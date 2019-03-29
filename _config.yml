@@ -37,7 +37,8 @@ plugins:
   - jekyll-feed
   - jemoji
   - jekyll-include-cache
- 
+  - jekyll-admin
+
 author:
   name   : "LIU YUE"
   avatar : "/content/images/common/liuyue.jpg"
