@@ -13,12 +13,13 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: "Site Title"
-email:
-description: "my blog"
-baseurl: "/lyhistory.github.io"
+title: "LIU YUE'S - NOTES TO SHARE"
+email: "lyhistory@gmail.com"
+description: "tech notes;"
+#baseurl: "/lyhistory.github.io"
 url: "https://lyhistory.github.io"
-minimal_mistakes_skin    : "default" 
+minimal_mistakes_skin    : "sunrise" 
+#"default" 
 
 # Build settings
 markdown: kramdown
@@ -42,7 +43,7 @@ plugins:
 author:
   name   : "LIU YUE"
   avatar : "/content/images/common/liuyue.jpg"
-  bio    : "my bio."
+  bio    : "Born in Anhui Province, XiaoXian County, China; Bachelor in Xiamen University, Master in National University of Singapore; Enneagram Type 5;"
   email  : # optional
   uri    : "http://lyhistory.com"
 
