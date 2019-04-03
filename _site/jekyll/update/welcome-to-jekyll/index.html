@@ -9,19 +9,19 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Welcome to Jekyll! - LIU YUE’S - NOTES TO SHARE</title>
-<meta name="description" content="You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated.">
+<!-- begin _includes/seo.html --><title>Migrate blog to github pages with jekyll - LIU YUE’S - NOTES TO SHARE</title>
+<meta name="description" content="1. Markdown Lanuage:https://guides.github.com/features/mastering-markdown/To add new posts, simply add a file in the _posts directory that follows the convention YYYY-MM-DD-name-of-post.ext and includes the necessary front matter.">
 
 
 
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="LIU YUE'S - NOTES TO SHARE">
-<meta property="og:title" content="Welcome to Jekyll!">
+<meta property="og:title" content="Migrate blog to github pages with jekyll">
 <meta property="og:url" content="http://localhost:4000/jekyll/update/welcome-to-jekyll/">
 
 
-  <meta property="og:description" content="You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated.">
+  <meta property="og:description" content="1. Markdown Lanuage:https://guides.github.com/features/mastering-markdown/To add new posts, simply add a file in the _posts directory that follows the convention YYYY-MM-DD-name-of-post.ext and includes the necessary front matter.">
 
 
 
@@ -230,15 +230,15 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Welcome to Jekyll!">
-    <meta itemprop="description" content="You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated.">
+    <meta itemprop="headline" content="Migrate blog to github pages with jekyll">
+    <meta itemprop="description" content="1. Markdown Lanuage:https://guides.github.com/features/mastering-markdown/To add new posts, simply add a file in the _posts directory that follows the convention YYYY-MM-DD-name-of-post.ext and includes the necessary front matter.">
     <meta itemprop="datePublished" content="October 20, 2017">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Welcome to Jekyll!
+          <h1 id="page-title" class="page__title" itemprop="headline">Migrate blog to github pages with jekyll
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -246,7 +246,7 @@
 
 
 
-  less than 1 minute read
+  1 minute read
 </p>
           
         </header>
@@ -254,17 +254,53 @@
 
       <section class="page__content" itemprop="text">
         
-        <p>You’ll find this post in your <code class="highlighter-rouge">_posts</code> directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run <code class="highlighter-rouge">jekyll serve</code>, which launches a web server and auto-regenerates your site when a file is updated.</p>
+        <h2 id="1-markdown-lanuage">1. Markdown Lanuage:</h2>
+<p>https://guides.github.com/features/mastering-markdown/
+To add new posts, simply add a file in the <code class="highlighter-rouge">_posts</code> directory that follows the convention <code class="highlighter-rouge">YYYY-MM-DD-name-of-post.ext</code> and includes the necessary front matter.</p>
 
-<p>To add new posts, simply add a file in the <code class="highlighter-rouge">_posts</code> directory that follows the convention <code class="highlighter-rouge">YYYY-MM-DD-name-of-post.ext</code> and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.</p>
+<h2 id="2-work-with-jekyll">2. Work with Jekyll:</h2>
 
-<p>Jekyll also offers powerful support for code snippets:</p>
+<h3 id="1-commands-to-use">1) Commands to use:</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ruby --version
+gem install bundler
+bundle install --force
+bundle info "github-pages"
+bundle info "jekyll-remote-theme"
+bundle exec jekyll serve
+To update::
+If you followed our setup recommendations and installed Bundler, run bundle update github-pages or simply bundle update and all your gems will update to the latest versions.
+If you don't have Bundler installed, run gem update github-pages
+</code></pre></div></div>
+
+<h3 id="2-jekyll-also-offers-powerful-support-for-code-snippets">2) Jekyll also offers powerful support for code snippets:</h3>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">print_hi</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
   <span class="nb">puts</span> <span class="s2">"Hi, </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">"</span>
 <span class="k">end</span>
 <span class="n">print_hi</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">)</span>
 <span class="c1">#=&gt; prints 'Hi, Tom' to STDOUT.</span></code></pre></figure>
+
+<h2 id="3-troubleshooting">3. Troubleshooting</h2>
+
+<ul>
+  <li>
+    <p>Your site is having problems building: You have an error on line 16 of your _config.yml file
+https://codebeautify.org/yaml-validator</p>
+  </li>
+  <li>Conversion error: Jekyll::Converters::Scss encountered an error while converting ‘assets/css/main.scss’: Invalid GBK character “\xE2” on line 54
+windows users may got this issue,  open powershell, execute
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Set-ExecutionPolicy RemoteSigned
+New-Item -Path $Profile -ItemType file -Force
+</code></pre></div>    </div>
+    <p>C:\Users&lt;yourname&gt;\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+copy paste “chcp 65001 &gt;$null”(without quote) inito it and save, then open up another powershell should do the trick
+refer to https://williamwang.info/setup-jekyll-on-windows/</p>
+  </li>
+  <li>failed load  jekyll-xxxx plugin
+try install it in your Gemfile and add it to the plugins array of _config.yml</li>
+</ul>
+
+<h2 id="4-reference">4. Reference</h2>
 
 <p>Check out the <a href="https://jekyllrb.com/docs/home">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://talk.jekyllrb.com/">Jekyll Talk</a>.</p>
 
@@ -285,7 +321,7 @@
       <section class="page__share">
   
 
-  <a href="https://twitter.com/intent/tweet?text=Welcome+to+Jekyll%21%20http%3A%2F%2Flocalhost%3A4000%2Fjekyll%2Fupdate%2Fwelcome-to-jekyll%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Migrate+blog+to+github+pages+with+jekyll%20http%3A%2F%2Flocalhost%3A4000%2Fjekyll%2Fupdate%2Fwelcome-to-jekyll%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
   <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fjekyll%2Fupdate%2Fwelcome-to-jekyll%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
@@ -301,7 +337,7 @@
       <a href="#" class="pagination--pager disabled">Previous</a>
     
     
-      <a href="/hi-btc/" class="pagination--pager" title="hello btc
+      <a href="/env-virtualbox/" class="pagination--pager" title="Setup dev env - virtualbox
 ">Next</a>
     
   </nav>
@@ -341,35 +377,6 @@
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">It’s important for developers to setup local env to simulate production env, not only that we have a overview(god’s eye view) of the whole project but also w...</p>
-  </article>
-</div>
-
-        
-          
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/hi-btc/" rel="permalink">hello btc
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  less than 1 minute read
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">test admin
-</p>
   </article>
 </div>
 

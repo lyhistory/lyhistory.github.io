@@ -246,7 +246,7 @@
 
 
 
-  2 minute read
+  3 minute read
 </p>
           
         </header>
@@ -256,13 +256,13 @@
         
         <p>It’s important for developers to setup local env to simulate production env, not only that we have a overview(god’s eye view) of the whole project but also we can have a ‘mini lab’ to try out and get the result quickly.</p>
 
-<p>And for blockchain developers it’s even crutical, someone may debate that, sometimes you can simply running a single node: for bitcoin core you have regtest mode, for ETH you have ganache and truffle dev, for EOS you have docker composer, yet for a comphrehensive project, you also have a large portion of off-chain components: database, web api etc, and for Consortium blockchain like hyperledger, you have to run multi nodes: peer nodes, order nodes.</p>
+<p>And for blockchain developers it’s even more crucial to setup multiple virtual instances to interact with each other, someone may debate that, most of the time you can simply run a single node: for bitcoin core you have regtest mode, for ETH you have ganache and truffle dev, for EOS you have docker composer, yet for a comprehensive project, there are much more bulding blocks beside the running nodes, normally you’ll have a large portion of off-chain components like database, web api etc, and for consortium blockchain like hyperledger, you have to run multi nodes: peer nodes, orderer nodes.</p>
 
-<p>It’s good for us to level up a little bit our knowledge on virtualbox.</p>
+<p>It’s always good for us to level up a little bit our knowledge on virtualbox.</p>
 
 <p>For demonstration my hosting machine is windows, virtualbox version 6.0, 
-one common requirement is that we have database and backend service running on internal network or ‘intranet’,  blockchain nodes and websites talking to both intranet and external internet.
-based on different abilities comparision of virtualbox network mode:</p>
+one common requirement is that we need database and backend service running on internal network or intranet,  blockchain nodes and websites talking to both intranet and external internet.
+based on the abilities comparision of different virtualbox network mode:</p>
 
 <table>
   <thead>
@@ -323,11 +323,11 @@ based on different abilities comparision of virtualbox network mode:</p>
   <p>Host-only networking is particularly useful for preconfigured virtual appliances, where multiple virtual machines are shipped together and designed to cooperate. For example, one virtual machine may contain a web server and a second one a database, and since they are intended to talk to each other, the appliance can instruct Oracle VM VirtualBox to set up a host-only network for the two. A second, bridged, network would then connect the web server to the outside world to serve data to, but the outside world cannot connect to the database.</p>
 </blockquote>
 
-<p>so we choose the following configuration for our virtualbox instance setup:</p>
+<p>To achieve the requirement, we choose the following configuration for our virtualbox instance setup:</p>
 
 <ul>
-  <li>vb1 to host database and backend service: host-only</li>
-  <li>vb2 to host blockchain nodes and websites: bridged mode and host-only</li>
+  <li>vb1 to host database and backend service: host-only mode</li>
+  <li>vb2 to host blockchain nodes and websites: bridged mode and host-only mode</li>
 </ul>
 
 <p>, so the expected result would be:</p>
@@ -363,7 +363,7 @@ host network manager for host-only network config
 <img src="/content/images/post/20190403/3.png" alt="" />
 <img src="/content/images/post/20190403/4.png" alt="" /></p>
 
-<p>for some reason, dhcp not working sometimes for the bridged adapter, if you find that dhcp doesn’t allocate ip for your bridged interface, then you can manually do:
+<p>somehow dhcp not working sometimes for the bridged adapter, if you find that dhcp doesn’t allocate ip for your bridged interface, you can manually fix it:
 <code class="highlighter-rouge">dhclient eth0</code>
 or you can edit network interface config to make it static</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim /etc/network/interfaces
@@ -399,7 +399,8 @@ ip route add default via [gateway] dev eth0
 
 <p>1) you can even config vb2 as a router by changing gateway of vb1, so you can do some data traffic monitoring easily</p>
 
-<p>2) sometimes you may find your disk space used up, very common when you run dockers or blockchain nodes which sync gigbytes chain data, and you don’t want to start over the setup again, good news is that you can always resize it:</p>
+<p>2) sometimes you may find your disk space used up, very common when you pull lots of dockers images or your blockchain nodes sync gigbytes of chain data, if you don’t want to start over the setup again, good news is that you can always resize your vdi:</p>
+
 <ul>
   <li>
     <p>resize before install os:
@@ -443,7 +444,7 @@ https://www.virtualbox.org/manual/ch06.html</p>
       
   <nav class="pagination">
     
-      <a href="/hi-btc/" class="pagination--pager" title="hello btc
+      <a href="/jekyll/update/welcome-to-jekyll/" class="pagination--pager" title="Migrate blog to github pages with jekyll
 ">Previous</a>
     
     
@@ -471,7 +472,7 @@ https://www.virtualbox.org/manual/ch06.html</p>
     
     <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/hi-btc/" rel="permalink">hello btc
+        <a href="/jekyll/update/welcome-to-jekyll/" rel="permalink">Migrate blog to github pages with jekyll
 </a>
       
     </h2>
@@ -481,38 +482,12 @@ https://www.virtualbox.org/manual/ch06.html</p>
 
 
 
-  less than 1 minute read
+  1 minute read
 </p>
     
-    <p class="archive__item-excerpt" itemprop="description">test admin
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/jekyll/update/welcome-to-jekyll/" rel="permalink">Welcome to Jekyll!
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  less than 1 minute read
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different wa...</p>
+    <p class="archive__item-excerpt" itemprop="description">1. Markdown Lanuage:
+https://guides.github.com/features/mastering-markdown/
+To add new posts, simply add a file in the _posts directory that follows the conv...</p>
   </article>
 </div>
 

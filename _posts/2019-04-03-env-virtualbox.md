@@ -10,13 +10,13 @@ related: true
 
 It's important for developers to setup local env to simulate production env, not only that we have a overview(god's eye view) of the whole project but also we can have a 'mini lab' to try out and get the result quickly.
 
-And for blockchain developers it's even crutical, someone may debate that, sometimes you can simply running a single node: for bitcoin core you have regtest mode, for ETH you have ganache and truffle dev, for EOS you have docker composer, yet for a comphrehensive project, you also have a large portion of off-chain components: database, web api etc, and for Consortium blockchain like hyperledger, you have to run multi nodes: peer nodes, order nodes.
+And for blockchain developers it's even more crucial to setup multiple virtual instances to interact with each other, someone may debate that, most of the time you can simply run a single node: for bitcoin core you have regtest mode, for ETH you have ganache and truffle dev, for EOS you have docker composer, yet for a comprehensive project, there are much more bulding blocks beside the running nodes, normally you'll have a large portion of off-chain components like database, web api etc, and for consortium blockchain like hyperledger, you have to run multi nodes: peer nodes, orderer nodes.
 
-It's good for us to level up a little bit our knowledge on virtualbox.
+It's always good for us to level up a little bit our knowledge on virtualbox.
 
 For demonstration my hosting machine is windows, virtualbox version 6.0, 
-one common requirement is that we have database and backend service running on internal network or 'intranet',  blockchain nodes and websites talking to both intranet and external internet.
-based on different abilities comparision of virtualbox network mode:
+one common requirement is that we need database and backend service running on internal network or intranet,  blockchain nodes and websites talking to both intranet and external internet.
+based on the abilities comparision of different virtualbox network mode:
 
 | Mode        | VM->Host           | VM<-Host  |VM1<->VM2|VM->Net/LAN|VM<-Net/LAN|
 | ------------- |:-------------:|:-------------:|:-----:|:-----:|:-------------:|
@@ -28,10 +28,10 @@ based on different abilities comparision of virtualbox network mode:
 
 > Host-only networking is particularly useful for preconfigured virtual appliances, where multiple virtual machines are shipped together and designed to cooperate. For example, one virtual machine may contain a web server and a second one a database, and since they are intended to talk to each other, the appliance can instruct Oracle VM VirtualBox to set up a host-only network for the two. A second, bridged, network would then connect the web server to the outside world to serve data to, but the outside world cannot connect to the database.
 
-so we choose the following configuration for our virtualbox instance setup:
+To achieve the requirement, we choose the following configuration for our virtualbox instance setup:
 
-* vb1 to host database and backend service: host-only
-* vb2 to host blockchain nodes and websites: bridged mode and host-only
+* vb1 to host database and backend service: host-only mode
+* vb2 to host blockchain nodes and websites: bridged mode and host-only mode
 
 , so the expected result would be:
 
@@ -54,7 +54,7 @@ host network manager for host-only network config
 ![](/content/images/post/20190403/3.png)
 ![](/content/images/post/20190403/4.png)
 
-for some reason, dhcp not working sometimes for the bridged adapter, if you find that dhcp doesn't allocate ip for your bridged interface, then you can manually do:
+somehow dhcp not working sometimes for the bridged adapter, if you find that dhcp doesn't allocate ip for your bridged interface, you can manually fix it:
 `dhclient eth0`
 or you can edit network interface config to make it static
 ```
@@ -93,7 +93,8 @@ ip route add default via [gateway] dev eth0
 
 1) you can even config vb2 as a router by changing gateway of vb1, so you can do some data traffic monitoring easily
 
-2) sometimes you may find your disk space used up, very common when you run dockers or blockchain nodes which sync gigbytes chain data, and you don't want to start over the setup again, good news is that you can always resize it:
+2) sometimes you may find your disk space used up, very common when you pull lots of dockers images or your blockchain nodes sync gigbytes of chain data, if you don't want to start over the setup again, good news is that you can always resize your vdi:
+
 * resize before install os:
 `VBoxVBoxManage.exe modifyhd your.vdi --resize [targetsize]`
 

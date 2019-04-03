@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-04-03T13:10:17+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">LIU YUE’S - NOTES TO SHARE</title><subtitle>tech notes;</subtitle><author><name>LIU YUE</name><uri>http://lyhistory.com</uri></author><entry><title type="html">Setup dev env - virtualbox</title><link href="http://localhost:4000/env-virtualbox/" rel="alternate" type="text/html" title="Setup dev env - virtualbox" /><published>2019-04-03T00:00:00+08:00</published><updated>2019-04-03T00:00:00+08:00</updated><id>http://localhost:4000/env-virtualbox</id><content type="html" xml:base="http://localhost:4000/env-virtualbox/">&lt;p&gt;It’s important for developers to setup local env to simulate production env, not only that we have a overview(god’s eye view) of the whole project but also we can have a ‘mini lab’ to try out and get the result quickly.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-04-03T15:13:53+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">LIU YUE’S - NOTES TO SHARE</title><subtitle>tech notes;</subtitle><author><name>LIU YUE</name><uri>http://lyhistory.com</uri></author><entry><title type="html">Setup dev env - virtualbox</title><link href="http://localhost:4000/env-virtualbox/" rel="alternate" type="text/html" title="Setup dev env - virtualbox" /><published>2019-04-03T00:00:00+08:00</published><updated>2019-04-03T00:00:00+08:00</updated><id>http://localhost:4000/env-virtualbox</id><content type="html" xml:base="http://localhost:4000/env-virtualbox/">&lt;p&gt;It’s important for developers to setup local env to simulate production env, not only that we have a overview(god’s eye view) of the whole project but also we can have a ‘mini lab’ to try out and get the result quickly.&lt;/p&gt;
 
-&lt;p&gt;And for blockchain developers it’s even crutical, someone may debate that, sometimes you can simply running a single node: for bitcoin core you have regtest mode, for ETH you have ganache and truffle dev, for EOS you have docker composer, yet for a comphrehensive project, you also have a large portion of off-chain components: database, web api etc, and for Consortium blockchain like hyperledger, you have to run multi nodes: peer nodes, order nodes.&lt;/p&gt;
+&lt;p&gt;And for blockchain developers it’s even more crucial to setup multiple virtual instances to interact with each other, someone may debate that, most of the time you can simply run a single node: for bitcoin core you have regtest mode, for ETH you have ganache and truffle dev, for EOS you have docker composer, yet for a comprehensive project, there are much more bulding blocks beside the running nodes, normally you’ll have a large portion of off-chain components like database, web api etc, and for consortium blockchain like hyperledger, you have to run multi nodes: peer nodes, orderer nodes.&lt;/p&gt;
 
-&lt;p&gt;It’s good for us to level up a little bit our knowledge on virtualbox.&lt;/p&gt;
+&lt;p&gt;It’s always good for us to level up a little bit our knowledge on virtualbox.&lt;/p&gt;
 
 &lt;p&gt;For demonstration my hosting machine is windows, virtualbox version 6.0, 
-one common requirement is that we have database and backend service running on internal network or ‘intranet’,  blockchain nodes and websites talking to both intranet and external internet.
-based on different abilities comparision of virtualbox network mode:&lt;/p&gt;
+one common requirement is that we need database and backend service running on internal network or intranet,  blockchain nodes and websites talking to both intranet and external internet.
+based on the abilities comparision of different virtualbox network mode:&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
@@ -67,11 +67,11 @@ based on different abilities comparision of virtualbox network mode:&lt;/p&gt;
   &lt;p&gt;Host-only networking is particularly useful for preconfigured virtual appliances, where multiple virtual machines are shipped together and designed to cooperate. For example, one virtual machine may contain a web server and a second one a database, and since they are intended to talk to each other, the appliance can instruct Oracle VM VirtualBox to set up a host-only network for the two. A second, bridged, network would then connect the web server to the outside world to serve data to, but the outside world cannot connect to the database.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;so we choose the following configuration for our virtualbox instance setup:&lt;/p&gt;
+&lt;p&gt;To achieve the requirement, we choose the following configuration for our virtualbox instance setup:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;vb1 to host database and backend service: host-only&lt;/li&gt;
-  &lt;li&gt;vb2 to host blockchain nodes and websites: bridged mode and host-only&lt;/li&gt;
+  &lt;li&gt;vb1 to host database and backend service: host-only mode&lt;/li&gt;
+  &lt;li&gt;vb2 to host blockchain nodes and websites: bridged mode and host-only mode&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;, so the expected result would be:&lt;/p&gt;
@@ -107,7 +107,7 @@ host network manager for host-only network config
 &lt;img src=&quot;/content/images/post/20190403/3.png&quot; alt=&quot;&quot; /&gt;
 &lt;img src=&quot;/content/images/post/20190403/4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;for some reason, dhcp not working sometimes for the bridged adapter, if you find that dhcp doesn’t allocate ip for your bridged interface, then you can manually do:
+&lt;p&gt;somehow dhcp not working sometimes for the bridged adapter, if you find that dhcp doesn’t allocate ip for your bridged interface, you can manually fix it:
 &lt;code class=&quot;highlighter-rouge&quot;&gt;dhclient eth0&lt;/code&gt;
 or you can edit network interface config to make it static&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vim /etc/network/interfaces
@@ -143,7 +143,8 @@ ip route add default via [gateway] dev eth0
 
 &lt;p&gt;1) you can even config vb2 as a router by changing gateway of vb1, so you can do some data traffic monitoring easily&lt;/p&gt;
 
-&lt;p&gt;2) sometimes you may find your disk space used up, very common when you run dockers or blockchain nodes which sync gigbytes chain data, and you don’t want to start over the setup again, good news is that you can always resize it:&lt;/p&gt;
+&lt;p&gt;2) sometimes you may find your disk space used up, very common when you pull lots of dockers images or your blockchain nodes sync gigbytes of chain data, if you don’t want to start over the setup again, good news is that you can always resize your vdi:&lt;/p&gt;
+
 &lt;ul&gt;
   &lt;li&gt;
     &lt;p&gt;resize before install os:
@@ -156,11 +157,25 @@ use gparted, detail refer to http://derekmolloy.ie/resize-a-virtualbox-disk/&lt;
 &lt;/ul&gt;
 
 &lt;p&gt;refer:
-https://www.virtualbox.org/manual/ch06.html&lt;/p&gt;</content><author><name>LIU YUE</name><uri>http://lyhistory.com</uri></author><summary type="html">It’s important for developers to setup local env to simulate production env, not only that we have a overview(god’s eye view) of the whole project but also we can have a ‘mini lab’ to try out and get the result quickly.</summary></entry><entry><title type="html">hello btc</title><link href="http://localhost:4000/hi-btc/" rel="alternate" type="text/html" title="hello btc" /><published>2019-03-29T00:00:00+08:00</published><updated>2019-03-29T00:00:00+08:00</updated><id>http://localhost:4000/hi-btc</id><content type="html" xml:base="http://localhost:4000/hi-btc/">&lt;p&gt;test admin&lt;/p&gt;</content><author><name>LIU YUE</name><uri>http://lyhistory.com</uri></author><summary type="html">test admin</summary></entry><entry><title type="html">Welcome to Jekyll!</title><link href="http://localhost:4000/jekyll/update/welcome-to-jekyll/" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2017-10-20T20:26:28+08:00</published><updated>2017-10-20T20:26:28+08:00</updated><id>http://localhost:4000/jekyll/update/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/welcome-to-jekyll/">&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+https://www.virtualbox.org/manual/ch06.html&lt;/p&gt;</content><author><name>LIU YUE</name><uri>http://lyhistory.com</uri></author><summary type="html">It’s important for developers to setup local env to simulate production env, not only that we have a overview(god’s eye view) of the whole project but also we can have a ‘mini lab’ to try out and get the result quickly.</summary></entry><entry><title type="html">Migrate blog to github pages with jekyll</title><link href="http://localhost:4000/jekyll/update/welcome-to-jekyll/" rel="alternate" type="text/html" title="Migrate blog to github pages with jekyll" /><published>2017-10-20T20:26:28+08:00</published><updated>2017-10-20T20:26:28+08:00</updated><id>http://localhost:4000/jekyll/update/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/welcome-to-jekyll/">&lt;h2 id=&quot;1-markdown-lanuage&quot;&gt;1. Markdown Lanuage:&lt;/h2&gt;
+&lt;p&gt;https://guides.github.com/features/mastering-markdown/
+To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter.&lt;/p&gt;
 
-&lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
+&lt;h2 id=&quot;2-work-with-jekyll&quot;&gt;2. Work with Jekyll:&lt;/h2&gt;
 
-&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+&lt;h3 id=&quot;1-commands-to-use&quot;&gt;1) Commands to use:&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ruby --version
+gem install bundler
+bundle install --force
+bundle info &quot;github-pages&quot;
+bundle info &quot;jekyll-remote-theme&quot;
+bundle exec jekyll serve
+To update::
+If you followed our setup recommendations and installed Bundler, run bundle update github-pages or simply bundle update and all your gems will update to the latest versions.
+If you don't have Bundler installed, run gem update github-pages
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;2-jekyll-also-offers-powerful-support-for-code-snippets&quot;&gt;2) Jekyll also offers powerful support for code snippets:&lt;/h3&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
   &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
@@ -168,4 +183,26 @@ https://www.virtualbox.org/manual/ch06.html&lt;/p&gt;</content><author><name>LIU
 &lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Tom'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints 'Hi, Tom' to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;Check out the &lt;a href=&quot;https://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;</content><author><name>LIU YUE</name><uri>http://lyhistory.com</uri></author><summary type="html">You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated.</summary></entry></feed>
+&lt;h2 id=&quot;3-troubleshooting&quot;&gt;3. Troubleshooting&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Your site is having problems building: You have an error on line 16 of your _config.yml file
+https://codebeautify.org/yaml-validator&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Conversion error: Jekyll::Converters::Scss encountered an error while converting ‘assets/css/main.scss’: Invalid GBK character “\xE2” on line 54
+windows users may got this issue,  open powershell, execute
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Set-ExecutionPolicy RemoteSigned
+New-Item -Path $Profile -ItemType file -Force
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;C:\Users&amp;lt;yourname&amp;gt;\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+copy paste “chcp 65001 &amp;gt;$null”(without quote) inito it and save, then open up another powershell should do the trick
+refer to https://williamwang.info/setup-jekyll-on-windows/&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;failed load  jekyll-xxxx plugin
+try install it in your Gemfile and add it to the plugins array of _config.yml&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;4-reference&quot;&gt;4. Reference&lt;/h2&gt;
+
+&lt;p&gt;Check out the &lt;a href=&quot;https://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;</content><author><name>LIU YUE</name><uri>http://lyhistory.com</uri></author><summary type="html">1. Markdown Lanuage: https://guides.github.com/features/mastering-markdown/ To add new posts, simply add a file in the _posts directory that follows the convention YYYY-MM-DD-name-of-post.ext and includes the necessary front matter.</summary></entry></feed>
