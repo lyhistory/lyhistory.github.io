@@ -1,4 +1,162 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/lyhistory.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/lyhistory.github.io/" rel="alternate" type="text/html" /><updated>2019-03-29T17:41:14+08:00</updated><id>http://localhost:4000/lyhistory.github.io/feed.xml</id><title type="html">Site Title</title><subtitle>my blog</subtitle><author><name>LIU YUE</name><uri>http://lyhistory.com</uri></author><entry><title type="html">hello btc</title><link href="http://localhost:4000/lyhistory.github.io/hi-btc/" rel="alternate" type="text/html" title="hello btc" /><published>2019-03-29T00:00:00+08:00</published><updated>2019-03-29T00:00:00+08:00</updated><id>http://localhost:4000/lyhistory.github.io/hi-btc</id><content type="html" xml:base="http://localhost:4000/lyhistory.github.io/hi-btc/">&lt;p&gt;test admin&lt;/p&gt;</content><author><name>LIU YUE</name><uri>http://lyhistory.com</uri></author><summary type="html">test admin</summary></entry><entry><title type="html">Welcome to Jekyll!</title><link href="http://localhost:4000/lyhistory.github.io/jekyll/update/welcome-to-jekyll/" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2017-10-20T20:26:28+08:00</published><updated>2017-10-20T20:26:28+08:00</updated><id>http://localhost:4000/lyhistory.github.io/jekyll/update/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/lyhistory.github.io/jekyll/update/welcome-to-jekyll/">&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-04-03T13:10:17+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">LIU YUE’S - NOTES TO SHARE</title><subtitle>tech notes;</subtitle><author><name>LIU YUE</name><uri>http://lyhistory.com</uri></author><entry><title type="html">Setup dev env - virtualbox</title><link href="http://localhost:4000/env-virtualbox/" rel="alternate" type="text/html" title="Setup dev env - virtualbox" /><published>2019-04-03T00:00:00+08:00</published><updated>2019-04-03T00:00:00+08:00</updated><id>http://localhost:4000/env-virtualbox</id><content type="html" xml:base="http://localhost:4000/env-virtualbox/">&lt;p&gt;It’s important for developers to setup local env to simulate production env, not only that we have a overview(god’s eye view) of the whole project but also we can have a ‘mini lab’ to try out and get the result quickly.&lt;/p&gt;
+
+&lt;p&gt;And for blockchain developers it’s even crutical, someone may debate that, sometimes you can simply running a single node: for bitcoin core you have regtest mode, for ETH you have ganache and truffle dev, for EOS you have docker composer, yet for a comphrehensive project, you also have a large portion of off-chain components: database, web api etc, and for Consortium blockchain like hyperledger, you have to run multi nodes: peer nodes, order nodes.&lt;/p&gt;
+
+&lt;p&gt;It’s good for us to level up a little bit our knowledge on virtualbox.&lt;/p&gt;
+
+&lt;p&gt;For demonstration my hosting machine is windows, virtualbox version 6.0, 
+one common requirement is that we have database and backend service running on internal network or ‘intranet’,  blockchain nodes and websites talking to both intranet and external internet.
+based on different abilities comparision of virtualbox network mode:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Mode&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;VM-&amp;gt;Host&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;VM&amp;lt;-Host&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;VM1&amp;lt;-&amp;gt;VM2&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;VM-&amp;gt;Net/LAN&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;VM&amp;lt;-Net/LAN&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Host-only&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;+&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;+&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;+&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;-&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;-&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Internal&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;-&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;-&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;+&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;-&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;-&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Bridged&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;+&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;+&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;+&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;+&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;+&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;NAT&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;+&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;PortForward&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;-&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;+&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;PortForward&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;NATservice&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;+&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;PortForward&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;+&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;+&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;PortForward&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Host-only networking is particularly useful for preconfigured virtual appliances, where multiple virtual machines are shipped together and designed to cooperate. For example, one virtual machine may contain a web server and a second one a database, and since they are intended to talk to each other, the appliance can instruct Oracle VM VirtualBox to set up a host-only network for the two. A second, bridged, network would then connect the web server to the outside world to serve data to, but the outside world cannot connect to the database.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;so we choose the following configuration for our virtualbox instance setup:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;vb1 to host database and backend service: host-only&lt;/li&gt;
+  &lt;li&gt;vb2 to host blockchain nodes and websites: bridged mode and host-only&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;, so the expected result would be:&lt;/p&gt;
+
+&lt;p&gt;host machine can talk to both vb1 and vb2 through ssh(default port 22, highly recommend winscp for windows users),
+vb1 can only talk to vb2 and host machine
+vb2 can talk to everything&lt;/p&gt;
+
+&lt;p&gt;1.Setup
+host network manager for host-only network config
+&lt;img src=&quot;/content/images/post/20190403/1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;blockquote&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;vb1&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;/content/images/post/20190403/6.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;/content/images/post/20190403/7.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;blockquote&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;vb2&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;/content/images/post/20190403/2.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;/content/images/post/20190403/3.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;/content/images/post/20190403/4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;for some reason, dhcp not working sometimes for the bridged adapter, if you find that dhcp doesn’t allocate ip for your bridged interface, then you can manually do:
+&lt;code class=&quot;highlighter-rouge&quot;&gt;dhclient eth0&lt;/code&gt;
+or you can edit network interface config to make it static&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vim /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+	address yourip
+	netmask 255.255.255.0
+	gateway your gateway
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/content/images/post/20190403/5.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;2.Commands&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ifconfig
+ip route show
+route -n
+cat /etc/network/interfaces
+/etc/init.d/networking restart
+service network-manager restart 
+ifdown eth0
+ifup eth0
+dhclient eth0
+Ifconfig eth0 [ip] netmask 255.255.255.0 up
+route add default gw [gateway] eth0
+ip route add default via [gateway] dev eth0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;3.Further learning&lt;/p&gt;
+
+&lt;p&gt;1) you can even config vb2 as a router by changing gateway of vb1, so you can do some data traffic monitoring easily&lt;/p&gt;
+
+&lt;p&gt;2) sometimes you may find your disk space used up, very common when you run dockers or blockchain nodes which sync gigbytes chain data, and you don’t want to start over the setup again, good news is that you can always resize it:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;resize before install os:
+&lt;code class=&quot;highlighter-rouge&quot;&gt;VBoxVBoxManage.exe modifyhd your.vdi --resize [targetsize]&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;resize after install os:
+use gparted, detail refer to http://derekmolloy.ie/resize-a-virtualbox-disk/&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;refer:
+https://www.virtualbox.org/manual/ch06.html&lt;/p&gt;</content><author><name>LIU YUE</name><uri>http://lyhistory.com</uri></author><summary type="html">It’s important for developers to setup local env to simulate production env, not only that we have a overview(god’s eye view) of the whole project but also we can have a ‘mini lab’ to try out and get the result quickly.</summary></entry><entry><title type="html">hello btc</title><link href="http://localhost:4000/hi-btc/" rel="alternate" type="text/html" title="hello btc" /><published>2019-03-29T00:00:00+08:00</published><updated>2019-03-29T00:00:00+08:00</updated><id>http://localhost:4000/hi-btc</id><content type="html" xml:base="http://localhost:4000/hi-btc/">&lt;p&gt;test admin&lt;/p&gt;</content><author><name>LIU YUE</name><uri>http://lyhistory.com</uri></author><summary type="html">test admin</summary></entry><entry><title type="html">Welcome to Jekyll!</title><link href="http://localhost:4000/jekyll/update/welcome-to-jekyll/" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2017-10-20T20:26:28+08:00</published><updated>2017-10-20T20:26:28+08:00</updated><id>http://localhost:4000/jekyll/update/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/welcome-to-jekyll/">&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
 
 &lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
 

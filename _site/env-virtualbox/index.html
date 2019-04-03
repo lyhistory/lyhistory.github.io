@@ -1,0 +1,562 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.15.2 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Setup dev env - virtualbox - LIU YUE’S - NOTES TO SHARE</title>
+<meta name="description" content="It’s important for developers to setup local env to simulate production env, not only that we have a overview(god’s eye view) of the whole project but also we can have a ‘mini lab’ to try out and get the result quickly.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="LIU YUE'S - NOTES TO SHARE">
+<meta property="og:title" content="Setup dev env - virtualbox">
+<meta property="og:url" content="http://localhost:4000/env-virtualbox/">
+
+
+  <meta property="og:description" content="It’s important for developers to setup local env to simulate production env, not only that we have a overview(god’s eye view) of the whole project but also we can have a ‘mini lab’ to try out and get the result quickly.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-04-03T00:00:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/env-virtualbox/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="LIU YUE'S - NOTES TO SHARE Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">LIU YUE'S - NOTES TO SHARE</a>
+        <ul class="visible-links"></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/content/images/common/liuyue.jpg" alt="LIU YUE" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">LIU YUE</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Born in Anhui Province, XiaoXian County, China; Bachelor in Xiamen University, Master in National University of Singapore; Enneagram Type 5;
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+        <li>
+          <a href="http://lyhistory.com" itemprop="url">
+            <i class="fas fa-fw fa-link" aria-hidden="true"></i> Website
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Setup dev env - virtualbox">
+    <meta itemprop="description" content="It’s important for developers to setup local env to simulate production env, not only that we have a overview(god’s eye view) of the whole project but also we can have a ‘mini lab’ to try out and get the result quickly.">
+    <meta itemprop="datePublished" content="April 03, 2019">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Setup dev env - virtualbox
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>It’s important for developers to setup local env to simulate production env, not only that we have a overview(god’s eye view) of the whole project but also we can have a ‘mini lab’ to try out and get the result quickly.</p>
+
+<p>And for blockchain developers it’s even crutical, someone may debate that, sometimes you can simply running a single node: for bitcoin core you have regtest mode, for ETH you have ganache and truffle dev, for EOS you have docker composer, yet for a comphrehensive project, you also have a large portion of off-chain components: database, web api etc, and for Consortium blockchain like hyperledger, you have to run multi nodes: peer nodes, order nodes.</p>
+
+<p>It’s good for us to level up a little bit our knowledge on virtualbox.</p>
+
+<p>For demonstration my hosting machine is windows, virtualbox version 6.0, 
+one common requirement is that we have database and backend service running on internal network or ‘intranet’,  blockchain nodes and websites talking to both intranet and external internet.
+based on different abilities comparision of virtualbox network mode:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Mode</th>
+      <th style="text-align: center">VM-&gt;Host</th>
+      <th style="text-align: center">VM&lt;-Host</th>
+      <th style="text-align: center">VM1&lt;-&gt;VM2</th>
+      <th style="text-align: center">VM-&gt;Net/LAN</th>
+      <th style="text-align: center">VM&lt;-Net/LAN</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Host-only</td>
+      <td style="text-align: center">+</td>
+      <td style="text-align: center">+</td>
+      <td style="text-align: center">+</td>
+      <td style="text-align: center">-</td>
+      <td style="text-align: center">-</td>
+    </tr>
+    <tr>
+      <td>Internal</td>
+      <td style="text-align: center">-</td>
+      <td style="text-align: center">-</td>
+      <td style="text-align: center">+</td>
+      <td style="text-align: center">-</td>
+      <td style="text-align: center">-</td>
+    </tr>
+    <tr>
+      <td>Bridged</td>
+      <td style="text-align: center">+</td>
+      <td style="text-align: center">+</td>
+      <td style="text-align: center">+</td>
+      <td style="text-align: center">+</td>
+      <td style="text-align: center">+</td>
+    </tr>
+    <tr>
+      <td>NAT</td>
+      <td style="text-align: center">+</td>
+      <td style="text-align: center">PortForward</td>
+      <td style="text-align: center">-</td>
+      <td style="text-align: center">+</td>
+      <td style="text-align: center">PortForward</td>
+    </tr>
+    <tr>
+      <td>NATservice</td>
+      <td style="text-align: center">+</td>
+      <td style="text-align: center">PortForward</td>
+      <td style="text-align: center">+</td>
+      <td style="text-align: center">+</td>
+      <td style="text-align: center">PortForward</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>Host-only networking is particularly useful for preconfigured virtual appliances, where multiple virtual machines are shipped together and designed to cooperate. For example, one virtual machine may contain a web server and a second one a database, and since they are intended to talk to each other, the appliance can instruct Oracle VM VirtualBox to set up a host-only network for the two. A second, bridged, network would then connect the web server to the outside world to serve data to, but the outside world cannot connect to the database.</p>
+</blockquote>
+
+<p>so we choose the following configuration for our virtualbox instance setup:</p>
+
+<ul>
+  <li>vb1 to host database and backend service: host-only</li>
+  <li>vb2 to host blockchain nodes and websites: bridged mode and host-only</li>
+</ul>
+
+<p>, so the expected result would be:</p>
+
+<p>host machine can talk to both vb1 and vb2 through ssh(default port 22, highly recommend winscp for windows users),
+vb1 can only talk to vb2 and host machine
+vb2 can talk to everything</p>
+
+<p>1.Setup
+host network manager for host-only network config
+<img src="/content/images/post/20190403/1.png" alt="" /></p>
+
+<blockquote>
+  <blockquote>
+    <blockquote>
+      <p>vb1</p>
+    </blockquote>
+  </blockquote>
+</blockquote>
+
+<p><img src="/content/images/post/20190403/6.png" alt="" />
+<img src="/content/images/post/20190403/7.png" alt="" /></p>
+
+<blockquote>
+  <blockquote>
+    <blockquote>
+      <p>vb2</p>
+    </blockquote>
+  </blockquote>
+</blockquote>
+
+<p><img src="/content/images/post/20190403/2.png" alt="" />
+<img src="/content/images/post/20190403/3.png" alt="" />
+<img src="/content/images/post/20190403/4.png" alt="" /></p>
+
+<p>for some reason, dhcp not working sometimes for the bridged adapter, if you find that dhcp doesn’t allocate ip for your bridged interface, then you can manually do:
+<code class="highlighter-rouge">dhclient eth0</code>
+or you can edit network interface config to make it static</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+	address yourip
+	netmask 255.255.255.0
+	gateway your gateway
+</code></pre></div></div>
+
+<p><img src="/content/images/post/20190403/5.png" alt="" /></p>
+
+<p>2.Commands</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ifconfig
+ip route show
+route -n
+cat /etc/network/interfaces
+/etc/init.d/networking restart
+service network-manager restart 
+ifdown eth0
+ifup eth0
+dhclient eth0
+Ifconfig eth0 [ip] netmask 255.255.255.0 up
+route add default gw [gateway] eth0
+ip route add default via [gateway] dev eth0
+</code></pre></div></div>
+
+<p>3.Further learning</p>
+
+<p>1) you can even config vb2 as a router by changing gateway of vb1, so you can do some data traffic monitoring easily</p>
+
+<p>2) sometimes you may find your disk space used up, very common when you run dockers or blockchain nodes which sync gigbytes chain data, and you don’t want to start over the setup again, good news is that you can always resize it:</p>
+<ul>
+  <li>
+    <p>resize before install os:
+<code class="highlighter-rouge">VBoxVBoxManage.exe modifyhd your.vdi --resize [targetsize]</code></p>
+  </li>
+  <li>
+    <p>resize after install os:
+use gparted, detail refer to http://derekmolloy.ie/resize-a-virtualbox-disk/</p>
+  </li>
+</ul>
+
+<p>refer:
+https://www.virtualbox.org/manual/ch06.html</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2019-04-03T00:00:00+08:00">April 03, 2019</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Setup+dev+env+-+virtualbox%20http%3A%2F%2Flocalhost%3A4000%2Fenv-virtualbox%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fenv-virtualbox%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A4000%2Fenv-virtualbox%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fenv-virtualbox%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/hi-btc/" class="pagination--pager" title="hello btc
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hi-btc/" rel="permalink">hello btc
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">test admin
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/jekyll/update/welcome-to-jekyll/" rel="permalink">Welcome to Jekyll!
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different wa...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2019 LIU YUE'S - NOTES TO SHARE. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script data-search-pseudo-elements defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>

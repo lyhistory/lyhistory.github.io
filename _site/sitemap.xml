@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>http://localhost:4000/lyhistory.github.io/jekyll/update/welcome-to-jekyll/</loc>
+<loc>http://localhost:4000/jekyll/update/welcome-to-jekyll/</loc>
 <lastmod>2017-10-20T20:26:28+08:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/lyhistory.github.io/hi-btc/</loc>
+<loc>http://localhost:4000/hi-btc/</loc>
 <lastmod>2019-03-29T00:00:00+08:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/lyhistory.github.io/</loc>
+<loc>http://localhost:4000/env-virtualbox/</loc>
+<lastmod>2019-04-03T00:00:00+08:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/</loc>
 </url>
 </urlset>
