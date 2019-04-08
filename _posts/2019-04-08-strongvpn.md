@@ -25,7 +25,6 @@ related: true
 [https://intranet.reliablehosting.com/services/strongvpn/refer/204835b682517019/](https://intranet.reliablehosting.com/services/strongvpn/refer/204835b682517019/)
 
 
-
 主站（国内被屏蔽）
 [https://intranet.strongvpn.com/services/strongvpn/refer/204835b682517019/](https://intranet.strongvpn.com/services/strongvpn/refer/204835b682517019/)
 
@@ -50,6 +49,7 @@ related: true
 			
 点击右上角"完成Done"，然后想使用的时候直接划一下status状态按钮即可。
 ![](/content/images/post/20190409/2.png)
+
 上面的配置内容可以在这里找到（或者直接找客服要，网站右下角客服）
 ![](/content/images/post/20190409/3.png)
 
@@ -71,7 +71,7 @@ V1/V2版本图标
 ![](/content/images/post/20190409/4.png)
 
 2. 测速地址（可以连接和断开vpn的情况下分别测速对比）
-http://str-sfo311.reliablehosting.com/
+[http://str-sfo311.reliablehosting.com/](http://str-sfo311.reliablehosting.com/)
 
 
 参考
