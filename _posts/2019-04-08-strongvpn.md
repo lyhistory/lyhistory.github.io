@@ -57,11 +57,13 @@ related: true
 ## 天朝用户特别说明
 
 对于天朝用户，推荐使用 United States - San Francisco （尤其是ios用户）
-并且对于android和windows用户来说，最好选择下面的V1版本
-android https://mirror4.reliablehosting.com/android/1.7.0.apk
-windows https://mirror2.reliablehosting.com/win/StrongVPN-latest.exe
+并且对于android和windows用户来说，最好选择下面的V1版本:
+
+[android V1下载链接](https://mirror4.reliablehosting.com/android/1.7.0.apk) 
+[windows V1下载链接](https://mirror2.reliablehosting.com/win/StrongVPN-latest.exe)
+
 V1/V2版本图标
-![](https://i.imgur.com/bzOGizP.png)
+![](/content/images/post/20190409/5.png)
 
 ## 更多
 
