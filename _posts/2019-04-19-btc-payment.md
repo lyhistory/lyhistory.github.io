@@ -1,5 +1,5 @@
 ---
-title: Tutorial-How to add BTC payment method
+title: Tutorial:Blockchain:How to add BTC payment method
 layout: single
 author_profile: true
 read_time: true
