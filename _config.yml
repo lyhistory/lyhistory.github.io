@@ -80,8 +80,8 @@ comments:
 search                   : true
 search_full_content      : true
 # lunr (default), algolia, google
-search_provider          : google
+search_provider          : lunr
 
-google:
-  search_engine_id       : 016202475545879656962:ot3scpbjy9y
-  instant_search         : true
+#google:
+#  search_engine_id       : 016202475545879656962:ot3scpbjy9y
+#  instant_search         : true
