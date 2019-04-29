@@ -43,10 +43,19 @@ plugins:
 author:
   name   : "LIU YUE"
   avatar : "/content/images/common/liuyue.jpg"
-  bio    : "古萧龙城好青年:lyhistory@gmail.com;wechat:lyhistory; Born in XiaoXian County,Anhui China; Bachelor in cst XMU, Master in se NUS; Enneagram Type 5;"
-  email  : # optional
+  bio    : "古萧龙城好青年:wechat:lyhistory; Born in XiaoXian County,Anhui China; Bachelor in cst XMU, Master in se NUS; Enneagram Type 5;"
+  email  : "lyhistory@gmail.com"
   uri    : "https://twitter.com/lyhistory"
-
+  links:
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: mailto:lyhistory@gmail.com
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/lyhistory"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/lyhistory"
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
@@ -76,7 +85,6 @@ comments:
   provider: "disqus"
   disqus:
     shortname: "lyhistory"
-	
 search                   : true
 search_full_content      : true
 # lunr (default), algolia, google
