@@ -79,8 +79,8 @@ comments:
 	
 search                   : true# , false (default)
 search_full_content      : true# , false (default)
-search_provider          : google# lunr (default), algolia, google
+search_provider          : lunr# lunr (default), algolia, google
 
-google:
-  search_engine_id       : 016202475545879656962:ot3scpbjy9y # YOUR_SEARCH_ENGINE_ID
-  instant_search         : true # false (default), true
+#google:
+#  search_engine_id       : 016202475545879656962:ot3scpbjy9y # YOUR_SEARCH_ENGINE_ID
+#  instant_search         : true # false (default), true
