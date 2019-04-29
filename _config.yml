@@ -44,8 +44,8 @@ author:
   name   : "LIU YUE"
   avatar : "/content/images/common/liuyue.jpg"
   bio    : "古萧龙城好青年:wechat:lyhistory; Born in XiaoXian County,Anhui China; Bachelor in cst XMU, Master in se NUS; Enneagram Type 5;"
-  email  : "lyhistory@gmail.com"
-  uri    : "https://twitter.com/lyhistory"
+  #email  : "lyhistory@gmail.com"
+  #uri    : "https://twitter.com/lyhistory"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
@@ -88,8 +88,8 @@ comments:
 search                   : true
 search_full_content      : true
 # lunr (default), algolia, google
-search_provider          : lunr
+search_provider          : google
 
-#google:
-#  search_engine_id       : 016202475545879656962:ot3scpbjy9y
-#  instant_search         : true
+google:
+  search_engine_id       : 016202475545879656962:ot3scpbjy9y
+  instant_search         : true
