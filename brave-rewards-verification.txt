@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: lyhistory.com 
+Token: 4353bffd07eb63110517b5062250f80a2877907e08d024c6b74321a481f28397
