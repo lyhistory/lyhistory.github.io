@@ -67,7 +67,17 @@ author:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
-
+footer:
+  links:
+    - label: "AlphaWallet"
+      icon: "fab fa-fw fa-graduation-cap"
+      url: https://alphawallet.com/
+    - label: "Facebook"
+      icon: "fab fa-fw fa-google"
+      url: https://developers.google.com/edu/
+    - label: "other"
+      icon: ""
+      url: http://vouchain.one/
 defaults:
   # _posts
   - scope:
