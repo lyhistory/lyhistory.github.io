@@ -70,9 +70,9 @@ author:
 footer:
   links:
     - label: "AlphaWallet"
-      icon: "fab fa-fw fa-graduation-cap"
+      icon: "fab fa-fw fa-university"
       url: https://alphawallet.com/
-    - label: "Facebook"
+    - label: "Google Course"
       icon: "fab fa-fw fa-google"
       url: https://developers.google.com/edu/
     - label: "other"
