@@ -61,7 +61,7 @@ CHANGE MASTER TO MASTER_HOST='192.168.0.141',MASTER_PORT=3306,MASTER_USER='repl'
 
  START SLAVE;
 ```
-![](/content/images/post/20190519/salve3.png)
+![](/content/images/post/20190519/slave3.png)
 
 reference:
 https://dev.mysql.com/doc/refman/5.7/en/
