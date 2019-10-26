@@ -1,0 +1,874 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.15.2 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Online chat room from NULL 聊天室开发 - LIU YUE’S - NOTES TO SHARE</title>
+<meta name="description" content="chat room version 1.0 functionality demonstration by gif">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="LIU YUE'S - NOTES TO SHARE">
+<meta property="og:title" content="Online chat room from NULL 聊天室开发">
+<meta property="og:url" content="http://localhost:4000/migrate-chatroom/">
+
+
+  <meta property="og:description" content="chat room version 1.0 functionality demonstration by gif">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-01-01T00:00:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/migrate-chatroom/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="LIU YUE'S - NOTES TO SHARE Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">LIU YUE'S - NOTES TO SHARE</a>
+        <ul class="visible-links"></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/content/images/common/liuyue.jpg" alt="LIU YUE" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">LIU YUE</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        古萧龙城好青年:wechat:lyhistory; Born in XiaoXian County,Anhui China; Bachelor in cst XMU, Master in se NUS; Enneagram Type 5;
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="mailto:lyhistory@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/lyhistory" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/lyhistory" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Online chat room from NULL 聊天室开发">
+    <meta itemprop="description" content="chat room version 1.0 functionality demonstration by gif">
+    <meta itemprop="datePublished" content="January 01, 2019">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Online chat room from NULL 聊天室开发
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  8 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>chat room version 1.0 functionality demonstration by gif</p>
+
+<p><img src="/content/images/post/20190101/chatroom.gif" alt="" /></p>
+
+<h1 id="1planning">1.Planning</h1>
+<p>(all the domains below are fictional)</p>
+
+<p>Now I have a web site website.com, an Oauth2 server oauth.com, and an API server/Resource server api.com,access restricted through oauth only, now I am asked to create an online chatting room for website.com, which will be embedded in website.com using iframe, assume domain is chatroom.com.</p>
+
+<p>General workflow will be: user log on website.com through oauth.com, on oauth successfully website.com pass access_token to chatroom.com, then last step, chatroom use access_token to retrieve user info from API.com, this process is also considered as logon chatroom.</p>
+
+<p>My colleague suggests me to use signalr, compare to super socket, it’s much more easy to draw UI because UI for such an online chatting room is very complicated, another advantage of signalr is that it supports long-polling, means those browsers not supporting websocket will also works fine, while the disadvantage is I need to maintain my own ‘sessions’, signalr or most web sockets do not support session feature by default.( why? answer in my blog ‘<a href="/migrate-session/">About Session</a>’ )</p>
+<h1 id="2business-modeling">2.Business Modeling</h1>
+<p>Domain Modeling ( use case driven approach,the task of discovering ‘objects’ that represent those business entities and concepts)</p>
+
+<p>User(name,online status)</p>
+
+<p>Friends</p>
+
+<p>Conversation Room – chat group (name, creator,members,status)</p>
+
+<p>Message – Private Message, Group Message</p>
+
+<p>Recently chat list</p>
+<h1 id="3requirements">3.Requirements</h1>
+<p>when user successfully connected with server,If he doesn’t have nickname yet, required to update user info through api.com.</p>
+
+<p>after checking nickname, he will be auto assigned to one of the lobbies(system setting channels);</p>
+
+<p>user can switch channels, can check users online status and add friends,</p>
+
+<p>start private conversation with friends,</p>
+
+<p>create chat group with selected friends,manage chat group, invite friend, kick out member.</p>
+
+<p>system will keep track of users’ recently chat records,</p>
+
+<p>missed messages will push to user as soon as he get online.</p>
+<h1 id="4analysis--design">4.Analysis &amp; Design</h1>
+<h2 id="41-tech">4.1 Tech</h2>
+<p>MVC for presentation layer</p>
+
+<p><a href="http://www.asp.net/signalr">SignalR</a> for communication layer</p>
+
+<p>Mongodb for db layer</p>
+<h2 id="42-detail">4.2 Detail</h2>
+<p>user persistence: session</p>
+
+<p>security: form authentication</p>
+
+<p><a href="https://github.com/gustavo-armenta/CookieAuthenticationSample">CookieAuthenticationSample</a>
+<a href="http://stackoverflow.com/questions/16190148/using-ajaxsetup-beforesend-for-basic-auth-is-breaking-signalr-connection">Using ajaxSetup beforeSend for Basic Auth is breaking SignalR connection</a></p>
+
+<p>Understanding and Handling Connection Lifetime Events in SignalR</p>
+<iframe src="//channel9.msdn.com/Events/TechEd/NorthAmerica/2014/DEV-B416/player" width="960" height="540" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+<p><a href="http://yunpan.cn/cVH3p99JWi94R">Emoticons （Verify Code e4d6） 聊天表情源码 提取码 e4d6</a></p>
+
+<h1 id="5implement">5.implement</h1>
+<h2 id="logic">Logic:</h2>
+<p>signalr reconnect?</p>
+
+<p>rejoin room ? missed message push?</p>
+
+<p>session lost handling? token expired handling?</p>
+
+<p>fallback handling,go back to client side, ask for new token ?</p>
+
+<p>performance enhancement?</p>
+
+<p>code refactor?</p>
+<h2 id="ui">UI:</h2>
+<p>Show Loading tips before enter/switch room and disable page event</p>
+<h2 id="technical">Technical:</h2>
+<h3 id="1signalr-life-cycle">1.signalR life cycle</h3>
+<p>SignalR connection OnConnected OnReConnected OnDisconnected</p>
+
+<p>Transport connection</p>
+
+<p>negotiate –&gt; connect –&gt; start–&gt; send….—&gt; reconnect</p>
+
+<p>(reconnect every 5s,on 30s throw hub error:</p>
+
+<p>Error: Couldn’t reconnect within the configured timeout of 30000 ms, disconnecting. {source: “TimeoutException”, stack: (…), message: “Couldn’t reconnect within the configured timeout of 30000 ms, disconnecting.”}</p>
+
+<p>Error: The client has been inactive since Wed May 13 2015 15:27:25 GMT+0800 (China Standard Time) and it has exceeded the inactivity timeout of 50000 ms. Stopping the connection. {source: “TimeoutException”, stack: (…), message: “The client has been inactive since Wed May 13 2015…ity timeout of 50000 ms. Stopping the connection.”}</p>
+
+<p>), then abort (check network)
+$.signalR.connectionState
+Object{connecting:0, connected:1, reconnecting:2, disconnected:4}
+error: connect before call</p>
+
+<p>solution: block user before connected,e.g. using overlap loading.</p>
+<h3 id="2-send-failed-error">2. send failed error</h3>
+<p><code class="highlighter-rouge">
+ChatHub.Send failed:
+chatroom.js:351 Error: Error: Send failed.
+at Object.r._.error (http://chatroom.24popcorn.com/Scripts/jquery.signalR-2.2.0.min.js:8:4512)
+at i.l (http://chatroom.24popcorn.com/Scripts/jquery.signalR-2.2.0.min.js:8:34125)
+at Object.&lt;anonymous&gt; (http://chatroom.24popcorn.com/Scripts/jquery.signalR-2.2.0.min.js:8:35652)
+at Object.&lt;anonymous&gt; (http://chatroom.24popcorn.com/Scripts/jquery.signalR-2.2.0.min.js:8:11987)
+at Object.n.event.dispatch (http://chatroom.24popcorn.com/Content/js/jquery-latest.min.js:3:8066)
+at Object.r.handle (http://chatroom.24popcorn.com/Content/js/jquery-latest.min.js:3:4774)
+at Object.n.event.trigger (http://chatroom.24popcorn.com/Content/js/jquery-latest.min.js:3:7167)
+at n.fn.extend.triggerHandler (http://chatroom.24popcorn.com/Content/js/jquery-latest.min.js:3:15006)
+at s (http://chatroom.24popcorn.com/Scripts/jquery.signalR-2.2.0.min.js:8:18319)
+at Object.u.ajax.success (http://chatroom.24popcorn.com/Scripts/jquery.signalR-2.2.0.min.js:8:18593)
+chatroom.js:118 SignalR error: Error: Send failed.
+chatroom.js:662 ChatHub.Send failed:
+chatroom.js:663 Error: Connection was disconnected before invocation result was received.
+at Object.r._.error (http://chatroom.24popcorn.com/Scripts/jquery.signalR-2.2.0.min.js:8:4512)
+at i.l (http://chatroom.24popcorn.com/Scripts/jquery.signalR-2.2.0.min.js:8:34125)
+at f (http://chatroom.24popcorn.com/Scripts/jquery.signalR-2.2.0.min.js:8:32687)
+at Object.&lt;anonymous&gt; (http://chatroom.24popcorn.com/Scripts/jquery.signalR-2.2.0.min.js:8:35854)
+at Object.&lt;anonymous&gt; (http://chatroom.24popcorn.com/Scripts/jquery.signalR-2.2.0.min.js:8:12085)
+at Object.n.event.dispatch (http://chatroom.24popcorn.com/Content/js/jquery-latest.min.js:3:8066)
+at Object.r.handle (http://chatroom.24popcorn.com/Content/js/jquery-latest.min.js:3:4774)
+at Object.n.event.trigger (http://chatroom.24popcorn.com/Content/js/jquery-latest.min.js:3:7167)
+at n.fn.extend.triggerHandler (http://chatroom.24popcorn.com/Content/js/jquery-latest.min.js:3:1
+</code>5006)
+at Object.r.fn.r.stop (http://chatroom.24popcorn.com/Scripts/jquery.signalR-2.2.0.min.js:8:13160)</p>
+
+<p>reason:another asynchronous call still in processing, may cause dead lock</p>
+
+<p>solution:</p>
+
+<p>queue before send calling, using Jquery.defferred Promise</p>
+
+<iframe src="//jsfiddle.net/kre9qvqL/2/embedded/" width="100%" height="300" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+
+<p>http://stackoverflow.com/questions/17308172/deferred-versus-promise</p>
+
+<p>http://joseoncode.com/2011/09/26/a-walkthrough-jquery-deferred-and-promise/</p>
+
+<p>http://www.vasanthk.com/jquery-promises-and-deferred-objects/</p>
+
+<p><img src="/content/images/post/20190101/chatroom1.png" alt="" />
+<img src="/content/images/post/20190101/chatroom2.png" alt="" />
+<img src="/content/images/post/20190101/chatroom3.png" alt="" /></p>
+
+<p>Finally!!! Let’s meet the murderer !!!</p>
+
+<p>http://stackoverflow.com/questions/17659603/async-void-asp-net-and-count-of-outstanding-operations
+Regarding “fire and forget”:
+I personally never use this phrase for async void methods. For one thing, the error handling semantics most certainly do not fit in with the phrase “fire and forget”; I half-jokingly refer to async void methods as “fire and crash”. A true async “fire and forget” method would be an async Task method where you ignore the returned Task rather than waiting for it.
+That said, in ASP.NET you almost never want to return early from requests (which is what “fire and forget” implies). This answer is already too long, but I have a description of the problems on my blog, along with some code to support ASP.NET “fire and forget” if it’s truly necessary.</p>
+
+<p>http://www.wiliam.com.au/wiliam-blog/async-void-dont-use-it
+https://msdn.microsoft.com/en-us/magazine/jj991977.aspx</p>
+
+<h3 id="3query-in-mongodb-using-c-driver">3.query in MongoDB using C# Driver</h3>
+<p>http://stackoverflow.com/questions/24169849/searching-an-array-of-objects-in-mongodb-using-the-c-sharp-driver</p>
+
+<p>http://stackoverflow.com/questions/5457637/mongodb-field-array-searching-c-how-to?rq=1</p>
+
+<p>http://stackoverflow.com/questions/25727553/querying-an-array-of-arrays-with-the-mongodb-c-sharp-driver?rq=1</p>
+
+<h3 id="4httpcontext-sessioncookie-is-null-with-ie">4.httpcontext session/cookie is null with IE</h3>
+<p>You can try the following code by adding in Global.asax file</p>
+
+<p>protected void Application_BeginRequest(object sender, EventArgs e)
+{
+HttpContext.Current.Response.AddHeader(“p3p”, “CP="CAO PSA OUR"”);
+}
+The problem lies with a W3C standard called Platform for Privacy Preferences or P3P. This will allow Internet Explorer to accept your cookie. You will need to send the header on every page that sets a cookie.</p>
+<h3 id="5page-refresh-signalr-disconnect-and-connect-again-and-assign-new-connectionid-but-how-to-maintain-statefirst-connection-time-and-current-conversation-state">5.Page refresh, SignalR disconnect and connect again and assign new connectionID, but how to maintain state(First Connection Time and current conversation state)</h3>
+
+<p>http://kevgriffin.com/maintaining-signalr-connectionids-across-page-instances/</p>
+
+<p>solution: Maitain your own SessionList, OnDisconnected mark check session state, if previous online=true, set online=false and remove connectionID from , else remove session, when OnConnected check session, if find user in session and previous online=false, set it true, and add new connectionID</p>
+
+<h1 id="6configuration-management">6.Configuration Management</h1>
+<p>release maintenance</p>
+
+<h1 id="7continuous-integration">7.Continuous Integration</h1>
+<p>another system which is the back end system need to interact with chatroom, e.g. from back end system, admin can ‘push’ messages to all clients connected with chatroom,</p>
+
+<p>back end system was implemented using .net c# technology,</p>
+
+<p>issues: I am using Form Authenticate with ChatHub which is the only hub I have so far. JS Clients connect to it after authentication.</p>
+
+<p>solution: add one more hub to interact with .net client, this new hub need also keep reference of ChatHub to notify all JS Clients connected to it.</p>
+
+<p>http://www.asp.net/signalr/overview/guide-to-the-api/hubs-api-guide-server#callfromoutsidehub</p>
+
+<p>http://henriquat.re/server-integration/signalr/integrateWithSignalRHubs.html</p>
+
+<p>errors encountered:</p>
+
+<p>signalr Unexpected character encountered while parsing value: &lt;. Path ‘’, line 2, position 1.</p>
+
+<p>reason: failed to connect to the hub, check whether you called the correct path or is there any authentication requires towards your hub.</p>
+
+<p>b.further more, I was asked to make the ‘push’ message be periodic, so I decided to use timer, soon I found the issue, I cannot do async operations inside a timer(threading timer)</p>
+
+<p>solution in my the other blog <a href="/migrate-codesnippets_csharp/">Code Snippets Series – C#</a></p>
+
+<p>Debug:
+<img src="/content/images/post/20190101/chatroom4.png" alt="" /></p>
+
+<p><strong>SignalR Message Format</strong></p>
+<blockquote>
+  <p>– http://blogs.microsoft.co.il/applisec/2014/03/12/signalr-message-format/</p>
+
+  <p>Messages are serialized as JSON objects and contain metadata about the handlers and the connection as well as payload (i.e. the data to transfer) The following information is included in the messages:</p>
+
+  <ul>
+    <li>Hubs (H): Handlers (i.e methods) on the server as well as on the clients are grouped in “Hubs”.</li>
+    <li>Method (M): The name of the Handler that will process the message.</li>
+    <li>Groups: Clients can be grouped on the servers in “groups” for pub-sub implementation.</li>
+    <li>Arguments (A): The actual content to be passed to the hander on the client or on the server.</li>
+    <li>Cursor (C): Represents a position in the message stream.</li>
+    <li>Index (I): The Id of the handler or Callback.
+Hub Message Format</li>
+  </ul>
+
+  <p>Hub Request format (“send” request)</p>
+
+  <p>Data={“I”:index,”H”:”samplingstreaminghub”,”M”:”ConnectToStream”,”A”:[“StreamUri”]}</p>
+
+  <p>Hubs messages format (server to client)</p>
+
+  <ul>
+    <li>
+      <p>{“C”:”messageId value”, “M”:[{“H”:”HubName”,”M”:”HandlerName”,”A”: [“argument list as json”]}]}</p>
+    </li>
+    <li>
+      <p>{“C”:”messageId value”, “G”: [“groupName”],”g”: [“groupName”],”T”:1,
+“M”:[{“H”:”HubName”,”M”:”HandlerName”,”A”: [“argument list as json”]}]}</p>
+    </li>
+  </ul>
+
+  <p>Hub Payloads format (“send” request or inside “M” element of Hub message)</p>
+
+  <ul>
+    <li>{“H”:”HubName”,”M”:”HandlerName”,”A”: [argument list as json],                                    “S”:{state as json},”I”:index}</li>
+    <li>{“H”:”HubName”,”M”:”HandlerName”,”A”: [argument list as json],”I”:index}
+Hub Response examples (“send” response)</li>
+    <li>{“I”:”0”,”R”:{“return object as json}}</li>
+    <li>{“I”: 0} -&gt; no result</li>
+    <li>{“I”: 0, “S”:{“x”:1},”R”:1} –&gt; result</li>
+    <li>{“I”: 0, “E”:”This is an error”} –&gt; error</li>
+    <li>{“I”: 0, “E”:”This is an error”, “T”: “Some stack trace here”} -&gt; error + stack
+The following is a complete list of the messages elements:
+Hub Messages:</li>
+  </ul>
+
+  <p>C – Cursor
+M – Messages
+T – Timeout (only if true) value is 1
+D – Disconnect (only if true) value is 1
+R – All Groups (Client groups should be reset to match this list exactly)
+G – Groups added
+g – Groups removed</p>
+
+  <p>Hub payload:</p>
+
+  <p>I – Callback Operation index
+H – Hub name
+M – method name
+A – arguments
+S – state (if not null)</p>
+
+  <p>Hub Method return value:</p>
+
+  <p>I – Operation index
+R – Result
+S – State
+E – Error
+T – stack trace
+D – Error Data</p>
+
+  <p>The cursor mechanism
+As described above the message contains a cursor for identifying the location in the stream. A cursor represents where a particular client is in an infinite stream of messages. If the client disconnects and then reconnects, it asks the OI streaming API for any messages that arrived after the client’s cursor value. The same thing happens when a connection uses long polling. After a long poll request completes, the client opens a new connection and asks for messages that arrived after the cursor.</p>
+
+  <p>To find more information download the signalR source code from github. To find the message format just search for json serialization attributes (by searching for “M” for example).</p>
+</blockquote>
+
+<h1 id="reference">reference:</h1>
+
+<p>MongoDB:</p>
+
+<p><a href="http://www.codeproject.com/Articles/784660/High-Performance-Search-using-MongoDB-and-ASP-NET">High Performance Search using MongoDB and ASP.NET MVC</a></p>
+
+<p>Authentication:
+<a href="http://www.danharman.net/2011/07/07/storing-custom-data-in-forms-authentication-tickets/">Storing Custom Data in Forms Authentication Tickets</a>
+<a href="http://forum.winhost.com/threads/form-authentication-timeout-not-working.9017/">form authentication timeout not working</a>
+<a href="http://blog.marcinbudny.com/2014/05/authentication-with-signalr-and-oauth.html#.VTRVVSGqqko">Authentication with SignalR and OAuth Bearer Token</a>
+<a href="http://geekswithblogs.net/shaunxu/archive/2014/05/27/set-context-user-principal-for-customized-authentication-in-signalr.aspx">Set Context User Principal for Customized Authentication in SignalR</a></p>
+
+<p>Session:
+<a href="https://syfuhs.net/2013/03/24/real-time-user-notification-and-session-management-with-signalr-part-2/">Real-time User Notification and Session Management with SignalR</a></p>
+
+<p>UI:
+<a href="http://jspkg.com/packages/css-emoticons">jQuery plugin to style emoticons with pure CSS3 properties (no images)</a>
+<a href="https://blog.twitter.com/2014/open-sourcing-twitter-emoji-for-everyone">Open sourcing Twitter emoji for everyone</a>
+<a href="http://www.jq22.com/jquery-info365">jquery.qqFace.js</a>
+<a href="http://www.tuicool.com/articles/yii63y">纯JS+MVC 打造Web实时聊天室</a></p>
+
+<p>relevant question:
+<a href="http://stackoverflow.com/questions/22472078/how-to-do-forms-authentication-with-signalr-separate-domains">How to do forms authentication with SignalR (separate domains)?</a>
+<a href="http://stackoverflow.com/questions/19626244/signalr-2-0-in-vs2012-registration-and-dependency-injection">SignalR 2.0 in VS2012 registration and Dependency Injection</a>
+<a href="http://stackoverflow.com/questions/21925367/passing-and-verifying-the-owin-bearer-token-in-query-string-in-webapi">Passing and verifying the OWIN Bearer token in Query String in WebAPI</a>
+<a href="http://stackoverflow.com/questions/22989209/web-api-owin-signalr-authorization">Web API / OWIN, SignalR &amp; Authorization</a>
+<a href="http://stackoverflow.com/questions/25509162/unable-to-identify-user-context-in-signalr-hub-decorated-with-authorize-attrib">Unable to Identify User Context in SignalR hub decorated with “Authorize” attribute</a>
+<a href="https://github.com/SignalR/SignalR/issues/2753">Context.User is Null on Authorized SignalRHub Task OnDisconnected</a>
+<a href="http://stackoverflow.com/questions/14343531/integrating-signalr-with-existing-authorization">Integrating SignalR with existing Authorization</a>
+<a href="http://stackoverflow.com/questions/18257753/how-do-i-authorize-access-to-servicestack-resources-using-oauth2-access-tokens-v">How do I authorize access to ServiceStack resources using OAuth2 access tokens via DotNetOpenAuth?</a>
+<a href="http://bitoftech.net/2014/10/27/json-web-token-asp-net-web-api-2-jwt-owin-authorization-server/">JSON Web Token in ASP.NET Web API 2 using Owin</a>
+<a href="http://blog.darkthread.net/post-2013-12-03-inside-signalr-transport.aspx">【打破砂鍋系列】SignalR傳輸方式剖析</a></p>
+
+<p>A chatroom for all! http://blogs.msdn.com/b/cdndevs/archive/2014/09/04/node-js-tutorial-series-a-chatroom-for-all-part-1-introduction-to-node.aspx</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2019-01-01T00:00:00+08:00">January 01, 2019</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Online+chat+room+from+NULL+%E8%81%8A%E5%A4%A9%E5%AE%A4%E5%BC%80%E5%8F%91%20http%3A%2F%2Flocalhost%3A4000%2Fmigrate-chatroom%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fmigrate-chatroom%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A4000%2Fmigrate-chatroom%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fmigrate-chatroom%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/migrate-bpm/" class="pagination--pager" title="Business Process Management
+">Previous</a>
+    
+    
+      <a href="/migrate-codesnippets_csharp/" class="pagination--pager" title="Code Snippets Series – C#
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/arp/" rel="permalink">troubleshooting intranet access issue raised by wrong arp
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">I got an issue access the shared folder on the other pc in the same intranet at home, actually it was working fine a few days ago.
+both pc are win10 os.
+
+</p>
+  </article>
+</div>
+
+        
+          
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/mysql_replication/" rel="permalink">Mysql replication test between different version
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Master: mysql5.7
+
+Slave: mysql8.0
+
+
+</p>
+  </article>
+</div>
+
+        
+          
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/storm/" rel="permalink">Apache storm starter
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">run WordCountTopology in Local Mode and (Local) Cluster Mode
+version: 1.2.2
+env: vms centos7
+example:https://github.com/apache/storm/blob/v1.2.2/examples/sto...</p>
+  </article>
+</div>
+
+        
+          
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hdfs/" rel="permalink">[Hadoop ecosystem] Chapter 1: Data Storage: HDFS
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Hadoop ecosystem series…
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form onsubmit="return googleCustomSearchExecute();" id="cse-search-box-form-id">
+    <input type="text" id="cse-search-input-box-id" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    </form>
+    <div id="results" class="results">
+        <gcse:searchresults-only></gcse:searchresults-only>    
+    </div></div>
+
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-9742852210287449",
+    enable_page_level_ads: true
+  });
+</script>
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://alphawallet.com/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-university" aria-hidden="true"></i> AlphaWallet</a></li>
+        
+      
+        
+          <li><a href="https://developers.google.com/edu/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google" aria-hidden="true"></i> Google Course</a></li>
+        
+      
+        
+          <li><a href="http://vouchain.one/" rel="nofollow noopener noreferrer"><i class="fas fa-link" aria-hidden="true"></i> other</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2019 LIU YUE'S - NOTES TO SHARE. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script data-search-pseudo-elements defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+
+
+<script>
+  (function () {
+    var cx = '016202475545879656962:ot3scpbjy9y';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+
+  function googleCustomSearchExecute() {
+    var input = document.getElementById('cse-search-input-box-id');
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (input.value == '') {
+      element.clearAllResults();
+    } else {
+      element.execute(input.value);
+    }
+    return false;
+  }
+
+  
+    $(document).ready(function () {
+      $('input#cse-search-input-box-id').on('keyup', function () {
+        googleCustomSearchExecute();
+      });
+    });
+  
+</script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/migrate-chatroom/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/migrate-chatroom"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://lyhistory.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

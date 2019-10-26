@@ -1,0 +1,639 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.15.2 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>strongvpn使用指南 - LIU YUE’S - NOTES TO SHARE</title>
+<meta name="description" content="遵纪守法是每个公民的责任,本文目的纯粹是给做外贸业务或者相关业务的朋友介绍一款可以使用外部网络的软件,当然是收费的,不推荐免费的,因为这种免费的软件一般都不稳定,所以只推荐我一直在用的老牌产品strongvpn服务,支持支付宝付款.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="LIU YUE'S - NOTES TO SHARE">
+<meta property="og:title" content="strongvpn使用指南">
+<meta property="og:url" content="http://localhost:4000/strongvpn/">
+
+
+  <meta property="og:description" content="遵纪守法是每个公民的责任,本文目的纯粹是给做外贸业务或者相关业务的朋友介绍一款可以使用外部网络的软件,当然是收费的,不推荐免费的,因为这种免费的软件一般都不稳定,所以只推荐我一直在用的老牌产品strongvpn服务,支持支付宝付款.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-04-08T00:00:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/strongvpn/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="LIU YUE'S - NOTES TO SHARE Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">LIU YUE'S - NOTES TO SHARE</a>
+        <ul class="visible-links"></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/content/images/common/liuyue.jpg" alt="LIU YUE" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">LIU YUE</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        古萧龙城好青年:wechat:lyhistory; Born in XiaoXian County,Anhui China; Bachelor in cst XMU, Master in se NUS; Enneagram Type 5;
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="mailto:lyhistory@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/lyhistory" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/lyhistory" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="strongvpn使用指南">
+    <meta itemprop="description" content="遵纪守法是每个公民的责任,本文目的纯粹是给做外贸业务或者相关业务的朋友介绍一款可以使用外部网络的软件,当然是收费的,不推荐免费的,因为这种免费的软件一般都不稳定,所以只推荐我一直在用的老牌产品strongvpn服务,支持支付宝付款.">
+    <meta itemprop="datePublished" content="April 08, 2019">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">strongvpn使用指南
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>遵纪守法是每个公民的责任,本文目的纯粹是给做外贸业务或者相关业务的朋友介绍一款可以使用外部网络的软件,当然是收费的,不推荐免费的,因为这种免费的软件一般都不稳定,所以只推荐我一直在用的老牌产品strongvpn服务,支持支付宝付款.</p>
+
+<h2 id="镜像站点">镜像站点</h2>
+<p>主站因为你知道原因一般都是被封的,所以这里给出镜像站点列表
+如果某个链接不可以访问，请选择下面任意一个可以访问的镜像链接</p>
+
+<p><a href="https://intranet.strongconnect.net/services/strongvpn/refer/204835b682517019/">https://intranet.strongconnect.net/services/strongvpn/refer/204835b682517019/</a></p>
+
+<p><a href="https://intranet.strongtech.org/services/strongvpn/refer/204835b682517019/">https://intranet.strongtech.org/services/strongvpn/refer/204835b682517019/</a></p>
+
+<p><a href="https://intranet.strtech.org/services/strongvpn/refer/204835b682517019/">https://intranet.strtech.org/services/strongvpn/refer/204835b682517019/</a></p>
+
+<p><a href="https://intranet.strongconnectivity.com/services/strongvpn/refer/204835b682517019/">https://intranet.strongconnectivity.com/services/strongvpn/refer/204835b682517019/</a></p>
+
+<p><a href="https://intranet.reliablehosting.com/services/strongvpn/refer/204835b682517019/">https://intranet.reliablehosting.com/services/strongvpn/refer/204835b682517019/</a></p>
+
+<p>主站（国内被屏蔽）
+<a href="https://intranet.strongvpn.com/services/strongvpn/refer/204835b682517019/">https://intranet.strongvpn.com/services/strongvpn/refer/204835b682517019/</a></p>
+
+<h2 id="如何使用">如何使用</h2>
+
+<ol>
+  <li>
+    <p>使用软件则直接登录就可以使用，国家/地点可以使用auto自动模式；当然也可以自行选择国家/地区，具体操作请看后面
+软件下载
+<img src="/content/images/post/20190409/1.png" alt="" /></p>
+  </li>
+  <li>
+    <p>对于ios用户，也可以选择手动设置，可以从“设置settings=》VPN”进行设置，具体如下</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     进入"设置Settings"，找到点击"VPN" ，然后"添加VPN配置...".：
+     点击 "类型Type"，选择"IKEv2"，
+     描述Description: StrongVPN (随便填写)
+     Server: ×××××
+     Remote ID: reliablehosting.com
+     Local ID: reliablehosting.com
+     Authentication: Username
+     Username: ×××××
+     Password: ××××××
+     Proxy: OFF
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>点击右上角”完成Done”，然后想使用的时候直接划一下status状态按钮即可。
+<img src="/content/images/post/20190409/2.png" alt="" /></p>
+
+<p>上面的配置内容可以在这里找到（或者直接找客服要，网站右下角客服）
+<img src="/content/images/post/20190409/3.png" alt="" /></p>
+
+<h2 id="天朝用户特别说明">天朝用户特别说明</h2>
+
+<p>对于天朝用户，推荐使用 United States - San Francisco （尤其是ios用户）
+并且对于android和windows用户来说，最好选择下面的V1版本:</p>
+
+<p><a href="https://mirror4.reliablehosting.com/android/1.7.0.apk">android V1下载链接</a> 
+<a href="https://mirror2.reliablehosting.com/win/StrongVPN-latest.exe">windows V1下载链接</a></p>
+
+<p>V1/V2版本图标
+<img src="/content/images/post/20190409/5.png" alt="" /></p>
+
+<h2 id="更多">更多</h2>
+
+<ol>
+  <li>
+    <p>手动测试找到适合自己的server
+<img src="/content/images/post/20190409/4.png" alt="" /></p>
+  </li>
+  <li>
+    <p>测速地址（可以连接和断开vpn的情况下分别测速对比）
+<a href="http://str-sfo311.reliablehosting.com/">http://str-sfo311.reliablehosting.com/</a></p>
+  </li>
+</ol>
+
+<p>参考
+https://blog.strongvpn.net/checking-vpn-server-network-speed-with-the-strongvpn-dialer-software/</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2019-04-08T00:00:00+08:00">April 08, 2019</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=strongvpn%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97%20http%3A%2F%2Flocalhost%3A4000%2Fstrongvpn%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fstrongvpn%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A4000%2Fstrongvpn%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fstrongvpn%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/env-virtualbox/" class="pagination--pager" title="Setup dev env - virtualbox
+">Previous</a>
+    
+    
+      <a href="/btc-payment/" class="pagination--pager" title="Tutorial:Blockchain:How to add BTC payment method
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/arp/" rel="permalink">troubleshooting intranet access issue raised by wrong arp
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">I got an issue access the shared folder on the other pc in the same intranet at home, actually it was working fine a few days ago.
+both pc are win10 os.
+
+</p>
+  </article>
+</div>
+
+        
+          
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/mysql_replication/" rel="permalink">Mysql replication test between different version
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Master: mysql5.7
+
+Slave: mysql8.0
+
+
+</p>
+  </article>
+</div>
+
+        
+          
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/storm/" rel="permalink">Apache storm starter
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">run WordCountTopology in Local Mode and (Local) Cluster Mode
+version: 1.2.2
+env: vms centos7
+example:https://github.com/apache/storm/blob/v1.2.2/examples/sto...</p>
+  </article>
+</div>
+
+        
+          
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hdfs/" rel="permalink">[Hadoop ecosystem] Chapter 1: Data Storage: HDFS
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Hadoop ecosystem series…
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form onsubmit="return googleCustomSearchExecute();" id="cse-search-box-form-id">
+    <input type="text" id="cse-search-input-box-id" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    </form>
+    <div id="results" class="results">
+        <gcse:searchresults-only></gcse:searchresults-only>    
+    </div></div>
+
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-9742852210287449",
+    enable_page_level_ads: true
+  });
+</script>
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://alphawallet.com/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-university" aria-hidden="true"></i> AlphaWallet</a></li>
+        
+      
+        
+          <li><a href="https://developers.google.com/edu/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google" aria-hidden="true"></i> Google Course</a></li>
+        
+      
+        
+          <li><a href="http://vouchain.one/" rel="nofollow noopener noreferrer"><i class="fas fa-link" aria-hidden="true"></i> other</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2019 LIU YUE'S - NOTES TO SHARE. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script data-search-pseudo-elements defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+
+
+<script>
+  (function () {
+    var cx = '016202475545879656962:ot3scpbjy9y';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+
+  function googleCustomSearchExecute() {
+    var input = document.getElementById('cse-search-input-box-id');
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (input.value == '') {
+      element.clearAllResults();
+    } else {
+      element.execute(input.value);
+    }
+    return false;
+  }
+
+  
+    $(document).ready(function () {
+      $('input#cse-search-input-box-id').on('keyup', function () {
+        googleCustomSearchExecute();
+      });
+    });
+  
+</script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/strongvpn/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/strongvpn"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://lyhistory.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

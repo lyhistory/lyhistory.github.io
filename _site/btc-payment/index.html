@@ -1,0 +1,683 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.15.2 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Tutorial:Blockchain:How to add BTC payment method - LIU YUE’S - NOTES TO SHARE</title>
+<meta name="description" content="Recently I’ve been asked to provide a demo of BTC top up and withdraw services to integrate with our website.As a Chinese saying goes that lay a brick to attract a jade, the purpose I wrote down my thoughts and some notes is only hoping more people would join the discussion and correct me.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="LIU YUE'S - NOTES TO SHARE">
+<meta property="og:title" content="Tutorial:Blockchain:How to add BTC payment method">
+<meta property="og:url" content="http://localhost:4000/btc-payment/">
+
+
+  <meta property="og:description" content="Recently I’ve been asked to provide a demo of BTC top up and withdraw services to integrate with our website.As a Chinese saying goes that lay a brick to attract a jade, the purpose I wrote down my thoughts and some notes is only hoping more people would join the discussion and correct me.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-04-19T00:00:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/btc-payment/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="LIU YUE'S - NOTES TO SHARE Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">LIU YUE'S - NOTES TO SHARE</a>
+        <ul class="visible-links"></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/content/images/common/liuyue.jpg" alt="LIU YUE" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">LIU YUE</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        古萧龙城好青年:wechat:lyhistory; Born in XiaoXian County,Anhui China; Bachelor in cst XMU, Master in se NUS; Enneagram Type 5;
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="mailto:lyhistory@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/lyhistory" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/lyhistory" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Tutorial:Blockchain:How to add BTC payment method">
+    <meta itemprop="description" content="Recently I’ve been asked to provide a demo of BTC top up and withdraw services to integrate with our website.As a Chinese saying goes that lay a brick to attract a jade, the purpose I wrote down my thoughts and some notes is only hoping more people would join the discussion and correct me.">
+    <meta itemprop="datePublished" content="April 19, 2019">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Tutorial:Blockchain:How to add BTC payment method
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Recently I’ve been asked to provide a demo of BTC top up and withdraw services to integrate with our website.
+As a Chinese saying goes that lay a brick to attract a jade, the purpose I wrote down my thoughts and some notes is only hoping more people would join the discussion and correct me.</p>
+
+<p>Objectives: basically our website provides membership service for users to top up and enjoy attracted discounts and bonus awards, to cater for arising demands that more and more users prefer BTC than fiat currencies, we decide to introduce one more payment channel with requirements described as follows:</p>
+
+<h1 id="11-functionalities">1.1 Functionalities</h1>
+<p>1&gt; Allow users to top up with BTC, so users can transfer in BTC and convert into platform supported fiat balance.
+2&gt; Allow users to withdraw their remained balance and receive converted BTC amount with their own BTC address</p>
+
+<h1 id="12-concerns">1.2 Concerns</h1>
+<p>1&gt; How to generate and assign BTC address to each user safely without exposing private key
+Can be solved by BIP32 Hierarchical deterministic key creation,
+basically we can generate child BTC address from XPUB(parent extension public key), so the web site that communicates to the insecure external network just need to know “parent extension public key”.
+[Refer to https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki:
+Deterministic wallets do not require such frequent backups, and elliptic curve mathematics permit schemes where one can calculate the public keys without revealing the private keys.]</p>
+
+<p>2&gt; How to maintain so many BTC addresses that assigned to users in an efficient manner
+By adopting BIP44 protocol, we can maintain BTC address in a structured and compatible format, for example, according to BIP44, we can design two main accounts for example:
+External account(for users): m/44’/0’/0’/0/address_index
+Internal account(for internal use): m/44’/0’/1’/0/address_index
+we can derive fresh BTC key info with parent key and increment address index,
+And by linking BTC address info(address, index, creationdate) with userid in the DB table, later on, we can even implement address recycle logic: simply cross check user top up history and BTC address creation date to recycle for example those that haven’t been used for 3 months.</p>
+
+<p>3&gt; How to manage those “small balance”(accurately should be utxo) received by thousands of BTC addresses that we have assigned to users
+Aggregate and transfer the “small balance” into internal wallet</p>
+
+<p>4&gt; How do we handle user withdraw requests, should we simply transfer from ‘central wallet’
+To be honest, I cannot think of more reasonable design than a central wallet, so in my design, central wallet serve as “settlement reserve funds”, we can use internal account mentioned above in 2&gt; m/44’/0’/1’/0/address_index , to keep it simple we can just use one fixed account m/44’/0’/1’/0/0, and we should also keep monitoring the balance of the internal account to ensure sufficient funds available for withdraw requests.</p>
+
+<p>5&gt; How to set up a so-called cold and hot wallet, and where should we place them in our design
+From the above discussion we already have a rough idea that there should be different levels of security requirements:
+i) security level for external accounts that assigned to users are low, for individual users, the amount they top up supposed to be relatively small amount of money, and we need to aggregate those small amount into a central account regularly, therefore external accounts are definitely hot wallet
+ii) security level for internal accounts are high, because internal accounts hold a large amount of money, but can we really make it 100% cold storage? I don’t think so, because it still needs to transfer out BTC regularly corresponding to users withdraw requests, you may say that we can create raw transaction and sign it offline, but still you need to know the withdraw requests first(connect to DB), and you need to know unspent transactions of this account in order to compose raw transaction(connect to BTC node), thus it can not be a physically disconnected cold wallet,but we can increase secure level by keeping it in secure intranet, let’s call it semi-cold wallet
+iii) as long as BTC is not stored on a physically isolated machine, it’s not 100% safe, we shouldn’t put all the eggs in one basket, so what we can do is put some percentage of the BTC into cold wallet, let’s say 60% in cold wallet, 40% in semi-cold wallet to handle withdraw.</p>
+
+<h1 id="13-workflow">1.3 Workflow</h1>
+<p>1&gt; Top-up Flow
+i) The user selects BTC payment method and key in 15000 CNY, the website app automatically displays 0.5 BTC based on the current exchange rate, the user confirms and clicks on submit
+ii) Website app generates a BTC top up address(m/44’/0’/0’/0/address_index) for the user and create a pending order record [insert into topup_order &lt;uuid,userid,btcaddress,btcindex,requestamt,exchangerate,createdate,status&gt;]
+iii) The user transfers BTC to the top up address assigned to him (he may transfer BTC from any exchanges or wallets as he like)
+iv) The scheduler service will periodically retrieve pending top-up requests from DB, and check transactions by RPC call to the BTC node, once detecting transactions to addresses that are in watchlist, update the user’s balance accordingly and update the record with txid/vout/scriptPub[update topup_order&lt;uuid,userid,btcaddress,btcindex,requestamt,exchangerate,createdate,status,realamt,txid,vout,scriptpub&gt;].
+v) the scheduler service will then compose raw transaction based on realamt,txid,vout,scriptpub to transfer btc from users topup address(external account) to internal account, aggregate 40% of received BTC to a semi-cold wallet address(e.g m/44’/0’/1’/0/index), 60% of received BTC to a cold wallet(e.g m/44’/0’/2’/0/index)</p>
+
+<p>2&gt; Withdraw Flow
+i) The user chooses to convert remained balance to BTC, key in 15000 CNY and provides a valid BTC address, the website app automatically displays 0.5 BTC based on the current exchange rate, the user confirms and submits withdraw request
+ii) Website app validates user’s balance and BTC address, and then creates a pending withdraw record[insert into withdraw_order &lt;uuid,userid,btcaddress,btcindex,balance,btcamt,exchangerate,createdate,status&gt;]
+iii) The scheduler service will periodically process all the pending withdraw request, transfer BTC from semi-cold wallet to the user’s BTC address</p>
+
+<h1 id="14-tech-spec">1.4 Tech spec</h1>
+
+<p>1&gt; Bitcoin core v0.17
+https://github.com/bitcoin/bitcoin/blob/master/doc/build-unix.md
+2&gt; Bx tool (libbitcoin)
+https://github.com/libbitcoin/libbitcoin-explorer
+https://github.com/libbitcoin/libbitcoin-explorer/wiki
+Note: to config for testnet
+vim /home/peter/libbitcoin-explorer/etc/libbitcoin/bx.cfg
+<img src="/content/images/post/20190419/1.png" alt="" />
+3&gt; Python
+pip install python-bitcoinrpc
+https://github.com/jgarzik/python-bitcoinrpc
+bip32utils
+https://github.com/lyndsysimon/bip32utils
+4&gt; Others
+BTC-Fiat exchange rate API
+https://blockchain.info/tobtc?currency=CNY&amp;value=1
+BTC transaction fees API
+https://bitcoinfees.21.co/api</p>
+
+<h1 id="15-hands-on">1.5 Hands-on</h1>
+
+<h2 id="151-generate-keys-for-testnet-that-comply-with-bip32-bip39-and-bip44">1.5.1 Generate keys for testnet that comply with bip32 bip39 and bip44</h2>
+<p>be aware that config your tools properly if testing on regtest or testnet, and also for regtest and testnet, cointype in bip44 path should be 1 https://github.com/satoshilabs/slips/blob/master/slip-0044.md
+So now, I’ll use bx tools to generate mnemonic and master node:</p>
+
+<p><img src="/content/images/post/20190419/2.png" alt="" />
+The website app uses xpub(m/44’/1’/0’/0)[tpubDFCmqNxHDiBWw9e8XUEhkHqcw1i4drCe2mwwpR83eA2Arfmq8hJkUeVYY7hYaQWEo4HZDQ86FiRYj8Lr3e9UT8bYi7yLvbNbXgqyJeqLYii] for user topup address generation;
+The scheduler service uses xprv(m/44’/1’/0’/0)[tprv8iWjgxv35LVr3gcLdpa7LtBWMzC8UX1jTUMAXu5kDtDn2BX4WJVAJ9sgMzFjuoiWjhUdamEeB7sxPS6uzkmcEAAXNAevuaRWYQFMwX713mP] to aggregate and transfer btc from topup address to internal address(semi-cold and cold wallet, in this demo, we simply aggregate and transfer into addr(m/44’/1’/1’/0/0)[muz1awk6YXQkP29dt1tdRpBTonmqAqwdst]).</p>
+
+<h2 id="152-setup-test-env">1.5.2 Setup Test Env</h2>
+<p>1&gt; Create a btc key pair on testnet as user’s own btc account
+BTC address generator https://bitcoinpaperwallet.com/bitcoinpaperwallet/generate-wallet.html
+mg9H4QPYcjqTjURFVSNDQQkFBx3FCxD3JB
+91fVLr2vDHRFvmVKjABfqX9163oAFTCJAyQk63RacCX2rs1ruA1
+2&gt; Faucet - Get BTC for testing
+https://coinfaucet.eu/en/btc-testnet/
+3&gt; GUI for user to transfer BTC
+Bitcoin core windows https://bitcoin.org/en/download
+To import private key Help -&gt; Debug Window -&gt; Console-&gt; importprivkey 91fVLr2vDHRFvmVKjABfqX9163oAFTCJAyQk63RacCX2rs1ruA1
+<img src="/content/images/post/20190419/3-1.png" alt="" />
+4&gt; host btc node demon
+vim ~/.bitcoin/bitcoin.conf
+<img src="/content/images/post/20190419/3.png" alt="" />
+bitcoind -testnet -printtoconsole/-daemon
+And then import our internal account:
+bitcoin-cli -testnet importprivkey cVHBtHK7kzze7yqF5En4Psbw2ZZdUEJ8jF4KAMXhLpuSwUf4fZAU “internal0” true</p>
+
+<p>5&gt; Testnet explorer - monitor both user’s own btc address and our system generated external/internal addresses
+https://live.blockcypher.com/btc-testnet/address/mg9H4QPYcjqTjURFVSNDQQkFBx3FCxD3JB/
+https://live.blockcypher.com/btc-testnet/address/n3ENHgEF9CTb3KnJotGQEuWScA9aAKyR7W/
+https://live.blockcypher.com/btc-testnet/address/muz1awk6YXQkP29dt1tdRpBTonmqAqwdst/</p>
+
+<h2 id="153-website-app">1.5.3 Website app</h2>
+<p>You can use nodejs webpack to create a very simple web app
+https://webpack.js.org/api/node/
+And then to generate top up address from xpub(m/44’/1’/0’/0)
+Simply import bitcoinjs lib and refer to sample code:
+https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/test/integration/bip32.js
+<img src="/content/images/post/20190419/4.png" alt="" /></p>
+
+<h2 id="154-the-scheduler-monitor-service">1.5.4 The Scheduler Monitor Service</h2>
+<p>1&gt; Topup
+<img src="/content/images/post/20190419/5.png" alt="" /></p>
+
+<p>2&gt; Aggregation and transfer from external user top up addresses to internal account
+<img src="/content/images/post/20190419/6.png" alt="" /></p>
+
+<p>3&gt; Withdraw
+<img src="/content/images/post/20190419/7.png" alt="" />
+Note:For withdraw btc from semi-cold wallet, I find it’s not feasible to use signtransactionwithkey, because that requires knowledge of all the utxo of the semi-cold wallet, and keep track of all the utxo requires lots of work and sophisticated design, so in this demo, I choose an easier way, as we already importprivkey of the internal account to bitcoin core upfront, just straightforward use sendmany to transfer BTC, so the bitcoin core wallet will do the dirty work for us</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2019-04-19T00:00:00+08:00">April 19, 2019</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Tutorial%3ABlockchain%3AHow+to+add+BTC+payment+method%20http%3A%2F%2Flocalhost%3A4000%2Fbtc-payment%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fbtc-payment%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A4000%2Fbtc-payment%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fbtc-payment%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/strongvpn/" class="pagination--pager" title="strongvpn使用指南
+">Previous</a>
+    
+    
+      <a href="/decred-stake/" class="pagination--pager" title="Tutorial:Blockchain:how to stake decred
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/arp/" rel="permalink">troubleshooting intranet access issue raised by wrong arp
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">I got an issue access the shared folder on the other pc in the same intranet at home, actually it was working fine a few days ago.
+both pc are win10 os.
+
+</p>
+  </article>
+</div>
+
+        
+          
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/mysql_replication/" rel="permalink">Mysql replication test between different version
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Master: mysql5.7
+
+Slave: mysql8.0
+
+
+</p>
+  </article>
+</div>
+
+        
+          
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/storm/" rel="permalink">Apache storm starter
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">run WordCountTopology in Local Mode and (Local) Cluster Mode
+version: 1.2.2
+env: vms centos7
+example:https://github.com/apache/storm/blob/v1.2.2/examples/sto...</p>
+  </article>
+</div>
+
+        
+          
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hdfs/" rel="permalink">[Hadoop ecosystem] Chapter 1: Data Storage: HDFS
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Hadoop ecosystem series…
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form onsubmit="return googleCustomSearchExecute();" id="cse-search-box-form-id">
+    <input type="text" id="cse-search-input-box-id" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    </form>
+    <div id="results" class="results">
+        <gcse:searchresults-only></gcse:searchresults-only>    
+    </div></div>
+
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-9742852210287449",
+    enable_page_level_ads: true
+  });
+</script>
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://alphawallet.com/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-university" aria-hidden="true"></i> AlphaWallet</a></li>
+        
+      
+        
+          <li><a href="https://developers.google.com/edu/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google" aria-hidden="true"></i> Google Course</a></li>
+        
+      
+        
+          <li><a href="http://vouchain.one/" rel="nofollow noopener noreferrer"><i class="fas fa-link" aria-hidden="true"></i> other</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2019 LIU YUE'S - NOTES TO SHARE. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script data-search-pseudo-elements defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+
+
+<script>
+  (function () {
+    var cx = '016202475545879656962:ot3scpbjy9y';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+
+  function googleCustomSearchExecute() {
+    var input = document.getElementById('cse-search-input-box-id');
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (input.value == '') {
+      element.clearAllResults();
+    } else {
+      element.execute(input.value);
+    }
+    return false;
+  }
+
+  
+    $(document).ready(function () {
+      $('input#cse-search-input-box-id').on('keyup', function () {
+        googleCustomSearchExecute();
+      });
+    });
+  
+</script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/btc-payment/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/btc-payment"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://lyhistory.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

@@ -1,0 +1,88 @@
+==================================================================
+https://keybase.io/lyhistory
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://lyhistory.com
+  * I am lyhistory (https://keybase.io/lyhistory) on keybase.
+  * I have a public key with fingerprint 6AC6 0FEC DD80 1EB5 440B  C905 DC51 8F59 A33C 42EB
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "012056f2e3728f8f45714b2de41181b8453f62d34df4258244bf7118de0ae50077bb0a",
+      "fingerprint": "6ac60fecdd801eb5440bc905dc518f59a33c42eb",
+      "host": "keybase.io",
+      "key_id": "dc518f59a33c42eb",
+      "kid": "0101b5474eef062873093d21702cc7f0659831c955c05812308fae501b41312baecd0a",
+      "uid": "ff3a647857c91611d95cb21802bd2c19",
+      "username": "lyhistory"
+    },
+    "merkle_root": {
+      "ctime": 1556279021,
+      "hash_meta": "67d2a1cc2cc03a5eb796e96c9a671baf83af9e3358caf12fa80223475ff14314",
+      "seqno": 5245825
+    },
+    "revoke": {
+      "sig_ids": [
+        "3b85ebe8c56c60f7af68e12c31df860447ec06df0413d4bb01bb95340c824c230f"
+      ]
+    },
+    "service": {
+      "hostname": "lyhistory.com",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": 1556279042,
+  "expire_in": 157680000,
+  "prev": "7af565256dbbcc5acec787c8f05e2fc0a73c360784c3549b887ca0b3a8ff2f32",
+  "seqno": 12,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.1.0
+Comment: https://keybase.io/crypto
+
+yMP5AnicbZN/TBdlHMdBwBIxK1Cz5axTzMYXep7n7rl77pvL39iK3MShluK3u+ee
+Ry7ge3DfAyREMpmbikKudJaVShrLnIbosrQVqDPRWeacbpa4JQqoiDaTr5g9x3Jt
+rvvnds/n/bw/r+f9uefQkLiYxNjzs2rfqJ8wpSu2tXlxScyC5u4BFZLpWOVSsELK
+Z/0vVmCxiBfKty0pKAGIAFY5YrKGCCdcwRpUTGQxBUICTaJgmavIkhWLKwgTpCgm
+10TJYsBgGABNM01gSAGJ2+FFzC1y7bAnbFWDqoAzalkEQGZiRQEm1QG2KIaEY92Q
+ZaogZoqNeU7E3yHgTCPCMmxHrImPUD/e/+gfcAMobDWFMQ5URDQZ6LKFoAYQpZpY
+wjqRIdUxpgATiGRAuA8MTQXKEJmGYOvnLum341w2VEUjWKM6VCG0dExNBAlApoUo
+1H1hhLlho5AJdUF5nh3xHLdcqgxIhczNL2Ah13E8P13q2b4GYqwiTQcIihMakbxQ
+IfMMPxjNQgakVFAC2cDM1HSV6SrVDVWDpsGJbHCdyTIm1OAQcUMgIFnRMOdQkaEi
+QCKsOOxIQYwUMQ8sCFxW6uQzv3nEXiRyi0jB+ZJsEuHOCMWqPwrN4CphEFEZWpyo
+QFE0RoFqcSDysBQxRGiaOpYVQMWQqciLS7mVfjO31Kb95v6gHg4ggzqFAqnIdTyH
+OgWilOd5RZGgH4xXXuRry5gZ+tclZNphS/wnYkcpcyO2ExZBCeVDmSkoILHFRbbL
+QravwJpKgHj8PqxUWIrDYBUjrFqmSSk2KKMa0SjhADPEKTA0mcoq0IhCZazoJhFF
+A5iyQThHXEb/hQhFK89YJDxFdGHDK3GZVNn844L4mNjEmIEJA/wLFJM46PEH1+rg
+iqF9j63t5N8NjTO/2V/cXeU9W5eQfCt6drmbM3fOrPXeytfthuCp48vTSXTkpLg/
+qsyKVRuWhK4Vxze+GF3QerP1AIlkTkovrS3qvRvYnBqTWlZx4dNw2UxnRnPTwszC
+6OXPPlradbgiMvzSrqdg5dTomnj14/Iont3y2qmere/VEbfjRpfyZvLk3CvZdxv2
+1LV8sPSTudunZW+7HCgrmv3EvtsT+6y1xzbs3Xlv9E/qn3hwwtXktP09w0bennDx
+XNad8Zcz01aerrm+88C+WyF2vfGvrqajO5QPt/BpU+NPPnerc3dr/Z3qYOLNnqz2
+G+NLRtVUz9hzsPHl1NWROSeXTd8e3Xnxq9vncttGjHTAuuT2wKGqvXuanh7XPuz7
+JLl307HjY6toyvEpj7WceAG/WrXiQk567s1Nuyf8fg+m/ZDR2JozcVtD97y4qjYb
+qXOX5LwzqHvmkBLVXliceVRJnJ5wJK3DffTw+F/GFKbumEnmX/SW5cVOvqaljA02
+3ifz2utXl6+DnaWBwjNtbaPYqi9/faZpabXVO/oRe9z5jvRX+kBd/LAkPmjxrM2X
+ztRXNsRuuTP8ped3hJXTW7/dtWZfICXaPiah9+se/beWrI1JE9+en3LYKrua2Hgk
+bGU9WdOa+v4XG9f3XWp6t97Mlqs7yxIHfn5/8N8d9GzHz6ihtjYlO5gxImn//ZoL
+J94auPaK9A+9VwVZ
+=DUBr
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/lyhistory
+
+==================================================================

@@ -1,0 +1,869 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.15.2 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Object Oriented Analysis and Design - LIU YUE’S - NOTES TO SHARE</title>
+<meta name="description" content="SDLC">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="LIU YUE'S - NOTES TO SHARE">
+<meta property="og:title" content="Object Oriented Analysis and Design">
+<meta property="og:url" content="http://localhost:4000/migrate-ooad/">
+
+
+  <meta property="og:description" content="SDLC">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-01-01T00:00:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/migrate-ooad/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="LIU YUE'S - NOTES TO SHARE Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">LIU YUE'S - NOTES TO SHARE</a>
+        <ul class="visible-links"></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/content/images/common/liuyue.jpg" alt="LIU YUE" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">LIU YUE</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        古萧龙城好青年:wechat:lyhistory; Born in XiaoXian County,Anhui China; Bachelor in cst XMU, Master in se NUS; Enneagram Type 5;
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="mailto:lyhistory@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/lyhistory" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/lyhistory" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Object Oriented Analysis and Design">
+    <meta itemprop="description" content="SDLC">
+    <meta itemprop="datePublished" content="January 01, 2019">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Object Oriented Analysis and Design
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h1 id="sdlc">SDLC</h1>
+
+<p>ISS-IDEF0 diagrams</p>
+
+<p>Object Oriented Modeling</p>
+
+<p>Domain Modeling &amp; Design Modeling</p>
+
+<p>A domain model is called conceptual model in database modeling, while a design model is called logical model.</p>
+
+<p>These distinctions are also used in model-driven development, where we have a succession of three types of models:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(solution-independent) domain models resulting from domain/requirements engineering in the system analysis, or inception, phase of a development project
+(platform-independent) design models resulting from the system design activities in the elaboration phase
+(platform-specific) implementation models, which are derived from a design model
+</code></pre></div></div>
+
+<p>While system modeling includes both information and process modeling, you seem to be concerned with information modeling only. Here, we can use the terms “domain class diagram” and “design class diagram” for the conceptual information model and the information design model made in the form of UML class diagrams.</p>
+
+<p>(from http://stackoverflow.com/questions/21265491/what-is-the-difference-between-a-domain-class-diagram-and-a-design-class-diagram)</p>
+
+<p>refer: http://ocw.mit.edu/courses/aeronautics-and-astronautics/16-355j-software-engineering-concepts-fall-2005/index.htm</p>
+
+<h1 id="ooad">OOAD</h1>
+<p>Inception: Business Modeling
+Elaboration: Requirements Analysis &amp; Design
+Construction: Implementation Test
+Transition: Deployment
+<img src="/content/images/post/20190101/ooad1.jpg" alt="" /></p>
+<h2 id="pre-requisite">Pre-requisite</h2>
+
+<p>Object-Oriented Concepts:</p>
+
+<p>Object(relatively distinguishable entities),characteristics: State,Behavior</p>
+
+<p>Classes( is a means to classify objects)</p>
+
+<p>Abstract(Extracting relevant characteristics of real world objects)</p>
+
+<p>Encapsulation(group related elements into a single entity)</p>
+
+<p>Relationship:</p>
+
+<p>Dependency(used to model client-supplier relationship)</p>
+
+<p>Association(represents a structural relationship between objects of different classes),Multiplicity, Unidirection,Bidirection</p>
+
+<p>Aggregation(part-whole relationship)</p>
+
+<p>composition(a especially strong form of an aggregation,live and die together)</p>
+
+<p>Inheritance(allows a class to reuse the definition of another class as part of its own definition, is-a relationship)</p>
+
+<p>Realization(between a specification/interface and its implementation/class that provides the interface’s services)</p>
+
+<p>Polymorphism:</p>
+
+<p>1.the ability to manipulate different objects that have a common set of operations(can be enforced via an interface or a superclass)</p>
+
+<p>2.supports plug-and-run benefits(allowing plugging of objects of different classes as long as that the objects conform to the interface required)</p>
+
+<p>UML - Unified Modeling Language</p>
+
+<p>arrow with (dashed) line,diamond with (dashed) line, triangle with (dashed) line, oval</p>
+
+<h2 id="object-oriented-requirements-and-analysis">Object Oriented Requirements and Analysis</h2>
+
+<p>##############################################################################</p>
+
+<h3 id="urs">URS</h3>
+
+<p>##############################################################################</p>
+
+<p>not in our scope</p>
+
+<p>##############################################################################</p>
+
+<h3 id="requirements-modeling">Requirements Modeling</h3>
+
+<p>##############################################################################</p>
+
+<p>Requirements Workflow: (to let the customer and the developer agree on the system description and the detailed requirements)</p>
+
+<p>Requirements management: (a systematic approach to eliciting, organizing and documenting the requirements of the system)</p>
+
+<p>Requirement Modeling:(a formalized approach to analyzing and refining the requirements of the system)</p>
+
+<p>Relation to other Activities:</p>
+
+<p>1.Analysis (provides initial list of objects needed to realize use cases,further analyzed during analysis phase)</p>
+
+<p>2.Testing (use case descriptions are used to generate system test cases)</p>
+
+<p>3.Configuration&amp;Change Management (use cases form the basis for configuration&amp;change management)</p>
+
+<p>4.Project Management(used for project planning&amp;control)</p>
+
+<hr />
+<p>Use Case Model:</p>
+
+<p>Use Case Diagram( Use Cases, Actors)</p>
+
+<p>Use Case Description</p>
+
+<p>Who: Actor, What/When: Use Cases, How:Domain Objects.</p>
+
+<p>Actors: An entity that interacts with the system for the purpose of completing a business event.(outside of and interact with the system)</p>
+
+<p>Use Cases: A description of a set of sequences of actions, including variants, that a system performs that yield an observable result of value to the actor.(enactment of the system operations. must fulfill a valuable goal/business activity for the actor).</p>
+
+<p>While capturing use cases, they tend to become complex because they generally contain redundancies.</p>
+
+<p>Guidelines:</p>
+
+<p>structure: include extend generalization</p>
+
+<p>type: abstract concrete</p>
+
+<p>Levels: system goal level, user goal level, single system interaction level</p>
+
+<p>Linked/Associate actors and use cases with communication.</p>
+
+<p>Build use case diagram: Business System, Real-time/embedded system.</p>
+
+<hr />
+
+<p>Domain Objects:</p>
+
+<p>develop domain object model diagrams depicting both static and dynamic perspectives.</p>
+
+<p>Guidelines:</p>
+
+<p>Name domain objects from a business/domain perspective. Use business/domain knowledge apart from noun-verb analysis to identity domain objects.</p>
+
+<p>Analysis whether the identified domain objects are sufficient for the specified use case to execute.</p>
+
+<p>Do Not create one-to-one mapping between domain objects and relational tables.</p>
+
+<p>Analysis</p>
+
+<p>ownership rules, collective behavior</p>
+
+<p>Use Case Realization:</p>
+
+<p>Use Case description:</p>
+
+<p>Flow of events:</p>
+
+<ol>
+  <li>This use case is called*****</li>
+</ol>
+
+<p>n. The use case terminates.</p>
+
+<p>Alternative flows: ***</p>
+
+<p>Produce Use Case Realization Report:</p>
+
+<p>1.Brief description</p>
+
+<p>2.Flow of events(standard and exceptional)</p>
+
+<p>3.Interaction diagrams(views of participating domain objects shown as collaboration diagrams)</p>
+
+<p>4.Participating objects</p>
+
+<p>5.Class diagrams</p>
+
+<p>6.Derived requirements</p>
+
+<hr />
+
+<p>Requirements Artifacts:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Use Case model survey
+</code></pre></div></div>
+
+<p>Identify Actors,Use Cases(concrete and abstract), Relationship between Actors and Use Cases.</p>
+
+<p>Draw the Use Case Global View diagram</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Domain object model
+</code></pre></div></div>
+
+<p>Identify domain objects</p>
+
+<p>Relationships among domain objects</p>
+
+<p>Draw the domain object diagrams</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Use case realization report(Requirements)
+</code></pre></div></div>
+
+<p>Write normal flow of events and exceptional flow of events for each use case.</p>
+
+<hr />
+<p>Use Case Validation (Prepare System Test Plan)</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	System or use case test plans are usually developed during the early stage of Elaboration Phase.
+
+	Use Case Descriptions can be made the basis for developing system test cases.
+</code></pre></div></div>
+
+<p>Use Case Instance: (use case is an abstract view of what happens between the user and the system, however,they do not describe the specific instances of interactions)</p>
+
+<p>specific executions of a use case.
+1.Refine requirements(Exploration of details, uncover business rules)</p>
+
+<p>2.Provide mechanism to validate requirements</p>
+
+<p>3.Facilitate better estimation</p>
+
+<p>Use Case Instance Description:
+UC Instance Name:</p>
+
+<p>Instance ID: Unique ID assigned to UC instance</p>
+
+<p>Conditions: Overall conditions in which the UC instance executes.Specific preconditions that must exist</p>
+
+<p>Inputs: Any input parameters needed for the UC instance to execute</p>
+
+<p>Instance Flow: Step by step flow description of the instance</p>
+
+<p>Outputs: Results of execution of the instance</p>
+
+<p>Use Case Paths and Minimum Test Cases(Test Case suite)</p>
+
+<p>##############################################################################</p>
+
+<h3 id="analysis-modeling">Analysis Modeling</h3>
+
+<p>##############################################################################</p>
+
+<p>Dimensions:</p>
+
+<p>The Information dimension specifies the information held in the system.</p>
+
+<p>The Behavior dimension specifies the behavior which the system will adopt.</p>
+
+<p>The Presentation dimension provides the details prevent the system to the outside world.</p>
+
+<p>Analysis Objects:</p>
+
+<p>Boundary Objects(the function that is directly dependent on the system environment)</p>
+
+<p>Entity Objects(Contains the information that to be passed among object or to be kept for a long period of time)</p>
+
+<p>Control Objects(Handle behavior dimension of the system), typically, wok as a glue or a cushion to unite the remaining objects of the system.</p>
+
+<p>typically contain: Transaction related behavior, Coordination related behavior, Sequencing specific to one or more use cases.</p>
+
+<p>Guidelines:</p>
+
+<p>In analysis modeling, focus on the responsibility of the objects when defining behavior, ignore the implementation details and the logic of the operation(Such concern should be deferred till Design stage)</p>
+
+<p>Objects communication Restrictions: Actor boundary entity control</p>
+
+<p>Analysis Modeling Workflow:</p>
+
+<p>1.Identify the objects that need to participate in the accomplishment of each use case</p>
+
+<p>2.Categories the identified objects into types(boundary,control,entity)</p>
+
+<p>3.Identify the static relationship between the objects and document.</p>
+
+<p>4.For each use case, define the dynamic relationships between objects(communication associations)</p>
+
+<p>5.Identify the operations and key(entity object) attributes required to facilitate dynamic and static relationships.</p>
+
+<p>6.Document the static relationships as one or more Class Diagrams(can be created per use case or at the whole system level).</p>
+
+<p>7.For each use case, document the dynamic relationships as one or more Collaboration Diagram.</p>
+
+<p>8.Assess the exceptional flow of events for each use case, and ensure that appropriate operations/attributes are provided to cover their functionality.</p>
+
+<p>9.Create additional Collaboration Diagrams(if necessary) to describe the processing of the exceptional flow for each use case.</p>
+
+<p>10.Ensure that all use cases are covered, including abstract use cases.</p>
+
+<p>11.Ensure that clear and appropriate links are made in the Collaboration Diagrams when use cases interact(when a concrete use case uses an abstract use case).</p>
+
+<p>12.Write the Flow of Events(Standard and Exceptions) of each use case in terms of the analysis objects and their operations.</p>
+
+<p>13.Document the analysis of each use case by preparing a Use Case Realization Report(Analysis).</p>
+
+<p>14.(optional)Document each analysis object by preparing a Class Report(Analysis).</p>
+
+<p>##############################################################################</p>
+
+<h3 id="design-modeling">Design Modeling</h3>
+
+<p>##############################################################################
+Object Oriented Design and Implementation</p>
+
+<Transition from="" Analysis="" to="" Design="">
+
+Design Objects:
+
+Design Modeling: Design Objects, class diagram,sequence diagram
+
+design for main scheduel:
+![](/content/images/post/20190101/ooad2.jpg)
+
+design of copy weekly schedule:
+![](/content/images/post/20190101/ooad3.jpg)
+</Transition>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2019-01-01T00:00:00+08:00">January 01, 2019</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Object+Oriented+Analysis+and+Design%20http%3A%2F%2Flocalhost%3A4000%2Fmigrate-ooad%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fmigrate-ooad%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A4000%2Fmigrate-ooad%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fmigrate-ooad%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/migrate-mobile_dev/" class="pagination--pager" title="Mobile development strategy
+">Previous</a>
+    
+    
+      <a href="/migrate-pm/" class="pagination--pager" title="Project Management - Project Initiation and Planning
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/arp/" rel="permalink">troubleshooting intranet access issue raised by wrong arp
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">I got an issue access the shared folder on the other pc in the same intranet at home, actually it was working fine a few days ago.
+both pc are win10 os.
+
+</p>
+  </article>
+</div>
+
+        
+          
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/mysql_replication/" rel="permalink">Mysql replication test between different version
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Master: mysql5.7
+
+Slave: mysql8.0
+
+
+</p>
+  </article>
+</div>
+
+        
+          
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/storm/" rel="permalink">Apache storm starter
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">run WordCountTopology in Local Mode and (Local) Cluster Mode
+version: 1.2.2
+env: vms centos7
+example:https://github.com/apache/storm/blob/v1.2.2/examples/sto...</p>
+  </article>
+</div>
+
+        
+          
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hdfs/" rel="permalink">[Hadoop ecosystem] Chapter 1: Data Storage: HDFS
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Hadoop ecosystem series…
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form onsubmit="return googleCustomSearchExecute();" id="cse-search-box-form-id">
+    <input type="text" id="cse-search-input-box-id" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    </form>
+    <div id="results" class="results">
+        <gcse:searchresults-only></gcse:searchresults-only>    
+    </div></div>
+
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-9742852210287449",
+    enable_page_level_ads: true
+  });
+</script>
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://alphawallet.com/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-university" aria-hidden="true"></i> AlphaWallet</a></li>
+        
+      
+        
+          <li><a href="https://developers.google.com/edu/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google" aria-hidden="true"></i> Google Course</a></li>
+        
+      
+        
+          <li><a href="http://vouchain.one/" rel="nofollow noopener noreferrer"><i class="fas fa-link" aria-hidden="true"></i> other</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2019 LIU YUE'S - NOTES TO SHARE. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script data-search-pseudo-elements defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+
+
+<script>
+  (function () {
+    var cx = '016202475545879656962:ot3scpbjy9y';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+
+  function googleCustomSearchExecute() {
+    var input = document.getElementById('cse-search-input-box-id');
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (input.value == '') {
+      element.clearAllResults();
+    } else {
+      element.execute(input.value);
+    }
+    return false;
+  }
+
+  
+    $(document).ready(function () {
+      $('input#cse-search-input-box-id').on('keyup', function () {
+        googleCustomSearchExecute();
+      });
+    });
+  
+</script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/migrate-ooad/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/migrate-ooad"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://lyhistory.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>
