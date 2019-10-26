@@ -49,7 +49,7 @@ author:
   #uri    : "https://twitter.com/lyhistory"
   links:
     - label: "知识星球-机器指令"
-      icon: "fas fa-fw fa-global"
+      icon: "fas fa-fw fa-dragon"
       url: "https://t.zsxq.com/3BayjMb"
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
@@ -74,14 +74,14 @@ author:
 footer:
   links:
     - label: "AlphaWallet"
-      icon: "fab fa-fw fa-university"
+      icon: "fas fa-fw fa-university"
       url: https://alphawallet.com/
+    - label: "机器指令"
+      icon: "fas fa-fw fa-dragon"
+      url: https://t.zsxq.com/3BayjMb
     - label: "Google Course"
       icon: "fab fa-fw fa-google"
       url: https://developers.google.com/edu/
-    - label: "机器指令"
-      icon: "fab fa-fw fa-global"
-      url: https://t.zsxq.com/3BayjMb
     - label: "other"
       icon: ""
       url: http://vouchain.one/
