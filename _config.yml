@@ -43,11 +43,14 @@ plugins:
 
 author:
   name   : "LIU YUE"
-  avatar : "/content/images/common/qrcode_xingqiu1.png"
-  bio    : "古萧龙城好青年:wechat:lyhistory; Born in XiaoXian County,Anhui China; Bachelor in cst XMU, Master in se NUS; Enneagram Type 5;"
+  avatar : "/content/images/common/qrcode_xingqiu2.png"
+  bio    : "古萧龙城IT青年:wechat:lyhistory; Born in XiaoXian County,Anhui China; Bachelor in cst XMU, Master in se NUS; Enneagram Type 5;"
   #email  : "lyhistory@gmail.com"
   #uri    : "https://twitter.com/lyhistory"
   links:
+    - label: "知识星球-机器指令"
+      icon: "fas fa-fw fa-global"
+      url: "https://t.zsxq.com/3BayjMb"
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
       url: mailto:lyhistory@gmail.com
@@ -76,6 +79,9 @@ footer:
     - label: "Google Course"
       icon: "fab fa-fw fa-google"
       url: https://developers.google.com/edu/
+    - label: "机器指令"
+      icon: "fab fa-fw fa-global"
+      url: https://t.zsxq.com/3BayjMb
     - label: "other"
       icon: ""
       url: http://vouchain.one/
