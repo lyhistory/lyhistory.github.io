@@ -1162,7 +1162,7 @@ a.reversefootnote:hover { text-decoration: underline; }
 @media (min-width: 80em) { .splash .sidebar__right { margin-right: 0; } }
 
 /* Author profile and links ========================================================================== */
-.author__avatar { display: table-cell; vertical-align: top; width: 36px; height: 36px; }
+.author__avatar { display: table-cell; vertical-align: top; }
 @media (min-width: 64em) { .author__avatar { display: block; width: auto; height: auto; } }
 .author__avatar img { max-width: 150px; border-radius: 10%; }
 @media (max-width: 40em) { .author__avatar img { max-width:100%; }}
