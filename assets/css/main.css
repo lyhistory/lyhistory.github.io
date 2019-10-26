@@ -1165,7 +1165,7 @@ a.reversefootnote:hover { text-decoration: underline; }
 .author__avatar { display: table-cell; vertical-align: top; width: 36px; height: 36px; }
 @media (min-width: 64em) { .author__avatar { display: block; width: auto; height: auto; } }
 .author__avatar img { max-width: 150px; border-radius: 10%; }
-@media { .author__avatar img { max-width:100%; }}
+@media (max-width: 40em) { .author__avatar img { max-width:100%; }}
 @media (min-width: 64em) { .author__avatar img { padding: 0px; border: 1px solid #baaa92; } }
 
 .author__content { display: table-cell; vertical-align: top; padding-left: 15px; padding-right: 25px; line-height: 1; }
