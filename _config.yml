@@ -23,7 +23,7 @@ minimal_mistakes_skin    : "sunrise"
 
 # Build settings
 markdown: kramdown
-remote_theme: "mmistakes/minimal-mistakes@4.15.2"
+remote_theme: "mmistakes/minimal-mistakes@4.17.1"
 # Outputting
 permalink: /:categories/:title/
 paginate: 5 # amount of posts to show
