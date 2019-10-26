@@ -18,6 +18,7 @@ email: "lyhistory@gmail.com"
 description: "tech notes;"
 #baseurl: "/lyhistory.github.io"
 url: "https://lyhistory.github.io"
+logo: "/content/images/common/liuyue.jpg"
 minimal_mistakes_skin    : "sunrise" 
 #"default" 
 
@@ -42,7 +43,7 @@ plugins:
 
 author:
   name   : "LIU YUE"
-  avatar : "/content/images/common/liuyue.jpg"
+  avatar : "/content/images/common/qrcode_xingqiu1.png"
   bio    : "古萧龙城好青年:wechat:lyhistory; Born in XiaoXian County,Anhui China; Bachelor in cst XMU, Master in se NUS; Enneagram Type 5;"
   #email  : "lyhistory@gmail.com"
   #uri    : "https://twitter.com/lyhistory"
