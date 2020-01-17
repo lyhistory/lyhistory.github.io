@@ -63,8 +63,11 @@ author:
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
-exclude:
-    - docs
+include:
+    - docs/
+    - docs/_navbar.md
+#exclude:
+#    - docs
 #   - Gemfile
 #   - Gemfile.lock
 #   - node_modules
