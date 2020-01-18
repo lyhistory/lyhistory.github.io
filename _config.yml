@@ -64,8 +64,8 @@ author:
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
 include:
-    - docs/
     - docs/_navbar.md
+    - docs/_sidebar.md
 #exclude:
 #    - docs
 #   - Gemfile
