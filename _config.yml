@@ -48,9 +48,9 @@ author:
   #email  : "lyhistory@gmail.com"
   #uri    : "https://twitter.com/lyhistory"
   links:
-    - label: "知识星球-机器指令"
+    - label: "机器指令-入门黑客&区块链"
       icon: "fas fa-fw fa-dragon"
-      url: "https://t.zsxq.com/3BayjMb"
+      url: "https://lyhistory.com/docs/"
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
       url: mailto:lyhistory@gmail.com

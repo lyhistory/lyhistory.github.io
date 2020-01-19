@@ -7,6 +7,8 @@
 笔者本着科班的系统学习态度，翻译专业材料，整理资源，分享经验，答疑解惑
 这里只是公开部分资源，需要更多资源或者答疑请扫描加入我的知识星球：coder2hacker
 
+![](/docs/resources/images/zhishixingqiu.jpg)
+
 # About the site
 
 ## blog
