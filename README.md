@@ -34,4 +34,6 @@ npm run docs:build
 config docs\vuepress\docs\.vuepress\config.js
 npm run docs:build
 cp docs\vuepress\docs\.vuepress\dist\* docs\
+
+gitignore nodemodules
 ```
