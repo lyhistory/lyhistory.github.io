@@ -12,6 +12,7 @@ module.exports = {
       { text: '渗透测试', link: '/coder2hacker/' },
       { text: '区块链', link: '/blockchain/' }
     ]
+	/*
 	,
 	sidebar: [
       {
@@ -28,5 +29,6 @@ module.exports = {
         children: []
       }
 	  ]
+	  */
   }
 }
