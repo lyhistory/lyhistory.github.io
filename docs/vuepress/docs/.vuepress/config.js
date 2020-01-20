@@ -11,7 +11,13 @@ module.exports = {
       { text: '机器指令', link: '/' },
       { text: '渗透测试', link: '/coder2hacker/' },
       { text: '区块链', link: '/blockchain/' }
-    ]
+    ],
+	sidebar: {
+	  '/coder2hacker/':[
+	    '',
+		'ch1_intro'
+	  ]
+	}
 	/*
 	,
 	sidebar: [
