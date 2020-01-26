@@ -36,9 +36,9 @@ https://bravenewgeek.com/tag/leader-election/
 >分布式任务调度
 
 可以看几个产品的架构图
-![Kafka](/docs_image/software/distrubuted_system1.png)
-![HDFS](/docs_image/software/distrubuted_system2.png)
-![HADOOP](/docs_image/software/distrubuted_system3.png)
+![Kafka](/docs/docs_image/software/distrubuted_system1.png)
+![HDFS](/docs/docs_image/software/distrubuted_system2.png)
+![HADOOP](/docs/docs_image/software/distrubuted_system3.png)
 
 Since Hadoop 2.0, ZooKeeper has become an essential service for Hadoop clusters, providing a mechanism for enabling high-availability of former single points of failure, specifically the HDFS NameNode and YARN ResourceManager.
 https://www.datadoghq.com/blog/hadoop-architecture-overview/
@@ -49,7 +49,7 @@ https://www.datadoghq.com/blog/hadoop-architecture-overview/
 
 举一个例子：
 
-![分布式管理例子](/docs_image/software/distrubuted_system4.png)
+![分布式管理例子](/docs/docs_image/software/distrubuted_system4.png)
 中央就是zookeeper，本身是集群，政治协商，一个挂掉还会迅速选一个，中央的主要工作是做集群管理，具体的生产生活还要交由Apache/Storm这些地方政府节点来做，
 地方节点之间也是一个集群，比如分布式商务系统集群（商务部是集群的leader，向中央注册），分布式农业系统集群等
 
@@ -89,7 +89,7 @@ zookeeper只支持最简单的推拉消息，每次节点注册时，只会通�
 然后因为所有worker及leader节点都保存了一份节点列表，所以leader分发任务的时候就可以采取一定的策略，比如round robin或load balance方式rpc调用worker分发任务；
 至于worker节点，虽然也保存了一份节点列表但一般只需要跟leader通信，当然如果leader挂掉，worker变成leader还是要用这个列表的；
 
-![分布式任务调度](/docs_image/software/distrubuted_system5.png)
+![分布式任务调度](/docs/docs_image/software/distrubuted_system5.png)
 
 还需要思考的问题：
 
@@ -100,7 +100,7 @@ zookeeper只支持最简单的推拉消息，每次节点注册时，只会通�
 ## 3.From distributed system to distributed ledger
 
 
-![网络类型](/docs_image/software/distrubuted_system6.png)
+![网络类型](/docs/docs_image/software/distrubuted_system6.png)
 
 我们前面谈到的分布式系统都不是不是真正的分布式，只能算是多中心的系统，zookeeper也不是真正的分布式框架，因为其本身集群也是有leader和follower的，
 所以基于zookeeper的分布式系统更会不是真的分布式，只有是基于共识算法实现的系统才有可能是真正的分布式系统；
