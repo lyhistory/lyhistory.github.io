@@ -9,11 +9,18 @@ module.exports = {
 	smoothScroll: true,
     nav: [
       { text: '机器指令', link: '/' },
+	  { text: '软件基础', link: '/software/' },
       { text: '渗透测试', link: '/coder2hacker/' },
       { text: '区块链', link: '/blockchain/' }
     ]
 	,
 	sidebar: [
+      {
+        title: '软件基础',   // required
+        path: '/software/',      // optional, which should be a absolute path.
+        collapsable: true, // optional, defaults to true
+        sidebarDepth: 2    // optional, defaults to 1
+      },
       {
         title: '黑客入门',   // required
         path: '/coder2hacker/',      // optional, which should be a absolute path.
