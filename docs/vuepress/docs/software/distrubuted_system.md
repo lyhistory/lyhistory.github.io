@@ -3,6 +3,8 @@ sidebar: auto
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
+[回目录](/docs/software)  《分布式系统开发》
+
 ## 1.关于一致性
 
 基本可以分为两大类：
@@ -33,9 +35,10 @@ https://bravenewgeek.com/tag/leader-election/
 
 >分布式存储系统：hbase基于zookeeper, 而ETCD采用RAFT协议 https://raft.github.io/
 
->分布式任务调度
+>分布式任务调度：Elastic-Job等
 
 可以看几个产品的架构图
+
 ![Kafka](/docs/docs_image/software/distrubuted_system1.png)
 ![HDFS](/docs/docs_image/software/distrubuted_system2.png)
 ![HADOOP](/docs/docs_image/software/distrubuted_system3.png)
@@ -45,7 +48,8 @@ https://www.datadoghq.com/blog/hadoop-architecture-overview/
 
 观察可以发现一个问题，为啥大部分都需要依赖分布式框架zookeeper？？
 
-简单来说，不要重复造轮子，zookeeper可以用于集群管理，只不过有些可以脱离zookeeper单机部署，有些则是只支持集群模式，跟zookeeper耦合紧密，当然我们谈的是分布式系统，所以这里不讨论单机版本
+简单来说，不要重复造轮子，zookeeper可以用于集群管理，只不过有些可以脱离zookeeper单机部署，有些则是只支持集群模式，跟zookeeper耦合紧密，
+Quartz就是支持单机版也支持集群，但是其集群基于数据库锁，严重耦合，所以有人也将其改造成为基于zookeeper集群管理的模式，当然我们谈的是分布式系统，所以这里不讨论单机版本
 
 举一个例子：
 
@@ -55,6 +59,7 @@ https://www.datadoghq.com/blog/hadoop-architecture-overview/
 
 Zookeeper适用的场景：
 https://www.ibm.com/developerworks/cn/opensource/os-cn-zookeeper/index.html
+
 >统一命名服务（Name Service）
 
 >配置管理（Configuration Management）
@@ -79,8 +84,13 @@ https://www.ibm.com/developerworks/cn/opensource/os-cn-zookeeper/index.html
 
 >可以简单设计一些规则来实现选举，比如通过配置文件定义好是否是leader候选人，然后选的时候就通过排序找到第一个活着的候选人即可；
 
->通过curator高级API利用zookeeper的共享锁机制自动做的leader选举，take leadership的方式，默认都是普通worker，在take leadership的时候激活为leader，
-不过这种方式有个缺点，其他普通的worker无法得知选举结果，所以在某些场景下，当worker需要向leader汇报情况的时候就做不了了，除非没有这种需求；
+>基于zookeeper 的临时节点实现选举，zookeeper除了手动才能删除的持久节点，还有一种ephemeral临时节点，如果临时节点的创建者客户，失去zookeeper连接，临时节点就会自动删除，
+然后zookeeper的架构是基于观察者模式，加上共享锁，所有注册的客户端都抢注比如/leader节点，不管是谁抢注成功其他客户端都会收到通知；
+
+>前一种方式比较低级，其实可以通过curator高级API封装好的leader election recipes，curator利用zookeeper的共享锁机制加观察模式封装了两种leader选举，leader latch和leader election，
+默认都是普通worker，在抢到leadership的时候激活为leader，不过这种方式有个缺点，其他普通的worker无法得知选举结果，所以在某些场景下，当worker需要向leader汇报情况的时候就做不了了，
+需要额外再做点处理，比如leader election的方式可以在take leadership的时候，通过rpc通知其他节点自己是leader，或者也可以将自己的id注册在zookeeper的一个特定的path上，比如/leader/result，
+这样其他节点就可以通过监听获取到leader选举结果；
 
 现在还没有结束，现在有了动态选举的leader和一群worker，leader要怎么分发任务给worker，他们是互不想干的独立进程，可能部署在不同的机器上，通过zookeeper吗？
 zookeeper只支持最简单的推拉消息，每次节点注册时，只会通知各节点有nodechange事件，各节点自行去zookeeper pull拉取具体变化信息，
@@ -93,9 +103,22 @@ zookeeper只支持最简单的推拉消息，每次节点注册时，只会通�
 
 还需要思考的问题：
 
->如何保证leader选举的唯一性，即保证不选出多个leader
+>上面不管是直接通过使用zookeeper的临时节点还是使用curator recipes进行选举，都无法避免一种场景的出现，比如选举出的leader无法连接数据库获取任务，
+针对这种异常场景，需要额外增加监控逻辑，比如心跳检测leader跟数据库的连接，一旦出现问题就断开跟zookeeper的连接，下线故障leader，去主动触发重新选举；
+
+>如何保证leader选举的唯一性，
+前面这个问题的一个类似场景是，leader断开了跟zookeeper的连接，但是还保持跟数据库及其他节点的连接，由于他已经断开了zookeeper的连接，无法通过观察者模式获取新leader的选举，
+他还认为自己是leader，这个场景比较容易解决，可以在通过监控跟zookeeper的心跳连接情况，一旦断开就直接剥夺leader的头衔并下线机器，
+但是在剥夺之前的时间窗口内还是存在多个leader问题，从而会产生下游任务重复触发并发执行的问题；
+
+>在上面这个问题无法解决的情况下，应该还要从下游去控制，比如从具体任务执行层面，精度不要放太高，比如放秒级或者分钟级，这样可以通过检查该秒或分钟内是否该任务已经触发来挡住重复的触发命令
 
 >如何在leader宕机的瞬间保持数据不丢失，新leader如何恢复旧leader宕机之前的状态
+
+>前面只是简单说leader会做任务分发，但是没有说谁会来判断任务触发是否满足条件，比如一种方式是leader来判断所有事件依赖以及是否满足触发条件，然后如果满足才会分发下去，
+另一种方式是，leader将任务直接简单的根据比如round robin策略分发出去，由具体的worker来判断依赖关系及等待其达到触发条件后再执行；
+后一种方式的问题是，如果某个任务的依赖任务分发给了另外一个worker，这些worker需要频繁的请求leader中心节点同步任务状态，
+所以第二种做法更简单的处理是分发任务时将一组有依赖关系的任务都分发给同一个worker，这样就避免了多节点之间的任务依赖，前面引用的一个用quartz基于zookeeper的实现架构就是第二种做法；
 
 ## 3.From distributed system to distributed ledger
 
@@ -112,7 +135,8 @@ zookeeper只支持最简单的推拉消息，每次节点注册时，只会通�
 关于共识算法，参考我在巴比特上面的文章：
 [区块链基础：解密挖矿与共识的误解](https://www.8btc.com/media/393154)
 
-
+ref:
+基于quartz和zookeeper的分布式调度设计 https://juejin.im/post/5c55ac0bf265da2da771a216
 
 
 

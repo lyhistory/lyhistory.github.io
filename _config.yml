@@ -48,7 +48,7 @@ author:
   #email  : "lyhistory@gmail.com"
   #uri    : "https://twitter.com/lyhistory"
   links:
-    - label: "机器指令-入门黑客&区块链"
+    - label: "机器指令-白帽黑客&区块链&计算机基础"
       icon: "fas fa-fw fa-dragon"
       url: "https://lyhistory.com/docs/"
     - label: "Email"
@@ -80,9 +80,9 @@ footer:
     - label: "AlphaWallet"
       icon: "fas fa-fw fa-university"
       url: https://alphawallet.com/
-    - label: "机器指令"
+    - label: "机器指令-白帽黑客&区块链&计算机基础"
       icon: "fas fa-fw fa-dragon"
-      url: https://t.zsxq.com/3BayjMb
+      url: https://lyhistory.com/docs/
     - label: "Google Course"
       icon: "fab fa-fw fa-google"
       url: https://developers.google.com/edu/
