@@ -5,6 +5,10 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《分布式系统开发》
 
+_注意:_
+
+_下面提到的节点根据上下文有不同的含义，说到zookeeper时主要是指注册在zookeeper的不同类型的node，说到集群时是指集群的不同实例_
+
 ## 1.关于一致性
 
 基本可以分为两大类：
@@ -18,7 +22,7 @@ https://bravenewgeek.com/tag/leader-election/
 
 ## 2.从中心化到去中心化
 
-中心化系统有单点故障的风险，所以引入多个节点，但是多个节点之间如何保持数据同步，基于一致性算法有两种思路：
+中心化系统有单点故障的风险，所以引入多个节点，从而实现高可用，分布式的两个重要考虑就是高可用和分片，分片就涉及到多个节点之间如何保持数据同步，基于一致性算法有两种思路：
 >1.最直接的办法是动态选出一个leader，只由leader单节点负责管理竞争资源，然后其他节点作为follower保存副本，当leader发生故障，重新从follower中选举新的leader，从而既避免了单点故障又保持了数据一致
 
 >2.节点之间通过共识算法保持数据同步，这是个经典的拜占庭将军问题，经典的共识算法是BFT拜占庭共识算法
@@ -31,7 +35,7 @@ https://bravenewgeek.com/tag/leader-election/
 
 >分布式消息队列集群Kafka
 
->分布式实时计算storm以及Hadoop mapreduce2.0
+>分布式计算 spark, storm以及Hadoop mapreduce2.0
 
 >分布式存储系统：hbase基于zookeeper, 而ETCD采用RAFT协议 https://raft.github.io/
 
@@ -87,10 +91,10 @@ https://www.ibm.com/developerworks/cn/opensource/os-cn-zookeeper/index.html
 >基于zookeeper 的临时节点实现选举，zookeeper除了手动才能删除的持久节点，还有一种ephemeral临时节点，如果临时节点的创建者客户，失去zookeeper连接，临时节点就会自动删除，
 然后zookeeper的架构是基于观察者模式，加上共享锁，所有注册的客户端都抢注比如/leader节点，不管是谁抢注成功其他客户端都会收到通知；
 
->前一种方式比较低级，其实可以通过curator高级API封装好的leader election recipes，curator利用zookeeper的共享锁机制加观察模式封装了两种leader选举，leader latch和leader election，
+>前一种方式比较低级，其实可以通过curator高级API封装好的leader election recipes，curator利用zookeeper的EPHEMERAL_SEQUENTIAL实现分布式锁加观察模式封装了两种leader选举，leader latch和leader election，
 默认都是普通worker，在抢到leadership的时候激活为leader，不过这种方式有个缺点，其他普通的worker无法得知选举结果，所以在某些场景下，当worker需要向leader汇报情况的时候就做不了了，
 需要额外再做点处理，比如leader election的方式可以在take leadership的时候，通过rpc通知其他节点自己是leader，或者也可以将自己的id注册在zookeeper的一个特定的path上，比如/leader/result，
-这样其他节点就可以通过监听获取到leader选举结果；
+这样其他节点就可以通过监听获取到leader选举结果；分布式计算引擎Spark采用了curator的leader latch方式选举leader;
 
 现在还没有结束，现在有了动态选举的leader和一群worker，leader要怎么分发任务给worker，他们是互不想干的独立进程，可能部署在不同的机器上，通过zookeeper吗？
 zookeeper只支持最简单的推拉消息，每次节点注册时，只会通知各节点有nodechange事件，各节点自行去zookeeper pull拉取具体变化信息，
@@ -119,6 +123,8 @@ zookeeper只支持最简单的推拉消息，每次节点注册时，只会通�
 另一种方式是，leader将任务直接简单的根据比如round robin策略分发出去，由具体的worker来判断依赖关系及等待其达到触发条件后再执行；
 后一种方式的问题是，如果某个任务的依赖任务分发给了另外一个worker，这些worker需要频繁的请求leader中心节点同步任务状态，
 所以第二种做法更简单的处理是分发任务时将一组有依赖关系的任务都分发给同一个worker，这样就避免了多节点之间的任务依赖，前面引用的一个用quartz基于zookeeper的实现架构就是第二种做法；
+
+>上面是假设数据都是放到数据库的，而且只允许leader单节点去维护，设想一下数据分布在每个节点上，比如每个节点都有完整的数据备份，同步起来就只能采取共识算法来做比较合理；
 
 ## 3.From distributed system to distributed ledger
 
