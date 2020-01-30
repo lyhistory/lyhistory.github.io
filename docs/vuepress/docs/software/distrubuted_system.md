@@ -9,18 +9,44 @@ _注意:_
 
 _下面提到的节点根据上下文有不同的含义，说到zookeeper时主要是指注册在zookeeper的不同类型的node，说到集群时是指集群的不同实例_
 
-## 1.关于一致性
+说到分布式系统就避免不了CAP理论，基本意思是在可用性、一致性、分区容错三者之间一次只能满足两个，不能同时满足：
+比如关系型数据库就是取了CA，高可用和强一致性，并且由事务支持延伸出ACID，而基于分布式系统实践总结，衍生出了BASE理论：
+基本可用（Basically Available）、软状态（ Soft State）、最终一致性（ Eventual Consistency），可见基本上是在追求一种平衡。
 
-基本可以分为两大类：
+## 1.关于一致性
+对于一个系统来说，尤其是分布式系统，如果都无法保持一致，基本也是不堪用的了，所以一致性还是基本上都要追求的；
+
+我个人理解，在谈到单机系统和分布式系统的一致性，这个词的意义或者强调的点还是有所区别的：
+
+首先对于一个单机系统，一致性是指在并发请求的情况下，该系统对用户级别会话级别等不同级别的读写数据的一致，
+比如前面说的关系型数据库，不考虑主从的情况下，读写同一个数据库，一致性的表现是要根据数据库的隔离水平设置isolation level决定的，有兴趣可以自己查阅<Isolation (database systems)>
+
+对于分布式系统，一致性一般是指对于一个集群内部各个节点上面的相关数据保持同步；
+
+在实践中按照强弱程度一致性分为：
+强一致性 strong consistency
+单调一致性 monotonic consistency
+会话一致性 session consistency
+最终一致性 eventual consistency
+弱一致性 weak consistency
+
+经过前面数据库的例子所以可以看到一致性不是死的，不是说我就是什么一致性，很多情况下一致性会根据系统的设置或系统的架构发生变化，在同一个系统中不同类型的数据也可能有着不同类型的一致性；
+而在区块链的世界里，一致性有着更加丰富的表现，比如比特币的共识，基本上认为6个确认之后就无法更改，但是同样的相同或类似共识算法的其他分叉币却可能需要更多的确认，因为还受制于价格因素，
+由于目前比特币的价格很高，其他的低价格的虚拟币发起51%攻击比较容易，成本很低；
+
+我看到有人还对一致性做如下划分：
+
 >最终一致性 eventual consistent，代表协议如gossip/multicast protocols，redis集群就是采用gossip
 
->共识算法一致性 consensus protocols，代表协议有 PBFT, RAFT, 经典的比特币共识算法nakamoto consensus等
+>共识算法一致性 consensus protocols，代表协议有 PBFT, RAFT
 
 The former includes things like epidemic broadcast trees, bimodal multicast, SWIM, HyParView, and NeEM. These tend to be eventually consistent and/or stochastic. 
 The latter, which I’ve described in more detail here, includes 2PC/3PC, Paxos, Raft, Zab, and chain replication. These tend to favor strong consistency over availability.
 https://bravenewgeek.com/tag/leader-election/
 
-## 2.从中心化到去中心化
+但是我存在异议，因为经典的比特币共识算法nakamoto consensus也是一种consensus protocol，但是也是属于最终一致性
+
+## 2.多节点容错 Crashed tolerance
 
 中心化系统有单点故障的风险，所以引入多个节点，从而实现高可用，分布式的两个重要考虑就是高可用和分片，分片就涉及到多个节点之间如何保持数据同步，基于一致性算法有两种思路：
 >1.最直接的办法是动态选出一个leader，只由leader单节点负责管理竞争资源，然后其他节点作为follower保存副本，当leader发生故障，重新从follower中选举新的leader，从而既避免了单点故障又保持了数据一致
@@ -126,7 +152,7 @@ zookeeper只支持最简单的推拉消息，每次节点注册时，只会通�
 
 >上面是假设数据都是放到数据库的，而且只允许leader单节点去维护，设想一下数据分布在每个节点上，比如每个节点都有完整的数据备份，同步起来就只能采取共识算法来做比较合理；
 
-## 3.From distributed system to distributed ledger
+## 3.拜占庭容错
 
 
 ![网络类型](/docs/docs_image/software/distrubuted_system6.png)
@@ -137,6 +163,8 @@ zookeeper只支持最简单的推拉消息，每次节点注册时，只会通�
 谈到去中心化，分布式，最广为人知的就是区块链，区块链技术，又被称作DLT，Distributed Ledger Technology，区块链大致分为permissioned 和 non-permissioned blockchain，前者基本都是私有链和联盟链，后者是公链，
 目前来看，只有公链才算是真正意义的分布式系统，因为所有节点基本上都是公平的，可以随时加入退出，不影响公链的运行，大家遵循同一个规则来运行节点，维护网络，
 运行节点的目的以及维护网络的方式具体就是挖矿（打包区块），发布交易，验证交易等；
+
+区块链 尤其是公链的共识算法跟分布式系统的共识算法有着本质的区别，分布式的共识算法如RAFT是基于系统容错，而公链的共识算法是基于拜占庭问题的容错算法，意思是要在节点作恶的情况下还能够达成共识
 
 关于共识算法，参考我在巴比特上面的文章：
 [区块链基础：解密挖矿与共识的误解](https://www.8btc.com/media/393154)
