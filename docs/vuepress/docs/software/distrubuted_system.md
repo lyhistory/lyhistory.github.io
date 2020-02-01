@@ -58,13 +58,15 @@ _下面提到的节点根据上下文有不同的含义，说到zookeeper时主�
 
 在这种假设前提下，多个节点就需要协同工作，有两种思路：
 
-* 1.主备方案
+**1.主备方案**
 最直接的办法是指定一个leader，只由leader单节点负责管理竞争资源，然后其他节点作为follower保存副本
 - 一致性，客户端写入数据请求都是交由或转发给leader，所以单节点维护保持了数据写的一致，所有节点都会接受客户端的读请求，follower不断同步保存的副本也保证了最终一致性；
 - 排除单点故障，当某个follower发生故障，leader就将follower从自己的通讯录中剔除或拉黑，如果该follower再次重新恢复上线，leader会将其再加回通讯录；
 
 现在出现两个问题：
+
 ** 1） follower转发写数据请求给leader，如果他们转发的请求互相有冲突呢，比如对同一个数据同时修改
+
 ** 2） 如何动态选出的leader并且当leader节点发送故障如何从follower中选出leader呢
 
 这两个问题都要依赖共识算法解决zookeeper的ZAP协议就是解决这个问题的：
@@ -80,7 +82,8 @@ leader直接收到或收到follower转发的写操作请求，都会按照FIFO�
 即选出同步了最新提交历史的节点，这样可以尽量保证崩溃的leader在崩溃之前广播出去的数据没有丢失，当然如果是没有广播出去的数据肯定是会丢了；
 每次选举出新的leader都会有自己的标志，有的叫term有的叫epoch，总之是为了防止挂掉的leader突然恢复，通过这个标志可以知道自己已经过气了；
 
-* 2.一致性状态机 
+**2.一致性状态机**
+
 上面是靠共识算法选举单节点leader节点来维护写的一致，现在我们完全采用共识算法来保证写的一致，不再需要leader，换句话说节点之间通过共识算法保持数据同步，具体是怎么工作的呢?
 
 我们首先要从经典问题“paxos岛兼职议会问题”说起，这个故障问题描述为：
@@ -162,7 +165,17 @@ acceptedProposal=minProposal=3，acceptedValue="Bob航班scoot100，座位号A2"
 并且都返回【C-OK,minProposal=3】;
 
 ```
-这些场景都是假设节点正常运作，paxos算法的意义就是可以在某些节点崩溃及通信延迟的情况下仍然可以达到最终一致的效果，
+这些场景都是假设节点正常运作，paxos算法的意义就是可以在某些节点崩溃及通信延迟的情况下仍然可以达到最终一致的效果，所以你可以自行想一下如果proposer节点或者acceptor节点掉线会不会影响系统稳定，
+这里需要多提一个概念叫做活锁livelock
+```
+Node1发起一个写数据的提议proposal:Prepare(【Node1-P-1】),假设Node1已经完成了Prepre，意思是Node3|4|5都返回了，现在开始提交决议【Node1-C-1,Value】
+此时Node2发起一个写数据的提议proposal:Prepare(【Node2-P-2】)，根据前面的分析，Node3|4|5收到后会更新minimalProposal=2,从而会拒绝Node1的决议【Node1-C-1,Value】，
+再根据前面的分析，Node1会从头开始重新提议【Node1-P-3】，
+然后刚刚Node2完成了提议，开始提交决议【Node2-C-2,Value】，但是Node3|4|5已经收到了Node1的新提议【Node1-P-3】，所以minimalProposal=3，所以会拒绝Node2的决议【Node2-C-2,Value】，
+所以Node2也只好放弃重头开始重新提议【Node2-P-4】...如此循环，谁也无法成功实现决议
+```
+解决上面的活锁问题有两种方法，一个是在每次重头开始提新提议的时候加一个随机的delay延迟，这样会可以给机会让其中一个proposer成功完成提议和决议；
+另一种比较更多采用的做法就是从proposer中选一个leader出来，由leader统一提议决议，避免冲突
 
 PAXOS比较复杂，RAFT是其实现的简化版本，实际上前面“主备方案”中提到的zookeeper的ZAP也都是跟RAFT类似的思想，RAFT主要包含选举leader election和日志拷贝log replication：
 比如leader election也是利用心跳和半数选举的机制，并且leader也是有第几代leader的term标志，ZAP用的是epoch；
@@ -281,11 +294,46 @@ zookeeper只支持最简单的推拉消息，每次节点注册时，只会通�
 
 ![网络类型](/docs/docs_image/software/distrubuted_system6.png)
 
-我们前面谈到的分布式系统都不是不是真正的分布式，只能算是多中心的系统，zookeeper也不是真正的分布式框架，因为其本身集群也是有leader和follower的，
-所以基于zookeeper的分布式系统更会不是真的分布式，只有是基于共识算法实现的系统才有可能是真正的分布式系统；
+我们前面谈到的不管是zookeeper的ZAP，paxos还是raft都不能算是真正的分布式，因为基本都是要选举出leader来主持大局，真正的分布式节点是完全平等的，不存在谁是leader，
+所以基本都只能算是多中心的分布式系统；
+而且我们看到实际的分布式产品大多是基于zookeeper，zookeeper本身也不是真正的分布式框架，因为其本身集群也是有leader和follower的，所以基于zookeeper的分布式系统更会不是真的分布式；
 
-谈到去中心化，分布式，最广为人知的就是区块链，区块链技术，又被称作DLT，Distributed Ledger Technology，区块链大致分为permissioned 和 non-permissioned blockchain，前者基本都是私有链和联盟链，后者是公链，
-目前来看，只有公链才算是真正意义的分布式系统，因为所有节点基本上都是公平的，可以随时加入退出，不影响公链的运行，大家遵循同一个规则来运行节点，维护网络，
+其实这里还隐含着另外一个问题，我们前面的分布式产品都是部署在内网中，不管是私有云公有云还是自己的机房，都不会给外界暴露端口，一般更不会允许外面的节点随便连进来，属于关在笼子里面的内部系统，
+根源在于上面提到的算法都是基于故障容错的，都是假设节点不会有恶意节点，因为都是自己公司内部部署的，自己肯定不会搞自己，这也是为什么无法任意对接外部节点的重要原因；
+
+所以区块链技术，尤其是比特币作为区块链的第一应用，到目前为止平稳运行了十多年，是真正意义上的去中心化分布式技术，不管是手机，普通电脑，还是矿机，都可以运行一个比特币节点，随时加入退出，
+甚至你是恶意篡改了比特币源码的节点都没关系，不会影响比特币的正常运行，那么他的共识算法跟前面有什么区别呢？下面我开始给大家介绍下区块链技术的入门知识：
+
+区块链技术又被称作DLT，Distributed Ledger Technology，区块链大致分为permissioned 和 non-permissioned blockchain，前者基本都是私有链和联盟链，后者是公链；
+
+### 3.1 联盟链技术
+
+私有链基本上没有任何意义，自己内部玩没有搞条链，唯一用武之处就是用来教学演示，对于正常的普通企业用传统的办法更高效，如果真的要搞行业级别的集成自然是选择联盟链，
+我就以IBM的hyperledger为代表来讲解下联盟链：
+
+直接看核心流程图，我只是简略说主要内容，不会讲解他的会员系统，也不会细分peer节点的类型
+![网络类型](/docs/docs_image/software/distrubuted_system7.png)
+客户端发一个transaction请求，实现了hyperledger sdk的客户端程序接收，会验证后发给peers节点，peers节点验证并进行endorse签名并返回结果给客户端，客户端收到一定数量的endorse之后，
+如果满足了事前设定的policy，比如至少收到半数的endorse，则发起提交请求，将transaction及endorsement一起发给ordering service，像极了前面提到的2PC，
+ordering service排序打包交易再发给peers，peers会验证打包好的每个交易，然后更新账本；
+不过等等，这里的ordering service是一个单独的节点，不像peers那样有多个节点，意思是个中心化的排序服务，然后我们看IBM文档的说法如下：
+
+![网络类型](/docs/docs_image/software/distrubuted_system8.png)
+
+看到没，关键点ordering service可以是一个单节点或者kafka集群，单节点不用说了，kafka集群是基于故障容错的分布式产品；
+没啥好多说的，这肯定不能算完全意义的分布式账本技术，
+只是相当于把基于故障容错的分布式系统改造成了区块链的样子，首先节点的加入都是要经过审核后配置到系统中，打包也是中心化的节点或集群决定的；
+
+### 3.2 公链技术
+
+真正的分布式账本技术是基于拜占庭容错算法
+
+#### 3.2.1 拜占庭将军问题和实用拜占庭容错算法PBFT
+
+TODO
+
+#### 3.2.2 比特币共识算法
+
 运行节点的目的以及维护网络的方式具体就是挖矿（打包区块），发布交易，验证交易等；
 
 区块链 尤其是公链的共识算法跟分布式系统的共识算法有着本质的区别，分布式的共识算法如RAFT是基于系统容错，而公链的共识算法是基于拜占庭问题的容错算法，意思是要在节点作恶的情况下还能够达成共识
@@ -294,6 +342,8 @@ zookeeper只支持最简单的推拉消息，每次节点注册时，只会通�
 关于共识算法，参考我在巴比特上面的文章：
 [区块链基础：解密挖矿与共识的误解](https://www.8btc.com/media/393154)
 
+目前来看，只有公链才算是真正意义的分布式系统，因为所有节点基本上都是公平的，可以随时加入退出且不影响公链的运行；
+paxos Byzantine ft
 
 ref:
 [Zab in words](https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab1.0)
@@ -305,6 +355,7 @@ ref:
 [RAFT协议](https://raft.github.io/)
 [Visualizations Raft: Understandable Distributed Consensus](http://thesecretlivesofdata.com/raft/)
 [基于quartz和zookeeper的分布式调度设计](https://juejin.im/post/5c55ac0bf265da2da771a216)
+[Hyperledger Fabric](https://cloud.ibm.com/docs/services/blockchain?topic=blockchain-hyperledger-fabric)
 [Building a Distributed Log from Scratch, Part 2: Data Replication](https://bravenewgeek.com/tag/leader-election/)
 
 
