@@ -123,3 +123,4 @@ https://en.bitcoin.it/wiki/Weaknesses
 从而浪费算力付出代价，这个论文挺有意思的，感觉有点像把我前面的1挖矿机制和2共识算法两者的矛盾点展示出来了，在挖矿的利益驱使下是完全遵守共识规则还是选择性的遵守，
 有兴趣可以了解下作者提出的解决方案[《THE VERIFIER’S DILEMMA》](https://eprint.iacr.org/2015/702.pdf)
 
+本文发布在 [巴比特专栏](https://www.8btc.com/article/393154)
