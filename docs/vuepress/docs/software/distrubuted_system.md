@@ -367,60 +367,57 @@ The messengers in this story represent communication channels in distributed net
 主节点 p = v mod |R|。v：视图编号，|R|节点个数，p：主节点编号
 现在R=4,v=0,p=0
 
-1.client c客户端发送请求<REQUEST, o, t, c>给主节点0；
-REQUEST: 包含消息内容m，以及消息摘要d(m)。客户端对请求进行签名。o: 请求的具体操作，t: 请求时客户端追加的时间戳，c：客户端标识。
+1.client c客户端发送请求<REQUEST, o, t, c>给主节点0:
 
-2.主节点0 pre-prepare
-主节点行以下交验消息签名并丢弃非法请求，
-然后分配一个编号n，编号n主要用于对客户端的请求进行排序。然后多播<<PRE-PREPARE, v=0, n, d>,  m>消息给其他副本节点。
-d客户端消息摘要，m消息内容。<PRE-PREPARE, v, n, d>进行主节点签名。n是要在某一个范围区间内的[h, H]，原因是垃圾回收。
+REQUEST包含消息内容m，以及消息摘要d(m),客户端对请求进行签名;
+o: 请求的具体操作，t: 请求时客户端追加的时间戳，c：客户端标识;
 
-3. 备份节点PREPARE：
+2.主节点0预准备pre-prepare：
 
-副本节点1、2、3收到主节点的PRE-PREPARE消息，校验并丢弃非法请求：
+主节点校验消息签名并拒绝非法请求；
+校验通过则分配编号n，用于对客户端请求的排序；
+然后多播消息<<PRE-PREPARE, v=0, n, d>,  m>给其他副本节点：
+d为客户端消息摘要，m为消息内容，n是要在范围区间内的[h, H]，用于垃圾回收；
+对<PRE-PREPARE, v, n, d>签名。
 
-a. 主节点PRE-PREPARE消息签名。
+3.全部节点发送PREPARE：
 
-b. 当前副本节点是否已经收到了一条在同一v=0下并且编号也是n，但是签名不同的PRE-PREPARE信息。
+副本节点1、2、3收到主节点0的PRE-PREPARE消息，校验并拒绝非法请求：
+主节点PRE-PREPARE消息签名；
+当前副本节点是否已经收到了一条在同一v=0下并且编号也是n，但是签名不同的PRE-PREPARE信息；
+d与m的摘要是否一致；
+n是否在区间[h, H]内；
 
-c. d与m的摘要是否一致。
+然后每个节点都向其他节点发送prepare消息<<PREPARE, v=0, n, d, i>, m>,i是当前副本节点编号;
+节点i对<PREPARE, v, n, d, i>进行签名;
+PRE-PREPARE和PREPARE消息写入log，用于View Change时恢复未完成的操作；
 
-d. n是否在区间[h, H]内。
+4.全部节点COMMIT：
 
-然后副本节点向其他节点包括主节点发送一条<PREPARE, v=0, n, d, i>消息, 
-v, n, d, m与上述PRE-PREPARE消息内容相同，i是当前副本节点编号。
-每个副本节点i对<PREPARE, v, n, d, i>进行签名。记录PRE-PREPARE和PREPARE消息到log中，用于View Change过程中恢复未完成的请求操作。
+所有节点收到PREPARE消息，校验并拒绝非法请求：
+节点PREPARE消息签名是否正确；
+当前节点是否已经收到了同一视图v下的n；
+n是否在区间[h, H]内；
+d是否和当前已收到PRE-PPREPARE中的d相同；
 
-4. COMMIT：
+节点i等待2f+1个验证通过的PREPARE消息则进入prepared状态并向其他节点发送commit消息<<COMMIT, v=0, n, d, i>，m>
+节点i对<COMMIT, v, n, d, i>签名；
+COMMIT消息写入日志，用于View Change时恢复未完成的操作
 
-主节点和副本节点收到PREPARE消息，需要进行以下交验：
+5.全部节点REPLY：
 
-a. 副本节点PREPARE消息签名是否正确。
+所有节点收到COMMIT消息，校验并拒绝非法请求：
+节点COMMIT消息签名是否正确；
+当前节点是否已经收到了同一视图v下的n；
+d与m的摘要是否一致；
+n是否在区间[h, H]内；
 
-b. 当前副本节点是否已经收到了同一视图v下的n。
+节点i等待2f+1个验证通过的COMMIT消息，进入commit状态，说明当前网络中的大部分节点已经达成共识，运行客户端的请求操作o，并返回<REPLY, v, t, c, i, r>给客户端，
+r是请求操作结果
 
-c. n是否在区间[h, H]内。
-
-d. d是否和当前已收到PRE-PPREPARE中的d相同
-
-非法请求丢弃。如果副本节点i收到了2f+1个验证通过的PREPARE消息，则向其他节点包括主节点发送一条<COMMIT, v, n, d, i>消息，v, n, d,  i与上述PREPARE消息内容相同。<COMMIT, v, n, d, i>进行副本节点i的签名。记录COMMIT消息到日志中，用于View Change过程中恢复未完成的请求操作。记录其他副本节点发送的PREPARE消息到log中。
-
-5. REPLY：
-
-主节点和副本节点收到COMMIT消息，需要进行以下交验：
-
-a. 副本节点COMMIT消息签名是否正确。
-
-b. 当前副本节点是否已经收到了同一视图v下的n。
-
-c. d与m的摘要是否一致。
-
-d. n是否在区间[h, H]内。
-
-非法请求丢弃。如果副本节点i收到了2f+1个验证通过的COMMIT消息，说明当前网络中的大部分节点已经达成共识，运行客户端的请求操作o，并返回<REPLY, v, t, c, i, r>给客户端，r：是请求操作结果，客户端如果收到f+1个相同的REPLY消息，说明客户端发起的请求已经达成全网共识，否则客户端需要判断是否重新发送请求给主节点。记录其他副本节点发送的COMMIT消息到log中。
-
-6.客户端client c等待f+1个reply，如果结果都相同，则完成
-
+6.客户端client c等待f+1个reply
+如果收到f+1个相同的REPLY消息，说明请求已经达成全网共识，否则客户端需要判断是否重新发送请求给主节点；
+记录节点发送的COMMIT消息到log中。
 
 拜占庭容错算法看起来感觉跟paxos有几分相似，确实，实际上paxos可以升级成BFT paxos，也有raft版本的BFT raft
 
@@ -462,20 +459,31 @@ destroying the Bitcoin system will also undermine the effectiveness of his own w
 paxos Byzantine ft
 
 ref:
+
 [Zab in words](https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab1.0)
+
 [Paxos lecture (Raft user study)](https://www.youtube.com/watch?v=JEpsBg0AO6o)
+
 [Paxos Made Simple](http://lamport.azurewebsites.net/pubs/pubs.html#paxos-simple)
+
 [Paxos By Example](https://medium.com/@angusmacdonald/paxos-by-example-66d934e18522)
+
 [Paxos 算法](https://baike.baidu.com/item/Paxos%20%E7%AE%97%E6%B3%95/10688635?fr=aladdin)
+
 [图解分布式一致性协议Paxos](https://www.cnblogs.com/hugb/p/8955505.html)
+
 [RAFT协议](https://raft.github.io/)
+
 [Visualizations Raft: Understandable Distributed Consensus](http://thesecretlivesofdata.com/raft/)
+
 [基于quartz和zookeeper的分布式调度设计](https://juejin.im/post/5c55ac0bf265da2da771a216)
+
 [Hyperledger Fabric](https://cloud.ibm.com/docs/services/blockchain?topic=blockchain-hyperledger-fabric)
+
 [Building a Distributed Log from Scratch, Part 2: Data Replication](https://bravenewgeek.com/tag/leader-election/)
 
-
 [Optimizing and Implementing Paxos](http://web.cse.ohio-state.edu/~wang.7564/cse5439/Paxos2.pdf)
+
 [Analyzing Bitcoin Security](https://www.slideshare.net/philippecamacho/analyzing-bitcoin-security)
 
 [Practical Byzantine Fault Tolerance](http://pmg.csail.mit.edu/papers/osdi99.pdf)
