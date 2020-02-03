@@ -489,3 +489,7 @@ ref:
 [Practical Byzantine Fault Tolerance](http://pmg.csail.mit.edu/papers/osdi99.pdf)
 
 [From Distributed Consensus Algorithms to the Blockchain Consensus Mechanism](https://medium.com/datadriveninvestor/from-distributed-consensus-algorithms-to-the-blockchain-consensus-mechanism-75ee036abb65)
+
+[Implementing PBFT in Blockchain](https://medium.com/coinmonks/implementing-pbft-in-blockchain-12368c6c9548)
+
+[pBFT— Understanding the Consensus Algorithm](https://medium.com/coinmonks/pbft-understanding-the-algorithm-b7a7869650ae)
