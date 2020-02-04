@@ -7,7 +7,7 @@
     <meta name="description" content="软件开发教程，渗透测试入门教程，区块链入门教程，物联网，大数据">
     
     
-    <link rel="preload" href="/docs/assets/css/0.styles.8afa94d5.css" as="style"><link rel="preload" href="/docs/assets/js/app.fbcb49ec.js" as="script"><link rel="preload" href="/docs/assets/js/2.5d2fca3b.js" as="script"><link rel="preload" href="/docs/assets/js/14.1969a59e.js" as="script"><link rel="prefetch" href="/docs/assets/js/10.78be33ff.js"><link rel="prefetch" href="/docs/assets/js/11.d92b133a.js"><link rel="prefetch" href="/docs/assets/js/12.fc24b5f8.js"><link rel="prefetch" href="/docs/assets/js/13.4e39f146.js"><link rel="prefetch" href="/docs/assets/js/15.f54708db.js"><link rel="prefetch" href="/docs/assets/js/3.74cf30dc.js"><link rel="prefetch" href="/docs/assets/js/4.6b1b1ab7.js"><link rel="prefetch" href="/docs/assets/js/5.15cc1684.js"><link rel="prefetch" href="/docs/assets/js/6.28fbebb9.js"><link rel="prefetch" href="/docs/assets/js/7.4d65fcb9.js"><link rel="prefetch" href="/docs/assets/js/8.f5a3b8d1.js"><link rel="prefetch" href="/docs/assets/js/9.065e49f7.js">
+    <link rel="preload" href="/docs/assets/css/0.styles.8afa94d5.css" as="style"><link rel="preload" href="/docs/assets/js/app.8d5aa054.js" as="script"><link rel="preload" href="/docs/assets/js/2.5d2fca3b.js" as="script"><link rel="preload" href="/docs/assets/js/14.ddfbae56.js" as="script"><link rel="prefetch" href="/docs/assets/js/10.866ab40a.js"><link rel="prefetch" href="/docs/assets/js/11.d92b133a.js"><link rel="prefetch" href="/docs/assets/js/12.fc24b5f8.js"><link rel="prefetch" href="/docs/assets/js/13.4e39f146.js"><link rel="prefetch" href="/docs/assets/js/15.f54708db.js"><link rel="prefetch" href="/docs/assets/js/3.74cf30dc.js"><link rel="prefetch" href="/docs/assets/js/4.6b1b1ab7.js"><link rel="prefetch" href="/docs/assets/js/5.15cc1684.js"><link rel="prefetch" href="/docs/assets/js/6.28fbebb9.js"><link rel="prefetch" href="/docs/assets/js/7.8f5458fe.js"><link rel="prefetch" href="/docs/assets/js/8.72a93404.js"><link rel="prefetch" href="/docs/assets/js/9.eeba6148.js">
     <link rel="stylesheet" href="/docs/assets/css/0.styles.8afa94d5.css">
   </head>
   <body>
@@ -111,41 +111,40 @@ acceptedProposal=minProposal=3，acceptedValue=&quot;Bob航班scoot100，座位�
 所以Node2也只好放弃重头开始重新提议【Node2-P-4】...如此循环，谁也无法成功实现决议
 </code></pre></div><p>解决上面的活锁问题有两种方法，一个是在每次重头开始提新提议的时候加一个随机的delay延迟，这样会可以给机会让其中一个proposer成功完成提议和决议；
 另一种比较更多采用的做法就是从proposer中选一个leader出来，由leader统一提议决议，避免冲突。</p> <p>说到这里，还有一个问题，上面说了对于2F+1个节点，只需要F+1个节点达成一致就可以move forward，即对外部提供服务了，所以paxos为了前面提到的FLP理论的liveness要求，引入了一个learner的概念，</p> <blockquote><p>Learners act as the replication factor for the protocol. Once a Client request has been agreed upon by the Acceptors, the Learner may take action (i.e.: execute the request and send a response to the client). To improve availability of processing, additional Learners can be added.
-Model application as a deterministic state machine
-acceptor接受数据后会通知给每一个learner节点，learner在判断已经有F+1个节点达成共识后就可以返回给客户端以及同步给其他Acceptor节点，
-当然paxos算法本身并不保证liveness，只是引入learner可以改善提升liveness。</p></blockquote> <p>PAXOS很经典但是也是比较臭名昭著的复杂，RAFT是其实现的简化版本，实际上前面“主备方案”中提到的zookeeper的ZAP也都是跟RAFT类似的思想，RAFT主要包含选举leader election和日志拷贝log replication：
+Model application as a deterministic state machine</p></blockquote> <p>acceptor接受数据后会通知给每一个learner节点，learner在判断已经有F+1个节点达成共识后就可以返回给客户端以及同步给其他Acceptor节点，
+当然paxos算法本身并不保证liveness，只是引入learner可以改善提升liveness。</p> <p>PAXOS很经典但是也是比较臭名昭著的复杂，RAFT是其实现的简化版本，实际上前面“主备方案”中提到的zookeeper的ZAP也都是跟RAFT类似的思想，RAFT主要包含选举leader election和日志拷贝log replication：
 比如leader election也是利用心跳和过半数选举的机制，并且leader也是有第几代leader的term标志，ZAP用的是epoch，paxos使用Ballot Number；
 然后log replication跟simple paxos的2PC类似但又不同，首先所有客户端的写请求都会转发给leader来处理，然后leader写入日志，状态是uncommitted，通过心跳发给所有followers，
-follower收到后也写入自己的日志，状态是uncommitted，等得到过半数的followers的ack响应后将状态改为committed，然后再通知所有follower，follower收到后也更新数据更改状态为committed，</p> <p>下面拿RAFT协议来覆盖一下前面没提到的分区容错partition tolerance，以网络分区的例子来说明下为什么前面提到的分布式算法思想可以实现分布式一致性状态机，</p> <p><img src="/docs/docs_image/software/distrubuted_system03.png" alt="raft"></p> <p>可以看到网络分为两个分区，两个leader，他们的时代是不同的一个是term=1一个是term=2，互相不知道彼此，但是由于term=1在更改数据的时候无法得到超过半数的响应，
+follower收到后也写入自己的日志，状态是uncommitted，等得到过半数的followers的ack响应后将状态改为committed，然后再通知所有follower，follower收到后也更新数据更改状态为committed，</p> <p>下面拿RAFT协议来完善一下前面没提到的分区容错partition tolerance，以网络分区的例子来说明下为什么前面提到的分布式算法思想可以实现分布式一致性状态机，</p> <p><img src="/docs/docs_image/software/distrubuted_system03.png" alt="raft"></p> <p>可以看到网络分为两个分区，两个leader，他们的时代是不同的一个是term=1一个是term=2，互相不知道彼此，但是由于term=1在更改数据的时候无法得到超过半数的响应，
 所以所有数据更改都会处于uncommit未提交状态；而反之在另一边term=2这里，是可以达成共识的；
-最后一旦网络恢复正常，term=1的分区就会发现自己全部过时了，就会放弃自己的uncommit日志，同步term=2的提交日志；</p> <h3 id="_2-2-分布式产品和zookeeper"><a href="#_2-2-分布式产品和zookeeper" class="header-anchor">#</a> 2.2 分布式产品和zookeeper</h3> <p>前面讲了很多理论，现在我们落实到市面上的各种分布式产品，看看具体大家都是如何实现的，然后再讲下如何动手自己写一个简单的分布式系统</p> <ul><li><p>分布式服务框架 zookeeper的ZAP协议</p></li> <li><p>分布式消息队列集群Kafka</p></li> <li><p>分布式计算 spark, storm以及Hadoop mapreduce2.0</p></li> <li><p>分布式存储系统：hbase基于zookeeper, 而ETCD采用RAFT协议</p></li> <li><p>分布式任务调度：Elastic-Job等</p></li></ul> <p>可以看几个产品的架构图</p> <p><img src="/docs/docs_image/software/distrubuted_system11.png" alt="Kafka"> <img src="/docs/docs_image/software/distrubuted_system12.png" alt="HDFS"> <img src="/docs/docs_image/software/distrubuted_system13.png" alt="HADOOP"></p> <p>Since Hadoop 2.0, ZooKeeper has become an essential service for Hadoop clusters, providing a mechanism for enabling high-availability of former single points of failure, specifically the HDFS NameNode and YARN ResourceManager.
-https://www.datadoghq.com/blog/hadoop-architecture-overview/</p> <p>观察可以发现一个问题，为啥大部分都需要依赖分布式框架zookeeper？？</p> <p>简单来说，不要重复造轮子，zookeeper可以用于集群管理，只不过有些可以脱离zookeeper单机部署，有些则是只支持集群模式，跟zookeeper耦合紧密，
+最后一旦网络恢复正常，term=1的分区就会发现自己全部过时了，就会放弃自己的uncommit日志，同步term=2的提交日志；</p> <h3 id="_2-2-分布式产品和zookeeper"><a href="#_2-2-分布式产品和zookeeper" class="header-anchor">#</a> 2.2 分布式产品和zookeeper</h3> <p>前面讲了很多理论，现在我们落实到市面上的各种分布式产品，看看具体大家都是如何实现的，然后再讲下如何动手自己写一个简单的分布式系统</p> <ul><li><p>分布式服务框架 zookeeper的ZAP协议</p></li> <li><p>分布式消息队列集群Kafka</p></li> <li><p>分布式计算 spark, storm以及Hadoop mapreduce2.0</p></li> <li><p>分布式存储系统：hbase基于zookeeper, 而ETCD采用RAFT协议</p></li> <li><p>分布式任务调度：Elastic-Job等</p></li></ul> <p>可以看几个产品的架构图</p> <p><img src="/docs/docs_image/software/distrubuted_system11.png" alt="Kafka"> <img src="/docs/docs_image/software/distrubuted_system12.png" alt="HDFS"> <img src="/docs/docs_image/software/distrubuted_system13.png" alt="HADOOP"></p> <blockquote><p>Since Hadoop 2.0, ZooKeeper has become an essential service for Hadoop clusters, providing a mechanism for enabling high-availability of former single points of failure, specifically the HDFS NameNode and YARN ResourceManager.
+https://www.datadoghq.com/blog/hadoop-architecture-overview/</p></blockquote> <p>观察可以发现一个问题，为啥大部分都需要依赖分布式框架zookeeper？？</p> <p>简单来说，不要重复造轮子，zookeeper可以用于集群管理，只不过有些可以脱离zookeeper单机部署，有些则是只支持集群模式，跟zookeeper耦合紧密，
 Quartz就是支持单机版也支持集群，但是其集群基于数据库锁，严重耦合，所以有人也将其改造成为基于zookeeper集群管理的模式，当然我们谈的是分布式系统，所以这里不讨论单机版本</p> <p>举一个例子：</p> <p><img src="/docs/docs_image/software/distrubuted_system14.png" alt="分布式管理例子">
 中央就是zookeeper，本身是集群，政治协商，一个挂掉还会迅速选一个，中央的主要工作是做集群管理，具体的生产生活还要交由Apache/Storm这些地方政府节点来做，
 地方节点之间也是一个集群，比如分布式商务系统集群（商务部是集群的leader，向中央注册），分布式农业系统集群等</p> <p>Zookeeper适用的场景：
-https://www.ibm.com/developerworks/cn/opensource/os-cn-zookeeper/index.html</p> <blockquote><p>统一命名服务（Name Service）</p></blockquote> <blockquote><p>配置管理（Configuration Management）</p></blockquote> <blockquote><p>集群管理（Group Membership）</p></blockquote> <blockquote><p>共享锁（Locks）：共享锁在同一个进程中很容易实现，但是在跨进程或者在不同 Server 之间就不好实现了</p></blockquote> <h3 id="_2-3-动手写一个简单的分布式系统"><a href="#_2-3-动手写一个简单的分布式系统" class="header-anchor">#</a> 2.3 动手写一个简单的分布式系统</h3> <p>假设我们需要创建一个分布式任务调度，当然是从零开始，不采用市面上的分布式任务调度产品，假设这些任务存在数据库</p> <p>首先我们肯定需要一些干活的workers，负责执行具体任务，想象一下我们创建了一个java程序执行具体的任务逻辑；</p> <p>由于正常情况下一般除非是定制了class loader否则一个java程序是跑在一个单独的jvm实例当中，
+https://www.ibm.com/developerworks/cn/opensource/os-cn-zookeeper/index.html</p> <ul><li><p>统一命名服务（Name Service）</p></li> <li><p>配置管理（Configuration Management）</p></li> <li><p>集群管理（Group Membership）</p></li> <li><p>共享锁（Locks）：共享锁在同一个进程中很容易实现，但是在跨进程或者在不同 Server 之间就不好实现了</p></li></ul> <h3 id="_2-3-动手写一个简单的分布式系统"><a href="#_2-3-动手写一个简单的分布式系统" class="header-anchor">#</a> 2.3 动手写一个简单的分布式系统</h3> <p>假设我们需要创建一个分布式任务调度，当然是从零开始，不采用市面上的分布式任务调度产品，假设这些任务存在数据库</p> <p>首先我们肯定需要一些干活的workers，负责执行具体任务，想象一下我们创建了一个java程序执行具体的任务逻辑；</p> <p>由于正常情况下一般除非是定制了class loader否则一个java程序是跑在一个单独的jvm实例当中，
 所以分布式部署的情况下，每个worker都在一个独立的jvm实例中，部署在多台机器上，多个互相独立的jvm实例之间需要协商分配这些任务，
 同时去读写数据库的任务列表很容易造成冲突，显然如果我们不采用共识算法，处理起来会毫无头绪，
 最直接简单的想法就是从中找一个特别的worker作为leader来做这个分配，这里就引入了zookeeper，
 你可能会说不引入zookeeper，自己写一个单独的leader程序不行吗，确实可以，不过leader程序也要做成集群式的，不可以引入单点故障，
 所以为了简单，直接让这些workers都注册zookeeper，不同的java程序微服务之间通过zookeeper的observer监听模式实现同步节点信息，
-这样每个worker都可以保存一份同步的worker list，怎么从worker list中选出一个leader呢，两个思路：</p> <blockquote><p>可以简单设计一些规则来实现选举，比如通过配置文件定义好是否是leader候选人，然后选的时候就通过排序找到第一个活着的候选人即可；</p></blockquote> <blockquote><p>基于zookeeper 的临时节点实现选举，zookeeper除了手动才能删除的持久节点，还有一种ephemeral临时节点，如果临时节点的创建者客户，失去zookeeper连接，临时节点就会自动删除，
-然后zookeeper的架构是基于观察者模式，加上共享锁，所有注册的客户端都抢注比如/leader节点，不管是谁抢注成功其他客户端都会收到通知；</p></blockquote> <blockquote><p>前一种方式比较低级，其实可以通过curator高级API封装好的leader election recipes，curator利用zookeeper的EPHEMERAL_SEQUENTIAL实现分布式锁加观察模式封装了两种leader选举，leader latch和leader election，
+这样每个worker都可以保存一份同步的worker list，怎么从worker list中选出一个leader呢，两个思路：</p> <p>可以简单设计一些规则来实现选举，比如通过配置文件定义好是否是leader候选人，然后选的时候就通过排序找到第一个活着的候选人即可；</p> <p>基于zookeeper 的临时节点实现选举，zookeeper除了手动才能删除的持久节点，还有一种ephemeral临时节点，如果临时节点的创建者客户，失去zookeeper连接，临时节点就会自动删除，
+然后zookeeper的架构是基于观察者模式，加上共享锁，所有注册的客户端都抢注比如/leader节点，不管是谁抢注成功其他客户端都会收到通知；</p> <p>前一种方式比较低级，其实可以通过curator高级API封装好的leader election recipes，curator利用zookeeper的EPHEMERAL_SEQUENTIAL实现分布式锁加观察模式封装了两种leader选举，leader latch和leader election，
 默认都是普通worker，在抢到leadership的时候激活为leader，不过这种方式有个缺点，其他普通的worker无法得知选举结果，所以在某些场景下，当worker需要向leader汇报情况的时候就做不了了，
 需要额外再做点处理，比如leader election的方式可以在take leadership的时候，通过rpc通知其他节点自己是leader，或者也可以将自己的id注册在zookeeper的一个特定的path上，比如/leader/result，
-这样其他节点就可以通过监听获取到leader选举结果；分布式计算引擎Spark采用了curator的leader latch方式选举leader;</p></blockquote> <p>现在还没有结束，现在有了动态选举的leader和一群worker，leader要怎么分发任务给worker，他们是互不想干的独立进程，可能部署在不同的机器上，通过zookeeper吗？
+这样其他节点就可以通过监听获取到leader选举结果；分布式计算引擎Spark采用了curator的leader latch方式选举leader;</p> <p>现在还没有结束，现在有了动态选举的leader和一群worker，leader要怎么分发任务给worker，他们是互不想干的独立进程，可能部署在不同的机器上，通过zookeeper吗？
 zookeeper只支持最简单的推拉消息，每次节点注册时，只会通知各节点有nodechange事件，各节点自行去zookeeper pull拉取具体变化信息，
 所以我们无法通过zookeeper实现worker及leader节点之间的要求，这里就引入了rpc通信协议，相比较基于HTTP的web service，基于TCP的rpc性能更优，然后结合proxy代理模式对调用方法接口进行封装，
 可以让微服务在调用远程方法的时候就像调用自身方法一样透明。
 然后因为所有worker及leader节点都保存了一份节点列表，所以leader分发任务的时候就可以采取一定的策略，比如round robin或load balance方式rpc调用worker分发任务；
-至于worker节点，虽然也保存了一份节点列表但一般只需要跟leader通信，当然如果leader挂掉，worker变成leader还是要用这个列表的；</p> <p><img src="/docs/docs_image/software/distrubuted_system15.png" alt="分布式任务调度"></p> <p>还需要思考的问题：</p> <blockquote><p>上面不管是直接通过使用zookeeper的临时节点还是使用curator recipes进行选举，都无法避免一种场景的出现，比如选举出的leader无法连接数据库获取任务，
-针对这种异常场景，需要额外增加监控逻辑，比如心跳检测leader跟数据库的连接，一旦出现问题就断开跟zookeeper的连接，下线故障leader，去主动触发重新选举；</p></blockquote> <blockquote><p>如何保证leader选举的唯一性，
+至于worker节点，虽然也保存了一份节点列表但一般只需要跟leader通信，当然如果leader挂掉，worker变成leader还是要用这个列表的；</p> <p><img src="/docs/docs_image/software/distrubuted_system15.png" alt="分布式任务调度"></p> <p>还需要思考的问题：</p> <ul><li><p>1.上面不管是直接通过使用zookeeper的临时节点还是使用curator recipes进行选举，都无法避免一种场景的出现，比如选举出的leader无法连接数据库获取任务，
+针对这种异常场景，需要额外增加监控逻辑，比如心跳检测leader跟数据库的连接，一旦出现问题就断开跟zookeeper的连接，下线故障leader，去主动触发重新选举；</p></li> <li><p>2.如何保证leader选举的唯一性，
 前面这个问题的一个类似场景是，leader断开了跟zookeeper的连接，但是还保持跟数据库及其他节点的连接，由于他已经断开了zookeeper的连接，无法通过观察者模式获取新leader的选举，
 他还认为自己是leader，这个场景比较容易解决，可以在通过监控跟zookeeper的心跳连接情况，一旦断开就直接剥夺leader的头衔并下线机器，
-但是在剥夺之前的时间窗口内还是存在多个leader问题，从而会产生下游任务重复触发并发执行的问题；</p></blockquote> <blockquote><p>在上面这个问题无法解决的情况下，应该还要从下游去控制，比如从具体任务执行层面，精度不要放太高，比如放秒级或者分钟级，这样可以通过检查该秒或分钟内是否该任务已经触发来挡住重复的触发命令</p></blockquote> <blockquote><p>如何在leader宕机的瞬间保持数据不丢失，新leader如何恢复旧leader宕机之前的状态</p></blockquote> <blockquote><p>前面只是简单说leader会做任务分发，但是没有说谁会来判断任务触发是否满足条件，比如一种方式是leader来判断所有事件依赖以及是否满足触发条件，然后如果满足才会分发下去，
+但是在剥夺之前的时间窗口内还是存在多个leader问题，从而会产生下游任务重复触发并发执行的问题；</p></li> <li><p>3.在上面这个问题无法解决的情况下，应该还要从下游去控制，比如从具体任务执行层面，精度不要放太高，比如放秒级或者分钟级，这样可以通过检查该秒或分钟内是否该任务已经触发来挡住重复的触发命令</p></li> <li><p>4.如何在leader宕机的瞬间保持数据不丢失，新leader如何恢复旧leader宕机之前的状态</p></li> <li><p>5.前面只是简单说leader会做任务分发，但是没有说谁会来判断任务触发是否满足条件，比如一种方式是leader来判断所有事件依赖以及是否满足触发条件，然后如果满足才会分发下去，
 另一种方式是，leader将任务直接简单的根据比如round robin策略分发出去，由具体的worker来判断依赖关系及等待其达到触发条件后再执行；
 后一种方式的问题是，如果某个任务的依赖任务分发给了另外一个worker，这些worker需要频繁的请求leader中心节点同步任务状态，
-所以第二种做法更简单的处理是分发任务时将一组有依赖关系的任务都分发给同一个worker，这样就避免了多节点之间的任务依赖，前面引用的一个用quartz基于zookeeper的实现架构就是第二种做法；</p></blockquote> <blockquote><p>上面是假设数据都是放到数据库的，而且只允许leader单节点去维护，设想一下数据分布在每个节点上，比如每个节点都有完整的数据备份，同步起来就只能采取共识算法来做比较合理；</p></blockquote> <hr> <h2 id="_3-基于拜占庭容错bft-byzantine-fault-tolerance-的分布式账本技术"><a href="#_3-基于拜占庭容错bft-byzantine-fault-tolerance-的分布式账本技术" class="header-anchor">#</a> 3.基于拜占庭容错BFT(Byzantine fault tolerance)的分布式账本技术</h2> <p><img src="/docs/docs_image/software/distrubuted_system16.png" alt="网络类型"></p> <p>我们前面谈到的不管是zookeeper的ZAP，paxos还是raft都不能算是真正的分布式，因为基本都是要选举出leader来主持大局，真正的分布式节点是完全平等的，不存在谁是leader，
+所以第二种做法更简单的处理是分发任务时将一组有依赖关系的任务都分发给同一个worker，这样就避免了多节点之间的任务依赖，前面引用的一个用quartz基于zookeeper的实现架构就是第二种做法；</p></li> <li><p>6.上面是假设数据都是放到数据库的，而且只允许leader单节点去维护，设想一下数据分布在每个节点上，比如每个节点都有完整的数据备份，同步起来就只能采取共识算法来做比较合理；</p></li></ul> <hr> <h2 id="_3-基于拜占庭容错bft-byzantine-fault-tolerance-的分布式账本技术"><a href="#_3-基于拜占庭容错bft-byzantine-fault-tolerance-的分布式账本技术" class="header-anchor">#</a> 3.基于拜占庭容错BFT(Byzantine fault tolerance)的分布式账本技术</h2> <p><img src="/docs/docs_image/software/distrubuted_system16.png" alt="网络类型"></p> <p>我们前面谈到的不管是zookeeper的ZAP，paxos还是raft都不能算是真正的分布式，因为基本都是要选举出leader来主持大局，真正的分布式节点是完全平等的，不存在谁是leader，
 所以基本都只能算是多中心的分布式系统；
 而且我们看到实际的分布式产品大多是基于zookeeper，zookeeper本身也不是真正的分布式框架，因为其本身集群也是有leader和follower的，所以基于zookeeper的分布式系统更会不是真的分布式；</p> <p>其实这里还隐含着另外一个问题，我们前面的分布式产品都是部署在内网中，不管是私有云公有云还是自己的机房，都不会给外界暴露端口，一般更不会允许外面的节点随便连进来，属于关在笼子里面的内部系统，
 根源在于上面提到的算法都是基于故障容错的，都是假设节点不会有恶意节点，因为都是自己公司内部部署的，自己肯定不会搞自己，这也是为什么无法任意对接外部节点的重要原因；</p> <p>所以区块链技术，尤其是比特币作为区块链的第一应用，到目前为止平稳运行了十多年，是真正意义上的去中心化分布式技术，不管是手机，普通电脑，还是矿机，都可以运行一个比特币节点，随时加入退出，
@@ -240,117 +239,175 @@ PBFT的理论之一quorum replication [Gifford 1979]
 这里就不再做讨论，
 通过POW工作量证明，动态调整难度，限制了挖矿节点提交区块的速度，保证大概10分钟左右生成一个区块,随机数的加入也让每一次打包变成了一次相对独立的随机事件，为后面泊松分布的证明打下伏笔；
 另外通过script脚本解决了
-拜占庭将军传递假消息问题：密码学保证数据一致性，除了矿工奖励，新的交易必然是解锁已经存在的utxo，</p> <p>destroying the Bitcoin system will also undermine the effectiveness of his own wealth</p> <ul><li>2.第二步 长链胜出：泊松分布的胜利</li></ul> <p>在一条链上无法double spent，但是可以在软分叉链上double spent，</p> <p><img src="/docs/docs_image/software/distrubuted_system26.png" alt="tamper block"></p> <hr> <p>ref:</p> <p><a href="https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab1.0" target="_blank" rel="noopener noreferrer">Zab in words<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://www.youtube.com/watch?v=JEpsBg0AO6o" target="_blank" rel="noopener noreferrer">Paxos lecture (Raft user study)<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="http://lamport.azurewebsites.net/pubs/pubs.html#paxos-simple" target="_blank" rel="noopener noreferrer">Paxos Made Simple<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://medium.com/@angusmacdonald/paxos-by-example-66d934e18522" target="_blank" rel="noopener noreferrer">Paxos By Example<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://baike.baidu.com/item/Paxos%20%E7%AE%97%E6%B3%95/10688635?fr=aladdin" target="_blank" rel="noopener noreferrer">Paxos 算法<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://www.cnblogs.com/hugb/p/8955505.html" target="_blank" rel="noopener noreferrer">图解分布式一致性协议Paxos<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://raft.github.io/" target="_blank" rel="noopener noreferrer">RAFT协议<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="http://thesecretlivesofdata.com/raft/" target="_blank" rel="noopener noreferrer">Visualizations Raft: Understandable Distributed Consensus<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://juejin.im/post/5c55ac0bf265da2da771a216" target="_blank" rel="noopener noreferrer">基于quartz和zookeeper的分布式调度设计<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://cloud.ibm.com/docs/services/blockchain?topic=blockchain-hyperledger-fabric" target="_blank" rel="noopener noreferrer">Hyperledger Fabric<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://bravenewgeek.com/tag/leader-election/" target="_blank" rel="noopener noreferrer">Building a Distributed Log from Scratch, Part 2: Data Replication<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="http://web.cse.ohio-state.edu/~wang.7564/cse5439/Paxos2.pdf" target="_blank" rel="noopener noreferrer">Optimizing and Implementing Paxos<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://www.slideshare.net/philippecamacho/analyzing-bitcoin-security" target="_blank" rel="noopener noreferrer">Analyzing Bitcoin Security<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="http://pmg.csail.mit.edu/papers/osdi99.pdf" target="_blank" rel="noopener noreferrer">Practical Byzantine Fault Tolerance<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://medium.com/datadriveninvestor/from-distributed-consensus-algorithms-to-the-blockchain-consensus-mechanism-75ee036abb65" target="_blank" rel="noopener noreferrer">From Distributed Consensus Algorithms to the Blockchain Consensus Mechanism<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://medium.com/coinmonks/implementing-pbft-in-blockchain-12368c6c9548" target="_blank" rel="noopener noreferrer">Implementing PBFT in Blockchain<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://medium.com/coinmonks/pbft-understanding-the-algorithm-b7a7869650ae" target="_blank" rel="noopener noreferrer">pBFT— Understanding the Consensus Algorithm<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="http://www.pmg.csail.mit.edu/papers/bft-tocs.pdf" target="_blank" rel="noopener noreferrer">Practical Byzantine Fault Tolerance and Proactive Recovery<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://people.eecs.berkeley.edu/~luca/cs174/byzantine.pdf" target="_blank" rel="noopener noreferrer">The Byzantine Generals Problem LESLIE LAMPORT, ROBERT SHOSTAK, and MARSHALL PEASE SRI International<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="http://pages.cs.wisc.edu/~sschang/OS-Qual/reliability/byzantine.htm" target="_blank" rel="noopener noreferrer">The Byzantine Generals Problem<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <hr> <p>Additional info: <a href="http://www.scs.stanford.edu/14au-cs244b/notes/pbft.txt" target="_blank" rel="noopener noreferrer">pbft notes<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <h1 id="practical-byzantine-fault-tolerance"><a href="#practical-byzantine-fault-tolerance" class="header-anchor">#</a> Practical Byzantine Fault Tolerance</h1> <p>Suppose you have N replicas, f of which might crash (non-Byzantine failure)
-What quorum size Q do you need to guarantee liveness and safety?</p> <ul><li>Liveness: (or pseudo-liveness, i.e., avoiding stuck states)
-There must be a non-failed quorum (<em>quorum availability</em>)
-Hence: Q &lt;= N - f</li> <li>Safety:  Any two quorums must intersect at one or more nodes
-Otherwise, two quorums could independently accept operations, diverge
-This property is often known as the <em>quorum intersection</em> property
-Hence: 2Q - N &gt; 0
-So: N &lt; 2Q &lt;= 2(N - f)
-Note highest possible f: N &lt; 2N-2f; f &lt; N/2
-And if N = 2f + 1, smallest Q is 2Q &gt; 2f + 1; Q = f + 1</li></ul> <p>Now say we throw in Byzantine failures.  One view...
-Say you have N nodes, f of which might experience Byzantine failure.
-First, how can Byzantine failures be worse than non-Byzantine?
-Byzantine nodes can vote for both a statement and its contradiction
-Make different statements to different nodes
-Consequences
-Risks driving non-failed nodes into divergent states
-Risks driving non-failed nodes into &quot;stuck states&quot;
-E.g., cause split vote on seemingly irrefutable statement
-Paxos example:  You think majority aborted some ballot b v
-You vote to commit b' v' (where b' &gt; b, v' != v)
-Can't convince other nodes it is safe to vote for b'</p> <p>What quorum size Q do we need in Byzantine setting?</p> <ul><li>Liveness: Q &lt;= N - f
-As in non-Byzantine case, failed nodes might not reply</li> <li>Safety: Quorum intersection must contain one non-faulty node
-Idea: out of f+1 nodes, at most one can be faulty
-Hence:  2Q - N &gt; f    (since f could be malicious)
-So: N + f &lt; 2Q &lt;= 2(N - f)
-Highest f:  N+f &lt; 2N-2f; 3f &lt; N; f &lt; N/3
-And if N = 3f + 1, the smallest Q is:
-N + f &lt; 2Q; 3f + 1 + f &lt; 2Q;  2f + 1/2 &lt; Q; Q_min = 2f + 1</li></ul> <p>So how does PBFT protocol work?
-Number replica cohorts 1, 2, 3, ..., 3f+1
-Number requests with consecutive sequence numbers (not viewstamps)
-System goes through a series of views
-In view v, replica number v mod (3f+1) is designated the primary
-Primary is responsible for selecting the order of operations
-Assigns an increasing sequence number to each operation
-In normal-case operation, use two-round protocol for request r:
-Round 1 (pre-prepare, prepare) goal:
-Ensure at least f+1 honest replicas agree that
-If request r executes in view v, will execute with sequence no. n
-Round 2 (commit) goal:
-Ensure at least f+1 honest replicas agree that
-Request r has executed in view v with sequence no. n</p> <p>Protocol for normal-case operation
-Let c be client
-r_i be replica i, or p primary, b_i backup i
-R set of all replicas</p> <pre><code>c -&gt; p:  m = {REQUEST, o, t, c}_Kc
-p -&gt; R:  {PRE-PREPARE, v, n, d}_Kp, m     (note d = H(m))
-</code></pre> <p>b_i -&gt; R:  {PREPARE, v, n, d, i}_K{r_i}
-[Note all messages signed, so will omit signatures and use &lt; &gt; henceforth.]</p> <p>replica r_i now waits for PRE-PREPARE + 2f matching PREPARE messages
-puts these messages in its log
-then we say prepared(m, v, n, i) is TRUE</p> <p>Note:  If prepared(m, v, n, i) is TRUE for honest replica r_i
-then prepared(m', v, n, j) where m' != m FALSE for any honest r_j
-So no other operation can execute with view v sequence number n</p> <p>Are we done?  Just reply to client?  No
-Just because some other m' won't execute at (v,n) doesn't mean m will
-Suppose r_i is compromised right after prepared(m, v, n, i)
-Suppose no other replica received r_i's prepare message
-Suppose f replicas are slow and never even received the PRE-PREPARE
-No other honest replica will know the request prepared!
-Particularly if p fails, request might not get executed!</p> <p>So we say operation doesn't execute until
-prepared(m, v, n, i) is TRUE for f+1 non-faulty replicas r_i
-We say committed(m, v, n) is TRUE when this property holds</p> <p>So how does a replica <em>know</em> committed(m, v, n) holds?
-Add one more message:</p> <p>r_i -&gt; R: &lt;COMMIT, v, n, d, i&gt;    (sent only after prepared(m,v,n,i))</p> <p>replica r_i waits for 2f+1 identical COMMIT messages (including its own)
-committed-local(m, v, n, i) is TRUE when:
-prepared(m, v, n, i) is TRUE, and
-r_i has 2f+1 matching commits in its log</p> <p>Note:  If committed-local(m, v, n, i) is TRUE for any non-faulty r_i
-Then means committed(m, v, n) is TRUE.
-r_i knows when committed-local is TRUE
-So committed-local is a replica's way of knowing that committed is TRUE</p> <p>r_i replies to client when committed-local(m, v, n, i) is TRUE
-Client waits for f+1 matching replies, then returns to client
-Why f+1 and not 2f+1?
-Because of f+1, at least one replica r_i is non-faulty
-So client knows committed-local(m, v, n, i)
-Which in turn implies committed(m, v, n)
-Note tentative reply optimization:
-r_i can send tentative reply to client after prepared(m, v, n, i)
-Client can accept result after 2f+1 matching tentative replies.  Why?
-f+1 of those replies must be from honest nodes
-And at least 1 of those f+1 will be part of 2f+1 forming a new view
-So that 1 node will make sure operation makes it to new view</p> <p>Garbage collecting the message log
-make periodic checkpoints
-Broadcast &lt;CHECKPOINT, n, d, i&gt;, where d = digest of state
-When 2f+1 signed CHECKPOINTs received
-restrict sequence numbers are between h and H
-h = sequence number of last stable checkpoint
-H = h + k   (e.g., k might be 2 * checkpoint interval of 100)
-delete all messages below sequence number of stable checkpoint</p> <p>View changes
-When client doesn't get an answer, broadcasts message to all replicas
-If a backup notices primary is slow/unresponsive:</p> <ul><li>broadcast &lt;VIEW-CHANGE v+1, n, C, P, i&gt;
-C is 2f+1 signed checkpoint messages for last stable checkpoint
-P = {P_m} where each P_m is signed PRE-PREPARE + 2f signed PREPARES
-i.e., P is set of all PREPAREd messages since checkpoint
-+ proof that the messages really are prepared</li></ul> <p>When primary of view v+1 sees 2f signed VIEW-CHANGE messages from others</p> <ul><li>New primary broadcasts &lt;NEW-VIEW, v+1, V, O&gt;
-V is set of at lesat 2f+1 VIEW-CHANGE messages (including by new primary)
-O is a set of pre-prepare messages, for operations that are:
-- after last stable checkpoint
-- appear in the set P of one of the VIEW-CHANGE messages
-O also contains dummy messages to fill in sequence number gaps</li></ul> <p>Replicas may optain any missing state from each other
-(e.g., stable checkpoint data, or missing operation, since
-reissued pre-prepare messages only contain digest of request)</p> <p>What happens if primary creates incorrect O in NEW-VIEW message?
-E.g., might send null requests for operations that prepared
-Other replicas can compute O from V, and can reject NEW-VIEW message
+拜占庭将军传递假消息问题：密码学保证数据一致性，除了矿工奖励，新的交易必然是解锁已经存在的utxo，</p> <p>destroying the Bitcoin system will also undermine the effectiveness of his own wealth</p> <ul><li>2.第二步 长链胜出：泊松分布的胜利</li></ul> <p>在一条链上无法double spent，但是可以在软分叉链上double spent，</p> <p><img src="/docs/docs_image/software/distrubuted_system26.png" alt="tamper block"></p> <hr> <p>ref:</p> <p><a href="https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab1.0" target="_blank" rel="noopener noreferrer">Zab in words<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://www.youtube.com/watch?v=JEpsBg0AO6o" target="_blank" rel="noopener noreferrer">Paxos lecture (Raft user study)<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="http://lamport.azurewebsites.net/pubs/pubs.html#paxos-simple" target="_blank" rel="noopener noreferrer">Paxos Made Simple<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://medium.com/@angusmacdonald/paxos-by-example-66d934e18522" target="_blank" rel="noopener noreferrer">Paxos By Example<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://baike.baidu.com/item/Paxos%20%E7%AE%97%E6%B3%95/10688635?fr=aladdin" target="_blank" rel="noopener noreferrer">Paxos 算法<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://www.cnblogs.com/hugb/p/8955505.html" target="_blank" rel="noopener noreferrer">图解分布式一致性协议Paxos<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://raft.github.io/" target="_blank" rel="noopener noreferrer">RAFT协议<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="http://thesecretlivesofdata.com/raft/" target="_blank" rel="noopener noreferrer">Visualizations Raft: Understandable Distributed Consensus<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://juejin.im/post/5c55ac0bf265da2da771a216" target="_blank" rel="noopener noreferrer">基于quartz和zookeeper的分布式调度设计<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://cloud.ibm.com/docs/services/blockchain?topic=blockchain-hyperledger-fabric" target="_blank" rel="noopener noreferrer">Hyperledger Fabric<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://bravenewgeek.com/tag/leader-election/" target="_blank" rel="noopener noreferrer">Building a Distributed Log from Scratch, Part 2: Data Replication<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="http://web.cse.ohio-state.edu/~wang.7564/cse5439/Paxos2.pdf" target="_blank" rel="noopener noreferrer">Optimizing and Implementing Paxos<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://www.slideshare.net/philippecamacho/analyzing-bitcoin-security" target="_blank" rel="noopener noreferrer">Analyzing Bitcoin Security<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="http://pmg.csail.mit.edu/papers/osdi99.pdf" target="_blank" rel="noopener noreferrer">Practical Byzantine Fault Tolerance<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://medium.com/datadriveninvestor/from-distributed-consensus-algorithms-to-the-blockchain-consensus-mechanism-75ee036abb65" target="_blank" rel="noopener noreferrer">From Distributed Consensus Algorithms to the Blockchain Consensus Mechanism<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://medium.com/coinmonks/implementing-pbft-in-blockchain-12368c6c9548" target="_blank" rel="noopener noreferrer">Implementing PBFT in Blockchain<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://medium.com/coinmonks/pbft-understanding-the-algorithm-b7a7869650ae" target="_blank" rel="noopener noreferrer">pBFT— Understanding the Consensus Algorithm<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="http://www.pmg.csail.mit.edu/papers/bft-tocs.pdf" target="_blank" rel="noopener noreferrer">Practical Byzantine Fault Tolerance and Proactive Recovery<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://people.eecs.berkeley.edu/~luca/cs174/byzantine.pdf" target="_blank" rel="noopener noreferrer">The Byzantine Generals Problem LESLIE LAMPORT, ROBERT SHOSTAK, and MARSHALL PEASE SRI International<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="http://pages.cs.wisc.edu/~sschang/OS-Qual/reliability/byzantine.htm" target="_blank" rel="noopener noreferrer">The Byzantine Generals Problem<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <hr> <p>Additional info: <a href="http://www.scs.stanford.edu/14au-cs244b/notes/pbft.txt" target="_blank" rel="noopener noreferrer">pbft notes<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <div class="language- extra-class"><pre class="language-text"><code>
+Suppose you have N replicas, f of which might crash (non-Byzantine failure)
+What quorum size Q do you need to guarantee liveness and safety?
+  * Liveness: (or pseudo-liveness, i.e., avoiding stuck states)
+      There must be a non-failed quorum (*quorum availability*)
+      Hence: Q &lt;= N - f
+  * Safety:  Any two quorums must intersect at one or more nodes
+      Otherwise, two quorums could independently accept operations, diverge
+      This property is often known as the *quorum intersection* property
+      Hence: 2Q - N &gt; 0
+  So: N &lt; 2Q &lt;= 2(N - f)
+  Note highest possible f: N &lt; 2N-2f; f &lt; N/2
+  And if N = 2f + 1, smallest Q is 2Q &gt; 2f + 1; Q = f + 1
+
+Now say we throw in Byzantine failures.  One view...
+  Say you have N nodes, f of which might experience Byzantine failure.
+  First, how can Byzantine failures be worse than non-Byzantine?
+    Byzantine nodes can vote for both a statement and its contradiction
+    Make different statements to different nodes
+  Consequences
+    Risks driving non-failed nodes into divergent states
+    Risks driving non-failed nodes into &quot;stuck states&quot;
+      E.g., cause split vote on seemingly irrefutable statement
+      Paxos example:  You think majority aborted some ballot b v
+        You vote to commit b' v' (where b' &gt; b, v' != v)
+        Can't convince other nodes it is safe to vote for b'
+
+What quorum size Q do we need in Byzantine setting?
+  * Liveness: Q &lt;= N - f
+      As in non-Byzantine case, failed nodes might not reply
+  * Safety: Quorum intersection must contain one non-faulty node
+      Idea: out of f+1 nodes, at most one can be faulty
+      Hence:  2Q - N &gt; f    (since f could be malicious)
+  So: N + f &lt; 2Q &lt;= 2(N - f)
+  Highest f:  N+f &lt; 2N-2f; 3f &lt; N; f &lt; N/3
+  And if N = 3f + 1, the smallest Q is:
+    N + f &lt; 2Q; 3f + 1 + f &lt; 2Q;  2f + 1/2 &lt; Q; Q_min = 2f + 1
+
+So how does PBFT protocol work?
+  Number replica cohorts 1, 2, 3, ..., 3f+1
+  Number requests with consecutive sequence numbers (not viewstamps)
+  System goes through a series of views
+    In view v, replica number v mod (3f+1) is designated the primary
+    Primary is responsible for selecting the order of operations
+      Assigns an increasing sequence number to each operation
+  In normal-case operation, use two-round protocol for request r:
+    Round 1 (pre-prepare, prepare) goal:
+      Ensure at least f+1 honest replicas agree that
+        If request r executes in view v, will execute with sequence no. n
+    Round 2 (commit) goal:
+      Ensure at least f+1 honest replicas agree that
+        Request r has executed in view v with sequence no. n
+
+Protocol for normal-case operation
+  Let c be client
+      r_i be replica i, or p primary, b_i backup i
+      R set of all replicas
+
+    c -&gt; p:  m = {REQUEST, o, t, c}_Kc
+    p -&gt; R:  {PRE-PREPARE, v, n, d}_Kp, m     (note d = H(m))
+  b_i -&gt; R:  {PREPARE, v, n, d, i}_K{r_i}
+  [Note all messages signed, so will omit signatures and use &lt; &gt; henceforth.]
+
+  replica r_i now waits for PRE-PREPARE + 2f matching PREPARE messages
+     puts these messages in its log
+     then we say prepared(m, v, n, i) is TRUE
+
+  Note:  If prepared(m, v, n, i) is TRUE for honest replica r_i
+     then prepared(m', v, n, j) where m' != m FALSE for any honest r_j
+     So no other operation can execute with view v sequence number n
+
+  Are we done?  Just reply to client?  No
+    Just because some other m' won't execute at (v,n) doesn't mean m will
+    Suppose r_i is compromised right after prepared(m, v, n, i)
+    Suppose no other replica received r_i's prepare message
+    Suppose f replicas are slow and never even received the PRE-PREPARE
+    No other honest replica will know the request prepared!
+    Particularly if p fails, request might not get executed!
+
+  So we say operation doesn't execute until
+    prepared(m, v, n, i) is TRUE for f+1 non-faulty replicas r_i
+    We say committed(m, v, n) is TRUE when this property holds
+
+  So how does a replica *know* committed(m, v, n) holds?
+    Add one more message:
+
+  r_i -&gt; R: &lt;COMMIT, v, n, d, i&gt;    (sent only after prepared(m,v,n,i))
+
+  replica r_i waits for 2f+1 identical COMMIT messages (including its own)
+    committed-local(m, v, n, i) is TRUE when:
+      prepared(m, v, n, i) is TRUE, and
+      r_i has 2f+1 matching commits in its log
+
+  Note:  If committed-local(m, v, n, i) is TRUE for any non-faulty r_i
+    Then means committed(m, v, n) is TRUE.
+    r_i knows when committed-local is TRUE
+    So committed-local is a replica's way of knowing that committed is TRUE
+
+r_i replies to client when committed-local(m, v, n, i) is TRUE
+  Client waits for f+1 matching replies, then returns to client
+  Why f+1 and not 2f+1?
+    Because of f+1, at least one replica r_i is non-faulty
+    So client knows committed-local(m, v, n, i)
+    Which in turn implies committed(m, v, n)
+  Note tentative reply optimization:
+    r_i can send tentative reply to client after prepared(m, v, n, i)
+    Client can accept result after 2f+1 matching tentative replies.  Why?
+      f+1 of those replies must be from honest nodes
+      And at least 1 of those f+1 will be part of 2f+1 forming a new view
+      So that 1 node will make sure operation makes it to new view
+
+Garbage collecting the message log
+  make periodic checkpoints
+    Broadcast &lt;CHECKPOINT, n, d, i&gt;, where d = digest of state
+    When 2f+1 signed CHECKPOINTs received
+  restrict sequence numbers are between h and H
+    h = sequence number of last stable checkpoint
+    H = h + k   (e.g., k might be 2 * checkpoint interval of 100)
+  delete all messages below sequence number of stable checkpoint
+
+View changes
+  When client doesn't get an answer, broadcasts message to all replicas
+  If a backup notices primary is slow/unresponsive:
+
+  - broadcast &lt;VIEW-CHANGE v+1, n, C, P, i&gt;
+    C is 2f+1 signed checkpoint messages for last stable checkpoint
+    P = {P_m} where each P_m is signed PRE-PREPARE + 2f signed PREPARES
+      i.e., P is set of all PREPAREd messages since checkpoint
+            + proof that the messages really are prepared
+
+  When primary of view v+1 sees 2f signed VIEW-CHANGE messages from others
+
+  - New primary broadcasts &lt;NEW-VIEW, v+1, V, O&gt;
+      V is set of at lesat 2f+1 VIEW-CHANGE messages (including by new primary)
+      O is a set of pre-prepare messages, for operations that are:
+        - after last stable checkpoint
+        - appear in the set P of one of the VIEW-CHANGE messages
+      O also contains dummy messages to fill in sequence number gaps
+
+  Replicas may optain any missing state from each other
+    (e.g., stable checkpoint data, or missing operation, since
+     reissued pre-prepare messages only contain digest of request)
+
+What happens if primary creates incorrect O in NEW-VIEW message?
+  E.g., might send null requests for operations that prepared
+  Other replicas can compute O from V, and can reject NEW-VIEW message
 What happens if primary sends different V's to different backups?
-Still okay, because any committed operation will be in 2f+1 VIEW-CHANGE msgs
-of which f+1 must be honest, so at least one member of V will have operation
-So new primary cannot cause committed operations to be dropped
-Only operations for which client has not yet seen the answer</p> <p>Discussion
-what problem does BFS solve?</p> <ul><li>is IS going to run BFS to deal with byzantine failures?</li> <li>what failures are we talking about?
-compromised servers</li> <li>what about compromised clients?
-authentication and authorization
-how can we extend the system to allow for more than (n-1)/3
-failures over its lifetime?</li> <li>detect failed replicas using  proactive recovery
-<ul><li>recover the system periodically, no matter what</li> <li>makes bad nodes good again</li></ul></li> <li>tricky stuff
-<ul><li>an attacker might steal compromised replica's keys</li></ul></li> <li>with how many replicas will BFS work reasonably well?</li></ul></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
-    <script src="/docs/assets/js/app.fbcb49ec.js" defer></script><script src="/docs/assets/js/2.5d2fca3b.js" defer></script><script src="/docs/assets/js/14.1969a59e.js" defer></script>
+  Still okay, because any committed operation will be in 2f+1 VIEW-CHANGE msgs
+  of which f+1 must be honest, so at least one member of V will have operation
+  So new primary cannot cause committed operations to be dropped
+  Only operations for which client has not yet seen the answer
+
+Discussion
+  what problem does BFS solve?
+  - is IS going to run BFS to deal with byzantine failures?
+  - what failures are we talking about?
+    compromised servers
+  - what about compromised clients?
+    authentication and authorization
+  how can we extend the system to allow for more than (n-1)/3
+  failures over its lifetime?
+  - detect failed replicas using  proactive recovery 
+    - recover the system periodically, no matter what
+    - makes bad nodes good again
+  - tricky stuff
+    - an attacker might steal compromised replica's keys
+- with how many replicas will BFS work reasonably well?
+
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/docs/assets/js/app.8d5aa054.js" defer></script><script src="/docs/assets/js/2.5d2fca3b.js" defer></script><script src="/docs/assets/js/14.ddfbae56.js" defer></script>
   </body>
 </html>
