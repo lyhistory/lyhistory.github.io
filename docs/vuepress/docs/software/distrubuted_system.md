@@ -58,7 +58,7 @@ _下面提到的节点根据上下文有不同的含义，说到zookeeper时主�
 另外需要再指出一点，经过前面数据库的例子所以可以看到一个系统的一致性不是固定死的，很多情况下一致性会根据系统的设置或系统的架构不同发生变化，在同一个系统中不同类型的数据也可能有着不同类型的一致性；
 单机系统都如此，分布式系统更是复杂，而对于区块链来说，一致性更加有着丰富的表现，比如比特币的6个确认，是中本聪基于泊松分布做的一种类似联合泊松分布的概率计算https://bitcoin.org/bitcoin.pdf，
 以全网千分之一的算力来做恶意节点得出6个确认之后可以忽略不计，当然随着单节点算力越高，需要的确认也随之增长。
-![bitcoin 6 confirmation](/docs/docs_image/software/distrubuted_system00.png)
+![bitcoin 6 confirmation](/docs/docs_image/software/distrubuted_system01.png)
 
 ---
 
@@ -109,7 +109,7 @@ leader直接收到或收到follower转发的写操作请求，都会按照FIFO�
 甚至有这种说法：“there is only one consensus protocol, and that’s Paxos — all other approaches are just broken versions of Paxos” .
 我们来简单讲一下Basic Paxos这个算法的基本原理：
 引用斯坦福的教学内容Basic Paxos的基本流程图：
-![paxos](/docs/docs_image/software/distrubuted_system01.png)
+![paxos](/docs/docs_image/software/distrubuted_system02.png)
    
 前面2PC及两阶段提交协议，实际paxos也是基于2PC，这里引入了提议者proposer和接受者acceptor的概念，
 为了简化描述：
@@ -207,7 +207,7 @@ follower收到后也写入自己的日志，状态是uncommitted，等得到过�
 
 下面拿RAFT协议来覆盖一下前面没提到的分区容错partition tolerance，以网络分区的例子来说明下为什么前面提到的分布式算法思想可以实现分布式一致性状态机，
 
-![raft](/docs/docs_image/software/distrubuted_system02.png)
+![raft](/docs/docs_image/software/distrubuted_system03.png)
 
 可以看到网络分为两个分区，两个leader，他们的时代是不同的一个是term=1一个是term=2，互相不知道彼此，但是由于term=1在更改数据的时候无法得到超过半数的响应，
 所以所有数据更改都会处于uncommit未提交状态；而反之在另一边term=2这里，是可以达成共识的；
@@ -230,9 +230,9 @@ follower收到后也写入自己的日志，状态是uncommitted，等得到过�
 
 可以看几个产品的架构图
 
-![Kafka](/docs/docs_image/software/distrubuted_system1.png)
-![HDFS](/docs/docs_image/software/distrubuted_system2.png)
-![HADOOP](/docs/docs_image/software/distrubuted_system3.png)
+![Kafka](/docs/docs_image/software/distrubuted_system11.png)
+![HDFS](/docs/docs_image/software/distrubuted_system12.png)
+![HADOOP](/docs/docs_image/software/distrubuted_system13.png)
 
 Since Hadoop 2.0, ZooKeeper has become an essential service for Hadoop clusters, providing a mechanism for enabling high-availability of former single points of failure, specifically the HDFS NameNode and YARN ResourceManager.
 https://www.datadoghq.com/blog/hadoop-architecture-overview/
@@ -244,7 +244,7 @@ Quartz就是支持单机版也支持集群，但是其集群基于数据库锁�
 
 举一个例子：
 
-![分布式管理例子](/docs/docs_image/software/distrubuted_system4.png)
+![分布式管理例子](/docs/docs_image/software/distrubuted_system14.png)
 中央就是zookeeper，本身是集群，政治协商，一个挂掉还会迅速选一个，中央的主要工作是做集群管理，具体的生产生活还要交由Apache/Storm这些地方政府节点来做，
 地方节点之间也是一个集群，比如分布式商务系统集群（商务部是集群的leader，向中央注册），分布式农业系统集群等
 
@@ -290,7 +290,7 @@ zookeeper只支持最简单的推拉消息，每次节点注册时，只会通�
 然后因为所有worker及leader节点都保存了一份节点列表，所以leader分发任务的时候就可以采取一定的策略，比如round robin或load balance方式rpc调用worker分发任务；
 至于worker节点，虽然也保存了一份节点列表但一般只需要跟leader通信，当然如果leader挂掉，worker变成leader还是要用这个列表的；
 
-![分布式任务调度](/docs/docs_image/software/distrubuted_system5.png)
+![分布式任务调度](/docs/docs_image/software/distrubuted_system15.png)
 
 还需要思考的问题：
 
@@ -317,7 +317,7 @@ zookeeper只支持最简单的推拉消息，每次节点注册时，只会通�
 
 ## 3.基于拜占庭容错BFT(Byzantine fault tolerance)的分布式账本技术
 
-![网络类型](/docs/docs_image/software/distrubuted_system6.png)
+![网络类型](/docs/docs_image/software/distrubuted_system16.png)
 
 我们前面谈到的不管是zookeeper的ZAP，paxos还是raft都不能算是真正的分布式，因为基本都是要选举出leader来主持大局，真正的分布式节点是完全平等的，不存在谁是leader，
 所以基本都只能算是多中心的分布式系统；
@@ -333,34 +333,32 @@ zookeeper只支持最简单的推拉消息，每次节点注册时，只会通�
 单纯从技术上来说区块链大致分为permissioned 和 non-permissioned blockchain，前者基本都是私有链和联盟链，后者是公链；
 如果从去中心化角度来说只有公链技术才算区块链，当然这个涉及到关于中心化的辩论，属于哲学问题，不予讨论；
 
-### 3.1 联盟链技术
+### 3.1 区块链分类简介
 
 私有链基本上没有任何意义，自己内部玩没有搞条链，唯一用武之处就是用来教学演示，对于正常的普通企业用传统的办法更高效，如果真的要搞行业级别的集成自然是选择联盟链，
 我就以IBM的hyperledger fabric为代表来讲解下联盟链：
 
 直接看核心流程图，我只是简略说主要内容，不会讲解他的会员系统（节点的加入都是要经过审核后配置到系统中），也不会细分peer节点的类型
-![网络类型](/docs/docs_image/software/distrubuted_system7.png)
+![hyperledger fabric flow](/docs/docs_image/software/distrubuted_system21.png)
 客户端发一个transaction请求，实现了hyperledger sdk的客户端程序接收，会验证后发给peers节点，peers节点验证并进行endorse签名并返回结果给客户端，客户端收到一定数量的endorse之后，
 如果满足了事前设定的policy，比如至少收到半数的endorse，则发起提交请求，将transaction及endorsement一起发给ordering service，像极了前面提到的2PC，
 ordering service排序打包交易再发给peers，peers会验证打包好的每个交易，然后更新账本；
 不过等等，这里的ordering service是一个单独的节点，不像peers那样有多个节点，意思是个中心化的排序服务，然后我们看IBM文档的说法如下：
 
-![网络类型](/docs/docs_image/software/distrubuted_system8.png)
+![hyperledger](/docs/docs_image/software/distrubuted_system22.png)
 
 看到没，关键的ordering service可以是一个单节点或者kafka集群，单节点不用说了，kafka集群是基于故障容错的分布式产品；
 不过共识这块hyperledger是可以插拔自定义的，实际上V1.4版本引入了RAFT算法，也是基于故障容错的；
 
 近期hyperledger的另外一个产品Sawtooth开始推出PBFT,据说跟fabric不同，Sawtooth可以支持permissionless网络，有兴趣的读者可以自行研究；
 
-### 3.2 公链技术
-
 谈到公链，代表就是区块链第一应用比特币及支持智能合约的超级计算机以太坊，当然还有EOS，BTS等等其他公链，他们的共识算法都是基于解决拜占庭将军问题的容错算法，
 注意这里并非特指拜占庭容错算法BFT或PBFT，而是泛指，区块链的共识算法也经常被称作trustless consensus，意思是无信任共识，换句话说跟前面那些故障容错算法的假设不同，对于无信任共识，节点之间是不可以相互信任的，
 会有好节点和坏节点，坏节点会恶意发送假信息，我们开始具体谈谈这些基础知识
 
-#### 3.2.1 拜占庭将军问题和实用拜占庭容错算法PBFT
+### 3.2 拜占庭将军问题和实用拜占庭容错算法PBFT
 
-##### 拜占庭将军问题
+#### 拜占庭将军问题
 东罗马帝国也就是拜占庭帝国国王准备攻打一座城堡，
 拜占庭军队的多个军区驻扎在城外，每个军区都有一个将军Generals，
 由于这些将军相距很远只能通过信使messengers传递消息，
@@ -391,7 +389,7 @@ IC1. 所有的忠诚副官节点都遵守同一个命令
 IC2. 如果将军是诚实的，每一个诚实副官都应该遵守将军发送的命令
 IC1和IC2叫做interactive consistency conditions交互型一致条件
 
-![Byzantine General problem](/docs/docs_image/software/distrubuted_system12.png)
+![Byzantine General problem](/docs/docs_image/software/distrubuted_system23.png)
 
 所以看到fig2违背了IC1，所以3个节点种有一个叛徒是无解的
 我们由此就证明了对付m个叛徒至少要3m+1个节点，黑人问号，什么时候证明的？
@@ -406,7 +404,7 @@ The proof is by contradiction
 
 下面假设m=1，3m+1=4
 
-![PBFT](/docs/docs_image/software/distrubuted_system11.png)
+![PBFT](/docs/docs_image/software/distrubuted_system24.png)
 
 fig3，
 OM(m=1）将军发送v给所有节点，
@@ -418,9 +416,9 @@ OM(m=1)将军分别发送x，y，z给副官1，2，3，
 OM(m=0)，副官1发送x给副官2，副官3发送z给副官2，副官2收到（x,y,z），同理所以每个副官都收到(x,y,z)，
 可以判断将军是叛徒
 
-##### 实用拜占庭容错算法PBFT
+#### 实用拜占庭容错算法PBFT
 
-![PBFT](/docs/docs_image/software/distrubuted_system9.png)
+![PBFT](/docs/docs_image/software/distrubuted_system25.png)
 
 主节点 p = v mod |R|。v：视图编号，|R|节点个数，p：主节点编号
 现在R=4,v=0,p=0
@@ -536,7 +534,7 @@ repy是【2f+1,3f+1】
 我们接下来还要再跳跃更大的一步，因为我们要面向全网，不做任何限制：不限制节点数，无法得知恶意节点数，节点可以任意时刻加入退出，同时我们还要保证节点达成正确的共识结果,
 下面我们看下比特币是如何做到的
 
-#### 3.2.2 比特币共识算法
+### 3.3 比特币共识算法
 
 * 1.第一步 共识的门票：创造随机事件
 
@@ -552,7 +550,7 @@ destroying the Bitcoin system will also undermine the effectiveness of his own w
 
 在一条链上无法double spent，但是可以在软分叉链上double spent，
 
-![tamper block](/docs/docs_image/software/distrubuted_system10.png)
+![tamper block](/docs/docs_image/software/distrubuted_system26.png)
 
 
 ---
