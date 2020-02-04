@@ -60,7 +60,9 @@ _下面提到的节点根据上下文有不同的含义，说到zookeeper时主�
 以全网千分之一的算力来做恶意节点得出6个确认之后可以忽略不计，当然随着单节点算力越高，需要的确认也随之增长。
 ![bitcoin 6 confirmation](/docs/docs_image/software/distrubuted_system00.png)
 
-## 2.基于故障容错Crash fault tolerance(或非拜占庭容错)的分布式系统
+---
+
+## 2.基于故障容错CFT(Crash fault tolerance或非拜占庭容错)的分布式系统
 
 中心化系统有单点故障的风险，故障有两层含义，一个是自己发送故障，一个是遭受到攻击，所以引入多个节点来抵消单一节点的风险，故障容错的假设是多节点中可能会存在故障节点，消息会丢失或重复，但是不会有发送假消息的恶意节点；
 
@@ -311,7 +313,9 @@ zookeeper只支持最简单的推拉消息，每次节点注册时，只会通�
 
 >上面是假设数据都是放到数据库的，而且只允许leader单节点去维护，设想一下数据分布在每个节点上，比如每个节点都有完整的数据备份，同步起来就只能采取共识算法来做比较合理；
 
-## 3.基于拜占庭容错Byzantine fault tolerance的分布式账本技术
+---
+
+## 3.基于拜占庭容错BFT(Byzantine fault tolerance)的分布式账本技术
 
 ![网络类型](/docs/docs_image/software/distrubuted_system6.png)
 
@@ -332,7 +336,7 @@ zookeeper只支持最简单的推拉消息，每次节点注册时，只会通�
 ### 3.1 联盟链技术
 
 私有链基本上没有任何意义，自己内部玩没有搞条链，唯一用武之处就是用来教学演示，对于正常的普通企业用传统的办法更高效，如果真的要搞行业级别的集成自然是选择联盟链，
-我就以IBM的hyperledger为代表来讲解下联盟链：
+我就以IBM的hyperledger fabric为代表来讲解下联盟链：
 
 直接看核心流程图，我只是简略说主要内容，不会讲解他的会员系统（节点的加入都是要经过审核后配置到系统中），也不会细分peer节点的类型
 ![网络类型](/docs/docs_image/software/distrubuted_system7.png)
@@ -344,7 +348,9 @@ ordering service排序打包交易再发给peers，peers会验证打包好的每
 ![网络类型](/docs/docs_image/software/distrubuted_system8.png)
 
 看到没，关键的ordering service可以是一个单节点或者kafka集群，单节点不用说了，kafka集群是基于故障容错的分布式产品；
-不过共识这块hyperledger是可以插拔自定义的，实际上V1.4版本引入了RAFT算法，也是基于故障容错的，当然了随着进一步发展默认引入基于拜占庭容错算法是迟早的事情；
+不过共识这块hyperledger是可以插拔自定义的，实际上V1.4版本引入了RAFT算法，也是基于故障容错的；
+
+近期hyperledger的另外一个产品Sawtooth开始推出PBFT,据说跟fabric不同，Sawtooth可以支持permissionless网络，有兴趣的读者可以自行研究；
 
 ### 3.2 公链技术
 
@@ -354,13 +360,65 @@ ordering service排序打包交易再发给peers，peers会验证打包好的每
 
 #### 3.2.1 拜占庭将军问题和实用拜占庭容错算法PBFT
 
-Byzantine originated from Lamport’s paper. It is no exaggeration to say that Byzantine fault tolerance (BFT) is the most complex and rigorous tolerance model. 
-By analogy, some number of generals plan an attack on a castle together and each general can choose to start the attack or retreat. 
-However, to successfully take the castle, all the generals must act synchronously. Next, given that the generals are too far from each other to use direct communication, 
-messengers are used to carry messages. However, messages are not reliable. They may successfully delivery messages after a very long time, 
-fail to deliver messages or even change with messages. 
-The generals may not be reliable, either, for example, one of them may be a traitor who does not act in accordance with the plan. 
-The messengers in this story represent communication channels in distributed networks and the generals represent nodes.
+##### 拜占庭将军问题
+东罗马帝国也就是拜占庭帝国国王准备攻打一座城堡，
+拜占庭军队的多个军区驻扎在城外，每个军区都有一个将军Generals，
+由于这些将军相距很远只能通过信使messengers传递消息，
+现在军队必须在撤退和进攻两个命令中达成一致并且同时行动，否则就会被击败；
+
+A.All loyal generals decide upon the same plan of action. 
+叛徒可以任意而为，但是忠诚的将军必须达成一致的计划agreement（进攻或撤退），所有节点不仅要达成共识而且是要合理的共识agreement
+
+B.A small number of traitors cannot cause the loyal generals to adopt a bad plan.
+我们无须考虑什么是bad plan，只需要指定忠诚的将军节点如何做出决定decision
+
+假设v(i)代表第i个将军发送的信息，那么n个将军的信息就是v(1),...v(n)
+所以满足A很简单，只需要所有节点按照同一个方法将收到的v(1),...v(n)转成行动，输入一样则输出一样；
+
+而对于B,假设最终的决定只有进攻和撤退两种，那么第i个将军的决定可以基于最多的投票，
+如果叛徒节点多到刚好让诚实的节点平均分成攻击和撤退两个阵营则无法达成共识
+
+A的前提是
+con1：每个节点都收到同样的v(1),...v(n)，
+但是有可能所有的诚实节点都是发送进攻的消息，但是一部分叛徒会导致诚实节点决定retreat
+con2：如果第i个节点是忠诚的，那么发送的v(i)必须被每个忠诚的节点使用
+重写con1:
+con1':任意两个忠诚的节点都使用相同的v(i)
+
+con1'和con2都可以归纳为第i个将军发送的信息v(i)，因为这里问题转化成一个将军节点如何发送信息给其他节点，所以把问题重新归纳为：
+将军节点如何发送命令给他的lieutenants副官们，即一个将军节点如何发送命令给他的n-1个副官节点，并且：
+IC1. 所有的忠诚副官节点都遵守同一个命令
+IC2. 如果将军是诚实的，每一个诚实副官都应该遵守将军发送的命令
+IC1和IC2叫做interactive consistency conditions交互型一致条件
+
+![Byzantine General problem](/docs/docs_image/software/distrubuted_system12.png)
+
+所以看到fig2违背了IC1，所以3个节点种有一个叛徒是无解的
+我们由此就证明了对付m个叛徒至少要3m+1个节点，黑人问号，什么时候证明的？
+The proof is by contradiction
+很简单，上面3个节点1个叛徒无解，设m=1，3m无解，所以反正法结束！
+
+定义口头信息算法Oral Message algorithms OM(m), ∀m∈N, m>0，将军向n-1个副官发送命令，定义函数 majority（v1 ,…,vn-1）的值两种方法：
+假设数值是二元的则取少数服从多数，比如多数是进攻则进攻,否则默认值为撤退；
+假设数值是一个可排序序列则选择中位数；
+
+执行方法是：OM(m)调用n-1次算法OM(m-1)，每一个算法OM(m-1)再分别调用n-2次的OM(m-2)，如此至m=0。
+
+下面假设m=1，3m+1=4
+
+![PBFT](/docs/docs_image/software/distrubuted_system11.png)
+
+fig3，
+OM(m=1）将军发送v给所有节点，
+OM(m=0)副官1发送v给副官2，副官3发送x给副官2，副官2有v1=v2=v，v3=x，v=majority（v,v,x），同理其他副官
+可以判断出副官3是叛徒
+
+fig4，
+OM(m=1)将军分别发送x，y，z给副官1，2，3，
+OM(m=0)，副官1发送x给副官2，副官3发送z给副官2，副官2收到（x,y,z），同理所以每个副官都收到(x,y,z)，
+可以判断将军是叛徒
+
+##### 实用拜占庭容错算法PBFT
 
 ![PBFT](/docs/docs_image/software/distrubuted_system9.png)
 
@@ -380,7 +438,7 @@ o: 请求的具体操作，t: 请求时客户端追加的时间戳，c：客户�
 d为客户端消息摘要，m为消息内容，n是要在范围区间内的[h, H]，用于垃圾回收；
 对<PRE-PREPARE, v, n, d>签名。
 
-3.全部节点发送PREPARE：
+3.副本节点发送PREPARE：
 
 副本节点1、2、3收到主节点0的PRE-PREPARE消息，校验并拒绝非法请求：
 主节点PRE-PREPARE消息签名；
@@ -388,7 +446,7 @@ d为客户端消息摘要，m为消息内容，n是要在范围区间内的[h, H
 d与m的摘要是否一致；
 n是否在区间[h, H]内；
 
-然后每个节点都向其他节点发送prepare消息<<PREPARE, v=0, n, d, i>, m>,i是当前副本节点编号;
+然后副本节点都向其他节点发送prepare消息<<PREPARE, v=0, n, d, i>, m>,i是当前副本节点编号;
 节点i对<PREPARE, v, n, d, i>进行签名;
 PRE-PREPARE和PREPARE消息写入log，用于View Change时恢复未完成的操作；
 
@@ -400,7 +458,7 @@ PRE-PREPARE和PREPARE消息写入log，用于View Change时恢复未完成的操
 n是否在区间[h, H]内；
 d是否和当前已收到PRE-PPREPARE中的d相同；
 
-节点i等待2f+1个验证通过的PREPARE消息则进入prepared状态并向其他节点发送commit消息<<COMMIT, v=0, n, d, i>，m>
+节点i等待2f+1个验证通过的PREPARE消息（对于副本节点来说包括自己）则进入prepared状态并向其他节点发送commit消息<<COMMIT, v=0, n, d, i>，m>
 节点i对<COMMIT, v, n, d, i>签名；
 COMMIT消息写入日志，用于View Change时恢复未完成的操作
 
@@ -412,24 +470,71 @@ COMMIT消息写入日志，用于View Change时恢复未完成的操作
 d与m的摘要是否一致；
 n是否在区间[h, H]内；
 
-节点i等待2f+1个验证通过的COMMIT消息，进入commit状态，说明当前网络中的大部分节点已经达成共识，运行客户端的请求操作o，并返回<REPLY, v, t, c, i, r>给客户端，
+节点i等待2f+1个验证通过的COMMIT消息（包括自己），进入commit状态，说明当前网络中的大部分节点已经达成共识，运行客户端的请求操作o，并返回<REPLY, v, t, c, i, r>给客户端，
 r是请求操作结果
 
 6.客户端client c等待f+1个reply
 如果收到f+1个相同的REPLY消息，说明请求已经达成全网共识，否则客户端需要判断是否重新发送请求给主节点；
 记录节点发送的COMMIT消息到log中。
 
-拜占庭容错算法看起来感觉跟paxos有几分相似，确实，实际上paxos可以升级成BFT paxos，也有raft版本的BFT raft
+几个问题：
+* 1.为什么需要一个primary节点
+PBFT的理论之一primary-backup [Alsberg and Day 1976]
+跟paxos和raft类似的思想，用leader节点可以避免多个proposer的冲突，以及排序client端的请求，降低算法实现难度，比如恢复，在PBFT的概念里epoch或term变成了view，然后leader叫做primary，其他的follower叫做backups，
+主节点负责将来自Client的请求给排好序，然后按序发送给备份节点；
+如果主节点可能会是恶意节点，比如给不同的请求编上相同的编号或者不分配编号或者编号跳跃不连续，备份节点会动检查这些序号的合法性，如果有发现问题，备份节点就会触发view change协议来选举出新的主节点，当然备份节点也会通过timeout心跳检查主节点是不是挂掉；
 
-拜占庭容错算法的限制是保证网络上不超过1/3的节点作恶，
-1/3的来源是，极端情况下有f个故障节点，f个恶意节点，那么至少要f+1个诚实节点才能保证少数服从多数，所以恶意节点最多是f/(f+f+f+1)，大概1/3
+* 2.主节点如果是恶意节点，是否可以通过篡改消息来作恶呢，如果是的话又会怎样
+首先，肯定是可以的，但是要分两方面来说，如果是篡改客户端发来的消息，这个是行不通的，会被备份节点通过检查签名发现问题，注意一般单纯用pbft的都是封闭系统，客户端也是要经过注册的，
+当然主节点可以完全用自己的私钥来签名发起一个恶意的消息，客户端通过公钥验证是肯定通过的，这种情况从算法角度看是无法解决的；
+
+* 3.为什么prepare和commit是等待2f+1不是f+1个消息，
+对于paxo或raft等基于CFT算法f+1个消息就能少数服从多数过半数确定下一步，但是为什么PBFT需要2f+1才能确定下一步呢？
+PBFT的理论之一quorum replication [Gifford 1979]
+假设节点总数为|R|的共识系统中选择|Q|个节点作为一个仲裁机制，需要保证这任意两个Q必须至少得有一个节点交集，不然可能会导致不一样的共识结果，根据韦恩图的计算法则：
+2|Q| - |R| >= 1 => |Q| >= (|R| + 1) / 2, 对于CFT,|R| = 2 f + 1 => |Q| >= f + 1
+这是针对CFT的情况，对于BFT交集还得容纳f个恶意节点
+2|Q| - |R| >= 1 + f => |Q| >= (|R| + f + 1) / 2, |R| = 3 f + 1 => |Q| >= 2f + 1
+
+举个例子，假设f=2，3*2+1=7个节点的情况下，i=0,1,2,3,4,5,6 其中5，6是坏节点，假设prepare阶段，极端情况每个节点0 1 2 3 4都先收到了5和6的假消息及f个假消息，加上各自节点自己的1个消息，
+是f+1个，可见，这种情况下就达成共识就是错误的结果或者达不成共识，取决于具体实现，比如至少不应该进入下一步；
+对于CTF的f+1，是因为挂掉的节点无法发消息，所以f+1是为了假设半数发的是旧消息proposer，所以用过半来做判断确认半数认为这个消息是可以共识的；
+
+* 4.为什么client是等待f+1个reply
+前面说了根据qurom理论，任意两个Q至少一个交集，并且允许容纳f个恶意节点，所以f+1隐含的意思是即使有f个都是恶意节点，至少一个节点的reply是诚实的，有一个诚实节点隐含着客户端的操作已经达成共识操作完成；
+
+拜占庭容错算法有着很多限制：
+
+* 1.需要保证网络上不超过1/3的节点作恶，
+
+1/3的来源是前面拜占庭将军问题的反证法，另外根据前面的quorum理论也能证明,
 对于一个permissioned network比如公司内网或者类似类似hyperledger这有的联盟链来说比较容易监控，
-但是对于一个开放式的网络，每分钟都可能有节点加入退出，根本无从监控和得知某个时间范围内到底有多少恶意节点，简单的数学模型是无法解决这个问题的，而且节点数过多会影响PBFT节点达成共识的速度，超过一定数目一般是不堪用的；
-而且拜占庭容错算法本身是易于被[Sybil attack](https://www.geeksforgeeks.org/sybil-attack/)， 因为默认情况下一个节点不需要花费任何代价就很容易伪造多个身份
-下面我们看下比特币是如何“解决”这些问题的
+但是对于一个开放式的网络，每分钟都可能有节点加入退出，根本无从监控和得知某个时间范围内到底有多少恶意节点，简单的数学模型是无法解决这个问题的，
+
+* 2.节点数过多会影响PBFT节点达成共识的速度，我们简单计算下互相发送的信息数量就大概知道随着节点增多这种共识方式是不实际的
+
+pre-prepare的消息数是接收者排除主节点自己1*（3f+1-1）=3f
+
+prepare是【2f3f，3f3f】：
+最少：发送者排除主节点和坏节点：3f+1-1-f=2f，接收者排除自己3f+1-1=3f
+最多:发送者排除主节点:3f+1-1=3f,接收者排除自己3f+1-1=3f
+
+commit是【(3f+1-f)(3f+1),(3f+1)3f】；
+最少：发送者排除坏节点:3f+1-f=2f+1,接收者排除自己:3f+1-1=3f
+最多:发送者:3f+1,接收者排除自己3f+1-1=3f
+
+repy是【2f+1,3f+1】
+
+* 3.拜占庭容错算法本身是易于被[Sybil attack](https://www.geeksforgeeks.org/sybil-attack/)， 因为默认情况下一个节点不需要花费任何代价就很容易伪造多个身份，由上面我们可以看到节点的区分只是序号i,
+
+当然我们看到除了i之外还有签名，签名就涉及用公钥验证，如果我们可以保证这些节点是可以“中心化”去管理公私钥配置的就可以防止sybil attack，不过代价是又变回了封闭式的系统，hyerledger，
+对于一个closed system只要加上类似的身份控制就可以避免sybil attack，sybil attack只针对"decentralized and permissionless peer to peer network"；
+
+在实际项目中pbft经常是跟其他算法一起使用，比如Zilliqa就是结合pbft和POW，另外PBFT看起来感觉跟paxos有几分相似，确实，实际上paxos可以升级成BFT paxos，也有raft版本的BFT raft;
 
 从故障容错到拜占庭容错，我们算是跳跃了一步，允许有恶意节点，但是限制为不超过全网1/3的恶意节点，
-我们接下来还要再跳跃更大的一步，因为我们要面向全网，不做任何限制：不限制节点数，无法得知恶意节点数，节点可以任意时刻加入退出，同时我们还要保证节点达成正确的共识结果
+我们接下来还要再跳跃更大的一步，因为我们要面向全网，不做任何限制：不限制节点数，无法得知恶意节点数，节点可以任意时刻加入退出，同时我们还要保证节点达成正确的共识结果,
+下面我们看下比特币是如何做到的
 
 #### 3.2.2 比特币共识算法
 
@@ -449,14 +554,8 @@ destroying the Bitcoin system will also undermine the effectiveness of his own w
 
 ![tamper block](/docs/docs_image/software/distrubuted_system10.png)
 
-运行节点的目的以及维护网络的方式具体就是挖矿（打包区块），发布交易，验证交易等；
 
-区块链 尤其是公链的共识算法跟分布式系统的共识算法有着本质的区别，分布式的共识算法如RAFT是基于系统容错，而公链的共识算法是基于拜占庭问题的容错算法，意思是要在节点作恶的情况下还能够达成共识
-
-
-
-目前来看，只有公链才算是真正意义的分布式系统，因为所有节点基本上都是公平的，可以随时加入退出且不影响公链的运行；
-paxos Byzantine ft
+---
 
 ref:
 
@@ -493,3 +592,183 @@ ref:
 [Implementing PBFT in Blockchain](https://medium.com/coinmonks/implementing-pbft-in-blockchain-12368c6c9548)
 
 [pBFT— Understanding the Consensus Algorithm](https://medium.com/coinmonks/pbft-understanding-the-algorithm-b7a7869650ae)
+
+[Practical Byzantine Fault Tolerance and Proactive Recovery](http://www.pmg.csail.mit.edu/papers/bft-tocs.pdf)
+
+[The Byzantine Generals Problem LESLIE LAMPORT, ROBERT SHOSTAK, and MARSHALL PEASE SRI International](https://people.eecs.berkeley.edu/~luca/cs174/byzantine.pdf)
+
+[The Byzantine Generals Problem](http://pages.cs.wisc.edu/~sschang/OS-Qual/reliability/byzantine.htm)
+
+---
+
+Additional info: [pbft notes](http://www.scs.stanford.edu/14au-cs244b/notes/pbft.txt)
+
+Practical Byzantine Fault Tolerance
+===================================
+
+Suppose you have N replicas, f of which might crash (non-Byzantine failure)
+What quorum size Q do you need to guarantee liveness and safety?
+  * Liveness: (or pseudo-liveness, i.e., avoiding stuck states)
+      There must be a non-failed quorum (*quorum availability*)
+      Hence: Q <= N - f
+  * Safety:  Any two quorums must intersect at one or more nodes
+      Otherwise, two quorums could independently accept operations, diverge
+      This property is often known as the *quorum intersection* property
+      Hence: 2Q - N > 0
+  So: N < 2Q <= 2(N - f)
+  Note highest possible f: N < 2N-2f; f < N/2
+  And if N = 2f + 1, smallest Q is 2Q > 2f + 1; Q = f + 1
+
+Now say we throw in Byzantine failures.  One view...
+  Say you have N nodes, f of which might experience Byzantine failure.
+  First, how can Byzantine failures be worse than non-Byzantine?
+    Byzantine nodes can vote for both a statement and its contradiction
+    Make different statements to different nodes
+  Consequences
+    Risks driving non-failed nodes into divergent states
+    Risks driving non-failed nodes into "stuck states"
+      E.g., cause split vote on seemingly irrefutable statement
+      Paxos example:  You think majority aborted some ballot b v
+        You vote to commit b' v' (where b' > b, v' != v)
+        Can't convince other nodes it is safe to vote for b'
+
+What quorum size Q do we need in Byzantine setting?
+  * Liveness: Q <= N - f
+      As in non-Byzantine case, failed nodes might not reply
+  * Safety: Quorum intersection must contain one non-faulty node
+      Idea: out of f+1 nodes, at most one can be faulty
+      Hence:  2Q - N > f    (since f could be malicious)
+  So: N + f < 2Q <= 2(N - f)
+  Highest f:  N+f < 2N-2f; 3f < N; f < N/3
+  And if N = 3f + 1, the smallest Q is:
+    N + f < 2Q; 3f + 1 + f < 2Q;  2f + 1/2 < Q; Q_min = 2f + 1
+
+So how does PBFT protocol work?
+  Number replica cohorts 1, 2, 3, ..., 3f+1
+  Number requests with consecutive sequence numbers (not viewstamps)
+  System goes through a series of views
+    In view v, replica number v mod (3f+1) is designated the primary
+    Primary is responsible for selecting the order of operations
+      Assigns an increasing sequence number to each operation
+  In normal-case operation, use two-round protocol for request r:
+    Round 1 (pre-prepare, prepare) goal:
+      Ensure at least f+1 honest replicas agree that
+        If request r executes in view v, will execute with sequence no. n
+    Round 2 (commit) goal:
+      Ensure at least f+1 honest replicas agree that
+        Request r has executed in view v with sequence no. n
+
+Protocol for normal-case operation
+  Let c be client
+      r_i be replica i, or p primary, b_i backup i
+      R set of all replicas
+
+    c -> p:  m = {REQUEST, o, t, c}_Kc
+    p -> R:  {PRE-PREPARE, v, n, d}_Kp, m     (note d = H(m))
+  b_i -> R:  {PREPARE, v, n, d, i}_K{r_i}
+  [Note all messages signed, so will omit signatures and use < > henceforth.]
+
+  replica r_i now waits for PRE-PREPARE + 2f matching PREPARE messages
+     puts these messages in its log
+     then we say prepared(m, v, n, i) is TRUE
+
+  Note:  If prepared(m, v, n, i) is TRUE for honest replica r_i
+     then prepared(m', v, n, j) where m' != m FALSE for any honest r_j
+     So no other operation can execute with view v sequence number n
+
+  Are we done?  Just reply to client?  No
+    Just because some other m' won't execute at (v,n) doesn't mean m will
+    Suppose r_i is compromised right after prepared(m, v, n, i)
+    Suppose no other replica received r_i's prepare message
+    Suppose f replicas are slow and never even received the PRE-PREPARE
+    No other honest replica will know the request prepared!
+    Particularly if p fails, request might not get executed!
+
+  So we say operation doesn't execute until
+    prepared(m, v, n, i) is TRUE for f+1 non-faulty replicas r_i
+    We say committed(m, v, n) is TRUE when this property holds
+
+  So how does a replica *know* committed(m, v, n) holds?
+    Add one more message:
+
+  r_i -> R: <COMMIT, v, n, d, i>    (sent only after prepared(m,v,n,i))
+
+  replica r_i waits for 2f+1 identical COMMIT messages (including its own)
+    committed-local(m, v, n, i) is TRUE when:
+      prepared(m, v, n, i) is TRUE, and
+      r_i has 2f+1 matching commits in its log
+
+  Note:  If committed-local(m, v, n, i) is TRUE for any non-faulty r_i
+    Then means committed(m, v, n) is TRUE.
+    r_i knows when committed-local is TRUE
+    So committed-local is a replica's way of knowing that committed is TRUE
+
+r_i replies to client when committed-local(m, v, n, i) is TRUE
+  Client waits for f+1 matching replies, then returns to client
+  Why f+1 and not 2f+1?
+    Because of f+1, at least one replica r_i is non-faulty
+    So client knows committed-local(m, v, n, i)
+    Which in turn implies committed(m, v, n)
+  Note tentative reply optimization:
+    r_i can send tentative reply to client after prepared(m, v, n, i)
+    Client can accept result after 2f+1 matching tentative replies.  Why?
+      f+1 of those replies must be from honest nodes
+      And at least 1 of those f+1 will be part of 2f+1 forming a new view
+      So that 1 node will make sure operation makes it to new view
+
+Garbage collecting the message log
+  make periodic checkpoints
+    Broadcast <CHECKPOINT, n, d, i>, where d = digest of state
+    When 2f+1 signed CHECKPOINTs received
+  restrict sequence numbers are between h and H
+    h = sequence number of last stable checkpoint
+    H = h + k   (e.g., k might be 2 * checkpoint interval of 100)
+  delete all messages below sequence number of stable checkpoint
+
+View changes
+  When client doesn't get an answer, broadcasts message to all replicas
+  If a backup notices primary is slow/unresponsive:
+
+  - broadcast <VIEW-CHANGE v+1, n, C, P, i>
+    C is 2f+1 signed checkpoint messages for last stable checkpoint
+    P = {P_m} where each P_m is signed PRE-PREPARE + 2f signed PREPARES
+      i.e., P is set of all PREPAREd messages since checkpoint
+            + proof that the messages really are prepared
+
+  When primary of view v+1 sees 2f signed VIEW-CHANGE messages from others
+
+  - New primary broadcasts <NEW-VIEW, v+1, V, O>
+      V is set of at lesat 2f+1 VIEW-CHANGE messages (including by new primary)
+      O is a set of pre-prepare messages, for operations that are:
+        - after last stable checkpoint
+        - appear in the set P of one of the VIEW-CHANGE messages
+      O also contains dummy messages to fill in sequence number gaps
+
+  Replicas may optain any missing state from each other
+    (e.g., stable checkpoint data, or missing operation, since
+     reissued pre-prepare messages only contain digest of request)
+
+What happens if primary creates incorrect O in NEW-VIEW message?
+  E.g., might send null requests for operations that prepared
+  Other replicas can compute O from V, and can reject NEW-VIEW message
+What happens if primary sends different V's to different backups?
+  Still okay, because any committed operation will be in 2f+1 VIEW-CHANGE msgs
+  of which f+1 must be honest, so at least one member of V will have operation
+  So new primary cannot cause committed operations to be dropped
+  Only operations for which client has not yet seen the answer
+
+Discussion
+  what problem does BFS solve?
+  - is IS going to run BFS to deal with byzantine failures?
+  - what failures are we talking about?
+    compromised servers
+  - what about compromised clients?
+    authentication and authorization
+  how can we extend the system to allow for more than (n-1)/3
+  failures over its lifetime?
+  - detect failed replicas using  proactive recovery 
+    - recover the system periodically, no matter what
+    - makes bad nodes good again
+  - tricky stuff
+    - an attacker might steal compromised replica's keys
+- with how many replicas will BFS work reasonably well?
