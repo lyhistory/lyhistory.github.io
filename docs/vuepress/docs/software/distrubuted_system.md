@@ -47,7 +47,7 @@ _下面提到的节点根据上下文有不同的含义，说到zookeeper时主�
 - 留言/多播协议 gossip/multicast protocols，包括redis在内的很多集群都是采用gossip
 - 共识协议 consensus protocols
 
-为了澄清更多的概念，我引用这个分类方式文<sup>[ref1](https://bravenewgeek.com/tag/leader-election/)</sup>中的一段话
+为了澄清更多的概念，我引用这个分类方式文<sup>[ref](https://bravenewgeek.com/tag/leader-election/)</sup>中的一段话
 >The former includes things like epidemic broadcast trees, bimodal multicast, SWIM, HyParView, and NeEM. These tend to be eventually consistent and/or stochastic. 
 >The latter, which I’ve described in more detail here, includes 2PC/3PC, Paxos, Raft, Zab, and chain replication. These tend to favor strong consistency over availability.
 
