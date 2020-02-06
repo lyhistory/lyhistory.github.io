@@ -289,16 +289,26 @@ Zookeeper适用的场景：<sup>[ref](https://www.ibm.com/developerworks/cn/open
 可以简单设计一些规则来实现选举，比如通过配置文件定义好是否是leader候选人，然后选的时候就通过排序找到第一个活着的候选人即可；
 
 基于zookeeper 的临时节点实现选举，zookeeper除了手动才能删除的持久节点，还有一种ephemeral临时节点，如果临时节点的创建者客户，失去zookeeper连接，临时节点就会自动删除，
-所有注册的客户端都抢注比如/leader子节点，然后子节点根据排序选leader，这种方式的缺陷很明显，客户端同步节点信息是有时间差的，在时间差内容易产生脑裂；
+所有注册的客户端都抢注比如/leader子节点，然后子节点根据排序选leader，这种方式的缺陷很明显，因为zookeeper只支持最简单的推拉消息,对某个node path的节点包括其data的监听都只会通知有变化,
+具体的变化还需要客户端去拉取,所以每个客户端同步节点信息是有时间差的，在时间差内容易产生脑裂；
 
 这种方式比较低级，其实可以通过curator高级API封装好的leader election recipes，curator利用zookeeper的EPHEMERAL_SEQUENTIAL实现分布式锁加观察模式封装了两种leader选举，leader latch和leader election，
 默认都是普通worker，在抢到leadership的时候激活为leader，不过这种方式有个缺点，其他普通的worker无法得知选举结果，所以在某些场景下，worker需要向leader汇报情况，需要额外再做点处理，
 例如在take leadership的时候，通过rpc通知其他节点自己是leader，或者也可以将自己的id注册在zookeeper的一个特定的path上，比如/leader/result，
 这样其他节点就可以通过监听获取到leader选举结果；分布式计算引擎Spark采用了curator的leader latch方式选举leader;
 
-现在还没有结束，现在有了动态选举的leader和一群worker，leader要怎么分发任务给worker，他们是互不想干的独立进程，可能部署在不同的机器上，通过zookeeper吗？
-zookeeper只支持最简单的推拉消息，每次节点注册时，只会通知各节点有nodechange事件，各节点自行去zookeeper pull拉取具体变化信息，
-所以我们无法通过zookeeper实现worker及leader节点之间的通信要求，我们可以引入rpc通信协议，相比较基于HTTP的web service，基于TCP的rpc性能更优，然后结合proxy代理模式对调用方法接口进行封装，
+现在还没有结束，现在有了动态选举的leader和一群worker，leader要怎么分发任务给worker，他们是互不想干的独立进程，可能部署在不同的机器上,两种思路:
+
+i)轻量级处理:
+
+假设worker在zookeeper上面注册为/task/worker-00000001,/task/worker-00000002,leader分发任务时可以将任务的信息setData给某个worker,然后worker监听到getData变化,
+则去获取具体任务加载执行,执行完成后再setData执行结果给当前的znode，然后leader可以监听获取结果，从而完成交互；
+但是前提是setData不可以超过1MB的限制，并且如果有任务之间还有依赖的话，完全通过zookeeper处理会比较复杂；
+<sup>[参考例子代码](https://github.com/lyhistory/learn_coding/tree/master/java/Components)</sup>
+
+ii)重量级处理:
+
+由于轻量级处理方式的限制，我们可以引入rpc通信协议，让leader和worker可以直接通信，相比较基于HTTP的web service，基于TCP的rpc性能更优，然后结合proxy代理模式对调用方法接口进行封装，
 可以让微服务在调用远程方法的时候就像调用自身方法一样透明；
 然后因为所有worker及leader节点都保存了一份节点列表，所以leader分发任务的时候就可以采取一定的策略，比如round robin或load balance方式rpc调用worker分发任务；
 至于worker节点，虽然也保存了一份节点列表但一般只需要跟leader通信，当然如果leader挂掉，worker变成leader才会用到这个列表；
