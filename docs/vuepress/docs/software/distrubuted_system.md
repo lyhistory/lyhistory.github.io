@@ -84,7 +84,7 @@ _下面提到的节点根据上下文有不同的含义，说到zookeeper时主�
 
 2） 如何动态选出的leader并且当leader节点发送故障如何从follower中选出leader呢
 
-这两个问题都要依赖共识算法解决，比如zookeeper的ZAP协议就是解决这个问题的：
+这两个问题都要依赖共识算法解决，比如zookeeper的ZAP(ZooKeeper Atomic Broadcast)协议就是解决这个问题的：
 
 第一个问题解决方法是2PC即两阶段提交协议: 
 
@@ -93,9 +93,8 @@ leader直接或间接通过follower收到转发的写操作请求，都会按照
 第二个问题解决方法是：
 
 每个节点启动后默认都是looking模式，当leader选出后，其他节点就立即变成follower模式，如果leader崩溃了，则跟followers的心跳连接失败，follower又会变回looking模式，然后leader崩溃后选举新leader原则是采用
-“Use a best-effort leader election algorithm that will elect a leader with the latest history from a quorum of servers.”
-即选出同步了最新提交历史的节点，这样可以尽量保证leader在崩溃之前广播出去的数据没有丢失；
-每次选举出新的leader都会有自己的标志，有的叫term有的叫epoch，总之是为了防止**脑裂**，比如挂掉的leader或者分区后的leader突然恢复连接，通过这个标志老leader可以知道自己已经过时了，然后转换成follower听从新的leader；
+“Use a best-effort leader election algorithm that will elect a leader with the latest history from a quorum of servers.”，具体后面算法讲解的leader恢复机制；
+每次选举出新的leader都会有自己的标志，有的叫term有的叫epoch，主要是为了防止**脑裂**，比如挂掉的leader或者分区后的leader突然恢复连接，通过这个标志老leader可以知道自己已经过时了，然后转换成follower听从新的leader；
 
 #### 2.1.2 一致性状态机
 
@@ -214,11 +213,13 @@ Node1发起一个写数据的提议proposal:Prepare(【Node1-P-1】),假设Node1
 Acceptor接受决议后会通知给每一个learner节点，learner在判断已经有F+1个节点达成共识后就可以返回给客户端以及同步给其他Acceptor节点，
 当然paxos算法本身并不保证liveness，只是引入learner可以改善liveness。
 
-PAXOS很经典但是也是比较臭名昭著的复杂，RAFT是其实现的简化版本，实际上前面“主备方案”中提到的zookeeper的ZAP协议也都是跟RAFT类似的思想，RAFT主要包含选举leader election和日志拷贝log replication：
+PAXOS很经典但是也是比较臭名昭著的复杂，RAFT是其实现的简化版本，RAFT主要包含选举leader election和日志拷贝log replication：
 
-其leader election也是利用心跳和过半数选举的机制，并且leader也是有第几代leader的term标志，ZAP用的是epoch，paxos使用Ballot Number；
+其leader election也是利用心跳和过半数选举的机制，并且leader也是有第几代leader的term标志，ZAP用的是epoch，simple paxos没有leader概念；
 然后log replication跟simple paxos的2PC些许类似，首先所有客户端的写请求都会转发给leader来处理，然后leader写入日志，状态是uncommitted，通过心跳发给所有followers，
 follower收到后也写入自己的日志，状态是uncommitted，leader等得到过半数的followers的ack响应后将状态改为committed，然后再通知所有follower，follower收到后也更新数据更改状态为committed，
+注意写日志的时候，leader是将请求变成entry，然后每个entry都有一个index值用来保持操作的有序性，类似于ZAP协议中的leader广播message赋值的单调递增monotonically increasing unique id的zxid，paxos中则类似每个proposer使用的Ballot Number；
+除了系统上线第一次leader election，后续各种原因触发的重新选举都需要一个recovery protocol，term+index，epoch+zxid是为了在leader选举的时候选择有着最完美日志的节点作为leader进行恢复，
 
 下面拿RAFT协议来举例完善一下前面没详细说的分区容错partition tolerance，
 
@@ -228,6 +229,23 @@ follower收到后也写入自己的日志，状态是uncommitted，leader等得�
 所以所有数据更改都会处于uncommit未提交状态；而反之在另一边term=2这里，是可以达成共识的；
 最后一旦网络恢复正常，term=1的分区就会发现自己全部过时了，就会放弃自己的uncommit日志，同步term=2的提交日志；
 由此可见在网络分区的情况下分布式状态机一样可以实现一致性；
+
+实际上前面“主备方案”中提到的zookeeper本质也是一个状态机模型，只不过是利用状态机的状态实现了主备方案，
+从大的角度讲zookeeper的ZAP协议分为3个阶段，Discovery，Sync，Boradcast，跟前面这些协议都是大同小异，就不展开细节，只需要说下不同点：
+
+![ZAP](/docs/docs_image/software/distrubuted_system04.png)<sup>[ref](https://blog.acolyer.org/2015/03/09/zab-high-performance-broadcast-for-primary-backup-systems/)</sup>
+
+和raft的有序性不同，ZAP协议有序性（znode节点操作）不仅体现在采用的FIFO先进先出队列，还有重新选举恢复的时候需要Sync，
+>Upon a change of primary, a quorum of processes has to execute a synchronization phase before the new primary broadcasts new transactions. Executing this phase guarantees that all transactions broadcast in previous epochs that have been or will be chosen are in the initial history of transactions of the new epoch.
+比如leader在崩溃之前广播出去的数据（proposal和commit）不会丢失，由leader产生但没有广播出去的proposal和commit则跳过，但是如果该leader之后重新被再次选举为新leader，其上没有提交的事务需要根据判断其epoch是否小于当前的epoch，是则丢弃，如果相同则还会被提交；
+![ZAP](/docs/docs_image/software/distrubuted_system05.png)
+>“Before proposing any new messages a newly elected leader first makes sure that all messages that are in its transaction log have been proposed to and committed by a quorum of followers”
+><sup>[A simple totally ordered broadcast protocol](https://www.datadoghq.com/pdf/zab.totally-ordered-broadcast-protocol.2008.pdf)</sup>
+这也是zookeeper可以作为分布式框架保证primary order基本顺序的信心保证；
+
+RAFT没有ZAP的sync这个阶段，而是靠AppendEntries RPC同步纠正，
+具体参考阿里云栖的这篇分析文章<sup>[ref](https://yq.aliyun.com/articles/62901?spm=a2c4e.11163080.searchblog.9.67152ec1BMuY5O)</sup>；
+而paxos算法本身没有保证有序性<sup>[paxos run](https://cwiki.apache.org/confluence/display/ZOOKEEPER/PaxosRun)</sup>；
 
 ### 2.2 分布式产品和zookeeper
 
@@ -253,7 +271,7 @@ follower收到后也写入自己的日志，状态是uncommitted，leader等得�
 
 观察可以发现一个问题，为啥很多产品都需要依赖分布式框架zookeeper？？
 
-简单回答，不要重复造轮子，zookeeper可以用于集群管理，只不过有些可以脱离zookeeper单机部署，有些则是只支持集群模式，跟zookeeper耦合紧密，
+简单回答，不要重复造轮子，前面提到zookeeper基于ZAP协议的有序状态更改strong guarantee使其可以用于集群管理，只不过有些可以脱离zookeeper单机部署，有些则是只支持集群模式，跟zookeeper耦合紧密，
 Quartz就是支持单机版也支持集群，但是其集群基于数据库锁，严重耦合，所以看到有人也将其改造成为基于zookeeper集群管理的模式，当然我们谈的是分布式系统，所以这里不讨论单机版本
 
 举一个例子来说明zookeeper：
@@ -480,7 +498,7 @@ d为客户端消息摘要，m为消息内容，n是要在范围区间内的[h, H
 d与m的摘要是否一致；
 n是否在区间[h, H]内；
 
-然后副本节点都向其他节点发送prepare消息<<PREPARE, v=0, n, d, i>, m>,i是当前副本节点编号;
+然后副本节点都向其他节点发送prepare消息<PREPARE, v=0, n, d, i>,i是当前副本节点编号;
 节点i对<PREPARE, v, n, d, i>进行签名;
 PRE-PREPARE和PREPARE消息写入log，用于View Change时恢复未完成的操作；
 
@@ -492,7 +510,7 @@ PRE-PREPARE和PREPARE消息写入log，用于View Change时恢复未完成的操
 n是否在区间[h, H]内；
 d是否和当前已收到PRE-PPREPARE中的d相同；
 
-节点i等待2f+1个验证通过的PREPARE消息（对于副本节点来说包括自己）则进入prepared状态并向其他节点发送commit消息<<COMMIT, v=0, n, d, i>，m>
+节点i等待2f+1个验证通过的PREPARE消息（对于副本节点来说包括自己）则进入prepared状态并向其他节点发送commit消息<COMMIT, v=0, n, D(m), i>，
 节点i对<COMMIT, v, n, d, i>签名；
 COMMIT消息写入日志，用于View Change时恢复未完成的操作
 
@@ -510,6 +528,8 @@ r是请求操作结果
 6>.客户端client c等待f+1个reply
 如果收到f+1个相同的REPLY消息，说明请求已经达成全网共识，否则客户端需要判断是否重新发送请求给主节点；
 记录节点发送的COMMIT消息到log中。
+
+算法其他细节：垃圾回收，视图更改请自行查阅，不是讨论重点；
 
 几个问题：
 * i.为什么需要一个primary节点
@@ -574,17 +594,52 @@ repy是【2f+1,3f+1】
 
 1.第一步 共识的门票：创造随机事件
 
-很多人将POW和POS误解为共识算法，我在另外一篇文章是专门讲了这个问题[解密挖矿与共识的误解](https://lyhistory.com/docs/blockchain/consensus)，
-这里就不再做讨论，
-通过POW工作量证明，动态调整难度，限制了挖矿节点提交区块的速度，保证大概10分钟左右生成一个区块,随机数的加入也让每一次打包变成了一次相对独立的随机事件，为后面泊松分布的证明打下伏笔；
-另外通过script脚本解决了
-拜占庭将军传递假消息问题：密码学保证数据一致性，除了矿工奖励，新的交易必然是解锁已经存在的utxo，
+首先，比特币的业务比较简单（其实可以通过bitcoin script制造很多复杂的场景，具体可以学习[Mastering Bitcoin](https://github.com/bitcoinbook/bitcoinbook)）,
+基本场景就是Alice给bob转一定数目的bitcoin，
 
-destroying the Bitcoin system will also undermine the effectiveness of his own wealth
+现在问题是，这么简单的一项业务功能，Alice转给bob 0.1个btc，验证，打包，落库（发布到链上，即大部分节点同意把新区块放到各自的本地最长的区块链头上），整过过程是谁发起的呢？
+
+开始，Alice通过自己喜欢的比特币钱包或者命令行（或者自己编写的比特币钱包）生成交易，钱包通过P2P协议把签名好的交易广播出去，接下来的问题是谁来验证打包？
+
+我们前面谈了那么多复杂的算法，基本都是要选一个leader出来做事情，而比特币的目的是节点之间大家都是平等的，没有leader worker之分，参与节点都有打包的权利，
+首先为什么有人想要打包，这是因为有incentive激励机制，打包成功可以获取若干比特币作为奖励，还可以获取区块中每笔交易的费用，继续打包权利游戏，
+比特币为此创造了一个猜谜游戏，我们称作工作量证明POW,简单来说，这个游戏就是定一个目标：打包好的区块的区块头取SHA256哈希值需要小于二进制01000000即64的数值即0到63之间的任何值，而且找到后要立即全网广播，
+
+区块头包含版本号，上一个区块的哈希值，默克尔树根哈希，时间戳，难度目标，随机值nonce，其中默克尔树根的哈希简单来说就是以交易作为叶子节点的哈希树的树根，哈希的哈希，
+可见这里面很多变量，所以最终获取一个小于目标01000000的哈希值是很不容易的事情，找不到就需要调整Nonce值，再不行就需要调整区块中的交易，总之是一个很激烈的随机数寻找游戏，
+至于难度值，简单理解，如果调高，比如目标变成00100000，前面0多了一个，可选的就剩下0到31，缩了一半，靶子越小越难打，如果全网算力提高，比特币会动态调整难度，保持平均每10分钟出一个区块的速度，
+
+所以找到谜底并第一个广播出去的节点就获取了这一轮打包游戏的胜利，比特币创造的这个随机游戏，为后面泊松分布的证明写下了伏笔；
+
+另外由于比特币创造性的使用了脚本技术也保证了交易本身无法被篡改，比如最基础的P2PKH (pay to public key hash)：
+
+保险箱scriptPubKey： OP_DUP OP_HASH160 <PubKeyHash> OP_EQUALVERIFY OP_CHECKSIG
+
+解锁scriptSig：<Sig><PubKey> 
+
+虎符拼起来：<Sig><PubKey> OP_DUP OP_HASH160 <PubKeyHash> OP_EQUALVERIFY OP_CHECKSIG 
+
+OP_DUP(PubKey)=PubKey PubKey
+OP_HASH160(PubKey) = PubKeyHash
+OP_EQUALVERIFY(PubKeyHash,PubKeyHash)==TRUE
+OP_CHECKSIG(Sig)==TRUE
+
+Wow,就是这么简洁优美
+
+当然还有其他的比如P2SH(pay to script hash)就不再讲了
+
+utxo是未花费输出unspent transaction output，在比特币的世界中，比特币是以utxo的形式存在的，每个比特币，准确说是每个fraction of bitcoin，或者每个satoshi（比特币最小单位）都是以utxo的形式存在脚本保险箱中；
+只有私钥的持有者才可以打开保险箱取出utxo使用；
+
+解决了拜占庭将军传递假消息的问题，除了私钥拥有者，没有人能够伪造或者篡改交易，从而可以让交易通过不安全的网络传输，不管是公网还是蓝牙设置卫星通信都可以；
+
+很多人将POW和POS误解为共识算法，我在另外一篇文章是专门讲了这个问题[解密挖矿与共识的误解](https://lyhistory.com/docs/blockchain/consensus)，
 
 2.第二步 长链胜出：泊松分布的胜利
 
 在一条链上无法double spent，但是可以在软分叉链上double spent，
+
+destroying the Bitcoin system will also undermine the effectiveness of his own wealth
 
 ![bitcoin 6 confirmation](/docs/docs_image/software/distrubuted_system26.png)
 
