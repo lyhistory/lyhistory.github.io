@@ -5,29 +5,59 @@ tagline: 从计算机基础到实战经验分享
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
-[软件基础 →](/docs/software)
-==============================
 
-[道德黑客技术 →](/docs/coder2hacker)
-====================================
+<div style="width: 600px;
+  margin: auto;">
+  <div>
+	  <h1>
+	  <a href="/docs/software" >
+		<img src="/docs/docs_image/software/architecture.png" alt="architecture" title="architecture" height="50" align="right"/>
+		<span>软件基础 →</span>
+	  </a>
+	  </h1> 
 
-[区块链开发 →](/docs/blockchain)
-================================
+  </div>
+  <div>
+  <h1>
+	  <a href="/docs/coder2hacker" >
+		<img src="/docs/docs_image/hacker/kali.png" alt="hacker" title="hacker" height="50" align="right"/>
+		<span>道德黑客入门 →</span>
+	  </a>
+	  </h1>
+  </div>
+  
+  <div>
+  <h1>
+	  <a href="/docs/blockchain" >
+		<img src="/docs/docs_image/blockchain/bitcoin.png" alt="blockchain" title="blockchain" height="50" align="right"/>
+		<span>区块链入门 →</span>
+	  </a>
+	  </h1>
+  </div>
+  <div style="width: 375px;
+  margin: auto;
+  padding: 10px 0;
+  font-family: Baskerville;
+  font-size: 14px;
+  text-align: left;">
+  <p>
+以为在这个世界留下了痕迹<br>
 
-_以为在这个世界留下了痕迹_
+地球也不过宇宙中尘埃一粒<br>
 
-_地球也不过宇宙中尘埃一粒_
+以为是自己留下了子孙后代<br>
 
-_以为是自己留下了子孙后代_
+其实是和猪大致相同的遗传信息<br>
 
-_其实是和猪大致相同的遗传信息_
+那一点差异也满是祖先的标记<br>
 
-_那一点差异也满是祖先的标记_
+灰飞烟灭之后<br>
 
-_灰飞烟灭之后_
+肉体或成为动植物的养分<br>
 
-_肉体或成为动植物的养分_
+无法分解的便与那土石化为一体<br><br>
 
-_无法分解的便与那土石化为一体_
-
-\-基因传递者 by 刘跃 2020.1.28
+-基因传递者 by 刘跃 2020.1.28
+</p>
+	</div>
+</div>

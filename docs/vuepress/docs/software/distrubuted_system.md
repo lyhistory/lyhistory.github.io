@@ -8,12 +8,12 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 _注意:_
 
-_下面提到的节点根据上下文有不同的含义，说到zookeeper时主要是指注册在zookeeper的不同类型的node，说到集群时是指集群的不同实例_
+_下面提到的节点根据上下文有不同的含义，说到zookeeper时主要是指注册在zookeeper的不同类型的znode，说到集群时是指集群的不同实例_
 
 谈到分布式系统就避免不了CAP理论，可用性、一致性、分区容错三者只能同时满足其中两个，可用性和一致性是我们经常提到的，分区容错可能很多人不太清楚，
 其定义是“The system continues to operate despite an arbitrary number of messages being dropped (or delayed) by the network between nodes”，
 可见对于分布式系统来说，分区容错并不是一个可选性，如果系统在发送节点之间通信延迟或丢包的情况下就停止工作，就失去了分布式的意义，
-所以当因为网络问题或自身故障引起通信延迟或丢包时，只能在一致性和可用性之间选一个，想要保持一致，对外服务就只能等待，有可能因超时提供不了服务；
+多节点因为网络或自身故障引起通信延迟或丢包，从而导致系统分区，只能在一致性和可用性之间选一个，想要保持完全一致，对外服务就只能等待，有可能会服务超时；
 
 对于单机系统来说就不存在上述多节点通信的问题，所以排除P,比如关系型数据库就是取了CA，高可用和强一致性，并且由事务支持延伸出ACID理论；
 
@@ -237,10 +237,12 @@ follower收到后也写入自己的日志，状态是uncommitted，leader等得�
 
 和raft的有序性不同，ZAP协议有序性（znode节点操作）不仅体现在采用的FIFO先进先出队列，还有重新选举恢复的时候需要Sync，
 >Upon a change of primary, a quorum of processes has to execute a synchronization phase before the new primary broadcasts new transactions. Executing this phase guarantees that all transactions broadcast in previous epochs that have been or will be chosen are in the initial history of transactions of the new epoch.
+
 比如leader在崩溃之前广播出去的数据（proposal和commit）不会丢失，由leader产生但没有广播出去的proposal和commit则跳过，但是如果该leader之后重新被再次选举为新leader，其上没有提交的事务需要根据判断其epoch是否小于当前的epoch，是则丢弃，如果相同则还会被提交；
 ![ZAP](/docs/docs_image/software/distrubuted_system05.png)
 >“Before proposing any new messages a newly elected leader first makes sure that all messages that are in its transaction log have been proposed to and committed by a quorum of followers”
 ><sup>[A simple totally ordered broadcast protocol](https://www.datadoghq.com/pdf/zab.totally-ordered-broadcast-protocol.2008.pdf)</sup>
+
 这也是zookeeper可以作为分布式框架保证primary order基本顺序的信心保证；
 
 RAFT没有ZAP的sync这个阶段，而是靠AppendEntries RPC同步纠正，
@@ -322,7 +324,7 @@ i)轻量级处理:
 假设worker在zookeeper上面注册为/task/worker-00000001,/task/worker-00000002,leader分发任务时可以将任务的信息setData给某个worker,然后worker监听到getData变化,
 则去获取具体任务加载执行,执行完成后再setData执行结果给当前的znode，然后leader可以监听获取结果，从而完成交互；
 但是前提是setData不可以超过1MB的限制，并且如果有任务之间还有依赖的话，完全通过zookeeper处理会比较复杂；
-<sup>[参考例子代码](https://github.com/lyhistory/learn_coding/tree/master/java/Components)</sup>
+<sup>[参考例子代码](https://github.com/lyhistory/learn_coding/tree/master/java/Components/zookeeper-demo)</sup>
 
 ii)重量级处理:
 
