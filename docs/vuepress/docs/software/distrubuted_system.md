@@ -20,9 +20,9 @@ _下面提到的节点根据上下文有不同的含义，说到zookeeper时主�
 而在分布式系统实践中，CAP并不是真的非黑即白的不可同时共存，基于大量实践衍生出了BASE理论，从高可用到基本可用 Basically Available，从强一致到最终一致性Eventual Consistency，加上软状态 Soft State，
 可见基本上是在追求一种平衡，对于一个系统来说，尤其是分布式系统，如果一直都无法保持一致，基本也是不堪用的了，所以一致性还是基本上都要追求的，只不过一致性根据强弱程度可以进一步细分；
 
-思维比较缜密的读者对于eventual consistency可能会有问题，这个最终一致性是在什么时间范围内达到一致，换句话说对于外部的client客户端来说，要到什么程度的eventual consistency才能对外提供服务？
+思维比较缜密的读者对于eventual consistency可能会有疑问，这个最终一致性是在什么时间范围内达到一致，换句话说对于外部的client客户端来说，要到什么程度的eventual consistency才能对外提供服务？
 这里不得不提另一个理论FLP，即分布式共识的不可能理论，跟CAP类似，但是从另外一个角度解读，包含三点safety, liveness, fault tolerance，刚才的问题就是关于liveness，
-用来指示分布式系统内的各个节点必须在合理的时间内达成一致in bounded time，不能一致处于不一致的状态，否则不能够对外提供服务；
+用来指示分布式系统内的各个节点必须在合理的时间内达成一致in bounded time，不能一直处于不一致的状态，否则不能够对外提供服务；
 
 ---
 
@@ -618,13 +618,13 @@ repy是【2f+1,3f+1】
 
 保险箱scriptPubKey： OP_DUP OP_HASH160 <PubKeyHash> OP_EQUALVERIFY OP_CHECKSIG
 
-解锁scriptSig：<Sig><PubKey> 
+解锁scriptSig：\<Sig\>\<PubKey\> 
 
 ![P2PKH](/docs/docs_image/software/distrubuted_system26.png)
 
-虎符拼起来：<Sig><PubKey> OP_DUP OP_HASH160 <PubKeyHash> OP_EQUALVERIFY OP_CHECKSIG ，执行顺序：
+虎符拼起来：\<Sig\>\<PubKey\> OP_DUP OP_HASH160 <PubKeyHash> OP_EQUALVERIFY OP_CHECKSIG ，执行顺序：
 ```
-OP_DUP(PubKey)=PubKey PubKey
+OP_DUP(PubKey)=PubKey
 OP_HASH160(PubKey) = PubKeyHash
 OP_EQUALVERIFY(PubKeyHash,PubKeyHash)==TRUE
 OP_CHECKSIG(Sig)==TRUE
@@ -687,10 +687,12 @@ k>z,每一次随机事件中攻击者都会得逞，所以是这里的泊松密�
 
 
 由图上面的计算可见只要单节点的算力不高，超过5个确认之后，恶意节点成功的概率都会很低，如果觉着数学难，再来一张比较直觉的图
+
 ![tamper block](/docs/docs_image/software/distrubuted_system28.png)
 
 实际上比特币作为一个史无前例的社会实验，是密码学、软件、经济、哲学的混合产物，
 >destroying the Bitcoin system will also undermine the effectiveness of his own wealth
+
 所以对于理性的节点来说，利益驱使下去正常挖矿获得收益也比想办法作弊恶意攻击的收益大的多；
 
 综上所述，这些理论的总和就构成了nakamoto consensus中本聪共识算法，
@@ -740,6 +742,7 @@ ref:
 [The Byzantine Generals Problem](http://pages.cs.wisc.edu/~sschang/OS-Qual/reliability/byzantine.htm)
 
 [BITCOIN WHITEPAPER](https://bitcoin.org/bitcoin.pdf)
+
 ---
 
 Additional info: [pbft notes](http://www.scs.stanford.edu/14au-cs244b/notes/pbft.txt)
