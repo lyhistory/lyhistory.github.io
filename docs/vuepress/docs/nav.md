@@ -6,8 +6,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
 
-<div style="width: 600px;
-  margin: auto;">
+<div style="max-width: 600px;margin: auto;">
   <div>
 	  <h1>
 	  <a href="/docs/software" >
@@ -34,7 +33,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	  </a>
 	  </h1>
   </div>
-  <div style="width: 375px;
+  <div style="max-width: 375px;
   margin: auto;
   font-family: LiSu;
   font-size: 24px;
