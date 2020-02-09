@@ -1,13 +1,17 @@
 ---
 home: false
+pageClass: custom-page-class
 sidebar: false
 actionLink: /software/
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
-计算机基础学习
-==============
+<img class="header" src="/docs/docs_image/software/architecture.png"/>
 
-
-# [分布式系统开发](/docs/software/distrubuted_system)
+<div>
+	<ul>
+		<li><a href="/docs/software/distrubuted_system" >分布式系统开发</a></li>
+		<li>more to do....</li>
+	</ul>
+</div>
 

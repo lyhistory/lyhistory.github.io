@@ -20,7 +20,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
   <div>
   <h1>
 	  <a href="/docs/coder2hacker" >
-		<img src="/docs/docs_image/hacker/kali.png" alt="hacker" title="hacker" height="50" align="right"/>
+		<img src="/docs/docs_image/coder2hacker/kali.png" alt="hacker" title="hacker" height="50" align="right"/>
 		<span>道德黑客入门 →</span>
 	  </a>
 	  </h1>
@@ -36,27 +36,22 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
   </div>
   <div style="width: 375px;
   margin: auto;
-  padding: 10px 0;
-  font-family: Baskerville;
-  font-size: 14px;
+  font-family: LiSu;
+  font-size: 24px;
   text-align: left;">
   <p>
-以为在这个世界留下了痕迹<br>
-
-地球也不过宇宙中尘埃一粒<br>
-
-以为是自己留下了子孙后代<br>
-
-其实是和猪大致相同的遗传信息<br>
-
-那一点差异也满是祖先的标记<br>
-
-灰飞烟灭之后<br>
-
-肉体或成为动植物的养分<br>
-
-无法分解的便与那土石化为一体<br><br>
-
+以為在這個世界留下了痕跡,<br>
+地球也不過宇宙中塵埃一粒;<br>
+以為是自己留下了子孫後代,<br>
+其實是和豬大致相同的遺傳信息,<br>
+那一點差異也滿是祖先的標記;<br>
+灰飛煙滅之後,<br>
+肉體或成為動植物的養分,<br>
+無法分解的便與那土石劃為一體~<br>
+</p>
+<p style="font-size: 18px;
+  font-style: italic;
+  margin-bottom: 30px;">
 -基因传递者 by 刘跃 2020.1.28
 </p>
 	</div>
