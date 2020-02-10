@@ -98,7 +98,15 @@ leader直接或间接通过follower收到转发的写操作请求，都会按照
 
 #### 2.1.2 一致性状态机
 
-一致性状态机也是依赖于共识算法实现的，一致性状态机原则上不需要选举leader节点来维护一致，不过实际产品很多还是引入了leader来降低一些问题的实现难度，
+首先状态机又称有限状态机是表示有限个状态以及在这些状态之间的转移和动作等行为的数学计算模型，所谓状态就是存储关于过去的信息，它反映从系统开始到现在时刻的输入变化，
+从软件实现角度最简单的状态机就是大家经常用的switch了，根据输入条件（event及当前状态）对数据做不同的状态切换，显然switch的条件是一个，这里是两个，处理起来首先要嵌套会比较臃肿，
+另外某些特殊状态还需要特殊处理，所以对于一个复杂系统，一般是要将状态机对象抽象出来，从实现角度，状态机也是设计模式之状态模式的一种应用比如Spring Statemachine；
+状态机在单机系统或者IOT的单机设备上都是常见的；
+
+而对于分布式系统，如何保证不同节点上的状态都是一致的，可以想到有几个因素：<sup>[The State Machine Approach](https://en.wikipedia.org/wiki/State_machine_replication#Leader_Election_(for_Paxos))</sup>
+每个节点的输入及对输入的执行顺序都是要保证一致的，返回给客户端的结果也应该是一致的；
+
+在分布式系统上，这些都是依赖于共识算法实现的，一致性状态机原则上不需要选举leader节点来维护一致，不过实际产品很多还是引入了leader来降低一些问题的实现难度(leader维持输入执行顺序，follower复制顺序log即state machine replication），
 但是跟前面的主备共识算法的侧重不同的是，主备思路是构建高可用的分布式主备系统，现在是为了构建分布式一致性状态机；
 
 我们首先要从经典问题**“paxos岛兼职议会问题”**说起，这个故障问题的描述：
@@ -744,6 +752,8 @@ ref:
 [The Byzantine Generals Problem](http://pages.cs.wisc.edu/~sschang/OS-Qual/reliability/byzantine.htm)
 
 [BITCOIN WHITEPAPER](https://bitcoin.org/bitcoin.pdf)
+
+[Clustering by Consensus](https://www.aosabook.org/en/500L/clustering-by-consensus.html)
 
 ---
 
