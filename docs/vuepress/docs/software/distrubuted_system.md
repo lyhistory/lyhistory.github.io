@@ -99,9 +99,27 @@ leader直接或间接通过follower收到转发的写操作请求，都会按照
 #### 2.1.2 一致性状态机
 
 首先状态机又称有限状态机是表示有限个状态以及在这些状态之间的转移和动作等行为的数学计算模型，所谓状态就是存储关于过去的信息，它反映从系统开始到现在时刻的输入变化，
-从软件实现角度最简单的状态机就是大家经常用的switch了，根据输入条件（event及当前状态）对数据做不同的状态切换，显然switch的条件是一个，这里是两个，处理起来首先要嵌套会比较臃肿，
-另外某些特殊状态还需要特殊处理，所以对于一个复杂系统，一般是要将状态机对象抽象出来，从实现角度，状态机也是设计模式之状态模式的一种应用比如Spring Statemachine；
-状态机在单机系统或者IOT的单机设备上都是常见的；
+从软件实现角度最简单的状态机就是大家经常用的switch了，常用在单机系统或者IOT的单机设备上，根据输入条件（event及当前状态）对数据做不同的状态切换，
+但是这种处理有两个问题：
+一方面switch的条件是一个，这里是两个，处理起来首先要嵌套会比较臃肿；
+另一方面在相对复杂系统中有些地方还需要可以灵活自定义特殊处理；
+所以一般是要将状态机对象抽象出来，实际上前面“主备方案”中提到的zookeeper本质也是一个状态机模型，
+只不过是利用状态机的状态实现了主备方案，而很多分布式状态机也是基于zookeeper构建的，比如Spring Statemachine，
+我们再挖掘其本质的话，所谓基于zookeeper的分布式状态机，不过就是将zookeeper作为服务端的客户端程序；
+
+所以从这个角度上，基于zookeeper client api的curator api本身也实现了状态机，其基本逻辑是：
+首先抽象出一个ConnectionStateManager，负责维护一个BlockingQueue事件队列，然后CuratorFrameworkImpl作为zookeeper的客户端利用跟服务端的连接情况获取当前连接状态，
+并将其状态交由ConnectionStateManager处理，ConnectionStateManager会做几件事情：
+1)根据当前状态和前一个状态做分析，并更新本地最新状态 
+2)notify阻塞在连接状态的线程（因为有些业务逻辑必须阻塞到连接到zookeeper才能展开）
+3）发布新状态到事件队列,然后processEvents处理线程会依次获取队列中的事件，并回调用事先向CuratorFramework注册好的listeners
+然后刚才说的自定义特殊处理的方式可以有：
+1)可以直接继承listener接口，然后向前面的CuratorFramework注册
+2)curator已经封装实现了很多接口，比如PathChildrenCache，因为zookeeper是采用推拉的架构，意思是zookeeper服务端会通知client端有nodechange或者datachange，但是具体的change内容还需要client端自己去获取，
+因为curator封装了PathChildrenCache等功能类，他们向CuratorFramework注册好了自己的listeners，会在ConnectionStateManager回调的时候，去拉取节点具体变化，然后PathChildrenCache还维护了一个listener列表，
+这有我们可以通过复写PathChildrenCache对外提供的listener完成更复杂的逻辑；
+
+上面说的小例子是从一个切面看待基于zookeeper的状态机，而实际上zookeeper本身本质也算是个状态机，下面我们开始从协议的角度来谈不依赖于任何外部框架的基于共识算法的状态机；
 
 而对于分布式系统，如何保证不同节点上的状态都是一致的，可以想到有几个因素：<sup>[The State Machine Approach](https://en.wikipedia.org/wiki/State_machine_replication#Leader_Election_(for_Paxos))</sup>
 每个节点的输入及对输入的执行顺序都是要保证一致的，返回给客户端的结果也应该是一致的；
@@ -238,8 +256,7 @@ follower收到后也写入自己的日志，状态是uncommitted，leader等得�
 最后一旦网络恢复正常，term=1的分区就会发现自己全部过时了，就会放弃自己的uncommit日志，同步term=2的提交日志；
 由此可见在网络分区的情况下分布式状态机一样可以实现一致性；
 
-实际上前面“主备方案”中提到的zookeeper本质也是一个状态机模型，只不过是利用状态机的状态实现了主备方案，
-从大的角度讲zookeeper的ZAP协议分为3个阶段，Discovery，Sync，Boradcast，跟前面这些协议都是大同小异，就不展开细节，只需要说下不同点：
+前面说zookeeper本质也是一种状态机，其ZAP协议又有不同的考虑，分为3个阶段，Discovery，Sync，Boradcast，跟前面这些协议都是大同小异，就不展开细节，只需要说下不同点：
 
 ![ZAP](/docs/docs_image/software/distrubuted_system04.png)<sup>[ref](https://blog.acolyer.org/2015/03/09/zab-high-performance-broadcast-for-primary-backup-systems/)</sup>
 
@@ -312,7 +329,7 @@ Zookeeper适用的场景：<sup>[ref](https://www.ibm.com/developerworks/cn/open
 最直接简单的想法就是通过zookeeper注册从中找一个worker作为leader来单独管理数据，
 你可能会说不引入zookeeper，自己写一个单独的leader程序不行吗，确实可以，不过leader程序也要做成集群式的，不可以引入单点故障，
 所以为了简单，直接让这些workers都注册zookeeper，不同的java程序微服务之间通过zookeeper的watcher监听模式实现同步节点信息，
-这样每个worker都可以保存一份同步的worker list，怎么从worker list中选出一个leader呢，两个思路：
+这样每个worker都可以保存一份同步的worker list，怎么从worker list中选出一个leader呢，要不然是配置要不是竞争，配置的缺点是
 
 可以简单设计一些规则来实现选举，比如通过配置文件定义好是否是leader候选人，然后选的时候就通过排序找到第一个活着的候选人即可；
 
