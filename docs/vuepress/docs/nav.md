@@ -11,7 +11,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	  <h1>
 	  <a href="/docs/software" >
 		<img src="/docs/docs_image/software/architecture.png" alt="architecture" title="architecture" height="50" align="right"/>
-		<span>软件基础 →</span>
+		<span>计算机基础 →</span>
 	  </a>
 	  </h1> 
 
