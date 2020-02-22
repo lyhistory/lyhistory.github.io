@@ -6,7 +6,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《网络基础》
 
-# 网络分层
+## 网络分层
 The layers in the TCP/IP network model, in order, include:
 + Layer 5: Application
 + Layer 4: Transport
@@ -20,14 +20,14 @@ The layers in the TCP/IP network model, in order, include:
 而采用layer2的交换机技术，由于交换机会学习mac地址（arp mapping），大大降低了广播的浪费；
 而layer3进一步采用ip网段隔开不同的分区，根据外部请求的ip可以准确的找到不同的网关，网关的概念跟
 
-## Layer 1: The physical layer
+### Layer 1: The physical layer
 We often take the physical layer for granted ("did you make sure the cable is plugged in?"), 
 but we can easily troubleshoot physical layer problems from the Linux command line. 
 That is if you have console connectivity to the host, which might not be the case for some remote systems.
 
 ![physical network](/docs/docs_image/software/network/network02.png)
 
-## Layer 2: The data link layer
+### Layer 2: The data link layer
 
 Layer2是交换机switch（记住arp mapping）
 The data link layer is responsible for local network connectivity; essentially, the communication of frames between hosts on the same Layer 2 domain (commonly called a local area network). The most relevant Layer 2 protocol for most sysadmins is the Address Resolution Protocol (ARP), which maps Layer 3 IP addresses to Layer 2 Ethernet MAC addresses. When a host tries to contact another host on its local network (such as the default gateway), it likely has the other host’s IP address, but it doesn’t know the other host’s MAC address. ARP solves this issue and figures out the MAC address for us.
@@ -37,7 +37,7 @@ A common problem you might encounter is an ARP entry that won’t populate, part
 
 Linux caches the ARP entry for a period of time, so you may not be able to send traffic to your default gateway until the ARP entry for your gateway times out. For highly important systems, this result is undesirable. Luckily, you can manually delete an ARP entry, which will force a new ARP discovery process
 
-## Layer 3: The network/internet layer
+### Layer 3: The network/internet layer
 
 layer3是路由器router（ip网段寻址）
 Layer 3 involves working with IP addresses, which should be familiar to any sysadmin. IP addressing provides hosts with a way to reach other hosts that are outside of their local network (though we often use them on local networks as well).
@@ -53,7 +53,7 @@ Another common issue that you’ll likely run into is a lack of an upstream gate
 While not a Layer 3 protocol, it’s worth mentioning DNS while we’re talking about IP addressing. Among other things, the Domain Name System (DNS) translates IP addresses into human-readable names, such as www.redhat.com. DNS problems are extremely common, and they are sometimes opaque to troubleshoot. Plenty of books and online guides have been written on DNS, but we’ll focus on the basics here.
 A telltale sign of DNS trouble is the ability to connect to a remote host by IP address but not its hostname. Performing a quick nslookup on the hostname can tell us quite a bit. Taking a look at the /etc/hosts file, we can see an override that someone must have carelessly added. Host file override issues are extremely common, especially if you work with application developers who often need to make these overrides to test their code during development
 
-## Layer 4: The transport layer
+### Layer 4: The transport layer
 The transport layer consists of the TCP and UDP protocols, with TCP being a connection-oriented protocol and UDP being connectionless. Applications listen on sockets, which consist of an IP address and a port. Traffic destined to an IP address on a specific port will be directed to the listening application by the kernel. A full discussion of these protocols is beyond the scope of this article, so we’ll focus on how to troubleshoot connectivity issues at these layers.
 1.  localhost
 The result can be useful if you can’t connect to a particular service on the machine, such as a web or SSH server. Another common issue occurs when a daemon or service won’t start because of something else listening on a port. The ss command is invaluable for performing these types of actions:
@@ -69,7 +69,7 @@ The examples above discussed common, simple utilities. However, a much more powe
 ●	OS fingerprinting.
 ●	Determining if remote ports are closed or simply filtered.
 
-# Network architecture
+## Network architecture
 ipset vpn(一般对外走公网，不可靠) VS leased line（一般连接内网和数据中心）
 
 vlan/vxlan技术（用于连接多个数据中心，让其变成逻辑上一个中心）
@@ -85,7 +85,7 @@ leaf access switch
 然后可以看到逻辑上蓝色和黑色是分开的，但物理上是用黑色同一条线，逻辑上是通过协议来区分的，协议就是在通信的header里面加多一点信息来区分BB和DC
 
 
-# Packet Sniffer
+## Packet Sniffer
 
 A packet sniffer is simply a piece of software that allows you to capture packets on your network. Tcpdump and Wireshark are examples of packet sniffers. Tcpdump provides a CLI packet sniffer, and Wireshark provides a feature-rich GUI for sniffing and analyzing packets.
 By default, tcpdump operates in promiscuous mode. This simply means that all packets reaching a host will be sent to tcpdump for inspection. This setting even includes traffic that was not destined for the specific host that you are capturing on, such as broadcast and multicast traffic. Of course, tcpdump isn’t some magical piece of software: It can only capture those packets that somehow reach one of the physical interfaces on your machine.
@@ -125,9 +125,9 @@ UDP sockets -ua
 RAW sockets -wa
 UNIX sockets -xa
 
-# 实战问题
+## 实战问题
 
-## wireshark
+### wireshark
 配置如下
 
 ![nginx](/docs/docs_image/software/network/network07.png)
@@ -161,7 +161,7 @@ https://www.imperva.com/learn/performance/http-keep-alive/
 使用wireshark还有个要注意的是，比如 http.host contains lyhistory.github.io
 因为我的域名是解析到github page  所以host不是我自己的lyhistory.com了
 
-## 一次排查send-q
+### 一次排查send-q
 
 ![send-q](/docs/docs_image/software/network/network10.png)
 
@@ -196,7 +196,7 @@ https://mina.apache.org/mina-project/gen-docs/2.1.2/apidocs/org/apache/mina/tran
 https://juejin.im/post/5d8488256fb9a06b065cad98
 https://cloud.tencent.com/developer/article/1143712
 
-## 内网穿透
+### 内网穿透
 
 Ipv4 ipv6
 
