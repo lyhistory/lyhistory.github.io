@@ -69,6 +69,7 @@ web攻击：通过扫描收集分析面向外网的web服务或者防火墙的�
 多个部门用不同的VLAN以保证不同部门之间的安全；
 另外大型公司的核心业务一般也会放在核心区，不能把所有服务都放在DMZ,并将是面向外网的，相对比较容易被突破；
 如果是互联网类型的公司还会将staging，uat和product分开在不同的分区上；
+通常大型公司的渗透测试都是针对uat环境做的，尤其涉及到敏感数据，一般都会避免直接测试生产环境；
 
 ### 2.4 更多架构
 
@@ -85,57 +86,126 @@ https://resources.infosecinstitute.com/beginners-guide-to-pentesting-iot-archite
 + 跟区块链通信的中心化系统比如交易所，钱包app，举例btc，都是要链下管理私钥和构造交易，然后再用私钥签名之后通过rpc通信比如python-bitcoinrpc的方式“发送到区块链上”，https://www.8btc.com/media/381319
 + 另外以太坊还有智能合约的概念，智能合约本身的安全也是一个新的领域，另外跟前面比特币rpc的例子类似，跟以太坊“沟通”一般是通过abi调用
 
-## 3.Web基础
+## 3.Web应用基础
+
+web应用一般分为website网站和web api接口，两者最主要的区别就是前者有presentation layer，后者则没有；
+网站当然是一种典型的web应用，我们只需要通过浏览器即可访问，浏览器只认识html，所以需要向web服务器请求，然后web服务器会直接返回静态页面或者
+根据网站的类型和编码方式解释或者编译生成html response并返回，有时候网站甚至会有自己的所谓view engine来动态生成html页面放在缓存中；
+手机app或者其他类型的富客户端背后也一定对应着web应用，比如即使是手机离线地图或者词典，在同步的时候也一定需要跟远程的服务器通信上传或者下载相关数据，
+远程服务一般会以web api形式提供服务，通信方式多数是基于http https，当然也有定制化的加密方式，或者直接采用其他的协议如XMPP等；
+
+### 3.1 基础协议
 http协议等
+HTTP Headers
+利用cookies进行session追踪
 https
+其他协议:XMPP
 
-抓包方法总结 gdoc realcase
+HTTP request and response
+	The request header
+	The response header
+HTTP methods:GET/POST/HEAD/TRACE/PUT/DELETE/OPTION
 
-
-
-1.4 Web应用总览
-
-1.4.1 HTTP协议
-1.4.2 HTTP Headers
-1.4.3 利用cookies进行session追踪
-1.4.4 HTML
-1.4.5 Web应用架构
- 
-Proactive security testing
-Different testing methodologies
-Ethical hacking
-Penetration testing
-Vulnerability assessment
-Security audits
-Considerations when performing penetration testing
-Rules of Engagement
-The type and scope of testing
-Client contact details
-Client IT team notifications
-Sensitive data handling
-Status meeting and reports
-The limitations of penetration testing
-The need for testing web applications
-Reasons to guard against attacks on web applications
-Kali Linux
-A web application overview for penetration testers
-HTTP protocol
-Knowing an HTTP request and response
-The request header
-The response header
-HTTP methods
-The GET method
-The POST method
-The HEAD method
-The TRACE method
-The PUT and DELETE methods
-The OPTIONS method
 Keeping sessions in HTTP
 Cookies
-Cookie flow between server and client
-Persistent and nonpersistent cookies
-Cookie parameters
-HTML data in HTTP response
-The server-side code
-Multilayer web
+	Cookie flow between server and client
+	Persistent and nonpersistent cookies
+	Cookie parameters
+HTML data in HTTP response:
+	服务端收到客户端的请求，根据请求的类型，比如.php扩展代表请求的页面是php代码，需要服务端对应的php引擎或者解释器根据客户端的参数和指定的页面路由找到对应的服务端代码，
+	解释执行并返回请求格式的结果，比如HTML/JSON/XML；
 
+Web Services
+	rest vs soap；
+	ajax：html/json/xml
+	websocket
+	
+### 3.2 web应用架构
+前面谈了网络架构，现在具体到web应用架构，
+
+从物理架构上说，一般是经典的3 tier：
+
+presentation tier放在位于DMZ的web服务器上；
+application tier或者business layer放在intranet内网服务器上；
+database tier也是放在intranet内网服务器上；
+
+从逻辑架构上讲，一般是经典的三层 3 layer：
+
+presentation layer 表现层一般是static html或者基于比如ASP.NET MVC的dynamic html，托管在web host软件中，如iis/apache；
+business layer 业务层，一般主要的核心业务逻辑都放在这一层，向上负责给presentation layer提供业务数据，向下负责跟数据访问层交互将数据转为业务数据以及将业务数据落库；
+data access layer 数据访问层，跟数据库的通信都是放在这一层，负责数据库读写；
+
+当然很多小公司会将逻辑上的三层作为一个完整的项目部署在web服务器上，因为小公司的技术栈比较简单，这样处理可以以最简单的方法获取最好的性能，弱点当然是安全性比较低，
+通常一旦web应用产生漏洞，会被迅速“脱裤”，数据库也往往直接泄漏；
+
+大中型公司会将业务层做成比如微服务端形式部署在内网或者核心区，然后DMZ的表现层的网站可以通过web api http或者rpc socket跟业务层的微服务进行通信；
+
+### 3.3 抓包方法总结
+
+对于网站，我们可以用浏览器加插件的方式进行抓包和测试，比如采用chrome的开发者工具+hackerbar，直接就可以查看http通信和web socket packet，
+但是缺点是如果页面发生跳转，跳转前的记录就会清除，这种情况只能采用抓包工具；而对于手机app、桌面软件等，我们只能采用抓包工具来抓取，下面就介绍下常用的抓包方式：
+
+抓包工具分为cli命令行工具和带有UI界面的工具，cli工具如tcpdump，UI工具有fiddler/wireshark/burpsuite等；
+Fiddler只适用于windows平台，burpsuite是java写的跨平台，Fiddler和burpsuite在抓包上偏向请求和响应的数据，但是wireshark偏向于数据帧，跟tcpdump一个级别；Proxifier主要是给没有提供代理设置的桌面软件，Proxifier Standard Edition uses Winsock Layered Service Provider (Winsock LSP) to capture TCP connections and Winsock Name Space Provider (Winsock NSP) to handle name resolution over proxy. Both providers have to be properly installed in the system；
+网页版/桌面程序抓不到包：web.whatsapp走的不是https协议抓到包，无法解密：没有开启解密模式或安装代理软件的CA证书，或者网站或软件只接受自己设置的白名单列表CA
+
+下面来具体分类说下：
+
++ TCPDUMP:
+最原始的方式是采用系统提供的基本工具比如linux的tcpdump嗅探监听，它是一个没有UI的cli形式的命令行工具，开启混杂模式，可以抓取任何经过本机任何一个网卡的数据包，windows上也有类似的windump；
+
++ burpsuite：
+https://support.portswigger.net/customer/portal/articles/1783087-Installing_Installing%20CA%20Certificate%20-%20FF.html
+https://medium.com/@faridhashmi733/fix-burp-suite-ssl-secure-connection-failed-8de2146e21fa
+
+![burpsuite https](/docs/docs_image/coder2hacker/ch2web/web02.png)
+
+
++ fiddler
+
+本机+可设置代理的软件（浏览器，百度网盘等允许设置代理的软件）：
+	Filters->breakpoints
+	Right click -> Replay->reissue and edit
+	Decrypt https
+
+![fiddler https](/docs/docs_image/coder2hacker/ch2web/web03.png)
+
+Fiddler+proxifier
+
+	本机+桌面软件（不可以设置代理的软件）：
+		配合Proxifier或其他
+![fiddler proxifier](/docs/docs_image/coder2hacker/ch2web/web04.png)
+
+_千万不要那个default走fiddler的proxy，不然会造成死循环，因为fiddler的流量也会被Proxifier拦截住，然后再发给自己，报错“proxifier detected that the application fiddler.exe get into an infinite connection loop”，另一个解决方案是增进Fiddler.exe Action放direct_
+
+手机抓包：
+	设置远程连接并只设置解密远程连接的https
+	
+![fiddler mobile](/docs/docs_image/coder2hacker/ch2web/web05.png)
+
+配置手机wifi代理
+	手机打开http://<fiddlerhost>:<port8888> 下载certificate 安装
+
+样本分析/后门查找
+https://any.run/
+技术揭秘：如何分析中国菜刀是否包含后门？https://www.freebuf.com/articles/system/93323.html
+
+
+https://www.cnblogs.com/king8/p/9024717.html
+https://www.proxifier.com/docs/win-v3/system.htm
+浅析手机抓包方法实践
+http://drops.xmd5.com/static/drops/tips-12467.html
+Https tunnel https://groups.google.com/forum/#!topic/httpfiddler/RCkzE3HhhxY
+Windows抓包指南①：Proxifier+Fiddler对第三方程序强制抓包
+https://www.52pojie.cn/thread-976016-1-1.html
+Windows抓包指南②：Fiddler抓不到的包是怎么回事？
+https://blog.csdn.net/CharlesSimonyi/article/details/90486208
+
+Fiddler+burpsuite
+	Fiddler gateway 转发给burpsuite
+
+
+---
+
+ref:
+[大型企业网络架构](https://blog.csdn.net/qq_36119192/article/details/84427267)
