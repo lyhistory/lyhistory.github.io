@@ -14,6 +14,10 @@ module.exports = {
       { text: '区块链', link: '/blockchain/' }
     ]
 	,
+	//markdown: {
+	//	extractHeaders: [ 'h2', 'h3', 'h4' ]
+	//}
+	//,
 	sidebar: [
       {
         title: '软件基础',   // required

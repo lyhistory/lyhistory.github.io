@@ -1,3 +1,10 @@
+---
+sidebar: auto
+sidebarDepth: 3
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
+[回目录](/docs/software)  《分布式框架zookeeper》
 
 # QuickStart: 
 
