@@ -1,4 +1,5 @@
 # terminalogy
+evk: evaluation kit
 ble: bluetooth low energy
 
 MDK=Microcontroller Development Kit
@@ -62,11 +63,11 @@ Project->Manage->Select Software Packs下面，更改NordicSemiconductor::nRF_De
 [nRF5x command line tools](https://www.nordicsemi.com/Software-and-tools/Development-Tools/nRF-Command-Line-Tools/Download#infotabs)
 包括Jlink驱动以及Nordic自己开发的一些命令行工具，具体包括Jlink驱动，nrfjprog，nrfutil以及mergehex等
 
-安装nRF connect手机版和桌面版，通过蓝牙连接开发板
+安装nRF connect手机版和桌面版，通过蓝牙连接开发板，包括Jlink驱动
 
 安装nRF toolbox
 
-安装nRFgo studio 图形化flash烧录工具
+~~安装nRFgo studio 图形化flash烧录工具~~
 
 # 入门
 
@@ -93,13 +94,42 @@ Nordic每一个例子都支持5种工具链：Keil5/Keil4/IAR/GCC/SES
 [Nordic nRF5 SDK(16.0) 例子介绍example&docs](https://www.cnblogs.com/iini/p/9095551.html)
 
 [开发你的第一个BLE应用程序—Blinky](https://www.cnblogs.com/iini/p/8996025.html)
-[手把手教你开发BLE数据透传应用程序](https://www.cnblogs.com/iini/p/9095622.html)
 	
-https://infocenter.nordicsemi.com/topic/sdk_nrf5_v16.0.0/getting_started_softdevice.html?cp=7_1_1_3
+[在线文档](https://infocenter.nordicsemi.com/topic/sdk_nrf5_v16.0.0/getting_started_softdevice.html?cp=7_1_1_3)
 
-to do:
+## 烧录
 
-# 烧录
+通过JLINK V9
+
+Keil5提示“the selected device NRF52840 is unkown to this version of the J-Link software”
+
+解决方法：有人说是因为keil5的版本问题，有人说是因为nRF Studio的版本已经停止更新的问题，
+所以去控制面板卸载了nRF Studio和基本所有带JLINK和SEGGER的东西，重新安装JLINK驱动发现SEGGER不可写，重启电脑安装即可，
+安装Jlink会弹出 Keil MDK-ARM(DLL V5.12f in "C:\Keil_v5\ARM\Segger")，一定要勾选，
+发现360杀毒会删除jflashapi几个文件，去恢复区恢复并禁止再次查杀，
+然后安装了nRF Connect，从中安装了Programmer
+
+![keil5 nrf5 SDK](/docs/docs_image/software/hardware/dk_nrf52_03.png)
+
+[Jlink Download](https://www.segger.com/downloads/jlink/#J-LinkSoftwareAndDocumentationPack)
+
+[nRF Connect](https://www.nordicsemi.com/Software-and-tools/Development-Tools/nRF-Connect-for-desktop/Download#infotabs)
+
+## 通信
+
+I2C UART
+
+[手把手教你开发BLE数据透传应用程序](https://www.cnblogs.com/iini/p/9095622.html)
+E:\workspace\iot\nRF52840\2 sdk\nRF5_SDK_16.0.0_98a08e2\examples\ble_peripheral\ble_app_uart\pca10056\s140\arm5_no_packs
+Load "flash_s140_nrf52_7.0.1_softdevice"
+then Load nrf52840_xxaa
+
+build failed
+"RTE\Device\nRF52840_xxAA\system_nrf52840.c(29): error: #5: cannot open source input file "nrf_erratas.h": No such file or directory"
+ replace examples /ble_peripheral /ble_app_uart /pca10056/s140/arm5_no_packs/ RTE/Device/nRF52840_xxAA/system_nrf52840.c  with  modules / nrfx / mdk / system_nrf52840.c.
+https://devzone.nordicsemi.com/f/nordic-q-a/54749/sdk16-0-keil5-26-building-error
+
+todo:
 bootloader烧写
 https://www.arduino.cn/thread-92918-1-1.html
 
@@ -116,6 +146,8 @@ jlink烧录比较快与直接；uart烧录，就是烧录最终程序；系统�
 
 STM32通过串口烧录程序  原理跟这片soc差不多的
 这片soc里面跑的是cortex M4的内核  应该都是万变不离其中
+
+
  	
 ---
 

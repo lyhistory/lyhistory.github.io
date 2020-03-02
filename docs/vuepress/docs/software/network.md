@@ -18,7 +18,7 @@ The layers in the TCP/IP network model, in order, include:
 
 比较早的layer1是采用hub技术，容易浪费带宽，比如A和B两台机器上面运行不同的服务，外面请求进来的时候，采用hub技术就要盲目广播，浪费带宽；
 而采用layer2的交换机技术，由于交换机会学习mac地址（arp mapping），大大降低了广播的浪费；
-而layer3进一步采用ip网段隔开不同的分区，根据外部请求的ip可以准确的找到不同的网关，网关的概念跟
+而layer3进一步采用ip网段隔开不同的分区，根据外部请求的ip可以准确的找到不同的网关
 
 ### Layer 1: The physical layer
 We often take the physical layer for granted ("did you make sure the cable is plugged in?"), 
@@ -242,3 +242,4 @@ ref:
 [A beginner's guide to network troubleshooting in Linux](https://www.redhat.com/sysadmin/beginners-guide-network-troubleshooting-linux)
 [Packet sniffer basics for network troubleshooting](https://www.redhat.com/sysadmin/packet-sniffer-basics)
 
+[网络7层协议，4层，5层？理清容易混淆的几个概念](https://blog.csdn.net/cc1949/article/details/79063439)
