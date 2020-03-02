@@ -1,4 +1,10 @@
-# terminalogy
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
+## 1.terminalogy
 evk: evaluation kit
 ble: bluetooth low energy
 
@@ -8,16 +14,16 @@ Softdevice是Nordic蓝牙协议栈的名称
 
 mbr: Master Boot Record主引导记录是位于磁盘最前边的一段引导（Loader）代码
 
-# 环境搭建
+## 2.环境搭建
 
-## 驱动Driver
+### 2.1 驱动Driver
 
 CH341SER.zip
 	
 安装成功的标志是usb连接开发板时会在设备管理器device manager里面会出现：
 端口Ports(COM & LPT)，展开后看到USB-SERIAL CH340(COM6)
 	
-## 开发工具IDE
+### 2.2 开发工具IDE
 
 + Keil 仅支持Windows
 + IAR 仅支持Windows
@@ -69,18 +75,18 @@ Project->Manage->Select Software Packs下面，更改NordicSemiconductor::nRF_De
 
 ~~安装nRFgo studio 图形化flash烧录工具~~
 
-# 入门
+## 3. 入门
 
 [Getting started with MDK Create applications with µVision® for ARM® Cortex®-M microcontrollers](http://www2.keil.com/docs/default-source/default-document-library/mdk5-getting-started.pdf?sfvrsn=2[NC,L])
 
-## keil5创建工程项目
+### 3.1 keil5创建工程项目
 
 建立工程，创建工程文件夹，创建文件，添加文件到工程，添加文件路径，生成机器可读的HEX文件<sup>[ref](https://blog.csdn.net/qq_44713454/article/details/98889913)</sup>
 
 [how to create new project in keil from scracth](https://devzone.nordicsemi.com/f/nordic-q-a/9098/how-to-create-new-project-in-keil-from-scracth)
 	 
 	
-## 使用SDK
+### 3.2 使用SDK
 
 + nRF52832和nRF52810对应开发板编号为PCA10040。虽然52832和52810共用同一块开发板，但是他们在SDK中的项目编号是不一样的，52832对应PCA10040目录，52810对应PCA10040e目录
 + nRF52840和nRF52811对应开发板编号为PCA10056。虽然52840和52811共用同一块开发板，但是他们在SDK中的项目编号是不一样的，52840对应PCA10056目录，52811对应PCA10056e目录，由于52811和52840 PIN to PIN兼容，软件也是完全兼容的
@@ -97,7 +103,7 @@ Nordic每一个例子都支持5种工具链：Keil5/Keil4/IAR/GCC/SES
 	
 [在线文档](https://infocenter.nordicsemi.com/topic/sdk_nrf5_v16.0.0/getting_started_softdevice.html?cp=7_1_1_3)
 
-## 烧录
+### 3.3 烧录
 
 通过JLINK V9
 
@@ -115,7 +121,7 @@ Keil5提示“the selected device NRF52840 is unkown to this version of the J-Li
 
 [nRF Connect](https://www.nordicsemi.com/Software-and-tools/Development-Tools/nRF-Connect-for-desktop/Download#infotabs)
 
-## 通信
+### 3.4 通信
 
 I2C UART
 
@@ -128,6 +134,9 @@ build failed
 "RTE\Device\nRF52840_xxAA\system_nrf52840.c(29): error: #5: cannot open source input file "nrf_erratas.h": No such file or directory"
  replace examples /ble_peripheral /ble_app_uart /pca10056/s140/arm5_no_packs/ RTE/Device/nRF52840_xxAA/system_nrf52840.c  with  modules / nrfx / mdk / system_nrf52840.c.
 https://devzone.nordicsemi.com/f/nordic-q-a/54749/sdk16-0-keil5-26-building-error
+
+
+BLE连接建立过程 http://www.mamicode.com/info-detail-2275982.html
 
 todo:
 bootloader烧写
