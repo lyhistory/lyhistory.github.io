@@ -15,7 +15,7 @@ module.exports = {
     ]
 	,
 	markdown: {
-		extractHeaders: [ 'h2', 'h3', 'h4' ]
+		extractHeaders: [ 'h2', 'h3', 'h4', 'h5' ]
 	}
 	,
 	sidebar: [
@@ -23,19 +23,19 @@ module.exports = {
         title: '软件基础',   // required
         path: '/software/',      // optional, which should be a absolute path.
         collapsable: true, // optional, defaults to true
-        sidebarDepth: 2    // optional, defaults to 1
+        sidebarDepth: 3    // optional, defaults to 1
       },
       {
         title: '黑客入门',   // required
         path: '/coder2hacker/',      // optional, which should be a absolute path.
         collapsable: true, // optional, defaults to true
-        sidebarDepth: 2    // optional, defaults to 1
+        sidebarDepth: 3    // optional, defaults to 1
       },
 	  {
         title: '区块链入门',   // required
         path: '/blockchain/',      // optional, which should be a absolute path.
         collapsable: true, // optional, defaults to true
-        sidebarDepth: 2,    // optional, defaults to 1
+        sidebarDepth: 3,    // optional, defaults to 1
         children: []
       }
 	  ]
