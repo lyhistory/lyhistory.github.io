@@ -156,8 +156,18 @@ https://docs.spring.io/spring/docs/2.5.x/reference/aop.html
 ** 代理
 动态代理 静态代理
 cglib 通过使用proxy设计模式 远程调用看起来像本地调用
-增强类 如mybatis
-
+增强类 如mybatis，fastclassbyspringcglib
+```
+保存生成的动态代理类或者增强类
+@EnableAsync
+@SpringBootApplication
+public class Application {
+    public static void main(String[] args) {
+    	System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY,"C:\\Workspace\\debug");
+        SpringApplication.run(Application.class, args);
+    }
+```
+MyBatis is a fork from iBATIS,
 ---
 
 ## 3.SpringBoot Framework

@@ -18,6 +18,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<p>-------------------------</p>
 	<h3>软件开发经验</h3>
 	<ul>
+		<li><a href="/docs/software/java" >java实用基础</a></li>
 		<li><a href="/docs/software/java_spring" >基于SpringBoot的微服务/a></li>
 		<li><a href="/docs/software/zookeeper" >分布式框架zookeeper</a></li>
 		<li><a href="/docs/software/redis" >分布式缓存redis</a></li>
