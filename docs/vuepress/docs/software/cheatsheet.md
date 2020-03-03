@@ -25,9 +25,9 @@ ss -at 'sport = :9870'
 重定向
 ![](/docs/docs_image/software/linux/linux_redirect01.png)
 
-< file 比如标准输出重定向 java -jar **.jar > log.txt
+\< file 比如标准输出重定向 java -jar **.jar > log.txt
 
-<<< String 比如脚本中读取第一个参数并取/分隔的\[0\] IFS='/' read -ra target_arr <<< "$1"
+\<<< String 比如脚本中读取第一个参数并取分隔'\'的第一个值 ```IFS='/' read -ra target_arr <<< "$1"```
 
 2>&1 标准错误输出重定向到标准输出
 ps -aef | grep -v grep | grep "java -server -jar" | awk '{print $2}'
