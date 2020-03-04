@@ -120,6 +120,8 @@ java sdk默认提供了非线程安全的队列和线程安全的队列，实际
 https://mvnrepository.com/artifact/com.lmax/disruptor/3.2.1/usages
 https://mvnrepository.com/artifact/com.lmax/disruptor/3.4.0/usages
 
+CopyRight 刘跃 LYHISTORY.COM
+
 ---
 
 ref:
