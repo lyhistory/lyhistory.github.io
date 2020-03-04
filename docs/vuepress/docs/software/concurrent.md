@@ -4,7 +4,28 @@ sidebarDepth: 3
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
-[回目录](/docs/software)  《concurrent》
+[回目录](/docs/software)  《concurrency并发》
+
+首先要明确个词的意思，首先引用：
+> Concurrency means multiple tasks which start, run, and complete in overlapping time periods, in no specific order. Parallelism is when multiple tasks OR several part of a unique task literally run at the same time, e.g. on a multi-core processor. Remember that Concurrency and parallelism are NOT the same thing.
+> https://howtodoinjava.com/java/multi-threading/concurrency-vs-parallelism/
+
+>"concurrent" is used only for events that occur over a period of time, whereas "simultaneous" can also be used for events that occur at a point in time.
+
+可以看到，cocurrency并发是只在一段时间内很多events一起发生，但是在这段时间内的任意一个时刻可能只有一个event发生，而parallelism是指events发生是simultaneously，某个时刻他们是可以同时发生；
+
+以吃饭和说话举例：
+有些人吃饭的时候不喜欢说话，只有吃完饭才说话，所以不支持并发concurrency和并行parallelism；
+有些人吃饭的时候说话比较优雅礼貌，每次都是先吞下嘴里的食物才说话，然后说了一句再吃一口，所以他支持并发concurrency但不支持并行parallelism；
+有些人吃饭不讲究，嘴里还没咽下去，同时还高声阔谈，食物有时候喷的对方一脸，所以他同时支持并发concurrency和并行parallelism；
+
+所以并发只是强调可以在一段时间内同时处理多个事务，并行是强调可以在某一个时刻处理多个事务，并发可以不并行，并行一定是并发；
+
+比如早期一个核的cpu也可以处理多个任务就是属于并发但是不是并行，在任何一个cpu时刻，只能处理一件任务，而多核则同一个时刻，多个cpu并行处理不同任务；
+
+所以我们并太关心并行，因为这个涉及到硬件和底层操作系统的处理，我们现在只关心并发的处理；
+
+一般谈到并发我们基本都是暗指高并发，实际上也有低并发的情况需要处理，比如低并发但是每个任务都是需要消耗长处理时间，下面也会提到；
 
 concurrent control或者并发控制是关乎系统的consistency一致性，
 最直接的想法是先来后到，但是先来后到也有问题，先来的可能做了一系列的读写操作，后到的就要一直等着吗，显然这种处理很粗暴，
@@ -51,14 +72,21 @@ Common scenarios
 
 ![](/docs/docs_image/software/concurrent/concurrent_db05.png)
 
-## 2. 应用层面的高并发
+## 2. 应用层面的并发
 
 从单个应用来讲，有几种方式：
+
 a.采用多线程，多开几个线程或线程池，充分利用cpu和内存，尤其是当遇到比较复杂的计算时，单个线程处理时间过长会阻塞影响性能，所以可以用java等forkjoinpool之类的方式处理；
-b.采用多进程，多个应用协同，比如前面加个load balance分流，然后几个应用之间share session之类的；
+
+b.采用多进程，多个应用协同，比如前面加个load balance反向代理分流比如[ha proxy](https://www.haproxy.org/) 或者nginx，比如淘宝CDN采用ha proxy，
+当然如果应用之间需要业务层面的协同，比如用户session管理，几个应用之间可以采用share session之类的其他工具或框架；
+
 c.采用队列，比如消息队列
 
-以上从应用层面说的三种方式，换个角度从整体架构上看，第三种方式比较有优势，比如采用FIFO排队方式来处理高并发，
+实际上第一种方式基本都不是为了处理高并发，现在很少有给一个单体应用加cpu内存的这种处理方式，如上面举例，一般都是用来处理long processing time的问题（低并发但是处理时间较长的任务），
+然后本质上b和c的原理差不多，只是观察的角度和粒度不同，实际ha proxy和nginx这些内部也是可能采用队列思想，这个我没有深入探索只是粗略知道；
+
+最后换个角度从整体架构上看，第三种方式比较有优势，比如采用FIFO排队方式来处理高并发，
 额外的好处：解耦了消息的生产者和消费者，生产者负责把消息放到队列尾部，消费者则从队列头拉取消息进行处理，
 由于解耦了生产者和消费者，互相就不需要等待对方处理，所以是异步操作，生产者不需要等待消费者处理某条消息的结果；
 

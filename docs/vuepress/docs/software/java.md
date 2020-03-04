@@ -238,6 +238,8 @@ mvn archetype:generate https://kafka.apache.org/22/documentation/streams/tutoria
 https://stackoverflow.com/questions/31720328/maven-not-downloading-dependencies-in-eclipse
 https://stackoverflow.com/questions/19655184/no-compiler-is-provided-in-this-environment-perhaps-you-are-running-on-a-jre-ra
 
+Build a Java app with Maven https://jenkins.io/doc/tutorials/build-a-java-app-with-maven/
+
 #### 3.2.2 POM 
 https://maven.apache.org/guides/introduction/introduction-to-the-pom.html
 https://maven.apache.org/guides/introduction/introduction-to-profiles.html
@@ -443,6 +445,7 @@ Streaming framework: apache spark，storm，kafka stream等，感觉reactive响�
 pipeline，method chaining，fluent Interface
 我们可以看到从synchronous到asynchronous转换比较明显就是用callback，但是如果步骤过多就会出现类似这样的嵌套写法
 process1().done( callback() ) 然后callback().done( anothercallback())；为了解决这个问题就出现了fluent interface，即
+process1().done( callback() ) 然后callback().done( anothercallback())；为了解决这个问题就出现了fluent interface，即
 process1().then(process2())
 
 Streaming里面也是很多这种写法
@@ -456,6 +459,159 @@ https://medium.com/@brianjleeofcl/what-they-probably-didnt-teach-you-pt-1-node-j
 cat < in.txt | grep “apache” | tr a-z A-Z > out.txt
 
 ### 5.2 RPC / RMI / JMS / WebService(Rest/SOAP) 
+
+#### 5.2.1 Overview
+
+> Nowadays we use general purpose applications or libraries to communicate with each other. For example, we often use an HTTP client library to retrieve information from a web server and to invoke a remote procedure call via web services. However, a general purpose protocol or its implementation sometimes does not scale very well. It is like how we don't use a general purpose HTTP server to exchange huge files, e-mail messages, and near-realtime messages such as financial information and multiplayer game data. What's required is a highly optimized protocol implementation that is dedicated to a special purpose. For example, you might want to implement an HTTP server that is optimized for AJAX-based chat application, media streaming, or large file transfer. You could even want to design and implement a whole new protocol that is precisely tailored to your need. Another inevitable case is when you have to deal with a legacy proprietary protocol to ensure the interoperability with an old system. What matters in this case is how quickly we can implement that protocol while not sacrificing the stability and performance of the resulting application.
+
+RPC is a protocol defined in https://tools.ietf.org/html/rfc1831 , netty is one of the non-blocking io implementation of RPC, 
+and also sometimes refer as an architecture style (getUserById?id=1) when comparing with rest style(get /cat/1)
+RMI is a protocol and also a low-level RPC implementation, “normally for server to server communication or inter micro services communication, service A invoke methods on service B just as its own function call”; dubbo is an advanced implementation on top of RMI and other protocols, is for distributed services;
+
+WebServices is also a specific implementation of RPC using HTTP protocol, it is also called RPC-Style web service, and one more style is Restful style web service.
+Compare: RMI is more performance better than web service, because RMI using tcp while web service using http;
+https://www.jianshu.com/p/5b90a4e70783
+
+![](/docs/docs_image/software/java/java06.png)
+
+RPC vs Restful, RPC vs RMI, Rest vs Restful:
+
+![](/docs/docs_image/software/java/java07.png)
+
+#### 5.2.2 RPC
+RPC框架有很多，比较知名的如阿里的Dubbo、google的gRPC、Go语言的rpcx、Apache的thrift。当然了，还有Spring Cloud，不过对于Spring Cloud来说，RPC只是它的一个功能模块，还有netty，alipay基于netty的SOFA RPC
+技术点：
+●	元注解定义
+●	网络IO，BIO\NIO\AIO，Socket编程，HTTP通信，一个就行。
+●	动态代理，JDK或者Cglib的动态代理。
+●	反射
+●	序列化、反序列化，JDK序列化，JSON、Hessian、Kryo、ProtoBuffer、ProtoStuff、Fst知道一个就行。
+●	网络通信
+●	编解码
+●	服务发现和注册
+●	心跳与链路检测
+
+利用动态代理也能实现AOP。仔细推演一下不能得出这个结论。我们知道：动态代理提供了一种方式，能够将分散的方法调用转发到一个统一的处理函数处理。AOP的实现需要能够提供这样一种机制，即在执行函数前和执行函数后都能执行自己定义的钩子。那么，首先使用动态代理让代理类忠实的代理被代理类，然后处理函数中插入我们的自定义的钩子。之后让代理类替换被代理类需要使用的场景，这样，相当于对该类的所有方法定义了一个切面。不过，使用动态代理实现AOP特别麻烦，啰嗦。这仅仅作为一个探讨的思路，来说明动态代理这一通用概念可以实现很多特定技术。实际使用中当然使用spring提供的AOP更为方便。
+https://www.jianshu.com/p/64355d8cb1ee
+
+基于Netty实现
+https://netty.io/wiki/user-guide-for-4.x.html
+
+https://github.com/luxiaoxun/NettyRpc/tree/b811cabebcf20a2551f4ffa746de68ba1e7ebafb
+https://juejin.im/post/5c6d7640f265da2de80f5e9c#heading-4
+
+SOFA RPC基于netty进一步封装，更容易使用
+
+流程
+●	Server端启动进行服务注册到zookeeper；
+●	Client端启动获取zookeeper的服务注册信息，定期更新；
+●	Client以本地调用方式调用服务（使用接口，例如helloService.sayHi("world"));
+●	Client通过RpcProxy会使用对应的服务名生成动态代理相关类，而动态代理类会将请求的对象中的方法、参数等组装成能够进行网络传输的消息体RpcRequest；
+●	Client通过一些的负载均衡方式确定向某台Server发送编码（RpcEncoder）过后的请求（netty实现）
+●	Server收到请求进行解码（RpcDecoder），通过反射（cglib的FastMethod实现）会进行本地的服务执行
+●	Server端writeAndFlush()将RpcResponse返回；
+●	Clinet将返回的结果会进行解码，得到最终结果。
+
+#### 5.2.3 RMI
+
+**RMI VS RPC:**
+Java RMI （Remote Method Invocation）- 远程方法调用，能够让客户端像使用本地调用一样调用服务端 Java 虚拟机中的对象方法。RMI 是面向对象语言领域对 RPC （Remote Procedure Call）的完善，用户无需依靠 IDL 的帮助来完成分布式调用，而是通过依赖接口这种更简单自然的方式。
+RPC and RMI are the mechanisms which enable a client to invoke the procedure or method from the server through establishing communication between client and server. The common difference between RPC and RMI is that RPC only supports procedural programming whereas RMI supports object-oriented programming.
+
+Getting Started Using Java™ RMI https://docs.oracle.com/javase/7/docs/technotes/guides/rmi/hello/hello-world.html
+
+第一步 全手动本地发布
+![](/docs/docs_image/software/java/java08.png)
+
+Difference between classes java.rmi.registry.Registry and java.rmi.Naming 
+https://stackoverflow.com/questions/3630329/difference-between-classes-java-rmi-registry-registry-and-java-rmi-naming
+需要手动编译interface server 到当前目录下面，然后手动运行时需要指定classpath，需要手动启动rmiregistry
+
+第二步 通过JNDI尝试远程发布并自动启动rmiregistry
+RMI VS WebService
+![](/docs/docs_image/software/java/java09.png)
+
+第三步 基于zookeeper发布
+https://my.oschina.net/huangyong/blog/345164
+http://wanglizhi.github.io/2016/06/12/RMI/
+
+注意：我们首先需要使用 ZooKeeper 的客户端工具创建一个持久性 ZNode，名为“/registry”，该节点是不存放任何数据的，可使用如下命令：
+create /registry null
+
+![](/docs/docs_image/software/java/java10.png)
+
+#### 5.2.4 Dubbo
+RMI比较原始
+Dependency
+http://jm.taobao.org/2018/06/13/%E5%BA%94%E7%94%A8/
+
+https://github.com/apache/dubbo/blob/master/dubbo-dependencies-bom/pom.xml
+Admin ui
+https://github.com/apache/dubbo-admin
+https://dubbo.apache.org/en-us/docs/admin/introduction.html
+
+Dubbo with multicast
+	Multicast
+Dubbo 支持多种协议，采用的协议在网络层级不同，performance
+https://dubbo.apache.org/en-us/docs/user/perf-test.html
+
+## 6.JVM
+
+JVM是一份本地化的程序，本质上是可执行的文件，是静态的概念。
+/jre/bin/server/jvm.dll
+
+程序运行起来成为进程，是动态的概念。java程序是跑在JVM上的，严格来讲，是跑在JVM实例上的，一个JVM实例其实就是JVM跑起来的进程，二者合起来称之为一个JAVA进程。各个JVM实例之间是相互隔离的。
+
+JVM,java虚拟机，只是给byte code提供解释翻译加载运行的一个工具（通常编程打包的程序都是直接到机器码，比如exe文件是windows的机器码可执行文件，Java语言设计只默认编译成中间语言byte code字节码，不编译成最终的机器码，然后jvm就会去解释执行），实际上不只是java语言，任何语言只要能转成bytecode 字节码都可以交由jvm加载，jvm会找到主程序并根据当前的操作系统解释成机器码运行；
+
+入门到放弃
+https://juejin.im/post/5b45ef49f265da0f5140489c
+
+JMX Monitor
+https://docs.oracle.com/javase/6/docs/technotes/guides/management/agent.html
+
+JPDA
+https://zhuanlan.zhihu.com/p/59639046
+
+Load jni library from jar:
+https://blog.csdn.net/Revivedsun/article/details/86562934
+https://stackoverflow.com/questions/1611357/how-to-make-a-jar-file-that-includes-dll-files
+http://www.jdotsoft.com/JarClassLoader.php#tempfiles
+
+![](/docs/docs_image/software/java/java11.png)
+
+file:/C:/Workspace/Temp/XXX.jar!/BOOT-INF/lib/XXX-1.0-SNAPSHOT.jar!/XXXJNI.dll
+
+file:/opt/XXX.jar!/BOOT-INF/lib/XXX-1.0-SNAPSHOT.jar!/libXXXJNI.so
+
+getClass().getResourceAsStream("/filename");
+https://stackoverflow.com/questions/20389255/reading-a-resource-file-from-within-jar
+
+### 6.1 Hsdb
+java -cp .:$JAVA_HOME/lib/sa-jdi.jar sun.jvm.hotspot.CLHSDB
+java -cp .:$JAVA_HOME/lib/sa-jdi.jar sun.jvm.hotspot.CLHSDB $JAVA_HOME/bin/java /opt/core.10759
+
+案例分享：如何通过JVM crash 的日志和core dump定位和分析Instrument引起的JVM crash
+https://blog.csdn.net/raintungli/article/details/77790829
+https://blog.csdn.net/qq_31865983/article/details/98480703
+
+java -cp .:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.232.b09-0.el7_7.x86_64/lib/sa-jdi.jar sun.jvm.hotspot.CLHSDB /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.232.b09-0.el7_7.x86_64/bin/java /opt/core.10759
+
+### 6.2 Java外挂
+https://www.codercto.com/a/18543.html
+https://github.com/vipshop/vjtools
+https://mp.weixin.qq.com/s/cwU2rLOuwock048rKBz3ew
+
+## 7.JAVA experience
+1）同步锁信号
+synchronized(this), wati, notify, notifyall
+
+2) 事件通信
+Publish Events
+public interface ApplicationContext extends EnvironmentCapable, ListableBeanFactory, HierarchicalBeanFactory,
+   	 MessageSource, ApplicationEventPublisher, ResourcePatternResolver {
+
+注解方法@EventListener并且其所在类也必须是@Component注解，或者直接extends ApplicationEvent
 
 ---
 todo
