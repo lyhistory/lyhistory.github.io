@@ -22,6 +22,9 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/java_spring" >基于SpringBoot的微服务</a></li>
 		<li><a href="/docs/software/zookeeper" >分布式框架zookeeper</a></li>
 		<li><a href="/docs/software/redis" >分布式缓存redis</a></li>
+		<li><a href="/docs/software/mysql" >mysql</a></li>
+		<li><a href="/docs/software/oracle" >oracle</a></li>
+		<li><a href="/docs/software/postgresql" >postgresql</a></li>
 	</ul>
 	<p>-------------------------</p>
 	<h3>硬件开发经验</h3>

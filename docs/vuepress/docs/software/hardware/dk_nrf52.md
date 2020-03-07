@@ -121,9 +121,24 @@ Keil5提示“the selected device NRF52840 is unkown to this version of the J-Li
 
 [nRF Connect](https://www.nordicsemi.com/Software-and-tools/Development-Tools/nRF-Connect-for-desktop/Download#infotabs)
 
+
+还可以直接通过UART USB接口烧录，不过这个我还没测试过，有待探索，可以参考
+https://www.cnblogs.com/iini/p/9095622.html
+
 ### 3.4 通信
 
-I2C UART
+Overview:
+通信协议有I2C UART
+
+刚开始我测试UART,记住每次烧录之后最好要“重启”，很简单，刚才用JLINK JTAG ARM仿真器烧录之后拔掉之后，换成usb线连接UART USB端口，
+这样插上电脑上电就相当于重启；
+
+然后要用串口调试工具，有很多工具可以选择：
+tera term 可以连上但是还没学会使用
+puttty serial完全连不上
+nrf官方的connect program能识别串口，但是也报错
+最后是用“sscom32串口调试助手”，注意基本配置（波特率看代码的定义，数据位8 停止位1 校验位和流控制都是放NONE），
+发送的时候要看是否要勾选HEX发送还是普通字符串发送
 
 [手把手教你开发BLE数据透传应用程序](https://www.cnblogs.com/iini/p/9095622.html)
 E:\workspace\iot\nRF52840\2 sdk\nRF5_SDK_16.0.0_98a08e2\examples\ble_peripheral\ble_app_uart\pca10056\s140\arm5_no_packs

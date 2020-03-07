@@ -155,6 +155,9 @@ Fiddler只适用于windows平台，burpsuite是java写的跨平台，Fiddler和b
 + TCPDUMP:
 最原始的方式是采用系统提供的基本工具比如linux的tcpdump嗅探监听，它是一个没有UI的cli形式的命令行工具，开启混杂模式，可以抓取任何经过本机任何一个网卡的数据包，windows上也有类似的windump；
 
+tcpdump -nnvS src X.X.X.X and dst port 8080
+从这个命令很容易理解其逻辑，抓取源地址是X.X.X.X，目的端口是8080的数据包
+
 + burpsuite：
 https://support.portswigger.net/customer/portal/articles/1783087-Installing_Installing%20CA%20Certificate%20-%20FF.html
 https://medium.com/@faridhashmi733/fix-burp-suite-ssl-secure-connection-failed-8de2146e21fa
@@ -194,8 +197,11 @@ https://any.run/
 
 https://www.cnblogs.com/king8/p/9024717.html
 https://www.proxifier.com/docs/win-v3/system.htm
+抓包神器 tcpdump 使用介绍 https://cizixs.com/2015/03/12/tcpdump-introduction/
+
 浅析手机抓包方法实践
 http://drops.xmd5.com/static/drops/tips-12467.html
+
 Https tunnel https://groups.google.com/forum/#!topic/httpfiddler/RCkzE3HhhxY
 Windows抓包指南①：Proxifier+Fiddler对第三方程序强制抓包
 https://www.52pojie.cn/thread-976016-1-1.html
