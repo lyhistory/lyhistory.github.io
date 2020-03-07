@@ -56,7 +56,7 @@ create database dbname;
 
 ### 1.2 Install on windows
 
-![](/docs/docs_image/software/mysql/mysq01.png)
+![](/docs/docs_image/software/mysql/mysql01.png)
 
 Setup replication
 https://lyhistory.com/mysql_replication/#
