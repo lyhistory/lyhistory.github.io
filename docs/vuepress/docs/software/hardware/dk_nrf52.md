@@ -130,7 +130,7 @@ https://www.cnblogs.com/iini/p/9095622.html
 Overview:
 通信协议有I2C UART
 
-刚开始我测试UART,记住每次烧录之后最好要“重启”，很简单，刚才用JLINK JTAG ARM仿真器烧录之后拔掉之后，换成usb线连接UART USB端口，
+刚开始我测试UART,由于nRF本身没有自带UART程序，所以需要先写一个程序烧录进去（我用官方的UART程序没有成功，后来用了朋友给的实验例子），记住每次烧录之后最好要“重启”，很简单，刚才用JLINK JTAG ARM仿真器烧录之后拔掉之后，换成usb线连接UART USB端口，
 这样插上电脑上电就相当于重启；
 
 然后要用串口调试工具，有很多工具可以选择：
@@ -139,6 +139,36 @@ puttty serial完全连不上
 nrf官方的connect program能识别串口，但是也报错
 最后是用“sscom32串口调试助手”，注意基本配置（波特率看代码的定义，数据位8 停止位1 校验位和流控制都是放NONE），
 发送的时候要看是否要勾选HEX发送还是普通字符串发送
+
+编程方式通信，叫做serial编程，比如java中使用RXTX:
+http://fizzed.com/oss/rxtx-for-java
+
+1.安装lib
+For Windows：
+Copy RXTXcomm.jar ---> <JAVA_HOME>\jre\lib\ext
+Copy rxtxSerial.dll ---> <JAVA_HOME>\jre\bin
+Copy rxtxParallel.dll ---> <JAVA_HOME>\jre\bin
+
+For Linux：
+Choose your binary build - x86_64 or i386 (based on which version of
+the JVM you are installing to)
+NOTE: You MUST match your architecture.  You can't install the i386
+version on a 64-bit version of the JDK and vice-versa.
+For a JDK installation on architecture=i386
+
+Copy RXTXcomm.jar ---> <JAVA_HOME>/jre/lib/ext
+Copy librxtxSerial.so ---> <JAVA_HOME>/jre/lib/i386/
+Copy librxtxParallel.so ---> <JAVA_HOME>/jre/lib/i386/
+
+2.在maven的pom.xml下添加
+```
+    <dependency>
+　　　　<groupId>org.rxtx</groupId>
+　　　　<artifactId>rxtx</artifactId>
+　　　　<version>2.1.7</version>
+　　</dependency>
+```
+3.具体编程看文档，参考 https://www.cnblogs.com/zhylioooo/p/7886189.html
 
 [手把手教你开发BLE数据透传应用程序](https://www.cnblogs.com/iini/p/9095622.html)
 E:\workspace\iot\nRF52840\2 sdk\nRF5_SDK_16.0.0_98a08e2\examples\ble_peripheral\ble_app_uart\pca10056\s140\arm5_no_packs

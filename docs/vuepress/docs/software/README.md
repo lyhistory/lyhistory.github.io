@@ -11,6 +11,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 <div>
 	<h3>架构经验</h3>
 	<ul>
+		<li><a href="/docs/software/architecture" >架构解读</a></li>
 		<li><a href="/docs/software/distrubuted_system" >分布式系统开发</a></li>
 		<li><a href="/docs/software/network" >网络基础</a></li>
 		<li><a href="/docs/software/concurrent" >并发控制</a></li>

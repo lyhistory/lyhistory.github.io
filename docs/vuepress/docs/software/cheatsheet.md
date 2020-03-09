@@ -19,6 +19,10 @@ taskkill /F /PID 27296
 
 LINUX
 =====
+
+Linux中查看日志文件的正确姿势，求你别tail走天下了
+https://mp.weixin.qq.com/s/Q-NfY2sr4n2XiJwy8SsXDA
+
 watch ss -tunpl4
 ss -at 'sport = :9870'
 
