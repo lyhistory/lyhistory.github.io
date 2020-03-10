@@ -211,6 +211,8 @@ https://blog.csdn.net/CharlesSimonyi/article/details/90486208
 Fiddler+burpsuite
 	Fiddler gateway 转发给burpsuite
 
+wireshark 
+	ip.addr == 10.20.70.101 and frame contains "CALL"
 ---
 
 ref:
