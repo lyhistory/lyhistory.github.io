@@ -6,7 +6,23 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《oracle实用基础》
 
-## 1.Setup 
+## 1. Basics
+
+### 1.1 Concepts
+tablespace datafiles
+![](/docs/docs_image/software/oracle/oracle00.png)
+
+### 1.2 Setup
+
+**server**:
+配置TNSNAMES.ORA files are located on both client and server systems.
+https://www.orafaq.com/wiki/Tnsnames.ora
+
+oracle+tomcat连接池
+在实际应用开发中，特别是在WEB应用系统中，如果JSP、Servlet或EJB使用JDBC直接访问数据库中的数据，每一次数据访问请求都必须经历建立数据库连接、打开数据库、存取数据和关闭数据库连接等步骤，而连接并打开数据库是一件既消耗资源又费时的工作，如果频繁发生这种数据库操作，系统的性能必然会急剧下降，甚至会导致系统崩溃。数据库连接池技术是解决这个问题最常用的方法，在许多应用程序服务器（例如：Weblogic, WebSphere,JBoss）中，基本都提供了这项技术，无需自己编程，但是，深入了解这项技术是非常必要的。
+https://www.cnblogs.com/lbangel/p/3406084.html
+
+**client**:
 
 Oracle Client
 http://www.oracle.com/technetwork/database/enterprise-edition/downloads/112010-win32soft-098987.html
@@ -43,12 +59,12 @@ Oracle.DataAccess Version compatible issue:
 Register to global cache
 
 Change  newVersion in dependentAssembly in web.config
-
+```
   <dependentAssembly>
        <assemblyIdentity name="Oracle.DataAccess" publicKeyToken="31bf3856ad364e35" culture="neutral"/>
        <bindingRedirect oldVersion="2.111.6.0" newVersion="4.112.3.0"/>
      </dependentAssembly>
-
+```
 Reference:
 https://docs.oracle.com/html/E10927_01/InstallVersioningScheme.htm
 http://www.oracle.com/technetwork/database/windows/downloads/utilsoft-087491.html

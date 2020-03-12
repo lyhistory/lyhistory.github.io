@@ -22,6 +22,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 所以并发只是强调可以在一段时间内同时处理多个事务，并行是强调可以在某一个时刻处理多个事务，并发可以不并行，并行一定是并发；
 
 比如早期一个核的cpu也可以处理多个任务就是属于并发但是不是并行，在任何一个cpu时刻，只能处理一件任务，而多核则同一个时刻，多个cpu并行处理不同任务；
+关于cpu这个层面的概念可以参考[被神话的Linux, 一文带你看清Linux在多核可扩展性设计上的不足](https://mp.weixin.qq.com/s/ntGv1ObIgi4SeCf7GhfAnQ)
 
 所以我们并太关心并行，因为这个涉及到硬件和底层操作系统的处理，我们现在只关心并发的处理；
 
@@ -119,6 +120,19 @@ java sdk默认提供了非线程安全的队列和线程安全的队列，实际
 可以看到越来越多的框架集成了disruptor队列，比如log4j，storm，solr
 https://mvnrepository.com/artifact/com.lmax/disruptor/3.2.1/usages
 https://mvnrepository.com/artifact/com.lmax/disruptor/3.4.0/usages
+
+虽然Disruptor的ring buffer队列可以处理高并发，但是有时候系统对消息队列有更高的要求，比如可以pub sub，可以存储当做db，如果下游挂掉可以重新恢复到之前的位置重跑等等，
+所以我们有kafka消息队列，
+kafka消息队列底层的基于sequential consistency的zab协议一定程度上保证了可以实现‘exactly-once’的语义：
+消息生产者producer可以保证幂等性（kafka系统内的重发不会造成下游收到多条重复数据，当然也不会丢失），
+消息消费者consumer可以通过自主管理offset和使用事务提交offset以及下游写入kafka的消息，可以保证不重复消费也不会丢失；
+
+### 3.系统和框架层面的并发限制
+
+比如linux句柄数 执行ulimit –n检查文件句柄数为1024，将该数值改为10240
+/etc/security/limits.con
+
+从框架层面可以参考我在network一文中的一个案例[### 4.2 一次排查send-q](/docs/software/network)
 
 CopyRight 刘跃 LYHISTORY.COM
 

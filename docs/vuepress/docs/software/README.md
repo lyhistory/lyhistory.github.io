@@ -11,10 +11,11 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 <div>
 	<h3>架构经验</h3>
 	<ul>
-		<li><a href="/docs/software/architecture" >架构解读</a></li>
-		<li><a href="/docs/software/distrubuted_system" >分布式系统开发</a></li>
-		<li><a href="/docs/software/network" >网络基础</a></li>
-		<li><a href="/docs/software/concurrent" >并发控制</a></li>
+		<li><a href="/docs/software/highlevel/architecture" >架构解读</a></li>
+		<li><a href="/docs/software/highlevel/distrubuted_system" >分布式系统开发</a></li>		
+		<li><a href="/docs/software/highlevel/concurrent" >并发控制</a></li>
+		<li><a href="/docs/software/highlevel/threadsafe" >线程安全</a></li>
+		<li><a href="/docs/software/highlevel/publickeyinfrastructure" >公钥基础设施</a></li>
 	</ul>
 	<p>-------------------------</p>
 	<h3>软件开发经验</h3>
@@ -23,9 +24,13 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/java_spring" >基于SpringBoot的微服务</a></li>
 		<li><a href="/docs/software/zookeeper" >分布式框架zookeeper</a></li>
 		<li><a href="/docs/software/redis" >分布式缓存redis</a></li>
+		<li><a href="/docs/software/kafka" >分布式消息队列kafka</a></li>
+		
 		<li><a href="/docs/software/mysql" >mysql</a></li>
 		<li><a href="/docs/software/oracle" >oracle</a></li>
 		<li><a href="/docs/software/postgresql" >postgresql</a></li>
+		<li><a href="/docs/software/network" >网络基础</a></li>
+		<li><a href="/docs/software/monitor" >实时监控</a></li>
 	</ul>
 	<p>-------------------------</p>
 	<h3>硬件开发经验</h3>

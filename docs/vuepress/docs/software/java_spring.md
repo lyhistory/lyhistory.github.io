@@ -371,6 +371,8 @@ getAuthenticationInfo调doGetAuthenticationInfo调getUser；
 
 ## 4. Spring Cloud 
 
+Spring Cloud 万字总结，真不错！
+https://mp.weixin.qq.com/s/YGtKoKBE1jxFaEUpEFSaLg
 
 https://github.com/macrozheng/mall
 https://github.com/zhangdaiscott/jeecg-boot

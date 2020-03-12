@@ -59,6 +59,15 @@ _下面提到的节点根据上下文有不同的含义，说到zookeeper时主�
 单机系统都如此，分布式系统更是复杂，而对于区块链来说，一致性更加有着丰富的表现，比如比特币的6个确认，是中本聪基于泊松分布做的一种类似联合泊松分布的概率计算，
 以全网千分之一的算力来做恶意节点得出6个确认之后可以忽略不计，当然随着单节点算力越高，需要的确认也随之增长。
 
+补充：对分布式系统来说有两大难点： 1.guaranteed order of message 2.exactly-once delivery
+
+首先说关于exactly once delivery语义
+
+对于比如支付系统来说，肯定不想发生两种情况：丢失消息（支付方支付成功，收款方没有收到）和重复消息（支付方支付100，收款方收到200），所以要保证系统自始至终exactly once delivery某条消息；
+这个语义要实现，前提一般是系统协议需要保证强一致，比如消息队列kafka的zab就是sequential consistency，来**支持**exactly once语义，这里是支持不是保证，只是说可以在一定条件下实现，
+具体是否实现还得看具体业务项目中有没有遵照规则去实现；
+因为kafka的sequential consistency，从字面来讲就是保证了消息的顺序性guaranteed order of message，具体请自行研究；
+
 ---
 
 ## 2.基于故障容错CFT(Crash fault tolerance或非拜占庭容错)的分布式系统
@@ -66,7 +75,7 @@ _下面提到的节点根据上下文有不同的含义，说到zookeeper时主�
 中心化系统有单点故障的风险，故障有两层含义，一个是自己发生故障，一个是遭受到攻击，所以引入多个节点来抵消单一节点的风险，
 故障容错的假设是多节点中可能会存在故障节点，消息会丢失或重复，但是不会有发送假消息的恶意节点，因为都是部署在内网的可控节点；
 
-![分布式系统的谬误](/docs/docs_image/software/distrubuted_system01.png)
+![分布式系统的谬误](/docs/docs_image/software/distributed_system/distrubuted_system01.png)
 
 在这种假设前提下，多个节点协同工作方式有两种思路：主备和一致性状态机
 
@@ -138,7 +147,7 @@ leader直接或间接通过follower收到转发的写操作请求，都会按照
 所以我们只需要理解一下最基础的Basic Paxos这个算法的基本原理，其他的算法都是基于此的演变升级；
 
 引用斯坦福的教学内容Basic Paxos的基本流程图：
-![paxos](/docs/docs_image/software/distrubuted_system02.png)
+![paxos](/docs/docs_image/software/distributed_system/distrubuted_system02.png)
    
 basic paxos是基于2PC两阶段提交协议的，这里首先引入提议者proposer和接受者acceptor作为两阶段的具体实施者，我们用一个机票预订的例子来讲解：
 
@@ -249,7 +258,7 @@ follower收到后也写入自己的日志，状态是uncommitted，leader等得�
 
 下面拿RAFT协议来举例完善一下前面没详细说的分区容错partition tolerance，
 
-![raft](/docs/docs_image/software/distrubuted_system03.png)
+![raft](/docs/docs_image/software/distributed_system/distrubuted_system03.png)
 
 可以看到网络分为两个分区，两个leader，他们的时代是不同的一个是term=1一个是term=2，互相不知道彼此，但是由于term=1在更改数据的时候无法得到超过半数的响应，
 所以所有数据更改都会处于uncommit未提交状态；而反之在另一边term=2这里，是可以达成共识的；
@@ -258,13 +267,13 @@ follower收到后也写入自己的日志，状态是uncommitted，leader等得�
 
 前面说zookeeper本质也是一种状态机，其ZAP协议又有不同的考虑，分为3个阶段，Discovery，Sync，Boradcast，跟前面这些协议都是大同小异，就不展开细节，只需要说下不同点：
 
-![ZAP](/docs/docs_image/software/distrubuted_system04.png)<sup>[ref](https://blog.acolyer.org/2015/03/09/zab-high-performance-broadcast-for-primary-backup-systems/)</sup>
+![ZAP](/docs/docs_image/software/distributed_system/distrubuted_system04.png)<sup>[ref](https://blog.acolyer.org/2015/03/09/zab-high-performance-broadcast-for-primary-backup-systems/)</sup>
 
 和raft的有序性不同，ZAP协议有序性（znode节点操作）不仅体现在采用的FIFO先进先出队列，还有重新选举恢复的时候需要Sync，
 >Upon a change of primary, a quorum of processes has to execute a synchronization phase before the new primary broadcasts new transactions. Executing this phase guarantees that all transactions broadcast in previous epochs that have been or will be chosen are in the initial history of transactions of the new epoch.
 
 比如leader在崩溃之前广播出去的数据（proposal和commit）不会丢失，由leader产生但没有广播出去的proposal和commit则跳过，但是如果该leader之后重新被再次选举为新leader，其上没有提交的事务需要根据判断其epoch是否小于当前的epoch，是则丢弃，如果相同则还会被提交；
-![ZAP](/docs/docs_image/software/distrubuted_system05.png)
+![ZAP](/docs/docs_image/software/distributed_system/distrubuted_system05.png)
 >“Before proposing any new messages a newly elected leader first makes sure that all messages that are in its transaction log have been proposed to and committed by a quorum of followers”
 ><sup>[A simple totally ordered broadcast protocol](https://www.datadoghq.com/pdf/zab.totally-ordered-broadcast-protocol.2008.pdf)</sup>
 
@@ -290,9 +299,9 @@ RAFT没有ZAP的sync这个阶段，而是靠AppendEntries RPC同步纠正，
 
 挑几个产品看看它们的架构图
 
-![Kafka](/docs/docs_image/software/distrubuted_system11.png)
-![HDFS](/docs/docs_image/software/distrubuted_system12.png)
-![HADOOP](/docs/docs_image/software/distrubuted_system13.png)
+![Kafka](/docs/docs_image/software/distributed_system/distrubuted_system11.png)
+![HDFS](/docs/docs_image/software/distributed_system/distrubuted_system12.png)
+![HADOOP](/docs/docs_image/software/distributed_system/distrubuted_system13.png)
 
 >Since Hadoop 2.0, ZooKeeper has become an essential service for Hadoop clusters, providing a mechanism for enabling high-availability of former single points of failure, specifically the HDFS NameNode and YARN ResourceManager.<sup>[ref](https://www.datadoghq.com/blog/hadoop-architecture-overview/)</sup>
 
@@ -303,7 +312,7 @@ Quartz就是支持单机版也支持集群，但是其集群基于数据库锁�
 
 举一个例子来说明zookeeper：
 
-![分布式管理例子](/docs/docs_image/software/distrubuted_system14.png)
+![分布式管理例子](/docs/docs_image/software/distributed_system/distrubuted_system14.png)
 中央就是zookeeper，本身是集群，政治协商，一个挂掉还会迅速选一个，中央的主要工作是做集群管理，具体的生产生活还要交由Apache/Storm这些地方政府节点来做，
 地方节点之间也是一个集群，比如分布式商务系统集群（商务部是集群的leader，向中央注册），分布式农业系统集群等
 
@@ -360,7 +369,7 @@ ii)重量级处理:
 
 总结画个架构图：
 
-![分布式任务调度](/docs/docs_image/software/distrubuted_system15.png)
+![分布式任务调度](/docs/docs_image/software/distributed_system/distrubuted_system15.png)
 
 还需要思考的问题：
 
@@ -389,7 +398,7 @@ ii)重量级处理:
 
 ## 3.基于拜占庭容错BFT(Byzantine fault tolerance)的分布式账本技术
 
-![网络类型](/docs/docs_image/software/distrubuted_system16.png)
+![网络类型](/docs/docs_image/software/distributed_system/distrubuted_system16.png)
 
 我们前面谈到的不管是zookeeper的ZAP，paxos还是raft都不能算是真正的分布式，因为基本都是要选举出leader来主持大局，真正的分布式节点是完全平等的，不存在谁是leader，
 所以基本都只能算是多中心系统；
@@ -412,14 +421,14 @@ ii)重量级处理:
 我就以IBM的hyperledger fabric为代表来讲解下联盟链：
 
 直接看核心流程图，我只是简略说主要内容，不会讲解他的会员系统（节点的加入都是要经过审核后配置到系统中），也不会细分peer节点的类型
-![hyperledger fabric flow](/docs/docs_image/software/distrubuted_system21.png)
+![hyperledger fabric flow](/docs/docs_image/software/distributed_system/distrubuted_system21.png)
 客户端发一个transaction请求，实现了hyperledger sdk的客户端程序接收请求，验证后发给peers节点，peers节点验证并进行endorse签名然后返回结果给客户端，
 客户端收到一定数量（一定数量决定于事前设定的policy，比如半数以上）的endorse之后就发起提交请求，将transaction及endorsement一起发给ordering service，又是一种2PC两阶段提交，
 ordering service排序打包交易到一个区块再发给peers，peers会验证区块中的每个交易，然后更新账本；
 
 不过等等，这里的ordering service听起来像是一个单节点，不像peers那样有多个节点，难道是个中心化的排序服务吗？然后我们看IBM文档的说法如下：
 
-![hyperledger](/docs/docs_image/software/distrubuted_system22.png)
+![hyperledger](/docs/docs_image/software/distributed_system/distrubuted_system22.png)
 
 看到没，关键的ordering service可以是一个单节点或者kafka集群，单节点不用说了，kafka集群仍然是基于故障容错的分布式产品；
 不过共识这块hyperledger是可以插拔自定义的，实际上V1.4版本引入了RAFT算法，当然也是基于故障容错的；
@@ -473,7 +482,7 @@ IC2. 如果将军是诚实的，每一个诚实副官都应该遵守将军发送
 
 IC1和IC2统称为interactive consistency conditions交互型一致条件
 
-![Byzantine General problem](/docs/docs_image/software/distrubuted_system23.png)
+![Byzantine General problem](/docs/docs_image/software/distributed_system/distrubuted_system23.png)
 
 fig2违背了IC1，所以3个节点中有一个叛徒是无解的，我们由此就证明了对付m个叛徒至少要3m+1个节点，黑人问号，什么时候证明的？
 
@@ -489,7 +498,7 @@ The proof is by contradiction，很简单，上面3个节点1个叛徒无解，�
 
 下面假设m=1，3m+1=4
 
-![PBFT](/docs/docs_image/software/distrubuted_system24.png)
+![PBFT](/docs/docs_image/software/distributed_system/distrubuted_system24.png)
 
 fig3，OM(m=1）将军首先发送v给所有节点，然后OM(m=0)副官1发送v给副官2，副官3发送x给副官2，副官2有v1=v2=v，v3=x，v=majority（v,v,x），其他副官同理；
 同时还可以判断出副官3是叛徒
@@ -499,7 +508,7 @@ fig4，OM(m=1)将军首先分别发送x，y，z给副官1，2，3，OM(m=0)，�
 
 #### 实用拜占庭容错算法PBFT
 
-![PBFT](/docs/docs_image/software/distrubuted_system25.png)
+![PBFT](/docs/docs_image/software/distributed_system/distrubuted_system25.png)
 
 主节点 p = v mod |R|。v：视图编号（类似前面提到的term），|R|节点个数，p：主节点编号
 现在R=4,v=0,p=0
@@ -647,7 +656,7 @@ repy是【2f+1,3f+1】
 
 解锁scriptSig：\<Sig\>\<PubKey\> 
 
-![P2PKH](/docs/docs_image/software/distrubuted_system26.png)
+![P2PKH](/docs/docs_image/software/distributed_system/distrubuted_system26.png)
 
 虎符拼起来：\<Sig\>\<PubKey\> OP_DUP OP_HASH160 <PubKeyHash> OP_EQUALVERIFY OP_CHECKSIG ，执行顺序：
 ```
@@ -704,7 +713,7 @@ OP_CHECKSIG(Sig)==TRUE
 
 在《Bitcoin: A Peer-to-Peer Electronic Cash System》里有着清晰的证明，泊松分布提供了理论依据：
 
-![bitcoin 6 confirmation](/docs/docs_image/software/distrubuted_system27.png)
+![bitcoin 6 confirmation](/docs/docs_image/software/distributed_system/distrubuted_system27.png)
 
 泊松分布比较简单就不再介绍，当n趋向无穷，及把离散事件变成连续事件，可以推导出泊松分布公式也不难，至于泊松密度，我的数学也是半桶水，所以就给了比较简单的注释：
 
@@ -715,7 +724,7 @@ k>z,每一次随机事件中攻击者都会得逞，所以是这里的泊松密�
 
 由图上面的计算可见只要单节点的算力不高，超过5个确认之后，恶意节点成功的概率都会很低，如果觉着数学难，再来一张比较直觉的图
 
-![tamper block](/docs/docs_image/software/distrubuted_system28.png)
+![tamper block](/docs/docs_image/software/distributed_system/distrubuted_system28.png)
 
 实际上比特币作为一个史无前例的社会实验，是密码学、软件、经济、哲学的混合产物，
 >destroying the Bitcoin system will also undermine the effectiveness of his own wealth
