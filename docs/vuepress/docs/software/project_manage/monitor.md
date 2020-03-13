@@ -37,6 +37,10 @@ Resolved by comment out from_name
 > If you have a lot of messages queued up it could go over the max number of messages per connection. To see if this is the case you can try submitting only a few messages to that domain at a time and then keep increasing the number until you find the maximum number accepted by the server.
 > https://social.msdn.microsoft.com/Forums/sqlserver/en-US/a1821fec-5109-46e0-8b18-36b96646a5c7/failure-sending-mail?forum=sqlreportingservices
 
+grafana permission
+Add permission, and remember remove all default viewer and editor permission
+
+
 ### 1.2 Data source compare
 Elastic / prometheus/ influxdb/ opentsdb /…...
 https://prometheus.io/docs/introduction/comparison/
@@ -63,7 +67,7 @@ OpenTSDB is a distributed time series database based on Hadoop and HBase.
 
 ### 2.1 Prometheus
 https://prometheus.io/docs/introduction/overview/
-![](/docs/docs_image/software/monitor/monitor01.png)
+![](/docs/docs_image/software/project_manage/monitor/monitor01.png)
 
 Pull or push?
 Scrape config: scrape interval
@@ -103,7 +107,7 @@ Histogram
 	histogram_quantile(0.5, sum(rate(*****_duration_seconds_bucket[10m])) by (le)) 
 
 ```
-![](/docs/docs_image/software/monitor/monitor02.png)
+![](/docs/docs_image/software/project_manage/monitor/monitor02.png)
 https://groups.google.com/forum/#!topic/prometheus-developers/VYaiXJCsHxQ
 https://yunlzheng.gitbook.io/prometheus-book/parti-prometheus-ji-chu/promql/prometheus-metrics-types
 https://www.yangcs.net/prometheus/3-prometheus/functions.html
@@ -173,12 +177,12 @@ if __name__ == '__main__':
     	process_request(t)
 
 ```
-![](/docs/docs_image/software/monitor/monitor03.png)
+![](/docs/docs_image/software/project_manage/monitor/monitor03.png)
 
 **Visualize on grafana**
 https://yunlzheng.gitbook.io/prometheus-book/part-ii-prometheus-jin-jie/grafana/grafana-panels/use_graph_panel
 
-![](/docs/docs_image/software/monitor/monitor04.png)
+![](/docs/docs_image/software/project_manage/monitor/monitor04.png)
 
 histogram graph:
 Be careful, grafana x axis ‘histogram’ mode is meaningless for prometheus, so we need to use “Series” mode instead
@@ -242,7 +246,7 @@ c= GaugeMetricFamily('btc_gauge', 'btc statics',labels=['menu'], value=1000)
 	raise ValueError('Can only specify at most one of value and labels.')
 ValueError: Can only specify at most one of value and labels.
 
-![](/docs/docs_image/software/monitor/monitor05.png)
+![](/docs/docs_image/software/project_manage/monitor/monitor05.png)
 
 No token found
 This usually means that the output is not valid Prometheus text format. Look for hyphens in metric or label names, or either of those starting with numbers - those are the most common errors.
@@ -357,7 +361,7 @@ if __name__ == '__main__':
 while True: time.sleep(60)
 
 ```
-![](/docs/docs_image/software/monitor/monitor06.png)
+![](/docs/docs_image/software/project_manage/monitor/monitor06.png)
 
 https://thingsmatic.com/2017/03/02/influxdb-and-grafana-for-sensor-time-series/
 
@@ -370,7 +374,7 @@ https://www.cybertec-postgresql.com/en/announcing-pgwatch2-a-simple-but-versatil
 
 https://github.com/cybertec-postgresql/pgwatch2
 
-![](/docs/docs_image/software/monitor/monitor10.png)
+![](/docs/docs_image/software/project_manage/monitor/monitor10.png)
 
 #### 3.1.1 Introduction
 1）Project background
@@ -382,7 +386,7 @@ For more background on the project motivations and design goals see the original
 ●	Feature pack 3
 
 2）Source Code explain
-![](/docs/docs_image/software/monitor/monitor11.png)
+![](/docs/docs_image/software/project_manage/monitor/monitor11.png)
 pgwatch2/Dockerfile
 
 pgwatch2/docker-launcher.sh
@@ -402,7 +406,7 @@ https://serverfault.com/questions/96499/how-to-automatically-start-supervisord-o
 #### 3.1.2 setup
  
 ##### 3.1.2.1 env
-![](/docs/docs_image/software/monitor/monitor12.png)
+![](/docs/docs_image/software/project_manage/monitor/monitor12.png)
 
 ##### 3.1.2.2 install/upgrade grafana
 wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.2.2-1.x86_64.rpm sudo yum localinstall grafana-5.2.2-1.x86_64.rpm
@@ -461,7 +465,8 @@ password = 123
 But how to restart with configuration changes or reload?
 http://www.onurguzel.com/supervisord-restarting-and-reloading/
 
-/var/log/supervisor/
+?# pgwatch2 fatal error
+check /var/log/supervisor/
 
 4) Add postgresql db config at WebUI
 http://hostip:8080/dbs
@@ -545,17 +550,269 @@ Create user admin with password ‘123456’ with all priveleges;
 /etc/influxdb/influxdb.conf
 After restart,  influx -precision rfc3339 -username admin -password 123456
 
-![](/docs/docs_image/software/monitor/monitor14.png)
+![](/docs/docs_image/software/project_manage/monitor/monitor14.png)
 
 ##### 3.1.3.2 docker local volumes
 
-### 3.1 Project Monitor CI with Jenkins
+https://github.com/cybertec-postgresql/pgwatch2/blob/master/Dockerfile
+https://dzone.com/articles/demystifying-the-data-volume-storage-in-docker
+https://docs.docker.com/engine/reference/commandline/volume_inspect/
 
-#### 3.1.1 Basic setup
+![](/docs/docs_image/software/project_manage/monitor/monitor15.png)
+
+##### 3.1.3.3 influxdb
+https://docs.influxdata.com/influxdb/v1.6/query_language/schema_exploration/
+#retention policy 
+https://docs.influxdata.com/influxdb/v1.2/query_language/database_management/#create-retention-policies-with-create-retention-policy，https://community.influxdata.com/t/what-is-the-retention-policy-and-how-exactly-it-work/1080/3
+Querying data in a non-DEFAULT retention policy https://www.influxdata.com/blog/tldr-influxdb-tech-tips-april-27-2017/
+Retention policies not dropping old data https://community.influxdata.com/t/retention-policies-not-dropping-old-data/4538
+
+![](/docs/docs_image/software/project_manage/monitor/monitor16.png)
+
+##### 3.1.3.4 Shift to existing grafana
+1) PW2_GRAFANA_BASEURL doesn’t work
+Need to check scripts
+```
+sudo docker run -d -p 8080:8080 -p 8086:8086 -p 9001:9001 -p 3001:3000 -e PW2_GRAFANA_BASEURL='http://10.20.70.205:3000' --name pw2 cybertec/pgwatch2
+```
+2) instructions not clear
+check section "To use an existing Grafana installation" in https://github.com/cybertec-postgresql/pgwatch2
+
+##### 3.1.3.5 backup & upgrade
+Need to explore and refer to “Updating to a newer Docker version” (https://github.com/cybertec-postgresql/pgwatch2)
+
+#### 3.1.4 Trouble shoot
+
+```
+cd /tmp/
+wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.2.2-1.x86_64.rpm
+sudo yum localinstall grafana-5.2.2-1.x86_64.rpm
+
+git clone https://github.com/cybertec-postgresql/pgwatch2.git
+sudo git clone https://github.com/cybertec-postgresql/pgwatch2.git
+
+sudo docker pull cybertec/pgwatch2
+sudo docker images
+
+sudo netstat -anp|grep :8080
+##sudo docker run -d -p 8080:8080 -p 9001:9001 -p 3001:3000 --name pw2 cybertec/pgwatch2
+##sudo docker run -d -p 8080:8080 -p 9001:9001 -p 3001:3000 -e PW2_GRAFANA_BASEURL='http://10.20.70.205:3000' --name pw2 cybertec/pgwatch2
+sudo docker run -d -p 8080:8080 -p 8086:8086 -p 9001:9001 -p 3001:3000 --name pw2 cybertec/pgwatch2
+sudo docker ps -a
+
+##    sudo vi /etc/grafana/grafana.ini
+##   	 ;type = postgres
+##   	 ;host = 10.20.70.168:6432
+##   	 ;name = oureadb
+##   	 ;user = pgwatch2
+##   	 # If the password contains # or ; you have to wrap it with trippel quotes. Ex """#password;"""
+##   	 ;password = secret
+
+sudo docker exec -ti pw2 /bin/bash
+    apt-get install net-tools
+    service supervisor status
+    ps -lef|grep "super"
+   	 /usr/bin/supervisord --configuration=/etc/supervisor/supervisord.conf --nodaemon
+    vi /etc/supervisor/supervisord.conf
+   	 [inet_http_server]
+   	 port = 9001
+   	 username = peter
+   	 password = 123456
+    service supervisor restart
+	    influx -precision rfc3339
+		influx -precision rfc3339 -username admin -password 123456
+   	        show databases
+			show grants for root;
+			grant all on pgwatch2 to root;
+   	        use pgwatch2
+			show measurements
+			select * from backends limit 1
+       SHOW TAG VALUES WITH KEY = "dbname" where "dbname" !~ /(test)+/
+	vi /pgwatch2/webpy/pgwatch2_influx.py
+		modify influx_connect_params
+sudo docker start pw2    
+    netstat -anp|grep :9001
+    netstat -anp|egrep :8080
+    ps -lef|egrep "35|PID"
+    ls -l /proc/35/exe
+    cat /proc/35/cmdline | xargs -0 echo
+    ps -p 35 -o cmd
+    vi /etc/grafana/grafana.ini
+   	 [server]
+   	 protocol = http
+   	 cert_file = /pgwatch2/persistent-config/self-signed-ssl.pem
+   	 cert_key = /pgwatch2/persistent-config/self-signed-ssl.key
+
+   	 [database]
+   	 type = postgres
+   	 host = 127.0.0.1:5432
+   	 name = pgwatch2_grafana
+   	 user = pgwatch2
+   	 password = pgwatch2admin
+
+   	 [security]
+   	 admin_user = admin
+   	 admin_password = pgwatch2admin
+
+   	 [auth.anonymous]
+   	 enabled = true
+
+   	 [metrics]
+   	 enabled = false
+
+sudo docker top 0c7180296ad6    
+
+sudo systemctl status grafana-server
+sudo systemctl start grafana-server
+journalctl -xe
+
+telnet 10.20.70.168 6432
+journalctl -xe
+
+http://10.20.70.205:8080/dbs
+oureadb
+10.20.70.168 6432 oureadb pgwatch2 secret
+
+```
+
+?# postgresql connection timeout
+Test on monitor server(running docker), try to connect use pgql
+yum localinstall https://download.postgresql.org/pub/repos/yum/11/redhat/rhel-7-x86_64/pgdg-centos11-11-2.noarch.rpm
+yum list postgres*
+yum install postgresql11.x86_64
+psql -h <IP> -p <Port> -U pgwatch2 -W -d <Database>
+Works fine on the host server, it turns out that the docker get network connectivity issue,
+Test by wget google.com
+https://dataonthego.wordpress.com/2015/09/05/install-postgresql-client-only-2/
+https://wiki.postgresql.org/wiki/YUM_Installation#Install_PGDG_RPM_file
+https://yum.postgresql.org/repopackages.php
+https://stackoverflow.com/questions/20430371/my-docker-container-has-no-internet
+
+?# prometheus not work => caused by server diskspace used up => caused by pgwatch2 influxdb use up space=>caused by pgwatch metrics preset config(full will scrape too much data)
+Server date ahead of real datetime
+Root disk space used up
+Influxdb used up space
+vim /etc/influxdb/influxdb.conf	modify check-interval
+du -h /var/lib/influxdb/data
+![](/docs/docs_image/software/project_manage/monitor/monitor17.png)
+
+?# Grafana did not display the records in the expected order in table
+very simple solution :
+click on max/average whatever column you want to sort, click it once or twice until the result is sorted in your expected order, then save, so next time when you open it, it will display in expected sort order,
+actually what happens is the grafana json file will change to for example:
+"legend": {
+"alignAsTable": true,
+"avg": true,
+"current": true,
+"max": true,
+"min": false,
+"rightSide": true,
+"show": true,
+"sideWidth": 300,
+"sort": "max",
+"sortDesc": true,
+"total": true,
+"values": true
+},
+ppl asking and discussing it here
+https://community.grafana.com/t/grafana-did-not-display-the-records-in-the-expected-order-in-table/4564
+and
+https://groups.io/g/grafana/topic/prometheus_data_not_sorted/4314229?p=,,,20,0,0,0::recentpostdate%2Fsticky,,,20,0,0,4314229
+
+### 3.2 Node Exporter Server Metrics
+
+#### 3.2.1 Linux
+Install node_exporter released for prometheus and config in prometheus
+https://prometheus.io/docs/guides/node-exporter/#installing-and-running-the-node-exporter
+Grafana dashboard
+
+Check http://*.*.*.*:9100/metrics
+
+```
+OR
+building running from source:
+go get github.com/prometheus/node_exporter
+cd ${GOPATH-$HOME/go}/src/github.com/prometheus/node_exporter
+make
+./node_exporter
+
+```
+ 
+Add alias, never change original variables, 
+
+?# node_exporter(latest Version 0.16.0) not showing on dashbaord 
+Because of naming changed https://www.robustperception.io/new-features-in-node-exporter-0-16-0
+Use the latest grafana dashboard https://grafana.com/dashboards/1860
+And check from prometheus web portal to confirm the query statement
+
+?# # multiple series error
+Fixed by itself after a while
+
+Not verified link:
+http://d-prototype.com/archives/9672
+
+![](/docs/docs_image/software/project_manage/monitor/monitor18.png)
+
+#### 3.2.2 Windows
+Windows support is removed by node exporter, the wmi_exporter is recommended as a replacement.
+https://github.com/martinlindhe/wmi_exporter
+https://grafana.com/dashboards/2129
+
+### 3.3 Server alive monitor - http request 200 OK
+Endpoint prob - Blackbox-exporter
+https://github.com/prometheus/blackbox_exporter
+
+https://cloudprober.org/how-to/external-probe/
+
+https://grafana.com/dashboards/5345
+
+![](/docs/docs_image/software/project_manage/monitor/monitor19.png)
+
+Alert 
+http://docs.grafana.org/alerting/notifications/#all-supported-notifier
+
+### 3.4 More prometheus exporter
+Btc exporter
+https://grafana.com/dashboards/6973
+https://github.com/hunterlong/btcexporter
+```
+docker run -it -d -p 9019:9019 -v /opt/btc/btcexporter/addresses.txt:/app/addresses.txt hunterlong/btcexporter
+
+ps -lef|grep “prome”
+ls /proc/<PID>/exe
+vi /path/prometheus.yml
+kill -HUP <PID>
+```
+http://10.20.70.205:9019/metrics
+
+how to Customize exporter?
+
+promethus lib
+https://prometheus.io/docs/instrumenting/writing_exporters/
+    python
+    https://github.com/prometheus/client_python#custom-collectors
+    go
+    https://redbyte.eu/en/blog/real-time-metrics-using-prometheus-and-grafana/
+
+
+### 3.5 More
+Real Time performance monitor for .NET CORE
+.Net Core 2.0+ InfluxDB+Grafana+App Metrics 实现跨平台的实时性能监控 https://www.cnblogs.com/landonzeng/p/7904402.html
+
+http request/traffic | web api monitor
+nodejs
+http://swaggerstats.io/docs.html
+
+java perform monitor
+https://github.com/stagemonitor/stagemonitor/wiki/Installation
+
+
+### 3.6 Project Monitor CI with Jenkins
+
 CI-Jenkins
 https://jenkins.io/doc/tutorials/
 
-![](/docs/docs_image/software/monitor/monitor07.png)
+![](/docs/docs_image/software/project_manage/monitor/monitor07.png)
 
 Docker mode:
 ```
@@ -607,10 +864,6 @@ sudo docker cp /home/test/workspace/ApexClear/sourcecode/ 0dc7a2730c43:/home/wor
 
 Pipline 
 https://jenkins.io/doc/tutorials/build-a-java-app-with-maven/
-
-
-
-https://docs.google.com/document/d/1oESRMqvuKmsi6EQjKh8KqsCMl2HGXbn6l7wd7pOLYYw/edit#
 
 ---
 

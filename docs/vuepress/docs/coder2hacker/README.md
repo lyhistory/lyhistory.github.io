@@ -29,5 +29,6 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li>Chapter 11.对抗</li>
 		社工钓鱼https://yq.aliyun.com/articles/661339
 		蜜罐系统
+		红队 Cobalt Strike 4.0
 	</ul>
 </div>

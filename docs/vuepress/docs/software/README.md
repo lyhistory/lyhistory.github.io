@@ -29,8 +29,13 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/mysql" >mysql</a></li>
 		<li><a href="/docs/software/oracle" >oracle</a></li>
 		<li><a href="/docs/software/postgresql" >postgresql</a></li>
-		<li><a href="/docs/software/network" >网络基础</a></li>
-		<li><a href="/docs/software/monitor" >实时监控</a></li>
+		<li><a href="/docs/software/network">网络基础</a></li>		
+	</ul>
+	<p>-------------------------</p>
+	<h3>项目控制管理</h3>
+	<ul>
+		<li><a href="/docs/software/git">GIT</a></li>
+		<li><a href="/docs/software/monitor">实时监控</a></li>
 	</ul>
 	<p>-------------------------</p>
 	<h3>硬件开发经验</h3>
@@ -40,7 +45,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<p>-------------------------</p>
 	<h3>附录</h3>
 	<ul>
-		<li><a href="/docs/software/cheatsheet" >cheatsheet</a></li>
+		<li><a href="/docs/software/cheatsheet">cheatsheet</a></li>
 	</ul>
 </div>
 
