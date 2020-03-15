@@ -54,9 +54,18 @@ ipcheck.need.sh
 
 ## 2. 运动姿势
 
+### 2.1 手动
+
 + [shadowsocketR搭梯子](/docs/software/network/vpn_shadowsockr)
 + [trojan搭梯子](/docs/software/network/vpn_trojan)
 + more to explore
+
+### 2.2 直接买
+
+比如有我个人经常用的[StrongVPN，点击官网](https://intranet.strongconnectivity.com/services/strongvpn/refer/204835b682517019/),
+还有开源的[protonvpn](https://protonvpn.com)
+可以多参考一些测评,比如[这个](https://10beasts.net/best-vpn-china-en/)
+
 
 ## 3. 运动安全使用方法
 

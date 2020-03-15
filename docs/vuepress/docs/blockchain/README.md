@@ -13,10 +13,16 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<ul>
 		<li>more to do....</li>
 	</ul>
+	<p>-------------------------</p>
 	<h3>深入解析</h3>
 	<ul>
 		<li><a href="/docs/blockchain/consensus" >解密挖矿与共识的误解</a></li>
 		<li>more to do....</li>
+	</ul>
+	<p>-------------------------</p>
+	<h3>科普知识</h3>
+	<ul>
+		<li><a href="/docs/blockchain/wallet" >钱包使用</a></li>
 	</ul>
 </div>
 
