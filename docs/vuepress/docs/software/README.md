@@ -27,14 +27,20 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/kafka" >分布式消息队列kafka</a></li>		
 		<li><a href="/docs/software/mysql" >mysql</a></li>
 		<li><a href="/docs/software/oracle" >oracle</a></li>
-		<li><a href="/docs/software/postgresql" >postgresql</a></li>
-		<li><a href="/docs/software/network">网络基础</a></li>		
+		<li><a href="/docs/software/postgresql" >postgresql</a></li>	
+	</ul>
+	<p>-------------------------</p>
+	<h3>网络相关</h3>
+	<ul>
+		<li><a href="/docs/software/network/network">网络基础</a></li>	
+		<li><a href="/docs/software/network/vpn_shadowsockr">shadowsocketR搭梯子</a></li>
+		<li><a href="/docs/software/network/vpn_trojan">trojan搭梯子</a></li>	
 	</ul>
 	<p>-------------------------</p>
 	<h3>项目控制管理</h3>
 	<ul>
-		<li><a href="/docs/software/git">GIT</a></li>
-		<li><a href="/docs/software/monitor">实时监控</a></li>
+		<li><a href="/docs/software/project_manage/git">GIT</a></li>
+		<li><a href="/docs/software/project_manage/monitor">实时监控</a></li>
 	</ul>
 	<p>-------------------------</p>
 	<h3>硬件开发经验</h3>

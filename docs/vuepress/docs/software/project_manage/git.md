@@ -46,6 +46,21 @@ git commit -m ".gitignore fix"
 display Chinese character
 git config core.quotepath false
 
+Adding a new SSH key to your GitHub account
+https://help.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account
+```
+for windows user .ssh is under c:/users/<username>/
+
+ls -al ~/.ssh
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+
+# start the ssh-agent in the background
+$ eval $(ssh-agent -s)
+ssh-add ~/.ssh/id_rsa
+
+clip < ~/.ssh/id_rsa.pub
+```
+
 ### 1.3 About repo
 git remote -v
 

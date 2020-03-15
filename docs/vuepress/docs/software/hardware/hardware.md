@@ -1,3 +1,10 @@
+---
+sidebar: auto
+sidebarDepth: 3
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
+[回目录](/docs/software)  《硬件基础与物联网IOT》
 
 ## 1.Fundamentals 
 Electronics Foundations: https://www.linkedin.com/learning/electronics-foundations-fundamentals
