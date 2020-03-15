@@ -33,6 +33,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<h3>网络相关</h3>
 	<ul>
 		<li><a href="/docs/software/network/network">网络基础</a></li>	
+		<li><a href="/docs/software/network/vpn">vpn梯子基础</a></li>
 		<li><a href="/docs/software/network/vpn_shadowsockr">shadowsocketR搭梯子</a></li>
 		<li><a href="/docs/software/network/vpn_trojan">trojan搭梯子</a></li>	
 	</ul>
