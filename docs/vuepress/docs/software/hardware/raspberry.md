@@ -1,3 +1,11 @@
+---
+sidebar: auto
+sidebarDepth: 3
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
+[回目录](/docs/software)  《树莓派raspberry》
+
 黑客基站https://www.linuxidc.com/Linux/2015-11/124762.htm
 
 ls /usr/lib/python3/dist-packages/

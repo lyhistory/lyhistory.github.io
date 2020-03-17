@@ -1,3 +1,11 @@
+---
+sidebar: auto
+sidebarDepth: 3
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
+[回目录](/docs/software)  《无人机drone》
+
 Keyword:  drone, Quad Copter, UAV, transmitter, rotating blade
 throttle 风门
 悬停 无头模式 一键返航 绕点飞行 云台相机 防抖 飞行控制 实时传输 /图传
@@ -89,6 +97,31 @@ Package Include
 1 x remote control strap
  
 http://cyberneticzoo.com/
+
+## Transmitter 
+Eachine i6 Transmitter / flysky i6
+Eachine i6 Transmitter Quick Look & Main Menu
+https://www.youtube.com/watch?v=rWwiF6Hi9rk
+https://www.youtube.com/watch?v=JYNfpL_LxiA
+
+
+Titoltor
+Trim
+
+Simulators and idle up on the Eachine i6 transmitter - tutorial
+https://www.youtube.com/watch?v=nzlmOcNMkdw
+
+https://item.taobao.com/item.htm?spm=a1z10.5-c-s.w4002-15727417338.22.6d031d951v1EIx&id=554098386901
+
+06913009-R7-1883917744	8812043-I3-336275 
+
+SmartPropoPlus https://sourceforge.net/projects/smartpropoplus/
+
+Eachine i6 Transmitter Hack - How to Enter The Program Mode
+
+https://www.youtube.com/watch?v=0no6lK6W2HI
+
+
 
 drones:
 https://hexoplus.com/product/hexo_drone_3d

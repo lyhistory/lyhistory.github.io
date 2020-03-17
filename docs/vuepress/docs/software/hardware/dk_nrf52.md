@@ -1,8 +1,10 @@
 ---
 sidebar: auto
-sidebarDepth: 4
+sidebarDepth: 3
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
+
+[回目录](/docs/software)  《nrf52开发板》
 
 ## 1.terminalogy
 evk: evaluation kit

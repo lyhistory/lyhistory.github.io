@@ -24,23 +24,33 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/java_spring" >基于SpringBoot的微服务</a></li>
 		<li><a href="/docs/software/zookeeper" >分布式框架zookeeper</a></li>
 		<li><a href="/docs/software/redis" >分布式缓存redis</a></li>
-		<li><a href="/docs/software/kafka" >分布式消息队列kafka</a></li>
-		
+		<li><a href="/docs/software/kafka" >分布式消息队列kafka</a></li>		
 		<li><a href="/docs/software/mysql" >mysql</a></li>
 		<li><a href="/docs/software/oracle" >oracle</a></li>
-		<li><a href="/docs/software/postgresql" >postgresql</a></li>
-		<li><a href="/docs/software/network">网络基础</a></li>		
+		<li><a href="/docs/software/postgresql" >postgresql</a></li>	
+	</ul>
+	<p>-------------------------</p>
+	<h3>网络相关</h3>
+	<ul>
+		<li><a href="/docs/software/network/network">网络基础</a></li>	
+		<li><a href="/docs/software/network/vpn">vpn梯子基础</a></li>
+		<li><a href="/docs/software/network/vpn_shadowsockr">shadowsocketR搭梯子</a></li>
+		<li><a href="/docs/software/network/vpn_trojan">trojan搭梯子</a></li>	
 	</ul>
 	<p>-------------------------</p>
 	<h3>项目控制管理</h3>
 	<ul>
-		<li><a href="/docs/software/git">GIT</a></li>
-		<li><a href="/docs/software/monitor">实时监控</a></li>
+		<li><a href="/docs/software/project_manage/git">GIT</a></li>
+		<li><a href="/docs/software/project_manage/monitor">实时监控</a></li>
 	</ul>
 	<p>-------------------------</p>
 	<h3>硬件开发经验</h3>
 	<ul>
+		<li><a href="/docs/software/hardware/hardware" >硬件基础和IOT介绍</a></li>
+		<li><a href="/docs/software/hardware/raspberry" >raspberry树莓派</a></li>
+		<li><a href="/docs/software/hardware/arduino" >arduino</a></li>
 		<li><a href="/docs/software/hardware/dk_nrf52" >nRF52开发入门</a></li>
+		<li><a href="/docs/software/hardware/drone" >drone无人机</a></li>
 	</ul>
 	<p>-------------------------</p>
 	<h3>附录</h3>

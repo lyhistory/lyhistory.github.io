@@ -288,7 +288,7 @@ https://docs.influxdata.com/flux/v0.24/introduction/getting-started
 New release https://www.influxdata.com/blog/introducing-the-next-generation-influxdb-2-0-platform/
 
 
-# (Optional) Copy the influx and influxd binary to your $PATH
+(Optional) Copy the influx and influxd binary to your $PATH
 sudo cp influxdb_2.0.0-alpha.8_darwin_amd64/{influx,influxd} /usr/local/bin/
 
 influxd --http-bind-address=127.0.0.1:9999
@@ -795,7 +795,7 @@ https://prometheus.io/docs/instrumenting/writing_exporters/
     https://redbyte.eu/en/blog/real-time-metrics-using-prometheus-and-grafana/
 
 
-### 3.5 More
+### 3.5 More Monitor with prometheus|influxdb
 Real Time performance monitor for .NET CORE
 .Net Core 2.0+ InfluxDB+Grafana+App Metrics 实现跨平台的实时性能监控 https://www.cnblogs.com/landonzeng/p/7904402.html
 
@@ -807,7 +807,7 @@ java perform monitor
 https://github.com/stagemonitor/stagemonitor/wiki/Installation
 
 
-### 3.6 Project Monitor CI with Jenkins
+### 3.6 Project Monitor CI with Jenkins(nothing to do with prometheus&influxdb)
 
 CI-Jenkins
 https://jenkins.io/doc/tutorials/
