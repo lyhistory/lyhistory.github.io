@@ -36,4 +36,10 @@ npm run docs:build
 cp docs\vuepress\docs\.vuepress\dist\* docs\
 
 gitignore nodemodules
+
+config: \docs\vuepress\docs\.vuepress\config.js
+resources: \docs\vuepress\docs\.vuepress\public
+custom css: \docs\vuepress\docs\.vuepress\styles
+build result: \docs\vuepress\docs\.vuepress\dist
+finally publish to: \docs\
 ```
