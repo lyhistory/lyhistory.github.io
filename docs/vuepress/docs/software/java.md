@@ -266,7 +266,9 @@ Maven package
 ethereumj-core maven package https://github.com/ethereum/ethereumj/issues/1018
 
 mvn clean build 
+mvn clean install -DskipTests
 mvn clean install -P<profileName> 
+mvn spring-boot:run
 
 https://gerardnico.com/maven/bin
 Unsupported major.minor version 52.0 https://blog.csdn.net/qq_36769100/article/details/78880341
@@ -329,6 +331,16 @@ https://rodrigouchoa.wordpress.com/2014/09/10/java-8-lambda-expressions-tutorial
 Stream 
 Distinct https://howtodoinjava.com/java8/java-stream-distinct-examples/
 https://stackoverflow.com/questions/42578210/filter-stream-with-values-from-another-stream
+```
+Map<String, Test> anotherDataMap = dataMap.entrySet().stream().filter(entry -> entry.getValue().getType() == "1")
+.collect(Collectors.toMap(
+		e->{return String.format("%s_ddd", e.getValue().getFoo()));}, 
+		e->{
+			Test test = new Test();
+			test.setFoo(e.getValue().getFoo())
+			return test;
+		})); 
+```
 
 future
 https://www.baeldung.com/java-future

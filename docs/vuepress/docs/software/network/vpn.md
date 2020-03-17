@@ -45,7 +45,7 @@ SSH无法连接，SSR连不上，网站打不开；
 	如果用Vultr（[点击这里去vultr官网领取100美金免费体验](https://www.vultr.com/?ref=8491735-6G)），可以随时删除服务，重新创建新的服务就会分配新的IP；
 	如果用[搬瓦工，官网地址](https://bandwagonhost.com/aff.php?aff=58544)，需要花点钱几美金就可以换ip，不用删除服务重新创建；
 	联系vps服务器服务商；
-
++ 构建服务器群组，比如采用软路由openwrt，多几个节点，缺点当然是费用高，另外一种方式可以考虑购买现成的服务器群组比如[ButterflyVPN](https://www.youtube.com/watch?v=FeRgNwa0eOA)
 
 被强检测：
 

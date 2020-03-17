@@ -269,6 +269,7 @@ http://www.cppblog.com/deercoder/archive/2011/11/13/160007.html
 
 Apendix:<<Merging and Branching Strategy>>
 ![](/docs/docs_image/software/project_manage/git/git03.png)
+![](/docs/docs_image/software/project_manage/git/git04.png)
 
 ```
 1. introduce git flow

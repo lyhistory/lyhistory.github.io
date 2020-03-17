@@ -22,7 +22,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<p>-------------------------</p>
 	<h3>科普知识</h3>
 	<ul>
-		<li><a href="/docs/blockchain/wallet" >钱包使用</a></li>
+		<li><a href="/docs/blockchain/wallets" >钱包使用</a></li>
 	</ul>
 </div>
 
