@@ -349,10 +349,10 @@ Java serialization algorithm
 https://www.javaworld.com/article/2072752/the-java-serialization-algorithm-revealed.html
 
 ### 4.2 JAVA ADVANCE
-Functional reference
-Functional Interfaces https://www.baeldung.com/java-8-functional-interfaces
-https://www.codementor.io/eh3rrera/using-java-8-method-reference-du10866vx
-https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/How-to-use-Javas-functional-Consumer-interface-example
+
+java魔术手法：
+cglib增强类+代理
+元注解
 
 #### 4.2.1 Concurrency handling
 
@@ -411,6 +411,12 @@ https://www.cnblogs.com/harrymore/p/10570284.html
 3）java, c++联调debug
 https://www.cnblogs.com/yejg1212/archive/2013/06/07/3125392.html
 C++ ide attach javaw
+
+#### 4.2.3 others
+Functional reference
+Functional Interfaces https://www.baeldung.com/java-8-functional-interfaces
+https://www.codementor.io/eh3rrera/using-java-8-method-reference-du10866vx
+https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/How-to-use-Javas-functional-Consumer-interface-example
 
 ## 5.JAVA framework
 
@@ -475,7 +481,7 @@ cat < in.txt | grep “apache” | tr a-z A-Z > out.txt
 #### 5.2.1 Overview
 
 > Nowadays we use general purpose applications or libraries to communicate with each other. For example, we often use an HTTP client library to retrieve information from a web server and to invoke a remote procedure call via web services. However, a general purpose protocol or its implementation sometimes does not scale very well. It is like how we don't use a general purpose HTTP server to exchange huge files, e-mail messages, and near-realtime messages such as financial information and multiplayer game data. What's required is a highly optimized protocol implementation that is dedicated to a special purpose. For example, you might want to implement an HTTP server that is optimized for AJAX-based chat application, media streaming, or large file transfer. You could even want to design and implement a whole new protocol that is precisely tailored to your need. Another inevitable case is when you have to deal with a legacy proprietary protocol to ensure the interoperability with an old system. What matters in this case is how quickly we can implement that protocol while not sacrificing the stability and performance of the resulting application.
-
+> https://netty.io/wiki/user-guide-for-4.x.html
 RPC is a protocol defined in https://tools.ietf.org/html/rfc1831 , netty is one of the non-blocking io implementation of RPC, 
 and also sometimes refer as an architecture style (getUserById?id=1) when comparing with rest style(get /cat/1)
 RMI is a protocol and also a low-level RPC implementation, “normally for server to server communication or inter micro services communication, service A invoke methods on service B just as its own function call”; dubbo is an advanced implementation on top of RMI and other protocols, is for distributed services;
@@ -491,7 +497,7 @@ RPC vs Restful, RPC vs RMI, Rest vs Restful:
 ![](/docs/docs_image/software/java/java07.png)
 
 #### 5.2.2 RPC
-RPC框架有很多，比较知名的如阿里的Dubbo、google的gRPC、Go语言的rpcx、Apache的thrift。当然了，还有Spring Cloud，不过对于Spring Cloud来说，RPC只是它的一个功能模块，还有netty，alipay基于netty的SOFA RPC
+RPC框架有很多，比较知名的如阿里的Dubbo、google的gRPC、Go语言的rpcx、Apache的thrift。当然了，还有Spring Cloud，不过对于Spring Cloud来说，RPC只是它的一个功能模块，还有netty（zookeeper使用netty），alipay基于netty的SOFA RPC
 技术点：
 ●	元注解定义
 ●	网络IO，BIO\NIO\AIO，Socket编程，HTTP通信，一个就行。

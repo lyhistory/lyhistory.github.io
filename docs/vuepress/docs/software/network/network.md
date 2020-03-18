@@ -269,7 +269,22 @@ NAT 是IP 转IP ARP 是IP 转MAC
 
 https://www.redhat.com/sysadmin/beginners-guide-network-troubleshooting-linux
 
+## 5.基于TCP/IP的应用层“协议”
+应用层的协议有FTP、HTTP、websocket、TELNET、SMTP、DNS等协议;
+前面也提到websocket是完整的应用层协议，所以不会访问raw tcp packets，但是常用的socket是可以的，因为它是基于应用层和传输层的抽象，并不是一个协议；
 
+FTP、SMTP、DNS各自都有特别的用处，HTTP则长作为一种general purpose的协议用于组件之间或者客户端和服务端之间的通信，但是有些情况下，HTTP是不够的，
+首先HTTP是应用层，对于系统内部的调用尤其是分布式系统之间调用来说性能比较低，此时就引入了基于传输层TCP的架构--RPC，
+RPC即远程过程调用，再加上proxy代理模式就可以让远程调用像本地调用一样，
+这样讲起来rpc是基于TCP的，偏偏有个rpc over http，目的就是internet用户也可以通过http来进行远程过程调用RPC,比如[Using HTTP as an RPC Transport](https://docs.microsoft.com/en-us/windows/win32/rpc/using-http-as-an-rpc-transport),
+一个完整的RPC架构里面包含了四个核心的组件，分别是Client ,Server,Client Stub以及Server Stub，
+RPC框架众多，比如netty:
+> Nowadays we use general purpose applications or libraries to communicate with each other. For example, we often use an HTTP client library to retrieve information from a web server and to invoke a remote procedure call via web services. However, a general purpose protocol or its implementation sometimes does not scale very well. It is like how we don't use a general purpose HTTP server to exchange huge files, e-mail messages, and near-realtime messages such as financial information and multiplayer game data. What's required is a highly optimized protocol implementation that is dedicated to a special purpose. For example, you might want to implement an HTTP server that is optimized for AJAX-based chat application, media streaming, or large file transfer. You could even want to design and implement a whole new protocol that is precisely tailored to your need. Another inevitable case is when you have to deal with a legacy proprietary protocol to ensure the interoperability with an old system. What matters in this case is how quickly we can implement that protocol while not sacrificing the stability and performance of the resulting application.
+> https://netty.io/wiki/user-guide-for-4.x.html
+
+基于TCP，所以要处理拆包、粘包问题
+
+http connect , http tunnel
 ---
 
 ref:
