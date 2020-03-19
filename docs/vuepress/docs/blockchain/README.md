@@ -11,6 +11,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 <div>
 	<h3>区块链入门</h3>
 	<ul>
+		<li><a href="/docs/blockchain/btc_ipayment_integrate">项目实战：比特币充提款集成</a></li>
 		<li>more to do....</li>
 	</ul>
 	<p>-------------------------</p>
