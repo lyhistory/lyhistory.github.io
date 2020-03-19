@@ -184,7 +184,7 @@ sudo sh -c 'tcpdump -i any -X host 192.168.207.4 -l | tee dat'
 
 ![wireshark](/docs/docs_image/software/network/network09.png)
 
-可以看到还有SSH的请求干扰视线，所以果断关掉，但是发现黑色背景的tcp不断的出现，然后关掉网站，居然还在，决定根据端口查一下
+可以看到还有SSH的请求干扰视线，所以果断关掉（其实也可以加过滤条件比如tcp.port!=22），但是发现黑色背景的tcp不断的出现，然后关掉网站，居然还在，决定根据端口查一下
 netstat -aon | find /i "53072"
 tasklist /fi "pid eq 81304"
 居然是chrome，关掉chrome就完全停掉了
@@ -227,6 +227,12 @@ https://mina.apache.org/mina-project/gen-docs/2.1.2/apidocs/org/apache/mina/tran
 然后再查到其他的一些程序，比如kafka和zookeeper默认50
 然后可以看到显示出来的redis-server和nginx都是128
 
+再后来遇到另外一个问题：
+[the ESTAB tcp connection remains even after closed initiator](https://github.com/quickfix-j/quickfixj/issues/269)
+![server socket](/docs/docs_image/software/network/network15.png)
+我配错了heartbeat，然后导致了一个神奇的现象，客户端连接服务端，由于他这个协议里面是客户端主动发起heartbeat，所以我配错了之后，即使客户端断掉(连接之后过二十分钟再断)，服务端就认为连接一直在，
+所以会一直保持这个ESTABLISHED连接，除非重启服务端，然后因为quickfix不允许同一个配置的initiator多次连接，所以再连接都变成了TIME_WAIT;
+
 参考：记一次惊心的网站TCP队列问题排查经历https://zhuanlan.zhihu.com/p/36731397
 https://juejin.im/post/5d8488256fb9a06b065cad98
 https://cloud.tencent.com/developer/article/1143712
@@ -256,7 +262,6 @@ https://bob.kim/ngrok_theory
 使用 NAT 穿透访问 NAT 后面的 HTTP Server 还是用更加简单的方式？ https://yq.aliyun.com/articles/195878?spm=a2c4e.11163080.searchblog.127.32e02ec1I9PHCG
 
 
-
  内网穿透工具的原理与开发实战 https://zhuanlan.zhihu.com/p/30351943
 frp和nginx内网服务器转发和建站 https://zhuanlan.zhihu.com/p/31924024
 NAT 是IP 转IP ARP 是IP 转MAC
@@ -269,12 +274,17 @@ NAT 是IP 转IP ARP 是IP 转MAC
 
 https://www.redhat.com/sysadmin/beginners-guide-network-troubleshooting-linux
 
-## 5.基于TCP/IP的应用层“协议”
+## 5. 应用层协议详解
+
+### 5.1 基于TCP/IP的应用层“协议”
 应用层的协议有FTP、HTTP、websocket、TELNET、SMTP、DNS等协议;
 前面也提到websocket是完整的应用层协议，所以不会访问raw tcp packets，但是常用的socket是可以的，因为它是基于应用层和传输层的抽象，并不是一个协议；
 
-FTP、SMTP、DNS各自都有特别的用处，HTTP则长作为一种general purpose的协议用于组件之间或者客户端和服务端之间的通信，但是有些情况下，HTTP是不够的，
-首先HTTP是应用层，对于系统内部的调用尤其是分布式系统之间调用来说性能比较低，此时就引入了基于传输层TCP的架构--RPC，
+FTP、SMTP、DNS各自都有特定的用处；
+
+HTTP则长作为一种general purpose的协议通常是用于客户端和服务端之间的通信，尤其是通过公网的通信，当然也可以用于组件之间或者系统内部之间的通信；
+但是有些情况下，HTTP是不够的：首先HTTP是应用层，对于系统内部的调用尤其是分布式系统之间调用来说性能比较低，此时就引入了基于传输层TCP的架构--RPC；
+
 RPC即远程过程调用，再加上proxy代理模式就可以让远程调用像本地调用一样，
 这样讲起来rpc是基于TCP的，偏偏有个rpc over http，目的就是internet用户也可以通过http来进行远程过程调用RPC,比如[Using HTTP as an RPC Transport](https://docs.microsoft.com/en-us/windows/win32/rpc/using-http-as-an-rpc-transport),
 一个完整的RPC架构里面包含了四个核心的组件，分别是Client ,Server,Client Stub以及Server Stub，
@@ -282,9 +292,71 @@ RPC框架众多，比如netty:
 > Nowadays we use general purpose applications or libraries to communicate with each other. For example, we often use an HTTP client library to retrieve information from a web server and to invoke a remote procedure call via web services. However, a general purpose protocol or its implementation sometimes does not scale very well. It is like how we don't use a general purpose HTTP server to exchange huge files, e-mail messages, and near-realtime messages such as financial information and multiplayer game data. What's required is a highly optimized protocol implementation that is dedicated to a special purpose. For example, you might want to implement an HTTP server that is optimized for AJAX-based chat application, media streaming, or large file transfer. You could even want to design and implement a whole new protocol that is precisely tailored to your need. Another inevitable case is when you have to deal with a legacy proprietary protocol to ensure the interoperability with an old system. What matters in this case is how quickly we can implement that protocol while not sacrificing the stability and performance of the resulting application.
 > https://netty.io/wiki/user-guide-for-4.x.html
 
-基于TCP，所以要处理拆包、粘包问题
+要了解这些框架的原理首先要搞明白TCP本身的原理，最重要的一个问题是：
+**TCP面向字节流，UDP面向报文段，TCP的报文段呢？**
 
-http connect , http tunnel
+> 问题的关键在于TCP是有缓冲区，作为对比，UDP面向报文段是没有缓冲区的。
+> TCP发送报文时，是将应用层数据写入TCP缓冲区中，然后由TCP协议来控制发送这里面的数据，而发送的状态是按字节流的方式发送的，跟应用层写下来的报文长度没有任何关系，所以说是流。
+> 作为对比的UDP，它没有缓冲区，应用层写的报文数据会直接加包头交给网络层，由网络层负责分片，所以是面向报文段的。
+> https://www.zhihu.com/question/34003599/answer/204379413
+
+所以说TCP本质是一个面向字节流的协议，本质是流式的，如同水流，没有分段，无法得知何时开始结束，
+而TCP提供了可靠的流控方式：[滑动窗口sliding window](https://www.youtube.com/watch?v=klDhO9N01c4)，简单来说这个滑动窗口跟收发两端的缓存有关，可以控制“流速”；
+
+由于这个滑动窗口的存在，跟发送端和接收端的收发节奏和表现出来的现象形象分为“拆包和粘包”问题：
+
+首先包(Packet)的定义：在包交换网络里，单个消息被划分为多个数据块，这些数据块称为包，它包含发送者和接收者的地址信息。这些包然后沿着不同的路径在一个或多个网络中传输，并且在目的地重新组合。
+
+打个比方，发送端先后发送两个信息 hello和world，接收端正常是期待同样先后收到hello和world，
+但是因为tcp流，假设滑动窗口是1024字节，接收端可能会一次收到 helloworld连起来，这叫做“粘包”，
+假设滑动窗口很小4个字节，接收端则会收到类似 hell o worl d 这种所谓“拆包”或者 hell owor ld 这种拆包+粘包；
+
+粘包问题的处理一般是加“分隔符”来标志一个包packet结束；
+拆包问题则是一般加上长度length字段，让接收方知道这个包的长度，比如10M，接收端可以把这些拆的包合并起来；
+
+### 5.2 HTTP tunnel隧道技术
+首先要了解两种代理模式：forward proxy（正向代理，位于客户端，隐藏客户端信息），reverse proxy（反向代理，位于服务器端，隐藏目标机器或服务信息，主要用于load balance等）；
+而端口转发（Port forwarding）
+> 是安全壳(SSH) 为网络安全通信使用的一种方法。SSH可以利用端口转发技术来传输其他TCP/IP协议的报文，当使用这种方式时，SSH就为其他服务在客户端和服务器端建立了一条安全的传输管道。端口转发利用本客户机端口映射到服务器端口来工作，SSH可以映射所有的服务器端口到本地端口，但要设置1024以下的端口需要根用户权限。在使用防火墙的网络中，如果设置为允许SSH服务通过(开启了22端口)，而阻断了其他服务，则被阻断的服务仍然可以通过端口转发技术转发数据包
+> https://baike.baidu.com/item/%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91
+
+一般渗透测试中会利用代理模式（正向或者反向）加上端口转发来“绕过”防火墙对目标机器上端口的限制，
+这种技术也通常称为隧道技术http tunnel，
+
+所以HTTP tunnel相当于proxy server+port forwarding；
+
+当然http tunnel也常用于一些网络架构中，比如系统分为DMZ和核心区，位于DMZ的服务器A面向外网，位于核心区的B不可以通过外网直接访问，只能通过A进行流量转发；
+
+**http tunnel use case**:
+
+1. ssh tunnel 
+
+forward local port to remote port, 比如在公司连接家里的远程桌面，但是公司的3389端口被屏蔽，可以走ssh转发
+ssh -L <LOCAL PORT>:<REMOTE IP>:<REMOTE PORT> <USERNAME>@<REMOTE IP>
+
+dynamic tunnel:
+ssh -D <LOCAL PORT> <USERNAME>@<REMOTE IP>
+
+reverse tunnel,比如在公司电脑上执行下面语句，然后回到家可以连接公司电脑
+ssh -R <REMOTE PORT>:localhost:<LOCAL PORT> <USERNAME>@<REMOTE IP>
+免费host网站
+ssh -R 80:localhost:3000 serveo.net 
+
+[例子来源](https://www.youtube.com/watch?v=AtuAdk4MwWw)
+
+2. https 
+> This mechanism is how a client behind an HTTP proxy can access websites using SSL or TLS (i.e. HTTPS). 
+> Proxy servers may also limit connections by only allowing connections to the default HTTPS port 443, whitelisting hosts, or blocking traffic which doesn't appear to be SSL.
+> https://en.wikipedia.org/wiki/HTTP_tunnel
+
+3. pentest tunnel 
+[ngrok - HTTP和TCP隧道](https://www.youtube.com/watch?v=tn2zbi8OnvM)
+[渗透基础——端口转发与代理](https://3gstudent.github.io/%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80-%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E4%B8%8E%E4%BB%A3%E7%90%86/)
+
+[Proxy servers and tunneling](https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling)
+[HTTP Tunnel使用的几种使用（经典）](https://blog.csdn.net/zhangxinrun/article/details/5942260)
+[http tunnel和入侵检测的理解](https://blog.csdn.net/gx11251143/article/details/104518461)
+
 ---
 
 ref:
@@ -293,3 +365,4 @@ ref:
 [Packet sniffer basics for network troubleshooting](https://www.redhat.com/sysadmin/packet-sniffer-basics)
 
 [网络7层协议，4层，5层？理清容易混淆的几个概念](https://blog.csdn.net/cc1949/article/details/79063439)
+[Netty(三) 什么是 TCP 拆、粘包？如何解决？](https://juejin.im/post/5b67902f6fb9a04fc67c1a24)
