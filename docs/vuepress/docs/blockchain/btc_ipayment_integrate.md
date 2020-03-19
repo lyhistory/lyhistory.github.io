@@ -68,7 +68,7 @@ i) 用户选择比特币充值，输入15000人民币，网站根据当前汇率
 
 ii) 网站生成比特币充值地址(M/44'/0'/0'/0/address_index)并生成一个订单 [insert into topup_order <uuid,userid,btcaddress,btcindex,requestamt,exchangerate,createdate,status>]，
 
-同时网站还生成一个收款二维码, 格式:bitcoin:<address>?amount=<value>&message=<message>
+同时网站还生成一个收款二维码, 格式:```bitcoin:<address>?amount=<value>&message=<message>```
 
 iii) 用户从交易所或者自己的钱包手动输入或者扫描二维码进行转账
 
