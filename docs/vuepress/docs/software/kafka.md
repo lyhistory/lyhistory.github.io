@@ -1,4 +1,10 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
 
+[回目录](/docs/software)  《kafka》
 
 ![](/docs/docs_image/software/kafka/kafka01.png)
 ![](/docs/docs_image/software/kafka/kafka02.png)

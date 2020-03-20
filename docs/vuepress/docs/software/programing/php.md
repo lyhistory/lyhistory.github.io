@@ -314,6 +314,24 @@ return privateKey.ExportCspBlob(true);
 }
 ```
 
+Simple Example OpenSSL: Encrypt Data With an RSA Key With PHP
+https://rietta.com/blog/2013/06/13/openssl-encrypt-data-with-rsa-key-with/
+OpenSSL for Windows
+http://gnuwin32.sourceforge.net/packages/openssl.htm
+Command Line Utilities
+https://wiki.openssl.org/index.php/Command_Line_Utilities
+php实现MD5withRSA签名算法
+http://www.cnblogs.com/kennyhr/p/3746100.html
+MD5 with RSA in php
+http://stackoverflow.com/questions/22653640/md5-with-rsa-in-php
+Difference between MakeCert and OpenSSL wrt C# SslStream
+http://stackoverflow.com/questions/26186780/difference-between-makecert-and-openssl-wrt-c-sharp-sslstream
+windows主机开启openssl的方法
+http://www.feichang56.com/openssl.html
+IIS6.0 + openssl执行版 + Windows2003--配置篇
+http://mixangel.blog.51cto.com/286311/135267
+
+
 ?#failed to open stream: no suitable wrapper could be found
 https://stackoverflow.com/questions/6551379/file-get-contents-error
 
@@ -322,3 +340,96 @@ today I identified an issue when install OneBase.org php framework( which is bas
 the root cause is callling of php internal function parse_url, when your password includes special character like #, the parse_url function wrongly split the string,
 work around is by adding a / at the tail of $url
 small issue, but may waste plenty of time investigating it because of layering and encapsulation
+
+
+## PHP Snippets
+
+**upload large files**
+upload images
+export PDF tcpdf
+https://www.sitepoint.com/upload-large-files-in-php/
+
+Strict Standards: Only variables should be passed by reference
+http://stackoverflow.com/questions/9848295/strict-standards-only-variables-should-be-passed-by-reference-error
+SMS
+XML PARSE
+
+**Illegal string-offset**
+```
+PHP safe check
+from 5.3 upgrade to 5.4
+http://stackoverflow.com/questions/24017096/deploying-cakephp-to-php-5-4-16-gives-illegal-string-offset-in-cakephps-core
+And as it's working in PHP 5.3, it is not going to work in PHP 5.4 because as I have cast my array into a string, I should cast it back to an array (or to be more precise: use my previously created string from the array as an array) which gives this error/warning in PHP 5.4.
+foreach(array('_GET','_POST','_COOKIE','_REQUEST') as $key) {
+if (isset($$key)){
+foreach($$key as $_key => $_value){
+$$key[$_key] = safe_str($_value);
+}
+}
+}
+ 
+http://stackoverflow.com/questions/24151713/looping-variable-variables-illegal-string-offset
+foreach(array('_GET','_POST','_COOKIE','_REQUEST') as $key) {
+if (isset($$key)){
+$temp=array();
+foreach($$key as $_key => $_value){
+if(is_array($$key)&&array_key_exists($_key,$$key)){
+if($_key=='PHPSESSID' || $_value==''){
+}else{
+$temp[$_key] = safe_str($_value);
+}
+}
+${$key}=$temp;
+}
+}
+http://stackoverflow.com/questions/23895204/php-5-5-12-illegal-string-offset-on-a-valid-array
+http://stackoverflow.com/questions/15361392/how-do-i-correct-this-illegal-string-offset
+```
+PHP magic_quotes_gpc的详细使用方法
+http://developer.51cto.com/art/200911/165392.htm
+http://php.net/manual/en/security.magicquotes.disabling.php
+stackoverflow.com/questions/6661406/best-method-of-disabling-php-magic-quotes-without-php-ini-or-htaccess
+ 
+Notice: Undefined index:
+Ways to deal with the issue:
+
+Recommended: Declare your variables. Or use isset() to check if they are declared before referencing them, as in: $value = isset($_POST['value']) ? $_POST['value'] : '';.
+Set a custom error handler for E_NOTICE and redirect the messages away from the standard output (maybe to a log file). set_error_handler('myHandlerForMinorErrors', E_NOTICE | E_STRICT).
+Disable E_NOTICE from reporting. A quick way to exclude just E_NOTICE is error_reporting( error_reporting() & ~E_NOTICE ).
+Suppress the error with the @ operator.
+Uninitialized string offset: 0
+is_array()
+Non-static method xxx:xxx() should not be called statically
+
+**php session null**
+
+debug steps：
+1、create phpinfo.php :
+
+open using browser and check session portion.
+2、cross domain issues: if set session.cookie_domain = A, session cookies is invalid in domain B.
+you can set session.cookie_domain="" in php.ini
+3、if set session.cookie_path = /abc/ in php.ini, only folder abc and its subdirectory is allowed to use session.in this case, set session.cookie_path = /
+4、misuse of session.cookie_path and session.save_path, session.cookie_path specifies path to set in the session cookie, while session.save_path defines the argument which is passed to the save handler. If you choose the default files handler, this is the path where the files are created.
+5、lack of write permission on session.save_path, or the path not exits, by default, windows uses '%SystemRoot%\TEMP', unix uses '/tmp'
+6、when session.auto_start = on, execute session_start() will generate new session_id.and check whether session_start() at wrong position
+
+**serialize unserialize**
+a:2:{i:0;a:3:{s:2:"id";s:1:"1";s:3:"num";s:1:"3";s:4:"desc";s:3:"50%";}i:1;a:3:{s:2:"id";s:1:"3";s:3:"num";s:1:"4";s:4:"desc";s:32:"交通便利";}}
+http://blog.tanist.co.uk/files/unserialize/
+
+How can I prevent SQL-injection in PHP?
+http://stackoverflow.com/questions/60174/how-can-i-prevent-sql-injection-in-php
+ 
+Protect Against Malicious POST Requests
+https://perishablepress.com/protect-post-requests/
+ 
+CURL
+CURL exec - Curl failed with error 0,
+http://stackoverflow.com/questions/8227909/curl-exec-always-returns-false
+Using cURL in PHP to access HTTPS (SSL/TLS) protected sites
+Return code is 0 SSL certificate problem: unable to get local issuer certificateCurl error: string(25) "Curl failed with error 0," NULL
+http://unitstep.net/blog/2009/05/05/using-curl-in-php-to-access-https-ssltls-protected-sites/
+ 
+Return code is 500 string(25) "Curl failed with error 0," NULL
+this could be pramamter issues or other program handler problem.
