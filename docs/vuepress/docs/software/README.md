@@ -20,6 +20,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<p>-------------------------</p>
 	<h3>软件开发经验</h3>
 	<ul>
+		<li><a href="/docs/software/programming/encoding">编码转码</a></li>
+		<li><a href="/docs/software/programming/regex">正则表达式</a></li>
 		<li><a href="/docs/software/java" >java实用基础</a></li>
 		<li><a href="/docs/software/java_spring" >基于SpringBoot的微服务</a></li>
 		<li><a href="/docs/software/zookeeper" >分布式框架zookeeper</a></li>

@@ -314,23 +314,39 @@ RPC框架众多，比如netty:
 粘包问题的处理一般是加“分隔符”来标志一个包packet结束；
 拆包问题则是一般加上长度length字段，让接收方知道这个包的长度，比如10M，接收端可以把这些拆的包合并起来；
 
-### 5.2 HTTP tunnel隧道技术
+### 5.2 tunnel 隧道技术
+
 首先要了解两种代理模式：forward proxy（正向代理，位于客户端，隐藏客户端信息），reverse proxy（反向代理，位于服务器端，隐藏目标机器或服务信息，主要用于load balance等）；
 而端口转发（Port forwarding）
 > 是安全壳(SSH) 为网络安全通信使用的一种方法。SSH可以利用端口转发技术来传输其他TCP/IP协议的报文，当使用这种方式时，SSH就为其他服务在客户端和服务器端建立了一条安全的传输管道。端口转发利用本客户机端口映射到服务器端口来工作，SSH可以映射所有的服务器端口到本地端口，但要设置1024以下的端口需要根用户权限。在使用防火墙的网络中，如果设置为允许SSH服务通过(开启了22端口)，而阻断了其他服务，则被阻断的服务仍然可以通过端口转发技术转发数据包
 > https://baike.baidu.com/item/%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91
 
-一般渗透测试中会利用代理模式（正向或者反向）加上端口转发来“绕过”防火墙对目标机器上端口的限制，
-这种技术也通常称为隧道技术http tunnel，
+一般渗透测试中会利用代理模式（正向或者反向）加上端口转发来“绕过”防火墙对目标机器上端口的限制
 
-所以HTTP tunnel相当于proxy server+port forwarding；
+#### 5.2.1 http tunnel
 
-当然http tunnel也常用于一些网络架构中，比如系统分为DMZ和核心区，位于DMZ的服务器A面向外网，位于核心区的B不可以通过外网直接访问，只能通过A进行流量转发；
+定义：
+> HTTP tunneling is used to create a network link between two computers in conditions of restricted network connectivity including firewalls, NATs and ACLs, among other restrictions. The tunnel is created by an intermediary called a proxy server which is usually located in a DMZ.
+> https://en.wikipedia.org/wiki/HTTP_tunnel
 
-**http tunnel use case**:
+系统一般分为DMZ和核心区，位于DMZ的服务器A面向外网，位于核心区的B不可以通过外网直接访问，只能通过A进行流量转发；
 
-1. ssh tunnel 
+http tunnel 一般都是采用 http connect 通过proxy server跟目标server之间建立双向连接
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT
+> This mechanism is how a client behind an HTTP proxy can access websites using SSL or TLS (i.e. HTTPS). 
+> Proxy servers may also limit connections by only allowing connections to the default HTTPS port 443, whitelisting hosts, or blocking traffic which doesn't appear to be SSL.
+> https://en.wikipedia.org/wiki/HTTP_tunnel
 
+[HTTP Tunnel使用的几种使用（经典）](https://blog.csdn.net/zhangxinrun/article/details/5942260)
+[http tunnel和入侵检测的理解](https://blog.csdn.net/gx11251143/article/details/104518461)
+
+#### 5.2.2 tcp tunnel
+
+跟http tunnel利用http connect，还需要一个proxy server来建立双向通道并做流量转发的操作；
+tcp tunnel一般不需要通过一个proxy server，而是借助安装在本地或者远程的软件来做“端口转发”，比如利用ssh将两台电脑的端口进行映射；
+
+** ssh tunnel**
+一般又被直接叫做port forwarding端口转发
 forward local port to remote port, 比如在公司连接家里的远程桌面，但是公司的3389端口被屏蔽，可以走ssh转发
 ssh -L <LOCAL PORT>:<REMOTE IP>:<REMOTE PORT> <USERNAME>@<REMOTE IP>
 
@@ -344,18 +360,28 @@ ssh -R 80:localhost:3000 serveo.net
 
 [例子来源](https://www.youtube.com/watch?v=AtuAdk4MwWw)
 
-2. https 
-> This mechanism is how a client behind an HTTP proxy can access websites using SSL or TLS (i.e. HTTPS). 
-> Proxy servers may also limit connections by only allowing connections to the default HTTPS port 443, whitelisting hosts, or blocking traffic which doesn't appear to be SSL.
-> https://en.wikipedia.org/wiki/HTTP_tunnel
+** ssh tunnel control **
+SSH tunneling is a powerful tool, but it can also be abused. 
+Controlling tunneling is particularly important when moving services to Amazon AWS or other cloud computing services.
 
-3. pentest tunnel 
+ssh连接由强加密来保护,这对于流量监控和过滤系统是有效的，因为traffic是不可解读的.但是这种不可见也存在着很大的风险，比如数据泄露。恶意软件可以利用ssh来隐藏未授权通信，或者从目标网络中漏出偷窃的数据.
+
+在一个ssh back-tunneling攻击中，攻击者在目标网络(比如AWS)以外建立一个server,一旦攻击者进到目标系统中,他就能够从里面连接到外部的ssh server.大多数的组织都允许outgoing的ssh连接(至少如果他们在公有云上有server的话).这个ssh连接在建立的时候使能了tcp port forwarding:从外部server上的一个port到内部网络中server的一个ssh端口。建立这么一个ssh back-tunnel仅需要在inside中一条命令，并且容易自动化.大多数防火墙对这种情况基本无能为力.
+CryptoAuditor是一个基于network的解决方案,它可以在防火墙处阻止未授权的ssh tunnel.它可以在防火墙处基于policy来解密ssh session，当然需要能够访问到host keys. 它也可以控制文件传输
+
+** for pentest **
+
 [ngrok - HTTP和TCP隧道](https://www.youtube.com/watch?v=tn2zbi8OnvM)
 [渗透基础——端口转发与代理](https://3gstudent.github.io/%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80-%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E4%B8%8E%E4%BB%A3%E7%90%86/)
 
 [Proxy servers and tunneling](https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling)
-[HTTP Tunnel使用的几种使用（经典）](https://blog.csdn.net/zhangxinrun/article/details/5942260)
-[http tunnel和入侵检测的理解](https://blog.csdn.net/gx11251143/article/details/104518461)
+
+#### 5.2.3 VPN
+
+A VPN tunnel, however, is fully encrypted. The "P in VPN indicates private. VPN tunnels are typically achieved with IPSeC, SSL, PPTP,  TCP Crypt (this is a new protocol), etc.
+
+> A VPN is created by establishing a virtual point-to-point connection through the use of dedicated circuits or with tunneling protocols over existing networks. A VPN available from the public Internet can provide some of the benefits of a wide area network (WAN). From a user perspective, the resources available within the private network can be accessed remotely
+> https://en.wikipedia.org/wiki/Virtual_private_network
 
 ---
 

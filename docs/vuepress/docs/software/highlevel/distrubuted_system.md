@@ -955,3 +955,19 @@ Discussion
 - with how many replicas will BFS work reasonably well?
 
 ```
+
+```
+Eventual consistency is a consistency model used in distributed computing to achieve high availability that informally guarantees that, if no new updates are made to a given data item, eventually all accesses to that item will return the last updated value.[1] Eventual consistency is widely deployed in distributed systems, often under the moniker of optimistic replication,[2] and has origins in early mobile computing projects.[3] A system that has achieved eventual consistency is often said to have converged, or achieved replica convergence.[4] Eventual consistency is a weak guarantee - most stronger models, like linearizability are trivially eventually consistent, but a system that is merely eventually consistent doesn't usually fulfill these stronger constraints.
+Eventually consistent services are often classified as providing BASE (Basically Available, Soft state, Eventual consistency) semantics, in contrast to traditional ACID (Atomicity, Consistency, Isolation, Durability)guarantees.[5][6] Eventual consistency is sometimes criticized[7] as increasing the complexity of distributed software applications. This is partly because eventual consistency is purely a liveness guarantee (reads eventually return the same value) and does not make safety guarantees: an eventually consistent system can return any value before it converges.
+
+In order to ensure replica convergence, a system must reconcile differences between multiple copies of distributed data. This consists of two parts:
+exchanging versions or updates of data between servers (often known as anti-entropy);[8] and
+choosing an appropriate final state when concurrent updates have occurred, called reconciliation.
+The most appropriate approach to reconciliation depends on the application. A widespread approach is "last writer wins".[1] Another is to invoke a user-specified conflict handler.[4] Timestamps and vector clocks are often used to detect concurrency between updates.
+Reconciliation of concurrent writes must occur sometime before the next read, and can be scheduled at different instants:[3][9]
+Read repair: The correction is done when a read finds an inconsistency. This slows down the read operation.
+Write repair: The correction takes place during a write operation, if an inconsistency has been found, slowing down the write operation.
+Asynchronous repair: The correction is not part of a read or write operation.
+
+Whereas EC is only a liveness guarantee (updates will be observed eventually), Strong Eventual Consistency (SEC) adds the safety guarantee that any two nodes that have received the same (unordered) set of updates will be in the same state. If, furthermore, the system is monotonic, the application will never suffer rollbacks. Conflict-free replicated data types are a common approach to ensuring SEC.[10]
+```
