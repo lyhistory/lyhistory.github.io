@@ -337,5 +337,8 @@ NVL always evaluates both arguments, while COALESCE usually stops evaluation whe
 Master DB (used by live system/application), Slave DB (readonly db, for backup),
 Reporting DB (for analysis)
 
+?#TNS:address already in use
+http://www.dba-oracle.com/t_ora_12542_tns_address_already_in_use.htm
+
 
 [私有库：oracle企业级存储过程](https://github.com/lyhistory/learn_coding/)
