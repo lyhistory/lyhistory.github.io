@@ -1164,8 +1164,8 @@ a.reversefootnote:hover { text-decoration: underline; }
 /* Author profile and links ========================================================================== */
 .author__avatar { display: table-cell; vertical-align: top; }
 @media (min-width: 64em) { .author__avatar { display: block; width: auto; height: auto; } }
-.author__avatar img { max-width: 150px; border-radius: 10%; }
-@media (max-width: 40em) { .author__avatar img { max-width:100%; }}
+.author__avatar img { max-width: 200px; border-radius: 10%; }
+@media (max-width: 40em) { .author__avatar img { max-width:100%; min-width: 150px;}}
 @media (min-width: 64em) { .author__avatar img { padding: 0px; border: 1px solid #baaa92; } }
 
 .author__content { display: table-cell; vertical-align: top; padding-left: 15px; padding-right: 25px; line-height: 1; }
