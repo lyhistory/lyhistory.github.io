@@ -1,3 +1,8 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
 
 正则表达式 Regex
 个人感觉正则表达才是计算机高级语言，超越了人眼的匹配，直追人脑的匹配能力。

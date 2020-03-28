@@ -256,6 +256,13 @@ ICMP协议：ping，tracert
 注意ping和trcert都是走ICMP协议，并不是tcp协议，如果想追踪tcp需要用：
 tcproute TCPTraceroute 
 
+tcproute安装使用：
+	工具tcproute：
+	https://www.elifulkerson.com/projects/tcproute.php
+	win10需要安装qin10pcap
+	http://www.win10pcap.org/download/
+	tcproute -p 443 github.io 
+
 **应用层的DNS协议**
 DNS工具windows:nslookup, linux: dig 
 
