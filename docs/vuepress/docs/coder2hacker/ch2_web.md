@@ -144,7 +144,7 @@ data access layer 数据访问层，跟数据库的通信都是放在这一层�
 ### 2.3 抓包方法总结
 
 对于网站，我们可以用浏览器加插件的方式进行抓包和测试，比如采用chrome的开发者工具+hackerbar，直接就可以查看http通信和web socket packet，
-但是缺点是如果页面发生跳转，跳转前的记录就会清除，这种情况只能采用抓包工具；而对于手机app、桌面软件等，我们只能采用抓包工具来抓取，下面就介绍下常用的抓包方式：
+~~但是缺点是如果页面发生跳转，跳转前的记录就会清除，这种情况只能采用抓包工具~~chrome已经提供了Preserve Log选项可以保存跳转前的链接；而对于手机app、桌面软件等，我们只能采用抓包工具来抓取，下面就介绍下常用的抓包方式：
 
 抓包工具分为cli命令行工具和带有UI界面的工具，cli工具如tcpdump，UI工具有fiddler/wireshark/burpsuite等；
 Fiddler只适用于windows平台，burpsuite是java写的跨平台，Fiddler和burpsuite在抓包上偏向请求和响应的数据，但是wireshark偏向于数据帧，跟tcpdump一个级别；Proxifier主要是给没有提供代理设置的桌面软件，Proxifier Standard Edition uses Winsock Layered Service Provider (Winsock LSP) to capture TCP connections and Winsock Name Space Provider (Winsock NSP) to handle name resolution over proxy. Both providers have to be properly installed in the system；

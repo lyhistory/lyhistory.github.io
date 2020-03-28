@@ -24,19 +24,22 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/programming/encoding">编码转码</a></li>
 		<li><a href="/docs/software/programming/regex">正则表达式</a></li>
 		<li><a href="/docs/software/programming/webdev">web开发</a></li>
+		<!--<li><a href="/docs/software/programming/programming">编程基础</a></li>-->
 		<li><a href="/docs/software/java" >java实用基础</a></li>
 		<li><a href="/docs/software/java_spring" >基于SpringBoot的微服务</a></li>
 		<li><a href="/docs/software/zookeeper" >分布式框架zookeeper</a></li>
 		<li><a href="/docs/software/redis" >分布式缓存redis</a></li>
 		<li><a href="/docs/software/kafka" >分布式消息队列kafka</a></li>
+		<!--<li><a href="/docs/software/buildingblock/shiro">shiro登录和权限管理</a></li>-->
 	</ul>
 	<p>-------------------------</p>
 	<h3>数据库</h3>
 	<ul>	
-		<li><a href="/docs/software/database/mysql" >mysql</a></li>
-		<li><a href="/docs/software/database/oracle" >oracle</a></li>
-		<li><a href="/docs/software/database/postgresql" >postgresql</a></li>	
-		<li><a href="/docs/software/database/mongodb" >mongodb</a></li>
+		<li><a href="/docs/software/database/database">数据库基础</a></li>
+		<li><a href="/docs/software/database/mysql">mysql</a></li>
+		<li><a href="/docs/software/database/oracle">oracle</a></li>
+		<li><a href="/docs/software/database/postgresql">postgresql</a></li>	
+		<li><a href="/docs/software/database/mongodb">mongodb</a></li>
 	</ul>
 	<p>-------------------------</p>
 	<h3>网络相关</h3>

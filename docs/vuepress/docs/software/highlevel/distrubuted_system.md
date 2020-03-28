@@ -42,6 +42,12 @@ _下面提到的节点根据上下文有不同的含义，说到zookeeper时主�
 - 最终一致性 eventual consistency
 - 弱一致性 weak consistency
 
+Types of Consistency
+• Consistency with other users: If two users query the database at the same time, will they see the same data? Traditional relational systems would generally try to ensure that they do, while non-relational databases often take a more relaxed stance. 
+• Consistency within a single session: Does the data maintain some logical consistency within the context of a single database session? For instance, if we modify a row and then read it again, do we see our own update? 
+• Consistency within a single request: Does an individual request return data that is internally coherent? For instance, when we read all the rows in a relational table, we are generally guaranteed to see the state of the table as it was at a moment in time. Modifications to the table that occurred after we began our query are not included. 
+• Consistency with reality: Does the data correspond with the reality that the database is trying to reflect? For example, it’s not enough for a banking transaction to simply be consistent at the end of the transaction; it also has to correctly represent the actual account balances. Consistency at the expense of accuracy is not usually acceptable.
+
 还有其他角度更细分的单调读一致性，单调写一致性，会话一致性，读后写一致性，写后读一致性，顺序一致性等，
 我还看到有人根据协议进行划分：
 - 留言/多播协议 gossip/multicast protocols，包括redis在内的很多集群都是采用gossip

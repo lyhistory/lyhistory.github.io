@@ -6,6 +6,10 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《网络基础》
 
+必读： <《图解TCP IP(第5版)》.((日)竹下隆史).[PDF].&ckook>
+
+主要参考： [A beginner's guide to network troubleshooting in Linux](https://www.redhat.com/sysadmin/beginners-guide-network-troubleshooting-linux)
+
 ## 1.网络分层 TCP/IP协议组
 
 The layers in the TCP/IP network model, in order, include:
@@ -28,6 +32,8 @@ The layers in the TCP/IP network model, in order, include:
 而采用layer2的交换机技术，由于交换机会学习mac地址（arp mapping），大大降低了广播的浪费；
 而layer3进一步采用ip网段隔开不同的分区，根据外部请求的ip可以准确的找到不同的网关
 
+DNS是域名转IP;NAT 是(外网)IP 转(内网)IP; ARP 是IP 转MAC
+
 [40年前的协议战争，对区块链有什么启示？](https://mp.weixin.qq.com/s?__biz=MzI5Mjg1Mjk1OQ==&mid=2247483735&idx=1&sn=0f8fb9ea380c7fc6af00bd514d5927f2&chksm=ec7a44e7db0dcdf1e395793cd20c096e0b506004046f736b2501df363e52cc52d9589cd3c40e&scene=0&xtrack=1)
 
 ### 1.1 Layer 1: The physical layer
@@ -47,7 +53,7 @@ A common problem you might encounter is an ARP entry that won’t populate, part
 
 Linux caches the ARP entry for a period of time, so you may not be able to send traffic to your default gateway until the ARP entry for your gateway times out. For highly important systems, this result is undesirable. Luckily, you can manually delete an ARP entry, which will force a new ARP discovery process
 
-### 1.3 Layer 3: The network/internet layer
+### 1.3 Layer 3: The network/internet layer 网络层
 
 layer3是路由器router（ip网段寻址）
 Layer 3 involves working with IP addresses, which should be familiar to any sysadmin. IP addressing provides hosts with a way to reach other hosts that are outside of their local network (though we often use them on local networks as well).
@@ -62,6 +68,22 @@ Another common issue that you’ll likely run into is a lack of an upstream gate
 
 While not a Layer 3 protocol, it’s worth mentioning DNS while we’re talking about IP addressing. Among other things, the Domain Name System (DNS) translates IP addresses into human-readable names, such as www.redhat.com. DNS problems are extremely common, and they are sometimes opaque to troubleshoot. Plenty of books and online guides have been written on DNS, but we’ll focus on the basics here.
 A telltale sign of DNS trouble is the ability to connect to a remote host by IP address but not its hostname. Performing a quick nslookup on the hostname can tell us quite a bit. Taking a look at the /etc/hosts file, we can see an override that someone must have carelessly added. Host file override issues are extremely common, especially if you work with application developers who often need to make these overrides to test their code during development
+
+**Ipv4 ipv6**
+
+:::ffff: 用于IPv4的IPv6套接字通信。应用和套接字方面，它是IPv6，但网络和就包而言，它是IPv4。
+In IPv6, you are allowed to remove leading zeros, and then remove consecutive zeros, meaning ::ffff: actually translates to 0000:0000:ffff:0000, this address has been designated as the IPv4 to IPv6 subnet prefix, so any IPv6 processor will understand it's working with an IPv4 address and handle it accordingly.
+
+**Public ip vs nat**
+
+NAT stands for Network Address Translation. In the context of our network, NAT is how one (public) IP address is turned into many (private) IP addresses. 
+A public IP address is an address that is exposed to the Internet. If you search for "what's my IP" on the Internet, you'll find the public IP address your computer is using.
+If you look up your computer's IP address, you'll see a different IP address: this is your device's private IP.
+Chances are, if you check this on all of your devices, you'll see that all your devices are using the same public IP, but all have different private IPs. This is NAT in action. The network hardware uses NAT to route traffic going from the public IP to the private IP.
+ 
+ 
+三层转发基本原理 https://blog.csdn.net/baidu_24553027/article/details/54928580
+NAT地址转换 https://blog.csdn.net/hjgblog/article/details/23356409
 
 ### 1.4 Layer 4: The transport layer
 
@@ -103,24 +125,7 @@ HTTP/1.0为每一次HTTP的请求/响应建立一条新的TCP链接，因此一�
 另外，为了获得适当的传输速度，则需要TCP花费额外的回路链接时间（RTT）,每一次链接的建立需要这种经常性的开销，而其并不带有实际有用的数据，只是保证链接的可靠性，
 因此HTTP/1.1提出了可持续链接的实现方法。HTTP/1.1将只建立一次TCP的链接而重复地使用它传输一系列的请求/响应 消息，因此减少了链接建立的次数和经常性的链接开销。
 
-
-## 2.Network architecture
-ipset vpn(一般对外走公网，不可靠) VS leased line（一般连接内网和数据中心）
-
-vlan/vxlan技术（用于连接多个数据中心，让其变成逻辑上一个中心）
-
-![network](/docs/docs_image/software/network/network14.png)
-
-BB: underlay backbone core switch 
-FW: Firewalls
-DC: VXLAN overlay network Core switch
-leaf access switch
-一套配置是指一个BB+一个FW+一个DC，BB通过防火墙连接DC,DC再连接access layer，access layer连接服务器；
-两个datacenter各自有两套配置，两个datacenter的两套配置各自通过一条黑色物理电缆连接，一条一个运营商，
-然后可以看到逻辑上蓝色和黑色是分开的，但物理上是用黑色同一条线，逻辑上是通过协议来区分的，协议就是在通信的header里面加多一点信息来区分BB和DC
-
-
-## 3.Packet Sniffer
+## 2.Packet Sniffer
 
 A packet sniffer is simply a piece of software that allows you to capture packets on your network. Tcpdump and Wireshark are examples of packet sniffers. Tcpdump provides a CLI packet sniffer, and Wireshark provides a feature-rich GUI for sniffing and analyzing packets.
 By default, tcpdump operates in promiscuous mode. This simply means that all packets reaching a host will be sent to tcpdump for inspection. This setting even includes traffic that was not destined for the specific host that you are capturing on, such as broadcast and multicast traffic. Of course, tcpdump isn’t some magical piece of software: It can only capture those packets that somehow reach one of the physical interfaces on your machine.
@@ -160,9 +165,9 @@ UDP sockets -ua
 RAW sockets -wa
 UNIX sockets -xa
 
-## 4.实战问题
+## 3.实战问题
 
-### 4.1 wireshark
+### 3.1 wireshark
 配置如下
 
 ![nginx](/docs/docs_image/software/network/network07.png)
@@ -196,7 +201,7 @@ https://www.imperva.com/learn/performance/http-keep-alive/
 使用wireshark还有个要注意的是，比如 http.host contains lyhistory.github.io
 因为我的域名是解析到github page  所以host不是我自己的lyhistory.com了
 
-### 4.2 一次排查send-q
+### 3.2 一次排查send-q
 
 ![send-q](/docs/docs_image/software/network/network10.png)
 
@@ -237,46 +242,26 @@ https://mina.apache.org/mina-project/gen-docs/2.1.2/apidocs/org/apache/mina/tran
 https://juejin.im/post/5d8488256fb9a06b065cad98
 https://cloud.tencent.com/developer/article/1143712
 
-### 4.3 内网穿透
 
-Ipv4 ipv6
 
-:::ffff: 用于IPv4的IPv6套接字通信。应用和套接字方面，它是IPv6，但网络和就包而言，它是IPv4。
-In IPv6, you are allowed to remove leading zeros, and then remove consecutive zeros, meaning ::ffff: actually translates to 0000:0000:ffff:0000, this address has been designated as the IPv4 to IPv6 subnet prefix, so any IPv6 processor will understand it's working with an IPv4 address and handle it accordingly.
+## 4. 协议详解
 
-内网穿透/映射	，端口映射（静态ip），动态ip映射（花生壳，frp） 动态域名解析DDNS（花生壳，nginx）
-Public ip vs nat：
-NAT stands for Network Address Translation. In the context of our network, NAT is how one (public) IP address is turned into many (private) IP addresses. 
-A public IP address is an address that is exposed to the Internet. If you search for "what's my IP" on the Internet, you'll find the public IP address your computer is using.
-If you look up your computer's IP address, you'll see a different IP address: this is your device's private IP.
-Chances are, if you check this on all of your devices, you'll see that all your devices are using the same public IP, but all have different private IPs. This is NAT in action. The network hardware uses NAT to route traffic going from the public IP to the private IP.
- 
-ipv4资源耗尽，部分宽带运营商开始对用户进行NAT，意思是得不到独立的外网IP，
-如果有独立的外网ip，直接在路由器上设置端口转发或者DMZ映射即可通过外网访问内网电脑；
-如果被NAT，可以利用frp反向代理进行内网穿透，从而对外网提供服务；
+### 4.1 各种测试工具背后的协议
+
+**网络层的协议测试工具**
+ICMP协议：ping，tracert
+
+**传输层的协议测试工具**
+参见/doc/software/network/vpn
+注意ping和trcert都是走ICMP协议，并不是tcp协议，如果想追踪tcp需要用：
+tcproute TCPTraceroute 
+
+**应用层的DNS协议**
+DNS工具windows:nslookup, linux: dig 
 
 DNS技术和NAT技术详解 https://blog.csdn.net/hansionz/article/details/86570290
-https://bob.kim/ngrok_theory
-利用NAT代理实现内网访问外网 https://www.ssgeek.com/linux/linux-technology/455.html
-用静态NAT实现外网PC访问内网服务器 https://blog.51cto.com/11970509/2046966
-使用 NAT 穿透访问 NAT 后面的 HTTP Server 还是用更加简单的方式？ https://yq.aliyun.com/articles/195878?spm=a2c4e.11163080.searchblog.127.32e02ec1I9PHCG
 
-
- 内网穿透工具的原理与开发实战 https://zhuanlan.zhihu.com/p/30351943
-frp和nginx内网服务器转发和建站 https://zhuanlan.zhihu.com/p/31924024
-NAT 是IP 转IP ARP 是IP 转MAC
-
-
-如何用30分钟快速优化家中Wi-Fi？阿里工程师有绝招 https://yq.aliyun.com/articles/692337?spm=a2c4e.11163080.searchblog.118.32e02ec1I9PHCG
-化繁为简！开发者尝鲜阿里小程序云平台，实操讲解如何打造智能小车！ https://yq.aliyun.com/articles/700749?spm=a2c4e.11163080.searchblog.48.32e02ec1I9PHCG
-技术宅之---用手机实现“移动网关” https://yq.aliyun.com/articles/702875?spm=a2c4e.11163080.searchblog.32.32e02ec1I9PHCG
-
-
-https://www.redhat.com/sysadmin/beginners-guide-network-troubleshooting-linux
-
-## 5. 应用层协议详解
-
-### 5.1 基于TCP/IP的应用层“协议”
+### 4.2 基于TCP/IP的应用层“协议”
 应用层的协议有FTP、HTTP、websocket、TELNET、SMTP、DNS等协议;
 前面也提到websocket是完整的应用层协议，所以不会访问raw tcp packets，但是常用的socket是可以的，因为它是基于应用层和传输层的抽象，并不是一个协议；
 
@@ -314,16 +299,23 @@ RPC框架众多，比如netty:
 粘包问题的处理一般是加“分隔符”来标志一个包packet结束；
 拆包问题则是一般加上长度length字段，让接收方知道这个包的长度，比如10M，接收端可以把这些拆的包合并起来；
 
-### 5.2 tunnel 隧道技术
+### 4.3 tunnel 隧道技术
 
-首先要了解两种代理模式：forward proxy（正向代理，位于客户端，隐藏客户端信息），reverse proxy（反向代理，位于服务器端，隐藏目标机器或服务信息，主要用于load balance等）；
-而端口转发（Port forwarding）
+首先要了解两种代理模式：**forward proxy（正向代理），reverse proxy（反向代理）：**
+正向代理，位于客户端，隐藏客户端信息，forward proxy proxies in behalf of clients (or requesting hosts)
+例子：vpn技术基本都是正向代理，隐藏客户端信息
+反向代理，位于服务器端，隐藏目标机器或服务信息，主要用于load balance等, a reverse proxy proxies in behalf of servers
+例子：nginx或者tomcat作为Oracle数据库的反向代理，再比如nginx作为监控UIgrafana的反向代理：Grafana-server runs its own service and hosts dashboard on 3000, if bind to domain, to the normal use access domain, default using 80, need a proxy server who use 80 to forward request to grafana-server for example nginx
+https://www.jscape.com/blog/bid/87783/Forward-Proxy-vs-Reverse-Proxy
+
+
+而**端口转发（Port forwarding）：**
 > 是安全壳(SSH) 为网络安全通信使用的一种方法。SSH可以利用端口转发技术来传输其他TCP/IP协议的报文，当使用这种方式时，SSH就为其他服务在客户端和服务器端建立了一条安全的传输管道。端口转发利用本客户机端口映射到服务器端口来工作，SSH可以映射所有的服务器端口到本地端口，但要设置1024以下的端口需要根用户权限。在使用防火墙的网络中，如果设置为允许SSH服务通过(开启了22端口)，而阻断了其他服务，则被阻断的服务仍然可以通过端口转发技术转发数据包
 > https://baike.baidu.com/item/%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91
 
 一般渗透测试中会利用代理模式（正向或者反向）加上端口转发来“绕过”防火墙对目标机器上端口的限制
 
-#### 5.2.1 http tunnel
+#### 4.3.1 http tunnel
 
 定义：
 > HTTP tunneling is used to create a network link between two computers in conditions of restricted network connectivity including firewalls, NATs and ACLs, among other restrictions. The tunnel is created by an intermediary called a proxy server which is usually located in a DMZ.
@@ -340,7 +332,7 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT
 [HTTP Tunnel使用的几种使用（经典）](https://blog.csdn.net/zhangxinrun/article/details/5942260)
 [http tunnel和入侵检测的理解](https://blog.csdn.net/gx11251143/article/details/104518461)
 
-#### 5.2.2 tcp tunnel
+#### 4.3.2 tcp tunnel
 
 跟http tunnel利用http connect，还需要一个proxy server来建立双向通道并做流量转发的操作；
 tcp tunnel一般不需要通过一个proxy server，而是借助安装在本地或者远程的软件来做“端口转发”，比如利用ssh将两台电脑的端口进行映射；
@@ -371,24 +363,43 @@ CryptoAuditor是一个基于network的解决方案,它可以在防火墙处阻�
 
 ** for pentest **
 
-[ngrok - HTTP和TCP隧道](https://www.youtube.com/watch?v=tn2zbi8OnvM)
-[渗透基础——端口转发与代理](https://3gstudent.github.io/%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80-%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E4%B8%8E%E4%BB%A3%E7%90%86/)
+参考渗透测试内网穿透部分 /doc/coder2hacker/intranet_penetration
 
 [Proxy servers and tunneling](https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling)
 
-#### 5.2.3 VPN
+#### 4.3.3 VPN
 
 A VPN tunnel, however, is fully encrypted. The "P in VPN indicates private. VPN tunnels are typically achieved with IPSeC, SSL, PPTP,  TCP Crypt (this is a new protocol), etc.
 
 > A VPN is created by establishing a virtual point-to-point connection through the use of dedicated circuits or with tunneling protocols over existing networks. A VPN available from the public Internet can provide some of the benefits of a wide area network (WAN). From a user perspective, the resources available within the private network can be accessed remotely
 > https://en.wikipedia.org/wiki/Virtual_private_network
 
+
+## 5.Network architecture
+ipset vpn(一般对外走公网，不可靠) VS leased line（一般连接内网和数据中心）
+
+vlan/vxlan技术（用于连接多个数据中心，让其变成逻辑上一个中心）
+
+![network](/docs/docs_image/software/network/network14.png)
+
+BB: underlay backbone core switch 
+FW: Firewalls
+DC: VXLAN overlay network Core switch
+leaf access switch
+一套配置是指一个BB+一个FW+一个DC，BB通过防火墙连接DC,DC再连接access layer，access layer连接服务器；
+两个datacenter各自有两套配置，两个datacenter的两套配置各自通过一条黑色物理电缆连接，一条一个运营商，
+然后可以看到逻辑上蓝色和黑色是分开的，但物理上是用黑色同一条线，逻辑上是通过协议来区分的，协议就是在通信的header里面加多一点信息来区分BB和DC
+
 ---
 
 ref:
 
-[A beginner's guide to network troubleshooting in Linux](https://www.redhat.com/sysadmin/beginners-guide-network-troubleshooting-linux)
 [Packet sniffer basics for network troubleshooting](https://www.redhat.com/sysadmin/packet-sniffer-basics)
 
 [网络7层协议，4层，5层？理清容易混淆的几个概念](https://blog.csdn.net/cc1949/article/details/79063439)
 [Netty(三) 什么是 TCP 拆、粘包？如何解决？](https://juejin.im/post/5b67902f6fb9a04fc67c1a24)
+
+如何用30分钟快速优化家中Wi-Fi？阿里工程师有绝招 https://yq.aliyun.com/articles/692337?spm=a2c4e.11163080.searchblog.118.32e02ec1I9PHCG
+
+化繁为简！开发者尝鲜阿里小程序云平台，实操讲解如何打造智能小车！ https://yq.aliyun.com/articles/700749?spm=a2c4e.11163080.searchblog.48.32e02ec1I9PHCG
+技术宅之---用手机实现“移动网关” https://yq.aliyun.com/articles/702875?spm=a2c4e.11163080.searchblog.32.32e02ec1I9PHCG

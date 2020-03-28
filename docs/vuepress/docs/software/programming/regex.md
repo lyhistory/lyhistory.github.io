@@ -90,7 +90,34 @@ Regular Expression Denial of Service (ReDoS) and Catastrophic Backtracking https
 
 ## 2.Application
 
-### 2.1 notepad++
+### 2.1 Linux
+
+```
+grep -E "searchtext" log.txt
+-i ignore case ; -n show linenumber; -c count;
+#Anchoring
+grep -E "^startby" log.txt
+grep -E "endby$" log.txt
+grep -E "\<w" log.txt//find by words not by line, find words start with 'w'
+#boundary 
+grep -E '\bwholeword\b' log.txt
+grep -E '\Babc\B' log.txt
+#Character Classes
+grep -E "^[ab]" log.txt //start with a or b 
+grep -E "T[^o]M" log.txt //exclude ToM
+#Interval Expressions
+grep -E "T[o]{1,2}M" log.txt //map to ToM or TooM
+#Escaping character
+grep -E "\.$" log.txt //以.号结尾的
+
+```
+https://www.howtogeek.com/661101/how-to-use-regular-expressions-regexes-on-linux/
+
+![](/docs/docs_image/software/programming/regex03.png)
+
+https://www.gnu.org/software/findutils/manual/html_node/find_html/Regular-Expressions.html#Regular-Expressions
+
+### 2.2 notepad++
 
 **1.multiple line to single line**
 ```
@@ -147,7 +174,7 @@ Replace with: \n\1\n
 ```
 ![](/docs/docs_image/software/programming/regex02.png)
 
-### 2.2 Codes
+### 2.3 Codes
 
 **JavaScript**
 RegExp Reference http://www.w3schools.com/jsref/jsref_obj_regexp.asp
@@ -201,12 +228,6 @@ result = re.sub(‘,.*’, ‘’, pos)
 ```
 Regular Expression HOWTO https://docs.python.org/2/howto/regex.html
 A collection of useful regular expressions http://nbviewer.ipython.org/github/rasbt/python_reference/blob/master/tutorials/useful_regex.ipynb
-
-**linux**
-
-![](/docs/docs_image/software/programming/regex03.png)
-
-https://www.gnu.org/software/findutils/manual/html_node/find_html/Regular-Expressions.html#Regular-Expressions
 
 
 ---

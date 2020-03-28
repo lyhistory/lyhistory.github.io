@@ -267,7 +267,7 @@ ethereumj-core maven package https://github.com/ethereum/ethereumj/issues/1018
 mvn clean build 
 mvn clean install -DskipTests
 mvn clean install -P<profileName> 
-mvn spring-boot:run
+mvn compile exec:java (for sprint-boot alternative: mvn spring-boot:run)
 
 https://gerardnico.com/maven/bin
 Unsupported major.minor version 52.0 https://blog.csdn.net/qq_36769100/article/details/78880341
@@ -303,6 +303,11 @@ https://github.com/lyhistory/java-learn?organization=lyhistory&organization=lyhi
 https://github.com/lyhistory/learn_coding
 
 ### 4.1 JAVA BASICS
+**[POJO VS Java Beans](https://www.tutorialspoint.com/pojo-vs-java-beans)**
+POJO: Plain-Old-Java-Object
+Java Beans: The only difference between both the classes is Java make java beans objects serialized so that the state of a bean class could be preserved in case required.
+So due to this a Java Bean class must either implements Serializable or Externalizable interface.
+
 List:
 Design Note – There is no setter method for a List property. The getter returns the List by reference. An item can be added to the List returned by the getter method using an appropriate method defined on java.util.List. Rationale for this design in JAXB 1.0 was to enable the implementation to wrapper the list and be able to perform checks as content was added or removed from the List.
 
@@ -496,6 +501,10 @@ https://www.jianshu.com/p/5b90a4e70783
 RPC vs Restful, RPC vs RMI, Rest vs Restful:
 
 ![](/docs/docs_image/software/java/java07.png)
+
+rest vs soap
+https://www.soapui.org/learn/api/soap-vs-rest-api.html
+
 
 #### 5.2.2 RPC
 RPC框架有很多，比较知名的如阿里的Dubbo、google的gRPC、Go语言的rpcx、Apache的thrift。当然了，还有Spring Cloud，不过对于Spring Cloud来说，RPC只是它的一个功能模块，还有netty（zookeeper使用netty），alipay基于netty的SOFA RPC

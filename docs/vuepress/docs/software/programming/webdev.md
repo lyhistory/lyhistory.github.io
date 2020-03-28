@@ -4,7 +4,7 @@ sidebarDepth: 3
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
-[回目录](/docs/blockchain)  《web开发》
+[回目录](/docs/software)  《web开发》
 
 ## 1.web开发基础
 
@@ -229,3 +229,10 @@ module.exports = {
 ## 3.More to explore
 
 http://archive.is/
+
+http://www.restapitutorial.com/
+
+solr - search engine
+bootstrap  - Ace Responsive BootStrap 3 Dashboard / Admin Template https://github.com/bopoda/ace
+AngularJS - BlurAdmin - https://akveo.github.io/blur-admin/articles/001-getting-started/
+ 

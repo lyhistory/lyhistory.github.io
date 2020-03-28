@@ -341,3 +341,62 @@ http://www.junge85.com/post/859.html
 淘宝OAuth2.0服务 http://www.ganzhishi.com/txt.asp?id=1305
 OAuth2.0 用户验证授权标准 理解 www.cnblogs.com/hilow/p/3826425.html
 
+
+todo:
+
+https://tools.ietf.org/html/rfc2617
+Digest access authentication
+https://www.quora.com/What-is-the-difference-between-Basic-Auth-Digest-Auth-oAuth1-0-and-oAuth2-0-What-is-an-example-of-each-in-core-PHP
+consideration: grant type? store?
+full flow (username password ): http://bitoftech.net/2014/07/16/enable-oauth-refresh-tokens-angularjs-app-using-asp-net-web-api-2-owin/
+一个很重要的坑！Oauth2 with Angular: The right way https://jeremymarc.github.io/2014/08/14/oauth2-with-angular-the-right-way
+Enable OAuth Refresh Tokens in AngularJS App using ASP .NET Web API 2, and Owin  bitoftech.net/2014/07/16/enable-oauth-refresh-tokens-angularjs-app-using-asp-net-web-api-2-owin/
+sso, oauth2, identity
+https://tools.ietf.org/pdf/rfc6749.pdf  and  http://self-issued.info/docs/draft-ietf-oauth-v2-bearer.html
+http://bchavez.bitarmory.com/archive/2015/07/19/asp-net-identity-oauth-2-social-login-web-api-2.aspx
+oatuh -- openid http://softwareas.com/oauth-openid-youre-barking-up-the-wrong-tree-if-you-think-theyre-the-same-thing/
+refresh token - https://github.com/openid/AppAuth-Android/issues/178
+OAuth 2.0 is an Authorization protocol. The idea behind OAuth is that you (the resource owner) can delegate access privileges to a third-party. An example is a Web app being able to post on your Facebook wall for you. Again, in very simplistic terms, this materializes by sending a 302 redirect to the user when she accesses a protected resource. That 302 redirects the user, for example to Facebook's oauth login page (https://www.facebook.com/dialog/oauth?client_id=...&redirect_url=[yourwebapp]&scope=[permissionsrequiredfromuser]). After you login to facebook, accept the permission request, facebook will send a 302 redirect to the redirect_url you provided with an access_token that you can then use to send requests on behalf of the user that provided the credentials. For example, to get information about the user you'd perform a request to https://graph.facebook.com/me?access_token=[access_token]. There are variations for this workflow. They are all explained in the links at the end of the answer.
+OpenDotNetAuth
+https://github.com/DotNetOpenAuth/DotNetOpenAuth
+https://github.com/DotNetOpenAuth/DotNetOpenAuth/wiki/Security-scenarios
+https://gitter.im/DotNetOpenAuth/DotNetOpenAuth
+https://geektalk.info/question/16855131/dotnetopenauth-openid-flow-w-own-auth-server
+ASP.NET Identity has nothing to do with ASP.NET. Talk about poor naming... It provides functionality to save and retrieve user's data from a data source. It also provides you with the ability to associate claims and roles to the users, other "login providers" (that would be the case when you "login with facebook" and your user_id from facebook gets associated with your local user id, this information is stored in the AspNetUserLogins table).The way you see it being used in the MVC project template is in the Account controller and the CookieAuthenticationMiddleware.
+Form Authenciation -> Membership -> Identity (ASP.NET https://docs.microsoft.com/en-us/aspnet/identity/overview/getting-started/introduction-to-aspnet-identity)
+http://www.techstrikers.com/Articles/understanding-asp.net-identity.php
+https://forums.asp.net/t/2014967.aspx?What+is+the+difference+between+form+authentication+Membership+API+and+newly+introduce+Identity
+http://jlabusch.github.io/oauth2-server/
+https://brockallen.com/2013/10/20/the-good-the-bad-and-the-ugly-of-asp-net-identity/#missingdata
+Scenario :
+http://www.nakov.com/blog/2014/12/22/webapi-owin-identity-custom-login-service/
+ 
+Terminology:
+Token Based vs Cookie Based:
+Authentication: Cookies vs JWTs and why you’re doing it wrong https://www.slideshare.net/derekperkins/authentication-cookies-vs-jwts-and-why-youre-doing-it-wrong
+https://docs.google.com/drawings/d/1wtiF_UK2e4sZVorvfBUZh2UCaZq9sTCGoaDojSdwp7I/edit
+https://auth0.com/blog/cookies-vs-tokens-definitive-guide/
+Claim based: http://stackoverflow.com/questions/6786887/explain-claims-based-authentication-to-a-5-year-old
+Token authentication
+Request to server is signed by "token" - usually it means setting specific http header, however they can be send in any part of http request (POST body, etc.)
+Pros:
+You can authorize only the request you wish to authorize (cookies - even the authorization cookie are send for every single request)
+Immune to XSRF (short example of XSRF - I'll send you a link in email that will look like <img src="http://bank.com?withdraw=1000&to=myself" /> and if you're logged in via cookie authentication to bank.com and bank.com doesn't have any means of XSRF protection I'll withdraw money from your account simply by the fact that your browser will trigger authorized get request to that url). Note there are anti forgery measure you can do with cookie-based authentication - but you have to implement those.
+Cookies are bound to single domain. Cookie created on domain foo.com can't be read by domain bar.com, while you can send token to any domain you like. This is especially useful for single page applications that are consuming multiple services that are requiring authorization - so I can have web app on domain myapp.com that can make authorized client-side requests to myservice1.com and to myservice2.com.
+Cons:
+You have to store token somewhere; while cookies are stored "out of the box", the location that comes to mind is localStorage (con: the token is persisted even after you close browser window), sessionStorage (pro: the token is discarded after you close browser window, con: opening new tab (ctrl+click) will render that tab anonymous) and cookies (pro: the token is discarded after you close browser window (that is if you'll use session cookie), you will be authenticated in tab opened by ctrl+click, you're immune to XSRF since you're ignoring cookie for authentication, you just use it as token storage, con: cookies are send out for every single request, if this cookie is not marked as https only you're open to man in the middle attack)
+It is slightly easier to do XSS attack against token based authentication (i.e. if I'm able to run injected script on your site I can stole your token; however cookie based authentication is not a silver bullet either - while cookies marked as http-only can't be read by client, client can still make request on your behalf that will automatically include the authorization cookie)
+Request for download a file, that is supposed to work only for authorized users requires you to use File API, the same request works out of the box for cookie-based authentication
+Cookie authentication
+Request to server is always signed in by authorization cookie
+Pros:
+Cookie can be marked as "http-only" which makes them impossible to be read on client side, this is better for XSS-attack protection
+Came out of the box - you don't have to implement any code on client side
+Cons:
+Bound to single domain (so if you have single page application that makes requests to multiple services you can end up doing crazy stuff like reverse proxy)
+Vulnerable to XSRF, you have to implement extra measures to make your site protected against cross site request forgery
+Are send out for every single request (even for request that doesn't require authentication)
+Overall I'd say tokens give you better flexibility (you're not bound to single domain), downside is you have to do quite some coding by yourself.
+--http://stackoverflow.com/questions/17000835/token-authentication-vs-cookies
+ 
+jwt https://jwt.io/

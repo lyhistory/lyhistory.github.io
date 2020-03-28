@@ -309,65 +309,7 @@ SpringBoot下Redis相关配置是如何被初始化的 https://my.oschina.net/u/
 Which type of injection??
 深度解析SpringBoot2.x整合Spring-Data-Redis https://www.itcodemonkey.com/article/13627.html
 
-#### 3.3.2 Shiro
-https://shiro.apache.org/architecture.html
-
-> To simplify configuration and enable flexible configuration/pluggability, Shiro’s implementations are all highly modular in design - 
-> so modular in fact, that the SecurityManager implementation (and its class-hierarchy) does not do much at all. 
-> **Instead, the SecurityManager implementations mostly act as a lightweight ‘container’ component**, delegating almost all behavior to nested/wrapped components. 
-> This ‘wrapper’ design is reflected in the detailed architecture diagram above.
-
-> SessionManager (org.apache.shiro.session.mgt.SessionManager)
-> The SessionManager knows how to create and manage user Session lifecycles to provide a robust Session experience for users in all environments. 
-> This is a unique feature in the world of security frameworks - 
-> **Shiro has the ability to natively manage user Sessions in any environment, even if there is no Web/Servlet or EJB container available. 
-> **By default, Shiro will use an existing session mechanism if available, (e.g. Servlet Container), but if there isn’t one, such as in a standalone application or non-web environment, 
-> **it will use its built-in enterprise session management to offer the same programming experience. The SessionDAO exists to allow any datasource to be used to persist sessions.
-
-> https://shiro.apache.org/architecture.html
-
-##### 3.3.2.1 Realm注入
-
-好了 我们从头看下这个Realm是如何注入的，刚开始我从jar里面找到了很多注入的地方加了断点，
-但是报错“not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)” 所以就只好具体分析，找到一些疑似调用到的方法再下断点拦截看调用栈;
-
-![](/docs/docs_image/software/java/java_springboot_shiro01.png)
-
-先是创建了DefaultWebSecurityManager, SecurityManager终极是继承自RealmSecurityManager,
-After方法内部再调用其子类型的方法，又是常见的template pattern，最终这里是将Realm传递给了这个默认的Authorizer: ModularRealmAuthorizer;
-
-##### 3.3.2.2 请求拦截和登录过程
-
-![](/docs/docs_image/software/java/java_springboot_shiro02.png)
-先要注册一下拦截/login,
-
-给每一个web请求的thread生成绑定一个subject，并且绑定一个单例的SecurityManager（关于绑定bind，是将其放入当前所在thread的一个ThreadLocal Map里面，值得学习研究下）；
-注意getSecurityManager的第三行是找开发者主动set的全局静态的SecurityManager，不推荐这种方式，具体参见文档或者vm static线程安全的文档，
-第一行是去找下面那个Application级别的单例bean（说错了，不是bean，是第一步Realm注入里面提到的创建好的一个单例）；
-
-接着看下图，回到拦截的post请求，请求中的form是被层层委托到DelegatingSubject：
-
-![](/docs/docs_image/software/java/java_springboot_shiro03.png)
-
-看到没，这里是去找SecurityManager，然后跟进其命名空间找到默认的实现 login，这是一个线程安全的singleton实例，可以看到多线程调用这个login没有用到任何公共资源，资源都在传入的上下文参数中，
-SecurityManager被设计成一个dispatcher并不参与太多实现，都是交给其他的组件来处理，
-
-> the SecurityManager implementations mostly act as a lightweight ‘container’ component, delegating almost all behavior to nested/wrapped components.
-> https://shiro.apache.org/securitymanager.html
-
-继续看下调用的这个authenticate(token)具体是如何工作的：
-
-Authenticator是一个interface，其实就是找到前面注入提到的现ModularRealmAuthenticator，如果不知道也可以这样找：在同级package找到AbstractAuthenticator，
-authenticate(AuthenticationToken token) 标准的template pattern，然后找到其一个默认实现ModularRealmAuthenticator；
-
-从我们自定义实例化的这个Realm里面找getAuthenticationInfo也是template pattern，一层层的，
-getAuthenticationInfo调doGetAuthenticationInfo调getUser；
-
-补充一句，在定义Realm bean的时候我们用了realm.setUserDefinitions("joe.coder=password,user\n" + "jill.coder=password,admin");
-这就相当于初始化了”内存数据库”，具体代码很简单不再分析；
-然后关于多线程安全的问题，这个简单的Realm自然是用了读写锁；
-
-至此剖析完成
+#### [3.3.2 Shiro](/docs/software/buildingblock/shiro)
 
 ## 4. Spring Cloud 
 

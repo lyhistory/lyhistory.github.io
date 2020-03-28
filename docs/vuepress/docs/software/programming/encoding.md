@@ -28,7 +28,7 @@ https://stackoverflow.com/questions/39258979/notepad-view-hidden-characters
 
 In computing, a code page is a character encoding and as such it is a specific association of a set of printable characters and control characters with unique numbers. 
 
-## 1.2 Unicode standards and the implementations
+### 1.2 Unicode standards and the implementations
 Unicode defines or standardize code points, but it has more than one code pages
 https://www.ibm.com/developerworks/library/ws-codepages/index.html
 
@@ -121,6 +121,13 @@ Btc use base58
 	Md5 sha256
 	Keccak256 ecrecover
 	Base64
+
+> UTF-8 is a text encoding - a way of encoding text as binary data.
+> Base64 is in some ways the opposite - it's a way of encoding arbitrary binary data as ASCII text.
+> when you hae some binary data that you want to ship across a network, you generally don't do it by just streaming the bits and bytes over the wire in a raw format.
+> why? beause some media are made for streaming text. You never know -- some protocols may interpret your binary data as control characters(like a modem),
+> or your binary data could be screwed up because the underlying protocol might think that you'e entered a speical character combination
+> (like how FTP translates line endings). so to get around this, people encode the binary data into characters.Base64 is one of these types of encodings.
 
 ## 3.characters garbled / garbled text
 
