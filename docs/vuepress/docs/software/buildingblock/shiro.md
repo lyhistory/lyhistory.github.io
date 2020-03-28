@@ -1,3 +1,11 @@
+---
+sidebar: auto
+sidebarDepth: 3
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
+[回目录](/docs/software)  《无敌的登录认证和授权利器-shiro，还能搞成sso》
+
 
 为什么要用shiro，我的理解这个轮子造的比较好，登录和权限授权是大部分应用最基本的功能，也是最容易出问题和重复性的工作，
 shiro将这部分模块化，采用依赖注入的模式，让用户可以比较容易自定义数据源、登录验证逻辑、权限逻辑等内容；
