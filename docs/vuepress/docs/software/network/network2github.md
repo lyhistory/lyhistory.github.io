@@ -63,6 +63,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 我的评论：刚开始看到这句话觉着有问题，如果选择相信中间人的证书，中间人就完全可以解密流量，不过细想下，v2ray是伪装成https流量，其本身也是有加密的，
 所以应该指的是解密开的流量本身仍然是v2ray加密内容，直到走到我们配置的vpn服务器端，然后vpn服务器端才能解密开流量，除非中间人在vpn服务器和我们的目标之间劫持；
+https只是信道加密，接收端可以解密，所以应该还需要采取对敏感内容的加密，不能仅仅依赖信道加密；
 
 ![](/docs/docs_image/software/network/network2github03.png)
 
@@ -121,3 +122,7 @@ From Wireshark Lab: DNS v6.01: However, nslookup also indicates that the answer 
 https://twitter.com/FledgeXu/status/1243073941138096129
 
 https://twitter.com/chenshaoju/status/1243078679380426753
+
+[Github 中间人攻击原理分析](https://zhuanlan.zhihu.com/p/119030756)
+
+[HTTPS中间人攻击实践（原理·实践）](https://zhuanlan.zhihu.com/p/59759209)

@@ -217,3 +217,6 @@ wireshark
 
 ref:
 [大型企业网络架构](https://blog.csdn.net/qq_36119192/article/details/84427267)
+
+比如内部maven的远程仓库泄漏，比如代码里面的acurator监控端口泄漏，比如内部的doc文档路径泄漏，
+比如内部的staging或uat测试环境泄漏

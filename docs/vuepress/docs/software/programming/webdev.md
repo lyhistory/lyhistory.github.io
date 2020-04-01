@@ -226,6 +226,30 @@ module.exports = {
 }
 ```
 
+### 3.3 公司站点
+
+Create website with hugo
+https://gohugo.io/getting-started/installing
+https://gohugo.io/getting-started/quick-start/
+https://themes.gohugo.io/minimal/
+Markdown Cheatsheet https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+
+git init;
+git submodule add https://github.com/calintat/minimal.git themes/minimal
+$ git submodule init
+$ git submodule update
+git submodule update --remote themes/minimal
+git submodule update --init --recursive
+
+cp themes/minimal/exampleSite/config.toml .
+
+hugo server –d
+hugo server -wDs ~/Code/hugo/docs -d dev
+
+hugo -s D:\sourcecode\ -d D:\publish\
+
+
+
 ## 3. 站长必备
 
 站点各种测试工具，ping速度、dns解析速度
@@ -241,6 +265,7 @@ https://blog.cloudflare.com/secure-and-fast-github-pages-with-cloudflare/
 ## 4.More to explore
 
 http://archive.is/
+http://archive.org/
 
 http://www.restapitutorial.com/
 

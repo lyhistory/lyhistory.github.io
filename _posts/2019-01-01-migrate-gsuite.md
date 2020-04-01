@@ -8,7 +8,7 @@ related: true
 title: G Suite walk-through
 ---
 
-official site: Google GSuite, click to have a look and have a 7 days free trial
+official site: [Google GSuite, click to have a look and have a 7 days free trial](https://goo.gl/X7RoPq)
 
 it is the cheapest on the market, compare with Microsoft domain email, QQ email, 163 email
 google always offer you the best product experience

@@ -118,3 +118,5 @@ ref:
 [OpenWrt 路由器 shadowsocks](https://github.com/softwaredownload/openwrt-fanqiang/blob/master/SUMMARY.md)
 [shadowsocks + dnsmasq + ipset + iptables 实现公办网络透明代理](https://witee.github.io/2016/12/01/%E5%85%AC%E5%8F%B8%E7%BD%91%E5%85%B3%E4%BD%BF%E7%94%A8-shadowsocks-%E6%90%AD%E5%BB%BA%E7%BF%BB%E5%A2%99%E7%BD%91%E7%BB%9C/)
 [利用shadowsocks打造局域网透明网关](https://medium.com/@oliviaqrs/%E5%88%A9%E7%94%A8shadowsocks%E6%89%93%E9%80%A0%E5%B1%80%E5%9F%9F%E7%BD%91%E7%BF%BB%E5%A2%99%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3-fb82ccb2f729)
+Squid 代理服务器
+http://www.ciphermagic.cn/chrome-scientific-internet-access.html

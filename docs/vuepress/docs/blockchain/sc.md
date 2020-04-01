@@ -27,3 +27,9 @@ POST request error; Failed to pin file to Skynet: [unable to fetch base sector o
 
 could not pin file to Skynet: [post call to /skynet/pin/https://siasky.net/AAAzPabRrAMv9wBjLM0gxW9S2MZMuRP69KZY2EUCC9bFNQ?basechunkredundancy=0&force=false&root=false&siapath=D%3A%2Fapps%2FSia-v1.4.4-windows-amd64%2Fskynet%2Fdestination failed; unable to perform POST on /skynet/pin/https://siasky.net/AAAzPabRrAMv9wBjLM0gxW9S2MZMuRP69KZY2EUCC9bFNQ?basechunkredundancy=0&force=false&root=false&siapath=D%3A%2Fapps%2FSia-v1.4.4-windows-amd64%2Fskynet%2Fdestination; API call not recognized]
 PS D:\apps\Sia-v1.4.4-windows-amd64>
+
+
+
+
+https://www.reddit.com/r/siacoin/comments/foduue/where_can_i_find_an_exact_calculator_for_how_much/
+https://www.reddit.com/r/siacoin/comments/7rlj06/not_enough_contracts_to_upload/

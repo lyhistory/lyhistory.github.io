@@ -69,11 +69,17 @@ http://world.std.com/~cme/html/web.html
 ![](/docs/docs_image/software/cryptography/pki01.png)
 
 ### 2.3 PGP
+
+How PGP works ? and how to make it Pretty Great Privacy
+OpenPGP Message Format: https://tools.ietf.org/html/rfc4880
+
 How PGP works https://users.ece.cmu.edu/~adrian/630-f04/PGP-intro.html
 Explanation of the web of trust of PGP https://www.rubin.ch/pgp/weboftrust.en.html
 
 Both when encrypting messages and when verifying signatures, it is critical that the public key used to send messages to someone or some entity actually does 'belong' to the intended recipient. Simply downloading a public key from somewhere is not a reliable assurance of that association; deliberate (or accidental) impersonation is possible. From its first version, PGP has always included provisions for distributing user's public keys in an 'identity certification ', which is also constructed cryptographically so that any tampering (or accidental garble) is readily detectable. However, merely making a certificate which is impossible to modify without being detected is insufficient; this can prevent corruption only after the certificate has been created, not before. Users must also ensure by some means that the public key in a certificate actually does belong to the person or entity claiming it. From its first release, PGP products have included an internal certificate 'vetting scheme' to assist with this, a trust model which has been called a web of trust. A given public key (or more specifically, information binding a user name to a key) may be digitally signed by a third party user to attest to the association between someone (actually a user name) and the key. There are several levels of confidence which can be included in such signatures. Although many programs read and write this information, few (if any) include this level of certification when calculating whether to trust a key. 
 
+From Pretty Good To Great
+Enhancing PGP using Bitcoin and the Blockchain https://arxiv.org/abs/1508.04868
 Bitcoin pgp?? https://bitcointalk.org/index.php?topic=186264.msg1929410#msg1929410
 https://www.quora.com/What-are-the-main-benefits-of-using-blockchain-techs-Vs-PGP
 

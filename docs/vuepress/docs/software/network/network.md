@@ -4,7 +4,7 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
-[回目录](/docs/software)  《网络基础》
+[回目录](/docs/software)  《网络基础》[回目录](/docs/software)  《网络基础》
 
 必读： <《图解TCP IP(第5版)》.((日)竹下隆史).[PDF].&ckook>
 
@@ -32,6 +32,12 @@ The layers in the TCP/IP network model, in order, include:
 而采用layer2的交换机技术，由于交换机会学习mac地址（arp mapping），大大降低了广播的浪费；
 而layer3进一步采用ip网段隔开不同的分区，根据外部请求的ip可以准确的找到不同的网关
 
+![](/docs/docs_image/software/network/network16.png)
+Switch:layer 2 datalink 
+Router:layer 3 network(dhcp server, dns, gateway)
+
+[The OSI model explained in simple terms](https://medium.com/@tomanagle/the-osi-model-explained-in-simple-terms-2abc3c7adadc)
+
 DNS是域名转IP;NAT 是(外网)IP 转(内网)IP; ARP 是IP 转MAC
 
 [40年前的协议战争，对区块链有什么启示？](https://mp.weixin.qq.com/s?__biz=MzI5Mjg1Mjk1OQ==&mid=2247483735&idx=1&sn=0f8fb9ea380c7fc6af00bd514d5927f2&chksm=ec7a44e7db0dcdf1e395793cd20c096e0b506004046f736b2501df363e52cc52d9589cd3c40e&scene=0&xtrack=1)
@@ -52,6 +58,10 @@ A common problem you might encounter is an ARP entry that won’t populate, part
 ![data link](/docs/docs_image/software/network/network03.png)
 
 Linux caches the ARP entry for a period of time, so you may not be able to send traffic to your default gateway until the ARP entry for your gateway times out. For highly important systems, this result is undesirable. Luckily, you can manually delete an ARP entry, which will force a new ARP discovery process
+
+所谓的[虚ip，ip漂移](https://xiaobaoqiu.github.io/blog/2015/04/02/xu-ni-iphe-ippiao-yi/)，就是利用了arp的高速缓存修改IP和mac地址的映射
+
+Arpspoof https://www.youtube.com/watch?v=8SIP36Fym7U
 
 ### 1.3 Layer 3: The network/internet layer 网络层
 
@@ -263,10 +273,22 @@ tcproute安装使用：
 	http://www.win10pcap.org/download/
 	tcproute -p 443 github.io 
 
-**应用层的DNS协议**
-DNS工具windows:nslookup, linux: dig 
+**应用层的协议和工具**
+DHCP协议
+	DHCP服务一般位于路由器（家用）或者服务器（公司用），内网中电脑上的dhcp client发出请求，
+	dhcp服务端返回分配ip地址、网关gateway、掩码及dns服务器地址；
+	[how dhcp works](https://www.youtube.com/watch?v=S43CFcpOZSI)
+	
+DNS协议 
+	DNS测试工具windows:nslookup, linux: dig 
 
 DNS技术和NAT技术详解 https://blog.csdn.net/hansionz/article/details/86570290
+
+![](/docs/docs_image/software/network/network17.png)
+Gateway: internal send packets to gateway
+Dns: resolve hostname
+https://superuser.com/questions/77914/whats-the-difference-between-default-gateway-and-preferred-dns-server
+
 
 ### 4.2 基于TCP/IP的应用层“协议”
 应用层的协议有FTP、HTTP、websocket、TELNET、SMTP、DNS等协议;
@@ -383,6 +405,10 @@ A VPN tunnel, however, is fully encrypted. The "P in VPN indicates private. VPN 
 
 
 ## 5.Network architecture
+
+Network Protocols and Architecture
+https://www.coursera.org/learn/network-protocols-architecture
+
 ipset vpn(一般对外走公网，不可靠) VS leased line（一般连接内网和数据中心）
 
 vlan/vxlan技术（用于连接多个数据中心，让其变成逻辑上一个中心）
@@ -396,6 +422,10 @@ leaf access switch
 一套配置是指一个BB+一个FW+一个DC，BB通过防火墙连接DC,DC再连接access layer，access layer连接服务器；
 两个datacenter各自有两套配置，两个datacenter的两套配置各自通过一条黑色物理电缆连接，一条一个运营商，
 然后可以看到逻辑上蓝色和黑色是分开的，但物理上是用黑色同一条线，逻辑上是通过协议来区分的，协议就是在通信的header里面加多一点信息来区分BB和DC
+
+todo:
+
+虚连接（VC:Virtual Connection）TCP虚连接？
 
 ---
 

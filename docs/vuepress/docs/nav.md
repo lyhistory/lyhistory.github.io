@@ -35,6 +35,17 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
   </div>
   <div style="max-width: 375px;
   margin: auto;
+  background-color: lightgreen;">
+	<p>
+		资助创作 Contribute to the creator：<br>
+		BitCoin: <strong>1No1oynpA9WQQkZUFCUoy6bq9P1ZTs9rA3</strong> <br>
+		Zcash: <strong>zs1xpy4c3fa85w3hx92az03qhma3x4mx6qm2qz2gy02nznaqhm8fwmsdwp0ajvsh00kj49yyg6rjrv</strong> <br>
+		Eth: <strong>0x93b4ec8ed7f1fad2107cdad30fd9ecec3f7975fe</strong> <br>
+		EOS: <strong>eos4donation</strong>
+	<p>
+  </div>
+  <div style="max-width: 375px;
+  margin: auto;
   font-family: LiSu;
   font-size: 24px;
   text-align: left;">

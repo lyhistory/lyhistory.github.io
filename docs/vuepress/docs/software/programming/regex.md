@@ -70,6 +70,7 @@ Character class
 
 My Findings 
 https://github.com/dotnet/docs/issues/8216
+![](/docs/docs_image/software/programming/regex.png)
 
 ![](/docs/docs_image/software/programming/regex01.png)
 

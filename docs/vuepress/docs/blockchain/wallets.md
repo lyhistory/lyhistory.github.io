@@ -8,11 +8,30 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 ## bitshare
 
+永远无法被关闭的去中心化交易所:
+[openledger](http://openledger.io/?r=liu-yue)和[wallet.bitshares](https://wallet.bitshares.org/?r=liu-yue)
+
+
 bitshares.org vs bitshares.openledger.info (OBITS https://obits.io/)
 https://bitcointalk.org/index.php?topic=1399878.0
 https://coinmarketcap.com/currencies/obits/#markets
 https://bitsharestalk.org/index.php/topic,13104.msg171728.html#msg171728
 
+## brave
+
+最喜欢的浏览器推荐下，屏蔽各种广告和js追踪，由javascript之父创建的brave，内置tor，正常浏览网页还可以赚取BAT：
+
+[点击官方链接](https://brave.com/lyh992)
+
+国内可能需要翻QIANG
+
+然后可以看到brave有rewards（只要使用浏览器就有奖励BAT），还内置了各种虚拟币钱包
+
+![](/docs/docs_image/blockchain/wallet/brave01.png)
+
+如果你也是站长可以申请创作者：
+
+https://publishers.basicattentiontoken.org/log-in
 
 ## decred
 有两个daemon，比如 %localappdata%打开会看到默认两个Dcrd和Decrediton，可以看到Decrediton里面主要是配置，而Dcrd主要是区块数据和日志，
