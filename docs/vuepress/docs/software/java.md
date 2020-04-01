@@ -28,6 +28,8 @@ java -version
 No compiler is provided in this environment. Perhaps you are running on a JRE rather than a JDK? 
 https://stackoverflow.com/questions/19655184/no-compiler-is-provided-in-this-environment-perhaps-you-are-running-on-a-jre-ra
 
+![https://docs.oracle.com/javase/8/docs/](/docs/docs_image/software/java/java00.png)
+
 ## 2.Tools&IDE
 
 ### 2.1 Decompiler
@@ -352,6 +354,42 @@ https://www.baeldung.com/java-future
 Java serialization algorithm
 https://www.javaworld.com/article/2072752/the-java-serialization-algorithm-revealed.html
 
+
+**JAXB**
+```
+xjc -XautoNameResolution -p com.lyhistory.test test.xsd
+```
+Xjc is a tool of JDK
+JAXB2: Xsd to class
+Failed with maven plugin generation, work around by using external xjc tool
+JAXB Architecture https://docs.oracle.com/cd/E19316-01/819-3669/bnazf/index.html
+
+Marshalling https://www.javatpoint.com/jaxb-marshalling-example
+
+https://github.com/highsource/jaxb2-basics/wiki/Using-JAXB2-Basics-Plugins
+http://websystique.com/java/jaxb/jaxb-codegeneration-maven-example/
+
+?# issues: package org.jvnet.jaxb2_commons.lang does not exist https://stackoverflow.com/questions/16833340/jaxb-equals-and-hashcode-gives-error
+
+?# issues: https://github.com/highsource/jaxb2-basics/issues/7
+Solved by using external tools generation
+
+GENERATED USING EXTERNAL TOOLS: jaxb-ri-2.3.1
+https://javaee.github.io/jaxb-v2/
+https://docs.oracle.com/javase/8/docs/technotes/tools/unix/xjc.html
+https://thoughts-on-java.org/generate-your-jaxb-classes-in-second/
+
+?#There's no ObjectFactory with an @XmlElementDecl 
+JAXBContext jaxbContextForSpan = JAXBContext.newInstance("com.lyhistory.test");
+
+https://stackoverflow.com/questions/12074317/theres-no-objectfactory-with-an-xmlelementdecl
+
+?#customize boolean to 0 1
+Customizing JAXB Bindings https://docs.oracle.com/javase/tutorial/jaxb/intro/custom.html
+```
+xjc -XautoNameResolution -p com.lyhistory.test -extension -b jaxb-bindings.xjb
+```
+
 ### 4.2 JAVA ADVANCE
 
 java魔术手法： 
@@ -585,14 +623,88 @@ Dubbo with multicast
 Dubbo 支持多种协议，采用的协议在网络层级不同，performance
 https://dubbo.apache.org/en-us/docs/user/perf-test.html
 
-## 6.JVM
+## 6.JVM/JMM
+
+### 6.1 基本概念
+java代码编译-->java class-->JDK安装的JVM翻译成对应操作系统的机器码
+
+javap java.class 可以把汇编指令/机器码反编译成jvm指令/字节码指令；
+
+工具hsdis打印汇编指令；
+
+JVM,java虚拟机，只是给byte code提供解释翻译加载运行的一个工具（通常编程打包的程序都是直接到机器码，比如exe文件是windows的机器码可执行文件，Java语言设计只默认编译成中间语言byte code字节码，不编译成最终的机器码，然后jvm就会去解释执行），实际上不只是java语言，任何语言只要能转成bytecode 字节码都可以交由jvm加载，jvm会找到主程序并根据当前的操作系统解释成机器码运行；
 
 JVM是一份本地化的程序，本质上是可执行的文件，是静态的概念。
 /jre/bin/server/jvm.dll
 
 程序运行起来成为进程，是动态的概念。java程序是跑在JVM上的，严格来讲，是跑在JVM实例上的，一个JVM实例其实就是JVM跑起来的进程，二者合起来称之为一个JAVA进程。各个JVM实例之间是相互隔离的。
 
-JVM,java虚拟机，只是给byte code提供解释翻译加载运行的一个工具（通常编程打包的程序都是直接到机器码，比如exe文件是windows的机器码可执行文件，Java语言设计只默认编译成中间语言byte code字节码，不编译成最终的机器码，然后jvm就会去解释执行），实际上不只是java语言，任何语言只要能转成bytecode 字节码都可以交由jvm加载，jvm会找到主程序并根据当前的操作系统解释成机器码运行；
+![](/docs/docs_image/software/java/java_jvm01.png)
+
+字节码引擎对应jvm指令:[Java bytecode instruction listings](https://en.wikipedia.org/wiki/Java_bytecode_instruction_listings)
+
+线程栈：栈帧的先进先出（异步方法呢？）
+
+栈帧：对应每个线程中调用的方法，相应概念：
+	局部变量表
+	操作数栈
+	动态链接
+	方法出口
+
+本地方法：	Native method Stack，比如JNI调用c/C++程序
+
+方法区 Method Area： 静态变量
+
+**堆heap**
+
+字节码引擎后在后台线程执行垃圾收集（minor gc和full gc），当发生垃圾收集的时候，会stop the world暂停当前活跃的线程
+
+gc root
+
+object header 分代年龄
+
+minor gc： 对象new除了后先放到新生代，满了后触发minor gc，挪到from(survivor0)，后面就在from(survivor0) to(survivor1)之间周转，直到被回收，或者直到年龄到达15，被挪到老生代
+
+老生代包含：
+	1.长生不死的对象 （比如web服务的bean对象，线程池对象等）
+	2.大对象
+	3.动态年龄判断
+	
+full gc：老年代满了会触发
+
+jdk调优工具jvisualvm （插件 visualgc）
+
+![](/docs/docs_image/software/java/java_jvm02.png)
+
+图中下部分给出了调优的例子
+
+[双十一电商网站亿级流量JVM调优实战视频教程全集](https://www.bilibili.com/video/av74868832/)
+
+**JMM**
+
+[JSR 133规范](https://jcp.org/en/jsr/detail?id=133)
+
+openJDK, IBM JDK, 阿里巴巴内部定制JVM
+
+Java 内存模型对主内存与工作内存之间的具体交互协议定义了八种操作，具体如下：
++ lock（锁定）：作用于主内存变量，把一个变量标识为一条线程独占状态。
++ unlock（解锁）：作用于主内存变量，把一个处于锁定状态的变量释放出来，释放后的变量才可以被其他线程锁定。
++ read（读取）：作用于主内存变量，把一个变量从主内存传输到线程的工作内存中，以便随后的 load 动作使用。
++ load（载入）：作用于工作内存变量，把 read 操作从主内存中得到的变量值放入工作内存的变量副本中。
++ use（使用）：作用于工作内存变量，把工作内存中的一个变量值传递给执行引擎，每当虚拟机遇到一个需要使用变量值的字节码指令时执行此操作。
++ assign（赋值）：作用于工作内存变量，把一个从执行引擎接收的值赋值给工作内存的变量，每当虚拟机遇到一个需要给变量进行赋值的字节码指令时执行此操作。
++ store（存储）：作用于工作内存变量，把工作内存中一个变量的值传递到主内存中，以便后续 write 操作。
++ write（写入）：作用于主内存变量，把 store 操作从工作内存中得到的值放入主内存变量中。
+
+![](/docs/docs_image/software/java/java_jmm01.png)
+
+默认如图采用缓存一致性：MESI一致性协议
+	总线消息；总线嗅探；总线裁决；
+	指令重排 https://efectivejava.blogspot.com/2013/07/what-is-reordering-in-java-when-you.html
+	
+总线锁，如果是跨多个缓存行则采取总线锁
+
+volatile避免指令重排，图下部分可见，volatile并不能保证线程安全（线程1最终并非基于线程2的最新结果2加1，而是基于旧的值1计算，虽然知道线程2修改的结果，但是它的做法是直接覆盖！）	
 
 入门到放弃
 https://juejin.im/post/5b45ef49f265da0f5140489c
@@ -617,7 +729,9 @@ file:/opt/XXX.jar!/BOOT-INF/lib/XXX-1.0-SNAPSHOT.jar!/libXXXJNI.so
 getClass().getResourceAsStream("/filename");
 https://stackoverflow.com/questions/20389255/reading-a-resource-file-from-within-jar
 
-### 6.1 Hsdb
+### 6.2 More
+
+#### 6.2.1 Hsdb
 java -cp .:$JAVA_HOME/lib/sa-jdi.jar sun.jvm.hotspot.CLHSDB
 java -cp .:$JAVA_HOME/lib/sa-jdi.jar sun.jvm.hotspot.CLHSDB $JAVA_HOME/bin/java /opt/core.10759
 
@@ -627,7 +741,7 @@ https://blog.csdn.net/qq_31865983/article/details/98480703
 
 java -cp .:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.232.b09-0.el7_7.x86_64/lib/sa-jdi.jar sun.jvm.hotspot.CLHSDB /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.232.b09-0.el7_7.x86_64/bin/java /opt/core.10759
 
-### 6.2 Java外挂
+#### 6.2.2 Java外挂
 https://www.codercto.com/a/18543.html
 https://github.com/vipshop/vjtools
 https://mp.weixin.qq.com/s/cwU2rLOuwock048rKBz3ew

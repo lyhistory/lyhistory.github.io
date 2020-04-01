@@ -435,12 +435,7 @@ http://support-it.huawei.com/docs/en-us/fusioninsight-all/maintenance-guide/en-u
 
 ---
 
-
-![](/docs/docs_image/software/kafka/kafka01.png)
-![](/docs/docs_image/software/kafka/kafka02.png)
-![](/docs/docs_image/software/kafka/kafka03.png)
-![](/docs/docs_image/software/kafka/kafka04.png)
-![](/docs/docs_image/software/kafka/kafka05.png)
+《Introduction to kafka》
 
 1.Basic Concepts
 	What’s Kafka
@@ -459,9 +454,6 @@ Why use Kafka
 
 Microservice and kafka already became a de-facto industry standard
 
-
-
-```
 1.
 basicaly kafka is a messaging system, compare to other messaging middleware like the one I used before called rabbit mq, with rabbit mq you can only process once,
 after consuming the message, it's removed from the queue.
@@ -470,6 +462,9 @@ and now kafka has evolved from messaging queue to full-fleged event streaming pl
 
 2.
 why do we use kafka
+
+![](/docs/docs_image/software/kafka/kafka21.png)
+
 Let's have a look at architecuture diagram next slides microservices approach vs traditional approach, 
 in traditional approach, application stack multiple layers and compononets together as a single unit.
 we can see microservice segregates functionalities into a set of autonamous services,so the circle connecting microservices is message queue system.
@@ -480,6 +475,9 @@ from developer standpoint, it can save a lot of time troubleshooting the microse
 micorservice is designed based on single reponsiblity principle, you can find the paticular service responsible for the cause straightforward.
 
 3.
+
+![](/docs/docs_image/software/kafka/kafka22.png)
+
 kafka works like this:
 producers publish message to the topics on brokers, the consumers subscribe to the topic will continously poll from the brokers.
 in the middle is the brokers, we have 4 brokers, each broker represents one instance of the kafka server, we have 2 topics allocated on the brokers:
@@ -494,6 +492,11 @@ in another word, consumers in the same consumer group load balance the topic par
 one critical concerns is how do we achieve exactly once semantics, how do we guarantee there is no missing or duplicated messages, there is a misconception that 
 develop using kafka API will inherently has the capbility to achieve exactly once senmantics, truth is we have to design properly.
 to discuss this concern, let's look at a typical application.
+
+![](/docs/docs_image/software/kafka/kafka23.png)
+
+
+
 we post a message to APP-1, APP-1 extract the data,transform and produce the message to kafka, APP-2 will consume the message.
 very simple but it can go wrong from many aspects.
 first, the http call, when we make a http post, it may happen that APP-1 recevied the post data and processed, 
@@ -506,7 +509,51 @@ go on the consumer side, unfortunately, consumer side is too much complicated, t
 before further discuss, let me clarify the verb 'processing', there are mainly two types of processing: in-memory processing, the other type is data persist(for example 
 store into database, write to kafka), if it's purly in-memory processing there is nothing to worry about, whenever it's broken, so I'm talking about type 2,
 , let's assume processing here means write to kafka.
+
+![](/docs/docs_image/software/kafka/kafka24.png)
+
 Transactional delivery allows producers to send data to multiple partitions such that either all messages are successfully delivered, or none of them are.
+
+1) Producer
+However, idempotent producers don’t provide guarantees for writes across multiple TopicPartitions. For this, one needs stronger transactional guarantees, ie. the ability to write to several TopicPartitions atomically. By atomically, we mean the ability to commit a set of messages across TopicPartitions as a unit: either all messages are committed, or none of them are.
+2) Consumer
+maintain offset
+Refer to https://kafka.apache.org/0102/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html
+By default, kafka help maintains consumer offset in topic called "__consumer_offset", whenever the consumer dies and restart or failover to another consumer in the same consumer group, it will continue from last committed offset.For example, we have two consumers A and B in one consumer group, if A crashed, B will take over A and continue from where A left over(from last committed offset), sounds good? Actually no,  here is why? 
+there are two ways to commit offset:
+Automatically commit when receive the record by calling poll()[Let's say, you call poll each 10 ms, and set commit-interval to 100ms. Thus, in every 10th call to poll will commit (and this commit covers all messages from the last 10 poll calls).], the problem with this way is that the consumer may fail process the offset has already advanced(If auto-commit is enabled for the Kafka consumer, the event processor might already have commited the event offset and fail before finishing the event. The consumer must commit the event manually after all relevant sub-processes have completed.), the other way is manually commit after process the record, this method is still problematic as the consumer may crashed after processing the record(calculating some results and send it to the downstream consumers/send to kafka) but before sending the commit to the kafka broker.
+
+
+**snapshot and recovery **
+
+When the rebalance happen, for the example when a consumer crashed, the other consumer will take over the partition and continue from last committed offset, but hold on, what about the context, I mean the states stored in the memory, how do we recover the states.
+So what we can do is that we reprocessing the partition from the beginning, but the problem is message processing is time consuming, and when the partition grows fast, there are too many messages, reprocessing the partition may take a long time.
+So what we can improve is that we add a checkpoint to take snapshot of the memory state, we call it checkpoint, so when rebalance happens, we can recover from the latest checkpoint instead of beginning, so this will improve the performance, save time for recovery.
+By design, the new clearing system process records from kafka one by one in sequence, during the data processing, the consumer generated many in memory results, for example currentPosition for each positionAccount, we want to have snapshot of the result from time to time, so in the case of recovery, the consumer can recover from snapshot, save a lot computing power to re-calculate the result.
+By the way, Kafka do support stateful operation with kafka stream state store, but that’s mainly for aggregation operation, so in our framework we didn’t take advantage of it
+
+
+业务流水线假设为：
+微服务A->微服务B->微服务C
+
+微服务B处理完来自微服务A的某条kafka信息，然后需要往下游也就是微服务C发送kafka消息SendKafkaMsg_InfoToC()时，同时会保存此时处理的来自微服务A的消息的offset SendKafkaMsg_SaveOffset()，我们成为增量快照，
+SendKafkaMsg_InfoToC()和SendKafkaMsg_SaveOffset()可以作为一个事务一起提交，
+这种情况下，增量快照保存的是一个offset，假设此时服务B挂掉，重启后，B会寻找offset，然后从头开始恢复内存状态，直到这个offset，恢复区段为【0, offset】；
+
+为了更快的恢复，我们不想每次从0开始恢复，所以引入全量快照SendKafkaMsg_SaveMemory()，保存此时的内存状态，并且全量快照中还要保存此时对应的来自微服务A的消息的offset，也就是说这是处理完第几条消息之后的内存状态，
+增量快照中保存了两个信息：全量快照的位置和恢复区段的终止位置即offsetEND，
+然后根据全量快照的位置，再去取出全量快照，全量快照中保存了当时的内存信息以及恢复区段的起始位置即offsetSTART，
+所以恢复时先找到增量快照，然后根据增量快照存的位置信息找到全量快照，恢复内存，剩下的一点差异再通过恢复区段【offsetSTART,offsetEND】，恢复到服务B挂掉之前的完整内存状态；
+
+**注意一点**，跟前面的“SendKafkaMsg_InfoToC()和SendKafkaMsg_SaveOffset()可以作为一个事务一起提交”不同，
+SendKafkaMsg_SaveMemory()不能跟SendKafkaMsg_SaveOffset()为一个事务一起提交，因为这两个是有前后依赖的，因为增量快照SendKafkaMsg_SaveOffset()还需要保存全量快照的位置信息，而全量快照SendKafkaMsg_SaveMemory()
+本身发送给Kafka是异步操作，回调中才能拿到自己的位置信息，所以无法作为同一个事务一起提交，所以只能等异步回调之后拿到全量的位置再存到增量快照SendKafkaMsg_SaveOffset()或者另一种做法是将全量快照的位置先存在内存中，增量快照SendKafkaMsg_SaveOffset()在下一次提交，
+即使挂掉也影响不大，大不了从头开始或者从更早的全量快照开始恢复；
+
+因此就可以理解下图：
+
+![](/docs/docs_image/software/kafka/kafka25.png)
+
 ```
 
 

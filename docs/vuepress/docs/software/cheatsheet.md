@@ -11,6 +11,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 WINDOWS
 ======
 
+常用路径：%APPDATA%
+
 中文 chcp 65001
 
 netstat -aon | findstr 'PORT'
@@ -21,9 +23,16 @@ ping to start:
 %SystemRoot%\system32\cmd.exe /C "path to jar"
 
 ---
-
+	
 LINUX
 =====
+
+常用路径： 
+```
+	/etc/**.conf
+	/var/log/**
+	/usr/bin/
+```
 
 Linux中查看日志文件的正确姿势，求你别tail走天下了
 https://mp.weixin.qq.com/s/Q-NfY2sr4n2XiJwy8SsXDA

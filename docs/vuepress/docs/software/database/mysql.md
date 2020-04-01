@@ -7,11 +7,14 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 [回目录](/docs/software)  《mysql实用基础》
 
 ## 1.Setup 
+
 ### 1.1 Install on centos
-**Using rpm**
 
-**Using tar**
+**Method 1: Using rpm**
 
+**Method 2: Using tar**
+
+```
 tar -xvf mysql-5.7.26-1.el7.x86_64.rpm-bundle.tar
 yum install mysql-community-{server,client,common,libs}-* mysql-5.*­
 
@@ -19,13 +22,13 @@ yum install mysql-community-{server,client,common,libs}-* mysql-5.*­
 https://princetonits.com/centos7-mysql-install-fails-due-conflict-libmysqlclient/
 yum list installed mariadb\*
 yum remove mariadb-libs.x86_64
-```
+
 vim /etc/my.cnf
 Bind-address:0.0.0.0
 service mysqld stop/start
 ```
 
-Mysql default password
+Mysql默认密码：
 /var/log/mysqld.log
 	A temporary password
 https://www.techietown.info/2017/08/mysql-default-root-password-on-centos7/

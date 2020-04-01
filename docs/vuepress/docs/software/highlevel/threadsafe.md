@@ -30,6 +30,7 @@ webscoket的连接等；
 		i)但是只是读没有写，读和读是没有冲突的，也没有关系;
 		ii)都有写，但是写不依赖于读，即线程不需要获取“最新”数据就可以直接写入覆盖，这种情况也没有关系；
 		iii)都有写，而且写依赖于读到最新数据，则需要处理；
+		iv)补充一种情况，两个线程A和B,A先读取，然后B再写入修改同一个数据，这种情况不会有线程安全问题，读写不会竞争，但是会有可见性问题（根据下面提到的缓存模型，线程A可能看不到B修改后的数据）
 
 **如何保证多线程在竞争资源时的安全？**
 
@@ -42,20 +43,30 @@ webscoket的连接等；
 
 + 乐观锁方式比如CAS Atomic https://blog.csdn.net/javazejian/article/details/72772470
 
+
+**另一个引起线程安全问题的原因：JMM优化引起的指令重排instruction reordering**
+
+
 ## 2.深入解读
 
-### 2.1 缓存与竞争资源
+### 2.1 内存模型与竞争资源
+
+![](/docs/docs_image/software/threadsafe/threadsafe01.png)
 
 不同的系统内存缓存模型可能不同，甚至有的没有缓存，https://developpaper.com/what-exactly-does-volatile-solve/
 [多核共享内存](https://software.intel.com/en-us/articles/software-techniques-for-shared-cache-multi-core-systems)
 ![共享内存模型](https://software.intel.com/sites/default/files/m/d/4/1/d/8/286506_286506.gif)
 
-
 [volatile和synchronized到底啥区别？多图文讲解告诉你](https://mp.weixin.qq.com/s/MHqXNRI6udI1wGCU0NVBaQ)
 synchronized 是独占锁/排他锁，而volatile不是排他的，根据下面内存模型可以知道，volatile只是说不用L1 L2缓存，直接读写主内存，只有在写入不依赖读的情况下才可以用volatile，
-否则只要是竞争资源就不可以用volatile，
+否则只要是竞争资源就不可以用volatile，换句话说volatile解决的是上面提到的“可见性”问题，但是不能解决线程安全问题，至于原因在/docs/software/java 关于JMM部分提到了
 
-![](/docs/docs_image/software/threadsafe/threadsafe01.png)
+![](/docs/docs_image/software/java/java_jmm01.png)
+
+JMM即java内存模型规范是个抽象概念，本质上跟上面所描述的cpu缓存模型是类似的，当然有其标准如[JSR 133规范](https://jcp.org/en/jsr/detail?id=133)
+
+高并发下JMM的指令重排(volatile可以禁用指令重排)
+
 
 ### 2.2 静态static与单例singleton的线程安全
 

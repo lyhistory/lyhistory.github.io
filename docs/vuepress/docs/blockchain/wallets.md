@@ -6,6 +6,14 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/blockchain)  《钱包使用技巧》
 
+## bitshare
+
+bitshares.org vs bitshares.openledger.info (OBITS https://obits.io/)
+https://bitcointalk.org/index.php?topic=1399878.0
+https://coinmarketcap.com/currencies/obits/#markets
+https://bitsharestalk.org/index.php/topic,13104.msg171728.html#msg171728
+
+
 ## decred
 有两个daemon，比如 %localappdata%打开会看到默认两个Dcrd和Decrediton，可以看到Decrediton里面主要是配置，而Dcrd主要是区块数据和日志，
 
@@ -32,5 +40,7 @@ logdir=newPath\Dcrd
 datadir=/your/new/path
 
 https://zecpages.com/
+
+
 
 
