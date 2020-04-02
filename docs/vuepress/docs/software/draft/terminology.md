@@ -44,3 +44,4 @@ mandatory access control
 ocr optical character recognition
 https://tesseract.projectnaptha.com/
  
+command palette 命令输入框

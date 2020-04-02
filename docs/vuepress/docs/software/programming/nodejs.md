@@ -1,3 +1,13 @@
+
+npm, nodejs, reactjs?
+Node and browser(javascript) both uses V8 engine, but browser has DOM, node doesn't, nodejs has other kind of APIs, 
+nodejs has more freedom to access the os (because it has modules like filesystem, http server, even batteries, so you can create mobile app from nodejs),
+both nodejs and reactjs use npm for moduel managment, but what's the difference??
+
+> The confusing bit is that npm is a package manager for JavaScript, not necessarily node (even though node is in the name..). Therefore, we can use npm also for web applications. (If we do, we need to use a bundler like webpack though).
+> Some npm modules might work both in the browser and in node, but some will only work on one of them. If the npm module requires some platform-spcific API (DOM for the browser for example) then it will not work for the other platform.
+> https://stackoverflow.com/questions/58985983/general-question-about-reactjs-nodejs-and-npm
+
 rm -rf ~/node_modules/
 
 Centos install

@@ -48,12 +48,15 @@ author:
   #email  : "lyhistory@gmail.com"
   #uri    : "https://twitter.com/lyhistory"
   links:
-    - label: "机器指令-白帽黑客&区块链&计算机基础"
+    - label: "机器指令-白帽黑客&区块链"
       icon: "fas fa-fw fa-dragon"
       url: "https://lyhistory.com/docs/"
-    - label: "Email"
+    - label: "发邮件Email"
       icon: "fas fa-fw fa-envelope-square"
       url: mailto:lyhistory@gmail.com
+    - label: "发密信Keybase"
+      icon: "fab fa-keybase"
+      url: "https://keybase.io/lyhistory"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
       url: "https://twitter.com/lyhistory"

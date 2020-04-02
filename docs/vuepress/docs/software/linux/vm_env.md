@@ -7,7 +7,7 @@ VM VS Container（docker vagrant）VS JVM:
 	Both provide a way to isolate applications and provide a virtual platform for applications to run on;
 	A container is an isolated, lightweight silo for running an application on the host operating system. Containers build on top of the host operating system's kernel (which can be thought of as the buried plumbing of the operating system), and contain only apps and some lightweight operating system APIs and services that run in user mode;
 	In contrast to containers, VMs run a complete operating system–including its own kernel.
-	提一下JVM,java虚拟机，只是给字节码byte code提供解释翻译加载运行的一个工具
+	提一下JVM,java虚拟机，只是给字节码byte code提供解释翻译加载运行的一个工具，同样的PVM也是类似；
 	
 docker vs VMs vs vagrant
 Docker vs Vagrant: What You Need to Know https://www.ctl.io/developers/blog/post/docker-vs-vagrant

@@ -625,6 +625,9 @@ https://dubbo.apache.org/en-us/docs/user/perf-test.html
 
 ## 6.JVM/JMM
 
+[JVM VS Python VM](https://medium.com/@rahul77349/difference-between-compiler-and-interpreter-with-respect-to-jvm-java-virtual-machine-and-pvm-22fc77ae0eb7)
+	JAVA需要经过一次编译成class文件，然后交给JVM跑，Python不需要编译，直接py交给PVM解释运行
+	
 ### 6.1 基本概念
 java代码编译-->java class-->JDK安装的JVM翻译成对应操作系统的机器码
 
