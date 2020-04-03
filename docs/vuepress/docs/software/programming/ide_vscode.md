@@ -141,6 +141,8 @@ PS C:\Workspace\Repository\TestReact\hello-react> node_modules\.bin\eslint.cmd -
 
 **打包部署**
 ```
+npm run build
+结果：
 The build folder is ready to be deployed.
 You may serve it with a static server:
 
