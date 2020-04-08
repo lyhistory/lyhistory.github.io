@@ -1,4 +1,7 @@
 
+圣杯与银弹 · 没用的设计模式
+https://draveness.me/holy-grail-design-pattern/
+
 Procedural Programming, Functional Programming, OO and AO Programming, we have so many programming methodology, what we discuss here is all based on OO Programming.
 When we say OO design and design pattern, we must mention 'GOF book',as introduced in wiki:
 The name of the book ("Design Patterns: Elements of Reusable Object-Oriented Software") is too long for e-mail, so "book by the gang of four" became a shorthand name for it. After all, it isn't the ONLY book on patterns. That got shortened to "GOF book", which is pretty cryptic the first time you hear it.

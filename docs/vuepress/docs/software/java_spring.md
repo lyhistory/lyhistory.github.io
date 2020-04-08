@@ -318,6 +318,9 @@ Which type of injection??
 Spring Cloud 万字总结，真不错！
 https://mp.weixin.qq.com/s/YGtKoKBE1jxFaEUpEFSaLg
 
+Azure Spring Cloud workshop
+https://docs.microsoft.com/en-us/learn/modules/azure-spring-cloud-workshop/
+
 https://github.com/macrozheng/mall
 https://github.com/zhangdaiscott/jeecg-boot
 

@@ -8,3 +8,6 @@ https://codeburst.io/declarative-vs-imperative-programming-a8a7c93d9ad2
 2: Declarative Programming
     2.A: Query/Database Programming
     2.B: Functional Programming
+
+
+To get our feet wet, when you follow tutorial, We strongly recommend typing code by hand as you’re working through the tutorial and not using copy/paste. This will help you develop muscle memory and a stronger understanding.
