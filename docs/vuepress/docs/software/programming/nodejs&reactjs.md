@@ -1,6 +1,20 @@
 
 
-npm, nodejs, reactjs?
+npm, nodejs, reactjs, javascript, typescript ?
+
+javascript是nodejs、reactjs和浏览器都在使用的一种编程语言, nodejs reactjs和浏览器用的都是javascript;
+
+nodejs reactjs及浏览器用的都是V8引擎，但是不同的是：
+
+reactjs是前端框架(当然也提供了部分server-side功能，但是我理解是有限的功能，主要还是client端)，reactjs和浏览器都有DOM API， 所以浏览器可以直接识别JavaScript操作dom，reactjs又增加了virtual dom（ReactDOM.render）来提升performance；
+而nodejs是server-side后端框架，跟前端没有半毛钱关系，虽然都是用JavaScript，V8引擎，它没有DOM API，不能操作DOM，但是有其他API，比如可以访问硬件的电源，它跟java php这些没有区别，
+
+总体来说nodejs和reactjs都是用npm来管理package，只不过有些module只能在nodejs或者reactjs下面才工作，有些则是两者都可以用；
+
+安装nodejs会自带npm，所以一般reactjs的安装也就是安装nodejs的npm；
+
+TypeScript是JavaScript类型的超类，可以使用JavaScript中的所有代码和编程概念，TypeScript是为了使JavaScript的开发变得更加容易而创建的, TypeScript代码需要被编译（成JavaScript）。
+
 Node and browser(javascript) both uses V8 engine, but browser has DOM, node doesn't, nodejs has other kind of APIs, 
 nodejs has more freedom to access the os (because it has modules like filesystem, http server, even batteries, so you can create mobile app from nodejs),
 both nodejs and reactjs use npm for moduel managment, but what's the difference??
@@ -14,14 +28,6 @@ javascript?typescript?
 > The idea behind developing this script is to make it a complementary scripting language like Visual Basic was to C++ in Microsoft's language families. However, JavaScript is not designed for large complex applications. It was developed for applications with a few hundred lines of code!
 > Typescript is a modern age Javascript development language. It is a statically compiled language to write clear and simple Javascript code. It can be run on Node js or any browser which supports ECMAScript 3 or newer versions.
 > Typescript provides optional static typing, classes, and interface. For a large JavaScript project adopting Typescript can bring you more robust software and easily deployable with a regular JavaScript application.
-
-总体来说nodejs和reactjs都是用npm来管理package，只不过有些module只能在nodejs或者reactjs下面才工作，有些则是两者都可以用；
-
-安装nodejs会自带npm，所以一般reactjs的安装也就是安装nodejs的npm；
-
-nodejs跟和浏览器用的javascript都是V8引擎，不同是浏览器用DOM，nodejs没有DOM(提供了ReactDOM.render可以使用DOM)但是有其他的API，而且nodejs的API范围更广，比如设置可以访问硬件的电源；
-
-TypeScript是JavaScript类型的超类，可以使用JavaScript中的所有代码和编程概念，TypeScript是为了使JavaScript的开发变得更加容易而创建的, TypeScript代码需要被编译（成JavaScript）
 
 ## 1. JavaScript
 
@@ -99,7 +105,7 @@ A closure is the combination of a function and the scope object in which it was 
 
 ```
 
-## 2. nodejs/reactjs共同概念
+## 2. nodejs/reactjs共同环境配置
 
 ```
 #centos
@@ -174,6 +180,9 @@ b)执行脚本 scripts
 JSX: javascript extension 
 
 ## 3.nodejs开发
+
+后端框架，虽然是用JavaScript，但是是后端代码，当然一般不直接用JavaScript，而是用超类typescript，可以更好的管理大项目架构，需要编译成JavaScript；
+
 **基本语法:**
 
 模块系统 Modules
@@ -188,6 +197,11 @@ https://channel9.msdn.com/Series/Building-Apps-with-Node-js?WT.mc_id=12833-DEV-s
 
 
 ## 4.reactJS开发
+
+前端框架，引入了[virtual dom的概念](https://www.codecademy.com/articles/react-virtual-dom)，
+前面也说过，其实reactjs也是有server-side服务端功能的，不过一般都是说服务端动态渲染，[Demystifying server-side rendering in React](https://www.freecodecamp.org/news/demystifying-reacts-server-side-render-de335d408fe4/)
+
+一般来说都只是将reactjs作为前端，然后搭配一个后端程序来获取动态数据，后端程序可以是nodejs、java等等；
 
 ## 4.1 基本语法
 

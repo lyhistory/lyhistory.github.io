@@ -1,13 +1,27 @@
 
+不可以闭门造车，要知道states of the art
+
+What projects are you working on now?
+https://news.ycombinator.com/item?id=22648431
+
+
 ## valuable site
 https://developers.google.com/edu/
 https://null-byte.wonderhowto.com
 
-Blockchain 
+## Blockchain 
 https://www.jkroll.com/#publications
 http://catkang.github.io/
 
-Security
+[FUNDING FUTURE](https://gitcoin.co/hackathon/funding-the-future?org=alto-io)
+
+[中文区块链技术播客](https://forkit.fm/episodes)
+
+## Security
+
+CyberSecurityRSS
+https://github.com/zer0yu/CyberSecurityRSS
+
 https://arnaucube.com/
 http://www.moonsec.com/post-657.html
 
@@ -50,7 +64,6 @@ https://opensource.com/article/19/12/learn-linux
 https://draveness.me/whys-the-design-tcp-performance
 
 https://blog.didierstevens.com/
-
 
 
 

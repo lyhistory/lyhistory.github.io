@@ -87,6 +87,11 @@ Hardware: ups(uninterrupted power supply)
 	e.g hyperledger cluster setup
 + 8. linux/win/mac + docker + vagrant
 
+windows+subsysterm:
+https://docs.microsoft.com/en-us/windows/wsl/about
+```
+
+```
 
 ### 2.2 本地开发环境配置例子
 //obselete: not free: virtualbox + xshell + xmanager + virtualenv
