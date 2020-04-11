@@ -211,8 +211,12 @@ make -s -j5
 
 GUI to remote bitcoin core
 https://bitcoin.stackexchange.com/questions/44408/how-to-connect-to-a-remote-bitcoin-core-remotely
+
 Dump peers.dat
 https://bitcoin.stackexchange.com/questions/75324/how-to-dump-peers-dat-file-to-a-plain-text-file
+
+Mq notification
+https://bitcoin.stackexchange.com/questions/40752/what-is-the-use-case-of-bitcoind-zeromq
 
 ### 2.2 Libbitcoin
 

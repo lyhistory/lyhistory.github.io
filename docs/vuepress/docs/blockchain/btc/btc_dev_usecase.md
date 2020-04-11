@@ -94,4 +94,200 @@ https://github.com/libbitcoin/libbitcoin-explorer/wiki
 
 Note: to config for testnet
  vim /home/peter/libbitcoin-explorer/etc/libbitcoin/bx.cfg
+ 
+![](/docs/docs_image/blockchain/btc/btc_dev_usecase01.png)
+
+3) Python
+Version 2.7, failed for 3.6
+```
+pip install python-bitcoinrpc
+https://github.com/jgarzik/python-bitcoinrpc
+	Failed for python3.6:
+	Traceback (most recent call last):
+  File "btc_monitor.py", line 94, in depositJob
+	blockObj = rpc_connection.getblock(blockHash)
+  File "/usr/lib/python3.6/site-packages/bitcoinrpc/authproxy.py", line 139, in __call__
+	response = self._get_response()
+  File "/usr/lib/python3.6/site-packages/bitcoinrpc/authproxy.py", line 192, in _get_response
+	log.debug("<-%s- %s"%(response["id"], json.dumps(response["result"], default=EncodeDecimal)))
+  File "/usr/lib64/python3.6/json/__init__.py", line 238, in dumps
+	**kw).encode(obj)
+  File "/usr/lib64/python3.6/json/encoder.py", line 199, in encode
+	chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib64/python3.6/json/encoder.py", line 257, in iterencode
+	return _iterencode(o, 0)
+  File "/usr/lib/python3.6/site-packages/bitcoinrpc/authproxy.py", line 77, in EncodeDecimal
+	return float(round(o, 8))
+decimal.InvalidOperation: [<class 'decimal.InvalidOperation'>]
+https://github.com/jgarzik/python-bitcoinrpc/issues/92
+```
+
+bip32utils
+https://github.com/lyndsysimon/bip32utils
+pip install .	or pip install bip32utils or python setup.py install
+
+4) Nodejs
+
+npm install bip39 bitcoinjs-lib bluebird body-parser cookie-parser debug ejs express express-session http-errors morgan pg pg-promise uuid
+
+5) Others 
+
+BTC-Fiat exchange rate api
+https://blockchain.info/tobtc?currency=CNY&value=1
+BTC transaction fees api
+https://bitcoinfees.21.co/api
+
+### 1.5 Hands on
+
+#### 1.5.1 Generate keys for testnet that comply with bip32 bip39 and bip44
+
+be aware that config your tools properly if testing on regtest or testnet, and also for regtest and testnet, cointype in bip44 path should be 1 https://github.com/satoshilabs/slips/blob/master/slip-0044.md
+So now, I’ll use bx tools to generate mnemonic and master node:
+
+```
+# bx seed
+4f9687fcff3ba10d9dab22cf6ad837ee3ba516dbe51ddee2
+# bx mnemonic-new 4f9687fcff3ba10d9dab22cf6ad837ee3ba516dbe51ddee2
+exhibit reflect you wrist ring man issue gold sorry fine assume symbol ripple merge hurdle photo ten blood
+# bx mnemonic-to-seed exhibit reflect you wrist ring man issue gold sorry fine assume symbol ripple merge hurdle photo ten blood
+4c3d16b85c7c1d62157a77faf817f89eeda7101e88d843bd58f6145e3ff203bd4982feb9700c219dfa74b04605aa4ec5c0c21c3a6ed352c1f59f1511a7500c09
+# bx hd-new 4c3d16b85c7c1d62157a77faf817f89eeda7101e88d843bd58f6145e3ff203bd4982feb9700c219dfa74b04605aa4ec5c0c21c3a6ed352c1f59f1511a7500c09
+tprv8ZgxMBicQKsPdKFbPviThueMk82PYxf5wMeHWPQ4x8bp2huNDbx53Q4ToywGUsUTfV4KiMoHZWkYsqymdEK3i8eoj2UrDpn1KUUUDzgF5rJ
+# echo tprv8ZgxMBicQKsPdKFbPviThueMk82PYxf5wMeHWPQ4x8bp2huNDbx53Q4ToywGUsUTfV4KiMoHZWkYsqymdEK3i8eoj2UrDpn1KUUUDzgF5rJ | \
+     bip32gen -v \
+     -i xprv -f - -x \
+     -o privkey,wif,pubkey,addr,xprv,xpub -F - -X \
+     44h/1h/0h/0 
+Importing starting key from extended private key
+Keyspec: 44h/1h/0h/0
+privkey: a1799465078f52aa1967d5ac93a322e2ab8e6ce9040a4f36d1a70d0acf574b60
+wif:     cSzb3Ze28dFCDzX7KvLmDm7wLq4CXSxquYUwpCQdNhDzYhjJ9z1A
+pubkey:  02e31d9a51cd4bf105b2903359c177f86c20be60aa870aa65d0c59a00a79029cdc
+addr:    mjzkzLhwFwXW2SRWqjBajn3emTHn7JyJ4x
+xprv:    tprv8iWjgxv35LVr3gcLdpa7LtBWMzC8UX1jTUMAXu5kDtDn2BX4WJVAJ9sgMzFjuoiWjhUdamEeB7sxPS6uzkmcEAAXNAevuaRWYQFMwX713mP
+xpub:    tpubDFCmqNxHDiBWw9e8XUEhkHqcw1i4drCe2mwwpR83eA2Arfmq8hJkUeVYY7hYaQWEo4HZDQ86FiRYj8Lr3e9UT8bYi7yLvbNbXgqyJeqLYii
+# echo tprv8ZgxMBicQKsPdKFbPviThueMk82PYxf5wMeHWPQ4x8bp2huNDbx53Q4ToywGUsUTfV4KiMoHZWkYsqymdEK3i8eoj2UrDpn1KUUUDzgF5rJ | \
+ 	bip32gen -v \
+ 	-i xprv -f - -x \
+ 	-o privkey,wif,pubkey,addr,xprv,xpub -F - -X \
+ 	44h/1h/1h/0/0
+Keyspec: 44h/1h/1h/0/0
+privkey: e5b0929aa90ea7ec0e13f6b0f76733af87dcef285c2f01688678e8a7fb8840a6
+wif: 	cVHBtHK7kzze7yqF5En4Psbw2ZZdUEJ8jF4KAMXhLpuSwUf4fZAU
+pubkey:  0310c21deba4469806df5d514110bfc1af651488c67f1edce828caa838ff17f969
+addr:	muz1awk6YXQkP29dt1tdRpBTonmqAqwdst
+xprv:	tprv8kB5cr8narJ5b6xE1svr1mpXAUn3niuTGLkZX9uieNb4hNM1gbyco8vEF1mmqjxf3pXLVKaLPSEnZ6F64JeqZKeKoyLUVaQxmuaaryq1N9b
+xpub:	tpubDGs7mGB2jDykUZz1uXbSRBUdjWHyx46MqeMLofx24ePTXrbnJzoCydY6R93dvvejjsCtpzXyYYN3sPSw7N2rzVQPsojtLGCdku2ZjhhSdZj
+
+```
+
+![](/docs/docs_image/blockchain/btc/btc_dev_usecase02.png)
+
+Website app uses 
+```
+xpub(m/44’/1’/0’/0)[tpubDFCmqNxHDiBWw9e8XUEhkHqcw1i4drCe2mwwpR83eA2Arfmq8hJkUeVYY7hYaQWEo4HZDQ86FiRYj8Lr3e9UT8bYi7yLvbNbXgqyJeqLYii] 
+```
+for user topup address generation;
+
+The scheduler service uses 
+```
+xprv(m/44’/1’/0’/0)[tprv8iWjgxv35LVr3gcLdpa7LtBWMzC8UX1jTUMAXu5kDtDn2BX4WJVAJ9sgMzFjuoiWjhUdamEeB7sxPS6uzkmcEAAXNAevuaRWYQFMwX713mP] 
+```
+to aggregate and transfer btc from topup address to internal address(semi-cold and cold wallet, 
+
+in this demo, we simply aggregate and transfer into addr(m/44’/1’/1’/0/0)[muz1awk6YXQkP29dt1tdRpBTonmqAqwdst]).
+
+#### 1.5.2 Setup Test Env
+
+1) use wallet app https://play.google.com/store/apps/details?id=de.schildbach.wallet_test
+
+Or manually Create a btc key pair on testnet as user’s own btc account
+
+	BTC address generator https://bitcoinpaperwallet.com/bitcoinpaperwallet/generate-wallet.html
+	mg9H4QPYcjqTjURFVSNDQQkFBx3FCxD3JB
+	91fVLr2vDHRFvmVKjABfqX9163oAFTCJAyQk63RacCX2rs1ruA1
+Then import to gui wallet
+Bitcoin core windows https://bitcoin.org/en/download
+To import private key Help -> Debug Window -> Console-> importprivkey 91fVLr2vDHRFvmVKjABfqX9163oAFTCJAyQk63RacCX2rs1ruA1
+
+![](/docs/docs_image/blockchain/btc/btc_dev_usecase03.png)
+
+2) Faucet - Get BTC for testing
+
+https://coinfaucet.eu/en/btc-testnet/
+
+3) host btc node demon
+
+vim ~/.bitcoin/bitcoin.conf
+![](/docs/docs_image/blockchain/btc/btc_dev_usecase04.png)
+
+bitcoind -testnet -printtoconsole/-daemon
+
+And then import our internal account:
+
+bitcoin-cli -testnet importprivkey cVHBtHK7kzze7yqF5En4Psbw2ZZdUEJ8jF4KAMXhLpuSwUf4fZAU "internal0" true
+
+4) Testnet explorer - monitor both user’s own btc address and our system generated external/internal addresses
+
+https://live.blockcypher.com/btc-testnet/address/mg9H4QPYcjqTjURFVSNDQQkFBx3FCxD3JB/
+https://live.blockcypher.com/btc-testnet/address/n3ENHgEF9CTb3KnJotGQEuWScA9aAKyR7W/
+https://live.blockcypher.com/btc-testnet/address/muz1awk6YXQkP29dt1tdRpBTonmqAqwdst/
+
+#### 1.5.3 Website app
+You can use nodejs webpack to create a very simple web app
+https://webpack.js.org/api/node/
+
+And then to generate top up address from  xpub(m/44’/1’/0’/0) 
+
+Simply import bitcoinjs lib and refer to sample code:
+https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/test/integration/bip32.js
+
+![](/docs/docs_image/blockchain/btc/btc_dev_usecase05.png)
+
+#### 1.5.4  The Scheduler Monitor Service
+
+1) Topup
+
+![](/docs/docs_image/blockchain/btc/btc_dev_usecase06.png)
+
+2) Aggregation and transfer from external user top up addresses to internal account
+
+![](/docs/docs_image/blockchain/btc/btc_dev_usecase07.png)
+
+3) Withdraw
+
+![](/docs/docs_image/blockchain/btc/btc_dev_usecase08.png)
+
+Note:For withdraw btc from semi-cold wallet, I find it’s not feasible to use signtransactionwithkey, because that requires knowledge of all the utxo of the semi-cold wallet, and keep track of all the utxo requires lots of work and sophisticated design,I haven’t test it but one possible way to get unspent transactions is that, import pubkey into bitcoin core wallet as watch only address, then rpc listunspent by address, but another problem is that you can think of each utxo amount as different denomination of coins in your pocket, every time you have to combine your coins in your pocket, so you need to design a combination strategy so that not to result in more and more small changes in your pocket
+~~and to get all the utxo there are mainly two ways:~~
+
+~~One way is to import the address to wallet using importaddress, it will cause the bitcoin core to rescan the entire blockchain, which will take several minutes, not practical in programming; another way is to maintain all the transactions locally, the semi-cold wallet is used in two places: aggregation and withdraw, so you need to keep record of every transaction to extract the latest utxo each time, lots of work has to be done.~~
+So in this demo, we choose an easy way,as we already importprivkey to bitcoin core upfront, just straightforward use sendmany to transfer BTC, so the bitcoin core wallet will do the dirty work for us
+
+### 1.6 Reference 
+
+https://github.com/chainside/btcpy
+
+红色警报：交易所接连被黑的防御建议 https://www.8btc.com/article/383011
+
+Multi-sig for “aggregation account”, 归集
+Simple multi-sig version::Building the World’s First Open Source Multi-Sig Bitcoin Exchange https://medium.com/@benedictchan/building-the-world-s-first-open-source-multi-sig-bitcoin-exchange-a6f1221eff46
+
+Save Transaction fee:
+Segwit P2sh instead of p2pkh , bip32 support? Signrawtransactionwithkey need redeemscript
+https://bitcoin.stackexchange.com/questions/36919/clarification-of-bip32-hierarchical-deterministic-multisig-scripts
+
+Calculate
+https://bitcoinfees.earn.com/api
+in*148 + out*34 + 10 plus or minus 'in'
+
+https://bitcoin.stackexchange.com/questions/1195/how-to-calculate-transaction-size-before-sending-legacy-non-segwit-p2pkh-p2sh
+https://bitcoin.stackexchange.com/questions/68712/what-bytes-are-calculated-on-the-transaction-fee
+
+
+## 2.open source projects
+
+Proof of authorship/proof of existence
+http://docs.proofofexistence.com/#/
+https://en.wikipedia.org/wiki/Proof_of_Existence
 

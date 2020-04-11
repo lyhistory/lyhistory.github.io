@@ -90,7 +90,10 @@ Hardware: ups(uninterrupted power supply)
 windows+subsysterm:
 https://docs.microsoft.com/en-us/windows/wsl/about
 ```
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all
 
+windows store: ubuntu
 ```
 
 ### 2.2 本地开发环境配置例子
