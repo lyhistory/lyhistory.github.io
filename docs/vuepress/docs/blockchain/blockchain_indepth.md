@@ -1,3 +1,10 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
+[回目录](/docs/blockchain)  《区块链：深度解析》
 
 ## 1. 区块链深度基础
 
@@ -93,18 +100,18 @@ DPOS+PBFT
 https://bbs.asch.io/topic/1883/阿希的dpos-pbft共识机制是如何运作的
 
 
-### 1.3 Permission design
+### 1.2 Permission design
 
 whether permission is needed to
 access the blockchain;
 
-### 1.4 cryptocurrency & smart contract
+### 1.3 cryptocurrency & smart contract
 
 都是在矿工节点上验证执行，储存位置
 
-### 1.5 安全问题-共识算法和智能合约
+### 1.4 安全问题-共识算法和智能合约
 
-#### 1.5.1 Consensus attack 共识漏洞
+#### 1.4.1 Consensus attack 共识漏洞
 
 重放攻击 replay attack
 Dos denial-of-service
@@ -141,18 +148,18 @@ https://bitcointalk.org/index.php?topic=3256693.0
 What prevents similar time-warp attacks in Bitcoin as happened to Verge? https://bitcoin.stackexchange.com/questions/75438/what-prevents-similar-time-warp-attacks-in-bitcoin-as-happened-to-verge
 https://forum.zcashcommunity.com/t/how-does-someone-find-a-17-blocks-in-4-seconds-time-warp-attack/1583/17
 
-#### 1.5.2 Contract attack 合约漏洞
+#### 1.4.2 Contract attack 合约漏洞
 
 DAO攻击
 SmartMesh Announcement on Ethereum Smart Contract Overflow Vulnerability https://medium.com/@smartmesh/smartmesh-announcement-on-ethereum-smart-contract-overflow-vulnerability-f1ded8777720
 
 干货分享：Qtum量子链开发者公开经典PoS协议的一个DoS攻击向量 www.8btc.com/qtum-pos-dos
 
-#### 1.5.3 交易漏洞
+#### 1.4.3 交易漏洞
 
 比如使用第三方的库要小心，可能会有坑
 
-#### 1.5.3 案例分析  attack analysis
+#### 1.4.3 案例分析  attack analysis
 
 https://en.bitcoin.it/wiki/Weaknesses
 https://en.bitcoin.it/wiki/Common_Vulnerabilities_and_Exposures
@@ -245,6 +252,17 @@ Blockchain Transaction Authentication and Security www.ascdi.com/blockchain-tran
 1.someone hold private key sign the merke tree, like traditional ca sign it, or the gov will sign it
 2.no central authority sign it, but it will be ‘signed’ by POW, by adding a nonuce or anymore values, to create a new hash preceding with enough 0s
 
+the block in blockchain explained (merkle trees)
+http://haroldcarr.com/posts/2017-07-31-the-block-in-blockchain-merkle-trees.html
+
+ETH Patricia Tries:
+	Merkle Trees and Patricia Tries - Blockchain for Developers [Lab 7] https://www.youtube.com/watch?v=wwrf87bq6jo
+EOS Merkle tree - LCV:
+	https://github.com/EOSIO/Documentation/blob/master/TechnicalWhitePaper.md
+	通过EOS.IO的默克尔证明实现区块链间通信 https://www.weibo.com/ttarticle/p/show?id=2309404181938423384064
+	> EOS 的 Block 上只存了 Merkle root，并没有存整个 tree。这个问题 Vitalik Buterin 和 Dan 辩论过一次，V 认为 EOS 这是投机取巧，Dan 认为 Merkle tree 的存在是为了校验状态（交易是否存在），而状态应该是区块链上的记录回放的结果，不应该属于共识的一部分，也不用记录在区块上，并且 EOS 也是支持利用 Merkle 做轻客户端证明的。但具体 EOS 怎么存这个，我自己还没看太明白。
+	> https://zhuanlan.zhihu.com/p/34046714
+	
 Merkle in time 
 
 Bitmap , bloom filter
@@ -291,3 +309,7 @@ stratum协议原理 https://www.8btc.com/article/54210
 
 全球交易所区块链最新发展及相关思考 https://mp.weixin.qq.com/s/MEN19UIawjjOb6OxqLyL9w
 
+Alternatives to Blockchain https://medium.com/@jimmysong/alternatives-to-blockchain-9f858c0a1f2d
+https://weibo.com/ttarticle/p/show?id=2309404248299317160730
+
+Drupal meet Blockchain, Blockchain meet Drupal. https://medium.com/@chainfrog/drupal-meet-blockchain-blockchain-meet-drupal-fe2e4b7b9f47

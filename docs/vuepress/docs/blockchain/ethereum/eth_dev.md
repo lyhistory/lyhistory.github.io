@@ -1,3 +1,10 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
+[回目录](/docs/blockchain)  《以太坊：开发基础》
 
 ## 1. Overview
 
@@ -132,6 +139,11 @@ Ethereum blockchain interaction with Nethereum https://mathieubrun.github.io/201
 Hell world DAPP https://medium.com/@mvmurthy/full-stack-hello-world-voting-ethereum-dapp-tutorial-part-1-40d2d0d807c2
 How to use Brave Browser with Ethereum dApps https://blog.saturn.network/how-to-use-brave-browser-with-ethereum-dapps/
 
+智能合约开发 - 如何更好的与合约交互 https://zhuanlan.zhihu.com/p/38244475
+智能合约开发 - 如何实现一键化登录 Dapp https://zhuanlan.zhihu.com/p/38213993
+200行Go实现一个Ethereum proxy server https://zhuanlan.zhihu.com/p/34056983
+
+逆向分析以太坊智能合约 https://zhuanlan.zhihu.com/p/34957994
 
 跨链
 Cross blockchain https://polkadot.network/

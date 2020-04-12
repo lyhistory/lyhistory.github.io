@@ -5,6 +5,7 @@ tagline: 从计算机基础到实战经验分享
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
+<img class="header" src="/docs/docs_image/coder2hacker/kali.png"/>
 
 <div style="max-width: 600px;margin: auto;">
   <div>

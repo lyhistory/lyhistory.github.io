@@ -1,3 +1,10 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
+[回目录](/docs/blockchain)  《比特币：开发基础》
 
 Completely Offline Bitcoin Transactions https://medium.com/hackernoon/completely-offline-bitcoin-transactions-4e58324637bd
 
@@ -24,7 +31,7 @@ https://live.blockcypher.com/
 
 
 ** Codes/Demo **
-https://github.com/lyhistory/blockchain_btc
+https://github.com/lyhistory/learn_coding/tree/master/blockchain/btc
 
 http://www.righto.com/2014/02/bitcoins-hard-way-using-raw-bitcoin.html
 https://github.com/shirriff/bitcoin-code/blob/master/txnUtils.py
@@ -85,7 +92,7 @@ https://github.com/ChristopherA/Learning-Bitcoin-from-the-Command-Line/blob/mast
 git clone https://github.com/bitcoin/bitcoin.git
 git tag        	 
 git checkout v0.17.1
-Usage Refer to <<https://github.com/lyhistory/blockchain_btc/blob/master/basic/bitcoincore_v0.17.1_cli.txt>>
+Usage Refer to <<https://github.com/lyhistory/learn_coding/tree/master/blockchain/btc/basic/bitcoincore_v0.17.1_cli.txt>>
 
 Build instruction - tested version
 https://github.com/bitcoin/bitcoin/blob/master/doc/build-unix.md
@@ -209,6 +216,9 @@ make -s -j5
 
 **Questions:**
 
+Run bitcoin in container
+https://stackoverflow.com/questions/25116608/how-to-connect-to-a-bitcoin-testnet-running-in-a-docker-container
+
 GUI to remote bitcoin core
 https://bitcoin.stackexchange.com/questions/44408/how-to-connect-to-a-remote-bitcoin-core-remotely
 
@@ -280,19 +290,7 @@ https://forum.bitcore.io/t/what-is-the-difference-between-bitcore-and-bitcored-a
 
 ### 2.4 应用架构
 
-
-BTC企业级冷热钱包架构 https://my.oschina.net/u/3050295/blog/1824008
-OKCoin开放比特币冷钱包技术方案 https://my.oschina.net/u/3050295/blog/1821609
-小白秒懂的冷热钱包原理 https://www.chainnews.com/articles/696192635729.htm
-
-https://github.com/bisq-network
-
-Ever wanted to run a c-lightning node without having to run bitcoind? Your problems are over: with the new `trustedcoin` plugin you can rely on block explorers for everything!
-
-Still better than Paypal. And it works!
-
-More: https://github.com/fiatjaf/lightningd-gjson-rpc/tree/x1/cmd/trustedcoin…
-Binary: https://github.com/fiatjaf/lightningd-gjson-rpc/releases/tag/x1
+参考 [btc深度解析](/docs/blockchain/btc/btc_indepth)和[btc用例](/docs/blockchain/btc/btc_dev_usecase)
 
 
 ## 3. Theory
@@ -353,11 +351,43 @@ The algorithms used to make a bitcoin address from a public key are the Secure H
 List of address prefixes
 https://en.bitcoin.it/wiki/List_of_address_prefixes
 
+**比特币HASH生成**
+
+Cryptographic Hash function , (collision-free, hiding, puzzle-friendly)
+
+算法：Dsha256(headerbytes)
+            	Header字段：version(4)、prev_block_hash(32)、merkle_root_hash(32)、time(4)、bits(4)、nonce(4) 共80字节
+
+每个块的第一个交易为coinbase交易，没有input，output是矿工地址，数量是区块奖励和所有交易费用的总和
+
+每个交易的txhash生成merkle tree，并生成merkle root hash放在header中；
+
+Merkle tree也用于BT下载
+
+私钥生成：随机数或者通过随机数seed生成
+公钥生成：pubkey=椭圆曲线函数（prikey,p,q）不可逆
+比特币地址生成：address=Base58(pub key hash)=Base58（RIPEMD160(SHA256(PUBKEY))）不可逆
+
+**P2PKH (pay to public key hash)**
+
+HASH160 = RIPEMD160(SHA256(pubkey))
+Pubkey Script: OP_DUP OP_HASH160 <PubKeyHash> OP_EQUALVERIFY OP_CHECKSIG
+<Sig><PubKey> OP_DUP OP_HASH160 <PubKeyHash> OP_EQUALVERIFY OP_CHECKSIG
+
 **Advanced Keys and Addresses**
+
 1)Encrypted Private Keys (BIP-38)
 BIP-38 proposes a common standard for encrypting private keys with a passphrase and encoding them with Base58Check so that they can be stored securely on backup media, transported securely between wallets, or kept in any other conditions where the key might be exposed. The standard for encryption uses the Advanced Encryption Standard (AES)
 
 2)Pay-to-Script Hash (P2SH) and Multisig Addresses
+
+通过BIP增加进比特币系统,可实现多重签名等
+
+Redeem Script (input contains source script, output contains the hash)
+Example:
+```
+OP_2 [A’s pubkey] [B’s pubkey] [C’s pubkey] OP_3 OP_CHECKMULTISIG
+```
 
 3)Vanity Addresses
 
@@ -426,6 +456,8 @@ third-party services for fee calculations: http://bitcoinfees.21.co
 
 multiple input and output addresses in bitcoin transactions https://bitcoin.stackexchange.com/questions/74003/multiple-input-and-output-addresses-in-bitcoin-transactions
 
+How did these zero-transaction fee transactions make it into the Bitcoin network? https://bitcoin.stackexchange.com/questions/69030/how-did-these-zero-transaction-fee-transactions-make-it-into-the-bitcoin-network
+
 **Reclaming disk space**
 ![](/docs/docs_image/blockchain/btc/btc_dev08_2.png)
 
@@ -445,7 +477,12 @@ First, the signature proves that the owner of the private key, who is by implica
 
 Sig = (R, S, SIGHASH)
 R and S are serialized into a byte-stream using an international standard encoding scheme called the Distinguished Encoding Rules, or DER.
-Signature Hash Types (SIGHASH)
+Signature Hash Types (SIGHASH):
+	- ALL
+	- NONE
+	- SINGLE
+	- ANYONECANPAY
+
 
 ![](/docs/docs_image/blockchain/btc/btc_dev11.png)
 
@@ -477,6 +514,23 @@ In version 0.9 of the Bitcoin Core client, a compromise was reached with the int
 RETURN <data>
 
 #### 3.6.4 Timelocks
+
+sequence number & nlocktime:
+- nLocktimer >=5亿，表示时间，<5亿，表示block高度
+- sequence number UTXO成熟度
+
+Bitcoin Timelocks in a nutshell https://medium.com/@RobinHung/bitcoin-timelocks-in-a-nutshell-4c95aafc7a59
+
+Block time:
+The block time is the average time it takes for the network to generate one extra block in the blockchain. Some blockchains create a new block as frequently as every five seconds.[28] By the time of block completion, the included data becomes verifiable. In cryptocurrency, this is practically when the transaction takes place, so a shorter block time means faster transactions. The block time for Ethereum is set to between 14 and 15 seconds, while for bitcoin it is 10 minutes.
+
+Block height:
+as it pertains to cryptocurrency, refers to the current number block in a blockchain. The genesis block, which is the very first block in any blockchain, has a block height equal to zero. Therefore, the block height is always a positive integer greater than zero.
+
+The Mystery Behind Block Time https://medium.facilelogin.com/the-mystery-behind-block-time-63351e35603a
+
+Transaction script with block height as condition
+https://bitcointalk.org/index.php?topic=115084.0
 
 **Transaction level lock**
 
@@ -557,6 +611,8 @@ Network Discovery
 
 **SPV Nodes**
 
+![](/docs/docs_image/blockchain/btc/btc_dev_spv01.png)
+
 SPV verifies transactions by reference to their depth in the blockchain instead of their height.
 when examining a transaction in block 300,000,the SPV node will establish a link between the transaction and the block that contains it, using a merkle path (see [merkle_trees]). Then, the SPV node waits until it sees the six blocks 300,001 through 300,006 piled on top of the block containing the transaction and verifies it by establishing its depth under blocks 300,006 to 300,001. 
 
@@ -586,6 +642,11 @@ Block Identifiers: Block Header Hash and Block Height
 The cryptographic hash algorithm used in bitcoin’s merkle trees is SHA256 applied twice, also known as double-SHA256
 Merkle Trees and Simplified Payment Verification (SPV)
 SPV node that is interested in incoming payments to an address contained in its wallet. The SPV node will establish a bloom filter (see [bloom_filters]) on its connections to peers to limit the transactions received to only those containing addresses of interest. When a peer sees a transaction that matches the bloom filter, it will send that block using a merkleblock message. The merkleblock message contains the block header as well as a merkle path that links the transaction of interest to the merkle root in the block. The SPV node can use this merkle path to connect the transaction to the block and verify that the transaction is included in the block. The SPV node also uses the block header to link the block to the rest of the blockchain. The combination of these two links, between the transaction and block, and between the block and blockchain, proves that the transaction is recorded in the blockchain.
+
+SPV merkle root
+https://bitcoin.org/en/developer-reference#merkle-trees
+
+Bloom filter
 
 ### 3.9 Mining and Consensus
 

@@ -1,3 +1,10 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
+[回目录](/docs/blockchain)  《以太坊：solidity》
 
 ## 1. Basis
 
@@ -364,3 +371,12 @@ Error or revert in the function
 ?# cannot find the function
 Because it’s an internal function, not public function
 
+---
+
+refer:
+
+The following represents a list of tutorials/resources that could help to learn specifics of developing smart-contracts:
++ Full guide about smart-contract development: https://blockgeeks.com/guides/solidity/
++ ICO/DApp development, additional list of useful resources: https://medium.com/@robbertvermeulen/learn-solidity-the-ethereum-smart-contract-programming-language-7f106fc26d6
++ Official solidity tutorials: https://ethereumbuilders.gitbooks.io/guide/content/en/solidity_tutorials.html
++ Official solidity documentation: http://solidity.readthedocs.io/en/latest/

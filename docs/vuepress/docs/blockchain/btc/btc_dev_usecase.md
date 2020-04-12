@@ -1,3 +1,10 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
+[回目录](/docs/blockchain)  《比特币：开发用例》
 
 ## 1. 作为支付手段 Deposit and Withdraw
 
@@ -266,6 +273,12 @@ So in this demo, we choose an easy way,as we already importprivkey to bitcoin co
 
 ### 1.6 Reference 
 
+BTC企业级冷热钱包架构 https://my.oschina.net/u/3050295/blog/1824008
+OKCoin开放比特币冷钱包技术方案 https://my.oschina.net/u/3050295/blog/1821609
+小白秒懂的冷热钱包原理 https://www.chainnews.com/articles/696192635729.htm
+
+https://github.com/bisq-network
+
 https://github.com/chainside/btcpy
 
 红色警报：交易所接连被黑的防御建议 https://www.8btc.com/article/383011
@@ -283,6 +296,8 @@ in*148 + out*34 + 10 plus or minus 'in'
 
 https://bitcoin.stackexchange.com/questions/1195/how-to-calculate-transaction-size-before-sending-legacy-non-segwit-p2pkh-p2sh
 https://bitcoin.stackexchange.com/questions/68712/what-bytes-are-calculated-on-the-transaction-fee
+
+
 
 
 ## 2.open source projects

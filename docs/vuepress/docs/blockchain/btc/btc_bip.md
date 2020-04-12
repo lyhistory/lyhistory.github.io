@@ -1,3 +1,10 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
+[回目录](/docs/blockchain)  《比特币BIP》
 
 Bitcoin Improvement Proposals
 https://github.com/bitcoinbook/bitcoinbook/blob/second_edition_print3_rc2/appdx-bips.asciidoc
