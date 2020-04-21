@@ -151,7 +151,14 @@ Injecting a Prototype Bean into a Singleton Bean Problem https://www.logicbig.co
 > https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html
 
 ** Spring AOP
+
+managed components & proxy(jdk proxy&cglib)
+
+> Whenever you declare a bean in XML or use @Component, @Service, or @Repository on a class targeted by Spring’s annotation component scanning (which is enabled by default for Spring Boot), that class is instantiated and managed as a singleton bean by the Spring framework.
+> However, Spring doesn’t actually provide a literal reference to the original bean when it’s injected—it wraps the bean in a proxy class to give Spring a chance to weave in AOP code if needed.
 https://docs.spring.io/spring/docs/2.5.x/reference/aop.html
+
+https://www.credera.com/blog/technology-insights/open-source-technology-insights/aspect-oriented-programming-in-spring-boot-part-2-spring-jdk-proxies-vs-cglib-vs-aspectj/
 
 
 ** 代理

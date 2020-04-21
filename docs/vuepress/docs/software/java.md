@@ -101,6 +101,12 @@ https://blog.csdn.net/arkblue/article/details/39718947
 https://www.bilibili.com/read/cv1844967/
 
 ### 2.3 IDE
+
+IDEA和eclipse各有优缺点，比如eclipse可以在同一个ide实例中操作多个project，而idea只能一个实例开一个project；
+但是IDEA有智能的依赖查询、依赖冲突解决、依赖调试能力，eclipse就稍微麻烦，只能手动操作，举例：
+我在查询一个AutoWired的依赖时，找到了这接口，然后直接找其引用reference是找不到的，可能是因为在不同的jar包中，
+最后是在右键“Open type Hierarchy”找到，而在IDEA中，直接左侧会显示一个i的小图标，点击即可显示“is implemented in”；
+
 Eclipse/STS 
 Project Explorer-> Projects Presentation (select hierarchy)
 
@@ -126,11 +132,17 @@ run config-> maven build->maven debug-> jre
 show jdk version that maven dependent on: mvn -version
 
 #### 2.3.3 Debug
-**基本debug技巧**
-1）调试依赖比如maven dependencies的时候，注意在eclipse里面设置断点有可能不生效，因为debugger view下会有很多空行，技巧是多设置一些断点，调试起来之后再在debugger view下设置断点
-2）比如pom.xml在eclipse里面可以查看Dependency hierarchy view，可以比较清晰的看到所有依赖的层级关系
 
-**Remote Debug(attach jar)**
+**基本debug技巧：**
+
+1).调试依赖比如maven dependencies的时候，注意在eclipse里面设置断点有可能不生效，因为debugger view下会有很多空行，技巧是多设置一些断点，调试起来之后再在debugger view下设置断点
+2).比如pom.xml在eclipse里面可以查看Dependency hierarchy view，可以比较清晰的看到所有依赖的层级关系
+3).右键 quick outline
+4).右键 Open type Hierarchy，可以显示依赖中的接口实现
+5).选中class名字，然后Ctrl+shift+T，或者从菜单Navigate->Open Type，可以显示这个class是在哪个jar包中，及其物理位置；
+
+**Remote Debug(attach jar)：**
+
 https://stackoverflow.com/questions/6855520/attach-debugger-to-application-using-eclipse/23297651
 Debug Configurations: 
 	Remote Java Application->Connect: Remote Host & Port 
@@ -146,7 +158,8 @@ Failed using port 8000
 
 For mvn project another way can be found in Maven->debug below
 
-**Debug into jar without sourcecode using decompiler**
+**Debug into jar without sourcecode using decompiler：**
+
 My original post
 https://stackoverflow.com/questions/58534925/eclipse-not-decompile-rt-jar-when-debugging-but-idea-does/58535553#58535553
 
