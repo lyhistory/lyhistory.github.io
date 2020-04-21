@@ -133,6 +133,11 @@ Interacting with the blockchain in simple terms means that you'll be making RPC 
 ### 2.4 Develop with Nethereum
 Ethereum blockchain interaction with Nethereum https://mathieubrun.github.io/2018/04/29/ethereum-truffle-nethereum-docker.html
 
+### 2.5 Others
+
+The Web 3.0 Game Framework: http://game3js.com/
+
+
 ## 3.入门项目
 
 区块链游戏设计必看网站——加密僵尸 https://zhuanlan.zhihu.com/p/34473272

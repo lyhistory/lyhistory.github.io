@@ -1,3 +1,10 @@
+---
+sidebar: auto
+sidebarDepth: 3
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
+[回目录](/docs/software)  《玩转mybatis》
 
 三种方式教你玩转mybatis的各种姿势，再也不怕各种config注解错误！
 
@@ -267,6 +274,8 @@ solved： 创建restController，在service中autowired，原因：
 ?# The @ConfigurationProperties annotation injects null values when decorates a @Bean method in a @Configuration class
 https://github.com/micronaut-projects/micronaut-spring/issues/19
 https://www.bbsmax.com/A/B0zqgpZr5v/
+
+---
 
 ref：
 

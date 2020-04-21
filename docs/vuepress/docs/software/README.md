@@ -31,6 +31,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/redis" >分布式缓存redis</a></li>
 		<li><a href="/docs/software/kafka" >分布式消息队列kafka</a></li>
 		<!--<li><a href="/docs/software/buildingblock/shiro">shiro登录和权限管理</a></li>-->
+		<li><a href="/docs/software/buildingblock/mybatis">玩转mybatis</a></li>
 	</ul>
 	<p>-------------------------</p>
 	<h3>数据库</h3>

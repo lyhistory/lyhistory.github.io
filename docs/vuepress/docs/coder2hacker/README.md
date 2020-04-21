@@ -10,6 +10,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 <div>
 	<h3>白帽黑客渗透技术入门</h3>
+	<span style="color:pink;">这个部分我会陆续筛选不敏感的内容慢慢更新,由于种种原因,这部分更新会比较缓慢,可以先加我知识星球;</span>
 	<ul>
 		<li><a href="/docs/coder2hacker/ch1_intro">Chapter 1．道德黑客和渗透测试介绍</a></li>
 		<li><a href="/docs/coder2hacker/ch2_web">Chapter 2．网络基础和web技术</a></li>

@@ -33,7 +33,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	  </h1>
   </div>
   <img class="header" src="/docs/docs_image/coder2hacker/kali.png"/>
-  <div style="max-width: 375px;
+  <div style="max-width: 500px;
   margin: auto;
   background-color: lightgreen;">
 	<p>
