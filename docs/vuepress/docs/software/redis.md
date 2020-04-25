@@ -398,3 +398,14 @@ Node XXXXX:6381 replied with error:
 ERR Unknown node XXXXXXXX
 
 redis-cli -h <ANY EXIST HOSTIP> -p <PORT> cluster meet <HOSTIP> <PORT>
+
+## 数据倾斜
+
+big key
+
+Scanning for big keys
+redis-cli --bigkeys
+
+https://programming.vip/docs/ali-yun-redis-big-key-search-tool.html
+
+

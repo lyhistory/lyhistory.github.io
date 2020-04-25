@@ -152,6 +152,9 @@ Injecting a Prototype Bean into a Singleton Bean Problem https://www.logicbig.co
 
 ** Spring AOP
 
+AOP是aspect oriented programing的简称，意为面向切面编程。 spring aop使用了动态代理技术在运行期织入增强的代码，使用了两种代理机制，一种是基于jdk的动态代理，另一种是基于CGLib的动态代理。
+详细请看深入理解代理模式设计模式：代理模式
+
 managed components & proxy(jdk proxy&cglib)
 
 > Whenever you declare a bean in XML or use @Component, @Service, or @Repository on a class targeted by Spring’s annotation component scanning (which is enabled by default for Spring Boot), that class is instantiated and managed as a singleton bean by the Spring framework.
@@ -175,7 +178,6 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 ```
-MyBatis is a fork from iBATIS,
 
 ---
 
