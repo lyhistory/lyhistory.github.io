@@ -29,6 +29,14 @@ javascript?typescript?
 > Typescript is a modern age Javascript development language. It is a statically compiled language to write clear and simple Javascript code. It can be run on Node js or any browser which supports ECMAScript 3 or newer versions.
 > Typescript provides optional static typing, classes, and interface. For a large JavaScript project adopting Typescript can bring you more robust software and easily deployable with a regular JavaScript application.
 
+javascript?ECMAScript?
+> ECMAScript 6.0（以下简称 ES6）是 JavaScript 语言的下一代标准,ECMAScript 和 JavaScript 的关系是，前者是后者的规格，后者是前者的一种实现（另外的 ECMAScript 方言还有 JScript 和 ActionScript）。日常场合，这两个词是可以互换的。
+> https://es6.ruanyifeng.com/#docs/intro
+
+ECMAScript6 VS ECMAScript5
+http://es6-features.org/#Constants
+
+
 ## 1. JavaScript
 
 latest version:ES6
@@ -235,6 +243,13 @@ Basic：
 Advanced:
 	+ Fragment
 	+ Higher-Order Components
+	
+
+Component:
+1)	class App extends React.Component{…​} is the method that creates a React component.
+2)	componentDidMount is the API invoked after React renders a component in the DOM.
+3)	render is the API that “draws” the component on the screen.
+
 
 ## 4.2 开发
 
@@ -369,3 +384,6 @@ Find out more about deployment here:
 
 **more: dependencies/import/router/typescript:**
 https://create-react-app.dev/docs
+
+React.js and Spring Data REST
+https://spring.io/guides/tutorials/react-and-spring-data-rest/

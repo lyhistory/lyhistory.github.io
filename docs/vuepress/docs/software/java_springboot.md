@@ -3,7 +3,7 @@
 
 自动配置、起步依赖、Actuator、命令行界面(CLI) 是Spring Boot最重要的4大核心特性
 
-## Spring IoC容器
+## 1.Spring IoC容器
 
 IoC容器是大管家，你只需要告诉它需要某个bean，它就把对应的实例（instance）扔给你，至于这个bean是否依赖其他组件，怎样完成它的初始化，根本就不需要你关心。
 
@@ -23,7 +23,7 @@ Spring提供了两种容器类型：BeanFactory和ApplicationContext：
 
 ![spring揭秘](/docs/docs_image/software/java/spring/java_spring_bean02.png)
 
-### Spring IoC容器的整个工作流程大致可以分为两个阶段：
+### 1.1 Spring IoC容器的整个工作流程大致可以分为两个阶段：
 
 **容器启动阶段**
 
@@ -52,10 +52,10 @@ IoC容器负责管理容器中所有bean的生命周期，而在bean生命周期
 org.springframework.beans.factory.config.BeanFactoryPostProcessor：
 允许我们在容器实例化相应对象之前，对注册到容器的BeanDefinition所保存的信息做一些额外的操作，比如修改bean定义的某些属性或者增加其他信息等。
 
-## AOP
+## 2. AOP
 
 
-## JavaConfig与常见Annotation
+## 3. JavaConfig与常见Annotation
 
 **1.JavaConfig**
 
@@ -175,7 +175,7 @@ public class AdditionalConfiguration {
 17、默认参数（通过 `SpringApplication.setDefaultProperties` 指定）；
 ```
 
-## SpringFactoriesLoader
+## 4. SpringFactoriesLoader
 
 JVM提供了3种类加载器： BootstrapClassLoader、 ExtClassLoader、 AppClassLoader分别加载Java核心类库、扩展类库以及应用的类路径( CLASSPATH)下的类库。JVM通过双亲委派模型进行类的加载，我们也可以通过继承 java.lang.classloader实现自己的类加载器。
 
@@ -185,7 +185,7 @@ JVM提供了3种类加载器： BootstrapClassLoader、 ExtClassLoader、 AppCla
 
 SpringFactoriesLoader，它本质上属于Spring框架私有的一种扩展方案，类似于SPI，Spring Boot在Spring基础上的很多核心功能都是基于此
 
-## Spring容器的事件监听机制
+## 5. Spring容器的事件监听机制
 
 Java提供了实现事件监听机制的两个基础类：自定义事件类型扩展自 java.util.EventObject、事件的监听器扩展自 java.util.EventListener
 
@@ -199,7 +199,7 @@ ApplicationContext接口继承了ApplicationEventPublisher接口，该接口提�
 
 最后，如果我们业务需要在容器内部发布事件，只需要为其注入ApplicationEventPublisher依赖即可：实现ApplicationEventPublisherAware接口或者ApplicationContextAware接口
 
-## 自动配置原理
+## 6. 自动配置原理
 
 @SpringBootApplication开启组件扫描和自动配置，而 SpringApplication.run则负责启动引导应用程序。 @SpringBootApplication是一个复合 Annotation，它将三个注解组合在一起：
 
@@ -210,6 +210,10 @@ ApplicationContext接口继承了ApplicationEventPublisher接口，该接口提�
 **@EnableAutoConfiguration**注解：
 	表示开启Spring Boot自动配置功能，Spring Boot会根据应用的依赖、自定义的bean、classpath下有没有某个类 等等因素来猜测你需要的bean，然后注册到IOC容器中;
 	enable [Spring Boot’s auto-configuration mechanism](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using-boot-auto-configuration)
+
+> You should only ever add one @SpringBootApplication or @EnableAutoConfiguration annotation. We generally recommend that you add one or the other to your primary @Configuration class only.
+> https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using-boot-auto-configuration
+
 ```
 @Target(value=TYPE)
  @Retention(value=RUNTIME)
@@ -303,9 +307,9 @@ public class DataSourceProperties implements BeanClassLoaderAware, InitializingB
 @Import({ Registrar.class, DataSourcePoolMetadataProvidersConfiguration.class })：导入其他额外的配置，就以DataSourcePoolMetadataProvidersConfiguration为例吧,
 DataSourcePoolMetadataProvidersConfiguration是数据库连接池提供者的一个配置类，即Classpath中存在 org.apache.tomcat.jdbc.pool.DataSource.class，则使用tomcat-jdbc连接池，如果Classpath中存在 HikariDataSource.class则使用Hikari连接池。
 
-## SpringApplication启动流程
+## 7. SpringApplication启动流程
 
-### 1. SpringApplication初始化
+### 7.1. SpringApplication初始化
 
 SpringBoot整个启动流程分为两个步骤：初始化一个SpringApplication对象、执行该对象的run方法。看下SpringApplication的初始化流程，SpringApplication的构造方法：
 
@@ -329,7 +333,7 @@ Spring Boot提供两种方式来添加自定义监听器：
 
 既然SpringApplication的初始化流程中已经从 spring.factories中获取到 ApplicationListener的实现类，那么我们直接在自己的jar包的 META-INF/spring.factories文件中新增配置即可：
 
-### 2. 启动流程
+### 7.2. 启动流程
 
 Spring Boot应用的整个启动流程都封装在SpringApplication.run方法中，其整个流程真的是太长太长了，但本质上就是在Spring容器启动的基础上做了大量的扩展，按照这个思路来看看源码
 ```
@@ -414,7 +418,7 @@ SpringApplicationRunListener只有一个实现类： EventPublishingRunListener�
 这就是Spring Boot的整个启动流程，其核心就是在Spring容器初始化并启动的基础上加入各种扩展点，这些扩展点包括：ApplicationContextInitializer、ApplicationListener以及各种BeanFactoryPostProcessor等等
 
 
-## 使用
+## 8. 使用
 
 spring boot官方提供了很多现成的starter，可以直接引用其depdendency使用比如 
 spring-boot-starter-web，spring-boot-starter-jdbc
