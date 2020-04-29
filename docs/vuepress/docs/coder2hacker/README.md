@@ -34,3 +34,13 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		红队 Cobalt Strike 4.0 https://www.cobaltstrike.com/
 	</ul>
 </div>
+
+<div style="background-color:bisque;">
+	<span>##欢迎资助我的创作 Welcome to support my creation##</span>
+	<ul>
+		<ol>比特币BITCOIN:&nbsp;<strong>1No1oynpA9WQQkZUFCUoy6bq9P1ZTs9rA3</strong></ol>
+		<ol>匿名币ZCASH:&nbsp;&nbsp;&nbsp;<strong>t1J1uyuQuPJrgBGpJjf8mB9QvMjGuCWrv4C</strong></ol>
+		<ol>以太币ETH:&nbsp;&nbsp;&nbsp;&nbsp;<strong>0x93b4ec8ed7f1fad2107cdad30fd9ecec3f7975fe</strong></ol>
+		<ol>柚子币EOS:&nbsp;&nbsp;&nbsp;&nbsp;<strong>eos4donation</strong></ol>
+	</ul>
+</div>

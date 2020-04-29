@@ -3,7 +3,7 @@ module.exports = {
   base: '/docs/',
   
   title: '计算机基础教程',
-  description: '软件开发教程，渗透测试入门教程，区块链入门教程，物联网，大数据',
+  description: '软件开发教程，白帽黑客入门教程，区块链入门教程，物联网，大数据',
   markdown: {
 	  extractHeaders: [ 'h2', 'h3', 'h4', 'h5' ]
   },
@@ -12,7 +12,7 @@ module.exports = {
     nav: [
       { text: '机器指令', link: '/' },
 	  { text: '软件基础', link: '/software/' },
-      { text: '渗透测试', link: '/coder2hacker/' },
+      { text: '白帽黑客', link: '/coder2hacker/' },
       { text: '区块链', link: '/blockchain/' }
     ]
 	

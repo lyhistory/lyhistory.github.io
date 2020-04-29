@@ -8,6 +8,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 <img class="header" src="/docs/docs_image/blockchain/bitcoin.png"/>
 <!--Private: <a href="https://github.com/lyhistory/learn_coding/blob/master/blockchain/courselist.md">课程列表</a>-->
+
 <div>
 	<h3>区块链入门</h3>
 	<ul>
@@ -18,6 +19,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/blockchain/ethereum/eth_dev">以太坊:开发基础</a></li>
 		<li><a href="/docs/blockchain/ethereum/eth_solidity">以太坊:solidity</a></li>
 		<li><a href="/docs/blockchain/ethereum/eth_erc">以太坊:ERC</a></li>
+		<li><a href="/docs/blockchain/ethereum/eth_web3">以太坊:web3踩坑记录</a></li>
 		<li><a href="/docs/blockchain/ecosystem/eos_dev">EOS:基础</a></li>
 		<li><a href="/docs/blockchain/ecosystem/nas_dev">NAS:基础</a></li>
 		<li>more to do....</li>
@@ -41,6 +43,16 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<ul>
 		<li><a href="/docs/blockchain/wallets" >钱包使用</a></li>
 		<li><a href="/docs/blockchain/ecosystem/crypto" >主流项目简介</a></li>
+	</ul>
+</div>
+
+<div style="background-color:bisque;">
+	<span>##欢迎资助我的创作 Welcome to support my creation##</span>
+	<ul>
+		<ol>比特币BITCOIN:&nbsp;<strong>1No1oynpA9WQQkZUFCUoy6bq9P1ZTs9rA3</strong></ol>
+		<ol>匿名币ZCASH:&nbsp;&nbsp;&nbsp;<strong>t1J1uyuQuPJrgBGpJjf8mB9QvMjGuCWrv4C</strong></ol>
+		<ol>以太币ETH:&nbsp;&nbsp;&nbsp;&nbsp;<strong>0x93b4ec8ed7f1fad2107cdad30fd9ecec3f7975fe</strong></ol>
+		<ol>柚子币EOS:&nbsp;&nbsp;&nbsp;&nbsp;<strong>eos4donation</strong></ol>
 	</ul>
 </div>
 
