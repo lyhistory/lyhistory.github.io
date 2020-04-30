@@ -21,6 +21,7 @@ spring boot不只是框架，还是spring cloud的一部分，spring cloud是微
 spring是建筑材料，spring boot是脚手架，spring cloud就是行业规范，采用行业规范的开发模式有利于IT更好的服务business和业务拓展
 
 ## 1. Overview
+
 ### 1.1 SOA?微服务?
 我们常说用spring boot构建微服务，又说spring cloud构建微服务，他们到底是什么关系？
 
@@ -66,94 +67,14 @@ https://start.spring.io/
 https://www.tutorialspoint.com/spring/spring_quick_guide.htm
 https://docs.spring.io/spring/docs/5.1.6.RELEASE/spring-framework-reference/ (spring boot 2.1.4 depend on spring 5.1.6)
 
-** architecture
+** architecture**
 ![](/docs/docs_image/software/java/java_spring01.png)
 
-** Beans
-https://www.tutorialspoint.com/spring/spring_bean_definition.htm
-
-Components(@Component @Service @Controller @Repository) vs beans (@Beans)
-all component types are treated in the same way. The subtypes are mere markers, think code readability rather than features.
-https://www.tomaszezula.com/2014/02/09/spring-series-part-5-component-vs-bean/
-
-** Scan&Autowire
-```
-package org.springframework.beans.factory.annotation;
-/**
-	 * Class representing injection information about an annotated field.
-	 */
-	private class AutowiredFieldElement extends InjectionMetadata.InjectedElement {
-
-		private final boolean required;
-
-		private volatile boolean cached = false;
-
-		@Nullable
-		private volatile Object cachedFieldValue;
-
-		public AutowiredFieldElement(Field field, boolean required) {
-			super(field, null);
-			this.required = required;
-		}
-
-		@Override
-		protected void inject(Object bean, @Nullable String beanName, @Nullable PropertyValues pvs) throws Throwable {
-			Field field = (Field) this.member;
-			Object value;
-			if (this.cached) {
-				value = resolvedCachedArgument(beanName, this.cachedFieldValue);
-			}
-			else {
-				DependencyDescriptor desc = new DependencyDescriptor(field, this.required);
-				desc.setContainingClass(bean.getClass());
-				Set<String> autowiredBeanNames = new LinkedHashSet<>(1);
-				Assert.state(beanFactory != null, "No BeanFactory available");
-				TypeConverter typeConverter = beanFactory.getTypeConverter();
-				try {
-					value = beanFactory.resolveDependency(desc, beanName, autowiredBeanNames, typeConverter);
-				}
-				catch (BeansException ex) {
-					throw new UnsatisfiedDependencyException(null, beanName, new InjectionPoint(field), ex);
-				}
-				synchronized (this) {
-					if (!this.cached) {
-						if (value != null || this.required) {
-							this.cachedFieldValue = desc;
-							registerDependentBeans(beanName, autowiredBeanNames);
-							if (autowiredBeanNames.size() == 1) {
-								String autowiredBeanName = autowiredBeanNames.iterator().next();
-								if (beanFactory.containsBean(autowiredBeanName) &&
-										beanFactory.isTypeMatch(autowiredBeanName, field.getType())) {
-									this.cachedFieldValue = new ShortcutDependencyDescriptor(
-											desc, autowiredBeanName, field.getType());
-								}
-							}
-						}
-						else {
-							this.cachedFieldValue = null;
-						}
-						this.cached = true;
-					}
-				}
-			}
-			if (value != null) {
-				ReflectionUtils.makeAccessible(field);
-				field.set(bean, value);
-			}
-		}
-	}
-```
-
-Autowire vs getbean
-Injecting a Prototype Bean into a Singleton Bean Problem https://www.logicbig.com/tutorials/spring-framework/spring-core/injecting-singleton-with-prototype-bean.html
-
-> You can then use getBean to retrieve instances of your beans. The ApplicationContext interface has a few other methods for retrieving beans, but, ideally, your application code should never use them. Indeed, your application code should have no calls to the getBean() method at all and thus have no dependency on Spring APIs at all.
-> https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html
-
-** Spring AOP
+** Spring AOP **
 
 AOP是aspect oriented programing的简称，意为面向切面编程。 spring aop使用了动态代理技术在运行期织入增强的代码，使用了两种代理机制，一种是基于jdk的动态代理，另一种是基于CGLib的动态代理。
 详细请看深入理解代理模式设计模式：代理模式
+https://www.baeldung.com/spring-aop
 
 managed components & proxy(jdk proxy&cglib)
 
@@ -162,6 +83,12 @@ managed components & proxy(jdk proxy&cglib)
 https://docs.spring.io/spring/docs/2.5.x/reference/aop.html
 
 https://www.credera.com/blog/technology-insights/open-source-technology-insights/aspect-oriented-programming-in-spring-boot-part-2-spring-jdk-proxies-vs-cglib-vs-aspectj/
+
+通过aop拦截mybatis接口dao
+https://blog.csdn.net/zkn_CS_DN_2013/article/details/52798447
+Spring / MyBatis——插件机制（AOP）
+https://blog.csdn.net/qq_22078107/article/details/85781594
+https://blog.csdn.net/u012525096/article/details/82389240
 
 
 ** 代理
@@ -182,6 +109,8 @@ public class Application {
 ---
 
 ## 3.SpringBoot Framework
+
+[springboot原理解析在这里](docs/software/java_springboot)
 
 > While the Spring framework focuses on providing flexibility to you, Spring Boot aims to shorten the code length and provide you with the easiest way to develop a web application. With annotation configuration and default codes, Spring Boot shortens the time involved in developing an application.
 > https://www.tutorialspoint.com/spring_boot/index.htm
@@ -307,7 +236,7 @@ https://www.baeldung.com/spring-boot-dependency-management-custom-parent
 </properties>
 ```
 
-### 3.3Integration 
+### 3.3 Integration 
 
 #### 3.3.1 redis
 @Autowired
@@ -321,6 +250,10 @@ Which type of injection??
 深度解析SpringBoot2.x整合Spring-Data-Redis https://www.itcodemonkey.com/article/13627.html
 
 #### [3.3.2 Shiro](/docs/software/buildingblock/shiro)
+
+#### more
+
+Thymeleaf https://www.baeldung.com/thymeleaf-in-spring-mvc
 
 ## 4. Spring Cloud 
 

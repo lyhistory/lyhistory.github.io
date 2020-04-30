@@ -3,9 +3,15 @@
 
 自动配置、起步依赖、Actuator、命令行界面(CLI) 是Spring Boot最重要的4大核心特性
 
-## 1.Spring IoC容器
+## 1.知识点Overview
+
+### 1.1 Spring IoC容器
 
 IoC容器是大管家，你只需要告诉它需要某个bean，它就把对应的实例（instance）扔给你，至于这个bean是否依赖其他组件，怎样完成它的初始化，根本就不需要你关心。
+
+bean是什么？
+> The objects that form the backbone of your application and that are managed by the Spring IoC container are called beans. A bean is an object that is instantiated, assembled, and otherwise managed by a Spring IoC container. 
+> https://www.tutorialspoint.com/spring/spring_bean_definition.htm
 
 IoC容器想要管理各个业务对象以及它们之间的依赖关系，需要通过某种途径来记录和管理这些信息。 
 BeanDefinition对象就承担了这个责任：容器中的每一个bean都会有一个对应的BeanDefinition实例，该实例负责保存bean对象的所有必要信息，包括bean对象的class类型、是否是抽象类、构造方法和参数、其它属性等等。
@@ -23,57 +29,61 @@ Spring提供了两种容器类型：BeanFactory和ApplicationContext：
 
 ![spring揭秘](/docs/docs_image/software/java/spring/java_spring_bean02.png)
 
-### 1.1 Spring IoC容器的整个工作流程大致可以分为两个阶段：
+**Spring IoC容器的整个工作流程大致可以分为两个阶段：**
 
-**容器启动阶段**
++ 容器启动阶段
 
-容器启动时，会通过某种途径加载 ConfigurationMetaData，
-ConfigurationMetaData可能定义在代码中，比如注解方式，也可能在在外部配置文件(XML/Properties)中，
-，容器需要依赖某些工具类如BeanDefinitionReader，BeanDefinitionReader会对加载的 ConfigurationMetaData进行解析和分析，并将分析后的信息组装为相应的BeanDefinition，
-最后把这些保存了bean定义的BeanDefinition，注册到相应的BeanDefinitionRegistry，
-这样容器的启动工作就完成了。
+	容器启动时，会通过某种途径加载 ConfigurationMetaData，
+	ConfigurationMetaData可能定义在代码中，比如注解方式，也可能在在外部配置文件(XML/Properties)中，
+	，容器需要依赖某些工具类如BeanDefinitionReader，BeanDefinitionReader会对加载的 ConfigurationMetaData进行解析和分析，并将分析后的信息组装为相应的BeanDefinition，
+	最后把这些保存了bean定义的BeanDefinition，注册到相应的BeanDefinitionRegistry，
+	这样容器的启动工作就完成了。
 
-**Bean的实例化阶段**
++ Bean的实例化阶段
 
-这个阶段触发是:当某个请求通过容器的getBean方法请求某个对象，或者因为依赖关系容器需要隐式的调用getBean时（如bean的注解@DependsOn 或者Autowired）;
-容器会首先检查所请求的对象之前是否已经实例化完成。如果没有，则会根据注册的BeanDefinition所提供的信息实例化被请求对象，并为其注入依赖。当该对象装配完毕后，容器会立即将其返回给请求方法使用。
+	这个阶段触发是:当某个请求通过容器的getBean方法请求某个对象，或者因为依赖关系容器需要隐式的调用getBean时（如bean的注解@DependsOn 或者Autowired）;
+	容器会首先检查所请求的对象之前是否已经实例化完成。如果没有，则会根据注册的BeanDefinition所提供的信息实例化被请求对象，并为其注入依赖。当该对象装配完毕后，容器会立即将其返回给请求方法使用。
 
-BeanFactory只是Spring IoC容器的一种实现，如果没有特殊指定，它采用采用延迟初始化策略：只有当访问容器中的某个对象时，才对该对象进行初始化和依赖注入操作。
-对于资源有限，并且功能要求不是很严格的场景，BeanFactory是比较合适的IoC容器选择。
+	_Notes:Autowire vs getbean_
+	> Injecting a Prototype Bean into a Singleton Bean Problem https://www.logicbig.com/tutorials/spring-framework/spring-core/injecting-singleton-with-prototype-bean.html
 
-而在实际场景下，我们更多的使用另外一种类型的容器： ApplicationContext，它构建在BeanFactory之上，属于更高级的容器，除了具有BeanFactory的所有能力之外，还提供对事件监听机制以及国际化的支持等。它管理的bean，在容器启动时全部完成初始化和依赖注入操作。
-ApplicationContext所管理的对象，在该类型容器启动之后，默认全部初始化并绑定完成。所以，相对于BeanFactory来说，ApplicationContext要求更多的系统资源，同时，因为在启动时就完成所有初始化，容器启动时间较之BeanFactory也会长一些。
-在那些系统资源充足，并且要求更多功能的场景中，ApplicationContext类型的容器是比较合适的选择。
+	> You can then use getBean to retrieve instances of your beans. The ApplicationContext interface has a few other methods for retrieving beans, but, ideally, your application code should never use them. Indeed, your application code should have no calls to the getBean() method at all and thus have no dependency on Spring APIs at all.
+	> https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html
+
+	BeanFactory只是Spring IoC容器的一种实现，如果没有特殊指定，它采用采用延迟初始化策略：只有当访问容器中的某个对象时，才对该对象进行初始化和依赖注入操作。
+	对于资源有限，并且功能要求不是很严格的场景，BeanFactory是比较合适的IoC容器选择。
+
+	而在实际场景下，我们更多的使用另外一种类型的容器： ApplicationContext，它构建在BeanFactory之上，属于更高级的容器，除了具有BeanFactory的所有能力之外，还提供对事件监听机制以及国际化的支持等。它管理的bean，在容器启动时全部完成初始化和依赖注入操作。
+	ApplicationContext所管理的对象，在该类型容器启动之后，默认全部初始化并绑定完成。所以，相对于BeanFactory来说，ApplicationContext要求更多的系统资源，同时，因为在启动时就完成所有初始化，容器启动时间较之BeanFactory也会长一些。
+	在那些系统资源充足，并且要求更多功能的场景中，ApplicationContext类型的容器是比较合适的选择。
 
 **bean生命周期接口**
 
-IoC容器负责管理容器中所有bean的生命周期，而在bean生命周期的不同阶段，Spring提供了不同的扩展点来改变bean的命运
+IoC容器负责管理容器中所有bean的生命周期，而在bean生命周期的不同阶段，Spring提供了不同的扩展点来改变bean的命运，例如EnvironmentPostProcessor、BeanFactoryPostProcessor等（具体参照：第2节 SpringApplication启动流程）:
 
-org.springframework.beans.factory.config.BeanFactoryPostProcessor：
-允许我们在容器实例化相应对象之前，对注册到容器的BeanDefinition所保存的信息做一些额外的操作，比如修改bean定义的某些属性或者增加其他信息等。
+### 1.2. JavaConfig与常见Annotation
 
-## 2. AOP
-
-
-## 3. JavaConfig与常见Annotation
-
-**1.JavaConfig**
+**1.2.1. JavaConfig**
 
 @SpringBootApplication 等同于 @EnableAutoConfiguration + @ComponentScan + @Configuration, 后面启动原理部分有详解
 
 All of your application components (@Component, @Service, @Repository, @Controller etc.) are automatically registered as Spring Beans.
 
-**2.@ComponentScan**
+Components(@Component @Service @Controller @Repository) VS Beans (@Beans):
+all component types are treated in the same way. The subtypes are mere markers, think code readability rather than features.
+https://www.tomaszezula.com/2014/02/09/spring-series-part-5-component-vs-bean/
 
-**3.@Import**
+**1.2.2. @ComponentScan**
+
+**1.2.3. @Import**
 
 在4.2之前， @Import注解只支持导入配置类，但是在4.2之后，它支持导入普通类
 
-**4.@Conditional @ConditionalOn\***
+**1.2.4. @Conditional @ConditionalOn\***
 
 表示在满足某种条件后才初始化一个bean或者启用某些配置。它一般用在由 @Component、 @Service、 @Configuration等注解标识的类上面，或者由 @Bean标记的方法上。如果一个 @Configuration类标记了 @Conditional，则该类中所有标识了 @Bean的方法和 @Import注解导入的相关类将遵从这些条件。
 
-**5.@ConfigurationProperties与@EnableConfigurationProperties**
+**1.2.5. @ConfigurationProperties与@EnableConfigurationProperties**
 
 当某些属性的值需要配置的时候，我们一般会在 application.properties文件中新建配置项，然后在bean中使用 @Value注解来获取配置的值;
 
@@ -138,7 +148,7 @@ public class AdditionalConfiguration {
 }
 ```
 
-配置属性加载顺序
+**1.2.6 配置属性加载顺序**
 ```
 1、开发者工具 `Devtools` 全局配置参数；
 
@@ -175,7 +185,7 @@ public class AdditionalConfiguration {
 17、默认参数（通过 `SpringApplication.setDefaultProperties` 指定）；
 ```
 
-## 4. SpringFactoriesLoader
+### 1.3. 启动加载器 SpringFactoriesLoader
 
 JVM提供了3种类加载器： BootstrapClassLoader、 ExtClassLoader、 AppClassLoader分别加载Java核心类库、扩展类库以及应用的类路径( CLASSPATH)下的类库。JVM通过双亲委派模型进行类的加载，我们也可以通过继承 java.lang.classloader实现自己的类加载器。
 
@@ -185,7 +195,7 @@ JVM提供了3种类加载器： BootstrapClassLoader、 ExtClassLoader、 AppCla
 
 SpringFactoriesLoader，它本质上属于Spring框架私有的一种扩展方案，类似于SPI，Spring Boot在Spring基础上的很多核心功能都是基于此
 
-## 5. Spring容器的事件监听机制
+### 1.4. Spring容器的事件监听机制
 
 Java提供了实现事件监听机制的两个基础类：自定义事件类型扩展自 java.util.EventObject、事件的监听器扩展自 java.util.EventListener
 
@@ -199,21 +209,24 @@ ApplicationContext接口继承了ApplicationEventPublisher接口，该接口提�
 
 最后，如果我们业务需要在容器内部发布事件，只需要为其注入ApplicationEventPublisher依赖即可：实现ApplicationEventPublisherAware接口或者ApplicationContextAware接口
 
-## 6. 自动配置原理
+### 1.5. 自动配置原理
 
-@SpringBootApplication开启组件扫描和自动配置，而 SpringApplication.run则负责启动引导应用程序。 @SpringBootApplication是一个复合 Annotation，它将三个注解组合在一起：
+@SpringBootApplication开启**组件扫描和自动配置**，
+而 SpringApplication.run则负责**启动引导应用程序**。 @SpringBootApplication是一个复合 Annotation，它将三个注解组合在一起：
 
-**@SpringBootConfiguration**就是 @Configuration，它是Spring框架的注解，标明该类是一个 JavaConfig配置类; allow to register extra beans in the context or import additional configuration classes;
+- **@SpringBootConfiguration**就是 @Configuration，它是Spring框架的注解，标明该类是一个 JavaConfig配置类; allow to register extra beans in the context or import additional configuration classes;
 
-**@ComponentScan**启用组件扫描;enable @Component scan on the package where the application is located;
+- **@ComponentScan**启用组件扫描;enable @Component scan on the package where the application is located;
 
-**@EnableAutoConfiguration**注解：
+- **@EnableAutoConfiguration**注解：
 	表示开启Spring Boot自动配置功能，Spring Boot会根据应用的依赖、自定义的bean、classpath下有没有某个类 等等因素来猜测你需要的bean，然后注册到IOC容器中;
 	enable [Spring Boot’s auto-configuration mechanism](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using-boot-auto-configuration)
 
+_Notes:_
 > You should only ever add one @SpringBootApplication or @EnableAutoConfiguration annotation. We generally recommend that you add one or the other to your primary @Configuration class only.
 > https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using-boot-auto-configuration
 
+开始讲解原理，先看EnableAutoConfiguration：
 ```
 @Target(value=TYPE)
  @Retention(value=RUNTIME)
@@ -251,7 +264,7 @@ https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/s
 org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,\
 .....
 ```
-
+然后举例看 DataSourceAutoConfiguration：
 ```
 https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/jdbc/DataSourceAutoConfiguration.java
 @Configuration(proxyBeanMethods = false)
@@ -262,10 +275,9 @@ https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/s
 public class DataSourceAutoConfiguration {
 ```
 @ConditionalOnClass({DataSource.class,EmbeddedDatabaseType.class})：当Classpath中存在DataSource或者EmbeddedDatabaseType类时才启用这个配置，否则这个配置将被忽略。
-
+注意上面的DataSourceProperties，
 @EnableConfigurationProperties(DataSourceProperties.class)：将DataSource的默认配置类注入到IOC容器中，DataSourceproperties定义为：
 ```
-
 @ConfigurationProperties(prefix = "spring.datasource")
 public class DataSourceProperties implements BeanClassLoaderAware, InitializingBean {
 	private ClassLoader classLoader;
@@ -304,12 +316,14 @@ public class DataSourceProperties implements BeanClassLoaderAware, InitializingB
 	private String password;
 	
 ```
+很清晰对应配置spring.datasource，然后是连接池配置：
+
 @Import({ Registrar.class, DataSourcePoolMetadataProvidersConfiguration.class })：导入其他额外的配置，就以DataSourcePoolMetadataProvidersConfiguration为例吧,
 DataSourcePoolMetadataProvidersConfiguration是数据库连接池提供者的一个配置类，即Classpath中存在 org.apache.tomcat.jdbc.pool.DataSource.class，则使用tomcat-jdbc连接池，如果Classpath中存在 HikariDataSource.class则使用Hikari连接池。
 
-## 7. SpringApplication启动流程
+## 2. SpringApplication启动流程
 
-### 7.1. SpringApplication初始化
+### 2.1. SpringApplication初始化
 
 SpringBoot整个启动流程分为两个步骤：初始化一个SpringApplication对象、执行该对象的run方法。看下SpringApplication的初始化流程，SpringApplication的构造方法：
 
@@ -325,17 +339,17 @@ public SpringApplication(ResourceLoader resourceLoader, Class<?>... primarySourc
 }
 ```
 
-初始化流程中最重要的就是通过SpringFactoriesLoader找到 spring.factories文件中配置的 ApplicationContextInitializer和 ApplicationListener两个接口的实现类名称，以便后期构造相应的实例。 ApplicationContextInitializer的主要目的是在 ConfigurableApplicationContext做refresh之前，对ConfigurableApplicationContext实例做进一步的设置或处理。ConfigurableApplicationContext继承自ApplicationContext，其主要提供了对ApplicationContext进行设置的能力。
+初始化流程中最重要的就是通过 SpringFactoriesLoader 找到 spring.factories 文件中配置的 ApplicationContextInitializer 和 ApplicationListener 两个接口的实现类名称，以便后期构造相应的实例。 ApplicationContextInitializer 的主要目的是在 ConfigurableApplicationContext 做 refresh之前，对ConfigurableApplicationContext实例做进一步的设置或处理。ConfigurableApplicationContext继承自 ApplicationContext ，其主要提供了对 ApplicationContext 进行设置的能力。
 
-Spring Boot提供两种方式来添加自定义监听器：
+Spring Boot提供两种方式来添加**自定义监听器**：
 
 通过 SpringApplication.addListeners()或者 SpringApplication.setListeners()两个方法来添加一个或者多个自定义监听器
 
 既然SpringApplication的初始化流程中已经从 spring.factories中获取到 ApplicationListener的实现类，那么我们直接在自己的jar包的 META-INF/spring.factories文件中新增配置即可：
 
-### 7.2. 启动流程
+### 2.2. 启动流程
 
-Spring Boot应用的整个启动流程都封装在SpringApplication.run方法中，其整个流程真的是太长太长了，但本质上就是在Spring容器启动的基础上做了大量的扩展，按照这个思路来看看源码
+Spring Boot应用的整个启动流程都封装在 SpringApplication.run 方法中，其整个流程真的是太长太长了，但本质上就是在Spring容器启动的基础上做了大量的扩展，按照这个思路来看看源码
 ```
 /**
 	 * Run the Spring application, creating and refreshing a new
@@ -385,17 +399,18 @@ Spring Boot应用的整个启动流程都封装在SpringApplication.run方法中
 	}
 ```
 
-1) 通过SpringFactoriesLoader查找并加载所有的 SpringApplicationRunListeners，通过调用starting()方法通知所有的SpringApplicationRunListener：应用开始启动了。SpringApplicationRunListener其本质上就是一个事件发布者，它在SpringBoot应用启动的不同时间点发布不同应用事件类型(ApplicationEvent)，如果有哪些事件监听者(ApplicationListener)对这些事件感兴趣，则可以接收并且处理。前面的初始化流程中，SpringApplication加载了一系列ApplicationListener。发布事件的代码已经在SpringApplicationRunListeners中实现了。
-SpringApplicationRunListener只有一个实现类： EventPublishingRunListener。1处的代码只会返回一个SpringApplicationRunListeners ，注意后面多了一个s字母，看下源码就会发现该类就是包含了一个SpringApplicationRunListener的List。操作SpringApplicationRunListeners ，在内部会遍历每一个SpringApplicationRunListener，调用每一个SpringApplicationRunListener的实现类的starting方法
+1) 通过 SpringFactoriesLoader 查找并加载所有的 SpringApplicationRunListeners，通过调用starting()方法通知所有的SpringApplicationRunListener：应用开始启动了。SpringApplicationRunListener 其本质上就是一个事件发布者，它在SpringBoot应用启动的不同时间点发布不同应用事件类型(ApplicationEvent)，如果有哪些事件监听者(ApplicationListener)对这些事件感兴趣，则可以接收并且处理。前面的初始化流程中，SpringApplication 加载了一系列 ApplicationListener。发布事件的代码已经在SpringApplicationRunListeners中实现了。
+SpringApplicationRunListener只有一个实现类： EventPublishingRunListener。此处的代码只会返回一个 SpringApplicationRunListeners ，注意后面多了一个s字母，看下源码就会发现该类就是包含了一个SpringApplicationRunListener的List。操作SpringApplicationRunListeners ，在内部会遍历每一个SpringApplicationRunListener，调用每一个SpringApplicationRunListener的实现类的starting方法
 
 2) 创建并配置当前应用将要使用的 Environment，Environment用于描述应用程序当前的运行环境，其抽象了两个方面的内容：配置文件(profile)和属性(properties)，开发经验丰富的同学对这两个东西一定不会陌生：不同的环境(eg：生产环境、预发布环境)可以使用不同的配置文件，而属性则可以从配置文件、环境变量、命令行参数等来源获取。因此，当Environment准备好后，在整个应用的任何时候，都可以从Environment中获取资源。
-总结起来，主要完成以下几件事：
 
-判断Environment是否存在，不存在就创建（如果是web项目就创建 StandardServletEnvironment，否则创建 StandardEnvironment）
+	总结起来，主要完成以下几件事：
 
-配置Environment：配置profile以及properties
+	- 判断Environment是否存在，不存在就创建（如果是web项目就创建 StandardServletEnvironment，否则创建 StandardEnvironment）
 
-调用SpringApplicationRunListener的 environmentPrepared()方法，通知事件监听者：应用的Environment已经准备好
+	- 配置Environment：配置profile以及properties
+
+	- 调用SpringApplicationRunListener的 environmentPrepared()方法，通知事件监听者：应用的Environment已经准备好
 
 3) 打印Banner图案
 
@@ -403,22 +418,30 @@ SpringApplicationRunListener只有一个实现类： EventPublishingRunListener�
 
 5) 初始化ApplicationContext，主要完成以下工作：
 
-将准备好的Environment设置给ApplicationContext
+	- 将准备好的Environment设置给ApplicationContext
 
-遍历调用所有的ApplicationContextInitializer的 initialize()方法来对已经创建好的ApplicationContext进行进一步的处理
+	- 遍历调用所有的ApplicationContextInitializer的 initialize()方法来对已经创建好的ApplicationContext进行进一步的处理
 
-调用SpringApplicationRunListener的 contextPrepared()方法，通知所有的监听者：ApplicationContext已经准备完毕
+	- 调用SpringApplicationRunListener的 contextPrepared()方法，通知所有的监听者：ApplicationContext已经准备完毕
 
-将所有的bean加载到容器中
+	- 将所有的bean加载到容器中
 
-调用SpringApplicationRunListener的 contextLoaded()方法，通知所有的监听者：ApplicationContext已经装载完毕
+	- 调用SpringApplicationRunListener的 contextLoaded()方法，通知所有的监听者：ApplicationContext已经装载完毕
 
 6) refresh完成配置类的解析、各种BeanFactoryPostProcessor和BeanPostProcessor的注册、国际化配置的初始化、web内置容器的构造等等。
 
-这就是Spring Boot的整个启动流程，其核心就是在Spring容器初始化并启动的基础上加入各种扩展点，这些扩展点包括：ApplicationContextInitializer、ApplicationListener以及各种BeanFactoryPostProcessor等等
+以上就是Spring Boot的整个启动流程，其核心就是在Spring容器初始化并启动的基础上加入各种扩展点，这些扩展点包括：
+- ApplicationContextInitializer
+- ApplicationListener
+- 自动配置自定义
+	org.springframework.boot.env.EnvironmentPostProcessor:
+	Allows for customization of the application's {@link Environment} prior to the application context being refreshed.
+- 各种BeanFactoryPostProcessor等等
+	org.springframework.beans.factory.config.BeanFactoryPostProcessor：
+	允许我们在容器实例化相应对象之前，对注册到容器的BeanDefinition所保存的信息做一些额外的操作，比如修改bean定义的某些属性或者增加其他信息等。
 
 
-## 8. 使用
+## 3. 使用springboot开发应用
 
 spring boot官方提供了很多现成的starter，可以直接引用其depdendency使用比如 
 spring-boot-starter-web，spring-boot-starter-jdbc

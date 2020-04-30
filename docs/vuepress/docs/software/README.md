@@ -26,7 +26,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/programming/webdev">web开发</a></li>
 		<!--<li><a href="/docs/software/programming/programming">编程基础</a></li>-->
 		<li><a href="/docs/software/java" >java实用基础</a></li>
-		<li><a href="/docs/software/java_spring" >基于SpringBoot的微服务</a></li>
+		<li><a href="/docs/software/java_spring" >基于spring分布式微服务入门</a></li>
 		<li><a href="/docs/software/java_springboot" >springboot原理解析</a></li>
 		<li><a href="/docs/software/zookeeper" >分布式框架zookeeper</a></li>
 		<li><a href="/docs/software/redis" >分布式缓存redis</a></li>
