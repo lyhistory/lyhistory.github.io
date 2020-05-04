@@ -75,3 +75,8 @@ cd /home/lyhistory/chia-blockchain
 
 . ./activate
 
+chia-create-plots -k 20 -n 10 -t /mnt/d/miner/chia/tmp_dir -d /mnt/d/miner/chia/final_dir
+chia-start-farmer &
+chia-start-wallet-server &
+
+

@@ -9,6 +9,11 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 ## 1.网络
 
 ### 1.1 网络基础
+
+详解具体参考：
++ [网络基础](/docs/software/network/network")
++ [Github系列网络事件记录](/docs/software/network/network2github")
+	
 网络分层根据协议栈有四层五层七层的不同分法
 
 + Layer 5: Application
@@ -106,6 +111,16 @@ HTTP request and response
 	The request header
 	The response header
 HTTP methods:GET/POST/HEAD/TRACE/PUT/DELETE/OPTION
+
++ "Simple" HTTP requests(can made by simple html, no javascript needed: form post, image src get..)
+	- An HTTP/1.1 GET, HEAD or a POST is the request method
+	- In the case of a POST, the Content-Type of the request body is one of application/x-www-form-urlencoded, multipart/form-data, or text/plain
+	- No custom HTTP headers are set (or, only CORS-safelisted headers are set)
++ "Preflighted" HTTP requests
+	- Before a "preflighted" requests can be sent to the target server, the browser must check that it is safe to send, 
+	So it first sends an HTTP request with the OPTIONS method to the same URL，
+	Browser sends OPTIONS request first to ask the server if the request we want to send is okay
+	- If server doesn't support OPTIONS (either because it is old or because it doesn't want to support preflighted requests) then, preflighted requests are denied
 
 Keeping sessions in HTTP
 Cookies

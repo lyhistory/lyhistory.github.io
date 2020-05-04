@@ -22,6 +22,8 @@ taskkill /F /PID 'PID'
 ping to start:
 %SystemRoot%\system32\cmd.exe /C "path to jar"
 
+Magnifier：Windows logo key‌  + Plus sign (+) 
+
 ---
 	
 LINUX

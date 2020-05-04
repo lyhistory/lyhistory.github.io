@@ -1,6 +1,6 @@
 who are you talking to ?
 
-client server
+client和server如何互相确认
 
 两个问题，client怎么知道自己是跟目标server通信，比如gmail服务器而不是黑客服务器；
 server怎么知道是这个用户在跟自己通信而不是
@@ -44,10 +44,16 @@ https通信是http建立在tls上，最新的tls1.3，client会validate server�
 第一次访问会返回response header携带public key或者subject public key info，一般都是一年才过期，client浏览器会记住对应的domain和public key信息，
 这样第一次（除外）之后，如果发生黑客劫持，黑客只要无法提供已经记录的public key信息（当然是需要签名的），或者说无法提供certificate chain上面的任何一个public key信息，
 则浏览器会拒绝或者warning；
-坏处是万一管理员配错了一次key，浏览器会记住一年，除了手动去清理（普通用户无法做到），没有办法revoke；
+坏处是万一管理员配错了一次key，浏览器会记住一年，除了手动去清理（普通用户无法做到），没有办法revoke，这就有个问题：
+Problem: hostile pinning
+If the unthinkable — server compromise! — happens, the attacker could set a new pin set for their own server. The attacker could:
+● Lock clients into the attacker’s server
+● Deny service to the site, long-term
+In many cases, though, server compromise enables so many extreme losses that hostile pinning pales in comparison.
+解决方案是这个http based key pinning header被Deprecated
 
 还有个有意思的问题，如果一个https网站，用户访问的时候不小心输入了http的连接，一般服务器端会301 redirect，这样就产生了安全问题，称为https strip，具体不再赘述，
-由这个问题引入了HSTS header，第一次访问（除外）之后都会在client浏览器端做306 internal redirect，直接将http加上s；
+由这个问题引入了HSTS header，第一次访问（除外）之后都会在client浏览器端做307 internal redirect，直接将http加上s；
 > Most users don’t specify the protocol in URLs typed into the address bar, so if you request www.netsparker.com (or just netsparker.com), the browser will assume the default HTTP protocol and send an HTTP request to http://www.netsparker.com. Because the Netsparker site uses HSTS to enforce HTTPS-only communication, it responds with a redirect to the HTTPS site (301 response code) and includes the Strict-Transport-Security response header to indicate that only the HTTPS version of the site will be served.
 > NTP Attacks on HSTS
 > For the present, HSTS is a fairly robust way of enforcing HTTPS connections. The only practical approach to compromising HSTS is based on attacks against the Network Time Protocol (NTP) that attempt to manipulate system time by faking time values from NTP servers. This allows attackers to fool the browser into expiring HSTS entries and allowing insecure HTTP connections. Note that this is not a problem intrinsic to HSTS – NTP vulnerabilities can also be used for attacks against other security technologies and protocols, including SSL/TLS, Kerberos and Active Directory.
@@ -88,11 +94,34 @@ https://security.stackexchange.com/questions/79518/what-are-hsts-super-cookies/7
 因为这是通信协议，不care很正常，但是应用层通常是需要根据业务需求对用户进行authenticate然后才能authorize，
 authenticate则通常是通过cookie和session的方式进行维护用户对话状态，这就引入了csrf，xssi，xss等攻击方式
 
-3.android app
+3.desktop software and app
 
 app和server之间可以通过https通信也可以通过其他协议通信，大致的攻防策略跟上面类似；
-不同的是，app我们开发之后是安装在用户端的，所以很自然的我们可以将前面说的key pinning公钥信息直接写死到app安装包里面，
+
+不同的是：
+
+app我们开发之后是安装在用户端的，所以很自然的我们可以将前面说的key pinning公钥信息直接写死到app安装包里面，
 app packaged and shipped with baked in public key, so it can verify the information from server;
+
+然后对于ios app，需要开发者签名，并且提交到apple，申请让apple签名，类似于CA的工作原理，这样才可以跟外界通信；
+
+然后对于桌面软件也是类似，分几种情况说明：
+
+1）桌面软件表现为跟浏览器类似的行为，走http通过internet去跟外界部署的比如某个web server通信，这样是默认允许的，一般操作系统默认80开启；
+
+2）但是如果反过来incoming connection，比如桌面软件自己开启了一个http server是比较危险的，具体参照我之前讲到的zoom漏洞案例分析，比如在本机监听某个端口（当然肯定是非80端口），
+如果不指定127.0.0.1，则默认绑定所有网卡（有时候是只绑定ipv6），这样局域网内任意机器都可以访问，当然默认防火墙会屏蔽掉外部连接过来的流量When bound to all interfaces, incoming connections are usually still blocked by the operating system firewall；
+如果需要从外部连接一般需要加防火墙设置，可以手动或者当你安装软件的时候，软件会自动设置（一般会问同意或者弹出admin权限请求“Windows firewall has blocked some features of this app”，一般没人去看）；
+如果是mac电脑，跟ios app一样，还需要申请apple的签名才能加入防火墙白名单！；
+经过这些设置，外界（软件的服务器端）就可以跟安装在用户电脑的应用发起通信了，当然软件内部肯定也要一份白名单来限制不要任意ip都能连过来！
+
+而我说软件在本地开启http server比较危险是因为，不管你设置没设置防火墙，黑客都无所谓，因为黑客可以这样做：
+当用户访问黑客站点时，站点上内嵌的指向localhost http server的请求，因为这是相当于本机内部请求，如果软件没写好，请求是会被执行的，具体的攻防涉及到same origin/preflight request/dns rebinding等，
+参考zoom案例分析，所以没事不要搞一个可以从普通浏览器就唤醒的http server（用户无察觉），可以搞一个其他协议的server，比如注册一个zoom://，浏览器不会直接执行而是去提醒用户唤醒软件，这样用户就会察觉！
+
+4.IOT设备
+
+跟前面都不同的是，很多IOT设备运行的操作系统都是极简化的，基本都没有防火墙，意味着可以直接从internet连上去！
 
 扩展：
 流量加密 vpn

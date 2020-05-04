@@ -209,11 +209,16 @@ Fireevent https://www.youtube.com/watch?v=OZ_XIgxbyiY
 
 Get svg https://codeday.me/bug/20181211/453475.html
 
+inspect on disappering element，有些元素是鼠标mouse hover才显示，所以直接用开发者工具inspect是不行的，
+需要在相关的parent上面右键设置一个Break on->subtree modifications
+
 总结：
 1.clickable li .click() ActionChain, execute
 2.get parent/child by xpath, dot .
 3.wait and time.sleep
 4.stale / not attached, re-query again
+5.Selenium Element not visible exception:
+ the html element is created from JavaScript, that is why webdriver cannot see it, use driver.execute_script("javascript code here")
 
 Serverless
 https://www.serverlessops.io/blog/serverless-contact-form-for-static-websites

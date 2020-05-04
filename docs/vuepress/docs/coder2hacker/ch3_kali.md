@@ -9,6 +9,9 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 Kalinux环境
 Kali linux for virtualbox或者手动安装
+https://www.offensive-security.com/kali-linux-vm-vmware-virtualbox-image-download/#1572305786534-030ce714-cc3b
+建议用官方优化过的virtualbox版本
+
 OWASP 
 bee-box
 

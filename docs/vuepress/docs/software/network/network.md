@@ -10,6 +10,10 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 主要参考： [A beginner's guide to network troubleshooting in Linux](https://www.redhat.com/sysadmin/beginners-guide-network-troubleshooting-linux)
 
+[Terminology guide](https://www.digitalocean.com/community/tutorials/an-introduction-to-networking-terminology-interfaces-and-protocols)
+
+[Common Port Numbers](https://www.utilizewindows.com/list-of-common-network-port-numbers/)
+
 ## 1.网络分层 TCP/IP协议组
 
 The layers in the TCP/IP network model, in order, include:

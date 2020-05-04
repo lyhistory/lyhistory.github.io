@@ -68,3 +68,16 @@ http://www.labnol.org/internet/save-webpages-for-offline-reading/6352/
 Screen recorder
 https://www.apowersoft.com/record-all-screen
 
+摸鱼神器：
+一款可以在任务栏、桌面、TouchBar上进行摸鱼的最强的跨平台摸鱼神器，支持小说、股票、按键翻页、鼠标翻页、自动翻页让你体验不同的工作 996，上班族必备神器 
+https://thief.im
+https://github.com/cteamx/Thief
+
+桌面放大镜 Magnifier ：
+windows自带 https://support.microsoft.com/en-sg/help/11542/windows-use-magnifier-to-make-things-easier-to-see
+
+dubbing配音：
+https://www.quora.com/Which-is-the-best-free-editing-software-for-dubbing
+
+
+
