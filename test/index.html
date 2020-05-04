@@ -1,1 +1,294 @@
-welcome to lyhistory.com
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="bootstrap.min.css" />
+    <title>Smart Lock Server</title>
+    <script>
+      // Add a global error event listener early on in the page load, to help ensure that browsers
+      // which don't support specific functionality still end up displaying a meaningful message.
+      window.addEventListener('error', function(error) {
+        if (ChromeSamples && ChromeSamples.setStatus) {
+          console.error(error);
+          ChromeSamples.setStatus(error.message + ' (Your browser may not support this feature.)');
+          error.preventDefault();
+        }
+      });
+    </script> 
+    
+  </head>
+
+  <body>
+    <div class="container">
+		<h1>Smart Lock Server</h1>
+
+		<span>欢迎使用智能锁</span>
+		<div class="form-group">
+			<label for="lockMacAddr">请求解锁的mac地址:</label> 
+ 
+			<input class="form-control text-white bg-dark" id="lockMacAddr"
+				type="text" placeholder="输入或者点击按钮通过蓝牙获取">
+		</div>
+
+		<div class="form-group">
+			<p id="signLayer">
+				<input type="button" onClick="getBluetoothButton()"
+					class="btn btn-primary" value="获取蓝牙设备"></input>
+			</p>
+		</div>
+		<h3>Live Output</h3>
+		<div id="output" class="output">
+		  <div id="content"></div>
+		  <div id="status"></div>
+		  <pre id="log"></pre>
+		</div>
+	</div>
+	
+<script>
+  if('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./service-worker.js');
+  }
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', function() {
+    const searchParams = new URL(location).searchParams;
+    const inputs = Array.from(document.querySelectorAll('input[id]'));
+
+    inputs.forEach(input => {
+      if (searchParams.has(input.id)) {
+        if (input.type == 'checkbox') {
+          input.checked = searchParams.get(input.id);
+        } else {
+          input.value = searchParams.get(input.id);
+          input.blur();
+        }
+      }
+      if (input.type == 'checkbox') {
+        input.addEventListener('change', function(event) {
+          const newSearchParams = new URL(location).searchParams;
+          if (event.target.checked) {
+            newSearchParams.set(input.id, event.target.checked);
+          } else {
+            newSearchParams.delete(input.id);
+          }
+          history.replaceState({}, '', Array.from(newSearchParams).length ?
+              location.pathname + '?' + newSearchParams : location.pathname);
+        });
+      } else {
+        input.addEventListener('input', function(event) {
+          const newSearchParams = new URL(location).searchParams;
+          if (event.target.value) {
+            newSearchParams.set(input.id, event.target.value);
+          } else {
+            newSearchParams.delete(input.id);
+          }
+          history.replaceState({}, '', Array.from(newSearchParams).length ?
+              location.pathname + '?' + newSearchParams : location.pathname);
+        });
+      }
+    });
+  });
+</script>
+
+<datalist id="services">
+  <option value="alert_notification">alert_notification</option>
+  <option value="automation_io">automation_io</option>
+  <option value="battery_service">battery_service</option>
+  <option value="blood_pressure">blood_pressure</option>
+  <option value="body_composition">body_composition</option>
+  <option value="bond_management">bond_management</option>
+  <option value="continuous_glucose_monitoring">continuous_glucose_monitoring</option>
+  <option value="current_time">current_time</option>
+  <option value="cycling_power">cycling_power</option>
+  <option value="cycling_speed_and_cadence">cycling_speed_and_cadence</option>
+  <option value="device_information">device_information</option>
+  <option value="environmental_sensing">environmental_sensing</option>
+  <option value="generic_access">generic_access</option>
+  <option value="generic_attribute">generic_attribute</option>
+  <option value="glucose">glucose</option>
+  <option value="health_thermometer">health_thermometer</option>
+  <option value="heart_rate">heart_rate</option>
+  <option value="human_interface_device">human_interface_device (blacklisted)</option>
+  <option value="immediate_alert">immediate_alert</option>
+  <option value="indoor_positioning">indoor_positioning</option>
+  <option value="internet_protocol_support">internet_protocol_support</option>
+  <option value="link_loss">link_loss</option>
+  <option value="location_and_navigation">location_and_navigation</option>
+  <option value="next_dst_change">next_dst_change</option>
+  <option value="phone_alert_status">phone_alert_status</option>
+  <option value="pulse_oximeter">pulse_oximeter</option>
+  <option value="reference_time_update">reference_time_update</option>
+  <option value="running_speed_and_cadence">running_speed_and_cadence</option>
+  <option value="scan_parameters">scan_parameters</option>
+  <option value="tx_power">tx_power</option>
+  <option value="user_data">user_data</option>
+  <option value="weight_scale">weight_scale</option>
+</datalist>
+
+
+<script>
+  var ChromeSamples = {
+    log: function() {
+      var line = Array.prototype.slice.call(arguments).map(function(argument) {
+        return typeof argument === 'string' ? argument : JSON.stringify(argument);
+      }).join(' ');
+
+      document.querySelector('#log').textContent += line + '\n';
+    },
+
+    clearLog: function() {
+      document.querySelector('#log').textContent = '';
+    },
+
+    setStatus: function(status) {
+      document.querySelector('#status').textContent = status;
+    },
+
+    setContent: function(newContent) {
+      var content = document.querySelector('#content');
+      while(content.hasChildNodes()) {
+        content.removeChild(content.lastChild);
+      }
+      content.appendChild(newContent);
+    }
+  };
+</script>
+
+<script>
+  if (/Chrome\/(\d+\.\d+.\d+.\d+)/.test(navigator.userAgent)){
+    // Let's log a warning if the sample is not supposed to execute on this
+    // version of Chrome.
+    if (45 > parseInt(RegExp.$1)) {
+      ChromeSamples.setStatus('Warning! Keep in mind this sample has been tested with Chrome ' + 45 + '.');
+    }
+  }
+</script>
+
+<script>
+		  
+var bluetoothDevice;
+		  
+function getBluetoothButton() {
+	var lockMacAddr=document.getElementById("lockMacAddr");
+	if(lockMacAddr.value != ""){
+		window.location.href = "http://192.168.1.112:8080/auth_init?lockMacAddr="+lockMacAddr;
+		return;
+	}
+	
+	if (!isWebBluetoothEnabled()) {
+      return;
+    }
+	
+	ChromeSamples.clearLog();
+  let filters = [];
+
+  let options = {};
+  options.acceptAllDevices = true;
+  
+    bluetoothDevice = null;
+  log('filters....'+filters);
+  log('Requesting Bluetooth Device...');
+  log('with ' + JSON.stringify(options));
+  
+ /* navigator.bluetooth.requestDevice(options)
+.then(device => {
+this.device = device;
+console.log('> Found ' + this.device.name);
+console.log('Connecting to GATT Server...');
+//console.log(device.gatt.connect());
+return device.gatt.connect();
+})
+.then(server => {
+console.log('Getting server...'+server.connected);
+this.server = server;
+
+	console.log('server device: '+this.server.device);
+	//console.log('Getting service...'+service.uuid);
+	//wait(3000);
+	console.log('server device: '+this.server.device);
+	return Promise.all([
+		wait(3000),
+		console.log('after 3 second '),		
+		server.getPrimaryService(0x180f)
+		.then(service => {
+			console.log('service get');
+			console.log(service.uuid);
+		  return this._cacheCharacteristic(service, 'battery_level');
+		}),
+		console.log('after getPrimaryService '),
+	])
+		.then(values => { console.log('value' + values); });
+})*/
+
+  
+ navigator.bluetooth.requestDevice(options)
+  .then(device => {
+	bluetoothDevice = device;
+    log('> Name:             ' + device.name);
+    log('> Id:               ' + device.id);
+    log('> Connected:        ' + device.gatt.connected);
+    if (!device.gatt.connected) {
+		 log("Connected");
+	
+	window.location.href = "http://192.168.1.112:8080/auth_init?lockMacAddr="+device.id;
+	
+    return device.gatt.connect();
+  } else {
+    // Already connected.
+    return Promise.resolve();
+  }
+    
+   //  return connect();
+  })
+  .then(server => {
+console.log('Getting server...'+server.connected);
+this.server = server;
+
+console.log('server device: '+this.server.device);
+console.log('Getting service...'+service.uuid);
+
+
+})
+.then(_=> this.server.getPrimaryService(0x180f))
+.then(service => {
+  console.log('service get');
+  console.log(service.uuid);
+  return this._cacheCharacteristic(service, 'battery_level');
+})
+  .catch(error => {
+    log('Argh! ' + error);
+  });
+}
+
+function connect() {
+  log('Connecting to Bluetooth Device...');
+  return bluetoothDevice.gatt.connect()
+  .then(server => {
+    log('> Bluetooth Device connected');
+  });
+}
+
+
+</script>
+
+
+<script>
+  log = ChromeSamples.log;
+
+  function isWebBluetoothEnabled() {
+    if (navigator.bluetooth) {
+      return true;
+    } else {
+      ChromeSamples.setStatus('Web Bluetooth API is not available.\n' +
+          'Please make sure the "Experimental Web Platform features" flag is enabled.');
+      return false;
+    }
+  }
+</script>
+
+
+  </body>
+</html>
