@@ -9,7 +9,12 @@ nodejs reactjs及浏览器用的都是V8引擎，但是不同的是：
 reactjs是前端框架(当然也提供了部分server-side功能，但是我理解是有限的功能，主要还是client端)，reactjs和浏览器都有DOM API， 所以浏览器可以直接识别JavaScript操作dom，reactjs又增加了virtual dom（ReactDOM.render）来提升performance；
 而nodejs是server-side后端框架，跟前端没有半毛钱关系，虽然都是用JavaScript，V8引擎，它没有DOM API，不能操作DOM，但是有其他API，比如可以访问硬件的电源，它跟java php这些没有区别，
 
-总体来说nodejs和reactjs都是用npm来管理package，只不过有些module只能在nodejs或者reactjs下面才工作，有些则是两者都可以用；
+可以比较下truffle的web3-nodejs和web3-react的区别： web3-react里面index.html基本只有一个root div，其他全靠index.js去画，而web3-nodejs的index.html则基本要写好，然后调用index.js里面的JavaScript互动，
+然后这个JavaScript因为是nodejs所以操作dom的时候只能用原始的document.getElementById，当然了这里并没有体现出nodejs的特别之处，因为并没有访问特别的api；
+
+总体来说nodejs和reactjs都是用npm来管理package，只不过有些module只能在nodejs或者reactjs下面才工作，有些则是两者都可以用;
+而在实际前端项目中，一般也会用到nodejs，因为为了开发方便，一般都会提供脚本运行开启一个web server，比如webpack使用的noop-service-worker-middleware就是一个express middleware，
+当然如果不用这些现成的包，可以自己集成reactjs和nodejs从而创建一个full dev environment，然后开发完成则是编译成静态html，扔给比如nginx托管，当然了如果这些静态html请求的后端服务可能就是nodejs提供的；
 
 安装nodejs会自带npm，所以一般reactjs的安装也就是安装nodejs的npm；
 
@@ -23,19 +28,33 @@ both nodejs and reactjs use npm for moduel managment, but what's the difference?
 > Some npm modules might work both in the browser and in node, but some will only work on one of them. If the npm module requires some platform-spcific API (DOM for the browser for example) then it will not work for the other platform.
 > https://stackoverflow.com/questions/58985983/general-question-about-reactjs-nodejs-and-npm
 
-javascript?typescript?
+javascript?ECMAScript?Typescript?
 > JavaScript is a scripting language which helps you create interactive web pages. It followed rules of client-side programming, so it runs in the user's web browser without the need of any resources forms the web server. You can also use Javascript with other technologies like REST APIs, XML, and more.
 > The idea behind developing this script is to make it a complementary scripting language like Visual Basic was to C++ in Microsoft's language families. However, JavaScript is not designed for large complex applications. It was developed for applications with a few hundred lines of code!
+
+> ECMAScript 6.0（以下简称 ES6）是 JavaScript 语言的下一代标准,ECMAScript 和 JavaScript 的关系是，前者是后者的规格，后者是前者的一种实现（另外的 ECMAScript 方言还有 JScript 和 ActionScript）。日常场合，这两个词是可以互换的。
+> https://es6.ruanyifeng.com/#docs/intro
+
+> TypeScript is a **strict superset of ECMAScript 2015**, which is itself a superset of ECMAScript 5, commonly referred to as JavaScript. As such, a JavaScript program is also a valid TypeScript program, and a TypeScript program can seamlessly consume JavaScript.
 > Typescript is a modern age Javascript development language. It is a statically compiled language to write clear and simple Javascript code. It can be run on Node js or any browser which supports ECMAScript 3 or newer versions.
 > Typescript provides optional static typing, classes, and interface. For a large JavaScript project adopting Typescript can bring you more robust software and easily deployable with a regular JavaScript application.
 
-javascript?ECMAScript?
-> ECMAScript 6.0（以下简称 ES6）是 JavaScript 语言的下一代标准,ECMAScript 和 JavaScript 的关系是，前者是后者的规格，后者是前者的一种实现（另外的 ECMAScript 方言还有 JScript 和 ActionScript）。日常场合，这两个词是可以互换的。
-> https://es6.ruanyifeng.com/#docs/intro
 
 ECMAScript6 VS ECMAScript5
 http://es6-features.org/#Constants
 
+**什么是transpiling:**
+
+React components are mostly written in modern JavaScript syntax. Take the class keyword for example. Stateful React components can be declared as classes, or as arrow (or regular functions). But older browsers don't understand ECMAScript 2015, thus we need some kind of transformation.
+That transformation is called transpiling. Webpack per-se doesn’t know how to transform JavaScript. Instead it relies on loaders: think of them as of transformers. A webpack loader takes something as the input and produces an output, called bundle.
+
+for latest ECMAScript syntax support (like ES5, ES6). React.js library itself insists you to make use of the latest JavaScript’s offerings for cleaner, less and more readable code. But unfortunately our browsers do not understands most of the syntax and this is where we need Babel’s help. 
+
+babel-loader is the webpack loader responsible for talking to Babel. Babel on the other hand must be configured to use presets. We need two of them:
+- babel preset env for compiling modern Javascript down to ES5
+- babel preset react for compiling JSX and other stuff down to Javascript
+
+create-react-app已经在package-lock.json锁定了webpack和Babel依赖
 
 ## 1. JavaScript
 
@@ -189,6 +208,8 @@ JSX: javascript extension
 
 ## 3.nodejs开发
 
+https://www.tutorialsteacher.com/nodejs/nodejs-tutorials
+
 后端框架，虽然是用JavaScript，但是是后端代码，当然一般不直接用JavaScript，而是用超类typescript，可以更好的管理大项目架构，需要编译成JavaScript；
 
 **基本语法:**
@@ -272,9 +293,9 @@ React Devtools extension
 
 ### 4.2.2 create-react-app	
 
-[完整文档](https://create-react-app.dev/docs/documentation-intro)
-
 **下面我们就采用第一种方式创建一个single-page app**
+
+[完整文档](https://create-react-app.dev/docs/documentation-intro)
 
 参考 https://code.visualstudio.com/docs/nodejs/reactjs-tutorial
 
@@ -387,3 +408,405 @@ https://create-react-app.dev/docs
 
 React.js and Spring Data REST
 https://spring.io/guides/tutorials/react-and-spring-data-rest/
+
+### 4.2.3 webpack
+
+https://webpack.js.org/concepts/
+
+[Tutorial: How to set up React, webpack, and Babel from scratch (2020)](https://www.valentinog.com/blog/babel/)
+
+**step 1: setting up the project**
+```
+mkdir webpack-react-tutorial && cd $_
+mkdir -p src
+npm init -y
+```
+
+**step 2: setting up webpack**
+
+webpack will ingest raw React components for producing JavaScript code that (almost) every browser can understand.
+```
+npm i webpack webpack-cli --save-dev
+```
+package.json
+```
+"scripts": {
+  "build": "webpack --mode production"
+}
+```
+At this point there is no need to define a configuration file for webpack. Older webpack versions would automatically look for a configuration file. Since version 4 that is no longer the case.
+
+**step 3: setting up Babel for transpiling our code**
+```
+npm i @babel/core babel-loader @babel/preset-env @babel/preset-react --save-dev
+```
+.babelrc
+```
+{
+  "presets": ["@babel/preset-env", "@babel/preset-react"]
+}
+```
+
+webpack.config.js
+```
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader"
+        }
+      }
+    ]
+  }
+};
+```
+The configuration is quite minimal. For every file with a js or jsx extension Webpack pipes the code through babel-loader. With this in place we're ready to write a React.
+
+**step 4: writing React components**
+
+pull in react
+```
+npm i react react-dom
+mkdir -p src/js/components/
+```
+
+src/js/components/Form.js:
+```
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+
+class Form extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      value: ""
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    const { value } = event.target;
+    this.setState(() => {
+      return {
+        value
+      };
+    });
+  }
+
+  render() {
+    return (
+      <form>
+        <input
+          type="text"
+          value={this.state.value}
+          onChange={this.handleChange}
+        />
+      </form>
+    );
+  }
+}
+
+export default Form;
+
+const wrapper = document.getElementById("container");
+wrapper ? ReactDOM.render(<Form />, wrapper) : false;
+```
+
+src/index.js:
+```
+import Form from "./js/components/Form";
+```
+
+npm run build
+
+**step 5:the HTML webpack plugin**
+
+To display our React form we must tell webpack to produce an HTML page. The resulting bundle will be placed inside a \<script\> tag.
+
+webpack needs two additional components for processing HTML: html-webpack-plugin and html-loader
+
+```
+npm i html-webpack-plugin html-loader --save-dev
+```
+
+Then update webpack.config.js:
+```
+const HtmlWebPackPlugin = require("html-webpack-plugin");
+
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader"
+        }
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "html-loader"
+          }
+        ]
+      }
+    ]
+  },
+  plugins: [
+    new HtmlWebPackPlugin({
+      template: "./src/index.html",
+      filename: "./index.html"
+    })
+  ]
+};
+```
+src/index.html:
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>How to set up React, Webpack, and Babel</title>
+</head>
+<body>
+<div id="container"></div>
+</body>
+</html>
+```
+
+npm run build
+
+result published to ./dist
+
+**step 6: Configuring the webpack dev server**
+
+You don't want to type npm run build every time you change a file.
+Once configured webpack will launch your application inside a browser. Also, every time you save a file after a modification webpack dev server will refresh the browser's window.
+
+```
+npm i webpack-dev-server --save-dev
+```
+package.json
+```
+"start": "webpack-dev-server --open --mode development",
+```
+
+### 4.2.4 mobx
+
+**concepts**
+
+https://mobx.js.org/README.html
+https://cn.mobx.js.org/
+https://mobx.js.org/getting-started.html
+
++ Use the @observable decorator or observable(object or array) functions to make objects trackable for MobX.
++ The @computed decorator can be used to create functions that can automatically derive their value from the state.
++ Use autorun to automatically run functions that depend on some observable state. This is useful for logging, making network requests, etc.
++ Use the @observer decorator from the mobx-react package to make your React components truly reactive. They will update automatically and efficiently. Even when used in large complex applications with large amounts of data.
+
+mobx vs  redux:
+https://blog.logrocket.com/redux-vs-mobx/
+https://redux.js.org/introduction/getting-started
+
+这个视频深入讲解了mobx的特性，如何转换现有js为mobx版本，并且对比react和加了mobx后的性能，调试技巧：
+https://www.youtube.com/watch?v=XGwuM_u7UeQ
+
+**create-react-app + mobx**
+
+[Introduction to MobX and React](https://www.youtube.com/watch?v=Dp75-DnGFrU)
+
+```
+npx create-react-app hello-mobx
+
+//This moves files around and makes your app’s configuration accessible.
+npm run eject
+
+```
+eject result:
+```
+? Are you sure you want to eject? This action is permanent. Yes
+Ejecting...
+
+Copying files into C:\Workspace\Repository\learn_coding\frontend\hello-mobx
+  Adding \config\env.js to the project
+  Adding \config\getHttpsConfig.js to the project
+  Adding \config\modules.js to the project
+  Adding \config\paths.js to the project
+  Adding \config\pnpTs.js to the project
+  Adding \config\webpack.config.js to the project
+  Adding \config\webpackDevServer.config.js to the project
+  Adding \config\jest\cssTransform.js to the project
+  Adding \config\jest\fileTransform.js to the project
+  Adding \scripts\build.js to the project
+  Adding \scripts\start.js to the project
+  Adding \scripts\test.js to the project
+
+Updating the dependencies
+  Removing react-scripts from dependencies
+  Adding @babel/core to dependencies
+  Adding @svgr/webpack to dependencies
+  Adding @typescript-eslint/eslint-plugin to dependencies
+  Adding @typescript-eslint/parser to dependencies
+  Adding babel-eslint to dependencies
+  Adding babel-jest to dependencies
+  Adding babel-loader to dependencies
+  Adding babel-plugin-named-asset-import to dependencies
+  Adding babel-preset-react-app to dependencies
+  Adding camelcase to dependencies
+  Adding case-sensitive-paths-webpack-plugin to dependencies
+  Adding css-loader to dependencies
+  Adding dotenv to dependencies
+  Adding dotenv-expand to dependencies
+  Adding eslint to dependencies
+  Adding eslint-config-react-app to dependencies
+  Adding eslint-loader to dependencies
+  Adding eslint-plugin-flowtype to dependencies
+  Adding eslint-plugin-import to dependencies
+  Adding eslint-plugin-jsx-a11y to dependencies
+  Adding eslint-plugin-react to dependencies
+  Adding eslint-plugin-react-hooks to dependencies
+  Adding file-loader to dependencies
+  Adding fs-extra to dependencies
+  Adding html-webpack-plugin to dependencies
+  Adding identity-obj-proxy to dependencies
+  Adding jest to dependencies
+  Adding jest-environment-jsdom-fourteen to dependencies
+  Adding jest-resolve to dependencies
+  Adding jest-watch-typeahead to dependencies
+  Adding mini-css-extract-plugin to dependencies
+  Adding optimize-css-assets-webpack-plugin to dependencies
+  Adding pnp-webpack-plugin to dependencies
+  Adding postcss-flexbugs-fixes to dependencies
+  Adding postcss-loader to dependencies
+  Adding postcss-normalize to dependencies
+  Adding postcss-preset-env to dependencies
+  Adding postcss-safe-parser to dependencies
+  Adding react-app-polyfill to dependencies
+  Adding react-dev-utils to dependencies
+  Adding resolve to dependencies
+  Adding resolve-url-loader to dependencies
+  Adding sass-loader to dependencies
+  Adding semver to dependencies
+  Adding style-loader to dependencies
+  Adding terser-webpack-plugin to dependencies
+  Adding ts-pnp to dependencies
+  Adding url-loader to dependencies
+  Adding webpack to dependencies
+  Adding webpack-dev-server to dependencies
+  Adding webpack-manifest-plugin to dependencies
+  Adding workbox-webpack-plugin to dependencies
+
+Updating the scripts
+  Replacing "react-scripts start" with "node scripts/start.js"
+  Replacing "react-scripts build" with "node scripts/build.js"
+  Replacing "react-scripts test" with "node scripts/test.js"
+
+Configuring package.json
+  Adding Jest configuration
+  Adding Babel preset
+
+Running npm install...
+audited 931631 packages in 24.439s
+
+59 packages are looking for funding
+  run `npm fund` for details
+
+found 1 low severity vulnerability
+  run `npm audit fix` to fix them, or `npm audit` for details
+Ejected successfully!
+```
+
+```
+npm install mobx --save
+npm install mobx-react --save
+```
+
+由于create-react-app默认是不支持mobx的decorator的，为了enable decorator，需要这么做：
+https://mobx.js.org/best/decorators.html
+
+**Method 1 Babel 6: using babel-preset-mobx**
+
+npm install --save-dev babel-preset-mobx
+package.json OR .babelrc:
+```
+{
+    "presets": ["mobx"]
+}
+```
+实际上我在Babel 7也测试成功，
+
+**Method 2 Babel 6: manually enabling decorators**
+
+npm i --save-dev babel-plugin-transform-decorators-legacy
+```
+{
+    "presets": ["es2015", "stage-1"],
+    "plugins": ["transform-decorators-legacy"]
+}
+```
+未测试
+
+**Method 3 Babel 7**
+
+```
+npm install --save-dev @babel/plugin-proposal-decorators
+npm install --save-dev @babel/plugin-proposal-class-properties
+```
+
+package.json:
+```
+"babel": {
+  "plugins":[
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy":true
+      }
+    ],
+    [
+      "@babel/plugin-proposal-class-properties",
+      {
+        "loose":true
+      }
+    ]
+  ],
+  "presets":[
+    "react-app"
+  ]
+}
+```
+
+### 4.2.5 troubleshooting
+
+?# resolve version by npm-force-resolutions
+e.g. Can't resolve './locale' in 'node_modules\moment\src\lib\locale'
+```
+npm install --save-dev npm-force-resolutions
+package.json:
+	"resolutions": {
+	"moment": "2.24.0"
+	}
+	"scripts":{
+	"preinstall": "npx npm-force-resolutions"
+	....
+	}
+npm install
+```
+
+
+
+--- 
+
+ref:
+
+[Tutorial: How to set up React, webpack, and Babel from scratch (2020)](https://www.valentinog.com/blog/babel/)
+
+[Getting started with REACT.js, using Webpack and Babel](https://medium.com/@siddharthac6/getting-started-with-react-js-using-webpack-and-babel-66549f8fbcb8)
+
+[How to Setup React and Node JS in a project](https://www.codementor.io/@kakarganpat/how-to-setup-react-and-node-js-in-a-project-koxwqbssl)
