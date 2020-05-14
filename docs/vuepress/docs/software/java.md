@@ -273,6 +273,7 @@ https://stackoverflow.com/questions/36427868/failed-to-execute-goal-org-apache-m
 1.	Delete \.m2\repository\org\apache\maven
 2.	mvn dependency:resolve -X
 
+自定义maven repository: e.g nexus repository
 #### 3.2.3 Lifecycle
 https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
 Maven -> Update Projects
@@ -318,6 +319,10 @@ https://github.com/lyhistory/java-learn?organization=lyhistory&organization=lyhi
 https://github.com/lyhistory/learn_coding
 
 ### 4.1 JAVA BASICS
+
+JAVA版本：J2SE vs J2ME vs J2EE
+https://www.geeksforgeeks.org/j2se-vs-j2me-vs-j2ee-whats-the-difference/
+
 **[POJO VS Java Beans](https://www.tutorialspoint.com/pojo-vs-java-beans)**
 POJO: Plain-Old-Java-Object
 Java Beans: The only difference between both the classes is Java make java beans objects serialized so that the state of a bean class could be preserved in case required.
@@ -367,6 +372,7 @@ https://www.baeldung.com/java-future
 Java serialization algorithm
 https://www.javaworld.com/article/2072752/the-java-serialization-algorithm-revealed.html
 
+父线程捕获子线程异常需要利用executorservice
 
 **JAXB**
 ```

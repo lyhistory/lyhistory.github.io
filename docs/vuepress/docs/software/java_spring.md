@@ -257,6 +257,15 @@ Thymeleaf https://www.baeldung.com/thymeleaf-in-spring-mvc
 
 ## 4. Spring Cloud 
 
+spring cloud alibaba全家桶：
+https://github.com/alibaba/spring-cloud-alibaba
+
+nacos代替了spring boot的properties或者yml配置，并且可以用于dns注册和rpc服务的注册和服务发现；
+
+Feign 默认采用http，用于微服务的数据共享，微服务可以像调用自己的服务一样调用其他微服务提供的服务，类似于dubbo等rpc框架（rpc+动态代理）
+
+
+
 Spring Cloud 万字总结，真不错！
 https://mp.weixin.qq.com/s/YGtKoKBE1jxFaEUpEFSaLg
 

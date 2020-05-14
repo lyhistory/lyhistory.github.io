@@ -61,6 +61,45 @@ Spring提供了两种容器类型：BeanFactory和ApplicationContext：
 
 IoC容器负责管理容器中所有bean的生命周期，而在bean生命周期的不同阶段，Spring提供了不同的扩展点来改变bean的命运，例如EnvironmentPostProcessor、BeanFactoryPostProcessor等（具体参照：第2节 SpringApplication启动流程）:
 
+**单例模式**
+
+spring boot默认bean是单例的，spring mvc默认的servlet也是单例的，当然bean @Controller也是单例的，多线程体现在httpservletrequest本身是线程间互相隔离的，
+一般都是通过ThreadLocal实现，
+之所以默认单例是因为，springboot本身就是ioc容器，启动过程很长，启动时会实例化加载bean（当然也有lazy模式），bean的实例化通常需要读取配置文件或者有很多其他bean的依赖，
+所以每次都重建销毁性能很差，而且浪费内存；
+https://stackoverflow.com/questions/10096483/is-threadlocal-preferable-to-httpservletrequest-setattributekey-value
+
+单例就是为了共享从而减少内存开销，多线程就是为了区别每个线程的上下文或者working thread context，所以线程上下文一定不能被共享，
+比如ThreadLocal不能跟ExecutorService共用，就是因为ExecutorService破坏了线程间的隔离
+Do Not Use ThreadLocal With ExecutorService
+https://www.baeldung.com/java-threadlocal 
+https://www.cnblogs.com/MrSaver/p/11191028.html
+
+单例模式 工厂模式 建造者模式
+
+> Spring单例Bean与单例模式的区别在于它们关联的环境不一样，单例模式是指在一个JVM进程中仅有一个实例，而Spring单例是指一个Spring Bean容器(ApplicationContext)中仅有一个实例。
+> 首先看单例模式，在一个JVM进程中（理论上，一个运行的JAVA程序就必定有自己一个独立的JVM）仅有一个实例，于是无论在程序中的何处获取实例，始终都返回同一个对象，以Java内置的Runtime为例（现在枚举是单例模式的最佳实践），无论何时何处获取，下面的判断始终为真：
+> Runtime.getRuntime() == Runtime.getRuntime()
+> 与此相比，Spring的单例Bean是与其容器（ApplicationContext）密切相关的，所以在一个JVM进程中，如果有多个Spring容器，即使是单例bean，也一定会创建多个实例，代码示例如下：
+```
+//  第一个Spring Bean容器
+ApplicationContext context_1 = new FileSystemXmlApplicationContext("classpath:/ApplicationContext.xml");
+Person yiifaa_1 = context_1.getBean("yiifaa", Person.class);
+//  第二个Spring Bean容器
+ApplicationContext context_2 = new FileSystemXmlApplicationContext("classpath:/ApplicationContext.xml");
+Person yiifaa_2 = context_2.getBean("yiifaa", Person.class);
+//  这里绝对不会相等，因为创建了多个实例
+System.out.println(yiifaa_1 == yiifaa_2);
+
+<!-- 即使声明了为单例，只要有多个容器，也一定会创建多个实例 -->
+<bean id="yiifaa" class="com.stixu.anno.Person" scope="singleton">
+    <constructor-arg name="username">
+        <value>yiifaa</value>
+    </constructor-arg>
+</bean>
+```
+> https://blog.csdn.net/yiifaa/java/article/details/74852425
+
 ### 1.2. JavaConfig与常见Annotation
 
 **1.2.1. JavaConfig**

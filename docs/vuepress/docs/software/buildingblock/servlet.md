@@ -73,6 +73,8 @@ service() 方法检查 HTTP 请求类型（GET、POST、PUT、DELETE 等），�
 
 ### Servlet的单例多线程安全
 
+> Java里有个API叫做ThreadLocal，spring单例模式下用它来切换不同线程之间的参数。用ThreadLocal是为了保证线程安全，实际上ThreadLoacal的key就是当前线程的Thread实例。单例模式下，spring把每个线程可能存在线程安全问题的参数值放进了ThreadLocal。这样虽然是一个实例在操作，但是不同线程下的数据互相之间都是隔离的，因为运行时创建和销毁的bean大大减少了，所以大多数场景下这种方式对内存资源的消耗较少，而且并发越高优势越明显。
+
 单例：Servlet只在用户第一次请求时被实例化，并且是单例的，在服务器重启或关闭时才会被销毁。
 
 多线程：当请求到达时，Servlet容器(Tomcat...)通过线程池中可用的线程给请求者并执行Service方法，每个线程执行一个单一的 Servlet 实例的 service() 方法

@@ -132,6 +132,9 @@ A closure is the combination of a function and the scope object in which it was 
 
 ```
 
+Var, let and const- what's the difference?
+https://dev.to/sarah_chima/var-let-and-const--whats-the-difference-69e
+
 ## 2. nodejs/reactjs共同环境配置
 
 ```
@@ -215,10 +218,15 @@ https://www.tutorialsteacher.com/nodejs/nodejs-tutorials
 **基本语法:**
 
 模块系统 Modules
+
 事件 Event
+
 函数 function
+
 路由 route
+
 全局对象 Global Object
+
 http://www.w3cschool.cc/nodejs
 http://www.nodejs.org/
 http://www.nodebeginner.org/index-zh-cn.html
@@ -231,6 +239,12 @@ https://channel9.msdn.com/Series/Building-Apps-with-Node-js?WT.mc_id=12833-DEV-s
 前面也说过，其实reactjs也是有server-side服务端功能的，不过一般都是说服务端动态渲染，[Demystifying server-side rendering in React](https://www.freecodecamp.org/news/demystifying-reacts-server-side-render-de335d408fe4/)
 
 一般来说都只是将reactjs作为前端，然后搭配一个后端程序来获取动态数据，后端程序可以是nodejs、java等等；
+
+reactjs learn roadmap:
+https://www.freecodecamp.org/news/learning-react-roadmap-from-scratch-to-advanced-bff7735531b6/
+
+react-indepth:
+https://legacy.gitbook.com/book/developmentarc/react-indepth/details
 
 ## 4.1 基本语法
 
@@ -271,10 +285,21 @@ Component:
 2)	componentDidMount is the API invoked after React renders a component in the DOM.
 3)	render is the API that “draws” the component on the screen.
 
+注意:
+```
+import时候 {}
+const { BirdStore } = this.props;
+==
+const BirdStore = this.props.BirdStore;
+
+普通模式：
+export defalt <classname>;
+单例模式
+const store = new BirdStore();
+export default store;
+```
 
 ## 4.2 开发
-
-React Devtools extension
 
 ### 4.2.1 toolchain
 **根据具体需求（放在服务端的静态页面或者动态渲染页面）有以下几种toolchain可以利用：**
@@ -307,7 +332,6 @@ React Devtools extension
 ```
 npm install -g create-react-app
 ```
-
 
 然后可以生成项目
 ```
@@ -346,7 +370,12 @@ code .
 
 **debug react**
 
-go to extension: install "debugger for chrome"
+new react dev tool
+https://react-devtools-tutorial.now.sh/
+
+go to vscode extension: install "debugger for chrome"
+&
+https://www.npmjs.com/package/@welldone-software/why-did-you-render
 
 then go to run&debug:
 click "create a launch.json file", select environment "chrome"，默认端口3000:
@@ -366,6 +395,8 @@ click "create a launch.json file", select environment "chrome"，默认端口300
 ```
 
 make sure "npm start" first, then F5 or click the debug button
+
+Chrome React Devtools extension
 
 **Linting**
 
@@ -608,6 +639,21 @@ https://mobx.js.org/getting-started.html
 + Use the @observable decorator or observable(object or array) functions to make objects trackable for MobX.
 + The @computed decorator can be used to create functions that can automatically derive their value from the state.
 + Use autorun to automatically run functions that depend on some observable state. This is useful for logging, making network requests, etc.
++ reactions
+	will not fire initially, only on change
++ transactions
++ actions
+	strict mode: only allow data modified in actions
+  ```
+  "never" (default): State can be modified from anywhere
+  "observed": All state that is observed somewhere needs to be changed through actions. This is the recommended strictness mode in non-trivial applications.
+  "always": State always needs be updated (which in practice also includes creation) in actions.
+  import { configure } from "mobx"
+  // don't allow state modifications outside actions
+  configure({ enforceActions: "always" })
+  ```
+  @action @action.bound https://stackoverflow.com/questions/48639891/difference-between-mobxs-action-bound-and-arrow-functions-on-class-functions
+
 + Use the @observer decorator from the mobx-react package to make your React components truly reactive. They will update automatically and efficiently. Even when used in large complex applications with large amounts of data.
 
 mobx vs  redux:
@@ -616,6 +662,9 @@ https://redux.js.org/introduction/getting-started
 
 这个视频深入讲解了mobx的特性，如何转换现有js为mobx版本，并且对比react和加了mobx后的性能，调试技巧：
 https://www.youtube.com/watch?v=XGwuM_u7UeQ
+
+mobx-ract Provider Injection基本原理：hooks
+https://reactjs.org/docs/hooks-overview.html
 
 **create-react-app + mobx**
 
@@ -799,11 +848,15 @@ package.json:
 npm install
 ```
 
+mobx debug tools: google extension "MobX Developer Tools"
 
+
+find all above code samples in https://github.com/lyhistory/learn_coding/tree/master/frontend
 
 --- 
 
 ref:
+
 
 [Tutorial: How to set up React, webpack, and Babel from scratch (2020)](https://www.valentinog.com/blog/babel/)
 
