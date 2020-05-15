@@ -11,7 +11,15 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 shiro将这部分模块化，采用依赖注入的模式，让用户可以比较容易自定义数据源、登录验证逻辑、权限逻辑等内容；
 
 另外采用shiro也比较容易实现CAS-SSO([Central Authentication Service - Single signon](https://en.wikipedia.org/wiki/Central_Authentication_Service))，
+https://apereo.github.io/cas/development/
 当然shiro并没有out-of-box的SSO方案，之前是有[shiro-cas集成支持](http://shiro.apache.org/cas.html)，现在是已经迁移到[pac4j security library for Shiro: OAuth, CAS, SAML, OpenID Connect, LDAP, JWT](https://github.com/bujiio/buji-pac4j)
+
+为什么shiro不可以直接作为sso？
+
+我猜测是这样，首先sso的方案需要原则上采用oauth2.0这种资源服务器和授权服务器分离的方式比如spring security，所有想要通过oauth2.0登录授权的客户端（比如网站服务器端），都需要通过client id secret方式认证，具体参考oauth2，
+，或者采用像CAS这种client-server架构，server跟client通过ca证书来认证；
+而shiro完全是个组件，虽然可以作为server端做authenticate和authorize，其authenticate功能偏于简单，没有提供验证客户端的接口，所以不易于作为sso跟更多的客户端（比如多个网站）交互，一般只是内嵌到网站服务端或者API服务器端作为其一部分使用，所以如果实现sso，shiro只能将其authenticate功能割让给CAS，然后自己只保留authorization功能；
+
 
 Apache Shiro is a powerful and flexible open-source security framework that cleanly handles 
 + **authentication**, 
@@ -492,6 +500,9 @@ public void cacheUserPermission(UserLogonEvent event) {
 
 前端请求到后面统统去缓存查权限；
 
+
+## 其他鉴权技术对比
+SpringSecurity原理剖析与权限系统设计 https://www.cnblogs.com/fanzhidongyzby/p/11610334.html
 
 ---
 
