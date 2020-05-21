@@ -108,7 +108,17 @@ TCP:
 TCP achieves reliability in two ways. 
 First, it orders packets by numbering them. 
 Second, it error-checks by having the recipient send a response back to the sender saying that it has received the message. If the sender doesn’t get a correct response, it can resend the packets to ensure the recipient receives them correctly.
+TCP三次握手，实际上是因为TCP是双向全工通信，所以彼此互相确认对方的初始序号seq（sequence number），确认的返回就是确认号ack（acknowledgement number）：
+```
+SYN SENT=>LISTEN	SYN=1,seq=x
+SYN SENT<=SYN REVD	SYN=1,ACK=1,seq=y,ack=x+1
+ESTAB=>SYN_REVD		ACK=1,seq=x+1,ack=y+1
+ESTAB<=>ESTAB		开始数据传输
 
+发送方在发送数据包（假设大小为 10 byte）时， 同时送上一个序号( 假设为 500)，那么接收方收到这个数据包以后， 就可以回复一个确认号（510 = 500 + 10） 告诉发送方 “我已经收到了你的数据包， 你可以发送下一个数据包， 序号从 510 开始”；
+上面数据大小是1个字节，因为是三次握手阶段，数据包就是序号，一个字节足够
+https://blog.csdn.net/lengxiao1993/article/details/82771768
+```
 UDP:
 The sender doesn’t wait to make sure the recipient received the packet—it just continues sending the next packets. If the recipient misses a few UDP packets here and there, they are just lost—the sender won’t resend them. 
 UDP is used when speed is desirable and error correction isn’t necessary. For example, UDP is frequently used for live broadcasts and online games.
@@ -137,7 +147,8 @@ HTTP协议是建立在请求/响应模型上的,
 
 HTTP/1.0为每一次HTTP的请求/响应建立一条新的TCP链接，因此一个包含HTML内容和图片的页面将需要建立多次的短期的TCP链接。一次TCP链接的建立将需要3次握手。
 另外，为了获得适当的传输速度，则需要TCP花费额外的回路链接时间（RTT）,每一次链接的建立需要这种经常性的开销，而其并不带有实际有用的数据，只是保证链接的可靠性，
-因此HTTP/1.1提出了可持续链接的实现方法。HTTP/1.1将只建立一次TCP的链接而重复地使用它传输一系列的请求/响应 消息，因此减少了链接建立的次数和经常性的链接开销。
+因此HTTP/1.1提出了可持续链接的实现方法-默认启用Keep-Alive。HTTP/1.1将只建立一次TCP的链接而重复地使用它传输一系列的请求/响应 消息，因此减少了链接建立的次数和经常性的链接开销。
+当然HTTP服务器端底层应该对tcp有超时设置，不然http client端如果不释放连接，有可能消耗掉TCP最大连接数，见后面的“一次排查send-q”；
 
 ## 2.Packet Sniffer
 
