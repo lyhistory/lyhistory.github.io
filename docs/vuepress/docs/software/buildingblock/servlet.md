@@ -34,7 +34,22 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	- 一般就是将Web/Servlet container wrap up作为一个应用程序服务；
 	- is responsible for serving dynamic content, managing EJB pool, facilitating distributed transaction, facilitating application lookup over JNDI, application security and others;
 	- From Java EE perspective couple of popular application servers are IBM WebSphere, Oracle WebLogic, Glassfish and Redhat's JBoss. 
-	
+
+**spring mvc， tomcat， servlet？**
+
+> Tomcat：The Apache Tomcat software is an open source implementation of the Java Servlet, JavaServer Pages, Java Expression Language and Java WebSocket technologies.
+> SpringMVC：Spring推出的基于Servlet标准的MVC框架实现。
+> 可以看出SpringMVC和Tomcat的结合点是Servlet。其实SpringMVC的DispatchServlet实现了HttpServlet，那么SpringMVC在Tomcat看来，其实就是一个Servlet
+
+> Tomcat下Servlet的配置文件：web.xml: web.xml的作用是配置Http和Servlet之间的映射关系、filter、context参数等。这样通过这份约定的配置文件，Tomcat可以把Http请求映射到不同的Servlet实例上。所以，在Servlet时代(structs时代)的web.xml中，会有很多的项配置。
+> SpringMVC的改变: SpringMVC也是Servlet的实现，只不过SpringMVC增加了一个DispatchServlet，所有的http请求都是映射到这个Servlet上，请求进入到这个Servlet中之后，就算进入到了框架之中了，由这个Servlet来统一的分配http请求到各个Controller
+
+> https://blog.csdn.net/achenyuan/article/details/77246395
+
+**servlet filter拦截器**
+
+这里稍微扩展下，在关于shiro讲解的一文中也提到有个坑，就是自定义shiro拦截器如果交给spring IOC容器管理，会注册到servlet的filter中，脱离了shiro的控制，从而导致servlet直接过滤掉，不交给shiro处理，
+shiro对servlet的filter进行了扩展/继承，所以我们实现的shiro拦截器本身也是继承自servlet拦截器，web容器接收到http 请求，转交给servlet，servlet的拦截器生效，filter之后再internal dofilter转交给shiro；
 
 **.NET中对应的servlet概念是？**
 

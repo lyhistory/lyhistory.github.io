@@ -172,6 +172,7 @@ Every Redis Cluster node requires two TCP connections open. The normal Redis TCP
 
 Hash tag and multiple key operations 
 this{foo}key and another{foo}key are guaranteed to be in the same hash slot, and can be used together in a command with multiple keys as arguments
+redis集群不支持模糊匹配partial match，想要模糊匹配只能对一个个server或database操作，不可以整体cluster操作，不过hash tag可以潜在解决这个问题
 
 **ConfigEpoch and current epoch
 This mechanism in Redis Cluster is called last failover wins.
