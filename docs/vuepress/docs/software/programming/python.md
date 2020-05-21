@@ -217,7 +217,7 @@ inspect on disappering element，有些元素是鼠标mouse hover才显示，所
 2.get parent/child by xpath, dot .
 3.wait and time.sleep
 4.stale / not attached, re-query again
-5.Selenium Element not visible exception:
+5.Selenium Element not visible exception或者selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted（刚好页面上某个按钮的位置被某个漂浮的比如feedback icon挡住）
  the html element is created from JavaScript, that is why webdriver cannot see it, use driver.execute_script("javascript code here")
 
 Serverless

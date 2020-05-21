@@ -753,3 +753,9 @@ https://bitfury.com/content/downloads/whitepaper_flare_an_approach_to_routing_in
 
 ![](/docs/docs_image/blockchain/btc/btc_dev20.png)
 
+
+---
+
+ref:
+
+https://nakamotoinstitute.org/

@@ -136,7 +136,7 @@ Web Services
 	ajax：html/json/xml
 	websocket
 	
-### 2.2 web应用架构
+### 2.2 web应用架构和WAF
 前面谈了网络架构，现在具体到web应用架构，
 
 从物理架构上说，一般是经典的3 tier：
@@ -155,6 +155,20 @@ data access layer 数据访问层，跟数据库的通信都是放在这一层�
 通常一旦web应用产生漏洞，会被迅速“脱裤”，数据库也往往直接泄漏；
 
 大中型公司会将业务层做成比如微服务端形式部署在内网或者核心区，然后DMZ的表现层的网站可以通过web api http或者rpc socket跟业务层的微服务进行通信；
+
+一般来说Web应用不会直接将IP暴露在公网上，通常是躲在WAF后面，参考[](https://wooyun.js.org/drops/Bypass%20WAF%20Cookbook.html)拓扑图：
+![burpsuite https](/docs/docs_image/coder2hacker/ch2web/waf01.png)
+
+假设客户端访问web服务器完整过程：
+
+1）首先会请求DNS，由于配置云waf的时候，会修改DNS的解析。我们发送DNS请求之后，域名会被解析到云WAF的ip上去。DNS解析完成之后，获取到域名信息，然后进入下一个步骤。
+
+2）HTTP协议是应用层协议，且是tcp协议，因此会首先去做TCP的三次握手
+
+3）发送HTTP请求过去，请求会依次经过云WAF，硬件IPS/IDS设备，硬件WAF设备，服务器，web服务器，主机防护软件/软WAF，WEB程序，数据库。 云WAF，硬件IPS/IDS，硬件WAF均有自己处理数据的方式。
+
+在获取HTTP数据之前会做TCP重组，重组主要目的是针对互联网数据包在网络上传输的时候会出现乱序的情况，数据包被重组之后就会做协议解析，取出相关的值。如http_method=GET,http_payload=xxx等等。这些值就对应了IPS规则中相关规则的值。从而来判断规则匹配与不匹配。
+
 
 ### 2.3 抓包方法总结
 

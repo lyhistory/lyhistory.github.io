@@ -141,6 +141,8 @@ HTTP/1.0为每一次HTTP的请求/响应建立一条新的TCP链接，因此一�
 
 ## 2.Packet Sniffer
 
+[更多抓包方法](/docs/coder2hacker/ch2_web)
+
 A packet sniffer is simply a piece of software that allows you to capture packets on your network. Tcpdump and Wireshark are examples of packet sniffers. Tcpdump provides a CLI packet sniffer, and Wireshark provides a feature-rich GUI for sniffing and analyzing packets.
 By default, tcpdump operates in promiscuous mode. This simply means that all packets reaching a host will be sent to tcpdump for inspection. This setting even includes traffic that was not destined for the specific host that you are capturing on, such as broadcast and multicast traffic. Of course, tcpdump isn’t some magical piece of software: It can only capture those packets that somehow reach one of the physical interfaces on your machine.
 
@@ -178,6 +180,9 @@ TCP sockets -ta
 UDP sockets -ua
 RAW sockets -wa
 UNIX sockets -xa
+
+实时流量监听：
+nethogs -v 2
 
 ## 3.实战问题
 

@@ -6,6 +6,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《公钥基础设施Public key infrastructure》
 
+[private reference- cryptography](HardDrive:/blockchain/cryptography)
 
 **PKI infrastructure:**
 
@@ -175,7 +176,16 @@ JSON Web Token (JWT) Signing
 https://auth0.com/blog/json-web-token-signing-algorithms-overview/
 https://stackoverflow.com/questions/38588319/understanding-rsa-signing-for-jwt
 
-### 4.2 Https /SSL/ TLS
+### 4.2 SSL/ TLS / HTTPS
+
+> SSL stands for Secure Sockets Layer and, in short, it's the standard technology for keeping an internet connection secure and safeguarding any sensitive data that is being sent between two systems, preventing criminals from reading and modifying any information transferred, including potential personal details. 
+
+> TLS (Transport Layer Security) is just an updated, more secure, version of SSL. We still refer to our security certificates as SSL because it is a more commonly used term, but when you are buying SSL from DigiCert you are actually buying the most up to date TLS certificates with the option of ECC, RSA or DSA encryption.
+
+> HTTPS就是TLS over HTTP 
+
+> SSL和SSH是不同的protocol，原理类似，SSH is generally a tool for technicians, and SSL/TLS is a mechanism for securing websites that is transparent to the user. 
+
 SSL Certificate Installation Instructions&Tutorials https://www.digicert.com/ssl-certificate-installation.htm
 How about move from installed server to a new server? SSL Certificate Export/Import Explained https://www.digicert.com/import-export-ssl-certificate.htm
 
@@ -247,6 +257,11 @@ openssl req -new -x509 -key private-key-pkcs8.pem -outform PEM -out server.pem -
 ![](/docs/docs_image/software/cryptography/pki08.png)
 
 ---
+
+Genrally speaking:
+
+If you have data in flight, use TLS;
+If you have data at rest, use PGP;
 
 ref:
 
