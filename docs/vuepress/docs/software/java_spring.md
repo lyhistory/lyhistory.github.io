@@ -257,14 +257,24 @@ Thymeleaf https://www.baeldung.com/thymeleaf-in-spring-mvc
 
 ## 4. Spring Cloud 
 
+netflix全家桶：
+
+全局外部流量入口：zuul 动态路由 Hystrix熔断降级
+微服务内部负载均衡：feign
+https://blog.csdn.net/zhou920786312/article/details/84982290
+feign和ribbon都属于客户端负载均衡，nginx属于服务端负载均衡，nginx不易于剔除非健康节点；
+
 spring cloud alibaba全家桶：
 https://github.com/alibaba/spring-cloud-alibaba
+
+spring cloud gateway 网关代替zuul+hystrix，既有路由又有熔断降级
 
 nacos代替了spring boot的properties或者yml配置，并且可以用于dns注册和rpc服务的注册和服务发现；
 
 Feign 默认采用http，用于微服务的数据共享，微服务可以像调用自己的服务一样调用其他微服务提供的服务，类似于dubbo等rpc框架（rpc+动态代理）
 
 
+bpm-business process management比如工单流程等： activiti or flowable
 
 Spring Cloud 万字总结，真不错！
 https://mp.weixin.qq.com/s/YGtKoKBE1jxFaEUpEFSaLg

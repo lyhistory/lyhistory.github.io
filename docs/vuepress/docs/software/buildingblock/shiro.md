@@ -25,9 +25,9 @@ https://apereo.github.io/cas/development/
 
 直观的看下shiro和CAS集成的流程图：
 
-![shiro流程图](/docs/docs_image/software/buildingblockshiro.png)
-![shiro+CAS流程图](/docs/docs_image/software/buildingblockshiro_cas01.png)
-![shiro+CAS流程图](/docs/docs_image/software/buildingblockshiro_cas02.png)
+![shiro流程图](/docs/docs_image/software/buildingblock/shiro.png)
+![shiro+CAS流程图](/docs/docs_image/software/buildingblock/shiro_cas01.png)
+![shiro+CAS流程图](/docs/docs_image/software/buildingblock/shiro_cas02.png)
 
 Apache Shiro is a powerful and flexible open-source security framework that cleanly handles 
 + **authentication**, 
@@ -39,7 +39,7 @@ Apache shiro http://shiro.apache.org/
 
 ## 1.key concepts
 
-![architecture](/docs/docs_image/software/buildingblockshiro01_p1.png)
+![architecture](/docs/docs_image/software/buildingblock/shiro01_p1.png)
 
 ### 1.1 关键模块
 + Subject(org.apache.shiro.subject.Subject)):
@@ -103,7 +103,7 @@ By default, Shiro will use an existing session mechanism if available, (e.g. Ser
 关于subject.login也就是shiro这部分登录逻辑：
 https://shiro.apache.org/authentication.html#Authentication-sequence
 
-![authentication](/docs/docs_image/software/buildingblockshiro01_p2.png)
+![authentication](/docs/docs_image/software/buildingblock/shiro01_p2.png)
 
 **Step 1**: Application code invokes the **Subject.login** method, passing in the constructed AuthenticationToken instance representing the end-user’s principals and credentials.
 
@@ -122,7 +122,7 @@ b) If only a single Realm is configured, it is called directly - there is no nee
 ### 1.3 authoization / access control
 https://shiro.apache.org/authorization.html
 
-![authoization](/docs/docs_image/software/buildingblockshiro01_p3.png)
+![authoization](/docs/docs_image/software/buildingblock/shiro01_p3.png)
 
 Step 1: Application or framework code invokes any of the **Subject hasRole*, checkRole*, isPermitted*, or checkPermission* method** variants, passing in whatever permission or role representation is required.
 
@@ -164,8 +164,8 @@ goodguy = winnebago:drive:eagle5
 好了 我们从头看下这个Realm是如何注入的，刚开始我从jar里面找到了很多注入的地方加了断点，
 但是报错“not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)” 所以就只好具体分析，找到一些疑似调用到的方法再下断点拦截看调用栈;
 
-![](/docs/docs_image/software/buildingblockshiro02_p1.png)
-![](/docs/docs_image/software/buildingblockshiro02_p2.png)
+![](/docs/docs_image/software/buildingblock/shiro02_p1.png)
+![](/docs/docs_image/software/buildingblock/shiro02_p2.png)
 
 先是创建了Realm的bean，(刚开始我还以为是注入到图1中的DefaultWebSecurityManager)，实际是注入到图2的ShiroWebAutoConfiguration：
 ```
@@ -181,7 +181,7 @@ The Spring container can injects the individual beans into one collection，并�
 
 其实最简单的思路，因为pom是依赖shiro-spring-boot-web-starter，自然是找到这个ShiroWebAutoConfiguration，然后两层继承自 AbstractShiroConfiguration，
 
-![](/docs/docs_image/software/buildingblockshiro02_p3.png)
+![](/docs/docs_image/software/buildingblock/shiro02_p3.png)
 因为org.apache.shiro.mgt.SessionsSecurityManager终极是继承自AuthorizingSecurityManager，又继承自AuthenticatingSecurityManager ，
 又继承自RealmSecurityManager,（有点意思，session内容依赖于权限，权限依赖于是否登录，是否登录依赖于数据源），
 securityManager.setRealms(realms)之后会调用afterRealmsSet(),由于afterRealmsSet()是父类的继承方法，所以又是常见的template pattern，
@@ -219,7 +219,7 @@ authz/authorize
 
 默认应该是开启authc，
 
-![](/docs/docs_image/software/buildingblockshiro02_p4.png)
+![](/docs/docs_image/software/buildingblock/shiro02_p4.png)
 
 先要注册一下拦截/login,这是我们自己提供的ShiroFilterChainDefinition：
 ```
@@ -327,7 +327,7 @@ public class AbstractShiroWebFilterConfiguration {
 
 接着看下图，回到拦截的post请求，请求中的form是被层层委托到 DelegatingSubject ：
 
-![](/docs/docs_image/software/buildingblockshiro02_p5.png)
+![](/docs/docs_image/software/buildingblock/shiro02_p5.png)
 
 看到没，这里是去找SecurityManager，然后跟进其命名空间找到默认的实现 login，这是一个线程安全的singleton实例，可以看到多线程调用这个login没有用到任何公共资源，资源都在传入的上下文参数中，
 SecurityManager被设计成一个dispatcher并不参与太多实现，都是交给其他的组件来处理，所以根据authenticate流程：
@@ -350,11 +350,11 @@ authenticate(AuthenticationToken token) 标准的template pattern，然后找到
 
 #### 2.2.1 config配置解析
 
-![](/docs/docs_image/software/buildingblockshiro03_p1.png)
+![](/docs/docs_image/software/buildingblock/shiro03_p1.png)
 
 #### 2.2.2 注入自定义realm
 
-![](/docs/docs_image/software/buildingblockshiro03_p2.png)
+![](/docs/docs_image/software/buildingblock/shiro03_p2.png)
 
 可以看到虽然这个CustomRealm extends AuthorizingRealm，但是实际上SecurityManager用来做authenticate和authorize，所以这里这个AuthorizingRealm让人误解，
 当然看其具体实现的两个方法也会很清楚doGetAuthenticationInfo和doGetAuthorizationInfo
@@ -362,7 +362,7 @@ authenticate(AuthenticationToken token) 标准的template pattern，然后找到
 
 #### 2.2.3 authenticate/login 
 
-![](/docs/docs_image/software/buildingblockshiro03_p3.png)
+![](/docs/docs_image/software/buildingblock/shiro03_p3.png)
 
 跟前面显示声明拦截器不同
 ```
@@ -703,7 +703,7 @@ public class SSOAutoConfig {
 由于shiro是对servlet的filter进行了扩展/继承，所以我们实现的shiro拦截器本身也是继承自servlet拦截器，web容器tomcat接收到http请求，
 先转交给spring mvc servlet，servlet的拦截器生效（拦截器列表初始化是spring启动初始化servlet context时在context中注入实现了servlet拦截器接口的bean，然后注册到filterchain,具体阅读ServletContextInitializerBeans源码），
 这里的servlet拦截器filter之后再通过internal dofilter放行给shiro；
-![](/docs/docs_image/software/buildingblockshiro_tomcat_servlet_filter.png)
+![](/docs/docs_image/software/buildingblock/shiro_tomcat_servlet_filter.png)
 参照[自定义 Filter 实现及其问题排查记录](https://www.guitu18.com/post/2020/01/06/64.html)
 
 **第三种方式：**
