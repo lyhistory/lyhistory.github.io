@@ -79,5 +79,9 @@ windows自带 https://support.microsoft.com/en-sg/help/11542/windows-use-magnifi
 dubbing配音：
 https://www.quora.com/Which-is-the-best-free-editing-software-for-dubbing
 
+白板/屏幕画图/电子教鞭
+	http://epic-pen.com/
+	https://17up.org/
+	https://www.zhihu.com/question/23568140
 
 

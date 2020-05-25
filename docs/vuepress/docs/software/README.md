@@ -17,14 +17,17 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/highlevel/concurrent">并发控制</a></li>
 		<li><a href="/docs/software/highlevel/threadsafe">线程安全</a></li>
 		<li><a href="/docs/software/highlevel/publickeyinfrastructure">公钥基础设施</a></li>
+		<li><a href="/docs/software/highlevel/oauth2">Oauth2.0</a></li>
 	</ul>
 	<p>-------------------------</p>
 	<h3>软件开发经验</h3>
 	<ul>
 		<li><a href="/docs/software/programming/encoding">编码转码</a></li>
 		<li><a href="/docs/software/programming/regex">正则表达式</a></li>
-		<li><a href="/docs/software/programming/webdev">web开发</a></li>
+		<li><a href="/docs/software/programming/nodejs&reactjs">nodejs&reactjs开发</a></li>
 		<!--<li><a href="/docs/software/programming/programming">编程基础</a></li>-->
+		<li><a href="/docs/software/webdev/webdev">web开发</a></li>
+		<li><a href="/docs/software/webdev/chromeextension">浏览器插件开发</a></li>
 		<li><a href="/docs/software/java" >java实用基础</a></li>
 		<li><a href="/docs/software/java_spring" >基于spring分布式微服务入门</a></li>
 		<li><a href="/docs/software/java_springboot" >springboot原理解析</a></li>
@@ -33,6 +36,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/kafka" >分布式消息队列kafka</a></li>
 		<!--<li><a href="/docs/software/buildingblock/shiro">shiro登录和权限管理</a></li>-->
 		<li><a href="/docs/software/buildingblock/mybatis">玩转mybatis</a></li>
+		<li><a href="/docs/software/buglist">踩坑记录-诡异bug</a></li>
 	</ul>
 	<p>-------------------------</p>
 	<h3>数据库</h3>

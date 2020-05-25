@@ -242,6 +242,7 @@ Fiddler+burpsuite
 
 wireshark 
 	ip.addr == 10.20.70.101 and frame contains "CALL"
+	ssl解密：通过设置环境变量SSLKEYLOGFILE
 ---
 
 ref:

@@ -257,14 +257,53 @@ Thymeleaf https://www.baeldung.com/thymeleaf-in-spring-mvc
 
 ## 4. Spring Cloud 
 
-netflix全家桶：
+spring cloud定义了接口标准，然后各家各组件做了不同实现；
+
+**从总体上看：**
+
++ 从入口开始，DNS动态解析 - 机房内负载均衡(LVS+Keepalived) 
+	动静分离可以放这里做，静态找FastDFS集群（便宜）或cdn服务（贵）；
+	动态则进入下面流量网关
+
++ 然后进入流量网关
+	一般是用基于netty的nginx做负载均衡，拦截无效非法流量/定向流量分发（挡爬虫、攻击、频控），此处可以放WAF Kona Openresty
+
++ 然后进入业务网关
+	一般是基于filter的zuul和spring cloud gateway，权限认证比如spring security+jwt或者CAS也可以放这里
+
+netty的性能比filter高，所以一般nginx放前面，zuul放后面，当然zuul和spring cloud gateway也可以作为流量网关；
+
++ 最后到具体微服务内部
+	基于servlet的springmvc（内置tomcat服务器）；
+	更高性能的基于netty的spring reactive webflux（内置netty服务器）；
+	页面渲染有	Thymleaf Eniov FreeMaker JSON；
+	微服务内部一般都有Acurator用于上报健康信息给比如springcloud admin；
+	微服务之间调用：先通过服务治理的注册中心获取服务列表到本地
+		=>经过断路器用hystrix，sentinel（限流，服务降级） 
+		=>经过负载均衡用netflix ribbon或springcloud loadbanlancer，
+		=>最后通过封装的http或者tcp client端调用远程服务，一般用Feigin或者其底层的restTemplate，
+
++ 服务治理
+	springcloud admin；
+	服务注册中心eureka nacos zookeeper
+	企业消息总线springcloud bus，kafka
+
++ 分布式事务及微服务之间链路
+	=> 先走分布式事务alibaba seata
+	=> 再连接微服务链路追踪 springcloud-sleuth，zokin，skvwalking
+	=> 最后获取分布式锁 zookeeper acurator，redlock
+	
+
+**从厂家看:**
+
++ netflix全家桶：
 
 全局外部流量入口：zuul 动态路由 Hystrix熔断降级
 微服务内部负载均衡：feign
 https://blog.csdn.net/zhou920786312/article/details/84982290
 feign和ribbon都属于客户端负载均衡，nginx属于服务端负载均衡，nginx不易于剔除非健康节点；
 
-spring cloud alibaba全家桶：
++ spring cloud alibaba全家桶：
 https://github.com/alibaba/spring-cloud-alibaba
 
 spring cloud gateway 网关代替zuul+hystrix，既有路由又有熔断降级

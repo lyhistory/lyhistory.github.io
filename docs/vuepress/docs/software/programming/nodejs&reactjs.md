@@ -850,6 +850,21 @@ npm install
 
 mobx debug tools: google extension "MobX Developer Tools"
 
+## 5.Storybook
+
+导读：https://www.youtube.com/watch?v=va-JzrmaiUM
+
+创建demo项目:
+```
+npx create-react-app hello-storybook
+npx storybook
+```
+运行和发布:
+```
+npm run storybook
+npm run builds
+```
+
 
 find all above code samples in https://github.com/lyhistory/learn_coding/tree/master/frontend
 
