@@ -103,6 +103,10 @@ then you can observe the current status of every request
 
 + User options->Connections->Upgream Proxy Servers
 
+### Advance
+Burp Collaborator
+https://portswigger.net/burp/documentation/collaborator
+
 ## tips
 
 Save copy of project -> Target/Proxy/Spider/Save in-scope items only

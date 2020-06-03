@@ -367,7 +367,7 @@ authenticate(AuthenticationToken token) 标准的template pattern，然后找到
 跟前面显示声明拦截器不同
 ```
 chainDefinition.addPathDefinition("/login.html", "authc");
-``` 
+```
 这里没有显示声明需要authc的连接，默认应该是所有post都走authc，
 
 然后通过extends org.apache.shiro.spring.web.ShiroFilterFactoryBean，定义了一堆可以不登录就可以访问的url（不然访问默认需要登录就会401无权限，不信可以实验默认的登录url http://localhost/login，返回一定是401未登录）：
@@ -552,14 +552,14 @@ if (realms.size() == 1) {
 	```
 	UserContextUtil.getUserService().getUserInfo就是我们自定义的DAO,
 	这一步获取db保存的用户info（主要是encrypted password，一般数据库不会保存明文密码，都是通过md5或者是其他哈希算法算出一个哈希值，而且为了防止撞库或者彩虹表，还会加盐）；
-
-    另外注意传入SimpleAuthenticationInfo的ssouser就是后面subject以及会写入session的principal
-    ```
-    public SimpleAuthenticationInfo(Object principal, Object credentials, String realmName) {
-        this.principals = new SimplePrincipalCollection(principal, realmName);
-        this.credentials = credentials;
-    }
-    ```
+	
+	另外注意传入SimpleAuthenticationInfo的ssouser就是后面subject以及会写入session的principal
+	```
+	public SimpleAuthenticationInfo(Object principal, Object credentials, String realmName) {
+	    this.principals = new SimplePrincipalCollection(principal, realmName);
+	    this.credentials = credentials;
+	}
+	```
 
 **b. assertCredentialsMatch 最终调用回我们重写的**
 
@@ -570,7 +570,7 @@ if (realms.size() == 1) {
 		   credentialsMatcherMap.put(SSOAlgorithmType.MD5, new HashedCredentialsMatcher("MD5"));
 		}
 		public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
-
+	
 			return credentialsMatcher.doCredentialsMatch(token, info);
 		}
 	```
@@ -794,6 +794,325 @@ public class ShiroSessionListener
 ```
 具体sessionManager源码分析，参见[SessionMananger（操作session）](https://www.jianshu.com/p/a8ab2d1fb61a)
 
+## 3.内核代码分析
+
+**关于subject**
+
+org.apache.shiro.subject.Subject
+
+<b>Note*</b> that the returned {@code Subject} instance is <b>not</b> automatically bound to the application (thread) for further use.  That is,
+{@link org.apache.shiro.SecurityUtils SecurityUtils}.{@link org.apache.shiro.SecurityUtils#getSubject() getSubject()} will not automatically return the same instance as what is returned by the builder.  It is up to the framework developer to bind the built {@code Subject} for continued use if desired.
+
+
+HTTP请求处理过程
+1，每个http请求都被ShoriFilter拦截进行处理
+2，将SecurityManager对象和包装后的Request和Response作为构造参数创建WebSubject.Builder实例，并调用 buildWebSubject 方法创建Subject
+
+org.apache.catalina.core
+ApplicationFilterChain
+```
+private static final ThreadLocal<ServletRequest> lastServicedRequest;
+private static final ThreadLocal<ServletResponse> lastServicedResponse;
+
+private void internalDoFilter(ServletRequest request,
+                                  ServletResponse response)
+{
+filter.doFilter(request, response, this);
+}								  
+
+org.apache.shiro.web.servlet
+OncePerRequestFilter
+public final void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
+{
+doFilterInternal(request, response, filterChain);
+}
+```
+
+org.apache.shiro.web.servlet
+AbstractShiroFilter
+```
+protected void doFilterInternal(ServletRequest servletRequest, ServletResponse servletResponse, final FilterChain chain)
+            throws ServletException, IOException {
+
+        Throwable t = null;
+
+        try {
+            final ServletRequest request = prepareServletRequest(servletRequest, servletResponse, chain);
+            final ServletResponse response = prepareServletResponse(request, servletResponse, chain);
+
+            final Subject subject = createSubject(request, response);
+
+            //noinspection unchecked
+            subject.execute(new Callable() {
+                public Object call() throws Exception {
+                    updateSessionLastAccessTime(request, response);
+                    executeChain(request, response, chain);
+                    return null;
+                }
+            });
+        } catch (ExecutionException ex) {
+            t = ex.getCause();
+        } catch (Throwable throwable) {
+            t = throwable;
+        }
+```
+
+step 1.subject创建 createSubject
+step 2.subject绑定 subject.execute(new Callable() {
+
+step 1：subject创建过程
+
+通过静态内部类Builder(静态内部类的作用https://blog.csdn.net/zero_and_one/article/details/53167372)创建SubjectContext并进而创建Subject
+org.apache.shiro.web.servlet
+AbstractShiroFilter>
+```
+protected WebSubject createSubject(ServletRequest request, ServletResponse response) {
+        return new WebSubject.Builder(getSecurityManager(), request, response).buildWebSubject();
+    }
+```
+首先创建WebSubject Builder，先找到WebSubject的静态内部类Builder:
+org.apache.shiro.web.subject
+public interface WebSubject extends Subject, RequestPairSource {
+```
+public Builder(SecurityManager securityManager, ServletRequest request, ServletResponse response) {
+            super(securityManager);
+            if (request == null) {
+                throw new IllegalArgumentException("ServletRequest argument cannot be null.");
+            }
+            if (response == null) {
+                throw new IllegalArgumentException("ServletResponse argument cannot be null.");
+            }
+            setRequest(request);
+            setResponse(response);
+        }
+```
+
+3，super(securityManager)调用Subject的静态内部类Builder方法，创建新的SubjectContext实例 DefaultSubjectContext ，并将SecurityManager保存到SubjectContext实例中
+org.apache.shiro.subject
+Subject
+```
+public Builder(SecurityManager securityManager) {
+            if (securityManager == null) {
+                throw new NullPointerException("SecurityManager method argument cannot be null.");
+            }
+            this.securityManager = securityManager;
+            this.subjectContext = newSubjectContextInstance();
+            if (this.subjectContext == null) {
+                throw new IllegalStateException("Subject instance returned from 'newSubjectContextInstance' " +
+                        "cannot be null.");
+            }
+            this.subjectContext.setSecurityManager(securityManager);
+        }
+protected SubjectContext newSubjectContextInstance() {
+            return new DefaultSubjectContext();
+        }
+```
+
+4，将Request和Response也添加到SubjectContext中保存
+org.apache.shiro.web.subject
+WebSubject
+```
+public Builder(SecurityManager securityManager, ServletRequest request, ServletResponse response) {
+            super(securityManager);
+            if (request == null) {
+                throw new IllegalArgumentException("ServletRequest argument cannot be null.");
+            }
+            if (response == null) {
+                throw new IllegalArgumentException("ServletResponse argument cannot be null.");
+            }
+            setRequest(request);
+            setResponse(response);
+        }
+ protected Builder setRequest(ServletRequest request) {
+            if (request != null) {
+                ((WebSubjectContext) getSubjectContext()).setServletRequest(request);
+            }
+            return this;
+        }
+```
+然后调用 buildWebSubject:		
+org.apache.shiro.web.subject
+WebSubject.Builder
+```
+public WebSubject buildWebSubject() {
+            Subject subject = super.buildSubject();
+            if (!(subject instanceof WebSubject)) {
+                String msg = "Subject implementation returned from the SecurityManager was not a " +
+                        WebSubject.class.getName() + " implementation.  Please ensure a Web-enabled SecurityManager " +
+                        "has been configured and made available to this builder.";
+                throw new IllegalStateException(msg);
+            }
+            return (WebSubject) subject;
+        }
+```
+调用父类Subject.Builder的buildSubject
+org.apache.shiro.subject;
+Subject.Builder
+```
+public Subject buildSubject() {
+            return this.securityManager.createSubject(this.subjectContext);
+        }
+```
+然后找到默认的 Securitymanager 创建 subject
+
+5，将 subjectContext 作为参数，调用SecurityManager的createSubject方法创建Subject对象	
+org.apache.shiro.mgt
+DefaultSecurityManager
+```
+public Subject createSubject(SubjectContext subjectContext) {
+        //create a copy so we don't modify the argument's backing map:
+        SubjectContext context = copy(subjectContext);
+
+        //ensure that the context has a SecurityManager instance, and if not, add one:
+        context = ensureSecurityManager(context);
+
+        //Resolve an associated Session (usually based on a referenced session ID), and place it in the context before
+        //sending to the SubjectFactory.  The SubjectFactory should not need to know how to acquire sessions as the
+        //process is often environment specific - better to shield the SF from these details:
+        context = resolveSession(context);
+
+        //Similarly, the SubjectFactory should not require any concept of RememberMe - translate that here first
+        //if possible before handing off to the SubjectFactory:
+        context = resolvePrincipals(context);
+
+        Subject subject = doCreateSubject(context);
+
+        //save this subject for future reference if necessary:
+        //(this is needed here in case rememberMe principals were resolved and they need to be stored in the
+        //session, so we don't constantly rehydrate the rememberMe PrincipalCollection on every operation).
+        //Added in 1.2:
+        save(subject);
+
+        return subject;
+    }
+```
+
+6，其中doCreateSubject将SubjectContext作为参数，调用SubjectFactory【DefaultSubjectFactory】的createSubject方法创建Subject
+
+7，接着根据 sessionid 取出SubjectContext一路收集来的数据来构建 WebDelegatingSubject 对象并返回。
+注意下面的wsc是通过SubjectContext取出的request reponse和sessionKey最终层层找到sessionManager，
+然后从request中解析出sessionid，然后从sessionManager中找到session、principal等等信息；
+
+org.apache.shiro.web.mgt
+DefaultWebSubjectFactory
+```
+public Subject createSubject(SubjectContext context) {
+        if (!(context instanceof WebSubjectContext)) {
+            return super.createSubject(context);
+        }
+        WebSubjectContext wsc = (WebSubjectContext) context;
+        SecurityManager securityManager = wsc.resolveSecurityManager();
+        Session session = wsc.resolveSession();
+        boolean sessionEnabled = wsc.isSessionCreationEnabled();
+        PrincipalCollection principals = wsc.resolvePrincipals();
+        boolean authenticated = wsc.resolveAuthenticated();
+        String host = wsc.resolveHost();
+        ServletRequest request = wsc.resolveServletRequest();
+        ServletResponse response = wsc.resolveServletResponse();
+
+        return new WebDelegatingSubject(principals, authenticated, host, session, sessionEnabled,
+                request, response, securityManager);
+    }
+```
+
+另外上面的save(subject)应该就是为了后面的请求过来resolve session principal，所以需要保存到session中，
+这个应该是对developer不可见的，属于shiro内部操作，developer应该只可以拿到httpSession，这里的是shiro进一步扩展的Session
+/**
+     * Saves the subject's state (it's principals and authentication state) to its
+     * {@link org.apache.shiro.subject.Subject#getSession() session}.  The session can be retrieved at a later time
+     * (typically from a {@link org.apache.shiro.session.mgt.SessionManager SessionManager} to be used to recreate
+     * the {@code Subject} instance.
+     *
+     * @param subject the subject for which state will be persisted to its session.
+     */
+    protected void saveToSession(Subject subject) {
+        //performs merge logic, only updating the Subject's session if it does not match the current state:
+        mergePrincipals(subject);
+        mergeAuthenticationState(subject);
+    }
+
+
+8，当调用Subject的getSession方法的时候，如果Session不存在，则首先创建一个新的DefaultSessionContext实例并设置host值【可能是空】
+9，将sessionContext对象作为参数调用securityManager的start方法来创建Session
+10，从SessionContext中取出HttpServletRequest，并调用HttpServletRequest的getSession方法来获取HttpSession，同时从SessionContext中取出host，使用这两个值作为构造函数的参数实例化HttpServletSession类。
+11，到此，Session的创建过程结束，此时的HttpServletSession纯粹只是HttpSession的代理一样。
+
+上面的第7步截图：
+![](/docs/docs_image/software/buildingblock/shiro_subject01.png)
+![](/docs/docs_image/software/buildingblock/shiro_subject02.png)
+![](/docs/docs_image/software/buildingblock/shiro_subject03.png)
+![](/docs/docs_image/software/buildingblock/shiro_subject04.png)
+
+---
+
+step 2:绑定subject到当前的线程上下文,接着上面的AbstractShiroFilter》subject.execute(new Callable() {
+
+org.apache.shiro.subject.support
+SubjectCallable
+
+```
+public SubjectCallable(Subject subject, Callable<V> delegate) {
+        this(new SubjectThreadState(subject), delegate);
+    }
+public V call() throws Exception {
+        try {
+            threadState.bind();
+            return doCall(this.callable);
+        } finally {
+            threadState.restore();
+        }
+    }
+```
+org.apache.shiro.subject.support
+SubjectThreadState
+```
+public SubjectThreadState(Subject subject) {
+        if (subject == null) {
+            throw new IllegalArgumentException("Subject argument cannot be null.");
+        }
+        this.subject = subject;
+
+        SecurityManager securityManager = null;
+        if ( subject instanceof DelegatingSubject) {
+            securityManager = ((DelegatingSubject)subject).getSecurityManager();
+        }
+        if ( securityManager == null) {
+            securityManager = ThreadContext.getSecurityManager();
+        }
+        this.securityManager = securityManager;
+    }
+  public void bind() {
+        SecurityManager securityManager = this.securityManager;
+        if ( securityManager == null ) {
+            //try just in case the constructor didn't find one at the time:
+            securityManager = ThreadContext.getSecurityManager();
+        }
+        this.originalResources = ThreadContext.getResources();
+        ThreadContext.remove();
+
+        ThreadContext.bind(this.subject);
+        if (securityManager != null) {
+            ThreadContext.bind(securityManager);
+        }
+    }
+```
+SecurityUtils.getSubject();
+
+org.apache.shiro
+SecurityUtils
+```
+ public static Subject getSubject() {
+        Subject subject = ThreadContext.getSubject();
+        if (subject == null) {
+            subject = (new Subject.Builder()).buildSubject();
+            ThreadContext.bind(subject);
+        }
+        return subject;
+    }
+```
+
+
+
 ## 其他鉴权技术对比
 SpringSecurity原理剖析与权限系统设计 https://www.cnblogs.com/fanzhidongyzby/p/11610334.html
 
@@ -804,3 +1123,6 @@ ref:
 [Shiro 免密登录](https://my.oschina.net/u/2419190/blog/1560577)
 [JAVA安全框架Apache Shiro浅析](https://www.jianshu.com/p/dc5c49f5101e)
 [SpringBoot系列 - 集成Shiro权限管理](https://www.xncoding.com/2017/07/07/spring/sb-shiro.html)
+
+https://juejin.im/post/5c539be16fb9a049e702896c
+https://blog.51cto.com/dengshuangfu/2361227

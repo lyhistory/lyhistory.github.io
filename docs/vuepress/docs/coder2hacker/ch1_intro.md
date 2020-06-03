@@ -62,13 +62,40 @@ web安全的复杂性：
 白帽黑客可以是自由职业，也可以通过渗透测试认证，加入公司组织的安全团队，称为渗透测试人员，
 渗透测试是公司或组织机构在经过客户公司或组织机构委托授权的情况下，在约定的测试范围内根据测试要求对授权的测试标的进行安全漏洞检测，并最终提供渗透测试结果报告，并对漏洞给出修复意见；
 
-渗透测试分为黑盒和白盒测试，取决于甲方公司跟受聘渗透测试团队的约定，是否提供内部相应资料；
+渗透测试分为黑盒、白盒、灰盒测试，取决于甲方公司跟受聘渗透测试团队的约定，是否提供内部相应资料；
+
+Black box Testing:
+Advantage: the most realistic simulation of a hacker trying to break, or break into, a system;
+Disadvantage: tend to be unnecessarily time consuming for the tester and therefore expensive for the stakeholder.
+
+White box Testing:
+Advantage: very time efficient for the tester
+Disadvantage: usually not a realistic simulation of a hacker attack since the tester has inside knowledge of the system;
+
+Gray box Testing:
+Advantage: a good balance between a realistic hacker attack and saving time by providing the tester with some inside knowledge of how the target system works.
+Disadvantage: the tester might not have access to the source code of the target application or other important bits of information.
+
 
 渗透测试通常是找出尽量多的漏洞，而红队测试则一般是攻击特定的目标，比如某公司的财务报表或者某台机器上的某个资料，
 红队是模拟现实中可能受雇的黑客的行为，除了攻击特定目标，还能测试公司的安防措施（阻断（prevention）、检测（detection）和响应（response）），
 通常渗透测试不会采用社工方式，但是红队可以采用一切有效方式甚至是物理接触的方式以达到目的；
 
 有红队自然有蓝队，红队是矛，蓝队是盾，蓝队是构建公司安全防御系统，提升安防能力的团队，红队的作用是为了训练蓝队；
+
+渗透测试的原则 C.I.A:
++ Confidentiality aims to prevent sensitive information from falling into the wrong hands. Credit card data, medical records, and usernames/passwords are three examples of such information.
+When the confidentiality of a system has been violated, the information owner must(or a least should) do his best to limit the damage done.
++ Integrity seeks to prevent information from being altered by unauthorized users. An example would be an online-ecommerce system where a customer can view,
+and change, the order information of other customers without leaving any trace of doing so. When the integrity of a system has been violated, 
+the information it processes can no longer be fully trusted.
++ Availability aims to keep information accessible when it is needed. Power outages or distributed denial of service(DDOS) are two examples of how the availability of a system can be affected.
+When the availability of a system has been violated, the system can no longer perform its intended function.
+
+the idea behind the CIA concept is that all three aspects must be taken into consideration while trying to maintian an acceptable security level.
+Not all three aspects are equally important for every kind of system, and some systems may do just fine without one or even two of them, 
+but system owners should always consider all three.
+
 
 #SRC挖洞
 正是由于前面提到的web应用风险，很多企业都会采取组建自己的安全团队，有些还会组建src security response center，安全应急反应中心，用于响应漏洞入侵，以及向有能力的黑客提供奖励；
@@ -80,17 +107,22 @@ https://security.360.cn/en/
 
 https://www.google.com/about/appsecurity/reward-program/index.html
 
-# 渗透思路总览
+# 渗透思路总览 Phases of Peneration Testing
 
 ### Reconnaissance 
+Gatering preliminary data or intelligence on your target.
 
-### Enumeration 
+### Enumeration / Scanning
+Application of technical tools to gather further inteligence
 
-### Exploitation 
+### Exploitation / Gaining Access
+Taking control of one or more network devices or application
 
 ### Maintaining access 
+Steps involved in being able to be persistently within the target environment
 
-### Cleaning tracks
+### Cleaning tracks / Covering tracks
+Attacker must take the steps necessary to remove all traces of detection.
 
 
 

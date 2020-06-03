@@ -9,7 +9,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
 WINDOWS
-======
+======个
 
 常用路径：%APPDATA%
 
@@ -23,6 +23,11 @@ ping to start:
 %SystemRoot%\system32\cmd.exe /C "path to jar"
 
 Magnifier：Windows logo key‌  + Plus sign (+) 
+
+Shortcut:
+folder nav: alt+arrow
+select/deselect: ctrl+space
+right-click: shift+win10
 
 ---
 	

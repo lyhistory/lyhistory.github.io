@@ -45,6 +45,16 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 > SpringMVC的改变: SpringMVC也是Servlet的实现，只不过SpringMVC增加了一个DispatchServlet，所有的http请求都是映射到这个Servlet上，请求进入到这个Servlet中之后，就算进入到了框架之中了，由这个Servlet来统一的分配http请求到各个Controller
 
 > https://blog.csdn.net/achenyuan/article/details/77246395
+>
+> Tomcat连接器（Connector）是处理请求的主要组件，它负责接收请求，创建Request和Response对象用于和前端进行数据的交换；然后分配线程让Servlet容器来处理这个请求，并把产生的Request和Response对象传给Servlet容器。当Engine处理完请求后，也会通过Connector将结果返回给请求端。即Connector进行请求的调度和控制。
+> 根据协议的不同，可以分为Http Connector和AJP Connector,
+> Tomcat处理连接请求的模式：
+> BIO：阻塞模型
+> NIO：非阻塞模型 
+> APR： 高性能，可扩展的模式，Tomcat8版本默认模式
+> https://www.jianshu.com/p/c4fab2a30c3a
+>
+> 比如spring mvc程序开启，默认tomcat会开启10个线程，如果并发请求大于10个，则创建新线程名字大概是http-nio-（nio就是说当前tomcat的连接模式是非阻塞的），最多限制貌似是200
 
 **servlet filter拦截器**
 

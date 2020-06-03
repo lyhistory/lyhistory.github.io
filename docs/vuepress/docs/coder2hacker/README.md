@@ -11,6 +11,11 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 <div>
 	<h3>白帽黑客渗透技术入门</h3>
 	<span style="color:pink;">这个部分我会陆续筛选不敏感的内容慢慢更新,由于种种原因,这部分更新会比较缓慢,可以先加我知识星球;</span>
+    <span>
+        ------------------------------------------------------
+        --- 理论篇
+        ------------------------------------------------------
+    </span>
 	<ul>
 		<li><a href="/docs/coder2hacker/ch1_intro">Chapter 1．道德黑客和渗透测试介绍</a></li>
 		<li><a href="/docs/coder2hacker/ch2_web">Chapter 2．网络基础和web技术</a></li>
@@ -28,13 +33,28 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li>Chapter 9. 自动扫描器</li>
 		<li><a href="/docs/coder2hacker/intranet_penetration">内网渗透</a></li>
 		<li>Chapter 10. 实例分析</li>
-		[redis](/docs/coder2hacker/realcase/redis)
+		[认证授权漏洞 auth](/docs/coder2hacker/realcase/auth)
+        [redis](/docs/coder2hacker/realcase/redis)
+        [中间人攻击 mitm](/docs/coder2hacker/realcase/mitm)
 		<li>Chapter 11.对抗</li>
 		社工钓鱼https://yq.aliyun.com/articles/661339
 		蜜罐系统
 		红队 Cobalt Strike 4.0 https://www.cobaltstrike.com/
 	</ul>
+    <span>
+        ------------------------------------------------------
+        --- 工具篇
+        ------------------------------------------------------
+    </span>
+    <ul>
+        <li><a href="/docs/coder2hacker/tools">工具概览</a></li>
+        <li><a href="/docs/coder2hacker/tools_recon">信息收集</a></li>
+        <li><a href="/docs/coder2hacker/tools_burpsuite">burpsuite</a></li>
+        <li><a href="/docs/coder2hacker/tools_sqlmap">sqlmap</a></li>
+        <li><a href="/docs/coder2hacker/tools_xray">xray</a></li>
+    </ul>
 </div>
+
 
 <div style="background-color:bisque;">
 	<span>##欢迎资助我的创作 Welcome to support my creation##</span>

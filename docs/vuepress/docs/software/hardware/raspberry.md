@@ -6,6 +6,33 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《树莓派raspberry》
 
+关于显示器无法显示：
+都是sdcard上config文件的配置问题，比如我买的pi top，用了pi top的distro就可以显示，而自己烧录的raspbian就无法显示，
+然后我只是文件compare了一下config，改成跟pi top的distro一样就ok了
+
+关于headless无头模式，一个是wifi，一个是ssh，要注意不同的os版本相应的wifi的配置不同，
+Raspbian Jessie 系统
+network={
+  ssid="WiFi名字"
+  psk="WiFi密码"
+  key_mgmt=WPA-PSK
+}
+Raspbian Stretch 系统
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+network={
+    ssid="WiFi名字"
+    psk="WiFi密码"
+    key_mgmt=WPA-PSK
+}
+
+所以熟悉下raspbian的不同版本还是有必要的，比如Jessie Stretch
+而ssh开启很简单，给一个ssh文件就ok
+
+主要配置
+raspi-config
+
+pi/raspberry
+
 黑客基站https://www.linuxidc.com/Linux/2015-11/124762.htm
 
 ls /usr/lib/python3/dist-packages/
