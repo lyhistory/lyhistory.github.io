@@ -1,3 +1,49 @@
+ 	
+guessmyname 3 days ago [–]
+
+All your questions can be answered by reading “Sign in with Apple REST API” [1][2]:
+
+1. User clicks or touches the “Sign in with Apple” button
+
+2. App or website redirects the user to Apple’s authentication service with some information in the URL including the application ID (aka. OAuth Client ID), Redirect URL, scopes (aka. permissions) and an optional state parameter
+
+3. User types their username and password and if correct Apple redirects them back to the “Redirect URL” with an identity token, authorization code, and user identifier to your app
+
+4. The identity token is a JSON Web Token (JWT) and contains the following claims:
+
+• iss: The issuer-registered claim key, which has the value https://appleid.apple.com.
+
+• sub: The unique identifier for the user.
+
+• aud: Your client_id in your Apple Developer account.
+
+• exp: The expiry time for the token. This value is typically set to five minutes.
+
+• iat: The time the token was issued.
+
+• nonce: A String value used to associate a client session and an ID token. This value is used to mitigate replay attacks and is present only if passed during the authorization request.
+
+• nonce_supported: A Boolean value that indicates whether the transaction is on a nonce-supported platform. If you sent a nonce in the authorization request but do not see the nonce claim in the ID token, check this claim to determine how to proceed. If this claim returns true you should treat nonce as mandatory and fail the transaction; otherwise, you can proceed treating the nonce as optional.
+
+• email: The user's email address.
+
+• email_verified: A Boolean value that indicates whether the service has verified the email. The value of this claim is always true because the servers only return verified email addresses.
+
+• c_hash: Required when using the Hybrid Flow. Code hash value is the base64url encoding of the left-most half of the hash of the octets of the ASCII representation of the code value, where the hash algorithm used is the hash algorithm used in the alg Header Parameter of the ID Token's JOSE Header. For instance, if the alg is HS512, hash the code value with SHA-512, then take the left-most 256 bits and base64url encode them. The c_hash value is a case sensitive string
+
+Let's start with the fact that Apple is forcing people to use an E-mail address as a user ID. That's just straight-up stupid.
+https://news.ycombinator.com/item?id=23362149
+jwt https://jwt.io/introduction/
+	
+Tomcat连接器（Connector）是处理请求的主要组件，它负责接收请求，创建Request和Response对象用于和前端进行数据的交换；然后分配线程让Servlet容器来处理这个请求，并把产生的Request和Response对象传给Servlet容器。当Engine处理完请求后，也会通过Connector将结果返回给请求端。即Connector进行请求的调度和控制。
+根据协议的不同，可以分为Http Connector和AJP Connector,
+Tomcat处理连接请求的模式：
+BIO：阻塞模型
+NIO：非阻塞模型 
+APR： 高性能，可扩展的模式，Tomcat8版本默认模式
+https://www.jianshu.com/p/c4fab2a30c3a
+
+在使用shiro的时候，开启程序，默认tomcat会开启10个线程，如果并发请求大于10个，则创建新线程名字大概是http-nio-（nio就是说当前tomcat的连接模式是非阻塞的），最多限制貌似是200
 
 为什么要用shiro，我的理解这个轮子造的比较好，登录和权限授权是大部分应用最基本的功能，也是最容易出问题和重复性的工作，
 shiro将这部分模块化，采用依赖注入的模式，让用户可以比较容易自定义数据源、登录验证逻辑、权限逻辑等内容；
@@ -853,7 +899,7 @@ step 2.subject绑定 subject.execute(new Callable() {
 
 step 1：subject创建过程
 
-通过静态内部类Builder创建SubjectContext并进而创建Subject
+通过静态内部类Builder(静态内部类的作用https://blog.csdn.net/zero_and_one/article/details/53167372)创建SubjectContext并进而创建Subject
 org.apache.shiro.web.servlet
 AbstractShiroFilter>
 ```

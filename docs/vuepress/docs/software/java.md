@@ -372,6 +372,9 @@ https://www.baeldung.com/java-future
 Java serialization algorithm
 https://www.javaworld.com/article/2072752/the-java-serialization-algorithm-revealed.html
 
+java开发之线程（守护线程daemon和用户线程User Thread）
+https://blog.csdn.net/mine_song/article/details/72651388
+
 父线程捕获子线程异常需要利用executorservice
 
 **JAXB**
