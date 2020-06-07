@@ -109,7 +109,10 @@ https://www.google.com/about/appsecurity/reward-program/index.html
 
 # 渗透思路总览 Phases of Peneration Testing
 
-### Reconnaissance 
+Every penetration test, be it for a network or a web application, has a workflow; it has a series of stages that should be completed in order to increase our chances of finding and exploiting every possible vulnerability affecting our targets, such as: 
+
+### Reconnaissance / Profiling the Web Server
+
 Gatering preliminary data or intelligence on your target.
 
 ### Enumeration / Scanning

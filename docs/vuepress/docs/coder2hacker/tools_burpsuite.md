@@ -7,6 +7,8 @@ https://portswigger.net/burp/communitydownload
 
 irc.freenode.net
 
+参考： https://t0data.gitbooks.io/burpsuite/content/chapter1.html
+
 ## Setup
 
 ### Target:
@@ -46,12 +48,25 @@ Http Pipelining:
 Payloads:
 + Sniper
 	single set of payloads then try them all on each position you mark
+	
+	将一组攻击载荷分别替换每一个修改点上，每个替换后的值都是不同的。
+
 + Battering ram
 	instead of separately it just puts each payload in every position all at once, each position will always have the same value that the other positions have
+	
+	和Sniper一样，它也使用一组攻击载荷，但是不同的是它在每一次修改中会把所有修改点都替换成一样的值。
+	
 + Pitchfork
 	take a payload set for each parameter and iterates over all of them at once
+	
+	将多个攻击载荷集中的每一项依次替换不同的修改点，当我们对已知的某些数据进行测试时会发现它很有用，比如对一组用户名和密码进行测试。
+	
 + Cluster bomb
 	generates a payload for each parameter and independently iterates over all of those per position
+	
+	测试多个攻击载荷的所有排列组合
+
+
 
 Custom Word List / Configure predefined payload lists
 https://github.com/danielmiessler/SecLists

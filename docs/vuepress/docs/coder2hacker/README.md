@@ -19,6 +19,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<ul>
 		<li><a href="/docs/coder2hacker/ch1_intro">Chapter 1．道德黑客和渗透测试介绍</a></li>
 		<li><a href="/docs/coder2hacker/ch2_web">Chapter 2．网络基础和web技术</a></li>
+        <li><a href="/docs/coder2hacker/basics_http">HTTP基础</a></li>
 		<li><a href="/docs/coder2hacker/ch3_kali">Chapter 3．基于Kali Linux搭建渗透环境</a></li>
 		<li><a href="/docs/coder2hacker/overview_security_client2server">客户端服务端通信安全概览</a></li>
 		<li>Chapter 4．信息侦察</li>

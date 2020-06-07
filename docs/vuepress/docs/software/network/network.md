@@ -30,6 +30,8 @@ The layers in the TCP/IP network model, in order, include:
 
 注意：websocket是完整的应用层协议，所以不会访问raw tcp packets，但是常用的socket是可以的，因为它是基于应用层和传输层的抽象，并不是一个协议；
 
+![网络分层](/docs/docs_image/software/network/network01_01.png)
+
 ![网络分层](/docs/docs_image/software/network/network01.png)
 
 比较早的layer1是采用hub技术，容易浪费带宽，比如A和B两台机器上面运行不同的服务，外面请求进来的时候，采用hub技术就要盲目广播，浪费带宽；
@@ -94,8 +96,8 @@ NAT stands for Network Address Translation. In the context of our network, NAT i
 A public IP address is an address that is exposed to the Internet. If you search for "what's my IP" on the Internet, you'll find the public IP address your computer is using.
 If you look up your computer's IP address, you'll see a different IP address: this is your device's private IP.
 Chances are, if you check this on all of your devices, you'll see that all your devices are using the same public IP, but all have different private IPs. This is NAT in action. The network hardware uses NAT to route traffic going from the public IP to the private IP.
- 
- 
+
+
 三层转发基本原理 https://blog.csdn.net/baidu_24553027/article/details/54928580
 NAT地址转换 https://blog.csdn.net/hjgblog/article/details/23356409
 
