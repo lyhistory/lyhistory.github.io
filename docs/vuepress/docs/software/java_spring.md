@@ -301,7 +301,7 @@ netty的性能比filter高，所以一般nginx放前面，zuul放后面，当然
 全局外部流量入口：zuul 动态路由 Hystrix熔断降级
 微服务内部负载均衡：feign
 https://blog.csdn.net/zhou920786312/article/details/84982290
-feign和ribbon都属于客户端负载均衡，nginx属于服务端负载均衡，nginx不易于剔除非健康节点；
+feign和ribbon都属于客户端负载均衡（正向代理，当然这里意图并不是说要隐藏客户端，而是反而客户端通过使用feignClient，feiginclient调用微服务B[多个节点在注册中心注册为B服务]，从而隐藏具体的调用过程，比如怎么动态选择哪个节点的B服务，通过什么协议等等），nginx属于服务端负载均衡（反向代理），nginx不易于剔除非健康节点；
 
 + spring cloud alibaba全家桶：
 https://github.com/alibaba/spring-cloud-alibaba
@@ -332,7 +332,6 @@ todo:
 Mvc
 Thymeleaf
 Realm
-
 
 ---
 

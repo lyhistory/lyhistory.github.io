@@ -115,12 +115,20 @@ strings nvme | grep WVDEVID -B 1
 http://huawei-firmware.com/?q=MT7-L09&load_page=search&page=1
 https://forum.xda-developers.com/mate-7/general/huawei-mt7-l09-l10-stock-firmware-ota-t3275784
 
-线刷
-连usb 用工具刷
+线刷：
+连usb 用工具刷，工具可以是第三方工具，也可以是FASTBOOT ，
 
-卡刷
+https://www.androidcentral.com/android-z-what-fastboot
+
+https://forum.xda-developers.com/showthread.php?t=2317790
+
+安装adb，利用adb和fastboot
+
+卡刷：
 自己下载到手机
-通过手机工具刷
+通过手机工具刷，工具可以是手机默认的recovery模式，或者是第三方recovery，比如安装TWRP 或cmw
+
+
 
 终于找到了MT7-L09的包
 https://forum.xda-developers.com/mate-7/general/huawei-mt7-l09-l10-stock-firmware-ota-t3275784
@@ -405,18 +413,81 @@ dd if=/sdcard/system.img of=/your/system/partition
 其他思路：通过fastboot直接刷https://www.youtube.com/watch?v=AIyEO4uoWLc
 MagiskManager
 
-##XIAOMI
+## XIAOMI
 
 HM NOTE 1LTE - Xiaomi Redmi Note 4G (Single SIM) 
 https://twrp.me/xiaomi/xiaomiredminote4gsinglesim.html
 
+Hm note 1s cu(gucci)
+Volume up + power => Recovery Mode
+Volume down + power => fastboot mode , usb connect to pc,
+
+
+
+[ROMs] Sailfish Os For Redmi 1s 
+http://en.miui.com/thread-146982-1-1.html
+https://www.youtube.com/watch?v=Np5woYmJN24
+
+#issues: Signature Enforcement
+http://en.miui.com/thread-237673-1-1.html
+
+
+
+Offical
+https://twrp.me/xiaomi/xiaomiredmi1s.html
+Work
+[TWRP] Redmi Note Prime (Gucci) TWRP English Recovery http://en.miui.com/forum.php?mod=viewthread&tid=212961&mobile=2
+
+Not work
+https://forum.xda-developers.com/redmi-1s/help/unlock-bootloader-flash-twrp-redmi-1s-t3772595
+http://en.miui.com/thread-29291-1-1.html
+https://www.jianshu.com/p/c348d419023b
+Failed install with fastboot
+
+
+
+https://github.com/CyanogenMod?utf8=%E2%9C%93&q=android_device_xiaomi&type=&language=
+
+Can I update my hm note 1s cu(gucci) to other version??
+https://forum.xda-developers.com/wiki/Xiaomi
+https://github.com/MiCode/Xiaomi_Kernel_OpenSource/
+
+
+使用adb查看小米设备的代号
+
+http://cuminlo.github.io/2016/06/02/%E4%BD%BF%E7%94%A8adb%E6%9F%A5%E7%9C%8B%E5%B0%8F%E7%B1%B3%E8%AE%BE%E5%A4%87%E7%9A%84%E4%BB%A3%E5%8F%B7/
+
+adb shell getprop | ack name
+
+
+
 ## more 
-extend interal storage with sdcard 
-method 1 via ext4 partition and link2sd app 
+### 扩展内部存储
+
+当然很多人觉着直接插入一个大容量的external sdcard不就可以了，然后可以从手机的storage设置中将默认的安装位置切换到external sdcard，但是问题是，手机的很多partition 比如/data还是用的internal storage，所以另一个思路就是：extend interal storage with sdcard ，要注意的是，在这个之前要买一个好的sdcard。
+
+什么是好的sdcard？
+
+首先不要买错，手机用的通常都是MicroSD:
+
+MicroSD vs. SD Card. MicroSD is a smaller variant of the SD (Secure Digital) card and is used in certain cell phones, PDAs and smaller, lighter devices. MicroSD cards can be read by regular SD card slots through an adaptor.
+
+注意不要贪便宜，据说市场上4成的sandisk是假的，所以还是去官方店购买；
+
+普通的sdcard在扩展为内部存储时，手机会告警：low speed SD card may seriously affect system performance, Class 10 or higher is recommended，所以推荐sandisk exterem pro
+
+microSD: Has a capacity up to 2GB, and works in any microSD slot.
+microSDHC: Has a capacity of more than 2GB and up to 32GB, and works in hardware that supports either SDHC and SDXC.
+microSDXC: Has a capacity of more than 32GB and up to 2TB (although at the time of writing, 1TB is the largest available card), and is only supported in SDXC-compatible devices.
+microSDUC: Supports cards up to 128TB, and will require a compatible device.
+
+下面说扩展方法：
+
+**method 1 via ext4 partition and link2sd app **
 https://www.diskpart.com/articles/partition-sd-card-1203.html
 注意，partition type ext2 3 4 尽量跟系统本身一致，可以用adb shell查看系统partition type ：cat /proc/mounts
 
-method 2 via Adoptable storage:
+**method 2 via Adoptable storage:**
 https://fossbytes.com/android-sd-card-internal-storage-adoptable-storage/
 
 发布文章：

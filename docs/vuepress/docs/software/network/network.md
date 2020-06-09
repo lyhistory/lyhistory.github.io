@@ -30,9 +30,90 @@ The layers in the TCP/IP network model, in order, include:
 
 注意：websocket是完整的应用层协议，所以不会访问raw tcp packets，但是常用的socket是可以的，因为它是基于应用层和传输层的抽象，并不是一个协议；
 
-![网络分层](/docs/docs_image/software/network/network01_01.png)
+
+
+![网络分层](/docs/docs_image/software/network/network01_2.png)
 
 ![网络分层](/docs/docs_image/software/network/network01.png)
+
+
+
+OSI七层是抽象的模型，而TCP/IP四层或五层是比较具体的协议；
+
+听了马士兵的关于TCP的讲解，还是感觉挺有收获的，大概总结下整体过程：
+
+
+
+![网络分层](/docs/docs_image/software/network/network00_1.png)
+
+![网络分层](/docs/docs_image/software/network/network00_2.png)
+
+
+
+用户从应用层发起http get request，比如通过浏览器或者直接通过shell命令
+```
+https://www.tldp.org/LDP/abs/html/devref1.html
+
+有一个特殊的文件/dev/tcp,打开这个文件就类似于发出了一个socket调用，建立一个socket连接，读写这个文件就相当于在这个socket连接中传输数据。
+1.打开/dev/tcp
+    以读写方式打开/dev/tcp，并指定服务器名为：www.baidu.com,端口号为：80,指定描述符为8
+    要注意的是：/dev/tcp本身是不存在的。
+exec 8<> /dev/tcp/www.baidu.com/80
+2. 向文件中写入数据，向文件中随便写一些数据
+echo -e "GET / HTTP/1.0\n" 1>& 8
+3. 读文件
+cat 0<& 8 或 cat<&8
+
+查看
+cd /proc/$$/fd
+关闭
+exec 8<& -
+```
+然后系统内核就会一层层往下打包，先打包“传输控制层”，这一层是需要通过三次握手建立连接的，
+第一次握手就是发送SYN给服务器端（这里的百度），通过dns获取了百度的IP，TCP socket套接字需要用到local客户端的ip和port以及server端的ip和port，那么具体怎么发送出这第一个包呢，很多人误以为传输层就可以直接发送，其实这个层强调的是传输“控制”层，
+所以还需要再下一层，网络层会根据目标ip地址，获取路由地址表（route -n），通过掩码来计算获取到走哪个网关，如果是内网就直接发送，如果是外网则走路由器网关，这就是所谓的下一跳的地址，
+但是有个问题，我们是发送给百度服务器的，这里又多了一个下一跳的地址，怎么搞，链路层就是解决这个问题的，
+通过arp表找到下一跳对应的mac地址，再包一层，最终通过物理层发送出去；
+
+上面第二张图就很清楚的说明了网络层和链路层的工作过程：
+
+网络层寻址，比如路由表：
+
+| Destination | Gateway      | Genmask       | Iface |
+| ----------- | ------------ | ------------- | ----- |
+| 192.168.1.0 | 0.0.0.0      | 255.255.255.0 | eth1  |
+| 0.0.0.0     | 10.20.30.254 | 0.0.0.0       | eth0  |
+
+ping 192.168.1.111； ip是192.168.1.111，掩码是255.255.255.0，与运算结果就是192.168.1.0即网络号，111就是这个网络中的主机号111，然后路由器表中192.168.1.0对应的网关gw是0.0.0.0，意思是直接内网通过eth1网卡发送，
+
+如果我们ping的是21.12.1.1，跟255.255.255.0运算结果是21.12.1.0，第一条不匹配，然后走到第二条，跟0.0.0.0与运算结果匹配Destination 0.0.0.0，所以走网关10.20.30.254出去；
+
+链路层的工作过程就是，路由器接收到数据包之后，撕掉上面自己的mac地址，然后贴上下一跳比如isp路由器的mac地址（通过arp表获取），依次下去，直到到达百度服务器或者百度服务器所在局域网上的某个机器比如路由器，然后撕掉发现就是对应自己内网的ip，即可以通过上面说的主机号找到某台服务器；
+
+下面展开说下开发常见的TCP协议，
+
+![网络分层](/docs/docs_image/software/network/network00_3.png)
+
+TCP面向连接，三次握手的本质就是，双方（客户端和服务端）都需要确认自己发送的信息对方可以收到，所以精简下来就是三次握手：
+
+第一次客户端发送syn空包给服务端，服务端收到，证明自己可以接收信息，然后返回ack以及syn，这是第二次，客户端收到就可以确认自己可以发送以及接受信息，第三次客户端发送ack，然后服务端收到就可以确认自己可以发送信息；
+
+而socket和资源的开辟大概是这样，比如服务器端起来一个http server，端口是80，我们通过netstat -natp命令会看到有一条处于listen状态的进程，这是代表这个服务开启的主进程（通常是Daemon守护进程）；
+
+假设此时客户端通过上面的命令或者浏览器发送http请求，通过前面解析的内核层的传输控制层三次握手建立连接，建立连接成功之后会发现服务端会spawn生成一个新的进程或线程（一般是线程），状态是established，这就睡listen状态的主进程生成的worker线程，然后内核会分配资源给这个线程/进程，可以在/proc/<pid>下看到资源，在linux上面一切皆文件，包括这些进程线程，当然客户端也同样会开辟相应的资源，注意服务器端始终是一个端口，然后通过生成子线程来handle进来的请求，而客户端则是会用随机的端口，一个客户端耗尽所有端口最多同时可以产生65535个连接，不过需要注意的是客户端可以重用某个端口对另一个服务器B发起请求，这就是套接字的本质，套接字是src IP+PORT<-->dest IP+PORT，所以客户端同时通过端口比如21访问服务器A和B，tcp不会发生混乱，因为虽然sr IP+PORT相同，但是每对套接字的服务端是不同的，依然可以区分；
+
+然后三次握手成功，资源开辟，就可以通信了，发送数据包；
+
+结束是需要四次分手，也是因为双方都开辟了资源，所以双方不可以随意销毁资源，结束的方式是，客户端发送FIN给服务端，服务端收到后ACK，可能此时服务端还有东西要处理（假设是保存session），做完后服务端同样发起FIN，客户端ACK，所以总共是四次；
+
+以上过程可以通过抓包来数包：
+
+```
+curl www.baidu.com
+tcpdump -nn -i eth0 port 80 or arp
+```
+
+
 
 比较早的layer1是采用hub技术，容易浪费带宽，比如A和B两台机器上面运行不同的服务，外面请求进来的时候，采用hub技术就要盲目广播，浪费带宽；
 而采用layer2的交换机技术，由于交换机会学习mac地址（arp mapping），大大降低了广播的浪费；
@@ -355,7 +436,7 @@ RPC框架众多，比如netty:
 首先要了解两种代理模式：**forward proxy（正向代理），reverse proxy（反向代理）：**
 正向代理，位于客户端，隐藏客户端信息，forward proxy proxies in behalf of clients (or requesting hosts)
 例子：vpn技术基本都是正向代理，隐藏客户端信息
-反向代理，位于服务器端，隐藏目标机器或服务信息，主要用于load balance等, a reverse proxy proxies in behalf of servers
+反向代理，位于服务器端，隐藏目标机器或服务信息，主要用于load balance等, a reverse proxy proxies in behalf of servers，另外很多WAF也是反向代理，隐藏服务器的真实ip，比如cloudflare可以防护对服务器真实IP的高频请求；
 例子：nginx或者tomcat作为Oracle数据库的反向代理，再比如nginx作为监控UIgrafana的反向代理：Grafana-server runs its own service and hosts dashboard on 3000, if bind to domain, to the normal use access domain, default using 80, need a proxy server who use 80 to forward request to grafana-server for example nginx
 https://www.jscape.com/blog/bid/87783/Forward-Proxy-vs-Reverse-Proxy
 

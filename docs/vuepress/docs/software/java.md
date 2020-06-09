@@ -485,6 +485,12 @@ https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/Ho
 
 ## 5.JAVA framework
 
+java有众多的框架，想要理清楚就要清楚其历史和基本框架，比如，
+
+springmvc基于内置tomcat，内置tomcat基于servlet规范实现，servlet支持多种协议，但是通常tomcat只是支持http协议，servlet从3.0之前的BIO发展为之后的NIO支持，而tomcat8又引入了高性能的APR;
+
+从JAVA 1.4起，JDK支持NIO(New IO, 采用os non blocking的工作方式), 使用JDK原生的API开发NIO比较复杂，需要理解Selector、Channel、ByteBuffer三大组件，所以有了mina，netty的封装，很多产品dubbo、spark、zookeeper、elasticSearch都使用netty作为底层通信IO框架支持；
+
 ### 5.1 Reactive and Streaming Framework
 (java8 stream is only for Collections, means that the input is fixed collections, not realtime stream, after processed, the input cannot be changed )
 Reactive framework: Akka, Vert.x, Java 9 “Flow” API, spring flux
