@@ -32,14 +32,24 @@ https://stackoverflow.com/questions/19655184/no-compiler-is-provided-in-this-env
 
 ## 2.Tools&IDE
 
-### 2.1 Decompiler
+### 2.1 Tools
+
+**Decompiler**
+
 Reverse class to view code http://java-decompiler.github.io/
 分析JVM	
 JVisualVM https://www.cnblogs.com/xifengxiaoma/p/9402497.html
 Java ServiceabilityAgent(HSDB)使用和分析
 https://liuzhengyang.github.io/2017/05/27/serviceabilityagent/
 
-### 2.2 Cmdline 
+**Linux tools**
+
+strace -ff -o prefix
+
+**JDK Tools**
+
+jvisualvm
+
 https://stackoverflow.com/questions/19843096/how-to-debug-a-java-application-without-access-to-the-source-code/58555431#58555431
 https://stackoverflow.com/questions/3668379/use-a-jar-with-source-as-source-for-jdb/58603802#58603802
 java -cp vs java -jar
@@ -193,7 +203,7 @@ Install new software/ marketpalce 如果报错
 
 ---
 
-## 3.Project Management Framework
+## 3.Package Management
 
 ### 3.1 Gradle
 todo Refer to Project:alpha-wallet
@@ -491,6 +501,10 @@ springmvc基于内置tomcat，内置tomcat基于servlet规范实现，servlet支
 
 从JAVA 1.4起，JDK支持NIO(New IO, 采用os non blocking的工作方式), 使用JDK原生的API开发NIO比较复杂，需要理解Selector、Channel、ByteBuffer三大组件，所以有了mina，netty的封装，很多产品dubbo、spark、zookeeper、elasticSearch都使用netty作为底层通信IO框架支持；
 
+[重点参考我的另一篇笔记 IO发展历史 BIO-NIO-Netty详解](/docs/software/buildingblock/netty)
+
+
+
 ### 5.1 Reactive and Streaming Framework
 (java8 stream is only for Collections, means that the input is fixed collections, not realtime stream, after processed, the input cannot be changed )
 Reactive framework: Akka, Vert.x, Java 9 “Flow” API, spring flux
@@ -650,6 +664,12 @@ Dubbo with multicast
 	Multicast
 Dubbo 支持多种协议，采用的协议在网络层级不同，performance
 https://dubbo.apache.org/en-us/docs/user/perf-test.html
+
+### 5.3.JNA
+
+Native access https://github.com/java-native-access/jna
+
+外挂钩子
 
 ## 6.JVM/JMM
 

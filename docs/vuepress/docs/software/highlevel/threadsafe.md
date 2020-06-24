@@ -86,7 +86,52 @@ b)存在数据依赖关系的不允许重排序
 
 ## 2.深入解读
 
-### 2.1 内存模型与竞争资源
+### 2.1 锁升级
+
+我们现在以java的上下文来探讨锁机制，
+
+想想多线程竞争资源的本质，想安全的使用竞争资源就需要一种“锁”机制，注意，有人可能会说不是说不用锁也可以么，java的上下文中，“无锁”也是一种“锁”，java锁的本质就是在对象头的标志位更改；
+
+然后再抽象的说，多线程竞争资源做到安全获取锁，本质就是通过锁这种机制获取对资源的临时占有，关键问题是在jvm中就完成，还是要下到内核中去完成，在jvm中完成就是相对轻量级的锁，如果需要操作系统介入，交给内核去处理就是相对重量级的锁，由于jvm用户态的线程跟内核态的线程是有一一对应关系的，所以再换句话说，线程的切换是在用户态就完成，还是要到内核态去切换
+
+synchronized锁升级和jol https://www.cnblogs.com/katsu2017/p/12610002.html
+
+synchronized锁升级优化 https://zhuanlan.zhihu.com/p/92808298
+
+https://zhuanlan.zhihu.com/p/61892830
+jvm用户态的线程和内核的线程的对应关系；
+
+JDK1.2之前，绿色线程——用户线程。JDK1.2——基于操作系统原生线程模型来实现。Sun JDK,它的Windows版本和Linux版本都使用一对一的线程模型实现，一条Java线程就映射到一条轻量级进程之中。
+Solaris同时支持一对一和多对多。
+
+重量级是指需要内核态的参与（操作系统、内核、系统总线、南北桥）；
+
+jdk1.6之前 synchronize是重量级，之后实现上变成了是轻量级
+
+所谓的锁升级，各种级别的锁，实际判断或者改变的是实例的头部header
+
+无锁态
+
+偏向锁
+
+自旋锁（说白了就是死循环等待，一般是依赖于CAS实现，CAS是通过cpu原语LOCK_IF_MP锁定整个消息总线的方式保证原子性，所以可见整个过程没有真正的锁，是通过CAS底层原子性来实现的“锁机制”）
+消耗内存
+等待时间长；
+等待线程多；
+
+特别的对于CAS实现来说，如果大量写不适合；
+
+升级到重量级
+
+
+
+自旋锁举例：实现CAS算法的乐观锁
+
+Java中CAS底层实现原理分析cpu的原语**LOCK_IF_MP** https://my.oschina.net/u/4339514/blog/4181506/print
+
+
+
+### 2.2 内存模型与竞争资源
 
 ![](/docs/docs_image/software/threadsafe/threadsafe01.png)
 
@@ -105,7 +150,7 @@ JMM即java内存模型规范是个抽象概念，本质上跟上面所描述的c
 高并发下JMM的指令重排(volatile可以禁用指令重排)
 
 
-### 2.2 静态static与单例singleton的线程安全
+### 2.3 静态static与单例singleton的线程安全
 
 关于static及singleton：
 	Singleton可以是static的，static是vm级别的静态变量，singleton可以是application级别的单例，如果是vm级别的，需要考虑application之间的冲突,如果是standalone程序，则可以使用vm static，引用一段shiro关于SecurityManager的注释：

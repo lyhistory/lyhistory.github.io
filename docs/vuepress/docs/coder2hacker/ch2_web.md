@@ -220,33 +220,47 @@ _千万不要那个default走fiddler的proxy，不然会造成死循环，因为
 ![fiddler mobile](/docs/docs_image/coder2hacker/ch2web/web05.png)
 
 配置手机wifi代理
-	手机打开http://<fiddlerhost>:<port8888> 下载certificate 安装
+	手机打开http://\<host\>:\<port 8888\> 下载FiddlerRoot certificate 安装，默认选择APP/VPN即可
 
-样本分析/后门查找
-https://any.run/
-技术揭秘：如何分析中国菜刀是否包含后门？https://www.freebuf.com/articles/system/93323.html
+fiddler高级用法：
+
+通过Rules->Custom rules可以修改脚本，做一些过滤或高亮及对request和response的修改，比如
+
+```
+高亮
+static function OnBeforeResponse(oSession: Session) {
+    if (m_Hide304s && oSession.responseCode == 304) {
+    	oSession["ui-hide"] = "true";
+    }
+    if(oSession.GetResponseBodyAsString().Contains("xxxx")){
+    	oSession["ui-color"] = "red";		
+    }
+}
+显示websocket内容，注意需要双击请求右侧才会出现websocket
+static function OnWebSocketMessage(oMsg: WebSocketMessage) {
+
+	// Log Message to the LOG tab
+	FiddlerApplication.Log.LogString(oMsg.ToString());
+
+}
+https://docs.telerik.com/fiddler/knowledgebase/fiddlerscript/modifyrequestorresponse
+```
+
+还有其他技巧比如下断点 bpafter：https://docs.telerik.com/fiddler/knowledgebase/quickexec
 
 
-https://www.cnblogs.com/king8/p/9024717.html
-https://www.proxifier.com/docs/win-v3/system.htm
-抓包神器 tcpdump 使用介绍 https://cizixs.com/2015/03/12/tcpdump-introduction/
-
-浅析手机抓包方法实践
-http://drops.xmd5.com/static/drops/tips-12467.html
-
-Https tunnel https://groups.google.com/forum/#!topic/httpfiddler/RCkzE3HhhxY
-Windows抓包指南①：Proxifier+Fiddler对第三方程序强制抓包
-https://www.52pojie.cn/thread-976016-1-1.html
-Windows抓包指南②：Fiddler抓不到的包是怎么回事？
-https://blog.csdn.net/CharlesSimonyi/article/details/90486208
 
 Fiddler+burpsuite
 	Fiddler gateway 转发给burpsuite
 
 wireshark 
 	ip.addr == 10.20.70.101 and frame contains "CALL"
-	ssl解密：通过设置环境变量SSLKEYLOGFILE
----
+
+​	ssl解密：通过设置环境变量SSLKEYLOGFILE
+
+**当然上面只是初步的抓包入门，实际情况会更复杂，比如很多app或网站程序都会利用各种策略和协议来阻止抓包，所以经常会遇到抓不到包的情况，进阶内容参照知识星球内的分享（知识号: coder2hacker）**
+
+
 
 ref:
 [大型企业网络架构](https://blog.csdn.net/qq_36119192/article/details/84427267)

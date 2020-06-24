@@ -28,14 +28,16 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<!--<li><a href="/docs/software/programming/programming">编程基础</a></li>-->
 		<li><a href="/docs/software/webdev/webdev">web开发</a></li>
 		<li><a href="/docs/software/webdev/chromeextension">浏览器插件开发</a></li>
-		<li><a href="/docs/software/java" >java实用基础</a></li>
-		<li><a href="/docs/software/java_spring" >基于spring分布式微服务入门</a></li>
-		<li><a href="/docs/software/java_springboot" >springboot原理解析</a></li>
-		<li><a href="/docs/software/zookeeper" >分布式框架zookeeper</a></li>
-		<li><a href="/docs/software/redis" >分布式缓存redis</a></li>
-		<li><a href="/docs/software/kafka" >分布式消息队列kafka</a></li>
-		<!--<li><a href="/docs/software/buildingblock/shiro">shiro登录和权限管理</a></li>-->
-		<li><a href="/docs/software/buildingblock/mybatis">玩转mybatis</a></li>
+		<li><a href="/docs/software/java" >基础:java实用基础</a></li>
+		<li><a href="/docs/software/java_spring" >基础:基于spring分布式微服务入门</a></li>
+		<li><a href="/docs/software/java_springboot" >基础:springboot原理解析</a></li>
+        <li><a href="/docs/software/buildingblock/nio_netty">基础:BIO/NIO/多路复用/NETTY</a></li>
+		<!--<li><a href="/docs/software/buildingblock/shiro">基础:shiro登录和权限管理</a></li>-->
+		<li><a href="/docs/software/buildingblock/zookeeper" >分布式框架zookeeper</a></li>
+		<li><a href="/docs/software/buildingblock/redis" >分布式缓存redis</a></li>
+		<li><a href="/docs/software/buildingblock/kafka" >分布式消息队列kafka</a></li>
+        <li><a href="/docs/software/buildingblock/storm" >流式处理storm</a></li>
+		<li><a href="/docs/software/buildingblock/mybatis">玩转mybatis</a></li>  
 		<li><a href="/docs/software/buglist">踩坑记录-诡异bug</a></li>
 	</ul>
 	<p>-------------------------</p>
@@ -48,16 +50,18 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/database/mongodb">mongodb</a></li>
 	</ul>
 	<p>-------------------------</p>
-	<h3>网络相关</h3>
+	<h3>网络运维</h3>
 	<ul>
 		<li><a href="/docs/software/network/network">网络基础</a></li>	
 		<li><a href="/docs/software/network/vpn">vpn梯子基础</a></li>
 		<li><a href="/docs/software/network/network2github">Github系列网络事件记录</a></li>	
 		<li><a href="/docs/software/network/vpn_shadowsockr">shadowsocketR搭梯子</a></li>
 		<li><a href="/docs/software/network/vpn_trojan">trojan搭梯子</a></li>	
+        <li><a href="/docs/software/linux/vm_env">开发测试环境-虚拟机和容器</a></li>
+        <li><a href="/docs/software/linux/vm_env_network">基于virtualbox构建网络环境</a></li>
 	</ul>
 	<p>-------------------------</p>
-	<h3>项目控制管理</h3>
+	<h3>项目管理</h3>
 	<ul>
 		<li><a href="/docs/software/project_manage/git">GIT</a></li>
 		<li><a href="/docs/software/project_manage/monitor">实时监控</a></li>

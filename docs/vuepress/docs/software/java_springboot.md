@@ -444,11 +444,11 @@ SpringApplicationRunListener只有一个实现类： EventPublishingRunListener�
 2) 创建并配置当前应用将要使用的 Environment，Environment用于描述应用程序当前的运行环境，其抽象了两个方面的内容：配置文件(profile)和属性(properties)，开发经验丰富的同学对这两个东西一定不会陌生：不同的环境(eg：生产环境、预发布环境)可以使用不同的配置文件，而属性则可以从配置文件、环境变量、命令行参数等来源获取。因此，当Environment准备好后，在整个应用的任何时候，都可以从Environment中获取资源。
 
 	总结起来，主要完成以下几件事：
-
+	
 	- 判断Environment是否存在，不存在就创建（如果是web项目就创建 StandardServletEnvironment，否则创建 StandardEnvironment）
-
+	
 	- 配置Environment：配置profile以及properties
-
+	
 	- 调用SpringApplicationRunListener的 environmentPrepared()方法，通知事件监听者：应用的Environment已经准备好
 
 3) 打印Banner图案
@@ -458,13 +458,13 @@ SpringApplicationRunListener只有一个实现类： EventPublishingRunListener�
 5) 初始化ApplicationContext，主要完成以下工作：
 
 	- 将准备好的Environment设置给ApplicationContext
-
+	
 	- 遍历调用所有的ApplicationContextInitializer的 initialize()方法来对已经创建好的ApplicationContext进行进一步的处理
-
+	
 	- 调用SpringApplicationRunListener的 contextPrepared()方法，通知所有的监听者：ApplicationContext已经准备完毕
-
+	
 	- 将所有的bean加载到容器中
-
+	
 	- 调用SpringApplicationRunListener的 contextLoaded()方法，通知所有的监听者：ApplicationContext已经装载完毕
 
 6) refresh完成配置类的解析、各种BeanFactoryPostProcessor和BeanPostProcessor的注册、国际化配置的初始化、web内置容器的构造等等。
@@ -482,6 +482,8 @@ SpringApplicationRunListener只有一个实现类： EventPublishingRunListener�
 
 ## 3. 使用springboot开发应用
 
+### 3.1 业务开发
+
 spring boot官方提供了很多现成的starter，可以直接引用其depdendency使用比如 
 spring-boot-starter-web，spring-boot-starter-jdbc
 [starters](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using-boot-starter)
@@ -489,6 +491,7 @@ spring-boot-starter-web，spring-boot-starter-jdbc
 但是问题是引用时需要加版本号，很多starter之间以及跟其他的dependency之间可能有版本依赖冲突，
 所以官方推荐使用parent方式或者import方式引入某个版本的spring-boot-starter-parent，因为这个parent里面已经定义好了各个版本号，
 所以在引用比如spring-boot-starter-web的时候就不需要添加版本号了
+
 ```
 <!-- Inherit defaults from Spring Boot -->
 <parent>
@@ -532,6 +535,8 @@ Gradually Replacing Auto-configuration
 Disabling Specific Auto-configuration Classes
 (exclude={DataSourceAutoConfiguration.class})
 
+
+
 ---
 
 REFERENCE:
@@ -554,3 +559,93 @@ https://juejin.im/post/5d005860f265da1b7f297630
 
 spring boot 中的 Parent POM 和 Starter 的作用什么
 https://cloud.tencent.com/developer/article/1362790
+
+
+
+### 3.2 框架开发（starter）
+
+ConfigurationProperties和EnableConfigurationProperties是一对，
+前者定义对应配置文件的属性，后者是激活读取；
+同样，
+Configuration或AutoConfiguration跟EnableAutoConfiguration是一对，
+前者相当于component就是定义为bean，而后者是激活这个自动配置，
+![img](file:///C:\Users\lyhis\AppData\Local\Temp\%W@GJ$ACOF(TYDYECOKVDYB.png)https://docs.spring.io/spring-boot/docs/1.3.8.RELEASE/reference/html/using-boot-auto-configuration.html
+
+创建一个starter
+hello-spring-boot-starter
+
+```
+写一个服务类
+public class HelloService {
+
+  private String msg;
+
+  public String sayHello() {
+    return "hello " + msg;
+  }
+
+  public String getMsg() {
+    return msg;
+  }
+
+  public void setMsg(String msg) {
+    this.msg = msg;
+  }
+}
+@ConfigurationProperties(prefix = "hello") //获取属性值
+public class HelloProperties {
+
+  private static final String MSG = "world";
+
+  private String msg = MSG ;
+
+  public String getMsg() {
+    return msg;
+  }
+
+  public void setMsg(String msg) {
+    this.msg = msg;
+  }
+
+}
+@Configuration
+//为带有@ConfigurationProperties注解的Bean提供有效的支持。
+// 这个注解可以提供一种方便的方式来将带有@ConfigurationProperties注解的类注入为Spring容器的Bean。
+@EnableConfigurationProperties(HelloProperties.class)//开启属性注入,通过@autowired注入
+@ConditionalOnClass(Hello.class)//判断这个类是否在classpath中存在，如果存在，才会实例化一个Bean
+// The Hello bean will be created if the hello.enable property exists and has a value other than false
+// or the property doesn't exist at all.
+@ConditionalOnProperty(prefix="hello", value="enabled", matchIfMissing = true)
+public class HelloAutoConfiguration {
+
+  @Autowired
+  private HelloProperties helloProperties;
+
+  @Bean
+  @ConditionalOnMissingBean(Hello.class)//容器中如果没有Hello这个类,那么自动配置这个Hello
+  public HelloService hello() {
+    HelloService hello = new HelloService();
+    hello.setMsg(helloProperties.getMsg());
+    return hello;
+  }
+
+}
+
+application.properties
+\#可以不配置
+hello.enabled=true
+
+hello.msg=charmingfst
+
+\#以debug模式运行
+debug=true
+
+\src\main\resources\META-INF\spring.factories
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.chm.test.HelloAutoConfiguration
+
+https://blog.csdn.net/zxc123e/article/details/80222967
+```
+
+
+

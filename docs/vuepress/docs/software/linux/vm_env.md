@@ -8,7 +8,7 @@ VM VS Container（docker vagrant）VS JVM:
 	A container is an isolated, lightweight silo for running an application on the host operating system. Containers build on top of the host operating system's kernel (which can be thought of as the buried plumbing of the operating system), and contain only apps and some lightweight operating system APIs and services that run in user mode;
 	In contrast to containers, VMs run a complete operating system–including its own kernel.
 	提一下JVM,java虚拟机，只是给字节码byte code提供解释翻译加载运行的一个工具，同样的PVM也是类似；
-	
+
 docker vs VMs vs vagrant
 Docker vs Vagrant: What You Need to Know https://www.ctl.io/developers/blog/post/docker-vs-vagrant
 https://www.quora.com/Whats-the-difference-between-a-VM-Docker-and-Vagrant
@@ -109,6 +109,8 @@ Other ssh client like: google chrome secure shell extension and http://web-conso
 Mouse escape from ubuntu: Esc
 Mouse escape from centos: right click / right Ctrl
 
+screen size fit to full screen:  Devices -> Insert Guest Additions CD image
+
 **SSH:**
 sudo yum install -y openssh-server
 https://bytefreaks.net/gnulinux/centos-6-install-start-and-stop-enable-and-disable-ssh-server
@@ -118,7 +120,8 @@ https://bytefreaks.net/gnulinux/centos-6-install-start-and-stop-enable-and-disab
 Auto install:
 
 	Sudo yum install tmux
-	
+	apt install tmux
+
 Manually install:
 
 	tar -zxvf tmux-2.8.tar.gz
@@ -133,7 +136,7 @@ Manually install:
 		https://github.com/tmux-plugins/tmux-resurrect/blob/master/docs/restoring_pane_contents.md
 	tmux source ~/.tmux.conf
 	sudo chown test:root .tmux -R
-
+	
 	Enable tmux copy mode: add into .tmux.conf: setw -g mode-keys vi
 
 Reload: Ctrl+b Shift+I
@@ -142,7 +145,35 @@ Recover: Ctrl+b ctrl+r
 
 ![](/docs/docs_image/software/linux/vm03.png)
 
-#### 2.2.2 连接
+import plugin
+
+```
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+~/.tmux.conf:
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+
+# Other examples:
+# set -g @plugin 'github_username/plugin_name'
+# set -g @plugin 'git@github.com/user/plugin'
+# set -g @plugin 'git@bitbucket.com/user/plugin'
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run -b '~/.tmux/plugins/tpm/tpm'
+
+tmux source ~/.tmux.conf
+
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @resurrect-capture-pane-contents 'on'
+
+To Load Plugin: ctrl+b I
+```
+
+
+
+#### 2.2.2 连接UI Display
 
 X11 with cygwin::cmd(when x11 gui needed):
 ```
@@ -156,7 +187,9 @@ ssh:
 X11 with cmder/xming:
 注意如果是bash的话不要用下面的
 set DISPLAY=127.0.0.1:0.0
-要用 export DISPLAY=127.0.0.1:0.0
+**要用 export DISPLAY=127.0.0.1:0.0**
+
+另外在如果用windows的cmd或者powershell会有奇怪的问题，例如设置DISPLAY后无法登陆ssh，所以尽量还是用bash
 
 ![](/docs/docs_image/software/linux/vm04.png)
 
@@ -264,7 +297,7 @@ https://prasadlinuxblog.wordpress.com/2018/05/29/how-configure-x11-forwarding-in
  vim /etc/ssh/sshd_config
  X11Forwarding yes
  systemctl restart sshd
- 
+
 cmder x11
 https://stackoverflow.com/questions/35211892/using-conemu-terminal-with-xming
 DISPLAY=XMING_ID;export DISPLAY;

@@ -36,7 +36,6 @@ rom又分为官方rom/stock firmware和custom rom
 一些推荐的app
 > Root Explorer, ES File Explorer, Lucky Patcher, Dumpster, Xposed Framework, Titanium Backup, apps2rom, Bloatfreezer, Link2SD, Android Wi-Fi Tether, Wireless Tether, ShootMe, Dropcap2, Greenify, Root Explorer, ClockworkMod Recovery, AdFree, Adaway, Droid Wall, Orbot, Cache Mate, Droid VNC Server, LBE Privacy Guard, Button Savior, gravitybox, xhangouts, xwhatsapp, Xprivacy, SetCPU, Overclock Widget, ROEHSOFT RAM-EXPANDER, Memory Swapper Free, ClockSync, AdBlock Plus, SuperSU, Titanium Backup, Wakelock Detector, ROM Manager, Quick Boot, LED Hack, TRIM, StickMount, busybox, Viper4Android
 
-
 Model: HUAWEI MT7-L09
 CPU: Hisilicon Kirin 925
 RAM: 2.0G
@@ -410,8 +409,211 @@ dd if=/sdcard/system.img of=/your/system/partition
 通过细小的差异，观察系统的反应，你会找到跟机器交流的感觉
 
 
+
+
+
 其他思路：通过fastboot直接刷https://www.youtube.com/watch?v=AIyEO4uoWLc
 MagiskManager
+
+
+
+## 后续
+
+用了AsiaPacific571的包Update.APP通过updater更新到了android6 emui4，注意更新后手机的解锁状态和root状态都会变掉；
+
+我重新root，但是发现root失效，然后尝试了手机kingoroot和电脑的各种一键root皆失败，重新解锁后再尝试也不可以，查了下原因，应该是这个作者说的
+
+> 坛子里很多花粉用一键ROOT工具，过程很顺利，却发现不能获取ROOT权限。这与工具无关，与P7的保护机制有关。
+>
+> 在system目录下，有一个set_immutable.list文件，这个文件设置了以下目录/文件不能被修改/删除/增加等操作：
+> /system/build.prop
+> /system/etc
+> /system/fonts
+> /system/framework
+> /system/isp.bin
+> /system/lib
+> /system/ons.bin
+> /system/usr
+> /system/vendor
+> /system/xbin
+> /system/app/HwLauncher6.apk
+> /system/app/HwLauncher6.odex
+> /system/app/Syst[EMUI](https://club.huawei.com/forum.php?gid=2867).apk
+> /system/app/SystemUI.odex
+> /system/priv-app/SettingsProvider.apk
+> /system/priv-app/SettingsProvider.odex
+> /system/priv-app/Keyguard.apk
+> /system/priv-app/Settings.apk
+> /system/priv-app/Settings.odex
+> /system/priv-app/Keyguard.apk
+>
+> 对一键ROOT工具而言，需要将su文件写入/system/xbin或者/system/bin目录，而P7则设置这两个目录无法写入，也就导致了最终结果是superuser.apk能写入system/app目录，但su文件没有写入，也就无法获取全部root权限。
+>
+> 即便是刷入第三方REC，然后刷入通用的ROOT包，仍然是这样的结果。
+>
+> 原因就在于set_immutable.list文件的功能相当于linux下将这些目录和文件增加了特殊权限i。想要刷入ROOT包，必须先解除i权限，但这些操作对小白而言太繁琐。所以通用的ROOT对P7而言是无效的，必须要针对P7的ROOT包。
+>
+> 本人将通用的ROOT包的刷机脚本加入了解除i权限并删除set_immutable.list，这样刷入可完美ROOT。ROOT包见附件。
+>
+> https://club.huawei.com/thread-6551920-1-1.html
+
+发现网上有教师用magisk来patch boot.img，试了下如下的方案，但是失败，在fastboot boot magisk_patched.img时报错“remote cmd not allowed”
+
+https://cn.ui.vmall.com/thread-20997307-1-1.html
+
+https://sspai.com/post/53043
+
+然后去到官网看指导，果然我的手机根本不符合这种patch方式安装，所以还是老老实实用三方recovery刷入
+
+https://topjohnwu.github.io/Magisk/install.html
+
+前面在刷twrp的时候失败，但是此时我已经升级到了emui4 android6，所以就再尝试一次
+
+下载这个版本twrp-v1-hi3630.img
+https://forum.xda-developers.com/mate-7/development/twrp-t3741830
+https://forum.xda-developers.com/devdb/project/dl/?id=28340
+
+```
+要保证手机状态是unlock解锁状态：
+判断方法：adb reboot bootloader可以看到手机状态
+开始刷twrp：
+adb reboot bootloader
+fastboot flash recovery twrp-v1-hi3630.img
+fastboot reboot
+判断是否成功：
+adb reboot recovery
+
+```
+
+注意，一定要及时用twrp做备份，并且存到电脑上，我后面实验adoptable storage的时候从网上下载了一个boot.img kernel文件，由于通过twrp刷不进去，所以用fastboot flash boot boot.img，但是失败，但是估计是刷入了部分内容，手机直接变砖，幸运的是三键还可以进入到twrp，所以直接用之前的备份restore即可（注意restore重启之后需要等待挺长时间，耐心等待）
+
+ROOT Huawei Ascend Mate 7 via Magisk
+
+```
+1- Copy and paste the **Magisk zip file** to the internal storage or SD card of your phone.
+https://github.com/topjohnwu/Magisk/releases
+2- Reboot your **Huawei Ascend Mate 7** to TWRP Recovery
+
+- Power off the **Huawei Ascend Mate 7** completely.
+- Press & Hold the **Power key** and **Volume up key.**
+- The phone should enter into the TWRP Recovery mode.
+
+3- Tap on **Install** button, and select the **Magisk zip file** that you have copied.
+
+4- Swiping **Swipe to Confirm Flash** to Confirm the installation
+```
+
+
+
+
+
+### 扩展内部存储
+
+当然很多人觉着直接插入一个大容量的external sdcard不就可以了，然后可以从手机的storage设置中将默认的安装位置切换到external sdcard，但是问题是，手机的很多partition 比如/data还是用的internal storage，所以另一个思路就是：extend interal storage with sdcard ，要注意的是，在这个之前要买一个好的sdcard。
+
+什么是好的sdcard？
+
+首先不要买错，手机用的通常都是MicroSD:
+
+MicroSD vs. SD Card. MicroSD is a smaller variant of the SD (Secure Digital) card and is used in certain cell phones, PDAs and smaller, lighter devices. MicroSD cards can be read by regular SD card slots through an adaptor.
+
+注意不要贪便宜，据说市场上4成的sandisk是假的，所以还是去官方店购买；
+
+普通的sdcard在扩展为内部存储时，手机会告警：low speed SD card may seriously affect system performance, Class 10 or higher is recommended，所以推荐sandisk exterem pro
+
+microSD: Has a capacity up to 2GB, and works in any microSD slot.
+microSDHC: Has a capacity of more than 2GB and up to 32GB, and works in hardware that supports either SDHC and SDXC.
+microSDXC: Has a capacity of more than 32GB and up to 2TB (although at the time of writing, 1TB is the largest available card), and is only supported in SDXC-compatible devices.
+microSDUC: Supports cards up to 128TB, and will require a compatible device.
+
+格式化：一般是fat32,
+
+下面说扩展方法：
+
+**method 1 via ext4 partition and link2sd app **
+https://www.diskpart.com/articles/partition-sd-card-1203.html
+注意，partition type ext2 3 4 尽量跟系统本身一致，可以用adb shell查看系统partition type ：cat /proc/mounts
+
+**method 2 via Adoptable storage:**
+https://fossbytes.com/android-sd-card-internal-storage-adoptable-storage/
+
+发布文章：
+https://mp.weixin.qq.com/s/b2HGQptEMExLeVL4Jo9_rw
+
+huawei 禁用了，至少emui4我是没找到！
+
+然后尝试rom essential，没什么效果，
+
+尝试了https://forum.xda-developers.com/honor-4x/how-to/adoptable-storage-emui-4-4-4x-4c-g-play-t3515712，
+
+结果变砖；
+
+尝试了下面的手动命令，一样没用
+
+shell@hwmt7:/ $ sm has-adoptable
+false
+
+shell@hwmt7:/ $ sm list-volumes all
+private mounted null
+public:179:169 mounted 0CB1-0A4C
+emulated mounted null
+
+shell@hwmt7:/ $ sm list-disks
+disk:179:168
+shell@hwmt7:/ $ sm partition disk:179:168 private
+shell@hwmt7:/ $ sm list-volumes all
+emulated:179:170 unmounted null
+private:179:170 mounted 91aab7e7-cba6-4de1-909b-e746b0a3bcc9
+private mounted null
+emulated mounted null
+shell@hwmt7:/ $ reboot
+
+https://stackoverflow.com/questions/38044532/how-to-turn-a-portable-sd-card-into-internal-storage-via-adb-command
+
+```
+某些Android裝置設定並未提供Adoptable Storage（也許手機商認為這限制重重的功能無異脫褲子放x、且有影響效能的疑慮），但若執意啟用也可透過ADB以指令方式完成。
+1.首先手機先開啟「開發人員模式」、進入設定中的「開發人員選項」開啟USB除錯，接著透過USB線與PC連接（PC端必要的驅動請自行尋求安裝）
+2.在PC（以下操作為Windows環境）透過指令adb shell進入遠端操作模式
+3.在shell模式可透過sm指令與相應參數進行操作（可直接執行sm列出可用參數）
+sm list-disks 列出已安裝可支援Adoptable Storage的SD卡（預設參數adoptable可免打）
+sm list-volumes [public|private|emulated|all]
+  sm list-volumes all 可列出SD卡全部容體（等同磁碟分割區）
+  sm list-volumes public 或 emulated 列出SD卡上的一般儲存區（FAT32或exFAT)
+  sm list-volumes private 列出SD 卡上掛載為Adpotable Storage的儲存區
+sm has-adoptable 可查詢系統是否啟用Adpotable Storage功能
+sm get-primary-storage-uuid 可讀取SD卡UUID
+sm set-force-adoptable [true|false] 若系統未開啟Adoptable Storage功能、可透過sm set-force-adoptable true強行開啟，或以sm set-force-adoptable false關閉。
+sm partition DISK [public|private|mixed] [ratio] 設定SD卡Adoptable Storage空間。注意、進行此操作將完全刪除SD卡內容、務必先備份SD卡。
+  sm partition DISK public 將SD卡完全格式化為一般儲存空間（FAT32或exFAT)
+  sm partition DISK private 將SD卡完全格式化為Adoptable Storage（加密EXT4）
+  sm partition DISK mixed [ratio] 將SD卡按比例格式化為一般儲存空間與Adoptable Storage。[ratio]為百分比指定Adoptable Storage比例、剩餘則為一般儲存區。並非所有裝置皆可支援混和模式、有可能回報儲存區損毀，此時請重新格式化SD卡避免使用mixed混和模式。
+sm mount VOLUME 掛載指定容體
+sm unmount VOLUME 卸載指定容體
+sm format VOLUME 格式化指定容體
+sm benchmark VOLUME 測試指定容體效能
+sm forget [UUID|all] 退出指定UUID或全部可卸除裝置（SD卡）
+```
+
+
+
+新买的micro sdcard extreme pro，通过桌面分区工具AOMEI Partition Assistant Standard改成ext4后，link2sd 无法mount，总是弹出重试脚本，
+刚开始怀疑是不是因为这个sdcard太新了，不兼容，然后发现这个帖子
+https://forum.xda-developers.com/showthread.php?t=2544602
+查了下mount2sd，居然没找到，但是找到了 App2SD Pro: All in One Tool [ROOT]
+这个东西用了下居然可以mount上去，但是有个问题是从settings->storage看到ext4的那个分区状态是corrupted，
+刚开始没在意，继续使用，发现app并没有默认安装到扩展的ext4分区，但是看到有auto link，并且进到app info，可以手动link data lib等到sdcard，
+所以就尝试了下，貌似起作用，但是还是有问题，
+
+其他待测工具
+https://apkpure.com/force2sd-lite-root/mobi.pruss.force2sd_lite
+
+
+
+https://www.partitionwizard.com/partitionmanager/increase-internal-storage-space-of-android.html
+
+try ext2 ext3?
+
+
 
 ## XIAOMI
 
@@ -462,34 +664,5 @@ adb shell getprop | ack name
 
 
 ## more 
-### 扩展内部存储
 
-当然很多人觉着直接插入一个大容量的external sdcard不就可以了，然后可以从手机的storage设置中将默认的安装位置切换到external sdcard，但是问题是，手机的很多partition 比如/data还是用的internal storage，所以另一个思路就是：extend interal storage with sdcard ，要注意的是，在这个之前要买一个好的sdcard。
-
-什么是好的sdcard？
-
-首先不要买错，手机用的通常都是MicroSD:
-
-MicroSD vs. SD Card. MicroSD is a smaller variant of the SD (Secure Digital) card and is used in certain cell phones, PDAs and smaller, lighter devices. MicroSD cards can be read by regular SD card slots through an adaptor.
-
-注意不要贪便宜，据说市场上4成的sandisk是假的，所以还是去官方店购买；
-
-普通的sdcard在扩展为内部存储时，手机会告警：low speed SD card may seriously affect system performance, Class 10 or higher is recommended，所以推荐sandisk exterem pro
-
-microSD: Has a capacity up to 2GB, and works in any microSD slot.
-microSDHC: Has a capacity of more than 2GB and up to 32GB, and works in hardware that supports either SDHC and SDXC.
-microSDXC: Has a capacity of more than 32GB and up to 2TB (although at the time of writing, 1TB is the largest available card), and is only supported in SDXC-compatible devices.
-microSDUC: Supports cards up to 128TB, and will require a compatible device.
-
-下面说扩展方法：
-
-**method 1 via ext4 partition and link2sd app **
-https://www.diskpart.com/articles/partition-sd-card-1203.html
-注意，partition type ext2 3 4 尽量跟系统本身一致，可以用adb shell查看系统partition type ：cat /proc/mounts
-
-**method 2 via Adoptable storage:**
-https://fossbytes.com/android-sd-card-internal-storage-adoptable-storage/
-
-发布文章：
-https://mp.weixin.qq.com/s/b2HGQptEMExLeVL4Jo9_rw
 

@@ -105,7 +105,7 @@ tomcat 内部的connector 是基于JDK NIO处理并发请求的，既然netty �
 >
 > https://www.zhihu.com/question/53498767
 
-
+具体的NIO参考[《java基础》](/docs/software/java)关于IO-BIO-NIO-多路复用部分讲解；
 
 ## 基础
 
