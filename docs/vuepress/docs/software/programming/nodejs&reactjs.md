@@ -1,5 +1,3 @@
-
-
 npm, nodejs, reactjs, javascript, typescript ?
 
 javascript是nodejs、reactjs和浏览器都在使用的一种编程语言, nodejs reactjs和浏览器用的都是javascript;
@@ -55,6 +53,26 @@ babel-loader is the webpack loader responsible for talking to Babel. Babel on th
 - babel preset react for compiling JSX and other stuff down to Javascript
 
 create-react-app已经在package-lock.json锁定了webpack和Babel依赖
+
+核心概念：event loop
+
+**Java Script is a Single threaded, non-blocking asynchronous concurrent language.**
+
+> With other languages, when server receives request, it allocates a thread to fulfill it. As part of handling the request let’s say it queries the database and the thread waits till it gets the response back from database. So it requires new thread to server the another request. If we have large number of concurrent requests then server capacity is most likely to be run out and new requests may need to wait until some thread is available or we need more hardware for more concurrent requests.
+>
+> Where as in JS (non-blocking IO), it is asynchronous by default. It has single thread to handle all requests. Thread doesn’t wait for the IO (for example DB response) and thread can be used to serve another request. In this example if there is a response from DB then it will be put in **Event Queue**. Node will monitor the queue and when there is an event in the queue, it will be processed in FIFO order.
+>
+> This is why Node (btw, node is just a run time environment to run java script at server side) is suitable for I/O intensive apps (e.g. DB read or network access). In contrast, Node shouldn’t be used for CPU intensive apps like video encoding etc.
+>
+> [Understanding Important Concepts in JavaScript](https://dzone.com/articles/java-script-important-concepts)
+
+![](/docs/docs_image/software/programming/javascript01.png)
+
+![](/docs/docs_image/software/programming/javascript02.png)
+
+![](/docs/docs_image/software/programming/javascript03.png)
+
+![](/docs/docs_image/software/programming/javascript04.png)
 
 ## 1. JavaScript
 
@@ -262,15 +280,15 @@ Basic：
 		- function components: are a simpler way to write components that only contain a render method and don’t have their own state
 	
 	+ State&Lifecycle
-
+	
 	+ handling events
-
+	
 	+ Conditional Rendering
-
+	
 	+ Lists Keys 
-
+	
 	+ Forms 
-
+	
 	[Lifting state up 联动](https://reactjs.org/docs/lifting-state-up.html)
 	
 	+ Composition vs Inheritance
@@ -868,7 +886,7 @@ npm run builds
 
 find all above code samples in https://github.com/lyhistory/learn_coding/tree/master/frontend
 
---- 
+---
 
 ref:
 

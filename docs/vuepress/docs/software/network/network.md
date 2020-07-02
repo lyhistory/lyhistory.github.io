@@ -550,6 +550,10 @@ A VPN tunnel, however, is fully encrypted. The "P in VPN indicates private. VPN 
 > A VPN is created by establishing a virtual point-to-point connection through the use of dedicated circuits or with tunneling protocols over existing networks. A VPN available from the public Internet can provide some of the benefits of a wide area network (WAN). From a user perspective, the resources available within the private network can be accessed remotely
 > https://en.wikipedia.org/wiki/Virtual_private_network
 
+### 4.4 其他network测试工具
+
+network丢包延迟重复模拟器 https://jagt.github.io/clumsy/
+
 
 ## 5.Network architecture
 

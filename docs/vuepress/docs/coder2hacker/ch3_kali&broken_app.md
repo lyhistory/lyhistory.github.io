@@ -32,18 +32,41 @@ Kali Linux的前身是BackTrack，直至2013年被Kali Linux取代，
 
 ## kaili setup
 
-Virtualbox 选择 **Debian 64bit**
+Virtualbox 两种方式：
 
-SSH
+直接下载vbox.ova导入，或者下载iso自行安装选择 **Debian 64bit**
 
-/etc/ssh/sshd_config
+基本设置：
 
-​	PermitRootLogin yes
+```
+1.Setup SSH
+apt-get install openssh-server
+/etc/ssh/sshd_config:
+	PermitRootLogin yes
 
-disable default ssh key:
+#We now need to change the default SSH keys. The reason for this is because every Linux and Unix system uses #similar keys. An Attacker could potentially guess or crack your SSH keys and exploit your system using Man-#in-the-Middle techniques.
+
+#disable default ssh key
+sudo su
 update-rc.d -f ssh remove
 update-rc.d -f ssh defaults
+#backup default keys
+cd /etc/ssh/
+mkdir insecure_original_default_kali_keys 
+mv ssh_host_* insecure_original_default_kali_keys/
+#create new keys
+dpkg-reconfigure openssh-server
+#restart
+sudo service ssh restart
 update-rc.d -f ssh enable 2 3 4 5
+
+2.Add new User
+如果是自行安装，默认用户root/toor，如果是用官方的vm版本，默认用户kali/kali，
+可以添加自定义用户：
+useradd -m <username>
+usermod -a -G sudo <username>
+chsh -s /bin/bash lyhistory
+```
 
 
 
@@ -133,13 +156,15 @@ The applications in the home page are organized in the following six groups:
 
   DVWA
 
-  Metasploitable2 3
+  **Metasploitable2 3**(msfadmin/msfadmin)
 
   https://www.vulnhub.com/
 
   https://sourceforge.net/projects/samurai
 
   https://www.mavensecurity.com/resources/web-security-dojo
+  
+  billu靶机
 
 
 

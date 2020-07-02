@@ -3,6 +3,10 @@
 
 自动配置、起步依赖、Actuator、命令行界面(CLI) 是Spring Boot最重要的4大核心特性
 
+Servlet->EJB->Struts->SpringMVC->SpringBoot
+
+New->Factory->容器
+
 ## 1.知识点Overview
 
 ### 1.1 Spring IoC容器

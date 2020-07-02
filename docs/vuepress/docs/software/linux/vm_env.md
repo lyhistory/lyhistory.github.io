@@ -121,6 +121,33 @@ Auto install:
 
 	Sudo yum install tmux
 	apt install tmux
+	
+	Tmux plugin manager:
+	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+	
+	~/.tmux.conf:
+	# List of plugins
+	set -g @plugin 'tmux-plugins/tpm'
+	set -g @plugin 'tmux-plugins/tmux-sensible'
+	
+	# Other examples:
+	# set -g @plugin 'github_username/plugin_name'
+	# set -g @plugin 'git@github.com:user/plugin'
+	# set -g @plugin 'git@bitbucket.com:user/plugin'
+	
+	# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+	run -b '~/.tmux/plugins/tpm/tpm'
+	
+	tmux source ~/.tmux.conf
+	
+	Tmux plugins / workflow:
+		https://github.com/tmux-plugins/tmux-resurrect
+		https://github.com/tmux-plugins/tmux-resurrect/blob/master/docs/restoring_pane_contents.md
+		
+		~/.tmux.conf:
+	    set -g @plugin 'tmux-plugins/tmux-resurrect'
+	    set -g @resurrect-capture-pane-contents 'on'
+		To Load Plugin: ctrl+b I
 
 Manually install:
 
@@ -130,12 +157,23 @@ Manually install:
 	Sudo make install
 	https://gist.github.com/pierreprinetti/86fbcd28e5cc1b3e0b9b762e4c12fad2
 	
-	Tmux plugin manager https://github.com/tmux-plugins/tpm
-	Tmux plugins / workflow
-		https://github.com/tmux-plugins/tmux-resurrect
-		https://github.com/tmux-plugins/tmux-resurrect/blob/master/docs/restoring_pane_contents.md
-	tmux source ~/.tmux.conf
+	git clone https://github.com/tmux-plugins/tmux-resurrect ~/.tmux/plugins
+	~/.tmux.conf:
+	run-shell ~/.tmux/plugins/resurrect.tmux
+	
+	For manually install, don’t forget to 
+			chown -R user:group ~/.tmux/plugins/tmux-resurrect/
+			chmod u+x ~/.tmux/plugins/tmux-resurrect/resurrect.tmux
+			chmod u+x ~/.tmux/plugins/tmux-resurrect/scripts/*.sh
+			chown -R user:group ~/.tmux/plugins/tpm/
+			chmod u+x ~/.tmux/plugins/tpm/scripts/*.sh
+			chmod u+x ~/.tmux/plugins/tpm/tpm
+
+
+​	
 	sudo chown test:root .tmux -R
+	
+	tmux source ~/.tmux.conf
 	
 	Enable tmux copy mode: add into .tmux.conf: setw -g mode-keys vi
 
@@ -144,32 +182,6 @@ Save: Ctrl+b ctrl+s
 Recover: Ctrl+b ctrl+r
 
 ![](/docs/docs_image/software/linux/vm03.png)
-
-import plugin
-
-```
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-~/.tmux.conf:
-# List of plugins
-set -g @plugin 'tmux-plugins/tpm'
-set -g @plugin 'tmux-plugins/tmux-sensible'
-
-# Other examples:
-# set -g @plugin 'github_username/plugin_name'
-# set -g @plugin 'git@github.com/user/plugin'
-# set -g @plugin 'git@bitbucket.com/user/plugin'
-
-# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
-run -b '~/.tmux/plugins/tpm/tpm'
-
-tmux source ~/.tmux.conf
-
-set -g @plugin 'tmux-plugins/tmux-resurrect'
-set -g @resurrect-capture-pane-contents 'on'
-
-To Load Plugin: ctrl+b I
-```
 
 
 
@@ -308,6 +320,12 @@ https://jdhao.github.io/2018/03/02/Windows-connect-server-x11-with-gitbash/
 vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
 
 ## 4. Troubleshooting
+
+?# host key verification failed: faile to login ssh, WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!
+
+ssh-keygen -R 192.168.1.101
+
+
 
 ![](/docs/docs_image/software/linux/vm_troubleshooting01.png)
 ![](/docs/docs_image/software/linux/vm_troubleshooting02.png)

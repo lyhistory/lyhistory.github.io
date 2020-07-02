@@ -42,18 +42,6 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		蜜罐系统
 		红队 Cobalt Strike 4.0 https://www.cobaltstrike.com/
 	</ul>
-    <span>
-        ------------------------------------------------------
-        --- 工具篇
-        ------------------------------------------------------
-    </span>
-    <ul>
-        <li><a href="/docs/coder2hacker/tools">工具概览</a></li>
-        <li><a href="/docs/coder2hacker/tools_recon">信息收集</a></li>
-        <li><a href="/docs/coder2hacker/tools_burpsuite">burpsuite</a></li>
-        <li><a href="/docs/coder2hacker/tools_sqlmap">sqlmap</a></li>
-        <li><a href="/docs/coder2hacker/tools_xray">xray</a></li>
-    </ul>
 </div>
 
 
@@ -66,3 +54,14 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<ol>柚子币EOS:&nbsp;&nbsp;&nbsp;&nbsp;<strong>eos4donation</strong></ol>
 	</ul>
 </div>
+```
+ __   __   __   ___  __             __        ___  __   
+/  ` /  \ |  \ |__  |__) |__|  /\  /  ` |__/ |__  |__)  
+\__, \__/ |__/ |___ |  \ |  | /~~\ \__, |  \ |___ |  \  
+                                                        
+                 __  ___  __   __        __   __        
+|    \ / |__| | /__`  |  /  \ |__) \ /  /  ` /  \  |\/| 
+|___  |  |  | | .__/  |  \__/ |  \  |  .\__, \__/  |  | 
+                                                        
+```
+
