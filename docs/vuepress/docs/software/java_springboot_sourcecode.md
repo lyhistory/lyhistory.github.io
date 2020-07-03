@@ -25,6 +25,37 @@ resolvableDependencies
 
 
 
+容器：
+
+GenericApplicationContext extends AbstractApplicationContext 
+
+工厂：
+
+DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory(<<DefaultSingletonBeanRegistry)
+
+implements ConfigurableListableBeanFactory
+
+
+
+[autoConfigurationReport, org.springframework.boot.context.ContextIdApplicationContextInitializer$ContextId, springApplicationArguments, springBootBanner, springBootLoggingSystem, environment]
+autoConfigurationReport
+org.springframework.boot.context.ContextIdApplicationContextInitializer$ContextId
+springApplicationArguments
+springBootBanner
+springBootLoggingSystem
+
+
+
+整理思路：
+
+初始化上下文和工厂，
+
+读取配置文件信息，放入
+
+读取bean信息，实例化bean，初始化bean，设置bean属性包括其依赖的自动装配；
+
+
+
 starter
 
 ```
@@ -209,7 +240,7 @@ registerBeanDefinition=>this.beanFactory.registerBeanDefinition 跟前面一样�
 
 到此为止将主类StarterMain加载到容器，可以在beanDefinitionMap中看到
 
-### refreshContext 进入spring
+### refreshContext 进入spring之refresh十三步
 
 ```java
 private void refreshContext(ConfigurableApplicationContext context) {
@@ -303,7 +334,37 @@ public void refresh() throws BeansException, IllegalStateException {
 }
 ```
 
-#### invokeBeanFactoryPostProcessors:
+#### 第三步 prepareBeanFactory
+
+将环境Environment和system相关的信息放入工厂的manualSingletonNames（local beans）
+
+
+
+#### 第四步 postProcessBeanFactory
+
+此时可以看一下现在beanFactory里面的beanDefinitionMap有什么
+
+除了几个internal的Processor处理程序的bean和一个EventListener工厂的bean外，我们的主程序也作为bean存储其中；
+
+![](./java_springboot_beanfactory01.png)
+
+看类型很明显，我们的主程序是Generic Bean类型，其他的都是Root Bean类型
+
+beanDefinitionMap::
+
+```java
+{org.springframework.context.annotation.internalConfigurationAnnotationProcessor=Root bean: class [org.springframework.context.annotation.ConfigurationClassPostProcessor];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.context.event.internalEventListenerFactory=Root bean: class [org.springframework.context.event.DefaultEventListenerFactory];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.context.event.internalEventListenerProcessor=Root bean: class [org.springframework.context.event.EventListenerMethodProcessor];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.context.annotation.internalAutowiredAnnotationProcessor=Root bean: class [org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.context.annotation.internalCommonAnnotationProcessor=Root bean: class [org.springframework.context.annotation.CommonAnnotationBeanPostProcessor];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, starterMain=Generic bean: class [com.lyhistory.mybatis.springboot.mybatis_starter.StarterMain];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null}
+```
+
+在进入下一步之前我们猜测，现在beanDefinitionMap还只有我们定义的一个主程序bean，接下来的思路应该是由主程序入手，递归出主程序扫描范围内的所有bean，如@Config，@Bean，@Controller，@Service，@Component等等，但是其他引入的starter中的bean呢，比如Mybatis的@Mapper，接下来我们看springboot读取这些bean信息的思路；
+
+#### 第五步：invokeBeanFactoryPostProcessors:
 
 ```java
 protected void invokeBeanFactoryPostProcessors(ConfigurableListableBeanFactory beanFactory) {
@@ -534,6 +595,14 @@ this.beanDefinitionMap.put(beanName, beanDefinition);
 这一步做完之后，正常推理configurationClasses应该扫描到了根据主类获取的各个自定义bean，验证一下
 
 ![](/docs/docs_image/software/java/spring/java_springboot_enableautoconfiguration01.png)
+
+```
+{ConfigurationClass: beanName 'myBatisConfiguration', class path resource [com/lyhistory/mybatis/springboot/mybatis_starter/MyBatisConfiguration.class]=ConfigurationClass: beanName 'myBatisConfiguration', class path resource [com/lyhistory/mybatis/springboot/mybatis_starter/MyBatisConfiguration.class],
+ ConfigurationClass: beanName 'myBatisMapperScannerConfig', class path resource [com/lyhistory/mybatis/springboot/mybatis_starter/MyBatisMapperScannerConfig.class]=ConfigurationClass: beanName 'myBatisMapperScannerConfig', class path resource [com/lyhistory/mybatis/springboot/mybatis_starter/MyBatisMapperScannerConfig.class],
+ ConfigurationClass: beanName 'testController', class path resource [com/lyhistory/mybatis/springboot/mybatis_starter/TestController.class]=ConfigurationClass: beanName 'testController', class path resource [com/lyhistory/mybatis/springboot/mybatis_starter/TestController.class],
+ ConfigurationClass: beanName 'testService', class path resource [com/lyhistory/mybatis/springboot/mybatis_starter/TestService.class]=ConfigurationClass: beanName 'testService', class path resource [com/lyhistory/mybatis/springboot/mybatis_starter/TestService.class],
+ ConfigurationClass: beanName 'starterMain', com.lyhistory.mybatis.springboot.mybatis_starter.StarterMain=ConfigurationClass: beanName 'starterMain', com.lyhistory.mybatis.springboot.mybatis_starter.StarterMain}
+```
 
 
 
@@ -823,7 +892,30 @@ parser.validate();
 
 
 
-###### 2.然后是读取BeanDefinition
+到此处，再看看beanDefinitionMap，~~不出所料，依然不会变，因为前面只是初步解析准备工作，还没有开始读取beanDefinition~~
+
+从主程序读取的bean Controller Service都已经在里面了，但是上面第二步拿到的那些Starter的AutoEnableConfiguration还没有进来，还需要继续
+
+![](./java_springboot_beanfactory03.png)
+
+```
+{myBatisMapperScannerConfig=Generic bean: class [com.lyhistory.mybatis.springboot.mybatis_starter.MyBatisMapperScannerConfig];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in file [C:\Workspace\Repository\learn_coding\java\Components\mybatis-demo\hello-mybatis\target\classes\com\lyhistory\mybatis\springboot\mybatis_starter\MyBatisMapperScannerConfig.class], org.springframework.context.annotation.internalConfigurationAnnotationProcessor=Root bean: class [org.springframework.context.annotation.ConfigurationClassPostProcessor];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.context.event.internalEventListenerFactory=Root bean: class [org.springframework.context.event.DefaultEventListenerFactory];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.context.event.internalEventListenerProcessor=Root bean: class [org.springframework.context.event.EventListenerMethodProcessor];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, testController=Generic bean: class [com.lyhistory.mybatis.springboot.mybatis_starter.TestController];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in file [C:\Workspace\Repository\learn_coding\java\Components\mybatis-demo\hello-mybatis\target\classes\com\lyhistory\mybatis\springboot\mybatis_starter\TestController.class], org.springframework.context.annotation.internalAutowiredAnnotationProcessor=Root bean: class [org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.internalCachingMetadataReaderFactory=Generic bean: class [org.springframework.boot.autoconfigure.SharedMetadataReaderFactoryContextInitializer$SharedMetadataReaderFactoryBean];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.context.annotation.internalCommonAnnotationProcessor=Root bean: class [org.springframework.context.annotation.CommonAnnotationBeanPostProcessor];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, testService=Generic bean: class [com.lyhistory.mybatis.springboot.mybatis_starter.TestService];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in file [C:\Workspace\Repository\learn_coding\java\Components\mybatis-demo\hello-mybatis\target\classes\com\lyhistory\mybatis\springboot\mybatis_starter\TestService.class], starterMain=Generic bean: class [com.lyhistory.mybatis.springboot.mybatis_starter.StarterMain];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, myBatisConfiguration=Generic bean: class [com.lyhistory.mybatis.springboot.mybatis_starter.MyBatisConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in file [C:\Workspace\Repository\learn_coding\java\Components\mybatis-demo\hello-mybatis\target\classes\com\lyhistory\mybatis\springboot\mybatis_starter\MyBatisConfiguration.class]}
+```
+
+
+
+###### 2.继续加载Starter的BeanDefinition
 
 org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader: loadBeanDefinitions
 
@@ -836,15 +928,168 @@ public void loadBeanDefinitions(Set<ConfigurationClass> configurationModel) {
 }
 ```
 
+这个地方有点意思，我们拿Mybatis举例，有两种不同的方式：
+
+###### Mybatis 用法一，自定义@Bean(name = "MapperScannerConfigurer")
+
+```
+
+package com.lyhistory.mybatis.springboot.mybatis_starter;
+
+@Configuration
+@AutoConfigureAfter(MyBatisConfiguration.class)
+public class MyBatisMapperScannerConfig {
+
+	@Bean(name = "MapperScannerConfigurer")
+	public MapperScannerConfigurer mapperScannerConfigurer() {
+		MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
+		mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
+		mapperScannerConfigurer.setBasePackage("com.lyhistory.mybatis.springboot.mybatis_starter");
+		return mapperScannerConfigurer;
+	}
+}
+```
 
 
-比如beanName=org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
 
-configClass.getImportBeanDefinitionRegistrars()：
+循环开始，前面的是主程序扫的bean，比如我自定义的com/lyhistory/mybatis/springboot/mybatis_starter/MyBatisConfiguration.class和com/lyhistory/mybatis/springboot/mybatis_starter/MyBatisMapperScannerConfig.class等等
+
+MyBatisConfiguration的这些方法的@bean都加到beanDefinitionMap
+
+```
+loadBeanDefinitionsForBeanMethod(beanMethod);
+```
+
+```java
+package com.lyhistory.mybatis.springboot.mybatis_starter;
+
+@Configuration
+public class MyBatisConfiguration { 
+	@Value("${spring.datasource.driverClassName}")
+    private String jdbcDriverClassName;
+	
+	@Value("${spring.datasource.url}")
+    private String jdbcUrl;
+
+    @Value("${spring.datasource.username}")
+    private String jdbcUsername;
+
+    @Value("${spring.datasource.password}")
+    private String jdbcPassword;
+    
+	@Bean(name = "dataSource",destroyMethod = "close")
+    public DataSource dataSource() {
+    	DruidDataSource datasource = new DruidDataSource();
+    	datasource.setDriverClassName(jdbcDriverClassName);
+    	datasource.setUrl(jdbcUrl);
+    	datasource.setUsername(jdbcUsername);
+    	datasource.setPassword(jdbcPassword);
+    	datasource.setMaxActive(20);
+    	datasource.setMinIdle(5);
+        return datasource;
+    }
+	
+	@Bean(name = {"sqlSessionFactory"})
+	@ConditionalOnMissingBean(name = {"sqlSessionFactory"})
+	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
+			
+		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+		sqlSessionFactoryBean.setDataSource(dataSource);
+		sqlSessionFactoryBean.setTypeAliasesPackage("com.lyhistory.mybatis.table");
+		sqlSessionFactoryBean.setConfigLocation(new ClassPathResource("mybatis/config/mybatis-config.xml"));
+		sqlSessionFactoryBean.setMapperLocations(
+				(new PathMatchingResourcePatternResolver()).getResources("classpath*:mybatis/mapping/*_starter.xml"));
+		return sqlSessionFactoryBean.getObject();
+	}
+}
+
+
+```
+
+继续循环，还会处理一个比较特殊的bean，就是主程序！！
+
+om.lyhistory.mybatis.springboot.mybatis_starter.StarterMain
+
+注意，它会触发这个方法
+
+```
+loadBeanDefinitionsFromRegistrars(configClass.getImportBeanDefinitionRegistrars());
+```
+
+configClass.getImportBeanDefinitionRegistrars()：获取到
+
+key=org.springframework.boot.autoconfigure.AutoConfigurationPackages$Registrar@10b9db7b
+
+values=org.springframework.core.type.StandardAnnotationMetadata@2b62442c
+
+```
+private void loadBeanDefinitionsFromRegistrars(Map<ImportBeanDefinitionRegistrar, AnnotationMetadata> registrars) {
+    registrars.forEach((registrar, metadata) ->
+                       registrar.registerBeanDefinitions(metadata, this.registry));
+}
+```
+
+这个registrar就是org.springframework.boot.autoconfigure.AutoConfigurationPackages，进入到其静态内部类Registrar的registerBeanDefinitions方法，最终往beanFactory里面的beanDefinitionMap注册org.springframework.boot.autoconfigure.AutoConfigurationPackages
+
+。。。。
+
+继续循环其他的starter注册的EnableAutoConfiguration的配置bean， 比如org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class
+
+beanName=org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
+
+```
+if (configClass.isImported()) {
+			registerBeanDefinitionForImportedConfigurationClass(configClass);
+            }
+```
+
+是经过前面parse的第二步从META-INF/spring.factories import进来的，还不在beanDefinitionMap中，所以需要往beanFactory注册一下，当然跟前面一样，其class内部的方法bean也需要注册，略过，重点说后面一步
+
+```
+loadBeanDefinitionsFromRegistrars(configClass.getImportBeanDefinitionRegistrars());
+```
+
+configClass.getImportBeanDefinitionRegistrars()：获取到：
+
+key1:org.springframework.boot.context.properties.EnableConfigurationPropertiesImportSelector$ConfigurationPropertiesBeanRegistrar@1e63ec0b
+
+value1:org.springframework.core.type.classreading.AnnotationMetadataReadingVisitor@160ac7fb, className=org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
+
+key2:org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessorRegistrar@3b956878
+
+value2:org.springframework.core.type.classreading.AnnotationMetadataReadingVisitor@160ac7fb
+
+org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
+
+这种方式到这里不会发生什么
+
+
+
+###### Mybatis 用法二：不自定义MapperScannerConfigurer
+
+configClass.getImportBeanDefinitionRegistrars()：获取到：
 
 key=org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration$AutoConfiguredMapperScannerRegistrar@2b4d4327
 
 values=org.springframework.core.type.classreading.AnnotationMetadataReadingVisitor@49232c6f
+
+className=org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration$MapperScannerRegistrarNotFoundConfiguration
+
+可以看到这里有个MapperScannerRegistrarNotFoundConfiguration，这里没有自定义@Bean(name = "MapperScannerConfigurer")，所以就会用这个MapperScannerRegistrarNotFoundConfiguration来触发Mybatis的扫描工作 ，而前面第一种方式相当于将这里的Mybatis Auto Scanner覆写了，所以也很容易理解
+
+至于为什么，可以研究一下前面第二步递归解析的时候调用的org.springframework.context.annotation.ConfigurationClass
+
+初步猜测，springboot有地方可以让mybatis去检查是否主类或者其他包下定义了MapperScannerConfigurer这个bean，如果没有则启用MapperScannerRegistrarNotFoundConfiguration
+
+```java
+public void addImportBeanDefinitionRegistrar(ImportBeanDefinitionRegistrar registrar, AnnotationMetadata importingClassMetadata) {
+    this.importBeanDefinitionRegistrars.put(registrar, importingClassMetadata);
+}
+```
+
+
+
+接着说
 
 ```java
 private void loadBeanDefinitionsFromRegistrars(Map<ImportBeanDefinitionRegistrar, AnnotationMetadata> registrars) {
@@ -886,13 +1131,281 @@ public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, B
 }
 ```
 
+上面很明显，这种方式@Mapper会被立即扫描进来，
+
+但是上面第一种方式结束后@Mapper不会被扫描进来，（第一种方式还需要后面的Finally那一步操作才可以扫描到！）
+
+我这里只放了第一种方式的截图：
+
+beanDefinitionMap，org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration也进来了
+
+![](./java_springboot_beanfactory04.png)
+
+```
+{defaultServletHandlerMapping=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration; factoryMethodName=defaultServletHandlerMapping; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class], org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter$FaviconConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter$FaviconConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, applicationTaskExecutor=Root bean: class [null];
+ scope=; abstract=false; lazyInit=true; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration; factoryMethodName=applicationTaskExecutor; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/task/TaskExecutionAutoConfiguration.class], persistenceExceptionTranslationPostProcessor=Root bean: class [org.springframework.boot.autoconfigure.dao.PersistenceExceptionTranslationAutoConfiguration];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=persistenceExceptionTranslationPostProcessor; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/dao/PersistenceExceptionTranslationAutoConfiguration.class], characterEncodingFilter=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration; factoryMethodName=characterEncodingFilter; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/HttpEncodingAutoConfiguration.class], myBatisMapperScannerConfig=Generic bean: class [com.lyhistory.mybatis.springboot.mybatis_starter.MyBatisMapperScannerConfig];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in file [C:\Workspace\Repository\learn_coding\java\Components\mybatis-demo\hello-mybatis\target\classes\com\lyhistory\mybatis\springboot\mybatis_starter\MyBatisMapperScannerConfig.class], org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration$DispatcherServletRegistrationConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration$DispatcherServletRegistrationConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, sqlSessionFactory=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=myBatisConfiguration; factoryMethodName=sqlSessionFactory; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/lyhistory/mybatis/springboot/mybatis_starter/MyBatisConfiguration.class], preserveErrorControllerTargetClassPostProcessor=Root bean: class [org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=preserveErrorControllerTargetClassPostProcessor; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/error/ErrorMvcAutoConfiguration.class], org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$JacksonObjectMapperBuilderConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$JacksonObjectMapperBuilderConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, jdbcTemplate=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=true; factoryBeanName=org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration$JdbcTemplateConfiguration; factoryMethodName=jdbcTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/jdbc/JdbcTemplateAutoConfiguration$JdbcTemplateConfiguration.class], org.springframework.context.annotation.internalConfigurationAnnotationProcessor=Root bean: class [org.springframework.context.annotation.ConfigurationClassPostProcessor];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, propertySourcesPlaceholderConfigurer=Root bean: class [org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=propertySourcesPlaceholderConfigurer; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/context/PropertyPlaceholderAutoConfiguration.class], org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration$EnableTransactionManagementConfiguration$CglibAutoProxyConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration$EnableTransactionManagementConfiguration$CglibAutoProxyConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, faviconRequestHandler=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter$FaviconConfiguration; factoryMethodName=faviconRequestHandler; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter$FaviconConfiguration.class], beanNameViewResolver=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration$WhitelabelErrorViewConfiguration; factoryMethodName=beanNameViewResolver; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/error/ErrorMvcAutoConfiguration$WhitelabelErrorViewConfiguration.class], loggingCodecCustomizer=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration$LoggingCodecConfiguration; factoryMethodName=loggingCodecCustomizer; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/http/codec/CodecsAutoConfiguration$LoggingCodecConfiguration.class], viewResolver=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter; factoryMethodName=viewResolver; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter.class], methodValidationPostProcessor=Root bean: class [org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=methodValidationPostProcessor; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/validation/ValidationAutoConfiguration.class], stringHttpMessageConverter=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration$StringHttpMessageConverterConfiguration; factoryMethodName=stringHttpMessageConverter; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/http/HttpMessageConvertersAutoConfiguration$StringHttpMessageConverterConfiguration.class], org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration$TomcatWebServerFactoryCustomizerConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration$TomcatWebServerFactoryCustomizerConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, tomcatServletWebServerFactoryCustomizer=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration; factoryMethodName=tomcatServletWebServerFactoryCustomizer; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/ServletWebServerFactoryAutoConfiguration.class], org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, server-org.springframework.boot.autoconfigure.web.ServerProperties=Generic bean: class [org.springframework.boot.autoconfigure.web.ServerProperties];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, messageConverters=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration; factoryMethodName=messageConverters; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/http/HttpMessageConvertersAutoConfiguration.class], jsonComponentModule=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration; factoryMethodName=jsonComponentModule; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration.class], dataSourceInitializerPostProcessor=Generic bean: class [org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerPostProcessor];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, websocketServletWebServerCustomizer=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.websocket.servlet.WebSocketServletAutoConfiguration$TomcatWebSocketConfiguration; factoryMethodName=websocketServletWebServerCustomizer; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/websocket/servlet/WebSocketServletAutoConfiguration$TomcatWebSocketConfiguration.class], org.springframework.context.event.internalEventListenerFactory=Root bean: class [org.springframework.context.event.DefaultEventListenerFactory];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, mappingJackson2HttpMessageConverter=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.http.JacksonHttpMessageConvertersConfiguration$MappingJackson2HttpMessageConverterConfiguration; factoryMethodName=mappingJackson2HttpMessageConverter; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/http/JacksonHttpMessageConvertersConfiguration$MappingJackson2HttpMessageConverterConfiguration.class], mbeanExporter=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=true; factoryBeanName=org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration; factoryMethodName=mbeanExporter; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/jmx/JmxAutoConfiguration.class], mbeanServer=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration; factoryMethodName=mbeanServer; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/jmx/JmxAutoConfiguration.class], servletWebServerFactoryCustomizer=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration; factoryMethodName=servletWebServerFactoryCustomizer; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/ServletWebServerFactoryAutoConfiguration.class], mvcUrlPathHelper=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration; factoryMethodName=mvcUrlPathHelper; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class], transactionTemplate=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration$TransactionTemplateConfiguration; factoryMethodName=transactionTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/transaction/TransactionAutoConfiguration$TransactionTemplateConfiguration.class], webServerFactoryCustomizerBeanPostProcessor=Root bean: class [org.springframework.boot.web.server.WebServerFactoryCustomizerBeanPostProcessor];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration=Generic bean: class [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.websocket.servlet.WebSocketServletAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.websocket.servlet.WebSocketServletAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, mybatis-org.mybatis.spring.boot.autoconfigure.MybatisProperties=Generic bean: class [org.mybatis.spring.boot.autoconfigure.MybatisProperties];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$Jackson2ObjectMapperBuilderCustomizerConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$Jackson2ObjectMapperBuilderCustomizerConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration$StringHttpMessageConverterConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration$StringHttpMessageConverterConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, standardJacksonObjectMapperBuilderCustomizer=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$Jackson2ObjectMapperBuilderCustomizerConfiguration; factoryMethodName=standardJacksonObjectMapperBuilderCustomizer; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration$Jackson2ObjectMapperBuilderCustomizerConfiguration.class], taskSchedulerBuilder=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfiguration; factoryMethodName=taskSchedulerBuilder; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/task/TaskSchedulingAutoConfiguration.class], org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, transactionInterceptor=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration; factoryMethodName=transactionInterceptor; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/transaction/annotation/ProxyTransactionManagementConfiguration.class], org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, jacksonCodecCustomizer=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration$JacksonCodecConfiguration; factoryMethodName=jacksonCodecCustomizer; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/http/codec/CodecsAutoConfiguration$JacksonCodecConfiguration.class], conventionErrorViewResolver=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration$DefaultErrorViewResolverConfiguration; factoryMethodName=conventionErrorViewResolver; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/error/ErrorMvcAutoConfiguration$DefaultErrorViewResolverConfiguration.class], org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.jdbc.metadata.DataSourcePoolMetadataProvidersConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.jdbc.metadata.DataSourcePoolMetadataProvidersConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.context.event.internalEventListenerProcessor=Root bean: class [org.springframework.context.event.EventListenerMethodProcessor];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, spring.mvc-org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties=Generic bean: class [org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, localeCharsetMappingsCustomizer=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration; factoryMethodName=localeCharsetMappingsCustomizer; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/HttpEncodingAutoConfiguration.class], formContentFilter=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration; factoryMethodName=formContentFilter; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration.class], multipartConfigElement=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration; factoryMethodName=multipartConfigElement; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/MultipartAutoConfiguration.class], MapperScannerConfigurer=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=myBatisMapperScannerConfig; factoryMethodName=mapperScannerConfigurer; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/lyhistory/mybatis/springboot/mybatis_starter/MyBatisMapperScannerConfig.class], requestContextFilter=Root bean: class [org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=requestContextFilter; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter.class], testController=Generic bean: class [com.lyhistory.mybatis.springboot.mybatis_starter.TestController];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in file [C:\Workspace\Repository\learn_coding\java\Components\mybatis-demo\hello-mybatis\target\classes\com\lyhistory\mybatis\springboot\mybatis_starter\TestController.class], defaultViewResolver=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter; factoryMethodName=defaultViewResolver; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter.class], org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration$EnableTransactionManagementConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration$EnableTransactionManagementConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.dao.PersistenceExceptionTranslationAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.dao.PersistenceExceptionTranslationAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, jacksonObjectMapperBuilder=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$JacksonObjectMapperBuilderConfiguration; factoryMethodName=jacksonObjectMapperBuilder; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration$JacksonObjectMapperBuilderConfiguration.class], spring.task.scheduling-org.springframework.boot.autoconfigure.task.TaskSchedulingProperties=Generic bean: class [org.springframework.boot.autoconfigure.task.TaskSchedulingProperties];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration$LoggingCodecConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration$LoggingCodecConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, restTemplateBuilder=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.client.RestTemplateAutoConfiguration; factoryMethodName=restTemplateBuilder; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/client/RestTemplateAutoConfiguration.class], multipartResolver=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration; factoryMethodName=multipartResolver; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/MultipartAutoConfiguration.class], requestMappingHandlerMapping=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=true; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration; factoryMethodName=requestMappingHandlerMapping; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class], org.springframework.aop.config.internalAutoProxyCreator=Root bean: class [org.springframework.aop.framework.autoproxy.InfrastructureAdvisorAutoProxyCreator];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration$JdbcTemplateConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration$JdbcTemplateConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, requestMappingHandlerAdapter=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration; factoryMethodName=requestMappingHandlerAdapter; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class], spring.transaction-org.springframework.boot.autoconfigure.transaction.TransactionProperties=Generic bean: class [org.springframework.boot.autoconfigure.transaction.TransactionProperties];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, mvcHandlerMappingIntrospector=Root bean: class [null];
+ scope=; abstract=false; lazyInit=true; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration; factoryMethodName=mvcHandlerMappingIntrospector; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class], springApplicationAdminRegistrar=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration; factoryMethodName=springApplicationAdminRegistrar; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/admin/SpringApplicationAdminJmxAutoConfiguration.class], org.springframework.boot.autoconfigure.condition.BeanTypeRegistry=Generic bean: class [org.springframework.boot.autoconfigure.condition.BeanTypeRegistry];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, spring.info-org.springframework.boot.autoconfigure.info.ProjectInfoProperties=Generic bean: class [org.springframework.boot.autoconfigure.info.ProjectInfoProperties];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.context.annotation.internalAutowiredAnnotationProcessor=Root bean: class [org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, spring.resources-org.springframework.boot.autoconfigure.web.ResourceProperties=Generic bean: class [org.springframework.boot.autoconfigure.web.ResourceProperties];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.context.properties.ConfigurationBeanFactoryMetadata=Generic bean: class [org.springframework.boot.context.properties.ConfigurationBeanFactoryMetadata];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.context.ConfigurationPropertiesAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.context.ConfigurationPropertiesAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.internalCachingMetadataReaderFactory=Generic bean: class [org.springframework.boot.autoconfigure.SharedMetadataReaderFactoryContextInitializer$SharedMetadataReaderFactoryBean];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$ParameterNamesModuleConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$ParameterNamesModuleConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, mvcContentNegotiationManager=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration; factoryMethodName=mvcContentNegotiationManager; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class], objectNamingStrategy=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration; factoryMethodName=objectNamingStrategy; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/jmx/JmxAutoConfiguration.class], org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, errorAttributes=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration; factoryMethodName=errorAttributes; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/error/ErrorMvcAutoConfiguration.class], httpRequestHandlerAdapter=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration; factoryMethodName=httpRequestHandlerAdapter; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class], beanNameHandlerMapping=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration; factoryMethodName=beanNameHandlerMapping; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class], spring.servlet.multipart-org.springframework.boot.autoconfigure.web.servlet.MultipartProperties=Generic bean: class [org.springframework.boot.autoconfigure.web.servlet.MultipartProperties];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.context.annotation.internalCommonAnnotationProcessor=Root bean: class [org.springframework.context.annotation.CommonAnnotationBeanPostProcessor];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryConfiguration$EmbeddedTomcat=Generic bean: class [org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryConfiguration$EmbeddedTomcat];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, resourceHandlerMapping=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration; factoryMethodName=resourceHandlerMapping; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class], simpleControllerHandlerAdapter=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration; factoryMethodName=simpleControllerHandlerAdapter; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class], spring.http-org.springframework.boot.autoconfigure.http.HttpProperties=Generic bean: class [org.springframework.boot.autoconfigure.http.HttpProperties];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.mybatis.spring.boot.autoconfigure.MybatisLanguageDriverAutoConfiguration=Generic bean: class [org.mybatis.spring.boot.autoconfigure.MybatisLanguageDriverAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, testService=Generic bean: class [com.lyhistory.mybatis.springboot.mybatis_starter.TestService];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in file [C:\Workspace\Repository\learn_coding\java\Components\mybatis-demo\hello-mybatis\target\classes\com\lyhistory\mybatis\springboot\mybatis_starter\TestService.class], org.springframework.transaction.config.internalTransactionAdvisor=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration; factoryMethodName=transactionAdvisor; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/transaction/annotation/ProxyTransactionManagementConfiguration.class], parameterNamesModule=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$ParameterNamesModuleConfiguration; factoryMethodName=parameterNamesModule; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration$ParameterNamesModuleConfiguration.class], org.springframework.boot.autoconfigure.jdbc.DataSourceInitializationConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.jdbc.DataSourceInitializationConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker=Generic bean: class [org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.web.client.RestTemplateAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.web.client.RestTemplateAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, hiddenHttpMethodFilter=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration; factoryMethodName=hiddenHttpMethodFilter; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration.class], org.springframework.transaction.config.internalTransactionalEventListenerFactory=Root bean: class [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=transactionalEventListenerFactory; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/transaction/annotation/ProxyTransactionManagementConfiguration.class], org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, mvcValidator=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration; factoryMethodName=mvcValidator; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class], org.springframework.boot.autoconfigure.websocket.servlet.WebSocketServletAutoConfiguration$TomcatWebSocketConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.websocket.servlet.WebSocketServletAutoConfiguration$TomcatWebSocketConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, mvcResourceUrlProvider=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration; factoryMethodName=mvcResourceUrlProvider; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class], spring.task.execution-org.springframework.boot.autoconfigure.task.TaskExecutionProperties=Generic bean: class [org.springframework.boot.autoconfigure.task.TaskExecutionProperties];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, viewControllerHandlerMapping=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration; factoryMethodName=viewControllerHandlerMapping; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class], org.springframework.boot.autoconfigure.jdbc.metadata.DataSourcePoolMetadataProvidersConfiguration$HikariPoolDataSourceMetadataProviderConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.jdbc.metadata.DataSourcePoolMetadataProvidersConfiguration$HikariPoolDataSourceMetadataProviderConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, dispatcherServlet=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration$DispatcherServletConfiguration; factoryMethodName=dispatcherServlet; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/DispatcherServletAutoConfiguration$DispatcherServletConfiguration.class], org.springframework.boot.autoconfigure.AutoConfigurationPackages=Generic bean: class [org.springframework.boot.autoconfigure.AutoConfigurationPackages$BasePackages];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessor=Generic bean: class [org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessor];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, hikariPoolDataSourceMetadataProvider=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.jdbc.metadata.DataSourcePoolMetadataProvidersConfiguration$HikariPoolDataSourceMetadataProviderConfiguration; factoryMethodName=hikariPoolDataSourceMetadataProvider; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/jdbc/metadata/DataSourcePoolMetadataProvidersConfiguration$HikariPoolDataSourceMetadataProviderConfiguration.class], spring.jdbc-org.springframework.boot.autoconfigure.jdbc.JdbcProperties=Generic bean: class [org.springframework.boot.autoconfigure.jdbc.JdbcProperties];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, transactionAttributeSource=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration; factoryMethodName=transactionAttributeSource; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/transaction/annotation/ProxyTransactionManagementConfiguration.class], org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter=Generic bean: class [org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration$DataSourceTransactionManagerConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration$DataSourceTransactionManagerConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, transactionManager=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration$DataSourceTransactionManagerConfiguration; factoryMethodName=transactionManager; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceTransactionManagerAutoConfiguration$DataSourceTransactionManagerConfiguration.class], errorPageRegistrarBeanPostProcessor=Root bean: class [org.springframework.boot.web.server.ErrorPageRegistrarBeanPostProcessor];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, errorPageCustomizer=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration; factoryMethodName=errorPageCustomizer; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/error/ErrorMvcAutoConfiguration.class], mvcConversionService=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration; factoryMethodName=mvcConversionService; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class], org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration$DefaultErrorViewResolverConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration$DefaultErrorViewResolverConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, starterMain=Generic bean: class [com.lyhistory.mybatis.springboot.mybatis_starter.StarterMain];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, tomcatWebServerFactoryCustomizer=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration$TomcatWebServerFactoryCustomizerConfiguration; factoryMethodName=tomcatWebServerFactoryCustomizer; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/embedded/EmbeddedWebServerFactoryCustomizerAutoConfiguration$TomcatWebServerFactoryCustomizerConfiguration.class], faviconHandlerMapping=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter$FaviconConfiguration; factoryMethodName=faviconHandlerMapping; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter$FaviconConfiguration.class], org.springframework.boot.autoconfigure.http.JacksonHttpMessageConvertersConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.http.JacksonHttpMessageConvertersConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, mvcPathMatcher=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration; factoryMethodName=mvcPathMatcher; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class], handlerExceptionResolver=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration; factoryMethodName=handlerExceptionResolver; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class], basicErrorController=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration; factoryMethodName=basicErrorController; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/error/ErrorMvcAutoConfiguration.class], org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, dispatcherServletRegistration=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration$DispatcherServletRegistrationConfiguration; factoryMethodName=dispatcherServletRegistration; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/DispatcherServletAutoConfiguration$DispatcherServletRegistrationConfiguration.class], dataSource=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=myBatisConfiguration; factoryMethodName=dataSource; initMethodName=null; destroyMethodName=close; defined in class path resource [com/lyhistory/mybatis/springboot/mybatis_starter/MyBatisConfiguration.class], org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration$JacksonCodecConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration$JacksonCodecConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, tomcatServletWebServerFactory=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryConfiguration$EmbeddedTomcat; factoryMethodName=tomcatServletWebServerFactory; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/ServletWebServerFactoryConfiguration$EmbeddedTomcat.class], org.springframework.boot.autoconfigure.http.JacksonHttpMessageConvertersConfiguration$MappingJackson2HttpMessageConverterConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.http.JacksonHttpMessageConvertersConfiguration$MappingJackson2HttpMessageConverterConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, spring.jackson-org.springframework.boot.autoconfigure.jackson.JacksonProperties=Generic bean: class [org.springframework.boot.autoconfigure.jackson.JacksonProperties];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, error=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration$WhitelabelErrorViewConfiguration; factoryMethodName=defaultErrorView; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/error/ErrorMvcAutoConfiguration$WhitelabelErrorViewConfiguration.class], org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties=Generic bean: class [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties];
+ scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$JacksonObjectMapperConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$JacksonObjectMapperConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, namedParameterJdbcTemplate=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=true; factoryBeanName=org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration$NamedParameterJdbcTemplateConfiguration; factoryMethodName=namedParameterJdbcTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/jdbc/JdbcTemplateAutoConfiguration$NamedParameterJdbcTemplateConfiguration.class], org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration$WhitelabelErrorViewConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration$WhitelabelErrorViewConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration$DispatcherServletConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration$DispatcherServletConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration$TransactionTemplateConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration$TransactionTemplateConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, mvcViewResolver=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration; factoryMethodName=mvcViewResolver; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class], defaultValidator=Root bean: class [org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=true; factoryBeanName=null; factoryMethodName=defaultValidator; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/validation/ValidationAutoConfiguration.class], welcomePageHandlerMapping=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter; factoryMethodName=welcomePageHandlerMapping; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter.class], mvcUriComponentsContributor=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration; factoryMethodName=mvcUriComponentsContributor; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class], org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration=Generic bean: class [org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, jacksonObjectMapper=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=true; factoryBeanName=org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$JacksonObjectMapperConfiguration; factoryMethodName=jacksonObjectMapper; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/jackson/JacksonAutoConfiguration$JacksonObjectMapperConfiguration.class], org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration$NamedParameterJdbcTemplateConfiguration=Generic bean: class [org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration$NamedParameterJdbcTemplateConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null, myBatisConfiguration=Generic bean: class [com.lyhistory.mybatis.springboot.mybatis_starter.MyBatisConfiguration];
+ scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in file [C:\Workspace\Repository\learn_coding\java\Components\mybatis-demo\hello-mybatis\target\classes\com\lyhistory\mybatis\springboot\mybatis_starter\MyBatisConfiguration.class], taskExecutorBuilder=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration; factoryMethodName=taskExecutorBuilder; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/task/TaskExecutionAutoConfiguration.class], platformTransactionManagerCustomizers=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration; factoryMethodName=platformTransactionManagerCustomizers; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/transaction/TransactionAutoConfiguration.class], sqlSessionTemplate=Root bean: class [null];
+ scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration; factoryMethodName=sqlSessionTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]}
+```
+
+
+
+##### Next:
+
+```java
+// Next, invoke the BeanDefinitionRegistryPostProcessors that implement Ordered.
+postProcessorNames = beanFactory.getBeanNamesForType(BeanDefinitionRegistryPostProcessor.class, true, false);
+for (String ppName : postProcessorNames) {
+    if (!processedBeans.contains(ppName) && beanFactory.isTypeMatch(ppName, Ordered.class)) {
+        currentRegistryProcessors.add(beanFactory.getBean(ppName, BeanDefinitionRegistryPostProcessor.class));
+        processedBeans.add(ppName);
+    }
+}
+sortPostProcessors(currentRegistryProcessors, beanFactory);
+registryProcessors.addAll(currentRegistryProcessors);
+invokeBeanDefinitionRegistryPostProcessors(currentRegistryProcessors, registry);
+currentRegistryProcessors.clear();
+
+```
+
+此时，postProcessor有两个，多了一个MapperScannerConfigurer
+
+[org.springframework.context.annotation.internalConfigurationAnnotationProcessor, MapperScannerConfigurer]
+
+上面的if判断不会通过，因为internalConfigurationAnnotationProcessor已经在上面一步处理过了，所以包含在processedBeans里面，而MapperScannerConfigurer虽然没有处理过，但不是类型不符合Ordered
+
+##### Finally
+
+```java
+// Finally, invoke all other BeanDefinitionRegistryPostProcessors until no further ones appear.
+boolean reiterate = true;
+while (reiterate) {
+    reiterate = false;
+    postProcessorNames = beanFactory.getBeanNamesForType(BeanDefinitionRegistryPostProcessor.class, true, false);
+    for (String ppName : postProcessorNames) {
+        if (!processedBeans.contains(ppName)) {
+            currentRegistryProcessors.add(beanFactory.getBean(ppName, BeanDefinitionRegistryPostProcessor.class));
+            processedBeans.add(ppName);
+            reiterate = true;
+        }
+    }
+    sortPostProcessors(currentRegistryProcessors, beanFactory);
+    registryProcessors.addAll(currentRegistryProcessors);
+    invokeBeanDefinitionRegistryPostProcessors(currentRegistryProcessors, registry);
+    currentRegistryProcessors.clear();
+}
+```
+
+通过if判断，终于轮到MapperScannerConfigurer起作用了，首先beanFactory.getBean实例化MapperScannerConfigurer
+
+开始invoke，
+
+org.mybatis.spring.mapper.MapperScannerConfigurer mplements BeanDefinitionRegistryPostProcessor, InitializingBean, ApplicationContextAware, BeanNameAware {
+
+```java
+ @Override
+  public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) {
+    if (this.processPropertyPlaceHolders) {
+      processPropertyPlaceHolders();
+    }
+
+    ClassPathMapperScanner scanner = new ClassPathMapperScanner(registry);
+    scanner.setAddToConfig(this.addToConfig);
+    scanner.setAnnotationClass(this.annotationClass);
+    scanner.setMarkerInterface(this.markerInterface);
+    scanner.setSqlSessionFactory(this.sqlSessionFactory);
+    scanner.setSqlSessionTemplate(this.sqlSessionTemplate);
+    scanner.setSqlSessionFactoryBeanName(this.sqlSessionFactoryBeanName);
+    scanner.setSqlSessionTemplateBeanName(this.sqlSessionTemplateBeanName);
+    scanner.setResourceLoader(this.applicationContext);
+    scanner.setBeanNameGenerator(this.nameGenerator);
+    scanner.setMapperFactoryBeanClass(this.mapperFactoryBeanClass);
+    if (StringUtils.hasText(lazyInitialization)) {
+      scanner.setLazyInitialization(Boolean.valueOf(lazyInitialization));
+    }
+    scanner.registerFilters();
+    scanner.scan(
+        StringUtils.tokenizeToStringArray(this.basePackage, ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS));
+  }
+```
+
+终于将我们自定义的mybatis的@Mapper加载进来了
+
+![](./java_springboot_beanfactory05.png)
+
 
 
 TODO:
 
 #Next Last
 
-## 实例化
+实例化
 
 org.springframework.beans.factory.support.AbstractBeanFactory
 
@@ -937,6 +1450,22 @@ org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcesso
 ​	postProcessPropertyValues
 
 ​	inject
+
+
+
+#### 第六步 registerBeanPostProcessors
+
+
+
+#### 第十一步 finishBeanFactoryInitialization
+
+
+
+#### 第十二步 finishRefresh
+
+
+
+#### 第十三步 resetCommonCaches
 
 ​	
 
