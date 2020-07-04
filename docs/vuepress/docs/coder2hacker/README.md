@@ -20,7 +20,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/coder2hacker/ch1_intro">Chapter 1．道德黑客和渗透测试介绍</a></li>
 		<li><a href="/docs/coder2hacker/ch2_web">Chapter 2．网络基础和web技术</a></li>
         <li><a href="/docs/coder2hacker/basics_http">HTTP基础</a></li>
-		<li><a href="/docs/coder2hacker/ch3_kali">Chapter 3．基于Kali Linux搭建渗透环境</a></li>
+		<li><a href="/docs/coder2hacker/ch3_kali&targets">Chapter 3．基于Kali Linux搭建渗透环境</a></li>
 		<li><a href="/docs/coder2hacker/overview_security_client2server">客户端服务端通信安全概览</a></li>
 		<li>Chapter 4．信息侦察</li>
 		<li>Chapter 5．基于身份和会话漏洞利用</li>
@@ -32,7 +32,6 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li>Chapter 8．CSRF 请求伪造</li>
 		一般来说相对于前一章XSS来说，CSRF危害相对少一些，因为一般是针对特定用户来伪造用户的请求，但是从防御来说一般是更困难
 		<li>Chapter 9. 自动扫描器</li>
-		<li><a href="/docs/coder2hacker/intranet_penetration">内网渗透</a></li>
 		<li>Chapter 10. 实例分析</li>
 		[认证授权漏洞 auth](/docs/coder2hacker/realcase/auth)
         [redis](/docs/coder2hacker/realcase/redis)
@@ -45,6 +44,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 </div>
 
 
+
 <div style="background-color:bisque;">
 	<span>##欢迎资助我的创作 Welcome to support my creation##</span>
 	<ul>
@@ -54,6 +54,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<ol>柚子币EOS:&nbsp;&nbsp;&nbsp;&nbsp;<strong>eos4donation</strong></ol>
 	</ul>
 </div>
+
+
 ```
  __   __   __   ___  __             __        ___  __   
 /  ` /  \ |  \ |__  |__) |__|  /\  /  ` |__/ |__  |__)  
@@ -64,4 +66,6 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 |___  |  |  | | .__/  |  \__/ |  \  |  .\__, \__/  |  | 
                                                         
 ```
+
+
 

@@ -1,3 +1,11 @@
+---
+sidebar: auto
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+
+---
+
+[回目录](/docs/software)  《spring boot 源码解析》
+
 ## keyword:
 
 BeanDefinition配置信息
@@ -29,20 +37,17 @@ resolvableDependencies
 
 GenericApplicationContext extends AbstractApplicationContext 
 
+getEnvironment 环境参数 配置文件信息
+getBeanFactory  beansMap
+
+
+
 工厂：
 
 DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory(<<DefaultSingletonBeanRegistry)
 
 implements ConfigurableListableBeanFactory
 
-
-
-[autoConfigurationReport, org.springframework.boot.context.ContextIdApplicationContextInitializer$ContextId, springApplicationArguments, springBootBanner, springBootLoggingSystem, environment]
-autoConfigurationReport
-org.springframework.boot.context.ContextIdApplicationContextInitializer$ContextId
-springApplicationArguments
-springBootBanner
-springBootLoggingSystem
 
 
 
@@ -338,7 +343,7 @@ public void refresh() throws BeansException, IllegalStateException {
 
 将环境Environment和system相关的信息放入工厂的manualSingletonNames（local beans）
 
-
+![](/docs/docs_image/software/java/spring/java_springboot_beanfactory01.png)
 
 #### 第四步 postProcessBeanFactory
 
@@ -346,7 +351,7 @@ public void refresh() throws BeansException, IllegalStateException {
 
 除了几个internal的Processor处理程序的bean和一个EventListener工厂的bean外，我们的主程序也作为bean存储其中；
 
-![](./java_springboot_beanfactory01.png)
+![](/docs/docs_image/software/java/spring/java_springboot_beanfactory02.png)
 
 看类型很明显，我们的主程序是Generic Bean类型，其他的都是Root Bean类型
 
@@ -896,7 +901,7 @@ parser.validate();
 
 从主程序读取的bean Controller Service都已经在里面了，但是上面第二步拿到的那些Starter的AutoEnableConfiguration还没有进来，还需要继续
 
-![](./java_springboot_beanfactory03.png)
+![](/docs/docs_image/software/java/spring/java_springboot_beanfactory03.png)
 
 ```
 {myBatisMapperScannerConfig=Generic bean: class [com.lyhistory.mybatis.springboot.mybatis_starter.MyBatisMapperScannerConfig];
@@ -1139,7 +1144,7 @@ public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, B
 
 beanDefinitionMap，org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration也进来了
 
-![](./java_springboot_beanfactory04.png)
+![](/docs/docs_image/software/java/spring/java_springboot_beanfactory04.png)
 
 ```
 {defaultServletHandlerMapping=Root bean: class [null];
@@ -1397,7 +1402,7 @@ org.mybatis.spring.mapper.MapperScannerConfigurer mplements BeanDefinitionRegist
 
 终于将我们自定义的mybatis的@Mapper加载进来了
 
-![](./java_springboot_beanfactory05.png)
+![](/docs/docs_image/software/java/spring/java_springboot_beanfactory05.png)
 
 
 

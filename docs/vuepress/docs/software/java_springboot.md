@@ -572,8 +572,9 @@ ConfigurationProperties和EnableConfigurationProperties是一对，
 前者定义对应配置文件的属性，后者是激活读取；
 同样，
 Configuration或AutoConfiguration跟EnableAutoConfiguration是一对，
-前者相当于component就是定义为bean，而后者是激活这个自动配置，
-![img](file:///C:\Users\lyhis\AppData\Local\Temp\%W@GJ$ACOF(TYDYECOKVDYB.png)https://docs.spring.io/spring-boot/docs/1.3.8.RELEASE/reference/html/using-boot-auto-configuration.html
+前者相当于component就是定义为bean，而后者是激活这个自动配置/装配（具体参考springboot源码分析一文），
+
+https://docs.spring.io/spring-boot/docs/1.3.8.RELEASE/reference/html/using-boot-auto-configuration.html
 
 创建一个starter
 hello-spring-boot-starter
