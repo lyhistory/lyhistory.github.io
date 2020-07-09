@@ -54,6 +54,17 @@ http://www.jasongj.com/2015/08/09/KafkaColumn4/
 ## 2.Basic usage 
 GUI KafkaEsque  https://kafka.esque.at
 
+查看kafka broker节点
+
+```
+zookeeper/bin/zkCli.sh -server localhost:2181 #Make sure your Broker is already running
+ls /brokers/ids # Gives the list of active brokers
+ls /brokers/topics #Gives the list of topics
+get /brokers/ids/0 #Gives more detailed information of the broker id '0'
+```
+
+
+
 ### 2.1 Local 
 Quick start
 https://kafka.apache.org/quickstart 
@@ -398,7 +409,7 @@ Kafka Stream有一些关键东西没有解决，例如在join场景中，需要�
 ## Troubleshooting
 ?# [2019-05-07 21:45:48,648] ERROR [KafkaServer id=0] Fatal error during KafkaServer startup. Prepare to shutdown (kafka.server.KafkaServer)
 org.apache.kafka.common.KafkaException: Failed to acquire lock on file .lock in /tmp/kafka-logs. A Kafka instance in another process or thread is using this directory.
- 
+
 ?#Kafka Client Compatibility
 https://spring.io/projects/spring-kafka
 org.springframework.kafka org.apache.kafka
@@ -576,3 +587,5 @@ https://stackoverflow.com/questions/50741186/how-to-filter-out-unnecessary-recor
 https://github.com/confluentinc/kafka-streams-examples/issues/126
 Cheatsheet
 https://gist.github.com/filipefigcorreia/3db4c7e525581553e17442792a2e7489
+
+```
