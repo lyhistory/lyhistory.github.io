@@ -28,3 +28,19 @@ server {
 
 ```
 
+internal
+
+https://www.cnblogs.com/lowmanisbusy/p/11718345.html
+
+Nginx常见基本配置---upstream 使用指南
+
+https://blog.csdn.net/LL845876425/article/details/97621365
+
+
+
+what is the difference between proxy_request_buffering and proxy_buffering on nginx?
+
+https://serverfault.com/questions/741610/what-is-the-difference-between-proxy-request-buffering-and-proxy-buffering-on-ng
+
+
+

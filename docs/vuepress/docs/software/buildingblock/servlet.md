@@ -162,6 +162,83 @@ spring boot Framework支持的三种环境：
 
 ---
 
+
+
+## 源码解读
+
+springmvc request参数解析@RequestBody和Controller方法调用
+
+```
+///
+org.apache.catalina.core;
+public final class ApplicationFilterChain implements FilterChain {
+doFilter=>
+internalDoFilter=>
+servlet.service(request, response);
+
+
+org.springframework.web.servlet
+public class DispatcherServlet extends FrameworkServlet {
+service
+doPost=>
+processRequest=>
+doService=>
+doDispatch=>
+mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
+
+## processedRequest
+
+
+org.springframework.web.servlet.mvc.method.annotation
+public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
+		implements BeanFactoryAware, InitializingBean {
+handleInternal
+=>mav = invokeHandlerMethod(request, response, handlerMethod);
+
+org.springframework.web.servlet.mvc.method.annotation
+public class ServletInvocableHandlerMethod extends InvocableHandlerMethod {
+invokeAndHandle=>
+Object returnValue = invokeForRequest(webRequest, mavContainer, providedArgs);
+
+
+org.springframework.web.method.support
+public class InvocableHandlerMethod extends HandlerMethod {
+
+public Object invokeForRequest(NativeWebRequest request, @Nullable ModelAndViewContainer mavContainer,
+			Object... providedArgs) throws Exception {
+
+		Object[] args = getMethodArgumentValues(request, mavContainer, providedArgs);
+		if (logger.isTraceEnabled()) {
+			logger.trace("Invoking '" + ClassUtils.getQualifiedMethodName(getMethod(), getBeanType()) +
+					"' with arguments " + Arrays.toString(args));
+		}
+		Object returnValue = doInvoke(args);
+		if (logger.isTraceEnabled()) {
+			logger.trace("Method [" + ClassUtils.getQualifiedMethodName(getMethod(), getBeanType()) +
+					"] returned [" + returnValue + "]");
+		}
+		return returnValue;
+	}
+
+## getMethodArgumentValues 解析参数
+
+org.springframework.web.servlet.mvc.method.annotation
+public class RequestResponseBodyMethodProcessor extends AbstractMessageConverterMethodProcessor {
+
+resolveArgument
+
+## doInvoke 调用Controller方法
+
+```
+
+
+
+
+
+---
+
+
+
 ref
 
 https://www.w3cschool.cn/servlet/servlet-life-cycle.html
