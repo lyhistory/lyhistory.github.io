@@ -1,3 +1,12 @@
+---
+sidebar: auto
+sidebarDepth: 3
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+
+---
+
+[回目录](/docs/software)  《Gitlab Server》
+
 ## Architecture
 
 https://docs.gitlab.com/ee/development/architecture.html
@@ -10,9 +19,7 @@ https://juejin.im/post/5cf67d355188255508118def
 
 https://docs.gitlab.com/omnibus/README.html#installation-and-configuration-using-omnibus-package
 
-
-
-![](./gitlab-server.png)
+![](/docs/docs_image/software/project_manage/git/gitlab01.png)
 
 
 

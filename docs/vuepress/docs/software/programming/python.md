@@ -299,7 +299,7 @@ https://stackoverflow.com/questions/6230444/how-to-install-python-developer-pack
 
 ?#issue: install lxml failed on win10
 https://www.lfd.uci.edu/~gohlke/pythonlibs/
- 
+
 https://python-forum.io/Thread-Where-lxml-for-Python-3-6-2-for-windows-10?pid=21585
 https://ask.hellobi.com/question/25374
 
@@ -308,6 +308,9 @@ pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org <packa
 https://stackoverflow.com/questions/25981703/pip-install-fails-with-connection-error-ssl-certificate-verify-failed-certi
 
 ?#issue: install mysqlclient on win10
+
+[error] Microsoft Visual C++ 14.0 is required
+
 https://stackoverflow.com/questions/47044149/unable-to-install-mysqlclient-python-package-on-windows/54830728#54830728
 download mysqlclient from http://www.lfd.uci.edu/~gohlke/pythonlibs/#mysql-python
 pip install wheel 

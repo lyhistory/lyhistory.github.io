@@ -245,6 +245,27 @@ How to Git PR From The Command Line https://hackernoon.com/how-to-git-pr-from-th
 The seven rules of a great git commit message:
 https://chris.beams.io/posts/git-commit/
 
+使用ssh！
+
+```
+ssh-keygen -t rsa -b 4096 -C "lyhistory@gmail.com"
+eval $(ssh-agent -s)
+ssh-add ~/.ssh/id_rsa
+更改passphrase密码
+ssh-keygen -p -f /path/to/ssh_key
+
+clip < ~/.ssh/id_rsa.pub
+# Copies the contents of the id_rsa.pub file to your clipboard
+
+加入到github
+https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account
+加入到gitlab
+https://gitlab.com/help/ssh/README#rsa-ssh-keys
+
+```
+
+
+
 ## 4.Troubleshooting 
 
 ?#1.If you are running git under a file system that is not case sensitive (Windows or OS X) this will occur if there are two branches with the same name but different capitalisation, e.g. user_model_changes and User_model_changes as both of the remote branches will match the same tracking ref. Delete the wrong remote branch (you shouldn't have branches that differ only by case) and then git remote prune origin and everything should work

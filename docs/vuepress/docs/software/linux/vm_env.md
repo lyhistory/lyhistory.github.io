@@ -171,10 +171,10 @@ Manually install:
 
 
 ​	
-	sudo chown test:root .tmux -R
-	
-	tmux source ~/.tmux.conf
-	
+​	sudo chown test:root .tmux -R
+​	
+​	tmux source ~/.tmux.conf
+​	
 	Enable tmux copy mode: add into .tmux.conf: setw -g mode-keys vi
 
 Reload: Ctrl+b Shift+I
@@ -320,6 +320,16 @@ https://jdhao.github.io/2018/03/02/Windows-connect-server-x11-with-gitbash/
 vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
 
 ## 4. Troubleshooting
+
+?#Failed to open virtual machine...*Cannot register the DVD image*
+
+很简单，编辑器打开vbox文件删掉\<DVDImages\>中间的那个Image引用即可
+
+?#full screen 全屏显示
+
+点击Devices菜单中的insert Guest Additions CD image ，返回虚拟机中的系统，一般情况下系统会弹出它的安装界面。如果没有弹出来的话，请打开我的电脑，找到它的盘符，双击也可以运行安装。
+
+
 
 ?# host key verification failed: faile to login ssh, WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!
 

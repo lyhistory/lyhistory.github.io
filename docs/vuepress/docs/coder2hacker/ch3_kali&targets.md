@@ -90,6 +90,8 @@ https://github.com/FelisCatus/SwitchyOmega/releases
 
 wappalyzer 
 
+Proxy SwitchyOmega
+
 FoxyProxy
 
 Cookies Manager+。

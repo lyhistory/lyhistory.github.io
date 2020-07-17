@@ -214,6 +214,8 @@ Fiddler+proxifier
 
 _千万不要那个default走fiddler的proxy，不然会造成死循环，因为fiddler的流量也会被Proxifier拦截住，然后再发给自己，报错“proxifier detected that the application fiddler.exe get into an infinite connection loop”，另一个解决方案是增进Fiddler.exe Action放direct_
 
+另外还有一款 wsockexpert  已经没人维护了
+
 手机抓包：
 	设置远程连接并只设置解密远程连接的https
 	
