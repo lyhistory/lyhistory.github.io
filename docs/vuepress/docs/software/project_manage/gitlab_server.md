@@ -7,7 +7,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《Gitlab Server》
 
-## Architecture
+## 1. Architecture
 
 https://docs.gitlab.com/ee/development/architecture.html
 
@@ -86,7 +86,7 @@ https://blog.csdn.net/u012598668/java/article/details/40080245
 
 
 
-### http/https over nginx:
+### 1.1 http/https over nginx:
 
 git request: http://172.26.101.133:8088/root/test-gitaly-cluster.git
 
@@ -206,7 +206,7 @@ https://juejin.im/post/5cf6832c51882520724c84ff
 
 
 
-### ssh over gitlab-shell
+### 1.2 ssh over gitlab-shell
 
 git@172.26.101.133:root/test-gitaly-cluster.git
 
@@ -268,7 +268,7 @@ for the gitaly storage, based on the documentation, we come out with this gitaly
 it has a praefect as router between gitlab server and gitaly nodes;
 ```
 
-## Install 安装
+## 2. Install 安装(手动)
 
 https://git-scm.com/book/en/v2/Git-on-the-Server-GitLab
 
@@ -278,7 +278,7 @@ ce版本源码：https://gitlab.com/gitlab-org/gitlab-foss/-/tree/master
 
 下面采用离线安装 https://docs.gitlab.com/omnibus/manual_install.html
 
-### dependency
+### 1.1 dependency
 
 ```
 # open HTTP, HTTPS and SSH access in the system firewall.
@@ -298,7 +298,7 @@ sudo systemctl enable postfix
 sudo systemctl start postfix
 ```
 
-### 手动rpm安装
+### 1.2 rpm安装
 
 ```
 # GitLab Community Edition
@@ -315,6 +315,21 @@ sudo mv gitlab-ce-13.0.7-ce.0.el7.x86_64.rpm /opt/
 rpm -ivh gitlab-ce-13.0.7-ce.0.el7.x86_64.rpm 
 
 for firstime install use -i or -U, for upgrade use -U
+
+总结：
+cd /opt/
+rpm -ivh gitlab-ce-13.0.7-ce.0.el7.x86_64.rpm 
+vim /etc/gitlab/gitlab.rb (change external_url="http://172.26.101.133:8088")
+sudo gitlab-ctl reconfigure
+firewall-cmd --zone=public --add-port=8088/tcp --permanent
+firewall-cmd --reload
+
+after all this:
+access from your browser
+http://172.26.101.133:8088
+
+it will ask for changing password, default username: admin@example.com
+
 ```
 
 启动：
@@ -333,17 +348,17 @@ log路径：
 
 /var/log/gitlab/
 
-### Configuration
+### 1.3 Configuration
 
 https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md
+
+#### 1.3.1 前端gitlab-server url和api
 
 /etc/gitlab/gitlab.rb
 
 ​	change external_url="http://172.26.101.133:8088"
 
 sudo gitlab-ctl reconfigure
-
-
 
 注意，刚开始我用了8080，~~刚好跟内置的nginx冲突~~，是跟gitlab-puma-worker冲突，
 
@@ -367,7 +382,7 @@ firewall-cmd --list-all
 firewall-cmd --list-ports
 ```
 
-这个reconfigure会将配置进行“分发”：
+**这个reconfigure会将配置进行“分发”，所以后面所有修改配置都要注意优先修改gitlab.rb，而不是直接改具体各个服务的配置：**
 
 比如端口和ip赋值给：
 
@@ -375,9 +390,7 @@ firewall-cmd --list-ports
 
  /opt/gitlab/embedded/service/gitlab-rails/config/gitlab.yml（模板：/opt/gitlab/embedded/service/gitlab-rails/config/gitlab.yml.exmaple）
 
-#### 前端 dashboard & grafana
-
-http://172.26.101.133:8088
+说回到 前端http://172.26.101.133:8088
 
 默认用户名root/ admin@example.com 可以从log中获取：
 
@@ -391,19 +404,17 @@ sudo grep -nr "admin" /var/log/gitlab/
 
 注意这个8088也将会是Gitaly集群的internal_api_url
 
-
-
 /opt/gitlab/embedded/service/gitlab-shell/config.yml
 
 ~~注意此处要手动修改gitlab_url，不知为何reconfigure没有生效到这里~~ 应该不需要修改，默认就是8080，对应puma-worker的端口
 
 auth_key?
 
+#### 1.3.2 监控grafana
 
+**基本登录**
 
-grafana:
-
-login
+首先login配置（通过gitlab server第三方登录）
 
 172.26.101.134:8088/-/grafana/login
 
@@ -413,33 +424,173 @@ http://172.26.101.134:8088/oauth/authorize?access_type=online&client_id=a797f890
 
 https://grafana.com/docs/grafana/latest/auth/gitlab/
 
-login gitlab, Applications->Add 
+配置：
+
+回到gitlab前端的管理员area， Applications->Add 
 
 callback url: http://172.26.101.134:8088/-/grafana/login/gitlab
 
-got to: /var/opt/gitlab/grafana/grafana.ini
+将clientid和secret配置到：/var/opt/gitlab/grafana/grafana.ini
 
 ```
 [auth.gitlab]
-
 client_id
-
 client_secret
-
 root_url = http://172.26.101.134:8088/-/grafana
-
 auth_url = http://172.26.101.134:8088/oauth/authorize
-
 token_url = http://172.26.101.134:8088/oauth/token
-
 api_url = http://172.26.101.134:8088/api/v4
 ```
 
 gitlab-ctl restart grafana
 
+**监控其他节点**
+
+这个是在安装了Gitaly cluster之后的配置
+
+9090 prometheus
+
+9100 node_exporter
+
+这两个都是可以看到metrics:
+
+curl 127.0.0.1:9090/metrics -s | head
+
+curl 127.0.0.1:9100/metrics -s | head
+
+应该只有prometheus自带UI:
+
+http://172.26.101.133:9090/graph
+
+但是浏览器无法打开，netstat发现9090只监听本地端口，所以要修改
+
+grep :9090 /var/opt/* -r
+
+找到/var/opt/gitlab/prometheus/prometheus.yml和/var/opt/gitlab/gitlab-rails/etc/gitlab.yml
+
+但是还是建议去/etc/gitlab/gitlab.rb里面去修改：
+
+ prometheus['listen_address'] = 'localhost:9090'
+
+最后可以打开了prometheus ui，
+
+测试dashboard：Gitaly，先修改variable
+
+```
+label_values(up{job="gitaly"}, instance)
+改成
+label_values(gitlab_build_info{job="praefect-gitaly"}, instance)
+果然可以看到其他三个instance
+```
+
+然后继续修改dashboard页面内部的metrics，比如Gitaly的cpu查询一下，
+
+rate(process_cpu_seconds_total{job="gitaly"}[1m])
+
+发现只有一条localhost记录，再来查查node exporter配置：
+
+ grep :9100 /var/opt/* -r
+/var/opt/gitlab/prometheus/prometheus.yml:    - localhost:9100
+
+```
+- job_name: node
+  static_configs:
+  - targets:
+    - localhost:9100
+```
+
+果然这个是问题所在，并没有去监听Gitaly cluster 上面的9100
+
+但是正确的做法仍然是不要直接修改，应该去修改/etc/gitlab/gitlab.rb
+
+突然想到我们在创建gitaly cluster的时候其实修改过，刚好在这个prometheus.yml里面验证下：
+
+```
+- job_name: praefect-gitaly
+  static_configs:
+  - targets:
+    - 172.26.101.136:9236
+    - 172.26.101.137:9236
+    - 172.26.101.138:9236
+```
+
+果然是有，我们依样画葫芦，可以同样修改上面的node
+
+```
+ {                                          
+   'job_name' => 'praefect-gitaly-nodes',   
+   'static_configs' => [                    
+     'targets' => [                         
+       '172.26.101.136:9100', # gitaly-1    
+       '172.26.101.137:9100', # gitaly-2    
+       '172.26.101.138:9100', # gitaly-3    
+     ]                                      
+   ]                                        
+ }                                          
+```
+
+但是还不够，还要确认Gitaly的9100端口对gitlab server可见，但是发现实际上Gitaly上面并没有开启9100端口，意思是node_exporter并没有启动，怀疑是gitlab程序会默认根据gitaly['enable'] = true来disable掉node_exporter,所以我尝试主动去开启node_exporter:
+
+```
+################################################################################
+## Prometheus Node Exporter
+##! Docs: https://docs.gitlab.com/ee/administration/monitoring/prometheus/node_exporter.html
+################################################################################
+
+node_exporter['enable'] = true
+# node_exporter['home'] = '/var/opt/gitlab/node-exporter'
+# node_exporter['log_directory'] = '/var/log/gitlab/node-exporter'
+# node_exporter['flags'] = {
+#   'collector.textfile.directory' => "/var/opt/gitlab/node-exporter/textfile_collector"
+# }
+# node_exporter['env_directory'] = '/opt/gitlab/etc/node-exporter/env'
+# node_exporter['env'] = {
+#   'SSL_CERT_DIR' => "/opt/gitlab/embedded/ssl/certs/"
+# }
+
+##! Advanced settings. Should be changed only if absolutely needed.
+node_exporter['listen_address'] = '0.0.0.0:9100'
+```
+
+刚好同时将node_exporter监听也改掉
+
+firewall-cmd --zone=public --add-port=9100/tcp --permanent
+
+firewall-cmd --reload
+
+回到gitlab-server，在http://172.26.101.133:9090/graph
+
+rate(process_cpu_seconds_total{job="praefect-gitaly-nodes"}[1m])
+
+果然看到了三个instance的metrics（注意重启服务后要多等一会）
+
+最后试着保存dashboard，居然弹出错误“ Cannot save provisioned dashboard"
+
+https://grafana.com/docs/grafana/latest/administration/provisioning/#dashboards
+
+vim /var/opt/gitlab/grafana/provisioning/dashboards/gitlab_dashboards.yml
+
+```
+---
+apiVersion: 1
+providers:
+- name: GitLab Omnibus
+  orgId: 1
+  folder: GitLab Omnibus
+  type: file
+  disableDeletion: true
+  updateIntervalSeconds: 600
+  options:
+    path: "/opt/gitlab/embedded/service/grafana-dashboards"
+```
+
+继而找到
+
+ vim /opt/gitlab/embedded/service/grafana-dashboards/gitaly.json
 
 
-#### 邮箱
+
+#### 1.3.3 邮箱
 
 前面跳过了邮箱配置，这里采用external mail server gmail，但是奇怪的是postfix自动运行
 
@@ -462,9 +613,7 @@ ActionMailer::Base.smtp_settings
 
 ```
 
-
-
-#### postgresql
+#### 1.3.4 postgresql
 
 https://docs.gitlab.com/omnibus/settings/database.html#connecting-to-the-bundled-postgresql-database
 
@@ -486,7 +635,7 @@ https://www.postgresql.org/docs/12/app-psql.html
 
 /opt/gitlab/embedded/bin/psql -U postgres -d gitlabhq_production -h <POSTGRESQL_SERVER_ADDRESS>
 
-#### gitaly
+#### 1.3.5 gitaly
 
 vim /var/opt/gitlab/gitaly/config.toml
 
@@ -498,10 +647,8 @@ socket_path = '/var/opt/gitlab/gitaly/gitaly.socket'
 internal_socket_dir = '/var/opt/gitlab/gitaly/internal_sockets'
 bin_dir = '/opt/gitlab/embedded/bin'
 
-
 # Optional: export metrics via Prometheus
 prometheus_listen_addr = 'localhost:9236'
-
 
 [[storage]]
 name = 'defau://www.postgresql.org/docs/12/app-psql.htmlt'
@@ -511,11 +658,9 @@ path = '/var/opt/gitlab/git-data/repositories'
 format = 'json'
 dir = '/var/log/gitlab/gitaly'
 
-
 [auth]
 
 [git]
-
 
 [gitaly-ruby]
 dir = "/opt/gitlab/embedded/service/gitaly-ruby"
@@ -526,7 +671,7 @@ dir = "/opt/gitlab/embedded/service/gitlab-shell"
 gitlab_url = 'http://127.0.0.1:8080'
 ```
 
-#### 日志logrotate
+#### 1.3.6 日志logrotate
 
 /var/opt/gitlab/logrotate/logrotate.conf
 
@@ -541,9 +686,339 @@ include /var/opt/gitlab/logrotate/logrotate.d/gitlab-workhorse
 include /var/opt/gitlab/logrotate/logrotate.d/gitlab-pages
 ```
 
+#### 1.3.7 SSL & SSH
+
+https://docs.gitlab.com/omnibus/settings/ssl.html
+
+刚开始想用let's ecrypt，发现
+
+https://certbot.eff.org/lets-encrypt/centosrhel7-nginx
+
+这自动更新得联网啊，而且我连个域名都没有，直接是ip访问
+
+还是用自签吧，但是又发现有坑：[Unable to perform Git operations due to an internal or self-signed certificate](https://docs.gitlab.com/ee/administration/troubleshooting/ssl.html#unable-to-perform-git-operations-due-to-an-internal-or-self-signed-certificate)
+
+大概意思是，自签没问题，但是git客户端无法验证自签证书，要么得一个个git客户端安装一遍，要么disable ssl verify，总归是坑
+
+ssh
+
+https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#create-and-add-your-ssh-key-pair
+
+```
+ssh-keygen -t ed25519 -C "<comment>"
+```
 
 
-## Maintenance 维护
+
+## 3. High Availability
+
+gitlab内部可以做给个部分的ha，比如
+
+1. [Configure the database](https://docs.gitlab.com/ee/administration/postgresql/replication_and_failover.html)
+2. [Configure Redis](https://docs.gitlab.com/ee/administration/high_availability/redis.html)
+3. [Configure NFS](https://docs.gitlab.com/ee/administration/high_availability/nfs.html)
+4. [Configure the GitLab application servers](https://docs.gitlab.com/ee/administration/high_availability/gitlab.html)
+
+不过需要注意的是，NFS在新版已经deprecated并且会被删除
+
+high_availability['mountpoint'] 
+
+https://docs.gitlab.com/ee/administration/high_availability/gitlab.html
+
+https://docs.gitlab.com/ee/administration/high_availability/nfs.html
+
+**Caution:** From GitLab 13.0, using NFS for Git repositories is deprecated. In GitLab 14.0, support for NFS for Git repositories is scheduled to be removed. Upgrade to [Gitaly Cluster](https://docs.gitlab.com/ee/administration/gitaly/praefect.html) as soon as possible.
+
+可以看到官方已经不推荐了
+
+### 3.1 gitlay cluster
+
+https://docs.gitlab.com/ee/administration/gitaly/praefect.html
+
+- 1 load balancer
+- 1 PostgreSQL server (PostgreSQL 11 or newer)
+- 3 Praefect nodes
+- 3 Gitaly nodes (1 primary, 2 secondary)
+
+#### 3.1.1 postgresql server:
+
+https://www.postgresql.org/download/linux/redhat/
+
+https://yum.postgresql.org/12/redhat/rhel-7-x86_64/repoview/postgresql12-libs.html
+
+find direct rpm download:
+
+https://yum.postgresql.org/rpmchart/
+
+- [postgresql12](https://yum.postgresql.org/12/redhat/rhel-7-x86_64/repoview/postgresql12.html) - PostgreSQL client programs and libraries
+- [postgresql12-contrib](https://yum.postgresql.org/12/redhat/rhel-7-x86_64/repoview/postgresql12-contrib.html) - Contributed source and binaries distributed with PostgreSQL
+- [postgresql12-libs](https://yum.postgresql.org/12/redhat/rhel-7-x86_64/repoview/postgresql12-libs.html) - The shared libraries required for any PostgreSQL clients
+- [postgresql12-server](https://yum.postgresql.org/12/redhat/rhel-7-x86_64/repoview/postgresql12-server.html) - The programs needed to create and run a PostgreSQL server
+
+```
+   40  cd /opt/
+   43  sudo mkdir postgresql
+   44  mv ~/postgresql12-* postgresql/
+   45  sudo mv ~/postgresql12-* postgresql/
+   47  cd postgresql/
+   50  sudo yum localinstall postgresql12-libs-12.3-5PGDG.rhel7.x86_64.rpm
+   52  sudo yum localinstall postgresql12-12.3-5PGDG.rhel7.x86_64.rpm
+   53  sudo yum localinstall postgresql12-server-12.3-5PGDG.rhel7.x86_64.rpm
+   54  sudo yum localinstall postgresql12-contrib-12.3-5PGDG.rhel7.x86_64.rpm
+   55  ll /usr/
+   56  /usr/pgsql-12/bin/postgresql-12-setup initdb
+   57  sudo /usr/pgsql-12/bin/postgresql-12-setup initdb
+   58  sudo systemctl enable postgresql-12
+   59  sudo systemctl start postgresql-12
+   
+   [liuyue@sgkc2-cicd-v02 ~]$ sudo ps -lef|grep "postgre"
+4 S postgres   987     1  0  80   0 - 99348 poll_s 16:59 ?        00:00:00 /usr/pgsql-12/bin/postmaster -D /var/lib/pgsql/12/data/
+1 S postgres   989   987  0  80   0 - 62944 ep_pol 16:59 ?        00:00:00 postgres: logger
+1 S postgres   991   987  0  80   0 - 99348 ep_pol 16:59 ?        00:00:00 postgres: checkpointer
+1 S postgres   992   987  0  80   0 - 99381 ep_pol 16:59 ?        00:00:00 postgres: background writer
+1 S postgres   993   987  0  80   0 - 99348 ep_pol 16:59 ?        00:00:00 postgres: walwriter
+1 S postgres   994   987  0  80   0 - 99486 ep_pol 16:59 ?        00:00:00 postgres: autovacuum launcher
+1 S postgres   995   987  0  80   0 - 62943 ep_pol 16:59 ?        00:00:00 postgres: stats collector
+1 S postgres   996   987  0  80   0 - 99486 ep_pol 16:59 ?        00:00:00 postgres: logical replication launcher
+```
+
+/opt/gitlab/embedded/bin/psql -U postgres -d gitlabhq_production -h <POSTGRESQL_SERVER_ADDRESS>
+
+登录失败！
+
+切换成os root用户 sudo su
+
+然后执行  su - postgres
+
+进入bash，输入psql就进入到plsql命令窗口，执行\l就可以看到所有db
+
+理解一下posgresql的用户概念
+
+https://www.liquidweb.com/kb/what-is-the-default-password-for-postgresql/
+
+本机如果直接通过plsql连接，可以修改local用户(默认用户postgres)：
+
+https://www.hostinger.com/tutorials/how-to-install-postgresql-on-centos-7/
+
+```
+psql -d template1 -c "ALTER USER postgres WITH PASSWORD 'NewPassword';"
+```
+
+https://stackoverflow.com/questions/18664074/getting-error-peer-authentication-failed-for-user-postgres-when-trying-to-ge
+
+
+
+远程连接：
+
+https://blog.csdn.net/zhangzeyuaaa/article/details/77941039
+
+开启监听：
+
+ /var/lib/pgsql/12/data/postgresql.conf
+
+listen_addresses = '*'          # what IP address(es) to listen on;
+
+md5方式：
+
+vim /var/lib/pgsql/12/data/pg_hba.conf
+
+`host    all             all             0.0.0.0/0            md5`
+
+```
+su - postgres
+
+psql
+create user gitlabuser password 'gitlab';
+CREATE ROLE praefect WITH LOGIN CREATEDB PASSWORD 'PRAEFECT_SQL_PASSWORD';
+
+/opt/gitlab/embedded/bin/psql -U praefect -d template1 -h 172.26.101.134
+
+template1=> \du
+                                   List of roles
+ Role name |                         Attributes                         | Member of
+-----------+------------------------------------------------------------+-----------
+ postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
+ praefect  | Create DB                                                  | {}
+ 
+template1=> CREATE DATABASE praefect_production WITH ENCODING=UTF8;
+CREATE DATABASE
+template1=> \l
+                                       List of databases
+        Name         |  Owner   | Encoding |   Collate   |    Ctype    |   Access privileges
+---------------------+----------+----------+-------------+-------------+-----------------------
+ postgres            | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+ praefect_production | praefect | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+ template0           | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres          +
+                     |          |          |             |             | postgres=CTc/postgres
+ template1           | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres          +
+                     |          |          |             |             | postgres=CTc/postgres
+(4 rows)
+
+
+# create database gitlabdb with owner gitlab;
+# alter database gitlabdb set search_path to sgc2,public;
+# alter user gitlab set search_path to sgc2,public;
+
+# create schema sgc2backup;
+# create user arch password 'gitlab';
+# alter user arch set search_path to sgc2backup;
+# alter schema sgc2backup owner to arch;
+
+# grant connect on database gitlabdb to arch;
+# grant usage, create on schema sgc2backup to arch;
+
+# GRANT USAGE ON SCHEMA sgc2backup TO gitlab;
+# grant select on all tables in schema sgc2backup to gitlab;
+# revoke insert,update,delete on all tables in schema sgc2backup from gitlab;
+
+# GRANT USAGE ON SCHEMA sgc2 TO arch;
+# grant select on all tables in schema sgc2 to arch;
+# revoke insert,update,delete on all tables in schema sgc2 from arch;
+
+```
+
+开启端口：
+
+firewall-cmd --permanent --add-port=5432/tcp
+
+firewall-cmd --reload
+
+
+
+卸载：
+
+```
+rpm -e postgresql-server	
+rpm -e postgresql-contrib	
+rpm -e postgresql	
+rpm -e postgresql-libs
+```
+
+#### 3.1.2 Gitaly Nodes
+
+这次采用了yum localinstall 没有采用rpm -ivh 不知道后续再用rpm -uvh升级是否有问题
+
+```
+Installing:.......
+
+Thank you for installing GitLab!
+GitLab was unable to detect a valid hostname for your instance.
+Please configure a URL for your GitLab instance by setting `external_url`
+configuration in /etc/gitlab/gitlab.rb file.
+Then, you can start your GitLab instance by running the following command:
+  sudo gitlab-ctl reconfigure
+
+For a comprehensive list of configuration options please see the Omnibus GitLab readme
+https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md
+.....                                                                                             8/8
+
+Installed:
+  gitlab-ce.x86_64 0:13.0.7-ce.0.el7
+
+Dependency Installed:
+  audit-libs-python.x86_64 0:2.8.5-4.el7     checkpolicy.x86_64 0:2.5-8.el7        libcgroup.x86_64 0:0.41-21.el7     libsemanage-python.x86_64 0:2.5-14.el7     policycoreutils-python.x86_64 0:2.5-34.el7
+  python-IPy.noarch 0:0.75-6.el7             setools-libs.x86_64 0:3.3.8-4.el7
+
+Complete!
+```
+
+gitaly['listen_addr'] = '0.0.0.0:8075'
+
+gitaly['auth_token'] = 'PRAEFECT_INTERNAL_TOKEN'	对应 praefect
+
+```
+praefect['virtual_storages'] = {
+  'storage-1' => {
+    'gitaly-1' => {
+      'address' => 'tcp://GITALY_HOST:8075',
+      'token'   => 'PRAEFECT_INTERNAL_TOKEN',
+      'primary' => true
+    },
+    'gitaly-2' => {
+      'address' => 'tcp://GITALY_HOST:8075',
+      'token'   => 'PRAEFECT_INTERNAL_TOKEN'
+    },
+    'gitaly-3' => {
+      'address' => 'tcp://GITALY_HOST:8075',
+      'token'   => 'PRAEFECT_INTERNAL_TOKEN'
+    }
+  }
+}
+```
+
+
+
+下面这两个是git push需要回调的
+
+gitlab_shell['secret_token'] = 'GITLAB_SHELL_SECRET_TOKEN' 这个是对应gitlab server配置的同样的token
+
+\# Don't forget to copy `/etc/gitlab/gitlab-secrets.json` from Gitaly client to Gitaly server. （？这句话是因为什么，是不是跟gitlab_shell['secret_token'] 不同的验证方式，公私钥验证？）
+
+gitlab_rails['internal_api_url'] = '172.26.101.133:8088' 对应gitlab server API，
+
+internal_api_url 会在gitlab-ctl reconfigure的时候被赋值到/opt/gitlab/embedded/service/gitlab-shell/config.yml以及
+
+/var/opt/gitlab/gitlab-shell/config.yml，注意我发现gitlab server上的这个配置文件内容却是8080端口，可能对外统一都是8088，然后对内是8080
+
+```
+# Url to gitlab instance. Used for api calls. May but need not end with a slash.
+gitlab_url: "http://127.0.0.1:8080"
+```
+
+就是对应的gitlab server上面的puma web服务（unicorn）
+
+#### 3.1.3 测试连通性
+
+```
+postgresql server open port 5432 to praefect server;
+​	on praefect server: sudo -u git /opt/gitlab/embedded/bin/praefect -config /var/opt/gitlab/praefect/config.toml sql-ping
+
+praefect server open port 2305 and 9652 to gitlab server;
+​	on gitlab server: gitlab-rake gitlab:gitaly:check
+
+gitlab server open api 8080? to gitaly server;
+​	on gitaly nodes: /opt/gitlab/embedded/service/gitlab-shell/bin/check -config /opt/gitlab/embedded/service/gitlab-shell/config.yml
+
+gitaly server open 9236 to gitlab server;	
+
+gitaly server open 8075 to praefect server; 
+​	on praefect server: sudo /opt/gitlab/embedded/bin/praefect -config /var/opt/gitlab/praefect/config.toml dial-nodes
+
+Praefect的9652 和 Gitaly的9236：
+grafana打开explorer，输入gitlab_build_info
+```
+
+### 3.2 Load Balancer
+
+https://docs.gitlab.com/ee/administration/high_availability/load_balancer.html#load-balancer-for-multi-node-gitlab
+
+这个是在gitlab scope之外，采用外部的负载均衡，
+
+在上面Gitaly cluster的官方文档关于Praefect部分是有load Balancer的要求，不过我们忽略了，可以加上，
+
+另外gitlab-server nginx部分也可以用上load Balancer多个gitlab server，不过这个需要看官方的支持，主要是数据的同步问题
+
+
+
+### 3.3 Postgresql Replication 
+
+GEO 这个不需要https://docs.gitlab.com/ee/administration/geo/replication/index.html
+
+需要的是gitlab-server Application Database和Praefect tracking database
+
+### 3.4 HA Roles
+
+https://docs.gitlab.com/omnibus/roles/README.html#
+
+The majority of the following roles will only work on a GitLab Enterprise Edition, meaning a gitlab-ee Omnibus package. It will be mentioned next to each role.
+
+没太搞懂，直接通过配置多个节点？ee才可以用
+
+redis roles
+
+https://docs.gitlab.com/omnibus/roles/README.html#redis-server-roles
+
+## 4. Maintenance 维护
 
 https://docs.gitlab.com/omnibus/maintenance/README.html
 
@@ -605,3 +1080,334 @@ https://docs.gitlab.com/ee/security/README.html#securing-your-gitlab-installatio
 
 
 
+## 5. 内置服务替换探索
+
+！！强烈不建议，因为会影响后续升级！！
+
+
+
+### 替换内置服务
+
+nginx
+
+jianshu.com/p/123778a515ca
+
+grafana
+
+postgresql
+
+
+
+反向代理
+
+https://cloud.tencent.com/developer/article/1437220
+
+配置排查参考：blog.csdn.net/weixin_43748870/article/details/86178042
+
+
+
+## Appendix
+
+防火墙状态：
+
+sudo firewall-cmd --list-all
+
+### gitlab-ctl
+
+```
+[liuyue@sgkc2-cicd-v02 ~]$ gitlab-ctl help
+omnibus-ctl: command (subcommand)
+check-config
+  Check if there are any configuration in gitlab.rb that is removed in specified version
+deploy-page
+  Put up the deploy page
+diff-config
+  Compare the user configuration with package available configuration
+get-redis-master
+  Get connection details to Redis master
+prometheus-upgrade
+  Upgrade the Prometheus data to the latest supported version
+remove-accounts
+  Delete *all* users and groups used by this package
+reset-grafana
+  Reset Grafana instance to its initial state by removing the data directory
+set-grafana-password
+  Reset admin password for Grafana
+upgrade
+  Run migrations after a package upgrade
+General Commands:
+  cleanse
+    Delete *all* gitlab data, and start from scratch.
+  help
+    Print this help message.
+  reconfigure
+    Reconfigure the application.
+  show-config
+    Show the configuration that would be generated by reconfigure.
+  uninstall
+    Kill all processes and uninstall the process supervisor (data will be preserved).
+Service Management Commands:
+  graceful-kill
+    Attempt a graceful stop, then SIGKILL the entire process group.
+  hup
+    Send the services a HUP.
+  int
+    Send the services an INT.
+  kill
+    Send the services a KILL.
+  once
+    Start the services if they are down. Do not restart them if they stop.
+  restart
+    Stop the services if they are running, then start them again.
+  service-list
+    List all the services (enabled services appear with a *.)
+  start
+    Start services if they are down, and restart them if they stop.
+  status
+    Show the status of all the services.
+  stop
+    Stop the services, and do not restart them.
+  tail
+    Watch the service logs of all enabled services.
+  term
+    Send the services a TERM.
+  usr1
+    Send the services a USR1.
+  usr2
+    Send the services a USR2.
+Backup Commands:
+  backup-etc
+    Backup GitLab configuration [accepts directory path]
+Let's Encrypt Commands:
+  renew-le-certs
+    Renew the existing Let's Encrypt certificates
+Database Commands:
+  pg-password-md5
+    Generate MD5 Hash of user password in PostgreSQL format
+  pg-upgrade
+    Upgrade the PostgreSQL DB to the latest supported version
+  revert-pg-upgrade
+    Run this to revert to the previous version of the database
+  set-replication-password
+    Set database replication password
+Container Registry Commands:
+  registry-garbage-collect
+    Run Container Registry garbage collection.
+```
+
+### gitlab-rails
+
+```
+[liuyue@sgkc2-cicd-v02 opt]$ sudo gitlab-rails help
+[sudo] password for liuyue:
+The most common rails commands are:
+ generate     Generate new code (short-cut alias: "g")
+ console      Start the Rails console (short-cut alias: "c")
+ server       Start the Rails server (short-cut alias: "s")
+ test         Run tests except system tests (short-cut alias: "t")
+ test:system  Run system tests
+ dbconsole    Start a console for the database specified in config/database.yml
+              (short-cut alias: "db")
+
+ new          Create a new Rails application. "rails new my_app" creates a
+              new application called MyApp in "./my_app"
+
+
+All commands can be run with -h (or --help) for more information.
+In addition to those commands, there are:
+
+--------------------------------------------------------------------------------
+ GitLab:       13.0.7 (bcfbac449a7) FOSS
+ GitLab Shell: 13.2.0
+ PostgreSQL:   11.7
+--------------------------------------------------------------------------------
+  about
+  acts_as_taggable_on_engine:install:migrations
+  acts_as_taggable_on_engine:tag_names:collate_bin
+  acts_as_taggable_on_engine:tag_names:collate_ci
+  app:template
+  app:update
+  assets:clean[keep]
+  assets:clobber
+  assets:environment
+  assets:precompile                                              
+brakeman                                                       
+cache:clear:redis                                              
+cache_digests:dependencies                                     
+cache_digests:nested_dependencies                              
+ci:cleanup:builds                                              
+clean                                                          
+clobber                                                        
+config_lint                                                    
+credentials:edit                                               
+credentials:show                                               
+danger_local                                                   
+db:create                                                      
+db:drop                                                        
+db:environment:set                                             
+db:fixtures:load                                               
+db:load_config                                                 
+db:migrate                                                     
+db:migrate:status                                              
+db:obsolete_ignored_columns                                    
+db:prepare                                                     
+db:rollback                                                    
+db:schema:cache:clear                                          
+db:schema:cache:dump                                           
+db:schema:dump                                                 
+db:schema:load                                                 
+db:seed                                                        
+db:seed:replant                                                
+db:seed_fu                                                     
+db:setup                                                       
+db:structure:dump                                              
+db:structure:load                                              
+db:system:change                                               
+db:version                                                     
+destroy                                                        
+dev:cache                                                      
+dev:load                                                       
+dev:setup                                                      
+downtime_check                                                 
+encrypted:edit                                                 
+encrypted:show                                                 
+file_hooks:validate
+  gemojione:aliases
+  gemojione:install_assets
+  gettext:add_language[language]
+  gettext:find
+  gettext:lint
+  gettext:pack
+  gettext:po_to_json
+  gettext:regenerate
+  gettext:store_model_attributes
+  gitlab:app:check
+  gitlab:artifacts:check
+  gitlab:artifacts:migrate
+  gitlab:assets:clean
+  gitlab:assets:compile
+  gitlab:assets:compile_webpack_if_needed
+  gitlab:assets:fix_urls
+  gitlab:assets:purge
+  gitlab:assets:purge_modules
+  gitlab:assets:vendor
+  gitlab:backup:create
+  gitlab:backup:restore
+  gitlab:check
+  gitlab:cleanup:block_removed_ldap_users
+  gitlab:cleanup:moved
+  gitlab:cleanup:orphan_job_artifact_files
+  gitlab:cleanup:orphan_lfs_file_references
+  gitlab:cleanup:orphan_lfs_files
+  gitlab:cleanup:project_uploads
+  gitlab:cleanup:remote_upload_files
+  gitlab:cleanup:sessions:active_sessions_lookup_keys
+  gitlab:db:clean_structure_sql
+  gitlab:db:composite_primary_keys_add
+  gitlab:db:composite_primary_keys_drop
+  gitlab:db:configure
+  gitlab:db:downtime_check[ref]
+  gitlab:db:drop_tables
+  gitlab:db:mark_migration_complete[version]
+  gitlab:db:setup_ee
+   gitlab:env:info
+  gitlab:exclusive_lease:clear[scope]
+  gitlab:features:enable_rugged
+  gitlab:generate_sample_prometheus_data[environment_id]
+  gitlab:git:fsck
+  gitlab:gitaly:check
+  gitlab:gitaly:install[dir,storage_path,repo]
+  gitlab:gitlab_shell:check
+  gitlab:import:all_users_to_all_groups
+  gitlab:import:all_users_to_all_projects
+  gitlab:import:repos[import_path]
+  gitlab:import:user_to_groups[email]
+  gitlab:import:user_to_projects[email]
+  gitlab:import_export:bump_version
+  gitlab:import_export:data
+  gitlab:import_export:export[username,namespace_path,project_path,archive_path]
+  gitlab:import_export:import[username,namespace_path,project_path,archive_path]
+  gitlab:import_export:version
+  gitlab:incoming_email:check
+  gitlab:ldap:rename_provider[old_provider,new_provider]
+  gitlab:lfs:check
+  gitlab:lfs:migrate
+  gitlab:orphans:check
+  gitlab:orphans:check_namespaces
+  gitlab:orphans:check_repositories
+  gitlab:praefect:replicas[project_id]
+  gitlab:seed:group_seed[subgroups_depth,username]
+  gitlab:seed:issues[project_full_path,backfill_weeks,average_issues_per_week]
+  gitlab:setup
+  gitlab:shell:build_missing_projects
+  gitlab:shell:install[repo]
+  gitlab:shell:setup
+  gitlab:sidekiq:check
+  gitlab:snippets:list_non_migrated
+  gitlab:snippets:migrate[ids]
+  gitlab:snippets:migration_status
+  gitlab:storage:hashed_attachments
+  gitlab:storage:hashed_projects
+  gitlab:storage:legacy_attachments
+  gitlab:storage:legacy_projects
+  gitlab:storage:list_hashed_attachments
+  gitlab:storage:list_hashed_projects
+   gitlab:storage:list_legacy_attachments
+  gitlab:storage:list_legacy_projects
+  gitlab:storage:migrate_to_hashed
+  gitlab:storage:rollback_to_legacy
+  gitlab:tcp_check[host,port]
+  gitlab:test
+  gitlab:two_factor:disable_for_all_users
+  gitlab:two_factor:rotate_key:apply
+  gitlab:two_factor:rotate_key:rollback
+  gitlab:update_project_templates
+  gitlab:update_templates
+  gitlab:uploads:check
+  gitlab:uploads:migrate:all
+  gitlab:uploads:migrate[uploader_class,model_class,mounted_as]
+  gitlab:uploads:migrate_to_local:all
+  gitlab:uploads:migrate_to_local[uploader_class,model_class,mounted_as]
+  gitlab:uploads:sanitize:remove_exif[start_id,stop_id,dry_run,sleep_time,uploader,since]
+  gitlab:web_hook:add
+  gitlab:web_hook:list
+  gitlab:web_hook:rm
+  gitlab:workhorse:install[dir,repo]
+  gitlab:x509:update_signatures
+  grape:path_helpers
+  grape:routes
+  hipchat:send[message]
+  import:github[token,gitlab_username,project_path]
+  initializers
+  jira:generate_consumer_key
+  jira:generate_public_cert
+  log:clear
+  metrics:setup_common_metrics
+  middleware
+  migrate_iids
+  notes
+  postgresql_md5_hash
+  restart
+  routes
+  runner
+  secret
+  secrets:edit
+  secrets:setup
+  secrets:show
+  setup
+  stats
+  test:db
+  time:zones[country_or_offset]
+  tmp:clear
+  tmp:create
+  tokens:reset_all_email
+  tokens:reset_all_feed
+  version
+  webpack:compile
+  yarn
+  yarn:available
+  yarn:check
+  yarn:clobber
+  yarn:install
+  zeitwerk:check
+```
