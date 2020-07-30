@@ -712,24 +712,48 @@ ssh-keygen -t ed25519 -C "<comment>"
 
 ## 3. High Availability
 
-gitlab内部可以做给个部分的ha，比如
+首先什么是HA，最严格的ha就是主主或主备（热备），自动切换，zero downtime；其次是主备（冷备），手动切换；最次是backup restore；
 
-1. [Configure the database](https://docs.gitlab.com/ee/administration/postgresql/replication_and_failover.html)
-2. [Configure Redis](https://docs.gitlab.com/ee/administration/high_availability/redis.html)
-3. [Configure NFS](https://docs.gitlab.com/ee/administration/high_availability/nfs.html)
-4. [Configure the GitLab application servers](https://docs.gitlab.com/ee/administration/high_availability/gitlab.html)
+总体上说，
 
-不过需要注意的是，NFS在新版已经deprecated并且会被删除
++ CE版本
 
-high_availability['mountpoint'] 
+  结合gitlab服务端架构，随便搜一下可以看到都是抄来抄去的同类文章https://www.cnblogs.com/wangshuyang/p/10946099.html
 
-https://docs.gitlab.com/ee/administration/high_availability/gitlab.html
+  网上大多建议装两个单机版（all in one），前面用Virtual IP或floating IP，然后两个单机通过NFS共享磁盘，由于NFS即将被移除，其他思路就是DRBD或者rsync整个磁盘同步，所以这个方案实际是主备（冷备），每次只是开一个机器，当挂掉之后，可以启动备用
 
-https://docs.gitlab.com/ee/administration/high_availability/nfs.html
+  https://www.digitalocean.com/community/tutorials/how-to-set-up-highly-available-web-servers-with-keepalived-and-floating-ips-on-ubuntu-14-04
 
-**Caution:** From GitLab 13.0, using NFS for Git repositories is deprecated. In GitLab 14.0, support for NFS for Git repositories is scheduled to be removed. Upgrade to [Gitaly Cluster](https://docs.gitlab.com/ee/administration/gitaly/praefect.html) as soon as possible.
++ EE版本
 
-可以看到官方已经不推荐了
+  采用主主（热备）
+
+  切分成两大部分，gitlab-server和Gitaly cluster，Gitaly cluster本身就是集群模式，gitlab-server需要借助load Balancer搞成ha，比如借助haproxy，然后多个gitlab-server节点之间共享Application database和Gitaly cluster；
+
+  gitlab-sever跟Gitaly cluster之间是通过Praefect连接，Praefect本身只是路由，所以可以做成多节点，加一个loadBalancer；
+
+  注意loadBalancer本身也是可以做成多节点的，参考haproxy的文章；
+
+> gitlab内部可以做给个部分的ha，比如
+>
+> 1. [Configure the database](https://docs.gitlab.com/ee/administration/postgresql/replication_and_failover.html)
+> 2. [Configure Redis](https://docs.gitlab.com/ee/administration/high_availability/redis.html)
+> 3. [Configure NFS](https://docs.gitlab.com/ee/administration/high_availability/nfs.html)
+> 4. [Configure the GitLab application servers](https://docs.gitlab.com/ee/administration/high_availability/gitlab.html)
+>
+> 不过需要注意的是，NFS在新版已经deprecated并且会被删除
+>
+> high_availability['mountpoint'] 
+>
+> https://docs.gitlab.com/ee/administration/high_availability/gitlab.html
+>
+> https://docs.gitlab.com/ee/administration/high_availability/nfs.html
+>
+> **Caution:** From GitLab 13.0, using NFS for Git repositories is deprecated. In GitLab 14.0, support for NFS for Git repositories is scheduled to be removed. Upgrade to [Gitaly Cluster](https://docs.gitlab.com/ee/administration/gitaly/praefect.html) as soon as possible.
+>
+> 可以看到官方已经不推荐了
+
+
 
 ### 3.1 gitlay cluster
 
@@ -988,15 +1012,27 @@ Praefect的9652 和 Gitaly的9236：
 grafana打开explorer，输入gitlab_build_info
 ```
 
-### 3.2 Load Balancer
+### 3.2 gitrail-server multi-nodes
+
+https://docs.gitlab.com/ee/administration/geo/replication/multiple_servers.html#geo-for-multiple-nodes-premium-only
+
+然后我顺着找到这个https://docs.gitlab.com/ee/administration/reference_architectures/index.html#traffic-load-balancer-starter-only
+
+> This requires separating out GitLab into multiple application nodes with an added [load balancer](https://docs.gitlab.com/ee/administration/high_availability/load_balancer.html). The load balancer will distribute traffic across GitLab application nodes. Meanwhile, each application node connects to a shared file server and database systems on the back end. This way, if one of the application servers fails, the workflow is not interrupted. [HAProxy](https://www.haproxy.org/) is recommended as the load balancer.
+>
+> Supported tiers: [GitLab Starter, Premium, and Ultimate](https://about.gitlab.com/pricing/)
+
+可以看到这个是要付费后才支持的，主要就是如何配置share db；
+
+还有几个疑问：redis不需要分离吗？ session存储在哪里，如何share？有几种可能：
+1.load Balancer可以有策略让一个用户整个session期间只连接固定一个Application server，所以不会有session共享问题
+2.session写到了db，按这里文档所说分离share db即可
+3.session写到redis，分离share redis即可（但是文档此处没有提redis）
+4.session写到Application memory，这个解决只能用方法1
 
 https://docs.gitlab.com/ee/administration/high_availability/load_balancer.html#load-balancer-for-multi-node-gitlab
 
 这个是在gitlab scope之外，采用外部的负载均衡，
-
-在上面Gitaly cluster的官方文档关于Praefect部分是有load Balancer的要求，不过我们忽略了，可以加上，
-
-另外gitlab-server nginx部分也可以用上load Balancer多个gitlab server，不过这个需要看官方的支持，主要是数据的同步问题
 
 
 
@@ -1006,7 +1042,7 @@ GEO 这个不需要https://docs.gitlab.com/ee/administration/geo/replication/ind
 
 需要的是gitlab-server Application Database和Praefect tracking database
 
-### 3.4 HA Roles
+### 3.4 ？？HA Roles
 
 https://docs.gitlab.com/omnibus/roles/README.html#
 

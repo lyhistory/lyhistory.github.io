@@ -315,6 +315,13 @@ export defalt <classname>;
 单例模式
 const store = new BirdStore();
 export default store;
+
+spread attributes:
+https://stackoverflow.com/questions/28452358/what-is-the-meaning-of-this-props-in-reactjs
+<Component x={} y={} z={} />
+=>
+var props = { x: 1, y: 1, z:1 };
+<Component {...props} />
 ```
 
 ## 4.2 开发
