@@ -530,11 +530,9 @@ echo "show info" | socat - /var/run/haproxy.sock | grep ^Idle
 
 https://cbonte.github.io/haproxy-dconv/2.3/configuration.html
 
-
-
 ### 安全设置
 
-chroot：修改haproxy的工作目录至指定的目录并在放弃权限之前执行chroot()操作,可以提升haproxy的安全级别，不过需要注意的是要确保指定的目录为空目录且任何用户均不能有写权限
+涉及到linux的chroot：修改haproxy的工作目录至指定的目录并在放弃权限之前执行chroot()操作,可以提升haproxy的安全级别，不过需要注意的是要确保指定的目录为空目录且任何用户均不能有写权限
 
 HAProxy is designed to run with very limited privileges. The standard way to use it is to isolate it into a chroot jail and to drop its privileges to a non-root user without any permissions inside this jail so that if any future vulnerability were to be discovered, its compromise would not affect the rest of the system.
 
@@ -578,6 +576,71 @@ id haproxy
 ```
 
 
+
+> ```
+> insecure-setuid-wanted
+> HAProxy doesn't need to call executables at run time (except when using
+> external checks which are strongly recommended against), and is even expected
+> to isolate itself into an empty chroot. As such, there basically is no valid
+> reason to allow a setuid executable to be called without the user being fully
+> aware of the risks. In a situation where haproxy would need to call external
+> checks and/or disable chroot, exploiting a vulnerability in a library or in
+> haproxy itself could lead to the execution of an external program. On Linux
+> it is possible to lock the process so that any setuid bit present on such an
+> executable is ignored. This significantly reduces the risk of privilege
+> escalation in such a situation. This is what haproxy does by default. In case
+> this causes a problem to an external check (for example one which would need
+> the "ping" command), then it is possible to disable this protection by
+> explicitly adding this directive in the global section. If enabled, it is
+> possible to turn it back off by prefixing it with the "no" keyword.
+> ```
+>
+> https://cbonte.github.io/haproxy-dconv/2.2/configuration.html#insecure-setuid-wanted
+
+
+
+> ```
+> BEFORE THE PATCH:
+> =================
+> 
+> # rpm -q haproxy
+> haproxy-1.4.22-3.el6.x86_64
+> 
+> # service haproxy start
+> Starting haproxy: [  OK  ]
+> 
+> # ps axf -o pid,user,group,command | grep hapr
+>  4661 root     root              \_ grep hapr
+>  4602 haproxy  haproxy  /usr/sbin/haproxy -D -f /etc/haproxy/haproxy.cfg -p /var/run/haproxy.pid
+> # grep Group /proc/4602/status 
+> Groups: 0 
+> 
+> 
+> AFTER THE PATCH:
+> ================
+> 
+> # rpm -q haproxy
+> haproxy-1.4.24-2.el6.x86_64
+> 
+> # service haproxy start
+> Starting haproxy: [  OK  ]
+> 
+> # ps a -o pid,user,group,command | grep haproxy
+>  1196 root     root     grep hapr
+> 31712 haproxy  haproxy  haproxy -f /etc/haproxy/haproxy.cfg -d -V
+> 
+> # grep Group /proc/31712/status
+> Groups:
+> ```
+>
+> https://bugzilla.redhat.com/show_bug.cgi?id=903303
+
+
+
+> chroot happens after bind, you need to:
+> bind to `/var/emtpy/var/run/haproxy.sock`
+>
+> https://discourse.haproxy.org/t/trying-to-run-haproxy-as-non-root-not-working/3906/3
 
 http://www.dscentral.in/2012/11/04/installing-haproxy-on-pfsense/
 

@@ -43,9 +43,7 @@ echo $(cmd) 和 echo "$(cmd)"，结果差不多，但是仍然有区别。注意
 
 当使用 sudo 时，系统会使用 /etc/sudoers 这个文件中规定的该用户的权限和环境变量
 
-特殊命令：
-watch 
-exec
+
 
 {}https://askubuntu.com/questions/339015/what-does-mean-in-the-find-command
 
