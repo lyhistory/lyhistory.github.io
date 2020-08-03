@@ -175,7 +175,7 @@ Manually install:
 ​	
 ​	tmux source ~/.tmux.conf
 ​	
-	Enable tmux copy mode: add into .tmux.conf: setw -g mode-keys vi
+​	Enable tmux copy mode: add into .tmux.conf: setw -g mode-keys vi
 
 Reload: Ctrl+b Shift+I
 Save: Ctrl+b ctrl+s
@@ -251,7 +251,6 @@ chmod u+w /etc/sudoers
 username ALL=(ALL) ALL
 chmod u-w /etc/sudoers
 
-
 **开发环境**
 Java
 yum install maven
@@ -261,6 +260,14 @@ sudo yum install python-devel
 sudo yum install epel-release
 sudo yum install python-pip
 https://linuxize.com/post/how-to-install-pip-on-centos-7/
+
+### 2.3 Clone和Snapshot
+
+建议安装之后设置一个origin的snapshot，而且每个重大修改之后做一个snapshot，这样可以随时restore和clone出某个状态的机器，
+
+注意clone的机器需要更改sid，方法是：
+
+c:\Windows\System32\Sysprep\sysprep.exe 勾选通用 然后重启
 
 
 ## 3.具体操作系统
@@ -315,9 +322,14 @@ https://stackoverflow.com/questions/35211892/using-conemu-terminal-with-xming
 DISPLAY=XMING_ID;export DISPLAY;
 https://jdhao.github.io/2018/03/02/Windows-connect-server-x11-with-gitbash/
 
-
 **DNS setting for centos**
 vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
+
+### 3.3 安装Windows
+
+`\\vboxsvr\<文件夹名字>`
+
+
 
 ## 4. Troubleshooting
 
@@ -355,6 +367,7 @@ Intel VT / AMD-V是做什么用的? https://zhidao.baidu.com/question/96510766.h
 ?#Shared folder
 Could not mount the media/drive 'C:\Program Files\Oracle\VirtualBox/VBoxGuestAdditions.iso' (VERR_PDM_MEDIA_LOCKED).
 https://superuser.com/questions/760327/vbox-guest-additions-iso-cant-be-mounted-because-of-verr-pdm-media-locked
+
 ```
 cd /media 
 mkdir cdrom 

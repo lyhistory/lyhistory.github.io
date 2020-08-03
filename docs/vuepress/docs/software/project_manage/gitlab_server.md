@@ -1037,6 +1037,8 @@ systemctl stop gitlab-runsvdir
 
 ### 升级 卸载
 
+注意:升级之后,之前的备份就会失效,意思是无法用之前的backup restore,只能降级,所以升级之后建立尽快做备份
+
 1、停止gitlab
  `gitlab-ctl stop`
 
