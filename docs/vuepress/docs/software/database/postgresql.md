@@ -7,6 +7,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 [回目录](/docs/software)  《postgresql实用基础》
 
 ## 1. Setup
+### 1.1 Baisc Setup
+
 https://www.tutorialspoint.com/postgresql/index.htm
 https://serverfault.com/questions/110154/whats-the-default-superuser-username-password-for-postgres-after-a-new-install
 
@@ -29,6 +31,64 @@ C# 连接 PostgreSQL --- Npgsql的安装和使用 https://blog.csdn.net/chencglt
 
 删除“重复”的function或stored procedure，比如：bpchar和varchar：
 ![](/docs/docs_image/software/postgresql/postgresql01.png)
+
+### 1.2 High Availability
+
+> Database servers can work together to allow a second server to take over quickly if the primary server fails (high availability), or to allow several computers to serve the same data (load balancing). Ideally, database servers could work together seamlessly. Web servers serving static web pages can be combined quite easily by merely load-balancing web requests to multiple machines. In fact, read-only database servers can be combined relatively easily too. Unfortunately, most database servers have a read/write mix of requests, and read/write servers are much harder to combine. This is because though read-only data needs to be placed on each server only once, a write to any server has to be propagated to all servers so that future read requests to those servers return consistent results.
+>
+> This synchronization problem is the fundamental difficulty for servers working together. Because there is no single solution that eliminates the impact of the sync problem for all use cases, there are multiple solutions. Each solution addresses this problem in a different way, and minimizes its impact for a specific workload.
+>
+> https://www.postgresql.org/docs/current/high-availability.html
+
+Replication不同方案：
+
+https://www.postgresql.org/docs/current/different-replication-solutions.html
+
++ Shared Disk Failover：
+
+​	Shared hardware functionality is common in network storage devices.
+
++ File System (Block Device) Replication
+
+A modified version of shared hardware functionality 
+
+DRBD is a popular file system replication solution for Linux.
+
++ Write-Ahead Log Shipping
+
+A standby server can be implemented using file-based log shipping ([Section 26.2](https://www.postgresql.org/docs/current/warm-standby.html)) or streaming replication (see [Section 26.2.5](https://www.postgresql.org/docs/current/warm-standby.html#STREAMING-REPLICATION)), or a combination of both. For information on hot standby, see [Section 26.5](https://www.postgresql.org/docs/current/hot-standby.html).
+
+Logical Replication
+
+
+
+Trigger-Based Master-Standby Replication
+
+
+
+Statement-Based Replication Middleware
+
+
+
+Asynchronous Multimaster Replication
+
+
+
+Synchronous Multimaster Replication
+
+
+
+Commercial Solutions
+
+
+
+Data Partitioning
+
+
+
+Multiple-Server Parallel Query Execution
+
+
 
 ## 2. Gaps between Oracle PLSQL and PostgreSQL
 https://github.com/digoal/blog/blob/master/201607/20160714_01.md
@@ -166,7 +226,7 @@ array_length(array[1,2,3], 1) https://www.postgresql.org/docs/9.1/static/functio
 	
 Cursor:
 https://www.postgresql.org/docs/11/static/sql-call.html
- 
+
 cannot commit while a subtransaction is active to_json
 
 https://hashrocket.com/blog/posts/faster-json-generation-with-postgresql

@@ -712,8 +712,6 @@ ssh-keygen -t ed25519 -C "<comment>"
 
 ## 3. High Availability
 
-首先什么是HA，最严格的ha就是主主或主备（热备），自动切换，zero downtime；其次是主备（冷备），手动切换；最次是backup restore；
-
 总体上说，
 
 + CE版本
@@ -780,7 +778,9 @@ https://yum.postgresql.org/rpmchart/
 - [postgresql12-server](https://yum.postgresql.org/12/redhat/rhel-7-x86_64/repoview/postgresql12-server.html) - The programs needed to create and run a PostgreSQL server
 
 ```
-   40  cd /opt/
+ ## 安装postgresql：：
+ 
+ 40  cd /opt/
    43  sudo mkdir postgresql
    44  mv ~/postgresql12-* postgresql/
    45  sudo mv ~/postgresql12-* postgresql/
@@ -804,9 +804,18 @@ https://yum.postgresql.org/rpmchart/
 1 S postgres   994   987  0  80   0 - 99486 ep_pol 16:59 ?        00:00:00 postgres: autovacuum launcher
 1 S postgres   995   987  0  80   0 - 62943 ep_pol 16:59 ?        00:00:00 postgres: stats collector
 1 S postgres   996   987  0  80   0 - 99486 ep_pol 16:59 ?        00:00:00 postgres: logical replication launcher
+
+## 为Praefect创建数据库：：
+
+# the database template1 is used because it is created by default on all PostgreSQL servers.
+/opt/gitlab/embedded/bin/psql -U postgres -d template1 -h POSTGRESQL_SERVER_ADDRESS
+> CREATE ROLE praefect WITH LOGIN CREATEDB PASSWORD 'PRAEFECT_SQL_PASSWORD';
+/opt/gitlab/embedded/bin/psql -U praefect -d template1 -h POSTGRESQL_SERVER_ADDRESS
+> CREATE DATABASE praefect_production WITH ENCODING=UTF8;
+ By creating the database while connected as the praefect user, we are confident they have access.
 ```
 
-/opt/gitlab/embedded/bin/psql -U postgres -d gitlabhq_production -h <POSTGRESQL_SERVER_ADDRESS>
+/opt/gitlab/embedded/bin/psql -U postgres -d praefect_production -h <POSTGRESQL_SERVER_ADDRESS>
 
 登录失败！
 
@@ -877,7 +886,22 @@ template1=> \l
  template1           | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres          +
                      |          |          |             |             | postgres=CTc/postgres
 (4 rows)
+template1-> use tempalte1
+template1-> \dt
+Did not find any relations.
+template1-> use template0
+template1-> \dt
+Did not find any relations.
+template1-> use postgres
+template1-> \dt
+Did not find any relations.
+template1-> use praefect_production
+template1-> \dt
+Did not find any relations.
 
+!!!
+我发现后面我连了Praefect过来，同样全部为空，难道一台Praefect并没有用到这个db？？？
+!!!
 
 # create database gitlabdb with owner gitlab;
 # alter database gitlabdb set search_path to sgc2,public;
@@ -996,6 +1020,7 @@ gitlab_url: "http://127.0.0.1:8080"
 ```
 postgresql server open port 5432 to praefect server;
 ​	on praefect server: sudo -u git /opt/gitlab/embedded/bin/praefect -config /var/opt/gitlab/praefect/config.toml sql-ping
+/opt/gitlab/embedded/bin/psql -U praefect -d template1 -h 172.26.101.134
 
 praefect server open port 2305 and 9652 to gitlab server;
 ​	on gitlab server: gitlab-rake gitlab:gitaly:check
@@ -1041,6 +1066,8 @@ https://docs.gitlab.com/ee/administration/high_availability/load_balancer.html#l
 GEO 这个不需要https://docs.gitlab.com/ee/administration/geo/replication/index.html
 
 需要的是gitlab-server Application Database和Praefect tracking database
+
+
 
 ### 3.4 ？？HA Roles
 
