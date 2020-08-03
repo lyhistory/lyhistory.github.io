@@ -126,7 +126,7 @@ epoll引入了内核空间，当创建server socket的时候获得文件描述�
 
 
 
-## 基于epoll的框架和产品：netty redis等
+## 基于epoll的框架和产品：netty redis haproxy等
 
 ![netty](/docs/docs_image/software/buildingblock/nio06.png)
 

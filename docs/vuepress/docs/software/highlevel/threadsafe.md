@@ -16,6 +16,14 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 线程是一个进程的最小执行单元；
 
 
+
+刚开始工作的时候也曾天真的认为使用一些看起来线程安全的工具类就可以让程序线程安全，比如：[使用ConcurrentHashMap一定线程安全？](https://juejin.im/post/5cb846a85188253772753d36) 
+
+实际情况复杂的多
+
+
+
+
 ## 1.线程安全：多线程与单线程
 
 ![](/docs/docs_image/software/threadsafe/threadsafe00.png)

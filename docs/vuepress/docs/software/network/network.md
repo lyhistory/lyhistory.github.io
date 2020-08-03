@@ -96,7 +96,7 @@ TCP面向连接，三次握手的本质就是，双方（客户端和服务端�
 
 而socket和资源的开辟大概是这样，比如服务器端起来一个http server，端口是80，我们通过netstat -natp命令会看到有一条处于listen状态的进程，这是代表这个服务开启的主进程（通常是Daemon守护进程）；
 
-假设此时客户端通过上面的命令或者浏览器发送http请求，通过前面解析的内核层的传输控制层三次握手建立连接，建立连接成功之后会发现服务端会spawn生成一个新的进程或线程（一般是线程，可以明确的看到其pid跟daemon的pid是相同的），状态是established，这就睡listen状态的主进程生成的worker线程，然后内核会分配资源给这个线程/进程，可以在/proc/<pid>下看到资源，在linux上面一切皆文件，包括这些进程线程，当然客户端也同样会开辟相应的资源，注意服务器端始终是一个端口，然后通过生成子线程来handle进来的请求，而客户端则是会用随机的端口，一个客户端耗尽所有端口最多同时可以产生65535个连接，不过需要注意的是客户端可以重用某个端口对另一个服务器B发起请求，这就是套接字的本质，套接字是src IP+PORT<-->dest IP+PORT，所以客户端同时通过端口比如21访问服务器A和B，tcp不会发生混乱，因为虽然sr IP+PORT相同，但是每对套接字的服务端是不同的，依然可以区分；
+假设此时客户端通过上面的命令或者浏览器发送http请求，通过前面解析的内核层的传输控制层三次握手建立连接，建立连接成功之后会发现服务端会spawn生成一个新的进程或线程（一般是线程，可以明确的看到其pid跟daemon的pid是相同的），状态是established，这就睡listen状态的主进程生成的worker线程，然后内核会分配资源给这个线程/进程，可以在/proc/<pid>下看到资源，在linux上面一切皆文件，包括这些进程线程，当然客户端也同样会开辟相应的资源，注意服务器端始终是一个端口，然后通过生成子线程来handle进来的请求，而客户端则是会用随机的端口，一个客户端耗尽所有端口最多同时可以产生65535个连接，不过需要注意的是客户端可以重用某个端口对另一个服务器B发起请求，这就是套接字socket的本质，套接字是src IP+PORT<-->dest IP+PORT，所以客户端同时通过端口比如21访问服务器A和B，tcp不会发生混乱，因为虽然sr IP+PORT相同，但是每对套接字的服务端是不同的，依然可以区分；
 
 然后三次握手成功，资源开辟，就可以通信了，发送数据包；
 
@@ -441,6 +441,8 @@ https://superuser.com/questions/77914/whats-the-difference-between-default-gatew
 应用层的协议有FTP、HTTP、websocket、TELNET、SMTP、DNS等协议;
 前面也提到websocket是完整的应用层协议，所以不会访问raw tcp packets，但是常用的socket是可以的，因为它是基于应用层和传输层的抽象，并不是一个协议；
 
+在nio_netty中提到了ServerSocket，用来跟客户端建立连接，实际上socket也常常作为进程间通信的“协议”，有个特殊情况是，如果是本机进程间通信，有个特别的所谓socket Unix域套接字（Unix Domain Socket）https://blog.csdn.net/roland_sun/article/details/50266565，例子gitlab server、haproxy
+
 FTP、SMTP、DNS各自都有特定的用处；
 
 HTTP则长作为一种general purpose的协议通常是用于客户端和服务端之间的通信，尤其是通过公网的通信，当然也可以用于组件之间或者系统内部之间的通信；
@@ -450,6 +452,7 @@ RPC即远程过程调用，再加上proxy代理模式就可以让远程调用像
 这样讲起来rpc是基于TCP的，偏偏有个rpc over http，目的就是internet用户也可以通过http来进行远程过程调用RPC,比如[Using HTTP as an RPC Transport](https://docs.microsoft.com/en-us/windows/win32/rpc/using-http-as-an-rpc-transport),
 一个完整的RPC架构里面包含了四个核心的组件，分别是Client ,Server,Client Stub以及Server Stub，
 RPC框架众多，比如netty:
+
 > Nowadays we use general purpose applications or libraries to communicate with each other. For example, we often use an HTTP client library to retrieve information from a web server and to invoke a remote procedure call via web services. However, a general purpose protocol or its implementation sometimes does not scale very well. It is like how we don't use a general purpose HTTP server to exchange huge files, e-mail messages, and near-realtime messages such as financial information and multiplayer game data. What's required is a highly optimized protocol implementation that is dedicated to a special purpose. For example, you might want to implement an HTTP server that is optimized for AJAX-based chat application, media streaming, or large file transfer. You could even want to design and implement a whole new protocol that is precisely tailored to your need. Another inevitable case is when you have to deal with a legacy proprietary protocol to ensure the interoperability with an old system. What matters in this case is how quickly we can implement that protocol while not sacrificing the stability and performance of the resulting application.
 > https://netty.io/wiki/user-guide-for-4.x.html
 
