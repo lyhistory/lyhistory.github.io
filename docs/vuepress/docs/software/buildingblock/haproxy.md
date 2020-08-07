@@ -534,13 +534,38 @@ https://cbonte.github.io/haproxy-dconv/2.3/configuration.html
 
 涉及到linux的chroot：修改haproxy的工作目录至指定的目录并在放弃权限之前执行chroot()操作,可以提升haproxy的安全级别，不过需要注意的是要确保指定的目录为空目录且任何用户均不能有写权限
 
-HAProxy is designed to run with very limited privileges. The standard way to use it is to isolate it into a chroot jail and to drop its privileges to a non-root user without any permissions inside this jail so that if any future vulnerability were to be discovered, its compromise would not affect the rest of the system.
+> HAProxy is designed to run with very limited privileges. The standard way to use it is to isolate it into a chroot jail and to drop its privileges to a non-root user without any permissions inside this jail so that if any future vulnerability were to be discovered, its compromise would not affect the rest of the system.
 
-In order to perform a chroot, it first needs to be started as a root user. It is pointless to build hand-made chroots to start the process there, these ones are painful to build, are never properly maintained and always contain way more bugs than the main file-system. And in case of compromise, the intruder can use the purposely built file-system. Unfortunately many administrators confuse "start as root" and "run as root", **resulting in the uid change to be done prior to starting haproxy, and reducing the effective security restrictions.** ？？这段话没有搞懂
+> In order to perform a chroot, it first needs to be started as a root user. It is pointless to build hand-made chroots to start the process there, these ones are painful to build, are never properly maintained and always contain way more bugs than the main file-system. And in case of compromise, the intruder can use the purposely built file-system. **Unfortunately many administrators confuse "start as root" and "run as root", resulting in the uid change to be done prior to starting haproxy, and reducing the effective security restrictions.** ？？这段话没有搞懂
 
 https://stackoverflow.com/questions/63150374/please-help-explain-the-haproxy-statment-unfortunately-many-administrators-conf
 
+但是细品下面接着的两段话
 
+```
+HAProxy will need to be started as root in order to :
+  - adjust the file descriptor limits
+  - bind to privileged port numbers
+  - bind to a specific network interface
+  - transparently listen to a foreign address
+  - isolate itself inside the chroot jail
+  - drop to another non-privileged UID
+
+HAProxy may require to be run as root in order to :
+  - bind to an interface for outgoing connections
+  - bind to privileged source ports for outgoing connections
+  - transparently bind to a foreign address for outgoing connections
+```
+
+可以看到start as root应该就是我们在Configuration里面指定好uid比如99 nobody，然后用root用户启动sytemctl start haproxy或者
+
+/usr/sbin/haproxy -D -f /etc/haproxy/haproxy.cfg，然后haproxy程序就会做下面一系列事情，比如：
+
+bind to privileged port numbers 绑定低于1024的端口。。。。进一步将其放入监狱jail，即根据chroot配置调用chroot，直到drop to another non-privileged UID就是降级我们指定的99 nobody，降级的原理就是根据配置的uid，然后系统调用setuid，最后就会看到haproxy的owner就是nobody这个用户；
+
+而run as root有什么用呢，首先bind to privileged source ports for outgoing connections 这个就是鸡肋，意思是当haproxy连接后台服务的时候，其作为客户端的源端口可以使用低于1024的端口，但是实际情况下，我们都不会关心一个客户端使用什么端口，我们写代码也只关心destination或者服务器的端口，至于其他两个，看起来也貌似没有用
+
+至于resulting in the uid change to be done prior to starting haproxy，首先start as root前面说了是root启动，然后降级成普通用户，所以是'uid change' after starting haproxy, 而run as root，不去配置uid，则不会降级，也不会有uid change，怎么又会prior to starting haproxy？这个暂时不深究
 
 ```
 A safe configuration will have :

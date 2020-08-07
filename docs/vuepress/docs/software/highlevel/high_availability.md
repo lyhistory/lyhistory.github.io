@@ -4,7 +4,7 @@
 
 其次是主备（热备 hot standby），主负责读写，备只是read only；
 
-接着就是主备（温备 warm standby），主负责读写，备只是负责replication，不参与读写；
+接着就是主备（温备 warm standby），主负责读写，备只是负责replication，不参与读写，注意温备实际上只是提供了disaster recovery，并不是真正的HA
 
 这三种种都是自动切换，zero downtime；
 
@@ -18,7 +18,9 @@
 
 load balance强调traffic load balance，一台机器挂掉不影响服务，但是数据可能会丢失；
 
-high availability强调consistency，包括failover时数据不丢失；
+Disaster Recovery强调的是在发生重大灾难事件时，至少大部分的数据还在，并不强调立刻恢复或者自动切换；
+
+high availability强调consistency，但是failover时数据也可能会因为不同的策略丢失掉某个时间窗口的数据；
 
 当然实际的产品其实都会考虑到，具体要看集群或多节点的一致性算法，如果没有一致性算法保证就只能是普通的分流，如果有就是所谓的高可用；
 

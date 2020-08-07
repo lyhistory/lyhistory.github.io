@@ -9,6 +9,54 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 ## 1. Setup
 ### 1.1 Baisc Setup
 
+#### 1.1.1 install
+
+
+
+#### 1.1.2 client连接
+
+直接psql连接是不行的，要切换成os root用户 sudo su
+
+然后执行  su - postgres
+
+进入bash，输入psql就进入到plsql命令窗口，执行\l就可以看到所有db
+
+理解一下posgresql的用户概念
+
+https://www.liquidweb.com/kb/what-is-the-default-password-for-postgresql/
+
+本机如果直接通过plsql连接，可以修改local用户(默认用户postgres)：
+
+https://www.hostinger.com/tutorials/how-to-install-postgresql-on-centos-7/
+
+```
+psql -d template1 -c "ALTER USER postgres WITH PASSWORD 'NewPassword';"
+```
+
+https://stackoverflow.com/questions/18664074/getting-error-peer-authentication-failed-for-user-postgres-when-trying-to-ge
+
+
+
+**开启远程连接：**
+
+https://blog.csdn.net/zhangzeyuaaa/article/details/77941039
+
+step 1：开启监听：
+
+ /var/lib/pgsql/12/data/postgresql.conf
+
+`listen_addresses = '*'          # what IP address(es) to listen on;`
+
+step 2：修改访问规则
+
+md5方式：
+
+vim /var/lib/pgsql/12/data/pg_hba.conf 
+
+`host    all             all             0.0.0.0/0            md5`
+
+---------------------------------------------
+
 https://www.tutorialspoint.com/postgresql/index.htm
 https://serverfault.com/questions/110154/whats-the-default-superuser-username-password-for-postgres-after-a-new-install
 
@@ -40,7 +88,7 @@ C# 连接 PostgreSQL --- Npgsql的安装和使用 https://blog.csdn.net/chencglt
 >
 > https://www.postgresql.org/docs/current/high-availability.html
 
-Replication不同方案：
+#### 1.2.1 Replication不同方案：
 
 https://www.postgresql.org/docs/current/different-replication-solutions.html
 
@@ -58,35 +106,49 @@ DRBD is a popular file system replication solution for Linux.
 
 A standby server can be implemented using file-based log shipping ([Section 26.2](https://www.postgresql.org/docs/current/warm-standby.html)) or streaming replication (see [Section 26.2.5](https://www.postgresql.org/docs/current/warm-standby.html#STREAMING-REPLICATION)), or a combination of both. For information on hot standby, see [Section 26.5](https://www.postgresql.org/docs/current/hot-standby.html).
 
-Logical Replication
++ Logical Replication
 
+Allows a database server to send a stream of data modifications to another server.  [Chapter 30](https://www.postgresql.org/docs/current/logical-replication.html).([Chapter 48](https://www.postgresql.org/docs/current/logicaldecoding.html)
 
++ Trigger-Based Master-Standby Replication
 
-Trigger-Based Master-Standby Replication
+The standby can answer read-only queries while the master server is running. The standby server is ideal for data warehouse queries.Slony-I is an example of this type of replication, with per-table granularity, and support for multiple standby servers. Because it updates the standby server asynchronously (in batches), there is possible data loss during fail over.
 
++ Statement-Based Replication Middleware
 
+ach server operates independently. Read-write queries must be sent to all servers, so that every server receives any changes. But read-only queries can be sent to just one server, allowing the read workload to be distributed among them.Care must also be taken that all transactions either commit or abort on all servers, perhaps using two-phase commit ([PREPARE TRANSACTION](https://www.postgresql.org/docs/current/sql-prepare-transaction.html) and [COMMIT PREPARED](https://www.postgresql.org/docs/current/sql-commit-prepared.html)). Pgpool-II and Continuent Tungsten are examples of this type of replication.
 
-Statement-Based Replication Middleware
++ Asynchronous Multimaster Replication
 
+each server works independently, and periodically communicates with the other servers to identify conflicting transactions. The conflicts can be resolved by users or conflict resolution rules. Bucardo is an example of this type of replication.
 
++ Synchronous Multimaster Replication
 
-Asynchronous Multimaster Replication
+PostgreSQL does not offer this type of replication
 
++ Commercial Solutions
 
++ Data Partitioning
 
-Synchronous Multimaster Replication
+Data partitioning splits tables into data sets. Each set can be modified by only one server. For example, data can be partitioned by offices, e.g., London and Paris,
 
++ Multiple-Server Parallel Query Execution
 
+Many of the above solutions allow multiple servers to handle multiple queries, but none allow a single query to use multiple servers to complete faster. This solution allows multiple servers to work concurrently on a single query. It is usually accomplished by splitting the data among servers and having each server execute its part of the query and return results to a central server where they are combined and returned to the user. 
 
-Commercial Solutions
+#### 1.2.2 具体方案1：warm standby or log shipping
 
+https://www.postgresql.org/docs/current/warm-standby.html
 
+The primary server operates in continuous archiving mode, while each standby server operates in continuous recovery mode, reading the WAL(write ahead logging) files from the primary(Directly moving WAL records from one database server to another is typically described as log shipping). 
 
-Data Partitioning
+#### 1.2.3 具体方案2：hot standby 
 
+https://www.postgresql.org/docs/current/hot-standby.html
 
+#### 1.2.4 具体配置 温备/热备
 
-Multiple-Server Parallel Query Execution
+http://www.mamicode.com/info-detail-2466322.html
 
 
 
@@ -126,12 +188,26 @@ tk rec_tk[]
 p_cjrs rec_cjr[];
 ```
 
+## 基本概念
+
+表空间
+
+postgres=# select * from pg_tablespace;
+ oid  |  spcname   | spcowner | spcacl | spcoptions
+------+------------+----------+--------+------------
+ 1663 | pg_default |       10 |        |
+ 1664 | pg_global  |       10 |        |
+(2 rows)
+
+
+
 ## 3. Gramma
 
 Assign null or empty ‘’ to numberic,  to_number(‘’) throw exception, use if else instead
 Bigint default value is NULL not 0
 
 ### 3.1 Basic
+
 **format**:
 https://www.postgresql.org/docs/7.4/static/functions-formatting.html
 	Oracle to_char(param)

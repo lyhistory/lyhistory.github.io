@@ -817,45 +817,7 @@ https://yum.postgresql.org/rpmchart/
 
 /opt/gitlab/embedded/bin/psql -U postgres -d praefect_production -h <POSTGRESQL_SERVER_ADDRESS>
 
-登录失败！
-
-切换成os root用户 sudo su
-
-然后执行  su - postgres
-
-进入bash，输入psql就进入到plsql命令窗口，执行\l就可以看到所有db
-
-理解一下posgresql的用户概念
-
-https://www.liquidweb.com/kb/what-is-the-default-password-for-postgresql/
-
-本机如果直接通过plsql连接，可以修改local用户(默认用户postgres)：
-
-https://www.hostinger.com/tutorials/how-to-install-postgresql-on-centos-7/
-
-```
-psql -d template1 -c "ALTER USER postgres WITH PASSWORD 'NewPassword';"
-```
-
-https://stackoverflow.com/questions/18664074/getting-error-peer-authentication-failed-for-user-postgres-when-trying-to-ge
-
-
-
-远程连接：
-
-https://blog.csdn.net/zhangzeyuaaa/article/details/77941039
-
-开启监听：
-
- /var/lib/pgsql/12/data/postgresql.conf
-
-listen_addresses = '*'          # what IP address(es) to listen on;
-
-md5方式：
-
-vim /var/lib/pgsql/12/data/pg_hba.conf
-
-`host    all             all             0.0.0.0/0            md5`
+登录失败！ 参考《database/postgresql》的设置说明
 
 ```
 su - postgres
