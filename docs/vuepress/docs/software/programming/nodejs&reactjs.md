@@ -328,6 +328,7 @@ var props = { x: 1, y: 1, z:1 };
 
 ### 4.2.1 toolchain
 **根据具体需求（放在服务端的静态页面或者动态渲染页面）有以下几种toolchain可以利用：**
+
 + If you’re learning React or creating a new single-page app, use Create React App.
 + If you’re building a server-rendered website with Node.js, try [Next.js](https://nextjs.org/learn/basics/getting-started).
 + If you’re building a static content-oriented website, try [Gatsby](https://www.gatsbyjs.org/docs/)
@@ -341,7 +342,7 @@ var props = { x: 1, y: 1, z:1 };
 	- A compiler such as Babel. It lets you write modern JavaScript code that still works in older browsers.
 	- 参考 https://blog.usejournal.com/creating-a-react-app-from-scratch-f3c693b84658
 
-### 4.2.2 create-react-app	
+### 4.2.2 create-react-app(highly recommend)	
 
 **下面我们就采用第一种方式创建一个single-page app**
 

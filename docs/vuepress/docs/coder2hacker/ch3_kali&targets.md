@@ -160,10 +160,14 @@ The applications in the home page are organized in the following six groups:
 
   **Metasploitable2 3**(msfadmin/msfadmin)
 
+  ​	https://sourceforge.net/projects/metasploitable/files/Metasploitable2/
+
+  ​	使用virtualbox方法：新建，然后选择Use an existing Hard Disk导入的vmware image
+
   https://www.vulnhub.com/
-
+  
   https://sourceforge.net/projects/samurai
-
+  
   https://www.mavensecurity.com/resources/web-security-dojo
   
   billu靶机

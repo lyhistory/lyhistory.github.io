@@ -27,6 +27,8 @@ https://bitsharestalk.org/index.php/topic,13104.msg171728.html#msg171728
 
 然后可以看到brave有rewards（只要使用浏览器就有奖励BAT），还内置了各种虚拟币钱包
 
+[chrome://wallet/](chrome://wallet/)
+
 ![](/docs/docs_image/blockchain/wallet/brave01.png)
 
 如果你也是站长可以申请创作者：

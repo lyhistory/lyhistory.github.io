@@ -93,14 +93,19 @@ Black box Testing:
 Advantage: the most realistic simulation of a hacker trying to break, or break into, a system;
 Disadvantage: tend to be unnecessarily time consuming for the tester and therefore expensive for the stakeholder.
 
+例子：fuzz测试
+
 White box Testing:
 Advantage: very time efficient for the tester
 Disadvantage: usually not a realistic simulation of a hacker attack since the tester has inside knowledge of the system;
+
+例子：代码审计
 
 Gray box Testing:
 Advantage: a good balance between a realistic hacker attack and saving time by providing the tester with some inside knowledge of how the target system works.
 Disadvantage: the tester might not have access to the source code of the target application or other important bits of information.
 
+例子：逆向工程
 
 渗透测试通常是找出尽量多的漏洞，而红队测试则一般是攻击特定的目标，比如某公司的财务报表或者某台机器上的某个资料，
 红队是模拟现实中可能受雇的黑客的行为，除了攻击特定目标，还能测试公司的安防措施（阻断（prevention）、检测（detection）和响应（response）），
@@ -132,7 +137,26 @@ https://security.360.cn/en/
 
 https://www.google.com/about/appsecurity/reward-program/index.html
 
-# 渗透思路总览 Phases of Peneration Testing
+
+
+## 开源渗透测试方法
+
+1.OSSTMM开源手册
+2.NIST SP 800-42网络安全测试指南
+3.OWASP十大Web应用安全威胁项目
+4.Web安全威胁分类标准
+5.PTES渗透测试执行标准
+www.pentest-standard.org
+渗透测试过程：
+Pre-Engagement Interaction
+Information Gathering
+Threat Modeling
+Vulnerability Analysis
+Exploitation
+Post Exploitation
+Reporting
+
+## 基本渗透思路 Phases of Peneration Testing
 
 Every penetration test, be it for a network or a web application, has a workflow; it has a series of stages that should be completed in order to increase our chances of finding and exploiting every possible vulnerability affecting our targets, such as: 
 
