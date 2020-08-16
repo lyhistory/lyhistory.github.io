@@ -324,6 +324,14 @@ var props = { x: 1, y: 1, z:1 };
 <Component {...props} />
 ```
 
+
+
+attribute: key
+
+https://reactjs.org/docs/lists-and-keys.html
+
+
+
 ## 4.2 开发
 
 ### 4.2.1 toolchain
