@@ -513,7 +513,10 @@ DHCP协议
 	DHCP服务一般位于路由器（家用）或者服务器（公司用），内网中电脑上的dhcp client发出请求，
 	dhcp服务端返回分配ip地址、网关gateway、掩码及dns服务器地址；
 	[how dhcp works](https://www.youtube.com/watch?v=S43CFcpOZSI)
-	
+	当我们配置静态IP或者一些内网渗透的测试环境时，需要[网络配置的四大基本要素： IP + Netmask + Gateway + DNS](https://blog.csdn.net/yuanbinquan/article/details/52963845)
+
+​	参考私人笔记《hacker_theory/tools_metasploit》以及类似的vm实验环境配置；
+
 DNS协议 
 	DNS测试工具windows:nslookup, linux: dig 
 

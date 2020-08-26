@@ -188,7 +188,7 @@ AGhcUqLmBmKALbwtAloozXAQGG1kL35HgWkmeLGrvHSg96WOkmjauFXFgIUwPIZ1nNVz7EE35OqBs27O
 >>> import base64
 >>> str="AGhcUqLmBmKALbwtAloozXAQGG1kL35HgWkmeLGrvHSg96WOkmjauFXFgIUwPIZ1nNVz7EE35OqBs27OYI2CCvuf3VMX/LCtZeW4H4YpIsBbI+yDExlCtDhcZhMrBN9YtQwK7rB5cfBq2f+J/zb5BQkVmaK45IA/IP2FyU0WVS6ooKSkSCoTWoTe1H9QNv6DfdL7cBMc/y/Pr6L8SZQYfg=="
 虽然这里是ascii码，一个ascii是一个字节，但是这里是base64编码，所以这里的一个ascii码表示的是base64的6个位所代表的一个“显示ascii码”（一个可打印字符），而实际上base64不是一个个6位去对应的（是24位对应4个字符），还有以下规则：
-base64: 2^6=64 6位表示一个base64编码，标准**Base64**只有64个字符（英文大小写、数字和+、/）以及用作后缀等号； **Base64**是把3个字节变成4个可打印字符（3×8=4×6，为什么这样？因为6和8的最大公约数是24，所以要让6位的base64系统跟8位的bytes系统切换，就这样补足），所以**Base64编码**后的字符串一定能被4整除（不算用作后缀的等号）； 等号一定用作后缀，且数目一定是0个、1个或2个。 这是因为如果原文**长度**不能被3整除，**Base64**要在后面添加\0凑齐3n位
+base64: 2^6=64 6位表示一个base64编码，标准**Base64**只有64个字符（英文大小写、数字和+、/）以及用作后缀等号； **Base64**是把3个字节变成4个可打印字符（3×8=4×6，为什么这样？因为6和8的最大公约数是24，所以要让6位的base64系统跟8位的bytes系统切换，就补足），所以**Base64编码**后的字符串一定能被4整除（不算用作后缀的等号）； 等号一定用作后缀，且数目一定是0个、1个或2个。 这是因为如果原文**长度**不能被3整除，**Base64**要在后面添加\0凑齐3n位
 
 错误算法：
 长度216，总共：216×6=1296位 1296/8=162 bytes
@@ -594,7 +594,6 @@ flip last byte：简单情况是 padding error，复杂情况跟前面类似，�
 复杂例子分析：
 
 ```
-
 curl http://127.0.0.1:5000/check?cipher=484b850123a04baf15df9be14e87369bc59ca16e1f3645ef53cc6a4d9d87308ed2382fb0a54f3a2954bfebe0a04dd4d6
 
 484b850123a04baf15df9be14e87369b	ApplicationUsern

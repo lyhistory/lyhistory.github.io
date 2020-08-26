@@ -206,4 +206,69 @@ Orchid怎么保证数据隐私？
 Orchid币比传统VPN服务更能保护用户隐私是基于：使用OXT作为支付手段从而不需要暴露个人的银行卡和其他信息，同时还支持宽带服务商的多跳的配置
 Orchid keeps data more private than traditional VPN services by using OXT for payments and support for multihop configurations between bandwidth providers.
 
+## Compound
+
+https://compound.finance/
+
+什么是Compound
+
+Compound 是运行在以太坊上的协议，可以让个人、开发者或者应用程序通过虚拟币获取利息而不需要依赖于任何第三方。跟传统的money market有点类似，不同在于，不限于某家银行，全世界都可以共用这个系统，并且允许开发者进行开发。
+
+Compound is a protocol running on Ethereum that lets individuals, developers, and applications earn interest on their crypto without relying on third parties.
+
+
+
+使用Compund借贷 Borrowing crypto with Compound
+
+除了获取利息，Compound协议还允许个人、开发者和应用程序通过一系列的利率市场来借贷虚拟币；
+
+（提供collateral资产然后借贷称之为over-collateralized lending，比如存入eth，可以借贷USDT，当然为了控制风险不是1:1，而是引入了collateral factor，比如0.75，然后compound是每个区块根据供需来算利息）
+
+In addition to earning interest, the Compound protocol also lets individuals, developers, and applications borrow crypto via a series of interest rate markets.
+
+
+
+什么是COMPd代币？What is the COMP token?
+
+COMP是以太坊代币，可以让社区治理Compound协议，COMP持有者享有对协议的变化发展进行提议和选举的特权。
+
+COMP is an Ethereum token that enables community governance of the Compound protocol. COMP holders have the exclusive right to propose and vote on changes to the protocol.
+
+
+
+## Kyber
+
+官网: http://kyber.network/
+
+什么是Kyber
+
+用户场景：某个商品只能用DAI购买，但是用户只有ether，用户只好通过交易所去兑换DAI，而解决方案kyber是一个区中心化的协议，连接了很多去中心化交易所，为用户寻找最好的兑换方案，让以太坊代币的兑换更加容易和产生最小摩擦。
+
+兑换dapp: https://kyberswap.com/swap
+
+Kyber is a decentralized protocol that aims to make exchanging Ethereum tokens easy and frictionless.
+
+
+
+什么是KNC What is KNC?
+
+KNC是以太坊代币，用来治理kyber协议，从而形成一个所谓的kyber DAO自治组织，KNC的持有者可以抵押代币用来为协议升级投票，从而可以获取奖励，奖励来自前面的去中心化交易费用。
+
+投票地址： kyber.org
+
+Kyber Network Crystal (KNC) is the Ethereum token that’s used to govern the Kyber protocol. KNC holders can stake their tokens to vote on changes to the protocol and earn rewards.
+
+
+
+Kyber如何赋能DeFi How does Kyber power DeFi?
+
+跟传统的被各大银行、保险公司等机构垄断的中心化金融行业不同，去中心化金融有着天然的全球性，移除过多的中间人和各种限制，用户可以简单的通过一个手机app就可以一站式储蓄、交易、购买保险，自动化投资，kyber扮演的角色就是Kyber可以为去中心化金融提供运行在以太坊上的众多服务的流动性，这些服务包括应用程序、钱包和交易所，流动性可以让一种资产可以高效的转换成另外一种资产，一个简单的场景就是用户可以用一种资产购买某件产品，然后商家可以用自己喜欢的资产来做结算。
+
+Kyber helps power decentralized finance (DeFi) by providing liquidity to a wide range of services running on Ethereum, including apps, wallets, and exchanges.
+
+
+
+## todo
+
+DAO: https://mainnet.aragon.org/#/
 

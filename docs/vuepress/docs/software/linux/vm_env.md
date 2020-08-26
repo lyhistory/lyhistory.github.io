@@ -329,7 +329,9 @@ vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
 
 `\\vboxsvr\<文件夹名字>`
 
+### 3.4 安装vmware images
 
+新建，然后选择Use an existing Hard Disk
 
 ## 4. Troubleshooting
 

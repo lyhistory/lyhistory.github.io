@@ -33,3 +33,20 @@ PS D:\apps\Sia-v1.4.4-windows-amd64>
 
 https://www.reddit.com/r/siacoin/comments/foduue/where_can_i_find_an_exact_calculator_for_how_much/
 https://www.reddit.com/r/siacoin/comments/7rlj06/not_enough_contracts_to_upload/
+
+
+
+## skynet sdk
+
+
+
+```
+npm init
+npm install webpack webpack-cli --save-dev
+mkdir src
+mkdir dist
+npm install --save skynet-js
+npx webpack
+
+```
+
