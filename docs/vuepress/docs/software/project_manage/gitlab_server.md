@@ -344,9 +344,11 @@ sudo gitlab-ctl reconfigure
 
 /var/opt/gitlab/nginx/conf/gitlab-http.conf
 
-log路径：
+log路径：也是排查错误的路径
 
 /var/log/gitlab/
+
+
 
 ### 1.3 Configuration
 
@@ -356,7 +358,7 @@ https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md
 
 /etc/gitlab/gitlab.rb
 
-​	change external_url="http://172.26.101.133:8088"
+​	change external_url="http://172.26.101.133:8088" 这个端口会写入到/var/opt/gitlab/nginx/conf/gitlab-http.conf
 
 sudo gitlab-ctl reconfigure
 
@@ -708,7 +710,11 @@ https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#create-and-ad
 ssh-keygen -t ed25519 -C "<comment>"
 ```
 
+### 1.4 商业版
 
+[https://docs.gitlab.com/ee/user/admin_area/license.html#:~:text=Add%20your%20license%20at%20install,and%20filename%20for%20the%20license.](https://docs.gitlab.com/ee/user/admin_area/license.html#:~:text=Add your license at install,and filename for the license.)
+
+https://packages.gitlab.com/gitlab/gitlab-ee
 
 ## 3. High Availability
 
@@ -1001,6 +1007,8 @@ grafana打开explorer，输入gitlab_build_info
 
 ### 3.2 gitrail-server multi-nodes
 
+#### 官方方案
+
 https://docs.gitlab.com/ee/administration/geo/replication/multiple_servers.html#geo-for-multiple-nodes-premium-only
 
 然后我顺着找到这个https://docs.gitlab.com/ee/administration/reference_architectures/index.html#traffic-load-balancer-starter-only
@@ -1020,6 +1028,123 @@ https://docs.gitlab.com/ee/administration/geo/replication/multiple_servers.html#
 https://docs.gitlab.com/ee/administration/high_availability/load_balancer.html#load-balancer-for-multi-node-gitlab
 
 这个是在gitlab scope之外，采用外部的负载均衡，
+
+
+
+跟gitlab沟通的结果发现，他们故意这种搞，就是为了卖他们的premium account所带的技术支持服务，
+
+当然我推测了下，上面说的 shared file server应该是指Gitaly nodes，那么database system是指postgresql，然后我从gitlab server的config里面看到
+
+```
+### GitLab database settings
+###! Docs: https://docs.gitlab.com/omnibus/settings/database.html
+###! **Only needed if you use an external database.**
+# gitlab_rails['db_adapter'] = "postgresql"
+# gitlab_rails['db_encoding'] = "unicode"
+# gitlab_rails['db_collation'] = nil
+# gitlab_rails['db_database'] = "gitlabhq_production"
+# gitlab_rails['db_pool'] = 1
+# gitlab_rails['db_username'] = "gitlab"
+# gitlab_rails['db_password'] = nil
+# gitlab_rails['db_host'] = nil
+# gitlab_rails['db_port'] = 5432
+# gitlab_rails['db_socket'] = nil
+# gitlab_rails['db_sslmode'] = nil
+# gitlab_rails['db_sslcompression'] = 0
+# gitlab_rails['db_sslrootcert'] = nil
+# gitlab_rails['db_sslcert'] = nil
+# gitlab_rails['db_sslkey'] = nil
+# gitlab_rails['db_prepared_statements'] = false
+# gitlab_rails['db_statements_limit'] = 1000
+
+
+### GitLab Redis settings
+###! Connect to your own Redis instance
+###! Docs: https://docs.gitlab.com/omnibus/settings/redis.html
+
+#### Redis TCP connection
+# gitlab_rails['redis_host'] = "127.0.0.1"
+# gitlab_rails['redis_port'] = 6379
+# gitlab_rails['redis_ssl'] = false
+# gitlab_rails['redis_password'] = nil
+# gitlab_rails['redis_database'] = 0
+# gitlab_rails['redis_enable_client'] = true
+```
+
+
+
+所以推测只需要按照如下文档建立一个外部db即可
+
+https://docs.gitlab.com/omnibus/settings/database.html
+
+https://docs.gitlab.com/omnibus/settings/database.html#using-a-non-packaged-postgresql-database-management-server
+
+https://docs.gitlab.com/ee/install/requirements.html#database
+
+但是还有个问题，redis是不是也要剥离到外部？从配置文件看确实可以，但是这些弄下来需要的机器实在不少，而且也是难以维护，所3以我没有尝试；
+
+#### rsync方案
+
+
+
+安装rsync实现自动增量同步到远端
+
+两个非常好的rpm包下载网站：
+ [http://rpmfind.net/](https://link.jianshu.com?t=http://rpmfind.net/)
+ [http://rpm.pbone.net/](https://link.jianshu.com?t=http://rpm.pbone.net/)
+
+将服务器： 172.26.101.133 的文件每天增量的备份到备份机： 172.26.101.140
+ 拉取
+
+```
+# 两台机器均需要安装rsync:
+yum install rsync
+
+# 服务器
+vim /etc/rsyncd.conf #创建主配置文件
+port = 873
+pid file = /var/run/rsyncd.pid
+motd file=/var/rsync/welcome.msg
+lock file = /var/rsync/rsync.lock
+log file = /var/rsync/rsyncd.log
+timeout = 900
+dont compress   = *.gz *.tgz *.zip *.z *.Z *.rpm *.deb *.bz2 #配置某些格式不压缩
+[backup]
+path = /var/opt/gitlab/backups
+comment = gitlab backup path
+use chroot = no
+max connections = 5
+list = yes
+uid = nobody
+gid = nobody
+secrets file = /etc/rsyncd.secrets
+hosts allow = 10.20.13.132
+hosts deny = *
+ignore errors = yes
+transfer logging = yes
+log format = "%t %a %m %f %b"
+auth users = root
+
+vim /etc/rsyncd.secrets
+root:Paic1234
+chmod 600 /etc/rsyncd.secrets
+rsync --daemon #启动服务
+kill `cat /var/rsync/rsyncd.pid` #停止服务
+
+
+#客户端
+vim /etc/rsyncd.secrets
+Paic1234 #只保留密码，带上用户名会报错
+vim /etc/rc.d/init.d/rsync.sh
+#!/bin/sh
+rsync -vzrtopg --progress --delete -e ssh root@10.20.13.133::backup /var/opt/gitlab/backups --password-file=/etc/rsyncd.secrets
+0 3 * * * /etc/rc.d/init.d/rsync.sh
+
+```
+
+
+
+https://www.jianshu.com/p/bc45631aa561
 
 
 
@@ -1047,45 +1172,15 @@ https://docs.gitlab.com/omnibus/roles/README.html#redis-server-roles
 
 https://docs.gitlab.com/omnibus/maintenance/README.html
 
-### 停止服务
+### 数据管理
 
-gitlab-ctl stop的坑：如果刚好你还在某个console里面，stop虽然显示全部down，但是ps -e|grep gitlab以及ps -e|grep postgres还是会看到一堆服务，
+#### gitlab server(workhorse)
 
-~~所以退出正在使用的所有gitlab console，再一次执行gitlab-ctl stop，实在不行进行kill -9或者gitlab-ctl kill <service>~~
+##### gitlab-rails dbconsole
 
-最终发现还需要关闭一个服务：
+gitlabhq_production=>\dt
 
-```
-systemctl disable gitlab-runsvdir
-systemctl stop gitlab-runsvdir
-```
-
-### 升级 卸载
-
-注意:升级之后,之前的备份就会失效,意思是无法用之前的backup restore,只能降级,所以升级之后建立尽快做备份
-
-1、停止gitlab
- `gitlab-ctl stop`
-
-2、卸载gitlab（注意这里写的是gitlab-ce）
- `rpm -e gitlab-ce`
-
-3、查看gitlab进程
- `ps aux | grep gitlab`
-
-`ps -e | grep gitlab`
-
-4、杀掉第一个进程（就是带有好多.............的进程）
- `kill -9 18777`
-
-杀掉后，在ps aux | grep gitlab确认一遍，还有没有gitlab的进程
-
-5、删除所有包含gitlab文件
- `find / -name gitlab | xargs rm -rf`
-
-### gitlab server(workhorse)
-
-gitlab-rails console >> users and products
+##### gitlab-rails console >> users and products
 
 https://docs.gitlab.com/ee/administration/troubleshooting/navigating_gitlab_via_rails_console.html
 
@@ -1104,6 +1199,253 @@ Enqueued ActionMailer::DeliveryJob (Job ID: 1fd0a22c-6908-45bd-b0b1-35f4da4aad25
 Access control
 
 https://docs.gitlab.com/ee/security/README.html#securing-your-gitlab-installation
+
+#### praefect database
+
+```
+su - postgres
+-bash-4.2$ psql
+postgres-# \c praefect_production;
+praefect_production-# \dt
+```
+
+
+
+#### gitaly repository
+
+ ls /var/opt/gitlab/git-data/repositories
+
+
+
+### 备份迁移
+
+https://docs.gitlab.com/omnibus/settings/backups.html
+
+#### Backup and restore Omnibus GitLab configuration
+
+It is recommended to keep a copy of `/etc/gitlab`, or at least of `/etc/gitlab/gitlab-secrets.json`, in a safe place. If you ever need to restore a GitLab application backup you need to also restore `gitlab-secrets.json`. If you do not, GitLab users who are using two-factor authentication will lose access to your GitLab server and ‘secure variables’ stored in GitLab CI will be lost.
+
+Your machines SSH host keys are stored in a separate location at `/etc/ssh/`. Be sure to also [backup and restore those keys](https://superuser.com/questions/532040/copy-ssh-keys-from-one-server-to-another-server/532079#532079) to avoid man-in-the-middle attack warnings if you have to perform a full machine restore.
+
+do not store your GitLab application backups (Git repositories, SQL data) in the same place as your configuration backup (`/etc/gitlab`). The `gitlab-secrets.json` file (and possibly also the `gitlab.rb` file) contain database encryption keys to protect sensitive data in the SQL database:
+
+- GitLab two-factor authentication (2FA) user secrets (‘QR codes’)
+- GitLab CI ‘secure variables’
+
+```
+MANUAL BACKUP:
+`gitlab-ctl backup-etc`
+Configuration backup archive complete: /etc/gitlab/config_backup/gitlab_config_1598345534_2020_08_25.tar
+
+AUTO BACKUP:
+sudo crontab -e -u root
+schedule the backup to run every morning after a weekday, Tuesday (day 2) through Saturday (day 6):
+15 04 * * 2-6  gitlab-ctl backup-etc && cd /etc/gitlab/config_backup && cp $(ls -t | head -n1) /secret/gitlab/backups/
+
+RESTORE:
+# Rename the existing /etc/gitlab, if any
+sudo mv /etc/gitlab /etc/gitlab.$(date +%s)
+# Change the example timestamp below for your configuration backup
+sudo tar -xf gitlab_config_1487687824_2017_02_21.tar -C /
+sudo gitlab-ctl reconfigure
+```
+
+#### Creating an application backup
+
+https://docs.gitlab.com/ee/raketasks/backup_restore.html
+
+GitLab provides a simple command line interface to back up your whole instance. It backs up your:
+
+- Database
+- Attachments
+- Git repositories data
+- CI/CD job output logs
+- CI/CD job artifacts
+- LFS objects
+- Container Registry images
+- GitLab Pages content
+
+The [backup Rake task](https://docs.gitlab.com/ee/raketasks/backup_restore.html#back-up-gitlab) GitLab provides does **not** store your configuration files. The primary reason for this is that your database contains encrypted information for two-factor authentication, the CI/CD ‘secure variables’, and so on. Storing encrypted information along with its key in the same place defeats the purpose of using encryption in the first place.
+
+**prerequisites：**
+
+sudo yum install rsync
+
+**START**
+
+```
+##STRATEGY:
+default streaming strategy:
+sudo gitlab-backup create
+
+sudo gitlab-backup create STRATEGY=copy
+
+To make sure the generated archive is intelligently transferable by rsync, the GZIP_RSYNCABLE=yes option can be set. This will set the --rsyncable option to gzip：
+sudo gitlab-backup GZIP_RSYNCABLE=yes
+
+##STORE:
+Backup create will store a tar file in `/var/opt/gitlab/backups`.
+
+If you want to store your GitLab backups in a different directory, add the following setting to `/etc/gitlab/gitlab.rb` and run `sudo gitlab-ctl reconfigure`:
+gitlab_rails['backup_path'] = '/mnt/backups'
+
+##SKIP:
+db (database)
+uploads (attachments)
+repositories (Git repositories data)
+builds (CI job output logs)
+artifacts (CI job artifacts)
+lfs (LFS objects)
+registry (Container Registry images)
+pages (Pages content)
+
+sudo gitlab-backup create SKIP=db,uploads
+
+In some cases (for example, if the backup is picked up by other backup software) creating a .tar file might be wasted effort or even directly harmful, so you can skip this step by adding tar to the SKIP environment variable:
+sudo gitlab-backup create SKIP=tar
+
+##UPLOAD:
+
+Upload to Remote: Specifying a custom directory for backups:
+sudo gitlab-backup create DIRECTORY=daily
+sudo gitlab-backup create DIRECTORY=weekly
+
+Upload to Local mounted shares:
+gitlab_rails['backup_upload_connection'] = {
+  :provider => 'Local',
+  :local_root => '/mnt/backups'
+}
+
+# The directory inside the mounted folder to copy backups to
+# Use '.' to store them in the root directory
+gitlab_rails['backup_upload_remote_directory'] = 'gitlab_backups'
+
+##PERMISSION:
+gitlab_rails['backup_archive_permissions'] = 0644 # Makes the backup archives world-readable
+
+
+## Limit backup lifetime to 7 days - 604800 seconds
+gitlab_rails['backup_keep_time'] = 604800
+
+```
+
+Daily Backup:
+
+```
+sudo su -
+crontab -e
+
+to schedule the backup for everyday at 2 AM:
+0 2 * * * /opt/gitlab/bin/gitlab-backup create CRON=1
+```
+
+#### Restore:
+
+**prerequisites**
+
+!!You can only restore a backup to **exactly the same version and type (CE/EE)** of GitLab that you created it on, for example CE 9.1.0!!
+
+need to restore `/etc/gitlab/gitlab-secrets.json`This file contains the database encryption key, [CI/CD variables](https://docs.gitlab.com/ee/ci/variables/README.html#gitlab-cicd-environment-variables), and variables used for [two-factor authentication](https://docs.gitlab.com/ee/user/profile/account/two_factor_authentication.html). If you fail to restore this encryption key file along with the application data backup, users with two-factor authentication enabled and GitLab Runners will lose access to your GitLab server.
+
+- You have run `sudo gitlab-ctl reconfigure` at least once.
+- GitLab is running. If not, start it using `sudo gitlab-ctl start`.
+
+**Note:** There is currently a [known issue](https://gitlab.com/gitlab-org/omnibus-gitlab/-/issues/3470) for restore not working with `pgbouncer`. In order to workaround the issue, the Rails node will need to bypass `pgbouncer` and connect directly to the primary database node. This can be done by setting `gitlab_rails['db_host']` and `gitlab_rails['port']` to connect to the primary database node and [reconfiguring GitLab](https://docs.gitlab.com/ee/administration/restart_gitlab.html#omnibus-gitlab-reconfigure).
+
+**START:**
+
+make sure your backup tar file is in the backup directory described in the `gitlab.rb` configuration `gitlab_rails['backup_path']`. The default is `/var/opt/gitlab/backups`. It needs to be owned by the `git` user.
+
+```
+sudo cp 11493107454_2018_04_25_10.6.4-ce_gitlab_backup.tar /var/opt/gitlab/backups/
+sudo chown git.git /var/opt/gitlab/backups/11493107454_2018_04_25_10.6.4-ce_gitlab_backup.tar
+```
+
+Stop the processes that are connected to the database. Leave the rest of GitLab running:
+
+```
+sudo gitlab-ctl stop unicorn
+sudo gitlab-ctl stop puma
+sudo gitlab-ctl stop sidekiq
+# Verify
+sudo gitlab-ctl status
+```
+
+Restore the backup, specifying the timestamp of the backup you wish to restore:
+
+```
+# This command will overwrite the contents of your GitLab database! sudo gitlab-backup restore BACKUP=11493107454_2018_04_25_10.6.4-ce
+```
+
+Next, restore `/etc/gitlab/gitlab-secrets.json` if necessary as mentioned above.
+
+Reconfigure, restart and check GitLab:
+
+```
+sudo gitlab-ctl reconfigure
+sudo gitlab-ctl restart
+sudo gitlab-rake gitlab:check SANITIZE=true
+```
+
+
+
+### 服务停止/升级/卸载
+
+gitlab-ctl stop的坑：如果刚好你还在某个console里面，stop虽然显示全部down，但是ps -e|grep gitlab以及ps -e|grep postgres还是会看到一堆服务，
+
+~~所以退出正在使用的所有gitlab console，再一次执行gitlab-ctl stop，实在不行进行kill -9或者gitlab-ctl kill <service>~~
+
+最终发现还需要关闭一个服务：
+
+```
+systemctl disable gitlab-runsvdir
+systemctl stop gitlab-runsvdir
+```
+
+**卸载**
+
+```
+gitlab-ctl cleanse
+
+/root/gitlab-cleanse-2020-08-20T16:28/config_backup
+
+#systemctl disable gitlab-runsvdir
+systemctl stop gitlab-runsvdir
+
+find / -name gitlab 
+
+rpm -e gitlab-ce
+yum localinstall gitlab-ce-13.0.7-ce.0.el7.x86_64.rpm
+
+scp root@172.26.101.136:/etc/gitlab/gitlab.rb /etc/gitlab/
+vim /etc/gitlab/gitlab.rb
+
+systemctl start gitlab-runsvdir
+gitlab-ctl reconfigure
+```
+
+注意:升级之后,之前的备份就会失效,意思是无法用之前的backup restore,只能降级,所以升级之后建立尽快做备份
+
+```
+1、停止gitlab
+gitlab-ctl stop
+2、卸载gitlab（注意这里写的是gitlab-ce）
+rpm -e gitlab-ce
+systemctl stop gitlab-runsvdir
+3、查看gitlab进程
+ps -lef | grep gitlab
+4、杀掉第一个进程（就是带有好多.............的进程）
+ kill -9 18777
+杀掉后，在ps aux | grep gitlab确认一遍，还有没有gitlab的进程
+5、删除所有包含gitlab文件
+find / -name gitlab | xargs rm -rf
+yum localinstall gitlab-ce-13.0.7-ce.0.el7.x86_64.rpm
+scp root@172.26.101.136:/etc/gitlab/gitlab.rb /etc/gitlab/
+vim /etc/gitlab/gitlab.rb
+# ruby_block[wait for praefect service socket] action run
+systemctl start gitlab-runsvdir
+gitlab-ctl reconfigure
+```
 
 
 
@@ -1130,6 +1472,114 @@ postgresql
 https://cloud.tencent.com/developer/article/1437220
 
 配置排查参考：blog.csdn.net/weixin_43748870/article/details/86178042
+
+## 6. Troubleshooting
+
+常用工具
+
+```
+gitlab-ctl tail
+```
+
+
+
+### 创建project以及浏览已有project出现500
+
+经过排查，放弃，重新安装，但是问题依旧，
+
+通过gitlab-ctl tail查log
+
+首先观察gitlab server log
+
+```
+==> /var/log/gitlab/gitlab-rails/production_json.log <==
+{"method":"POST","path":"/projects","format":"html","controller":"ProjectsController","action":"create","status":500,"time":"2020-08-21T06:41:34.153Z","params":[{"key":"utf8","value":"✓"},{"key":"authenticity_token","value":"[FILTERED]"},{"key":"project","value":{"ci_cd_only":"false","name":"helloworld","namespace_id":"1","path":"helloworld","description":"[FILTERED]","visibility_level":"0"}}],"remote_ip":"10.30.30.94","user_id":1,"username":"root","ua":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36","queue_duration_s":0.010634,"correlation_id":"s6jJ3TyP8a1","meta.user":"root","meta.caller_id":"ProjectsController#create","gitaly_calls":2,"gitaly_duration_s":0.011436,"redis_calls":14,"redis_duration_s":0.003358,"cpu_s":0.71,"exception.class":"ActionView::Template::Error","exception.message":"7:permission denied","exception.backtrace":["lib/gitlab/gitaly_client.rb:192:in `execute'","lib/gitlab/gitaly_client.rb:170:in `block in call'","lib/gitlab/gitaly_client.rb:198:in `measure_timings'","lib/gitlab/gitaly_client.rb:169:in `call'","lib/gitlab/gitaly_client/ref_service.rb:42:in `default_branch_name'","lib/gitlab/git/repository.rb:90:in `root_ref'","app/models/repository.rb:509:in `root_ref'","lib/gitlab/repository_cache_adapter.rb:84:in `block (2 levels) in cache_method_asymmetrically'","lib/gitlab/repository_cache.rb:44:in `fetch_without_caching_false'","lib/gitlab/repository_cache_adapter.rb:179:in `block (2 levels) in cache_method_output_asymmetrically'","lib/gitlab/safe_request_store.rb:12:in `fetch'","lib/gitlab/repository_cache.rb:25:in `fetch'","lib/gitlab/repository_cache_adapter.rb:178:in `block in cache_method_output_asymmetrically'","lib/gitlab/utils/strong_memoize.rb:30:in `strong_memoize'","lib/gitlab/repository_cache_adapter.rb:192:in `block in memoize_method_output'","lib/gitlab/repository_cache_adapter.rb:201:in `no_repository_fallback'","lib/gitlab/repository_cache_adapter.rb:191:in `memoize_method_output'","lib/gitlab/repository_cache_adapter.rb:177:in `cache_method_output_asymmetrically'","lib/gitlab/repository_cache_adapter.rb:83:in `block in cache_method_asymmetrically'","app/models/repository.rb:646:in `head_commit'","app/models/repository.rb:657:in `tree'","app/models/repository.rb:1010:in `file_on_head'","app/models/repository.rb:561:in `block in avatar'","lib/gitlab/gitaly_client.rb:335:in `allow_n_plus_1_calls'","app/models/repository.rb:560:in `avatar'","lib/gitlab/repository_cache_adapter.rb:21:in `block (2 levels) in cache_method'","lib/gitlab/repository_cache.rb:25:in `fetch'","lib/gitlab/repository_cache_adapter.rb:152:in `block in cache_method_output'","lib/gitlab/utils/strong_memoize.rb:30:in `strong_memoize'","lib/gitlab/repository_cache_adapter.rb:192:in `block in memoize_method_output'","lib/gitlab/repository_cache_adapter.rb:201:in `no_repository_fallback'","lib/gitlab/repository_cache_adapter.rb:191:in `memoize_method_output'","lib/gitlab/repository_cache_adapter.rb:151:in `cache_method_output'","lib/gitlab/repository_cache_adapter.rb:20:in `block in cache_method'","app/models/project.rb:1308:in `avatar_in_git'","app/models/project.rb:1312:in `avatar_url'","app/models/concerns/avatarable.rb:24:in `avatar_url'","app/helpers/page_layout_helper.rb:52:in `page_image'","app/views/layouts/_head.html.haml:27","app/views/layouts/application.html.haml:6","app/controllers/application_controller.rb:132:in `render'","app/controllers/projects_controller.rb:68:in `create'","app/controllers/application_controller.rb:496:in `set_current_admin'","lib/gitlab/session.rb:11:in `with_session'","app/controllers/application_controller.rb:487:in `set_session_storage'","app/controllers/application_controller.rb:481:in `set_locale'","lib/gitlab/error_tracking.rb:48:in `with_context'","app/controllers/application_controller.rb:546:in `sentry_context'","app/controllers/application_controller.rb:474:in `block in set_current_context'","lib/gitlab/application_context.rb:52:in `block in use'","lib/gitlab/application_context.rb:52:in `use'","lib/gitlab/application_context.rb:20:in `with_context'","app/controllers/application_controller.rb:467:in `set_current_context'"],"db_duration_s":0.07781,"view_duration_s":0.0,"duration_s":0.77791}
+```
+
+可以看到gitaly-client的permission denied error
+
+然后从Praefect测试到Gitaly nodes的连通性
+
+```
+2020/08/21 15:25:38 [tcp://172.26.101.137:8075]: checking health...
+2020/08/21 15:25:38 [tcp://172.26.101.138:8075]: dialed successfully!
+2020/08/21 15:25:38 [tcp://172.26.101.138:8075]: checking health...
+2020/08/21 15:25:38 [tcp://172.26.101.136:8075]: dialed successfully!
+2020/08/21 15:25:38 [tcp://172.26.101.136:8075]: checking health...
+2020/08/21 15:25:38 [tcp://172.26.101.138:8075]: ERROR: unable to request health check: rpc error: code = PermissionDenied desc = permission denied
+2020/08/21 15:25:38 [tcp://172.26.101.137:8075]: ERROR: unable to request health check: rpc error: code = PermissionDenied desc = permission denied
+2020/08/21 15:25:38 [tcp://172.26.101.136:8075]: ERROR: unable to request health check: rpc error: code = PermissionDenied desc = permission denied
+rpc error: code = PermissionDenied desc = permission denied
+```
+
+查到说不是shared secret就是clock drift问题 https://gitlab.com/gitlab-org/gitaly/-/issues/1762
+
+我确认了配置无误，所以应该是clock drift，
+
+通过ntp配置
+
+```
+yum install ntp
+vim /etc/ntp.conf
+systemctl start ntpd
+systemctl enable ntpd
+```
+
+同步之后再测试，终于可以了
+
+```
+WARN[0000] ignoring configured election strategy as failover is disabled  election_strategy=local pid=6972
+2020/08/21 17:02:07 [tcp://172.26.101.138:8075]: dialing...
+2020/08/21 17:02:07 [tcp://172.26.101.136:8075]: dialing...
+2020/08/21 17:02:07 [tcp://172.26.101.137:8075]: dialing...
+2020/08/21 17:02:07 [tcp://172.26.101.138:8075]: dialed successfully!
+2020/08/21 17:02:07 [tcp://172.26.101.138:8075]: checking health...
+2020/08/21 17:02:07 [tcp://172.26.101.136:8075]: dialed successfully!
+2020/08/21 17:02:07 [tcp://172.26.101.136:8075]: checking health...
+[root@sgkc2-cicd-proxy-v03 opt]# .101.137:8075]: dialed successfully!
+```
+
+然后从前端访问测试，发现创建的时候报错503 not available，这又是啥，结果测试从gitlab server到Praefect的连通性，发现Praefect不通，最后发现Praefect忘记启动了！
+
+```
+[root@sgkc2-cicd-v01 opt]# gitlab-rake gitlab:gitaly:check
+Checking Gitaly ...
+
+Gitaly: ... default ... OK
+
+Checking Gitaly ... Finished
+```
+
+总结：
+
+一定要确保连通性！
+
+### repository migration问题
+
+由于安装Gitaly cluster之前已经创建了一个repository，所以需要migration，
+
+https://docs.gitlab.com/ee/administration/gitaly/praefect.html#migrating-existing-repositories-to-praefect
+
+```
+curl --request POST --header "Private-Token: <your_access_token>" --header "Content-Type: application/json" \
+--data '{"destination_storage_name":"praefect"}' "https://gitlab.example.com/api/v4/projects/123/repository_storage_moves"
+```
+
+这个token如何获取呢？
+
+Admin头像->settings->Access Tokens，创建api权限获取token：测试
+
+http://172.26.101.133/api/v4/projects?access_token=5L74k2hxQrKYdKNNG8Ne
+
+
+
+api
+
+https://docs.gitlab.com/ee/api/README.html
+
+https://docs.gitlab.com/ee/api/api_resources.html
+
+https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html
 
 
 
