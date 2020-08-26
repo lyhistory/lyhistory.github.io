@@ -201,6 +201,10 @@ postgres=# select * from pg_tablespace;
 
 
 
+https://www.tutorialspoint.com/postgresql/index.htm
+
+
+
 ## 3. Gramma
 
 Assign null or empty ‘’ to numberic,  to_number(‘’) throw exception, use if else instead
