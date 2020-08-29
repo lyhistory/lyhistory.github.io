@@ -195,6 +195,12 @@ npm -v
 ~/node_modules/
 ```
 
+
+
+npm私有仓库搭建 https://www.jianshu.com/p/cf2e9f580e6d
+
+
+
 **项目package.json： **
 
 不管是手动创建还是自动创建的nodejs或者reactjs项目，比如：
@@ -865,7 +871,25 @@ package.json:
 }
 ```
 
-### 4.2.5 troubleshooting
+### 4.2.5 npm packages
+
+#### ESLINT
+
+vscode
+
+https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+
+preference->settings->search eslint->edit in settings.json
+
+```
+   "editor.codeActionsOnSave": {
+        "source.fixAll": true
+    }
+```
+
+
+
+### 4.2.6 troubleshooting
 
 ?# resolve version by npm-force-resolutions
 e.g. Can't resolve './locale' in 'node_modules\moment\src\lib\locale'
