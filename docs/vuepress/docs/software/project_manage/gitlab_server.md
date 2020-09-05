@@ -1085,60 +1085,12 @@ https://docs.gitlab.com/ee/install/requirements.html#database
 
 #### rsync方案
 
-
-
 安装rsync实现自动增量同步到远端
-
-两个非常好的rpm包下载网站：
- [http://rpmfind.net/](https://link.jianshu.com?t=http://rpmfind.net/)
- [http://rpm.pbone.net/](https://link.jianshu.com?t=http://rpm.pbone.net/)
 
 将服务器： 172.26.101.133 的文件每天增量的备份到备份机： 172.26.101.140
  拉取
 
 ```
-# 两台机器均需要安装rsync:
-yum install rsync
-
-# 服务器
-vim /etc/rsyncd.conf #创建主配置文件
-port = 873
-pid file = /var/run/rsyncd.pid
-motd file=/var/rsync/welcome.msg
-lock file = /var/rsync/rsync.lock
-log file = /var/rsync/rsyncd.log
-timeout = 900
-dont compress   = *.gz *.tgz *.zip *.z *.Z *.rpm *.deb *.bz2 #配置某些格式不压缩
-[backup]
-path = /var/opt/gitlab/backups
-comment = gitlab backup path
-use chroot = no
-max connections = 5
-list = yes
-uid = nobody
-gid = nobody
-secrets file = /etc/rsyncd.secrets
-hosts allow = 10.20.13.132
-hosts deny = *
-ignore errors = yes
-transfer logging = yes
-log format = "%t %a %m %f %b"
-auth users = root
-
-vim /etc/rsyncd.secrets
-root:Paic1234
-chmod 600 /etc/rsyncd.secrets
-rsync --daemon #启动服务
-kill `cat /var/rsync/rsyncd.pid` #停止服务
-
-
-#客户端
-vim /etc/rsyncd.secrets
-Paic1234 #只保留密码，带上用户名会报错
-vim /etc/rc.d/init.d/rsync.sh
-#!/bin/sh
-rsync -vzrtopg --progress --delete -e ssh root@10.20.13.133::backup /var/opt/gitlab/backups --password-file=/etc/rsyncd.secrets
-0 3 * * * /etc/rc.d/init.d/rsync.sh
 
 ```
 
@@ -1221,7 +1173,7 @@ praefect_production-# \dt
 
 https://docs.gitlab.com/omnibus/settings/backups.html
 
-#### Backup and restore Omnibus GitLab configuration
+#### 配置备份 Backup and restore Omnibus GitLab configuration
 
 It is recommended to keep a copy of `/etc/gitlab`, or at least of `/etc/gitlab/gitlab-secrets.json`, in a safe place. If you ever need to restore a GitLab application backup you need to also restore `gitlab-secrets.json`. If you do not, GitLab users who are using two-factor authentication will lose access to your GitLab server and ‘secure variables’ stored in GitLab CI will be lost.
 
@@ -1272,6 +1224,33 @@ The [backup Rake task](https://docs.gitlab.com/ee/raketasks/backup_restore.html#
 sudo yum install rsync
 
 **START**
+
+```
+#手动
+sudo gitlab-backup create GZIP_RSYNCABLE=yes 
+Creating backup archive: 1599013473_2020_09_02_13.3.0-ee_gitlab_backup.tar ... done
+Uploading backup archive to remote storage  ... skipped
+Deleting tmp directories ... done
+done
+done
+done
+done
+done
+done
+done
+Deleting old backups ... skipping
+Warning: Your gitlab.rb and gitlab-secrets.json files contain sensitive data
+and are not included in this backup. You will need these files to restore a backup.
+Please back them up manually.
+Backup task is done.
+
+/var/opt/gitlab/backups/1599013473_2020_09_02_13.3.0-ee_gitlab_backup.tar
+
+#自动
+sudo su -
+crontab -e
+0 2 * * * /opt/gitlab/bin/gitlab-backup GZIP_RSYNCABLE=yes create CRON=1
+```
 
 ```
 ##STRATEGY:
@@ -1402,35 +1381,19 @@ systemctl disable gitlab-runsvdir
 systemctl stop gitlab-runsvdir
 ```
 
-**卸载**
+注意:升级之后,之前的备份就会失效,意思是无法用之前的backup restore,只能降级,所以升级之后建立尽快做备份
 
 ```
+(optional)
 gitlab-ctl cleanse
 
 /root/gitlab-cleanse-2020-08-20T16:28/config_backup
 
-#systemctl disable gitlab-runsvdir
-systemctl stop gitlab-runsvdir
-
-find / -name gitlab 
-
-rpm -e gitlab-ce
-yum localinstall gitlab-ce-13.0.7-ce.0.el7.x86_64.rpm
-
-scp root@172.26.101.136:/etc/gitlab/gitlab.rb /etc/gitlab/
-vim /etc/gitlab/gitlab.rb
-
-systemctl start gitlab-runsvdir
-gitlab-ctl reconfigure
-```
-
-注意:升级之后,之前的备份就会失效,意思是无法用之前的backup restore,只能降级,所以升级之后建立尽快做备份
-
-```
 1、停止gitlab
 gitlab-ctl stop
 2、卸载gitlab（注意这里写的是gitlab-ce）
 rpm -e gitlab-ce
+#systemctl disable gitlab-runsvdir (如果不想重装)
 systemctl stop gitlab-runsvdir
 3、查看gitlab进程
 ps -lef | grep gitlab

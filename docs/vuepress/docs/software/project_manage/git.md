@@ -266,7 +266,59 @@ https://gitlab.com/help/ssh/README#rsa-ssh-keys
 
 
 
-## 4.Troubleshooting 
+## 4. git server
+
+```
+$mkdir test.git
+$cd test.git/
+$git init --bare
+Initialized empty Git repository in /git_home/test.git/
+
+```
+
+本地：全新提交
+
+```
+# on John's computer
+$ cd myproject
+$ git init
+$ git add .
+$ git commit -m 'Initial commit'
+$ git remote add origin git@gitserver:/srv/git/project.git
+$ git push origin master
+```
+
+本地：upstream提交
+
+```
+初始化
+$ git remote rename origin upstream
+C:\Workspace\Repository\clearSystemWeb>git remote -v
+upstream        http://<anotherip>/test.git (fetch)
+upstream        http://<anotherip>/test.git (push)
+
+$ git remote add origin git@<ip>:/git_home/test.git
+$ git remote -v
+origin  git@<ip>:/git_home/test.git (fetch)
+origin  git@<ip>:/git_home/test.git (push)
+upstream        http://<anotherip>/test.git (fetch)
+upstream        http://<anotherip>/test.git (push)
+$ git push origin master
+
+同步upstream到origin
+git fetch upstream
+git checkout master
+git pull upstream master or git merge upstream/master
+git push origin master
+
+提交到upstream
+正常merge
+git push upstream master
+```
+
+
+
+## 5.Troubleshooting 
 
 ?#1.If you are running git under a file system that is not case sensitive (Windows or OS X) this will occur if there are two branches with the same name but different capitalisation, e.g. user_model_changes and User_model_changes as both of the remote branches will match the same tracking ref. Delete the wrong remote branch (you shouldn't have branches that differ only by case) and then git remote prune origin and everything should work
 

@@ -116,7 +116,13 @@ SYNOPSIS
 
 
 
-不管是client还是server都要安装
+不管是client还是server都要安装rsync
+
+两个非常好的rpm包下载网站：
+ [http://rpmfind.net/](https://link.jianshu.com?t=http://rpmfind.net/)
+ [http://rpm.pbone.net/](https://link.jianshu.com?t=http://rpm.pbone.net/)
+
+172.26.101.133（服务端） <= 172.26.101.140（客户端拉取）
 
 ```
 # yum install rsync
@@ -129,59 +135,101 @@ SYNOPSIS
 /etc/rsyncd.conf
 /etc/sysconfig/rsyncd
 
+[root@backup ~]# vim /etc/rsyncd.conf 
 
-[root@backup ~]# vi /etc/rsyncd.conf         先把原有的内容清除，这里要用vi进行编辑，不能使用vim
-
-uid = rsync
-gid = rsync
-port = 873
-fake super = yes
-use chroot = no
-max connections = 200
-timeout = 600
-ignore errors
-read only = false
-list = false
-auth users = rsync_backup
+uid = nobody	#rsync
+gid = nobody	#rsync
+use chroot = yes
+# max connections = 200
+# timeout = 600
+dont compress   = *.gz *.tgz *.zip *.z *.Z *.rpm *.deb *.bz2
+pid file = /var/run/rsyncd.pid
+#motd file=/var/rsync/welcome.msg
+#lock file = /var/rsync/rsync.lock
+log file = /var/rsync/rsyncd.log
 secrets file = /etc/rsync.password
-log file = /var/log/rsyncd.log
 
-#####################################
+#port = 873 默认端口 如果服务端制定了，客户端也要指定--port=xxx
+#fake super = yes
+#ignore errors
+#read only = false
+#list = false
 
-[backup]
-comment = welcome to  backup!
-path = /backup
+[path1]
+comment = path1
+path = /path1
+auth users = rsync_backup
+read only = no
+list = no
+hosts allow = 172.26.101.140
+hosts deny = *
+[gitlab_path1]
+comment = "/opt/gitlab"
+path = /opt/gitlab
+auth users = rsync_backup
+read only = no
+list = yes
+hosts allow = 172.26.101.140
+hosts deny = *
+[gitlab_path2]
+comment = "/var/opt/gitlab"
+path = /var/opt/gitlab
+auth users = rsync_backup
+read only = no
+list = yes
+hosts allow = 172.26.101.140
+hosts deny = *
+[gitlab_path3]
+comment = "/etc/gitlab"
+path = /etc/gitlab
+auth users = rsync_backup
+read only = no
+list = yes
+hosts allow = 172.26.101.140
+hosts deny = *
+[gitlab_path1]
+comment = "/var/log/gitlab"
+path = /var/log/gitlab
+auth users = rsync_backup
+read only = no
+list = yes
+hosts allow = 172.26.101.140
+hosts deny = *
 
-
-useradd -M -s /sbin/nologin rsync
+#useradd -M -s /sbin/nologin rsync
 mkdir /backup
 chown -R rsync.rsync /backup/   
 echo "rsync_backup:1" >/etc/rsync.password    密码设置为1
 chmod 600 /etc/rsync.password
+
+rsync --daemon #启动服务
+kill `cat /var/rsync/rsyncd.pid` #停止服务
+
 systemctl start rsyncd
 systemctl enable rsyncd
 
-客户端推送到服务端
-rsync -avz /anything rsync_backup@172.16.1.41::backup
+##客户端推送到服务端
+rsync -avz /anything rsync_backup@172.26.101.133::test
 
-客户端从服务端拉取
-rsync -avz rsync_backup@172.16.1.41::backup /opt
+##客户端从服务端拉取
+rsync -avz rsync_backup@172.26.101.133::gitlab_path /opt/gitlab
 免密模式：
 echo "1" >/etc/rsync.password  
 chmod 600 /etc/rsync.password
-rsync -avz rsync_backup@172.16.1.41::backup /opt --password-file=/etc/rsync.password
+rsync -avz rsync_backup@172.26.101.133::gitlab_path /opt/gitlab --password-file=/etc/rsync.password
 或者
 export RSYNC_PASSWORD=1     设置RSYNC_PASSWORD环境变量=1  这里的1是密码，密码要和服务端的一致
 
 https://www.cnblogs.com/zeq912/p/9593931.html
 
 定时任务rsync.sh：
+#vim /etc/rc.d/init.d/rsync.sh
+vim /home/rsync.h:
 pull sample: 
 rsync -avz rsync_backup@remote_server::backup /opt --password-file=/etc/rsync.password  >/dev/null 2>&1
 push sample:
 rsync -vrtL --progress /opt/* rsync_backup@remote_server::backup --password-file=/etc/rsync.password 
 -v参数表示显示输出结果，r表示保持属性，t表示保持时间，L表示软link视作普通文件。
-
 
 chmod 755  rsync.sh
 
@@ -211,6 +259,63 @@ rsync -avz webshell 10.0.0.12::WWW /
 ```
 
 https://www.cnblogs.com/f-ck-need-u/p/7220009.html
+
+
+
+## troubleshooting
+
+?rsync failed to connect to no route to host (113)
+
+firewall
+
+```
+netstat -anp|grep "rsync"
+firewall-cmd --permanent --add-port=873/tcp
+firewall-cmd --reload
+```
+
+?rsync: opendir "." (in gitlab_path2) failed: Permission denied (13)
+
+```
+服务端不要用 systemctl start rsync，
+
+换用
+
+[root@sgkc2-cicd-v01 test]# rsync --daemon --config=/etc/rsyncd.conf                                         [root@sgkc2-cicd-v01 test]# netstat -anp | grep :973                        
+tcp     0    0 0.0.0.0:973       0.0.0.0:*        LISTEN    1597/rsync                                      tcp6    0    0 :::973         :::*           LISTEN    1597/rsync                           
+[root@sgkc2-cicd-v01 test]# firewall-cmd --permanent --add-port=973/tcp                             
+ success                                                                                                     
+[root@sgkc2-cicd-v01 test]# firewall-cmd --reload  
+ 
+ 
+[root@sgkc2-cicd-v01 test]# find / -name rsync
+/etc/selinux/targeted/active/modules/100/rsync
+/usr/bin/rsync
+/opt/gitlab/embedded/bin/rsync
+[root@sgkc2-cicd-v01 test]# find / -name rsyncd.service
+/usr/lib/systemd/system/rsyncd.service
+[root@sgkc2-cicd-v01 test]# vim /usr/lib/systemd/system/rsyncd.service
+[Unit]
+Description=fast remote file copy program daemon
+ConditionPathExists=/etc/rsyncd.conf
+
+[Service]
+EnvironmentFile=/etc/sysconfig/rsyncd
+ExecStart=/usr/bin/rsync --daemon --no-detach "$OPTIONS"
+
+[Install]
+WantedBy=multi-user.target
+```
+
+
+
+
+
+
+
+
+
+
 
 
 
