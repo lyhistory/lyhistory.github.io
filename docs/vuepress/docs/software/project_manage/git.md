@@ -268,6 +268,8 @@ https://gitlab.com/help/ssh/README#rsa-ssh-keys
 
 ## 4. git server
 
+https://git-scm.com/book/en/v2/Git-on-the-Server-Setting-Up-the-Server
+
 ```
 $mkdir test.git
 $cd test.git/
@@ -288,7 +290,20 @@ $ git remote add origin git@gitserver:/srv/git/project.git
 $ git push origin master
 ```
 
+本地：已有git转成空仓发布
+
+```
+https://blog.csdn.net/chenzhengfeng/article/details/81743626
+
+git clone --bare /home/project/sw
+touch sw/git-daemon-export-ok
+```
+
+
+
 本地：upstream提交
+
+https://blog.csdn.net/liuchaoxuan/article/details/80656145
 
 ```
 初始化

@@ -278,6 +278,12 @@ ce版本源码：https://gitlab.com/gitlab-org/gitlab-foss/-/tree/master
 
 下面采用离线安装 https://docs.gitlab.com/omnibus/manual_install.html
 
+### 1.0 硬件准备
+
+一台Praefect Server（存储空间可以给最低没关系）和三台gitaly server（git高可用的核心服务器，要求high CPU, high memory, fast storage）
+
+挂载磁盘大小需要注意，因为gitlab会写入一些数据到 /var/opt/gitlab，所以如果/var单独挂载需要注意
+
 ### 1.1 dependency
 
 ```
@@ -1087,14 +1093,7 @@ https://docs.gitlab.com/ee/install/requirements.html#database
 
 安装rsync实现自动增量同步到远端
 
-将服务器： 172.26.101.133 的文件每天增量的备份到备份机： 172.26.101.140
- 拉取
-
-```
-
-```
-
-
+参考《linux/rsync》
 
 https://www.jianshu.com/p/bc45631aa561
 

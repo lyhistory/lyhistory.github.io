@@ -153,7 +153,9 @@ A closure is the combination of a function and the scope object in which it was 
 Var, let and const- what's the difference?
 https://dev.to/sarah_chima/var-let-and-const--whats-the-difference-69e
 
-## 2. nodejs/reactjs共同环境配置
+## 2. nodejs/reactjs开发环境
+
+### 2.1 共同环境配置
 
 ```
 #centos
@@ -232,6 +234,50 @@ b)执行脚本 scripts
 ```
 
 JSX: javascript extension 
+
+### 2.2 vscode
+
+#### 离线安装
+
+```
+#安装插件 
+插件市场搜索
+https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+右侧有个 Download Extension 点击下载
+放到vscode的安装目录如 D:\Microsoft VS Code\bin 
+打开cmd
+code --install-extension *.vsix
+
+#安装npm
+连线机器
+>npm install -g npm-bundle
+>npm install -g eslint
+>npm-bundle eslint
+eslint-7.8.1.tgz
+目标机器
+>npm install -g ./eslint-7.8.1.tgz
+
+npm-bundle的本质是借助npm pack来实现打包的。npm pack会打包包本身以及bundledDependencies中的依赖，npm-bundle则是将pm2的所有dependencies记录到bundledDependencies，来实现所有依赖的打包。
+这种方式不需要安装多余的devDependencies，并且不需要克隆pm2的源码
+```
+
+
+
+#### ESLINT
+
+https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+
+preference->settings->search eslint->edit in settings.json
+
+```
+   "editor.codeActionsOnSave": {
+        "source.fixAll": true
+    }
+```
+
+
+
+
 
 ## 3.nodejs开发
 
@@ -872,20 +918,6 @@ package.json:
 ```
 
 ### 4.2.5 npm packages
-
-#### ESLINT
-
-vscode
-
-https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
-
-preference->settings->search eslint->edit in settings.json
-
-```
-   "editor.codeActionsOnSave": {
-        "source.fixAll": true
-    }
-```
 
 
 

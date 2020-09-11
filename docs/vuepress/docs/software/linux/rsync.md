@@ -202,11 +202,14 @@ chown -R rsync.rsync /backup/
 echo "rsync_backup:1" >/etc/rsync.password    密码设置为1
 chmod 600 /etc/rsync.password
 
-rsync --daemon #启动服务
+rsync --daemon --config=/etc/rsyncd.conf #启动服务
 kill `cat /var/rsync/rsyncd.pid` #停止服务
-
+or
 systemctl start rsyncd
 systemctl enable rsyncd
+
+记得重启需要删除pid文件：
+rm /var/run/rsyncd.pid
 
 ##客户端推送到服务端
 rsync -avz /anything rsync_backup@172.26.101.133::test
@@ -226,9 +229,9 @@ https://www.cnblogs.com/zeq912/p/9593931.html
 #vim /etc/rc.d/init.d/rsync.sh
 vim /home/rsync.h:
 pull sample: 
-rsync -avz rsync_backup@remote_server::backup /opt --password-file=/etc/rsync.password  >/dev/null 2>&1
+rsync -avz --delete rsync_backup@remote_server::backup /opt --password-file=/etc/rsync.password  >/dev/null 2>&1
 push sample:
-rsync -vrtL --progress /opt/* rsync_backup@remote_server::backup --password-file=/etc/rsync.password 
+rsync -vrtL --delete --progress /opt/* rsync_backup@remote_server::backup --password-file=/etc/rsync.password 
 -v参数表示显示输出结果，r表示保持属性，t表示保持时间，L表示软link视作普通文件。
 
 chmod 755  rsync.sh
@@ -264,7 +267,7 @@ https://www.cnblogs.com/f-ck-need-u/p/7220009.html
 
 ## troubleshooting
 
-?rsync failed to connect to no route to host (113)
+**?rsync failed to connect to no route to host (113)**
 
 firewall
 
@@ -274,9 +277,22 @@ firewall-cmd --permanent --add-port=873/tcp
 firewall-cmd --reload
 ```
 
-?rsync: opendir "." (in gitlab_path2) failed: Permission denied (13)
+**?rsync: opendir "." (in gitlab_path2) failed: Permission denied (13)**
 
 ```
+具体错误信息：
+# rsync -avz --delete rsync_backup@172.26.101.133::gitlab_path2 /var/opt/gitlab --password-file=/etc/rsync.password
+receiving incremental file list
+rsync: opendir "." (in gitlab_path2) failed: Permission denied (13)
+IO error encountered -- skipping file deletion
+
+sent 20 bytes  received 114 bytes  268.00 bytes/sec
+total size is 0  speedup is 0.00
+rsync error: some files/attrs were not transferred (see previous errors) (code 23) at main.c(1651) [generator=3.1.2]
+
+
+解决方法：
+
 服务端不要用 systemctl start rsync，
 
 换用
@@ -292,6 +308,10 @@ tcp     0    0 0.0.0.0:973       0.0.0.0:*        LISTEN    1597/rsync          
 /etc/selinux/targeted/active/modules/100/rsync
 /usr/bin/rsync
 /opt/gitlab/embedded/bin/rsync
+
+但是实际上我发现不是端口问题，换回873也是成功的；
+然后再看systemctl的rsync服务脚本，发现跟我手动rsync --daemon并没有区别？？
+
 [root@sgkc2-cicd-v01 test]# find / -name rsyncd.service
 /usr/lib/systemd/system/rsyncd.service
 [root@sgkc2-cicd-v01 test]# vim /usr/lib/systemd/system/rsyncd.service
@@ -305,9 +325,99 @@ ExecStart=/usr/bin/rsync --daemon --no-detach "$OPTIONS"
 
 [Install]
 WantedBy=multi-user.target
+
+发现原因：
+最后发现实际上我虽然systemctl方式启动rsyncd成功，但是查看status会有个错误信息：
+# systemctl status rsyncd
+rsync: failed to open log-file /var/rsync/rsyncd.log: Permission denied (13)
+再搜索 https://stackoverflow.com/questions/52176871/rsync-daemon-and-permissions
+发现是selinux问题！
+# ls -Z /usr/bin/rsync
+-rwxr-xr-x. root root system_u:object_r:rsync_exec_t:s0 /usr/bin/rsync
+# ps auxZ | grep -v grep | grep rsync
+system_u:system_r:rsync_t:s0    root     30320  0.0  0.0 114848  1216 ?        Ss   14:12   0:00 /usr/bin/rsync --daemon --no-detach
+
+chcon -R -t public_content_t /var/rsync/ 没用！以为是改成public类型就可以但是没用，这个需要再研究，而且想到实际上同步文件的时候rsync_exec_t也没有那些配置的文件path的权限，所以也是有问题
+
+临时解决方法：改变rsync的type
+chcon -t bin_t /usr/bin/rsync 
+但是此方法有被重新标记的风险，永久办法为使用semanage
+具体参考《linux/selinux》
 ```
 
 
+
+**No space left**
+
+```
+# rsync -avz rsync_backup@172.26.101.133::gitlab_path2 /var/opt/gitlab --password-file=/etc/rsync.password
+receiving incremental file list
+postgresql/data/pg_wal/
+postgresql/data/pg_wal/000000010000000000000002
+rsync: write failed on "/var/opt/gitlab/postgresql/data/pg_wal/000000010000000000000002": No space left on device (28)
+rsync error: error in file IO (code 11) at receiver.c(393) [receiver=3.1.2]
+
+居然报磁盘空间不够，但是这台destination除了备份并没有做其他事情，按道理文件应该跟source完全一样才对，查下是哪个文件出问题了
+
+# df -h
+Filesystem             Size  Used Avail Use% Mounted on
+devtmpfs               7.8G     0  7.8G   0% /dev
+tmpfs                  7.8G     0  7.8G   0% /dev/shm
+tmpfs                  7.8G   41M  7.8G   1% /run
+tmpfs                  7.8G     0  7.8G   0% /sys/fs/cgroup
+/dev/mapper/rhel-root  148G  4.6G  144G   4% /
+/dev/sda1              473M  164M  309M  35% /boot
+/dev/mapper/rhel-var    19G   19G   13M 100% /var
+/dev/mapper/rhel-home   19G  250M   19G   2% /home
+tmpfs                  1.6G     0  1.6G   0% /run/user/0
+
+可以看到/是足够的，/var满了，他们是挂载到不同的路径，
+
+再看下我的饿备份脚本
+# cat test_rsync.sh
+rsync -avz rsync_backup@172.26.101.133::gitlab_path1 /opt/gitlab --password-file=/etc/rsync.password >/dev/null 2>&1
+rsync -avz rsync_backup@172.26.101.133::gitlab_path2 /var/opt/gitlab --password-file=/etc/rsync.password >/dev/null 2>&1
+rsync -avz rsync_backup@172.26.101.133::gitlab_path3 /etc/gitlab --password-file=/etc/rsync.password >/dev/null 2>&1
+rsync -avz rsync_backup@172.26.101.133::gitlab_path4 /var/log/gitlab --password-file=/etc/rsync.password >/dev/null 2>&1
+rsync -avz rsync_backup@172.26.101.133::gitlab_path5 /run/gitlab --password-file=/etc/rsync.password >/dev/null 2>&1
+rsync -avz rsync_backup@172.26.101.133::gitlab_path6 /etc/ssh --password-file=/etc/rsync.password >/dev/null 2>&1
+
+可以看到往/var里面写东西的有两个 
+/var/log/gitlab和/var/opt/gitlab
+
+[root@sgkc2-cicd-gitlab-v01 ~]# du -sh /var/*
+0       /var/adm
+515M    /var/cache
+0       /var/crash
+8.0K    /var/db
+95M     /var/lib
+37M     /var/log
+18G     /var/opt
+36K     /var/spool
+
+可以看到就是/var/opt的问题
+# du -sh /var/opt/gitlab/*
+.......
+114M    /var/opt/gitlab/postgresql
+18G     /var/opt/gitlab/prometheus
+....
+可以看到问题出在 /var/opt/gitlab/prometheus
+
+[root@sgkc2-cicd-gitlab-v01 ~]# du -sh /var/opt/gitlab/prometheus/*
+18G     /var/opt/gitlab/prometheus/data
+8.0K    /var/opt/gitlab/prometheus/prometheus.yml
+24K     /var/opt/gitlab/prometheus/rules
+
+看下到底里面是什么
+ls /var/opt/gitlab/prometheus/data/
+对比下source机器，然后看到明显destination机器多出了很多文件，
+突然想到这个负责监控的prometheus数据是同步删除的
+
+In the simple example above, if there are files in the target destination that are not present at the source, they will be left alone and not touched. Sometimes you want to the target destination to become an exact copy of the source, aka "a mirror". To do that you want files on the target destination side to be deleted if they do not exist at the source. To do this you simply add the --delete option to rsync.
+
+rsync -aZP --delete /source/dir/to/copy /target/dir/
+
+```
 
 
 
