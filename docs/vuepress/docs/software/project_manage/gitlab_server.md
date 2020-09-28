@@ -998,6 +998,7 @@ postgresql server open port 5432 to praefect server;
 
 praefect server open port 2305 and 9652 to gitlab server;
 ​	on gitlab server: gitlab-rake gitlab:gitaly:check
+ sudo gitlab-rake gitlab:check SANITIZE=true
 
 gitlab server open api 8080? to gitaly server;
 ​	on gitaly nodes: /opt/gitlab/embedded/service/gitlab-shell/bin/check -config /opt/gitlab/embedded/service/gitlab-shell/config.yml
@@ -1089,7 +1090,53 @@ https://docs.gitlab.com/ee/install/requirements.html#database
 
 但是还有个问题，redis是不是也要剥离到外部？从配置文件看确实可以，但是这些弄下来需要的机器实在不少，而且也是难以维护，所3以我没有尝试；
 
-#### rsync方案
+#### 备份方案
+
+method 1： back & restore
+
+```
+uninstall...
+install same version as the source machine
+systemctl start gitlab-runsvdir
+sudo gitlab-ctl reconfigure
+sudo gitlab-ctl start
+from source:
+sudo scp root@172.26.101.133:/var/opt/gitlab/backups/1600046306_2020_09_14_13.3.0-ee_gitlab_backup.tar /var/opt/gitlab/backups/
+sudo chown git.git /var/opt/gitlab/backups/1600046306_2020_09_14_13.3.0-ee_gitlab_backup.tar
+
+sudo gitlab-ctl stop unicorn
+sudo gitlab-ctl stop puma
+sudo gitlab-ctl stop sidekiq
+# Verify
+sudo gitlab-ctl status
+
+# This command will overwrite the contents of your GitLab database! 
+sudo gitlab-backup restore BACKUP=/var/opt/gitlab/backups/1600046306_2020_09_14_13.3.0-ee_gitlab_backup.tar
+The backup file 1600046306_2020_09_14_13.3.0-ee_gitlab_backup_gitlab_backup.tar does not exist!
+
+sudo gitlab-backup restore 不加参数居然是可以工作的，所以/var/opt/gitlab/backups下面只放一个tar
+
+restore `/etc/gitlab/gitlab-secrets.json`
+sudo scp root@172.26.101.133:/etc/gitlab/config_backup/gitlab_config_1598345534_2020_08_25.tar /etc/gitlab/
+sudo mv /etc/gitlab /etc/gitlab.$(date +%s)
+sudo tar -xf gitlab_config_1598345534_2020_08_25.tar -C /
+tar: Removing leading `/' from member names 这句话不知道什么意思
+
+vim /etc/gitlab/gitlab.rb 修改external_url
+sudo gitlab-ctl reconfigure
+sudo gitlab-ctl restart
+注意执行上面一句的时候要等一会才开始执行下面的检查，否则会抛很多错误
+sudo gitlab-rake gitlab:check SANITIZE=true
+  
+开放相应的端口，并进行连通性检测
+gitlab server open api 8080? to gitaly server;
+
+修改Gitaly nodes的internal_api_url
+```
+
+
+
+method 2：rsync
 
 安装rsync实现自动增量同步到远端
 
@@ -1352,7 +1399,8 @@ sudo gitlab-ctl status
 Restore the backup, specifying the timestamp of the backup you wish to restore:
 
 ```
-# This command will overwrite the contents of your GitLab database! sudo gitlab-backup restore BACKUP=11493107454_2018_04_25_10.6.4-ce
+# This command will overwrite the contents of your GitLab database! 
+sudo gitlab-backup restore BACKUP=11493107454_2018_04_25_10.6.4-ce
 ```
 
 Next, restore `/etc/gitlab/gitlab-secrets.json` if necessary as mentioned above.

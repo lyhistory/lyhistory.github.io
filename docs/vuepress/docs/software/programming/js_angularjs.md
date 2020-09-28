@@ -1,3 +1,5 @@
+refer: 《programming/js_dev_overview》
+
 AngularJS Expressions vs. JavaScript Expressions
 Like JavaScript expressions, AngularJS expressions can contain literals, operators, and variables.
 Unlike JavaScript expressions, AngularJS expressions can be written inside HTML.
@@ -18,15 +20,15 @@ Provider: https://docs.angularjs.org/guide/providers
 Service components in ng: https://docs.angularjs.org/api/ng/service/$q
 app/bower_components https://docs.angularjs.org/tutorial/step_00
 factory service provider https://tylermcginnis.com/angularjs-factory-vs-service-vs-provider-5f426cfe6b8c#.su490lwd1
- 
+
 Jasmine Test framework:
 http://jasmine.github.io/1.3/introduction.html
 https://docs.angularjs.org/guide/e2e-testing
- 
+
 Bootstrap time saver:
 http://bootsnipp.com/forms
 http://www.plugolabs.com/twitter-bootstrap-button-generator-3/
- 
+
 top ten mistake
 https://www.airpair.com/angularjs/posts/top-10-mistakes-angularjs-developers-make
 service vs factory
@@ -40,11 +42,11 @@ http://angularjs.cn/A0d9
 http://www.cnblogs.com/golddream/p/4932884.html
 ng-hide
 https://teamtreehouse.com/community/show-hide-div-by-changing-class-to-active-angularjs
- 
+
 https://docs.angularjs.org/api/ng/directive/ngInclude
- 
+
 http://stackoverflow.com/questions/28319339/show-hide-onclick-angularjs
- 
- 
+
+
 http://stackoverflow.com/questions/29041464/angular-ensure-list-is-updated-without-page-reload
 

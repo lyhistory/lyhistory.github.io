@@ -318,69 +318,7 @@ https://legacy.gitbook.com/book/developmentarc/react-indepth/details
 
 ## 4.1 基本语法
 
-https://reactjs.org/docs/hello-world.html
-https://reactjs.org/tutorial/tutorial.html
 
-Basic：
-	+ element: first-class JavaScript objects
-		https://reactjs.org/docs/react-api.html#createelement
-
-	+ component&props
-	https://reactjs.org/docs/react-component.html
-		- controlled components: by lift up state 
-		- pure components: by using immutable 
-		- function components: are a simpler way to write components that only contain a render method and don’t have their own state
-	
-	+ State&Lifecycle
-	
-	+ handling events
-	
-	+ Conditional Rendering
-	
-	+ Lists Keys 
-	
-	+ Forms 
-	
-	[Lifting state up 联动](https://reactjs.org/docs/lifting-state-up.html)
-	
-	+ Composition vs Inheritance
-
-Advanced:
-	+ Fragment
-	+ Higher-Order Components
-	
-
-Component:
-1)	class App extends React.Component{…​} is the method that creates a React component.
-2)	componentDidMount is the API invoked after React renders a component in the DOM.
-3)	render is the API that “draws” the component on the screen.
-
-注意:
-```
-import时候 {}
-const { BirdStore } = this.props;
-==
-const BirdStore = this.props.BirdStore;
-
-普通模式：
-export defalt <classname>;
-单例模式
-const store = new BirdStore();
-export default store;
-
-spread attributes:
-https://stackoverflow.com/questions/28452358/what-is-the-meaning-of-this-props-in-reactjs
-<Component x={} y={} z={} />
-=>
-var props = { x: 1, y: 1, z:1 };
-<Component {...props} />
-```
-
-
-
-attribute: key
-
-https://reactjs.org/docs/lists-and-keys.html
 
 
 

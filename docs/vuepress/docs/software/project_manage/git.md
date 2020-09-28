@@ -140,6 +140,24 @@ git reset --hard origin/master
 git cherry-pick 60b3ccd807343ccce957aceecb36b1da81d34a45
 https://www.atlassian.com/git/tutorials/cherry-pick
 
+
+
+### 1.8 history and blame
+
+Show what revision and author last modified each line of a file
+
+`git-blame`
+
+Git – Particular File Change History
+
+`git log -p -- src/pages/basic/table/table/SeperateTable.jsx`
+
+Git: Show all of the various changes to a single line in a specified file over the entire git history
+
+`git log -L 292,292:src/pages/basic/table/table/SeperateTable.jsx`
+
+
+
 ## 2.Advance
 ### 2.1 About submodule/subtree/worktree
 1) submodule
@@ -329,6 +347,13 @@ git push origin master
 提交到upstream
 正常merge
 git push upstream master
+
+强制同步到upstream
+https://github.community/t/syncing-a-fork-leaves-me-one-commit-ahead-of-upstream-master/1435
+git checkout master
+git reset --hard upstream/master
+git push --force
+
 ```
 
 
