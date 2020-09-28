@@ -200,6 +200,8 @@ important deadlock issue here：
 ![](/docs/docs_image/software/oracle/oracle02.png)
 
 ### 2.8 exec store-procedure and export to csv file
+
+```
 set colsep ','
 var    input1 VARCHAR2(10);
 var    input2 VARCHAR2(10);
@@ -212,6 +214,26 @@ end;
 /
 spool /tmp/results.csv
 print results;
+
+### 
+
+
+declare
+v_sql varchar2(5000);
+begin
+v_sql := q'[select
+col1||','||
+col2
+from
+(
+select * from ***
+)
+order by col1]';
+dump_sql_to_csv(v_sql, 'example.csv');
+end;
+/
+
+```
 
 ### 2.9 Scheduler
 https://docs.oracle.com/cd/B28359_01/server.111/b28310/schedadmin006.htm
@@ -340,5 +362,109 @@ Reporting DB (for analysis)
 ?#TNS:address already in use
 http://www.dba-oracle.com/t_ora_12542_tns_address_already_in_use.htm
 
-
 [私有库：oracle企业级存储过程](https://github.com/lyhistory/learn_coding/)
+
+
+
+```
+#################################################################################
+## Code snippets
+#################################################################################
+
+CREATE OR REPLACE TYPE "Array" IS TABLE OF VARCHAR2(100);
+
+
+CREATE OR REPLACE FUNCTION STR2ARRAY(
+strSource IN VARCHAR2,
+delimiter IN VARCHAR2 DEFAULT ','
+)
+RETURN Array
+AS
+count NUMBER;
+temp VARCHAR2(999999):=strSource||delimiter;
+array Array := Array();
+BEGIN
+LOOP
+count := instr(temp, delimiter );
+EXIT WHEN (NVL(count,0) = 0);
+array.EXTEND;
+array(array.COUNT) := LTRIM(RTRIM(SUBSTR(temp, 1, count-1)));
+temp := SUBSTR(temp,count+ LENGTH(delimiter) );
+END LOOP;
+RETURN array;
+END STR2ARRAY;
+
+select distinct t1.AA as AA,t2.BB as BB
+from table1 t1
+inner join
+(
+select
+t_1.column_value as A,
+t_2.column_value as B
+from
+(
+select rownum id, column_value
+from table(STR2ARRAY('TEST'))) t_1
+join
+(
+select rownum id , column_value from table(STR2ARRAY('TEST2'))
+) t_2 on t_1.id = t_2.id
+) t2 on t1.AA= (case when t2.A = 'TEST then 'Y' else 'N' end)
+where not exists (
+select 1
+from table3 t3
+where t3.C = t2.B
+);
+SELECT id,
+field,
+DECODE(NVL(field, 'No'), 'Yes', 'Yes Result do this', NVL(field, 'No'), 'No result do this', 'catch all result do this')
+FROM   table
+or
+SELECT id,
+field,
+CASE NVL(field, 'No')
+WHEN 'Yes' THEN 'Yes Result do this'
+WHEN 'No' THEN 'No result do this'
+ELSE 'catch all result do this'
+END
+FROM   table
+ 
+/*
+t1: id
+t2: id,t1_id,amt
+select temp.totalAmt
+from t1 t1
+left join (select t1_id,sum(amt) as totalAmt from t2 group by t1_id) temp on temp.t1_id=t1.id;
+*/
+/*select * from table where trunc(datefield)=trunc(TO_DATE('15/01/16', 'DD/MM/YY'));*/
+/*
+select count,total,average
+from(
+select t1_id,count,total,case when nvl(count,0)=0 then 0 else round(total/count,2) end as average
+from(
+select t1_id, count(*) as count, sum(amt) as total
+from t2
+group by t1_id
+)
+)
+where average>5;
+*/
+/×
+array like parameters
+method 1: string split
+method 2: Array split
+method 3: clob split
+×/
+/×
+quotes
+http://www.techonthenet.com/oracle/questions/quotes.php
+×/
+Concatenation Operator https://docs.oracle.com/cd/B19306_01/server.102/b14200/operators003.htm
+ 
+Best Practice:
+Master DB (used by live system/application), Slave DB (readonly db, for backup),
+Reporting DB (for analysis)
+Big Data Sqoop ? Hbase？
+
+```
+

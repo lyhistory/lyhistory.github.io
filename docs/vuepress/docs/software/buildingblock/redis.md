@@ -223,6 +223,7 @@ https://redislabs.com/redis-features/high-availability
 > # A value of 0 can be set but is useful only for debugging and dangerous
 > # in production.
 > #
+>
 > # cluster-migration-barrier 1
 
 2.consider use failover whenever make changes to master nodes
@@ -408,5 +409,27 @@ Scanning for big keys
 redis-cli --bigkeys
 
 https://programming.vip/docs/ali-yun-redis-big-key-search-tool.html
+
+
+
+----
+
+todo:
+
+单线程，考虑是否原子操作
+
+Get 判断
+
+（时间窗口）
+
+Set （多线程覆盖）
+
+Setnx
+
+谈谈Redis的SETNX https://huoding.com/2015/09/14/463
+
+https://redis.io/commands/setnx
+
+https://github.com/StackExchange/StackExchange.Redis/blob/86b983496d3307903ce9bc2a3c7f207de42a0dea/StackExchange.Redis/StackExchange/Redis/RedisDatabase.cs
 
 

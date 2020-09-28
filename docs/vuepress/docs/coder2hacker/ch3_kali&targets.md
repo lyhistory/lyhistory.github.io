@@ -88,15 +88,17 @@ apt-get install **kali-linux-web**
 
 https://github.com/FelisCatus/SwitchyOmega/releases
 
-wappalyzer 
+HackBar。hackbar quantum
+
+Tamper Data and Tamper Data Icon Redux.
 
 Proxy SwitchyOmega
 
 FoxyProxy
 
-Cookies Manager+。
+wappalyzer 
 
-HackBar。hackbar quantum
+Cookies Manager+。
 
 HttpRequester。
 
@@ -105,8 +107,6 @@ RESTClient。
 User-Agent Switcher。
 
 Tampermonkey。
-
-Tamper Data and Tamper Data Icon Redux.
 
 XSS Me
 

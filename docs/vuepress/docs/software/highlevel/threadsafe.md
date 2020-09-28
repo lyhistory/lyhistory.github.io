@@ -216,3 +216,22 @@ https://odetocode.com/articles/313.aspx
 + 基于redis
 + 基于zookeeper的ephemeral sequential node
 
+
+
+----
+
+concurrency queue
+
+concurrency dictionary
+
+C#在多线程环境中，进行安全遍历操作
+
+http://stanzhai.github.io/2013/06/27/csharp-read-data-in-multithread-safely/
+
+Implementing the Singleton Pattern in C#
+
+http://csharpindepth.com/Articles/General/Singleton.aspx
+
+Thread Safety In C# [www.c-sharpcorner.com/UploadFile/1c8574/thread-safety369/](http://www.c-sharpcorner.com/UploadFile/1c8574/thread-safety369/)
+
+System.timer Thread.timer

@@ -63,4 +63,8 @@ The ability to read these will be essential if you plan to do source code review
 
 ## AArch64 assembly
 
+汇编对于内存攻防很重要 参考《0 day》
+
 For advanced embedded and mobile hacking, understanding the very lowest level of abstraction is essential.
+
+https://www.tutorialspoint.com/assembly_programming/index.htm

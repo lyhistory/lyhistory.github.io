@@ -1,3 +1,5 @@
+Nginx 和 Apache 各有什么优缺点？ https://www.zhihu.com/question/19571087
+
 enable list files : autoindex on 注意location写法
 
 ```
