@@ -1,38 +1,40 @@
 refer: 《programming/js_dev_overview》
 
-## 基本概念
+## 1. 基本概念
 
 https://reactjs.org/docs/glossary.html
 
-### Single-page Application
+### 1.1 Reacjs Application
+
+**Single-page Applicaiton**
 
 Though you may build a single-page application in React, it is not a requirement. React can also be used for enhancing small parts of existing websites with additional interactivity. Code written in React can coexist peacefully with markup rendered on the server by something like PHP, or with other client-side libraries. In fact, this is exactly how React is being used at Facebook.
 
-### ES6, ES2015, ES2016, etc 
+**CDN**
+
+CDN stands for Content Delivery Network. CDNs deliver cached, static content from a network of servers across the globe.
+
+### 1.2 ES6, ES2015, ES2016, etc 
 
 These acronyms all refer to the most recent versions of the ECMAScript Language Specification standard, which the JavaScript language is an implementation of. The ES6 version (also known as ES2015) includes many additions to the previous versions such as: arrow functions, classes, template literals, `let` and `const` statements. You can learn more about specific versions [here](https://en.wikipedia.org/wiki/ECMAScript#Versions).
 
-### Compilers 
+### 1.3 Compilers 
 
 有的称之为 transpiling
 
 A JavaScript compiler takes JavaScript code, transforms it and returns JavaScript code in a different format. The most common use case is to take ES6 syntax and transform it into syntax that older browsers are capable of interpreting. [Babel](https://babeljs.io/) is the compiler most commonly used with React.
 
-### Bundlers 
+### 1.4 Bundlers 
 
 又称 minimize？
 
 Bundlers take JavaScript and CSS code written as separate modules (often hundreds of them), and combine them together into a few files better optimized for the browsers. Some bundlers commonly used in React applications include [Webpack](https://webpack.js.org/) and [Browserify](http://browserify.org/).
 
-### Package Managers
+### 1.5 Package Managers
 
 Package managers are tools that allow you to manage dependencies in your project. [npm](https://www.npmjs.com/) and [Yarn](https://yarnpkg.com/) are two package managers commonly used in React applications. Both of them are clients for the same npm package registry.
 
-### CDN
-
-CDN stands for Content Delivery Network. CDNs deliver cached, static content from a network of servers across the globe.
-
-### JSX
+### 1.6 JSX
 
 JSX is a syntax extension to JavaScript. It is similar to a template language, but it has full power of JavaScript. JSX gets compiled to `React.createElement()` calls which return plain JavaScript objects called “React elements”.
 
@@ -48,9 +50,9 @@ react不是必须使用JSX。你可以使用普通的JS。然而，我们建议�
 
 jsx是类似于html但是不完全相同，但是还是有不同的地方
 
-### ReactJS
+### 1.7 ReactJS
 
-#### Elements
+#### 1.7.1 Elements
 
 first-class JavaScript objects
 https://reactjs.org/docs/react-api.html#createelement
@@ -67,7 +69,7 @@ To render a React element into a root DOM node, pass both to [`ReactDOM.render()
 
 
 
-#### Component&props|State&Lifecycle Methods
+#### 1.7.2 Component&props|State&Lifecycle Methods
 
 https://reactjs.org/docs/react-component.html
 
@@ -183,39 +185,66 @@ Neither parent nor child components can know if a certain component is stateful 
 
 
 
-#### Controlled vs. Uncontrolled Components 很重要的概念
+#### 1.7.3 Controlled vs. Uncontrolled Components 很重要的概念
 
-##### Controlled
+##### 1. Controlled
 
 https://reactjs.org/docs/forms.html#controlled-components
 
-**Form elements**
+https://reactjs.org/docs/forms.html
 
-In HTML, form elements such as `<input>`, `<textarea>`, and `<select>` typically maintain their own state and update it based on user input. In React, mutable state is typically kept in the state property of components, and only updated with [`setState()`](https://reactjs.org/docs/react-component.html#setstate).
+HTML form elements work a little bit differently from other DOM elements in React, because form elements naturally keep some internal state,  such as `<input>`, `<textarea>`, and `<select>` typically maintain their own state and update it based on user input. 
+
+The form has the default HTML form behavior of browsing to a new page when the user submits the form. If you want this behavior in React, it just works. But in most cases, it’s convenient to have a JavaScript function that handles the submission of the form and has access to the data that the user entered into the form. The standard way to achieve this is with a technique called “controlled components”.
+
+In React, mutable state is typically kept in the state property of components, and only updated with [`setState()`](https://reactjs.org/docs/react-component.html#setstate).
 
 We can combine the two by making the React state be the “single source of truth”. Then the React component that renders a form also controls what happens in that form on subsequent user input. An input form element whose value is controlled by React in this way is called a “controlled component”.
 
 ```react
-class NameForm extends React.Component {
+class Reservation extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: ''};
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  handleChange(event) {
-    this.setState({value: event.target.value});
+    this.state = {
+      isGoing: true,
+      numberOfGuests: 2
+    };
+	this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
   handleSubmit(event) {
     alert('A name was submitted: ' + this.state.value);
     event.preventDefault();
   }
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
-          Name:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
+          Is going:
+          <input
+            name="isGoing"
+            type="checkbox"
+            checked={this.state.isGoing}
+            onChange={this.handleInputChange} />
+        </label>
+        <br />
+        <label>
+          Number of guests:
+          <input
+            name="numberOfGuests"
+            type="number"
+            value={this.state.numberOfGuests}
+            onChange={this.handleInputChange} />
         </label>
         <input type="submit" value="Submit" />
       </form>
@@ -224,13 +253,15 @@ class NameForm extends React.Component {
 }
 ```
 
-**Forms**
+完整解决方案/框架：
 
-https://reactjs.org/docs/forms.html
+If you’re looking for a complete solution including validation, keeping track of the visited fields, and handling form submission, [Formik](https://jaredpalmer.com/formik) (is one of the popular choices. However, it is built on the same principles of controlled components and managing state)
 
-HTML form elements work a little bit differently from other DOM elements in React, because form elements naturally keep some internal state.
+antd
 
-##### Uncontrolled
+
+
+##### 2. Uncontrolled
 
 where form data is handled by the DOM itself. To write an uncontrolled component, instead of writing an event handler for every state update, you can [use a ref](https://reactjs.org/docs/refs-and-the-dom.html) to get form values from the DOM.
 
@@ -263,112 +294,7 @@ Likewise, <input type="checkbox"> and <input type="radio"> support defaultChecke
 In React, an <input type="file" /> is always an uncontrolled component because its value can only be set by a user, and not programmatically.
 ```
 
-#### Lists & Keys
-
-https://reactjs.org/docs/lists-and-keys.html
-
-Don’t pass something like `Math.random()` to keys. It is important that keys have a “stable identity” across re-renders so that React can determine when items are added, removed, or re-ordered. Ideally, keys should correspond to unique and stable identifiers coming from your data, such as `post.id`.
-
-Keys only make sense in the context of the surrounding array.
-
-```
-## wrong:
-function ListItem(props) {
-  const value = props.value;
-  return (
-    // Wrong! There is no need to specify the key here:
-    <li key={value.toString()}>
-      {value}
-    </li>
-  );
-}
-function NumberList(props) {
-  const numbers = props.numbers;
-  const listItems = numbers.map((number) =>
-    // Wrong! The key should have been specified here:
-    <ListItem value={number} />
-  );
-  return (
-    <ul>
-      {listItems}
-    </ul>
-  );
-}
-
-const numbers = [1, 2, 3, 4, 5];
-ReactDOM.render(
-  <NumberList numbers={numbers} />,
-  document.getElementById('root')
-);
-
-##correct:
-
-function ListItem(props) {
-  // Correct! There is no need to specify the key here:
-  return <li>{props.value}</li>;
-}
-function NumberList(props) {
-  const numbers = props.numbers;
-  const listItems = numbers.map((number) =>
-    // Correct! Key should be specified inside the array.
-    <ListItem key={number.toString()} value={number} />
-  );
-  return (
-    <ul>
-      {listItems}
-    </ul>
-  );
-}
-const numbers = [1, 2, 3, 4, 5];
-ReactDOM.render(
-  <NumberList numbers={numbers} />,
-  document.getElementById('root')
-);
-
-# JSX allows embedding any expression in curly braces so we could inline the map() result:
-function NumberList(props) {
-  const numbers = props.numbers;
-  return (
-    <ul>
-      {numbers.map((number) =>
-        <ListItem key={number.toString()}
-                  value={number} />
-      )}
-    </ul>
-  );
-}
-
-```
-
-
-
-#### Lifting State Up
-
-#### Refs
-
-https://reactjs.org/docs/refs-and-the-dom.html
-
-In the typical React dataflow, [props](https://reactjs.org/docs/components-and-props.html) are the only way that parent components interact with their children. To modify a child, you re-render it with new props. However, there are a few cases where you need to imperatively modify a child outside of the typical dataflow. The child to be modified could be an instance of a React component, or it could be a DOM element. For both of these cases, React provides an escape hatch.
-
-React supports a special attribute that you can attach to any component. The `ref` attribute can be an object created by [`React.createRef()` function](https://reactjs.org/docs/react-api.html#reactcreateref) or a callback function, or a string (in legacy API). When the `ref` attribute is a callback function, the function receives the underlying DOM element or class instance (depending on the type of element) as its argument. This allows you to have direct access to the DOM element or component instance.
-
-Use refs sparingly. If you find yourself often using refs to “make things happen” in your app, consider getting more familiar with [top-down data flow](https://reactjs.org/docs/lifting-state-up.html).
-
-可以在html element或者class component上面用ref，但是不可以在function component上面使用！ because they don’t have instances
-
-使用方式：
-
-推荐：When a ref is passed to an element in `render`, a reference to the node becomes accessible at the `current` attribute of the ref.
-
-即将移除：If you worked with React before, you might be familiar with an older API where the `ref` attribute is a string, like `"textInput"`, and the DOM node is accessed as `this.refs.textInput`. We advise against it because string refs have [some issues](https://github.com/facebook/react/pull/8333#issuecomment-271648615), are considered legacy, and **are likely to be removed in one of the future releases**.
-
-使用场景：
-
-1.没有设计好parent child，所以造成有时候只好偷懒通过ref直接操作child的dom，其实可以通过在parent维护state 然后传给child prop，然后在handler里面去更改state来解决
-
-2.但是有些情况下，确实需要通过拿到dom元素来获取其clientheight，scrollheight之类的，虽然读取需要ref，但是set还是尽量用state来更新，而不是直接通过dom去改变
-
-#### Handling Events
+#### 1.7.4 Handling Events
 
 https://reactjs.org/docs/handling-events.html
 
@@ -465,7 +391,7 @@ class LoggingButton extends React.Component {
 
 ```
 
-#### Conditional Rendering
+#### 1.7.5 Conditional Rendering
 
 ```
 // if else
@@ -530,15 +456,357 @@ function WarningBanner(props) {
 
 ```
 
+#### 1.7.6 Lists & Keys
+
+https://reactjs.org/docs/lists-and-keys.html
+
+Don’t pass something like `Math.random()` to keys. It is important that keys have a “stable identity” across re-renders so that React can determine when items are added, removed, or re-ordered. Ideally, keys should correspond to unique and stable identifiers coming from your data, such as `post.id`.
+
+Keys only make sense in the context of the surrounding array.
+
+```
+## wrong:
+function ListItem(props) {
+  const value = props.value;
+  return (
+    // Wrong! There is no need to specify the key here:
+    <li key={value.toString()}>
+      {value}
+    </li>
+  );
+}
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) =>
+    // Wrong! The key should have been specified here:
+    <ListItem value={number} />
+  );
+  return (
+    <ul>
+      {listItems}
+    </ul>
+  );
+}
+
+const numbers = [1, 2, 3, 4, 5];
+ReactDOM.render(
+  <NumberList numbers={numbers} />,
+  document.getElementById('root')
+);
+
+##correct:
+
+function ListItem(props) {
+  // Correct! There is no need to specify the key here:
+  return <li>{props.value}</li>;
+}
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) =>
+    // Correct! Key should be specified inside the array.
+    <ListItem key={number.toString()} value={number} />
+  );
+  return (
+    <ul>
+      {listItems}
+    </ul>
+  );
+}
+const numbers = [1, 2, 3, 4, 5];
+ReactDOM.render(
+  <NumberList numbers={numbers} />,
+  document.getElementById('root')
+);
+
+# JSX allows embedding any expression in curly braces so we could inline the map() result:
+function NumberList(props) {
+  const numbers = props.numbers;
+  return (
+    <ul>
+      {numbers.map((number) =>
+        <ListItem key={number.toString()}
+                  value={number} />
+      )}
+    </ul>
+  );
+}
+
+```
 
 
-### Reconciliation
+
+#### 1.7.7 Components设计思想
+
+##### Thinking in React 基本封装
+
+判断什么是state：
+
+1. Is it passed in from a parent via props? If so, it probably isn’t state.
+2. Does it remain unchanged over time? If so, it probably isn’t state.
+3. Can you compute it based on any other state or props in your component? If so, it isn’t state.
+
+谁是state拥有者：
+
+React is all about one-way data flow down the component hierarchy. It may not be immediately clear which component should own what state. For each piece of state in your application:
+
+- Identify every component that renders something based on that state.
+- Find a common owner component (a single component above all the components that need the state in the hierarchy).
+- Either the common owner or another component higher up in the hierarchy should own the state.
+- If you can’t find a component where it makes sense to own the state, create a new component solely for holding the state and add it somewhere in the hierarchy above the common owner component.
+
+
+
+##### Lifting State Up 联动类组件
+
+If something can be derived from either props or state, it probably shouldn’t be in the state. For example, instead of storing both `celsiusValue` and `fahrenheitValue`, we store just the last edited `temperature` and its `scale`. The value of the other input can always be calculated from them in the `render()` method. 
+
+When you see something wrong in the UI, you can use [React Developer Tools](https://github.com/facebook/react/tree/master/packages/react-devtools) to inspect the props and move up the tree until you find the component responsible for updating the state. This lets you trace the bugs to their source
+
+```js
+const scaleNames = {
+  c: 'Celsius',
+  f: 'Fahrenheit'
+};
+
+function toCelsius(fahrenheit) {
+  return (fahrenheit - 32) * 5 / 9;
+}
+
+function toFahrenheit(celsius) {
+  return (celsius * 9 / 5) + 32;
+}
+
+function tryConvert(temperature, convert) {
+  const input = parseFloat(temperature);
+  if (Number.isNaN(input)) {
+    return '';
+  }
+  const output = convert(input);
+  const rounded = Math.round(output * 1000) / 1000;
+  return rounded.toString();
+}
+
+function BoilingVerdict(props) {
+  if (props.celsius >= 100) {
+    return <p>The water would boil.</p>;
+  }
+  return <p>The water would not boil.</p>;
+}
+
+class TemperatureInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
+    this.props.onTemperatureChange(e.target.value);
+  }
+
+  render() {
+    const temperature = this.props.temperature;
+    const scale = this.props.scale;
+    return (
+      <fieldset>
+        <legend>Enter temperature in {scaleNames[scale]}:</legend>
+        <input value={temperature}
+               onChange={this.handleChange} />
+      </fieldset>
+    );
+  }
+}
+
+class Calculator extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleCelsiusChange = this.handleCelsiusChange.bind(this);
+    this.handleFahrenheitChange = this.handleFahrenheitChange.bind(this);
+    this.state = {temperature: '', scale: 'c'};
+  }
+
+  handleCelsiusChange(temperature) {
+    this.setState({scale: 'c', temperature});
+  }
+
+  handleFahrenheitChange(temperature) {
+    this.setState({scale: 'f', temperature});
+  }
+
+  render() {
+    const scale = this.state.scale;
+    const temperature = this.state.temperature;
+    const celsius = scale === 'f' ? tryConvert(temperature, toCelsius) : temperature;
+    const fahrenheit = scale === 'c' ? tryConvert(temperature, toFahrenheit) : temperature;
+
+    return (
+      <div>
+        <TemperatureInput
+          scale="c"
+          temperature={celsius}
+          onTemperatureChange={this.handleCelsiusChange} />
+        <TemperatureInput
+          scale="f"
+          temperature={fahrenheit}
+          onTemperatureChange={this.handleFahrenheitChange} />
+        <BoilingVerdict
+          celsius={parseFloat(celsius)} />
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(
+  <Calculator />,
+  document.getElementById('root')
+);
+```
+
+##### Containment 容器类组件(弹窗类和布局类)
+
+```
+--- 弹窗类
+Some components don’t know their children ahead of time. This is especially common for components like `Sidebar` or `Dialog` that represent generic “boxes”. We recommend that such components use the special `children` prop to pass children elements directly into their output:
+
+function FancyBorder(props) {
+  return (
+    <div className={'FancyBorder FancyBorder-' + props.color}>
+      {props.children}
+    </div>
+  );
+}
+function WelcomeDialog() {
+  return (
+    <FancyBorder color="blue">
+      <h1 className="Dialog-title">
+        Welcome
+      </h1>
+      <p className="Dialog-message">
+        Thank you for visiting our spacecraft!
+      </p>
+    </FancyBorder>
+  );
+}
+
+--- 布局类
+sometimes you might need multiple “holes” in a component. In such cases you may come up with your own convention instead of using children:
+
+function SplitPane(props) {
+  return (
+    <div className="SplitPane">
+      <div className="SplitPane-left">
+        {props.left}
+      </div>
+      <div className="SplitPane-right">
+        {props.right}
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <SplitPane
+      left={
+        <Contacts />
+      }
+      right={
+        <Chat />
+      } />
+  );
+}
+```
+
+##### Specialization 通用到定制
+
+a more “specific” component renders a more “generic” one and configures it with props
+
+```
+function Dialog(props) {
+  return (
+    <FancyBorder color="blue">
+      <h1 className="Dialog-title">
+        {props.title}
+      </h1>
+      <p className="Dialog-message">
+        {props.message}
+      </p>
+      {props.children}
+    </FancyBorder>
+  );
+}
+
+function WelcomeDialog() {
+  return (
+    <Dialog
+      title="Welcome"
+      message="Thank you for visiting our spacecraft!" />
+  );
+}
+
+class SignUpDialog extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSignUp = this.handleSignUp.bind(this);
+    this.state = {login: ''};
+  }
+
+  render() {
+    return (
+      <Dialog title="Mars Exploration Program"
+              message="How should we refer to you?">
+        <input value={this.state.login}
+               onChange={this.handleChange} />
+        <button onClick={this.handleSignUp}>
+          Sign Me Up!
+        </button>
+      </Dialog>
+    );
+  }
+
+  handleChange(e) {
+    this.setState({login: e.target.value});
+  }
+
+  handleSignUp() {
+    alert(`Welcome aboard, ${this.state.login}!`);
+  }
+}
+```
+
+##### More
+
+If you want to reuse non-UI functionality between components, we suggest extracting it into a separate JavaScript module. The components may import it and use that function, object, or a class, without extending it.
+
+#### 1.7.8 Refs
+
+https://reactjs.org/docs/refs-and-the-dom.html
+
+In the typical React dataflow, [props](https://reactjs.org/docs/components-and-props.html) are the only way that parent components interact with their children. To modify a child, you re-render it with new props. However, there are a few cases where you need to imperatively modify a child outside of the typical dataflow. The child to be modified could be an instance of a React component, or it could be a DOM element. For both of these cases, React provides an escape hatch.
+
+React supports a special attribute that you can attach to any component. The `ref` attribute can be an object created by [`React.createRef()` function](https://reactjs.org/docs/react-api.html#reactcreateref) or a callback function, or a string (in legacy API). When the `ref` attribute is a callback function, the function receives the underlying DOM element or class instance (depending on the type of element) as its argument. This allows you to have direct access to the DOM element or component instance.
+
+Use refs sparingly. If you find yourself often using refs to “make things happen” in your app, consider getting more familiar with [top-down data flow](https://reactjs.org/docs/lifting-state-up.html).
+
+可以在html element或者class component上面用ref，但是不可以在function component上面使用！ because they don’t have instances
+
+使用方式：
+
+推荐：When a ref is passed to an element in `render`, a reference to the node becomes accessible at the `current` attribute of the ref.
+
+即将移除：If you worked with React before, you might be familiar with an older API where the `ref` attribute is a string, like `"textInput"`, and the DOM node is accessed as `this.refs.textInput`. We advise against it because string refs have [some issues](https://github.com/facebook/react/pull/8333#issuecomment-271648615), are considered legacy, and **are likely to be removed in one of the future releases**.
+
+使用场景：
+
+1.没有设计好parent child，所以造成有时候只好偷懒通过ref直接操作child的dom，其实可以通过在parent维护state 然后传给child prop，然后在handler里面去更改state来解决
+
+2.但是有些情况下，确实需要通过拿到dom元素来获取其clientheight，scrollheight之类的，虽然读取需要ref，但是set还是尽量用state来更新，而不是直接通过dom去改变
+
+#### 1.7.9 Reconciliation
 
 https://reactjs.org/docs/reconciliation.html
 
 When a component’s props or state change, React decides whether an actual DOM update is necessary by comparing the newly returned element with the previously rendered one. When they are not equal, React will update the DOM. This process is called “reconciliation”.
-
-
 
 
 
@@ -843,6 +1111,16 @@ export const information = (props, isPortal = false) => {
 #### 其他常用语法
 
 ```
+we used the ES6 computed property name syntax to update the state key
+https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Object_initializer#Computed_property_names
+this.setState({
+  [name]: value
+});
+equivalent to this ES5 code:
+var partialState = {};
+partialState[name] = value;
+this.setState(partialState);
+
 import时候 {}
 const { BirdStore } = this.props;
 ==
