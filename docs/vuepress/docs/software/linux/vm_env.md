@@ -104,18 +104,19 @@ virtualbox (save the state) +LVM+ cmder/ConEmu/cygwin (x11, tmux session+tmux-re
 
 Other ssh client like: google chrome secure shell extension and http://web-console.org/
 
-#### 2.2.1 Host install
+#### 2.2.1 常用工具
 
 Mouse escape from ubuntu: Esc
 Mouse escape from centos: right click / right Ctrl
 
 screen size fit to full screen:  Devices -> Insert Guest Additions CD image
 
-**SSH:**
+##### **SSH:**
+
 sudo yum install -y openssh-server
 https://bytefreaks.net/gnulinux/centos-6-install-start-and-stop-enable-and-disable-ssh-server
 
-**Tmux:**
+##### **Tmux:**
 
 Auto install:
 
@@ -183,7 +184,15 @@ Recover: Ctrl+b ctrl+r
 
 ![](/docs/docs_image/software/linux/vm03.png)
 
+##### 其他
 
+z.sh 是一款可让你快速跳转到过去或最近经常访问的目录的命令行工具。 *https://github.com/rupa/z*
+
+how2是一款可以通过自然语言搜索问题及答案的命令行工具。 *https://github.com/santinic/how2*
+
+fzf 是一款用于文本模糊查找的命令行工具。*https://github.com/junegunn/fzf*
+
+tldr是一款命令行手册页简化工具，旨在让使用者能够更加清晰、简单的获得命令行工具的帮助信息。 *https://github.com/tldr-pages/tldr*
 
 #### 2.2.2 连接UI Display
 

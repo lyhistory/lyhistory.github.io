@@ -1545,3 +1545,10 @@ import React, { lazy } from 'react';
 const MyComponent = lazy(() => import("./MyComponent.js"));
 ```
 
+
+
+### TypeScript
+
+从 React 迁移到 TypeScript：忍受了 15 年的 JavaScript 错误从此走远
+
+https://mp.weixin.qq.com/s/EvOkI-g3VCzzzuh0Cc4AkA

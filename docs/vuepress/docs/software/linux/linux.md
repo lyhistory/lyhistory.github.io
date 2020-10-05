@@ -2,7 +2,7 @@
 
 ## 重定向/管道
 
-![](C:/docs/docs_image/software/linux/linux_redirect01.png)
+![](/docs/docs_image/software/linux/linux_redirect01.png)
 
 + 重定向
 
@@ -84,7 +84,13 @@ set -x 可以显示shell在执行什么程序
 
 当使用 sudo 时，系统会使用 /etc/sudoers 这个文件中规定的该用户的权限和环境变量
 
+## 系统相关
 
+### 内存
+
+Linux used 内存到底哪里去了？ https://mp.weixin.qq.com/s/-WG0kjK_YQxrXuPi-OebsQ
+
+![](/docs/docs_image/software/linux/linux_memory01.png)
 
 ## 包管理
 

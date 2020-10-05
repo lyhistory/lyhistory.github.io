@@ -21,3 +21,11 @@ https://www.namebase.io/blog/tutorial-1-what-is-handshake-and-hns/
 
 Tutorial 5: Difference between Handshake domains and traditional domains
 https://www.namebase.io/blog/tutorial-5-difference-between-handshake-domains-and-traditional-domains/
+
+
+
+
+
+**Decentralized Blog on Handshake and Skynet**
+
+https://learn.namebase.io/advanced-topics/developing-on-handshake
