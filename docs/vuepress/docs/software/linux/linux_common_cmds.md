@@ -1,16 +1,12 @@
-type 'cmd' 查看命令类型
+## Basic 
+
+查看命令类型:	type 'cmd' 
+
+查看系统：	cat /etc/os-release
 
 
 
-cat /etc/os-release
-
-$ tmux -f ~/.tmux.conf
-$ echo $TMUX
-/tmp/tmux-1001/default,22984,0
-
-
-
-GREP
+## GREP
 
 https://www.cyberciti.biz/faq/howto-use-grep-command-in-linux-unix/
 
@@ -26,6 +22,19 @@ find / -type f -name "Locations.xml" -print
 
 grep -H -r "/apex/apps/clearing/lib" ~ | cut -d: -f1 | sort -u
 
+
+
+## du/df
+
 由一次磁盘告警引发的血案 | 你知道 du 和 ls 区别吗？
 
 https://mp.weixin.qq.com/s/BMeSEcQbhC4dcH-oYEtE-g
+
+
+
+## crontab
+
+`/etc/crontab`是系统级别的crontab，系统的设置
+`crontab -e`是用户级的crontab
+linux下实际保存在`/var/spool/cron/username`中
+

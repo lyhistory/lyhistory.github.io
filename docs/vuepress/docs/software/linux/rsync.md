@@ -125,12 +125,16 @@ SYNOPSIS
 172.26.101.133（服务端） <= 172.26.101.140（客户端拉取）
 
 ```
-# yum install rsync
 从上面的man可以看到：
 如果是local没什么好讲的，
 如果是Access via remote shell，就是在src机器上执行rsync命令push或者dest机器上执行rsync命令pull，所以不存在服务端的概念；
 如果是Access via rsync daemon就需要引入服务端守护进程的概念，然后client端就可以从服务端pull或者push到服务端；
 
+下面是采用 Access via rsync daemon
+-------------------------------------------------------------------------
+--- 服务端
+-------------------------------------------------------------------------
+# yum install rsync
 # rpm -qc rsync
 /etc/rsyncd.conf
 /etc/sysconfig/rsyncd
@@ -202,20 +206,29 @@ chown -R rsync.rsync /backup/
 echo "rsync_backup:1" >/etc/rsync.password    密码设置为1
 chmod 600 /etc/rsync.password
 
+# 启动服务
+方法一：
 rsync --daemon --config=/etc/rsyncd.conf #启动服务
 kill `cat /var/rsync/rsyncd.pid` #停止服务
-or
+记得重启需要删除pid文件：
+rm /var/run/rsyncd.pid
+
+方法二：
+关闭selinux再使用systemctl，不然会出现后面的permission错误
 systemctl start rsyncd
 systemctl enable rsyncd
 
-记得重启需要删除pid文件：
-rm /var/run/rsyncd.pid
+-------------------------------------------------------------------------
+--- 客户端
+-------------------------------------------------------------------------
+# yum install rsync
 
 ##客户端推送到服务端
 rsync -avz /anything rsync_backup@172.26.101.133::test
 
 ##客户端从服务端拉取
 rsync -avz rsync_backup@172.26.101.133::gitlab_path /opt/gitlab
+
 免密模式：
 echo "1" >/etc/rsync.password  
 chmod 600 /etc/rsync.password
@@ -232,7 +245,7 @@ pull sample:
 rsync -avz --delete rsync_backup@remote_server::backup /opt --password-file=/etc/rsync.password  >/dev/null 2>&1
 push sample:
 rsync -vrtL --delete --progress /opt/* rsync_backup@remote_server::backup --password-file=/etc/rsync.password 
--v参数表示显示输出结果，r表示保持属性，t表示保持时间，L表示软link视作普通文件。
+-v参数表示显示输出结果，r表示保持属性，t表示保持时间，L表示软link视作普通文件, --delete有时候也很重要，参考troubleshooting的例子
 
 chmod 755  rsync.sh
 

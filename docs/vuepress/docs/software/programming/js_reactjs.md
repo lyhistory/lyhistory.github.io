@@ -941,6 +941,10 @@ var props = { x: 1, y: 1, z:1 };
 
 #### AutoBinding
 
+https://blog.csdn.net/qq_42817227/article/details/82689047
+
+https://www.cnblogs.com/daidechong/p/11586448.html
+
 In React components declared as ES6 classes, methods follow the same semantics as regular ES6 classes. This means that they don’t automatically bind `this` to the instance. You’ll have to explicitly use `.bind(this)` in the constructor:
 
 This means writing ES6 classes comes with a little more boilerplate code `this.handleClick = this.handleClick.bind(this);` for event handlers, but the upside is slightly better performance in large applications.

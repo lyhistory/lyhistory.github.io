@@ -199,3 +199,29 @@ $ /usr/local/nginx/sbin/nginx -s reload
 
 ```
 
+
+
+切换 root路径 从默认的相对路径 到 绝对路径
+
+出现 (13: permission denied)
+
+https://stackoverflow.com/questions/25774999/nginx-stat-failed-13-permission-denied
+
+方法一 更改默认用户为root
+
+```
+user  root;
+worker_processes  1;
+```
+
+
+
+方法二 添加文件权限给这个用户nobody或者将用户加到相应group
+
+```
+user  nobody;
+worker_processes  1;
+```
+
+
+

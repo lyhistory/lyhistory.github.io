@@ -420,9 +420,15 @@ auth_key?
 
 #### 1.3.2 监控grafana
 
-**基本登录**
+第一种基本登录 
 
-首先login配置（通过gitlab server第三方登录）
+​	grafana['disable_login_form'] = false
+
+​	gitlab-ctl set-grafana-password
+
+第二种方法：通过gitlab server第三方登录
+
+首先login配置
 
 172.26.101.134:8088/-/grafana/login
 
@@ -817,19 +823,27 @@ https://yum.postgresql.org/rpmchart/
 1 S postgres   995   987  0  80   0 - 62943 ep_pol 16:59 ?        00:00:00 postgres: stats collector
 1 S postgres   996   987  0  80   0 - 99486 ep_pol 16:59 ?        00:00:00 postgres: logical replication launcher
 
-## 为Praefect创建数据库：：
+```
+
+下一步 为Praefect创建数据库
+
+```
+刚开始想着从Praefect服务器直接连过来，发现失败
 
 # the database template1 is used because it is created by default on all PostgreSQL servers.
 /opt/gitlab/embedded/bin/psql -U postgres -d template1 -h POSTGRESQL_SERVER_ADDRESS
-> CREATE ROLE praefect WITH LOGIN CREATEDB PASSWORD 'PRAEFECT_SQL_PASSWORD';
-/opt/gitlab/embedded/bin/psql -U praefect -d template1 -h POSTGRESQL_SERVER_ADDRESS
-> CREATE DATABASE praefect_production WITH ENCODING=UTF8;
- By creating the database while connected as the praefect user, we are confident they have access.
+
 ```
 
-/opt/gitlab/embedded/bin/psql -U postgres -d praefect_production -h <POSTGRESQL_SERVER_ADDRESS>
 
-登录失败！ 参考《database/postgresql》的设置说明
+
+登录失败！ 需要修改监听端口和登录的方式，具体参考《database/postgresql》的设置说明
+
+另外如果有防火墙还要开端口
+
+firewall-cmd --permanent --add-port=5432/tcp
+
+firewall-cmd --reload
 
 ```
 su - postgres
@@ -837,8 +851,13 @@ su - postgres
 psql
 create user gitlabuser password 'gitlab';
 CREATE ROLE praefect WITH LOGIN CREATEDB PASSWORD 'PRAEFECT_SQL_PASSWORD';
-
+ALTER ROLE praefect with PASSWORD 'test';
+然后再从Praefect服务器用新创建的用户连过来
 /opt/gitlab/embedded/bin/psql -U praefect -d template1 -h 172.26.101.134
+
+> CREATE DATABASE praefect_production WITH ENCODING=UTF8;
+ By creating the database while connected as the praefect user, we are confident they have access.
+
 
 template1=> \du
                                    List of roles
@@ -876,6 +895,9 @@ Did not find any relations.
 !!!
 我发现后面我连了Praefect过来，同样全部为空，难道一台Praefect并没有用到这个db？？？
 !!!
+我错了，跟mysql语法不同！！！ Postgresql是用 \c praefect_production; 切换数据库！！！
+
+/opt/gitlab/embedded/bin/psql -U praefect -d praefect_production -h <POSTGRESQL_SERVER_ADDRESS>
 
 # create database gitlabdb with owner gitlab;
 # alter database gitlabdb set search_path to sgc2,public;
@@ -898,12 +920,6 @@ Did not find any relations.
 # revoke insert,update,delete on all tables in schema sgc2 from arch;
 
 ```
-
-开启端口：
-
-firewall-cmd --permanent --add-port=5432/tcp
-
-firewall-cmd --reload
 
 
 
@@ -1001,16 +1017,86 @@ praefect server open port 2305 and 9652 to gitlab server;
  sudo gitlab-rake gitlab:check SANITIZE=true
 
 gitlab server open api 8080? to gitaly server;
-​	on gitaly nodes: /opt/gitlab/embedded/service/gitlab-shell/bin/check -config /opt/gitlab/embedded/service/gitlab-shell/config.yml
+​	on gitaly nodes: 
+/opt/gitlab/embedded/service/gitlab-shell/bin/check -config /opt/gitlab/embedded/service/gitlab-shell/config.yml
+or
+/opt/gitlab/embedded/bin/gitaly-hooks check /var/opt/gitlab/gitaly/config.toml
+
 
 gitaly server open 9236 to gitlab server;	
 
 gitaly server open 8075 to praefect server; 
 ​	on praefect server: sudo /opt/gitlab/embedded/bin/praefect -config /var/opt/gitlab/praefect/config.toml dial-nodes
 
+prometheus_listen_addr
 Praefect的9652 和 Gitaly的9236：
-grafana打开explorer，输入gitlab_build_info
+grafana打开explorer，输入gitlab_build_info 结果中可以看到localhost的gitlab server，Praefect，以及三个Gitaly，如果看不到，就说明端口没有开启或者防火墙挡住
 ```
+
+通信TOKEN
+
+可以用`tool: openssl rand -base64 32` 生成
+
+```
+GITLAB_SHELL_SECRET_TOKEN: this is used by Git hooks to make callback HTTP API requests to GitLab when accepting a Git push. This secret is shared with GitLab Shell for legacy reasons.
+
+PRAEFECT_EXTERNAL_TOKEN: repositories hosted on your Praefect cluster can only be accessed by Gitaly clients that carry this token.
+
+PRAEFECT_INTERNAL_TOKEN: this token is used for replication traffic inside your Praefect cluster. This is distinct from PRAEFECT_EXTERNAL_TOKEN because Gitaly clients must not be able to access internal nodes of the Praefect cluster directly; that could lead to data loss.
+
+PRAEFECT_SQL_PASSWORD: this password is used by Praefect to connect to PostgreSQL.
+
+--------------------------------------------------------------------
+--- gitlab server:
+--------------------------------------------------------------------
+git_data_dirs({
+  "default" => {
+    "gitaly_address" => "tcp://<PRAEFECT IP>:2305",
+    "gitaly_token" => 'PRAEFECT_EXTERNAL_TOKEN'
+  }
+})
+
+gitlab_shell['secret_token'] = 'GITLAB_SHELL_SECRET_TOKEN'
+
+--------------------------------------------------------------------
+--- praefect:
+--------------------------------------------------------------------
+praefect['auth_token'] = 'PRAEFECT_EXTERNAL_TOKEN'
+
+
+praefect['database_host'] = '<TRACKING POSTGRESQL DATABASE IP>'
+praefect['database_port'] = 5432
+praefect['database_user'] = 'praefect'
+praefect['database_password'] = 'PRAEFECT_SQL_PASSWORD'
+praefect['database_dbname'] = 'praefect_production'
+
+# Name of storage hash must match storage name in git_data_dirs on GitLab
+# server ('praefect') and in git_data_dirs on Gitaly nodes ('gitaly-1')
+praefect['virtual_storages'] = {
+  'default' => {
+    'gitaly-1' => {
+      'address' => 'tcp://<GITALY VM1 IP>:8075',
+      'token'   => 'PRAEFECT_INTERNAL_TOKEN',
+    },
+    'gitaly-2' => {
+      'address' => 'tcp://<GITALY VM2 IP>:8075',
+      'token'   => 'PRAEFECT_INTERNAL_TOKEN'
+    },
+    'gitaly-3' => {
+      'address' => 'tcp://<GITALY VM3 IP>:8075',
+      'token'   => 'PRAEFECT_INTERNAL_TOKEN'
+    }
+  }
+}
+--------------------------------------------------------------------
+--- gitaly:
+--------------------------------------------------------------------
+gitaly['auth_token'] = 'PRAEFECT_INTERNAL_TOKEN'
+
+gitlab_shell['secret_token'] = 'GITLAB_SHELL_SECRET_TOKEN'
+```
+
+
 
 ### 3.2 gitrail-server multi-nodes
 
@@ -1143,6 +1229,109 @@ method 2：rsync
 参考《linux/rsync》
 
 https://www.jianshu.com/p/bc45631aa561
+
+```
+------------------------------------------------
+--- 服务器端
+------------------------------------------------
+yum install rsync
+
+vim /etc/rsyncd.conf
+​```
+# /etc/rsyncd: configuration file for rsync daemon mode
+
+# See rsyncd.conf man page for more options.
+
+# configuration example:
+
+uid = root
+gid = root
+use chroot = no
+#port = 973
+# max connections = 4
+pid file = /var/run/rsyncd.pid
+log file = /var/rsync/rsyncd.log
+secrets file = /etc/rsync.password
+# exclude = lost+found/
+# transfer logging = yes
+# timeout = 900
+# ignore nonreadable = yes
+# dont compress   = *.gz *.tgz *.zip *.z *.Z *.rpm *.deb *.bz2
+
+# [ftp]
+#        path = /home/ftp
+#        comment = ftp export area
+[gitlab_path1]
+comment = "/opt/gitlab"
+path = /opt/gitlab
+auth users = root, rsync_backup
+read only = yes 
+list = yes 
+hosts allow = <DEST IP>
+hosts deny = *
+[gitlab_path2]
+comment = "/var/opt/gitlab"
+path = /var/opt/gitlab
+auth users = root, rsync_backup
+read only = yes
+list = yes 
+hosts allow = <DEST IP>
+hosts deny = *
+[gitlab_path3]
+comment = "/etc/gitlab"
+path = /etc/gitlab
+auth users = root, rsync_backup
+read only = yes 
+list = yes 
+hosts allow = <DEST IP>
+hosts deny = *
+[gitlab_path4]
+comment = "/var/log/gitlab"
+path = /var/log/gitlab
+auth users = root, rsync_backup
+read only = yes 
+list = yes 
+hosts allow = <DEST IP>
+hosts deny = *
+[gitlab_path5]
+comment = "/run/gitlab"
+path = /run/gitlab
+auth users = root, rsync_backup
+read only = yes 
+list = yes 
+hosts allow = <DEST IP>
+hosts deny = *
+​```
+
+echo "rsync_backup:1" >/etc/rsync.password  
+chmod 600 /etc/rsync.password
+
+firewall-cmd --permanent --add-port=873/tcp
+firewall-cmd --reload
+
+------------------------------------------------
+--- 客户端
+------------------------------------------------
+yum install rsync
+
+echo "1" >/etc/rsync.password  
+chmod 600 /etc/rsync.password
+
+vim /opt/gitlab_rsync.sh
+
+rsync -avz --delete rsync_backup@<SOURCE IP>::gitlab_path1 /opt/gitlab --password-file=/etc/rsync.password >/dev/null 2>&1
+rsync -avz --delete rsync_backup@<SOURCE IP>::gitlab_path2 /var/opt/gitlab --password-file=/etc/rsync.password >/dev/null 2>&1
+rsync -avz --delete rsync_backup@<SOURCE IP>::gitlab_path3 /etc/gitlab --password-file=/etc/rsync.password >/dev/null 2>&1
+rsync -avz --delete rsync_backup@<SOURCE IP>::gitlab_path4 /var/log/gitlab --password-file=/etc/rsync.password >/dev/null 2>&1
+rsync -avz --delete rsync_backup@<SOURCE IP>::gitlab_path5 /run/gitlab --password-file=/etc/rsync.password >/dev/null 2>&1
+
+chmod 755 /opt/gitlab_rsync.sh
+
+echo "00 3 * * * root /opt/gitlab_rsync.sh" >> /etc/crontab
+
+```
+
+
 
 
 

@@ -1,7 +1,10 @@
-
 visual studio code不是visual studio哦，这个工具实在是强大，可以开发各种程序：
 Python、c++、nodejs等等，
 还有各种插件，比如PlatformIO，可以方便的开发各种硬件；
+
+
+
+**关于js npm eslint相关的安装参考《js_dev_overview》**
 
 ## 1.基本概念
 

@@ -235,6 +235,21 @@ b)执行脚本 scripts
 
 JSX: javascript extension 
 
+#### **Debug**
+
+```
+.eslintrc.js
+rules: {
+    'no-debugger': 0,
+    .....
+  }
+  
+然后代码里面可以用 debugger 下断点
+
+```
+
+
+
 ### 2.2 vscode
 
 #### 离线安装
