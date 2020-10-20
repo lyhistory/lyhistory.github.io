@@ -24,7 +24,10 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<ul>
 		<li><a href="/docs/software/programming/encoding">编码转码</a></li>
 		<li><a href="/docs/software/programming/regex">正则表达式</a></li>
-		<li><a href="/docs/software/programming/nodejs&reactjs">nodejs&reactjs开发</a></li>
+        <li><a href="/docs/software/programming/concepts">编程基础概念</a></li>
+        <li><a href="/docs/software/programming/assembly">汇编</a></li>
+		<li><a href="/docs/software/programming/js_dev_overview">javascript开发概览</a></li>
+        <li><a href="/docs/software/programming/js_reactjs">reactjs开发</a></li>
 		<!--<li><a href="/docs/software/programming/programming">编程基础</a></li>-->
 		<li><a href="/docs/software/webdev/webdev">web开发</a></li>
 		<li><a href="/docs/software/webdev/chromeextension">浏览器插件开发</a></li>
@@ -60,6 +63,12 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/network/vpn_trojan">trojan搭梯子</a></li>	
         <li><a href="/docs/software/linux/vm_env">开发测试环境-虚拟机和容器</a></li>
         <li><a href="/docs/software/linux/vm_env_network">基于virtualbox构建网络环境</a></li>
+        <li><a href="/docs/software/linux/linux">linux基础</a></li>
+        <li><a href="/docs/software/linux/linux_common_cmds">linux常用命令</a></li>
+        <li><a href="/docs/software/linux/linux_special_cmds">linux特殊命令</a></li>
+        <li><a href="/docs/software/linux/linux_kernel">linux内核</a></li>
+        <li><a href="/docs/software/linux/rsync">rsync</a></li>
+        <li><a href="/docs/software/linux/selinux">selinux</a></li>
 	</ul>
 	<p>-------------------------</p>
 	<h3>项目管理</h3>

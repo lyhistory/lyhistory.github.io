@@ -201,6 +201,18 @@ A telltale sign of DNS trouble is the ability to connect to a remote host by IP 
 :::ffff: 用于IPv4的IPv6套接字通信。应用和套接字方面，它是IPv6，但网络和就包而言，它是IPv4。
 In IPv6, you are allowed to remove leading zeros, and then remove consecutive zeros, meaning ::ffff: actually translates to 0000:0000:ffff:0000, this address has been designated as the IPv4 to IPv6 subnet prefix, so any IPv6 processor will understand it's working with an IPv4 address and handle it accordingly.
 
+**CIDR notation**
+
+```
+IP address ranges are commonly expressed using CIDR notation, for example, 192.168.0.0/16.
+
+IPv4 addresses consist of four 8-bit decimal values known as "octets", each separated by a dot. The value of each octet can range from 0 to 255, meaning that the lowest possible IPv4 address would be 0.0.0.0 and the highest 255.255.255.255.
+
+In CIDR notation, the lowest IP address in the range is written explicitly, followed by another number that indicates how many bits from the start of the given address are fixed for the entire range. For example, 10.0.0.0/8 indicates that the first 8 bits are fixed (the first octet). In other words, this range includes all IP addresses from 10.0.0.0 to 10.255.255.255. 
+```
+
+
+
 **Public ip vs nat**
 
 NAT stands for Network Address Translation. In the context of our network, NAT is how one (public) IP address is turned into many (private) IP addresses. 
@@ -262,6 +274,14 @@ HTTP/1.0为每一次HTTP的请求/响应建立一条新的TCP链接，因此一�
 另外，为了获得适当的传输速度，则需要TCP花费额外的回路链接时间（RTT）,每一次链接的建立需要这种经常性的开销，而其并不带有实际有用的数据，只是保证链接的可靠性，
 因此HTTP/1.1提出了可持续链接的实现方法-默认启用Keep-Alive。HTTP/1.1将只建立一次TCP的链接而重复地使用它传输一系列的请求/响应 消息，因此减少了链接建立的次数和经常性的链接开销。
 当然HTTP服务器端底层应该对tcp有超时设置，不然http client端如果不释放连接，有可能消耗掉TCP最大连接数，见后面的“一次排查send-q”；
+
+ASN即自治系统号(AutonomousSystemNumber) 也是应用层的概念：
+
+http://ip.yqie.com/tips/f94e7b8826754ce0a9fbe7c8a94f8b97.htm
+
+https://www.obj-sys.com/asn1tutorial/node1.html
+
+
 
 ## 2.Packet Sniffer
 
@@ -491,7 +511,7 @@ TIME_WAIT 状态：
 
 ## 4. 协议详解
 
-### 4.1 各种测试工具背后的协议
+### 4.1 各种分层背后的协议和测试工具
 
 **网络层的协议测试工具**
 ICMP协议：ping，tracert
