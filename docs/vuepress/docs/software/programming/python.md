@@ -176,7 +176,7 @@ Check chrome version because its auto upgrading
 
 https://chromedriver.storage.googleapis.com/index.html
 
-chromedriver.exe put in %AppData%\Local\Programs\Python\Python37-32\Scripts\
+chromedriver.exe put in `C:\Users\XXX\AppData\Local\Programs\Python\Python37-32\Scripts\`
 
 Wait for page loading
 https://stackoverflow.com/questions/26566799/how-to-wait-until-the-page-is-loaded-with-selenium-for-python

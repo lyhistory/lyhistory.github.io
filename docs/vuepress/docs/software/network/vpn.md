@@ -77,3 +77,9 @@ ipcheck.need.sh
 
 ### 3.4.避免全流量走海外ip，不然就是找死，全部流量一直访问国外某ip，这不是自投罗网么，ssr客户端全局代理模式，电脑端可以使用GFWList模式，手机端可以只设置浏览器走代理模式；
 
+
+
+## 4.搭建参考
+
+https://github.com/ttlequals0/autovpn
+

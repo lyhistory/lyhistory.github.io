@@ -177,8 +177,8 @@ data access layer 数据访问层，跟数据库的通信都是放在这一层�
 ~~但是缺点是如果页面发生跳转，跳转前的记录就会清除，这种情况只能采用抓包工具~~chrome已经提供了Preserve Log选项可以保存跳转前的链接；而对于手机app、桌面软件等，我们只能采用抓包工具来抓取，下面就介绍下常用的抓包方式：
 
 抓包工具分为cli命令行工具和带有UI界面的工具，cli工具如tcpdump，UI工具有fiddler/wireshark/burpsuite等；
-Fiddler只适用于windows平台，burpsuite是java写的跨平台，Fiddler和burpsuite在抓包上偏向请求和响应的数据，但是wireshark偏向于数据帧，跟tcpdump一个级别；Proxifier主要是给没有提供代理设置的桌面软件，Proxifier Standard Edition uses Winsock Layered Service Provider (Winsock LSP) to capture TCP connections and Winsock Name Space Provider (Winsock NSP) to handle name resolution over proxy. Both providers have to be properly installed in the system；
-网页版/桌面程序抓不到包：web.whatsapp走的不是https协议抓到包，无法解密：没有开启解密模式或安装代理软件的CA证书，或者网站或软件只接受自己设置的白名单列表CA
+Fiddler只适用于windows平台，burpsuite是java写的跨平台，Fiddler和burpsuite在抓包上偏向请求和响应的数据，但是wireshark偏向于数据帧，跟tcpdump一个级别；Proxifier主要是给没有提供代理设置的桌面软件，Proxifier Standard Edition uses Winsock Layered Service Provider (Winsock LSP) to capture TCP connections and Winsock Name Space Provider (Winsock NSP) to handle name resolution over proxy. Both providers have to be properly installed in the system；wireshark不提供代理，而是从底层抓取所有通过某个网卡的流量，如果需要监听某个特定程序的流量也很简单，只需要通过filter的本地端口过滤；
+为什么有些网页版/桌面程序抓不到包? 常见原因:web.whatsapp走的不是https协议抓到包，无法解密：没有开启解密模式或安装代理软件的CA证书，或者网站或软件只接受自己设置的白名单列表CA
 
 下面来具体分类说下：
 
@@ -208,8 +208,8 @@ https://medium.com/@faridhashmi733/fix-burp-suite-ssl-secure-connection-failed-8
 
 Fiddler+proxifier
 
-	本机+桌面软件（不可以设置代理的软件）：
-		配合Proxifier或其他
+本机+桌面软件（不可以设置代理的软件）：配合Proxifier或其他
+
 ![fiddler proxifier](/docs/docs_image/coder2hacker/ch2web/web04.png)
 
 _千万不要那个default走fiddler的proxy，不然会造成死循环，因为fiddler的流量也会被Proxifier拦截住，然后再发给自己，报错“proxifier detected that the application fiddler.exe get into an infinite connection loop”，另一个解决方案是增进Fiddler.exe Action放direct_
@@ -255,10 +255,19 @@ https://docs.telerik.com/fiddler/knowledgebase/fiddlerscript/modifyrequestorresp
 Fiddler+burpsuite
 	Fiddler gateway 转发给burpsuite
 
-wireshark 
-	ip.addr == 10.20.70.101 and frame contains "CALL"
+
+
++ wireshark 
+
+  终极杀器wireshark,可以设置监听某些网卡的流量,怎么监听某个特定应用程序的流量呢? 很简单通过过滤条件:
+
+  首先通过任务管理器查看pid或者tasklist | findstr SEARCH_STR获取pid,然后通过 netstat -ano|findstr PID 可以查到本机开启的client端端口，然后通过wireshark filter过滤：tcp.port=PORT_NUMBER
+
+  其他过滤条件举例:	ip.addr == 10.20.70.101 and frame contains "CALL"
 
 ​	ssl解密：通过设置环境变量SSLKEYLOGFILE
+
+
 
 **当然上面只是初步的抓包入门，实际情况会更复杂，比如很多app或网站程序都会利用各种策略和协议来阻止抓包，所以经常会遇到抓不到包的情况，进阶内容参照知识星球内的分享（知识号: coder2hacker）**
 

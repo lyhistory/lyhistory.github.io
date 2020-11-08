@@ -57,8 +57,10 @@ y2w copy 2 words
 
 中文 chcp 65001
 
-netstat -aon | findstr 'PORT'
-tasklist | findstr 'PID'
+tasklist | findstr STR
+
+netstat -aon | findstr PID
+
 taskkill /F /PID 'PID'
 
 ping to start:
