@@ -4,6 +4,16 @@
 
 查看系统：	cat /etc/os-release
 
+man
+
+tldr:	https://tldr.sh/
+
+```
+npm install -g tldr / pip install tldr
+sudo ln -s /home/lyhistory/.local/bin/tldr tldr
+
+```
+
 
 
 ## GREP

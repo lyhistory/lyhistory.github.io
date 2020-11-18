@@ -133,37 +133,15 @@ https://developer.microsoft.com/en-us/microsoft-edge/tools/vms
 
 ## 3 troubleshooting 
 
-#bridged mode not assign ip address and route
-Tried: dhclient eth0 
-https://unix.stackexchange.com/questions/174573/dhcp-kali-linux
-Havne’t try this manual method::ip route add default via ip-of-router-on-local-network dev enp0s3 https://superuser.com/questions/1075988/virtualbox-bridged-network-is-unreachable
+### bridged mode not assign ip address and route
++ 方法一： dhclient eth0 
+  https://unix.stackexchange.com/questions/174573/dhcp-kali-linux
+  Havne’t try this manual method::ip route add default via ip-of-router-on-local-network dev enp0s3 https://superuser.com/questions/1075988/virtualbox-bridged-network-is-unreachable
+
 ```
 less /var/logs/messages 
 Apr  1 03:05:04 kali NetworkManager[431]: <info>  [1554102304.0124] device (eth0): carrier: link connected
-Apr  1 03:05:04 kali NetworkManager[431]: <info>  [1554102304.0127] device (eth1): carrier: link connected
-Apr  1 03:05:04 kali NetworkManager[431]: <info>  [1554102304.0129] device (eth0): state change: unavailable -> disconnected (reason 'carrier-changed', sys-iface-state: 'managed')
-Apr  1 03:05:04 kali NetworkManager[431]: <info>  [1554102304.0147] device (eth1): state change: unavailable -> disconnected (reason 'carrier-changed', sys-iface-state: 'managed')
-Apr  1 03:05:04 kali NetworkManager[431]: <info>  [1554102304.0167] modem-manager: ModemManager available
-Apr  1 03:05:04 kali NetworkManager[431]: <info>  [1554102304.0171] policy: auto-activating connection 'Wired connection 1' (36cfa611-f6b6-4a31-9c9e-468d2df788be)
-Apr  1 03:05:04 kali NetworkManager[431]: <info>  [1554102304.0174] policy: auto-activating connection 'Wired connection 1' (36cfa611-f6b6-4a31-9c9e-468d2df788be)
-Apr  1 03:05:04 kali NetworkManager[431]: <info>  [1554102304.0178] device (eth0): Activation: starting connection 'Wired connection 1' (36cfa611-f6b6-4a31-9c9e-468d2df788be)
-Apr  1 03:05:04 kali NetworkManager[431]: <info>  [1554102304.0178] device (eth0): state change: disconnected -> deactivating (reason 'new-activation', sys-iface-state: 'managed')
-Apr  1 03:05:04 kali NetworkManager[431]: <info>  [1554102304.0180] manager: NetworkManager state is now DISCONNECTING
-Apr  1 03:05:04 kali NetworkManager[431]: <info>  [1554102304.0182] device (eth1): Activation: starting connection 'Wired connection 1' (36cfa611-f6b6-4a31-9c9e-468d2df788be)
-Apr  1 03:05:04 kali NetworkManager[431]: <info>  [1554102304.0184] device (eth1): state change: disconnected -> prepare (reason 'none', sys-iface-state: 'managed')
-Apr  1 03:05:04 kali NetworkManager[431]: <info>  [1554102304.0185] manager: NetworkManager state is now CONNECTING
-Apr  1 03:05:04 kali NetworkManager[431]: <info>  [1554102304.0187] device (eth0): state change: deactivating -> disconnected (reason 'new-activation', sys-iface-state: 'managed')
-Apr  1 03:05:04 kali NetworkManager[431]: <info>  [1554102304.0210] device (eth1): state change: prepare -> config (reason 'none', sys-iface-state: 'managed')
-Apr  1 03:05:04 kali NetworkManager[431]: <info>  [1554102304.0229] device (eth1): state change: config -> ip-config (reason 'none', sys-iface-state: 'managed')
-Apr  1 03:05:04 kali NetworkManager[431]: <info>  [1554102304.0440] dhcp4 (eth1): activation: beginning transaction (timeout in 45 seconds)
-Apr  1 03:05:04 kali NetworkManager[431]: <info>  [1554102304.1160] dhcp4 (eth1): dhclient started with pid 515
-Apr  1 03:05:05 kali NetworkManager[431]: <info>  [1554102305.3910] dhcp4 (eth1):   address 192.168.99.100
-Apr  1 03:05:05 kali NetworkManager[431]: <info>  [1554102305.3911] dhcp4 (eth1):   plen 24 (255.255.255.0)
-Apr  1 03:05:05 kali NetworkManager[431]: <info>  [1554102305.3911] dhcp4 (eth1):   lease time 1200
-Apr  1 03:05:05 kali NetworkManager[431]: <info>  [1554102305.3911] dhcp4 (eth1): state changed unknown -> bound
-Apr  1 03:05:05 kali NetworkManager[431]: <info>  [1554102305.3927] device (eth1): state change: ip-config -> ip-check (reason 'none', sys-iface-state: 'managed')
-Apr  1 03:05:05 kali NetworkManager[431]: <info>  [1554102305.3937] device (eth1): state change: ip-check -> secondaries (reason 'none', sys-iface-state: 'managed')
-Apr  1 03:05:05 kali NetworkManager[431]: <info>  [1554102305.3941] device (eth1): state change: secondaries -> activated (reason 'none', sys-iface-state: 'managed')
+...............
 Apr  1 03:05:05 kali NetworkManager[431]: <info>  [1554102305.3947] manager: NetworkManager state is now CONNECTED_LOCAL
 Apr  1 03:05:05 kali NetworkManager[431]: <info>  [1554102305.4044] device (eth1): Activation: successful, device activated.
 Apr  1 03:05:05 kali NetworkManager[431]: <info>  [1554102305.4072] manager: startup complete
@@ -173,23 +151,69 @@ dhclient eth0
 ```
 Apr  1 03:09:49 kali NetworkManager[431]: <info>  [1554102589.2543] keyfile: add connection /run/NetworkManager/system-connections/eth0.nmconnection (effc3b34-06a5-49dd-886b-d21223855eac,"eth0")
 Apr  1 03:09:49 kali NetworkManager[431]: <info>  [1554102589.2623] device (eth0): Activation: starting connection 'eth0' (effc3b34-06a5-49dd-886b-d21223855eac)
-Apr  1 03:09:49 kali NetworkManager[431]: <info>  [1554102589.2904] device (eth0): state change: disconnected -> prepare (reason 'none', sys-iface-state: 'external')
-Apr  1 03:09:49 kali NetworkManager[431]: <info>  [1554102589.2911] device (eth0): state change: prepare -> config (reason 'none', sys-iface-state: 'external')
-Apr  1 03:09:49 kali NetworkManager[431]: <info>  [1554102589.2913] device (eth0): state change: config -> ip-config (reason 'none', sys-iface-state: 'external')
-Apr  1 03:09:49 kali NetworkManager[431]: <info>  [1554102589.2915] device (eth0): state change: ip-config -> ip-check (reason 'none', sys-iface-state: 'external')
-Apr  1 03:09:49 kali NetworkManager[431]: <info>  [1554102589.2920] device (eth0): state change: ip-check -> secondaries (reason 'none', sys-iface-state: 'external')
-Apr  1 03:09:49 kali NetworkManager[431]: <info>  [1554102589.2922] device (eth0): state change: secondaries -> activated (reason 'none', sys-iface-state: 'external')
-Apr  1 03:09:49 kali NetworkManager[431]: <info>  [1554102589.3028] device (eth0): Activation: successful, device activated.
+.........
 Apr  1 03:09:49 kali NetworkManager[431]: <info>  [1554102589.3036] manager: NetworkManager state is now CONNECTED_GLOBAL
 ```
 
-?#Can access internet but cannot ping
++ 方法二
+
+  ```
+  宿主机查看当前网络：
+  Wireless LAN adapter Wi-Fi:
+  
+     Connection-specific DNS Suffix  . :
+     Description . . . . . . . . . . . : Intel(R) Dual Band Wireless-AC 8265
+     Physical Address. . . . . . . . . : 00-28-F8-22-E9-5D
+     DHCP Enabled. . . . . . . . . . . : Yes
+     Autoconfiguration Enabled . . . . : Yes
+     Link-local IPv6 Address . . . . . : fe80::61e4:8e32:fb58:74a4%26(Preferred)
+     IPv4 Address. . . . . . . . . . . : 192.168.0.141(Preferred)
+     Subnet Mask . . . . . . . . . . . : 255.255.255.0
+     Lease Obtained. . . . . . . . . . : Tuesday, 17 November 2020 10:59:55 AM
+     Lease Expires . . . . . . . . . . : Tuesday, 24 November 2020 10:59:54 AM
+     Default Gateway . . . . . . . . . : 192.168.0.1
+     DHCP Server . . . . . . . . . . . : 192.168.0.1
+     DHCPv6 IAID . . . . . . . . . . . : 134228216
+     DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-21-C8-05-55-00-28-F8-22-E9-5D
+     DNS Servers . . . . . . . . . . . : 172.17.5.36
+                                         172.17.5.4
+     NetBIOS over Tcpip. . . . . . . . : Enabled
+  
+  配置静态ip
+  /etc/network/interfaces：
+  #auto eth0
+  #iface eth0 inet dhcp
+  auto eth0
+  iface eth0 inet static
+  address 192.168.0.109
+  netmask 255.255.255.0
+  gateway 192.168.0.1
+  
+  sudo ifdown eth0
+  sudo ifup eth0
+  or
+  sudo /etc/init.d/networking restart
+  
+  如果还是无法上网：
+  /etc/resolv.conf
+  nameserver 8.8.8.8
+  
+  sudo systemctl restart systemd-resolved.service
+  
+  解决后看下当前路由情况：
+  route -n
+  ```
+
+  
+
+### Can access internet but cannot ping
+
 Firewall setting
 Outbound port 
 https://askubuntu.com/questions/608194/have-internet-connection-but-cant-ping-external-sites
 https://networkengineering.stackexchange.com/questions/37896/ping-port-number
 
-?#eth0 not found or not configured simply restart vm
+### eth0 not found or not configured simply restart vm
 https://askubuntu.com/questions/1060980/eth0-not-configured-but-it-was-working-earlier
 
 

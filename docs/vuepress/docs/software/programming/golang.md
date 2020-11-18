@@ -1,4 +1,21 @@
-《an introduction to programming in go》
+## install
+
+```
+https://golang.org/doc/install
+
+tar -C /usr/local -xzf go1.15.4.linux-amd64.tar.gz
+
+$HOME/.profile or /etc/profile (for a system-wide installation)
+export PATH=$PATH:/usr/local/go/bin
+
+go version
+```
+
+
+
+## grama
+
+refer《an introduction to programming in go》
 
 Page25
 Type 

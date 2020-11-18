@@ -105,6 +105,15 @@ pyinstaller --onefile <your_script_name>.py
 ## 3. Python Basics
 PEP 8 - Python 编码风格指南 https://drafts.damnever.com/2015/EPE8-style-guide-for-python-code.html
 
+python2 to python3
+
+```
+pip install 2to3
+2to3 . -w
+```
+
+
+
 ### 3.1 syntax
 https://www.w3schools.com/python/default.asp
 

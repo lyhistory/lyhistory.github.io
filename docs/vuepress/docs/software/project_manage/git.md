@@ -284,7 +284,7 @@ https://gitlab.com/help/ssh/README#rsa-ssh-keys
 
 
 
-## 4. git server
+## 4. git server & fork uptream
 
 https://git-scm.com/book/en/v2/Git-on-the-Server-Setting-Up-the-Server
 
@@ -338,7 +338,8 @@ upstream        http://<anotherip>/test.git (fetch)
 upstream        http://<anotherip>/test.git (push)
 $ git push origin master
 
-同步upstream到origin
+同步upstream到origin / sync forking repo
+https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/syncing-a-fork
 git fetch upstream
 git checkout master
 git pull upstream master or git merge upstream/master
