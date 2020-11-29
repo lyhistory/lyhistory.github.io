@@ -80,6 +80,9 @@ include:
 #   - vendor/ruby/
 footer:
   links:
+    - label: "Sea Shepherd 搞小日本"
+      icon: "fas fa-fw fa-whale"
+      url: https://seashepherd.org/
     - label: "AlphaWallet"
       icon: "fas fa-fw fa-university"
       url: https://alphawallet.com/

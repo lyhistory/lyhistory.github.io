@@ -9,9 +9,13 @@ man
 tldr:	https://tldr.sh/
 
 ```
-npm install -g tldr / pip install tldr
-sudo ln -s /home/lyhistory/.local/bin/tldr tldr
+npm install -g tldr 
+或者
+pip install tldr
 
+sudo ln -s /home/lyhistory/.local/bin/tldr tldr
+或者修改.bashrc
+export PATH=$PATH:$HOME/.local/bin
 ```
 
 

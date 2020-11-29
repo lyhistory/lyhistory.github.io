@@ -179,6 +179,7 @@ Apr  1 03:09:49 kali NetworkManager[431]: <info>  [1554102589.3036] manager: Net
                                          172.17.5.4
      NetBIOS over Tcpip. . . . . . . . : Enabled
   
+  --- for debain:
   配置静态ip
   /etc/network/interfaces：
   #auto eth0
@@ -194,7 +195,7 @@ Apr  1 03:09:49 kali NetworkManager[431]: <info>  [1554102589.3036] manager: Net
   or
   sudo /etc/init.d/networking restart
   
-  如果还是无法上网：
+  如果还是无法上网（上面172.17.5.36是某ISP提供的，貌似虚拟机无法用）：
   /etc/resolv.conf
   nameserver 8.8.8.8
   
@@ -202,8 +203,43 @@ Apr  1 03:09:49 kali NetworkManager[431]: <info>  [1554102589.3036] manager: Net
   
   解决后看下当前路由情况：
   route -n
-  ```
 
+  --- for centos
+  vim /etc/sysconfig/network-scripts/ifcfg-eth0
+  HWADDR=00:08:A2:0A:BA:B8
+  TYPE=Ethernet
+  #BOOTPROTO=dhcp
+  BOOTPROTO=none	
+  # Server IP #
+  IPADDR=192.168.0.110
+  # Subnet #
+  PREFIX=24
+  # Set default gateway IP #
+  GATEWAY=192.168.0.1
+  # Set dns servers #
+  DNS1=8.8.8.8
+  DEFROUTE=yes
+  IPV4_FAILURE_FATAL=no
+  # Disable ipv6 #
+  IPV6INIT=no
+  NAME=eth0
+  # This is system specific and can be created using 'uuidgen eth0' command #
+  UUID=41171a6f-bce1-44de-8a6e-cf5e782f8bd6
+  DEVICE=eth0
+  ONBOOT=yes
+  
+  systemctl restart network
+  
+  #Verify new IP settings:
+  ip a s eth0
+  #Verify new routing settings:
+  ip r
+  #Verify DNS servers settings:
+  cat /etc/resolv.conf
+  #Verify the internet connectivity:
+  ping -c 4 google.com
+  ```
+  
   
 
 ### Can access internet but cannot ping
