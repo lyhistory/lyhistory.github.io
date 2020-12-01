@@ -112,14 +112,19 @@ git clean -f (to remove the untracked changes) and -fd (to also remove untracked
 
 ### 1.6 Status check
 tig
+
+```
 git log
 https://www.atlassian.com/git/tutorials/git-log
 
 git log --graph --oneline --decorate --all
 //recent commit log
-git log -n 1 --pretty=format:%H -- clear-risk/src/main/java/com/quantdo/clear/risk/margin/impl/ApexSpanMarginJNICalculator.java
+git log -n 1 --pretty=format:%H -- test/src/main/java/test.java
 First git log -p | grep "Disruptor"
 Then git log –S ‘search text’
+
+某个文件的修改历史：
+git log --follow -p -- test/src/main/java/test.java
 
 git show commit-hash
 git show REVISION:/path/to/file
@@ -127,6 +132,9 @@ git show 15928170ffecd7022301a***:****.java
 https://stackoverflow.com/questions/1057564/pretty-git-branch-graphs
 
 git diff master..standardised-meetup-contract-xml
+```
+
+
 
 ### 1.7 cherry pick
 git log
@@ -193,6 +201,7 @@ git push
 https://gist.github.com/DavideMontersino/810ebaa170a2aa2d2cad
 https://stackoverflow.com/questions/6286571/are-git-forks-actually-git-clones
 Example:
+
 ```
 git clone https://github.com/lyhistory/xmlsectool.git
 cd xmlsectool/
@@ -326,7 +335,7 @@ https://blog.csdn.net/liuchaoxuan/article/details/80656145
 ```
 初始化
 $ git remote rename origin upstream
-C:\Workspace\Repository\clearSystemWeb>git remote -v
+C:\Workspace\Repository\test>git remote -v
 upstream        http://<anotherip>/test.git (fetch)
 upstream        http://<anotherip>/test.git (push)
 
@@ -475,3 +484,9 @@ Cheatsheet
 https://illustrated-git.readthedocs.io/en/latest/
 Take your Git practice to the next level    
     https://www.youtube.com/watch?v=eZRJyduqGuQ
+
+
+
+git仓库与项目源码分离
+
+https://blog.csdn.net/sinat_34349564/article/details/52442526

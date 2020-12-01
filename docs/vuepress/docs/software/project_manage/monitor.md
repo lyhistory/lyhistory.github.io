@@ -258,7 +258,7 @@ This usually means that the output is not valid Prometheus text format. Look for
 Scalability
 
 Thanos - a Scalable Prometheus with Unlimited Storage https://www.infoq.com/news/2018/06/thanos-scalable-prometheus
- 
+
 
 ### 2.2 influxdb
 
@@ -407,7 +407,7 @@ Auto start on system start
 https://serverfault.com/questions/96499/how-to-automatically-start-supervisord-on-linux-ubuntu
 
 #### 3.1.2 setup
- 
+
 ##### 3.1.2.1 env
 ![](/docs/docs_image/software/project_manage/monitor/monitor12.png)
 
@@ -417,7 +417,7 @@ http://docs.grafana.org/installation/upgrading/
 
 sudo yum install https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.2.2-1.x86_64.rpm
  /etc/grafna/grafana.ini
- 
+
 ##### 3.1.2.3 run integrated docker image
 1) run docker
 pull
@@ -740,7 +740,7 @@ make
 ./node_exporter
 
 ```
- 
+
 Add alias, never change original variables, 
 
 ?# node_exporter(latest Version 0.16.0) not showing on dashbaord 
@@ -863,7 +863,7 @@ cd /home/test/workspace/sonarqube
 ./sonarqube-7.8/bin/linux-x86-64/sonar.sh console
 
 Install sonarscanner on docker/jenkins
-sudo docker cp /home/test/workspace/ApexClear/sourcecode/ 0dc7a2730c43:/home/workspace/
+sudo docker cp /home/test/workspace/test/sourcecode/ 0dc7a2730c43:/home/workspace/
 
 Pipline 
 https://jenkins.io/doc/tutorials/build-a-java-app-with-maven/

@@ -1644,6 +1644,16 @@ vim /etc/gitlab/gitlab.rb
 # ruby_block[wait for praefect service socket] action run
 systemctl start gitlab-runsvdir
 gitlab-ctl reconfigure
+
+升级后查看版本号：
+https://docs.gitlab.com/omnibus/package-information/
+Once the Omnibus GitLab package is installed, all versions of the bundled libraries are located in /opt/gitlab/version-manifest.txt.
+
+gitlab server上可以执行： gitlab-rake gitlab:env:info
+Praefect和Gitaly上面不可以，可以通过：
+yum list installed|grep "gitlab"
+或
+cat /opt/gitlab/version-manifest.txt
 ```
 
 
@@ -1780,7 +1790,162 @@ https://docs.gitlab.com/ee/api/api_resources.html
 
 https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html
 
+### push失败问题
 
+https://gitlab.com/gitlab-org/gitaly/-/issues/3327
+
+```
+λ git push upstream someBranch
+Enumerating objects: 40, done.
+Counting objects: 100% (40/40), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (16/16), done.
+Writing objects: 100% (26/26), 18.56 KiB | 1.33 MiB/s, done.
+Total 26 (delta 6), reused 0 (delta 0)
+remote:
+remote: Create merge request for someBranch:
+remote:
+To http://****.git
+   018fd712..ea76148f  someBranch -> someBranch
+这个成功了
+λ git push origin master
+Enumerating objects: 267, done.
+Counting objects: 100% (229/229), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (63/63), done.
+Writing objects: 100% (174/174), 49.63 KiB | 5.51 MiB/s, done.
+Total 174 (delta 35), reused 162 (delta 24), pack-reused 0
+remote: Resolving deltas: 100% (35/35), completed with 12 local objects.
+这个就卡死在这里了
+λ git fsck
+Checking object directories: 100% (256/256), done.
+Checking objects: 100% (29945/29945), done.
+dangling blob 9706bd0d4e4b57714071d2f9cfb08461c0600fff
+dangling blob 9052226fc23fa9e83043335ea5ec13bc2f724bdc
+过了一天再执行就没有dangling blob了，所以这个应该没有什么关系
+```
+
+#### git client排查：
+https://confluence.atlassian.com/bitbucketserverkb/git-push-fails-fatal-the-remote-end-hung-up-unexpectedly-779171796.html
+
+.git/config
+```
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+	packedGitLimit = 512m 
+	packedGitWindowSize = 512m
+[pack] 
+	deltaCacheSize = 2047m 
+	packSizeLimit = 2047m 
+	windowMemory = 2047m	
+[remote "upstream"]
+	url = http://****.git
+	fetch = +refs/heads/*:refs/remotes/upstream/*
+[branch "master"]
+	remote = upstream
+	merge = refs/heads/master
+[gui]
+	wmstate = zoomed
+	geometry = 1109x563+224+224 442 255
+[branch "someBranch"]
+	remote = upstream
+	merge = refs/heads/someBranch
+[remote "origin"]
+	url = http://*****.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+```
+
+#### server端排查：
+nginx
+https://docs.gitlab.com/omnibus/settings/nginx.html
+client_max_body_size 200M;
+proxy_read_timeout
+
+/var/log/gitlab/gitlab-workhorse/current
+```
+{"correlation_id":"FiyLbvdSzA9","error":"handleReceivePack: smarthttp.ReceivePack: rpc error: code = Unavailable desc = PostReceivePack: exit status 128","level":"error","method":"POST","msg":"error","time":"2020-11-25T15:36:17+08:00","uri":"/test/git-receive-pack"}
+{"correlation_id":"FiyLbvdSzA9","duration_ms":932,"host":"172.16.101.160","level":"info","method":"POST","msg":"access","proto":"HTTP/1.1","referrer":"","remote_addr":"127.0.0.1:0","remote_ip":"127.0.0.1","status":200,"system":"http","time":"2020-11-25T15:36:17+08:00","uri":"/test/git-receive-pack","user_agent":"git/2.29.2.windows.2","written_bytes":779}
+                                                                                                                                                             
+{"correlation_id":"CRxXsx22P13","error":"handleReceivePack: smarthttp.ReceivePack: rpc error: code = Internal desc = failed proxying to secondary: rpc error: code = Unavailable desc = PostReceivePack: exit status 128","level":"error","method":"POST","msg":"error","time":"2020-11-25T16:32:25+08:00","uri":"/test/git-receive-pack"}
+{"correlation_id":"CRxXsx22P13","duration_ms":548,"host":"172.16.101.160","level":"info","method":"POST","msg":"access","proto":"HTTP/1.1","referrer":"","remote_addr":"127.0.0.1:0","remote_ip":"127.0.0.1","status":200,"system":"http","time":"2020-11-25T16:32:25+08:00","uri":"/test/git-receive-pack","user_agent":"git/2.29.2.windows.2","written_bytes":703}
+```
+/var/log/gitlab/gitaly/current 或者通过 gitlab-ctl tail gitaly
+```
+{"correlation_id":"guaTaM5Wcq4","grpc.code":"OK","grpc.meta.auth_version":"v2","grpc.meta.client_name":"gitlab-workhorse","grpc.meta.deadline_type":"none","grpc.method":"InfoRefsReceivePack","grpc.request.fullMethod":"/gitaly.SmartHTTPService/InfoRefsReceivePack","grpc.request.glProjectPath":"test/...","grpc.request.glRepository":"project-11","grpc.request.repoPath":"@hashed/4f/c8/4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8.git","grpc.request.repoStorage":"gitaly-1","grpc.request.topLevelGroup":"@hashed","grpc.service":"gitaly.SmartHTTPService","grpc.start_time":"2020-11-26T01:22:46Z","grpc.time_ms":4.995,"level":"info","msg":"finished streaming call with code OK","peer.address":"172.16.101.162:39070","pid":6702,"span.kind":"server","system":"grpc","time":"2020-11-26T01:22:46.594Z"}
+{"correlation_id":"mqo8zmozsw6","diskcache":"25dd57ac-cd11-46e1-9085-e7323e817a0d","grpc.meta.auth_version":"v2","grpc.meta.client_name":"gitlab-web","grpc.meta.deadline_type":"regular","grpc.method":"Cleanup","grpc.request.deadline":"2020-11-26T01:22:57Z","grpc.request.fullMethod":"/gitaly.RepositoryService/Cleanup","grpc.request.glProjectPath":"test/....","grpc.request.glRepository":"project-11","grpc.request.repoPath":"@hashed/4f/c8/4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8.git","grpc.request.repoStorage":"gitaly-1","grpc.request.topLevelGroup":"@hashed","grpc.service":"gitaly.RepositoryService","grpc.start_time":"2020-11-26T01:22:48Z","level":"info","msg":"diskcache state change","peer.address":"172.16.101.162:39070","pid":6702,"span.kind":"server","system":"grpc","time":"2020-11-26T01:22:48.683Z"}
+{"correlation_id":"mqo8zmozsw6","grpc.code":"OK","grpc.meta.auth_version":"v2","grpc.meta.client_name":"gitlab-web","grpc.meta.deadline_type":"regular","grpc.method":"Cleanup","grpc.request.deadline":"2020-11-26T01:22:57Z","grpc.request.fullMethod":"/gitaly.RepositoryService/Cleanup","grpc.request.glProjectPath":"test/....","grpc.request.glRepository":"project-11","grpc.request.repoPath":"@hashed/4f/c8/4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8.git","grpc.request.repoStorage":"gitaly-1","grpc.request.topLevelGroup":"@hashed","grpc.service":"gitaly.RepositoryService","grpc.start_time":"2020-11-26T01:22:48Z","grpc.time_ms":4.464,"level":"info","msg":"finished unary call with code OK","peer.address":"172.16.101.162:39070","pid":6702,"span.kind":"server","system":"grpc","time":"2020-11-26T01:22:48.683Z"}
+{"correlation_id":"mqo8zmozsw6","grpc.code":"OK","grpc.meta.auth_version":"v2","grpc.meta.client_name":"gitlab-web","grpc.meta.deadline_type":"regular","grpc.method":"GetNewLFSPointers","grpc.request.deadline":"2020-11-26T01:23:17Z","grpc.request.fullMethod":"/gitaly.BlobService/GetNewLFSPointers","grpc.request.glProjectPath":"test/....","grpc.request.glRepository":"project-11","grpc.request.repoPath":"@hashed/4f/c8/4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8.git","grpc.request.repoStorage":"gitaly-1","grpc.request.topLevelGroup":"@hashed","grpc.service":"gitaly.BlobService","grpc.start_time":"2020-11-26T01:22:48Z","grpc.time_ms":10.164,"level":"info","msg":"finished streaming call with code OK","peer.address":"172.16.101.162:39070","pid":6702,"span.kind":"server","system":"grpc","time":"2020-11-26T01:22:48.777Z"}
+{"correlation_id":"BSJbCoB1SJ8","duration_ms":568,"level":"info","method":"POST","msg":"Finished HTTP request","status":200,"time":"2020-11-26T01:22:48.813Z","url":"http://172.16.101.160/api/v4/internal/allowed"}
+{"correlation_id":"UxinibJuxD","duration_ms":45,"level":"info","method":"POST","msg":"Finished HTTP request","status":200,"time":"2020-11-26T01:22:48.859Z","url":"http://172.16.101.160/api/v4/internal/pre_receive"}
+{"grpc.code":"OK","grpc.meta.auth_version":"v2","grpc.meta.deadline_type":"none","grpc.method":"PreReceiveHook","grpc.request.fullMethod":"/gitaly.HookService/PreReceiveHook","grpc.request.glProjectPath":"test/....","grpc.request.glRepository":"project-11","grpc.request.repoPath":"@hashed/4f/c8/4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8.git","grpc.request.repoStorage":"gitaly-1","grpc.request.topLevelGroup":"@hashed","grpc.service":"gitaly.HookService","grpc.start_time":"2020-11-26T01:22:48Z","grpc.time_ms":616.497,"level":"info","msg":"finished streaming call with code OK","peer.address":"@","pid":6702,"span.kind":"server","system":"grpc","time":"2020-11-26T01:22:48.860Z"}
+{"grpc.code":"OK","grpc.meta.auth_version":"v2","grpc.meta.deadline_type":"none","grpc.method":"UpdateHook","grpc.request.fullMethod":"/gitaly.HookService/UpdateHook","grpc.request.glProjectPath":"test/....","grpc.request.glRepository":"project-11","grpc.request.repoPath":"@hashed/4f/c8/4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8.git","grpc.request.repoStorage":"gitaly-1","grpc.request.topLevelGroup":"@hashed","grpc.service":"gitaly.HookService","grpc.start_time":"2020-11-26T01:22:48Z","grpc.time_ms":0.222,"level":"info","msg":"finished streaming call with code OK","peer.address":"@","pid":6702,"span.kind":"server","system":"grpc","time":"2020-11-26T01:22:48.877Z"}
+
+{"error":"error voting on transaction: error voting on transaction: transaction was aborted","grpc.code":"Internal","grpc.meta.auth_version":"v2","grpc.meta.deadline_type":"none","grpc.method":"ReferenceTransactionHook","grpc.request.fullMethod":"/gitaly.HookService/ReferenceTransactionHook","grpc.request.glProjectPath":"test/....","grpc.request.glRepository":"project-11","grpc.request.repoPath":"@hashed/4f/c8/4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8.git","grpc.request.repoStorage":"gitaly-1","grpc.request.topLevelGroup":"@hashed","grpc.service":"gitaly.HookService","grpc.start_time":"2020-11-26T01:22:48Z","grpc.time_ms":14.148,"level":"error","msg":"finished streaming call with code Internal","peer.address":"@","pid":6702,"span.kind":"server","system":"grpc","time":"2020-11-26T01:22:48.905Z"}
+{"error":"error voting on transaction: error voting on transaction: rpc error: code = Internal desc = subtransaction has failed","grpc.code":"Internal","grpc.meta.auth_version":"v2","grpc.meta.deadline_type":"none","grpc.method":"ReferenceTransactionHook","grpc.request.fullMethod":"/gitaly.HookService/ReferenceTransactionHook","grpc.request.glProjectPath":"test/....","grpc.request.glRepository":"project-11","grpc.request.repoPath":"@hashed/4f/c8/4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8.git","grpc.request.repoStorage":"gitaly-1","grpc.request.topLevelGroup":"@hashed","grpc.service":"gitaly.HookService","grpc.start_time":"2020-11-26T01:22:48Z","grpc.time_ms":1.25,"level":"error","msg":"finished streaming call with code Internal","peer.address":"@","pid":6702,"span.kind":"server","system":"grpc","time":"2020-11-26T01:22:48.919Z"}
+{"correlation_id":"CqyeiP2Iyc8","grpc.meta.auth_version":"v2","grpc.meta.client_name":"gitlab-workhorse","grpc.meta.deadline_type":"none","grpc.method":"PostReceivePack","grpc.request.fullMethod":"/gitaly.SmartHTTPService/PostReceivePack","grpc.request.glProjectPath":"test/....","grpc.request.glRepository":"project-11","grpc.request.repoPath":"@hashed/4f/c8/4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8.git","grpc.request.repoStorage":"gitaly-1","grpc.request.topLevelGroup":"@hashed","grpc.service":"gitaly.SmartHTTPService","grpc.start_time":"2020-11-26T01:22:48Z","level":"error","msg":"error executing git hookerror executing git hookfatal: ref updates aborted by hook\\n","peer.address":"172.16.101.162:39070","pid":6702,"span.kind":"server","system":"grpc","time":"2020-11-26T01:22:48.920Z"}
+{"correlation_id":"CqyeiP2Iyc8","diskcache":"3764ffdd-944a-4977-b2ee-faa1360827ca","grpc.meta.auth_version":"v2","grpc.meta.client_name":"gitlab-workhorse","grpc.meta.deadline_type":"none","grpc.method":"PostReceivePack","grpc.request.fullMethod":"/gitaly.SmartHTTPService/PostReceivePack","grpc.request.glProjectPath":"test/....","grpc.request.glRepository":"project-11","grpc.request.repoPath":"@hashed/4f/c8/4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8.git","grpc.request.repoStorage":"gitaly-1","grpc.request.topLevelGroup":"@hashed","grpc.service":"gitaly.SmartHTTPService","grpc.start_time":"2020-11-26T01:22:48Z","level":"info","msg":"diskcache state change","peer.address":"172.16.101.162:39070","pid":6702,"span.kind":"server","system":"grpc","time":"2020-11-26T01:22:48.922Z"}
+```
+
+log的时区不同？
+https://docs.gitlab.com/ee/administration/timezone.html
+
+又尝试清缓存 通过rail console try to clear cache
+
+gitlab-rails console
+https://docs.gitlab.com/ee/administration/troubleshooting/gitlab_rails_cheat_sheet.html
+
+```
+p=Project.find_by(id:11)
+
+irb(main):026:0> pp p.statistics
+
+irb(main):027:0> p.statistics.refresh!
+
+irb(main):028:0> pp p.statistics
+
+=> #<ProjectStatistics id: 10, project_id: 11, namespace_id: 12, commit_count: 1355, storage_size: 8074035, repository_size: 7990149, lfs_objects_size: 0, build_artifacts_size: 0, shared_runners_seconds: 0, shared_runners_seconds_last_reset: nil, packages_size: 0, wiki_size: 83886, snippets_size: 0, pipeline_artifacts_size: 0>
+irb(main):029:0>
+```
+
+
+
+经过搜索最接近的是这里 https://gitlab.com/gitlab-org/gitaly/-/issues/3128 大概意思因为gitlab今年好像引入了Gitaly的新voting策略 所以看到不少类似问题，我们的不是primary failed vote，而是直接是vote error，因为我们的版本是13.4 他这里说是13.5做了一些关于voting的修正，这也许是为啥gitlab提醒我们 upgrade asap的原因
+
+
+
+#### 最终重现
+
+回想过程，想起来是先推送的其他分支，然后才推送了master，重现成功，虽然git client端错误有点不同，不再卡死，而是报错：
+
+```
+λ git push origin master
+Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
+error: RPC failed; HTTP 500 curl 22 The requested URL returned error: 500
+fatal: the remote end hung up unexpectedly
+fatal: the remote end hung up unexpectedly
+Everything up-to-date
+```
+
+但是服务器端是相同的错误
+
+```
+{"correlation_id":"WurcwnEEsXa","error":"handleReceivePack: smarthttp.ReceivePack: rpc error: code = Unavailable desc = PostReceivePack: exit status 128","level":"error","method":"POST","msg":"error","time":"2020-11-26T17:47:48+08:00","uri":"/yue.liu/test-mgr.git/git-receive-pack"}
+{"correlation_id":"WurcwnEEsXa","duration_ms":534,"host":"172.16.101.160","level":"info","method":"POST","msg":"access","proto":"HTTP/1.1","referrer":"","remote_addr":"127.0.0.1:0","remote_ip":"127.0.0.1","status":500,"system":"http","time":"2020-11-26T17:47:48+08:00","uri":"/yue.liu/test-mgr.git/git-receive-pack","user_agent":"git/2.29.2.windows.2","written_bytes":0}
+
+{"grpc.code":"OK","grpc.meta.auth_version":"v2","grpc.meta.deadline_type":"none","grpc.method":"PreReceiveHook","grpc.request.fullMethod":"/gitaly.HookService/PreReceiveHook","grpc.request.glProjectPath":"yue.liu/test-mgr","grpc.request.glRepository":"project-15","grpc.request.repoPath":"@hashed/e6/29/e629fa6598d732768f7c726b4b621285f9c3b85303900aa912017db7617d8bdb.git","grpc.request.repoStorage":"gitaly-2","grpc.request.topLevelGroup":"@hashed","grpc.service":"gitaly.HookService","grpc.start_time":"2020-11-26T09:47:58Z","grpc.time_ms":236.395,"level":"info","msg":"finished streaming call with code OK","peer.address":"@","pid":6188,"span.kind":"server","system":"grpc","time":"2020-11-26T09:47:58.387Z"}
+{"grpc.code":"OK","grpc.meta.auth_version":"v2","grpc.meta.deadline_type":"none","grpc.method":"UpdateHook","grpc.request.fullMethod":"/gitaly.HookService/UpdateHook","grpc.request.glProjectPath":"yue.liu/test-mgr","grpc.request.glRepository":"project-15","grpc.request.repoPath":"@hashed/e6/29/e629fa6598d732768f7c726b4b621285f9c3b85303900aa912017db7617d8bdb.git","grpc.request.repoStorage":"gitaly-2","grpc.request.topLevelGroup":"@hashed","grpc.service":"gitaly.HookService","grpc.start_time":"2020-11-26T09:47:58Z","grpc.time_ms":0.369,"level":"info","msg":"finished streaming call with code OK","peer.address":"@","pid":6188,"span.kind":"server","system":"grpc","time":"2020-11-26T09:47:58.410Z"}
+{"error":"error voting on transaction: error voting on transaction: transaction was aborted","grpc.code":"Internal","grpc.meta.auth_version":"v2","grpc.meta.deadline_type":"none","grpc.method":"ReferenceTransactionHook","grpc.request.fullMethod":"/gitaly.HookService/ReferenceTransactionHook","grpc.request.glProjectPath":"yue.liu/test-mgr","grpc.request.glRepository":"project-15","grpc.request.repoPath":"@hashed/e6/29/e629fa6598d732768f7c726b4b621285f9c3b85303900aa912017db7617d8bdb.git","grpc.request.repoStorage":"gitaly-2","grpc.request.topLevelGroup":"@hashed","grpc.service":"gitaly.HookService","grpc.start_time":"2020-11-26T09:47:58Z","grpc.time_ms":4.137,"level":"error","msg":"finished streaming call with code Internal","peer.address":"@","pid":6188,"span.kind":"server","system":"grpc","time":"2020-11-26T09:47:58.429Z"}
+{"error":"error voting on transaction: error voting on transaction: rpc error: code = Internal desc = subtransaction has failed","grpc.code":"Internal","grpc.meta.auth_version":"v2","grpc.meta.deadline_type":"none","grpc.method":"ReferenceTransactionHook","grpc.request.fullMethod":"/gitaly.HookService/ReferenceTransactionHook","grpc.request.glProjectPath":"yue.liu/test-mgr","grpc.request.glRepository":"project-15","grpc.request.repoPath":"@hashed/e6/29/e629fa6598d732768f7c726b4b621285f9c3b85303900aa912017db7617d8bdb.git","grpc.request.repoStorage":"gitaly-2","grpc.request.topLevelGroup":"@hashed","grpc.service":"gitaly.HookService","grpc.start_time":"2020-11-26T09:47:58Z","grpc.time_ms":1.062,"level":"error","msg":"finished streaming call with code Internal","peer.address":"@","pid":6188,"span.kind":"server","system":"grpc","time":"2020-11-26T09:47:58.444Z"}
+{"correlation_id":"WurcwnEEsXa","grpc.meta.auth_version":"v2","grpc.meta.client_name":"gitlab-workhorse","grpc.meta.deadline_type":"none","grpc.method":"PostReceivePack","grpc.request.fullMethod":"/gitaly.SmartHTTPService/PostReceivePack","grpc.request.glProjectPath":"yue.liu/test-mgr","grpc.request.glRepository":"project-15","grpc.request.repoPath":"@hashed/e6/29/e629fa6598d732768f7c726b4b621285f9c3b85303900aa912017db7617d8bdb.git","grpc.request.repoStorage":"gitaly-2","grpc.request.topLevelGroup":"@hashed","grpc.service":"gitaly.SmartHTTPService","grpc.start_time":"2020-11-26T09:47:58Z","level":"error","msg":"error executing git hookerror executing git hookfatal: ref updates aborted by hook\\n","peer.address":"172.16.101.162:54626","pid":6188,"span.kind":"server","system":"grpc","time":"2020-11-26T09:47:58.446Z"}
+{"correlation_id":"WurcwnEEsXa","diskcache":"e0a52ce2-2bda-474f-8df5-5ca5537df98c","grpc.meta.auth_version":"v2","grpc.meta.client_name":"gitlab-workhorse","grpc.meta.deadline_type":"none","grpc.method":"PostReceivePack","grpc.request.fullMethod":"/gitaly.SmartHTTPService/PostReceivePack","grpc.request.glProjectPath":"yue.liu/test-mgr","grpc.request.glRepository":"project-15","grpc.request.repoPath":"@hashed/e6/29/e629fa6598d732768f7c726b4b621285f9c3b85303900aa912017db7617d8bdb.git","grpc.request.repoStorage":"gitaly-2","grpc.request.topLevelGroup":"@hashed","grpc.service":"gitaly.SmartHTTPService","grpc.start_time":"2020-11-26T09:47:58Z","level":"info","msg":"diskcache state change","peer.address":"172.16.101.162:54626","pid":6188,"span.kind":"server","system":"grpc","time":"2020-11-26T09:47:58.448Z"}
+{"correlation_id":"WurcwnEEsXa","error":"rpc error: code = Canceled desc = rpc error: code = Unavailable desc = PostReceivePack: exit status 128","grpc.code":"Canceled","grpc.meta.auth_version":"v2","grpc.meta.client_name":"gitlab-workhorse","grpc.meta.deadline_type":"none","grpc.method":"PostReceivePack","grpc.request.fullMethod":"/gitaly.SmartHTTPService/PostReceivePack","grpc.request.glProjectPath":"yue.liu/test-mgr","grpc.request.glRepository":"project-15","grpc.request.repoPath":"@hashed/e6/29/e629fa6598d732768f7c726b4b621285f9c3b85303900aa912017db7617d8bdb.git","grpc.request.repoStorage":"gitaly-2","grpc.request.topLevelGroup":"@hashed","grpc.service":"gitaly.SmartHTTPService","grpc.start_time":"2020-11-26T09:47:58Z","grpc.time_ms":328.75,"level":"info","msg":"finished streaming call with code Canceled","peer.address":"172.16.101.162:54626","pid":6188,"span.kind":"server","system":"grpc","time":"2020-11-26T09:47:58.448Z"}
+{"correlation_id":"ldjgtuTb099","grpc.code":"OK","grpc.meta.auth_version":"v2","grpc.meta.client_name":"gitlab-web","grpc.meta.deadline_type":"regular","grpc.method":"FindCommit","grpc.request.deadline":"2020-11-26T09:48:28Z","grpc.request.fullMethod":"/gitaly.CommitService/FindCommit","grpc.request.glProjectPath":"test/...","grpc.request.glRepository":"project-9","grpc.request.repoPath":"@hashed/19/58/19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7.git","grpc.request.repoStorage":"gitaly-2","grpc.request.topLevelGroup":"@hashed","grpc.service":"gitaly.CommitService","grpc.start_time":"2020-11-26T09:47:59Z","grpc.time_ms":6.662,"level":"info","msg":"finished unary call with code OK","peer.address":"172.16.101.162:54626","pid":6188,"span.kind":"server","system":"grpc","time":"2020-11-26T09:47:59.660Z"}
+```
 
 ## Appendix
 

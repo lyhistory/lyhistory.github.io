@@ -30,7 +30,7 @@ find / -type f -name "mysql-connector-java-5.1.24.jar" -print
 
 find / -type f -name "Locations.xml" -print
 
-grep -H -r "/apex/apps/clearing/lib" ~ | cut -d: -f1 | sort -u
+grep -H -r "/apps/lib" ~ | cut -d: -f1 | sort -u
 
 
 

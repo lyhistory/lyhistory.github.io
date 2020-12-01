@@ -17,7 +17,7 @@ https://zookeeper.apache.org/doc/current/index.html
 Resolved: yum install glibc.i686
 ./bin/zkServer.sh start-foreground
 $ java -version
-bash: /apex/apps/dependency/java-se-8u40-ri/bin/java: /lib/ld-linux.so.2: bad ELF interpreter: No such file or directory
+bash: /apps/dependency/java-se-8u40-ri/bin/java: /lib/ld-linux.so.2: bad ELF interpreter: No such file or directory
 [clear@sgkc2-devclr-v08 dependency]$ /lib/ld-linux.so.2: bad ELF interpreter: No such file or directory
 
 
