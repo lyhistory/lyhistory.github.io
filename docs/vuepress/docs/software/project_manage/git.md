@@ -348,11 +348,14 @@ upstream        http://<anotherip>/test.git (push)
 $ git push origin master
 
 同步upstream到origin / sync forking repo
+git checkout master
+git pull upstream master 
+git push origin master
+OR 
 https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/syncing-a-fork
 git fetch upstream
 git checkout master
-git pull upstream master or git merge upstream/master
-git push origin master
+git merge upstream/main
 
 提交到upstream
 正常merge
