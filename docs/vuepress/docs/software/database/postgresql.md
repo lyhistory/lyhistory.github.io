@@ -21,7 +21,26 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 进入bash，输入psql就进入到plsql命令窗口，执行\l就可以看到所有db
 
+```
+为啥默认角色:postgres呢，执行：
+\du
+                                   List of roles
+ Role name |                         Attributes                         | Member of
+-----------+------------------------------------------------------------+-----------
+ _gvm      |                                                            | {dba}
+ dba       | Superuser, No inheritance, Cannot login                    | {}
+ postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
+
+可以创建更多角色
+sudo -u postgres createuser owning_user
+sudo -u postgres createdb -O owning_user dbname
+```
+
+
+
 理解一下posgresql的用户概念
+
+the `postgres` PostgreSQL user account already exists and is configured to be accessible via `peer` authentication for unix sockets in `pg_hba.conf`
 
 https://www.liquidweb.com/kb/what-is-the-default-password-for-postgresql/
 
@@ -190,6 +209,19 @@ p_cjrs rec_cjr[];
 
 ## 基本概念
 
+psql命令
+
+https://www.postgresql.org/docs/10/app-psql.html
+
+```
+\list
+\c [DATABASE]
+\d
+\du
+```
+
+
+
 表空间
 
 postgres=# select * from pg_tablespace;
@@ -199,9 +231,9 @@ postgres=# select * from pg_tablespace;
  1664 | pg_global  |       10 |        |
 (2 rows)
 
-
-
 https://www.tutorialspoint.com/postgresql/index.htm
+
+
 
 
 

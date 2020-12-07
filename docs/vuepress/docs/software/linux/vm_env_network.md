@@ -155,7 +155,7 @@ Apr  1 03:09:49 kali NetworkManager[431]: <info>  [1554102589.2623] device (eth0
 Apr  1 03:09:49 kali NetworkManager[431]: <info>  [1554102589.3036] manager: NetworkManager state is now CONNECTED_GLOBAL
 ```
 
-+ 方法二
++ 方法二 设置静态ip（注意ip不要冲突了，不然有各种异常出现）
 
   ```
   宿主机查看当前网络：
