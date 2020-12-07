@@ -1484,7 +1484,7 @@ Backup task is done.
 #自动
 sudo su -
 crontab -e
-0 2 * * * /opt/gitlab/bin/gitlab-backup GZIP_RSYNCABLE=yes create CRON=1
+0 2 * * * /opt/gitlab/bin/gitlab-backup create GZIP_RSYNCABLE=yes CRON=1
 ```
 
 ```
@@ -1604,7 +1604,25 @@ sudo gitlab-rake gitlab:check SANITIZE=true
 
 
 
-### 服务停止/升级/卸载
+### 服务升级/卸载
+
+这里有关于升级的policy：
+
+要注意：大小版本、ce还是ee及安装方法
+
+https://docs.gitlab.com/ee/update/
+
+比如如果是手动rpm package安装，参考：
+
+https://docs.gitlab.com/omnibus/update
+
+有个坑：Praefect和Gitaly升级都没问题，但是对于gitlab server，如果是在停止状态下升级，会出现错误，因为gitlab server升级时会进行自动备份，服务都停了就无法备份了，所以要`sudo touch /etc/gitlab/skip-auto-backup`关掉自动backup即可
+
+另外注意：
+
+When upgrading to a new major version, remember to first [check for background migrations](https://docs.gitlab.com/ee/update/README.html#checking-for-background-migrations-before-upgrading).
+
+其他如下：
 
 gitlab-ctl stop的坑：如果刚好你还在某个console里面，stop虽然显示全部down，但是ps -e|grep gitlab以及ps -e|grep postgres还是会看到一堆服务，
 

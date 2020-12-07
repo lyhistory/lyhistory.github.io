@@ -164,6 +164,24 @@ Git: Show all of the various changes to a single line in a specified file over t
 
 `git log -L 292,292:src/pages/basic/table/table/SeperateTable.jsx`
 
+### 1.9 authentication
+
+如何更新用户密码：
+
+for linux:
+
+```
+git config --global --unset user.password
+```
+
+
+
+for windows:
+
+```
+git config --global credential.helper wincred
+```
+
 
 
 ## 2.Advance
