@@ -278,13 +278,13 @@ ce版本源码：https://gitlab.com/gitlab-org/gitlab-foss/-/tree/master
 
 下面采用离线安装 https://docs.gitlab.com/omnibus/manual_install.html
 
-### 1.0 硬件准备
+### 2.1 硬件准备
 
 一台Praefect Server（存储空间可以给最低没关系）和三台gitaly server（git高可用的核心服务器，要求high CPU, high memory, fast storage）
 
 挂载磁盘大小需要注意，因为gitlab会写入一些数据到 /var/opt/gitlab，所以如果/var单独挂载需要注意
 
-### 1.1 dependency
+### 2.2 dependency
 
 ```
 # open HTTP, HTTPS and SSH access in the system firewall.
@@ -304,7 +304,7 @@ sudo systemctl enable postfix
 sudo systemctl start postfix
 ```
 
-### 1.2 rpm安装
+### 2.3 rpm安装
 
 ```
 # GitLab Community Edition
@@ -356,11 +356,11 @@ log路径：也是排查错误的路径
 
 
 
-### 1.3 Configuration
+### 2.4 Configuration
 
 https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md
 
-#### 1.3.1 前端gitlab-server url和api
+#### 2.4.1 前端gitlab-server url和api
 
 /etc/gitlab/gitlab.rb
 
@@ -418,7 +418,7 @@ sudo grep -nr "admin" /var/log/gitlab/
 
 auth_key?
 
-#### 1.3.2 监控grafana
+#### 2.4.2 监控grafana
 
 第一种基本登录 
 
@@ -604,7 +604,7 @@ providers:
 
 
 
-#### 1.3.3 邮箱
+#### 2.4.3 邮箱
 
 前面跳过了邮箱配置，这里采用external mail server gmail，但是奇怪的是postfix自动运行
 
@@ -627,7 +627,7 @@ ActionMailer::Base.smtp_settings
 
 ```
 
-#### 1.3.4 postgresql
+#### 2.4.4 postgresql
 
 https://docs.gitlab.com/omnibus/settings/database.html#connecting-to-the-bundled-postgresql-database
 
@@ -649,7 +649,7 @@ https://www.postgresql.org/docs/12/app-psql.html
 
 /opt/gitlab/embedded/bin/psql -U postgres -d gitlabhq_production -h <POSTGRESQL_SERVER_ADDRESS>
 
-#### 1.3.5 gitaly
+#### 2.4.5 gitaly
 
 vim /var/opt/gitlab/gitaly/config.toml
 
@@ -685,7 +685,7 @@ dir = "/opt/gitlab/embedded/service/gitlab-shell"
 gitlab_url = 'http://127.0.0.1:8080'
 ```
 
-#### 1.3.6 日志logrotate
+#### 2.4.6 日志logrotate
 
 /var/opt/gitlab/logrotate/logrotate.conf
 
@@ -700,7 +700,7 @@ include /var/opt/gitlab/logrotate/logrotate.d/gitlab-workhorse
 include /var/opt/gitlab/logrotate/logrotate.d/gitlab-pages
 ```
 
-#### 1.3.7 SSL & SSH
+#### 2.4.7 SSL & SSH
 
 https://docs.gitlab.com/omnibus/settings/ssl.html
 
@@ -722,11 +722,31 @@ https://docs.gitlab.com/ee/gitlab-basics/create-your-ssh-keys.html#create-and-ad
 ssh-keygen -t ed25519 -C "<comment>"
 ```
 
-### 1.4 商业版
+### 2.5 商业版
 
 [https://docs.gitlab.com/ee/user/admin_area/license.html#:~:text=Add%20your%20license%20at%20install,and%20filename%20for%20the%20license.](https://docs.gitlab.com/ee/user/admin_area/license.html#:~:text=Add your license at install,and filename for the license.)
 
 https://packages.gitlab.com/gitlab/gitlab-ee
+
+### 2.6 替换内置服务
+
+！！强烈不建议，因为会影响后续升级！！
+
+nginx
+
+jianshu.com/p/123778a515ca
+
+grafana
+
+postgresql
+
+
+
+反向代理
+
+https://cloud.tencent.com/developer/article/1437220
+
+配置排查参考：blog.csdn.net/weixin_43748870/article/details/86178042
 
 ## 3. High Availability
 
@@ -1006,6 +1026,10 @@ gitlab_url: "http://127.0.0.1:8080"
 就是对应的gitlab server上面的puma web服务（unicorn）
 
 #### 3.1.3 测试连通性
+
+单机版gitlab可以执行`gitlab-rake gitlab:check`即可全面单机检测
+
+但是对于我们的HA方案，即gitlab server->praefect->gitaly分开部署，则需要执行：
 
 ```
 postgresql server open port 5432 to praefect server;
@@ -1604,7 +1628,7 @@ sudo gitlab-rake gitlab:check SANITIZE=true
 
 
 
-### 服务升级/卸载
+### 服务升级(update policy)+卸载
 
 这里有关于升级的policy：
 
@@ -1674,31 +1698,156 @@ yum list installed|grep "gitlab"
 cat /opt/gitlab/version-manifest.txt
 ```
 
+## 5. CICD
+
+https://docs.gitlab.com/ee/ci/README.html
+
+### Overview
+
+CICD 典型workflow
+
+![](/docs/docs_image/software/project_manage/git/gitlab_workflow_example.png)
+
+![](/docs/docs_image/software/project_manage/git/gitlab_workflow_example_extended.png)
+
+1. Verify:
+   - Automatically build and test your application with Continuous Integration.
+   - Analyze your source code quality with [GitLab Code Quality](https://docs.gitlab.com/ee/user/project/merge_requests/code_quality.html).
+   - Determine the browser performance impact of code changes with [Browser Performance Testing](https://docs.gitlab.com/ee/user/project/merge_requests/browser_performance_testing.html). 
+   - Determine the server performance impact of code changes with [Load Performance Testing](https://docs.gitlab.com/ee/user/project/merge_requests/load_performance_testing.html). 
+   - Perform a series of tests, such as [Container Scanning](https://docs.gitlab.com/ee/user/application_security/container_scanning/index.html) , [Dependency Scanning](https://docs.gitlab.com/ee/user/application_security/dependency_scanning/index.html) , and [Unit tests](https://docs.gitlab.com/ee/ci/unit_test_reports.html).
+   - Deploy your changes with [Review Apps](https://docs.gitlab.com/ee/ci/review_apps/index.html) to preview the app changes on every branch.
+2. Package:
+   - Store Docker images with the [Container Registry](https://docs.gitlab.com/ee/user/packages/container_registry/index.html).
+   - Store packages with the [Package Registry](https://docs.gitlab.com/ee/user/packages/package_registry/index.html).
+3. Release:
+   - Continuous Deployment, automatically deploying your app to production.
+   - Continuous Delivery, manually click to deploy your app to production.
+   - Deploy static websites with [GitLab Pages](https://docs.gitlab.com/ee/user/project/pages/index.html).
+   - Ship features to only a portion of your pods and let a percentage of your user base to visit the temporarily deployed feature with [Canary Deployments](https://docs.gitlab.com/ee/user/project/canary_deployments.html). 
+   - Deploy your features behind [Feature Flags](https://docs.gitlab.com/ee/operations/feature_flags.html).
+   - Add release notes to any Git tag with [GitLab Releases](https://docs.gitlab.com/ee/user/project/releases/index.html).
+   - View of the current health and status of each CI environment running on Kubernetes with [Deploy Boards](https://docs.gitlab.com/ee/user/project/deploy_boards.html). 
+   - Deploy your application to a production environment in a Kubernetes cluster with [Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/stages.html#auto-deploy).
+
+With GitLab CI/CD you can also:
+
+- Easily set up your app’s entire lifecycle with [Auto DevOps](https://docs.gitlab.com/ee/topics/autodevops/index.html).
+- Deploy your app to different [environments](https://docs.gitlab.com/ee/ci/environments/index.html).
+- Install your own [GitLab Runner](https://docs.gitlab.com/runner/).
+- [Schedule pipelines](https://docs.gitlab.com/ee/ci/pipelines/schedules.html).
+- Check for app vulnerabilities with [Security Test reports](https://docs.gitlab.com/ee/user/application_security/index.html).
+
+### Setup
+
+```
+配置：
+GitLab CI/CD is configured by a file called .gitlab-ci.yml placed at the repository’s root. 
+逻辑：
+This file creates a pipeline, which runs for changes to the code in the repository. Pipelines consist of one or more stages that run in order and can each contain one or more jobs that run in parallel. These jobs (or scripts) get executed by the GitLab Runner agent.
+```
+
+.gitlab-ci.yml模板：
+
+https://gitlab.com/gitlab-org/gitlab-foss/tree/master/lib/gitlab/ci/templates
 
 
-## 5. 内置服务替换探索
 
-！！强烈不建议，因为会影响后续升级！！
+**Pipeline**
+
+https://docs.gitlab.com/ee/ci/pipelines/pipeline_architectures.html
+
+编写.gitlab-ci.yml时可以通过visualize查看pipeline
+
+**Runner&executor**
+
+https://docs.gitlab.com/runner/
+
+https://docs.gitlab.com/runner/executors/README.html
+
+```
+配置/注册：
+前端UI->Admin Area->Runners 以及 Settings > CI/CD and expand Runners
+https://docs.gitlab.com/runner/configuration/advanced-configuration.html
+/etc/gitlab-runner/config.toml
+
+After a runner is configured and available for your project, your CI/CD jobs can use the runner.
+
+Specify the name of the runner or its tags in your .gitlab-ci.yml file. Then, when you commit to your repository, the pipeline runs, and the runner’s executor processes the commands.
+```
+
+### 案例：JAVA application with Maven
+
+https://gitlab.com/gitlab-org/gitlab-foss/-/blob/master/lib/gitlab/ci/templates/Maven.gitlab-ci.yml
+
+```
+# Build JAVA applications using Apache Maven (http://maven.apache.org)
+# For docker image tags see https://hub.docker.com/_/maven/
+#
+# For general lifecycle information see https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
+
+# This template will build and test your projects
+# * Caches downloaded dependencies and plugins between invocation.
+# * Verify but don't deploy merge requests.
+# * Deploy built artifacts from master branch only.
+
+variables:
+  # This will suppress any download for dependencies and plugins or upload messages which would clutter the console log.
+  # `showDateTime` will show the passed time in milliseconds. You need to specify `--batch-mode` to make this work.
+  MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
+  # As of Maven 3.3.0 instead of this you may define these options in `.mvn/maven.config` so the same config is used
+  # when running from the command line.
+  # `installAtEnd` and `deployAtEnd` are only effective with recent version of the corresponding plugins.
+  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+
+# This template uses jdk8 for verifying and deploying images
+image: maven:3.3.9-jdk-8
+
+# Cache downloaded dependencies and plugins between builds.
+# To keep cache across branches add 'key: "$CI_JOB_NAME"'
+cache:
+  paths:
+    - .m2/repository
+
+# For merge requests do not `deploy` but only run `verify`.
+# See https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
+.verify: &verify
+  stage: test
+  script:
+    - 'mvn $MAVEN_CLI_OPTS verify'
+  except:
+    - master
+
+# Verify merge requests using JDK8
+verify:jdk8:
+  <<: *verify
+
+# To deploy packages from CI, create a ci_settings.xml file
+# For deploying packages to GitLab's Maven Repository: See https://docs.gitlab.com/ee/user/project/packages/maven_repository.html#creating-maven-packages-with-gitlab-cicd for more details.
+# Please note: The GitLab Maven Repository is currently only available in GitLab Premium / Ultimate.
+# For `master` branch run `mvn deploy` automatically.
+deploy:jdk8:
+  stage: deploy
+  script:
+    - if [ ! -f ci_settings.xml ];
+        then echo "CI settings missing\! If deploying to GitLab Maven Repository, please see https://docs.gitlab.com/ee/user/project/packages/maven_repository.html#creating-maven-packages-with-gitlab-cicd for instructions.";
+      fi
+    - 'mvn $MAVEN_CLI_OPTS deploy -s ci_settings.xml'
+  only:
+    - master
+```
 
 
 
-### 替换内置服务
+### 案例：自动生成merge request
 
-nginx
+https://about.gitlab.com/blog/2017/09/05/how-to-automatically-create-a-new-mr-on-gitlab-with-gitlab-ci/
 
-jianshu.com/p/123778a515ca
+### 案例 gitlab pages
 
-grafana
+https://docs.gitlab.com/ee/user/project/pages/getting_started/pages_from_scratch.html
 
-postgresql
-
-
-
-反向代理
-
-https://cloud.tencent.com/developer/article/1437220
-
-配置排查参考：blog.csdn.net/weixin_43748870/article/details/86178042
+注意这里job的名字是特定的pages，而且不需要配置runner: GitLab executes it in the background and doesn’t use runner.
 
 ## 6. Troubleshooting
 
@@ -1964,6 +2113,125 @@ Everything up-to-date
 {"correlation_id":"WurcwnEEsXa","error":"rpc error: code = Canceled desc = rpc error: code = Unavailable desc = PostReceivePack: exit status 128","grpc.code":"Canceled","grpc.meta.auth_version":"v2","grpc.meta.client_name":"gitlab-workhorse","grpc.meta.deadline_type":"none","grpc.method":"PostReceivePack","grpc.request.fullMethod":"/gitaly.SmartHTTPService/PostReceivePack","grpc.request.glProjectPath":"yue.liu/test-mgr","grpc.request.glRepository":"project-15","grpc.request.repoPath":"@hashed/e6/29/e629fa6598d732768f7c726b4b621285f9c3b85303900aa912017db7617d8bdb.git","grpc.request.repoStorage":"gitaly-2","grpc.request.topLevelGroup":"@hashed","grpc.service":"gitaly.SmartHTTPService","grpc.start_time":"2020-11-26T09:47:58Z","grpc.time_ms":328.75,"level":"info","msg":"finished streaming call with code Canceled","peer.address":"172.16.101.162:54626","pid":6188,"span.kind":"server","system":"grpc","time":"2020-11-26T09:47:58.448Z"}
 {"correlation_id":"ldjgtuTb099","grpc.code":"OK","grpc.meta.auth_version":"v2","grpc.meta.client_name":"gitlab-web","grpc.meta.deadline_type":"regular","grpc.method":"FindCommit","grpc.request.deadline":"2020-11-26T09:48:28Z","grpc.request.fullMethod":"/gitaly.CommitService/FindCommit","grpc.request.glProjectPath":"test/...","grpc.request.glRepository":"project-9","grpc.request.repoPath":"@hashed/19/58/19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7.git","grpc.request.repoStorage":"gitaly-2","grpc.request.topLevelGroup":"@hashed","grpc.service":"gitaly.CommitService","grpc.start_time":"2020-11-26T09:47:59Z","grpc.time_ms":6.662,"level":"info","msg":"finished unary call with code OK","peer.address":"172.16.101.162:54626","pid":6188,"span.kind":"server","system":"grpc","time":"2020-11-26T09:47:59.660Z"}
 ```
+
+### 版本升级后出现500无法访问project
+
+```
+还是常规操作查看gitlab server日志，刚开始我是一个个日志去/var/log/gitlab里面看，结果没发现异常，然后又去到Praefect和Gitaly都没异常，说明从gitlab server到Praefect到Gitaly一路畅通，最后其实是我漏了gitlab server的一些日志，通过这个命令可以看全面：
+gitlab-ctl tail
+==> /var/log/gitlab/nginx/gitlab_access.log <==
+10.30.30.94 - - [11/Dec/2020:11:15:26 +0800] "GET /assets/favicon-7901bd695fb93edb07975966062049829afb56cf11511236e61bcf425070e36e.png HTTP/1.1" 200 1611 "http://172.26.101.133/dummyproject/dummy_project" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36" -
+
+==> /var/log/gitlab/puma/puma_stdout.log <==
+{"timestamp":"2020-12-11T03:15:27.086Z","pid":10524,"message":"PumaWorkerKiller: Consuming 7400.09765625 mb with master and 8 workers."}
+
+==> /var/log/gitlab/gitlab-rails/production.log <==
+Started GET "/dummyproject/dummy_project" for 10.30.30.94 at 2020-12-11 11:15:30 +0800
+Processing by ProjectsController#show as HTML
+  Parameters: {"namespace_id"=>"dummyproject", "id"=>"dummy_project"}
+Completed 500 Internal Server Error in 123ms (ActiveRecord: 11.4ms | Elasticsearch: 0.0ms | Allocations: 30989)
+
+==> /var/log/gitlab/gitlab-rails/production_json.log <==
+{"method":"GET","path":"/dummyproject/dummy_project","format":"html","controller":"ProjectsController","action":"show","status":500,"time":"2020-12-11T03:15:30.561Z","params":[{"key":"namespace_id","value":"dummyproject"},{"key":"id","value":"dummy_project"}],"remote_ip":"10.30.30.94","user_id":1,"username":"root","ua":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0","correlation_id":"QlUs3cmwEw6","meta.user":"root","meta.project":"dummyproject/dummy_project","meta.root_namespace":"dummyproject","meta.caller_id":"ProjectsController#show","meta.feature_category":"projects","gitaly_calls":2,"gitaly_duration_s":0.015953,"redis_calls":18,"redis_duration_s":0.0048839999999999995,"redis_read_bytes":2804,"redis_write_bytes":2499,"redis_cache_calls":17,"redis_cache_duration_s":0.004227,"redis_cache_read_bytes":2621,"redis_cache_write_bytes":973,"redis_shared_state_calls":1,"redis_shared_state_duration_s":0.000657,"redis_shared_state_read_bytes":183,"redis_shared_state_write_bytes":1526,"queue_duration_s":0.136449,"cpu_s":0.26,"exception.class":"ActionView::Template::Error","exception.message":"undefined method `change_reviewer_merge_request' for #<NotificationSetting:0x00007f75ceb68438>","exception.backtrace":["app/views/shared/notifications/_custom_notifications.html.haml:29:in `public_send'","app/views/shared/notifications/_custom_notifications.html.haml:29","app/views/shared/notifications/_custom_notifications.html.haml:25:in `each'","app/views/shared/notifications/_custom_notifications.html.haml:25:in `each_with_index'","app/views/shared/notifications/_custom_notifications.html.haml:25","app/views/shared/notifications/_custom_notifications.html.haml:14","app/views/shared/notifications/_new_button.html.haml:34","app/views/shared/notifications/_new_button.html.haml:33","app/views/shared/notifications/_new_button.html.haml:12","app/views/projects/_home_panel.html.haml:47","app/views/projects/show.html.haml:12","app/controllers/application_controller.rb:134:in `render'","app/controllers/application_controller.rb:548:in `block in allow_gitaly_ref_name_caching'","lib/gitlab/gitaly_client.rb:318:in `allow_ref_name_caching'","app/controllers/application_controller.rb:547:in `allow_gitaly_ref_name_caching'","ee/lib/gitlab/ip_address_state.rb:10:in `with'","ee/app/controllers/ee/application_controller.rb:44:in `set_current_ip_address'","app/controllers/application_controller.rb:493:in `set_current_admin'","lib/gitlab/session.rb:11:in `with_session'","app/controllers/application_controller.rb:484:in `set_session_storage'","lib/gitlab/i18n.rb:73:in `with_locale'","lib/gitlab/i18n.rb:79:in `with_user_locale'","app/controllers/application_controller.rb:478:in `set_locale'","lib/gitlab/error_tracking.rb:52:in `with_context'","app/controllers/application_controller.rb:543:in `sentry_context'","app/controllers/application_controller.rb:471:in `block in set_current_context'","lib/gitlab/application_context.rb:54:in `block in use'","lib/gitlab/application_context.rb:54:in `use'","lib/gitlab/application_context.rb:21:in `with_context'","app/controllers/application_controller.rb:463:in `set_current_context'","lib/gitlab/metrics/elasticsearch_rack_middleware.rb:16:in `call'","lib/gitlab/middleware/rails_queue_duration.rb:33:in `call'","lib/gitlab/metrics/rack_middleware.rb:16:in `block in call'","lib/gitlab/metrics/transaction.rb:61:in `run'","lib/gitlab/metrics/rack_middleware.rb:16:in `call'","lib/gitlab/request_profiler/middleware.rb:17:in `call'","lib/gitlab/jira/middleware.rb:19:in `call'","lib/gitlab/middleware/go.rb:20:in `call'","lib/gitlab/etag_caching/middleware.rb:13:in `call'","lib/gitlab/middleware/multipart.rb:218:in `call'","lib/gitlab/middleware/handle_null_bytes.rb:19:in `call'","lib/gitlab/middleware/read_only/controller.rb:51:in `call'","lib/gitlab/middleware/read_only.rb:18:in `call'","lib/gitlab/middleware/same_site_cookies.rb:27:in `call'","lib/gitlab/middleware/basic_health_check.rb:25:in `call'","lib/gitlab/middleware/handle_ip_spoof_attack_error.rb:25:in `call'","lib/gitlab/middleware/request_context.rb:23:in `call'","config/initializers/fix_local_cache_middleware.rb:9:in `call'","lib/gitlab/metrics/requests_rack_middleware.rb:49:in `call'","lib/gitlab/middleware/release_env.rb:12:in `call'"],"db_duration_s":0.01144,"view_duration_s":0.0,"duration_s":0.12355,"db_count":26,"db_write_count":0,"db_cached_count":4}
+==> /var/log/gitlab/gitlab-rails/production.log <==
+
+ActionView::Template::Error (undefined method `change_reviewer_merge_request' for #<NotificationSetting:0x00007f75ceb68438>):
+    26:                   - field_id = "#{notifications_menu_identifier("modal", notification_setting)}_notification_setting[#{event}]"
+    27:                   .form-group
+    28:                     .form-check{ class: ("gl-mt-0" if index == 0) }
+    29:                       = check_box("notification_setting", event, id: field_id, class: "js-custom-notification-event form-check-input", checked: notification_setting.public_send(event))
+    30:                       %label.form-check-label{ for: field_id }
+    31:                         %strong
+    32:                           = notification_event_name(event)
+
+app/views/shared/notifications/_custom_notifications.html.haml:29:in `public_send'
+app/views/shared/notifications/_custom_notifications.html.haml:29
+app/views/shared/notifications/_custom_notifications.html.haml:25:in `each'
+app/views/shared/notifications/_custom_notifications.html.haml:25:in `each_with_index'
+app/views/shared/notifications/_custom_notifications.html.haml:25
+app/views/shared/notifications/_custom_notifications.html.haml:14
+app/views/shared/notifications/_new_button.html.haml:34
+app/views/shared/notifications/_new_button.html.haml:33
+app/views/shared/notifications/_new_button.html.haml:12
+app/views/projects/_home_panel.html.haml:47
+app/views/projects/show.html.haml:12
+app/controllers/application_controller.rb:134:in `render'
+app/controllers/application_controller.rb:548:in `block in allow_gitaly_ref_name_caching'
+lib/gitlab/gitaly_client.rb:318:in `allow_ref_name_caching'
+app/controllers/application_controller.rb:547:in `allow_gitaly_ref_name_caching'
+ee/lib/gitlab/ip_address_state.rb:10:in `with'
+ee/app/controllers/ee/application_controller.rb:44:in `set_current_ip_address'
+app/controllers/application_controller.rb:493:in `set_current_admin'
+lib/gitlab/session.rb:11:in `with_session'
+app/controllers/application_controller.rb:484:in `set_session_storage'
+lib/gitlab/i18n.rb:73:in `with_locale'
+lib/gitlab/i18n.rb:79:in `with_user_locale'
+app/controllers/application_controller.rb:478:in `set_locale'
+lib/gitlab/error_tracking.rb:52:in `with_context'
+app/controllers/application_controller.rb:543:in `sentry_context'
+app/controllers/application_controller.rb:471:in `block in set_current_context'
+lib/gitlab/application_context.rb:54:in `block in use'
+lib/gitlab/application_context.rb:54:in `use'
+lib/gitlab/application_context.rb:21:in `with_context'
+app/controllers/application_controller.rb:463:in `set_current_context'
+lib/gitlab/metrics/elasticsearch_rack_middleware.rb:16:in `call'
+lib/gitlab/middleware/rails_queue_duration.rb:33:in `call'
+lib/gitlab/metrics/rack_middleware.rb:16:in `block in call'
+lib/gitlab/metrics/transaction.rb:61:in `run'
+lib/gitlab/metrics/rack_middleware.rb:16:in `call'
+lib/gitlab/request_profiler/middleware.rb:17:in `call'
+lib/gitlab/jira/middleware.rb:19:in `call'
+lib/gitlab/middleware/go.rb:20:in `call'
+lib/gitlab/etag_caching/middleware.rb:13:in `call'
+lib/gitlab/middleware/multipart.rb:218:in `call'
+lib/gitlab/middleware/handle_null_bytes.rb:19:in `call'
+lib/gitlab/middleware/read_only/controller.rb:51:in `call'
+lib/gitlab/middleware/read_only.rb:18:in `call'
+lib/gitlab/middleware/same_site_cookies.rb:27:in `call'
+lib/gitlab/middleware/basic_health_check.rb:25:in `call'
+lib/gitlab/middleware/handle_ip_spoof_attack_error.rb:25:in `call'
+lib/gitlab/middleware/request_context.rb:23:in `call'
+config/initializers/fix_local_cache_middleware.rb:9:in `call'
+lib/gitlab/metrics/requests_rack_middleware.rb:49:in `call'
+lib/gitlab/middleware/release_env.rb:12:in `call'
+
+==> /var/log/gitlab/gitlab-workhorse/current <==
+{"content_type":"text/html; charset=utf-8","correlation_id":"QlUs3cmwEw6","duration_ms":297,"host":"172.26.101.133","level":"info","method":"GET","msg":"access","proto":"HTTP/1.1","referrer":"http://172.26.101.133/","remote_addr":"127.0.0.1:0","remote_ip":"127.0.0.1","status":500,"system":"http","time":"2020-12-11T11:15:30+08:00","uri":"/dummyproject/dummy_project","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0","written_bytes":2926}
+
+很容易就发现：
+ActionView::Template::Error (undefined method `change_reviewer_merge_request'这段，通过在gitlab.com 搜索后面的详情第一个error：“app/views/shared/notifications/_custom_notifications.html.haml:29:in `public_send'”
+得到：
+https://gitlab.com/gitlab-org/gitlab/-/issues/5752
+然后根据提示检查db migration：
+
+gitlab-rake db:migrate:status
+发现很多down的
+[root@sgkc2-cicd-v01 opt]# gitlab-rake db:migrate:status|grep notification
+   up     20190115054216  Add error notification sent to remote mirrors
+   up     20190320174702  Add lets encrypt notification email to application settings
+   up     20190327163904  Add notification email to notification settings
+   up     20190606014128  Add last ci minutes notification at to namespaces
+   up     20190621022810  Add last ci minutes usage notification level to namespaces
+   up     20190930082942  Add new release to notification settings
+   up     20191014123159  Add expire notification delivered to personal access tokens
+   up     20191111165017  Add fixed pipeline to notification settings
+   up     20200311192351  Add index on noteable type and noteable id to sent notifications
+   up     20200717163656  Add moved project to notification settings
+   up     20200729151021  Add after expiry notification delivered to personal access tokens
+  down    20200909083339  Add change reviewer merge request to notification settings
+  down    20200912152943  Rename admin notification email application setting
+  down    20200912153218  Cleanup admin notification email application setting rename
+  
+gitlab-rails dbconsole
+\d notification_settings
+确实没有 change_reviewer_merge_request
+然后 gitlab-rake db:migrate:status|grep notification_settings 会看到相关的脚本基本都down
+修复很简单，执行
+gitlab-rake db:migrate
+	
+```
+
+
 
 ## Appendix
 
