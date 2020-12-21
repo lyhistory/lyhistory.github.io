@@ -238,6 +238,18 @@ Apr  1 03:09:49 kali NetworkManager[431]: <info>  [1554102589.3036] manager: Net
   cat /etc/resolv.conf
   #Verify the internet connectivity:
   ping -c 4 google.com
+  
+  root@kali:/home/lyhistory# ip -4 addr
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+      inet 127.0.0.1/8 scope host lo
+         valid_lft forever preferred_lft forever
+  2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+      inet 192.168.0.109/24 brd 192.168.0.255 scope global eth0
+         valid_lft forever preferred_lft forever
+  
+  root@kali:/home/lyhistory# ip route
+  default via 192.168.0.1 dev eth0 onlink 
+  192.168.0.0/24 dev eth0 proto kernel scope link src 192.168.0.109 
   ```
   
   
