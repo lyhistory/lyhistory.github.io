@@ -18,6 +18,16 @@ sudo ln -s /home/lyhistory/.local/bin/tldr tldr
 export PATH=$PATH:$HOME/.local/bin
 ```
 
+## FIND
+
+```
+find . -size +1G -ls | sort -k7n
+
+find / -type f -name "mysql-connector-java-5.1.24.jar" -print
+
+find / -type f -name "Locations.xml" -print
+```
+
 
 
 ## GREP
@@ -29,10 +39,6 @@ https://www.cyberciti.biz/faq/howto-use-grep-command-in-linux-unix/
 grep -H -r "syscript" ~ | cut -d: -f1 | sort -u
 
 grep -H -r "create_db.sh" ~ | cut -d: -f1 | sort -u
-
-find / -type f -name "mysql-connector-java-5.1.24.jar" -print
-
-find / -type f -name "Locations.xml" -print
 
 grep -H -r "/apps/lib" ~ | cut -d: -f1 | sort -u
 

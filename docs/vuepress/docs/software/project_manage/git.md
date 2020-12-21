@@ -309,6 +309,18 @@ https://gitlab.com/help/ssh/README#rsa-ssh-keys
 
 ```
 
+**Make Your Life Easier With These Git Workflows:**
+
+```
+https://hackernoon.com/make-your-life-easier-with-these-git-workflows-part-i-mb243ztb
+!$ replaced with last used argument
+git commit --amend append changes to the previous commit
+git reset HEAD~1 undo the latest commit
+--soft keep workspace changes
+--hard discard workspace changes
+--force overwrite existing code in repository
+```
+
 
 
 ## 4. git server & fork uptream
