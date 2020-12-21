@@ -140,7 +140,10 @@ git diff master..standardised-meetup-contract-xml
 git log
 git show 60b3ccd807343ccce957aceecb36b1da81d34a45
 git stash --include-untracked
-git stash apply/pop
+
+git stash list
+
+git stash apply/pop (pop和apply有区别)
 https://stackoverflow.com/questions/15286075/difference-between-git-stash-pop-and-git-stash-apply
 
 git checkout master
