@@ -1646,13 +1646,17 @@ https://docs.gitlab.com/omnibus/update
 
 When upgrading to a new major version, remember to first [check for background migrations](https://docs.gitlab.com/ee/update/README.html#checking-for-background-migrations-before-upgrading).
 
+关于upgrade path，gitlab不保证每次升级都是100%成功的：
+
+“Although you can generally upgrade through multiple GitLab versions in one go, sometimes this can cause issues.Find where your version sits in the upgrade path below, and upgrade GitLab accordingly, while also consulting the [version-specific upgrade instructions](https://docs.gitlab.com/ee/update/README.html#version-specific-upgrading-instructions)” 例如参考Troubleshooting中的“版本升级后出现500无法访问project”
+
 其他如下：
 
 gitlab-ctl stop的坑：如果刚好你还在某个console里面，stop虽然显示全部down，但是ps -e|grep gitlab以及ps -e|grep postgres还是会看到一堆服务，
 
 ~~所以退出正在使用的所有gitlab console，再一次执行gitlab-ctl stop，实在不行进行kill -9或者gitlab-ctl kill <service>~~
 
-最终发现还需要关闭一个服务：
+如果是卸载还需要关闭一个服务：
 
 ```
 systemctl disable gitlab-runsvdir
