@@ -14,41 +14,20 @@ Non-tracking branch
 Understanding Tracking Branches in Git  https://lornajane.net/posts/2014/understanding-tracking-branches-in-git
 
 ### 1.2 Config
-Basic
-```
-	git config --global user.name "***"
-	git config --global user.email "***"
-```
-gitignore
-```
-	echo "**/.idea/*" >> .gitignore
-	git status
-	git add .gitignore
-	git commit -m "ignore idea subfolders"
-	
-	Add to ignore after Commit and pushed 
-	https://stackoverflow.com/questions/7927230/remove-directory-from-remote-repository-after-adding-them-to-gitignore
-	git rm -r --cached desktop/res/
-git commit -m "remove ignored directory /desktop/res"
-git status
-git add .
-git commit -m "ignore /desktop/res"
-git status
-git push origin feature/desktop-magiclink
-
-
-add and commit gitignore file
-git rm -r --cached .
-git add .
-git commit -m ".gitignore fix"
+**Authentication**
 
 ```
-display Chinese character
-git config core.quotepath false
+git config --global user.name "***"
+git config --global user.email "***"
 
-Adding a new SSH key to your GitHub account
+//如何更新用户密码：
+for linux:
+git config --global --unset user.password
+for windows:
+git config --global credential.helper wincred
+
+//Adding a new SSH key to your GitHub account
 https://help.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account
-```
 for windows user .ssh is under c:/users/<username>/
 
 ls -al ~/.ssh
@@ -61,11 +40,38 @@ ssh-add ~/.ssh/id_rsa
 clip < ~/.ssh/id_rsa.pub
 ```
 
+**Ignore**
+
+```
+//首次添加
+echo "**/.idea/*" >> .gitignore
+git status
+git add .gitignore
+git commit -m "ignore idea subfolders"
+	
+//Add to ignore after Commit and pushed 
+https://stackoverflow.com/questions/7927230/remove-directory-from-remote-repository-after-adding-them-to-gitignore
+git rm -r --cached desktop/res/
+git commit -m "remove ignored directory /desktop/res"
+git status
+git add .
+git commit -m "ignore /desktop/res"
+git status
+git push origin feature/desktop-magiclink
+
+```
+**display Chinese character**
+git config core.quotepath false
+
 ### 1.3 About repo
+```
 git remote -v
 
 Change repo url:
 git remote set-url origin git://test.com/repo.git
+```
+
+
 
 ### 1.4 About branch
 ```
@@ -89,19 +95,27 @@ git tag
 git checkout tags/v1.0.8
 ```
 
-### 1.5 Clean up & reset 
+### 1.5 About commit
+
+#### Clean up / reset / revert
+
 http://sethrobertson.github.io/GitFixUm/fixup.html
 
 **Git reflog**
 	List commit history
 
 **Git reset**
-git reset --hard <sha-id>
+
+```
+git reset --hard <sha-id>	git reset --hard origin/master
 git reset HEAD^ (unstage)
 //un-commit last un-pushed git commit without losing the changes
 git reset HEAD~1 --soft https://stackoverflow.com/questions/19859486/how-to-un-commit-last-un-pushed-git-commit-without-losing-the-changes/19859644
+```
 
 **Git revert**
+
+```
 a.to revert changes made to your working copy : git checkout .
 b.to revert changes made to the index which also called as unstage (i.e., that you have added): git reset  (e.g. git reset HEAD index.html)
 git reset did a great job of unstaging octodog.txt, but you'll notice that he's still there. He's just not staged anymore. It would be great if we could go back to how things were before octodog came around and ruined the party.
@@ -110,21 +124,51 @@ c.to revert a change that you have committed: git revert
 git clean -f (remove untracked file: new files,generated files)
 git clean -f (to remove the untracked changes) and -fd (to also remove untracked directories) http://stackoverflow.com/questions/61212/remove-local-untracked-files-from-my-current-git-branch
 
-### 1.6 Status check
-tig
+```
+
+#### Stash
 
 ```
-git log
-https://www.atlassian.com/git/tutorials/git-log
+git stash --include-untracked
 
+git stash list
+
+git stash apply/pop (pop和apply有区别)
+https://stackoverflow.com/questions/15286075/difference-between-git-stash-pop-and-git-stash-apply
+```
+
+#### Cherry pick
+
+git cherry-pick 60b3ccd807343ccce957aceecb36b1da81d34a45
+https://www.atlassian.com/git/tutorials/cherry-pick
+
+### 1.6 Version history and blame
+
+主要工具和命令：
+
+tig / git blame / git log
+
+```
+-p代表path
+--follow代表是否跟踪某个文件重命名前后
+
+//所有log
 git log --graph --oneline --decorate --all
+
+//Particular File Change History：
+git log -p -- src/pages/basic/table/table/SeperateTable.jsx
+git log --follow -p -- test/src/main/java/test.java
+
+//Show all of the various changes to a single line in a specified file over the entire git history
+git log -L 292,292:src/pages/basic/table/table/SeperateTable.jsx
+
 //recent commit log
 git log -n 1 --pretty=format:%H -- test/src/main/java/test.java
 First git log -p | grep "Disruptor"
 Then git log –S ‘search text’
 
-某个文件的修改历史：
-git log --follow -p -- test/src/main/java/test.java
+//Show what revision and author last modified each line of a file
+git blame
 
 git show commit-hash
 git show REVISION:/path/to/file
@@ -132,57 +176,6 @@ git show 15928170ffecd7022301a***:****.java
 https://stackoverflow.com/questions/1057564/pretty-git-branch-graphs
 
 git diff master..standardised-meetup-contract-xml
-```
-
-
-
-### 1.7 cherry pick
-git log
-git show 60b3ccd807343ccce957aceecb36b1da81d34a45
-git stash --include-untracked
-
-git stash list
-
-git stash apply/pop (pop和apply有区别)
-https://stackoverflow.com/questions/15286075/difference-between-git-stash-pop-and-git-stash-apply
-
-git checkout master
-git reset --hard origin/master
-git cherry-pick 60b3ccd807343ccce957aceecb36b1da81d34a45
-https://www.atlassian.com/git/tutorials/cherry-pick
-
-
-
-### 1.8 history and blame
-
-Show what revision and author last modified each line of a file
-
-`git-blame`
-
-Git – Particular File Change History
-
-`git log -p -- src/pages/basic/table/table/SeperateTable.jsx`
-
-Git: Show all of the various changes to a single line in a specified file over the entire git history
-
-`git log -L 292,292:src/pages/basic/table/table/SeperateTable.jsx`
-
-### 1.9 authentication
-
-如何更新用户密码：
-
-for linux:
-
-```
-git config --global --unset user.password
-```
-
-
-
-for windows:
-
-```
-git config --global credential.helper wincred
 ```
 
 
@@ -201,7 +194,19 @@ https://www.youtube.com/watch?v=t3Qhon7burE
 
 3) worktree
 
-### 2.2 about fork:
+https://www.youtube.com/watch?v=h1bifLAnrXA
+
+```
+ tig
+ git worktree add ../TestWT
+ tig
+ git worktree list
+ git worktree remove --force TestWT
+```
+
+
+
+### 2.2 About fork
 1) normal fork
 https://www.youtube.com/watch?v=_NrSWLQsDL4
 
@@ -242,12 +247,8 @@ git push upstream master
 3) auto sync from upstream/origin
 https://stackoverflow.com/questions/23793062/can-forks-be-synced-automatically-in-github
 
-### 2.3 about workflow - wrap up all the previous knowledge
-#### 2.3.1 Available tools
-1) git cherry-pick
-2) git stash
-git stash list
-git stash apply
+### 2.3 About workflow - wrap up all the previous knowledge
+
 shelve changes / git stack https://www.youtube.com/watch?v=Zb8k8q8n8Ao
 
 3) git merge and git rebase
@@ -272,21 +273,7 @@ now is good to do merge
 Basic Branching and Merging https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging
 GIT: FETCH AND MERGE, DON’T PULL http://longair.net/blog/2009/04/16/git-fetch-and-merge/
 
-4)  worktree
-https://www.youtube.com/watch?v=h1bifLAnrXA
-
-   	 tig
-   	 git worktree add ../TestWT
-   	 tig
-   	 git worktree list
-   	 git worktree remove --force TestWT
-
-5) fork
-
-6) git flow
-
-### 2.4 Other low frequency stuff
-create pull request
+create merge request / pull request
 How to Git PR From The Command Line https://hackernoon.com/how-to-git-pr-from-the-command-line-a5b204a57ab1
 
 ## 3.Best Practice
@@ -326,7 +313,7 @@ git reset HEAD~1 undo the latest commit
 
 
 
-## 4. git server & fork uptream
+## 4. 案例：set up git server & fork uptream
 
 https://git-scm.com/book/en/v2/Git-on-the-Server-Setting-Up-the-Server
 
