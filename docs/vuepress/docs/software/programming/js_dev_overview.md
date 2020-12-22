@@ -682,17 +682,45 @@ https://mobx.js.org/getting-started.html
 	will not fire initially, only on change
 + transactions
 + actions
-	strict mode: only allow data modified in actions
+	
   ```
+  strict mode: only allow data modified in actions
   "never" (default): State can be modified from anywhere
   "observed": All state that is observed somewhere needs to be changed through actions. This is the recommended strictness mode in non-trivial applications.
   "always": State always needs be updated (which in practice also includes creation) in actions.
   import { configure } from "mobx"
   // don't allow state modifications outside actions
   configure({ enforceActions: "always" })
-  ```
-  @action @action.bound https://stackoverflow.com/questions/48639891/difference-between-mobxs-action-bound-and-arrow-functions-on-class-functions
-
+  
+#关于runInAction，在strict模式下，所有的setState操作都必须在action方法中，比如：
+	loadWeather = city => {
+	  fetch(
+	    `https://abnormal-weather-api.herokuapp.com/cities/search?city=${city}`
+	  )
+	    .then(response => response.json())
+	    .then(data => {
+	      this.setWeatherData(data);   //   <==== here
+	    });
+	};
+	
+	@action
+	setWeatherData = data => {
+	  this.weatherData = data;   
+	};
+	
+	可以看到这种写法为了设置weatherData还需要写一个action方法，可以通过runInAction简写成
+	loadWeatherRunInThen = city => {
+	  fetch(`https://abnormal-weather-api.herokuapp.com/cities/search?city=${city}`)
+	    .then(response => response.json())
+	    .then(data => {
+	      runInAction(() => {
+	        this.weatherData = data;         // <====== We dont have to define an action
+	      });
+	    });
+	};
+	```
+	@action @action.bound https://stackoverflow.com/questions/48639891/difference-between-mobxs-action-bound-and-arrow-functions-on-class-functions
+	
 + Use the @observer decorator from the mobx-react package to make your React components truly reactive. They will update automatically and efficiently. Even when used in large complex applications with large amounts of data.
 
 mobx vs  redux:
