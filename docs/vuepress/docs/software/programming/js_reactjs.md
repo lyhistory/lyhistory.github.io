@@ -922,6 +922,20 @@ Component:
 2)	componentDidMount is the API invoked after React renders a component in the DOM.
 3)	render is the API that “draws” the component on the screen.
 
+#### 生命周期排查
+
+某个项目，由于需求是高度定制化的类似Excel的表格，市面没有现成产品，所以某高人通过模仿antd写了一套原生的表格组件，层层嵌套，大概是windowtable下面包了一层table叫Seperatetable
+
+县看下普通组件生命周期
+
+![](/docs/docs_image/software/programming/reactjs_lifecycle_01.png)
+
+实际项目中，会将api调用获取数据逻辑放在didmount里面（为什么不放在willmount？好像有问题），所以获取数据后必然会触发setSate数据变动操作，从而有一次引发render，这都是正常的，但是因为高人哥们包装的不算太好，造成render完之后Seperatetable又多了一次render，然后windowtable接着触发render，由此循环几次才结束，分析如下
+
+![](/docs/docs_image/software/programming/reactjs_lifecycle_02.png)
+
+此问题还在研究中
+
 ### ES6
 
 
