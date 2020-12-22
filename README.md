@@ -33,7 +33,7 @@ mkdir docs
 npm run docs:build
 config docs\vuepress\docs\.vuepress\config.js
 npm run docs:build
-cp docs\vuepress\docs\.vuepress\dist\* docs\
+cp \docs\.vuepress\dist\* ..\docs\ (from \lyhistory.github.io\docs\vuepress\docs\.vuepress\dist\* to \lyhistory.github.io\docs)
 
 gitignore nodemodules
 
@@ -41,5 +41,5 @@ config: \docs\vuepress\docs\.vuepress\config.js
 resources: \docs\vuepress\docs\.vuepress\public
 custom css: \docs\vuepress\docs\.vuepress\styles
 build result: \docs\vuepress\docs\.vuepress\dist
-finally publish to: \docs\
+finally publish to: ..\docs\
 ```
