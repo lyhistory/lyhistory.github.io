@@ -2235,7 +2235,46 @@ gitlab-rake db:migrate
 	
 ```
 
+### Malformed configuration JSON file found at /opt/gitlab/embedded/nodes/XXXX.json
 
+```
+# yum history info 21
+Loaded plugins: product-id, search-disabled-repos, subscription-manager
+
+This system is not registered with an entitlement server. You can use subscription-manager to register.
+
+Transaction ID : 21
+Begin time     : Wed Dec 23 10:30:02 2020
+Begin rpmdb    : 428:92019b90dfb62522e2602a67ec8bb622df3d807c
+End time       :            10:30:10 2020 (8 seconds)
+End rpmdb      : 428:92019b90dfb62522e2602a67ec8bb622df3d807c
+User           : root <root>
+Return-Code    : Failure: 1
+Command Line   : -d 2 -y install /opt/gitlab-ee-13.5.1-ee.0.el7.x86_64.rpm
+Transaction performed with:
+    Installed     rpm-4.11.3-43.el7.x86_64                    @APEX
+    Installed     subscription-manager-1.24.26-3.el7_8.x86_64 @APEX
+    Installed     yum-3.4.3-167.el7.noarch                    @APEX
+Packages Altered:
+ ** Updated gitlab-ee-13.5.0-ee.0.el7.x86_64 @/gitlab-ee-13.5.0-ee.0.el7.x86_64
+ ** Update            13.5.1-ee.0.el7.x86_64 ?
+Scriptlet output:
+   1 Malformed configuration JSON file found at /opt/gitlab/embedded/nodes/xxxxx.json.
+   2 This usually happens when your last run of `gitlab-ctl reconfigure` didn't complete successfully.
+   3 This file is used to check if any of the unsupported configurations are enabled,
+   4 and hence require a working reconfigure before upgrading.
+   5 Please run `sudo gitlab-ctl reconfigure` to fix it and try again.
+   6 error: %pre(gitlab-ee-13.5.1-ee.0.el7.x86_64) scriptlet failed, exit status 1
+```
+
+
+
+1. 升级报错“Malformed configuration JSON file found at /opt/gitlab/embedded/nodes/XXX.json.”
+2. 然后根据这个错误我看了下这个文件内只是一个简单的hostname，而且是正常Jason格式，根据 https://gitlab.com/gitlab-org/omnibus-gitlab/-/issues/4385 中有人提到删除该文件即可正常升级
+3. 然后根据log提示 “Please run `sudo gitlab-ctl reconfigure` to fix it and try again”决定执行 reconfigure看看，结果仍然报错，不过错误信息是：“ruby_block[directory resource: /var/opt/gitlab/git-data/repositories] (/opt/gitlab/embedded/cookbooks/cache/cookbooks/package/resources/storage_directory.rb line 34) had an error: Mixlib::ShellOut::ShellCommandFailed: Failed asserting that mode permissions on "/var/opt/gitlab/git-data/repositories"”
+4.根据第3的错误搜索，发现 https://gitlab.com/gitlab-org/omnibus-gitlab/-/issues/5743，确定是版本13.5.0自己的问题，说是升级到13.5.1就解决了
+4. 所以，13.5.0的一个bug造成无法reconfigure，只能通过升级解决，但是升级又遇到所谓malformed json错误，提示reconfigure解决，deadlock！
+5. 最终解决，采用别人提到的尝试删除/opt/gitlab/embedded/nodes/XXXX.json，再次升级成功！
 
 ## Appendix
 

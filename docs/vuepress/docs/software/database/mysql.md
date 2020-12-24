@@ -64,21 +64,25 @@ create database dbname;
 Setup replication
 https://lyhistory.com/mysql_replication/#
 
-### 1.3 Tool
+### 1.3 Client Tools
 http://sqlfiddle.com/
 
 Dbeaver export mysql
 Export without data https://github.com/dbeaver/dbeaver/issues/2176
 
-## 2. Usage
+mysql workbench
+
+## 2. DB Management
 
 ### 2.1 mysql-cli
 
+```
 mysql -uroot -pCappuccin0!
 mysql --login-path=sgkc2-devclr-v01
 
 mysql_config_editor/login-path
 mysql_config_editor print --all
+```
 
 grep:
 ```
@@ -171,8 +175,49 @@ If it is desired to prevent the server from running without the password-validat
 
 service mysqld start --validate-password=FORCE_PLUS_PERMANENT
 
-### 2.3 Common SQL
-a mysql db can have many schema,like a building have many rooms, and users can get access to different room, so schema can have more than one user.
+
+
+## 3.Troubleshooting 
+
+**?#Host 'xxx.xx.xxx.xxx' is not allowed to connect to this MySQL server**
+
+```
+CREATE USER 'test'@'%' IDENTIFIED BY '123456';
+GRANT ALL PRIVILEGES ON * . * TO 'test'@'%';
+FLUSH PRIVILEGES;
+```
+
+**?#mysql workbench The type initializer for 'HtmlRenderer.Utils.FontsUtils' threw an exception.**
+http://stackoverflow.com/questions/32020024/upgrading-to-windows-10-breaks-mysql-workbench
+https://bugs.mysql.com/bug.php?id=75344
+
+**?#script import issue;**
+
+```
+-- Set new delimiter '$$'
+DELIMITER $$
+$$
+-- Set default delimiter ';'
+DELIMITER ;
+```
+
+**?#Fixing “Lock wait timeout exceeded; try restarting transaction” for a 'stuck" Mysql table?**
+
+https://stackoverflow.com/questions/5836623/getting-lock-wait-timeout-exceeded-try-restarting-transaction-even-though-im
+
+```
+show processlist;
+kill <put_process_id_here>; 先干掉耗时长的process
+```
+
+
+
+## 4. SQL
+
+### Basic
+
+a mysql db can have many schema,**like a building have many rooms, and users can get access to different room, so schema can have more than one user.**
+
 ```
 SELECT DATE_FORMAT(date_add(date_column,INTERVAL 8 HOUR),'%b %d %Y %h %p'),COUNT(distinct(count_column))
 FROM db.table
@@ -187,7 +232,10 @@ select duration,date_add(dateOfProgram,INTERVAL 2 DAY), IFNULL(date_add(startTim
 
 ```
 
-Performance on index : when join a large table
+### Advance
+
+**Performance on index : when join a large table**
+
 ```
 bad:
 select user.*, log.LoginTime
@@ -202,7 +250,8 @@ where  status='true'
 group by userid) temp on temp.userid=user.userid;
 ```
 
-存储过程互相调用
+**存储过程互相调用**
+
 ```
 DELIMITER $$
 CREATE DEFINER=`dbuser`@`%` PROCEDURE `PROCE1`(
@@ -249,7 +298,8 @@ END
 
 ```
 
-Multiple cursors in mysql stored procedure
+**Multiple cursors in mysql stored procedure**
+
 ```
 DROP PROCEDURE IF EXISTS `multipleCursorsAtOne`;
 DELIMITER $$
@@ -300,27 +350,20 @@ $$
 
 ```
 
-## 3.Troubleshooting 
-#Host 'xxx.xx.xxx.xxx' is not allowed to connect to this MySQL server
-```
-CREATE USER 'test'@'%' IDENTIFIED BY '123456';
-GRANT ALL PRIVILEGES ON * . * TO 'test'@'%';
-FLUSH PRIVILEGES;
-```
-mysql workbench The type initializer for 'HtmlRenderer.Utils.FontsUtils' threw an exception.
-http://stackoverflow.com/questions/32020024/upgrading-to-windows-10-breaks-mysql-workbench
-https://bugs.mysql.com/bug.php?id=75344
- 
-script import issue;
-delimiter http://buysql.com/mysql/42-delimiter-mysql.html
--- Set new delimiter '$$'
-DELIMITER $$
-$$
--- Set default delimiter ';'
-DELIMITER ;
-Recursive query
+**Recursive query**
+
+就是针对存在parent id的存在层级关系的表
+
 Hierarchical data in MySQL: parents and children in one query
+
+https://stackoverflow.com/questions/20215744/how-to-create-a-mysql-hierarchical-recursive-query
+
 Managing Hierarchical Data in MySQL
+
+https://www.mysqltutorial.org/mysql-adjacency-list-tree/
+
+
+
 
 
 ---

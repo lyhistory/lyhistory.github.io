@@ -180,5 +180,12 @@ apt list --installed | grep "PKG"
 
 ### yum
 
+```
+yum history
+yum history info 21
+```
+
+
+
 
 
