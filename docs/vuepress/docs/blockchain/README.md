@@ -43,6 +43,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<ul>
 		<li><a href="/docs/blockchain/wallets" >钱包使用</a></li>
 		<li><a href="/docs/blockchain/ecosystem/crypto" >主流项目简介</a></li>
+        <li><a href="/docs/blockchain/ecosystem/decred" >Decred得信币</a></li>
 	</ul>
 </div>
 

@@ -57,6 +57,22 @@ transparent地址是公开的，工作方式跟比特币地址一样，shielded�
 
 Zcash’s shielded transactions let you exchange value without revealing your private financial information.
 
+## DECRED
+
+什么是decred？
+
+decred简写DCR， 是 decentralized credits缩写。
+
+decred VS BTC，和比特币有什么异同？
+
+decred的POW工作量证明和POS权益证明的混合共识模式，既保证了其安全性，又保证了用户参与，其模型工作原理大概是，传统的工作量证明是矿工竞争挖矿，谁挖到算谁的，具体的原理参考我其他深入介绍POW的文章，而混合模型下，引入了validator验证者的概念，验证者通过购买ticket来参与最终挖矿的验证，最后挖矿的收益矿工和验证者进行分成，其好处之一就是可以抵挡51%攻击；
+
+另外一个好处就是削弱了矿工的绝对权利。相对于btc，我们知道btc有很多dork，btc cash，btc gold等等，都是因为矿工站队引起的，对于普通的btc持有者来说，很难参与到战队中，而decred的混合模型下，开发者对decred的任何修改和升级都要经过投票voting的过程，voting的过程也是普通的decred持有者互动下进行的；
+
+因此Decred又被称为 Bitcoin with governance 即带有治理属性的比特币，甚至被称为真正的比特币，因为其更加符合比特币的设计初衷。
+
+
+
 ## Basic Attention Token
 
 BAT不仅是代币，brave也是我最喜欢的浏览器，屏蔽各种广告和js追踪，由javascript之父创建的brave，内置tor，正常浏览网页还可以赚取BAT：[点击官方链接](https://brave.com/lyh992)
@@ -185,6 +201,20 @@ How does Dai stay stable?
 
 DAI的稳定币价格是由世界上最大的一个去中心化应用，即开源项目Maker来保证的.DAI是通过在Maker上开一个Collateralized Debt Position (CDP)帐号来生成的。
 Dai’s stable price is made possible by one of the world’s largest decentralized applications, an open source project called Maker.
+
+### MakerDAO
+
+什么是 MakerDAO
+
+MakerDAO是一个去中心化的组织，其使命是实现更大的财务自由。 它使用Maker协议以及两个原生代币MKR和DAI，以允许任何人通过提供抵押品来借钱。
+
+Maker 治理
+
+MakerDAO 的任何升级都是由MKR持有者组成的社区来决定的。该系统的结构旨在奖励谨慎的管理，并始终确保Dai得到充足抵押品的背书。
+
+MakerDAO的愿景
+
+通过提供安全、可靠和透明的金融工具，MakerDAO 希望为全世界的用户增强经济能力。
 
 ## Orchid.OXT.
 

@@ -13,7 +13,8 @@ npm install -g tldr
 或者
 pip install tldr
 
-sudo ln -s /home/lyhistory/.local/bin/tldr tldr
+cd /usr/bin
+sudo ln -s /home/lyhistory/.local/bin/tldr tldr (/usr/bin/tldr)
 或者修改.bashrc
 export PATH=$PATH:$HOME/.local/bin
 ```
