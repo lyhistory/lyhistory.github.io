@@ -23,7 +23,7 @@ curl "https://api.telegram.org/bot$telegram_api_token/getUpdates" | jq '.result[
 
 tnotify(){
  message=$1
- token="1411335010:AAHhnlUOEtW9_sYQh4DrvnCsHcb4lGZASFQ"
+ token="XXXXXXXXXXXX"
  chatid="350644282"
  curl -s -X POST https://api.telegram.org/bot$token/sendMessage -d chat_id=$chatid -d text="$message"
 }
