@@ -1,3 +1,5 @@
+![](/docs/docs_image/blockchain/ecosystem/decred_logo.jpg)
+
 ## 什么是Decred？
 
 Decred 得信币，简写DCR， 是 decentralized credits缩写，字面意思是去中心化信用，是跟比特币同性质的点对点的数字货币系统，所以也是比特币的竞争者之一。
@@ -85,4 +87,10 @@ Decred奖励的分配方案是：60%分配给miner矿工，30%分配给validator
 | 2019年5月9               |      | [Lightning Network闪电网络主网上线](https://github.com/decred/dcps/blob/master/dcp-0004/dcp-0004.mediawiki) |
 | 2019年8月28              |      | [隐私功能上线](https://blog.decred.org/2019/08/28/Iterating-Privacy/) |
 | 至今动态                 |      | [Decred日报](https://decred.org/press/)                      |
+
+
+
+如何购买DCR，推荐笔者使用了六年的AEX（前身比特时代），扫描图片二维码：
+
+![](/docs/docs_image/blockchain/aex_2.jpg)
 

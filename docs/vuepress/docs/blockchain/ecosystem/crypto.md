@@ -298,6 +298,14 @@ Kyber helps power decentralized finance (DeFi) by providing liquidity to a wide 
 
 
 
+## 如何投资
+
+推荐笔者使用了六年的AEX（前身比特时代），目前有赠送活动，可以直接注册体验，扫描图片二维码：
+
+![](/docs/docs_image/blockchain/aex_1.jpg)
+
+
+
 ## todo
 
 DAO: https://mainnet.aragon.org/#/

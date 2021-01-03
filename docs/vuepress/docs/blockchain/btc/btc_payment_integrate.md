@@ -183,3 +183,11 @@ https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/test/integration/bip32.js
 ![](/docs/docs_image/blockchain/bitcoin/btc_ipayment_integrate07.png)
 
 Note: 对于取款即从内部账号转btc到用户个人地址，本来想采用signtransactionwithkey离线签名的方式，但是问题是这个需要知道所有的utxo，意味着要很好的管理所有的utxo，当然可以通过观察钱包的方式获取utxo（还没有测试），导入pubkey到bitcoin core，rpc获取unspent transaction，但是还是需要一定的策略去使用这些utxo，比如每次先用余额低的输出，不然可能会产生越来越多小额的输出，所以实际上这个demo偷个懒，直接用sendmany的方式来处理了
+
+
+
+## 如何购买
+
+推荐笔者使用了六年的AEX（前身比特时代），目前有赠送活动，可以直接注册体验，扫描图片二维码：
+
+![](/docs/docs_image/blockchain/aex_1.jpg)

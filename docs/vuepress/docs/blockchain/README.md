@@ -10,6 +10,14 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 <!--Private: <a href="https://github.com/lyhistory/learn_coding/blob/master/blockchain/courselist.md">课程列表</a>-->
 
 <div>
+    <h3>科普知识</h3>
+	<ul>
+		<li><a href="/docs/blockchain/wallets" >钱包使用</a></li>
+		<li><a href="/docs/blockchain/ecosystem/crypto" >主流项目简介</a></li>
+        <li><a href="/docs/blockchain/ecosystem/decred" >Decred得信币</a></li>
+        <li><a href="https://www.aex.plus/page/m_regist.html#/?invite_code=392896&invite_type=20">注册获取虚拟币，推荐笔者使用了六年的AEX（前身比特时代），目前有赠送</a></li>
+	</ul>
+    <p>-------------------------</p>
 	<h3>区块链入门</h3>
 	<ul>
 		<li><a href="/docs/blockchain/btc/btc_dev">比特币:开发基础</a></li>
@@ -38,14 +46,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/blockchain/blockchain_as_new_architecture" >译文：为什么区块链是更好的应用服务器或者数据库架构</a></li>
 		<li>more to do....</li>
 	</ul>
-	<p>-------------------------</p>
-	<h3>科普知识</h3>
-	<ul>
-		<li><a href="/docs/blockchain/wallets" >钱包使用</a></li>
-		<li><a href="/docs/blockchain/ecosystem/crypto" >主流项目简介</a></li>
-        <li><a href="/docs/blockchain/ecosystem/decred" >Decred得信币</a></li>
-	</ul>
 </div>
+
 
 <div style="background-color:bisque;">
 	<span>##欢迎资助我的创作 Welcome to support my creation##</span>

@@ -101,7 +101,7 @@ https://github.com/libbitcoin/libbitcoin-explorer/wiki
 
 Note: to config for testnet
  vim /home/peter/libbitcoin-explorer/etc/libbitcoin/bx.cfg
- 
+
 ![](/docs/docs_image/blockchain/btc/btc_dev_usecase01.png)
 
 3) Python
@@ -306,3 +306,10 @@ Proof of authorship/proof of existence
 http://docs.proofofexistence.com/#/
 https://en.wikipedia.org/wiki/Proof_of_Existence
 
+
+
+## 如何购买
+
+推荐笔者使用了六年的AEX（前身比特时代），目前有赠送活动，可以直接注册体验，扫描图片二维码：
+
+![](/docs/docs_image/blockchain/aex_1.jpg)

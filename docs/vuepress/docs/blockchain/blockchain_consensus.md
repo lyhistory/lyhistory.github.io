@@ -45,7 +45,7 @@ UTXO  越多时或者准确说stake越大时，找到的机会越大，这是权
 [POSv3详解](http://earlz.net/view/2017/07/27/1904/the-missing-explanation-of-proof-of-stake-version)
 
 ## 3. 投票程序-共识算法 trustless consensus
- 
+
 POW POS只是成为候选者的门票，最终哪个区块是这一轮的胜出者是由占多数的选民来决定的，他们的投票的规则才是共识算法本身，选民是网络中的节点，当然我这里说的是full node，投票的工作大概包括(这里没有展开详细的过程，完全是high-level概述)：
 
 ### 1）validate and relay transaction: 
@@ -82,7 +82,7 @@ POW POS只是成为候选者的门票，最终哪个区块是这一轮的胜出�
 如果你想问如果有些节点不遵守共识或修改共识会如何，答案是会发生分叉，只不过如果没有足够的节点支持和加入你的这个新共识，你的这条分叉链也就没有什么意义了，所以共识是多数人的共识，少数人的共识只有在基于DPOS的公链或者一些联盟链上才有意义。
 
 ## 4. 攻击向量 attack vector
- 
+
 理解了这些，就会对一些完全问题或者安全事故有相对更清晰的理解，比如
 
 1）某些攻击手法对于很多POS公链来说是经济上可行的，但是对于比特币这样的POW公链是经济上不可行的
@@ -124,3 +124,11 @@ https://en.bitcoin.it/wiki/Weaknesses
 有兴趣可以了解下作者提出的解决方案[《THE VERIFIER’S DILEMMA》](https://eprint.iacr.org/2015/702.pdf)
 
 本文发布在 [巴比特专栏](https://www.8btc.com/article/393154)
+
+
+
+## 如何获得
+
+推荐笔者使用了六年的AEX（前身比特时代），目前有赠送活动，可以直接注册体验，扫描图片二维码：
+
+![](/docs/docs_image/blockchain/aex_1.jpg)
