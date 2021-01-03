@@ -64,11 +64,11 @@ logdir=newPath\Dcrd
 
 即可更改区块数据和日志的文件夹
 
-
 Assurances in Crypto edit https://blog.goodaudience.com/1-assurances-in-crypto-14c55a1fd616
 
+注意SPV轻量级钱包模式，stake购买ticket需要手动，不能自动，只有full node才支持自动购买ticket
 
-##zec
+## zec
 
 根据 https://docs.zecwallet.co/faq/#can-i-change-the-location-of-the-data-directory
 
@@ -85,6 +85,6 @@ https://zecpages.com/
 
 ## 如何投资
 
-推荐笔者使用了六年的AEX（前身比特时代），目前有赠送活动，可以直接注册体验，扫描图片二维码：
+推荐笔者使用了六年的AEX（前身比特时代），目前有赠送活动，可以直接注册体验，长按/扫描图片二维码：
 
-![](/docs/docs_image/blockchain/aex_1.jpg)
+![](/docs/docs_image/blockchain/aex_1.png)

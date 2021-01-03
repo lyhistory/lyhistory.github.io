@@ -84,7 +84,7 @@ https://github.com/OpenZeppelin/openzeppelin-solidity/blob/9b3710465583284b8c4c5
 
 ICO stands for a token or cryptocurrency initial offering crowdsale. It is a common method in blockchain space, decentralized applications and in-game tokens for bootstrap funding of your project.
 https://github.com/TokenMarketNet/ico
- 
+
 Open Source Dashboard and smart-contract for your ICO
 https://bitcointalk.org/index.php?topic=3009880.0
 https://github.com/JincorTech/backend-ico-dashboard - Backend
