@@ -129,11 +129,15 @@ git clean -f (to remove the untracked changes) and -fd (to also remove untracked
 #### Stash
 
 ```
+git stash
+or
 git stash --include-untracked
 
 git stash list
 
-git stash apply/pop (pop和apply有区别)
+git stash apply/pop 
+pop和apply有区别：
+	git stash apply 后仍然在list中，需要 git stash drop掉
 https://stackoverflow.com/questions/15286075/difference-between-git-stash-pop-and-git-stash-apply
 ```
 

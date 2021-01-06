@@ -46,6 +46,8 @@ set -x 可以显示shell在执行什么程序
   首先$()主要则是command substitution，比如
   rm $(where connect.sh)
 
+  dos2unix $(find . -type f)
+
   echo $(cmd) 和 echo "$(cmd)"，结果差不多，但是仍然有区别。注意观察，双引号转义完成的结果会自动增加单引号，而前者不会， 如果 $ 读取出的参数字符串包含空格，应该用双引号括起来，否则就会出错。
 
   管道：

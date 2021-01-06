@@ -76,6 +76,8 @@ mysql workbench
 
 ### 2.1 mysql-cli
 
+千万不要用双引号，尤其是password，所有的-u -p -e等等后面不要加空格！
+
 ```
 mysql -uroot -pCappuccin0!
 mysql --login-path=sgkc2-devclr-v01
@@ -233,6 +235,16 @@ select duration,date_add(dateOfProgram,INTERVAL 2 DAY), IFNULL(date_add(startTim
 ```
 
 ### Advance
+
+**批量生成truncate**
+
+```
+mysql -h'HOST' -u'USERNAME' -p'PASSWORD' -e'SELECT CONCAT("TRUNCATE TABLE ",TABLE_NAME,";") FROM information_schema.TABLES WHERE TABLE_SCHEMA="clear" into outfile "/var/lib/mysql-files/truncate_db_clear.sql";'
+
+SHOW VARIABLES LIKE "secure_file_priv" 查看能写到哪个目录
+```
+
+
 
 **Performance on index : when join a large table**
 
