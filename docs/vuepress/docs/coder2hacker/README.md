@@ -10,7 +10,6 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 <div>
 	<h3>白帽黑客渗透技术入门</h3>
-	<span style="color:pink;">这个部分我会陆续筛选不敏感的内容慢慢更新,更多最新内容关注知识星球：coder2hacker;</span>
     <span>
         ------------------------------------------------------
         --- 实战篇
@@ -21,7 +20,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
     </ul>
     <span>
         ------------------------------------------------------
-        --- 理论篇
+        --- 理论篇[会筛选不敏感的慢慢更,更多都在知识星球 coder2hacker]
         ------------------------------------------------------
     </span>
 	<ul>
@@ -50,6 +49,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		红队 Cobalt Strike 4.0 https://www.cobaltstrike.com/
 	</ul>
 </div>
+
 
 
 <div style="background-color:bisque;">
