@@ -6,6 +6,12 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/blockchain)  《钱包使用技巧》
 
+注意事项：
+
+如果使用在线钱包，比如uphold，一定要设置并备份好google验证恢复码；
+
+如果是使用冷钱包，一定要备份好私钥或助记词；
+
 ## bitshare
 
 永远无法被关闭的去中心化交易所:
@@ -16,37 +22,6 @@ bitshares.org vs bitshares.openledger.info (OBITS https://obits.io/)
 https://bitcointalk.org/index.php?topic=1399878.0
 https://coinmarketcap.com/currencies/obits/#markets
 https://bitsharestalk.org/index.php/topic,13104.msg171728.html#msg171728
-
-## brave
-
-最喜欢的浏览器推荐下，屏蔽各种广告和js追踪，由javascript之父创建的brave，内置tor，正常浏览网页还可以赚取BAT：
-
-[点击官方链接](https://brave.com/lyh992)
-
-国内可能需要翻QIANG
-
-然后可以看到brave有rewards（只要使用浏览器就有奖励BAT），还内置了各种虚拟币钱包
-
-[chrome://wallet/](chrome://wallet/)
-
-![](/docs/docs_image/blockchain/wallet/brave01.png)
-
-如果你也是站长可以申请创作者：
-https://brave.com/creators/
-https://publishers.basicattentiontoken.org/log-in
-
-userful links：
-
-https://community.brave.com/
-https://brave.com/faq/
-https://uphold.com/en/brave
-
-[Where is my BAT wallet address is Brave?](https://www.reddit.com/r/BATProject/comments/8ta0m4/where_is_my_bat_wallet_address_is_brave/)
-
-[Help center](https://support.brave.com/hc/)
-
-[Brave Browser, BATs, and the Attention Economy](https://www.youtube.com/watch?v=yR-ayASDdrE&feature=youtu.be)
-https://news.ycombinator.com/item?id=13940613
 
 
 

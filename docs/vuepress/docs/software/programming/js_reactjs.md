@@ -810,7 +810,7 @@ When a component’s props or state change, React decides whether an actual DOM 
 
 
 
-## 深入解读
+## 2. 深入解读
 
 https://reactjs.org/docs/hello-world.html
 https://reactjs.org/tutorial/tutorial.html
@@ -1457,6 +1457,8 @@ class Table extends PureComponent {
 
 ### Code Bundling&Splitting
 
+Effective Code Splitting in React: A Practical Guide: https://hackernoon.com/effective-code-splitting-in-react-a-practical-guide-2195359d5d49
+
 **Bundling**
 
 Most React apps will have their files “bundled” using tools like [Webpack](https://webpack.js.org/), [Rollup](https://rollupjs.org/) or [Browserify](http://browserify.org/). Bundling is the process of following imported files and merging them into a single file: a “bundle”. This bundle can then be included on a webpage to load an entire app at once.
@@ -1570,3 +1572,4 @@ const MyComponent = lazy(() => import("./MyComponent.js"));
 从 React 迁移到 TypeScript：忍受了 15 年的 JavaScript 错误从此走远
 
 https://mp.weixin.qq.com/s/EvOkI-g3VCzzzuh0Cc4AkA
+

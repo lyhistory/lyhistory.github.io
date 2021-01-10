@@ -134,6 +134,8 @@ https://medium.com/@julianwlsn/why-the-history-revision-attack-in-chain-based-pr
 
 ## 其他
 
+[Bitcoin tech talk](https://jimmysong.substack.com/people/1811560-jimmy-song)
+
 [比特币分叉历史](https://zhuanlan.zhihu.com/p/62895584)
 
 ![](/docs/docs_image/blockchain/btc/btc_indepth_fork01.png) 

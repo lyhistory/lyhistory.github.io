@@ -14,6 +14,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<ul>
 		<li><a href="/docs/blockchain/wallets" >钱包使用</a></li>
 		<li><a href="/docs/blockchain/ecosystem/crypto" >主流项目简介</a></li>
+        <li><a href="/docs/blockchain/btc/btc_intro" >比特币简介</a></li>
         <li><a href="/docs/blockchain/ecosystem/decred" >Decred得信币</a></li>
         <li><a href="https://www.aex.plus/page/m_regist.html#/?invite_code=392896&invite_type=20">注册获取虚拟币，推荐笔者使用了六年的AEX（前身比特时代），目前有赠送</a></li>
 	</ul>

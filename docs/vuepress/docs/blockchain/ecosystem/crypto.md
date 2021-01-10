@@ -75,7 +75,12 @@ decred的POW工作量证明和POS权益证明的混合共识模式，既保证�
 
 ## Basic Attention Token
 
-BAT不仅是代币，brave也是我最喜欢的浏览器，屏蔽各种广告和js追踪，由javascript之父创建的brave，内置tor，正常浏览网页还可以赚取BAT：[点击官方链接](https://brave.com/lyh992)
+Brave浏览器
+The Brave web browser
+
+BAT不仅是代币，brave也是我最喜欢的浏览器，Brave是一个免费的开源的web浏览器，屏蔽各种广告和js追踪，由javascript之父创建的brave，内置tor，正常浏览网页还可以赚取BAT.
+
+Brave is a free, open-source web browser with several unique features.
 
 Brave的使命是修复当今“被破坏的”web服务。
 Brave is on a mission to fix what it believes is a broken web. 
@@ -85,12 +90,6 @@ Brave and BAT: A new way to browse the web
 
 Brave认为网上冲浪应该更快，更安全，更多隐私保护，并且没有广告的暴力植入。
 Brave believes that surfing the web should be faster, more secure, and more private without intrusive ads.
-
-Brave浏览器
-The Brave web browser
-
-Brave是一个免费的开源的web浏览器，屏蔽各种广告和js追踪，内置tor，正常浏览网页还可以赚取BAT：[点击官方链接](https://brave.com/lyh992)
-Brave is a free, open-source web browser with several unique features.
 
 BAT注意力币是如何工作的
 How the Basic Attention Token works

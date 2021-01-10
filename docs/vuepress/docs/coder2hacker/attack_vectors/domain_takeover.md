@@ -75,13 +75,201 @@ CloudFront服务器会在HTTP Host header看到它，所以CloudFront不能将�
 
 
 
-
-
-## 升级/风险
+## 利用
 
 子域名接管被认为是高级别的安全威胁，归结为被怀有恶意的他人注册域名并企图控制一个或多个子域名。这呈现出一个有意思的攻击向量，甚至会导致一些其他高级别的安全风险，比如在Arne Swinnen的bug bounty report中解释的认证绕过：
 
 https://hackerone.com/reports/172137
+
+大多数受影响的云商都采取了各种激进的策略开始缓解这个问题：
+
+不允许其他账号注册某个custom domain，比如，如果 takeover.example.com 曾经被账号account1注册过，云商不会允许account2进行注册。
+
+增加域名验证，你必须提供证明你是域名的拥有者，这经常是让你增加TXT记录，而攻击者并没有其访问权限。
+
+增加熵值，一些服务会生成随机字符串作为CNAME记录的一部分，通常都是有很强的防御作用，因为API的rate限制不允许你进行爆破，或者熵值太长让你无法爆破，AWS ELB就是例子。
+
+如何判断云商是否存在子域名接管可能，可以参考：
+
+https://github.com/EdOverflow/can-i-take-over-xyz
+
+为了计划好可能的升级路径，你需要知道云商允许你怎么玩这个接管的域名，除非你可以将其指向到自己的vps实例，你将会在功能上受到很多限制，比如：
+
+Amazon S3 — 允许托管静态内容，但是你不能在后台运行类似python脚本的动态内容。
+
+Microsoft Azure CloudApp — 允许指定动态容器，但是，你不能拥有完全控制权。
+
+Microsoft TrafficManager — 一旦受害者进行了DNS解析，就允许你指定你自己的A记录，一旦你指定到你自己的VPS实例，你就基本什么都可以干了。
+
+
+
+### 浏览器的透明性 Transparency To a Browser
+
+我们先来看看关于CNAME的DNS解析：
+
+![](/docs/docs_image/coder2hacker/attack_vectors/domain_takeover.png)
+
+注意第七步请求的是sub.example.com 而不是 anotherdomain.com，浏览器甚至都不会意识到anotherdomain.com的存在！
+
+虽然是使用了CNAME记录，浏览器的URL地址栏仍然是 sub.example.com 这就是我说的浏览器的透明性。
+
+如果你仔细想想，浏览器是完全相信DNS resolver提供的域名准确信息，简单来说，子域名接管实际就是一种针对特定域名的DNS spoofing，为什么？因为任何浏览器对受影响的域名进行DNS解析的时候会接收到攻击者设置的记录，然后浏览器很高兴的将服务器端传回的结果显示出来并认为其是合法的。
+
+就钓鱼攻击场景来说，这种域名接管是最完美的，因为攻击者通常是使用 typosquatting 或 所谓的 Doppelganger domain 来模仿合法的域名/网站用来钓鱼，而现在攻击者直接接管了一个合法的域名，这样对于普通户来说基本无法判断其内容是否来自于攻击者。
+
+让我们用一个随机银行举例，如果银行的某个子域名存在子域名接管漏洞，攻击者可以创建HTML表单模拟银行系统的登录表单，然后，攻击者可以实施鱼叉攻击spear phishing 或 大规模钓鱼攻击 mass phishing campaign，让用户登录并更改密码，然后攻击者就获取了用户的密码，钓鱼邮件中的url是合法的银行网站子域名，所以用户并不会察觉到有什么异常，而且由于这个域名来自于高可信的银行，邮件系统的spam filter和其他的安全措施基本不会触发spam或malicious。
+
+域名本身在成功的攻击中的确有着显著的作用，比如一个5th level子域名比一个2nd level的有着比较好听的名字的子域名会显得有那么一点略少的合法性。我曾经看到过很多完美的子域名钓鱼案例，包括：
+
+```
+
+purchases.SOMETHING.com
+www.SOMETHING.com
+online.SOMETHING.com
+shop.SOMETHING.com
+```
+
+所有这些都是知名企业。
+
+当然，最近的域名接管的钓鱼事件基本都是有着比较长的域名，域名中包含企业名字，比如apple的例子：
+
+https://www.phishtank.com/target_search.php?target_id=183&valid=y&active=All&Search=Search
+
+有合法的SSL证书（后面会有更多说明），域名以及模仿目标网站的网页中包含企业的关键词，这些都会让用户容易掉到陷阱中。
+
+### SSL Certificates
+
+上面的攻击可以通过生成合法的SSL证书来加强，证书授权权威比如Let's Encrypt 允许通过内容验证来自动验证域名的拥有者：
+
+意思是，如果URL路径中存在特定的一些内容，Let's Encrypt 会通过该域名的证书！因为攻击者已经全权接管了该域名，这个验证分分钟可以搞定，所以攻击者可以给这个域名生成SSL证书，进一步提升钓鱼的成功概率。
+
+获取合法的SSL证书是很重要的，当域名指向你的VPS实例，你可以直接使用cerbot获取Let's Encrypt证书，整个过程是自动化的。如果是Amazon Elasticbeanstalk, 你不可以按照cerbot，你仍然可以手动创建一个valid HTTP endpoint，通过Let's Encrypt验证，证书certificates对后面的篇章很重要。
+
+### Cookie 偷窃(升级版XSS和CSRF)
+
+这个跟前面的“浏览器的透明性”是一起的，但是有着完全不同的后果。
+
+浏览器实现了很多security policies来防御恶意网站的攻击，这包括Same-origin policy，浏览器的一个首要安全任务就是安全储存cookies，为什么？HTTP协议是无状态的，cookies用来追踪sessions，用户常常会选择将会话保存更长的时间以避免短期内反复登录，所以这些cookie就等同于login token，用来提供给web服务器进行身份验证。基于此，一些攻击方法比如session hijacking自然产生。
+
+
+
+每次请求，浏览器都自动携带保存的cookie，这些cookie通常是issue颁发给请求的这个域名的，但是也有其他情况就是，cookie可以设置为跟子域名共享shared，参考：
+
+https://tools.ietf.org/html/rfc6265#section-8.6
+
+这种情况常常是网站使用基于cookie的单点登录，使用单点登录，用户可以通过某个子域名站点登录，然后共享该session token，访问其他子域名网站就不需要登录了，设置普通类型cookie的语法如下：
+
+```
+
+HTTP/1.1 200 OK
+Set-Cookie: name=value
+```
+
+如果issued这个cookie的web服务器是 example.com，只有这个服务器可以访问这个cookie，但是这个cookie也可以设置成这样：
+
+```
+HTTP/1.1 200 OK
+Set-Cookie: name=value; domain=example.com
+```
+
+这个cookie会被携带在发往 example.com 的HTTP请求中，但是同时也可以携带在发往其他子域名比如subdomain.example.com的HTTP请求中，这个行为结合子域名接管会产生高危漏洞，假设某个域名使用了这种类型的cookie，如果发生了子域名接管，攻击者可以搜集用户的session token，唯一需要做的就是诱导用户去访问该子域名，session cookie会自动携带在HTTP请求中。
+
+浏览器还实现了关于cookie的其他的一些安全机制，比如
+
+```
+
+HttpOnly cookie — Cookies can by default be accessed by Javascript code running in the context of the website which created the cookies. Javascript can read, update, and delete the cookies. HttpOnly cookie flag (set by the web server) indicates that the particular cookie cannot be accessed by Javascript code. The only way to get it is through HTTP request and response headers.
+Secure cookie — When the cookie has the Secure flag set by the web server, it can be communicated back to the web server only if HTTPS is used.
+```
+
+如果发生了上述攻击，这两个安全机制 HttpOnly和secure flags完全没有任何补救作用，首先HttpOnly只是防范javascript获取cookie，而这里是服务器端直接拿到cookie，至于secure flags，通过前面的讲述，攻击者可以比较轻松生成SSL证书。
+
+参考Arne Swinnen在bug bounty提交的子域名接管的Cookie偷窃报告：
+
+https://hackerone.com/reports/172137
+
+该报告解释了Ubiquiti Networks 存在的子域名(ping.ubnt.com)问题，这个子域名是执行unclaimed AWS CloudFront distribution。因为Ubiquiti Networks 是使用通配符的session cookie实现的单点登录，所以访问ping.ubnt.com的用户的session cookie都会丢失。即使这个域名是指向AWS CloudFront，CloudFront distribution设置允许日志记录下每个请求的cookie，所以这个偷窃cookie的场景就成立了，2017年，Arne还演示了针对Uber单点登录的类似攻击向量：
+
+https://www.arneswinnen.net/2017/06/authentication-bypass-on-ubers-sso-via-subdomain-takeover/
+
+上面解释的行为不仅仅限于cookie，因为javascript对运行之上的网站有完全控制，如果有能力去替换合法网站的js脚本可能导致很严重的后果，假设使用external provider提供的js代码（使用script tag和src来引用），当external provider过期后，the browser fails silently, i.e.,  对普通用户不会触发任何可见的alerts，如果external code不是干重要的事情（e.g.,只是用来tracking）这种external provider可能默默的在网页上躺尸，如果攻击者接管了过期域名，将攻击内容替换并匹配上网站中的js url路径，就可以获取该网站每个访问者。
+
+有一种方法可以保护js的integrity，HTML5引入了Subresource Integrity 即script tag增加一种密码hash属性，如果这个hash跟下载的文件不一致，浏览器会拒绝执行。
+
+
+
+第一个use-case是展示存储型XSS，很简单，创建html页面：
+
+```
+alert(document.cookie)
+```
+
+对于实现了SSO的网站，很容易盗窃用户的session token，从而可以就可以升级到 Account Takeover ，那篇文章中也解释了即使是http only和secure flag也没用，因为可以从我们自己完全控制的vps后台接收浏览器请求中携带的cookie：
+
+```
+#python3
+
+import Flask
+
+app = flask.Flask(__name__)
+
+@app.route('/')
+def gimme_my_cookies():
+    return flask.jsonify(flask.request.cookies)
+
+if __name__ == '__main__':
+    app.run(port=80)
+```
+
+
+
+另一个use-case就是可以进行钓鱼
+
+跟上面的例子类似，CSRF也是需要类似SSO一样的实现（通配符子域名共享cookie），对于使用postMesssage API的inter-app communication也是成立的，js代码负责检测sender并基于sender允许其他action，都是设置为类似 *.example.com 通配符子域名。
+
+Arne Swinnen发布过一个report，是关于Authentication Bypass的，我就不解释了，报告在这里：
+
+https://hackerone.com/reports/219205
+
+### E-mails
+
+当CNAME子域名接管成立的时候，攻击者同样可以设置MX记录指向任意web服务器，这允许其接收合法子域名的邮件，特别是对需要攻击者和受害者之间互动的（鱼叉）钓鱼攻击有效。攻击者通常会spoof Return-Path header 来接收邮件的回复，而正确配置MX记录，这个问题就绕过了。
+
+另一方面，发送邮件也是可能的，虽然spoof From header来包含到任意邮件地址中很繁琐，SPF filters通常会检查Return-Path header并允许这个域名的mail-sending hosts。SPFT将配置存储在DNS TXT记录中，子域名接管后，TXT记录也在攻击者的控制中，所以SPF 检查可以很容易通过。
+
+我前面也提到了这些策略在多数云商上面是行不通的，因为你没有直接的DNS zone的控制权。
+
+### Higher Order Risks
+
+子域名接管的概念可以很自然延伸到NS记录，如果base domain有至少注册了一个可用的NS记录，source domain名字就有可能存在子域名接管。
+
+通过NS记录的子域名接管的一个问题是，source domain名字通常有多个NS记录，多个NS记录通常是为了冗余和负载均衡。DNS resolution之前会随机选择nameserver。假设 sub.example.com 有两个NS记录：ns.vulnerable.com 和 ns.nonvulnerable.com，如果攻击者接管了 ns.vulnerable.com ，从普通用户的角度，如果访问解析 sub.example.com 会发生如下情况：
+
+```
+1. 因为有两个nameserver，而且是随机选择，意味着查询nameserver结果获得被攻击者控制的可能性是会i50%
+2. 如果用户的DNS 让esolver选择了 ns.nonvulnerable.com (合法的nameserver), 返回正确结果，并且会被缓存在某些地方大概6到24个小时。
+3. 如果用户的DNS 让esolver选择了 ns.vulnerable.com (攻击者的nameserver), 攻击者返回错误结果并且被缓存，由于攻击者控制着这个nameserver，所以他可以设置更长时间的TTL，比如一周。
+```
+
+上面的过程每次缓存失效后都会重复，当攻击者设置很高的TTL时，错误的结果会停留在DNS缓存中很长时间，在这段时间内，所有请求到sub.example.com的返回结果都会是攻击者的错误返回；
+
+这个结果在某些情况下会更加强，比如如果是使用了公共的DNS resolvers比如google dns，这种情况下，public resolvers很可能也会缓存下错误结果，意味着所有使用相同DNS resolver的用户都会获得错误结果，直到缓存被revoke。
+
+除了控制source domain名字，控制所有更高的域名同样有收获，这是因为拥有一个canonical domain名字的NS记录意味着拥source domain名字的完整dns zone。
+
+2016年，Matthew Bryant演示了maris.int上通过NS记录的子域名接管：
+
+https://thehackerblog.com/the-international-incident-gaining-control-of-a-int-domain-name-with-dns-trickery/index.html
+
+这个 .INT 顶级域名是个特殊的TLD， 只有少数域名在用这个顶级域名，Bryant演示即使注册这个域名是需要IANA的独家批准，nameservers 可以设置为任意域名，因为 maris.int 的其中一个nameserver(cobalt.aliis.be)可以被注册，子域名接管在这个严格限制的TLD上同样可行。
+
+Matthew 还演示了更高级别的安全攻击：
+
+https://thehackerblog.com/the-io-error-taking-control-of-all-io-domains-with-a-targeted-registration/index.html
+
+，他可以获得 .IO 顶级域名的nameserver的控制权，获得.IO的控制权意味着控制所有.IO域名的返回结果，在这种情况下，.IO的一个nameserver：ns-a1.io 可以被注册，通过注册 ns-a1.io Bryant可以接收到DNS queries 并且控制其给所有.IO域名的返回！
+
+
 
 
 
@@ -107,11 +295,21 @@ https://hackerone.com/reports/175070
 
 ## 防御
 
-企业通常在日常工作中不会审计他们的DNS配置，实际上，企业也缺乏标准的流程去添加、更改或移除他们DNS zone file的设置。甚至记录DNS记录变化都不常实施。所以你知道这里有多少空间需要改进了。
+一些风险已经被某些cloud provider默默缓解排除了,但是并非所有cloud provider都会验证域名的ownership，这背后的首要原因就是便捷性，云商不去验证本身并没有过错，应该是由用户本身去监控DNS记录，另一个原因就是当cloud resource删除后，用户通常也不再采用该服务，那么云商有什么理由去管你？
 
-预防子域名接管的第一步就是妥善的监控和分析DNS记录，其中很重要的就是开展 subdomain enumeration
+当然有一些服务商比如gitlab就意识到子域名接管是个问题，所以实现了域名验证的机制。
 
-建立并维护你的动态digital footprint包括所有dns配置改动是预防此类问题的核心。
+企业通常在日常工作中不会审计他们的DNS配置，实际上，企业也缺乏标准的流程去添加、更改或移除他们DNS zone file的设置。甚至记录DNS记录变化都不常实施,为了预防子域名接管，企业应该改变基础架构中关于创建和销毁资源的流程，以资源创建为例，DNS记录的创建必须是流程的最后一步，这可以在整个过程中避免DNS记录指向不存在的域名；对于资源销毁，DNS记录应该在流程的第一步就执行删除:
+
+1.删除受影响的DNS记录：当这个受影响的记录不再被使用时采取最简单的办法就是从DNS zone删除掉受影响的记录，
+
+2.认领域名：重新注册设置回某个云商，如果是普通的internet domain，重新购买回该过期域名。
+
+3.预防子域名接管的第一步就是妥善的监控和分析DNS记录，其中很重要的就是开展 subdomain enumeration,建立并维护你的动态digital footprint包括所有dns配置改动是预防此类问题的核心。一些工具如aquatone包含了子域名接管的检查，这种检查应该由企业的安全团队周期性开展来验证没有受影响的域名。
+
+
+
+
 
 ## POC
 
