@@ -1,3 +1,11 @@
+---
+sidebar: auto
+sidebarDepth: 3
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
+[回目录](/docs/coder2hacker)  《子域名接管/劫持 Subdomain Takeover》
+
 ## 原理
 
 你的一些DNS记录（主要是CNAME）被你开启了zone delegation：
