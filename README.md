@@ -11,12 +11,17 @@
 
 # About the site
 
-## blog
+## general setting
+
+domain provider: cn.aliyun.com
+dns resolver: cloudflare.com
+
+## blog：lyhistory.com
 
 - jekyll
 - Minimal-mistakes
 
-## docs
+## docs: lyhistory.com/docs
 
 - vuepress
 ```

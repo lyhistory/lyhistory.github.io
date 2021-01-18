@@ -159,14 +159,14 @@ DNS是域名转IP;NAT 是(外网)IP 转(内网)IP; ARP 是IP 转MAC
 
 [40年前的协议战争，对区块链有什么启示？](https://mp.weixin.qq.com/s?__biz=MzI5Mjg1Mjk1OQ==&mid=2247483735&idx=1&sn=0f8fb9ea380c7fc6af00bd514d5927f2&chksm=ec7a44e7db0dcdf1e395793cd20c096e0b506004046f736b2501df363e52cc52d9589cd3c40e&scene=0&xtrack=1)
 
-### 1.1 Layer 1: The physical layer
+### 1.1 Layer 1: The physical layer 物理层
 We often take the physical layer for granted ("did you make sure the cable is plugged in?"), 
 but we can easily troubleshoot physical layer problems from the Linux command line. 
 That is if you have console connectivity to the host, which might not be the case for some remote systems.
 
 ![physical network](/docs/docs_image/software/network/network02.png)
 
-### 1.2 Layer 2: The data link layer
+### 1.2 Layer 2: The data link layer 数据链路层
 
 Layer2是交换机switch（记住arp mapping）
 The data link layer is responsible for local network connectivity; essentially, the communication of frames between hosts on the same Layer 2 domain (commonly called a local area network). The most relevant Layer 2 protocol for most sysadmins is the Address Resolution Protocol (ARP), which maps Layer 3 IP addresses to Layer 2 Ethernet MAC addresses. When a host tries to contact another host on its local network (such as the default gateway), it likely has the other host’s IP address, but it doesn’t know the other host’s MAC address. ARP solves this issue and figures out the MAC address for us.
@@ -213,18 +213,16 @@ In CIDR notation, the lowest IP address in the range is written explicitly, foll
 
 
 
-**Public ip vs nat**
+**Public ip vs NAT**
+
+详细见后面 4.1 
 
 NAT stands for Network Address Translation. In the context of our network, NAT is how one (public) IP address is turned into many (private) IP addresses. 
 A public IP address is an address that is exposed to the Internet. If you search for "what's my IP" on the Internet, you'll find the public IP address your computer is using.
 If you look up your computer's IP address, you'll see a different IP address: this is your device's private IP.
 Chances are, if you check this on all of your devices, you'll see that all your devices are using the same public IP, but all have different private IPs. This is NAT in action. The network hardware uses NAT to route traffic going from the public IP to the private IP.
 
-
-三层转发基本原理 https://blog.csdn.net/baidu_24553027/article/details/54928580
-NAT地址转换 https://blog.csdn.net/hjgblog/article/details/23356409
-
-### 1.4 Layer 4: The transport layer
+### 1.4 Layer 4: The transport layer 传输层
 
 The transport layer consists of the TCP and UDP protocols, 
 with TCP being a connection-oriented protocol and UDP being connectionless. 
@@ -234,6 +232,7 @@ TCP achieves reliability in two ways.
 First, it orders packets by numbering them. 
 Second, it error-checks by having the recipient send a response back to the sender saying that it has received the message. If the sender doesn’t get a correct response, it can resend the packets to ensure the recipient receives them correctly.
 TCP三次握手，实际上是因为TCP是双向全工通信，所以彼此互相确认对方的初始序号seq（sequence number），确认的返回就是确认号ack（acknowledgement number）：
+
 ```
 SYN SENT=>LISTEN	SYN=1,seq=x
 SYN SENT<=SYN REVD	SYN=1,ACK=1,seq=y,ack=x+1
@@ -264,7 +263,7 @@ The examples above discussed common, simple utilities. However, a much more powe
 ●	OS fingerprinting.
 ●	Determining if remote ports are closed or simply filtered.
 
-### 1.5 Layer 5: Application Layer 
+### 1.5 Layer 5: Application Layer 应用层
 
 HTTP协议是建立在请求/响应模型上的,
 首先由客户建立一条与服务器的TCP链接，并发送一个请求到服务器，请求中包含请求方法、URI、协议版本以及相关的MIME样式的消息;
@@ -513,11 +512,72 @@ TIME_WAIT 状态：
 
 ### 4.1 各种分层背后的协议和测试工具
 
-**网络层的协议测试工具**
-ICMP协议：ping，tracert
+#### **网络层的协议测试工具**
+1) **ICMP协议**：ping，tracert
 
-**传输层的协议测试工具**
-参见/doc/software/network/vpn
+2) **网络层NAT“协议”** VS 应用层代理服务器
+
+为什么需要NAT技术？
+
+首先NAT违反了基本的网络分层结构模型的设计原则。因为在传统的网络分层结构模型中，第N层是不能修改第N+1层的报头内容的。NAT破坏了这种各层独立的原则，NAT不算是真正的TCP/IP协议，而是一种工作在网络层和传输层的技术。
+
+要真正了解NAT就必须先了解现在IP地址的使用情况，私有 IP 地址是指内部网络或[主机](https://baike.baidu.com/item/主机)的IP 地址，公有IP 地址是指在因特网上全球唯一的IP 地址。RFC 1918 为私有网络预留出了三个IP 地址块（不会在因特网上被分配，因此可以不必向ISP 或注册中心申请而在公司或企业内部自由使用）：
+
+A 类：10.0.0.0～10.255.255.255
+
+B 类：172.16.0.0～172.31.255.255
+
+C 类：192.168.0.0～192.168.255.255
+
+IPV4地址只有32位，随着接入Internet的计算机数量的不断猛增，IP地址资源也就愈加显得捉襟见肘，1994年提出NAT（Network Address Translation，网络地址转换）技术；
+
+虽然NAT可以借助于某些[代理服务器](https://baike.baidu.com/item/代理服务器)来实现，但考虑到运算成本和网络性能，很多时候都是在[路由器](https://baike.baidu.com/item/路由器)上来实现的，这种方法需要在专用网（私网IP）连接到因特网（公网IP）的路由器上安装NAT软件。装有NAT软件的路由器叫做NAT路由器，它至少有一个有效的外部全球IP地址（公网IP地址）。这样，所有使用本地地址（私网IP地址）的主机在和外界通信时，都要在NAT路由器上将其本地地址转换成全球IP地址，才能和因特网连接。
+
+NAT技术实现：
+
+1）基本IP地址替换
+
+![](/docs/docs_image/software/network/network_nat01.png)
+
+- NAT路由器将源地址从10.0.0.10替换成全局的IP 202.244.174.37
+- NAT路由器收到外部的数据时, 又会把目标IP从202.244.174.37替换回10.0.0.10
+- 在NAT路由器内部, 有一张自动生成的用于`地址转换的表`
+- 当 `10.0.0.10`第一次向`163.221.120.9` 发送数据时就会生成表中的映射关系
+
+2）NAPT技术
+
+如果局域网内, 有多个主机都访问同一个`外网服务器`， 那么对于服务器返回的数据中, 目的`IP`都是相同的。 那么`NAT`路由器如何判定将这个数据包转发给哪个局域网的主机? NAPT技术使用IP+Port来解决这个问题。
+
+![](/docs/docs_image/software/network/network_nat02.png)
+
+在使用`TCP`或`UDP`的通信当中，只有`目标地址、源地址、目标端口、源端口`以及协议类型（TCP还是UDP）五项内容都一致时才被认为是同一个通信连接。此时所使用的正是`NAPT`。
+
+这种转换表在`NAT`路由器上自动生成。例如，在TCP情况下，建立TCP连接首次握手时的SYN包一经发出，就会生成这个表。而后又随着收到关闭连接时发出`FIN`包的确认应答从表中被删除。
+
+3）NAT-PT（NAPT-PT）
+
+现在很多互联网服务都基于IPv4。如果这些服务不能做到IPv6中也能正常使用的话，搭建IPv6网络环境的有时也就无从谈起。 为此，就产生了`NAT-PT（NAPT-PT）`规范，PT是Protocol Translation的缩写。**NAT-PT是将IPv6的首部转换为IPv4的首部的一种技术。有了这种技术，那些只有IPv6地址的主机也就能够与IPv4地址的其他主机进行通信了。**
+
+![](/docs/docs_image/software/network/network_nat03.png)
+
+
+
+代理服务器看起来和`NAT`设备有一点像， 客户端像代理服务器发送请求, 代理服务器将请求转发给真正要请求的`服务器`，服务器返回结果后代理服务器又把结果回传给客户端。
+
+NAT技术无法从外部网络向内网建立连接，所以如果外网要访问内网中某台机器，需要在路由器上设置 port forward端口转发，或者利用代理服务器，明白了NAT的这个“缺点”就也会明白了为啥vm的NAT模式时如果host需要访问vm也是需要设置端口转发，这是同样的道理。
+
+**NAT和代理服务器的区别：**
+
+- NAT设备是网络基础设备之一，解决的是`IP`不足的问题，而代理服务器则是更贴近具体应用, 比如通过`代理服务器`进行翻墙，另外像迅游这样的加速器, 也是使用`代理服务器`。
+- NAT是工作在`网络层`直接对IP地址进行替换。代理服务器往往工作在`应用层`。
+- `NAT`一般在局域网的出口部署，代理服务器可以在局域网做也可以在广域网做也可以跨网。
+- NAT一般集成在`防火墙`，路由器等硬件设备上。代理服务器则是一个`软件程序`, 需要部署在服务器上。
+
+三层转发基本原理 https://blog.csdn.net/baidu_24553027/article/details/54928580
+NAT地址转换 https://blog.csdn.net/hjgblog/article/details/23356409
+
+#### **传输层的协议测试工具**
+参见《/doc/software/network/vpn》
 注意ping和trcert都是走ICMP协议，并不是tcp协议，如果想追踪tcp需要用：
 tcproute TCPTraceroute 
 
@@ -528,7 +588,7 @@ tcproute安装使用：
 	http://www.win10pcap.org/download/
 	tcproute -p 443 github.io 
 
-**应用层的协议和工具**
+#### **应用层的协议和工具**
 DHCP协议
 	DHCP服务一般位于路由器（家用）或者服务器（公司用），内网中电脑上的dhcp client发出请求，
 	dhcp服务端返回分配ip地址、网关gateway、掩码及dns服务器地址；
@@ -540,7 +600,7 @@ DHCP协议
 DNS协议 
 	DNS测试工具windows:nslookup, linux: dig 
 
-DNS技术和NAT技术详解 https://blog.csdn.net/hansionz/article/details/86570290
+​	https://blog.csdn.net/hansionz/article/details/86570290
 
 ![](/docs/docs_image/software/network/network17.png)
 Gateway: internal send packets to gateway
@@ -589,7 +649,17 @@ RPC框架众多，比如netty:
 粘包问题的处理一般是加“分隔符”来标志一个包packet结束；
 拆包问题则是一般加上长度length字段，让接收方知道这个包的长度，比如10M，接收端可以把这些拆的包合并起来；
 
-### 4.3 tunnel 隧道技术
+### 4.3 应用层之代理服务器
+
+前面说过NAT技术和代理服务器技术的区别，现在具体说下代理服务器
+
+代理服务器的作用：
+
+- VPN: 广域网中的代理。
+- 负载均衡: 局域网中的代理。
+- 端口转发: http/ssh tunnel 隧道技术
+
+**正向代理/反向代理/端口转发:**
 
 首先要了解两种代理模式：**forward proxy（正向代理），reverse proxy（反向代理）：**
 正向代理，位于客户端，隐藏客户端信息，forward proxy proxies in behalf of clients (or requesting hosts)
@@ -603,7 +673,15 @@ https://www.jscape.com/blog/bid/87783/Forward-Proxy-vs-Reverse-Proxy
 > 是安全壳(SSH) 为网络安全通信使用的一种方法。SSH可以利用端口转发技术来传输其他TCP/IP协议的报文，当使用这种方式时，SSH就为其他服务在客户端和服务器端建立了一条安全的传输管道。端口转发利用本客户机端口映射到服务器端口来工作，SSH可以映射所有的服务器端口到本地端口，但要设置1024以下的端口需要根用户权限。在使用防火墙的网络中，如果设置为允许SSH服务通过(开启了22端口)，而阻断了其他服务，则被阻断的服务仍然可以通过端口转发技术转发数据包
 > https://baike.baidu.com/item/%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91
 
+所以这种端口转发方式中ssh就充当了代理服务器的角色
+
 一般渗透测试中会利用代理模式（正向或者反向）加上端口转发来“绕过”防火墙对目标机器上端口的限制
+
+例子：
+
+https://medium.com/@ryanwendel/forwarding-reverse-shells-through-a-jump-box-using-ssh-7111f1d55e3a
+
+https://www.offensive-security.com/metasploit-unleashed/portfwd/
 
 #### 4.3.1 http tunnel
 

@@ -33,7 +33,7 @@ decred浏览器实时数据：https://dcrdata.decred.org/
 
 而Decred采用的是POW工作量证明和POS权益证明的混合模式作为共识机制的基础，有什么好处呢：
 
-1. 安全性 Security
+### 1. 安全性 Security
 
 In peer-to-peer financial systems, Proof-of-Work (PoW) solved the double spending problem. It has proved its worth for more than a decade, but is energy intensive and susceptible to majority attacks. Proof-of-Stake (PoS) was developed to avoid those issues through alignment of interests, but it came with its own shortcomings, most notably the nothing-at-stake problem.
 
@@ -43,7 +43,9 @@ In peer-to-peer financial systems, Proof-of-Work (PoW) solved the double spendin
 
 而混合模型下，Decred引入了validator验证者的概念，验证者通过购买门票ticket来参与挖矿的随机验证，最后挖矿的收益矿工和验证者进行分成，其好处之一就是可以抵挡51%攻击，即使有矿池拥有了绝对的算力，但是验证者的存在就可以避免拥有超过51%算力的矿工篡改区块。
 
-2. 适应性 Adaptability
+### 2. 适应性 Adaptability
+
+Decred’s built-in governance systems empower its community with formal rights to make consensus changes and manage project-level decisions. These systems make Decred adaptable, allowing it to evolve per the will of the stakeholders, resist forks and incorporate new technology over the long run.
 
 ![img](https://decred.org/images/adaptability_politeia-the-proposal-system.png)
 
@@ -51,7 +53,9 @@ In peer-to-peer financial systems, Proof-of-Work (PoW) solved the double spendin
 
 而decred的治理模型下，削弱了矿工的绝对权利，开发者对decred的任何修改和升级都要经过投票voting的过程，投票的过程也是普通的decred持有者参与互动下进行的，这样所有DCR的持有者就可以参与到Decred的升级修改或者开发进展的决策过程。
 
-3. 可持续性 sustainability
+### 3. 可持续性 sustainability
+
+Decred continuously funds its treasury with 10% of each block reward and employs a flexible contractor model that allows contributors to receive compensation for their work. This makes Decred a sustainable and self-funded Decentralized Autonomous Organization.
 
 Decred奖励的分配方案是：60%分配给miner矿工，30%分配给validators验证者即DCR ticket持有者，剩下10%分配给由Decred持有者管理的Decred Treasury Fund资金池，用来激励Decred builder开发者修复问题并开发新的特性，相对于比特币100%将奖励分配给矿工来说，Decred的激励机制无疑是非常完美的；
 
