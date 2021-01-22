@@ -79,7 +79,7 @@ create-react-app已经在package-lock.json锁定了webpack和Babel依赖
 latest version:ES6
 
 > Unlike most programming languages, the JavaScript language has no concept of input or output. It is designed to run as a scripting language in a host environment, and it is up to the host environment to provide mechanisms for communicating with the outside world. The most common host environment is the browser, but JavaScript interpreters can also be found in a huge list of other places, including Adobe Acrobat, Adobe Photoshop, SVG images, Yahoo's Widget engine, server-side environments such as Node.js, NoSQL databases like the open source Apache CouchDB, embedded computers, complete desktop environments like GNOME (one of the most popular GUIs for GNU/Linux operating systems), and others.
-> https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript
+> https://developer.mozilla.org/en-US/docs/Web/JavaScript/
 
 + Number
 + String
@@ -158,6 +158,14 @@ https://dev.to/sarah_chima/var-let-and-const--whats-the-difference-69e
 ### 2.1 共同环境配置
 
 ```
+一般安装nodejs就自动自带按照npm，但是Ubuntu貌似并非如此
+
+#ubuntu
+apt install npm
+但是默认版本很低，升级：
+sudo npm install -g npm
+hash -d npm
+
 #centos
 yum install nodejs
 yum uninstall nodejs
@@ -180,8 +188,6 @@ npm install -g npm-windows-upgrade npm-windows-upgrade
 
 安装验证：
 ```
-首先需要安装nodejs，nodejs自带npm：
-
 node --version 
 npm --version
 npx -version
@@ -333,7 +339,19 @@ https://legacy.gitbook.com/book/developmentarc/react-indepth/details
 
 ## 4.1 基本语法
 
+```js
+if( value ) {
+}
+```
 
+will evaluate to `true` if `value` is **not**:
+
+- null
+- undefined
+- NaN
+- empty string ("")
+- 0
+- false
 
 
 
@@ -692,6 +710,56 @@ https://mobx.js.org/getting-started.html
   // don't allow state modifications outside actions
   configure({ enforceActions: "always" })
   
+  ```
+
+**actions VS flow(function * (fn)**
+
+通过我发现的一个“bug”来理解下单线程非阻塞的JS模型在mobx flow中的运用，flow会根据异步请求将代码段切分成多块，每块都是一个action，也就是每块如果有状态变化都会触发render：
+
+https://github.com/mobxjs/mobx/issues/2715
+
+https://mobx.js.org/actions.html#using-flow-instead-of-async--await-
+
+```react
+class testStore {
+  @observable tableData = []
+  @observable requestComplete = false
+  @action //这里的action是没用的，因为下面用了flow！You don't need action when using flow... the point of flow is to automatically insert actions in between time-separated blocks of code - that is - in between individual awaits - which are replaced by yields (which allows us to insert these actions).
+  retrieveTableData = (flow(function * () {
+    try {
+      console.log('Mark 1')
+      this.requestComplete = false
+      console.log('Mark 2')
+      const tempTableData = yield axios.post('someEndpoints','someParam') //以此分割成两块action，代码运行到此处，因为这里是等待异步请求，而js是非阻塞的单线程，所以就会跑去做其他事情，即如果之前观测数据requestComplete是true，这里改成了false，此时js就刚好腾出手来去触发render！
+      console.log('Mark 3')
+      if (Array.isArray(tempTableData)) {
+        this.tableData = doSthTo(tempTableData)
+        console.log('Mark 4')  
+      }
+      this.requestComplete = true
+      console.log('Mark 5')
+    } catch (error) {
+	  console.log('Mark -1')
+      this.requestComplete = true
+    }
+  }))
+}
+
+@inject('testStore')
+@observer
+class testTable extends Component {
+    componentDidMount () {
+    const { testStore } = this.props
+    testStore.retrieveTableData()
+  }
+  render () {
+    console.log('Mark render...')
+    return <Sth>
+  }
+```
+
+
+
 #关于runInAction，在strict模式下，所有的setState操作都必须在action方法中，比如：
 	loadWeather = city => {
 	  fetch(
@@ -703,6 +771,7 @@ https://mobx.js.org/getting-started.html
 	    });
 	};
 	
+
 	@action
 	setWeatherData = data => {
 	  this.weatherData = data;   
@@ -720,8 +789,10 @@ https://mobx.js.org/getting-started.html
 	};
 	```
 	@action @action.bound https://stackoverflow.com/questions/48639891/difference-between-mobxs-action-bound-and-arrow-functions-on-class-functions
-	
+
 + Use the @observer decorator from the mobx-react package to make your React components truly reactive. They will update automatically and efficiently. Even when used in large complex applications with large amounts of data.
+
+  
 
 mobx vs  redux:
 https://blog.logrocket.com/redux-vs-mobx/
