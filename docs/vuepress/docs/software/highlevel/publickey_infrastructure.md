@@ -35,6 +35,15 @@ PKI supports all the above four requirements with methods such as secure messagi
 
 	is a concept, or a way, to ensure that the sender or receiver of a message cannot deny either sending or receiving such a message in future. One of the important audit checks for non-repudiation is a time stamp. The time stamp is an audit trail that provides information of the time the message is sent by the sender and the time the message is received by the receiver.
 
+**Public key cryptography**ss
+
+Public key cryptography (negotiating exchange symmetric master secret key)
+	Rsa dsa ecdsa ecc
+Symmetric (Exchange message)
+	Des …
+Hash function (Integrity)
+	Md5 hmac
+
 ## 1.Overview
 
 ### 1.1 Secure messaging
@@ -62,6 +71,12 @@ PKI also provides key exchange functionality that facilitates the secure exchang
 ## 2.Methods
 
 ### 2.1 Certificate authority or Self-signed with X.509
+
+如果有域名建议用 CA的证书，可以用Let's Encrypt获取，或者可以使用第三方DNS解析自带的，比如cloudflare的证书；
+
+如果没有域名比如本地测试环境那只能用自签名证书；
+
+ca 证书链 chain of trust
 
 PGP VS X.509
 http://world.std.com/~cme/html/web.html
@@ -96,18 +111,25 @@ Identification is guaranteed by CA
 
 ![](/docs/docs_image/software/cryptography/pki02.png)
 
-#### 3.1.1 Public key cryptography
-Public key cryptography (negotiating exchange symmetric master secret key)
-	Rsa dsa ecdsa ecc
-Symmetric (Exchange message)
-	Des …
-Hash function (Integrity)
-	Md5 hmac
+#### 3.1.1 Implementation
+https://en.wikipedia.org/wiki/Comparison_of_TLS_implementations
+
++ openssl:
+
+  is a software library for applications that secure communications over computer networks against eavesdropping or need to identify the party at the other end. It is widely used by Internet servers, including the majority of HTTPS websites.
+
+  经常被用来配置https
+
++ Bouncy Castle (cryptography): 
+
+  is a collection of APIs used in cryptography. It includes APIs for both the Java and the C# programming languages
+
+  参考我写的一个密码学小工具：《blockchain_cryptography.md》
 
 #### 3.1.2 Certifications - X.509 cert - always related to CA party
 a standard defining the format of public key certificates
  https://en.wikipedia.org/wiki/X.509
- 
+
 ![](/docs/docs_image/software/cryptography/pki03.png)
 
 #### 3.1.3 Algorithm for TLS whole flow
@@ -124,7 +146,15 @@ a standard defining the format of public key certificates
 ![](/docs/docs_image/software/cryptography/pki04.png)
 
 #### 3.1.4 Protocol - Handshake
+
 Tcp handshake => TLS/SSL Handshake
+
+The TLS handshake happens after the TCP handshake. For the TCP or for the transport layer, everything in the TLS handshake is just application data. Once the TCP handshake is completed the TLS layer will initiate the TLS handshake.
+
+https://medium.facilelogin.com/nuts-and-bolts-of-transport-layer-security-tls-2c5af298c4be
+
+
+
 A walk-through of a TCP handshake http://commandlinefanatic.com/cgi-bin/showarticle.cgi?article=art058
 The TLS Handshake at a High Level http://commandlinefanatic.com/cgi-bin/showarticle.cgi?article=art057
 A walk-through of an SSL handshake http://commandlinefanatic.com/cgi-bin/showarticle.cgi?article=art059
@@ -134,13 +164,78 @@ https://www.youtube.com/watch?v=iQsKdtjwtYI
 
 ![](/docs/docs_image/software/cryptography/pki05.png)
 
-## 3.2 Manager tools
-Openssl keytool
+### 3.2 Manager tools
 
-### 3.2.1 Truststore 
+管理：private key public key certificate
+
+比如我们可以使用openssl工具手动生成自签名的证书，也可以通过ca购买证书（也要先通过openssl工具生成csr）；
+
+一个web应用如果需要提供以https的方式访问的服务的话，我们需要一个数字证书，这个证书的配置是在nginx或apache的配置文件或者其他web容器的配置文件中进行配置的。当然这个可以保存在keystore中。
+
+例子：nginx https配置 参考《buildingblock/nginx.md》
+
+#### 3.2.1 交互工具：Openssl keytool
+
+openssl是常用的一个开源安全通信library，这里指其开源的toolkit
+
+keytool是JDK里面内置的一个数字证书生产工具
+
+证书类型：
+
++ .PEM：
+
+  (originally “Privacy Enhanced Mail”) is the most common format for X.509 certificates, CSRs(Cerificate Signing Request), and cryptographic keys. A PEM file is a text file containing one or more items in Base64 ASCII encoding, each with plain-text headers and footers (e.g. -----BEGIN CERTIFICATE----- and -----END CERTIFICATE-----). A single PEM file could contain an end-entity certificate, a private key, or multiple certificates forming a complete chain of trust.
+
+  are usually seen with the extensions .crt, .pem, .cer, and .key (for private keys), but you may also see them with different extensions
+
++ .DER：
+
+  (Distinguished Encoding Rules) is a binary encoding for X.509 certificates and private keys. Unlike PEM, DER-encoded files do not contain plain text statements such as -----BEGIN CERTIFICATE-----. DER files are most commonly seen in Java contexts.
+
+  DER-encoded files are usually found with the extensions .der and .cer
+
++ PKCS
+
+  + PKCS#7 (also known as P7B) 
+
+    is a container format for digital certificates that is most often found in Windows and Java server contexts, and usually has the extension .p7b. PKCS#7 files are not used to store private keys.
+
+  + PKCS#12 (also known as PKCS12 or PFX) 
+
+    is a common binary format for storing a certificate chain and private key in a single, encryptable file, and usually have the filename extensions .p12 or .pfx.
+
+```
+#View contents of PEM certificate file
+openssl x509 -in CERTIFICATE.pem -text -noout 
+#Convert PEM certificate to DER
+openssl x509 -outform der -in CERTIFICATE.pem -out CERTIFICATE.der
+#Convert PEM certificate with chain of trust to PKCS#7
+openssl crl2pkcs7 -nocrl -certfile CERTIFICATE.pem -certfile MORE.pem -out CERTIFICATE.p7b
+#Convert PEM certificate with chain of trust and private key to PKCS#12
+openssl pkcs12 -export -out CERTIFICATE.pfx -inkey PRIVATEKEY.key -in CERTIFICATE.crt -certfile MORE.crt
+
+#View contents of DER-encoded certificate file
+openssl x509 -inform der -in CERTIFICATE.der -text -noout
+#Convert DER-encoded certificate to PEM
+openssl x509 -inform der -in CERTIFICATE.der -out CERTIFICATE.pem
+#Convert DER-encoded certificate with chain of trust and private key to PKCS#12
+https://www.ssl.com/how-to/create-a-pfx-p12-certificate-file-using-openssl/
+```
+
+
+
+#### 3.2.2 存储：Truststore & Keystore
+
+keystore可以看成一个放key的库，key就是公钥，私钥，数字签名等组成的一个信息。
+
+truststore是放信任的证书的一个store
+truststore和keystore的性质是一样的，都是存放key的一个仓库，区别在于，truststore里存放的是只包含公钥的数字证书，代表了可以信任的证书，而keystore是包含私钥的。
+
++ Truststore
+
 (as name suggest) is used to store certificates from trusted Certificate authorities(CA) which are used to verify certificate presented by Server in SSL Connection 
 
-### 3.2.2 Keystore
++ Keystore
 
 ![](/docs/docs_image/software/cryptography/pki06.png)
 
@@ -155,7 +250,7 @@ KEYSTORE vs private key vs certificate
 
 Difference between trustStore vs keyStore in Java SSLRead more: http://www.java67.com/2012/12/difference-between-truststore-vs.html#ixzz5UBSznugK www.java67.com/2012/12/difference-between-truststore-vs.html
 
-Manage keys, certificates and keystores https://www.ibm.com/support/knowledgecenter/en/SSCQGF_7.1.0/com.ibm.IBMDI.doc_7.1/adminguide36.htm
+Manage keys, certificates and keystores https://www.ibm.com/support/knowledgecenter/en/SSCQGF_7.2.0/com.ibm.IBMDI.doc_7.2/adminguide63.htm#ktrustmgmt
 
 
 https://github.com/ethereum/go-ethereum/wiki/Mobile:-Account-management
