@@ -344,6 +344,20 @@ vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
 
 ## 4. Troubleshooting
 
+?#Nonexistent host networking interface
+
+编辑器打开vbox文件
+
+```
+<BridgedInterface name="Linksys AE1000"/>
+
+to this:
+
+<BridgedInterface name="Intel(R) 82579LM Gigabit Network Connection"/>
+```
+
+
+
 ?#Failed to open virtual machine...*Cannot register the DVD image*
 
 很简单，编辑器打开vbox文件删掉\<DVDImages\>中间的那个Image引用即可

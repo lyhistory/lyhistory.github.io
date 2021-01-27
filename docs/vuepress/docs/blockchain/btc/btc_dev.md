@@ -87,15 +87,19 @@ https://github.com/bitcoin/bitcoin/blob/master/contrib/zmq/zmq_sub.py
 https://github.com/bitcoin/bitcoin/blob/452bb90c718da18a79bfad50ff9b7d1c8f1b4aa3/contrib/debian/examples/bitcoin.conf
 https://github.com/ChristopherA/Learning-Bitcoin-from-the-Command-Line/blob/master/bitcoin-cli-commands-help.md
 
-**Setup**
+#### **Setup**
 
+```
 git clone https://github.com/bitcoin/bitcoin.git
+cd bitcoin
 git tag        	 
 git checkout v0.17.1
-Usage Refer to <<https://github.com/lyhistory/learn_coding/tree/master/blockchain/btc/basic/bitcoincore_v0.17.1_cli.txt>>
+```
 
-Build instruction - tested version
-https://github.com/bitcoin/bitcoin/blob/master/doc/build-unix.md
+
+See doc/build-*.md for instructions on building the various elements of the Bitcoin Core reference implementation of Bitcoin.
+
+比如测试过的：https://github.com/bitcoin/bitcoin/blob/master/doc/build-unix.md
 
 ![](/docs/docs_image/blockchain/btc/btc_dev01.png)
 
@@ -103,7 +107,7 @@ https://github.com/bitcoin/bitcoin/blob/master/doc/build-unix.md
 
 ubuntu:
 ```
-sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3 libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-test-dev libboost-thread-dev
+sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3 libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-test-dev libboost-thread-dev -y
 ```
 The following removed https://github.com/bitcoin/bitcoin/commit/fa3148aacbea0e1a0ba8016b66b8d6b876c267b2
 ~~For ubuntu only(enable wallet mode dependency):~~
@@ -133,7 +137,7 @@ https://ma.ttias.be/run-a-bitcoin-core-full-node-on-centos-7/
 ./autogen.sh
 ./configure
 make
-make install 
+make install （这一步是可选的，如果不做这一步，结果bitcoind bitcoin-cli都在./src目录里面）
 ```
 ![](/docs/docs_image/blockchain/btc/btc_dev02.png)
 
@@ -143,6 +147,7 @@ make install
 ./contrib/install_db4.sh `pwd`
 
 2)	Manually install
+
 ```
 BITCOIN_ROOT=$(pwd)
 # Pick some path to install BDB to, here we create a directory within the bitcoin directory
@@ -227,6 +232,195 @@ https://bitcoin.stackexchange.com/questions/75324/how-to-dump-peers-dat-file-to-
 
 Mq notification
 https://bitcoin.stackexchange.com/questions/40752/what-is-the-use-case-of-bitcoind-zeromq
+
+
+
+#### Usage 
+
+Refer to <<https://github.com/lyhistory/learn_coding/tree/master/blockchain/btc/basic/bitcoincore_v0.17.1_cli.txt>>
+
+```
+如果没有make install
+make的结果都在 ./src/下面
+./src/bitcoind -mempoolreplacement=1 -printtoconsole
+
+./src/bitcoin-cli getblockhash 0
+./src/bitcoin-cli getblock 000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f
+./src/bitcoin-cli getblock 000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f 2
+
+./src/bitcoin-cli getrawtransaction 4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b
+./src/bitcoin-cli decoderawtransaction
+
+./src/bitcoin-cli stop
+
+
+
+lyhistory@lyhistory-VirtualBox:/opt/bitcoin$ ./src/bitcoin-cli getblockhash 0
+000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f
+lyhistory@lyhistory-VirtualBox:/opt/bitcoin$ ./src/bitcoin-cli getblock 000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f
+{
+  "hash": "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
+  "confirmations": 5631,
+  "strippedsize": 285,
+  "size": 285,
+  "weight": 1140,
+  "height": 0,
+  "version": 1,
+  "versionHex": "00000001",
+  "merkleroot": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
+  "tx": [
+    "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"
+  ],
+  "time": 1231006505,
+  "mediantime": 1231006505,
+  "nonce": 2083236893,
+  "bits": "1d00ffff",
+  "difficulty": 1,
+  "chainwork": "0000000000000000000000000000000000000000000000000000000100010001",
+  "nTx": 1,
+  "nextblockhash": "00000000839a8e6886ab5951d76f411475428afc90947ee320161bbf18eb6048"
+}
+
+lyhistory@lyhistory-VirtualBox:/opt/bitcoin$ ./src/bitcoin-cli getrawtransaction 4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b
+error code: -5
+error message:
+The genesis block coinbase is not considered an ordinary transaction and cannot be retrieved
+
+需要用这种方法：
+lyhistory@lyhistory-VirtualBox:/opt/bitcoin$ ./src/bitcoin-cli getblock 000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f 2
+{
+  "hash": "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
+  "confirmations": 127025,
+  "strippedsize": 285,
+  "size": 285,
+  "weight": 1140,
+  "height": 0,
+  "version": 1,
+  "versionHex": "00000001",
+  "merkleroot": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
+  "tx": [
+    {
+      "txid": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
+      "hash": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
+      "version": 1,
+      "size": 204,
+      "vsize": 204,
+      "weight": 816,
+      "locktime": 0,
+      "vin": [
+        {
+          "coinbase": "04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73",
+          "sequence": 4294967295
+        }
+      ],
+      "vout": [
+        {
+          "value": 50.00000000,
+          "n": 0,
+          "scriptPubKey": {
+            "asm": "04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f OP_CHECKSIG",
+            "hex": "4104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac",
+            "reqSigs": 1,
+            "type": "pubkey",
+            "addresses": [
+              "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
+            ]
+          }
+        }
+      ],
+      "hex": "01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff4d04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73ffffffff0100f2052a01000000434104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac00000000"
+    }
+  ],
+  "time": 1231006505,
+  "mediantime": 1231006505,
+  "nonce": 2083236893,
+  "bits": "1d00ffff",
+  "difficulty": 1,
+  "chainwork": "0000000000000000000000000000000000000000000000000000000100010001",
+  "nTx": 1,
+  "nextblockhash": "00000000839a8e6886ab5951d76f411475428afc90947ee320161bbf18eb6048"
+}
+lyhistory@lyhistory-VirtualBox:/opt/bitcoin$
+
+查看coinbase里面的内容
+方法一：
+echo "01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff4d04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73ffffffff0100f2052a01000000434104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac00000000" | xxd -r -p
+
+方法二：
+lyhistory@lyhistory-VirtualBox:/opt/bitcoin$ ./src/bitcoin-cli decoderawtransaction 01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff4d04ffff001d0104455468652054696d65732030332f 4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73ffffffff0100f2052a01000000434104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649 f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac00000000
+{
+  "txid": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
+  "hash": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
+  "version": 1,
+  "size": 204,
+  "vsize": 204,
+  "weight": 816,
+  "locktime": 0,
+  "vin": [
+    {
+      "coinbase": "04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73",
+      "sequence": 4294967295
+    }
+  ],
+  "vout": [
+    {
+      "value": 50.00000000,
+      "n": 0,
+      "scriptPubKey": {
+        "asm": "04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f OP_CHECKSIG",
+        "hex": "4104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac",
+        "reqSigs": 1,
+        "type": "pubkey",
+        "addresses": [
+          "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
+        ]
+      }
+    }
+  ]
+}
+
+echo "04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73" | xxd -r -p
+♦□□ ♦EThe Times 03/Jan/2009 Chancellor on brink of second bailout for banks
+
+再看一个普通的coinbase交易
+lyhistory@lyhistory-VirtualBox:/opt/bitcoin$ ./src/bitcoin-cli decoderawtransaction 01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff0704ffff001d0136ffffffff0100f2052a0100000043 4104fcc2888ca91cf0103d8c5797c256bf976e81f280205d002d85b9b622ed1a6f820866c7b5fe12285cfa78c035355d752fc94a398b67597dc4fbb5b386816425ddac00000000
+{
+  "txid": "d3ad39fa52a89997ac7381c95eeffeaf40b66af7a57e9eba144be0a175a12b11",
+  "hash": "d3ad39fa52a89997ac7381c95eeffeaf40b66af7a57e9eba144be0a175a12b11",
+  "version": 1,
+  "size": 134,
+  "vsize": 134,
+  "weight": 536,
+  "locktime": 0,
+  "vin": [
+    {
+      "coinbase": "04ffff001d0136",
+      "sequence": 4294967295
+    }
+  ],
+  "vout": [
+    {
+      "value": 50.00000000,
+      "n": 0,
+      "scriptPubKey": {
+        "asm": "04fcc2888ca91cf0103d8c5797c256bf976e81f280205d002d85b9b622ed1a6f820866c7b5fe12285cfa78c035355d752fc94a398b67597dc4fbb5b386816425dd OP_CHECKSIG",
+        "hex": "4104fcc2888ca91cf0103d8c5797c256bf976e81f280205d002d85b9b622ed1a6f820866c7b5fe12285cfa78c035355d752fc94a398b67597dc4fbb5b386816425ddac",
+        "reqSigs": 1,
+        "type": "pubkey",
+        "addresses": [
+          "15yN7NPEpu82sHhB6TzCW5z5aXoamiKeGy"
+        ]
+      }
+    }
+  ]
+}
+
+ "coinbase": "04ffff001d0136",解释：
+https://bitcoin.stackexchange.com/questions/48540/how-is-the-extra-nonce-formatted
+
+```
+
+
 
 ### 2.2 Libbitcoin
 
@@ -498,13 +692,13 @@ https://en.bitcoin.it/wiki/Script
 Common Bitcoin Script Templates https://bitcoinedge.org/tutorial/EN:scripting-transactions-p2pkh-p2wpkh-p2sh-p2wsh
 
 #### 3.6.1 Multisignature
-0 <Signature B> <Signature C> 2 <Public Key A> <Public Key B> <Public Key C> 3 CHECKMULTISIG
+`0 <Signature B> <Signature C> 2 <Public Key A> <Public Key B> <Public Key C> 3 CHECKMULTISIG`
 
 #### 3.6.2 Pay-to-Script-Hash (P2SH)
 
-<Sig1> <Sig2> <2 PK1 PK2 PK3 PK4 PK5 5 CHECKMULTISIG>
+`<Sig1> <Sig2> <2 PK1 PK2 PK3 PK4 PK5 5 CHECKMULTISIG>
 <2 PK1 PK2 PK3 PK4 PK5 5 CHECKMULTISIG> HASH160 <redeem scriptHash> EQUAL
-<Sig1> <Sig2> 2 PK1 PK2 PK3 PK4 PK5 5 CHECKMULTISIG
+<Sig1> <Sig2> 2 PK1 PK2 PK3 PK4 PK5 5 CHECKMULTISIG`
 
 P2SH locking scripts contain the hash of a redeem script, which gives no clues as to the content of the redeem script itself. The P2SH transaction will be considered valid and accepted even if the redeem script is invalid. You might accidentally lock bitcoin in such a way that it cannot later be spent.
 

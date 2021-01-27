@@ -4,7 +4,13 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
-[回目录](/docs/software)  《分布式系统开发》
+[回目录](/docs/software)  《分布式系统开发-从故障容错分布式系统到拜占庭容错分布式账本》
+
+本文发布在 infoq：
+
+分布式系统全景分析：从故障容错到拜占庭容错
+
+https://www.infoq.cn/article/ihxufskmuc3ptlfyrryk
 
 _注意:_
 
@@ -154,7 +160,7 @@ leader直接或间接通过follower收到转发的写操作请求，都会按照
 
 引用斯坦福的教学内容Basic Paxos的基本流程图：
 ![paxos](/docs/docs_image/software/distributed_system/distrubuted_system02.png)
-   
+
 basic paxos是基于2PC两阶段提交协议的，这里首先引入提议者proposer和接受者acceptor作为两阶段的具体实施者，我们用一个机票预订的例子来讲解：
 
 为了简化描述，假设我们只有5个节点Node1|Node2|Node3|Node4|Node5 ，其中Node1和Node2是proposer角色，然后Node3|Node4|Node5都是acceptor角色，
