@@ -4,7 +4,7 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
-[回目录](/docs/software)  《网络基础》[回目录](/docs/software)  《网络基础》
+[回目录](/docs/software)  《网络基础》
 
 必读： <《图解TCP IP(第5版)》.((日)竹下隆史).[PDF].&ckook>
 
@@ -16,9 +16,16 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 ## 1.网络分层 TCP/IP协议组
 
-The layers in the TCP/IP network model, in order, include:
+Open Systems Interconnection model (OSI model) is a conceptual model that characterises and standardises the communication functions of a telecommunication or computing system without regard to its underlying internal structure and technology.
+
+![网络分层](/docs/docs_image/software/network/network01.png)
+
+OSI七层是抽象的模型，而TCP/IP四层或五层是比较具体的协议；
+
+五层模型
+
 + Layer 5: Application
-	FTP、HTTP、websocket、TELNET、SMTP、DNS等协议;
+	FTP、HTTP、HTTPS、websocket、TELNET、SMTP、DNS等协议;
 + Layer 4: Transport
 	TCP协议与UDP协议
 + Layer 3: Network/Internet
@@ -28,13 +35,19 @@ The layers in the TCP/IP network model, in order, include:
 + Layer 1: Physical	
 	ISO2110，IEEE802。IEEE802.2
 
-注意：websocket是完整的应用层协议，所以不会访问raw tcp packets，但是常用的socket是可以的，因为它是基于应用层和传输层的抽象，并不是一个协议；
+注意：websocket是完整的应用层协议，所以不会访问raw tcp packets，但是常用的socket是可以的，因为它是基于应用层和传输层的抽象，并不是一个协议
 
-![网络分层](/docs/docs_image/software/network/network01.png)
+七层模型：
+
++ Layer 7: Application layer(HTTP)
++ Layer 6: Presentation layer (none in this case)
++ Layer 5: Session layer (SSL/TLS)
++ Layer 4: Transport layer (TCP)
++ Layer 3: Network layer (IPv4)
++ Layer 2: Data link layer (ethernet)
++ Layer 1: Physical layer (network cable / wifi)
 
 
-
-OSI七层是抽象的模型，而TCP/IP四层或五层是比较具体的协议；
 
 听了马士兵的关于TCP的讲解，还是感觉挺有收获的，大概总结下整体过程：
 
@@ -264,6 +277,12 @@ The examples above discussed common, simple utilities. However, a much more powe
 ●	Determining if remote ports are closed or simply filtered.
 
 ### 1.5 Layer 5: Application Layer 应用层
+
+对应了七层的上面三层：
+
++ Layer 7: Application layer(HTTP)
++ Layer 6: Presentation layer (none in this case)
++ Layer 5: Session layer (SSL)
 
 HTTP协议是建立在请求/响应模型上的,
 首先由客户建立一条与服务器的TCP链接，并发送一个请求到服务器，请求中包含请求方法、URI、协议版本以及相关的MIME样式的消息;
@@ -510,9 +529,8 @@ TIME_WAIT 状态：
 
 ## 4. 协议详解
 
-### 4.1 各种分层背后的协议和测试工具
+### 4.1 网络层的协议测试工具
 
-#### **网络层的协议测试工具**
 1) **ICMP协议**：ping，tracert
 
 2) **网络层NAT“协议”** VS 应用层代理服务器
@@ -576,7 +594,8 @@ NAT技术无法从外部网络向内网建立连接，所以如果外网要访�
 三层转发基本原理 https://blog.csdn.net/baidu_24553027/article/details/54928580
 NAT地址转换 https://blog.csdn.net/hjgblog/article/details/23356409
 
-#### **传输层的协议测试工具**
+### 4.2 传输层的协议测试工具
+
 参见《/doc/software/network/vpn》
 注意ping和trcert都是走ICMP协议，并不是tcp协议，如果想追踪tcp需要用：
 tcproute TCPTraceroute 
@@ -589,16 +608,22 @@ tcproute安装使用：
 	tcproute -p 443 github.io 
 
 #### **应用层的协议和工具**
-DHCP协议
-	DHCP服务一般位于路由器（家用）或者服务器（公司用），内网中电脑上的dhcp client发出请求，
-	dhcp服务端返回分配ip地址、网关gateway、掩码及dns服务器地址；
-	[how dhcp works](https://www.youtube.com/watch?v=S43CFcpOZSI)
-	当我们配置静态IP或者一些内网渗透的测试环境时，需要[网络配置的四大基本要素： IP + Netmask + Gateway + DNS](https://blog.csdn.net/yuanbinquan/article/details/52963845)
+
+
+
+### 4.2 应用层之“协议”
+应用层的协议有FTP、HTTP、websocket、TELNET、SMTP、DHCP、DNS等协议：
+
+#### **DHCP协议**
+​	DHCP服务一般位于路由器（家用）或者服务器（公司用），内网中电脑上的dhcp client发出请求，
+​	dhcp服务端返回分配ip地址、网关gateway、掩码及dns服务器地址；
+​	[how dhcp works](https://www.youtube.com/watch?v=S43CFcpOZSI)
+​	当我们配置静态IP或者一些内网渗透的测试环境时，需要[网络配置的四大基本要素： IP + Netmask + Gateway + DNS](https://blog.csdn.net/yuanbinquan/article/details/52963845)
 
 ​	参考私人笔记《hacker_theory/tools_metasploit》以及类似的vm实验环境配置；
 
-DNS协议 
-	DNS测试工具windows:nslookup, linux: dig 
+#### **DNS协议 **
+​	DNS测试工具windows:nslookup, linux: dig 
 
 ​	https://blog.csdn.net/hansionz/article/details/86570290
 
@@ -607,14 +632,13 @@ Gateway: internal send packets to gateway
 Dns: resolve hostname
 https://superuser.com/questions/77914/whats-the-difference-between-default-gateway-and-preferred-dns-server
 
+#### Socket '协议'
 
-### 4.2 基于TCP/IP的应用层“协议”
-应用层的协议有FTP、HTTP、websocket、TELNET、SMTP、DNS等协议;
 前面也提到websocket是完整的应用层协议，所以不会访问raw tcp packets，但是常用的socket是可以的，因为它是基于应用层和传输层的抽象，并不是一个协议；
 
 在nio_netty中提到了ServerSocket，用来跟客户端建立连接，实际上socket也常常作为进程间通信的“协议”，有个特殊情况是，如果是本机进程间通信，有个特别的所谓socket Unix域套接字（Unix Domain Socket）https://blog.csdn.net/roland_sun/article/details/50266565，例子gitlab server、haproxy
 
-FTP、SMTP、DNS各自都有特定的用处；
+#### HTTP协议和 RPC'协议'
 
 HTTP则长作为一种general purpose的协议通常是用于客户端和服务端之间的通信，尤其是通过公网的通信，当然也可以用于组件之间或者系统内部之间的通信；
 但是有些情况下，HTTP是不够的：首先HTTP是应用层，对于系统内部的调用尤其是分布式系统之间调用来说性能比较低，此时就引入了基于传输层TCP的架构--RPC；
@@ -649,7 +673,13 @@ RPC框架众多，比如netty:
 粘包问题的处理一般是加“分隔符”来标志一个包packet结束；
 拆包问题则是一般加上长度length字段，让接收方知道这个包的长度，比如10M，接收端可以把这些拆的包合并起来；
 
-### 4.3 应用层之代理服务器
+#### HTTPS
+
+https通信是http建立在tls上，最新的tls1.3(SSL is deprecated predecessor of TLS)，TLS typically relies on a set of trusted third-party certificate authorities to establish the authenticity of certificates. 也就是CA
+
+TLS握手发生在TCP握手结束之后，具体参考《publickey_infrastructure.md/[#](https://lyhistory.com/docs/software/highlevel/publickeyinfrastructure.html#_3-1-ssl-tls)3.1 SSL/TLS》
+
+### 4.3 应用层之proxy代理服务器
 
 前面说过NAT技术和代理服务器技术的区别，现在具体说下代理服务器
 
@@ -661,6 +691,8 @@ RPC框架众多，比如netty:
 
 **正向代理/反向代理/端口转发:**
 
+其实端口转发根据方向可以分为正向和反向代理
+
 首先要了解两种代理模式：**forward proxy（正向代理），reverse proxy（反向代理）：**
 正向代理，位于客户端，隐藏客户端信息，forward proxy proxies in behalf of clients (or requesting hosts)
 例子：vpn技术基本都是正向代理，隐藏客户端信息
@@ -668,8 +700,10 @@ RPC框架众多，比如netty:
 例子：nginx或者tomcat作为Oracle数据库的反向代理，再比如nginx作为监控UIgrafana的反向代理：Grafana-server runs its own service and hosts dashboard on 3000, if bind to domain, to the normal use access domain, default using 80, need a proxy server who use 80 to forward request to grafana-server for example nginx
 https://www.jscape.com/blog/bid/87783/Forward-Proxy-vs-Reverse-Proxy
 
-
 而**端口转发（Port forwarding）：**
+
+由于NAT的缺点，从外网发起访问内网的主机是不行的，为了解决这个问题，可以在NAT路由器上做端口转发设置，除此之外，还可以借助代理服务器解决这个问题，比如借助ssh的正向反向或动态代理功能
+
 > 是安全壳(SSH) 为网络安全通信使用的一种方法。SSH可以利用端口转发技术来传输其他TCP/IP协议的报文，当使用这种方式时，SSH就为其他服务在客户端和服务器端建立了一条安全的传输管道。端口转发利用本客户机端口映射到服务器端口来工作，SSH可以映射所有的服务器端口到本地端口，但要设置1024以下的端口需要根用户权限。在使用防火墙的网络中，如果设置为允许SSH服务通过(开启了22端口)，而阻断了其他服务，则被阻断的服务仍然可以通过端口转发技术转发数据包
 > https://baike.baidu.com/item/%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91
 
@@ -706,6 +740,9 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT
 tcp tunnel一般不需要通过一个proxy server，而是借助安装在本地或者远程的软件来做“端口转发”，比如利用ssh将两台电脑的端口进行映射；
 
 ** ssh tunnel**
+
+https://zhuanlan.zhihu.com/p/57630633
+
 一般又被直接叫做port forwarding端口转发
 forward local port to remote port, 比如在公司连接家里的远程桌面，但是公司的3389端口被屏蔽，可以走ssh转发
 ssh -L <LOCAL PORT>:<REMOTE IP>:<REMOTE PORT> <USERNAME>@<REMOTE IP>
@@ -734,6 +771,37 @@ CryptoAuditor是一个基于network的解决方案,它可以在防火墙处阻�
 参考渗透测试内网穿透部分 /doc/coder2hacker/intranet_penetration
 
 [Proxy servers and tunneling](https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling)
+
+
+
+案例：
+
+1.[实战课: 从"NAT端口转发"到"代理服务tunnel"拿shell](https://mp.weixin.qq.com/s?__biz=MzU1NTUyMzYzMg==&mid=2247483910&idx=1&sn=cdfe82e503449f46ad1a5f7f51876a33&chksm=fbd24959cca5c04f7f5cfbbb63e2230a7ba7c6134bc6f5c2241b394c8f9e57808f34bc9f2a8e&token=1983430103&lang=zh_CN#rd)
+
+	+ NAT路由器端口转发
+	+ 代理服务器tunnel `ssh -R443:localhost:443 -R444:localhost:444 -R445:localhost:445 -p8022 -lroot 云主机IP`
+
+2.后渗透 pivot-内网扫描，参考《tools_metasploit》
+
+```
+通过控制的某个主机的meterpreter session来扫描整个内网
+https://redteamnation.com/pivoting/
+
+e.g. the compromised host 192.168.1.22 has access to a private network at 172.17.0.0/24.
+
+方法一：使用proxychain
+假设我们拿到主机192.168.1.22的ssh，我们可以开一个tunnel：
+ssh -D 4444 admin@192.168.1.22
+然后在attacker机器设置proxychains config：
+注释掉proxy_dns，开启 socks4 127.0.0.1 4444
+然后执行
+proxychains nmap -Pn -sT 172.17.0.0/24
+这样nmap就会通过444端口将流量转发到 192.168.1.22 主机上
+
+方法二：使用 meterpreter autoroute
+```
+
+
 
 #### 4.3.3 VPN
 

@@ -16,7 +16,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/highlevel/distrubuted_system">分布式系统开发</a></li>		
 		<li><a href="/docs/software/highlevel/concurrent">并发控制</a></li>
 		<li><a href="/docs/software/highlevel/threadsafe">线程安全</a></li>
-		<li><a href="/docs/software/highlevel/publickeyinfrastructure">公钥基础设施</a></li>
+		<li><a href="/docs/software/highlevel/publickey_infrastructure">公钥基础设施</a></li>
 		<li><a href="/docs/software/highlevel/oauth2">Oauth2.0</a></li>
 	</ul>
 	<p>-------------------------</p>

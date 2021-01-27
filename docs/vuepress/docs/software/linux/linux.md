@@ -97,8 +97,6 @@ sudo su -l _gvm -s /bin/bash
 sudo sh -c "cmds"
 ```
 
-
-
 ## 安装包管理
 
 ### 不同发行版选择
@@ -223,5 +221,142 @@ yum history info 21
 
 
 
+## 基础服务
 
+### 网络
+
+**Ubuntu**
+
+注意,对于Ubuntu 17.10 switched from ifupdown (which uses the /etc/network/interfaces file) to netplan,
+
+所以新版本已经找不到 /etc/network/interfaces
+
+netplan貌似只是个接口: https://netplan.io/examples/
+
+具体的控制还是: NetworkManager 和 networkd, 其中desktop版本默认是 NetworkManager，而对于无UI的server版本只能用networkd
+https://askubuntu.com/questions/1031439/am-i-running-networkmanager-or-networkd
+
+```
+To configure netplan, save configuration files under /etc/netplan/ with a .yaml extension (e.g. /etc/netplan/config.yaml), then run sudo netplan apply. This command parses and applies the configuration to the system. Configuration written to disk under /etc/netplan/ will persist between reboots.
+
+---------------------------------------------------------
+对于NetworkManager:
+---------------------------------------------------------
+First any interfaces defined in /etc/network/interfaces are ignored by network-manager. (man 5 NetworkManager)
+systemctl status network-manager
+
+vim /etc/netplan/01-network-manager-all.yaml
+# Let NetworkManager manage all devices on this system
+network:
+  version: 2
+  renderer: NetworkManager       
+
+UI是使用NetworkManager,所以直接打开控制面板来设置静态IP和DNS即可
+address 192.168.0.109
+netmask 255.255.255.0
+gateway 192.168.0.1
+DNS: 8.8.8.8
+设置完等一会即可    
+
+---------------------------------------------------------
+对于Networkd：
+---------------------------------------------------------
+systemd-networkd will only manage network addresses and routes for any link for which it finds a .network file with an appropriate [Match] section. (man 8 systemd-networkd).
+systemctl status systemd-netword
+
+vim /etc/netplan/01-network-manager-all.yaml
+network:
+    version: 2
+    renderer: networkd
+    ethernets:
+        enp3s0:
+            dhcp4: true
+
+```
+
+
+
+**Debain based : Kali**
+
+```
+--- for debain:
+配置静态ip
+/etc/network/interfaces：
+#auto eth0
+#iface eth0 inet dhcp
+auto eth0
+iface eth0 inet static
+address 192.168.0.109
+netmask 255.255.255.0
+gateway 192.168.0.1
+
+sudo ifdown eth0
+sudo ifup eth0
+or
+sudo /etc/init.d/networking restart
+
+如果还是无法上网（上面172.17.5.36是某ISP提供的，貌似虚拟机无法用）：
+/etc/resolv.conf
+nameserver 8.8.8.8
+
+sudo systemctl restart systemd-resolved.service
+
+解决后看下当前路由情况：
+route -n
+
+#Verify new IP settings:
+ip a s eth0
+#Verify new routing settings:
+ip r
+#Verify DNS servers settings:
+cat /etc/resolv.conf
+#Verify the internet connectivity:
+ping -c 4 google.com
+
+root@kali:/home/lyhistory# ip -4 addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    inet 192.168.0.109/24 brd 192.168.0.255 scope global eth0
+       valid_lft forever preferred_lft forever
+
+root@kali:/home/lyhistory# ip route
+default via 192.168.0.1 dev eth0 onlink 
+192.168.0.0/24 dev eth0 proto kernel scope link src 192.168.0.109 
+```
+
+
+
+**Centos**
+
+```
+--- for centos
+vim /etc/sysconfig/network-scripts/ifcfg-eth0
+HWADDR=00:08:A2:0A:BA:B8
+TYPE=Ethernet
+#BOOTPROTO=dhcp
+BOOTPROTO=none	
+# Server IP #
+IPADDR=192.168.0.110
+# Subnet #
+PREFIX=24
+# Set default gateway IP #
+GATEWAY=192.168.0.1
+# Set dns servers #
+DNS1=8.8.8.8
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+# Disable ipv6 #
+IPV6INIT=no
+NAME=eth0
+# This is system specific and can be created using 'uuidgen eth0' command #
+UUID=41171a6f-bce1-44de-8a6e-cf5e782f8bd6
+DEVICE=eth0
+ONBOOT=yes
+
+systemctl restart network
+
+
+```
 

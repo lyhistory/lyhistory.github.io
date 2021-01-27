@@ -179,7 +179,43 @@ Apr  1 03:09:49 kali NetworkManager[431]: <info>  [1554102589.3036] manager: Net
                                          172.17.5.4
      NetBIOS over Tcpip. . . . . . . . : Enabled
   
-  --- for debain:
+  ----------------------------------------------------------------------------
+  --- for ubuntu:
+  ----------------------------------------------------------------------------
+  默认会出现类似下面的结果,其中 ipv4对应的是enp0s3:avahi的169的地址,
+  lyhistory@lyhistory-VirtualBox:~$ ifconfig
+  enp0s3: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+          inet6 2404:e801:2001:3955:357e:c623:5742:484a  prefixlen 64  scopeid 0x0<global>
+          inet6 2404:e801:2001:3955:543b:3df2:4b55:43b1  prefixlen 64  scopeid 0x0<global>
+          inet6 fe80::2228:aebf:fda5:523b  prefixlen 64  scopeid 0x20<link>
+          ether 08:00:27:64:46:ce  txqueuelen 1000  (Ethernet)
+          RX packets 7632  bytes 1432852 (1.4 MB)
+          RX errors 0  dropped 0  overruns 0  frame 0
+          TX packets 7961  bytes 1009450 (1.0 MB)
+          TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+  
+  enp0s3:avahi: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+          inet 169.254.7.153  netmask 255.255.0.0  broadcast 169.254.255.255
+          ether 08:00:27:64:46:ce  txqueuelen 1000  (Ethernet)
+  
+  lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+          inet 127.0.0.1  netmask 255.0.0.0
+          inet6 ::1  prefixlen 128  scopeid 0x10<host>
+          loop  txqueuelen 1000  (Local Loopback)
+          RX packets 11328  bytes 898386 (898.3 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+          TX packets 11328  bytes 898386 (898.3 KB)
+          TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+          
+  根据<<Linux.md/网络>>部分的原理,ubuntu 17以上版本都是UI的network manager来控制的，所以直接打开控制面板来设置静态IP和DNS即可
+  address 192.168.0.109
+  netmask 255.255.255.0
+  gateway 192.168.0.1
+  DNS: 8.8.8.8
+  设置完等一会即可        
+  ----------------------------------------------------------------------------
+  --- for 其他debain:
+  ----------------------------------------------------------------------------
   配置静态ip
   /etc/network/interfaces：
   #auto eth0
@@ -203,8 +239,30 @@ Apr  1 03:09:49 kali NetworkManager[431]: <info>  [1554102589.3036] manager: Net
   
   解决后看下当前路由情况：
   route -n
-
+  
+  #Verify new IP settings:
+  ip a s eth0
+  #Verify new routing settings:
+  ip r
+  #Verify DNS servers settings:
+  cat /etc/resolv.conf
+  #Verify the internet connectivity:
+  ping -c 4 google.com
+  
+  root@kali:/home/lyhistory# ip -4 addr
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+      inet 127.0.0.1/8 scope host lo
+         valid_lft forever preferred_lft forever
+  2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+      inet 192.168.0.109/24 brd 192.168.0.255 scope global eth0
+         valid_lft forever preferred_lft forever
+  
+  root@kali:/home/lyhistory# ip route
+  default via 192.168.0.1 dev eth0 onlink 
+  192.168.0.0/24 dev eth0 proto kernel scope link src 192.168.0.109 
+  ----------------------------------------------------------------------------
   --- for centos
+  ----------------------------------------------------------------------------
   vim /etc/sysconfig/network-scripts/ifcfg-eth0
   HWADDR=00:08:A2:0A:BA:B8
   TYPE=Ethernet
@@ -230,26 +288,7 @@ Apr  1 03:09:49 kali NetworkManager[431]: <info>  [1554102589.3036] manager: Net
   
   systemctl restart network
   
-  #Verify new IP settings:
-  ip a s eth0
-  #Verify new routing settings:
-  ip r
-  #Verify DNS servers settings:
-  cat /etc/resolv.conf
-  #Verify the internet connectivity:
-  ping -c 4 google.com
   
-  root@kali:/home/lyhistory# ip -4 addr
-  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
-      inet 127.0.0.1/8 scope host lo
-         valid_lft forever preferred_lft forever
-  2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
-      inet 192.168.0.109/24 brd 192.168.0.255 scope global eth0
-         valid_lft forever preferred_lft forever
-  
-  root@kali:/home/lyhistory# ip route
-  default via 192.168.0.1 dev eth0 onlink 
-  192.168.0.0/24 dev eth0 proto kernel scope link src 192.168.0.109 
   ```
   
   
