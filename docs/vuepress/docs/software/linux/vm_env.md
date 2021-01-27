@@ -239,14 +239,23 @@ success
 
 #### 2.2.3 基本开发设置
 
+https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04
+
+https://www.digitalocean.com/community/tutorials/initial-server-setup-with-centos-7
+
 **用户管理**
+
+```
 groupadd gapp
 useradd newUser –g newGroup –d /home/newUser
 passwd newUser 
-
 id
-	uid=1001(newUser) gid=500(newGroup) groups=500(newGroup)
-usermod -aG wheel newUser 
+	uid=1001(newUser) gid=500(newGroup) groups=500(newGroup)	
+	
+for ubuntu:
+usermod -aG sudo newUser
+for centos:
+usermod -aG wheel newUser or gpasswd -a newUser wheel
 id
 	uid=1001(newUser) gid=500(newGroup) groups=500(newGroup),10(wheel)
 
@@ -254,6 +263,9 @@ mkdir -p /path/to/app
 chown root:newGroup /path/
 chown root:newGroup /apex/to/
 $ chown -R newUser:newGroup /path/to/app
+```
+
+
 
 最简单暴力方式：
 chmod u+w /etc/sudoers
