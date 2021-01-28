@@ -35,7 +35,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/java_spring" >基础:基于spring分布式微服务入门</a></li>
 		<li><a href="/docs/software/java_springboot" >基础:springboot原理解析</a></li>
         <li><a href="/docs/software/java_springboot_sourcecode" >基础:springboot源码阅读</a></li>
-        <li><a href="/docs/software/buildingblock/nio_netty">基础:BIO/NIO/多路复用/NETTY</a></li>
+        <li><a href="/docs/software/buildingblock/nio_epoll">基础:BIO/NIO/多路复用/NETTY</a></li>
 		<!--<li><a href="/docs/software/buildingblock/shiro">基础:shiro登录和权限管理</a></li>-->
 		<li><a href="/docs/software/buildingblock/zookeeper" >分布式框架zookeeper</a></li>
 		<li><a href="/docs/software/buildingblock/redis" >分布式缓存redis</a></li>
@@ -57,10 +57,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<h3>网络运维</h3>
 	<ul>
 		<li><a href="/docs/software/network/network">网络基础</a></li>	
-		<li><a href="/docs/software/network/vpn">vpn梯子基础</a></li>
-		<li><a href="/docs/software/network/network2github">Github系列网络事件记录</a></li>	
-		<li><a href="/docs/software/network/vpn_shadowsockr">shadowsocketR搭梯子</a></li>
-		<li><a href="/docs/software/network/vpn_trojan">trojan搭梯子</a></li>	
+        <li><a href="/docs/software/network/ssl_tls_setup">ssl/tls环境配置(https|wss)</a></li>	
         <li><a href="/docs/software/linux/vm_env">开发测试环境-虚拟机和容器</a></li>
         <li><a href="/docs/software/linux/vm_env_network">基于virtualbox构建网络环境</a></li>
         <li><a href="/docs/software/linux/linux">linux基础</a></li>
@@ -69,6 +66,11 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
         <li><a href="/docs/software/linux/linux_kernel">linux内核</a></li>
         <li><a href="/docs/software/linux/rsync">rsync</a></li>
         <li><a href="/docs/software/linux/selinux">selinux</a></li>
+		<li><a href="/docs/software/network/vpn">vpn梯子基础</a></li>
+         <li><a href="/docs/software/network/vpn_trojan">trojan搭梯子</a></li>	
+		<li><a href="/docs/software/network/network2github">Github系列网络事件记录</a></li>	
+		<li><a href="/docs/software/network/vpn_shadowsockr">shadowsocketR搭梯子</a></li>
+		
 	</ul>
 	<p>-------------------------</p>
 	<h3>项目管理</h3>
