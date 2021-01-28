@@ -1453,6 +1453,11 @@ sudo crontab -e -u root
 schedule the backup to run every morning after a weekday, Tuesday (day 2) through Saturday (day 6):
 15 04 * * 2-6  gitlab-ctl backup-etc && cd /etc/gitlab/config_backup && cp $(ls -t | head -n1) /secret/gitlab/backups/
 
+注意要设置好Limit backup lifetime for local files (prune old backups)
+否则会磁盘写满
+## Limit backup lifetime to 7 days - 604800 seconds
+gitlab_rails['backup_keep_time'] = 604800
+
 RESTORE:
 # Rename the existing /etc/gitlab, if any
 sudo mv /etc/gitlab /etc/gitlab.$(date +%s)
