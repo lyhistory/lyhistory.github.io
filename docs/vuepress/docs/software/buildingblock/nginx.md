@@ -106,6 +106,24 @@ $ /usr/local/nginx/sbin/nginx -s reload
 
 /usr/local/nginx/sbin/nginx
 
+## 语法
+
+```
+--- 变量 Variables
+https://nginx.org/en/docs/varindex.html
+The $http_upgrade use the value from client header upgrade, in nginx conf, $http_HEADER get the HEADER from client.
+
+--- map
+map $args $foo {
+    default 0;
+    debug   1;
+}
+$args 是nginx内置变量，就是获取的请求 url 的参数。 如果 $args 匹配到 debug 那么 $foo 的值会被设为 1 ，如果 $args 一个都匹配不到 $foo 就是default 定义的值，在这里就是 0
+https://www.cnblogs.com/cangqinglang/p/12174407.html
+```
+
+
+
 ## 配置
 
 ### HTTPS
@@ -166,22 +184,6 @@ Email Address []:tech-mgmt@asiapacificex.com
 创建一个跟客户端进行key exchange协商的秘钥：
 sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
 
-sudo vim /usr/local/nginx/conf/nginx.conf:
-include /usr/local/nginx/conf/ssl.conf
-
-sudo vim /usr/local/nginx/conf/ssl.conf:
-server {
-    listen 443 http2 ssl;
-    listen [::]:443 http2 ssl;
-
-    server_name server_IP_address;
-
-    ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
-    ssl_certificate_key /etc/ssl/privatekey/nginx-selfsigned.key;
-    ssl_dhparam /etc/ssl/certs/dhparam.pem;
-}
-
- sudo /usr/local/nginx/sbin/nginx -t
 ---------------------------------------------------------------------------------
 --- 这是另一种方法
 ---------------------------------------------------------------------------------
@@ -201,26 +203,81 @@ server {
 # cp ssl.key /usr/local/nginx/conf
 # cp ssl.crt /usr/local/nginx/conf
 
- server {
-        listen       443 ssl;
-        server_name  localhost;
-        ssl_certificate      /usr/local/nginx/conf/ssl.crt;
-        ssl_certificate_key  /usr/local/nginx/conf/ssl.key;
-        ssl_session_cache    shared:SSL:1m;
-        ssl_session_timeout  5m;
-        ssl_ciphers  HIGH:!aNULL:!MD5;
-        ssl_prefer_server_ciphers  on;
-        location ~ /clearingCenter/{
-           proxy_pass http://clearingCenter;  
-           proxy_redirect off;
-           proxy_set_header Host $host;
-           proxy_set_header X-Real-IP $remote_addr;
-           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-           proxy_http_version 1.1;
-           proxy_set_header Upgrade $http_upgrade;
-           proxy_set_header Connection "upgrade";    
-        }
+```
+
+
+
+```
+sudo vim /usr/local/nginx/conf/nginx.conf:
+include /usr/local/nginx/conf/ssl.conf
+
+sudo vim /usr/local/nginx/conf/ssl.conf:
+
+---------------------------------------------------------------------------------
+--- 同时支持http https
+---------------------------------------------------------------------------------
+
+server {
+	listen       80;
+    listen 443 http2 ssl;
+    listen [::]:443 http2 ssl;
+
+    server_name server_IP_address;
+
+    ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+    ssl_certificate_key /etc/ssl/privatekey/nginx-selfsigned.key;
+    ssl_dhparam /etc/ssl/certs/dhparam.pem;
 }
+
+---------------------------------------------------------------------------------
+--- 强制 https
+---------------------------------------------------------------------------------
+server {
+        listen       80;
+        server_name  test.local;
+		rewrite ^/(.*) https://$server_name$request_uri? permanent;
+	}
+	
+sudo /usr/local/nginx/sbin/nginx -t
+```
+
+### WSS
+
+https://nginx.org/en/docs/http/websocket.html
+
+By default, the connection will be closed if the proxied server does not transmit any data within 60 seconds. This timeout can be increased with the [proxy_read_timeout](https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_read_timeout) directive. Alternatively, the proxied server can be configured to periodically send WebSocket ping frames to reset the timeout and check if the connection is still alive.
+
+```
+--------------------------------------------------------------
+--- 标准设置
+--------------------------------------------------------------
+location /chat/ {
+    proxy_pass http://backend;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+}
+
+--------------------------------------------------------------
+--- 自定义变量
+--------------------------------------------------------------
+http {
+    map $http_upgrade $connection_upgrade {
+        default upgrade; //如果client发生request的header含有Upgrade，则赋值变量connection_upgrade=upgrade
+        ''      close;	 //否则则赋值变量connection_upgrade=close
+    }
+
+    server {
+        ...
+
+        location /chat/ {
+            proxy_pass http://backend;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection $connection_upgrade; //使用上面map的变量
+        }
+    }
+    
 ```
 
 
@@ -294,4 +351,12 @@ worker_processes  1;
 ```
 
 
+
+windows path
+
+```
+location /test {
+			alias "C:/Workspace/task/setup/nginx-1.17.6/conf/test/";
+		}
+```
 

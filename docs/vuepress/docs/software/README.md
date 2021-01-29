@@ -57,7 +57,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<h3>网络运维</h3>
 	<ul>
 		<li><a href="/docs/software/network/network">网络基础</a></li>	
-        <li><a href="/docs/software/network/ssl_tls_setup">ssl/tls环境配置(https|wss)</a></li>	
+        <li><a href="/docs/software/network/http">http协议实用</a></li>	
+        <li><a href="/docs/software/network/http_ssl_tls_setup">ssl/tls环境配置(https|wss)</a></li>	
         <li><a href="/docs/software/linux/vm_env">开发测试环境-虚拟机和容器</a></li>
         <li><a href="/docs/software/linux/vm_env_network">基于virtualbox构建网络环境</a></li>
         <li><a href="/docs/software/linux/linux">linux基础</a></li>
@@ -70,7 +71,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
          <li><a href="/docs/software/network/vpn_trojan">trojan搭梯子</a></li>	
 		<li><a href="/docs/software/network/network2github">Github系列网络事件记录</a></li>	
 		<li><a href="/docs/software/network/vpn_shadowsockr">shadowsocketR搭梯子</a></li>
-		
+
 	</ul>
 	<p>-------------------------</p>
 	<h3>项目管理</h3>
@@ -82,7 +83,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<h3>硬件开发经验</h3>
 	<ul>
 		<li><a href="/docs/software/hardware/hardware" >硬件基础和IOT介绍</a></li>
-        <li><a href="/docs/software/hardware/android_rom" >安卓rom相关</a></li>
+	    <li><a href="/docs/software/hardware/android_rom" >安卓rom相关</a></li>
 		<li><a href="/docs/software/hardware/raspberry" >raspberry树莓派</a></li>
 		<li><a href="/docs/software/hardware/arduino" >arduino</a></li>
 		<li><a href="/docs/software/hardware/dk_nrf52" >nRF52开发入门</a></li>

@@ -244,10 +244,28 @@ backend service has to implement and support https, and nginx also have to act a
 
 2的一个解决方法是nodejs跟spring mvc用相同的证书，或者手动给浏览器安装证书：https://qastack.cn/superuser/27268/how-do-i-disable-the-warning-chrome-gives-if-a-security-certificate-is-not-trusted
 
-但是其实更完美的解决方法是加一个nginx，nginx作为proxy转发两者的流量到nodejs和springmvc，这样浏览器本身和其中的js代码axios http client只需要跟nginx进行handshake即可，参考下面这张图：
+但是其实更完美的解决方法是加一个nginx，nginx作为proxy转发两者的流量到nodejs和springmvc，这样浏览器本身和其中的js代码axios http client只需要跟nginx进行handshake即可，而且origin和host都是test.local，不存在跨域问题，参考下面这张图：
 
 ![](/docs/docs_image/software/network/local_env02.png)
+
+注意，关于websocket有两点：
+
+1. 如果网站使用了https，默认必须使用wss，ws会被浏览器block住，另外注意到，这里前端跟nginx之间是使用wss的，nginx跟真正的服务端仍然是明文ws通信，这个很正常，本来nginx就是反向代理，客户端不需要直接跟被代理的服务端连接，所以实际上同理后端的服务也可以只用http跟nginx通信；
+
+2. 如果是本地测试 127.0.0.1，特别要小心，如图域名使用test.local会出现问题：provisional headers are shown
+
+   解决办法是，nginx将server_name改为localhost即可
 
 而最终部署到服务器上则会简化，因为就不需要nodejs开发环境了：
 
 ![](/docs/docs_image/software/network/product_env.png)
+
+
+
+测试完https后，想回去测试http，chrome经常会强制使用https，解决办法：
+
+https://superuser.com/questions/565409/how-to-stop-an-automatic-redirect-from-http-to-https-in-chrome
+
+1. Go to `chrome://net-internals/#hsts`. Enter *3rdrevolution.com* under **Delete domain security policies** and press the Delete button.
+2. Now go to `chrome://settings/clearBrowserData`, tick the box *Cached images and files* and press click the button *Clear data*.
+
