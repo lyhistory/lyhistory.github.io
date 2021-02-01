@@ -191,6 +191,11 @@ Wait for page loading
 https://stackoverflow.com/questions/26566799/how-to-wait-until-the-page-is-loaded-with-selenium-for-python
 
 python Message: unknown error: Element is not clickable at point
+
+```
+executor.executeScript("arguments[0].click();", firstbutton);
+```
+
 https://stackoverflow.com/questions/37879010/selenium-debugging-element-is-not-clickable-at-point-x-y
 Single result and multi result
 https://stackoverflow.com/questions/42216174/selecting-a-button-list-object-has-no-attribute-click-python-selenium?rq=1

@@ -71,8 +71,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
          <li><a href="/docs/software/network/vpn_trojan">trojan搭梯子</a></li>	
 		<li><a href="/docs/software/network/network2github">Github系列网络事件记录</a></li>	
 		<li><a href="/docs/software/network/vpn_shadowsockr">shadowsocketR搭梯子</a></li>
-
-	</ul>
+    </ul>
 	<p>-------------------------</p>
 	<h3>项目管理</h3>
 	<ul>
@@ -82,19 +81,22 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<p>-------------------------</p>
 	<h3>硬件开发经验</h3>
 	<ul>
-		<li><a href="/docs/software/hardware/hardware" >硬件基础和IOT介绍</a></li>
-	    <li><a href="/docs/software/hardware/android_rom" >安卓rom相关</a></li>
-		<li><a href="/docs/software/hardware/raspberry" >raspberry树莓派</a></li>
-		<li><a href="/docs/software/hardware/arduino" >arduino</a></li>
-		<li><a href="/docs/software/hardware/dk_nrf52" >nRF52开发入门</a></li>
-		<li><a href="/docs/software/hardware/drone" >drone无人机</a></li>
-	</ul>
+        <li><a href="/docs/software/hardware/hardware" >硬件基础和IOT介绍</a></li>
+        <li><a href="/docs/software/hardware/android_rom" >安卓rom相关</a></li>
+        <li><a href="/docs/software/hardware/raspberry" >raspberry树莓派</a></li>
+        <li><a href="/docs/software/hardware/arduino" >arduino</a></li>
+        <li><a href="/docs/software/hardware/dk_nrf52" >nRF52开发入门</a></li>
+        <li><a href="/docs/software/hardware/drone" >drone无人机</a></li>
+    </ul>
 	<p>-------------------------</p>
 	<h3>附录</h3>
 	<ul>
 		<li><a href="/docs/software/cheatsheet">cheatsheet</a></li>
 	</ul>
 </div>
+
+
+
 <div style="background-color:bisque;">
 	<span>##欢迎资助我的创作 Welcome to support my creation##</span>
 	<ul>

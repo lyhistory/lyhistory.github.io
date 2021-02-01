@@ -230,7 +230,7 @@ backend service has to implement and support https, and nginx also have to act a
 
 假设前端项目用的是create-reactjs-app脚手架，npm run start会开启一个nodejs服务，如下
 
-![](/docs/docs_image/software/network/local_env01.png)
+![](/docs/docs_image/software/network/ssl_local_env01.png)
 
 这种情况下显然是不可行的，首先：
 
@@ -246,7 +246,7 @@ backend service has to implement and support https, and nginx also have to act a
 
 但是其实更完美的解决方法是加一个nginx，nginx作为proxy转发两者的流量到nodejs和springmvc，这样浏览器本身和其中的js代码axios http client只需要跟nginx进行handshake即可，而且origin和host都是test.local，不存在跨域问题，参考下面这张图：
 
-![](/docs/docs_image/software/network/local_env02.png)
+![](/docs/docs_image/software/network/ssl_local_env02.png)
 
 注意，关于websocket有两点：
 
@@ -258,7 +258,7 @@ backend service has to implement and support https, and nginx also have to act a
 
 而最终部署到服务器上则会简化，因为就不需要nodejs开发环境了：
 
-![](/docs/docs_image/software/network/product_env.png)
+![](/docs/docs_image/software/network/ssl_product_env.png)
 
 
 

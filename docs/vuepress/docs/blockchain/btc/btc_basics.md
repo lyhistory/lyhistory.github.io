@@ -1,77 +1,261 @@
+作为区块链技术爱好者以及比特币支持者，传播比特币技术是最好的方式，don't trust, verify
 
-\## 比特币的区块中不存在"一个"比特币,而是以Satoshi为最小单位
+我想从大多数人对比特币的种种误解开始，一一展示其背后的相关技术细节，管中窥豹，欢迎斧正！
 
-每一笔交易的输入输出的数值都是带有8位小数的数字，1btc 100,000,000 satoshi，1个btc的表示是1,00000000
+
+
+\## 比特币是币是软件还是网络
+
+
+
+比特币既可以指代虚拟币本身，又代表了比特币这个软件，又指代由众多运行了比特币这个软件的节点通过P2P通信建立的庞大网络；
+
+
+
+注意虽然每个节点都是运行比特币软件，但是每个节点所用的未必是“原生”的比特币软件，可以是兼容比特币原生软件的定制软件，甚至是恶意的尝试破坏比特币网络的黑客节点，每个节点的角色也是各自不同的，可以是：
+
+
+
+- 钱包 Wallet：桌面钱包或SPV手机钱包，只关注自己钱包的交易；
+- 矿工 Miner：solo矿工或矿池节点；
+- 全节点 Full Blockchain Node：包含完整的区块数据以及节点路由；
+- 或者是proxy等等
+
+
+
+\## 谁负责将交易录入到区块链这个数据库中
+
+
+
+比特币是去中心化的，意思是没有一个中心数据库，而是各个节点维护自己一份数据库就是所谓的账本；
+
+
+
+所有矿工节点根据算力平等竞争，都有权利打包，所有节点也都有权利验证每个交易和区块的合法性；
+
+
+
+诚实节点会拒绝非法的区块和交易，比特币独特的中本聪共识机制会激励大部分节点表现诚实，让恶意节点无利可图，从而维护比特币网络的安全性；
+
+
+
+节点会追随全网最长的链，总是尽快激活最长链并在其基础上争取打包下一个区块；
+
+
+
+\## 比特币的区块中不存在"一个"比特币,而是以Satoshi为最小单位的8位精度数字
+
+
+
+每一笔交易的输入输出的数值都是带有8位小数的数字，1btc =100,000,000 satoshi，表示为 1.00000000
 
 我们来看一个典型的比特币交易数据：
 
 ```
-lyhistory@lyhistory-VirtualBox:/opt/bitcoin$ ./src/bitcoin-cli -regtest getrawtransaction 4b6ca9427fbe2a2a8377bd013873125497d31f678b5190b700d6084fc6155c3b 1{  "txid": "4b6ca9427fbe2a2a8377bd013873125497d31f678b5190b700d6084fc6155c3b",  "hash": "59fadb8a2226194e326caa691de571ddf2e22a9fa25627c6d00fa6d81d54be0f",  "version": 2,  "size": 249,  "vsize": 168,  "weight": 669,  "locktime": 107,  "vin": [    {      "txid": "8e191e86fcebcc005f7d7f99d57927890e199e5e5f1f6e7ef479c63b3f1d70fa",      "vout": 0,      "scriptSig": {        "asm": "0014027ee2a1bc4018a399ba46b9c44eb97740361b2e",        "hex": "160014027ee2a1bc4018a399ba46b9c44eb97740361b2e"      },      "txinwitness": [        "3044022070cb53521c13ee145c38a8a46565fba2f4feb035968553cc504918be15780c9d02207e899712a0fd7b1e16d37b81684506a331a37bad63016e5284d06b4bc8e056f001",        "031ed1c01ee7091acaf2954c299117dfec43bbb1053de8da730f7763e496667baa"      ],      "sequence": 4294967294    }  ],  "vout": [    {      "value": 4.08993280,      "n": 0,      "scriptPubKey": {        "asm": "OP_HASH160 82b0b02e998beaf0fdd8382819b7d10160902eeb OP_EQUAL",        "hex": "a91482b0b02e998beaf0fdd8382819b7d10160902eeb87",        "reqSigs": 1,        "type": "scripthash",        "addresses": [          "2N5AFVjXYG9ECxSV6Ha6quSrmRGafK1AxGi"        ]      }    },    {      "value": 0.70000000,      "n": 1,      "scriptPubKey": {        "asm": "OP_DUP OP_HASH160 ee2fb9835096ac9c67310660640dc43cae817d3d OP_EQUALVERIFY OP_CHECKSIG",        "hex": "76a914ee2fb9835096ac9c67310660640dc43cae817d3d88ac",        "reqSigs": 1,        "type": "pubkeyhash",        "addresses": [          "n3ENHgEF9CTb3KnJotGQEuWScA9aAKyR7W"        ]      }    }  ],  "hex": "02000000000101fa701d3f3bc679f47e6e1f5f5e9e190e892779d5997f7d5f00ccebfc861e198e0000000017160014027ee2a1bc4018a399ba46b9c44eb97740361b2efeffffff0200be60180000000017a91482b0b02e998beaf0fdd8382819b7d10160902eeb87801d2c04000000001976a914ee2fb9835096ac9c67310660640dc43cae817d3d88ac02473044022070cb53521c13ee145c38a8a46565fba2f4feb035968553cc504918be15780c9d02207e899712a0fd7b1e16d37b81684506a331a37bad63016e5284d06b4bc8e056f00121031ed1c01ee7091acaf2954c299117dfec43bbb1053de8da730f7763e496667baa6b000000",  "blockhash": "3036d0aaae513f5907d654ca2ec75c6491aba0942a861868e6503e26bfdbd40f",  "confirmations": 1,  "time": 1552251112,  "blocktime": 1552251112}
+lyhistory@lyhistory-VirtualBox:/opt/bitcoin$ ./src/bitcoin-cli -regtest getrawtransaction 4b6ca9427fbe2a2a8377bd013873125497d31f678b5190b700d6084fc6155c3b 1
+{
+  "txid": "4b6ca9427fbe2a2a8377bd013873125497d31f678b5190b700d6084fc6155c3b",
+  "hash": "59fadb8a2226194e326caa691de571ddf2e22a9fa25627c6d00fa6d81d54be0f",
+  "version": 2,
+  "size": 249,
+  "vsize": 168,
+  "weight": 669,
+  "locktime": 107,
+  "vin": [
+    {
+      "txid": "8e191e86fcebcc005f7d7f99d57927890e199e5e5f1f6e7ef479c63b3f1d70fa",
+      "vout": 0,
+      "scriptSig": {
+        "asm": "0014027ee2a1bc4018a399ba46b9c44eb97740361b2e",
+        "hex": "160014027ee2a1bc4018a399ba46b9c44eb97740361b2e"
+      },
+      "txinwitness": [
+        "3044022070cb53521c13ee145c38a8a46565fba2f4feb035968553cc504918be15780c9d02207e899712a0fd7b1e16d37b81684506a331a37bad63016e5284d06b4bc8e056f001",
+        "031ed1c01ee7091acaf2954c299117dfec43bbb1053de8da730f7763e496667baa"
+      ],
+      "sequence": 4294967294
+    }
+  ],
+  "vout": [
+    {
+      "value": 4.08993280,
+      "n": 0,
+      "scriptPubKey": {
+        "asm": "OP_HASH160 82b0b02e998beaf0fdd8382819b7d10160902eeb OP_EQUAL",
+        "hex": "a91482b0b02e998beaf0fdd8382819b7d10160902eeb87",
+        "reqSigs": 1,
+        "type": "scripthash",
+        "addresses": [
+          "2N5AFVjXYG9ECxSV6Ha6quSrmRGafK1AxGi"
+        ]
+      }
+    },
+    {
+      "value": 0.70000000,
+      "n": 1,
+      "scriptPubKey": {
+        "asm": "OP_DUP OP_HASH160 ee2fb9835096ac9c67310660640dc43cae817d3d OP_EQUALVERIFY OP_CHECKSIG",
+        "hex": "76a914ee2fb9835096ac9c67310660640dc43cae817d3d88ac",
+        "reqSigs": 1,
+        "type": "pubkeyhash",
+        "addresses": [
+          "n3ENHgEF9CTb3KnJotGQEuWScA9aAKyR7W"
+        ]
+      }
+    }
+  ],
+  "hex": "02000000000101fa701d3f3bc679f47e6e1f5f5e9e190e892779d5997f7d5f00ccebfc861e198e0000000017160014027ee2a1bc4018a399ba46b9c44eb97740361b2efeffffff0200be60180000000017a91482b0b02e998beaf0fdd8382819b7d10160902eeb87801d2c04000000001976a914ee2fb9835096ac9c67310660640dc43cae817d3d88ac02473044022070cb53521c13ee145c38a8a46565fba2f4feb035968553cc504918be15780c9d02207e899712a0fd7b1e16d37b81684506a331a37bad63016e5284d06b4bc8e056f00121031ed1c01ee7091acaf2954c299117dfec43bbb1053de8da730f7763e496667baa6b000000",
+  "blockhash": "3036d0aaae513f5907d654ca2ec75c6491aba0942a861868e6503e26bfdbd40f",
+  "confirmations": 1,
+  "time": 1552251112,
+  "blocktime": 1552251112
+}
 ```
 
 可以看到，里面的value是 4.08993280 有8位小数，至于具体的这笔交易的输入vin和输出vout，后面再解释
 
 
 
-\## 比特币是币还是软件还是网络？
-
-比特币既可以指代虚拟币本身，又代表了比特币这个软件，又指代又众多运行了比特币这个软件的节点通过P2P通信建立的庞大网络；
-
-注意虽然每个节点都是运行比特币软件，但是每个节点所用的未必是“原生”的比特币软件，可以是兼容比特币原生软件的定制软件，甚至是恶意的尝试破坏比特币网络的黑客节点，每个节点的角色也是各自不同的，可以是：
-
-钱包 Wallet：桌面钱包或SPV手机钱包，只关注自己钱包的交易；
-
-矿工 Miner：solo矿工或矿池节点；
-
-全节点 Full Blockchain Node：包含完整的区块数据以及节点路由；
-
-
-
-\## 谁负责将交易录入到区块数据库中
-
-比特币是去中心化的，意思是没有一个中心数据库，而是各个节点维护自己一份数据库就是所谓的账本；
-
-所有矿工节点根据算力平等竞争，都有权利打包，所有节点也都有权利验证每个交易和区块的合法性；
-
-诚实节点会拒绝非法的区块和交易，比特币独特的中本聪共识机制会激励大部分节点表现诚实，让恶意节点无利可图，从而维护比特币网络的安全性；
-
-节点会跟随全网最长的链，快速激活最长链并在其基础上争取打包下一个区块；
-
-
-
 \## 比特币如何凭空挖出来的？
+
+
 
 通过一种特殊的交易，叫做coinbase交易：
 
+
+
 大概意思是矿工节点打包的时候，会凭空创造一个给自己的奖励，当然这个奖励的规则是要符合比特币的共识规则的，比如50个BTC，这个特殊奖励每4年会减半一次，比如变成25个体BTC，12.5个BTC......
 
-如果矿工的某次打包成功的被比特币网络接受，那么这个奖励也随着区块加入到了比特币区块链中，随后在后续100个区块被打包之后，这个奖励才能被矿工转走；
+
+
+如果矿工的某次打包成功的被比特币网络接受，那么这个奖励也随着区块加入到了比特币区块链中；
 
 
 
-我们就以创世区块来举例说明，所谓创世区块就是开天辟地第一个区块，也就是区块高度为0的区块，而所谓区块高度 Block height 是指区块链中某个区块的区块序号，区块序号从0开始，而反过来算就叫做确认，假设当前区块高度是666，我们就是区块高度665有一个确认，高度664现在有2个确认，以此类推，660有6个确认；
+我们就以创世区块来举例说明，所谓创世区块就是开天辟地第一个区块，也就是区块高度为0的区块，而所谓区块高度 Block height 是指区块链中某个区块的区块序号，区块序号从0开始，而倒序过来算就叫做确认数；
 
 
 
-创世区块如下：
+*举例：假设当前区块高度是666（也就是第667个区块），相对于前面一个区块即高度为665的区块，我们说此时区块高度665的区块中所有的交易就有了一个确认，同理，区块高度664的区块中所有的交易此时有2个确认，以此类推，此时，区块高度660的区块中所有的交易有了6个确认；*
+
+
+
+补充说明：前面说到的矿工打包成功后获得的奖励，不能立刻被使用，必须等到100个确认才可以；
+
+
+
+举例，创世区块如下：
 
 ```
-lyhistory@lyhistory-VirtualBox:/opt/bitcoin$ ./src/bitcoin-cli getblockhash 0000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26flyhistory@lyhistory-VirtualBox:/opt/bitcoin$ ./src/bitcoin-cli getblock 000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f 2{  "hash": "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",  "confirmations": 127025,  "strippedsize": 285,  "size": 285,  "weight": 1140,  "height": 0,  "version": 1,  "versionHex": "00000001",  "merkleroot": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",  "tx": [    {      "txid": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",      "hash": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",      "version": 1,      "size": 204,      "vsize": 204,      "weight": 816,      "locktime": 0,      "vin": [        {          "coinbase": "04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73",          "sequence": 4294967295        }      ],      "vout": [        {          "value": 50.00000000,          "n": 0,          "scriptPubKey": {            "asm": "04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f OP_CHECKSIG",            "hex": "4104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac",            "reqSigs": 1,            "type": "pubkey",            "addresses": [              "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"            ]          }        }      ],      "hex": "01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff4d04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73ffffffff0100f2052a01000000434104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac00000000"    }  ],  "time": 1231006505,  "mediantime": 1231006505,  "nonce": 2083236893,  "bits": "1d00ffff",  "difficulty": 1,  "chainwork": "0000000000000000000000000000000000000000000000000000000100010001",  "nTx": 1,  "nextblockhash": "00000000839a8e6886ab5951d76f411475428afc90947ee320161bbf18eb6048"}
+lyhistory@lyhistory-VirtualBox:/opt/bitcoin$ ./src/bitcoin-cli getblockhash 0
+000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f
+lyhistory@lyhistory-VirtualBox:/opt/bitcoin$ ./src/bitcoin-cli getblock 000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f 2
+{
+  "hash": "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
+  "confirmations": 127025,
+  "strippedsize": 285,
+  "size": 285,
+  "weight": 1140,
+  "height": 0,
+  "version": 1,
+  "versionHex": "00000001",
+  "merkleroot": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
+  "tx": [
+    {
+      "txid": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
+      "hash": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
+      "version": 1,
+      "size": 204,
+      "vsize": 204,
+      "weight": 816,
+      "locktime": 0,
+      "vin": [
+        {
+          "coinbase": "04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73",
+          "sequence": 4294967295
+        }
+      ],
+      "vout": [
+        {
+          "value": 50.00000000,
+          "n": 0,
+          "scriptPubKey": {
+            "asm": "04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f OP_CHECKSIG",
+            "hex": "4104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac",
+            "reqSigs": 1,
+            "type": "pubkey",
+            "addresses": [
+              "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
+            ]
+          }
+        }
+      ],
+      "hex": "01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff4d04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73ffffffff0100f2052a01000000434104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac00000000"
+    }
+  ],
+  "time": 1231006505,
+  "mediantime": 1231006505,
+  "nonce": 2083236893,
+  "bits": "1d00ffff",
+  "difficulty": 1,
+  "chainwork": "0000000000000000000000000000000000000000000000000000000100010001",
+  "nTx": 1,
+  "nextblockhash": "00000000839a8e6886ab5951d76f411475428afc90947ee320161bbf18eb6048"
+}
 ```
 
-这个创世区块中只包含一个交易，也就是所谓的coinbase交易，这个是一种特殊的交易，可以看到输入的vin没有指向任何的来源；
 
-另外，比特币的交易除了显示从谁转给了谁多少比特币外还可以携带额外的信息，我们再来看看中本聪隐藏在创世区块中的信息：
+
+这个创世区块中只包含一个交易，也就是前面提到的矿工奖励coinbase交易，可以看到输入的vin没有指向任何的来源，所以是“凭空”铸造比特币的交易；
+
+
+
+另外，比特币的交易除了会显示从谁转给了谁多少金额之外，还可以携带额外的信息，我们再来看看中本聪隐藏在创世区块中的信息：
 
 The Times 03/Jan/2009 Chancellor on brink of second bailout for banks
 
 ```
-lyhistory@lyhistory-VirtualBox:/opt/bitcoin$ ./src/bitcoin-cli decoderawtransaction 01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff4d04ffff001d0104455468652054696d65732030332f 4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73ffffffff0100f2052a01000000434104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649 f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac00000000{  "txid": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",  "hash": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",  "version": 1,  "size": 204,  "vsize": 204,  "weight": 816,  "locktime": 0,  "vin": [    {      "coinbase": "04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73",      "sequence": 4294967295    }  ],  "vout": [    {      "value": 50.00000000,      "n": 0,      "scriptPubKey": {        "asm": "04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f OP_CHECKSIG",        "hex": "4104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac",        "reqSigs": 1,        "type": "pubkey",        "addresses": [          "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"        ]      }    }  ]}echo "04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73" | xxd -r -p♦□□ ♦EThe Times 03/Jan/2009 Chancellor on brink of second bailout for banks
+lyhistory@lyhistory-VirtualBox:/opt/bitcoin$ ./src/bitcoin-cli decoderawtransaction 01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff4d04ffff001d0104455468652054696d65732030332f 4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73ffffffff0100f2052a01000000434104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649 f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac00000000
+{
+  "txid": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
+  "hash": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
+  "version": 1,
+  "size": 204,
+  "vsize": 204,
+  "weight": 816,
+  "locktime": 0,
+  "vin": [
+    {
+      "coinbase": "04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73",
+      "sequence": 4294967295
+    }
+  ],
+  "vout": [
+    {
+      "value": 50.00000000,
+      "n": 0,
+      "scriptPubKey": {
+        "asm": "04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f OP_CHECKSIG",
+        "hex": "4104678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5fac",
+        "reqSigs": 1,
+        "type": "pubkey",
+        "addresses": [
+          "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
+        ]
+      }
+    }
+  ]
+}
+​
+echo "04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73" | xxd -r -p
+♦□□ ♦EThe Times 03/Jan/2009 Chancellor on brink of second bailout for banks
 ```
 
 
 
 \## 比特币是匿名的所以无法追踪？
+
+
 
 前段时间灯塔国的国会山事件引入注目，另外就是其后所传出的FBI的调查：
 
@@ -79,37 +263,46 @@ lyhistory@lyhistory-VirtualBox:/opt/bitcoin$ ./src/bitcoin-cli decoderawtransact
 
 比特币不是匿名的！而只是假名的！Pseudonymous NOT Anonymous
 
+
+
 以前面我给例子，这笔交易transaction id=
 
 4b6ca9427fbe2a2a8377bd013873125497d31f678b5190b700d6084fc6155c3b
 
-，输入和输出都很清楚：
+，输入和输出都公开展示的很清楚：
+
+
 
 输出vout可以看到接收者的地址： 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa
 
 
 
-而输入vin你可能说看不到发送者啊，实际是有的，很简单，vin里面的
+而输入vin你可能说看不到发送者啊，实际是有的，很简单，通过vin里面的参数：
 
 ```
-"txid": "8e191e86fcebcc005f7d7f99d57927890e199e5e5f1f6e7ef479c63b3f1d70fa",      "vout": 0,
+"txid": "8e191e86fcebcc005f7d7f99d57927890e199e5e5f1f6e7ef479c63b3f1d70fa",
+      "vout": 0,
 ```
 
-代表的意思是，交易transaction id=
+其代表的意思是，
+
+交易transaction id=
 
 8e191e86fcebcc005f7d7f99d57927890e199e5e5f1f6e7ef479c63b3f1d70fa
 
-所对应的输出的第0个（也就是第一个）输出作为这次交易的输入，完全可以同样的命令进行查询：
+所对应的那笔交易的所有输出的第0个输出（也就是第一个输出）作为这次交易的输入，
+
+我们完全可以同样的命令进行查询到这笔交易的详细内容：
 
 ```
 lyhistory@lyhistory-VirtualBox:/opt/bitcoin$ ./src/bitcoin-cli -regtest getrawtransaction 8e191e86fcebcc005f7d7f99d57927890e199e5e5f1f6e7ef479c63b3f1d70fa 1
 ```
 
-命令我给出了，结果就不贴了，跟上面交易的格式一样，所以可以拿到发送者的地址；
+命令我给出了，结果就不贴了，跟上面交易的格式一样，所以从中就可以拿到发送者的地址；
 
 
 
-因此，这些信息完全是公开透明的，任何人都可以查询，发送和接收者的比特币地址就是他们的假名，而非匿名，因为如果这些地址曾经关联过其他网络信息，就完全能够曝光发送者和接收者的真实身份，比如如果这些地址是属于某个合法交易所的，交易所都会要求做KYC客户认证，完全可以锁定到真实用户身份，又或者该地址的拥有者不小心在某个社交平台发布了跟这些地址相关的信息，也可以关联起来！
+因此，这些信息完全是公开透明的，任何人都可以进行公开查询，发送和接收者的比特币地址就是他们的假名，而非匿名，因为如果这些地址曾经关联过其他网络信息，就完全能够曝光发送者和接收者的真实身份，比如如果这些地址是属于某个合法交易所的，交易所都会要求做KYC客户认证，完全可以锁定到真实用户身份，又或者该地址的拥有者不小心在某个社交平台发布了跟这些地址相关的信息，也可以关联起来！
 
 
 
@@ -119,7 +312,9 @@ lyhistory@lyhistory-VirtualBox:/opt/bitcoin$ ./src/bitcoin-cli -regtest getrawtr
 
 \## 转账手续费跟金额无关
 
-上面的交易中，你可能没看到费用fee的字段或字眼，世界上费用是包含在coinbase交易里的，因为前面给出的coinbase例子中，创世区块中并没有其他交易的，所以就只有纯粹的挖矿奖励 50.00000000 个btc，如果有包含其他交易，就会将所有的费用加上奖励，比如变成 50.00123000 个btc，换句话说，一个区块中，除掉区块奖励，所有的输出减去输入的差值就体现在这个 0.00123000；
+
+
+上面的交易中，你可能没看到费用fee的字段或字眼，实际上费用是包含在coinbase交易里的，因为前面给出的coinbase例子中，创世区块中并没有其他交易的，所以就只有纯粹的挖矿奖励 50.00000000 个btc，如果有包含其他交易，就会将所有的费用加上奖励，比如变成 50.00123000 个btc，换句话说，一个区块中，除掉区块奖励，所有的输出减去输入的差值就体现在这个 0.00123000 上面；
 
 
 
@@ -127,11 +322,11 @@ lyhistory@lyhistory-VirtualBox:/opt/bitcoin$ ./src/bitcoin-cli -regtest getrawtr
 
 
 
-当然费用越高被打包的速度会越快，虽然每个矿工的打包策略不同，但是很少有矿工会傻到先打包费用低的；
+当然费用越高被打包的速度会越快，虽然每个矿工的打包策略不同，但是很少有矿工会优先打包费用低的；
 
 
 
-你甚至可以将费用设置为0，也就是不给费用，也许会有好心的矿工帮你打包。。。
+你甚至可以将费用设置为0，也就是不给费用，也许会有好心的矿工帮你打包。。。我没试过
 
 ![img](https://mmbiz.qpic.cn/mmbiz_png/p6jpicicAXHVXPH0uJ3cAdFa1p03icicDaGL71wSAB9fuicgrP1Zpq3fgAasExM0fauvicicz9zd3dFvt6Bye6vRhrt8w/640?wx_fmt=png)
 
@@ -141,7 +336,9 @@ lyhistory@lyhistory-VirtualBox:/opt/bitcoin$ ./src/bitcoin-cli -regtest getrawtr
 
 \## 世界上不存在两个相同的比特币/Satoshi
 
-如果Bob转给Alice 0.1个btc，注意这0.1个btc并不会是Bob钱包中的某个0.1个btc原封不动的给过来的，先不考虑手续费，假设手续费是0，
+
+
+如果Bob转给Alice 0.1个btc，注意这0.1个btc并不会是Bob钱包中的某个0.1个btc原封不动的转过来的，为了方便讲解，我们假设手续费是0，所以：
 
 vin输入 0.1 个 btc，
 
@@ -149,31 +346,64 @@ vout输出 0.1 个 btc，
 
 有啥不一样？
 
+
+
 认真观察前面我给的例子，
 
-vout是长这个样子的（我改一下金额以符合我们的例子）：
+vout是长这个样子的（*我改一下金额以符合我们的例子*）：
 
 ```
-"vout": [    {      "value": 0.10000000,      "n": 0,      "scriptPubKey": {        "asm": "OP_HASH160 82b0b02e998beaf0fdd8382819b7d10160902eeb OP_EQUAL",        "hex": "a91482b0b02e998beaf0fdd8382819b7d10160902eeb87",        "reqSigs": 1,        "type": "scripthash",        "addresses": [          "2N5AFVjXYG9ECxSV6Ha6quSrmRGafK1AxGi"        ]      }    },
+"vout": [
+    {
+      "value": 0.10000000,
+      "n": 0,
+      "scriptPubKey": {
+        "asm": "OP_HASH160 82b0b02e998beaf0fdd8382819b7d10160902eeb OP_EQUAL",
+        "hex": "a91482b0b02e998beaf0fdd8382819b7d10160902eeb87",
+        "reqSigs": 1,
+        "type": "scripthash",
+        "addresses": [
+          "2N5AFVjXYG9ECxSV6Ha6quSrmRGafK1AxGi"
+        ]
+      }
+    },
 ```
 
-value就是金额，n代表这个输出在这个交易中的序号，0就是第一个输出，关键的是这个scriptPubKey 这就是比特币重要的所谓未花费输出UTXO模型的一种最简单的脚本，这个输出就是Bob给Alice的0.1个比特币！之所以这0.1个体比特币跟Bob的0.1个比特币不同就是因为只有Alice可以解锁使用这0.1个比特币！回头看下Bob之前的0.1个比特币长啥样？
+value就是金额，n代表这个输出在这个交易中的序号，0就是第一个输出，关键的是这个scriptPubKey 这就是比特币重要的所谓未花费输出UTXO模型的一种最简单的脚本，这个输出就是Bob给Alice的0.1个比特币！之所以这0.1个比特币跟Bob的0.1个比特币不同就是因为只有Alice可以解锁使用这0.1个比特币！回头看下Bob之前的0.1个比特币长啥样？
 
 那么就再来看vin，
 
 ```
-"vin": [    {      "txid": "8e191e86fcebcc005f7d7f99d57927890e199e5e5f1f6e7ef479c63b3f1d70fa",      "vout": 0,      "scriptSig": {        "asm": "0014027ee2a1bc4018a399ba46b9c44eb97740361b2e",        "hex": "160014027ee2a1bc4018a399ba46b9c44eb97740361b2e"      },
+"vin": [
+    {
+      "txid": "8e191e86fcebcc005f7d7f99d57927890e199e5e5f1f6e7ef479c63b3f1d70fa",
+      "vout": 0,
+      "scriptSig": {
+        "asm": "0014027ee2a1bc4018a399ba46b9c44eb97740361b2e",
+        "hex": "160014027ee2a1bc4018a399ba46b9c44eb97740361b2e"
+      },
 ```
 
-他不是直接给出金额，而是指向了另外一个交易id的某个输出，同理也意思是指向了跟前面这个scriptPubKey 类似的东西，假设就是
+前面已经讲解了vin，这里不是直接给出金额，而是指向了另外一个交易id的某个输出，根据前面对vin的讲解，我们知道最终也是指向了跟前面这个scriptPubKey 类似的东西，假设就是
 
 ```
-"vout": [    {      "value": 0.10000000,      "n": 0,      "scriptPubKey": {        "asm": "OP_HASH160 XXXXXXXXX OP_EQUAL",        "hex": "XXXXXXXX",        "reqSigs": 1,        "type": "scripthash",        "addresses": [          "XXXXXXXXXXXXXX"        ]      }    },
+"vout": [
+    {
+      "value": 0.10000000,
+      "n": 0,
+      "scriptPubKey": {
+        "asm": "OP_HASH160 XXXXXXXXX OP_EQUAL",
+        "hex": "XXXXXXXX",
+        "reqSigs": 1,
+        "type": "scripthash",
+        "addresses": [
+          "XXXXXXXXXXXXXX"
+        ]
+      }
+    },
 ```
 
-看到没，这是Bob之前的那0.1个体比特币，可以看到除了Value一样，其他的基本都不同，尤其是scriptPubKey绝对不同；
-
-所以说世界上不存在相同的比特币！
+看到没，这是Bob之前的那0.1个比特币，可以看到除了Value一样，其他的基本都不同，尤其是scriptPubKey绝对不同（如果相同就惨了，都不需要Bob转账了，Alice可以直接解锁使用Bob的这0.1个比特币了），况且还有每笔交易的id、时间和所在的区块等等各种变量的存在，所以说世界上不存在相同的比特币！
 
 
 
@@ -183,33 +413,50 @@ vin中的scriptSig就是答案，这个就是用来解锁Bob的0.1个比特币�
 
 ![img](https://mmbiz.qpic.cn/mmbiz_png/p6jpicicAXHVXPH0uJ3cAdFa1p03icicDaGLXCqvOvrA9p1OTDClNOFg5lCLQ8ZM83gHfv7CficCcVvpc1ia6UrDIpAw/640?wx_fmt=png)
 
-虎符拼起来：<Sig><PubKey> OP_DUP OP_HASH160 OP_EQUALVERIFY OP_CHECKSIG ，执行顺序：
+就好象是拼起来的虎符：<Sig><PubKey> OP_DUP OP_HASH160 OP_EQUALVERIFY OP_CHECKSIG ，执行顺序：
 
 ```
-OP_DUP(PubKey)=PubKeyOP_HASH160(PubKey) = PubKeyHashOP_EQUALVERIFY(PubKeyHash,PubKeyHash)==TRUEOP_CHECKSIG(Sig)==TRUE
+OP_DUP(PubKey)=PubKey
+OP_HASH160(PubKey) = PubKeyHash
+OP_EQUALVERIFY(PubKeyHash,PubKeyHash)==TRUE
+OP_CHECKSIG(Sig)==TRUE
 ```
 
 
 
 \## 双花double spending和重组 reorganization
 
-最近又有基础不扎实的“专业人士”“爆出”比特币出现双花double spending，而事实上发生的是所谓的 consensus fork或者叫做 reorgnization：
+
+
+最近又有基础不扎实的“专业人士大呼小叫“曝出”比特币出现双花double spending，而事实上发生的是所谓的 consensus fork或者叫做 reorgnization：
 
 *The term "blockchain reorganization" is used to refer to the situation where a client discovers a new difficultywise-longest well-formed blockchain which excludes one or more blocks that the client previously thought were part of the difficultywise-longest well-formed blockchain. These excluded blocks become orphans. Chain reorganization is a client-local phenomenon; the entire bitcoin network doesn't "reorganize" simultaneously.*
 
-就不翻译了，直接引用我另外一篇文章的例子：
+就不翻译了，直接引用我在另外一篇文章中的例子：
 
 *我们假设当前区块高度是 666666，区块高度就是目前链上的区块数，假设我们就一条干干净净的链，从第一块算起，现在是第 666666 个区块， 先假设一个极端情况只有 M1 M2 M3 这 3 个节点参与挖矿，M1 率先打包了一个新的区块并满足条件，然后迅速广播出去， 其他节点收到消息之后 full validate block and activate best chain，即验证区块中每笔交易的合法性，如果有不合法的则区块失效， 所以所有节点最开始在接收到交易的时候就应该做验证，否则后面打包无效交易也是浪费自己的算力， 如果区块合法，M2 和 M3 就立即 connect to the tip 并激活 best chain，就是将 M1 打包的区块作为第 666667 个区块加到链的顶端。*
 
 
 
-*那么寻找第 666667 个区块的游戏的胜出者就是 M1 吗，M1 可以立即拿到矿工奖励吗？ 答案是未必，因为现实世界是在 M1 出包的同时，还有可能上千个其他节点也出包了，甚至是别的节点出包落后，但是网络比 M1 的快，更快的覆盖全网最多的节点， 所以实际上在每个出包的时候，全网节点上的区块链一般都是处于分叉状态，有的同步到 M1，有的同步到比如 M100，所以第 666667 个区块现在可能有两个， 那么就要看下一轮第 666668 个区块是谁挖的，假设 666668 这个区块是* *M2 挖的，刚好 M2 又是支持 M1 的，即 666668 个区块是基于 M1 挖到的 666667* 个区块之上挖的， 我们说 666667 这个区块现在有了 2 个确认，全网其他节点假设他们上面还是停留在 M100 的 666667 个区块高度，那么随着 M2 的 666668 的广播，他们会迅速切换到最长链上， 此刻就是以 M2 为首的 666668 个区块。
+*那么寻找第 666667 个区块的游戏的胜出者就是 M1 吗，M1 可以立即拿到矿工奖励吗？答案是未必，因为现实世界是在 M1 出包的同时，还有可能上千个其他节点也出包了，甚至是别的节点出包落后，但是网络比 M1 的快，更快的覆盖全网最多的节点， 所以实际上在每个出包的时候，全网节点上的区块链一般都是处于分叉状态，有的同步到 M1，有的同步到比如 M100，所以第 666667 个区块现在可能有两个， 那么就要看下一轮第 666668 个区块是谁挖的，假设 666668 这个区块是* *M2 挖的，刚好 M2 又是支持 M1 的，即 666668 个区块是基于 M1 挖到的 666667* 个区块之上挖的， 我们说 666667 这个区块现在有了 2 个确认，全网其他节点假设他们上面还是停留在 M100 的 666667 个区块高度，那么随着 M2 的 666668 的广播，他们会迅速切换到最长链上， 此刻就是以 M2 为首的 666668 个区块。
 
 
 
 所以Bob可不可以将0.1个比特币发送给Alice之后或同时发送给Craig呢？
 
-答案是Bob完全可以这么做，但是只会有一笔交易最终被成功打包进到区块中，准确的说也许这两笔交易在短时间内可能都会被打包到区块中，但是随着区块越来越长，6个确认之后，基本上只会有一笔交易最终被打包到区块中，另外一个会被抛弃；
+答案是Bob完全可以这么做，但是只会有一笔交易**最终**被成功打包进到区块中，准确的说也许这两笔交易在短时间内可能都会被成功的被不同的矿工打包到区块中，但是随着区块的增长，6个确认之后，大概率只会有一笔交易最终被打包到区块中，另外一个会被抛弃，为什么？
+
+
+
+为什么是6个确认之后？，参考我在infosys的文章，文末给了参考链接，这里直接说结论，就是依据了泊松分布的原理
+
+![img](https://mmbiz.qpic.cn/mmbiz_png/p6jpicicAXHVXPH0uJ3cAdFa1p03icicDaGLR1OLiapL2P4iaQZArqNDtA8MHvfZdhicn9QGXxxz1bosXI9wnrLtzDaBw/640?wx_fmt=png)
+
+
+
+网络上有个直观的图，可以让你可以直觉上进行理解：
+
+![img](https://mmbiz.qpic.cn/mmbiz_png/p6jpicicAXHVXPH0uJ3cAdFa1p03icicDaGLqfgkxUicjKQU1QS0jcSdDCuWkoibEibr3ts36tQCicLU7FuAeklAGNdexA/640?wx_fmt=png)
 
 
 
@@ -217,19 +464,9 @@ OP_DUP(PubKey)=PubKeyOP_HASH160(PubKey) = PubKeyHashOP_EQUALVERIFY(PubKeyHash,Pu
 
 
 
-为什么是确认数到6，参考我的其他文章，文末给了参考链接，这里直接说结论，就是利用了泊松分布的原理
-
-![img](https://mmbiz.qpic.cn/mmbiz_png/p6jpicicAXHVXPH0uJ3cAdFa1p03icicDaGLR1OLiapL2P4iaQZArqNDtA8MHvfZdhicn9QGXxxz1bosXI9wnrLtzDaBw/640?wx_fmt=png)
-
-
-
-网络上有个直观的图，可以让你可以直觉上理解：
-
-![img](https://mmbiz.qpic.cn/mmbiz_png/p6jpicicAXHVXPH0uJ3cAdFa1p03icicDaGLqfgkxUicjKQU1QS0jcSdDCuWkoibEibr3ts36tQCicLU7FuAeklAGNdexA/640?wx_fmt=png)
-
-
-
 \## 为什么总量是2100万?
+
+
 
 看看网络上的神秘主义回答：
 
@@ -238,6 +475,8 @@ OP_DUP(PubKey)=PubKeyOP_HASH160(PubKey) = PubKeyHashOP_EQUALVERIFY(PubKeyHash,Pu
 Bitcoin block rewards are cut in half every 4 years. Half of 42 is 21
 
 为什么42是生命密码，请自行查询，有各种科学数据解释这个数字的特比之处，当然这里解释比较牵强；
+
+
 
 下面看Statoshi本“人”的回答：
 
@@ -249,7 +488,7 @@ https://plan99.net/~mike/satoshi-emails/thread1.html
 
 
 
-试着梳理下，大概就是说是一个有根据的猜测而已，基本上用的上限是根据 64位整数型最大数：
+试着梳理下，大概就是说这是一个有根据的猜测而已，基本上用的上限是根据 64位整数型最大数：
 
 2^64-1=18,446,744,073,709,551,615，
 
@@ -264,16 +503,23 @@ https://plan99.net/~mike/satoshi-emails/thread1.html
 另外这里虽然Satoshi没有进一步具体解释，但是根据比特币的设计，下面这种解释比较符合其最终设计：
 
 ```
-6 blocks per hour* 24 hours per day* 365 days per year* 4 years per cycle= 210,240~= 210,000Sum all the block reward sizes:50 + 25 + 12.5 + 6.25 + 3.125 + ... = 100210,000 * 100 = 21 million.https://bitcoin.stackexchange.com/questions/8439/why-was-21-million-picked-as-the-number-of-bitcoins-to-be-created
+6 blocks per hour
+* 24 hours per day
+* 365 days per year
+* 4 years per cycle
+= 210,240
+~= 210,000
+Sum all the block reward sizes:
+50 + 25 + 12.5 + 6.25 + 3.125 + ... = 100
+210,000 * 100 = 21 million.
+https://bitcoin.stackexchange.com/questions/8439/why-was-21-million-picked-as-the-number-of-bitcoins-to-be-created
 ```
 
 
 
-
-
-
-
 \## 如何安装使用比特币
+
+
 
 对于普通用户可以去这里选择需要的软件：
 
@@ -284,7 +530,17 @@ https://bitcoin.org/en/choose-your-wallet
 对于开发者，可以编译安装bitcoin core，如果是想熟悉基本的bitcoin-cli操作，可以用我下面提供的最简单的无UI 无钱包模式：
 
 ```
-git clone https://github.com/bitcoin/bitcoin.gitcd bitcoingit tag           git checkout v0.17.1sudo apt-get install build-essential libtool autotools-dev automake pkg-config bsdmainutils python3sudo apt-get install libssl-dev libevent-dev libboost-system-dev libboost-filesystem-dev libboost-test-dev libboost-thread-dev -ysudo ./autogen.shsudo ./configure --disable-wallet --without-gui --without-miniupnpcsudo makemake install # optional
+git clone https://github.com/bitcoin/bitcoin.git
+cd bitcoin
+git tag           
+git checkout v0.17.1
+​
+sudo apt-get install build-essential libtool autotools-dev automake pkg-config bsdmainutils python3
+sudo apt-get install libssl-dev libevent-dev libboost-system-dev libboost-filesystem-dev libboost-test-dev libboost-thread-dev -y
+sudo ./autogen.sh
+sudo ./configure --disable-wallet --without-gui --without-miniupnpc
+sudo make
+make install # optional
 ```
 
 更多模式自行参考bitcon文档
@@ -295,17 +551,25 @@ git clone https://github.com/bitcoin/bitcoin.gitcd bitcoingit tag           git 
 
 参考资料：
 
+
+
 区块链教程：
 
 https://lyhistory.com/docs/blockchain/
+
+
 
 比特币“官网”：
 
 https://bitcoin.org/
 
+
+
 分布式系统全景分析：从故障容错到拜占庭容错
 
 https://www.infoq.cn/article/ihxufskmuc3ptlfyrryk
+
+
 
 区块链基础：解密挖矿与共识的误解 
 
