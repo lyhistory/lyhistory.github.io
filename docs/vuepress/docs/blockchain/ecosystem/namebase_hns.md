@@ -2,7 +2,7 @@
 
 而现在我告诉你，有办法永久拥有域名而且是顶级域名TLD: top level domain，比如 fromchina，然后你可以出售子域名：factory.fromchina；silk.fromchina等等；
 
-下面就来说说普通人怎么获取顶级域名
+下面就就通过介绍Handshake握手协议、HNS握手币和Namebase平台来讲解普通人怎么获取顶级域名！
 
 ## 什么是握手协议Handshake protocol
 
@@ -72,11 +72,9 @@ Handshake又是如何解决上面提到的现有系统所存在的问题的呢�
 
 ## 什么是握手币 Handshake coin (HNS)
 
-Handshake coin (简称HNS)，中文：握手币，是一种所谓的utility token，参与者用来转移，注册和更新域名
+Handshake coin (简称HNS)，中文：握手币，是一种所谓的utility token，参与者用来转移，注册和更新域名；
 
-。 硬币是防止对等网络上的垃圾邮件所必需的。 最初的硬币供应绝大多数将免费授予自由和开源软件社区-大部分将分配给各个FOSS贡献者。 对于所有非开发人员，我们推出后，这些硬币将可以通过Namebase进行买卖。 我们平台上的用户将能够使用HNS竞标名称或购买其以与BTC等其他资产进行交易。 HNS在Namebase上的主要用途将始终是促进轻松的私人竞标体验，以使人们能够访问新的免费Internet。
-
-The coin is necessary to prevent spam on the peer-to-peer network. The vast majority of the initial coin supply will be granted freely to the Free and Open Source Software community — the majority will go to individual FOSS contributors. For all non-developers, the coin will be made available for buy/sell through Namebase after our launch. Users on our platform will be able to use HNS to bid on names or buy it for trading with other assets like BTC. The main utility of HNS on Namebase will always be to facilitate an easy, and private bidding experience to enable access to the new, free Internet. 
+HNS是可以防止点对点网络上垃圾诈骗，最初大部分的握手币是免费供应给自由和开源软件社区— 其中大部分分配给个人FOSS(Free and Open Source Software)贡献者，对于非开发者，这些币通过namebase平台上的买卖来获取， namebase平台上的用户将能够使用HNS竞标或购买域名以及与BTC等其他资产进行交易，HNS在Namebase上的主要用途将始终是促进轻松的私人竞标体验，以使人们能够访问全新的自由互联网。
 
 
 
@@ -120,9 +118,19 @@ Handshake为不同的用户群提供了不同的价值，域名所有者将注�
 
 Handshake仍处于早期阶段，因此对于所有生态系统参与者来说，支持采用都非常重要，我们将在市场营销和社区发展方面支持Handshake。 我们还将努力与浏览器和其他相关项目（即Pi-hole）进行集成，以将Handshake技术带给更多用户。 如果您有兴趣，请加入[Namer 社区]（https://discord.gg/V3aTrkp）并帮助我们实现互联网的自由和安全！
 
+## 新手竞标技巧
 
+假设当你手上有100个HNS，你最好不要一次竞标太多，建议一次一个，土豪自便，因为即使你没有竞标成功，竞标之后差不多锁定一周多才能释放，这样容易错过其他机会；
 
-## 域名解析
+对于某个你感兴趣的域名，只要没有人开始竞标，一旦你开始竞标，就有人会参与进来，所以尽量不要太早开启，等待你手上的域名竞标完成，资金释放之后再竞标其他域名，注意，竞标成功是有奖励的，目前一般100会返回50；
+
+不要被对手吓住，有时候第一个出标的给10个HNS，第二个直接给出1000，不要认为没有机会，你可以试着给30或50之类的，因为有所谓的blind amount盲量金额，1000对应的真实出标有可能只有20或者40；
+
+竞标倒计时，一个区块是10分钟打包，但是这个是平均值，注意最后一分钟竞标往往不会被打包，但是如果你很想要，还是建议最后一分钟也要争取，尽量在倒数30分钟、20分钟、10分钟这几个时间点观察对手出标情况然后应对，另外要注意公告，有时候由于网络拥堵，有可能需要至少6个区块也就是1个小时的时间打包；
+
+你可以竞标中文域名，比如“庄园”，“说”等等。
+
+## 握手域名如何解析
 
 Handshake 握手域名存在于Handshake 握手区块链上，大部分浏览器目前还没有支持，在等待浏览器跟上节奏的同时，下面是在浏览器中使用Handshake 握手域名的几种方式：
 
@@ -176,33 +184,9 @@ lightweight recursive DNS resolver https://github.com/handshake-org/hnsd
 
 
 
-## 竞标
-
-
-
-竞标技巧，当你手上有100个HNS，你最好不要一次竞标太多，建议一次一个，因为即使你没有竞标成功，竞标之后差不多锁定一周多才能释放，这样容易错过其他机会，有的感兴趣的域名，只要没有人开始竞标，一旦你开始竞标，就有人会参与进来，所以尽量不要太早开启，等待你手上的域名竞标完成，资金释放之后再竞标其他域名，注意，竞标成功是有奖励的，一般100会返回50
-
-不要被对手吓住，有时候第一个出标的给10个HNS，第二个直接给出1000，不要认为没有机会，你可以试着给30或50之类的，因为有blind金额，1000对应的真实出标极可能只有20或者40；
-
-竞标倒计时，一个区块是10分钟打包，但是这个是平均值，注意最后一分钟竞标往往不会被打包，但是如果你很想要，还是建议最后一分钟也要争取，尽量在倒数30分钟、20分钟、10分钟这几个时间点观察对手出标情况然后应对，另外要注意公告，有时候由于网络拥堵，有可能需要至少6个区块也就是1个小时的时间打包；
-
-你可以竞标中文域名，比如“说”
-
-
-
-
-
-## 使用场景
+## 一些使用场景
 
 https://www.namebase.io/use-cases/
-
-### 售卖子域名
-
-目前需要先去申请
-
-### 跳转
-
-https://namebase.io/manage/redirects
 
 ### 去中心化应用
 
@@ -222,13 +206,25 @@ https://www.namebase.io/dlinks/
 
 http://yueliu.fromchina.hns.to/
 
-### 解析到GitHub Pages
+### 其他
+
+**买卖子域名**
+
+**解析到GitHub Pages**
 
 https://medium.com/blockchannel/configuring-handshake-top-level-domains-for-github-pages-f84f4a310c94
 
+**跳转**
+
+https://namebase.io/manage/redirects
 
 
-## Links
+
+---
+
+**支持我的创作，donate to HNS:** hs1qxzlznz7wjlpl50wvasslalcvkg2m3rzn57uf7n
+
+## 参考链接
 
 https://community.namebase.io/
 
