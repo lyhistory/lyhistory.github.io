@@ -85,7 +85,7 @@ set -x 可以显示shell在执行什么程序
   简单判别方式：命令是否可以阻塞终端（如cat不加任何命令会阻塞终端）
   如 echo"trade:trade"|chpasswd 
 
-## 用户身份
+## 用户身份和权限
 
 ```
 su _gvm
@@ -95,7 +95,17 @@ sudo -u _gvm gvmd --migrate
 sudo su -l _gvm -s /bin/bash
 
 sudo sh -c "cmds"
+
+
 ```
+
+
+
+Permissions take a different meaning for directories. Here's what they mean:
+
+-  **r**ead determines if a user can view the directory's contents, i.e. do ls in it.
+-  **w**rite determines if a user can create new files or delete file in the directory. (Note here that this essentially means that a user with write access toa directory can delete files in the directory *even* if he/she doesn't have write permissions for the file! So be careful with this.)
+-  e**x**ecute determines if the user can cd into the directory.
 
 ## 安装包管理
 

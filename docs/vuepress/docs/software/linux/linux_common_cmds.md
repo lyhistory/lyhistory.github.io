@@ -59,3 +59,20 @@ https://mp.weixin.qq.com/s/BMeSEcQbhC4dcH-oYEtE-g
 `crontab -e`是用户级的crontab
 linux下实际保存在`/var/spool/cron/username`中
 
+crontab是分用户的，默认为当前用户，可以通过-u指定用户
+
+日志
+
+/var/log/cron
+
+/var/spool/mail/root
+
+
+
+## history
+
+```
+#Delete your Linux history without leaving a trace!
+history -d $((HISTCMD-1)) && history -d [line entry number]
+```
+

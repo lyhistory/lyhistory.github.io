@@ -1204,6 +1204,10 @@ https://docs.gitlab.com/ee/install/requirements.html#database
 
 method 1： back & restore
 
+https://docs.gitlab.com/ee/raketasks/backup_restore.html
+
+https://docs.gitlab.com/omnibus/settings/backups.html
+
 ```
 uninstall...
 install same version as the source machine
@@ -2280,6 +2284,14 @@ Scriptlet output:
 4.根据第3的错误搜索，发现 https://gitlab.com/gitlab-org/omnibus-gitlab/-/issues/5743，确定是版本13.5.0自己的问题，说是升级到13.5.1就解决了
 4. 所以，13.5.0的一个bug造成无法reconfigure，只能通过升级解决，但是升级又遇到所谓malformed json错误，提示reconfigure解决，deadlock！
 5. 最终解决，采用别人提到的尝试删除/opt/gitlab/embedded/nodes/XXXX.json，再次升级成功！
+
+### gitlab-backup备份定时任务失败
+
+通过查crontab的相关日志以及 /var/mail/root，发现是配置的目录没有权限
+
+但是实际上改目录已经chown给了git用户，最后发现是git对这个目录的父目录没有权限！
+
+
 
 ## Appendix
 

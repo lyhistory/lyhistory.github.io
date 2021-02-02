@@ -20,6 +20,10 @@ Open Systems Interconnection model (OSI model) is a conceptual model that charac
 
 ![网络分层](/docs/docs_image/software/network/network01.png)
 
+网上找到这张图还不错，OSI Model和TCP/IP Model对应关系图：
+
+![](/docs/docs_image/software/network/network_osi_model_2_tcpip_model.gif)
+
 OSI七层是抽象的模型，而TCP/IP四层或五层是比较具体的协议；
 
 五层模型

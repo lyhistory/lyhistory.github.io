@@ -50,6 +50,14 @@ working with slf4j: [log4j-slf4j-impl](https://mvnrepository.com/artifact/org.ap
 
 The actual logging configuration is adhering to native Log4j 2 configuration
 
+日志配置：
+
+https://www.cnblogs.com/lzb1096101803/p/5796849.html
+
+https://www.jdon.com/48406
+
+https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout
+
 ```java
 >>springboot application.yml:
 logging:
@@ -136,6 +144,8 @@ Configuration:
 working: [logback-classic](https://search.maven.org/classic/#search|gav|1|g%3A"ch.qos.logback" AND a%3A"logback-classic").
 
 working with slf4j: nothing need to do, because logback-classic will transitively pull in another two dependencies, the *logback-core* and *slf4j-api*. 
+
+日志配置：https://www.cnblogs.com/EasonJim/p/7801486.html
 
 **outdated log4j**
 
