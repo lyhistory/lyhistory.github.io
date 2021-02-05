@@ -173,6 +173,19 @@ if (logger.isDebugEnabled()) {
 }
 ```
 
+但是需要注意的是，如果打印exception stacktrace，一定要保证e不能有占位符！
+
+https://stackoverflow.com/questions/5951209/how-to-log-exception-and-message-with-placeholders-with-slf4j/66019806#66019806
+
+```
+String s = "Hello world";
+try {
+  Integer i = Integer.valueOf(s);
+} catch (NumberFormatException e) {
+  logger.error("Failed to format {}", s, e);
+}
+```
+
 
 
 ## 日志类型

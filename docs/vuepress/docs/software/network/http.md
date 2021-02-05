@@ -75,39 +75,177 @@ location /chat/ {
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
 }
-    
+ 
 ```
 
-举例，client端发起：
+举例，
+
+### 客户端和服务端直连
+
+注意本地测试在brave浏览器下目前有问题，还是用chrome测试
+
+https://community.brave.com/t/throw-unknown-reason-error-while-using-local-custom-domain-name-to-test-websocket/202155/2
+
+nginx配置：
 
 ```
+server {
+		listen       80;
+        server_name  test.local;
+		
+		location / {
+			alias "C:/Workspace/test/";
+		}
+	}
+```
+
+
+
+client端代码：
+
+```
+index.html: 放在"C:/Workspace/test/"下
+
+<!DOCTYPE html>
+<script>
+
+let socket = new WebSocket("ws://127.0.0.1:8089");
+
+socket.onopen = function(e) {
+  alert("[open] Connection established");
+  alert("Sending to server");
+  socket.send("My name is LiuYue");
+};
+
+socket.onmessage = function(event) {
+  alert(`[message] Data received from server: ${event.data}`);
+};
+
+socket.onclose = function(event) {
+  if (event.wasClean) {
+    alert(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+  } else {
+    alert('[close] Connection died');
+  }
+};
+
+socket.onerror = function(error) {
+  alert(`[error] ${error.message}`);
+};
+</script>
+```
+
+服务端代码：
+
+```
+// Node.js WebSocket server script
+const http = require('http');
+const WebSocketServer = require('websocket').server;
+const server = http.createServer();
+server.listen(8089);
+const wsServer = new WebSocketServer({
+    httpServer: server
+});
+wsServer.on('request', function(request) {
+    const connection = request.accept(null, request.origin);
+    connection.on('message', function(message) {
+      console.log('Received Message:', message.utf8Data);
+      connection.sendUTF('Hi this is WebSocket server!');
+    });
+    connection.on('close', function(reasonCode, description) {
+        console.log('Client has disconnected.');
+    });
+});
+
+npm install http
+npm install websocket
+node index.js
+```
+
+访问 
+
+http://test.local
+
+请求和响应：
+
+```
+
 Request:
-GET ws://10.136.100.45/websocket HTTP/1.1
-Host: 10.136.100.45
+GET ws://127.0.0.1:8089/ HTTP/1.1
+Host: 127.0.0.1:8089
 Connection: Upgrade
 Pragma: no-cache
 Cache-Control: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.146 Safari/537.36
 Upgrade: websocket
-Origin: http://10.136.100.45
+Origin: http://test.local
 Sec-WebSocket-Version: 13
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Safari/537.36
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Sec-WebSocket-Key: 71Dt2w4d4cxOmBCOT9taTg==
+Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits
+
+
+Response:
+HTTP/1.1 101 Switching Protocols
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Accept: QOGonnA91h4HMkaOCKTaNl7u1ac=
+Origin: http://test.local
+
+```
+
+
+
+### 客户端通过nginx连服务端
+
+nginx配置：
+
+```
+location /ws {
+			proxy_pass http://127.0.0.1:8089;
+			proxy_set_header Upgrade $http_upgrade;
+			proxy_set_header Connection "Upgrade";
+		}
+```
+
+
+
+client端代码：
+
+```
+let socket = new WebSocket("ws://127.0.0.1:8089");
+改为
+let socket = new WebSocket("ws://test.local/ws");
+```
+
+再来看请求和响应(可以看到返回里面的服务端信息nginx)：
+
+```
+Request:
+GET ws://test.local/ws HTTP/1.1
+Host: test.local
+Connection: Upgrade
+Pragma: no-cache
+Cache-Control: no-cache
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.146 Safari/537.36
+Upgrade: websocket
+Origin: http://test.local
+Sec-WebSocket-Version: 13
 Accept-Encoding: gzip, deflate
 Accept-Language: en-US,en;q=0.9
-Sec-GPC: 1
-Sec-WebSocket-Key: rlNWZDD4jGOrhYjTYv5UEA==
+Sec-WebSocket-Key: n6GlfYzgjkKTEZ4xqG4ikw==
 Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits
 
 Response:
 HTTP/1.1 101 Switching Protocols
-Server: nginx/1.16.1
-Date: Fri, 29 Jan 2021 06:17:07 GMT
+Server: nginx/1.17.6
+Date: Fri, 05 Feb 2021 08:35:29 GMT
 Connection: upgrade
-upgrade: websocket
-sec-websocket-accept: l+0+vEsZvDECt5AGda7vPI3BwME=
-
+Upgrade: websocket
+Sec-WebSocket-Accept: wE4LVzK8tjX9oOIt3bfOwNWA7+s=
+Origin: http://test.local
 ```
-
-
 
 
 

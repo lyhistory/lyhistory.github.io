@@ -1,14 +1,12 @@
 https secure http
 
-wss secure socket
-
-## SSL/TLS Certificate
+wss secure websocket
 
 refer to 《network.md/tls》
 
-https / secure websocket
+## SSL/TLS Certificate 证书类型
 
-### 证书类型：
+工具：keytool openssl
 
 证书可以单纯只是包含ca认证的证书链（CA的签名）或自签名，以及公钥，也可以同时包含私钥，私钥当然可以独立于证书生成单独存储；
 
@@ -21,9 +19,23 @@ https / secure websocket
 + self-sgined certificate
 
 ```
+------------------------------------------------------------
+--- use openssl 不带密码
+------------------------------------------------------------
 sudo mkdir /etc/ssl/privatekey
 sudo chmod 700 /etc/ssl/privatekey
 sudo openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout /etc/ssl/privatekey/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
+
+------------------------------------------------------------
+--- use keytool 带密码
+------------------------------------------------------------
+keytool -genkey -alias secure_netty -keysize 2048 -validity 365 -keyalg RSA -dname "CN=localhost" -keypass 123456 -storepass 123456 -keystore selfsigned.jks
+keytool -export -alias securechat -keystore selfsigned.jks -storepass 123456 -file selfsigned.cer
+
+
+keytool -genkey -alias secure_tomcat -keysize 1024 -validity 365 -keyalg RSA -keypass 123456 -storepass 123456 -keystore selfsigned.keystore 
+keytool -list -v -keystore selfsigned.keystore
+keytool -export -alias secure_tomcat -keystore selfsigned.keystore -file selfsigned.cer
 ```
 
 
@@ -56,15 +68,7 @@ root/certbot-auto renew --pre-hook "systemctl stop nginx" --post-hook "systemctl
 
 
 
-### 工具：
-
-keytool
-
-openssl
-
-
-
-## Products supporting https
+## Supporting https
 
 ### browser
 
@@ -143,10 +147,10 @@ server:
   port:
     10001
   ssl:
-    key-store: tomcat.keystore
+    key-store: selfsigned.keystore
     key-store-password: 123456
     keyStoreType: JKS
-    keyAlias: tomcat
+    keyAlias: secure_tomcat
     
 @EnableAsync
 @SpringBootApplication
@@ -204,6 +208,47 @@ https://zhuanlan.zhihu.com/p/81807865
 ### netty
 
 https://blog.csdn.net/invadersf/article/details/80337380
+
+https://www.cnblogs.com/zhjh256/p/6488668.html
+
+```
+import io.netty.handler.ssl.SslHandler;
+public class SslChannelInitializer extends ChannelInitializer<Channel> {
+    private final SslContext context;
+
+    public SslChannelInitializer(SslContext context) { 
+        this.context = context;
+    }
+
+    @Override
+    protected void initChannel(Channel ch) throws Exception {
+        SSLEngine engine = context.newEngine(ch.alloc());
+        engine.setUseClientMode(false);
+        ch.pipeline().addFirst("ssl", new SslHandler(engine));
+        ChannelPipeline pipeline = ch.pipeline(); 
+        pipeline.addLast("frameDecoder", new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4));  
+        pipeline.addLast("frameEncoder", new LengthFieldPrepender(4));                
+        pipeline.addLast("decoder", new StringDecoder(Charset.forName("UTF-8")));  
+        pipeline.addLast("encoder", new StringEncoder(Charset.forName("UTF-8")));  
+        pipeline.addLast("spiderServerBusiHandler", new SpiderServerBusiHandler());
+    }
+}
+
+bossGroup = new NioEventLoopGroup(1);
+workerGroup = new NioEventLoopGroup(WORKER_GROUP_SIZE);
+channelClass = NioServerSocketChannel.class;
+logger.info("workerGroup size:" + WORKER_GROUP_SIZE);
+logger.info("preparing to start spider server...");
+b.group(bossGroup, workerGroup);  
+b.channel(channelClass);
+KeyManagerFactory keyManagerFactory = null;
+KeyStore keyStore = KeyStore.getInstance("JKS");
+keyStore.load(new FileInputStream("selfsigned.jks"), "sNetty".toCharArray());
+keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
+keyManagerFactory.init(keyStore,"123456".toCharArray());
+SslContext sslContext = SslContextBuilder.forServer(keyManagerFactory).build();
+b.childHandler(new SslChannelInitializer(sslContext)); 
+```
 
 
 

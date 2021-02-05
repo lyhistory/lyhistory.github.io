@@ -98,6 +98,16 @@ $ /usr/local/nginx/sbin/nginx -s quit
 重启
 $ /usr/local/nginx/sbin/nginx -s reload
 
+
+Firewalls
+sudo firewall-cmd --add-service=http
+sudo firewall-cmd --add-service=https
+sudo firewall-cmd --runtime-to-permanent
+or
+sudo iptables -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+sudo iptables -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+
+
 ```
 
 /usr/local/nginx/conf/nginx.conf
@@ -105,6 +115,8 @@ $ /usr/local/nginx/sbin/nginx -s reload
 /usr/local/nginx/html
 
 /usr/local/nginx/sbin/nginx
+
+
 
 ## 语法
 
@@ -230,14 +242,21 @@ server {
 }
 
 ---------------------------------------------------------------------------------
---- 强制 https
+--- 强制 enforce https
 ---------------------------------------------------------------------------------
+一种方法
 server {
         listen       80;
         server_name  test.local;
 		rewrite ^/(.*) https://$server_name$request_uri? permanent;
 	}
 	
+另一种方法
+the default Nginx configuration file allows us to easily add directives to the default port 80 server block by adding files in the /etc/nginx/default.d directory. Create a new file called ssl-redirect.conf
+
+vim /etc/nginx/default.d/ssl-redirect.conf：
+return 301 https://$host$request_uri/;
+
 sudo /usr/local/nginx/sbin/nginx -t
 ```
 

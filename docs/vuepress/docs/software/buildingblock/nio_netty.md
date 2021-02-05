@@ -76,7 +76,7 @@ https://juejin.im/post/5c6d7640f265da2de80f5e9c#heading-4
 
 ### 基于http的websocket
 
-使用SimpleChannelInboundHandler，并使用netty提供的FullHttpRequest直接处理http，所以不需要处理拆包粘包问题
+使用SimpleChannelInboundHandler，因为是netty封装了基于http的一系列方法，所以直接用封装的HttpServerCodec处理拆包粘包问题，并使用netty提供的FullHttpRequest直接handle http
 
 > 官方文档：
 
@@ -89,6 +89,39 @@ websocket是基于http1.1的，自然此时netty需要handle http request
 https://www.huaweicloud.com/articles/bb663e7adeb28738a452e98025e0b6f2.html
 
 ```
+public void init() throws InterruptedException {
+    ChannelFuture channelFuture;
+    NioEventLoopGroup nioEventLoopGroup1 = new NioEventLoopGroup(this.config.getBossLoopGroupThreads());
+    NioEventLoopGroup nioEventLoopGroup2 = new NioEventLoopGroup(this.config.getWorkerLoopGroupThreads());
+    ServerBootstrap bootstrap = new ServerBootstrap();
+    ((ServerBootstrap)((ServerBootstrap)((ServerBootstrap)((ServerBootstrap)bootstrap.group(nioEventLoopGroup1, nioEventLoopGroup2)
+      .channel(io.netty.channel.socket.nio.NioServerSocketChannel.class))
+      .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, Integer.valueOf(this.config.getConnectTimeoutMillis())))
+      .option(ChannelOption.SO_BACKLOG, Integer.valueOf(this.config.getSoBacklog())))
+      .childOption(ChannelOption.WRITE_SPIN_COUNT, Integer.valueOf(this.config.getWriteSpinCount()))
+      .childOption(ChannelOption.WRITE_BUFFER_WATER_MARK, new WriteBufferWaterMark(this.config.getWriteBufferLowWaterMark(), this.config.getWriteBufferHighWaterMark()))
+      .childOption(ChannelOption.TCP_NODELAY, Boolean.valueOf(this.config.isTcpNoDelay()))
+
+      
+      .childOption(ChannelOption.SO_KEEPALIVE, Boolean.valueOf(this.config.isSoKeepAlive()))
+      .childOption(ChannelOption.SO_LINGER, Integer.valueOf(this.config.getSoLinger()))
+      .childOption(ChannelOption.ALLOW_HALF_CLOSURE, Boolean.valueOf(this.config.isAllowHalfClosure()))
+      .handler(new LoggingHandler(LogLevel.DEBUG)))
+      .childHandler(new ChannelInitializer<NioSocketChannel>()
+        {
+          protected void initChannel(NioSocketChannel ch) throws Exception {
+            ChannelPipeline pipeline = ch.pipeline();
+            
+            pipeline.addLast("http-codec", new HttpServerCodec());
+            
+            pipeline.addLast("aggregator", new HttpObjectAggregator(65536));
+            
+            pipeline.addLast("http-chunked", new ChunkedWriteHandler());
+            
+            pipeline.addLast("http-server-handler", new HttpServerHandler(WebsocketServer.this.pojoEndpointServer, WebsocketServer.this.config));
+          }
+        });
+.....................        
 class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
   private final PojoEndpointServer pojoEndpointServer;
   private static ByteBuf faviconByteBuf = null; private final ServerEndpointConfig config;
@@ -104,13 +137,35 @@ class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
 
 当然rpc也可以基于http实现，我们这里是说基于tcp的rpc：
 
-同样是使用SimpleChannelInboundHandler，但不再使用netty提供的FullHttpRequest，而是接收默认的TCP消息，所以需要handle 自定义的rpc request，因为是TCP，所以需要处理拆包粘包
+同样是使用SimpleChannelInboundHandler，但不再使用netty提供的基于http的方法，而是自己处理接收到的TCP消息，所以需要处理拆包粘包：自定义继承了ByteToMessageDecoder的RpcDecoder，并且需要handle 自定义的rpc request：自定义继承了SimpleChannelInboundHandler的RpcServerHandler
 
 使用netty实现高性能rpc https://www.cnblogs.com/jietang/p/5615681.html
 
 
 
 ```
+public void start() throws Exception {
+		if(leaderGroup == null && workerGroup == null) {
+			leaderGroup = new NioEventLoopGroup();
+			leaderGroup = new NioEventLoopGroup();
+			ServerBootstrap bootstrap = new ServerBootstrap();
+			bootstrap.group(leaderGroup, leaderGroup).channel(NioServerSocketChannel.class)
+				.childHandler(new ChannelInitializer<SocketChannel>() {
+
+					@Override
+					protected void initChannel(SocketChannel ch) throws Exception {
+						ch.pipeline()
+							.addLast(new LengthFieldBasedFrameDecoder(65536, 0, 4, 0, 0))
+							.addLast(new RpcDecoder(RpcRequest.class))
+							.addLast(new RpcEncoder(RpcResponse.class))
+							.addLast(new RpcServerHandler(handlerMap));
+					}
+				}).option(ChannelOption.SO_BACKLOG, 128)
+				.childOption(ChannelOption.SO_KEEPALIVE, true);
+.....................
+public class RpcDecoder extends ByteToMessageDecoder {
+
+.....................
 public class RpcRequest {
 	private String requestId;
 	private String className;

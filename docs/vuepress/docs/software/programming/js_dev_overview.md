@@ -497,6 +497,39 @@ https://create-react-app.dev/docs
 React.js and Spring Data REST
 https://spring.io/guides/tutorials/react-and-spring-data-rest/
 
+```
+自定义环境变量
+There is also a built-in environment variable called NODE_ENV. You can read it from process.env.NODE_ENV. When you run npm start, it is always equal to 'development', when you run npm test it is always equal to 'test', and when you run npm run build to make a production bundle, it is always equal to 'production'. You cannot override NODE_ENV manually. This prevents developers from accidentally deploying a slow development build to production.
+https://create-react-app.dev/docs/adding-custom-environment-variables/
+
+Windows (cmd.exe)#
+set "REACT_APP_NODE_ENV=uat" && npm run start
+Linux, macOS (Bash)#
+export REACT_APP_NODE_ENV=uat && npm run start
+
+package.json:
+  "scripts": {
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js",
+
+    "startDevOnWinCmd": "set \"REACT_APP_NODE_ENV=dev\" && node scripts/start.js",
+    "startDevOnLinux": "export REACT_APP_NODE_ENV=dev && node scripts/start.js",
+
+    "buildQaOnWinCmd": "set \"REACT_APP_NODE_ENV=qa\" && node scripts/build.js",
+    "buildQaOnLinux": "export REACT_APP_NODE_ENV=qa && node scripts/build.js",
+
+usage:
+​```
+npm run start #default for dev/development start
+npm run build #default for prod/produciton build
+npm run startDevOnWinCmd #example for dev start
+npm run buildQaOnWinCmd  #example for qa build
+​```
+```
+
+
+
 ### 4.2.3 webpack
 
 https://webpack.js.org/concepts/
