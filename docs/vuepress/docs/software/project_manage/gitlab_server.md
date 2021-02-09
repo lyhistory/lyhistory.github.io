@@ -2291,7 +2291,44 @@ Scriptlet output:
 
 但是实际上改目录已经chown给了git用户，最后发现是git对这个目录的父目录没有权限！
 
+### 磁盘用尽
 
+1. 备份文件忘记设置 keeping time，造成默认的/var用尽
+
+2. prometheus监控数据，每天大概1.28G 上下，retention貌似是2 weeks
+
+   https://docs.gitlab.com/ee/operations/metrics/dashboards/#annotation-retention-policy
+
+   ```
+   (time() - prometheus_tsdb_lowest_timestamp_seconds) / 86400
+   
+   http://XXXXX-/grafana/explore?orgId=1&left=["now-1h","now","GitLab Omnibus",{"expr":"(time() - prometheus_tsdb_lowest_timestamp_seconds) %2F 86400"},{"mode":"Metrics"},{"ui":[true,true,true,"none"]}]
+   
+   可以看到结果是15，差不多就是2个礼拜多一天，所以/var尽量要大一些，至少50G以上
+   
+    ls -ltrh $(find /var/opt/gitlab/prometheus/data/wal/* -not -empty)
+    
+    https://gitlab.com/gitlab-org/omnibus-gitlab/-/issues/4166
+    
+    
+   最后发现可能是由于之前磁盘出现过问题，造成prometheus出错：
+    tail -f /var/log/gitlab/prometheus/current
+   2021-02-09_05:00:02.10666 level=info ts=2021-02-09T05:00:02.106Z caller=head.go:804 component=tsdb msg="Head GC completed" duration=57.012153ms
+   2021-02-09_05:00:02.10697 level=error ts=2021-02-09T05:00:02.106Z caller=db.go:685 component=tsdb msg="compaction failed" err="reload blocks: head truncate failed: truncate chunks.HeadReadWriter: maxt of the files are not set"
+   2021-02-09_07:00:01.99667 level=info ts=2021-02-09T07:00:01.995Z caller=compact.go:495 component=tsdb msg="write block" mint=1612843200000 maxt=1612850400000 ulid=01EY2SDZ0QD07844YCTAQ8S55Z duration=1.332421074s
+   
+   尝试使用prometheus api，发现admin api被gitlab禁用
+   https://prometheus.io/docs/prometheus/latest/querying/api/#tsdb-stats
+   $ curl -XPOST http://localhost:9090/api/v1/admin/tsdb/clean_tombstones
+   
+   https://github.com/prometheus/prometheus/issues/7753
+   gitlab-ctl stop prometheus
+   Delete the chunks_head directory
+   gitlab-ctl start prometheus
+   
+   ```
+
+   
 
 ## Appendix
 
