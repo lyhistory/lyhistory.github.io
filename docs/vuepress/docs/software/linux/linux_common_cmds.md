@@ -31,17 +31,22 @@ find / -type f -name "Locations.xml" -print
 
 
 
-## GREP
+## GREP/zgrep
 
 https://www.cyberciti.biz/faq/howto-use-grep-command-in-linux-unix/
 
-
+```
+grep/zgrep "pattern" file/file.gz
 
 grep -H -r "syscript" ~ | cut -d: -f1 | sort -u
 
 grep -H -r "create_db.sh" ~ | cut -d: -f1 | sort -u
 
 grep -H -r "/apps/lib" ~ | cut -d: -f1 | sort -u
+
+```
+
+
 
 
 
@@ -50,6 +55,19 @@ grep -H -r "/apps/lib" ~ | cut -d: -f1 | sort -u
 由一次磁盘告警引发的血案 | 你知道 du 和 ls 区别吗？
 
 https://mp.weixin.qq.com/s/BMeSEcQbhC4dcH-oYEtE-g
+
+```
+df -h
+du -sh ./*
+```
+
+
+
+## split
+
+```
+split -a 4 -d -l 20000 2021-02-15_test.log ./test/test_
+```
 
 
 

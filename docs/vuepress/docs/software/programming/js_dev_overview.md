@@ -158,19 +158,59 @@ https://dev.to/sarah_chima/var-let-and-const--whats-the-difference-69e
 ### 2.1 共同环境配置
 
 ```
+---------------------------------------------------------------------------------------
+--- ubuntu
+---------------------------------------------------------------------------------------
 一般安装nodejs就自动自带按照npm，但是Ubuntu貌似并非如此
-
-#ubuntu
 apt install npm
 但是默认版本很低，升级：
 sudo npm install -g npm
 hash -d npm
-
-#centos
+---------------------------------------------------------------------------------------
+--- centos
+---------------------------------------------------------------------------------------
 yum install nodejs
 yum uninstall nodejs
 
-Upgrade to nodejs8
+---------------------------------------------------------------------------------------
+--- redhat
+---------------------------------------------------------------------------------------
+https://github.com/nodesource/distributions/blob/master/README.md#rpminstall
+
+$ curl -fsSL https://rpm.nodesource.com/setup_15.x | sudo bash -
+
+$ yum repolist
+Loaded plugins: product-id, search-disabled-repos, subscription-manager
+This system is not registered with an entitlement server. You can use subscription-manager to register.
+repo id           repo name     											status
+nodesource/x86_64 Node.js Packages for Enterprise Linux 7 - x86_64          37
+repolist: 55,117
+
+## Inspecting system...
++ rpm -q --whatprovides redhat-release || rpm -q --whatprovides centos-release || rpm -q --whatprovides cloudlinux-release || rpm -q --whatprovides sl-release
++ uname -m
+## Confirming "el7-x86_64" is supported...
++ curl -sLf -o /dev/null 'https://rpm.nodesource.com/pub_15.x/el/7/x86_64/nodesource-release-el7-1.noarch.rpm'
+## Downloading release setup RPM...
++ mktemp
++ curl -sL -o '/tmp/tmp.YhLB6BeGzL' 'https://rpm.nodesource.com/pub_15.x/el/7/x86_64/nodesource-release-el7-1.noarch.rpm'
+## Installing release setup RPM...
++ rpm -i --nosignature --force '/tmp/tmp.YhLB6BeGzL'
+## Cleaning up...
++ rm -f '/tmp/tmp.YhLB6BeGzL'
+## Checking for existing installations...
++ rpm -qa 'node|npm' | grep -v nodesource
+
+## Run `sudo yum install -y nodejs` to install Node.js 15.x and npm.
+## You may also need development tools to build native addons:
+     sudo yum install gcc-c++ make
+## To install the Yarn package manager, run:
+     curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+     sudo yum install yarn
+     
+---------------------------------------------------------------------------------------
+--- Upgrade to nodejs8
+---------------------------------------------------------------------------------------
 https://tech.amikelive.com/node-663/quick-tip-installing-nodejs-8-on-centos-7/
 yum install epel-release
 curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
@@ -181,7 +221,9 @@ yum install -y nodejs
 只需要执行npm -request即可，如果提示 Error: ENOENT, stat '\AppData\Roaming\npm'
 只需要当前目录下创建npm即可
 
-#windows安装node js
+---------------------------------------------------------------------------------------
+--- windows安装node js
+---------------------------------------------------------------------------------------
 Windows upgrade npm
 npm install -g npm-windows-upgrade npm-windows-upgrade
 ```

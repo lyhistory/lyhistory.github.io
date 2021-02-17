@@ -51,8 +51,180 @@ http://www.jasongj.com/2015/08/09/KafkaColumn4/
 
 ![](/docs/docs_image/software/kafka/kafka01.png)
 
+## 安装 install
+
+https://www.digitalocean.com/community/tutorial_collections/how-to-install-apache-kafka
+
+```shell
+------------------------------------------------------------------------
+--- Creating a User for Kafka
+------------------------------------------------------------------------
+sudo useradd kafka -m
+sudo passwd kafka
+for ubuntu: sudo adduser kafka sudo
+for centos: sudo usermod -aG wheel kafka
+su -l kafka
+
+------------------------------------------------------------------------
+-- Downloading and Extracting the Kafka Binaries
+------------------------------------------------------------------------
+mkdir ~/Downloads
+curl "https://www.apache.org/dist/kafka/2.1.1/kafka_2.11-2.1.1.tgz" -o ~/Downloads/kafka.tgz
+mkdir ~/kafka && cd ~/kafka
+tar -xvzf ~/Downloads/kafka.tgz --strip 1 （We specify the --strip 1 flag to ensure that the archive’s contents are extracted in ~/kafka/ itself and not in another directory (such as ~/kafka/kafka_2.11-2.1.1/) inside of it）
+
+------------------------------------------------------------------------
+--- Configuring the Kafka Server
+------------------------------------------------------------------------
+vim ~/kafka/config/server.properties:
+
+# The id of the broker. This must be set to a unique integer for each broker.
+broker.id=0
+
+port=9092
+host.name=10.136.100.48
+advertised.host.name=10.136.100.48
+advertised.port=9092
+
+delete.topic.enable = true
+log.retention.hours=168
+log.dirs=/opt/kafka_2.12-2.2.0/kafka-logs
+#外置zookeeper
+zookeeper.connect=10.136.100.48:2181,10.136.100.49:2181,10.136.100.50:2181
+
+------------------------------------------------------------------------
+--- Option 1: Creating Systemd Unit Files and Starting the Kafka Server
+------------------------------------------------------------------------
+sudo vim /etc/systemd/system/zookeeper.service
+[Unit]
+Requires=network.target remote-fs.target
+After=network.target remote-fs.target
+
+[Service]
+Type=simple
+User=kafka
+ExecStart=/home/kafka/kafka/bin/zookeeper-server-start.sh /home/kafka/kafka/config/zookeeper.properties
+ExecStop=/home/kafka/kafka/bin/zookeeper-server-stop.sh
+Restart=on-abnormal
+
+[Install]
+WantedBy=multi-user.target
+
+The [Unit] section specifies that Zookeeper requires networking and the filesystem to be ready before it can start.
+The [Service] section specifies that systemd should use the zookeeper-server-start.sh and zookeeper-server-stop.sh shell files for starting and stopping the service. It also specifies that Zookeeper should be restarted automatically if it exits abnormally.
+
+sudo vim /etc/systemd/system/kafka.service
+[Unit]
+Requires=zookeeper.service
+After=zookeeper.service
+
+[Service]
+Type=simple
+User=kafka
+ExecStart=/bin/sh -c '/home/kafka/kafka/bin/kafka-server-start.sh /home/kafka/kafka/config/server.properties > /home/kafka/kafka/kafka.log 2>&1'
+ExecStop=/home/kafka/kafka/bin/kafka-server-stop.sh
+Restart=on-abnormal
+
+[Install]
+WantedBy=multi-user.target
+The [Unit] section specifies that this unit file depends on zookeeper.service. This will ensure that zookeeper gets started automatically when the kafka service starts.
+The [Service] section specifies that systemd should use the kafka-server-start.sh and kafka-server-stop.sh shell files for starting and stopping the service. It also specifies that Kafka should be restarted automatically if it exits abnormally. 
+
+sudo systemctl start kafka
+sudo journalctl -u kafka
+sudo systemctl enable kafka
+
+------------------------------------------------------------------------
+--- Option 2: 编写启动脚本
+------------------------------------------------------------------------
+readonly PROGNAME=$(basename $0)
+readonly PROGDIR=$(readlink -m $(dirname $0))
+
+# source env
+L_INVOCATION_DIR="$(pwd)"
+L_CMD_DIR="/opt/scripts"
+
+if [ "${L_INVOCATION_DIR}" != "${L_CMD_DIR}" ]; then
+  pushd ${L_CMD_DIR} &> /dev/null
+fi
+
+#source ../set_env.sh
+
+#--------------- Function Definition ---------------#
+showUsage() {
+  echo "Usage:"
+  echo "$0 kafka start|kill"
+  echo ""
+  echo "--start or -b:  Start kafka"
+  echo "--kill or -k:   Stop kafka"
+}
+
+#---------------  Main ---------------#
+
+# Parse arguments
+while [ "${1:0:1}" == "-" ]; do
+  case $1 in
+    --start)
+      L_FLAG="B"
+      ;;
+    -b)
+      L_FLAG="B"
+      ;;
+        --kill)
+      L_FLAG="K"
+          ;;
+        -k)
+      L_FLAG="K"
+          ;;
+    *)
+      echo "Unknown option: $1"
+          echo ""
+      showUsage
+          echo ""
+      exit 1
+      ;;
+  esac
+  shift
+done
+
+L_RETURN_FLAG=0 # 0 for success while 99 for failure
+
+KAFKA_HOME=/opt/kafka_2.12-2.2.0/bin
+
+pushd ${KAFKA_HOME} &>/dev/null
+
+if [ "$L_FLAG" == "B" ]; then
+        echo "Starting kafka service..."
+        ./kafka-server-start.sh -daemon ../config/server.properties
+else
+        echo "Stopping kafka service..."
+        ./kafka-server-stop.sh -daemon ../config/server.properties
+fi
+
+exit $L_RETURN_FLAG
+
+------------------------------------------------------------------------
+--- Restricting the Kafka User  as a security precaution. 
+------------------------------------------------------------------------
+This step in the prerequisite disables sudo access for the kafka user
+for ubuntu:
+sudo deluser kafka sudo
+for centos:
+sudo gpasswd -d kafka wheel
+
+sudo passwd kafka -l (对应unlock：sudo passwd kafka -u)
+sudo su - kafka
+
+
+```
+
+
+
 ## 2.Basic usage 
+
 GUI KafkaEsque  https://kafka.esque.at
+
+https://github.com/airbnb/kafkat
 
 查看kafka broker节点
 
@@ -154,6 +326,85 @@ Telnet 127.0.0.1/guesthost 9092 WORKS, but it doesn’t mean can reach to the gu
 vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
 
 ![](/docs/docs_image/software/kafka/kafka04.png)
+
+### Backup & Restore
+
+https://www.digitalocean.com/community/tutorials/how-to-back-up-import-and-migrate-your-apache-kafka-data-on-ubuntu-18-04
+
+```
+单机版例子，集群类似，只是需要停掉所有的zookeeper和kafka，然后备份其中一台机器的zookeeper和kafka，然后在所有机器上恢复
+
+sudo -iu kafka
+
+~/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic BackupTopic
+
+echo "Test Message 1" | ~/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic BackupTopic > /dev/null
+
+~/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic BackupTopic --from-beginning
+
+-----------------------------------------------------------------------------------
+--- Backing Up the ZooKeeper State Data
+-----------------------------------------------------------------------------------
+kafka内置zookeeper：
+ZooKeeper stores its data in the directory specified by the dataDir field in the /kafka/config/zookeeper.properties:
+dataDir=/tmp/zookeeper
+使用外置zookeeper：
+/zookeeper/conf/zoo.cfg
+dataDir=/opt/zookeeper-3.4.8/zkdata
+dataLogDir=/opt/zookeeper-3.4.8/logs
+
+compressed archive files are a better option over regular archive files to save disk space:
+tar -czf /opt/kafka_backup/zookeeper-backup.tar.gz /opt/zookeeper-3.4.8/zkdata/*
+忽略错误 tar: Removing leading `/' from member names
+
+-----------------------------------------------------------------------------------
+--- Backing Up the Kafka Topics and Messages
+-----------------------------------------------------------------------------------
+Kafka stores topics, messages, and internal files in the directory that the log.dirs field specifies 
+/kafka/config/server.properties:
+log.dirs=/opt/kafka_2.12-2.2.0/kafka-logs
+
+stop the Kafka service so that the data in the log.dirs directory is in a consistent state when creating the archive with tar
+
+sudo systemctl stop kafka (前面安装时移除了kafka的sudo权限，需要使用其他有sudo权限的非root用户执行)
+sudo -iu kafka
+
+tar -czf /opt/kafka_backup/kafka-backup.tar.gz /opt/kafka_2.12-2.2.0/kafka-logs/*
+
+sudo systemctl start kafka （同样切换其他用户）
+sudo -iu kafka
+
+-----------------------------------------------------------------------------------
+--- Restoring the ZooKeeper Data & Kafka Data
+-----------------------------------------------------------------------------------
+You need to stop the Kafka and ZooKeeper services as a precaution against the data directories receiving invalid data during the restoration process.
+
+sudo systemctl stop kafka
+sudo systemctl stop zookeeper
+sudo -iu kafka
+
+rm -r /opt/zookeeper-3.4.8/zkdata/*
+tar -C /opt/zookeeper-3.4.8/zkdata -xzf /opt/kafka_backup/zookeeper-backup.tar.gz --strip-components 2
+（specify the --strip 2 flag to make tar extract the archive’s contents in /tmp/zookeeper/ itself and not in another directory (such as /tmp/zookeeper/tmp/zookeeper/) inside of it.）
+
+rm -r /opt/kafka_2.12-2.2.0/kafka-logs/*
+tar -C /opt/kafka_2.12-2.2.0/kafka-logs -xzf /opt/kafka_backup/kafka-backup.tar.gz --strip-components 2
+sudo systemctl start kafka
+sudo systemctl start zookeeper
+sudo -iu kafka
+
+-----------------------------------------------------------------------------------
+--- Verifying the Restoration
+-----------------------------------------------------------------------------------
+~/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic BackupTopic --from-beginning
+
+```
+
+https://stackoverflow.com/questions/47791039/backup-restore-kafka-and-zookeeper/48337651
+
+https://www.confluent.io/blog/3-ways-prepare-disaster-recovery-multi-datacenter-apache-kafka-deployments/
+
+
 
 ## 3.Kafka stream
 《Kafka Stream》调研：一种轻量级流计算模式 https://yq.aliyun.com/articles/58382

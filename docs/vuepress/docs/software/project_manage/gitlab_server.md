@@ -1850,6 +1850,56 @@ deploy:jdk8:
     - master
 ```
 
+### 案例：Create-react-app
+
+https://dev.to/christianmontero/gitlab-ci-cd-example-with-a-dockerized-reactjs-app-1cda
+
+https://medium.com/recraftrelic/automating-reactjs-app-deployment-using-gitlab-12e0bf92461b
+
+```
+image: node:latest
+# This folder is cached between builds
+# http://docs.gitlab.com/ee/ci/yaml/README.html#cache
+cache:
+  paths:
+    - node_modules/
+
+stages:
+  - build
+  - deploy
+build:
+  stage: build
+  image: node
+  script: 
+    - echo "Start building App"
+    - npm install
+    - npm build
+    - echo "Build successfully!"
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - build
+      - node_modules/
+deploy_production:
+    stage: deploy
+    when: manual
+    tags: 
+      - <tag you provided while registering the token>
+      - <second tag>
+    script:
+        - echo "Deploying to server"
+        #- TD=`date +"%y%m%d"`
+        - INSATLL_TARGET_DIR=/opt/html_$TD
+        - ssh -q clear@10.136.100.48 "mkdir -p $INSATLL_TARGET_DIR"
+        - scp -r build/* clear@10.136.100.48:${INSATLL_TARGET_DIR}/
+        - echo "Deployed"
+    environment:
+        name: production
+        url: <your deployment url>
+    only:
+        - master
+```
+
 
 
 ### 案例：自动生成merge request
@@ -1861,6 +1911,22 @@ https://about.gitlab.com/blog/2017/09/05/how-to-automatically-create-a-new-mr-on
 https://docs.gitlab.com/ee/user/project/pages/getting_started/pages_from_scratch.html
 
 注意这里job的名字是特定的pages，而且不需要配置runner: GitLab executes it in the background and doesn’t use runner.
+
+### troubshooting
+
+?# remote: You are not allowed to download code from this project.
+
+https://docs.gitlab.com/ee/user/project/new_ci_build_permissions_model.html
+
+默认是 triggered by Administrator，不是push代码的用户，retry就可以了？
+
+
+
+ ?# npm: command not found
+
+根据runner所使用的具体executor，比如docker可以使用node image，如果是普通的vm，需要安装nodejs
+
+
 
 ## 6. Troubleshooting
 
@@ -2261,9 +2327,9 @@ User           : root <root>
 Return-Code    : Failure: 1
 Command Line   : -d 2 -y install /opt/gitlab-ee-13.5.1-ee.0.el7.x86_64.rpm
 Transaction performed with:
-    Installed     rpm-4.11.3-43.el7.x86_64                    @APEX
-    Installed     subscription-manager-1.24.26-3.el7_8.x86_64 @APEX
-    Installed     yum-3.4.3-167.el7.noarch                    @APEX
+    Installed     rpm-4.11.3-43.el7.x86_64                    @APX
+    Installed     subscription-manager-1.24.26-3.el7_8.x86_64 @APX
+    Installed     yum-3.4.3-167.el7.noarch                    @APX
 Packages Altered:
  ** Updated gitlab-ee-13.5.0-ee.0.el7.x86_64 @/gitlab-ee-13.5.0-ee.0.el7.x86_64
  ** Update            13.5.1-ee.0.el7.x86_64 ?

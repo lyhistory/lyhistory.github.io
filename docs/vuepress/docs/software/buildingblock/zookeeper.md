@@ -23,7 +23,6 @@ bash: /apps/dependency/java-se-8u40-ri/bin/java: /lib/ld-linux.so.2: bad ELF int
 
 https://zookeeper.apache.org/doc/r3.3.3/zookeeperStarted.html
 
-
 bin/zkCli.sh -server 127.0.0.1:2181
 	help
 	ls /
@@ -31,6 +30,7 @@ bin/zkCli.sh -server 127.0.0.1:2181
 	ls /test mywatcher
 	delete /test
 	
+
 ## 编译源码
 https://www.cnblogs.com/MangoCai/p/10846187.html
 
@@ -55,6 +55,92 @@ dataDir=C:\Workspace\Repository\zookeeper-release-3.5.6\dataDir
 把jar放到根目录下，
 运行
 ```/bin/zkServer.cmd /bin/zkCli.cmd```
+
+## 管理脚本
+
+```shell
+readonly PROGNAME=$(basename $0)
+readonly PROGDIR=$(readlink -m $(dirname $0))
+
+# source env
+L_INVOCATION_DIR="$(pwd)"
+L_CMD_DIR="/opt/scripts"
+
+if [ "${L_INVOCATION_DIR}" != "${L_CMD_DIR}" ]; then
+  pushd ${L_CMD_DIR} &> /dev/null
+fi
+
+#source ../set_env.sh
+
+#--------------- Function Definition ---------------#
+showUsage() {
+  echo "Usage:"
+  echo "$0 zookeeper start|kill"
+  echo ""
+  echo "--start or -b:  Start zookeeper"
+  echo "--kill or -k:   Stop zookeeper"
+  echo "--status or -s: Check zookeeper status"
+}
+#---------------  Main ---------------#
+
+# Parse arguments
+while [ "${1:0:1}" == "-" ]; do
+  case $1 in
+    --start)
+      L_FLAG="B"
+      ;;
+    -b)
+      L_FLAG="B"
+      ;;
+    --status)
+      L_FLAG="S"
+      ;;
+    -s)
+      L_FLAG="S"
+      ;;
+        --kill)
+      L_FLAG="K"
+          ;;
+        -k)
+      L_FLAG="K"
+          ;;
+        --kafka)
+      L_FLAG="KAFKA"
+          ;;
+    *)
+      echo "Unknown option: $1"
+          echo ""
+      showUsage
+          echo ""
+      exit 1
+      ;;
+  esac
+  shift
+done
+
+L_RETURN_FLAG=0 # 0 for success while 99 for failure
+
+BIN_HOME=/opt/zookeeper-3.4.8/bin
+
+pushd ${BIN_HOME} &>/dev/null
+
+if [ "$L_FLAG" == "B" ]; then
+        echo "Starting zookeeper service..."
+        ./zkServer.sh start
+elif [ "$L_FLAG" == "K" ]; then
+        echo "Stopping zookeeper service..."
+        ./zkServer.sh stop
+elif [ "$L_FLAG" == "KAFKA" ]; then
+        ./zkCli.sh ls /brokers/ids
+else
+        echo "Checking zookeeper status..."
+        ./zkServer.sh status
+fi
+
+exit $L_RETURN_FLAG
+```
+
+
 
 # monitor&troubleshooting
 

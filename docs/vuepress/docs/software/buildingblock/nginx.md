@@ -185,7 +185,7 @@ sudo openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout /etc/ssl/priva
 Country Name (2 letter code) [XX]:SG
 State or Province Name (full name) []:
 Locality Name (eg, city) [Default City]:
-Organization Name (eg, company) [Default Company Ltd]:APEX
+Organization Name (eg, company) [Default Company Ltd]:LYHISTORY
 Organizational Unit Name (eg, section) []:IT
 Common Name (eg, your name or your server's hostname) []:10.136.100.48
 Email Address []:tech-mgmt@asiapacificex.com
@@ -259,6 +259,32 @@ return 301 https://$host$request_uri/;
 
 sudo /usr/local/nginx/sbin/nginx -t
 ```
+
+
+
+优化
+
+SSL operations consume extra CPU resources. On multi-processor systems several [worker processes](https://nginx.org/en/docs/ngx_core_module.html#worker_processes) should be run, no less than the number of available CPU cores. The most CPU-intensive operation is the SSL handshake. There are two ways to minimize the number of these operations per client: the first is by enabling [keepalive](https://nginx.org/en/docs/http/ngx_http_core_module.html#keepalive_timeout) connections to send several requests via one connection and the second is to reuse SSL session parameters to avoid SSL handshakes for parallel and subsequent connections. The sessions are stored in an SSL session cache shared between workers and configured by the [ssl_session_cache](https://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_session_cache) directive. One megabyte of the cache contains about 4000 sessions. The default cache timeout is 5 minutes. It can be increased by using the [ssl_session_timeout](https://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_session_timeout) directive. Here is a sample configuration optimized for a multi-core system with 10 megabyte shared session cache:
+
+```
+worker_processes auto;
+
+http {
+    ssl_session_cache   shared:SSL:10m;
+    ssl_session_timeout 10m;
+
+    server {
+        listen              443 ssl;
+        server_name server_IP_address;
+        keepalive_timeout   70;
+
+        ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+        ssl_certificate_key /etc/ssl/privatekey/nginx-selfsigned.key;
+        ssl_dhparam /etc/ssl/certs/dhparam.pem;
+        ...
+```
+
+
 
 ### WSS
 

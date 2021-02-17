@@ -227,7 +227,46 @@ apt list --installed | grep "PKG"
 ```
 yum history
 yum history info 21
+
+
+[root@liuyuelocal ~]# yum repolist
+Loaded plugins: fastestmirror, langpacks
+Repodata is over 2 weeks old. Install yum-cron? Or run: yum makecache fast
+Determining fastest mirrors
+ * base: mirror.newmediaexpress.com
+ * epel: mirrors.aliyun.com
+ * extras: mirror.newmediaexpress.com
+ * updates: mirror.newmediaexpress.com
+repo id                                                                                   repo name                                                                                                       status
+
+!base/7/x86_64                                                                            CentOS-7 - Base                                                                                                 10,097
+
+!docker-ce-stable/x86_64                                                                  Docker CE Stable - x86_64                                                                                           63
+
+!epel/x86_64                                                                              Extra Packages for Enterprise Linux 7 - x86_64                                                                  13,499
+
+!extras/7/x86_64                                                                          CentOS-7 - Extras                                                                                                  307
+
+!ius/x86_64                                                                               IUS for Enterprise Linux 7 - x86_64                                                                                714
+
+!updates/7/x86_64                                                                         CentOS-7 - Updates                                                                                                 997
+
+repolist: 25,677
+
+
+#yum repolist
+Loaded plugins: product-id, search-disabled-repos, subscription-manager
+This system is not registered with an entitlement server. You can use subscription-manager to register.
+repo id                                                                              repo name                                                                                                            status
+
+nodesource/x86_64                                                                    Node.js Packages for Enterprise Linux 7 - x86_64                                                                         37
+
+repolist: 55,117
 ```
+
+DNF, or Dandified Yum, which is the next major version of the Yum  package manager was introduced with Fedora 18. As of Fedora 22, it has  become the default package manager.
+
+https://www.rootusers.com/how-to-install-dnf-package-manager-in-centosrhel/
 
 
 

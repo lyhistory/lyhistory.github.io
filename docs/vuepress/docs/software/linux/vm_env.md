@@ -261,7 +261,6 @@ id
 
 mkdir -p /path/to/app
 chown root:newGroup /path/
-chown root:newGroup /apex/to/
 $ chown -R newUser:newGroup /path/to/app
 ```
 
