@@ -176,7 +176,15 @@ Permissions take a different meaning for directories. Here's what they mean:
   
   ​	i) 特定用户的PATH  ~/bashrc  ~/bash_profile
   
-  ​	ii) system wide全局PATH /etc/profile或/root/.bashrc
+  ​	ii) system wide全局PATH /etc/profile或/root/.bashrc 
+  
+  Anything in `~/.profile` and `~/.bashrc` is run *after* `/etc/profile` and `/bash.bashrc` 
+  
+  所以如果是修改了/etc/profile对root或sudo操作无效，要看下root下面的~/.bashXXX是不是有PATH设置，
+  
+  如果还不生效，就要看下 Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin，可以使用 sudo -E 绕过
+  
+  For some setups the `-E` switch will not work. To "workaround" it you can use `sudo env "PATH=$PATH" bash`. This will also carry your current `$PATH` forward to your `sudo` environment.
   
   2) or just mv it into /usr/local/bin/
   

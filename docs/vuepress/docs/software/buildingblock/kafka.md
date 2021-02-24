@@ -327,7 +327,19 @@ vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
 
 ![](/docs/docs_image/software/kafka/kafka04.png)
 
-### Backup & Restore
+### Backup (point-in-time snapshot) & Restore
+
+为什么需要备份？
+
+https://medium.com/@anatolyz/introducing-kafka-backup-9dc0677ea7ee
+
+> Replication handles many error cases but by far not all. What about the case that  there is a bug in Kafka that deletes old data? What about a  misconfiguration of the topic (are you sure, that your value of  retention.ms is a millisecond value?)? What about an admin that  accidentally deleted the whole Prod Cluster because they thought they  were on dev? What about security breaches? If an attacker gets access to your Kafka Management interface, they can do whatever they like.
+>
+> Of course, this does not matter too much if you are using Kafka to  distribute click-streams data for your analytics department and it is  tolerable to loose some data. But if you use Kafka as your “central  nervous system” for your company and you store your core business data  in Kafka you better think about a cold storage backup for your Kafka  Cluster.
+>
+> 
+
+#### 停机备份
 
 https://www.digitalocean.com/community/tutorials/how-to-back-up-import-and-migrate-your-apache-kafka-data-on-ubuntu-18-04
 
@@ -402,9 +414,54 @@ sudo -iu kafka
 
 https://stackoverflow.com/questions/47791039/backup-restore-kafka-and-zookeeper/48337651
 
+
+
+#### 在线备份
+
+> Still no. You’re dealing with a distributed system. It’s not magic. Any  attempt to trigger a snapshot ‘simultaneously’ across multiple  hosts/disks is going to be subject to some small level of timing  difference whether those are VMs managed by you in the Cloud or  containers in K8s with persistent disks managed by the Cloud provider.  It’d probably work in small scale tests, but break under significant  production load.
+
+https://www.reddit.com/r/apachekafka/comments/jb400p/kafka_backup_and_recovery/g8vkju7/
+
+https://www.reddit.com/r/apachekafka/comments/g73nk9/how_to_take_full_backupsnapshot_of_kafka/
+
+解决方案：
+
+Support point-in-time backups :
+
+提出需求：https://github.com/itadventurer/kafka-backup/issues/52
+
+解决方案：
+
+1）当前版本在一定场景下可以使用：
+
+- Let Kafka Backup running in the background
+- Kafka Backup writes data continuously in the background to the file system
+- `kill -9` Kafka Backup as soon as it is "finished", i.e.  it finished writing your data. This should be promptly after you  finished producing data
+- move the data of Kafka Backup to your new destination.
+
+```
+需要用到kafka自带的connect-standalone.sh 所以要配置环境变量
+export PATH=$PATH:~/kafka/bin
+
+
+backup：
+sudo env "PATH=$PATH" backup-standalone.sh --bootstrap-server localhost:9092 --target-dir /path/to/backup/dir --topics 'topic1,topic2'
+
+~/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic topic1
+
+~/kafka/bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic 'topic.*'
+
+restore：
+restore-standalone.sh --bootstrap-server localhost:9092 --target-dir /path/to/backup/dir --topics 'topic1,topic2'
+
+~/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic BackupTopic --from-beginning
+```
+
+2）新增的支持 https://github.com/itadventurer/kafka-backup/pull/99 但是没有发布
+
+
+
 https://www.confluent.io/blog/3-ways-prepare-disaster-recovery-multi-datacenter-apache-kafka-deployments/
-
-
 
 ## 3.Kafka stream
 《Kafka Stream》调研：一种轻量级流计算模式 https://yq.aliyun.com/articles/58382
