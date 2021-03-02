@@ -228,6 +228,25 @@ IPv4 addresses consist of four 8-bit decimal values known as "octets", each sepa
 In CIDR notation, the lowest IP address in the range is written explicitly, followed by another number that indicates how many bits from the start of the given address are fixed for the entire range. For example, 10.0.0.0/8 indicates that the first 8 bits are fixed (the first octet). In other words, this range includes all IP addresses from 10.0.0.0 to 10.255.255.255. 
 ```
 
+**ABC类/段IP地址**
+
+A类IP地址 
+在IP地址的四段号码中，第一段号码为网络号码，剩下的三段号码为本地计算机的号码。如果用二进制表示IP地址的话，A类IP地址就由1字节的网络地址和3字节主机地址组成，网络地址的最高位必须是“0”。A类IP地址中网络的标识长度为8位，主机标识的长度为24位。
+地址范围从1.0.0.1到127.255.255.254 （二进制表示为：00000001 00000000 00000000 00000001 - 01111111 11111111 11111111 11111110）。最后一个是广播地址。
+子网掩码为255.0.0.0
+
+B类IP地址
+在IP地址的四段号码中，前两段号码为网络号码。如果用二进制表示IP地址的话，B类IP地址就由2字节的网络地址和2字节主机地址组成，网络地址的最高位必须是“10”。B类IP地址中网络的标识长度为16位，主机标识的长度为16位。
+地址范围从128.0.0.1-191.255.255.254 （二进制表示为：10000000 00000000 00000000 00000001-10111111 11111111 11111111 11111110）。 最后一个是广播地址。
+子网掩码为255.255.0.0
+
+C类IP地址
+在IP地址的四段号码中，前三段号码为网络号码，剩下的一段号码为本地计算机的号码。如果用二进制表示IP地址的话，C类IP地址就由3字节的网络地址和1字节主机地址组成，网络地址的最高位必须是“110”。C类IP地址中网络的标识长度为24位，主机标识的长度为8位。
+范围从192.0.0.1-223.255.255.254 （二进制表示为: 11000000 00000000 00000000 00000001 - 11011111 11111111 11111111 11111110）。最后一个是广播地址。
+子网掩码为255.255.255.0
+
+Penetration Testing Tools Cheat Sheet https://highon.coffee/blog/penetration-testing-tools-cheat-sheet/
+
 
 
 **Public ip vs NAT**
@@ -636,6 +655,14 @@ Gateway: internal send packets to gateway
 Dns: resolve hostname
 https://superuser.com/questions/77914/whats-the-difference-between-default-gateway-and-preferred-dns-server
 
+> 好了，既然 DNS 系统使用的是网路的查询，那么自然需要有监听的 port 啰！没错！很合理！那么 DNS 使用的是那一个 port 呢？那就是 53 这个 port 啦！你可以到你的 Linux 底下的 /etc/services 这个档案看看！搜寻一下 domain 这个关键字，就可以查到 53 这个 port 啦！
+>
+> 但是这里需要跟大家报告的是，通常DNS 查询的时候，是以udp 这个较快速的资料传输协定来查询的， 但是万一没有办法查询到完整的资讯时，就会再次的以tcp 这个协定来重新查询的！所以启动 DNS 的 daemon (就是 named 啦) 时，会同时启动 tcp 及 udp 的 port 53 喔！所以，记得防火墙也要同时放行 tcp, udp port 53 呢！
+>
+> http://linux.vbird.org/linux_server/0350dns.php
+
+DNS防火墙： https://developer.aliyun.com/article/766501
+
 #### Socket '协议'
 
 前面也提到websocket是完整的应用层协议，所以不会访问raw tcp packets，但是常用的socket是可以的，因为它是基于应用层和传输层的抽象，并不是一个协议；
@@ -721,7 +748,11 @@ https://medium.com/@ryanwendel/forwarding-reverse-shells-through-a-jump-box-usin
 
 https://www.offensive-security.com/metasploit-unleashed/portfwd/
 
-#### 4.3.1 http tunnel
+#### 4.3.1 ICMP Tunnel
+
+Ping Power — ICMP Tunnel https://infosecwriteups.com/ping-power-icmp-tunnel-31e2abb2aaea
+
+#### 4.3.2 http tunnel
 
 定义：
 > HTTP tunneling is used to create a network link between two computers in conditions of restricted network connectivity including firewalls, NATs and ACLs, among other restrictions. The tunnel is created by an intermediary called a proxy server which is usually located in a DMZ.
@@ -738,7 +769,7 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT
 [HTTP Tunnel使用的几种使用（经典）](https://blog.csdn.net/zhangxinrun/article/details/5942260)
 [http tunnel和入侵检测的理解](https://blog.csdn.net/gx11251143/article/details/104518461)
 
-#### 4.3.2 tcp tunnel
+#### 4.3.3 tcp tunnel
 
 跟http tunnel利用http connect，还需要一个proxy server来建立双向通道并做流量转发的操作；
 tcp tunnel一般不需要通过一个proxy server，而是借助安装在本地或者远程的软件来做“端口转发”，比如利用ssh将两台电脑的端口进行映射；
@@ -807,7 +838,7 @@ proxychains nmap -Pn -sT 172.17.0.0/24
 
 
 
-#### 4.3.3 VPN
+#### 4.3.4 VPN
 
 A VPN tunnel, however, is fully encrypted. The "P in VPN indicates private. VPN tunnels are typically achieved with IPSeC, SSL, PPTP,  TCP Crypt (this is a new protocol), etc.
 

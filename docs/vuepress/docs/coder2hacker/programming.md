@@ -3,7 +3,7 @@
 + [计算机基础-编程](/docs/software/programming/programming.md)
 + [计算机基础-JS编程](/docs/software/programming/nodejs&reactjs.md)
 + [计算机基础-python编程](/docs/software/programming/python.md)
-+ [计算机基础-python编程](/docs/software/programming/php.md)
++ [计算机基础-php编程](/docs/software/programming/php.md)
 + more: /docs/software/programming/*
 
 语言本身的灵活性会给黑客带来很多机会，比如占了客户端漏洞很大比重的csrf/xss，基本是围绕着html js的context展开，
@@ -53,6 +53,14 @@ Useful for automation and quick testing and analysis, particularly for web hacki
 
 ## Java and Kotlin
 The ability to read these will be essential if you plan to do source code review of Android applications. Java is produced by decompilers for Android applications, which allows you to read code (roughly) equivalent to the original source, even when you only have a compiled application.
+
+## Haskell
+
+https://itnext.io/hacking-with-haskell-28887c1f2d06
+
+http://learnyouahaskell.com/chapters
+
+
 
 ## SQL
 https://sqlbolt.com/

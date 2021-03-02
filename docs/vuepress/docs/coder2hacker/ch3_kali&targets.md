@@ -70,6 +70,10 @@ chsh -s /bin/bash lyhistory
 
 
 
+Install Nethunter On Unsupported Devices https://infosecwriteups.com/hunting-on-the-go-install-nethunter-on-unsupported-devices-dd01a4f30b6a
+
+
+
 **Kali****自带基本工具**
 
 apt-get update
