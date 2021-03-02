@@ -1,4 +1,3 @@
-
 [official documents](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-documentation)
 
 自动配置、起步依赖、Actuator、命令行界面(CLI) 是Spring Boot最重要的4大核心特性
@@ -563,6 +562,16 @@ https://juejin.im/post/5d005860f265da1b7f297630
 
 spring boot 中的 Parent POM 和 Starter 的作用什么
 https://cloud.tencent.com/developer/article/1362790
+
+#### 3.1.2 springboot mvc
+
+so by default, tomcat will create some temp folder under /tmp and use it later on
+
+[`spring.servlet.multipart.location`](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#spring.servlet.multipart.location)
+
+https://stackoverflow.com/questions/50523407/the-temporary-upload-location-tmp-tomcat-4296537502689403143-5000-work-tomcat/50523578
+
+
 
 
 

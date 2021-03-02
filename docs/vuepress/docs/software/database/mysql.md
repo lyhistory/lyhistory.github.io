@@ -6,6 +6,12 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《mysql实用基础》
 
+## 0. Knowledge Base
+
+default storage engine: **InnoDB**
+
+https://dev.mysql.com/doc/refman/5.6/en/innodb-introduction.html
+
 ## 1.Setup 
 
 ### 1.1 Install on centos
@@ -65,6 +71,17 @@ Setup replication
 https://lyhistory.com/mysql_replication/#
 
 ### 1.3 Client Tools
+
+**mysql built-in tools:**
+
+mysql
+
+mysqldump
+
+mysqladmin
+
+**3rd party:**
+
 http://sqlfiddle.com/
 
 Dbeaver export mysql
@@ -79,8 +96,8 @@ mysql workbench
 千万不要用双引号，尤其是password，所有的-u -p -e等等后面不要加空格！
 
 ```
-mysql -uroot -pCappuccin0!
-mysql --login-path=sgkc2-devclr-v01
+mysql -uroot -p123456
+mysql --login-path=XXXX
 
 mysql_config_editor/login-path
 mysql_config_editor print --all
@@ -95,7 +112,46 @@ https://stackoverflow.com/questions/10177465/grep-in-mysql-cli-interpretter
 
 ### 2.2 database management
 
-**upgrade 5.7.18 5.7.26**
+#### Security
+
+**disable remote Access**
+
+```
+DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
+FLUSH PRIVILEGES;
+
+my.ini:
+[mysqld]
+.....
+skip-networking
+
+vim /etc/my.cnf
+Bind-address:127.0.0.1
+service mysqld stop/start
+```
+
+**turn off local_infile**
+
+https://dev.mysql.com/doc/refman/8.0/en/load-data-local-security.html
+
+```
+SHOW VARIABLES WHERE Variable_name = 'local_infile';
+SET GLOBAL local_infile = 'OFF';
+```
+
+
+
+#### backup&restore
+
+backup https://dev.mysql.com/doc/refman/5.7/en/mysqldump-sql-format.html
+mysqldump -uroot -p123456--all-databases > mysqldump_20190524.sql
+
+
+
+#### upgrade 
+
+EXAMPLE: from 5.7.18 to 5.7.26
+
 ```
 SHOW VARIABLES WHERE Variable_name LIKE "version";
 
@@ -118,9 +174,6 @@ $ find / -name "mysql" -type d -print 2>/dev/null
 
 ```
 
-backup https://dev.mysql.com/doc/refman/5.7/en/mysqldump-sql-format.html
-mysqldump -uroot -pCappuccin0! --all-databases > mysqldump_20190524.sql
-
 Upgrading MySQL with Directly-Downloaded RPM Packages 
 https://dev.mysql.com/doc/refman/5.7/en/updating-direct-rpms.html
 https://dev.mysql.com/doc/refman/5.7/en/linux-installation-rpm.html
@@ -141,14 +194,9 @@ https://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-23.html
 
 Installation of previous versions of MySQL using older packages might have created a configuration file named /usr/my.cnf. It is highly recommended that you examine the contents of the file and migrate the desired settings inside to the file /etc/my.cnf file, then remove /usr/my.cnf.
 
-trouble shooting
-https://dev.mysql.com/doc/refman/5.7/en/upgrade-troubleshooting.html
 
-**turn off local_infile**
-SHOW VARIABLES WHERE Variable_name = 'local_infile';
-SET GLOBAL local_infile = 'OFF';
 
-**plugins**
+#### plugins
 https://dev.mysql.com/doc/refman/5.7/en/server-plugins.html
 https://dev.mysql.com/doc/refman/5.7/en/plugin-loading.html#server-plugin-installing
 
@@ -177,9 +225,7 @@ If it is desired to prevent the server from running without the password-validat
 
 service mysqld start --validate-password=FORCE_PLUS_PERMANENT
 
-
-
-## 3.Troubleshooting 
+### 2.3 Troubleshooting 
 
 **?#Host 'xxx.xx.xxx.xxx' is not allowed to connect to this MySQL server**
 
@@ -212,7 +258,8 @@ show processlist;
 kill <put_process_id_here>; 先干掉耗时长的process
 ```
 
-
+**?#upgrade trouble shooting**
+https://dev.mysql.com/doc/refman/5.7/en/upgrade-troubleshooting.html
 
 ## 4. SQL
 

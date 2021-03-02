@@ -19,7 +19,24 @@ sudo ln -s /home/lyhistory/.local/bin/tldr tldr (/usr/bin/tldr)
 export PATH=$PATH:$HOME/.local/bin
 ```
 
-## FIND
+## File Operation
+
+### transfer
+
+include hidden file: add the dot in the ending
+
+```
+scp -rp src/. user@server:dest/
+```
+
+### files&directory
+
+```
+创建文件夹
+install -d /path/to/targetfolder
+```
+
+### FIND
 
 ```
 find . -size +1G -ls | sort -k7n
@@ -29,9 +46,7 @@ find / -type f -name "mysql-connector-java-5.1.24.jar" -print
 find / -type f -name "Locations.xml" -print
 ```
 
-
-
-## GREP/zgrep
+### GREP/zgrep
 
 https://www.cyberciti.biz/faq/howto-use-grep-command-in-linux-unix/
 
@@ -46,7 +61,11 @@ grep -H -r "/apps/lib" ~ | cut -d: -f1 | sort -u
 
 ```
 
+### split
 
+```
+split -a 4 -d -l 20000 2021-02-15_test.log ./test/test_
+```
 
 
 
@@ -60,16 +79,6 @@ https://mp.weixin.qq.com/s/BMeSEcQbhC4dcH-oYEtE-g
 df -h
 du -sh ./*
 ```
-
-
-
-## split
-
-```
-split -a 4 -d -l 20000 2021-02-15_test.log ./test/test_
-```
-
-
 
 ## crontab
 
