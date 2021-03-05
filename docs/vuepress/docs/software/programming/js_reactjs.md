@@ -798,9 +798,17 @@ Use refs sparingly. If you find yourself often using refs to “make things happ
 
 使用场景：
 
-1.没有设计好parent child，所以造成有时候只好偷懒通过ref直接操作child的dom，其实可以通过在parent维护state 然后传给child prop，然后在handler里面去更改state来解决
+There are a few good use cases for refs:
 
-2.但是有些情况下，确实需要通过拿到dom元素来获取其clientheight，scrollheight之类的，虽然读取需要ref，但是set还是尽量用state来更新，而不是直接通过dom去改变
+- Managing focus, text selection, or media playback.
+- Triggering imperative animations.
+- Integrating with third-party DOM libraries.
+
+比如有些情况下，确实需要通过拿到dom元素来获取其clientheight，scrollheight之类的，虽然读取需要ref，但是set还是尽量用state来更新，而不是直接通过dom去改变；
+
+但是不好的做法：没有设计好parent child，所以造成有时候只好偷懒通过ref直接操作child的dom或方法，其实可以 Avoid using refs for anything that can be done declaratively 通过在parent维护state 然后传给child prop，然后在handler里面去更改state来解决：例如, instead of exposing `open()` and `close()` methods on a `Dialog` component, pass an `isOpen` prop to it.
+
+
 
 #### 1.7.9 Reconciliation
 
@@ -913,9 +921,13 @@ ReactDOM.render(
 
 + Fragment
 
-+ Higher-Order Components
++ HOCs: Higher-Order Components 
 
+  For Cross-Cutting Concerns  主要是为了重用一些重复的逻辑（比如订阅datasource）
 
++ Hooks
+
+  为了替换HOCs，为了重用一些“有状态的 stateful”逻辑
 
 Component:
 1)	class App extends React.Component{…​} is the method that creates a React component.

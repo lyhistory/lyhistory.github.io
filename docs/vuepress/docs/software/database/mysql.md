@@ -12,6 +12,10 @@ default storage engine: **InnoDB**
 
 https://dev.mysql.com/doc/refman/5.6/en/innodb-introduction.html
 
+other engine:
+
+**MyISAM**: https://kinsta.com/knowledgebase/convert-myisam-to-innodb/
+
 ## 1.Setup 
 
 ### 1.1 Install on centos
@@ -145,6 +149,155 @@ SET GLOBAL local_infile = 'OFF';
 
 backup https://dev.mysql.com/doc/refman/5.7/en/mysqldump-sql-format.html
 mysqldump -uroot -p123456--all-databases > mysqldump_20190524.sql
+
+If you used the **–set-gtid-purged=ON** option, you would see the value of the [Global Transaction Identifier’s](http://dev.mysql.com/doc/refman/5.6/en/replication-gtids-concepts.html) (GTID’s):
+
+```
+--
+--GTID state at the beginning of the backup 
+--
+
+SET @@GLOBAL.GTID_PURGED='';
+```
+
+脚本：
+
+```
+-----------------------------------------------------------------
+--- db_backup.sh
+-----------------------------------------------------------------
+#!/bin/bash
+# Shell script to backup MySQL database
+
+# Set variables
+V_USER="root"	# DB_USERNAME
+V_PASS="123456"	# DB_PASSWORD
+
+V_DBS="db1
+db2"
+
+V_DEST="/opt/backup/" # Backup Dest directory
+V_DAYS=365 # How many days old files must be to be removed
+
+# Linux bin paths
+MYSQL="$(which mysql)"
+MYSQLDUMP="$(which mysqldump)"
+GZIP="$(which gzip)"
+
+# Create Backup sub-directories
+NOW="$(date +"%Y%m%d")"
+MBD="$V_DEST/$NOW/mysql"
+install -d $MBD
+
+
+# Archive database dumps
+for db in $V_DBS
+do
+    FILE="$MBD/$db.sql"
+    echo "Start to backup $db ...."
+    $MYSQLDUMP -u$V_USER -p$V_PASS $db > $FILE
+    echo "Done!"
+done
+
+# Archive the directory, send mail and cleanup
+cd $V_DEST
+tar -cf $NOW.tar $NOW
+$GZIP -9 $NOW.tar
+
+echo "MySQL backup is completed! Backup name is $NOW.tar.gz"
+#echo "MySQL backup is completed! Backup name is $NOW.tar.gz" | mail -s "MySQL backup" $EMAIL
+rm -rf $NOW
+
+# Remove old files
+find $V_DEST -mtime +$V_DAYS -exec rm -f {} \;
+
+-----------------------------------------------------------------
+--- db_restore.sh
+-----------------------------------------------------------------
+#!/bin/bash - 
+# Shell script to restore MySQL database
+
+# Set Variables
+V_USER="root"
+V_SOURCE="/opt/backup/"
+
+MYSQL="$(which mysql)"
+MYSQLADMIN="$(which mysqladmin)"
+
+pushd ${V_SOURCE} &> /dev/null
+
+if [ $# -eq 0 ]
+  then
+    echo "Please speicifed the date, USAGE:./db_restore 20200101"
+    exit 0
+fi
+
+# Look for sql.gz files:
+if [ "$(ls -A $1.tar.gz 2> /dev/null)" ]  ; then
+  echo "sql.gz files found extracting..."
+  tar -zxvf $1.tar.gz
+else
+  echo "target file $1.tar.gz not found in ${V_SOURCE}"
+  exit 0
+fi
+pushd ${V_SOURCE}/$1/mysql &> /dev/null
+# Exit when folder doesn't have .sql files:
+if [ "$(ls -A *.sql 2> /dev/null | wc -l)" == 0 ]; then
+  echo "No *.sql files found in $(pwd)"
+  exit 0
+fi
+
+# Read mysql root password:
+echo -n "Type mysql $V_USER password: "
+read -s V_PASS
+echo ""
+
+
+# Get all database list first
+DBS="$($MYSQL -u$V_USER -p$V_PASS -Bse 'show databases')"
+
+# Ignore list, won't restore the following list of DB:
+SKIP="db2"
+
+
+# Restore DBs:
+for filename in *.sql
+do
+  dbname=${filename%.sql}
+  
+  skipdb=-1
+  if [ "$SKIP" != "" ]; then
+    for ignore in $SKIP
+    do
+        [ "$dbname" == "$ignore" ] && skipdb=1 || :
+        
+    done
+  fi      
+
+  # If not in ignore list, restore:
+  if [ "$skipdb" == "-1" ] ; then
+  
+    skip_create=-1
+    for existing in $DBS
+    do      
+      [ "$dbname" == "$existing" ] && skip_create=1 || :
+    done
+  
+    if [ "$skip_create" ==  "1" ] ; then 
+      echo "Database: $dbname already exist, skiping create"
+    else
+      echo "Creating DB: $dbname"
+      #mysqladmin create $dbname -u $V_USER -p$V_PASS
+    fi
+    
+    echo "Importing DB: $dbname from $filename"
+    #mysql $dbname < $filename -u $V_USER -p$V_PASS
+  fi    
+done
+
+```
+
+
 
 
 

@@ -1867,19 +1867,40 @@ cache:
 stages:
   - build
   - deploy
-build:
+build:dev:
+  stage: build
+  image: node:latest
+  script: 
+    - echo "Start building App for dev"
+    - npm install --force
+    - npm run build
+    - echo "Build successfully!"
+    - echo "Start deploying App for dev"
+    - TD=`date +"%y%m%d"`
+    - INSATLL_TARGET_DIR=/html/$TD
+    - ssh -q root@IP "mkdir -p $INSATLL_TARGET_DIR"
+    - scp ./build/* root@IP:${INSATLL_TARGET_DIR}/;
+    - echo "Deploy successfully!"
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - build
+  only:
+    - /^dev_.*$/
+build:qa:
   stage: build
   image: node
   script: 
-    - echo "Start building App"
-    - npm install
-    - npm build
+    - echo "Start building App for qa"
+    - npm install --force
+    - npm run buildQaOnLinux
     - echo "Build successfully!"
   artifacts:
     expire_in: 1 hour
     paths:
       - build
-      - node_modules/
+  only:
+    - qa
 deploy_production:
     stage: deploy
     when: manual
@@ -1890,8 +1911,8 @@ deploy_production:
         - echo "Deploying to server"
         #- TD=`date +"%y%m%d"`
         - INSATLL_TARGET_DIR=/opt/html_$TD
-        - ssh -q clear@10.136.100.48 "mkdir -p $INSATLL_TARGET_DIR"
-        - scp -r build/* clear@10.136.100.48:${INSATLL_TARGET_DIR}/
+        - ssh -q root@IP "mkdir -p $INSATLL_TARGET_DIR"
+        - scp -r build/* root@IP:${INSATLL_TARGET_DIR}/
         - echo "Deployed"
     environment:
         name: production

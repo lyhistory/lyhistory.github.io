@@ -156,8 +156,12 @@ tig / git blame / git log
 -p代表path
 --follow代表是否跟踪某个文件重命名前后
 
+
 //所有log
 git log --graph --oneline --decorate --all
+
+//对比branch
+git log --graph --oneline currentbranch otherbranch
 
 //Particular File Change History：
 git log -p -- src/pages/basic/table/table/SeperateTable.jsx
