@@ -6,7 +6,10 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《公钥基础设施Public key infrastructure》
 
-[private reference- cryptography](HardDrive:/blockchain/cryptography)
+[private reference- cryptography](HardDrive:/blockchain/cryptography):
+
+​		https://www.youtube.com/playlist?list=PLoJC20gNfC2gAB-eg7oaUTheB_JgQY4-q
+​		http://crypto-textbook.com/
 
 **PKI infrastructure:**
 

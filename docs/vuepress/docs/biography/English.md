@@ -8,4 +8,6 @@ Bring your own *device* —also called bring your own technology (BYOT), bring y
 
 In My Opinion
 
+LMO: let's move on
+
 bc：because

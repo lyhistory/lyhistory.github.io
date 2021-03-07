@@ -1,3 +1,11 @@
+## 系统参数
+
+```
+cat /etc/os-release
+```
+
+
+
 ## 文件描述符 fd
 
 cd /proc/pid/fd

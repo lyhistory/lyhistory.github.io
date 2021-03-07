@@ -232,7 +232,7 @@ todo:
 Pie-Top
 https://pimylifeup.com/pi-top-review/
 https://3dprint.com/45158/pi-top-version-3/
- 
+
 37 in 1 sensor kit: https://www.modmypi.com/download/37-piece-sensor-description.pdf
 heartbeat/Fingertip measuring heartbeat
 http://forum.arduino.cc/index.php?topic=230713.0
@@ -274,4 +274,5 @@ How to Make a Raspberry Pi VPN Server https://www.electromaker.io/tutorial/blog/
 
 
 
-
+树莓派 太阳能板 + nxtcoin pos +移动硬盘
+https://www.nxter.org/how-to-set-up-a-nxt-node-on-a-raspberry-pi-2/

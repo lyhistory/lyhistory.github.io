@@ -35,6 +35,10 @@ now you can enjoy with your domain email, choose sender by selecting from the ad
 ### Cancel your business email
 https://support.google.com/work/mail/answer/6268517?hl=en
 
+### Troubleshooting
+?PayPal account country is different from your payments profile country
+Selected wrong billing country
+https://support.google.com/a/answer/3530790?hl=en
 
 
 special promo code for GSuite
