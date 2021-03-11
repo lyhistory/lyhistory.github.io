@@ -21,6 +21,15 @@ export PATH=$PATH:$HOME/.local/bin
 
 ## File Operation
 
+### vim
+
+```
+
+
+```
+
+
+
 ### transfer
 
 include hidden file: add the dot in the ending
