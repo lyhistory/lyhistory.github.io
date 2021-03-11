@@ -210,7 +210,9 @@ in this demo, we simply aggregate and transfer into addr(m/44’/1’/1’/0/0)[
 
 Or manually Create a btc key pair on testnet as user’s own btc account
 
-	BTC address generator https://bitcoinpaperwallet.com/bitcoinpaperwallet/generate-wallet.html
+注意：千万**不要**使用 https://bitcoinpaperwallet.com/ 这个网站是诈骗网站
+
+	BTC address generator
 	mg9H4QPYcjqTjURFVSNDQQkFBx3FCxD3JB
 	91fVLr2vDHRFvmVKjABfqX9163oAFTCJAyQk63RacCX2rs1ruA1
 Then import to gui wallet
