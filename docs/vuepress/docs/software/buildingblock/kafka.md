@@ -774,13 +774,11 @@ Kafka Stream有一些关键东西没有解决，例如在join场景中，需要�
 
 
 ## 4.Indepth 
-
+nothing to guarantee/at-most-once => at-least-once => exactly-once
 
 
 https://kafka.apache.org/documentation/#design
 
-Since the 0.11.0.0 release, Kafka has added support to allow its producers to send messages to different topic partitions in a transactional and idempotent manner https://kafka.apache.org/documentation/#semantics
-KIP-129: Streams Exactly-Once Semantics https://cwiki.apache.org/confluence/display/KAFKA/KIP-129%3A+Streams+Exactly-Once+Semantics
 
 ### 4.1 Common
 
@@ -926,7 +924,7 @@ In this example we will consume a batch of records and batch them up in memory. 
 
  To avoid this, we will manually commit the offsets only after the corresponding records have been inserted into the database. This gives us exact control of when a record is considered consumed. This raises the opposite possibility: the process could fail in the interval after the insert into the database but before the commit (even though this would likely just be a few milliseconds, it is a possibility). In this case the process that took over consumption would consume from last committed offset and would repeat the insert of the last batch of data. Used in this way Kafka provides what is often called "at-least-once" delivery guarantees, as each record will likely be delivered one time but in failure cases could be duplicated. 
 
-上面at-least-once 也不是绝对的，也可能丢数据：
+**上面at-least-once 也不是绝对的，也可能丢数据(nothing to guarantee)：**
 
 **Note: Using automatic offset commits can also give you "at-least-once" delivery, but the requirement is that you must consume all data returned from each call to [`poll(long)`](https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#poll-long-) before any subsequent calls, or before [`closing`](https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#close--) the consumer. If you fail to do either of these, it is possible for the committed offset to get ahead of the consumed position, which results in missing records. The advantage of using manual offset control is that you have direct control over when a record is considered "consumed."**
 
@@ -982,17 +980,19 @@ endOffsets（返回the offset of the upcoming message, i.e. the offset of the la
 
 ，然后通过获取的offset定位恢复restore到上一次这个topic的position处理位置 [`seek(TopicPartition, long)`](https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#seek-org.apache.kafka.common.TopicPartition-long-)，然后再poll
 
+注意：
 
++ 如果想要zombie fence生效，除了用对transaction.id，这个顺序也很重要，要先去initTransaction注册 transaction.id（形象的说就是争取到合法身份先），然后才是去restore（读取增量快照做恢复），否则，如果你先去restore，再去注册（创建Transactional Producer并initTransactions），有可能restore的时候读取到增量快照是 1000，但是根据我后面在4.3小节提供的流程图，旧的disruptorProducer仍然可以继续写入kafka（之前曾经遇到过一次disruptor ringbuffer在rebalance之后继续工作重复落库的事情，相同的原理），因此等到 去注册（争取合法身份）的时候，增量快照可能已经到了2000，然后因为你先做的restore，你会定位到1000，将1001开始的都当做新消息：
 
-有一个缺点是，虽然我们启动时可以判断，比如[0,1000]是之前处理过的，1001开始是新的数据，但是为了使内存恢复到之前的状态，仍然需要对[0,1000]这个区间的数据进行计算（只不过不进行任何事务处理比如落数据库，只是单纯为了restore memory），所以一个改进策略就是，增加全量快照，系统停止之前或定期将内存序列化存起来，注意存的时候同时存下当时的offset，比如1000，然后在增量快照中记录下这个全量快照的位置（当然还有我们要保存的offset）即可，由于为了记录下全量快照的kafka位置，需要等待kafka send的回调，所以记录到增量快照没有办法跟保存全量快照作为一个事务处理，不过没关系：
+  每个consumer group中的服务rebalance的正确启动顺序应该是：
+  1. 先根据 kafka分配的partition创建好worker（主要是Transactional Producer），这个做完后，会立即让fence生效，不用再担心 其他服务上仍在等待shutdown的disruptorWorker继续消费ringbuffer的缓存消息
+  2. 读取增量快照进行restore，由于第1步做完，我们完全相信kafka可以履行zombie fence，所以这里可以100%确定可以拿到准确的 last offset，从而准确的恢复
 
-比如主题T-TARGET ，现在处理到了offset=1000，决定做一次全量快照，此时全量快照中保存下内存状态和start offset=1000，
++ 有一个缺点是，虽然我们启动时可以判断，比如[0,1000]是之前处理过的，1001开始是新的数据，但是为了使内存恢复到之前的状态，仍然需要对[0,1000]这个区间的数据进行计算（只不过不进行任何事务处理比如落数据库，只是单纯为了restore memory），所以一个改进策略就是，增加全量快照，系统停止之前或定期将内存序列化存起来，注意存的时候同时存下当时的offset，比如1000，然后在增量快照中记录下这个全量快照的位置（当然还有我们要保存的offset）即可，由于为了记录下全量快照的kafka位置，需要等待kafka send的回调，所以记录到增量快照没有办法跟保存全量快照作为一个事务处理，不过没关系：
 
-kafka send全量快照到 T-QuanLiang中，然后在callback时，可以获取到全量快照在T-QuanLiang的 quanliang offset比如=0，
+  比如主题T-TARGET ，现在处理到了offset=1000，决定做一次全量快照，此时全量快照中保存下内存状态和start offset=1000，kafka send全量快照到 T-QuanLiang中，然后在callback时，可以获取到全量快照在T-QuanLiang的 quanliang offset比如=0，T-TARGET进来新的消息（或者之前做全量快照的指令本身就是条消息），继续事务性的记录增量快照 T-ZengLiang，此时最新记录的增量消息的内容是 quanliang offset=0&&end offset=1001
 
-T-TARGET进来新的消息（或者之前做全量快照的指令本身就是条消息），继续事务性的记录增量快照 T-ZengLiang，此时最新记录的增量消息的内容是 quanliang offset=0&&end offset=1001
-
-恢复的时候，先 找到T-ZengLiang最后一个消息 ，获取到quanliang offset=0&&end offset=1001，然后通过quanliang offset=0去seek(T-QuanLiang, 0) 拿到 start offset=1000和当时的内存数据，从而恢复内存数据，然后从1000开始(1000,1001],只需要重新计算下1001这条数据更新下内存即可，从1002开始往后都是新的消息
+  恢复的时候，先 找到T-ZengLiang最后一个消息 ，获取到quanliang offset=0&&end offset=1001，然后通过quanliang offset=0去seek(T-QuanLiang, 0) 拿到 start offset=1000和当时的内存数据，从而恢复内存数据，然后从1000开始(1000,1001],只需要重新计算下1001这条数据更新下内存即可，从1002开始往后都是新的消息
 
 #### 配合事务型producer
 
@@ -1020,6 +1020,8 @@ https://dzone.com/articles/dont-use-apache-kafka-consumer-groups-the-wrong-wa
 
 
 ### 4.2 Producer Indepth
+
+Since the 0.11.0.0 release, Kafka has added support to allow its producers to send messages to different topic partitions in a transactional and idempotent manner https://kafka.apache.org/documentation/#semantics
 
 #### 4.2.1 幂等性 idempotent producer
 
@@ -1154,6 +1156,8 @@ https://cwiki.apache.org/confluence/display/KAFKA/KIP-98+-+Exactly+Once+Delivery
 
 https://blog.csdn.net/alex_xfboy/article/details/82988259
 
+KIP-129: Streams Exactly-Once Semantics https://cwiki.apache.org/confluence/display/KAFKA/KIP-129%3A+Streams+Exactly-Once+Semantics
+
 重点：
 
 Producer：
@@ -1172,13 +1176,17 @@ However, the demand for stream  processing applications with stronger semantics 
 
 
 
-从某个Topic的某个Partition的数据流看 atomic read-process-write pattern（对于使用kafka stream 的应用来说就是 consume-transform-produce’）：
+从某个Topic的某个Partition的数据流看 atomic read-process-write pattern（对于使用kafka stream 的应用来说就是 consume-transform-produce）：
 
 More formally, if a stream processing application consumes message *A* and produces message *B* such that *B = F(A)*, then exactly  once processing means that *A* is considered consumed if and only if *B* is successfully produced, and vice versa.
 
 message *A* will be considered consumed from topic-partition *tp0* only when its offset *X* is marked as consumed. Marking an offset as consumed is called *committing an offset.* In Kafka, we record offset commits by writing to an internal Kafka topic called the *offsets topic*. A message is considered consumed only when its offset is committed to the offsets topic
 
 Thus since an offset commit is just  another write to a Kafka topic, and since a message is considered  consumed only when its offset is committed, atomic writes across  multiple topics and partitions also enable atomic read-process-write  cycles: the commit of the offset *X* to the offsets topic and the write of message *B* to *tp1* will be part of a single transaction, and hence atomic.
+
+设计：
+
+每个application订阅一个主题，创建一个KafkaConsumer，发生rebalance之后根据分配的partition，每个partition都创建一个Transactional KafkaProducer
 
 1.上游KafkaProducer：
 
@@ -1194,7 +1202,15 @@ Thus since an offset commit is just  another write to a Kafka topic, and since a
 
   3) 挂起后又恢复场景，applications will crash  or—worse!—temporarily lose connectivity to the rest of the system.  Typically, new instances are automatically started to replace the ones  which were deemed lost. Through this process, we may have multiple  instances processing the same input topics and writing to the same  output topics, causing duplicate outputs and violating the exactly once  processing semantics. We call this the problem of “zombie instances.”
 
+  比如Producer发送Kafka消息（commitTransaction之前）突然挂起，然后transaction.id被新起的Producer占用，当之前的Producer又恢复的时候再commitTransaction会被Fence屏蔽掉，并且KafkaConsumer的read_committed隔离级别也可以保证不读取这些尚未提交的事务消息（The Kafka consumer will only deliver  transactional messages to the application if the transaction was  actually committed. Put another way, the consumer will not deliver  transactional messages which are part of an open transaction, and nor  will it deliver messages which are part of an aborted transaction.
+
+  when using a Kafka consumer to consume  messages from a topic, an application will not know whether these  messages were written as part of a transaction, and so they do not know  when transactions start or end. 
+
+  In short: Kafka guarantees that a  consumer will eventually deliver only non-transactional messages or  committed transactional messages. It will withhold messages from open  transactions and filter out messages from aborted transactions.）
+
   解决方法：通过 transaction.id 进行 zombie Fence
+
+  4）consumer group中多个服务发生rebalance后重启的场景：服务A处理Paritition 0和1，然后服务B进入引起rebalance，分配结果为B接管Partition 0，当B创建KafkaProducer处理partition 0时，首先要定位到partition 0之前被处理到哪里了，这种场景仍然是先使用 Transaction.id进行zombie fence，以防服务A的处理Partition 0的kafkaproducer还在工作（比如使用了disruptor有ringbuffer缓存，即使没有用disruptor这种东西，由于A和B是两个独立的进程，B也无法保证A的kafka producer没有继续再处理某条消息，所以先小人后君子），然后才读取offset，定位到之前A在Partition 0成功提交的最后一条消息（换句话就是被zombie fence之前成功的最后一条消息）
 
 + 保证不漏发：
   + KafkaProducer需要使用幂等性，并且千万不要设置 ETRIES_CONFIG = "retries"，使用默认的Integer.MAX_VALUE
@@ -1211,11 +1227,7 @@ Thus since an offset commit is just  another write to a Kafka topic, and since a
 
     比如KafkaConsumer处理数据的过程包括作为KafkaProducer继续往下游发送消息，那么可以通过KafkaProducer的transaction处理，同时发送一个增量快照保存起当前的offset，这样就可以脱离开系统默认的__consumer_offset
 
-  + 另外一个比较隐含的场景是，当上游发生一些状况，比如上游的Producer发送Kafka消息（commitTransaction之前）突然挂起，然后transaction.id被新起的Producer占用，当之前的Producer又恢复的时候再commitTransaction会被Fence屏蔽掉，并且KafkaConsumer的read_committed隔离级别也可以保证不读取这些尚未提交的事务消息（The Kafka consumer will only deliver  transactional messages to the application if the transaction was  actually committed. Put another way, the consumer will not deliver  transactional messages which are part of an open transaction, and nor  will it deliver messages which are part of an aborted transaction.
-
-    when using a Kafka consumer to consume  messages from a topic, an application will not know whether these  messages were written as part of a transaction, and so they do not know  when transactions start or end. 
-
-    In short: Kafka guarantees that a  consumer will eventually deliver only non-transactional messages or  committed transactional messages. It will withhold messages from open  transactions and filter out messages from aborted transactions.）
+  + 另外一个比较隐含的场景就是上游出了问题，参考上游的场景3）和4）
 
 + 保证不要丢失消息：
 
@@ -1341,6 +1353,17 @@ The transactional consumer is much simpler than the producer, since all it needs
 As such, the transactional consumer shows no degradation in throughput when reading transactional messages in *read_committed* mode. The main reason for this is that we preserve zero copy reads when reading transactional messages. 
 
 Further, the consumer does not need  to any buffering to wait for transactions to complete. Instead, the  broker does not allow it to advance to offsets which include open  transactions.
+
+
+
+```
+[main] [org.apache.kafka.clients.producer.internals.TransactionManager : [Producer clientId=producer-1, transactionalId=TID-PARTITION-0] ProducerId set to -1 with epoch -1
+[ad | producer-1] [org.apache.kafka.clients.Metadata : Cluster ID: uEekh0baSnKon5ENwtY9dg
+[ad | producer-1] [org.apache.kafka.clients.producer.internals.TransactionManager : [Producer clientId=producer-1, transactionalId=TID-PARTITION-0] ProducerId set to 16871 with epoch 85
+
+```
+
+之前一直困惑于这个 -1 -1，不过因为这三条log全部是org.apache.kafka的，所以刚开始抱着完全信任kafka的想法就先放一边了，后来忍不住大概debug进去瞅了下，确认是kafka正常的设计，第一条log直接就能debug到，step into initTransactions很容易看到，所以意思是默认就会先初始化一个-1 -1，我估计是先给个负值的epoch，等到完全注册好才给后面那个正数的epoch，是合理的，不然还没有注册好事务型的producer，直接给一个合法的epoch，会影响到现在正常工作的其他producer（比如万一因为问题这个新的producer初始化失败也不会影响到/zombie fence使用相同Transaction.id的其他producer）
 
 ## 5. Troubleshooting
 ### Fatal error during KafkaServer startup. Prepare to shutdown (kafka.server.KafkaServer)
