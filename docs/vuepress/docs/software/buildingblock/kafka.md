@@ -255,9 +255,7 @@ GUI：
 
 + https://github.com/airbnb/kafkat
 
-### 2.1 本地调试 
-
-#### 2.1.1 单机 Local 调试
+#### 2.2.1 单机 Local 调试
 
 Quick start
 https://kafka.apache.org/quickstart 
@@ -306,7 +304,7 @@ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning
 bin/kafka-console-consumer.sh --bootstrap-server <你的kafka配置> --topic T-RISK --partition 0 --offset 3350 --max-messages 1
 ```
 
-#### 2.1.2  虚拟机远程调试 Remote 
+#### 2.2.2  虚拟机远程调试 Remote 
 
 **VM Host only mode**
 
@@ -355,15 +353,9 @@ vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
 
 ![](/docs/docs_image/software/buildingblock/kafka/kafka04.png)
 
-### 2.2 集成开发 springboot
+#### 2.2.3 集成开发 springboot
 
-```
-
-```
-
-
-
-#### spring-kafka
+##### spring-kafka
 
 https://www.baeldung.com/spring-kafka
 
@@ -375,7 +367,9 @@ org.springframework.kafka包含：
 + spring-retry
 + kafka-clients
 
-#### apache-kafka
+##### apache-kafka
+
+org.apache.kafka.kafka-client 
 
 https://docs.confluent.io/clients-kafka-java/current/overview.html
 
@@ -383,9 +377,7 @@ https://www.baeldung.com/kafka-exactly-once
 
 https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html
 
-
-
-org.apache.kafka.kafka-client 
+https://dzone.com/articles/kafka-producer-and-consumer-example
 
 
 
@@ -408,7 +400,38 @@ org.apache.kafka.kafka-client
 #get /brokers/ids/0 #Gives more detailed information of the broker id '0'
 ```
 
-#### 2.3.2 日志排查
+#### 2.3.2 House keeping
+
+##### kafka offset not increase by 1
+
+https://stackoverflow.com/questions/54636524/kafka-streams-does-not-increment-offset-by-1-when-producing-to-topic
+
+https://issues.apache.org/jira/browse/KAFKA-6607
+
+[http://trumandu.github.io/2019/04/13/%E5%A6%82%E4%BD%95%E7%9B%91%E6%8E%A7kafka%E6%B6%88%E8%B4%B9Lag%E6%83%85%E5%86%B5/](http://trumandu.github.io/2019/04/13/如何监控kafka消费Lag情况/)
+
+https://stackoverflow.com/questions/54544074/how-to-make-restart-able-producer
+
+ https://github.com/confluentinc/confluent-kafka-go/issues/195
+
+##### clean up 
+
+__consumer_offsets https://stackoverflow.com/questions/41429053/how-to-change-consumer-offsets-cleanup-plicy-to-delete-from-compact
+
+##### partition
+
+1 partition 2 replica, where is the replica?? On the same parition but different segment??
+
+Alter:
+	bin/kafka-topics.sh --bootstrap-server broker_host:port --alter --topic my_topic_name \
+      --partitions 40
+kafka-reassign-partitions命令是针对Partition进行重新分配，而不能将整个Topic的数据重新均衡到所有的Partition中。
+https://segmentfault.com/a/1190000011721643
+https://cloud.tencent.com/developer/article/1349448
+
+Be aware that one use case for partitions is to semantically partition data, and adding partitions doesn't change the partitioning of existing data so this may disturb consumers if they rely on that partition. That is if data is partitioned by hash(key) % number_of_partitions then this partitioning will potentially be shuffled by adding partitions but Kafka will not attempt to automatically redistribute data in any way.
+
+#### 2.3.3 日志排查
 
 KAFKA Internal consumer topic log：
 
@@ -446,7 +469,7 @@ echo "exclude.internal.topics=false" > consumer.config
 
 
 
-#### 2.3.3 Backup (point-in-time snapshot) & Restore
+#### 2.3.4 Backup (point-in-time snapshot) & Restore
 
 为什么需要备份？
 
@@ -766,8 +789,6 @@ To combat the challenges of being stateful, Kafka ships with a range of features
 State store, global or local?
 Ktable, globalktable
 
-
-
 Kafka Stream有一些关键东西没有解决，例如在join场景中，需要保证来源2个Topic数据Shard个数必须是一定的，因为本身做不到MapJoin等技术
 
 
@@ -778,78 +799,6 @@ nothing to guarantee/at-most-once => at-least-once => exactly-once
 
 
 https://kafka.apache.org/documentation/#design
-
-
-### 4.1 Common
-
-#### schema registry
-
-https://docs.confluent.io/current/schema-registry/schema_registry_tutorial.html
-
-#### clean up
-
-__consumer_offsets
-
-#### partition
-
-1 partition 2 replica, where is the replica?? On the same parition but different segment??
-
-Alter:
-	bin/kafka-topics.sh --bootstrap-server broker_host:port --alter --topic my_topic_name \
-      --partitions 40
-kafka-reassign-partitions命令是针对Partition进行重新分配，而不能将整个Topic的数据重新均衡到所有的Partition中。
-https://segmentfault.com/a/1190000011721643
-https://cloud.tencent.com/developer/article/1349448
-
-Be aware that one use case for partitions is to semantically partition data, and adding partitions doesn't change the partitioning of existing data so this may disturb consumers if they rely on that partition. That is if data is partitioned by hash(key) % number_of_partitions then this partitioning will potentially be shuffled by adding partitions but Kafka will not attempt to automatically redistribute data in any way.
-
-https://dzone.com/articles/kafka-producer-and-consumer-example
-
-###leader epoch & high watermark
-https://cwiki.apache.org/confluence/display/KAFKA/KIP-101+-+Alter+Replication+Protocol+to+use+Leader+Epoch+rather+than+High+Watermark+for+Truncation
-Kafka数据丢失及最新改进策略 http://lday.me/2017/10/08/0014_kafka_data_loss_and_new_mechanism/
-kafka ISR设计及水印与leader epoch副本同步机制深入剖析-kafka 商业环境实战 https://juejin.im/post/5bf6b0acf265da612d18e931
-leader epoch与watermark https://www.cnblogs.com/huxi2b/p/7453543.html
-High watermark
-If you want to improve the reliability of the data, set the request.required.acks = -1, but also min.insync.replicas this parameter (which can be set in the broker or topic level) to achieve maximum effectiveness. 
-https://medium.com/@mukeshkumar_46704/in-depth-kafka-message-queue-principles-of-high-reliability-42e464e66172
-
-###comsumer group coordinator
-https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Client-side+Assignment+Proposal
-
-###Log Compaction 
-https://kafka.apache.org/22/documentation/#compaction
-Kafka技术内幕-日志压缩 https://segmentfault.com/a/1190000005312891
-
-
-Note however that there cannot be more consumer instances(task) in a consumer group than partitions. 
-https://cwiki.apache.org/confluence/display/KAFKA/KIP-28+-+Add+a+processor+client
-
-#### offset types
-
-https://rongxinblog.wordpress.com/2016/07/29/kafka-high-watermark/
-
-poll and timeout
-
-https://www.oreilly.com/library/view/kafka-the-definitive/9781491936153/ch04.html
-
-TIMEOUTS IN KAFKA CLIENTS AND KAFKA STREAMS http://javierholguera.com/2018/01/01/timeouts-in-kafka-clients-and-kafka-streams/
-
-#### kafka offset not increase by 1
-
-https://stackoverflow.com/questions/54636524/kafka-streams-does-not-increment-offset-by-1-when-producing-to-topic
-
-https://issues.apache.org/jira/browse/KAFKA-6607
-
-[http://trumandu.github.io/2019/04/13/%E5%A6%82%E4%BD%95%E7%9B%91%E6%8E%A7kafka%E6%B6%88%E8%B4%B9Lag%E6%83%85%E5%86%B5/](http://trumandu.github.io/2019/04/13/如何监控kafka消费Lag情况/)
-
-https://stackoverflow.com/questions/54544074/how-to-make-restart-able-producer
-
- https://github.com/confluentinc/confluent-kafka-go/issues/195
-
-
-
-
 
 ### 4.1 Consumer Indepth
 
@@ -866,6 +815,14 @@ public ConsumerRecords<K,V> poll(long timeout)
 ```
 
 On each poll, consumer will try to use the last consumed offset as the starting offset and fetch sequentially. The last consumed offset can be manually set through [`seek(TopicPartition, long)`](https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#seek-org.apache.kafka.common.TopicPartition-long-) or automatically set as the last committed offset for the subscribed list of partitions 即如果不显示调用 seek来设置其位置，将会自动使用interal offset来定位其最后一次消费的位置。
+
+**consumer poll timeout**
+
+> The way consumers maintain membership in a consumer group and ownership of the partitions assigned to them is by sending *heartbeats* to a Kafka broker designated as the *group coordinator* (this broker can be different for different consumer groups). As long as the consumer is sending heartbeats at regular intervals, it is assumed to be alive, well, and processing messages from its partitions. Heartbeats are sent when the consumer polls (i.e., retrieves records) and when it commits records it has consumed.
+>
+> https://www.oreilly.com/library/view/kafka-the-definitive/9781491936153/ch04.html
+
+TIMEOUTS IN KAFKA CLIENTS AND KAFKA STREAMS http://javierholguera.com/2018/01/01/timeouts-in-kafka-clients-and-kafka-streams/
 
 #### 依赖internal offset
 
@@ -1277,6 +1234,23 @@ while (true) {
 
 https://www.cnblogs.com/luozhiyun/p/12079527.html
 
+#### leader epoch & high watermark
+
+https://rongxinblog.wordpress.com/2016/07/29/kafka-high-watermark/
+
+https://cwiki.apache.org/confluence/display/KAFKA/KIP-101+-+Alter+Replication+Protocol+to+use+Leader+Epoch+rather+than+High+Watermark+for+Truncation
+Kafka数据丢失及最新改进策略 http://lday.me/2017/10/08/0014_kafka_data_loss_and_new_mechanism/
+kafka ISR设计及水印与leader epoch副本同步机制深入剖析-kafka 商业环境实战 https://juejin.im/post/5bf6b0acf265da612d18e931
+leader epoch与watermark https://www.cnblogs.com/huxi2b/p/7453543.html
+High watermark
+If you want to improve the reliability of the data, set the request.required.acks = -1, but also min.insync.replicas this parameter (which can be set in the broker or topic level) to achieve maximum effectiveness. 
+https://medium.com/@mukeshkumar_46704/in-depth-kafka-message-queue-principles-of-high-reliability-42e464e66172
+
+#### consumer group coordinator
+https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Client-side+Assignment+Proposal
+
+
+
 #### kafka idempotent 原理
 
 http://matt33.com/2018/10/24/kafka-idempotent/
@@ -1364,6 +1338,13 @@ Further, the consumer does not need  to any buffering to wait for transactions t
 ```
 
 之前一直困惑于这个 -1 -1，不过因为这三条log全部是org.apache.kafka的，所以刚开始抱着完全信任kafka的想法就先放一边了，后来忍不住大概debug进去瞅了下，确认是kafka正常的设计，第一条log直接就能debug到，step into initTransactions很容易看到，所以意思是默认就会先初始化一个-1 -1，我估计是先给个负值的epoch，等到完全注册好才给后面那个正数的epoch，是合理的，不然还没有注册好事务型的producer，直接给一个合法的epoch，会影响到现在正常工作的其他producer（比如万一因为问题这个新的producer初始化失败也不会影响到/zombie fence使用相同Transaction.id的其他producer）
+
+#### Log Compaction 
+https://kafka.apache.org/22/documentation/#compaction
+Kafka技术内幕-日志压缩 https://segmentfault.com/a/1190000005312891
+
+Note however that there cannot be more consumer instances(task) in a consumer group than partitions. 
+https://cwiki.apache.org/confluence/display/KAFKA/KIP-28+-+Add+a+processor+client
 
 ## 5. Troubleshooting
 ### Fatal error during KafkaServer startup. Prepare to shutdown (kafka.server.KafkaServer)
@@ -1502,9 +1483,13 @@ https://www.cnblogs.com/wangb0402/p/6187796.html
 
 
 + products
-https://cwiki.apache.org/confluence/display/KAFKA/Ecosystem
+  https://cwiki.apache.org/confluence/display/KAFKA/Ecosystem
+
+  schema registry https://docs.confluent.io/current/schema-registry/schema_registry_tutorial.html
+
 + Cheatsheet
-https://gist.github.com/filipefigcorreia/3db4c7e525581553e17442792a2e7489
+  https://gist.github.com/filipefigcorreia/3db4c7e525581553e17442792a2e7489
+
 + related
 https://medium.com/eleven-labs/cqrs-pattern-c1d6f8517314
 https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs

@@ -57,7 +57,7 @@ https://www.cnblogs.com/lidabo/p/3317364.html
 	8bits
 	ASCII=>ANSI
 	http://www.differencebetween.net/technology/web-applications/difference-between-ansi-and-ascii/
-
+	
 	https://en.wikipedia.org/wiki/Code_page
 	Teleprinters and stock tickers were quite happy sending 7 bits of information to each other. But the new fangled microprocessors of the 1970s preferred to work with powers of 2. They could process 8 bits at a time and so used 8 bits (aka a byte or octet) to store each character, giving 256 possible values.
 
@@ -102,7 +102,7 @@ And for the other kind of encoding algorithm used for higher level, for example 
 **Language level encode decode**
 
 Url编码 base64
-Http请求中的编码，先base64再urlencode
+Http请求中的编码，先base64再urlencode（因为base64包括+/，这两个符号在url中都有特殊含义）
 https://www.simonkrueger.com/2014/07/10/always-url-encode-your-base64-encoded-query-parameters.html
 
 base64 将二进制转成base64(2^6)数字加字符表示，将原有二进制按照每6位对应到base64一个字符或数字；
