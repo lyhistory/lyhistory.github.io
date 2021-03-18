@@ -39,7 +39,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 + Topics & logs (Logical concept)：每条发布到 kafka 集群的消息属于的类别，即 kafka 是面向 topic 的。
 
   	LEO:: log end offset	offset+1
-  	ISR:: in-sync replicas
+    	ISR:: in-sync replicas
 
 + Partition (Physical concept): 是物理上的概念，每个 topic 包含一个或多个 partition。kafka 分配的单位是 partition。
 
@@ -378,6 +378,21 @@ https://www.baeldung.com/kafka-exactly-once
 https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html
 
 https://dzone.com/articles/kafka-producer-and-consumer-example
+
+默认配置：
+
+https://kafka.apache.org/documentation/
+
+```
+auto.create.topics.enable
+
+Enable auto creation of topic on the server
+Type:	boolean
+Default:	true
+Valid Values:	
+Importance:	high
+Update Mode:	read-only
+```
 
 
 
@@ -806,9 +821,32 @@ https://kafka.apache.org/23/javadoc/index.html?org/apache/kafka/clients/consumer
 
 https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#poll-long-
 
-#### 关键API
+#### 4.1.1 跟borker交互
 
-POLL
+keyword: heartbeat，rebalance
+
+##### consumer groups
+
+Don't Use Apache Kafka Consumer Groups the Wrong Way! https://dzone.com/articles/dont-use-apache-kafka-consumer-groups-the-wrong-wa
+1)	Having consumers as part of the same consumer group means providing the“competing consumers” pattern with whom the messages from topic partitions are spread across the members of the group.
+2)	Having consumers as part of different consumer groups means providing the “publish/subscribe” pattern where the messages from topic partitions are sent to all the consumers across the different groups.
+https://dzone.com/articles/dont-use-apache-kafka-consumer-groups-the-wrong-wa
+
+##### 配合事务型producer
+
+**we can indicate with \*isolation.level\* that we should wait to read transactional messages until the associated transaction has been committed**:
+
+```java
+consumerProps.put("isolation.level", "read_committed");
+```
+
+在消费端有一个参数isolation.level，设置为“read_committed”，表示消费端应用不可以看到尚未提交的事务内的消息。如果生产者开启事务并向某个分区值发送3条消息 msg1、msg2 和 msg3，在执行 commitTransaction() 或 abortTransaction()  方法前，设置为“read_committed”的消费端应用是消费不到这些消息的，不过在 KafkaConsumer  内部会缓存这些消息，直到生产者执行 commitTransaction() 方法之后它才能将这些消息推送给消费端应用。反之，如果生产者执行了  abortTransaction() 方法，那么 KafkaConsumer 会将这些缓存的消息丢弃而不推送给消费端应用。
+
+https://stackoverflow.com/questions/56047968/kafka-isolation-level-implications
+
+##### 关键API
+
+###### POLL
 
 ```
 public ConsumerRecords<K,V> poll(long timeout)
@@ -824,7 +862,15 @@ On each poll, consumer will try to use the last consumed offset as the starting 
 
 TIMEOUTS IN KAFKA CLIENTS AND KAFKA STREAMS http://javierholguera.com/2018/01/01/timeouts-in-kafka-clients-and-kafka-streams/
 
-#### 依赖internal offset
+###### ConsumerRebalanceListener 
+
+onPartitionsRevoked && onPartitionsAssigned
+
+> It is guaranteed that all the processes in a consumer group will execute their [`onPartitionsRevoked(Collection)`](https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/ConsumerRebalanceListener.html#onPartitionsRevoked-java.util.Collection-) callback before any instance executes its [`onPartitionsAssigned(Collection)`](https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/ConsumerRebalanceListener.html#onPartitionsAssigned-java.util.Collection-) callback. 
+
+发生rebalance时，kafka会保证所有之前的consumer无法继续消费消息（连heartbeat都停止了，提示消息 Attempt to heartbeat failed since group is rebalancing），然后会先通过 onPartitionsRevoked 回调所有的consumer，待所有consumer的onPartitionsRevoked完成之后，才会继续回调onPartitionsAssigned（笔者测试到一种情况，就是consumergroup有服务A和B，A因为网络问题，导致kafka集群决定将所有partition分配给B，所以kafka集群发送revoke给A和B，因为A有网络问题，B就没有等待A完成revoke，直接启动了，而过了两分钟，A才收到kafka集群的消息，后面exactly once笔者给出了场景图示）
+
+#### 4.1.2 依赖internal offset
 
 直接poll，不通过 seek来设置位置，自动使用interal offset来定位其最后一次消费的位置，注意下面的前两个使用方法 at-least-once 至少一次当然可能会重复消费，**但是也可能丢失信息**
 
@@ -914,7 +960,7 @@ Note: The committed offset should always be the offset of the next message that 
 
 参考后面的 atomic-read-process-write例子
 
-#### 不依赖interal offset，自己维护offset exactly-once
+#### 4.1.3 不依赖interal offset，自己维护offset exactly-once
 
 The consumer application need not use Kafka's built-in offset storage, it can store offsets in a store of its own choosing, example usage:
 
@@ -951,28 +997,7 @@ endOffsets（返回the offset of the upcoming message, i.e. the offset of the la
 
   恢复的时候，先 找到T-ZengLiang最后一个消息 ，获取到quanliang offset=0&&end offset=1001，然后通过quanliang offset=0去seek(T-QuanLiang, 0) 拿到 start offset=1000和当时的内存数据，从而恢复内存数据，然后从1000开始(1000,1001],只需要重新计算下1001这条数据更新下内存即可，从1002开始往后都是新的消息
 
-#### 配合事务型producer
 
-注意前面的两种 exactly-once方法（依赖interal offset和维护自己的offset）都需要这个配置才能保证 exactly-once
-
-**we can indicate with \*isolation.level\* that we should wait to read transactional messages until the associated transaction has been committed**:
-
-```java
-consumerProps.put("isolation.level", "read_committed");
-```
-
-在消费端有一个参数isolation.level，设置为“read_committed”，表示消费端应用不可以看到尚未提交的事务内的消息。如果生产者开启事务并向某个分区值发送3条消息 msg1、msg2 和 msg3，在执行 commitTransaction() 或 abortTransaction()  方法前，设置为“read_committed”的消费端应用是消费不到这些消息的，不过在 KafkaConsumer  内部会缓存这些消息，直到生产者执行 commitTransaction() 方法之后它才能将这些消息推送给消费端应用。反之，如果生产者执行了  abortTransaction() 方法，那么 KafkaConsumer 会将这些缓存的消息丢弃而不推送给消费端应用。
-
-https://stackoverflow.com/questions/56047968/kafka-isolation-level-implications
-
-
-
-#### consumer groups
-
-Don't Use Apache Kafka Consumer Groups the Wrong Way! https://dzone.com/articles/dont-use-apache-kafka-consumer-groups-the-wrong-wa
-1)	Having consumers as part of the same consumer group means providing the“competing consumers” pattern with whom the messages from topic partitions are spread across the members of the group.
-2)	Having consumers as part of different consumer groups means providing the “publish/subscribe” pattern where the messages from topic partitions are sent to all the consumers across the different groups.
-https://dzone.com/articles/dont-use-apache-kafka-consumer-groups-the-wrong-wa
 
 
 
@@ -980,7 +1005,52 @@ https://dzone.com/articles/dont-use-apache-kafka-consumer-groups-the-wrong-wa
 
 Since the 0.11.0.0 release, Kafka has added support to allow its producers to send messages to different topic partitions in a transactional and idempotent manner https://kafka.apache.org/documentation/#semantics
 
-#### 4.2.1 幂等性 idempotent producer
+https://kafka.apache.org/23/javadoc/index.html?org/apache/kafka/clients/producer/KafkaProducer.html
+
+#### 4.2.1 跟broker交互
+
+##### 关键配置
+
+acks=all
+
+if the producer receives an  acknowledgement (ack) from the Kafka broker and acks=all, it means that  the message has been written exactly once to the Kafka topic
+
+##### 关键API
+
+initTransactions
+
+> The following steps will be taken when initTransactions() is called:
+>
+> 1. If no TransactionalId has been provided in configuration, skip to step 3.
+> 2. Send a [FindCoordinatorRequest](https://docs.google.com/document/d/11Jqy_GjUGtdXJK94XGsEIK7CP1SnQGdp2eF0wSw9ra8/edit#heading=h.97qeo7mkx9jx) with the configured TransactionalId and with CoordinatorType encoded as “transaction” to a random broker. Block for the corresponding response, which will return the assigned transaction coordinator for this producer.
+> 3. Send an [InitPidRequest](https://docs.google.com/document/d/11Jqy_GjUGtdXJK94XGsEIK7CP1SnQGdp2eF0wSw9ra8/edit#heading=h.z99xar1h2enr) to the transaction coordinator or to a random broker if no TransactionalId was provided in configuration. Block for the corresponding response to get the returned PID.
+>
+> https://docs.google.com/document/d/11Jqy_GjUGtdXJK94XGsEIK7CP1SnQGdp2eF0wSw9ra8/edit
+>
+> ### 2. Getting a producer Id -- the InitPidRequest
+>
+> After discovering the location of its coordinator, the next step is to retrieve the producer’s PID. This is achieved by issuing a InitPidRequest to the transaction coordinator
+>
+> #### 2.1 When an TransactionalId is specified
+>
+> If the transactional.id configuration is set, this TransactionalId passed along with the InitPidRequest, and the mapping to the corresponding PID is logged in the transaction  log in step 2a. This enables us to return the same PID for the  TransactionalId to future instances of the producer, and hence enables  recovering or aborting previously incomplete transactions.
+>
+> In addition to returning the PID, the InitPidRequest performs the following tasks:
+>
+> 1. Bumps up the epoch of the PID, so that the any previous zombie instance of  the producer is fenced off and cannot move forward with its transaction.
+> 2. Recovers (rolls forward or rolls back) any transaction left incomplete by the previous instance of the producer.
+>
+> The handling of the InitPidRequest is synchronous. Once it returns, the producer can send data and start new transactions.
+>
+> https://cwiki.apache.org/confluence/display/KAFKA/KIP-98+-+Exactly+Once+Delivery+and+Transactional+Messaging
+
+
+
+
+
+
+
+#### 4.2.2 幂等性 idempotent producer
 
 https://cwiki.apache.org/confluence/display/KAFKA/Idempotent+Producer
 
@@ -998,11 +1068,13 @@ Setting a value greater than zero will cause the client to resend any record who
 
 https://stackoverflow.com/questions/55192852/transactional-producer-vs-just-idempotent-producer-java-exception-outoforderseq/66579532#66579532
 
-#### 4.2.2 事务性 Transactional Producer 
+
+
+How does this feature work? Under the  covers, it works in a way similar to TCP: each batch of messages sent to Kafka will contain a sequence number that the broker will use to dedupe any duplicate send. Unlike TCP, though—which provides guarantees only  within a transient in-memory connection—this sequence number is  persisted to the replicated log, so even if the leader fails, any broker that takes over will also know if a resend is a duplicate. The overhead of this mechanism is quite low: it’s just a few extra numeric fields  with each batch of messages. As you will see later in this article, this feature adds negligible performance overhead over the non-idempotent  producer.
+
+#### 4.2.3 事务性 Transactional Producer 
 
 https://www.cnblogs.com/luozhiyun/p/12079527.html
-
-https://kafka.apache.org/23/javadoc/index.html?org/apache/kafka/clients/producer/KafkaProducer.html
 
 https://tgrez.github.io/posts/2019-04-13-kafka-transactions.html
 
@@ -1011,6 +1083,8 @@ https://tgrez.github.io/posts/2019-04-13-kafka-transactions.html
 
 
 依据：
+
+**org.apache.kafka.clients.producer.ProducerConfig.TRANSACTIONAL_ID_CONFIG**
 
 ```
     For instance, in a distributed stream processing application, suppose topic-partition tp0 was originally processed by transactional.id T0. If, at some point later, it could be mapped to another producer with transactional.id T1, there would be no fencing between T0 and T1. So it is possible for messages from tp0 to be reprocessed, violating the exactly once processing guarantee.
@@ -1022,9 +1096,23 @@ https://tgrez.github.io/posts/2019-04-13-kafka-transactions.html
 -- https://docs.spring.io/spring-kafka/reference/#transactional-id
 ```
 
+**initTransactions**
+
+```
+Needs to be called before any other methods when the transactional.id is set in the configuration. This method does the following: 
+1. Ensures any transactions initiated by previous instances of the producer with the same transactional.id are completed. If the previous instance had failed with a transaction in progress, it will be aborted. If the last transaction had begun completion, but not yet finished, this method awaits its completion. 
+
+2. Gets the internal producer id and epoch, used in all future transactional messages issued by the producer. Note that this method will raise TimeoutException if the transactional state cannot be initialized before expiration of max.block.ms. 
+Additionally, it will raise InterruptException if interrupted. It is safe to retry in either case, but once the transactional state has been successfully initialized, this method should no longer be used.
+```
+
+**beginTransaction / sendOffsetsToTransaction / commitTransaction / abortTransaction**
+
+这些方法都会抛 ProducerFencedException 原理就是调用这些方法之前必须要先调用 initTransactions， initTransactions会分配每个transaction.id新的epoch，从而阻止zombie程序继续发送kafka transaction
 
 
-org.apache.kafka.clients.producer.ProducerConfig.TRANSACTIONAL_ID_CONFIG
+
+代码示例：
 
 ```java
 -------------------------------------------------------------------
@@ -1088,7 +1176,7 @@ public Properties prepareFor(String transactionId) {
         return result;
     }
 
-String transactionId =  UUID.randomUUID().toString();
+String transactionId = partition-id >= 0 ? String.format("%s-TID-%d", config.getApplicationName(), partition-id) : "TID";
 this.rawProducer = new KafkaProducer<>(config.prepareFor(transactionId));
 this.rawProducer.initTransactions();
 ```
@@ -1105,6 +1193,13 @@ transaction has been expired by the broker.
 
 ### 4.3 Exactly-Once
 
+#### 4.3.1 Exactly-Once-Message-Processing
+
+> there are only two hard problems in distributed systems: 
+>
+> 1. Guaranteed order of messages 
+> 2. Exactly-once delivery
+
 https://www.confluent.io/online-talk/introducing-exactly-once-semantics-in-apache-kafka/
 
 https://www.confluent.io/blog/transactions-apache-kafka/
@@ -1115,15 +1210,19 @@ https://blog.csdn.net/alex_xfboy/article/details/82988259
 
 KIP-129: Streams Exactly-Once Semantics https://cwiki.apache.org/confluence/display/KAFKA/KIP-129%3A+Streams+Exactly-Once+Semantics
 
-重点：
+**重点：**
 
-Producer：
++ Producer：
 
-开启幂等enable.idempotence和事务 transactional.id
+  开启幂等enable.idempotence和事务 transactional.id，并维护offset
 
-Consumer：
++ Consumer：
 
-设置isolation.level=read_committed 并且处理好offset
+  设置isolation.level=read_committed（配合事务型Producer）
+
++ 跟 kafka borker交互：
+
+  consumer根据kafka broker的rebalance来为每个partition创建producer，事务型 producer通过initTransaction操作来fence zombie（仍然是依靠kafka broker），从而屏蔽掉其他过时的producer（rebalance过程中被收回了partition的consumer之前所创建的producer）消费消息的可能性，然后consumer可以放心的restore
 
 
 
@@ -1196,9 +1295,75 @@ Thus since an offset commit is just  another write to a Kafka topic, and since a
 
 ![](/docs/docs_image/software/buildingblock/kafka/kafka_exactly_once01.png)
 
+如图中所示，solution A不完美，因为解决不了服务A因为网络跟kafka集群断开又恢复的场景下有可能在极短的时间窗口发生的重复消费问题，solution B是最完美的设计，充分利用了kafka的exactly once能力
+
 ![](/docs/docs_image/software/buildingblock/kafka/kafka_exactly_once02.png)
 
-简单例子：
+example 1：
+
+```
+public class KafkaTransactionsExample {
+  
+  public static void main(String args[]) {
+    KafkaConsumer<String, String> consumer = new KafkaConsumer<>(consumerConfig);
+ 
+ 
+    // Note that the ‘transactional.id’ configuration _must_ be specified in the
+    // producer config in order to use transactions.
+    KafkaProducer<String, String> producer = new KafkaProducer<>(producerConfig);
+ 
+    // We need to initialize transactions once per producer instance. To use transactions,
+    // it is assumed that the application id is specified in the config with the key
+    // transactional.id.
+    //
+    // This method will recover or abort transactions initiated by previous instances of a
+    // producer with the same app id. Any other transactional messages will report an error
+    // if initialization was not performed.
+    //
+    // The response indicates success or failure. Some failures are irrecoverable and will
+    // require a new producer  instance. See the documentation for TransactionMetadata for a
+    // list of error codes.
+    producer.initTransactions();
+     
+    while(true) {
+      ConsumerRecords<String, String> records = consumer.poll(CONSUMER_POLL_TIMEOUT);
+      if (!records.isEmpty()) {
+        // Start a new transaction. This will begin the process of batching the consumed
+        // records as well
+        // as an records produced as a result of processing the input records.
+        //
+        // We need to check the response to make sure that this producer is able to initiate
+        // a new transaction.
+        producer.beginTransaction();
+         
+        // Process the input records and send them to the output topic(s).
+        List<ProducerRecord<String, String>> outputRecords = processRecords(records);
+        for (ProducerRecord<String, String> outputRecord : outputRecords) {
+          producer.send(outputRecord);
+        }
+         
+        // To ensure that the consumed and produced messages are batched, we need to commit
+        // the offsets through
+        // the producer and not the consumer.
+        //
+        // If this returns an error, we should abort the transaction.
+         
+        sendOffsetsResult = producer.sendOffsetsToTransaction(getUncommittedOffsets());
+         
+      
+        // Now that we have consumed, processed, and produced a batch of messages, let's
+        // commit the results.
+        // If this does not report success, then the transaction will be rolled back.
+        producer.endTransaction();
+      }
+    }
+  }
+}
+```
+
+
+
+example 2：
 
 ```
 KafkaProducer producer = createKafkaProducer(
@@ -1224,6 +1389,16 @@ while (true) {
 }
 ```
 
+#### 4.3.2 Exactly-Once-Stream-Processsing
+
+or stream processing applications built  using Kafka’s Streams API, we leverage the fact that the source of truth for the state store and the input offsets are Kafka topics. Hence we  can transparently fold this data into transactions that atomically write to multiple partitions, and thus provide the exactly-once guarantee for streams across the read-process-write operations.
+
+```
+processing.guarantee=exactly_once
+
+Note that exactly-once semantics is guaranteed within the scope of Kafka Streams’ internal processing only; for example, if the event streaming app written in Streams makes an RPC call to update some remote stores, or if it uses a customized client to directly read or write to a Kafka topic, the resulting side effects would not be guaranteed exactly once. 
+```
+
 ### 4.4 Diving into Kafka
 
 前面4.1 4.2 4.3 主要是将kafka当做黑盒，然后通过kafka开放的API来达到跟kafka交互的exactly-once，
@@ -1235,6 +1410,8 @@ while (true) {
 https://www.cnblogs.com/luozhiyun/p/12079527.html
 
 #### leader epoch & high watermark
+
+Kafka is a highly available, persistent, durable system where every message written to a partition is persisted  and replicated some number of times (we will call it *n*). As a result, Kafka can tolerate *n-1* broker failures, meaning that a partition is available as long as there is at least one broker available. Kafka’s replication protocol  guarantees that once a message has been written successfully to the  leader replica, it will be replicated to all available replicas. 
 
 https://rongxinblog.wordpress.com/2016/07/29/kafka-high-watermark/
 
@@ -1256,6 +1433,8 @@ https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Client-side+Assignment+P
 http://matt33.com/2018/10/24/kafka-idempotent/
 
 #### kafka Transaction 原理 Transaction Coordinator and Transaction Log
+
+https://cwiki.apache.org/confluence/display/KAFKA/KIP-98+-+Exactly+Once+Delivery+and+Transactional+Messaging
 
 The components introduced with the  transactions API in Kafka 0.11.0 are the Transaction Coordinator and the Transaction Log on the right hand side of the diagram above.
 

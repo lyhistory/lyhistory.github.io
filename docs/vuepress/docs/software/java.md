@@ -455,10 +455,7 @@ https://www.cnblogs.com/shijiaqi1066/p/4631466.html
 https://blog.csdn.net/dweizhao/article/details/73480025
 
 **method 2: Single thread queue - Disruptor**
-LMAX DisruptorHigh Performance Inter-Thread Messaging Library 
-https://lmax-exchange.github.io/disruptor/
-http://lmax-exchange.github.io/disruptor/files/Disruptor-1.0.pdf
-https://github.com/LMAX-Exchange/disruptor/wiki/Getting-Started
+
 
 
 #### 4.2.2 JNI

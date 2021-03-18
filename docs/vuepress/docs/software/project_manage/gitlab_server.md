@@ -1867,6 +1867,7 @@ cache:
 stages:
   - build
   - deploy
+
 build:dev:
   stage: build
   image: node:latest
@@ -1875,50 +1876,27 @@ build:dev:
     - npm install --force
     - npm run build
     - echo "Build successfully!"
-    - echo "Start deploying App for dev"
-    - TD=`date +"%y%m%d"`
-    - INSATLL_TARGET_DIR=/html/$TD
-    - ssh -q root@IP "mkdir -p $INSATLL_TARGET_DIR"
-    - scp ./build/* root@IP:${INSATLL_TARGET_DIR}/;
-    - echo "Deploy successfully!"
   artifacts:
     expire_in: 1 hour
     paths:
       - build
   only:
     - /^dev_.*$/
-build:qa:
-  stage: build
-  image: node
+
+deploy:dev:
+  stage: deploy
+  needs: ['build:dev']
+  when: manual
   script: 
-    - echo "Start building App for qa"
-    - npm install --force
-    - npm run buildQaOnLinux
-    - echo "Build successfully!"
-  artifacts:
-    expire_in: 1 hour
-    paths:
-      - build
+    - echo "Start deploying App for dev"
+    - FOLDER=`date +"%y%m%d"`
+    - INSATLL_TARGET_DIR=/opt/html/$FOLDER
+    - ssh -q root@HOST "mkdir -p $INSATLL_TARGET_DIR"
+    - scp -rp ./build/* root@HOST:${INSATLL_TARGET_DIR}/;
+    - ssh -q root@HOST "cd $INSATLL_TARGET_DIR/.. && ln -nsf $FOLDER current"
+    - echo "Deploy successfully!"
   only:
-    - qa
-deploy_production:
-    stage: deploy
-    when: manual
-    tags: 
-      - <tag you provided while registering the token>
-      - <second tag>
-    script:
-        - echo "Deploying to server"
-        #- TD=`date +"%y%m%d"`
-        - INSATLL_TARGET_DIR=/opt/html_$TD
-        - ssh -q root@IP "mkdir -p $INSATLL_TARGET_DIR"
-        - scp -r build/* root@IP:${INSATLL_TARGET_DIR}/
-        - echo "Deployed"
-    environment:
-        name: production
-        url: <your deployment url>
-    only:
-        - master
+    - /^dev_.*$/
 ```
 
 
