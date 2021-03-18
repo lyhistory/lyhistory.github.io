@@ -19,3 +19,29 @@ https://www.avalabs.org/solutions
 
 https://docs.avax.network/
 
+创建钱包 https://wallet.avax.network/
+
+
+
+## stake
+
+### delegator
+
+委托给validator
+
+https://avascan.info/staking/validator/NodeID-9Wzwy6h2isTcKAmJW5BMMxfH2EPasM4Ly
+
+选择策略：https://docs.avascan.info/guide-delegation-avalanche-network/choose-validator-node-avalanche
+
+找了个有名有姓的 Allnodes  https://twitter.com/Allnodes
+
+但是好像参与的 delegator不多，所以最终还是选择了参与人不少 而且在线时间100%的：
+
+NodeID-Pu5SGCYS3hxAeqCtmuP82mFVTDQAmzWeF
+
+
+
+## mint nft
+
+https://docs.avax.network/build/tutorials/smart-digital-assets/wallet-nft-studio
+
