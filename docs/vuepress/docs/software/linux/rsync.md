@@ -150,7 +150,7 @@ dont compress   = *.gz *.tgz *.zip *.z *.Z *.rpm *.deb *.bz2
 pid file = /var/run/rsyncd.pid
 #motd file=/var/rsync/welcome.msg
 #lock file = /var/rsync/rsync.lock
-log file = /var/rsync/rsyncd.log
+log file = /var/rsync/rsyncd.log	#需要手动创建rsync目录！
 secrets file = /etc/rsync.password
 
 #port = 873 默认端口 如果服务端制定了，客户端也要指定--port=xxx
@@ -206,10 +206,15 @@ chown -R rsync.rsync /backup/
 echo "rsync_backup:1" >/etc/rsync.password    密码设置为1
 chmod 600 /etc/rsync.password
 
-# 启动服务
+#管理服务
 方法一：
-rsync --daemon --config=/etc/rsyncd.conf #启动服务
-kill `cat /var/rsync/rsyncd.pid` #停止服务
+#启动服务
+rsync --daemon --config=/etc/rsyncd.conf
+#停止服务
+for bash compatible back-tick expression:
+kill -9 `cat /var/run/rsyncd.pid` 
+else
+cat /var/run/rsyncd.pid | xargs kill -9
 记得重启需要删除pid文件：
 rm /var/run/rsyncd.pid
 
