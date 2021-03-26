@@ -9,8 +9,6 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 搭梯子或者跳墙是一项古老的体育运动，可以普及计算机理论基础，比如IP TCP UDP协议，ping telent tracert 软路由等工具，正向代理反向代理，流量加密中转等等，
 不仅增强了体质，还提升了全民基础科技水平
 
-提问方式：[加我知识星球](https://t.zsxq.com/3BayjMb)；
-
 ## 1. 运动理论
 
 ### 1.1 服务器的端口
@@ -62,8 +60,16 @@ ipcheck.need.sh
 
 ### 2.2 直接买
 
-比如有我个人经常用的[StrongVPN，点击官网](https://intranet.strongconnectivity.com/services/strongvpn/refer/204835b682517019/),
+比如有我个人经常用的StrongVPN：
+
++ [StrongVPN 镜像1](https://intranet.strongconnectivity.com/services/strongvpn/refer/204835b682517019/)
++ [StrongVPN 镜像2](https://intranet.reliablehosting.com/services/strongvpn/refer/204835b682517019/)
++ [StrongVPN 镜像3](https://intranet.strongvpn.com/services/strongvpn/refer/204835b682517019/)
+
+
+
 还有开源的[protonvpn](https://protonvpn.com)
+
 可以多参考一些测评,比如[这个](https://10beasts.net/best-vpn-china-en/)
 
 
@@ -83,3 +89,4 @@ ipcheck.need.sh
 
 https://github.com/ttlequals0/autovpn
 
+提问方式：[加我知识星球](https://t.zsxq.com/3BayjMb)；

@@ -18,7 +18,7 @@ email: "lyhistory@gmail.com"
 description: "tech notes;"
 #baseurl: "/lyhistory.github.io"
 url: "https://lyhistory.github.io"
-logo: "/content/images/common/liuyue.jpg"
+logo: "/content/images/common/liuyue_origin.jpg"
 minimal_mistakes_skin    : "sunrise" 
 #"default" 
 
@@ -53,7 +53,7 @@ author:
       url: "https://lyhistory.com/docs/"
     - label: "微信公众号: coder2hacker"
       icon: "fas fa-fw fa-wechat"
-      url: "https://lyhistory.com/docs/"
+      url: "https://coder2hacker.hns.to"
     - label: "发邮件Email"
       icon: "fas fa-fw fa-envelope-square"
       url: mailto:lyhistory@gmail.com

@@ -45,3 +45,6 @@ NodeID-Pu5SGCYS3hxAeqCtmuP82mFVTDQAmzWeF
 
 https://docs.avax.network/build/tutorials/smart-digital-assets/wallet-nft-studio
 
+
+
+https://docs.avax.network/build/tutorials/smart-contracts/deploy-a-smart-contract-on-avalanche-using-remix-and-metamask
