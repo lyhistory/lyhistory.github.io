@@ -142,7 +142,30 @@ exit $L_RETURN_FLAG
 
 
 
-# monitor&troubleshooting
+# 工具/日志排查
+
+工具集合：
+
+https://github.com/apache/zookeeper/blob/master/zookeeper-docs/src/main/resources/markdown/zookeeperTools.md
+
+日志：
+
+https://stackoverflow.com/questions/17894808/how-do-one-read-the-zookeeper-transaction-log
+
+```
+--- 3.6 之前版本
+具体log4j版本可以在zookeeper目录下/lib里面去看
+
+java -cp /apex/apps/dependency/zookeeper-3.4.8/zookeeper-3.4.8.jar:lib/log4j-1.2.16.jar:lib/slf4j-log4j12-1.6.1.jar:lib/slf4j-api-1.6.1.jar org.apache.zookeeper.server.LogFormatter /apex/apps/dependency/zookeeper-3.4.8/logs/version-2/log.100000001 >  /apex/apps/clearing/zookeeper
+
+--- 3.6后版本
+For transaction log:
+bin/zkTxnLogToolkit.sh --dump /datalog/version-2/log.f3aa6 
+For snapshots:
+./zkSnapShotToolkit.sh -d /data/zkdata/version-2/snapshot.fa01000186d
+```
+
+
 
 Admin
 https://zookeeper.apache.org/doc/current/zookeeperAdmin.html

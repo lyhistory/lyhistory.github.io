@@ -8,7 +8,14 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 
 
+sourcecode:
+
+client:https://github.com/apache/kafka
+
+server: https://github.com/a0x8o/kafka
+
 ## 1. Basic concepts
+
 + zookeeper：kafka 通过 zookeeper 来存储集群的 meta 信息。
 
 + broker：kafka 集群中包含的服务器。Each server acts as a leader for some of its partitions and a follower for others so load is well balanced within the cluster. 
@@ -23,23 +30,55 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 + Consumer group：high-level consumer API 中，每个 consumer 都属于一个 consumer group，每条消息只能被 consumer group 中的一个 Consumer 消费，但可以被多个 consumer group 消费。
 
-  consumer group leader
-  group coordinator
-  User group rebalance
-  Standby
+  + group coordinator: is nothing but one of the brokers which receives heartbeats (or polling for messages) from all consumers of a consumer group. Every consumer group has a group coordinator. If a consumer stops sending heartbeats, the coordinator will trigger a rebalance.
+  + consumer coordinator: each kafkaconsumer instance has a private member of consumer coordinator
+  + consumer group leader:  is one of the consumer in a consumer group. 
 
-  
+  + subscribe mode VS assign mode
 
-  By having a notion of parallelism—the partition—within the topics, Kafka is able to provide both ordering guarantees and load balancing over a pool of consumer processes. This is achieved by assigning the partitions in the topic to the consumers in the consumer group so that **each partition is consumed by exactly one consumer in the group. **By doing this we ensure that the consumer is the only reader of that partition and consumes the data in order. Since there are many partitions this still balances the load over many consumer instances. **Note however that there cannot be more consumer instances in a consumer group than partitions. **
+    先来看一段话
 
-  **If we add more consumers to a single group with a single topic than we  have partitions, some of the consumers will be idle and get no messages  at all.**
+    > By having a notion of parallelism—the partition—within the topics, Kafka is able to provide both ordering guarantees and load balancing over a pool of consumer processes. This is achieved by assigning the partitions in the topic to the consumers in the consumer group so that **each partition is consumed by exactly one consumer in the group. **By doing this we ensure that the consumer is the only reader of that partition and consumes the data in order. Since there are many partitions this still balances the load over many consumer instances. **Note however that there cannot be more consumer instances in a consumer group than partitions. **
+    >
+    > **If we add more consumers to a single group with a single topic than we  have partitions, some of the consumers will be idle and get no messages  at all.**
+
+    注意到这句话：however that there cannot be more consumer instances in a consumer group than partitions. 
+
+    实际上这个是指的是assign mode下，同一个consumer group不能多个consumer来assign到同一个partition:
+
+    ```
+    Properties props = new Properties();
+    props.put(ConsumerConfig.GROUP_ID_CONFIG, "MyConsumerGroup");
+    props.put("enable.auto.commit", "false");
+    consumer = new KafkaConsumer<>(props);
+    TopicPartition partition0 = new TopicPartition("mytopic", 0);
+    consumer.assign(Arrays.asList(partition0));
+    ConsumerRecords<Integer, String> records = consumer.poll(1000);
+    ```
+
+    如果一个consumer group启动多个consumer都选择这种assign模式，那么就会有问题，因为
+
+    It is important to recall that Kafka keeps one offset per [consumer-group, topic, partition]. That is the reason.
+
+    就是kafka自动维护的__consumer_offset是按照[consumer-group, topic, partition]来的[但是这里已经置为false了，所以应该没有问题，如果是true就有问题了，多个consumer读写同一个[consumer-group, topic, partition]就会有冲突]
+
+    而如果是使用subscribe mode，就会自动进行rebalance，如果同一个consumer group中的instance多于partition，那么没有问题，大不了consumer就idle或standby而已
 
   
 
 + Topics & logs (Logical concept)：每条发布到 kafka 集群的消息属于的类别，即 kafka 是面向 topic 的。
 
-  	LEO:: log end offset	offset+1
-    	ISR:: in-sync replicas
+   + LEO:: log end offset	offset+1
+   + ISR:: in-sync replicas
+
+   + internal topic:
+
+     + __consumer_offsets
+
+       ```
+       key:   <consumer_group>,<topic>,<partition>
+       value: <offset>,<partition_leader_epoch>,<metadata>,<timestamp>
+       ```
 
 + Partition (Physical concept): 是物理上的概念，每个 topic 包含一个或多个 partition。kafka 分配的单位是 partition。
 
@@ -294,6 +333,9 @@ Topic:my-replicated-topic       PartitionCount:1        ReplicationFactor:3     
 
 ```
 bin/kafka-console-producer.sh --broker-list localhost:9092 --topic my-replicated-topic
+
+# for test 
+bin/kafka-verifiable-producer.sh --topic consumer-tutorial --max-messages 200000 --broker-list localhost:9092
 ```
 
 ##### Consumer 
@@ -302,6 +344,38 @@ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic my-replicated
 bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic my-replicated-topic
 
 bin/kafka-console-consumer.sh --bootstrap-server <你的kafka配置> --topic T-RISK --partition 0 --offset 3350 --max-messages 1
+
+#inspect partition assignments and consumption progress 
+bin/kafka-consumer-groups.sh --new-consumer --describe --group consumer-tutorial-group --bootstrap-server localhost:9092 
+=>
+shows all the partitions assigned within the consumer group, which consumer instance owns it, and the last committed offset (reported here as the “current offset”). The lag of a partition is the difference between the log end offset and the last committed offset. 
+
+#!/usr/bin/bash
+# Copyright (c) 2016 AsiaInvestment Pte. Ltd. Singapore
+# All rights reserved.
+BOOTS_STRAP_SERVER=127.0.0.1:9092
+ZK_SERVER=127.0.0.1:2181
+pushd /apex/apps/dependency/kafka_2.12-2.2.0/bin &>/dev/null
+echo "#################################"
+echo "### TOPICS"
+echo "#################################"
+topics=(`./kafka-topics.sh --list --zookeeper $ZK_SERVER | grep -v grep  | awk '{print $1}'`)
+for topic in ${topics[@]}
+do
+./kafka-topics.sh --describe --bootstrap-server $BOOTS_STRAP_SERVER --topic $topic
+done
+echo "#################################"
+echo "### CONSUMER GROUP"
+echo "#################################"
+consumer_groups=(`./kafka-consumer-groups.sh --list --bootstrap-server $BOOTS_STRAP_SERVER | grep -v grep | awk '{print $1}'`)
+for group in ${consumer_groups[@]}
+do
+echo "                  >>>group:$group<<<"
+./kafka-consumer-groups.sh --describe --group $group --bootstrap-server $BOOTS_STRAP_SERVER
+done
+
+popd &>/dev/null
+
 ```
 
 #### 2.2.2  虚拟机远程调试 Remote 
@@ -383,20 +457,11 @@ https://dzone.com/articles/kafka-producer-and-consumer-example
 
 https://kafka.apache.org/documentation/
 
-```
-auto.create.topics.enable
-
-Enable auto creation of topic on the server
-Type:	boolean
-Default:	true
-Valid Values:	
-Importance:	high
-Update Mode:	read-only
-```
-
 
 
 ### 2.3 管理维护 Maintain
+
+https://kafka.apache.org/documentation/#operations
 
 #### 2.3.1 节点状态
 
@@ -446,13 +511,127 @@ https://cloud.tencent.com/developer/article/1349448
 
 Be aware that one use case for partitions is to semantically partition data, and adding partitions doesn't change the partitioning of existing data so this may disturb consumers if they rely on that partition. That is if data is partitioned by hash(key) % number_of_partitions then this partitioning will potentially be shuffled by adding partitions but Kafka will not attempt to automatically redistribute data in any way.
 
-#### 2.3.3 日志排查
+#### 2.3.3 工具/日志排查
+
+https://kafka.apache.org/documentation/#monitoring
+
+##### 日志位置
+
++ /kafka/logs
+
+  controller.log.2021-03-01-00
+  server.log.2021-03-01-00
+  state-change.log.2021-03-01
+
++ /kafka/kafka-logs
+
+   __consumer_offsets-0/
+
+  __transaction_state-0/
+
+  [TOPIC]-[PARTITION]/
+
+##### kafka client端日志解析
+
+```
+---------------------------------------------------------------------------
+--- metadata
+this.kafkaConsumer.partitionsFor(context.getConfig().getTaskTopic())
+=>
+2021-04-01 14:37:00.622  INFO 32380GG [main] o.a.k.c.Metadata : Cluster ID: uEekh0baSnKon5ENwtY9dg
+
+consumer.endOffsets(Collections.singleton(topicPartition)).get(topicPartition) 
+=>
+2021-04-01 14:37:51.146  INFO 32380GG [RKER-RECOVERY-2] o.a.k.c.Metadata : Cluster ID: uEekh0baSnKon5ENwtY9dg
+或
+2021-03-27 15:40:29 395-[org.apache.kafka.clients.Metadata.update(Metadata.java:365)]-[INFO]  Cluster ID: pjnHKkklRtuSQjVDsUbgVw
+
+---------------------------------------------------------------------------
+--- subscribe to topic or to topic|partition
+
+this.kafkaConsumer.subscribe(Collections.singleton(context.getConfig().getTaskTopic()), new SimpleWorkBalancer(context.getRestorer(), this::removeWorker, this::addWorker));
+=>
+2021-04-01 14:37:00.639  INFO 32380GG [main] o.a.k.c.c.KafkaConsumer : [Consumer clientId=consumer-1, groupId=CLEAR-PRICEENGINE-SZL] Subscribed to topic(s): T-QUOTATION
+
+consumer.assign(Collections.singleton(topicPartition));
+=>
+2021-04-01 14:38:09.783  INFO 32380GG [RKER-RECOVERY-2] o.a.k.c.c.KafkaConsumer : [Consumer clientId=consumer-2, groupId=RESTORE-1] Subscribed to partition(s): T-QUOTATION-SNP-1
+
+---------------------------------------------------------------------------
+--- Discover group
+consumer.poll(Duration.ofMillis(10_000L));
+=>
+如果是assign mode，如果前面没有调用endOffsets之类获取metadata，此时会打印（估计跟consumer.seek(topicPartition, checkpointOffset);有关，当然如果之前调用过就会在调用时打印，此时不会打印）：
+2021-04-01 15:56:50.755  INFO 22064GG [RKER-RECOVERY-1] o.a.k.c.Metadata : Cluster ID: uEekh0baSnKon5ENwtY9dg 
+然后打印
+2021-04-01 14:37:40.379  INFO 32380GG [CLEAR-MANAGER] ordinator$FindCoordinatorResponseHandler : [Consumer clientId=consumer-1, groupId=CLEAR-PRICEENGINE-SZL] Discovered group coordinator 10.136.100.48:9092 (id: 2147483647 rack: null)
+2021-04-01 14:38:41.369  INFO 32380GG [RKER-RECOVERY-2] ordinator$FindCoordinatorResponseHandler : [Consumer clientId=consumer-2, groupId=RESTORE-1] Discovered group coordinator 10.136.100.48:9092 (id: 2147483647 rack: null)
+
+如果触发了rebalance，则接着打印
+2021-03-31 08:59:01.727  INFO 20080GG [CLEAR-MANAGER] o.a.k.c.c.i.AbstractCoordinator : [Consumer clientId=consumer-1, groupId=CLEAR-PRICEENGINE-SZL] (Re-)joining group
+2021-03-31 08:59:01.904  INFO 20080GG [CLEAR-MANAGER] o.a.k.c.c.i.AbstractCoordinator : [Consumer clientId=consumer-1, groupId=CLEAR-PRICEENGINE-SZL] (Re-)joining group
+2021-03-31 08:59:04.122  INFO 20080GG [CLEAR-MANAGER] o.a.k.c.c.i.AbstractCoordinator$1 : [Consumer clientId=consumer-1, groupId=CLEAR-PRICEENGINE-SZL] Successfully joined group with generation 10
+
+```
+
+##### kafka Common Exceptions
+
+Kafka常见错误整理 https://cloud.tencent.com/developer/article/1508919
+
+```
+--- LEADER_NOT_AVAILABLE: 
+topic 可能不存在，kafka api默认会自动创建
+
+--- offset commit failed on partition this is not the correct coordinator
+
+--- Offset commit failed on partition xxx at offset 957: The coordinator is not aware of this member
+https://www.cnblogs.com/chuijingjing/p/12797035.html
+
+--- topic not presetn in metadata after 6000ms
+partition 可能不存在或者是其他问题，比如
+https://blog.csdn.net/bay_bai/article/details/104799498
+https://github.com/wurstmeister/kafka-docker/issues/553
+
+--- Connection to node -1 could not be established. Broker may not be available.
+listener设置不对
+https://blog.csdn.net/Mr_hou2016/article/details/79484032
+
+--- Connection to node -2 could not be established. Broker may not be available.
+
+--- org.apache.kafka.common.errors.TimeoutException: Failed to get offsets by times in 30000ms
+endOffsets()->fetchOffsetsByTimes
+
+--- UNKNOWN_MEMBER_ID
+Attempt to heartbeat failed for since member id consumer-1-c4ff67d3-b776-4994-9179-4a19f9ff87a6 is not valid
+如果当前 group 的状态为 Dead，则说明对应的 group 不再可用，或者已经由其它 GroupCoordinator 实例管理，直接响应 UNKNOWN_MEMBER_ID 错误，消费者可以再次请求获取新接管的 GroupCoordinator 实例所在的位置信息。
+
+--- Group coordinator is unavailable or invalid
+Group coordinator 192.168.11.55:9092 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery
+
+--- CommitFailedException
+If a simple consumer(assign mode) tries to commit offsets with a group id which matches an active consumer group, the coordinator will reject the commit (which will result in a CommitFailedException). However, there won’t be any errors if another simple consumer instance shares the same group id.
+
+--- INVALID_FETCH_SESSION_EPOCH.
+Node 1 was unable to process the fetch request with (sessionId=1972558084, epoch=904746): INVALID_FETCH_SESSION_EPOCH.
+```
+
+
+
+##### kafka-log-dirs.sh
+
+```
+./bin/kafka-log-dirs.sh --describe --bootstrap-server hostname:port --broker-list broker 1, broker 2 --topic-list topic 1, topic 2
+```
+
+##### kafka-dump-log.sh
 
 KAFKA Internal consumer topic log：
 
 ```
 ./bin/kafka-dump-log.sh --files ./kafka-logs/T-TOPIC-1/00000000000000000192.log --print-data-log
 ```
+
+##### kafka-console-consumer.sh 
 
 KAFKA Internal offset topic: `__consumer_offsets`:
 
@@ -812,8 +991,40 @@ Kafka Stream有一些关键东西没有解决，例如在join场景中，需要�
 ## 4.Indepth 
 nothing to guarantee/at-most-once => at-least-once => exactly-once
 
-
 https://kafka.apache.org/documentation/#design
+
+### 4.0 Config
+
+https://docs.confluent.io/platform/current/installation/configuration
+
+```
+--- auto.create.topics.enable
+
+Enable auto creation of topic on the server
+Type:	boolean
+Default:	true
+Valid Values:	
+Importance:	high
+Update Mode:	read-only
+
+--- request.timeout.ms
+The configuration controls the maximum amount of time the client will wait for the response of a request. If the response is not received before the timeout elapses the client will resend the request if necessary or fail the request if retries are exhausted.
+
+Type:	int
+Default:	30000 (30 seconds)
+
+--- scheduled.rebalance.max.delay.ms
+The maximum delay that is scheduled in order to wait for the return of one or more departed workers before rebalancing and reassigning their connectors and tasks to the group. During this period the connectors and tasks of the departed workers remain unassigned
+
+Type:	int
+Default:	300000 (5 minutes)
+
+--- session.timeout.ms
+ After every rebalance, all members of the current generation begin sending periodic heartbeats to the group coordinator. As long as the coordinator continues receiving heartbeats, it assumes that members are healthy. On every received heartbeat, the coordinator starts (or resets) a timer. If no heartbeat is received when the timer expires, the coordinator marks the member dead and signals the rest of the group that they should rejoin so that partitions can be reassigned. The duration of the timer is known as the session timeout and is configured on the client with the setting session.timeout.ms. 
+  The only problem with this is that a spurious rebalance might be triggered if the consumer takes longer than the session timeout to process messages. You should therefore set the session timeout large enough to make this unlikely. The default is 30 seconds, but it’s not unreasonable to set it as high as several minutes. The only downside of a larger session timeout is that it will take longer for the coordinator to detect genuine consumer crashes.
+```
+
+
 
 ### 4.1 Consumer Indepth
 
@@ -852,7 +1063,13 @@ https://stackoverflow.com/questions/56047968/kafka-isolation-level-implications
 public ConsumerRecords<K,V> poll(long timeout)
 ```
 
+The poll API returns fetched records based on the current position. 
+
 On each poll, consumer will try to use the last consumed offset as the starting offset and fetch sequentially. The last consumed offset can be manually set through [`seek(TopicPartition, long)`](https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#seek-org.apache.kafka.common.TopicPartition-long-) or automatically set as the last committed offset for the subscribed list of partitions 即如果不显示调用 seek来设置其位置，将会自动使用interal offset来定位其最后一次消费的位置。
+
+更完整的：
+
+When the group is **first created**, the position will be set according to the reset policy (which is typically either set to the earliest or latest offset for each partition defined by the auto.offset.reset). Once the consumer begins committing offsets, then each **later rebalance** will reset the position to the last committed offset. The parameter passed to poll controls the maximum amount of time that the consumer will block while it awaits records at the current position. The consumer returns immediately as soon as any records are available, but it will wait for the full timeout specified before returning if nothing is available.
 
 注意：只是subscribe topic并不能立即引发rebalance，可以在subscribe之后poll，从而立即引发rebalance：
 
@@ -900,6 +1117,14 @@ Setting `enable.auto.commit` **means that offsets are committed automatically wi
              System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
      }
 ```
+
+![](/docs/docs_image/software/buildingblock/kafka/kafka_consumer_position.png)
+
+图中 high waterMark和log end offset是上游producer发布的消息offset，其中high watermark是代表全部replicate结束，所以consumer最多能读取到high watermark位置，last committed log是指consumer消费完之后，自动提交的offset
+
+When a partition gets reassigned to another consumer in the group, the initial position is set to the last committed offset. If the consumer in the example above suddenly crashed, then the group member taking over the partition would begin consumption from offset 1. In that case, it would have to reprocess the messages up to the crashed consumer’s position of 6.
+
+The diagram also shows two other significant positions in the log. The log end offset is the offset of the last message written to the log. The high watermark is the offset of the last message that was successfully copied to all of the log’s replicas. From the perspective of the consumer, the main thing to know is that you can only read up to the high watermark. This prevents the consumer from reading unreplicated data which could later be lost.
 
 ##### 手动提交offset，at-least-once
 
@@ -1425,8 +1650,227 @@ High watermark
 If you want to improve the reliability of the data, set the request.required.acks = -1, but also min.insync.replicas this parameter (which can be set in the broker or topic level) to achieve maximum effectiveness. 
 https://medium.com/@mukeshkumar_46704/in-depth-kafka-message-queue-principles-of-high-reliability-42e464e66172
 
-#### consumer group coordinator
+#### Consumer coordinator & Group coordinator & Rebalance
+
+> While the old consumer depended on Zookeeper for group management, the new consumer uses a group coordination protocol built into Kafka itself. For each group, one of the brokers is selected as the *group coordinator*. The coordinator is responsible for managing the state of the group. Its main job is to mediate partition assignment when new members arrive, old members depart, and when topic metadata changes. The act of reassigning partitions is known as *rebalancing* the group.
+>
+> https://www.confluent.io/blog/tutorial-getting-started-with-the-new-apache-kafka-0-9-consumer-client/
+
+keyword: 
+
++ GroupCoordinator  服务端 borker（Kafka 会依据请求的 group 的 ID 查找对应 offset topic [__consumer_offsets?]分区 leader 副本所在的 broker 节点：__
+
+  每个 Group 都会选择一个 Coordinator 来完成自己组内各 Partition 的 Offset 信息，选择的规则如下： 1. 计算 Group 对应在 __consumer_offsets` 上的 `Partition 2. 根据对应的Partition寻找该Partition的leader所对应的Broker，该Broker上的Group Coordinator即就是该Group的Coordinator）
+
++ ConsumerCoordinator 
+
++ Consumer leader/follower 第一个申请加入group的consumer作为leader，在服务端确定好分区分配策略之后，具体执行分区分配的工作则交由 leader 消费者负责，并在完成分区分配之后将分配结果反馈给服务端
+
 https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Client-side+Assignment+Proposal
+
+https://www.zhenchao.org/2019/06/25/kafka/kafka-group-coordinator/
+
+在 kafka-0.10 版本，Kafka 在**服务端引入了组协调器(GroupCoordinator)**，每个 Kafka Server 启动时都会创建一个 GroupCoordinator 实例，**用于管理部分消费者组和该消费者组下的每个消费者的消费偏移量**。同时**在客户端引入了消费者协调器(ConsumerCoordinator)**，实例化一个消费者就会实例化一个 ConsumerCoordinator 对象，ConsumerCoordinator **负责同一个消费者组下各消费者与服务端的 GroupCoordinator 进行通信**。
+
+##### 客户端-消费者协调器(ConsumerCoordinator)
+
+To control this assignment, users can either write an implementation of the [`PartitionAssignor`](https://github.com/apache/kafka/blob/2.2/clients/src/main/java/org/apache/kafka/clients/consumer/internals/PartitionAssignor.java) interface or use one of the three provided implementations (configured through the `partition.assignment.strategy` config):
+
+- [`RangeAssignor`](https://github.com/apache/kafka/blob/b6d1450012734a841fdf85400636593092cf7e2b/clients/src/main/java/org/apache/kafka/clients/consumer/RangeAssignor.java#L29): For each topic, divide its partitions by the number of consumers subscribed to it and assign X to each (lexicographically sorted) consumer. If it does not evenly divide, the first consumers will have more partitions.
+- [`RoundRobinAssignor`](https://github.com/apache/kafka/blob/2.2/clients/src/main/java/org/apache/kafka/clients/consumer/RoundRobinAssignor.java): Assign all partitions from all the subscribed topics to each consumer sequentially, one by one.
+- [`StickyAssignor`](https://github.com/apache/kafka/blob/2.2/clients/src/main/java/org/apache/kafka/clients/consumer/StickyAssignor.java): Assign partitions so that they are distributed as evenly as possible. During rebalances, partitions stay with their previously assigned consumers as much as possible.
+
+Additionally, the `PartitionAssignor` interface exposes a `metadata()` method. Every consumer in the group can use this method to send generic metadata about itself to the broker when joining a group. Once a rebalance is in the works, every consumer’s metadata is propagated to the group leader. This enables the leader to make a well-informed decision about assigning partitions (e.g., by considering a consumer application’s datacenter rack).
+
+```java
+public class KafkaConsumer<K, V> implements Consumer<K, V> {
+    private final ConsumerCoordinator coordinator;
+}
+public final class ConsumerCoordinator extends AbstractCoordinator {
+    private final List<PartitionAssignor> assignors;
+    private final OffsetCommitCallback defaultOffsetCommitCallback;
+    private final SubscriptionState subscriptions;
+    private final ConsumerInterceptors<?, ?> interceptors;
+    private boolean isLeader = false;
+    private MetadataSnapshot metadataSnapshot;
+    private MetadataSnapshot assignmentSnapshot;
+    
+    省略了部分代码....
+}
+
+
+public abstract class AbstractCoordinator implements Closeable {
+    private enum MemberState {
+        UNJOINED,    // the client is not part of a group
+        REBALANCING, // the client has begun rebalancing
+        STABLE,      // the client has joined and is sending heartbeats
+    }
+
+    private final Heartbeat heartbeat;
+    protected final ConsumerNetworkClient client;
+    private HeartbeatThread heartbeatThread = null;
+    private MemberState state = MemberState.UNJOINED;
+    private RequestFuture<ByteBuffer> joinFuture = null;
+    
+    省略了部分代码....
+}
+```
+
+ConsumerCoordinator 是 KafkaConsumer 的一个私有的成员变量，因此 ConsumerCoordinator 中存储的信息也只有与之对应的消费者可见，不同消费者之间是看不到彼此的 ConsumerCoordinator 中的信息的。
+
+ConsumerCoordinator 的作用：
+
+- 处理更新消费者缓存的 Metadata 请求
+- 向组协调器发起加入消费者组的请求
+- 对本消费者加入消费者前后的相应处理
+- 请求离开消费者组(例如当消费者取消订阅时)
+- 向组协调器发送提交偏移量的请求
+- 通过一个定时的心跳检测任务来让组协调器感知自己的运行状态
+- Leader消费者的 ConsumerCoordinator 还负责执行分区的分配，一个消费者组中消费者 leader 由组协调器选出，leader 消费者的 ConsumerCoordinator 负责消费者与分区的分配，然后把分配结果发送给组协调器，然后组协调器再把分配结果返回给其他消费者的消费者协调器，这样减轻了服务端的负担
+
+ConsumerCoordinator 实现上述功能的组件是 ConsumerCoordinator 类的私有成员或者是其父类的私有成员：
+
+![](/docs/docs_image/software/buildingblock/kafka/kafka_consumercoordinator.png)
+
+##### 服务端-组协调器(GroupCoordinator)
+
+```
+class GroupCoordinator(
+                       val brokerId: Int, // 所属的 broker 节点的 ID
+                       val groupConfig: GroupConfig, // Group 配置对象，记录了 group 中 session 过期的最小时长和最大时长，即超时时长的合法区间
+                       val offsetConfig: OffsetConfig, // 记录 OffsetMetadata 相关的配置项
+                       val groupManager: GroupMetadataManager, // 负责管理 group 元数据以及对应的 offset 信息
+                       val heartbeatPurgatory: DelayedOperationPurgatory[DelayedHeartbeat], // 管理 DelayedHeartbeat 延时任务的炼狱
+                       val joinPurgatory: DelayedOperationPurgatory[DelayedJoin], // 管理 DelayedJoin 延时任务的炼狱
+                       time: Time) extends Logging {
+
+    /** 标识当前 GroupCoordinator 实例是否启动 */
+    private val isActive = new AtomicBoolean(false)
+
+    // ... 省略方法定义
+
+}
+
+其中 GroupMetadataManager 类主要用于管理消费者 group 的元数据信息和 offset 相关信息
+
+Kafka 服务在启动时针对每一个 broker 节点都会创建一个 GroupCoordinator 实例，并调用 GroupCoordinator#startup 方法启动运行。GroupCoordinator 在启动时主要是调用了 GroupMetadataManager#enableMetadataExpiration 方法启动 delete-expired-group-metadata 定时任务
+
+定时任务 delete-expired-group-metadata 的主要作用在于从 group 的元数据信息中移除那些已经过期的 topic 分区对应的 offset 元数据，并将这些元数据以消息的形式记录到 offset topic 中，具体执行流程如下：
+
+1.依据当前时间戳计算并获取已经过期的 topic 分区对应的 offset 元数据信息；
+2.将状态为 Empty 且名下记录的所有 offset 元数据都已经过期的 group 切换成 Dead 状态；
+3.如果 group 已经失效，则从 GroupCoordinator 本地移除对应的元数据信息，并与步骤 1 中获取到的 offset 元数据信息一起封装成消息记录到 offset topic 中。
+具体逻辑由 GroupMetadataManager#cleanupGroupMetadata 方法实现
+
+
+GroupState 特质定义了 group 的状态，并由 GroupCoordinator 进行维护。围绕 GroupState 特质，Kafka 实现了 5 个样例对象，分别用于描述 group 的 5 种状态：
+
+PreparingRebalance ：表示 group 正在准备执行分区再分配操作。
+AwaitingSync ：表示 group 正在等待 leader 消费者的分区分配结果，新版本已更名为 CompletingRebalance。
+Stable ：表示 group 处于正常运行状态。
+Dead ：表示 group 名下已经没有消费者，且对应的元数据已经（或正在）被删除。
+Empty ：表示 group 名下已经没有消费者，并且正在等待记录的所有 offset 元数据过期。
+
+
+```
+
+
+
+GroupCoordinator 的作用：
+
+- 负责对其管理的组员(消费者)提交的相关请求进行处理
+- 与消费者之间建立连接，并从与之连接的消费者之间选出一个 leader
+- 当 leader 分配好消费者与分区的订阅关系后，会把结果发送给组协调器，组协调器再把结果返回给各个消费者
+- 管理与之连接的消费者的消费偏移量的提交，将每个消费者的消费偏移量保存到kafka的内部主题中
+- 通过心跳检测消费者与自己的连接状态
+- 启动组协调器的时候创建一个定时任务，用于清理过期的消费组元数据以及过去的消费偏移量信息
+
+GroupCoordinator 依赖的组件及其作用：
+
+![](/docs/docs_image/software/buildingblock/kafka/kafka_groupcoordinator.png)
+
+- KafkaConfig：实例化 OffsetConfig 和 GroupConfig
+- ZkUtils：分消费者分配组协调器时从Zookeeper获取内部主题的分区元数据信息。
+- GroupMetadataManager：负责管理 GroupMetadata以及消费偏移量的提交，并提供了一系列的组管理的方法供组协调器调用。GroupMetadataManager 不仅把 GroupMetadata 写到kafka内部主题中，而且还在内存中缓存了一份GroupMetadata，其中包括了组员(消费者)的元数据信息，例如消费者的 memberId、leaderId、分区分配关系，状态元数据等。状态元数据可以是以下五种状态： 
+  - PreparingRebalance：消费组准备进行平衡操作
+  - AwaitingSync：等待leader消费者将分区分配关系发送给组协调器
+  - Stable：消费者正常运行状态，心跳检测正常
+  - Dead：处于该状态的消费组没有任何消费者成员，且元数据信息也已经被删除
+  - Empty：处于该状态的消费组没有任何消费者成员，但元数据信息也没有被删除，知道所有消费者对应的消费偏移量元数据信息过期。
+- ReplicaManager：GroupMetadataManager需要把消费组元数据信息以及消费者提交的已消费偏移量信息写入 Kafka 内部主题中，对内部主题的操作与对其他主题的操作一样，先通过 ReplicaManager 将消息写入 leader 副本，ReplicaManager 负责 leader 副本与其他副本的管理。
+- DelayedJoin：延迟操作类，用于监视处理所有消费组成员与组协调器之间的心跳超时
+- GroupConfig：定义了组成员与组协调器之间session超时时间配置
+
+##### 消费者协调器和组协调器的交互 
+
+核心就是 rebalance
+
+https://chrzaszcz.dev/2019/06/kafka-rebalancing/
+
+https://cwiki.apache.org/confluence/display/KAFKA/KIP-429%3A+Kafka+Consumer+Incremental+Rebalance+Protocol
+
+https://www.slideshare.net/ConfluentInc/the-silver-bullet-for-endless-rebalancing
+
+![](/docs/docs_image/software/buildingblock/kafka/kafka_rebalance.png)
+
+(1) 心跳
+
+消费者协调器通过和组协调器发送心跳来维持它们和群组的从属关系以及它们对分区的所有权关系。只要消费者以正常的时间间隔发送心跳，就被认为是活跃的，说明它还在读取分区里的消息。消费者会在轮询获取消息或提交偏移量时发送心跳。
+
+如果消费者停止发送心跳的时间足够长，会话就会过期，组协调器认为它已经死亡，就会触发一次再均衡。
+
+在 0.10 版本里，心跳任务由一个独立的心跳线程来执行，可以在轮询获取消息的空档发送心跳。这样一来，发送心跳的频率（也就是组协调器群检测消费者运行状态的时间）与消息轮询的频率（由处理消息所花费的时间来确定）之间就是相互独立的。在0.10 版本的 Kafka 里，可以指定消费者在离开群组并触发再均衡之前可以有多长时间不进行消息轮询，这样可以避免出现活锁（livelock），比如有时候应用程序并没有崩溃，只是由于某些原因导致无法正常运行。这个配置与 session.timeout.ms 是相互独立的，后者用于控制检测消费者发生崩溃的时间和停止发送心跳的时间。
+
+(2) 分区再均衡
+
+发生分区再均衡的3种情况：
+
+- 一个新的消费者加入群组时，它读取的是原本由其他消费者读取的消息。
+- 当一个消费者被关闭或发生崩溃时，它就离开群组，原本由它读取的分区将由群组里的其他消费者来读取。如果一个消费者主动离开消费组，消费者会通知组协调器它将要离开群组，组协调器会立即触发一次再均衡，尽量降低处理停顿。如果一个消费者意外发生崩溃，没有通知组协调器就停止读取消息，组协调器会等待几秒钟，确认它死亡了才会触发再均衡。在这几秒钟时间里，死掉的消费者不会读取分区里的消息。
+- 在主题发生变化时，比如管理员添加了新的分区，会发生分区重分配。
+
+分区的所有权从一个消费者转移到另一个消费者，这样的行为被称为分区再均衡。再均衡非常重要，它为消费者群组带来了高可用性和伸缩性（我们可以放心地添加或移除消费者），不过在正常情况下，我们并不希望发生这样的行为。在再均衡期间，消费者无法读取消息，造成整个群组一小段时间的不可用。另外，当分区被重新分配给另一个消费者时，消费者当前的读取状态会丢失，它有可能还需要去刷新缓存，在它重新恢复状态之前会拖慢应用程序。
+
+(3) leader 消费者分配分区的策略
+
+当消费者要加入群组时，它会向群组协调器发送一个 JoinGroup 请求。第一个加入群组的消费者将成为leader消费者。leader消费者从组协调器那里获得群组的成员列表（列表中包含了所有最近发送过心跳的消费者，它们被认为是活跃的），并负责给每一个消费者分配分区。
+
+每个消费者的消费者协调器在向组协调器请求加入组时，都会把自己支持的分区分配策略报告给组协调器(轮询或者是按跨度分配或者其他)，组协调器选出该消费组下所有消费者都支持的的分区分配策略发送给leader消费者，leader消费者根据这个分区分配策略进行分配。
+
+完毕之后，leader消费者把分配情况列表发送给组协调器，消费者协调器再把这些信息发送给所有消费者。每个消费者只能看到自己的分配信息，只有leader消费者知道群组里所有消费者的分配信息。这个过程会在每次再均衡时重复发生。
+
+(4) 消费者入组过程
+
+- 消费者创建后，消费者协调器会选择一个负载较小的节点，向该节点发送寻找组协调器的请求
+
+-  KafkaApis 处理请求，调用返回组协调器所在的节点，过程如下：
+
+  ```
+  def partitionFor(group: String): Int = groupManager.partitionFor(group)
+  https://github.com/a0x8o/kafka/blob/master/core/src/main/scala/kafka/coordinator/group/GroupCoordinator.scala
+  =>
+  groupId的哈希值的绝对值对 __consumer_offset 这个topic的partition的个数（默认50）取余 得到一个分区的id
+  def partitionFor(groupId: String): Int = Utils.abs(groupId.hashCode) % groupMetadataTopicPartitionCount
+  https://github.com/a0x8o/kafka/blob/master/core/src/main/scala/kafka/coordinator/group/GroupMetadataManager.scala
+  =>
+  该分区的leader副本所在的节点就是组协调器所在的节点，该消费组的元数据信息以及消费者消费偏移量信息都会写到__consumer_offset的这个分区中
+  ```
+
+  
+
+- 找到组协调器后，消费者协调器申请加入消费组，发送 JoinGroupRequest请求
+
+- KafkaApis 调用 handleJoinGroup() 方法处理请求 
+
+  - 把消费者注册到消费组中
+  - 把消费者的clientId与一个UUID值生成一个memberId分配给消费者
+  - 构造器该消费者的MemberMetadata信息
+  - 把该消费者的MemberMetadata信息注册到GroupMetadata中
+  - 第一个加入组的消费者将成为leader
+
+- 把处理JoinGroupRequest请求的结果返回给消费者
+
+- 加入组成功后，进行分区再均衡
 
 
 

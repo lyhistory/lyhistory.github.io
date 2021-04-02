@@ -199,6 +199,22 @@ Permissions take a different meaning for directories. Here's what they mean:
 + 源码编译安装
 
   configuration或cmake之后make install，通常安装的路径在 install_manifest.txt，所以删除方式：`cat install_manifest.txt | xargs echo sudo rm | sh`
+  
+  > The steps:
+  >
+  > 1. The `autogen.sh` script generates the `configure` script (from `configure.ac`, using autoconf) and any files it needs (like creating `Makefile.in` from `Makefile.am` using automake). This requires autotools to be installed on your system, and it must be run when checking out the project from source control (if `configure` isn’t checked in). People who download source tarballs can usually skip this step, because output of this step is included in source tarballs.
+  >
+  >    **Note** This is usually equivalent to `autoreconf --install`. If there is not `autogen.sh` file, then just run `autoreconf --install` instead. If you have inherited a project with an `autogen.sh`, consider deleting it if you can use `autoreconf --install`.
+  >
+  > 2. The `configure` script generates `Makefile` and other files needed to build. Typically `Makefile.in` is used as a template to generate `Makefile` (and `config.h.in` to generate `config.h`). This process happens using only standard tools installed on your system, like sed and awk, and doesn't require autotools to be installed.
+  >
+  > 3. The `make` command builds the software.
+  >
+  > 4. The `make install` command installs it.
+  >
+  > https://stackoverflow.com/questions/50044091/what-is-the-job-of-autogen-sh-when-building-a-c-package-on-linux
+  
+  
 
 常见问题：
 
