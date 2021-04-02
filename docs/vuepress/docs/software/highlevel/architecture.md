@@ -154,7 +154,7 @@ Advantage:
 1.Different components can be changed in isolation without affecting the rest of the components thus making application easier to maintain.
 2.It is more suited to the agile methodology in which changes happen very frequently thus tight coupling will not allow future enhancement.
 3.Creating mock tests is easier as the actual objects can be easily replaced with mock objects.
- 
+
 question: repository vs dal/orm ? repository with DDD? repository and business logic ? dbcontext vs repository?
 
 from http://stackoverflow.com/questions/14092234/how-does-the-repository-pattern-differ-from-a-simple-data-access-layer::
@@ -190,7 +190,7 @@ http://geekswithblogs.net/Aligned/archive/2013/03/12/herersquos-how-the-unit-of-
 https://msdn.microsoft.com/en-us/magazine/dd882510.aspx
 http://codetunnel.io/how-to-combine-the-unit-of-work-pattern-and-repository-pattern-in-an-easy-and-intuitive-way/
 Unit of Work Concurrency
- 
+
 Generic Unit of Work & (Extensible) Repositories Framework https://genericunitofworkandrepositories.codeplex.com/
 Generic Repository and Unit of Work Pattern, Entity Framework, Unit Testing, Autofac IoC Container and ASP.NET MVC
 http://techbrij.com/generic-repository-unit-of-work-entity-framework-unit-testing-asp-net-mvc
@@ -204,14 +204,14 @@ https://cockneycoder.wordpress.com/2013/04/07/why-entity-framework-renders-the-r
 Business Layer - Facade Pattern:
 
 Provide a unified interface to a set of interfaces in a subsystem. Façade defines a higher-level interface that makes the subsystem easier to use.
- 
+
 Sessions in ASP.NET MVC using Dependency Injection
 Don’t Do Role-Based Authorization Checks; Do Activity-Based Checks
- 
+
 Customer Relationship Management (CRM)
 
 Cross Cutting Layer - IOC ???:
- 
+
 AutoFac/Unity
 Resolver Container ILifetimescope
 http://blog.darkthread.net/post-2013-11-03-autofac-notes-3-lifetime-scope.aspx
@@ -306,3 +306,4 @@ https://eng.uber.com/multitenancy-microservice-architecture/
 
 .NET技术+25台服务器怎样支撑世界第54大网站 https://www.csdn.net/article/2014-07-22/2820774-stackoverflow-update-560m-pageviews-a-month-25-servers
 
+可伸缩性最佳实践：来自eBay的经验 https://kb.cnblogs.com/page/157745/
