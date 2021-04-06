@@ -52,8 +52,10 @@ set -x 可以显示shell在执行什么程序
 
   管道：
 
-  ps -aef | grep -v grep | grep "java -server -jar" | awk '{print $2}'
+  `ps -aef | grep -v grep | grep "java -server -jar" | awk '{print $2}'`
   $(2)获取管道前面等输出结果第二列,此时可以用$2替代；
+
+  `yes|cp -r source_folder target_folder/`
 
   标准输入重定向符：
 
@@ -176,7 +178,7 @@ Permissions take a different meaning for directories. Here's what they mean:
   
   ​	i) 特定用户的PATH  ~/bashrc  ~/bash_profile
   
-  ​	ii) system wide全局PATH /etc/profile或/root/.bashrc 
+  ​	ii) system wide全局PATH /etc/profile或/root/.bashrc  (/etc/environment?)
   
   Anything in `~/.profile` and `~/.bashrc` is run *after* `/etc/profile` and `/bash.bashrc` 
   

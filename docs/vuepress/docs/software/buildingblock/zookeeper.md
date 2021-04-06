@@ -6,16 +6,52 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《分布式框架zookeeper》
 
-# QuickStart: 
+## QuickStart: 
 
-## Install & usage
+### Install & usage
 
 https://cwiki.apache.org/confluence/display/ZOOKEEPER/Index
 https://zookeeper.apache.org/doc/current/index.html
 
+https://docs.confluent.io/platform/current/zookeeper/deployment.html
+
+集群配置：
+
+```
+This example is for a 3 node ensemble：
+
+# The number of milliseconds of each tick                      
+tickTime=2000                                                  
+# The number of ticks that the initial                         
+# synchronization phase can take                               
+initLimit=10                                                   
+# The number of ticks that can pass between                    
+# sending a request and getting an acknowledgement             
+syncLimit=5                                                    
+# the directory where the snapshot is stored.                  
+# do not use /tmp for storage, /tmp here is just               
+# example sakes.                                               
+dataDir=/opt/dependency/zookeeper-3.4.8/zkdata           
+dataLogDir=/opt/dependency/zookeeper-3.4.8/logs          
+# the port at which the clients will connect                   
+clientPort=2181                                                
+server.1=1.1.1.1:2888:3888                               
+server.2=1.1.1.2:2888:3888                               
+server.3=1.1.1.3:2888:3888                               
+SERVER_JVMFLAGS=-Xmx1024m'                                     
+```
+
+
+
 ？Failed to start and no log
 Resolved: yum install glibc.i686
+
+```
 ./bin/zkServer.sh start-foreground
+```
+
+
+
 $ java -version
 bash: /apps/dependency/java-se-8u40-ri/bin/java: /lib/ld-linux.so.2: bad ELF interpreter: No such file or directory
 [clear@sgkc2-devclr-v08 dependency]$ /lib/ld-linux.so.2: bad ELF interpreter: No such file or directory
@@ -31,7 +67,8 @@ bin/zkCli.sh -server 127.0.0.1:2181
 	delete /test
 	
 
-## 编译源码
+### 编译源码
+
 https://www.cnblogs.com/MangoCai/p/10846187.html
 
 安装ant，设置%ANT_HOME%\bin
@@ -56,7 +93,7 @@ dataDir=C:\Workspace\Repository\zookeeper-release-3.5.6\dataDir
 运行
 ```/bin/zkServer.cmd /bin/zkCli.cmd```
 
-## 管理脚本
+### 管理脚本
 
 ```shell
 readonly PROGNAME=$(basename $0)
@@ -140,15 +177,52 @@ fi
 exit $L_RETURN_FLAG
 ```
 
+## 工具/日志排查
 
-
-# 工具/日志排查
+https://zookeeper.apache.org/doc/r3.3.2/zookeeperAdmin.html
 
 工具集合：
 
 https://github.com/apache/zookeeper/blob/master/zookeeper-docs/src/main/resources/markdown/zookeeperTools.md
 
-日志：
+### Application Log
+
+```
+zkServer.sh start的log默认是在：
+/bin/zookeeper.out
+
+使用/conf/log4j.properties 设置为 zookeeper.log
+https://stackoverflow.com/questions/28691341/zookeeper-log-file-not-created-inside-logs-directory
+https://stackoverflow.com/questions/26612908/why-does-zookeeper-not-use-my-log4j-properties-file-log-directory
+
+实例：
+发现某个节点
+netstat -anp|grep :2181 以及
+netstat -anp|grep :2888 （ensemble节点互通端口）
+出现大量的time_wait tcp连接，来自于各个节点，
+最后通过查看
+tail -f /bin/zookeeper.out 发现：
+2021-04-06 20:58:23,958 [myid:1] - WARN  [QuorumPeer[myid=1]/0.0.0.0:2181:Follower@89] - Exception when following the leader
+java.io.IOException: Permission denied                                                                       
+        at java.io.UnixFileSystem.createFileExclusively(Native Method)                
+        at java.io.File.createNewFile(File.java:1012) 
+        at org.apache.zookeeper.server.quorum.Learner.syncWithLeader(Learner.java:436)                   
+        at org.apache.zookeeper.server.quorum.Follower.followLeader(Follower.java:82)
+        at org.apache.zookeeper.server.quorum.QuorumPeer.run(QuorumPeer.java:846)                      
+2021-04-06 20:58:23,959 [myid:1] - INFO  [QuorumPeer[myid=1]/0.0.0.0:2181:Follower@166] - shutdown called    java.lang.Exception: shutdown Follower  
+		at org.apache.zookeeper.server.quorum.Follower.shutdown(Follower.java:166)                   
+        at org.apache.zookeeper.server.quorum.QuorumPeer.run(QuorumPeer.java:850) 
+2021-04-06 20:58:23,959 [myid:1] - INFO  [QuorumPeer[myid=1]/0.0.0.0:2181:FollowerZooKeeperServer@140] - Shutting down
+然后通过permission denied判断是权限问题，因为启动的时候是用的普通user，发现
+find zookeeper/ -group root
+发现了zkdata下面的文件都是root的，修改权限即可
+https://stackoverflow.com/questions/54087210/kafka-create-too-many-time-wait-tcp-connection/66969946#66969946
+其他类似案例：https://www.cnblogs.com/duanxz/p/3768454.html
+```
+
+
+
+### Data Log
 
 https://stackoverflow.com/questions/17894808/how-do-one-read-the-zookeeper-transaction-log
 
@@ -196,12 +270,12 @@ https://zookeeper.apache.org/doc/r3.4.13/zookeeperAdmin.html#sc_zkCommands
 Baseline 
 https://cwiki.apache.org/confluence/display/ZOOKEEPER/ServiceLatencyOverview
 
-# programming
+## 开发 programming
 
 https://cwiki.apache.org/confluence/display/ZOOKEEPER/ErrorHandling
 https://zookeeper.apache.org/doc/current/zookeeperProgrammers.html
 
-# 原理解读
+## 原理解读
 
 ![](/docs/docs_image/software/zookeeper/zookeeper03.png)
 ![](/docs/docs_image/software/zookeeper/zookeeper04.png)
@@ -416,8 +490,8 @@ listener.childEvent(client, event);
 然后看到前面CuratorFramework还调用了processEvent，继续查到里面是调用CuratorListener，
 我们事先并没有注册任何CuratorListener，而是调用的PathChildrenCacheListener，所以这个processEvent这里没有起到任何作用；
 
+## 深入解读
 
-# 深入解读
 https://cwiki.apache.org/confluence/display/ZOOKEEPER/ZooKeeperPresentations
 Sometimes developers mistakenly assume one other guarantee that ZooKeeper does not in fact make. This is: * Simultaneously Consistent Cross-Client Views* : ZooKeeper does not guarantee that at every instance in time, two different clients will have identical views of ZooKeeper data. Due to factors like network delays, one client may perform an update before another client gets notified of the change. Consider the scenario of two clients, A and B. If client A sets the value of a znode /a from 0 to 1, then tells client B to read /a, client B may read the old value of 0, depending on which server it is connected to. If it is important that Client A and Client B read the same value, Client B should should call the sync() method from the ZooKeeper API method before it performs its read. So, ZooKeeper by itself doesn't guarantee that changes occur synchronously across all servers, but ZooKeeper primitives can be used to construct higher level functions that provide useful client synchronization. (For more information, see the ZooKeeper Recipes. [tbd:..]).
 

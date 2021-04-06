@@ -121,6 +121,8 @@ Overview:
 
 ### 2.1 安装 install
 
+#### 安装kafka
+
 ```shell
 ------------------------------------------------------------------------
 --- Creating a User for Kafka
@@ -156,7 +158,7 @@ delete.topic.enable = true
 log.retention.hours=168
 log.dirs=/opt/kafka_2.12-2.2.0/kafka-logs
 #外置zookeeper
-zookeeper.connect=10.136.100.48:2181,10.136.100.49:2181,10.136.100.50:2181
+zookeeper.connect=1.1.1.1:2181,1.1.1.2:2181,1.1.1.3:2181
 
 ------------------------------------------------------------------------
 --- Option 1: Creating Systemd Unit Files and Starting the Kafka Server
@@ -282,6 +284,45 @@ sudo passwd kafka -l (对应unlock：sudo passwd kafka -u)
 sudo su - kafka
 
 
+```
+
+#### 使用external zookeeper
+
+```
+kafka配置：
+
+# Zookeeper connection string (see zookeeper docs for details).
+# This is a comma separated host:port pairs, each corresponding to a zk
+# server. e.g. "127.0.0.1:3000,127.0.0.1:3001,127.0.0.1:3002".
+# You can also append an optional chroot string to the urls to specify the
+# root directory for all kafka znodes.
+zookeeper.connect=1.1.1.1:2181,1.1.1.2:2181,1.1.1.3:2181
+
+# Timeout in ms for connecting to zookeeper
+zookeeper.connection.timeout.ms=6000
+
+zookeeper配置：
+This example is for a 3 node ensemble：
+
+# The number of milliseconds of each tick                      
+tickTime=2000                                                  
+# The number of ticks that the initial                         
+# synchronization phase can take                               
+initLimit=10                                                   
+# The number of ticks that can pass between                    
+# sending a request and getting an acknowledgement             
+syncLimit=5                                                    
+# the directory where the snapshot is stored.                  
+# do not use /tmp for storage, /tmp here is just               
+# example sakes.                                               
+dataDir=/apex/apps/dependency/zookeeper-3.4.8/zkdata           
+dataLogDir=/apex/apps/dependency/zookeeper-3.4.8/logs          
+# the port at which the clients will connect                   
+clientPort=2181                                                
+server.1=1.1.1.1:2888:3888                               
+server.2=1.1.1.2:2888:3888                               
+server.3=1.1.1.3:2888:3888                               
+SERVER_JVMFLAGS=-Xmx1024m'                                     
 ```
 
 
@@ -515,6 +556,17 @@ Be aware that one use case for partitions is to semantically partition data, and
 
 https://kafka.apache.org/documentation/#monitoring
 
+##### 系统排查
+
+```
+$ jps
+17303 Jps
+29819 Kafka
+$ ll /proc/29819/fd
+```
+
+
+
 ##### 日志位置
 
 + /kafka/logs
@@ -564,8 +616,8 @@ consumer.poll(Duration.ofMillis(10_000L));
 如果是assign mode，如果前面没有调用endOffsets之类获取metadata，此时会打印（估计跟consumer.seek(topicPartition, checkpointOffset);有关，当然如果之前调用过就会在调用时打印，此时不会打印）：
 2021-04-01 15:56:50.755  INFO 22064GG [RKER-RECOVERY-1] o.a.k.c.Metadata : Cluster ID: uEekh0baSnKon5ENwtY9dg 
 然后打印
-2021-04-01 14:37:40.379  INFO 32380GG [CLEAR-MANAGER] ordinator$FindCoordinatorResponseHandler : [Consumer clientId=consumer-1, groupId=CLEAR-PRICEENGINE-SZL] Discovered group coordinator 10.136.100.48:9092 (id: 2147483647 rack: null)
-2021-04-01 14:38:41.369  INFO 32380GG [RKER-RECOVERY-2] ordinator$FindCoordinatorResponseHandler : [Consumer clientId=consumer-2, groupId=RESTORE-1] Discovered group coordinator 10.136.100.48:9092 (id: 2147483647 rack: null)
+2021-04-01 14:37:40.379  INFO 32380GG [CLEAR-MANAGER] ordinator$FindCoordinatorResponseHandler : [Consumer clientId=consumer-1, groupId=CLEAR-PRICEENGINE-SZL] Discovered group coordinator 1.1.1.1:9092 (id: 2147483647 rack: null)
+2021-04-01 14:38:41.369  INFO 32380GG [RKER-RECOVERY-2] ordinator$FindCoordinatorResponseHandler : [Consumer clientId=consumer-2, groupId=RESTORE-1] Discovered group coordinator 1.1.1.1:9092 (id: 2147483647 rack: null)
 
 如果触发了rebalance，则接着打印
 2021-03-31 08:59:01.727  INFO 20080GG [CLEAR-MANAGER] o.a.k.c.c.i.AbstractCoordinator : [Consumer clientId=consumer-1, groupId=CLEAR-PRICEENGINE-SZL] (Re-)joining group
@@ -574,11 +626,12 @@ consumer.poll(Duration.ofMillis(10_000L));
 
 ```
 
-##### kafka Common Exceptions
+##### kafka 常见异常Exceptions
 
 Kafka常见错误整理 https://cloud.tencent.com/developer/article/1508919
 
 ```
+
 --- LEADER_NOT_AVAILABLE: 
 topic 可能不存在，kafka api默认会自动创建
 
@@ -603,7 +656,14 @@ endOffsets()->fetchOffsetsByTimes
 
 --- UNKNOWN_MEMBER_ID
 Attempt to heartbeat failed for since member id consumer-1-c4ff67d3-b776-4994-9179-4a19f9ff87a6 is not valid
-如果当前 group 的状态为 Dead，则说明对应的 group 不再可用，或者已经由其它 GroupCoordinator 实例管理，直接响应 UNKNOWN_MEMBER_ID 错误，消费者可以再次请求获取新接管的 GroupCoordinator 实例所在的位置信息。
+可能1：如果当前 group 的状态为 Dead，则说明对应的 group 不再可用，或者已经由其它 GroupCoordinator 实例管理，直接响应 UNKNOWN_MEMBER_ID 错误，消费者可以再次请求获取新接管的 GroupCoordinator 实例所在的位置信息。
+可能2：消费者会在轮询获取消息或提交偏移量时发送心跳，如果消费者停止发送心跳的时间足够长，会话就会过期，组协调器认为它已经死亡，就会触发一次再均衡，至于原因，有可能是：
+一般来说producer的生产消息的逻辑速度都会比consumer的消费消息的逻辑速度快，当producer在短时间内产生大量的数据丢进kafka的broker里面时，可能出现类似错误：Offset commit failed on partition : The coordinator is not aware of this member.
+1) kafka的consumer会从broker里面取出一批数据，给消费线程进行消费；
+2) 由于取出的一批消息数量太大，consumer在session.timeout.ms时间之内没有消费完成；
+3) consumer coordinator 会由于没有接受到心跳而挂掉；
+4) 由于自动提交offset失败，reblance之后又重新消费之前的一批数据（offset提交失败），恶性循环，越积越多；
+- https://www.cnblogs.com/chuijingjing/p/12797035.html
 
 --- Group coordinator is unavailable or invalid
 Group coordinator 192.168.11.55:9092 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery
@@ -996,6 +1056,76 @@ https://kafka.apache.org/documentation/#design
 ### 4.0 Config
 
 https://docs.confluent.io/platform/current/installation/configuration
+
+#### Server Config
+
+```
+############################# Server Basics #############################
+# The id of the broker. This must be set to a unique integer for each broker.
+broker.id=0
+
+############################# Socket Server Settings #############################
+port=9092
+host.name=10.136.100.48
+advertised.host.name=10.136.100.48
+advertised.port=9092
+listeners = PLAINTEXT://your.host.name:9092
+#advertised.listeners=PLAINTEXT://your.host.name:9092 //This is the metadata that’s passed back to clients.
+listener.security.protocol.map=PLAINTEXT:PLAINTEXT,SSL:SSL,SASL_PLAINTEXT:SASL_PLAINTEXT,SASL_SSL:SASL_SSL
+#Kafka brokers communicate between themselves, usually on the internal network (e.g., Docker network, AWS VPC, etc.). To define which listener to use, specify：
+inter.broker.listener.name //https://cwiki.apache.org/confluence/display/KAFKA/KIP-103%3A+Separation+of+Internal+and+External+traffic
+
+You need to set advertised.listeners (or KAFKA_ADVERTISED_LISTENERS if you’re using Docker images) to the external address (host/IP) so that clients can correctly connect to it. Otherwise, they’ll try to connect to the internal host address—and if that’s not reachable, then problems ensue.
+
+https://stackoverflow.com/questions/42998859/kafka-server-configuration-listeners-vs-advertised-listeners
+https://cwiki.apache.org/confluence/display/KAFKA/KIP-103%3A+Separation+of+Internal+and+External+traffic
+https://cwiki.apache.org/confluence/display/KAFKA/KIP-291%3A+Separating+controller+connections+and+requests+from+the+data+plane
+
+############################# Group Coordinator Settings #############################
+# The following configuration specifies the time, in milliseconds, that the GroupCoordinator will delay the initial consumer rebalance.
+# The rebalance will be further delayed by the value of group.initial.rebalance.delay.ms as new members join the group, up to a maximum of max.poll.interval.ms.
+# The default value for this is 3 seconds.
+# We override this to 0 here as it makes for a better out-of-the-box experience for development and testing.
+# However, in production environments the default value of 3 seconds is more suitable as this will help to avoid unnecessary, and potentially expensive, rebalances during application startup.
+group.initial.rebalance.delay.ms=0
+
+还看到配置 scheduled.rebalance.max.delay.ms，
+https://medium.com/streamthoughts/apache-kafka-rebalance-protocol-or-the-magic-behind-your-streams-applications-e94baf68e4f2
+但是这好像是confluence提供的产品，并不是kafka默认的
+
+```
+
+##### 测试 listener工具：
+
+关于host
+
+[Kafka Listeners – Explained](https://www.confluent.io/blog/kafka-listeners-explained/)
+
++ kafkacat:
+
+  https://github.com/edenhill/kafkacat
+
+  https://docs.confluent.io/platform/current/app-development/kafkacat-usage.html
+
+  ```
+  kafkacat -b kafka0:9092 -L
+  ```
+
++ python scripts
+
+  https://github.com/lyhistory/kafka-listeners/blob/master/python/python_kafka_test_client.py
+
+  https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/
+
++ nc
+
+  ```
+   nc -vz 1.1.1.1 9092
+  ```
+
+  
+
+#### Client Config
 
 ```
 --- auto.create.topics.enable
@@ -1801,9 +1931,7 @@ GroupCoordinator 依赖的组件及其作用：
 - DelayedJoin：延迟操作类，用于监视处理所有消费组成员与组协调器之间的心跳超时
 - GroupConfig：定义了组成员与组协调器之间session超时时间配置
 
-##### 消费者协调器和组协调器的交互 
-
-核心就是 rebalance
+##### 消费者协调器和组协调器的交互 -(核心 rebalance)
 
 https://chrzaszcz.dev/2019/06/kafka-rebalancing/
 
@@ -1963,6 +2091,10 @@ Further, the consumer does not need  to any buffering to wait for transactions t
 ```
 
 之前一直困惑于这个 -1 -1，不过因为这三条log全部是org.apache.kafka的，所以刚开始抱着完全信任kafka的想法就先放一边了，后来忍不住大概debug进去瞅了下，确认是kafka正常的设计，第一条log直接就能debug到，step into initTransactions很容易看到，所以意思是默认就会先初始化一个-1 -1，我估计是先给个负值的epoch，等到完全注册好才给后面那个正数的epoch，是合理的，不然还没有注册好事务型的producer，直接给一个合法的epoch，会影响到现在正常工作的其他producer（比如万一因为问题这个新的producer初始化失败也不会影响到/zombie fence使用相同Transaction.id的其他producer）
+
+#### NIO Selector
+
+https://stackoverflow.com/questions/46185430/kafka-source-understanding-the-semantics-of-selector-poll
 
 #### Log Compaction 
 https://kafka.apache.org/22/documentation/#compaction

@@ -3,11 +3,41 @@
 ```
 查看系统安装的所有java版本
 update-alternatives --config java
+
+
+$ update-alternatives --config java
+
+There are 2 programs which provide 'java'.
+
+  Selection    Command
+-----------------------------------------------
+   1           java-1.8.0-openjdk.x86_64 (/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.232.b09-0.el7_7.x86_64-debug/jre/bin/java)
+*+ 2           java-1.8.0-openjdk.x86_64 (/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.232.b09-0.el7_7.x86_64/jre/bin/java)
+
+Enter to keep the current selection[+], or type selection number:
+failed to create /var/lib/alternatives/java.new: Permission denied
+$ which java
+/usr/bin/java
+$ ll /usr/bin/java
+lrwxrwxrwx 1 root root 22 Nov 25  2019 /usr/bin/java -> /etc/alternatives/java
+$ ll /etc/alternatives/java
+lrwxrwxrwx 1 root root 73 Nov 25  2019 /etc/alternatives/java -> /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.232.b09-0.el7_7.x86_64/jre/bin/java
+
 ```
 
 difference between JAVA_HOME and update-alternatives
 
 https://unix.stackexchange.com/questions/123412/what-is-the-difference-between-java-home-and-update-alternatives
+
+```
+vim ~/.bash_profile
+
+export JAVA_HOME=/opt/jdk1.8.0_221
+PATH=$PATH:$HOME/.local/bin:$HOME/bin:$JAVA_HOME/bin
+export PATH
+```
+
+
 
 update-java-alternatives vs update-alternatives --config java
 

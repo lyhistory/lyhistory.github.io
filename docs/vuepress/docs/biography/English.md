@@ -11,3 +11,7 @@ In My Opinion
 LMO: let's move on
 
 bc：because
+
+TLDR: Too Long; Didn’t Read
+
+https://www.howtogeek.com/435266/what-does-tldr-mean-and-how-do-you-use-it/
