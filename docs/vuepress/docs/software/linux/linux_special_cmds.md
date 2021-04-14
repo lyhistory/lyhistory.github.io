@@ -49,3 +49,9 @@ https://www.cs.utexas.edu/~shmat/courses/cs380s_fall09/09setuid.pdf
 ## watch 
 
 实时监控
+
+```
+
+watch ss -tunpl4
+```
+

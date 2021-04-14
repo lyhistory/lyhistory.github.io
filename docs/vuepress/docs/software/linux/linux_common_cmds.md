@@ -68,6 +68,7 @@ grep -H -r "create_db.sh" ~ | cut -d: -f1 | sort -u
 
 grep -H -r "/apps/lib" ~ | cut -d: -f1 | sort -u
 
+grep -r -H "eth[0-9]" /var/log/
 ```
 
 ### split
@@ -103,8 +104,6 @@ crontab是分用户的，默认为当前用户，可以通过-u指定用户
 
 /var/spool/mail/root
 
-
-
 ## history
 
 ```
@@ -112,3 +111,8 @@ crontab是分用户的，默认为当前用户，可以通过-u指定用户
 history -d $((HISTCMD-1)) && history -d [line entry number]
 ```
 
+## remote
+
+ssh rsh 
+
+https://blog.csdn.net/jiangyu1013/article/details/79721053

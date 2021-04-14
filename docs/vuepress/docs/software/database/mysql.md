@@ -148,17 +148,37 @@ SET GLOBAL local_infile = 'OFF';
 #### backup&restore
 
 backup https://dev.mysql.com/doc/refman/5.7/en/mysqldump-sql-format.html
-mysqldump -uroot -p123456--all-databases > mysqldump_20190524.sql
 
-If you used the **–set-gtid-purged=ON** option, you would see the value of the [Global Transaction Identifier’s](http://dev.mysql.com/doc/refman/5.6/en/replication-gtids-concepts.html) (GTID’s):
+基本用法
 
 ```
+--------------------------------------------------------------
+--- all db
+--------------------------------------------------------------
+mysqldump -uroot -p123456--all-databases > mysqldump_20190524.sql
+
+--------------------------------------------------------------
+--- schema only
+--------------------------------------------------------------
+mysqldump -uXXX -pXXX --no-tablespaces --routines --events --no-data --set-gtid-purged=OFF DBName > schema.sql
+
+mysql -uXXX -pXXX  DBName < schema.sql
+
+--------------------------------------------------------------
+--- options
+--------------------------------------------------------------
+If you used the **–set-gtid-purged=ON** option, you would see the value of the [Global Transaction Identifier’s](http://dev.mysql.com/doc/refman/5.6/en/replication-gtids-concepts.html) (GTID’s):
 --
 --GTID state at the beginning of the backup 
 --
 
 SET @@GLOBAL.GTID_PURGED='';
+
+-routines
+Include stored routines (procedures and functions) 
 ```
+
+
 
 脚本：
 
@@ -413,6 +433,10 @@ kill <put_process_id_here>; 先干掉耗时长的process
 
 **?#upgrade trouble shooting**
 https://dev.mysql.com/doc/refman/5.7/en/upgrade-troubleshooting.html
+
+**?#Access denied for user 'root'@'localhost' (using password: NO) when trying to connect**
+
+通常是因为输入了中文字符的dash -- 或者从word文档copy出来的错误编码的参数符号--
 
 ## 4. SQL
 

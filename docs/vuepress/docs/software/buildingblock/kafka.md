@@ -1093,6 +1093,14 @@ group.initial.rebalance.delay.ms=0
 https://medium.com/streamthoughts/apache-kafka-rebalance-protocol-or-the-magic-behind-your-streams-applications-e94baf68e4f2
 但是这好像是confluence提供的产品，并不是kafka默认的
 
+############################# Log Retention Policy #############################
+# The minimum age of a log file to be eligible for deletion due to age
+log.retention.hours=336
+# The maximum size of a log segment file. When this size is reached a new log segment will be created.
+#log.segment.bytes=1073741824
+log.segment.bytes=2147483647
+https://stackoverflow.com/questions/65507232/kafka-log-segment-bytes-vs-log-retention-hours
+
 ```
 
 ##### 测试 listener工具：
@@ -2104,6 +2112,7 @@ Note however that there cannot be more consumer instances(task) in a consumer gr
 https://cwiki.apache.org/confluence/display/KAFKA/KIP-28+-+Add+a+processor+client
 
 ## 5. Troubleshooting
+
 ### Fatal error during KafkaServer startup. Prepare to shutdown (kafka.server.KafkaServer)
 
 ```
@@ -2126,7 +2135,9 @@ transactional.id.expiration.ms=2073600000
 
 ```
 
+### kafka segment.bytes different for each topic
 
+修改了其中一个broker节点的config，忘记同步到所有的节点
 
 ### Kafka Client Compatibility
 

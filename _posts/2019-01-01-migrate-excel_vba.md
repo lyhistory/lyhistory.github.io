@@ -59,6 +59,10 @@ https://www.timeatlas.com/vlookup-tutorial/
 quickly find corresponding values based on comparing the other columns.
 =INDEX($F$2:$F$100,MATCH(C2,$E$2:$E$100,0))
 http://www.excel-university.com/how-to-return-a-value-left-of-vlookups-lookup-column/
+
+如果需要match multiple columns，比如 H1 MATCH A1 同时 I1 MATCH B1，可以先生成临时column：M1=A1&B1 ,N1=H1&I1
+=INDEX(T:T,MATCH(M1,N:N,0))
+
  
 ### 8.Transpose/convert multi column to single column
 https://www.extendoffice.com/documents/excel/1172-excel-transpose-multiple-columns-into-one-column.html

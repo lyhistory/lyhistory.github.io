@@ -556,6 +556,35 @@ TIME_WAIT 状态：
 
 1) **ICMP协议**：ping，tracert
 
+如果是使用ipv6，加 -6
+
+```
+C:\WINDOWS\system32>tracert 101.OO.XX.39
+
+Tracing route to 101.32.168.39 over a maximum of 30 hops
+
+  1    69 ms    70 ms    69 ms  172.OO.XX.11
+............................
+ 11   102 ms    91 ms    83 ms  203.208.152.81
+ 12   188 ms   175 ms   155 ms  203.208.169.54
+ 13     *        *        *     Request timed out.
+ 14     *        *        *     Request timed out.
+ 15     *        *        *     Request timed out.
+ 16     *        *        *     Request timed out.
+ 17   543 ms   164 ms   167 ms  101.OO.XX.39
+ 
+ 解释：
+ 1. asterisks：
+ The asterisks indicate that the target server did not respond as traceroute expected before a timeout occurred - this does not always indicate packet loss. If you suspect packet loss because of asterisks in the output or because the server you are running a traceroute to is not reached, you can attempt to ping the server where problems have started occur 不过本例中，没有显示出对应ip，不过可以通过ping 最后的101可以确定是通的
+ 
+ 2. Request timed out: This is because the server at hop four is not accepting Internet Control Message Protocol (ICMP) traffic. As a result it ignores Traceroutes request for information. As you can see, however, it has still sent the data to the next hop as there are results that follow.
+
+查询ip arin：
+https://mxtoolbox.com/SuperTool.aspx?action=ptr%3a203.208.169.54&run=toolpage
+```
+
+
+
 2) **网络层NAT“协议”** VS 应用层代理服务器
 
 为什么需要NAT技术？
@@ -630,11 +659,13 @@ tcproute安装使用：
 	http://www.win10pcap.org/download/
 	tcproute -p 443 github.io 
 
-#### **应用层的协议和工具**
+```
+https://serverfault.com/questions/199434/how-do-i-make-curl-use-keepalive-from-the-command-line
 
+$ while :;do echo -e "GET / HTTP/1.1\nhost: $YOUR_VIRTUAL_HOSTNAME\n\n";sleep 1;done|telnet $YOUR_SERVERS_IP 80
+```
 
-
-### 4.2 应用层之“协议”
+### 4.3 应用层之“协议”
 应用层的协议有FTP、HTTP、websocket、TELNET、SMTP、DHCP、DNS等协议：
 
 #### **DHCP协议**

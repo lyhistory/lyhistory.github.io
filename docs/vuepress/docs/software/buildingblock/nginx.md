@@ -290,7 +290,15 @@ http {
 
 https://nginx.org/en/docs/http/websocket.html
 
+**proxy_read_timeout** 
+
 By default, the connection will be closed if the proxied server does not transmit any data within 60 seconds. This timeout can be increased with the [proxy_read_timeout](https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_read_timeout) directive. Alternatively, the proxied server can be configured to periodically send WebSocket ping frames to reset the timeout and check if the connection is still alive.
+
+**proxy_connect_timeout**
+
+Default: proxy_connect_timeout 60s;
+
+Defines a timeout for establishing a connection with a proxied server. It should be noted that this timeout cannot usually exceed 75 seconds.
 
 ```
 --------------------------------------------------------------
@@ -325,7 +333,9 @@ http {
     
 ```
 
+?# websocket is closed before the connection is established
 
+网络问题 防火墙
 
 ### 其他
 

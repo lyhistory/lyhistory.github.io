@@ -39,6 +39,23 @@ https://kubernetes.io/docs/user-journeys/users/application-developer/foundationa
 
 ### 1.2 工具
 
+#### All in one
+
+MSYS2 - Software Distribution and Building Platform for Windows: 
+
+https://www.msys2.org/
+
+```
+pacman -Syu
+pacman -Su
+pacman -S --needed base-devel mingw-w64-x86_64-toolchain
+pacman -S git
+```
+
+
+
+#### Common tools
+
 **ConEmu:**
 
 		Ctrl+Shift+O and Ctrl+Shift+E

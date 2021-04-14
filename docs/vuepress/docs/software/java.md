@@ -48,6 +48,10 @@ strace -ff -o prefix
 
 **JDK Tools**
 
+jps
+
+jstack https://docs.oracle.com/javase/8/docs/technotes/guides/troubleshoot/tooldescr016.html
+
 jvisualvm
 
 https://stackoverflow.com/questions/19843096/how-to-debug-a-java-application-without-access-to-the-source-code/58555431#58555431

@@ -40,8 +40,6 @@ https://askubuntu.com/questions/709336/how-to-find-out-why-process-was-killed-on
 
 `dmesg -T | grep java` 也没有任何信息
 
-
-
 https://stackoverflow.com/questions/726690/what-killed-my-process-and-why
 
 https://superuser.com/questions/606448/how-to-discover-what-is-killing-a-process
@@ -50,13 +48,16 @@ free -h
 
 看起来内存和swap都很不够
 
-
-
-
-
 未尝试：
 
 debug crashed application
 
 https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/developer_guide/debugging-crashed-application
 
+最后仍然是根据/var/log/messages的错误信息关掉了crontab，从而解决
+
+### web server nginx not responding?
+
+可以ping，可以telnet 80端口，但是网站无法访问，之前遇到过一次，是因为路由器或交换机等设备的网络防火墙设置问题，
+
+但是这次是直接在该服务器本机上进行 curl http://127.0.0.1 都没有反应（nginx是监听的0.0.0.0:80），/var/log/messages里面有报错信息，跟一个crontab调用的python有关，猜测是因为crontab由于错误消耗了内存或cpu，导致nginx资源被占用而死掉，重启nginx恢复

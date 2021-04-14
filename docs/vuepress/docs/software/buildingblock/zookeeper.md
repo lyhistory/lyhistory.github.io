@@ -15,9 +15,16 @@ https://zookeeper.apache.org/doc/current/index.html
 
 https://docs.confluent.io/platform/current/zookeeper/deployment.html
 
-集群配置：
+
 
 ```
+tar zxvf zookeeper-3.4.8.tar.gz 
+
+mkdir -p /opt/dependency/zookeeper-3.4.8/zkdata
+mkdir -p /opt/dependency/zookeeper-3.4.8/logs 
+
+
+集群配置：
 This example is for a 3 node ensemble：
 
 # The number of milliseconds of each tick                      
@@ -38,7 +45,12 @@ clientPort=2181
 server.1=1.1.1.1:2888:3888                               
 server.2=1.1.1.2:2888:3888                               
 server.3=1.1.1.3:2888:3888                               
-SERVER_JVMFLAGS=-Xmx1024m'                                     
+SERVER_JVMFLAGS=-Xmx1024m'       
+
+然后在各个节点上分别写入 1 2 3等到myid：
+$ echo "1" > /apex/apps/clearing/3rd-party/zookeeper/zkdata/myid
+
+好像还有个 zookeeper_server.pid?
 ```
 
 

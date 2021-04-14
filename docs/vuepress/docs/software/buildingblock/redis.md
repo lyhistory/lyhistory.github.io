@@ -12,13 +12,19 @@ https://redis.io/topics/quickstart
 ### 1.1 简单安装
 
 ```
-wget http://download.redis.io/redis-stable.tar.gz
-tar xvzf redis-stable.tar.gz
-cd redis-stable
-make
+
+$ wget https://download.redis.io/releases/redis-6.2.1.tar.gz
+$ tar xzf redis-6.2.1.tar.gz
+$ cd redis-6.2.1
+$ make
+
 make test
 sudo cp src/redis-server /usr/local/bin/
 sudo cp src/redis-cli /usr/local/bin/
+
+卸载的时候别忘记
+rm /usr/local/bin/redis-server
+rm /usr/local/bin/redis-cli
 ```
 
 ### 1.2 生产环境安装（推荐）
@@ -77,11 +83,78 @@ redis-cli --cluster create <HOSTIP1>:6379 <HOSTIP1>:6380 <HOSTIP1>:6381 \
 <HOSTIP2>:6379 <HOSTIP2>:6380 <HOSTIP2>:6381 \
 <HOSTIP3>:6379 <HOSTIP3>:6380 <HOSTIP3>:6381 \
 --cluster-replicas 2
+
+>>> Performing hash slots allocation on 9 nodes...   
+Master[0] -> Slots 0 - 5460                            
+Master[1] -> Slots 5461 - 10922                                                                    
+Master[2] -> Slots 10923 - 16383            
+Adding replica HOSTIP2:6380 to HOSTIP1:6379
+Adding replica HOSTIP3:6380 to HOSTIP1:6379
+Adding replica HOSTIP1:6381 to HOSTIP2:6379
+Adding replica HOSTIP3:6381 to HOSTIP2:6379
+Adding replica HOSTIP2:6381 to HOSTIP3:6379        
+Adding replica HOSTIP1:6380 to HOSTIP3:6379     
+M: afabffee7a9076d42c9640a77ae2db6e6eb52fae HOSTIP1:6379           
+   slots:[0-5460] (5461 slots) master                           
+S: f24a6554ed2b64b071122bd16c7201aca1b184d0 HOSTIP1:6380                               
+   replicates 36d8fdd4eaedd2f601a2e27d9856d9b82dd8017c               
+S: bb483966fa9a7d60c9020a75d19fb2a4d1e8acf0 HOSTIP1:6381
+   replicates b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d             
+M: b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d HOSTIP2:6379
+   slots:[5461-10922] (5462 slots) master                                   
+S: 27c88c277aa82340f5e2f9d73078d59399ed6b87 HOSTIP2:6380 
+   replicates afabffee7a9076d42c9640a77ae2db6e6eb52fae                
+S: 56ce383e2cb6affedd61317cfb35b05f29dfc7f1 HOSTIP2:6381 
+   replicates 36d8fdd4eaedd2f601a2e27d9856d9b82dd8017c     
+M: 36d8fdd4eaedd2f601a2e27d9856d9b82dd8017c HOSTIP3:6379     
+   slots:[10923-16383] (5461 slots) master               
+S: 54d6095aca3e1edd27761e080651bb28144e3a81 HOSTIP3:6380
+   replicates afabffee7a9076d42c9640a77ae2db6e6eb52fae
+S: 9f92fe21d31b4b18f54321fbedc809ca4afcf187 HOSTIP3:6381
+   replicates b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d
+Can I set the above configuration? (type 'yes' to accept): yes
+>>> Nodes configuration updated
+>>> Assign a different config epoch to each node
+>>> Sending CLUSTER MEET messages to join the cluster
+Waiting for the cluster to join
+...
+>>> Performing Cluster Check (using node HOSTIP1:6379)
+M: afabffee7a9076d42c9640a77ae2db6e6eb52fae HOSTIP1:6379
+   slots:[0-5460] (5461 slots) master
+   2 additional replica(s)
+S: bb483966fa9a7d60c9020a75d19fb2a4d1e8acf0 HOSTIP1:6381
+   slots: (0 slots) slave
+   replicates b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d
+S: 27c88c277aa82340f5e2f9d73078d59399ed6b87 HOSTIP2:6380
+   slots: (0 slots) slave
+   replicates afabffee7a9076d42c9640a77ae2db6e6eb52fae
+M: b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d HOSTIP2:6379
+   slots:[5461-10922] (5462 slots) master
+   2 additional replica(s)
+S: 9f92fe21d31b4b18f54321fbedc809ca4afcf187 HOSTIP3:6381
+   slots: (0 slots) slave
+   replicates b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d
+S: 54d6095aca3e1edd27761e080651bb28144e3a81 HOSTIP3:6380
+   slots: (0 slots) slave
+   replicates afabffee7a9076d42c9640a77ae2db6e6eb52fae
+S: 56ce383e2cb6affedd61317cfb35b05f29dfc7f1 HOSTIP2:6381
+   slots: (0 slots) slave
+   replicates 36d8fdd4eaedd2f601a2e27d9856d9b82dd8017c
+S: f24a6554ed2b64b071122bd16c7201aca1b184d0 HOSTIP1:6380
+   slots: (0 slots) slave
+   replicates 36d8fdd4eaedd2f601a2e27d9856d9b82dd8017c
+M: 36d8fdd4eaedd2f601a2e27d9856d9b82dd8017c HOSTIP3:6379
+   slots:[10923-16383] (5461 slots) master
+   2 additional replica(s)
+[OK] All nodes agree about slots configuration.
+>>> Check for open slots...
+>>> Check slots coverage...
+[OK] All 16384 slots covered.
 ```
 
 控制脚本：
 ```
-REDIS_HOME=/opt/redis-5.0.5
+REDIS_HOME=/opt/redis-5.0.5/src
 pushd ${REDIS_HOME} &>/dev/null
 
 while [ "${1:0:1}" == "-" ]; do
@@ -92,12 +165,24 @@ while [ "${1:0:1}" == "-" ]; do
       redis-server conf/redis6380.conf
       redis-server conf/redis6381.conf
       ;;
+    --create-cluster)
+    	redis-cli --cluster create HOST1:6379 HOST1:6380 HOST1:6381 ....HOST2... --cluster-replicas 2
     --kill)
       echo "Stopping redis nodes..."
       redis-cli -p 6379 shutdown
       redis-cli -p 6380 shutdown
       redis-cli -p 6381 shutdown
           ;;
+    --clear-cache)
+      masterNodes=($(./redis-cli cluster nodes | grep master | awk '{ print $2 }'))
+      testArray=(${masterNodes[@]})
+      echo ${testArray[0]}
+      for item in "${masterNodes[@]}"; do
+                host="$(cut -d':' -f1 <<<$item)"
+                tmp="$(cut -d':' -f2 <<<$item)"
+                port="$(cut -d'@' -f1 <<<$tmp)"
+                redis-cli -c -h ${serverIp} -p ${port} flushall
+        done
     *)
       echo "usage: --start|--kill"
       exit 1
@@ -105,6 +190,8 @@ while [ "${1:0:1}" == "-" ]; do
   esac
   shift
 done
+
+        
 
 ```
 
@@ -120,6 +207,7 @@ redis-cli -c -h <HOSTIP> -p <PORT>
 	cluster help
 	cluster info
 	cluster nodes
+	connect HOST PORT #Switch to other nodes
 	cluster slots
 	replicate NODEID
 	cluster failover (on slave node)
@@ -128,6 +216,7 @@ redis-cli -c -h <HOSTIP> -p <PORT>
 		cluster reset(soft/hard, chang slave to an empty ‘standalone’ master)
 		Slaveof no one (change slave to master, cannot execute in cluster mode)
 	Slave host port (change slave to replicate another master, cannot execute in cluster mode)
+	
 //检查	
 redis-cli --cluster check <HOSTIP>:<PORT>
 //修复

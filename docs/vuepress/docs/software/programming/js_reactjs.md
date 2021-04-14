@@ -1014,11 +1014,24 @@ If you’d rather play it safe, you have a few options:
 基本
 
 ```
+named export vs default export:
+https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export
+
 普通模式：
-export defalt <classname>;
+export defalt new BirdStore();
+导出class? export defalt <classname>;
 单例模式
 const store = new BirdStore();
 export default store;
+
+import store from '../xxx/store'
+class TestStore {
+  imported_store = store
+  mystore = new MyStore()
+}
+export default new TestStore()
+
+
 ```
 
 逻辑代码中调用UI,如弹窗
@@ -1584,4 +1597,170 @@ const MyComponent = lazy(() => import("./MyComponent.js"));
 从 React 迁移到 TypeScript：忍受了 15 年的 JavaScript 错误从此走远
 
 https://mp.weixin.qq.com/s/EvOkI-g3VCzzzuh0Cc4AkA
+
+## 3. Troubleshooting
+
+**?# Attempted import error: '' is not exported from**
+
+```
+since it's a default export, and not a named export.
+import { combineReducers } from '../../store/reducers';
+should be
+import combineReducers from '../../store/reducers';
+```
+
+https://stackoverflow.com/questions/53328408/receiving-attempted-import-error-in-react-app
+
+**?# 非单例模式（不同实例）引起的一次问题排查**
+
+```react
+------------------------------------------
+folderA/TableA:
+------------------------------------------
+import ViewDetail from '../folderB/ViewDetail'
+
+@inject('aStore')
+@observer
+class TableA extends Component {
+onXXClick = (controlData) => {
+    const { aStore } = this.props
+	aStore.bAnotherStore.displayDetailsModal(controlData)
+}
+render () {
+    const { aStore } = this.props
+    return [
+		<ViewDetail key="details"/>,
+		xxxx
+   ]
+  }
+}
+------------------------------------------
+folderA/AStore:
+------------------------------------------
+import { BAnotherStore } from '../folderB/BAnotherStore'
+class AStore {
+  bAnotherStore = new BAnotherStore()
+}
+export default new AStore()
+
+------------------------------------------
+folderB/TableB:
+------------------------------------------
+import ViewDetail from './ViewDetail'
+@inject('bStore')
+@observer
+class TableB extends React.Component {
+render () {
+    const { bStore } = this.props
+    return [
+		<ViewDetail key="details"/>,
+		xxxx
+   ]
+  }
+}
+export default TableB
+
+------------------------------------------
+folderB/bStore:
+------------------------------------------
+import { BAnotherStore } from './bAnotherStore'
+class BStore {
+	bAnotherStore
+	constructor () {
+    	this.bAnotherStore = new BAnotherStore()
+    }
+}
+export default new BStore()
+
+------------------------------------------
+folderB/bAnotherStore:
+------------------------------------------
+export class BAnotherStore {
+	@observable isVisible = false
+	@observable detailsData = {}
+	@action.bound
+	displayDetailsModal (controlData) {
+    	this.isVisible = !this.isVisible
+    	if (this.isVisible) {
+      		this.detailsData = JSON.parse(controlData.content)
+    }
+  }
+}
+------------------------------------------
+folderB/ViewDetail:
+------------------------------------------
+@inject('bStore')
+@observer
+class ViewDetail extends Component {
+render () {
+      const { bStore } = this.props
+      if (!bStore.bAnotherStore.isVisible) {
+        return null
+      }
+      const entity = bStore.bAnotherStore.detailsData
+      return (
+        <Modal
+          visible={true}
+          <DetailPart title={'Basic Information'} partArray={[
+            { title: 'Name', value: entity.name },
+            { title: 'Status', value: entity.status }
+          ]}/>
+        </Modal>
+      )
+    }
+}
+
+export default Form.create({ name: 'details' })(ViewDetail)
+
+
+index.js:
+import aStore from '../folderA/aStore'
+import bStore from '../folderB/bStore'
+ReactDOM.render(
+  <Provider
+  	aStore={aStore}
+    bStore={bStore}
+        <App/>
+  </Provider>,
+  document.getElementById('root')
+)
+
+App.jsx:
+import TableA from '../folderA/TableA'
+import TableB from '../folderB/TableB'
+class App extends Component {
+    render () {
+    	<TableA/>
+		<TableB/>
+    }
+}
+
+      
+问题就是：
+TableA引用的页面是folderB/ViewDetail，folderB/ViewDetail所inject的bStore实例是index.js传入的bStore，index.js的bStore是通过import folderB/bStore而来的一个单例，
+但是 TableA 调用的aStore.bAnotherStore并不是前面的实例bStore的成员变量，而是自己在构造aStore的时候自己new的！
+所以换言之，ViewDetail页面渲染用的实例 和 TableA更改状态的实例是两回事！
+更改方法很简单：
+folderA/AStore:
+import { BAnotherStore } from '../folderB/BAnotherStore' //注意这里加大括号是因为BAnotherStore是name export的class
+class AStore {
+  bAnotherStore = new BAnotherStore()
+}
+=>
+import bStore from '../folderB/bStore' //注意这里不能加大括号，因为是Default export的实例
+class AStore {
+  bStore = bStore
+}
+以及：           
+folderA/TableA:
+onXXClick = (controlData) => {
+    const { aStore } = this.props
+	aStore.bAnotherStore.displayDetailsModal(controlData)
+}
+=>
+onXXClick = (controlData) => {
+    const { aStore } = this.props
+	aStore.bStore.bAnotherStore.displayDetailsModal(controlData)
+}              
+```
 
