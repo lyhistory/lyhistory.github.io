@@ -18,6 +18,8 @@ https://unix.stackexchange.com/questions/88744/what-is-the-centos-equivalent-of-
 
   /var/log/secure
 
+/var/log/messsages-20210415 可能包含几天前比如0401的内容，因为会archive
+
 ## common system log
 
 dmesg -T
@@ -25,6 +27,17 @@ dmesg -T
 journalctl -f
 
 https://unix.stackexchange.com/questions/314985/combining-tail-journalctl
+
+## 查看 thread dump
+
+https://blog.csdn.net/liwenxia626/article/details/80791704
+
+top
+通过top -Hp <PID>可以查看该进程下各个线程的cpu使用情况；
+
+对于JAVA程序可以：
+
+jstack -F <PID/Thread ID>
 
 
 

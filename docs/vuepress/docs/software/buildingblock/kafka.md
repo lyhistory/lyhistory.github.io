@@ -571,9 +571,11 @@ $ ll /proc/29819/fd
 
 + /kafka/logs
 
-  controller.log.2021-03-01-00
-  server.log.2021-03-01-00
-  state-change.log.2021-03-01
+  controller.log.2021-03-01-00 kafka集群选举出的Controller负责通信
+  server.log.2021-03-01-00 具体负责某个partition replica的leader的日志以及负责某个consumer group的group coordinator日志
+  state-change.log.2021-03-01 记录topic partition的online offline等状态信息
+
+  kafkaServer.out跟server.log一样，只是会定期archive到server.log
 
 + /kafka/kafka-logs
 
@@ -582,6 +584,77 @@ $ ll /proc/29819/fd
   __transaction_state-0/
 
   [TOPIC]-[PARTITION]/
+
+##### kafka server端日志解析
+
+```
+---------------------------------------------------------------------------
+--- create/delete topic, from controller.log
+1）这个是命令创建的
+./kafka-topics.sh --create --bootstrap-server $KFK_CLUSTER --replication-factor 2 --partitions 3 --topic T-XXX
+replica是2，所以对应两个broker，所以后面还要选一个prefer replica作为leader
+[2021-04-14 11:04:11,239] INFO [Controller id=0] New topics: [Set(T-XXX)], deleted topics: [Set()], new partition replica assignment [Map(T-XXX-2 -> Vector(3, 0), T-XXX-1 -> Vector(0, 1), T-XXX-0 -> Vector(1, 3))] (kafka.controller.KafkaController)
+
+--- elect TOPIC-PARTITION replica leader
+INFO [Controller id=0] Partition T-XXX-2 completed preferred replica leader election. New leader is 3 (kafka.controller.KafkaController)
+
+2）下面这个内部topic是何时被创建的（更准确的应该是说其各个分区是何时创建的）
+https://cloud.tencent.com/developer/news/19958
+__consumer_offsets创建的时机有很多种，主要包括：
+broker响应FindCoordinatorRequest请求时
+broker响应MetadataRequest显式请求__consumer_offsets元数据时
+其中以第一种最为常见，而第一种时机的表现形式可能有很多，比如用户启动了一个消费者组(下称consumer group)进行消费或调用kafka-consumer-groups --describe等
+
+注意，各自分区都是对应到一个broker，所以consumer group也就是直接对应到了相应的broker（group coordinator）
+[2021-04-14 11:14:20,601] INFO [Controller id=0] New topics: [Set(__consumer_offsets)], deleted topics: [Set()], new partition replica assignment [Map(__consumer_offsets-22 -> Vector(3), __consumer_offsets-30 -> Vector(1), __consumer_offsets-8 -> Vector(0), __consumer_offsets-21 -> Vector(1), __co
+对应到项目代码应该就是消费组 consumer group启动的时候
+
+3）这个是代码创建的：
+auto.create.topics.enable=true，代码读取T-XXX-SNP就会创建：
+SNP就是我们后面会提到的所谓自己维护的增量快照
+默认用了1个replica，所以直接就对应某个broker
+[2021-04-14 11:14:27,347] INFO [Controller id=0] New topics: [Set(T-XXX-SNP)], deleted topics: [Set()], new partition replica assignment [Map(T-sss-SNP-2 -> Vector(3), T-XXX-SNP-1 -> Vector(1), T-XXX-SNP-0 -> Vector(0))] (kafka.controller.KafkaController)
+[2021-04-14 11:14:27,347] INFO [Controller id=0] New partition creation callback for T-XXX-SNP-2,T-XXX-SNP-1,T-XXX-SNP-0 (kafka.controller.KafkaController)
+
+最后变成一张broker map：
+[2021-04-14 11:18:36,979] DEBUG [Controller id=0] Preferred replicas by broker Map(1 -> Map(T-JOB-SNP-0 -> Vector(1),  __consumer_offsets-27 -> Vector(1), T-TEST-1 -> Vector(1, 0), __transaction_state-2 -> Vector(1, 3), __transaction_state-20 -> Vector(1, 3), __consumer_offsets-33 -> Vector(1), T-DBMS-SNP-0 -> Vector(1), T-CAPTURE-0 -> Vector(1, 0), __consumer_offsets-36 -> Vector(1), __transaction_state-29 -> Vector(1, 0), __consumer_offsets-42 -> Vector(1), __consumer_offsets-3 -> Vector(1), __consumer_offsets-18 -> Vector(1), __transaction_state-38 -> Vector(1, 3), T-CLEAR-SNP-2 -> Vector(1, 3), T-MEMBER-1 -> Vector(1, 0), __consumer_offsets-15 -> Vector(1), __consumer_offsets-24 -> Vector(1), T-EOD-1 -> Vector(1, 0), T-QUOTATION-2 -> Vector(1, 0), __transaction_state-14 -> Vector(1, 3), __transaction_state-44 -> Vector(1, 3), T-RISK-0 -> Vector(1, 3), T-RISK-SNP-2 -> Vector(1), __transaction_state-32 -> Vector(1, 3), __consumer_offsets-48 -> Vector(1), T-CAPTURE-SNP-1 -> Vector(1), T-CLEAR-0 -> Vector(1, 0), T-EOD-SNP-1 -> Vector(1), __transaction_state-17 -> Vector(1, 0), __transaction_state-23 -> Vector(1, 0), __transaction_state-47 -> Vector(1, 0), __consumer_offsets-6 -> Vector(1), T-QUOTATION-SNP-1 -> Vector(1), __transaction_state-26 -> Vector(1, 3), T-JOB-2 -> Vector(1, 0), __transaction_state-5 -> Vector(1, 0), __transaction_state-8 -> Vector(1, 3)
+
+---------------------------------------------------------------------------
+--- elect Controller from controller.log
+[2021-04-14 10:53:31,013] DEBUG [Controller id=1] Broker 0 has been elected as the controller, so stopping the election process. (kafka.controller.KafkaController)
+
+
+---------------------------------------------------------------------------
+--- rebalance by group coordinator broker 3,from server.log or kafkaServer.out
+[2021-04-15 08:24:20,809] INFO [GroupCoordinator 3]: Preparing to rebalance group XXXX-SZL in state PreparingRebalance with old generation 0 (__consumer_offsets-28) (reason: Adding new member consumer-1-11aac9d7-8a72-44fe-bf5c-0519941bbb6a) (kafka.coordinator.group.GroupCoordinator)
+[2021-04-15 08:24:20,811] INFO [GroupCoordinator 3]: Stabilized group XXX-SZL generation 1 (__consumer_offsets-28) (kafka.coordinator.group.GroupCoordinator)
+[2021-04-15 08:24:20,823] INFO [GroupCoordinator 3]: Assignment received from leader for group XXXX-SZL for generation 1 (kafka.coordinator.group.GroupCoordinator)
+[2021-04-15 08:24:22,543] INFO [TransactionCoordinator id=3] Initialized transactionalId XXX-TID-0 with producerId 1004 and producer epoch 1 on partition __transaction_state-15 (kafka.coordinator.transaction.TransactionCoordinator)
+[2021-04-15 08:24:23,957] INFO [GroupCoordinator 3]: Preparing to rebalance group XXXX-SZL in state PreparingRebalance with old generation 0 (__consumer_offsets-49) (reason: Adding new member consumer-1-416c9379-0f89-48f4-b125-eadf648d57c7) (kafka.coordinator.group.GroupCoordinator)
+[2021-04-15 08:24:23,959] INFO [GroupCoordinator 3]: Stabilized group XXXXE-SZL generation 1 (__consumer_offsets-49) (kafka.coordinator.group.GroupCoordinator)
+[2021-04-15 08:24:23,972] INFO [GroupCoordinator 3]: Assignment received from leader for group XXX-SZL for generation 1 (kafka.coordinator.group.GroupCoordinator)
+[2021-04-15 08:24:25,524] INFO [TransactionCoordinator id=3] Initialized transactionalId XXXX-TID-0 with producerId 1005 and producer epoch 1 on partition __transaction_state-18 (kafka.coordinator.transaction.TransactionCoordinator)
+
+---------------------------------------------------------------------------
+--- closed kafka client, from server.log or kafkaServer.out
+
+[2021-04-16 17:51:05,705] INFO [GroupCoordinator 3]: Member consumer-1-416c9379-0f89-48f4-b125-eadf648d57c7 in group CLEAR-REALTIME-SZL has failed, removing it from the group (kafka.coordinator.group.GroupCoordinator)
+[2021-04-16 17:51:05,707] INFO [GroupCoordinator 3]: Preparing to rebalance group CLEAR-REALTIME-SZL in state PreparingRebalance with old generation 1 (__consumer_offsets-49) (reason: removing member consumer-1-416c9379-0f89-48f4-b125-eadf648d57c7 on heartbeat expiration) (kafka.coordinator.group.GroupCoordinator)
+客户端consumer group所有的consumer都停掉了，所以是empty，然后整个group宣布dead
+[2021-04-16 17:51:05,707] INFO [GroupCoordinator 3]: Group XXX-SZL with generation 2 is now empty (__consumer_offsets-49) (kafka.coordinator.group.GroupCoordinator)
+[2021-04-16 17:53:56,956] INFO [GroupMetadataManager brokerId=3] Group XXX-SZL transitioned to Dead in generation 2 (kafka.coordinator.group.GroupMetadataManager)
+
+---------------------------------------------------------------------------
+---shutdown kafka borker 3, from server.log or kafkaServer.out
+[2021-04-15 08:59:31,965] INFO Terminating process due to signal SIGTERM (org.apache.kafka.common.utils.LoggingSignalHandler)
+[2021-04-15 08:59:31,973] INFO [KafkaServer id=3] shutting down (kafka.server.KafkaServer)
+[2021-04-15 08:59:31,977] INFO [KafkaServer id=3] Starting controlled shutdown (kafka.server.KafkaServer)
+[2021-04-15 08:59:32,066] INFO [ReplicaFetcherManager on broker 3] Removed fetcher for partitions Set(__transaction_state-45, __transaction_state-27, __transaction_state-9, T-XXX-2, T-XXX-1, __transaction_state-39, __transaction_state-36, ...... __transaction_state-0) (kafka.server.ReplicaFetcherManager)
+
+
+```
+
+
 
 ##### kafka client端日志解析
 
@@ -603,11 +676,11 @@ consumer.endOffsets(Collections.singleton(topicPartition)).get(topicPartition)
 
 this.kafkaConsumer.subscribe(Collections.singleton(context.getConfig().getTaskTopic()), new SimpleWorkBalancer(context.getRestorer(), this::removeWorker, this::addWorker));
 =>
-2021-04-01 14:37:00.639  INFO 32380GG [main] o.a.k.c.c.KafkaConsumer : [Consumer clientId=consumer-1, groupId=CLEAR-PRICEENGINE-SZL] Subscribed to topic(s): T-QUOTATION
+2021-04-01 14:37:00.639  INFO 32380GG [main] o.a.k.c.c.KafkaConsumer : [Consumer clientId=consumer-1, groupId=XXXX-SZL] Subscribed to topic(s): T-XXXX
 
 consumer.assign(Collections.singleton(topicPartition));
 =>
-2021-04-01 14:38:09.783  INFO 32380GG [RKER-RECOVERY-2] o.a.k.c.c.KafkaConsumer : [Consumer clientId=consumer-2, groupId=RESTORE-1] Subscribed to partition(s): T-QUOTATION-SNP-1
+2021-04-01 14:38:09.783  INFO 32380GG [RKER-RECOVERY-2] o.a.k.c.c.KafkaConsumer : [Consumer clientId=consumer-2, groupId=RESTORE-1] Subscribed to partition(s): T-XXXX-SNP-1
 
 ---------------------------------------------------------------------------
 --- Discover group
@@ -616,13 +689,18 @@ consumer.poll(Duration.ofMillis(10_000L));
 如果是assign mode，如果前面没有调用endOffsets之类获取metadata，此时会打印（估计跟consumer.seek(topicPartition, checkpointOffset);有关，当然如果之前调用过就会在调用时打印，此时不会打印）：
 2021-04-01 15:56:50.755  INFO 22064GG [RKER-RECOVERY-1] o.a.k.c.Metadata : Cluster ID: uEekh0baSnKon5ENwtY9dg 
 然后打印
-2021-04-01 14:37:40.379  INFO 32380GG [CLEAR-MANAGER] ordinator$FindCoordinatorResponseHandler : [Consumer clientId=consumer-1, groupId=CLEAR-PRICEENGINE-SZL] Discovered group coordinator 1.1.1.1:9092 (id: 2147483647 rack: null)
+2021-04-01 14:37:40.379  INFO 32380GG [XXXX-MANAGER] ordinator$FindCoordinatorResponseHandler : [Consumer clientId=consumer-1, groupId=XXX-SZL] Discovered group coordinator 1.1.1.1:9092 (id: 2147483647 rack: null)
 2021-04-01 14:38:41.369  INFO 32380GG [RKER-RECOVERY-2] ordinator$FindCoordinatorResponseHandler : [Consumer clientId=consumer-2, groupId=RESTORE-1] Discovered group coordinator 1.1.1.1:9092 (id: 2147483647 rack: null)
 
 如果触发了rebalance，则接着打印
-2021-03-31 08:59:01.727  INFO 20080GG [CLEAR-MANAGER] o.a.k.c.c.i.AbstractCoordinator : [Consumer clientId=consumer-1, groupId=CLEAR-PRICEENGINE-SZL] (Re-)joining group
-2021-03-31 08:59:01.904  INFO 20080GG [CLEAR-MANAGER] o.a.k.c.c.i.AbstractCoordinator : [Consumer clientId=consumer-1, groupId=CLEAR-PRICEENGINE-SZL] (Re-)joining group
-2021-03-31 08:59:04.122  INFO 20080GG [CLEAR-MANAGER] o.a.k.c.c.i.AbstractCoordinator$1 : [Consumer clientId=consumer-1, groupId=CLEAR-PRICEENGINE-SZL] Successfully joined group with generation 10
+2021-03-31 08:59:01.727  INFO 20080GG [XXX-MANAGER] o.a.k.c.c.i.AbstractCoordinator : [Consumer clientId=consumer-1, groupId=CLEAR-PRICEENGINE-SZL] (Re-)joining group
+2021-03-31 08:59:01.904  INFO 20080GG [XXX-MANAGER] o.a.k.c.c.i.AbstractCoordinator : [Consumer clientId=consumer-1, groupId=CLEAR-PRICEENGINE-SZL] (Re-)joining group
+2021-03-31 08:59:04.122  INFO 20080GG [XXX-MANAGER] o.a.k.c.c.i.AbstractCoordinator$1 : [Consumer clientId=consumer-1, groupId=CLEAR-PRICEENGINE-SZL] Successfully joined group with generation 10
+
+---------------------------------------------------------------------------
+--- todo
+Leader imbalance ratio for broker 3 is 0.0
+https://stackoverflow.com/questions/57475580/whats-the-difference-between-kafka-preferred-replica-election-sh-and-auto-leade
 
 ```
 
@@ -631,6 +709,9 @@ consumer.poll(Duration.ofMillis(10_000L));
 Kafka常见错误整理 https://cloud.tencent.com/developer/article/1508919
 
 ```
+--- NotEnoughReplicasException
+The size of the current ISR Set(0) is insufficient to satisfy the min.isr requirement
+https://stackoverflow.com/questions/62770272/notenoughreplicasexception-the-size-of-the-current-isr-set2-is-insufficient-t
 
 --- LEADER_NOT_AVAILABLE: 
 topic 可能不存在，kafka api默认会自动创建

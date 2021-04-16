@@ -1,3 +1,17 @@
+## 基本
+
+查端口找pid netstat -anp|grep :80 
+
+pid查程序：
+
+```
+cat /proc/21268/cmdline
+ls -l /proc/21268/exe
+ps -lef|grep 21268
+```
+
+
+
 ## 软硬限制
 
 要知道,在linux的世界里,一切皆文件.因此要实现大的并发量的第一步,修改linux系统的文件标识符限制数,也就是文件打开数量的限制
@@ -22,13 +36,16 @@ $ps -lef|grep "kafka"
 $ls /proc/<kafka pid>/fd | wc -l
 ```
 
-## 端口流量
+## 端口TCP流量
 
 查看某个端口的tcp连接记录：
 
 https://serverfault.com/questions/193600/how-to-get-a-linux-network-log/193602
 
 ```
+------------------------------------------------------
+--- 通过 iptables
+------------------------------------------------------
 --- 创建
 $iptables -I INPUT -p tcp --dport 9092 -j LOG
 $tail -f /var/log/messages
@@ -41,7 +58,18 @@ num  target     prot opt source               destination
 $iptables -D INPUT 1
 
 
+------------------------------------------------------
+--- 其他
+------------------------------------------------------
+ss sport eq :10101
+
+ss -tanp | grep 10101
+ESTAB      0      0      172.22.16.15:10101              172.22.16.7:9092                users:(("java",pid=21268,fd=46))
+
+ls -al  /proc/21268/fd/46
 ```
+
+
 
 ## 检查网卡 network card adapter
 
@@ -49,3 +77,6 @@ $iptables -D INPUT 1
 grep -r -H "eth0" /var/log/
 ```
 
+## 案例
+
+https://blog.cloudflare.com/this-is-strictly-a-violation-of-the-tcp-specification/

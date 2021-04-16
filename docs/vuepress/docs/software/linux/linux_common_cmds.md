@@ -53,6 +53,9 @@ find . -size +1G -ls | sort -k7n
 find / -type f -name "mysql-connector-java-5.1.24.jar" -print
 
 find / -type f -name "Locations.xml" -print
+
+//kafka/logs下面有很多日志，格式为：[server|controller].log.YYYY-MM-DD-0X，如果想大概知道有哪几类文件，可以：
+find . -type f -maxdepth 1 -exec basename "{}" \; | cut -d'.' -f1 | sort -u
 ```
 
 ### GREP/zgrep
@@ -62,13 +65,16 @@ https://www.cyberciti.biz/faq/howto-use-grep-command-in-linux-unix/
 ```
 grep/zgrep "pattern" file/file.gz
 
+grep -r -l "eth[0-9]" /var/log/ #file name only
+grep -r -H "eth[0-9]" /var/log/ #print each match and filename
+
 grep -H -r "syscript" ~ | cut -d: -f1 | sort -u
 
 grep -H -r "create_db.sh" ~ | cut -d: -f1 | sort -u
 
 grep -H -r "/apps/lib" ~ | cut -d: -f1 | sort -u
 
-grep -r -H "eth[0-9]" /var/log/
+
 ```
 
 ### split
