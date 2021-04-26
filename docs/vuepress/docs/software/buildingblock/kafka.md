@@ -370,6 +370,20 @@ Topic:my-replicated-topic       PartitionCount:1        ReplicationFactor:3     
         Topic: my-replicated-topic      Partition: 0    Leader: 1       Replicas: 1,2,0 Isr: 1,2,0
 ```
 
+##### Reassign Partition
+
+```
+kafka-reassign-partitions.sh
+-- 1.generate current assignment
+kafka-reassign-partitions --zookeeper hostname:port --topics-to-move-json-file topics to move.json --broker-list broker 1, broker 2 --generate
+-- 2.modify and apply
+kafka-reassign-partitions --zookeeper hostname:port  --reassignment-json-file reassignment configuration.json --bootstrap-server hostname:port --execute
+-- 3.verify
+kafka-reassign-partitions --zookeeper hostname:port --reassignment-json-file reassignment configuration.json  --bootstrap-server hostname:port --verify
+```
+
+
+
 ##### Producer 
 
 ```
@@ -1184,6 +1198,8 @@ https://stackoverflow.com/questions/65507232/kafka-log-segment-bytes-vs-log-rete
 
 ```
 
+
+
 ##### 测试 listener工具：
 
 关于host
@@ -1212,7 +1228,23 @@ https://stackoverflow.com/questions/65507232/kafka-log-segment-bytes-vs-log-rete
    nc -vz 1.1.1.1 9092
   ```
 
-  
+
+##### replica factor
+
+很重要，对于普通的topic replica factor来说，replica多一些没有问题，但是对internal topic要特别注意，尤其是对于 __transaction_state来说，如果min.isr设置跟replication.factor设置一样，那么任何一个kafka节点down掉，都会造成无法写入kafka（transactional producer写入会报错 NotEnoughReplicasException）
+
+https://stackoverflow.com/questions/47483016/recommended-settings-for-kafka-internal-topics-after-upgrade-to-1-0
+
+```
+############################# Internal Topic Settings  #############################
+# The replication factor for the group metadata internal topics "__consumer_offsets" and "__transaction_state"                                                                        
+# For anything other than development testing, a value greater than 1 is recommended for to ensure availability such as 3.                                                            
+offsets.topic.replication.factor=3
+transaction.state.log.replication.factor=3
+transaction.state.log.min.isr=2
+```
+
+
 
 #### Client Config
 
@@ -2225,6 +2257,23 @@ transactional.id.expiration.ms=2073600000
 https://spring.io/projects/spring-kafka
 org.springframework.kafka org.apache.kafka
 https://www.cnblogs.com/wangb0402/p/6187796.html
+
+### Replica factor
+
+```
+############################# Internal Topic Settings  #############################
+# The replication factor for the group metadata internal topics "__consumer_offsets" and "__transaction_state"                                                                        
+# For anything other than development testing, a value greater than 1 is recommended for to ensure availability such as 3.          
+offsets.topic.num.partitions = 50 （default）
+offsets.topic.replication.factor=3
+transaction.state.log.replication.factor=3
+transaction.state.log.min.isr=2
+
+kafka-topics.sh -describe --bootstrap-server ip:9092 --topic __consumer_offsets
+kafka-topics.sh -describe --bootstrap-server ip:9092 --topic __transaction_state
+```
+
+
 
 ## Reference
 + kafka原理

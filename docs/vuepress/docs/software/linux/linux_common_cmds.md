@@ -56,6 +56,8 @@ find / -type f -name "Locations.xml" -print
 
 //kafka/logs下面有很多日志，格式为：[server|controller].log.YYYY-MM-DD-0X，如果想大概知道有哪几类文件，可以：
 find . -type f -maxdepth 1 -exec basename "{}" \; | cut -d'.' -f1 | sort -u
+
+find zookeeper/ -group root
 ```
 
 ### GREP/zgrep

@@ -244,6 +244,7 @@ https://stackoverflow.com/questions/17894808/how-do-one-read-the-zookeeper-trans
 
 java -cp /apex/apps/dependency/zookeeper-3.4.8/zookeeper-3.4.8.jar:lib/log4j-1.2.16.jar:lib/slf4j-log4j12-1.6.1.jar:lib/slf4j-api-1.6.1.jar org.apache.zookeeper.server.LogFormatter /apex/apps/dependency/zookeeper-3.4.8/logs/version-2/log.100000001 >  /apex/apps/clearing/zookeeper
 
+
 --- 3.6后版本
 For transaction log:
 bin/zkTxnLogToolkit.sh --dump /datalog/version-2/log.f3aa6 

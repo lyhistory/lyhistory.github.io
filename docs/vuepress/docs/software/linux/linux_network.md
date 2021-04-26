@@ -57,6 +57,8 @@ num  target     prot opt source               destination
 1    LOG        tcp  --  anywhere             anywhere             tcp dpt:XmlIpcRegSvc LOG level warning
 $iptables -D INPUT 1
 
+--- More
+iptables -A INPUT -p tcp --destination-port 9092 -j DROP
 
 ------------------------------------------------------
 --- 其他
