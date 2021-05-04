@@ -1903,6 +1903,10 @@ https://medium.com/@mukeshkumar_46704/in-depth-kafka-message-queue-principles-of
 
 #### Consumer coordinator & Group coordinator & Rebalance
 
+https://matt33.com/2017/10/22/consumer-join-group/
+
+https://cloud.tencent.com/developer/news/19958
+
 > While the old consumer depended on Zookeeper for group management, the new consumer uses a group coordination protocol built into Kafka itself. For each group, one of the brokers is selected as the *group coordinator*. The coordinator is responsible for managing the state of the group. Its main job is to mediate partition assignment when new members arrive, old members depart, and when topic metadata changes. The act of reassigning partitions is known as *rebalancing* the group.
 >
 > https://www.confluent.io/blog/tutorial-getting-started-with-the-new-apache-kafka-0-9-consumer-client/

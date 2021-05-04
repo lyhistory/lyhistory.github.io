@@ -62,6 +62,8 @@ Spring提供了两种容器类型：BeanFactory和ApplicationContext：
 
 **bean生命周期接口**
 
+https://www.huaweicloud.com/articles/b59be8ffdcfbd1f8a1fe28bffe848d20.html
+
 IoC容器负责管理容器中所有bean的生命周期，而在bean生命周期的不同阶段，Spring提供了不同的扩展点来改变bean的命运，例如EnvironmentPostProcessor、BeanFactoryPostProcessor等（具体参照：第2节 SpringApplication启动流程）:
 
 **单例模式**
@@ -102,6 +104,679 @@ System.out.println(yiifaa_1 == yiifaa_2);
 </bean>
 ```
 > https://blog.csdn.net/yiifaa/java/article/details/74852425
+
+
+
+@bean方法调用的特殊性：
+
+https://www.racecoder.com/archives/787/
+
+https://stackoverflow.com/questions/27990060/calling-a-bean-annotated-method-in-spring-java-configuration
+
+#### Spring装配bean的三种方法：
+
+The interface `org.springframework.context.ApplicationContext` represents the Spring IoC container and is responsible for instantiating, configuring, and assembling the aforementioned beans. The container gets its instructions on what objects to instantiate, configure, and assemble by reading configuration metadata. The configuration metadata is represented in：
+
+XML, Java annotations, or Java code:
+
+https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/beans.html
+
+- [Annotation-based configuration](https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/beans.html#beans-annotation-config) 使用注解Annotation定义Bean
+
+  Spring 2.5 introduced support for annotation-based configuration metadata.
+
+  spring从两个角度实现自动化装配：组件扫描和自动装配
+
+  1) 创建可被发现的bean
+
+  ```java
+  @Component
+  这个简单的注解表明该类会作为组件类,并告知Spring要为这个类创建bean
+  
+  ----------------------------------------------------------------------------------------
+  --- 命名 bean id
+  ---------------------------------------------------------------------------------------- 
+  如果没有个bean设置ID,Spring会根据类名为其指定一个ID,默认名字就是把类名的第一个字母变为小写.
+  @Component("lonelyHeartsClub") //设置期望的ID
+  	public class SgtPeppers implements CompactDisc{
+  }
+  另外还一种为bean命名的方式,使用Java依赖注入规范中所提供的@Named注解来为bean设置ID
+  @Named("lonelyHeartsClub")
+  public class SgtPeppers implements CompactDisc{
+  }
+  
+  ----------------------------------------------------------------------------------------
+  --- 设置组件扫描的基础包
+  ----------------------------------------------------------------------------------------
+  当对一个类标注@Component注解时，表明该类会作为组件类，spring将为这个类创建bean。当在应用文中引用这个bean，spring会自动扫描事先指定的包查找这个  bean。但spring默认是不启用组件扫描的，可以在XML中配置加上。还有一种方法：在新建一个配置类，类中可以什么不用写，在配置类上加上@ComponentScan注解，spring会自动扫描改配置类所在的包。
+  //直接在value属性中指明包的名称
+  @Configuration
+  @ComponentScan("soundsystem")
+  public class CDPlayerConfig{}
+  
+  //通过basePackages属性配置
+  @Configuration
+  @ComponentScan(basePackages="soundsystem")
+  public class CDPlayerConfig{}
+  
+  //设置多个基础包,用数组表示
+  @Configuration
+  @ComponentScan(basePackages={"soundsystem","video"})
+  public class CDPlayerConfig{}
+  
+  //基础包以String类型表示是不安全的,如果重构代码的话,指定的基础包可能会出现错误,用指定为包中所包含的类或接口的方法
+  @Configuration
+  @ComponentScan(basePackageClasses={CDPlayer.class,DVDPlayer.class})
+  public class CDPlayerConfig{}
+  
+  ----------------------------------------------------------------------------------------
+  --- 添加注解自动装配Autowired
+  @Autowired可以换成@Inject,@Inject注解来源于Java依赖注入规范,该规范同时还为我们定义了@Named注解.
+  尽管@Inject和@Autowierd有细微的差别,但大多数场景下,它们都可以互换.
+  ----------------------------------------------------------------------------------------
+  @Autowired注解构造器：
+  @Component
+  public class CDPlayer implements MediaPlayer{
+    private CompactDisc cd;
+  
+    @Autowired//这表明当Spring创建CDPlayer bean的时候,会通过这个构造器来进行实例化并且会传入一个可设置给CompactDisc类型的bean.
+    public CDPlayer(CompactDisc cd){//构造器
+      this.cd = cd;
+    }
+  
+    public void paly(){
+      cd.paly();
+    }
+  }
+  
+  @Autowired注解属性的Setter方法：
+  @Autowired
+  public void setCompactDisc(CompactDisc cd){
+    this.cd = cd;
+  }
+  
+  如果没有匹配的bean,那么在应用上下文创建的时候,Spring会抛出一个异常,为了避免异常的出现,你可以将@Autowired的requied属性设置为false
+  @Autowired(required=false)
+  public void setCompactDisc(CompactDisc cd){
+    this.cd = cd;
+  }
+  
+  如果有多个bean都能满足依赖关系的话,Spring将会抛出一个异常,表明没有明确指定要选择哪个bean进行自动装配, 一般在组件类上添加注解@Qualifier()括号写这个bean的id，在注入时也加上@Qualifier(),写上bean的id
+  @Component
+  @Qualifier("postdao")
+  public interface Postdao{
+  . . . .
+  }
+  
+  @Component
+  @Qualifier("userdao")
+  public interface Userdao{
+  . . . .
+  }
+  
+  @Autowired
+  @Qualifier("usedao")
+  public void setUserdao(Userdao userdao)
+  {. . .
+  }
+  
+  @Autowired
+  @Qualifier("postdao")
+  public void setUserdao(Postdao postdao)
+  {. . .
+  }
+  ```
+
+- [Java-based configuration](https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/beans.html#beans-java) 基于java类提供Bean定义信息
+
+  Starting with Spring 3.0, many features provided by the [Spring JavaConfig project](http://www.springsource.org/javaconfig) became part of the core Spring Framework. Thus you can define beans external to your application classes by using Java rather than XML files. To use these new features, see the `@Configuration`, `@Bean, @Import` and `@DependsOn` annotations.
+
+  有些情况下,比如说,要将第三方库的组件装配到你的应用中,就不能使用前面的自动化装配方法 到第三方库中去给类加@Component和@Autowired注解,
+  在这种情况下,就需要采用显示装配的方式.在进行显示配置有Java和XML两种方案显示装配bean.
+
+  使用java代码，先新建一个配置类JavaConfig，里面都是配置所需的bean，不应该有业务逻辑代码，所以单独建一个类。
+
+  ```java
+  //创建JavaConfig类的关键在于为其添加@Configruation注解,表明这是一个配置类
+  @Configuration
+  public class CDPlayerConfig{
+      @Bean
+      public CompactDisc sgtPeppers(){
+        return new SgtPeppers();
+      }
+      //@Bean注解会告诉Spring这个方法将会返回一个对象,该对象要注册为Spring应用上下文的bean,默认情况下,
+      bean的ID于带有@Bean注解的方法名一样,也可以重命名
+  
+      @Bean(name="lonelyHeartsClubBand")
+      public CompactDisc sgtPeppers(){
+        return new SgtPeppers();
+      }
+  	
+      声明CompactDisc bean是非常简单,它自身没有其他依赖,但现在,我们需要声明CDPlayer bean,它依赖于CompactDisc,在JavaConfig中,如何将他们装配在一起呢?
+      @Bean
+      public CDPlayer cdPlayer(){
+        return new CDPlayer(sgtPeppers()); //因为sgtPeppers()方法上添加了@Bean注解,Spring将会拦截所有对它的调用,
+      //并确保直接返回该方法创建的bean,而不是每次都对其进行实际的调用.
+      }
+      等价于下面这种方式
+          
+      @Bean
+      public CDPlayer cdPlayer(CompactDisc compactDisc){//在这里,cdPlayer()方法请求一个CompactDisc作为参数,当Springs调用cdPlayer()创建CDPlayer bean的时候,
+  //它会自动装配一个CompactDisc到配置方法之中,然后方法体按照合适的方法来使用它.
+        return new CDPlayer(compactDisc);
+      }
+  	@Bean(name="lonelyHeartsClubBandPlayer")
+      public CDPlayer cdPlayer(CompactDisc lonelyHeartsClubBand){
+  		return new CDPlayer(compactDisc);
+      }
+  }
+  
+  More example：
+  
+  @Configuration
+  @ContextConfiguration(locations = {"classpath:spring/spring-dao.xml","classpath:scan.xml"}）
+  public class bbsConfig{
+  　　private Postdao postdao;
+  　　private Userdao userdao;
+  　　@Bean(name="postservice")
+     public PostService getPost()
+  　　{
+  　　return new PostserviceImpl(postdao,userdao);
+  　　}
+  }
+  
+  在对PostService的bean注入时，同时又依赖了两个bean，postdao和userdao。直接引用beanID就可以，spring会自动地从容器中获取这些bean，只要他们的配置是正确的就行。这个例子中userdao、postdao是Mybatis配置自动扫描将dao接口生成代理注入到spring的，其实也算是xml装配bean
+  这里如果再声明一个bean，返回的仍是postserviceImpl对象，和之前的那个bean完全一样，是同一个实例。一般spring @bean如果是同一个beanID，默认返回的是一个单例bean，注入的是同一个实例。如果修改其中一个会都改变的。
+  不过在这里要注意进行测试时，由于spring的单元测试和springIoc容器是完全独立的，postdao和userdao注入检测时是使用locations加载xml文件，而postservice使用classes加载config类的，但是两个不能同时混用在@ContextConfiguration中。所以非要都测试的话，就分开测试吧。
+  ```
+
+  
+
+- 基于xml配置Bean
+
+  Configuration metadata is traditionally supplied in a simple and intuitive XML format
+
+  https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/beans.html
+
+  ```java
+  //XML装配bean的缺点
+  //1.当Spring发现这个<bean>元素时,它将会调用SgtPeppers的默认构造器来创建bean.在XML配置中,bean的创建显得更加被动
+  //2.不如JavaConfig强大,在JavaConfig配置中,可以通过任何想象到的方法来创建bean实例(构造器,set方法等)
+  //3.在简单的<bean>声明中,将bean的类型以字符串的形式设置在了class属性中,不能保证设置给class属性的值是真正的类
+  //4.重命名了类,也会引起麻烦
+  
+  --------------------------------------------------------------------------------------
+  ---基本
+  --------------------------------------------------------------------------------------
+  <?xml version="1.0" encoding="UTF-8">
+  <beans xmlns="http://........"
+               xmlns:xsi="http://.....''>
+    <!--  configuration details go here -->
+  	<bean class="soundsystem.SgtPeppers" />
+  	//这里声明一个很简单的bean,因为没有明确给定ID,所以这个bean将会根据全限定类名来进行命名,
+  	//这里的bean的ID将会是"soundsystem.SgtPeppers#0".其中,"#0"是一个计数的形式,来区分相同类型的bean.
+  
+  	//更好的方法是借助id属性
+  	<bean id="compactDisc" class="soundsystem.SgtPeppers" />
+  
+  	
+   	//当Spring遇到<bean>这个元素时,它会创建一个CDPlayer实例.<constructor-arg>元素会告知Spring要将
+      //一个ID为compactDisc的bean引用传递到CDPlayer的构造器中.
+      <bean id="cdPlayer" class="soundsystem.CDPlayer">
+        <constructor-arg ref="compactDisc">
+      </bean>
+          
+  </beans>
+  
+  作为替代方案,也可以使用Spring的c-命名空间（Spring3.0所引入的c-命名空间）
+  <?xml version="1.0" encoding="UTF-8">
+  <beans xmlns="http://........"
+              xmlns:c="http://www.springframework.org/schema/c"
+               xmlns:xsi="http://.....''>
+    <!--  configuration details go here -->
+  	<bean id="cdPlayer" class="soundsystem.CDPlayer"
+     	c:cd-ref="compactDisc">
+      //"c:" 命名空间的前缀
+      //"cd" 构造器参数名
+      //"-ref"注入bean引用
+      //"compactDisc" 要注入bean 的ID
+  	
+      如果在优化构建的过程,将调试标志移除掉,那么这种方式可能无法正常执行.代替方案：
+  	<bean id="cdPlayer" class="soundsystem.CDPlayer"
+     c:_0-ref="compactDisc">
+  	//把参数名换成"0",也就是参数的索引,但XML中不允许数字作为属性的第一个字符,因此添加下划线"_"
+  
+  </beans>
+  --------------------------------------------------------------------------------------
+  --- 字面量string注入
+  --------------------------------------------------------------------------------------
+  public class BlankDisc implements CompactDisc{
+    private String title;
+    private String artist;
+    
+    public BlandDisc(String title,String artist){
+      this.title = title;
+      this.artist = artist;
+    }
+  
+    public void paly(){
+      System.out.println("Playing"+title+"by"+artist);
+    }
+  
+  }
+  
+  <bean id="compactDisc"
+      class="soundysytem.BlankDisc">
+    <constructor-arg value="Sgt.Peper's Lonely Hearts" />
+    <constructor-arg value="The beatles"/>
+  </bean>
+  等价
+  <bean id="compactDisc"
+      class="soundsystem.BlanDisc"
+      c:_title="Sgt.Peper's Lonely Hearts"
+      c:_artist="The beatles"/>
+  </bean>
+  或
+  <bean id="compactDisc"
+      class="soundsystem.BlanDisc"
+      c:_0="Sgt.Peper's Lonely Hearts"
+      c:_1="The beatles"/>
+  </bean>
+  
+  --------------------------------------------------------------------------------------
+  --- 集合注入
+  -------------------------------------------------------------------------------------- 
+  public class BlankDisc implements CompactDisc{
+  
+    private String title;
+    private String artist;
+    private List<String> tracks;
+  
+     public void setTitel(String title){
+      this.title = title;
+      }
+  
+      public void setArtist(String artist){
+        this.artist= artist;
+      }
+     public void setTracks(List<String> tracks){
+      this.tracks= tracks;
+      }
+  
+      public void play(){
+        ....
+      }
+  }
+  
+  <bean id="compactDisc"
+      class="soundsystem.BlankDisc">
+    <constructor-arg value="Sgt.Peper's Lonely Hearts" />
+    <constructor-arg value="The beatles" />
+    <constructor-arg>
+      <list>
+        <value>Sgt. Pepper's Lonely Heats</value>
+        <value>With a Little Help</value>
+        <value>Lucy in the Sky</value>
+        <value>Getting Better</value>
+        <value>Fixing a Hole</value>
+      </list>
+    </constructor-arg>
+  </bean>
+  等价于p命名空间
+  <bean id="compactDisc"
+        class="soundsystem.BlankDisc"
+        p:title="Sgt.peper's loney hearts club"
+        p:artist="The Beatles">
+    <property name="tracks">
+      <list>
+        <value>Sgt.peper's loney hearts club</value>
+        <value>loney hearts club</value>
+        <value>hearts club</value>
+        <value>club hearts</value>
+        ...
+      </list>
+     </property>
+  注意list不能直接使用p空间，可以借用util-命名空间
+  <util:list id="trackList">
+       <value>Sgt.peper's loney hearts club</value>
+       <value>loney hearts club</value>
+       <value>hearts club</value>
+       <value>club hearts</value>
+  </util:lsit>
+  <bean id="compactDisc"
+             class = "soundsystem.BlankDisc"
+             p:title="Sgt.pepers lonely hearts"
+             p:artist="The Beatles"
+             p:tracks-ref="trackList">     
+  
+  复杂类型的list：
+  public Discography(String artist,List<CompactDisc> cds){...}
+  
+  <bean id="beatlesDiscography" class="soundsystem.Discography">
+    <constructor-arg value="The Beatles" />
+    <constructor-arg>
+      <list>
+        <ref bean="sgtPeppers" />
+        <ref bean="whiteAlbum" />
+        ...
+      </lsit>
+    </constructor-arg>
+  
+  --------------------------------------------------------------------------------------
+  --- 属性注入
+  --------------------------------------------------------------------------------------    
+  import soundsystem.CompactDisc;
+  import soundsystem.MediaPlayer;
+  
+  public class CDPlayer implements MediaPlayer{
+    private CompactDisc compactDisc;
+  
+    @Autowired
+    public void setCompactDisc(CompactDisc compactDisc){
+      this.compactDisc = compactDisc; 
+    }
+  
+    public void paly(){
+      compactDisc.play();
+    }
+  } 
+  <bean id="cdPlayer" class="soundsystem.CDPlayer">
+      <property name="compactDisc" ref="compactDisc" />
+  </bean>
+  //通过ref引用了ID为compactDisc的bean,将其注入到compactDisc属性中(通过setCompactDisc()方法)
+  
+  等价于通过p命名空间
+  <?xml version="1.0" encoding="UTF-8">
+  <beans xmlns="http://........"
+         xmlns:p="http://www.springframework.org/schema/p"
+         xmlns:xsi="http://.....''>
+    <!--  configuration details go here -->
+    <bean id="cdPlayer" class="soundsystem.CDPlayer"
+      p:compactDisc-ref="compactDisc" />
+  </bean>
+  //"p:" :前缀
+  //前面的compactDisc: 属性名
+  //-ref:  注入bean引用
+  //后面的compactDisc: 所注入bean的ID
+  
+  </beans>
+   
+  
+  <?xml version="1.0" encoding="UTF-8" ?>
+  <beans xmlns="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.springframework.org/schema/beans
+              http://www.springframework.org/schema/beans/spring-beans.xsd
+              http://www.springframework.org/schema/context">
+      <import resource="spring/spring-dao.xml"/>
+  
+      <bean id="postservice" class="com.bbs.service.impl.PostserviceImpl">
+            <constructor-arg ref="postdao"/>
+              <constructor-arg ref="userdao"/>
+      </bean>
+  </beans>
+  
+  配置postservice的bean时需要引入两个bean，postdao和userdao，放到constructor-arg的标签中，ref指的是依赖的bean的ID。如果是在javaConfig中配置的，就写@Bean的内容。如果是@Component就写@Qualifier的内容。这里是引入的是动态实现的dao接口的bean，是在spring-dao.xml中配置的，引入这个配置文件就可以自动获得beanID。
+  ```
+
+  
+
+  **混合使用三种装配**
+
+  1. 在类上可以使用 @import(bbsConfig.class)组合其他java注解
+  2. 在类上使用 @importResource("classpath:spring-dao.xml")组合其他xml注解
+  3. 在类上可以使用@ContenxtConfiguration包含class或者xml
+  4. 在xml中可以用引入xml注解，也可以使用引入java注解
+
+#### 基于XML的三种注入方式：
+
+https://www.cnblogs.com/wuchanming/p/5426746.html
+
++ 属性注入
+
+  ```java
+  package com.java.entity;
+  
+  public class People {
+      private int id;
+      private String name;
+      private int age;
+  
+      public People() {
+          //调用默认的构造方法
+      }
+  
+      public int getId() {
+          return id;
+      }
+  
+      public void setId(int id) {
+          this.id = id;
+      }
+  
+      public String getName() {
+          return name;
+      }
+  
+      public void setName(String name) {
+          this.name = name;
+      }
+  
+      public int getAge() {
+          return age;
+      }
+  
+      public void setAge(int age) {
+          this.age = age;
+      }
+      
+        @Override
+      public String toString() {
+          return "People{" +
+                  "id=" + id +
+                  ", name='" + name + '\'' +
+                  ", age=" + age +
+                  '}';
+      }
+  }
+  
+  <?xml version="1.0" encoding="UTF-8"?>
+  <beans xmlns="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd">
+  
+      <bean id="people" class="com.java.entity.People"></bean>
+      //属性注入
+      <bean id="people2" class="com.java.entity.People">
+              <property name="id" value="1"></property>
+              <property name="age" value="18"></property>
+              <property name="name" value="张三"></property>
+          </bean>
+  </beans>
+          
+  public class Test2 {
+      public static void main(String[] args) {
+          //加载beans.xml文件，调用Spring接口
+          ApplicationContext ac=new ClassPathXmlApplicationContext("beans.xml");
+          //通过id获取bean，返回一个对象
+          People people=(People)ac.getBean("people");
+          //调用方法
+          System.out.println(people);
+  		
+          //属性注入
+          People people2=(People)ac.getBean("people2");
+          System.out.println(people2);
+      }
+  }
+  ```
+
+  
+
++ 构造函数注入
+
+  ```java
+  public People(int id, String name, int age) {
+          this.id = id;
+          this.name = name;
+          this.age = age;
+      }
+  <!--类型注入-->
+      <bean id="people3" class="com.java.entity.People">
+          <constructor-arg type="int" value="2"></constructor-arg>
+          <constructor-arg type="String" value="李四"></constructor-arg>
+          <constructor-arg type="int" value="19"></constructor-arg>
+      </bean>
+  
+      <!--索引注入-->
+      <bean id="people4" class="com.java.entity.People">
+          <constructor-arg index="0" value="3"></constructor-arg>
+          <constructor-arg index="1" value="王五"></constructor-arg>
+          <constructor-arg index="2" value="20"></constructor-arg>
+      </bean>
+  
+      <!--联合使用-->
+      <bean id="people5" class="com.java.entity.People">
+          <constructor-arg type="int" index="0" value="4"></constructor-arg>
+          <constructor-arg type="String" index="1" value="赵六"></constructor-arg>
+          <constructor-arg type="int" index="2" value="21"></constructor-arg>
+      </bean>
+  
+  //类型注入
+  People people3=(People)ac.getBean("people3");
+  System.out.println(people3);
+  
+  //类型注入
+  People people4=(People)ac.getBean("people4");
+  System.out.println(people4);
+  
+  //联合使用
+  People people5=(People)ac.getBean("people5");
+  System.out.println(people5);
+  ```
+
+  
+
++ 工厂方法注入，分为静态工厂和非静态工厂； 一般用得多的都是静态工厂；
+
+  ```java
+  package com.java.factory;
+  
+  import com.java.entity.People;
+  
+  public class PeopleFactory {
+      //非静态工厂
+      public People createPeople(){
+          People p=new People();
+          p.setId(5);
+          p.setName("阿七");
+          p.setAge(22);
+          return p;
+      }
+  
+      //静态工厂
+      public static People createPeople1(){
+          People p=new People();
+          p.setId(6);
+          p.setName("阿八");
+          p.setAge(23);
+          return p;
+      }
+  }
+  
+   <!--工厂模式的非静态方法-->
+      <bean id="peopleFactory" class="com.java.factory.PeopleFactory"></bean>
+  
+      <bean id="people6" factory-bean="peopleFactory" factory-method="createPeople"></bean>
+  
+      <!--工厂模式的静态方法-->
+      <bean id="people7" class="com.java.factory.PeopleFactory" factory-method="createPeople1"></bean>
+          
+   //工厂方式注入，非静态
+  People people6=(People)ac.getBean("people6");
+  System.out.println(people6);
+  
+  //工厂方式注入，静态
+  People people7=(People)ac.getBean("people7");
+  System.out.println(people7);
+  ```
+
+
+
+#### 基于Autowired 的三种注入方式
+
+https://stackoverflow.com/questions/39890849/what-exactly-is-field-injection-and-how-to-avoid-it
+
+https://medium.com/@ilyailin7777/all-dependency-injection-types-spring-336da7baf51b
+
+ 如果你使用的是构造器注入
+恭喜你，当你有十几个甚至更多对象需要注入时，你的构造函数的参数个数可能会长到无法想像。
+
+如果你使用的是field反射注入
+如果不使用Spring框架，这个属性只能通过反射注入，太麻烦了！这根本不符合JavaBean规范。
+还有，当你不是用过Spring创建的对象时，还可能引起NullPointerException。
+并且，你不能用final修饰这个属性。
+
+如果你使用的是setter方法注入
+那么你将不能将属性设置为final。
+两者取其轻
+
+Spring3.0官方文档建议使用setter注入覆盖构造器注入。
+Spring4.0官方文档建议使用构造器注入。
+结论
+
+如果注入的属性是必选的属性，则通过构造器注入。
+如果注入的属性是可选的属性，则通过setter方法注入。
+至于field注入，不建议使用。
+
++ 通过field反射注入, field injection (不推荐)
+
+  ```java
+  @Component
+  public class Dependency(){
+  }
+  @Component
+  public class DI(){
+  	@Autowired
+  	private Dependency dependency;
+  }
+       
+  ```
+
++ 通过构造器注入
+
+  ```
+  public class DI(){
+  	//通过构造器注入
+  	private DependencyA a;
+  	@Autowired
+  	public DI(DependencyA a){
+  		this.a = a;
+  	}
+     
+  }
+  ```
+
+  
+
++ 通过setter方法注入
+
+  ```
+  public class DI(){
+  	//通过setter方法注入
+  	private DependencyB b;
+  	@Autowired
+  	public void setDependencyB(DependencyB b){
+  		this.b = b;
+  	}
+      
+  }
+       
+  ```
+
+  
+
+  
 
 ### 1.2. JavaConfig与常见Annotation
 
@@ -661,5 +1336,9 @@ com.chm.test.HelloAutoConfiguration
 https://blog.csdn.net/zxc123e/article/details/80222967
 ```
 
+## 4. Troubleshooting
 
+### BeanDefinitionOverrideException 
+
+https://www.baeldung.com/spring-boot-bean-definition-override-exception
 

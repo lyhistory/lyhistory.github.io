@@ -1480,3 +1480,116 @@ VS
 
 FactoryBean 生产唯一固定的复杂对象 （参考OpenFeign实现接口getobject getobjecttype isSingleton）
 
+
+
+
+
+## More example
+
+类似前面分析的mybatis，redis connector也有类似的，通过下面代码的注释，可以看到，类似mybatis的RegistrarNotFound，当我们没有自定义RedisConnectionFactory的时候，spring 会帮我们注册一个默认的即下面的LettuceConnectionFactory，严格说其实不是spring帮我们，而是 spring boot starter --- spring-boot-starter-data-redis，其制定的标准接口，默认选用Lettuce实现
+
+```java
+
+@Configuration
+@ComponentScan("com.lyhistory.redis")
+//@EnableRedisRepositories(basePackages = "com.lyhistory.redis.repo")
+@PropertySource("classpath:application.properties")
+public class RedisConfig {
+    
+    @Autowired
+    private ClusterConfigurationProperties clusterProperties;
+    
+    @Bean
+    RedisClusterConfiguration redisConfiguration() {
+        RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration(clusterProperties.getNodes());
+        redisClusterConfiguration.setMaxRedirects(clusterProperties.getMaxRedirects());
+
+        return redisClusterConfiguration;
+    }
+    /*
+    @Bean
+    JedisConnectionFactory jedisConnectionFactory() {
+        return new JedisConnectionFactory();
+    }
+    */
+   
+    @Bean
+    LettuceConnectionFactory redisConnectionFactory(RedisClusterConfiguration redisConfiguration) {
+
+        GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
+        poolConfig.setMaxIdle(-1);
+        poolConfig.setMinIdle(10);
+        poolConfig.setMaxWaitMillis(3000);
+        poolConfig.setMaxTotal(200);
+
+        LettucePoolingClientConfiguration lettucePoolingClientConfiguration = LettucePoolingClientConfiguration.builder()
+                .commandTimeout(Duration.ofSeconds(10))
+                .shutdownTimeout(Duration.ZERO)
+                .poolConfig(poolConfig)
+                .build();
+
+        return new LettuceConnectionFactory(redisConfiguration, lettucePoolingClientConfiguration);
+    }
+    
+    
+    // 我对spring boot的启动过程run方法进行了debug
+    // 执行完 AbstractApplicationContext.refresh() => finishBeanFactoryInitialization(beanFactory);
+    // 查看 beanFactory.beanDefinitionMap，会看到
+    // redisConnectionFactory=Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=redisConfig; factoryMethodName=redisConnectionFactory; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/lyhistory/redis/RedisConfig.class
+    // 可以明确的看到这个redisConnectionFactory也就是子类LettuceConnectionFactory 就是上面定义的bean，路径是我们自定义的该类 [com/lyhistory/redis/RedisConfig.class]
+    //
+    // 如果将前面的bean注释掉，再debug
+    // 会看到
+    // redisConnectionFactory=Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.LettuceConnectionConfiguration; factoryMethodName=redisConnectionFactory; initMethodName=null; destroyMethodName=(inferred); 
+    // 路径变成了 [org/springframework/boot/autoconfigure/data/redis/LettuceConnectionConfiguration.class],
+    @Bean
+    public RedisTemplate<String, Object> redisTemplate(LettuceConnectionFactory connectionFactory){//(RedisConnectionFactory connectionFactory) {// LettuceConnectionFactory implements RedisConnectionFactory
+        
+        final RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
+        template.setConnectionFactory(connectionFactory);
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setHashKeySerializer(new StringRedisSerializer());
+        FastJsonRedisSerializer<Object> fastJsonRedisSerializer = new FastJsonRedisSerializer(Object.class);
+        template.setValueSerializer(fastJsonRedisSerializer);
+        //template.setValueSerializer(new GenericToStringSerializer<Object>(Object.class));
+        return template;
+    }
+   
+}
+```
+
+前面想复杂了，实际比较简单
+
+在 spring-boot-autoconfigure的 org.springframework.boot.autoconfigure.data.redis; 看到很简单的 ConditionalOnMissingBean，
+
+就是说当没有找到用户自定义的这些connectionFactory就会默认创建，可见，用户自定义的优先级肯定是比较高的，应该是在前面的程序启动过程中加载bean的时候优先加载的，而后才是加载第三方定义的这些默认的bean
+
+```java
+@Configuration
+@ConditionalOnClass(RedisClient.class)
+class LettuceConnectionConfiguration extends RedisConnectionConfiguration {
+    。。。。。。。。。。。。。
+@Bean
+	@ConditionalOnMissingBean(RedisConnectionFactory.class)
+	public LettuceConnectionFactory redisConnectionFactory(
+			ClientResources clientResources) throws UnknownHostException {
+		LettuceClientConfiguration clientConfig = getLettuceClientConfiguration(
+				clientResources, this.properties.getLettuce().getPool());
+		return createLettuceConnectionFactory(clientConfig);
+	}
+
+	private LettuceConnectionFactory createLettuceConnectionFactory(
+			LettuceClientConfiguration clientConfiguration) {
+		if (getSentinelConfig() != null) {
+			return new LettuceConnectionFactory(getSentinelConfig(), clientConfiguration);
+		}
+		if (getClusterConfiguration() != null) {
+			return new LettuceConnectionFactory(getClusterConfiguration(),
+					clientConfiguration);
+		}
+		return new LettuceConnectionFactory(getStandaloneConfig(), clientConfiguration);
+	}
+    。。。。。。。。。。。。。
+```
+
+具体解析可以参考 https://www.javatt.com/p/19819
