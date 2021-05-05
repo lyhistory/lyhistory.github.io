@@ -113,6 +113,15 @@ https://www.racecoder.com/archives/787/
 
 https://stackoverflow.com/questions/27990060/calling-a-bean-annotated-method-in-spring-java-configuration
 
+
+
+[Spring Boot 2.0 ：深入分析Spring Boot原理](https://blog.csdn.net/TheLudlows/article/details/81360067)
+
+spring boot之自动装配（spring-boot-autoconfigure） https://blog.csdn.net/wangjie5540/article/details/99542777
+
+原创 | 我被面试官给虐懵了，竟然是因为我不懂Spring中的@Configuration
+https://juejin.im/post/5d005860f265da1b7f297630
+
 #### Spring装配bean的三种方法：
 
 The interface `org.springframework.context.ApplicationContext` represents the Spring IoC container and is responsible for instantiating, configuring, and assembling the aforementioned beans. The container gets its instructions on what objects to instantiate, configure, and assemble by reading configuration metadata. The configuration metadata is represented in：
@@ -1157,10 +1166,13 @@ SpringApplicationRunListener只有一个实现类： EventPublishingRunListener�
 	org.springframework.beans.factory.config.BeanFactoryPostProcessor：
 	允许我们在容器实例化相应对象之前，对注册到容器的BeanDefinition所保存的信息做一些额外的操作，比如修改bean定义的某些属性或者增加其他信息等。
 
-
 ## 3. 使用springboot开发应用
 
 ### 3.1 业务开发
+
+#### 3.1.1 使用starter
+
+##### POM depenedency
 
 spring boot官方提供了很多现成的starter，可以直接引用其depdendency使用比如 
 spring-boot-starter-web，spring-boot-starter-jdbc
@@ -1206,12 +1218,417 @@ full list: https://github.com/spring-projects/spring-boot/blob/v2.2.6.RELEASE/sp
 
 ```
 
-[一站式starter](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using-boot-starter)
+##### Configuration
 
-[About AutoConfig](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using-boot-auto-configuration)
-Gradually Replacing Auto-configuration
-Disabling Specific Auto-configuration Classes
-(exclude={DataSourceAutoConfiguration.class})
+默认是 application.properties，也可以使用yaml
+
+都在这里：
+
+https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html
+
+另外一种稍微硬核的通过查阅代码获取的方式：
+
+所有的配置都可以在 spring-boot-autoconfigure里面找到，比如
+
+org.springframework.boot.autoconfigure.data.redis/RedisProperties
+
+```java
+@ConfigurationProperties(prefix = "spring.redis")
+public class RedisProperties {
+
+	/**
+	 * Database index used by the connection factory.
+	 */
+	private int database = 0;
+
+	/**
+	 * Connection URL. Overrides host, port, and password. User is ignored. Example:
+	 * redis://user:password@example.com:6379
+	 */
+	private String url;
+
+	/**
+	 * Redis server host.
+	 */
+	private String host = "localhost";
+
+	/**
+	 * Login password of the redis server.
+	 */
+	private String password;
+
+	/**
+	 * Redis server port.
+	 */
+	private int port = 6379;
+
+	/**
+	 * Whether to enable SSL support.
+	 */
+	private boolean ssl;
+
+	/**
+	 * Connection timeout.
+	 */
+	private Duration timeout;
+
+	private Sentinel sentinel;
+
+	private Cluster cluster;
+
+	private final Jedis jedis = new Jedis();
+
+	private final Lettuce lettuce = new Lettuce();
+
+	public int getDatabase() {
+		return this.database;
+	}
+
+	public void setDatabase(int database) {
+		this.database = database;
+	}
+
+	public String getUrl() {
+		return this.url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getHost() {
+		return this.host;
+	}
+
+	public void setHost(String host) {
+		this.host = host;
+	}
+
+	public String getPassword() {
+		return this.password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public int getPort() {
+		return this.port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	public boolean isSsl() {
+		return this.ssl;
+	}
+
+	public void setSsl(boolean ssl) {
+		this.ssl = ssl;
+	}
+
+	public void setTimeout(Duration timeout) {
+		this.timeout = timeout;
+	}
+
+	public Duration getTimeout() {
+		return this.timeout;
+	}
+
+	public Sentinel getSentinel() {
+		return this.sentinel;
+	}
+
+	public void setSentinel(Sentinel sentinel) {
+		this.sentinel = sentinel;
+	}
+
+	public Cluster getCluster() {
+		return this.cluster;
+	}
+
+	public void setCluster(Cluster cluster) {
+		this.cluster = cluster;
+	}
+
+	public Jedis getJedis() {
+		return this.jedis;
+	}
+
+	public Lettuce getLettuce() {
+		return this.lettuce;
+	}
+
+	/**
+	 * Pool properties.
+	 */
+	public static class Pool {
+
+		/**
+		 * Maximum number of "idle" connections in the pool. Use a negative value to
+		 * indicate an unlimited number of idle connections.
+		 */
+		private int maxIdle = 8;
+
+		/**
+		 * Target for the minimum number of idle connections to maintain in the pool. This
+		 * setting only has an effect if it is positive.
+		 */
+		private int minIdle = 0;
+
+		/**
+		 * Maximum number of connections that can be allocated by the pool at a given
+		 * time. Use a negative value for no limit.
+		 */
+		private int maxActive = 8;
+
+		/**
+		 * Maximum amount of time a connection allocation should block before throwing an
+		 * exception when the pool is exhausted. Use a negative value to block
+		 * indefinitely.
+		 */
+		private Duration maxWait = Duration.ofMillis(-1);
+
+		public int getMaxIdle() {
+			return this.maxIdle;
+		}
+
+		public void setMaxIdle(int maxIdle) {
+			this.maxIdle = maxIdle;
+		}
+
+		public int getMinIdle() {
+			return this.minIdle;
+		}
+
+		public void setMinIdle(int minIdle) {
+			this.minIdle = minIdle;
+		}
+
+		public int getMaxActive() {
+			return this.maxActive;
+		}
+
+		public void setMaxActive(int maxActive) {
+			this.maxActive = maxActive;
+		}
+
+		public Duration getMaxWait() {
+			return this.maxWait;
+		}
+
+		public void setMaxWait(Duration maxWait) {
+			this.maxWait = maxWait;
+		}
+
+	}
+
+	/**
+	 * Cluster properties.
+	 */
+	public static class Cluster {
+
+		/**
+		 * Comma-separated list of "host:port" pairs to bootstrap from. This represents an
+		 * "initial" list of cluster nodes and is required to have at least one entry.
+		 */
+		private List<String> nodes;
+
+		/**
+		 * Maximum number of redirects to follow when executing commands across the
+		 * cluster.
+		 */
+		private Integer maxRedirects;
+
+		public List<String> getNodes() {
+			return this.nodes;
+		}
+
+		public void setNodes(List<String> nodes) {
+			this.nodes = nodes;
+		}
+
+		public Integer getMaxRedirects() {
+			return this.maxRedirects;
+		}
+
+		public void setMaxRedirects(Integer maxRedirects) {
+			this.maxRedirects = maxRedirects;
+		}
+
+	}
+    ..........
+        /**
+	 * Lettuce client properties.
+	 */
+	public static class Lettuce {
+
+		/**
+		 * Shutdown timeout.
+		 */
+		private Duration shutdownTimeout = Duration.ofMillis(100);
+
+		/**
+		 * Lettuce pool configuration.
+		 */
+		private Pool pool;
+
+		public Duration getShutdownTimeout() {
+			return this.shutdownTimeout;
+		}
+
+		public void setShutdownTimeout(Duration shutdownTimeout) {
+			this.shutdownTimeout = shutdownTimeout;
+		}
+
+		public Pool getPool() {
+			return this.pool;
+		}
+
+		public void setPool(Pool pool) {
+			this.pool = pool;
+		}
+
+	}
+
+}
+```
+
+可以看到前缀是 spring.redis ，具体配置举例：
+
++ 其中最简单的string类型
+
+  ```
+  spring.redis.host=10.136.100.48
+  spring.redis.port=6379
+  ```
+
++ 复杂类型如private Cluster cluster，很简单，进去看Cluster的成员即可，只是注意maxRedirects在application.properties写作：
+
+  ```
+  spring.redis.cluster.nodes=10.136.100.48:6379,10.136.100.48:6380,10.136.100.48:6381,10.136.100.49:6379,10.136.100.49:6380,10.136.100.49:6381,10.136.100.50:6379,10.136.100.50:6380,10.136.100.50:6381
+  spring.redis.cluster.max-redirects=3
+  ```
+
++ 使用yaml
+
+  ```
+  spring:
+    #Redis缓存配置(RedisProperties)
+    redis:
+  #    database: 0
+  #    host: localhost
+  #    port: 6380
+  #    password:
+      #timeout: 6000
+      #redis cluster
+      cluster:
+        nodes: 1.1.1.1:6379,1.1.1.1:6380,1.1.1.1:6381
+        maxRedirects: 3
+      lettuce:
+        pool:
+          max-active: 200
+          max-wait: 3000
+          max-idle: -1
+          min-idle: 10
+  ```
+
+###### 案例分析：
+
+某次项目使用 spring-boot-starter版本为2.0.5
+
+```
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.5.RELEASE</version>
+        <relativePath />
+    </parent>
+```
+
+使用其 spring-boot-starter-data-redis 遇到RedisExcpetion 后来没能重现，不过也能重现出类似的WARN级别信息：
+
+l.c.c.t.ClusterTopologyRefresh^[[m : Unable to connect to xxxx:6379
+
+java.util.concurrent.CompletionException: io.netty.channel.ConnectTimeoutException: connection timed out: /xxxx:6379
+
+经过查阅，client端的RedisConnectionFactory需要增加 ClusterTopologyRefreshOptions  这个option，
+
+```java
+    @Autowired
+    private RedisProperties redisProperties;
+ 
+    @Value("${redis.maxRedirects:3}")
+    private int maxRedirects;
+ 
+    @Value("${redis.refreshTime:5}")
+    private int refreshTime;
+ 
+    @Bean
+    public LettuceConnectionFactory redisConnectionFactory() {
+ 
+        RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration(redisProperties.getCluster().getNodes());
+ 
+        redisClusterConfiguration.setMaxRedirects(maxRedirects);
+ 
+        / / Support adaptive cluster topology refresh and static refresh source
+        ClusterTopologyRefreshOptions clusterTopologyRefreshOptions =  ClusterTopologyRefreshOptions.builder()
+                .enablePeriodicRefresh()
+                .enableAllAdaptiveRefreshTriggers()
+                .refreshPeriod(Duration.ofSeconds(refreshTime))
+                .build();
+ 
+        ClusterClientOptions clusterClientOptions = ClusterClientOptions.builder()
+                .topologyRefreshOptions(clusterTopologyRefreshOptions).build();
+ 
+                 / / From the priority, read and write separation, read from the possible inconsistency, the final consistency CP
+        LettuceClientConfiguration lettuceClientConfiguration = LettuceClientConfiguration.builder()
+                .readFrom(ReadFrom.SLAVE_PREFERRED)
+                .clientOptions(clusterClientOptions).build();
+ 
+        return new LettuceConnectionFactory(redisClusterConfiguration, lettuceClientConfiguration);
+    }
+```
+
+而实际上为什么这个不提供配置呢，查阅了前面说的官方配置：
+
+https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html
+
+发现实际有这个选项
+
+```
+spring.redis.lettuce.cluster.refresh.dynamic-refresh-sources
+spring.redis.lettuce.cluster.refresh.period
+```
+
+而进一步看到第一个config是在spring boot 2.4.0引入的
+
+https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.4.0-Configuration-Changelog
+
+而第二个period是2.3.0
+
+https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.3.0-Configuration-Changelog
+
+直接搜源码 ClusterTopologyRefreshOptions 确认下：
+
+https://github.com/spring-projects/spring-boot/blob/47516b50c39bd6ea924a1f6720ce6d4a71088651/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/data/redis/LettuceConnectionConfiguration.java
+
+点击blame，找到这行
+
+```
+			if (refreshProperties.getPeriod() != null) {
+				refreshBuilder.enablePeriodicRefresh(refreshProperties.getPeriod());
+			}
+```
+
+点击左侧对应的提交：
+
+https://github.com/spring-projects/spring-boot/commit/dfac3a282b98bd480c5acf778dbfbce994051dad
+
+可以看到这次提交的comment：Add configuration to enable Redis Cluster topology refresh      
+
+然后从左上角可以看到是从 [v2.3.0.M4](https://github.com/spring-projects/spring-boot/releases/tag/v2.3.0.M4) 最开始引入的，之后是 v2.3.0.RC1，v2.3.0.RELEASE，直到最新的v2.5.0-RC1
 
 
 
@@ -1222,21 +1639,22 @@ REFERENCE:
 https://github.com/javastacks/spring-boot-best-practice
 https://github.com/YunaiV/SpringBoot-Labs
 
-[Spring Boot 2.0 ：深入分析Spring Boot原理](https://blog.csdn.net/TheLudlows/article/details/81360067)
 [给你一份超详细 Spring Boot 知识清单](https://mp.weixin.qq.com/s/1yxsCD3IxopIWYceA54Ayw)
 
+[一站式starter](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using-boot-starter)
 
+[About AutoConfig](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using-boot-auto-configuration)
+Gradually Replacing Auto-configuration
+Disabling Specific Auto-configuration Classes
+(exclude={DataSourceAutoConfiguration.class})
+
+spring boot 中的 Parent POM 和 Starter 的作用什么
+https://cloud.tencent.com/developer/article/1362790
 
 EnvironmentPostProcessor
 BeanPostProcessor
 
-spring boot之自动装配（spring-boot-autoconfigure） https://blog.csdn.net/wangjie5540/article/details/99542777
 
-原创 | 我被面试官给虐懵了，竟然是因为我不懂Spring中的@Configuration
-https://juejin.im/post/5d005860f265da1b7f297630
-
-spring boot 中的 Parent POM 和 Starter 的作用什么
-https://cloud.tencent.com/developer/article/1362790
 
 #### 3.1.2 springboot mvc
 

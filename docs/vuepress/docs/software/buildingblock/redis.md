@@ -456,11 +456,21 @@ The same happens during reshardings. When a node importing a hash slot completes
 
 #### Cluster failover strategy 主从切换
 
+集群是否工作状态可以通过 cluster info查看cluster_state
+
 对于一个N个master node的集群来说，如果每个master node有一个slave，总共就是2N个节点：
 
 1）任何一个节点挂掉或者被network partitioned away都不影响整体的工作，如果是slave挂，没有影响，如果是master挂，其replica会被选举为新的master，依然没有影响
 
 2）如果一个master和其slave同时挂，则cluster无法工作（实际上不会“同时”，肯定是有时间差的，可以利用replica migration提高此情况下的可用性）
+
+3）如果一个master挂掉，并且没有slave，集群无法工作
+
+4）超半数master挂掉，集群无法选举，从而无法工作
+
+N建议为奇数：
+
+比如3个master节点和4个master节点的集群相比，如果都挂了一个master节点都能选举新master节点，如果都挂了两个master节点都没法选举新master节点了，所以奇数的master节点可以节省机器资源
 
 ##### Step 1: Failure detection
 
@@ -533,7 +543,7 @@ In order to speedup the reconfiguration of other nodes, a pong packet is broadca
 
 The other nodes will detect that there is a new master serving the same slots served by the old master but with a greater `configEpoch`, and will upgrade their configuration. Slaves of the old master (or the  failed over master if it rejoins the cluster) will not just upgrade the  configuration but will also reconfigure to replicate from the new  master. 
 
-##### Example 1
+##### Example
 
 - A master is no longer reachable indefinitely. The master has three slaves A, B, C.
 - Slave A wins the election and is promoted to master.
@@ -594,7 +604,32 @@ A<-A3
 
 如果 B1挂掉，B就成为了 orphaned master nodes，（如果B再挂掉，就无法提供服务，simply because there is no other instance to have a copy of the hash slots the master was serving.），所以引入了replica migration，就是当B1挂掉后，因为A有A1和A2等多个replica，所以其中一个可以migration称为B的replica，这样即使B再挂掉，仍然有一个replica可以被promote成为B，可能你会问，这么麻烦，给每个master node都搞多个replica不行吗，当然可以，不过 this is expensive.
 
-##### Case 3: 常见现象：master node aggregate
+##### Case 3：Slave of Slave node
+
+Redis的主从关系是链式的，一个从节点也是可以拥有从节点的，
+
+当一个主A和从A1同时挂掉，A2被选举为新主，然后先重启A，主就会变成A2的从节点，再重启A1，A1仍然会是A的从节点，从而出现链式：A1->A->A2
+
+解决办法：
+
+cluster replicate 为A1指定主节点
+
+##### Case 4：网络不稳定，频繁主从切换
+
+解决办法：合理修正cluster-node-timeout
+
+Once the slave receives ACKs from the majority of masters, it wins the election.  Otherwise if the majority is not reached within the period of two times `NODE_TIMEOUT` (but always at least 2 seconds), the election is aborted and a new one will be tried again after `NODE_TIMEOUT * 4` (and always at least 4 seconds).
+
+As soon as a master is in `FAIL` state, a slave waits a short period of time before trying to get elected. That delay is computed as follows:
+
+```
+DELAY = 500 milliseconds + random delay between 0 and 500 milliseconds +
+        SLAVE_RANK * 1000 milliseconds.
+```
+
+The fixed delay ensures that we wait for the `FAIL` state to propagate across the cluster, otherwise the slave may try to get elected while the masters are still unaware of the `FAIL` state, refusing to grant their vote.
+
+##### Case 5: 常见现象：master nodes aggregate 
 
 假设3台机器M1 M2 M3, 创建cluster，3个master A B C，3个slave(或者6个slave) A1 B1 C1，一般会平均分配：
 
@@ -744,6 +779,24 @@ Optionally we can choose fastoredis https://fastoredis.com/anonim_users_download
 ### 3.2 自动方式管理
 
 #### cluster failover
+
+A manual failover is a special kind of failover that is usually executed when there are no actual failures, but we wish to swap the current master with one of its replicas (which is the node we send the command to), in a safe way, without any window for data loss. 
+
+1. The replica tells the master to stop processing queries from clients.
+2. The master replies to the replica with the current *replication offset*.
+3. The replica waits for the replication offset to match  on its side, to make sure it processed all the data from the master  before it continues.
+4. The replica starts a failover, obtains a new  configuration epoch from the majority of the masters, and broadcasts the new configuration.
+5. The old master receives the configuration update:  unblocks its clients and starts replying with redirection messages so  that they'll continue the chat with the new master.
+
+The command behavior can be modified by two options: **FORCE** and **TAKEOVER***（CLUSTER FAILOVER, unless the TAKEOVER option is specified, does not execute a failover synchronously, it only schedules a manual failover, bypassing the failure detection stage）:
+
++ **FORCE** 
+
+  If the FORCE option is given, the replica does not perform any handshake with the master, that may be not reachable, but instead just starts a failover ASAP starting from point 4. This is useful when we want to start a manual failover while the master is no longer reachable.
+
++ **TAKEOVER**
+
+  There are situations where this is not enough, and we want a replica to failover without any agreement with the rest of the cluster. A real world use case for this is to mass promote replicas in a different data center to masters in order to perform a data center switch, while all the masters are down or partitioned away.
 
 两种场景：
 
@@ -986,6 +1039,8 @@ pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org redis-
 ```
 
 ### 3.3 Java-Spring boot integration
+
+https://docs.spring.io/spring-data/data-redis/docs/current/reference/html/
 
 spring-boot-starter-data-redis 依赖于spring-data-redis
 
