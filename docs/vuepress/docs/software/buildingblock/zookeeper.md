@@ -48,7 +48,7 @@ server.3=1.1.1.3:2888:3888
 SERVER_JVMFLAGS=-Xmx1024m'       
 
 然后在各个节点上分别写入 1 2 3等到myid：
-$ echo "1" > /apex/apps/clearing/3rd-party/zookeeper/zkdata/myid
+$ echo "1" > /zookeeper/zkdata/myid
 
 好像还有个 zookeeper_server.pid?
 ```
@@ -189,6 +189,50 @@ fi
 exit $L_RETURN_FLAG
 ```
 
+### admin 
+
+**New in 3.5.0:** The following        options are used to configure the [AdminServer](https://zookeeper.apache.org/doc/r3.5.4-beta/zookeeperAdmin.html#sc_adminserver).
+
+- admin.enableServer
+
+  (Java system property: **zookeeper.admin.enableServer**) Set to "false" to disable the AdminServer.  By default the              AdminServer is enabled.
+
+- admin.serverAddress
+
+  (Java system property: **zookeeper.admin.serverAddress**) The address the embedded Jetty server listens on. Defaults to 0.0.0.0.
+
+- admin.serverPort
+
+  (Java system property: **zookeeper.admin.serverPort**) The port the embedded Jetty server listens on.  Defaults to 8080.
+
+- admin.idleTimeout
+
+  (Java system property: **zookeeper.admin.idleTimeout**) Set the maximum idle time in milliseconds that a connection can wait                           before sending or receiving data. Defaults to 30000 ms.
+
+- admin.commandURL
+
+  (Java system property: **zookeeper.admin.commandURL**) The URL for listing and issuing commands relative to the              root URL.  Defaults to "/commands".
+
+### Things to Avoid
+
+Here are some common problems you can avoid by configuring      ZooKeeper correctly:
+
+- inconsistent lists of servers
+
+  The list of ZooKeeper servers used by the clients must match            the list of ZooKeeper servers that each ZooKeeper server has.            Things work okay if the client list is a subset of the real list,            but things will really act strange if clients have a list of            ZooKeeper servers that are in different ZooKeeper clusters. Also,            the server lists in each Zookeeper server configuration file            should be consistent with one another.
+
+- incorrect placement of transaction log
+
+  The most performance critical part of ZooKeeper is the            transaction log. ZooKeeper syncs transactions to media before it            returns a response. A dedicated transaction log device is key to            consistent good performance. Putting the log on a busy device will            adversely effect performance. If you only have one storage device,            put trace files on NFS and increase the snapshotCount; it doesn't            eliminate the problem, but it should mitigate it.
+
+- incorrect Java heap size
+
+  You should take special care to set your Java max heap size            correctly. In particular, you should not create a situation in            which ZooKeeper swaps to disk. The disk is death to ZooKeeper.            Everything is ordered, so if processing one request swaps the            disk, all other queued requests will probably do the same. the            disk. DON'T SWAP. Be conservative in your estimates: if you have 4G of RAM, do            not set the Java max heap size to 6G or even 4G. For example, it            is more likely you would use a 3G heap for a 4G machine, as the            operating system and the cache also need memory. The best and only            recommend practice for estimating the heap size your system needs            is to run load tests, and then make sure you are well below the            usage limit that would cause the system to swap.
+
+- Publicly accessible deployment
+
+  ​              A ZooKeeper ensemble is expected to operate in a trusted computing environment.              It is thus recommended to deploy ZooKeeper behind a firewall.            
+
 ## 工具/日志排查
 
 https://zookeeper.apache.org/doc/r3.3.2/zookeeperAdmin.html
@@ -242,7 +286,7 @@ https://stackoverflow.com/questions/17894808/how-do-one-read-the-zookeeper-trans
 --- 3.6 之前版本
 具体log4j版本可以在zookeeper目录下/lib里面去看
 
-java -cp /apex/apps/dependency/zookeeper-3.4.8/zookeeper-3.4.8.jar:lib/log4j-1.2.16.jar:lib/slf4j-log4j12-1.6.1.jar:lib/slf4j-api-1.6.1.jar org.apache.zookeeper.server.LogFormatter /apex/apps/dependency/zookeeper-3.4.8/logs/version-2/log.100000001 >  /apex/apps/clearing/zookeeper
+java -cp /zookeeper-3.4.8/zookeeper-3.4.8.jar:lib/log4j-1.2.16.jar:lib/slf4j-log4j12-1.6.1.jar:lib/slf4j-api-1.6.1.jar org.apache.zookeeper.server.LogFormatter /zookeeper-3.4.8/logs/version-2/log.100000001 >  /home/test/zookeeper
 
 
 --- 3.6后版本
@@ -279,6 +323,12 @@ edit /etc/hosts,add 127.0.0.1 <hostname>
 jconsole
 Four letter words
 https://zookeeper.apache.org/doc/r3.4.13/zookeeperAdmin.html#sc_zkCommands
+
+```
+echo dump | nc localhost 2181
+```
+
+
 
 Baseline 
 https://cwiki.apache.org/confluence/display/ZOOKEEPER/ServiceLatencyOverview
@@ -536,3 +586,7 @@ client.setData().forPath(nodePath, "222".getBytes());
 
 ref：
 https://www.cnblogs.com/duanxz/p/3783266.html
+
+
+
+Zookeeper集群"脑裂"问题 - 运维总结 https://www.cnblogs.com/kevingrace/p/12433503.html

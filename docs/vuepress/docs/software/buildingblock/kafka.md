@@ -315,8 +315,8 @@ syncLimit=5
 # the directory where the snapshot is stored.                  
 # do not use /tmp for storage, /tmp here is just               
 # example sakes.                                               
-dataDir=/apex/apps/dependency/zookeeper-3.4.8/zkdata           
-dataLogDir=/apex/apps/dependency/zookeeper-3.4.8/logs          
+dataDir=/zookeeper-3.4.8/zkdata           
+dataLogDir=/zookeeper-3.4.8/logs          
 # the port at which the clients will connect                   
 clientPort=2181                                                
 server.1=1.1.1.1:2888:3888                               
@@ -410,7 +410,7 @@ shows all the partitions assigned within the consumer group, which consumer inst
 # All rights reserved.
 BOOTS_STRAP_SERVER=127.0.0.1:9092
 ZK_SERVER=127.0.0.1:2181
-pushd /apex/apps/dependency/kafka_2.12-2.2.0/bin &>/dev/null
+pushd /kafka_2.12-2.2.0/bin &>/dev/null
 echo "#################################"
 echo "### TOPICS"
 echo "#################################"
@@ -1902,6 +1902,10 @@ If you want to improve the reliability of the data, set the request.required.ack
 https://medium.com/@mukeshkumar_46704/in-depth-kafka-message-queue-principles-of-high-reliability-42e464e66172
 
 #### Consumer coordinator & Group coordinator & Rebalance
+
+https://matt33.com/2017/10/22/consumer-join-group/
+
+https://cloud.tencent.com/developer/news/19958
 
 > While the old consumer depended on Zookeeper for group management, the new consumer uses a group coordination protocol built into Kafka itself. For each group, one of the brokers is selected as the *group coordinator*. The coordinator is responsible for managing the state of the group. Its main job is to mediate partition assignment when new members arrive, old members depart, and when topic metadata changes. The act of reassigning partitions is known as *rebalancing* the group.
 >
