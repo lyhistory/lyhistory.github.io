@@ -48,7 +48,7 @@ server.3=1.1.1.3:2888:3888
 SERVER_JVMFLAGS=-Xmx1024m'       
 
 然后在各个节点上分别写入 1 2 3等到myid：
-$ echo "1" > /apex/apps/clearing/3rd-party/zookeeper/zkdata/myid
+$ echo "1" > /zookeeper/zkdata/myid
 
 好像还有个 zookeeper_server.pid?
 ```
@@ -286,7 +286,7 @@ https://stackoverflow.com/questions/17894808/how-do-one-read-the-zookeeper-trans
 --- 3.6 之前版本
 具体log4j版本可以在zookeeper目录下/lib里面去看
 
-java -cp /apex/apps/dependency/zookeeper-3.4.8/zookeeper-3.4.8.jar:lib/log4j-1.2.16.jar:lib/slf4j-log4j12-1.6.1.jar:lib/slf4j-api-1.6.1.jar org.apache.zookeeper.server.LogFormatter /apex/apps/dependency/zookeeper-3.4.8/logs/version-2/log.100000001 >  /apex/apps/clearing/zookeeper
+java -cp /zookeeper-3.4.8/zookeeper-3.4.8.jar:lib/log4j-1.2.16.jar:lib/slf4j-log4j12-1.6.1.jar:lib/slf4j-api-1.6.1.jar org.apache.zookeeper.server.LogFormatter /zookeeper-3.4.8/logs/version-2/log.100000001 >  /home/test/zookeeper
 
 
 --- 3.6后版本

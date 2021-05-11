@@ -315,8 +315,8 @@ syncLimit=5
 # the directory where the snapshot is stored.                  
 # do not use /tmp for storage, /tmp here is just               
 # example sakes.                                               
-dataDir=/apex/apps/dependency/zookeeper-3.4.8/zkdata           
-dataLogDir=/apex/apps/dependency/zookeeper-3.4.8/logs          
+dataDir=/zookeeper-3.4.8/zkdata           
+dataLogDir=/zookeeper-3.4.8/logs          
 # the port at which the clients will connect                   
 clientPort=2181                                                
 server.1=1.1.1.1:2888:3888                               
@@ -410,7 +410,7 @@ shows all the partitions assigned within the consumer group, which consumer inst
 # All rights reserved.
 BOOTS_STRAP_SERVER=127.0.0.1:9092
 ZK_SERVER=127.0.0.1:2181
-pushd /apex/apps/dependency/kafka_2.12-2.2.0/bin &>/dev/null
+pushd /kafka_2.12-2.2.0/bin &>/dev/null
 echo "#################################"
 echo "### TOPICS"
 echo "#################################"

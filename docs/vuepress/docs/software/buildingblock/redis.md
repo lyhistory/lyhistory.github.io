@@ -558,7 +558,23 @@ At this point B is down and A is available again with a role of master (actually
 2. A will not be able to claim to be the master for its  hash slots, because the other nodes already have the same hash slots  associated with a higher configuration epoch (the one of B) compared to  the one published by A.
 3. So, all the nodes will upgrade their table to assign the hash slots to C, and the cluster will continue its operations.
 
-##### Case 1: master fail=>slave promote to master
+##### Case 1: network partition 短暂的脑裂
+
+除了Step 1提到的选举过程中的脑裂问题，选举前的读写也存在短暂的脑裂问题：
+
+Majority master nodes：A B
+
+Minority master nodes：C
+
+1) A write may reach a master, but while the master may be able to reply to the client, the write may not be propagated to slaves via the  asynchronous replication used between master and slave nodes. If the  master dies without the write reaching the slaves, the write is lost  forever if the master is unreachable for a long enough period that one  of its slaves is promoted. 
+
+2) A client with an out-of-date routing table may write to the old master  before it is converted into a slave (of the new master) by the cluster.
+
+Notes：
+
+for a master to be failed over it must be unreachable by the majority of masters for at least `NODE_TIMEOUT`, so if the partition is fixed before that time, no writes are lost. When the partition lasts for more than `NODE_TIMEOUT`, all the writes performed in the minority side up to that point may be  lost. However the minority side of a Redis Cluster will start refusing  writes as soon as `NODE_TIMEOUT` time has elapsed without  contact with the majority, so there is a maximum window after which the  minority becomes no longer available. Hence, no writes are accepted or  lost after that time.
+
+##### Case 2: master fail=>slave promote to master
 
 A<-A1
 
@@ -574,9 +590,9 @@ Node B1 replicates B, and B fails, the cluster will promote node B1 as the new m
 
 However, note that if nodes B and B1 fail at the same time, Redis Cluster is not able to continue to operate.
 
-##### Case 2: mater & slave both fail, but slave fail first
+##### Case 3: mater & slave both fail, but slave fail first
 
-或者说出现orphaned mater node的情况
+或者说出现orphaned master node的情况
 
 **解决方法:**
 
@@ -604,7 +620,7 @@ A<-A3
 
 如果 B1挂掉，B就成为了 orphaned master nodes，（如果B再挂掉，就无法提供服务，simply because there is no other instance to have a copy of the hash slots the master was serving.），所以引入了replica migration，就是当B1挂掉后，因为A有A1和A2等多个replica，所以其中一个可以migration称为B的replica，这样即使B再挂掉，仍然有一个replica可以被promote成为B，可能你会问，这么麻烦，给每个master node都搞多个replica不行吗，当然可以，不过 this is expensive.
 
-##### Case 3：Slave of Slave node
+##### Case 4：Slave of Slave node
 
 Redis的主从关系是链式的，一个从节点也是可以拥有从节点的，
 
@@ -614,7 +630,7 @@ Redis的主从关系是链式的，一个从节点也是可以拥有从节点的
 
 cluster replicate 为A1指定主节点
 
-##### Case 4：网络不稳定，频繁主从切换
+##### Case 5：网络不稳定，频繁主从切换
 
 解决办法：合理修正cluster-node-timeout
 
@@ -629,7 +645,9 @@ DELAY = 500 milliseconds + random delay between 0 and 500 milliseconds +
 
 The fixed delay ensures that we wait for the `FAIL` state to propagate across the cluster, otherwise the slave may try to get elected while the masters are still unaware of the `FAIL` state, refusing to grant their vote.
 
-##### Case 5: 常见现象：master nodes aggregate 
+
+
+##### Case 6: 常见现象：master nodes aggregate 
 
 假设3台机器M1 M2 M3, 创建cluster，3个master A B C，3个slave(或者6个slave) A1 B1 C1，一般会平均分配：
 

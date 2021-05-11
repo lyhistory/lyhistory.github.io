@@ -264,11 +264,12 @@ spring cloud定义了接口标准，然后各家各组件做了不同实现；
 + 从入口开始，DNS动态解析 - -> 机房内负载均衡(LVS+Keepalived) 
 	动静分离可以放这里做，
 	
+
 静态找FastDFS集群（便宜）或cdn服务（贵）；
 	动态则进入下面流量网关
 	
 	LVS的virtual ip概念，大概是一个数据包发送给192.168.1.1这个服务器，但是负载均衡给了192.168.1.2这个服务器，按照TCP协议，参考我在network的讲解，2这个服务器应该拒绝这个包，因此才引入了VIP的概念；
-	
+
 + 然后进入流量网关（强调性能）=路由+waf+负载
 	不是用纯的nginx，一般是用基于netty的nginx做负载均衡，拦截无效非法流量/定向流量分发（挡爬虫、攻击、频控），此处可以放WAF Kona Openresty(nginx+lua) 定向流量分发(一致性哈希) 数亿万个文件 item.jd.com/1234.html
 	hash(1234) mod 服务器个数
@@ -299,10 +300,11 @@ spring cloud定义了接口标准，然后各家各组件做了不同实现；
 	springcloud admin；
 	服务注册中心eureka nacos zookeeper
 	
+
 ​	前面网关部分，假如业务网关有多个节点，流量网关的nginx可以通过访问注册中心获得业务网关列表，从而对业务网关进行负载均衡；然后业务网关访问注册中心可以获取对应的微服务；当然所有的业务网关和微服务都是注册到注册中心的；
-	
+​	
 	企业消息总线springcloud bus，kafka
-	
+
 + 分布式事务及微服务之间链路
 	=> 先走分布式事务alibaba seata
 	=> 再连接微服务链路追踪 springcloud-sleuth，zokin，skvwalking
@@ -347,6 +349,199 @@ todo:
 Mvc
 Thymeleaf
 Realm
+
+
+
+## 5. Versions Compatibility
+
+### 5.1 Spring VS Spring Integration VS Spring Boot VS 3rd-party clients
+
++ 3rd-party
+
+  通常是Apache library
+
++ Spring 集成了3rd party，比如 spring kafka，spring data redis，相当于在相应的3rd party，kafka-clients，redis的lettuce、jedis等基础上提供了统一的接口和规范，provides a "template" as a high-level abstraction，helps you apply core Spring concepts (dependency injection and declarative)，如果直接使用3rd-party，我们需要自定义@ConfigurationProperties来管理配置，以及@Configuration来定义比如kafkaProuducer等bean，从而使用autowired注入（在spring boot中，注入配置和定义bean都是在spring-boot-autoconfigure）
+
+  例如：
+
+  spring kafka 提供了 kafkaTemplate和KafkaListener，~~替代了kafka-clients的producer和consumer~~实际上通过pom dependency hierarchy可以看到spring-kafka是依赖于kafka-clients的，只需要引入spring-kafka即可 https://www.baeldung.com/spring-kafka
+
+  但是有些时候不仅需要引用spring提供的lib，还需要引用3rd party lib，比如使用spring data redis也需要自己引入lettuce或者jedis https://www.baeldung.com/spring-data-redis-tutorial
+
+  这个时候经常就会因为 spring data redis版本和三方包版本不同有冲突，这种情况下使用spring boot就可以解决这个烦恼，spring boot提供的starter帮我们引用好了相应版本的spring data redis以及 lettuce和jedis
+
+  ```
+  using spring:
+  <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-redis</artifactId>
+      <version>2.3.3.RELEASE</version>
+   </dependency>
+  
+  <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+      <version>3.3.0</version>
+      <type>jar</type>
+  </dependency>
+  
+  using spring boot:
+  <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-redis</artifactId>
+      <version>2.3.3.RELEASE</version>
+  </dependency>
+  ```
+
++ Spring Integration 
+
+  based on Spring,  Extends the Spring programming model to support the well-known Enterprise Integration Patterns.
+
+  https://spring.io/projects/spring-integration
+
++ Spring boot 
+
+  如前面所说提供starter，集成了3rd party，所有的starter在这里
+
+  https://github.com/spring-projects/spring-boot/tree/main/spring-boot-project/spring-boot-starters
+
+  
+
+### 5.2 kafka
+
+#### Client & Sever
+
++ 直接使用3rd-party
+
+  ```
+  <dependency>
+       <groupId>org.apache.kafka</groupId>
+       <artifactId>kafka-clients</artifactId>
+       <version>2.2.0</version>
+   </dependency>
+  ```
+
+  
+
++ 版本
+
+  https://cwiki.apache.org/confluence/display/KAFKA/Compatibility+Matrix
+
+  https://www.confluent.io/blog/upgrading-apache-kafka-clients-just-got-easier/
+
+  Bidirectional Client Compatibility--- KIP-35 enabled clients: any version (Release: Broker protocol - 0.10.0, Java clients - 0.10.2)
+
+  https://stackoverflow.com/questions/55691662/determine-the-kafka-client-compatibility-with-kafka-broker/67463949#67463949
+
+#### Client & Client Wrapper
+
++ 使用 Spring-Kafka（spring-kafka自身依赖于kafka-clients）
+
+  https://docs.spring.io/spring-kafka/reference/html/#introduction
+
+  If you are not using Spring Boot, declare the `spring-kafka` jar as a dependency in your project.
+
+  ```
+  <dependency>
+    <groupId>org.springframework.kafka</groupId>
+    <artifactId>spring-kafka</artifactId>
+    <version>2.7.0</version>
+  </dependency>
+  ```
+
+  When using Spring Boot, (and you haven’t used start.spring.io to create your project), omit the version and Boot will automatically bring in the correct version that is compatible with your Boot version: 
+
+  ```
+  <parent>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-parent</artifactId>
+      <version>2.1.4.RELEASE</version>
+  </parent>
+      
+  <dependency>
+    <groupId>org.springframework.kafka</groupId>
+    <artifactId>spring-kafka</artifactId>
+  </dependency>
+  
+  ```
+
+  
+
++ 版本
+
+  https://spring.io/projects/spring-kafka
+
+### 5.3 Redis
+
+https://github.com/spring-projects/spring-data-redis/issues/2061
+
+#### Client & Server
+
++ 直接使用3rd-party lettuce / jedis
+
+  
+
++ 版本
+
+  查看release note
+
+  Redis 2.6+ up to Redis 6.x. In terms of Java runtime, Lettuce requires at least Java 8 and works with Java 16. It is tested continuously against the latest Redis source-build.
+
+  https://github.com/lettuce-io/lettuce-core/releases
+
+#### Client & Client Wrapper
+
++ 使用 
+
+  spring-boot-starter-data-redis（自动引入spring-data-redis 和lettuce和jedis）
+
+  
+
++ 版本
+
+  https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-data-redis/2.4.5/jar
+
+  spring-boot-starter-data-redis 2.4.5 
+
+  => spring-data-redis 2.4.8 
+
+  => lettuce 6.0.4.RELEASE
+
+### 5.4 Redis
+
+#### Client & Server
+
++ general 
+
+  查看release note，比如
+
+  https://stackoverflow.com/questions/61118552/zookeeper-3-5-x-backwards-compability-with-zookeeper-3-4-x-clients
+
+  - 3.4.x clients **compatible** with 3.5.x server
+  - 3.4.x and 3.5.x clients can be mixed on 3.5 server
+  - 3.5.x clients **incompatible** with 3.4 server
+
++ kafka
+
+  Kafka is tested against the Zookeeper version it comes with.
+
+  If you want to upgrade, you'll need to verify Zookeeper itself is  backwards compatible with older clients/protocols that Kafka may use.
+
+  https://github.com/apache/kafka/search?q=zookeeper+version&type=commits
+
+  https://archive.apache.org/dist/kafka/1.1.0/RELEASE_NOTES.html
+
+  
+
++ curator
+
+  curator-recipies 2.12.0=>
+
+  ​      curator-framework 2.12.0=>
+
+  ​      curator-client 2.12.0=>
+
+  ​      zookeeper 3.4.8
 
 ---
 

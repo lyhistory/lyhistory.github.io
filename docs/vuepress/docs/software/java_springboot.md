@@ -238,6 +238,8 @@ https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/ht
 
 - [Java-based configuration](https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/beans.html#beans-java) 基于java类提供Bean定义信息
 
+  所谓java based 我的理解是这里是说不需要依赖于spring，普通的java项目也可以用
+
   Starting with Spring 3.0, many features provided by the [Spring JavaConfig project](http://www.springsource.org/javaconfig) became part of the core Spring Framework. Thus you can define beans external to your application classes by using Java rather than XML files. To use these new features, see the `@Configuration`, `@Bean, @Import` and `@DependsOn` annotations.
 
   有些情况下,比如说,要将第三方库的组件装配到你的应用中,就不能使用前面的自动化装配方法 到第三方库中去给类加@Component和@Autowired注解,
@@ -246,6 +248,28 @@ https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/ht
   使用java代码，先新建一个配置类JavaConfig，里面都是配置所需的bean，不应该有业务逻辑代码，所以单独建一个类。
 
   ```java
+  @Configuration
+  public class AppConfig {
+    @Bean
+    public MyService myService() {
+        return new MyServiceImpl();
+    }
+  }
+  public static void main(String[] args) {
+    ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+    MyService myService = ctx.getBean(MyService.class);
+    myService.doStuff();
+  }
+  
+  public static void main(String[] args) {
+    AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+    ctx.register(AppConfig.class, OtherConfig.class);
+    ctx.register(AdditionalConfig.class);
+    ctx.refresh();
+    MyService myService = ctx.getBean(MyService.class);
+    myService.doStuff();
+  }
+  
   //创建JavaConfig类的关键在于为其添加@Configruation注解,表明这是一个配置类
   @Configuration
   public class CDPlayerConfig{
