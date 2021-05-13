@@ -1,10 +1,12 @@
-## Key concepts
+## 0. Key concepts
 
-ring  闭合，加减，乘(环中乘法不一定有单位元也不一定要满足交换律)，有时可以除（存在inverse）
+ring  闭合，加(满足additive composition law)，乘(满足multiplicative composition law，环中乘法不一定有单位元也不一定要满足交换律，不一定存在inverse)
 
-​	加法环ring (+ Addition) === abelian group
+​	只从满足Additive composition law的加法环ring来说 === abelian group
 
-group 闭合，要么加减，要么乘除(必须存在inverse)
+​	communitative ring ==- ring+满足乘法交换律
+
+group 闭合，要么加，要么乘(必须存在inverse)
 
 ​	abelian group：满足交换律
 
@@ -13,6 +15,8 @@ group 闭合，要么加减，要么乘除(必须存在inverse)
 ​	subgroup
 
 field 闭合，既可以加也可以乘（由加群和乘群组合而成）
+
+​	field === communitative ring+multiplicative inverse(except additive identity)
 
 ​	finite field : field with finite number of elements, the number of elements called order，乘法结构为循环群
 
@@ -173,6 +177,31 @@ s.t. x(1/x)=1 , (1/x)x=1
 based on the definition of Rings, just add one more axioms, that it must obey :
 
 ∀ x,y ∈ R , xy=yx
+
+example: 
+
+Rational numbers,
+
+Real numbers,
+
+Complex numbers,
+
+all the prime fields on vector space,
+
+Integer Rings, 
+
+Zero Ring:
+
+{0} the additive identity&multiplicative identity is the same 0
+
+### 1.4 Sub Ring
+
+Two trivial example:
+
++ Zero Ring is sub ring of any Ring;
++ any Ring is the sub ring of itself
+
+
 
 ### 1.4 Euclidean algorithms (Basic and Extended)
 
