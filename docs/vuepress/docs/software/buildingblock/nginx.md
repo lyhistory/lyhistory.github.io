@@ -286,6 +286,20 @@ http {
 
 
 
+**client端验证**
+
+估计是有些情况下，比如client端是手机app，可能需要安装client端证书，
+
+（或者是自签的证书可以手动安装到浏览器，这样浏览器就不再提醒危险了，对于开发调试意义不大，浏览器可以直接选择相信）
+
+https://www.ktanx.com/blog/p/581
+
+```
+**ssl_client_certificate** *file*;
+```
+
+
+
 ### WSS
 
 https://nginx.org/en/docs/http/websocket.html

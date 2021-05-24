@@ -1,3 +1,69 @@
+
+
+## Algebra concepts
+
+Classic Algebra: 整数 有理数 实数 复数 加减乘除
+
+Abstract Algebra: 构造新的number system，通常只说 加和乘（减和除用inverse表示），并且加和乘用更通用的 composition来代表，在abstract algebra中，如果不说具体的additive或multiplicative，通常是用 ◦ / + / x 或直接xy不带任何符号来表示一种composition方式，composition可以是加或乘法或模运算甚至是set permutation等
+
+group 闭合，**Single composition law**: 要么加，要么乘(必须存在inverse)
+
+​	abelian group：满足交换律
+
+​	Cyclic Groups
+
+​	subgroup
+
+
+
+ring  闭合，**multiple composition law**: 既要加(满足additive composition law)，又要乘(满足multiplicative composition law，环中乘法不一定有单位元也不一定要满足交换律，不一定存在inverse)
+
+​	只从满足Additive composition law的加法环ring来说 === abelian group
+
+​	communitative ring ==- ring+满足乘法交换律
+
+
+
+field 闭合，既可以加也可以乘（由加群和乘“群”组合而成）
+
+​	加群 === abelian group
+
+​	乘“群” === communitative ring+multiplicative inverse(except additive identity 所以不是群)
+
+​	finite field : field with finite number of elements, the number of elements called order，乘法结构为循环群
+
+符号:
+
+◦ composition
+
+∃ 存在
+
+∀ 任意		
+
+∈ 属于
+
+≡ 同余符号　
+
+累加累乘
+
+
+$$
+\sum_{i=1}^n \frac{1}{i^2} \quad and \quad \prod_{i=1}^n \frac{1}{i^2} \quad and \quad \bigcup_{i=1}^{2} R
+$$
+
+https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference
+
+uppercase *Σ*, lowercase *σ*
+
+
+
+
+## Cryptography
+
+block ciphers VS stream ciphers
+
+
+
 3 problems:
 
 + how to communicate safely => encryption/decryption
@@ -9,12 +75,6 @@ PKI: public key infrastructure (Public-Key Cryptosystems) === Asymmetric Cryptog
 DLP: Discrete Logarithm Problem
 
 DHK: Diffie–Hellman key exchange
-
-
-
-## Cryptography
-
-block ciphers VS stream ciphers
 
 
 

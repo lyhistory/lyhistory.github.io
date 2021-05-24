@@ -1199,8 +1199,12 @@ SpringApplicationRunListener只有一个实现类： EventPublishingRunListener�
 ##### POM depenedency
 
 spring boot官方提供了很多现成的starter，可以直接引用其depdendency使用比如 
-spring-boot-starter-web，spring-boot-starter-jdbc
 [starters](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using-boot-starter)
+
+| `spring-boot-starter`    | Core starter, including auto-configuration support, logging and YAML |
+| ------------------------ | ------------------------------------------------------------ |
+| spring-boot-starter-web  | Starter for building web, including RESTful, applications using Spring MVC. Uses Tomcat as the default embedded container |
+| spring-boot-starter-jdbc | Starter for using JDBC with the HikariCP connection pool     |
 
 但是问题是引用时需要加版本号，很多starter之间以及跟其他的dependency之间可能有版本依赖冲突，
 所以官方推荐使用parent方式或者import方式引入某个版本的spring-boot-starter-parent，因为这个parent里面已经定义好了各个版本号，
@@ -1784,3 +1788,8 @@ https://blog.csdn.net/zxc123e/article/details/80222967
 
 https://www.baeldung.com/spring-boot-bean-definition-override-exception
 
+### BeanCurrentlyInCreationException/circular reference
+
+Caused by: org.springframework.beans.factory.BeanCurrentlyInCreationException: Error creating bean with name 'AAAA': Bean with name 'AAAA' has been injected into other beans [BBBB] in its raw version as part of a circular reference, but has eventually been wrapped. This means that said other beans do not use the final version of the bean. This is often the result of over-eager type matching - consider using 'getBeanNamesForType' with the 'allowEagerInit' flag turned off, for example.
+
+解决：加@Lazy

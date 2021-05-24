@@ -26,15 +26,44 @@ sudo mkdir /etc/ssl/privatekey
 sudo chmod 700 /etc/ssl/privatekey
 sudo openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout /etc/ssl/privatekey/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
 
+vim nginx-selfsigned.crt
+	-----BEGIN CERTIFICATE-----
+	-----END CERTIFICATE-----
+
+vim /etc/ssl/privatekey/nginx-selfsigned.key
+	-----BEGIN PRIVATE KEY-----
+	-----END PRIVATE KEY-----
+
+openssl x509 -in nginx-selfsigned.crt -text -noout
+keytool -printcert -file /etc/ssl/certs/nginx-selfsigned.crt
+
+检查crt跟private key是否匹配：
+openssl x509 -noout -modulus -in test.crt | openssl md5
+openssl rsa -noout -modulus -in test.key | openssl md5
+两者输出的 Modulus 应该一直（RSA素数乘积，用来生成key pair）
 ------------------------------------------------------------
 --- use keytool 带密码
 ------------------------------------------------------------
+-- Generate a Java keystore and key pair
+keytool -genkey -alias mydomain -keyalg RSA -keystore keystore.jks  -keysize 2048
+-- Generate a certificate signing request (CSR) for an existing Java keystore
+keytool -certreq -alias mydomain -keystore keystore.jks -file mydomain.csr
+-- Import a root or intermediate CA certificate to an existing Java keystore
+keytool -import -trustcacerts -alias root -file Thawte.crt -keystore keystore.jks
+-- Import a signed primary certificate to an existing Java keystore
+keytool -import -trustcacerts -alias mydomain -file mydomain.crt -keystore keystore.jks
+-- Generate a keystore and self-signed certificate
+keytool -genkey -keyalg RSA -alias selfsigned -keystore keystore.jks -storepass password -validity 360 -keysize 2048
+-- Export a certificate from a keystore
+keytool -export -alias selfsigned -file selfsigned.crt -keystore keystore.jks
+
 keytool -genkey -alias secure_netty -keysize 2048 -validity 365 -keyalg RSA -dname "CN=localhost" -keypass 123456 -storepass 123456 -keystore selfsigned.jks
-keytool -export -alias securechat -keystore selfsigned.jks -storepass 123456 -file selfsigned.cer
+keytool -export -alias secure_netty -keystore selfsigned.jks -storepass 123456 -file selfsigned.cer
 
 
 keytool -genkey -alias secure_tomcat -keysize 1024 -validity 365 -keyalg RSA -keypass 123456 -storepass 123456 -keystore selfsigned.keystore 
 keytool -list -v -keystore selfsigned.keystore
+	打印信息包含 Entry type: PrivateKeyEntry
 keytool -export -alias secure_tomcat -keystore selfsigned.keystore -file selfsigned.cer
 ```
 
@@ -123,8 +152,8 @@ nginx.conf:
         listen [::]:443 ssl;
         server_name  localhost;
 
-        ssl_certificate /etc/ssl/certs/clear-selfsigned.crt;
-        ssl_certificate_key /etc/ssl/privatekey/clear-selfsigned.key;
+        ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+        ssl_certificate_key /etc/ssl/privatekey/nginx-selfsigned.key;
         ssl_dhparam /etc/ssl/certs/dhparam.pem;
 ```
 

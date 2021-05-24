@@ -124,6 +124,22 @@ IDEA和eclipse各有优缺点，比如eclipse可以在同一个ide实例中操�
 Eclipse/STS 
 Project Explorer-> Projects Presentation (select hierarchy)
 
+#### 2.3.0 Code Style
+
+统一代码以及配置文件的缩进，以eclipse为例：
+
+1.代码缩进
+
+Window->Preferences->Java->Code Style->Formatter:
+
+Edit Tab Policy: Space only
+
+2.配置xml缩进比如pom
+
+Window->Preferences->XML->XML Files->Editor:
+
+Indent with spaces, Indentation size 4
+
 #### 2.3.1 Folder structure
 **About resources folder
 Missing resources: manually create resources folder in src/main, and then Manve->update project
@@ -216,6 +232,8 @@ todo Refer to Project:alpha-wallet
 
 #### 3.2.1 Install 
 
+**eclipse maven path: Preferences->Maven->Installations**
+
 manual:
 http://maven.apache.org/download.cgi
 https://www.mkyong.com/maven/how-to-install-maven-in-windows/
@@ -225,6 +243,7 @@ MAVEN_HOME:C:\dev\maven\apache-maven-3.6.1\bin\
 JAVA_HOME:C:\Java\jdk1.6.0\
 PATH=...%MAVEN_HOME/bin;%JAVA_HOME%/bin
 自定义startup script： mvn.bat/mvn.cmd
+
 ```
 @REM ==== START VALIDATION ====
 set JAVA_HOME=C:\PROGRA~1\Java\jdk1.6.0_45
@@ -268,7 +287,580 @@ https://stackoverflow.com/questions/19655184/no-compiler-is-provided-in-this-env
 
 Build a Java app with Maven https://jenkins.io/doc/tutorials/build-a-java-app-with-maven/
 
-#### 3.2.2 POM 
+#### 3.2.2 POM / Dependency Mechanism
+
+- Do not attempt to import a POM that is defined in a submodule of the current POM. Attempting to do that will result in the build failing  since it won't be able to locate the POM.
+- Never declare the POM importing a POM as the parent (or grandparent, etc) of the target POM. There is no way to resolve the circularity and  an exception will be thrown.
+- When referring to artifacts whose POMs have transitive dependencies, the project needs to specify versions of those artifacts as managed  dependencies. Not doing so results in a build failure since the artifact may not have a version specified. (This should be considered a best  practice in any case as it keeps the versions of artifacts from changing from one build to the next).
+
+##### Dependency mediation/Transitive Dependencies
+
+```
+  A
+  ├── B
+  │   └── C
+  │       └── D 2.0
+  └── E
+      └── D 1.0
+In text, dependencies for A, B, and C are defined as A -> B -> C -> D 2.0 and A -> E -> D 1.0, then D 1.0 will be used when building A because the path from A to D through E is shorter. You could explicitly add a dependency to D 2.0 in A to force the use of D 2.0, as shown here:
+  A
+  ├── B
+  │   └── C
+  │       └── D 2.0
+  ├── E
+  │   └── D 1.0
+  │
+  └── D 2.0     
+  
+ 
+```
+
+Suggestion: 最好指定需要的依赖，而不是使用隐式引用，原因：
+
+Although transitive dependencies can implicitly include desired  dependencies, it is a good practice to explicitly specify the  dependencies your source code uses directly. This best practice proves  its value especially when the dependencies of your project change their  dependencies.
+
+For example, assume that your project A specifies a dependency on  another project B, and project B specifies a dependency on project C. If you are directly using components in project C, and you don't specify  project C in your project A, it may cause build failure when project B  suddenly updates/removes its dependency on project C.
+
+Another reason to directly specify dependencies is that it provides  better documentation for your project: one can learn more information by just reading the POM file in your project, or by executing **mvn dependency:tree -Dverbose**
+
+##### Excluded dependencies
+
+If project X depends on project Y, and  project Y depends on project Z, the owner of project X can explicitly  exclude project Z as a dependency, using the "exclusion" element.
+
+If project Y depends on project Z, the owner of project Y can mark  project Z as an optional dependency, using the "optional" element. When  project X depends on project Y, X will depend only on Y and not on Y's  optional dependency Z. The owner of project X may then explicitly add a  dependency on Z, at her option. (It may be helpful to think of optional  dependencies as "excluded by default.")
+
+##### Dependency Scope
+
+compile/provided/runtime/test/system/import
+
+##### Dependency Management
+
++ The dependency management section is a mechanism for centralizing dependency information
+
+  ```
+  Project A:
+      <project>
+        ...
+        <dependencies>
+          <dependency>
+            <groupId>group-a</groupId>
+            <artifactId>artifact-a</artifactId>
+            <version>1.0</version>
+            <exclusions>
+              <exclusion>
+                <groupId>group-c</groupId>
+                <artifactId>excluded-artifact</artifactId>
+              </exclusion>
+            </exclusions>
+          </dependency>
+          <dependency>
+            <groupId>group-a</groupId>
+            <artifactId>artifact-b</artifactId>
+            <version>1.0</version>
+            <type>bar</type>
+            <scope>runtime</scope>
+          </dependency>
+        </dependencies>
+      </project>
+  Project B:
+      <project>
+        ...
+        <dependencies>
+          <dependency>
+            <groupId>group-c</groupId>
+            <artifactId>artifact-b</artifactId>
+            <version>1.0</version>
+            <type>war</type>
+            <scope>runtime</scope>
+          </dependency>
+          <dependency>
+            <groupId>group-a</groupId>
+            <artifactId>artifact-b</artifactId>
+            <version>1.0</version>
+            <type>bar</type>
+            <scope>runtime</scope>
+          </dependency>
+        </dependencies>
+      </project>
+  =>
+  Parent:
+      <project>
+        ...
+        <dependencyManagement>
+          <dependencies>
+            <dependency>
+              <groupId>group-a</groupId>
+              <artifactId>artifact-a</artifactId>
+              <version>1.0</version>
+       
+              <exclusions>
+                <exclusion>
+                  <groupId>group-c</groupId>
+                  <artifactId>excluded-artifact</artifactId>
+                </exclusion>
+              </exclusions>
+       
+            </dependency>
+       
+            <dependency>
+              <groupId>group-c</groupId>
+              <artifactId>artifact-b</artifactId>
+              <version>1.0</version>
+              <type>war</type>
+              <scope>runtime</scope>
+            </dependency>
+       
+            <dependency>
+              <groupId>group-a</groupId>
+              <artifactId>artifact-b</artifactId>
+              <version>1.0</version>
+              <type>bar</type>
+              <scope>runtime</scope>
+            </dependency>
+          </dependencies>
+        </dependencyManagement>
+      </project>
+      
+  Project A:
+      <project>
+        ...
+        <dependencies>
+          <dependency>
+            <groupId>group-a</groupId>
+            <artifactId>artifact-a</artifactId>
+          </dependency>
+       
+          <dependency>
+            <groupId>group-a</groupId>
+            <artifactId>artifact-b</artifactId>
+            <!-- This is not a jar dependency, so we must specify type. -->
+            <type>bar</type>
+          </dependency>
+        </dependencies>
+      </project>
+  Project B:
+      <project>
+        ...
+        <dependencies>
+          <dependency>
+            <groupId>group-c</groupId>
+            <artifactId>artifact-b</artifactId>
+            <!-- This is not a jar dependency, so we must specify type. -->
+            <type>war</type>
+          </dependency>
+       
+          <dependency>
+            <groupId>group-a</groupId>
+            <artifactId>artifact-b</artifactId>
+            <!-- This is not a jar dependency, so we must specify type. -->
+            <type>bar</type>
+          </dependency>
+        </dependencies>
+      </project>
+  ```
+
+  
+
++ Very important use of the dependency management section is to control the versions of artifacts used in transitive dependencies
+
+  ```
+  Project A:
+      <project>
+       <modelVersion>4.0.0</modelVersion>
+       <groupId>maven</groupId>
+       <artifactId>A</artifactId>
+       <packaging>pom</packaging>
+       <name>A</name>
+       <version>1.0</version>
+       <dependencyManagement>
+         <dependencies>
+           <dependency>
+             <groupId>test</groupId>
+             <artifactId>a</artifactId>
+             <version>1.2</version>
+           </dependency>
+           <dependency>
+             <groupId>test</groupId>
+             <artifactId>b</artifactId>
+             <version>1.0</version>
+             <scope>compile</scope>
+           </dependency>
+           <dependency>
+             <groupId>test</groupId>
+             <artifactId>c</artifactId>
+             <version>1.0</version>
+             <scope>compile</scope>
+           </dependency>
+           <dependency>
+             <groupId>test</groupId>
+             <artifactId>d</artifactId>
+             <version>1.2</version>
+           </dependency>
+         </dependencies>
+       </dependencyManagement>
+      </project>
+      
+  Project B:
+      <project>
+        <parent>
+          <artifactId>A</artifactId>
+          <groupId>maven</groupId>
+          <version>1.0</version>
+        </parent>
+        <modelVersion>4.0.0</modelVersion>
+        <groupId>maven</groupId>
+        <artifactId>B</artifactId>
+        <packaging>pom</packaging>
+        <name>B</name>
+        <version>1.0</version>
+       
+        <dependencyManagement>
+          <dependencies>
+            <dependency>
+              <groupId>test</groupId>
+              <artifactId>d</artifactId>
+              <version>1.0</version>
+            </dependency>
+          </dependencies>
+        </dependencyManagement>
+       
+        <dependencies>
+          <dependency>
+            <groupId>test</groupId>
+            <artifactId>a</artifactId>
+            <version>1.0</version>
+            <scope>runtime</scope>
+          </dependency>
+          <dependency>
+            <groupId>test</groupId>
+            <artifactId>c</artifactId>
+            <scope>runtime</scope>
+          </dependency>
+        </dependencies>
+      </project>
+  
+  When maven is run on project B, version 1.0 of artifacts a, b, c, and d will be used regardless of the version specified in their POM:
+  1. a and c both are declared as dependencies of the project so version 1.0 is used due to dependency mediation. Both also have runtime scope since it is directly specified.
+  2. b is defined in B's parent's dependency management section and since dependency management takes precedence over dependency mediation for transitive dependencies, version 1.0 will be selected should it be referenced in a or c's POM. b will also have compile scope.
+  3. Finally, since d is specified in B's dependency management section, should d be a dependency (or transitive dependency) of a or c, version 1.0 will be chosen - again because dependency management takes precedence over dependency mediation and also because the current POM's declaration takes precedence over its parent's declaration
+  ```
+
++ projects can import managed dependencies from other projects
+
+  ```
+      <project>
+        <modelVersion>4.0.0</modelVersion>
+        <groupId>maven</groupId>
+        <artifactId>B</artifactId>
+        <packaging>pom</packaging>
+        <name>B</name>
+        <version>1.0</version>
+       
+        <dependencyManagement>
+          <dependencies>
+            <dependency>
+              <groupId>maven</groupId>
+              <artifactId>A</artifactId>
+              <version>1.0</version>
+              <type>pom</type>
+              <scope>import</scope>
+            </dependency>
+            <dependency>
+              <groupId>test</groupId>
+              <artifactId>d</artifactId>
+              <version>1.0</version>
+            </dependency>
+          </dependencies>
+        </dependencyManagement>
+       
+        <dependencies>
+          <dependency>
+            <groupId>test</groupId>
+            <artifactId>a</artifactId>
+            <version>1.0</version>
+            <scope>runtime</scope>
+          </dependency>
+          <dependency>
+            <groupId>test</groupId>
+            <artifactId>c</artifactId>
+            <scope>runtime</scope>
+          </dependency>
+        </dependencies>
+      </project>
+      
+  Assuming A is the POM defined in the preceding example, the end result would be the same. All of A's managed dependencies would be incorporated into B except for d since it is defined in this POM.
+  
+  Project X:
+      <project>
+       <modelVersion>4.0.0</modelVersion>
+       <groupId>maven</groupId>
+       <artifactId>X</artifactId>
+       <packaging>pom</packaging>
+       <name>X</name>
+       <version>1.0</version>
+       
+       <dependencyManagement>
+         <dependencies>
+           <dependency>
+             <groupId>test</groupId>
+             <artifactId>a</artifactId>
+             <version>1.1</version>
+           </dependency>
+           <dependency>
+             <groupId>test</groupId>
+             <artifactId>b</artifactId>
+             <version>1.0</version>
+             <scope>compile</scope>
+           </dependency>
+         </dependencies>
+       </dependencyManagement>
+      </project>
+  Project Y:
+      <project>
+       <modelVersion>4.0.0</modelVersion>
+       <groupId>maven</groupId>
+       <artifactId>Y</artifactId>
+       <packaging>pom</packaging>
+       <name>Y</name>
+       <version>1.0</version>
+       
+       <dependencyManagement>
+         <dependencies>
+           <dependency>
+             <groupId>test</groupId>
+             <artifactId>a</artifactId>
+             <version>1.2</version>
+           </dependency>
+           <dependency>
+             <groupId>test</groupId>
+             <artifactId>c</artifactId>
+             <version>1.0</version>
+             <scope>compile</scope>
+           </dependency>
+         </dependencies>
+       </dependencyManagement>
+      </project>
+  Project Z:
+      <project>
+        <modelVersion>4.0.0</modelVersion>
+        <groupId>maven</groupId>
+        <artifactId>Z</artifactId>
+        <packaging>pom</packaging>
+        <name>Z</name>
+        <version>1.0</version>
+       
+        <dependencyManagement>
+          <dependencies>
+            <dependency>
+              <groupId>maven</groupId>
+              <artifactId>X</artifactId>
+              <version>1.0</version>
+              <type>pom</type>
+              <scope>import</scope>
+            </dependency>
+            <dependency>
+              <groupId>maven</groupId>
+              <artifactId>Y</artifactId>
+              <version>1.0</version>
+              <type>pom</type>
+              <scope>import</scope>
+            </dependency>
+          </dependencies>
+        </dependencyManagement>
+      </project>
+      
+  In the example above Z imports the managed dependencies from both X and Y. However, both X and Y contain dependency a. Here, version 1.1 of a would be used since X is declared first and a is not declared in Z's dependencyManagement.
+  
+  This process is recursive. For example, if X imports another POM, Q, when Z is processed it will simply appear that all of Q's managed dependencies are defined in X.
+  ```
+
++ Bill of Materials (BOM) POMs
+
+  Imports are most effective when used for defining a "library" of  related artifacts that are generally part of a multiproject build. It is fairly common for one project to use one or more artifacts from these  libraries. However, it has sometimes been difficult to keep the versions in the project using the artifacts in synch with the versions  distributed in the library. The pattern below illustrates how a "bill of materials" (BOM) can be created for use by other projects.
+
+  
+
+  ```
+  The root of the project is the BOM POM. It defines the versions of  all the artifacts that will be created in the library. Other projects  that wish to use the library should import this POM into the  dependencyManagement section of their POM.
+  
+  <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+        <modelVersion>4.0.0</modelVersion>
+        <groupId>com.test</groupId>
+        <artifactId>bom</artifactId>
+        <version>1.0.0</version>
+        <packaging>pom</packaging>
+        <properties>
+          <project1Version>1.0.0</project1Version>
+          <project2Version>1.0.0</project2Version>
+        </properties>
+       
+        <dependencyManagement>
+          <dependencies>
+            <dependency>
+              <groupId>com.test</groupId>
+              <artifactId>project1</artifactId>
+              <version>${project1Version}</version>
+            </dependency>
+            <dependency>
+              <groupId>com.test</groupId>
+              <artifactId>project2</artifactId>
+              <version>${project2Version}</version>
+            </dependency>
+          </dependencies>
+        </dependencyManagement>
+       
+        <modules>
+          <module>parent</module>
+        </modules>
+      </project>
+      
+  The parent subproject has the BOM POM as its parent. It is a normal multiproject pom.
+      <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+        <modelVersion>4.0.0</modelVersion>
+        <parent>
+          <groupId>com.test</groupId>
+          <version>1.0.0</version>
+          <artifactId>bom</artifactId>
+        </parent>
+       
+        <groupId>com.test</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.0</version>
+        <packaging>pom</packaging>
+       
+        <dependencyManagement>
+          <dependencies>
+            <dependency>
+              <groupId>log4j</groupId>
+              <artifactId>log4j</artifactId>
+              <version>1.2.12</version>
+            </dependency>
+            <dependency>
+              <groupId>commons-logging</groupId>
+              <artifactId>commons-logging</artifactId>
+              <version>1.1.1</version>
+            </dependency>
+          </dependencies>
+        </dependencyManagement>
+        <modules>
+          <module>project1</module>
+          <module>project2</module>
+        </modules>
+      </project>
+      
+  Next are the actual project POMs.
+      <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+        <modelVersion>4.0.0</modelVersion>
+        <parent>
+          <groupId>com.test</groupId>
+          <version>1.0.0</version>
+          <artifactId>parent</artifactId>
+        </parent>
+        <groupId>com.test</groupId>
+        <artifactId>project1</artifactId>
+        <version>${project1Version}</version>
+        <packaging>jar</packaging>
+       
+        <dependencies>
+          <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+          </dependency>
+        </dependencies>
+      </project>
+       
+      <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+        <modelVersion>4.0.0</modelVersion>
+        <parent>
+          <groupId>com.test</groupId>
+          <version>1.0.0</version>
+          <artifactId>parent</artifactId>
+        </parent>
+        <groupId>com.test</groupId>
+        <artifactId>project2</artifactId>
+        <version>${project2Version}</version>
+        <packaging>jar</packaging>
+       
+        <dependencies>
+          <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+          </dependency>
+        </dependencies>
+      </project>
+      
+  The project that follows shows how the library can now be used in another project without having to specify the dependent project's versions.
+      <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+        <modelVersion>4.0.0</modelVersion>
+        <groupId>com.test</groupId>
+        <artifactId>use</artifactId>
+        <version>1.0.0</version>
+        <packaging>jar</packaging>
+       
+        <dependencyManagement>
+          <dependencies>
+            <dependency>
+              <groupId>com.test</groupId>
+              <artifactId>bom</artifactId>
+              <version>1.0.0</version>
+              <type>pom</type>
+              <scope>import</scope>
+            </dependency>
+          </dependencies>
+        </dependencyManagement>
+        <dependencies>
+          <dependency>
+            <groupId>com.test</groupId>
+            <artifactId>project1</artifactId>
+          </dependency>
+          <dependency>
+            <groupId>com.test</groupId>
+            <artifactId>project2</artifactId>
+          </dependency>
+        </dependencies>
+      </project>
+  ```
+
+
+##### 遇到的实际问题
+
+```
+ 
+  Project A: some-framework version 1.2.0-SNAPSHOT
+  │			[
+  │				sub moduels: 
+  │				some-framework-model ${project.version}
+  │				......
+  │			]
+  ├── SubProject A-1: test-A
+  │						└── Dependency: some-framework-model
+  │   
+  └── Project B: some-project version 0.8.0-SNAPSHOT
+      └── SubProejct B-1: some-project-service 
+      		└── Dependency: some-framework-model
+      		
+注意到，
+当我在 Project A的parent的pom里面的dependencyManagement里使用 ${project.version} 来声明 some-framework-model的版本，编译SubProject A-1: test-A的时候可以正确找到 some-framework-model 1.2.0-SNAPSHOT；
+但是当编译Project B的时候就出现问题了，因为SubProejct B-1: some-project-service 并不是去找some-framework-model 1.2.0-SNAPSHOT 而是去找 some-framework-model 0.8.0-SNAPSHOT；
+显然SubProejct B-1找错了，可能是maven的这个${project.version}被Project B继承下来，然后简单的替换成了0.8.0，而不是沿用Project A的版本1.2.0-SNAPSHOT
+```
+
+
+
+引入第三方jar资源 注意事项: 
+
+1、引入任何第三方jar之前,查看一下平台framework-parent.pom中是否已经包含(或间接依赖引入),存在时请不要再次引入; 
+2、如果引入的第三方jar与平台存在版本不一致的地方,请在此处做maven依赖引用剔除,剔除方法还是参见framework-parent.pom中的dependencyManagement部分; 
+3、在当前dependencyManagement依赖管理中定义jar版本信息必须在properties属性中统一明确定义,便于集中版本维护管理与问题排查; 
+4、在当前业务工程内的各业务子模块禁止出现版本(version)标签信息。 
+
+
+
 https://maven.apache.org/guides/introduction/introduction-to-the-pom.html
 https://maven.apache.org/guides/introduction/introduction-to-profiles.html
 m2 repository
@@ -327,6 +919,49 @@ https://maven.apache.org/surefire/maven-surefire-plugin/examples/debugging.html
 Haven’t solve, why mvn -Dmaven.surefire.debug test not working?
 With , maybe because of using powershell, should try cmd instead
 https://www.cnblogs.com/sylvia-liu/articles/4685130.html
+
+#### 3.2.5 nexus maven-repositories
+
+https://www.baeldung.com/maven-deploy-nexus
+
+```
+  <!-- Publish the versioned releases here -->
+ <!-- 配置远程发布到私服,mvn deploy -->
+    <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <name>Nexus Release Repository</name>
+            <url>http://XXXXX/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://XXXXX/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+<!-- download artifacts from this repo -->    
+<repositories>
+        <repository>
+            <id>nexus</id>
+            <url>http://xxxxx/repository/maven-snapshots/</url>
+        </repository>
+        <repository>
+            <id>aliyun-repo</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>maven-repo</id>
+            <url>http://xxxxx/repository/maven-central/</url>
+        </repository>
+    </repositories>
+```
+
+
+
+
+
+
 
 ## 4.JAVA TUTORIAL
 https://github.com/lyhistory/java-learn?organization=lyhistory&organization=lyhistory

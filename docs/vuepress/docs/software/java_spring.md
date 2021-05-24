@@ -303,7 +303,7 @@ spring cloud定义了接口标准，然后各家各组件做了不同实现；
 
 ​	前面网关部分，假如业务网关有多个节点，流量网关的nginx可以通过访问注册中心获得业务网关列表，从而对业务网关进行负载均衡；然后业务网关访问注册中心可以获取对应的微服务；当然所有的业务网关和微服务都是注册到注册中心的；
 ​	
-	企业消息总线springcloud bus，kafka
+​	企业消息总线springcloud bus，kafka
 
 + 分布式事务及微服务之间链路
 	=> 先走分布式事务alibaba seata
@@ -405,7 +405,6 @@ Realm
 
   https://github.com/spring-projects/spring-boot/tree/main/spring-boot-project/spring-boot-starters
 
-  
 
 ### 5.2 kafka
 
@@ -542,6 +541,49 @@ https://github.com/spring-projects/spring-data-redis/issues/2061
   ​      curator-client 2.12.0=>
 
   ​      zookeeper 3.4.8
+
+### 5.5 Springfox
+
+使用 springfox2.9.2，升级springboot从2.0.5到2.4.5，遇到错误：
+
+```
+Description:
+
+An attempt was made to call a method that does not exist. The attempt was made from the following location:
+
+    org.springframework.hateoas.server.core.DelegatingLinkRelationProvider.<init>(DelegatingLinkRelationProvider.java:36)
+
+The following method did not exist:
+
+    org.springframework.plugin.core.PluginRegistry.of([Lorg/springframework/plugin/core/Plugin;)Lorg/springframework/plugin/core/PluginRegistry;
+
+The method's class, org.springframework.plugin.core.PluginRegistry, is available from the following locations:
+
+    jar:file:/C:/Users/yue.liu/.m2/repository/org/springframework/plugin/spring-plugin-core/1.2.0.RELEASE/spring-plugin-core-1.2.0.RELEASE.jar!/org/springframework/plugin/core/PluginRegistry.class
+
+The class hierarchy was loaded from the following locations:
+
+    org.springframework.plugin.core.PluginRegistry: file:/C:/Users/yue.liu/.m2/repository/org/springframework/plugin/spring-plugin-core/1.2.0.RELEASE/spring-plugin-core-1.2.0.RELEASE.jar
+
+
+Action:
+
+Correct the classpath of your application so that it contains a single, compatible version of org.springframework.plugin.core.PluginRegistry
+```
+
+spring-boot-starter-data-rest
+=> spring-data-rest-webmvc
+=> spring-data-rest-core
+=> spring-plugin-core 
+
+springfox-swagger2
+=> spring-plugin-core
+
+https://github.com/springfox/springfox/issues/3052
+
+https://github.com/springfox/springfox/releases
+
+springfox 3.0: Requires SpringBoot 2.2+ (not tested with earlier versions)
 
 ---
 

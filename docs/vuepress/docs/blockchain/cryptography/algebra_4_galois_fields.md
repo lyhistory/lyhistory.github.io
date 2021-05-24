@@ -12,21 +12,79 @@ In order to have all four basic arithmetic operations (i.e., addition, subtracti
 
 A field F is a set of elements with the following properties:
 
-+ All elements of F form an additive group with the group operation “+” and the neutral element 0.
++ 加法结构：加群===Abelian Group
+
+  All elements of F form an additive group with the group operation “+” and the neutral element 0.
 
   Additive Identity https://en.wikipedia.org/wiki/Characteristic_(algebra)#:~:text=A%20field%20of%20non%2Dzero,also%20called%20its%20prime%20field.&text=The%20finite%20field%20GF(p,infinite%20fields%20of%20prime%20characteristic.
 
-  
+  满足：
 
-+ All elements of F except 0 form a multiplicative group with the group operation “×” and the neutral element 1.
+  + Closure
+  + Associative
+  + Additive Identity Exist
+  + Inverse Exist
+  + Commutative
 
-+ When the two group operations are mixed, the 分配律 distributivity law holds, i.e., for all a,b,c ∈ F: a(b+c) = (ab)+(ac).
++ 乘法结构：乘“群”
 
-Example 4.2. 实数集合 
+  All elements of F except 0 form a multiplicative group with the group operation “×” and the neutral element 1.
+
+  + Closure
+
+  + Associative
+
+  + Multiplicative Identity Exist
+
+  + Inverse Exist(except additive Identity，所以不满足群定义)
+
+    ∀ x ∈ F\\{0}, ∃ x<sup>-1</sup>∈ F, s.t. x◦x<sup>-1</sup>=x<sup>-1</sup>◦x=i
+
+    通过分配律可以证明，
+
+    a(b+c) = (ab)+(ac)，让c=0
+
+    a(b+0) = (ab)+(a0) => ab = ab + a0 两边加上ab的加法逆 -ab => a0=0，再通过满足交换律得到0a=0，
+
+    所以0跟任何元素相乘都是0，都不会是multiplicative identity，所以0不存在乘法逆
+
+  + Commutative
+
++ Distributivity
+
+  When the two group operations are mixed, the 分配律 distributivity law holds, i.e., for all a,b,c ∈ F: a(b+c) = (ab)+(ac).
+
+例子：有理数、实数集合 、复数都是filed
 
 The set R of real numbers is a field with the neutral element 0 for the additive group and the neutral element 1 for the multiplicative group. Every real number a has an additive inverse, namely −a, and every nonzero element a has a multiplicative inverse 1/a.
 
 https://en.wikipedia.org/wiki/Field_(mathematics)#Constructing_fields_from_rings
+
+## Prime Fields
+
+尝试构造Fields，首先要满足加法群abelian group，举例Integer
+
+Z = {0,1, -1, 2, -2, . . .}
+
+但是明显不满足乘法结构要求的存在乘法逆，所以这个不是Fileds
+
+Fp , p = 2, 3, 5, 7 ,11, 13, ..... |Fp| = p
+
+Z/(pZ)
+
+pZ={np|n∈Z} = {0, p, -p, 2p, -2p,.........}
+
+
+
+
+
+Theorem 4.3.2 
+
+Let p be a prime. The integer ring Z<sub>p</sub> is denoted as GF(p) and is referred to as a **prime field**, or as a **Galois field(or Finite Fields) with a prime number of elements**. All nonzero elements of GF(p) have an inverse. Arithmetic in GF(p) is done modulo p.
+
+素数阶群必为循环群 https://blog.csdn.net/qq_25847123/article/details/100572099
+
+
 
 ## Finite Field
 
@@ -98,13 +156,7 @@ https://math.stackexchange.com/questions/837562/why-is-the-multiplicative-group-
 
 在域中必有乘法单位元1，若作1+1+1+…运算，对无限域来说，则有可能n·1≠o，但在有限域中，1+1+…+1=0，否则该域必成为无限域。例如，在GF(2)中，1+1=0。
 
-## Prime Fields
 
-Theorem 4.3.2 
-
-Let p be a prime. The integer ring Z<sub>p</sub> is denoted as GF(p) and is referred to as a **prime field**, or as a **Galois field(or Finite Fields) with a prime number of elements**. All nonzero elements of GF(p) have an inverse. Arithmetic in GF(p) is done modulo p.
-
-素数阶群必为循环群 https://blog.csdn.net/qq_25847123/article/details/100572099
 
 
 

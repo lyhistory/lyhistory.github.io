@@ -235,15 +235,12 @@ while [ "${1:0:1}" == "-" ]; do
     --start)
       L_FLAG="B"
       ;;
-    -b)
-      L_FLAG="B"
+    --kill)
+      L_FLAG="K"
+          ;;
+     --status)
+      L_FLAG="S"
       ;;
-        --kill)
-      L_FLAG="K"
-          ;;
-        -k)
-      L_FLAG="K"
-          ;;
     *)
       echo "Unknown option: $1"
           echo ""
@@ -258,15 +255,30 @@ done
 L_RETURN_FLAG=0 # 0 for success while 99 for failure
 
 KAFKA_HOME=/opt/kafka_2.12-2.2.0/bin
+ZK_CLUSTER=$HOST1:2181,$HOST2:2181,$HOST3:2181
 
 pushd ${KAFKA_HOME} &>/dev/null
 
 if [ "$L_FLAG" == "B" ]; then
         echo "Starting kafka service..."
         ./kafka-server-start.sh -daemon ../config/server.properties
-else
+elif
         echo "Stopping kafka service..."
         ./kafka-server-stop.sh -daemon ../config/server.properties
+elif [ "$L_FLAG" == "S" ]; then
+        echo "Checking kafka status..."
+        arr=(${ZK_CLUSTER//","/ })
+        echo "${arr[@]}"
+        for ZK_NODE in "${arr[@]}";
+        do
+                echo "ZK_NODE: $ZK_NODE"
+                ./zookeeper-shell.sh $ZK_NODE ls /brokers/ids
+                exit_code=$?
+                echo $exit_code
+                if [ "$exit_code" = "0" ]; then
+                        exit 1
+                fi
+        done
 fi
 
 exit $L_RETURN_FLAG
