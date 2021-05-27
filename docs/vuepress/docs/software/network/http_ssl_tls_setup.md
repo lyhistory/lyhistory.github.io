@@ -343,3 +343,29 @@ https://superuser.com/questions/565409/how-to-stop-an-automatic-redirect-from-ht
 1. Go to `chrome://net-internals/#hsts`. Enter *3rdrevolution.com* under **Delete domain security policies** and press the Delete button.
 2. Now go to `chrome://settings/clearBrowserData`, tick the box *Cached images and files* and press click the button *Clear data*.
 
+## Troubleshooting
+
+?# NET::ERR_CERT_COMMON_NAME_INVALID
+
+如果是设置，基本就是域名跟证书不一致，比如证书中的：
+
+```
+openssl x509 -noout -text -in test.crt
+Subject: CN = *.test.com
+nginx配置的server_name就需要是其子域名
+```
+
+如果是访问其他网站遇到，可能是dns解析问题：
+
+https://blog.csdn.net/zerooffdate/article/details/80513730
+
+
+
+?# emerg] SSL_CTX_use_PrivateKey failed (SSL: error:0B080074:x509 certificate routines:X509_check_private_key:key values mismatch)
+
+私钥和证书不匹配，验证
+
+```
+openssl x509 -noout -modulus -in certificate.crt | openssl md5
+openssl rsa -noout -modulus -in privateKey.key | openssl md5
+```

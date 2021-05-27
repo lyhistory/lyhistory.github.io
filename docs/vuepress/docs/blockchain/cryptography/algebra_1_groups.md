@@ -306,6 +306,25 @@ n ∈ N = {1, 2, 3, 4, 5, 6, ..........n}
 
 容易得到，|Cn|的序=n 也就是所有的Cyclic Permutation总共有n种可能，可以联想之所以set Permutation是n阶乘，而这里是n，主要是这里1 2 3。。。。n这些元素是联动的，也就是当1旋转到了2，2必然对应3，而set Permutation中可以自由选择
 
+
+
+举例：
+
+C4
+
+| i                               | σ                               | σ<sup>2</sup>                   | σ<sup>3</sup>                   |
+| ------------------------------- | ------------------------------- | ------------------------------- | ------------------------------- |
+| 1->1<br/>2->2<br/>3->3<br/>4->4 | 1->2<br/>2->3<br/>3->4<br/>4->1 | 1->3<br/>2->4<br/>3->1<br/>4->2 | 1->4<br/>2->1<br/>3->2<br/>4->3 |
+
+| ◦             | i             | σ             | σ<sup>2</sup> | σ<sup>3</sup> |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| i             | i             | σ             | σ<sup>2</sup> | σ<sup>3</sup> |
+| σ             | σ             | σ<sup>2</sup> | σ<sup>3</sup> | i             |
+| σ<sup>2</sup> | σ<sup>2</sup> | σ<sup>3</sup> | i             | σ             |
+| σ<sup>3</sup> | σ<sup>3</sup> | i             | σ             | σ<sup>2</sup> |
+
+
+
 ## Dihedral Groups
 
 假设自然数 natural number
@@ -331,6 +350,27 @@ D1=S1, D2=S2, D3=S3
 但是D4!=S4而是介于 C4和S4之间，当然D4不是abelian Group
 
 Dn不是abelian group
+
+
+
+## Klein 4 Group
+
+n {1, 2, 3, 4}
+
+V = Klein 4 Group = {i, t12, t34, D}4
+
+| i                            | t12                             | t34                             | D                               |
+| ---------------------------- | ------------------------------- | ------------------------------- | ------------------------------- |
+| 1->1<br>2->2<br>3->3<br>4->4 | 1->2<br/>2->1<br/>3->3<br/>4->4 | 1->1<br/>2->2<br/>3->4<br/>4->3 | 1->2<br/>2->1<br/>3->4<br/>4->3 |
+
+
+
+| ◦    | i    | t12  | t34  | D    |
+| ---- | ---- | ---- | ---- | ---- |
+| i    | i    | t12  | t34  | D    |
+| t12  | t12  | i    | D    | t34  |
+| t34  | t34  | D    | i    | t12  |
+| D    | D    | t34  | t12  | i    |
 
 ## Group Isomorphisms
 
@@ -366,7 +406,35 @@ for ∀ x,y ∈ G, φ(x ◦ y) = φ(x)  ◦ φ(y)
 | φ(x) |      | φ(x) ◦ φ(y) |      |
 | ...  |      |             |      |
 
+注意：order相同的两个group未必是isomorphic的，比如 C4和Klein 4 group，对比两者的 i 明显规律不同！klein 4 group的每个元素都是自己跟自己互逆，而C4则不是
 
+**Isomorphism Class:**
+
+taking all groups that are isomorphic to one another and sticking them into a great big class, all of them are just the equivalent algebraic structure but with difference symbols used to denote the different elements of the group 
+
+
+
+举例：
+
+G:
+
+(R, +)	实数是Filed，不过这里只考虑其在加法结构上的Abelian Group结构
+
+G':
+
+(R<sup>+</sup>, *)  R<sup>+</sup> = {x ∈ R | x > 0 }	正实数在乘法结构上是Abelian Group
+
+
+
+φ: G->G'	
+
+x,y ∈ G, ◦ 是 +， x ◦ y = x + y
+
+φ(x),φ(y) ∈ G', ◦ 是 *, φ(x) = e<sup>x</sup>, φ(y) = e<sup>y</sup>
+
+for ∀ x,y ∈ G, 
+
+φ(x ◦ y) = φ(x + y) = e<sup>x+y</sup>= e<sup>x</sup>e<sup>y</sup> = φ(x)φ(y) = φ(x)  ◦ φ(y)
 
 ## Subgroups
 

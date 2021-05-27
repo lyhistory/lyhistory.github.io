@@ -53,9 +53,11 @@ $$
 
 https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference
 
+希腊字母
+
 uppercase *Σ*, lowercase *σ*
 
-
+https://reference.wolfram.com/language/guide/GreekLetters.html.zh
 
 
 ## Cryptography

@@ -244,6 +244,15 @@ server {
 ---------------------------------------------------------------------------------
 --- 强制 enforce https
 ---------------------------------------------------------------------------------
+server {
+        listen       80;
+        server_name  test.local;
+		if ($http_x_forwarded_proto = "http") {
+      		return 301 https://$server_name$request_uri;
+  		}
+	}
+
+下面的方法有时候会报错 redirect too many times：
 一种方法
 server {
         listen       80;

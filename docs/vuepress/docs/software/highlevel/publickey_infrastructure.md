@@ -138,15 +138,75 @@ a standard defining the format of public key certificates
 #### 3.1.3 Algorithm for TLS whole flow
 
 **Step 1:Key exchange or key agreement algorithm**
-	Purpose: to negotiate and generate master secret key
-	https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5551094/
-	1.	RSA
-	2.	Diffie hellman Perfect Forward Secrecy https://www.youtube.com/watch?v=IkM3R-KDu44
-	3.	ECC
+
+​	Purpose: to negotiate and generate master secret key
+​	https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5551094/
+ + RSA
+
+ + Diffie hellman Perfect Forward Secrecy https://www.youtube.com/watch?v=IkM3R-KDu44
+
+ + ECC
+
+  
+
 **Step 2-Part 1: Cipher to exchange message with master secret key**
+
 **Step 2-Part 2: Data integrity**
 
 ![](/docs/docs_image/software/cryptography/pki04.png)
+
+解释：
+
+1.秘钥交换一般都是用DH（什么情况用RSA ECC？）
+
+2.第二步的通信过程一般都是采用对称加密，因为比非对称快
+
+3.为什么有了第一步的DH和第二步的对称加密，很多情况还需要设置RSA，比如nginx需要设置ssl_certificate（RSA公钥和认证信息）和ssl_certificate_key（RSA私钥），因为第一步的key exchange过程，客户端也需要验证服务端的身份，所以服务端需要用私钥加密，然后客户端通过服务端的证书包含的公钥进行验证，防止通话对象是黑客而不是真正的服务器。
+
+4.为什么第一步不干脆用RSA呢
+
+简单讲，就是为了预防将来如果服务器私钥泄露，那么之前的对话如果没记录了，所有客户端跟服务端的对话将被解密，影响比较大，所以不应该使用私钥直接跟所有客户端对话，而应该进一步提升安全性（有点类似密码加盐的策略）
+
+> The downside of this handshake is that the messages secured by it are  only as safe as the private key. Suppose a third party has recorded the  handshake and the subsequent communication. If that party gets access to the private key in the future, they will be able to decrypt the  pre-main secret and derive the session key. With that they can decrypt  the entire message. This is true even if the certificate is expired or  revoked. This leads us to another form of handshake that can provide  confidentiality even if the private key is compromised.
+>
+> https://blog.cloudflare.com/keyless-ssl-the-nitty-gritty-technical-details/
+
+5.为什么需要pre-master secret key，pre-master VS master key
+
+The client generates a random number, called a **Pre**-**Master Secret key**. Upon receiving a Certificate message, it checks authentication of the server's certificate and extracts its public **key**. The **Pre**-**Master Secret key** is encrypted by the server's public **key** and sent via the ClientKeyExchange message to the server.
+
+> The point of the pre-master key is to have a uniform format for the  master key (e.g. this helps sharing session parameters between multiple  front-ends). SSL is generic: it supports several kinds of key exchange  algorithms, in particular RSA asymmetric encryption, and various [Diffie-Hellman](http://en.wikipedia.org/wiki/Diffie–Hellman_key_exchange) variants. All these methods do not yield "shared secret" of the same  size and format. Notably, with DH, you get a group element, in whatever  group you are working, which can be an elliptic curve or something else; the shared secret is, as a binary string, somewhat biased, and is not  chosen by the client.
+>
+> Defining that the key exchange mechanism yields a pre-master secret  (with characteristics derived from the actual key exchange mechanism),  to be hashed into a master secret, thus allows for a better modularity.
+>
+> https://security.stackexchange.com/questions/54399/whats-the-point-of-the-pre-master-key
+
+https://crypto.stackexchange.com/questions/27131/differences-between-the-terms-pre-master-secret-master-secret-private-key
+
+简单来说就是为了统一master key的格式，比如pre-master key可能是通过DH或者其他的方式交互产生的（比如服务端发给客户端8即2<sup>3</sup>,客户端选一个比如4及2<sup>2</sup>，然后将4发给服务端，然后客户端和服务端都各自可以算出 (2<sup>2</sup>)<sup>3</sup>=2<sup>6</sup>=64，作为pre master key），然后至于master key何时生成：
+
+> 3.The client generates a random number, called a Pre-Master Secret key. Upon receiving a Certificate message, it checks authentication of the  server’s certificate and extracts its public key. The Pre-Master Secret  key is encrypted by the server’s public key and sent via the  ClientKeyExchange message to the server. Meanwhile, the [Key Derivation Function](https://www.sciencedirect.com/topics/computer-science/key-derivation-function) (KDF) generates a master key derived from the Pre-Secret Master key.
+>
+> 4.On the server side, the ClientKeyExchange message is decrypted by the  server’s private key, resulting in the Pre-Master Secret key. Using the  same KDF as the client, the master key is derived from the Pre-Master  Secret key.
+>
+> https://www.sciencedirect.com/topics/computer-science/master-secret-key
+
+
+
+6.master key vs session key？
+
+The client and server then use the master secret to calculate several  session keys for use in that session only – 4 session keys, to be  precise.
+
+The 4 kinds of session keys created in each TLS handshake are:
+
+- The "client write key"
+- The "server write key"
+- The "client write MAC key"
+- The "server write MAC key"
+
+https://www.cloudflare.com/learning/ssl/what-is-a-session-key/
+
+7.TLS handshakes occur after a TCP connection has been opened via a TCP handshake.
 
 #### 3.1.4 Protocol - Handshake
 

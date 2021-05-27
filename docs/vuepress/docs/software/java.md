@@ -850,6 +850,12 @@ compile/provided/runtime/test/system/import
 显然SubProejct B-1找错了，可能是maven的这个${project.version}被Project B继承下来，然后简单的替换成了0.8.0，而不是沿用Project A的版本1.2.0-SNAPSHOT
 ```
 
++ sub Project不需要指定parent的版本号
+
+  https://stackoverflow.com/questions/10582054/maven-project-version-inheritance-do-i-have-to-specify-the-parent-version
+
+  Starting with Maven 3.5.0-beta-1 you can use the `${revision}`, `${sha1}`  and/or `${changelist}` as placeholders for the version in your pom file.  https://maven.apache.org/maven-ci-friendly.html
+
 
 
 引入第三方jar资源 注意事项: 
