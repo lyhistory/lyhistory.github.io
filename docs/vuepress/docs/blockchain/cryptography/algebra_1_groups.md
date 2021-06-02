@@ -212,6 +212,8 @@ permutation2: S*2 mod 9	结果映射	2 4 8 1 5 7
 
 。。。。。
 
+其实更适合后面 Cayley's theorem, 对于 G={1 2 4 5 7 8} ，aG=G
+
 
 
 #### Group的序 Size/Order
@@ -248,7 +250,28 @@ permutation2: S*2 mod 9	结果映射	2 4 8 1 5 7
 
 In abstract algebra, the symmetric group defined over any set is the group whose elements are all the bijections from the set to itself, and whose group operations is the composition of functions. In particular, the finite symmetric group Sn defined over a finite set of n symbols consists of the permutations that can be performed on the n symbols.
 
+举例：
 
+S3
+
+| i                    | t12                    | t13                    | t23                    | σ                      | σ<sup>2</sup>          |
+| -------------------- | ---------------------- | ---------------------- | ---------------------- | ---------------------- | ---------------------- |
+| 1->1<br>2->2<br>3->3 | 1->2<br/>2->1<br/>3->3 | 1->3<br/>2->2<br/>3->1 | 1->1<br/>2->3<br/>3->2 | 1->2<br/>2->3<br/>3->1 | 1->3<br/>2->1<br/>3->2 |
+
+| ◦             | i             | t12  | t13           | t23  | σ    | σ<sup>2</sup> |
+| ------------- | ------------- | ---- | ------------- | ---- | ---- | ------------- |
+| i             | i             | t12  | t12           | t23  | σ    | σ<sup>2</sup> |
+| t12           | t12           |      | σ<sup>2</sup> |      |      |               |
+| t13           | t13           | σ    |               |      |      |               |
+| t23           | t23           |      |               |      |      |               |
+| σ             | σ             |      |               |      |      |               |
+| σ<sup>2</sup> | σ<sup>2</sup> |      |               |      |      |               |
+
+t12 ◦ t13 =   σ<sup>2</sup>
+
+t13 ◦ t12 =   σ
+
+所以S3不是abelian group
 
 ## Cyclic Groups
 
@@ -438,7 +461,344 @@ for ∀ x,y ∈ G,
 
 ## Subgroups
 
-H < G , every subgroup is a subset 
+H ⊂ G 或 H < G , every subgroup is a subset 
+
+closure for H suddenly becomes non-trivial, because it's hard to say that for  ∀ x,y ∈ H, x ◦ y also ∈ H not outside of H
+
+H需要包含G的identity
+
+two trivial sub group：identity & the entire group
+
+例子1：
+
+S3= {  i, t12, t13, t23, σ, σ<sup>2</sup> }
+
+C3  = {  i, σ, σ<sup>2</sup> }  
+
+C3 ⊂  S3
+
+H = { i, t12 }	(isomorphic to S2)
+
+H ⊂  S3
+
+例子2：
+
+Integer Z= {0, 1, -1, 2, -2, ..........}
+
+aZ = {za | z ∈ Z } = { 0, a, -a, 2a, -2a, .......}
+
+aZ ⊂ Z
+
+0Z = {0} 1Z = Z 刚好是Z的two trivia sub group
+
+如何证明aZ也是group？
+
+closure： 利用ring的分配律（因为Integer是ring）：za+z'a = (z+z')a = z''a, z''=z+z' ∈ Z, z''a ∈ aZ
+
+其他 associative inverse identity都很显然
+
+
+
+结论：H < Z and b ∈ H and b is the smallest positive integer, prove that H = bZ ⊂ Z
+
+证明：
+
+先证明 bZ ⊂ H
+
+b存在inverse -b，b+b=2b............从而构造出
+
+{0, b, -b, 2b, -2b, ......} 如果任何一个元素不存在与H中，那么H就不是闭合的，就不是group，所以bZ ⊂ H
+
+再证明H can't contain any other integers that are not within the set bZ
+
+let a  ∈ H but not in bZ, so:
+
+if a<b, contradict to b is the smallest integers;
+
+if a>b, then a = zb + r, z ∈ Z and b>r>0 (if r=b then a=(z+1)b, contradict to a not in bz)
+
+=> r = a + (-zb) , because a ∈ H, -zb also ∈ H, so we have r ∈ H, contradict to b is the smallest integers
+
+
+
+结论：it's impossible for a finite group to be isomorphic to it's subgroup, however in infinite group very that's not the case.
+
+aZ isomorphic to Z
+
+aZ = {za | z ∈ Z } 
+
+φ:  aZ -> Z
+
+for ∀ x,y ∈ G, φ(x) = x/a
+
+φ(x ◦ y) = φ(x + y) = φ(za+z'a) = φ((z+z')a) =  z+z'
+
+φ(x)  ◦ φ(y) = φ(x) + φ(y) = φ(za) + φ(z'a) = z+z'
+
+
+
+结论：subgroup intersection交集也是subgroup
+
+H1,H2 < G ,H1 ∩ H2 < G
+
+H1 ∩ H2 = { g ∈ G | g∈H1,g∈H2 }
+
+证明H1 ∩ H2是group即可：
+
+首先不需要担心associativity 因为很显然如果其交集不遵守的话，H1和H2也就不是group，identity也显然即存在于H1又存在于H2,主要看其他几个性质：
+
+关于closure, for ∀ x,y ∈ H1 ∩ H2 证明 xy ∈ H1 ∩ H2，很简单由于 x,y ∈ H1，所以xy ∈ H1，同理xy ∈ H2，得证
+
+关于inverse，∀ x ∈ H1 ∩ H2，证明 x<sup>-1</sup> ∈ H1 ∩ H2，跟closure的证明一样x ∈ H1，所以x<sup>-1</sup> ∈ H1 ，同理x<sup>-1</sup> ∈ H2
+
+## Cyclic Groups and subgroups
+
+### finite & infinite Cyclic group
+
+n ∈ N = {1, 2, 3, 4, 5, 6, ..........n}
+
+Cyclic Permutation就是rotate旋转圆盘（每次旋转360/n），所以
+
+旋转0次：
+
+1->1 2->2 .............n->n	用i表示
+
+旋转一次就是：
+
+1->2 2->3 ..........n->1	用*σ* 表示
+
+旋转两次
+
+1->3 2->4...........n-1->1 n->2	用*σ<sup>2</sup>* 表示
+
+......
+
+旋转n-1次
+
+1->n 2->1 ..........n->n-1	用*σ<sup>n-1</sup>* 表示
+
+前面是finite Cyclic group，
+
+但是如果我们假设研究infinite Cyclic group，比如整个自然数就会在旋转一次的时候遇到问题：
+
+1->2 2->3 .......... 由于是整个自然数，无法得到自然数的最后一个数让其指向1，所以无法实现Permutation，
+
+现在考虑更大的集合 Integer 整数，Z = { 0, 1, -1, 2, -2, .......}
+
+旋转一次就是：
+
+..... -3->-2 -2->-1 -1->0 0->1 1->2 2->3 ................. 现在随便找一个Integer 都能找到其对应的map
+
+但是现在又有个问题，前面的finite Cyclic group Cn当旋转n-1次相当于逆时针旋转1次，旋转a次的逆是n-a次，旋转n次就回到了i，但是这里因为是infinite，如果向一个方向旋转是回不到i的，所以这里需要引入反方向的旋转，反方向旋转一次：
+
+....-2->-3 -1->-2 0->-1 1->0 2->1 3->2............
+
+现在定义一组新的符号：
+
+identity：0
+
+顺时针（向右旋转）一次：+1
+
+逆时针（向左旋转）一次：-1
+
+{ 0, 1, -1, 2, -2,...... } 神奇的发现产生的这个infinite Cyclic group跟我们考虑的整个Integer Z是完全一样的
+
+
+
+### Cyclic Subgroup
+
+for cyclic group G, x ∈ G (x is not identity element), \<x\> called Cyclic subgroup generated by x 
+
+\<x\> = {e, x, x<sup>2</sup>,x<sup>3</sup>............. x<sup>-1</sup>, x<sup>-2</sup>......} 根据group的性质，肯定包含identity,e= x<sup>0</sup>，然后根据闭合性质，x跟自己compose成 x<sup>2</sup>（参考前面Cyclic Permutation的例子，相当于旋转两次），接着生成 x<sup>3</sup>等，并且每个元素都存在逆
+
+注意：如果G是finite group，那么subgroup \<x\> 也必然是finite group（x的某个次幂=e），如果\<x\> 是infinite group，G必然也是infinite group
+
+我们下面考虑 infinite group的情况，证明\<x\> 是group：
+
+closure 闭合：∀ a,b ∈ Z (\<x\> 元素的次幂是Integer)
+
+x<sup>a </sup> ◦ x<sup>b</sup> = x<sup>a+b</sup>
+
+x<sup>a </sup> = x ◦ x ........◦ x 表示x compose自己a次，所以x<sup>a </sup> ◦ x<sup>b</sup>就是x compose with自己a+b次，所以是满足闭合
+
+inverse显然存在，
+
+例子：
+
+for (Z,+) Integer under addition，
+
+<2> = { 0, 2, 4, 6........, -2, -4, -6..........} = 2Z（前面subgroup举例的aZ）
+
+结论：infinite Cyclic subgroup is always isomorphic to the infinite Cyclic group
+
+\<x\> isomorphic to (Z,+)
+
+\<x\> = {e, x, x<sup>2</sup>,x<sup>3</sup>............. x<sup>-1</sup>, x<sup>-2</sup>......}
+
+φ: \<x\> ->(Z,+) , φ(x<sup>n</sup>) = n
+
+for ∀ a,b ∈ \<x\>, 
+
+φ(a ◦ b) = φ(x<sup>m</sup> ◦ x<sup>n</sup>) = φ(x<sup>m+n</sup>) =  m+n
+
+φ(a)  ◦ φ(b) = φ(x<sup>m</sup>) + φ(x<sup>n</sup>) = m + n 	φ(a ◦ b)= φ(a)  ◦ φ(b) 得证
+
+
+
+finite Group
+
+\<x\> = {e, x, x<sup>2</sup>,x<sup>3</sup>.............}
+
+if \<x\> is finite group, then must exist m∈N is the smallest that give an entry that already had(start cyclic), so that\<x\> = {e, x, x<sup>2</sup>, x<sup>3</sup>, ......x<sup>m-1</sup> }, and it must be x<sup>m</sup> = e
+
+Prove:
+
+suppose x<sup>m</sup> = x<sup>n</sup> ∈N and n<m
+
+(x<sup>-1</sup>)<sup>n</sup> x<sup>m</sup> = (x<sup>-1</sup>)<sup>n</sup> x<sup>n</sup>
+
+=> x<sup>m-n</sup> = e this contradict to m is the smallest that give an entry that already had
+
+不难证明 \<x\> = {e, x, x<sup>2</sup>, x<sup>3</sup>, ......x<sup>m-1</sup> } 是一个group，满足group的属性:
+
+closuer: x<sup>a</sup> ◦ x<sup>b</sup> = x<sup>a+b</sup> if a+b<m显然属于\<x\>, 等于m则 x<sup>m</sup> = e ，大于m比如介于(m,2m)则 x<sup>a</sup> ◦ x<sup>b</sup> = x<sup>m</sup>(x<sup>r</sup>)=x<sup>r</sup> r<m
+
+inverse: 根据 x<sup>m</sup> = e => x<sup>1</sup> ◦ x<sup>m-1</sup> = e 找到complementary power即可
+
+结论： \<x\> = {e, x, x<sup>2</sup>, x<sup>3</sup>, ......x<sup>m-1</sup> }  is isomorphic to Cm = {e, σ<sup>1</sup>, σ<sup>2</sup>, ......., σ<sup>m-1</sup>}
+
+
+
+由上述得出**Cyclic Group 定义**：
+
+Cyclic group both the finite and infinite cyclic groups what they contain basically is they need to contain an element x ∈ C such that the subgroup group generated by x \<x\> is actually equal to the entire group
+
+<1> = { 0, +1, +2, +3......., -1, -2, -3,..........}
+
+
+
+## Cayley's theorem
+
+### 引入
+
+前面讲了group的定义和属性，以及如何通过set Permutation来构造group，但是还没有回答一个问题就是：
+
+so the questions now becomes is it the case that we can always think of a group as being a set of symbols where these symbols are representing set permutations of some set.
+
+G={........}
+
+a ∈ G, 
+
+aG = {a◦g | g ∈ G}
+
+| ◦    | <---G---> every elements in G |
+| ---- | ----------------------------- |
+| ...  |                               |
+| a    | a◦g                           |
+| .... |                               |
+
+
+
+Ga = {g◦a | g ∈ G}
+
+| ◦                     | ...  | a    | ...  |
+| --------------------- | ---- | ---- | ---- |
+| <--                   |      | g◦a  |      |
+| G every elements in G |      | g◦a  |      |
+| -->                   |      | g◦a  |      |
+
+结论：aG = Ga = G for ∀ a ∈ G
+
+for aG and Ga, every elements appear once and only once, 
+
+Prove:
+
+首先根据Group闭合的性质，a ∈ G，所以aG ∈ G，然后：
+
+先证明appear only once：
+
+assume   g<>g' but a◦g = a◦g' 
+
+| ◦    | <--- |      | G every elements in G | ---> |
+| ---- | ---- | ---- | --------------------- | ---- |
+| ...  |      |      |                       |      |
+| a    |      | a◦g  | a◦g'                  |      |
+| .... |      |      |                       |      |
+
+=>   a<sup>-1</sup>◦a◦g = a<sup>-1</sup>◦a◦g' 
+
+=> g = g' contradict to g<>g' 
+
+再来证明every elements appear once：
+
+对于finite group来说，很简单，因为假设G的order是n，那么由于前面证明了g<>g'=>a◦g <> a◦g' 所以aG产生的n个元素也各不相同，所以得证；
+
+然后对于infinite group来说，由于是infinite，换种思路：
+
+for 任意 g ∈ G，只要可以找到ax=g, x ∈ G不就可以了么
+
+=> x=a<sup>-1</sup>g，所以对于任意g都可以找到x=a<sup>-1</sup>g 从而让ax=g 得证
+
+
+
+###  凱萊定理
+
+官方定义：
+
+In group theory, Cayley's theorem, named in honour of Arthur Cayley, states that every group G is isomorphic to a subgroup of the symmetric group acting on G.[1] This can be understood as an example of the group action of G on the elements of G.[2] The theorem can be obtained by explicitly constructing the representation within the representation of the symmetric group of permutation matrices, which is sometimes known as the regular representation.
+
+A permutation of a set G is any bijective function taking G onto G. The set of all permutations of G forms a group under function composition, called the symmetric group on G, and written as Sym(G).[3] 
+
+
+
+解释：
+
+for group G={e.....}
+
+let's just take the the symbols from the Group G (not taking the composition law, only the symbols), so we got a Set 
+
+S={e......} 
+
+this is the SET that we're going to think of every element of the group as representing a set permutation of and the composition law is then going to represent the composition of those set permutations
+
+take any g ∈ S, a ∈ G, 
+
+set permutation is bijective map from the SET to itself, 
+
+we define **set permutation: a(g) **
+
+and because g ∈ S, and it's the same symbol from group G, so we can have:
+
+a(g) = a ◦ g，前面已经证明了 aG=G，every elements appear once and only once，所以必然是双射
+
+then we can define a new composition law based on this set permutation, it will be the same composition as the Group G
+
+| ◦    | <---------G---------->  |
+| ---- | ----------------------- |
+| e    | <---------G---------->  |
+| ...  |                         |
+| a    | <---------aG----------> |
+| ...  |                         |
+
+eG 就像之前set Permutation的i
+
+aG 就像之前set Permutation的其他双射 比如之前研究过的t12 ，*σ*等
+
+然后我们定义新的composition就是set Permutation的composition，换句话就是对 i t12 *σ*这些符号所对应的set Permutation的composition law，当然我们这里不需要使用这些符号了，可以直接用 我们定义的 **set permutation: a(g) **g ∈ S, a ∈ G，假设新的composition符号是&
+
+所以对于∀ a,b ∈ G，a&b就代表 先进行set Permutation：b(g)，g ∈ S, b ∈ G，然后再进行set Permutation：a(b(g))， b(g) ∈ S, a ∈ G
+
+进而我们可以证明实际上这个a&b = a(b(g)) 等同于 a和b先在G上composite a◦b，然后再进行我们定义的set Permutation (a◦b)(g), g ∈ S, a◦b ∈ G，即：
+
+(a◦b)(g) = a(b(g))
+
+很容易 根据我们的定义a(g) = a ◦ g 加上G上的associative性质即得证
+
+但是注意，我们不可以定义set Permutation：a(g) = g ◦ a 虽然前面知道 Ga也是双射，但是
+
+(a◦b)(g) = a(b(g)) 不成立，因为
+
+(a◦b)(g) = g◦(a◦b) 而 a(b(g)) = a(g◦b) = (g◦b)◦a = g◦(b◦a) 但是我们知道对于group a◦b并不一定等于b◦a，只有abelian group才有这个属性
 
 
 
@@ -453,3 +813,13 @@ aG = {a◦g | g ∈ G}
 Ga = {g◦a | g ∈ G}
 
 aG == Ga == G, every elements in the group appear once and only once
+
+## Quotient Groups
+
+N < G, G/N
+
+∀ n ∈ N
+
+∀ g ∈ G
+
+g<sup>n</sup>g<sup>-1</sup> ∈ N

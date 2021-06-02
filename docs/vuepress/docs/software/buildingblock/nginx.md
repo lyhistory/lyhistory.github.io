@@ -247,7 +247,7 @@ server {
 server {
         listen       80;
         server_name  test.local;
-		if ($http_x_forwarded_proto = "http") {
+		if ($scheme = "http") {
       		return 301 https://$server_name$request_uri;
   		}
 	}
