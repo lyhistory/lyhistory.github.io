@@ -1162,9 +1162,78 @@ https://kafka.apache.org/documentation/#design
 
 ### 4.0 Config
 
+https://kafka.apache.org/26/documentation/
+
 https://docs.confluent.io/platform/current/installation/configuration
 
 #### Server Config
+
+##### 复制因子 replica factor 详解
+
+min.insync.replicas同时控制external topic 以及internal topic` __consumer_offsets`和`__transaction_state`，transaction.state.\*只控制`__transaction_state`（transaction.state.log.min.isr overriden min.insync.replicas），
+offsets.topic.replication.factor控制offsets topic也就是`__consumer_offsets`，必须跟broker个数一致(小于等于，默认值为3，如果是两个节点就不行了，所以不要轻易使用默认值），否则无法启动
+default.replication.factor控制automatically created topics，应该是值的external topic
+
+
+
++ if offsets.topic.replication.factor > brokers数量，kafka client无法启动（无法Discover group coordinator）, kafka server报错：
+
+```
+ERROR [KafkaApi-0] Number of alive brokers '2' does not meet the required replication factor '3' for the offsets topic (configured via 'offsets.topic.replication.factor'). This error can be ignored if the cluster is starting up and not all brokers are up yet. (kafka.server.KafkaApis)
+```
+
+
+
++ if 挂掉的节点==default.replication.factor，比如：
+
+default.replication.factor=1 则代表external topic没有replication，这样挂掉任何一个节点client都会报错：
+
+```
+2021-06-08 17:06:01.892 ^[[33m WARN^[[m ^[[35m23610GG^[[m [TEST-MANAGER] ^[[36mk.c.NetworkClient$DefaultMetadataUpdater^[[m : [Consumer clientId=consumer-1, groupId=TEST-SZL] 1 partitions have leader brokers without a matching listener, including [T-TEST-1]
+```
+
+ 
+
++ if (live isr 活着的节点中并且是isr的节点数) < transaction.state.log.min.isr:
+
+```
+[2021-06-09 09:31:14,285] ERROR [ReplicaManager broker=0] Error processing append operation on partition __transaction_state-28 (kafka.server.ReplicaManager)
+org.apache.kafka.common.errors.NotEnoughReplicasException: The size of the current ISR Set(0) is insufficient to satisfy the min.isr requirement of 2 for partition __transaction_state-28
+```
+
+注意如果不停掉kafka producer程序，上述日志会快速的在kafka/logs/server.log 中刷入，潜在可能会造成磁盘问题
+
++ if (live isr 活着的节点中并且是isr的节点数) <min.insync.replicas of` __consumer_offsets`:
+
+kafka consumer client discover group之后无法join group，在revoke之后，rejoining group停顿几分钟后狂刷日志：
+
+```
+2021-06-09 10:17:23.076 ^[[32m INFO^[[m ^[[35m26210GG^[[m [CLEAR-MANAGER] ^[[36mo.a.k.c.c.i.AbstractCoordinator^[[m : [Consumer clientId=consumer-1, groupId=CLEAR-REALTIME-SZL] Group
+coordinator XXXX:9092 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery                                                                        
+2021-06-09 10:17:23.186 ^[[32m INFO^[[m ^[[35m26210GG^[[m [CLEAR-MANAGER] ^[[36mordinator$FindCoordinatorResponseHandler^[[m : [Consumer clientId=consumer-1, groupId=CLEAR-REALTIME-SZL] Discovered group coordinator XXXX:9092 (id: 2147483647 rack: null)
+2021-06-09 10:17:23.187 ^[[32m INFO^[[m ^[[35m26210GG^[[m [CLEAR-MANAGER] ^[[36mo.a.k.c.c.i.AbstractCoordinator^[[m : [Consumer clientId=consumer-1, groupId=CLEAR-REALTIME-SZL] Group
+coordinator XXXX8:9092 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery                                                                        
+2021-06-09 10:17:23.288 ^[[32m INFO^[[m ^[[35m26210GG^[[m [CLEAR-MANAGER] ^[[36mordinator$FindCoordinatorResponseHandler^[[m : [Consumer clientId=consumer-1, groupId=CLEAR-REALTIME-SZL] Discovered group coordinator XXXX:9092 (id: 2147483647 rack: null)
+2021-06-09 10:17:23.289 ^[[32m INFO^[[m ^[[35m26210GG^[[m [CLEAR-MANAGER] ^[[36mo.a.k.c.c.i.AbstractCoordinator^[[m : [Consumer clientId=consumer-1, groupId=CLEAR-REALTIME-SZL] (Re-)joining group
+```
+
+
+
+kafka server端狂刷日志：
+
+```
+[2021-06-09 10:18:43,146] INFO [GroupCoordinator 0]: Preparing to rebalance group CLEAR-REALTIME-SZL in state PreparingRebalance with old generation 393 (__consumer_offsets-49) (reaso
+n: error when storing group assignment during SyncGroup (member: consumer-1-0c90d042-0326-4cf2-a870-bb2ae055d140)) (kafka.coordinator.group.GroupCoordinator)                          
+[2021-06-09 10:18:43,349] INFO [GroupCoordinator 0]: Stabilized group CLEAR-REALTIME-SZL generation 394 (__consumer_offsets-49) (kafka.coordinator.group.GroupCoordinator)             
+[2021-06-09 10:18:43,349] INFO [GroupCoordinator 0]: Assignment received from leader for group CLEAR-REALTIME-SZL for generation 394 (kafka.coordinator.group.GroupCoordinator)        
+[2021-06-09 10:18:43,349] ERROR [ReplicaManager broker=0] Error processing append operation on partition __consumer_offsets-49 (kafka.server.ReplicaManager)                           
+org.apache.kafka.common.errors.NotEnoughReplicasException: The size of the current ISR Set(0) is insufficient to satisfy the min.isr requirement of 2 for partition __consumer_offsets-
+49  
+```
+
+
+
+##### 通用配置
 
 ```
 ############################# Server Basics #############################
@@ -1294,6 +1363,14 @@ Default:	300000 (5 minutes)
 https://kafka.apache.org/23/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html
 
 https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#poll-long-
+
+确定一个 Consumer Group 的 GroupCoordinator 的位置：
+
+1. abs (GroupId.hashCode) % NumPartition，NumPartition 就是__consumer_offsets 的分区数
+2. 计算结果表示了__consumer_offsets 的一个 partition比如`__consumer_offsets-10`
+3.  找到该`__consumer_offsets-10` 的 leader 所在的 broker如broker id=3，即该consumer group的GroupCoordinator， 
+4. 当该consumer group的GroupCoordinator挂掉时，也就是这个broker挂掉后，其他borkers（保存有`__consumer_offsets-10`的replica的节点）会选一个broker如broker id=1作为新的`__consumer_offsets-10`的leader，然后该broker会load 本机保存的`__consumer_offsets-10`replica到内存中，完成后，cient端就会discover该broker作为新的GroupCoordinator
+5. 当broker id=3恢复正常后，会抢回broker id=1之前接管的`__consumer_offsets-10`，重新作为该topic的leader，然后client端就重新discover broker id=3作为group coordinator，这种抢回的方式可以保证kafka节点任务均衡
 
 #### 4.1.1 跟borker交互
 
@@ -2288,6 +2365,42 @@ transaction.state.log.min.isr=2
 kafka-topics.sh -describe --bootstrap-server ip:9092 --topic __consumer_offsets
 kafka-topics.sh -describe --bootstrap-server ip:9092 --topic __transaction_state
 ```
+
+### 无法删除topic
+
+
+
+```
+bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic T-*
+可以通过zookeeper删除
+bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic T-.*
+```
+
+
+
+### 删除topic后无法创建，提示已存在，但是找不到 org.apache.kafka.common.errors.TopicExistsException
+
+是zookeeper跟kafka数据不一致，
+
+./bin/zookeeper-shell.sh :2181 get /brokers/topics
+
+或者
+
+bin/zookeeper-shell.sh localhost:2181
+
+​	ls /brokers/topics
+
+​	ls /admin/delete_topics
+
+会看到很多topic存在这里
+
+直接通过命令delete，或者更简单的通过删除 ../zookeeper/logs/version-2/ 和 ../zookeeper/zkdata/version-2/
+
+rm -rf ../zookeeper/zkdata/version-2/* 
+rm -rf ../zookeeper/logs/version-2/*
+rm -rf kafka-logs/*
+rm -rf logs/*
+
 
 
 

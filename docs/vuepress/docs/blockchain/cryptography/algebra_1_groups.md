@@ -395,7 +395,7 @@ V = Klein 4 Group = {i, t12, t34, D}4
 | t34  | t34  | D    | i    | t12  |
 | D    | D    | t34  | t12  | i    |
 
-## Group Isomorphisms
+## Group Isomorphisms 同构
 
 G = S2 = {i, t}
 
@@ -800,6 +800,198 @@ aG 就像之前set Permutation的其他双射 比如之前研究过的t12 ，*σ
 
 (a◦b)(g) = g◦(a◦b) 而 a(b(g)) = a(g◦b) = (g◦b)◦a = g◦(b◦a) 但是我们知道对于group a◦b并不一定等于b◦a，只有abelian group才有这个属性
 
+## Parity of a permutation
+
+
+
+
+
+| t12 (1 2)                       | t123 (1 2 3)                    | t132 (1 3 2)                    | t13,24 (1 3)(2 4)               | (1 3 4)(2 5)                            | σ<sup>2</sup>                   |
+| ------------------------------- | ------------------------------- | ------------------------------- | ------------------------------- | --------------------------------------- | ------------------------------- |
+| 1->2<br/>2->1<br/>3->3<br/>4->4 | 1->2<br/>2->3<br/>3->1<br/>4->4 | 1->3<br/>2->1<br/>3->2<br/>4->4 | 1->3<br/>2->4<br/>3->1<br/>4->2 | 1->3<br/>2->5<br/>3->4<br/>4->1<br>5->2 | 1->3<br/>2->1<br/>3->2<br/>4->4 |
+
+t12 (1 2) :
+
+​	2-cycle 意思是3 4不变，单看1和2就是类似Cyclic Permutation的两个元素的cycle rotate
+
+t123 (1 2 3) 
+
+​	3-cycle 同理，4不变，此时是按 1 2 3的顺序进行的Cyclic Permutation的三个元素的一次rotate
+
+t132 (1 3 2) 
+
+​	3-cycle 同理，只不过顺序变成了 1 3 2 进行的一次rotate
+
+t13,24 (1 3)(2 4) 
+
+​	two 2-cycle
+
+进一步观察发现
+
+(1 2 3)=(1 3)(1 2)
+
+所有的Permutation都可以分解为多个2-cycle的composition，情况分为：
+
+(1 2)(1 2) 这种完全一样的就互相抵消
+
+(1 3 2) = (2 3)(1 2) = (1 3)( 2 3) 这种是有一个重合的就有多种写法
+
+(1 2)(3 4)=(3 4)(1 2) 这种没有重合的就满足communitative交换
+
+(1 3)(1 2) is the inverse of (1 2)(1 3)
+
+can only have even or odd decompositions
+
+(1 2)(1 3)(1 3)(1 2) = e 很简单 (1 3)(1 3) = e 抵消
+
+a = tn tn-1.....t1 
+
+a<sup>-1</sup> = t1t2.....tn
+
+a = tn..........t1 n = even
+
+a = sm........s1 m = odd
+
+a<sup>-1</sup> =  s1.....sm
+
+a<sup>-1</sup> a = s1......smtn........t1 =e identity必须是even number of transpositions，如果是odd无法互相抵消
+
+## Group Homomorphisms 同态
+
+φ: G->G' φ doesn't have to be bijective
+
+for ∀ x,y ∈ G, φ(x ◦ y) = φ(x)  ◦ φ(y)
+
+1) 不需要满足 surjective 满射，即：
+
+for ∀ g' ∈ G' ∃ g ∈ G, s.t. φ(g)  = g'
+
+2）不需要满足injective 单射
+
+for ∀ g' ∈ Im(φ)	Im(φ)={φ(g) | g ∈ G},
+
+∃ only one g ∈ G, s.t. φ(g)  = g'
+
+
+
+Prove:	φ(e<sub>G</sub>) = e<sub>G'</sub>	e<sub>G</sub>代表G的e  e<sub>G'</sub>是G'的e
+
+we know that:
+
+x ∈ G,  x ◦ x = x => x=e only solution for x compose with itself equal to itself is the identity
+
+so, to prove φ(e<sub>G</sub>) = e<sub>G'</sub> we just need to prove that φ(e<sub>G</sub>) ◦ φ(e<sub>G</sub>) = e<sub>G'</sub> ，
+
+φ(e<sub>G</sub>) ◦ φ(e<sub>G</sub>)  = φ(e<sub>G</sub>  ◦ e<sub>G</sub>)  and e<sub>G</sub>  ◦ e<sub>G</sub> = e<sub>G</sub>  
+
+=> φ(e<sub>G</sub>) ◦ φ(e<sub>G</sub>) = φ(e<sub>G</sub>)  and because φ(e<sub>G</sub>)  is element in G',
+
+so we got the only solution is e<sub>G'</sub>	
+
+
+
+Prove:
+
+a, a<sup>-1</sup> ∈ G, (a, a<sup>-1</sup>  can be the same element)
+
+=> φ(a) inverse is φ(a<sup>-1</sup>) 
+
+or write as: φ(a<sup>-1</sup>) = InverseOf(φ(a)) 或写作 (φ(a))<sup>-1</sup>
+
+φ(a) ◦ φ(a<sup>-1</sup>) = φ(a ◦ a<sup>-1</sup>)  = φ(e<sub>G</sub>) = e<sub>G'</sub> 
+
+
+
+Prove:
+
+**Im(φ) < G' 	Im(φ)={φ(g) | g ∈ G}** , means that we can reduce a non-surjective homomorphism to surjective homomorphism
+
+if the homomorphisms is surjective, then Im(φ) = G' , else Im(φ) is a proper subset of G',
+
+so we konw Im(φ)  is a subset of G', how to prove Im(φ)  is a subgroup of G',仍然是看group的性质：
+
+1) closure	∀ g1,g2 ∈ Im(φ) , g1◦ g2 ∈ Im(φ)
+
+prove: if g1,g2 ∈ Im(φ), means exist φ(a)=g1, φ(b)=g2 (a b can be equal, hormomorphism no need to be injective)
+
+g1◦ g2 = φ(a) ◦ φ(b) = φ(a ◦ b) ∈ Im(φ) 得证
+
+2) associativity 继承的性质
+
+3) Identity 
+
+φ(e<sub>G</sub>) = e<sub>G'</sub>	e<sub>G'</sub> ∈ Im(φ)
+
+4) Inverses	a' ∈ Im(φ) , (a')<sup>-1</sup> ∈ Im(φ)
+
+we konw  (a')<sup>-1</sup>  = φ(a<sup>-1</sup>) so we got (a')<sup>-1</sup> ∈ Im(φ) 得证
+
+
+
+Example:
+
+φ: (Z, +) -> S2
+
+Z={0,1,-1,2,-2.........}
+
+S2={+1,-1} 	+1代表identity，-1代表transpose
+
+φ(x)= +1 if x is even =-1 if x is odd
+
+Prove: (Z, +) -> S2	∀ a,b ∈ Z φ(a+b)=φ(a)φ(b)
+
+case 1: a,b are even, φ(a)=φ(b)=1, a+b is even , φ(a+b)=1=φ(a)φ(b) 其他情况同理
+
+
+
+Kernel(φ) = { g ∈ G | φ(g)=e<sub>G'</sub>}
+
+if it's isomorphism,means it's bijective, then e<sub>G</sub> is the only element
+
+Prove: Kernel(φ) < G subgroup:
+
+1) closure, any a,b  ∈ kernel(φ), φ(a◦b)=e<sub>G'</sub> φ(a)◦φ(b)=e<sub>G'</sub> ◦ e<sub>G'</sub> = e<sub>G'</sub>  得证
+
+2) associativity 和 identity都很显然
+
+3) Inverse	a ∈ kernel(φ) prove a<sup>-1</sup> ∈ kernel(φ) 即证明 φ(a<sup>-1</sup>)=e<sub>G'</sub> :
+
+根据前面的结论知道φ(a) inverse is φ(a<sup>-1</sup>) 所以
+
+φ(a<sup>-1</sup>) = InverseOf(φ(a)) 或写作 (φ(a) )<sup>-1</sup> =  InverseOf(e<sub>G'</sub>) =e<sub>G'</sub>
+
+
+
+
+
+conjugate element
+
+a,g ∈ G, the conjugate of g by a: aga<sup>-1</sup>
+
+if G is abelian, aga<sup>-1</sup> = aa<sup>-1</sup>g = g
+
+
+
+Normal subgroup:
+
+H<G, ∀ h ∈ H ∀ g ∈ G, ghg<sup>-1</sup>∈ H, means that H has to be stable under conjugation by any element in G
+
+结论：All subgroups of Abelian groups is normal subgroup
+
+结论：all kernel group is normal subgroup，
+
+Prove: H= Kernel(φ) ∀ h ∈ Kernel(φ), ∀ g ∈ G, ghg<sup>-1</sup> ∈ Kernel(φ)，即证明 φ(ghg<sup>-1</sup>) = e<sub>G'</sub>
+
+φ(ghg<sup>-1</sup>) = φ(gh) ◦ φ(g<sup>-1</sup>) = φ(g) ◦ φ(h) ◦ φ(g<sup>-1</sup>) =φ(g) ◦  e<sub>G'</sub>◦ φ(g<sup>-1</sup>) =φ(g) ◦  φ(g<sup>-1</sup>) 
+
+我们知道：
+
+φ(g) ◦  φ(g<sup>-1</sup>) = φ(g ◦  g<sup>-1</sup>)  = φ(e<sub>G</sub>) = e<sub>G'</sub>
+
+或者直接根据φ(g<sup>-1</sup>) 就是φ(g) 的inverse，得到e<sub>G'</sub>
+
+得证
+
 
 
 ## Cosets + Lagranges
@@ -814,6 +1006,116 @@ Ga = {g◦a | g ∈ G}
 
 aG == Ga == G, every elements in the group appear once and only once
 
+
+
+**Cosets:**
+
+a ∈ G, subgroup H<G ,
+
+left coset of H under a: aH = {a◦h | h ∈ H}
+
+right coset of H under a: Ha
+
+a ∈ aH, a ∈ Ha， 因为subgroup H必然包含identity e
+
+if a ∈ H，跟前面的Cayley's theorem讲的内容一样，aH=Ha=H	(aH=Ha 还有几种情况：G是abelian group；或者H是normal subgroup)
+
+if a ∉ H, aH Ha are free of H (distinct from H), Prove by contradiction:
+
+aH = {a◦h | h ∈ H} , h' = a◦h, assume h' ∈ H
+
+h' = a◦h=> h'◦h<sup>-1</sup> = a , h<sup>-1</sup> ∈ H (h ∈ group H, exist inverse), so h'◦h<sup>-1</sup> ∈ H (closure), so a ∈ H, contradict to a ∉ H得证
+
+
+
+if H is a Normal subgroup of G:
+
+H<G, ∀ h ∈ H ∀ g ∈ G, ghg<sup>-1</sup>∈ H, means that H has to be stable under conjugation by any element in G
+
+∀ a ∈ G, aH=Ha，即 aH ⊂ Ha  AND Ha ⊂ aH 
+
+a◦h ∈ aH, h ∈ H, to show ∃ h' ∈ H, s.t. h'a = ah => h' = aha<sup>-1</sup> ,because H is a normal subgroup of G, this is true 得证
+
+
+
+**Properties of Coset**
+
+a◦h ∈ aH,	(a◦h)H = aH
+
+(a◦h)H =  {(a◦h)◦h' | h' ∈ H} = {a◦(h◦h')| h' ∈ H} 	再次使用 Cayley's theorem，{h◦h'| h' ∈ H} = hH =H
+
+=> (a◦h)H ={a◦(h◦h')| h' ∈ H} ={a◦h''| h'' ∈ H} 
+
+
+
+Example:
+
+G=(Z, +) 
+
+subgroup一节讲过 H=5Z={ 5z|z∈Z} = {0, 5, -5, 10, -10.......}
+
+because (Z, +) is abelian group, left coset is the same as right coset
+
+a = 1
+
+aH = 1+H = 1+5Z = {1, 6, -4, 11, -9, ........}
+
+
+
+Partition of set, split SET into N partition, P = { subset1, subset2, .....,subsetN}
+
+H<G,
+
+if H not G, then there must be some elements outside of H but inside of G, 
+
+a ∉ H, 从前面结论知道 element in aH totally distinct from H, then:
+
+H union aH 可能等于 G，否则就存在
+
+b ∉ H union aH，that bH totally distinct from  (H union aH)，我们已经知道同理aH，bH totally distinct from  H，但是怎么证明 bH totally distinct from  aH，prove by contradiction:
+
+aH =  {a◦h | h ∈ H} 
+
+bH =  {b◦h | h ∈ H} 
+
+assume exist b◦h1 = a◦h2, h1,h2∈H
+
+=> b = a◦h2◦h1<sup>-1</sup> ,h2◦h1<sup>-1</sup> ∈ H, so b ∈ aH，跟前面的前提b ∉ H union aH矛盾，得证
+
+如果 H union aH union bH 都不能cover整个G，则continue
+
+所以Partition of G = { H, aH,bH, .........} 注意，如果确定了H，这个结果是唯一的
+
+如果H是finite group，H的order |H|=m, 即H有m个元素，那么所有的cosets都跟H有相同的order，因为all elements in aH are distinct
+
+### Lagranges Theorem
+
+G is finite group / has an order(number of elements in group)
+
+|G| = n|H| n ∈ N, 
+
+OR  \|H\| must be divide by \|G\|
+
+n实际上就是前面的 Partition of G  = { H, aH,bH, .........}  partition的数量，因为前面知道aH，bH，nH都跟H的order一样
+
+用处--快速验证 是不是subgroup，首先看是否 obey lagranges theorem，看order是否被整除，如果否则不是，如果是进一步验证是否满足group的composition law
+
+example：
+
+|G| = Prime number=P = 2, 3, 5, 7............
+
+其 subgroup |H|=1 or |G|
+
+take some non-identity element x from G, x≠ e<sub>G</sub>，前面讲的Cyclic subgroup提到的，
+
+infinite Cyclic group: \<x\> = {e, x, x<sup>2</sup>,x<sup>3</sup>............. x<sup>-1</sup>, x<sup>-2</sup>......} 
+
+finite cyclic group: \<x\> = {e, x, x<sup>2</sup>, x<sup>3</sup>, ......x<sup>m-1</sup> }  x<sup>m</sup> = e
+
+对于 order为prime number=P 的finite group G来说，从non-identity element x生成的finite Cyclic group \<x\> = {e, x, x<sup>2</sup>, x<sup>3</sup>, ......x<sup>m-1</sup> }  x<sup>m</sup> = e，m就是G的order = P，因为我们前面有结论其 subgroup |H|=1 or |G|，然后我们取出的是non-identity element x，所以 \<x\> 的 order就是等于|G|，所以m=P=|G|,x<sup>P</sup>=e，换句话说就是non-identity element x生成的finite Cyclic group \<x\> 就是整个 G，所以G is isomorphic to a finite cyclic group 即 C<sub>P</sub> 
+
+
+
 ## Quotient Groups
 
 N < G, G/N
@@ -823,3 +1125,4 @@ N < G, G/N
 ∀ g ∈ G
 
 g<sup>n</sup>g<sup>-1</sup> ∈ N
+

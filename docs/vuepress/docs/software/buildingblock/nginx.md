@@ -2,6 +2,10 @@
 
 Nginx 和 Apache 各有什么优缺点？ https://www.zhihu.com/question/19571087
 
+Reverse Proxy vs. Load Balancer https://www.nginx.com/resources/glossary/reverse-proxy-vs-load-balancer/
+
+
+
 ## 安装
 
 https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/
@@ -360,6 +364,42 @@ http {
 
 网络问题 防火墙
 
+### TCP/UDP
+
+https://blog.csdn.net/jeikerxiao/article/details/87863341
+
+```
+Normal:
+
+stream {
+    server {
+        listen 443;
+        proxy_connect_timeout 8s;
+    	proxy_timeout 24h;
+        proxy_pass admin;
+    }
+
+    upstream admin {
+        server admin.uim.cloud:443;
+    }
+}
+
+TCP Load Balancing:
+stream {
+	upstream mysql_backends {
+		server backend1.test.com:3306;
+		server backend2.test.com:3306;
+	}
+	server {
+		listen 3306;
+		proxy_pass	mysql_backends;
+	}
+}
+
+```
+
+
+
 ### 其他
 
 enable list files : autoindex on 注意location写法
@@ -437,4 +477,162 @@ location /test {
 			alias "C:/Workspace/task/setup/nginx-1.17.6/conf/test/";
 		}
 ```
+
+## HA 高可用方案
+
+nginx本身的高可用
+
++ nginx plus 收费
++ Keepalived
++ heartbeat、corosync、pacemaker
+
+
+
+Keepalived是一个基于VRRP协议-Virtual Router Redundancy Protocol 来实现的服务高可用方案
+
+keepalived可以认为是VRRP协议在Linux上的实现，主要有三个模块，分别是core、check和vrrp。core模块为keepalived的核心，负责主进程的启动、维护以及全局配置文件的加载和解析。check负责健康检查，包括常见的各种检查方式。
+
+```
+                   +-------------+
+                   |    uplink   |
+                   +-------------+
+                          |
+                          +
+    MASTER            keep|alived         BACKUP
+172.101.2.100      172.101.2.99      172.101.2.101
++-------------+    +-------------+    +-------------+
+|   nginx01   |----|  virtualIP  |----|   nginx02   |
++-------------+    +-------------+    +-------------+
+                          |
+       +------------------+------------------+
+       |                  |                  |
++-------------+    +-------------+    +-------------+
+|    web01    |    |    web02    |    |    web03    |
+————————————————
+```
+
+
+
+
+
+```
+以机器172.101.2.100和172.101.2.101为举例
+
+1.	两台服务都安装nginx和keepalived
+
+2．修改配置文件
+172.101.2.100
+Nginx配置文件不用修改，只修改keepalived即可
+Vi  /etc/keepalived/keepalived.conf
+! Configuration File for keepalived
+
+global_defs {
+   notification_email {
+     acassen@firewall.loc
+     failover@firewall.loc
+     sysadmin@firewall.loc
+   }
+   notification_email_from Alexandre.Cassen@firewall.loc
+   smtp_server 192.168.200.1
+   smtp_connect_timeout 30
+   router_id LVS_BACKUPS
+}
+
+vrrp_script chk_http_port {
+    script "/etc/keepalived/scripts/che_nginx.sh"   #检查nginx进程脚步位置
+    interval 1               #1秒钟检查一次
+    
+}
+
+vrrp_instance VI_1 {
+    state BACKUP
+    interface bond0
+    virtual_router_id 51
+    priority 90
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass 1111
+    }
+	    track_script {           
+        chk_http_port     #检查脚步的脚步名称，具体看上面vrrp_script chk_http_port
+    }
+    virtual_ipaddress {
+        172.100.2.99
+    }
+}
+
+virtual_server 172.100.2.99 443 {
+    delay_loop 6
+    lb_algo rr
+    lb_kind NAT
+    nat_mask 255.255.255.0
+    persistence_timeout 50
+    protocol TCP
+
+    real_server 172.101.2.100 443 {
+        weight 3
+        TCP_CHECK {
+            connect_timeout 3
+            nb_get_retry 3
+            delay_before_retry 3
+        }
+    }
+   
+    real_server 172.101.2.101 443 {
+        weight 3
+        TCP_CHECK {
+            connect_timeout 3
+            nb_get_retry 3
+            delay_before_retry 3
+        }
+    }
+}
+
+
+其余的配置是keepalived双机集群配置，从keepalived服务172.101.2.100的也是添加修改有注释的地方即可
+
+这样在停掉nginx时会自动将keepalived也停止掉
+
+该脚本检测ngnix的运行状态，并在nginx进程不存在时尝试重新启动ngnix，如果启动失败则停止keepalived，准备让其它机器接管。
+
+/etc/keepalived/check_nginx.sh ：
+#!/bin/bash
+counter=$(ps -C nginx --no-heading|wc -l)
+if [ "${counter}" = "0" ]; then
+    /usr/local/bin/nginx
+    sleep 2
+    counter=$(ps -C nginx --no-heading|wc -l)
+    if [ "${counter}" = "0" ]; then
+        /etc/init.d/keepalived stop
+    fi
+fi
+你也可以根据自己的业务需求，总结出在什么情形下关闭keepalived，如 curl 主页连续2个5s没有响应则切换：
+# curl -IL http://localhost/member/login.htm
+# curl --data "memberName=fengkan&password=22" http://localhost/member/login.htm
+ 
+count = 0
+for (( k=0; k<2; k++ )) 
+do 
+    check_code=$( curl --connect-timeout 3 -sL -w "%{http_code}\\n" http://localhost/login.html -o /dev/null )
+    if [ "$check_code" != "200" ]; then
+        count = count +1
+        continue
+    else
+        count = 0
+        break
+    fi
+done
+if [ "$count" != "0" ]; then
+#   /etc/init.d/keepalived stop
+    exit 1
+else
+    exit 0
+fi
+————————————————
+版权声明：本文为CSDN博主「IT黑旋风」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/u010391029/article/details/52071898
+```
+
+
 

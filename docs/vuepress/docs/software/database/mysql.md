@@ -114,7 +114,38 @@ pager grep ***
 https://stackoverflow.com/questions/10177465/grep-in-mysql-cli-interpretter
 ```
 
+
+
 ### 2.2 database management
+
+#### Global Status
+
+```
+show global variables like '%timeout'; 
+show variables like '%engine%';
+SHOW VARIABLES LIKE "max_connections";
+select @@wait_timeout;
+show variables like '%error%';
+
+show global status like '%connection%';
+show global status like '%errors%';
+show global status like '%thread%';
+show processlist;
+
+select * from mysql.user;
+
+show variables like "%time_zone%";
+show processlist;
+select substring_index(host,':' ,1) as client_ip,Command,Time from information_schema.processlist;
+show variables like 'max_connections';
+SHOW GLOBAL STATUS LIKE "Threads_connected";
+show variables like 'log_error';
+
+use mysql;
+SHOW CREATE TABLE innodb_index_stats;
+```
+
+
 
 #### Security
 
@@ -400,7 +431,7 @@ service mysqld start --validate-password=FORCE_PLUS_PERMANENT
 
 ### 2.3 Troubleshooting 
 
-**?#Host 'xxx.xx.xxx.xxx' is not allowed to connect to this MySQL server**
+#### Host 'xxx.xx.xxx.xxx' is not allowed to connect to this MySQL server**
 
 ```
 CREATE USER 'test'@'%' IDENTIFIED BY '123456';
@@ -408,11 +439,11 @@ GRANT ALL PRIVILEGES ON * . * TO 'test'@'%';
 FLUSH PRIVILEGES;
 ```
 
-**?#mysql workbench The type initializer for 'HtmlRenderer.Utils.FontsUtils' threw an exception.**
+#### mysql workbench The type initializer for 'HtmlRenderer.Utils.FontsUtils' threw an exception.**
 http://stackoverflow.com/questions/32020024/upgrading-to-windows-10-breaks-mysql-workbench
 https://bugs.mysql.com/bug.php?id=75344
 
-**?#script import issue;**
+#### script import issue;
 
 ```
 -- Set new delimiter '$$'
@@ -422,7 +453,7 @@ $$
 DELIMITER ;
 ```
 
-**?#Fixing “Lock wait timeout exceeded; try restarting transaction” for a 'stuck" Mysql table?**
+#### Fixing “Lock wait timeout exceeded; try restarting transaction” for a 'stuck" Mysql table?
 
 https://stackoverflow.com/questions/5836623/getting-lock-wait-timeout-exceeded-try-restarting-transaction-even-though-im
 
@@ -431,12 +462,137 @@ show processlist;
 kill <put_process_id_here>; 先干掉耗时长的process
 ```
 
-**?#upgrade trouble shooting**
+#### upgrade trouble shooting
+
 https://dev.mysql.com/doc/refman/5.7/en/upgrade-troubleshooting.html
 
-**?#Access denied for user 'root'@'localhost' (using password: NO) when trying to connect**
+#### Access denied for user 'root'@'localhost' (using password: NO) when trying to connect**
 
 通常是因为输入了中文字符的dash -- 或者从word文档copy出来的错误编码的参数符号--
+
+#### 随机出现的connection timeout
+
+##### 起因是duird连接池报错
+
+我们的一个springboot程序 使用了阿里druid，之前都好好的，上到生产遇到几次比较随机的错误：
+
+```
+Caused by: com.alibaba.druid.pool.GetConnectionTimeoutException: wait millis 60000, active 0, maxActive 500, creating 1, createElapseMillis 120001
+	at com.alibaba.druid.pool.DruidDataSource.getConnectionInternal(DruidDataSource.java:1682)
+	at com.alibaba.druid.pool.DruidDataSource.getConnectionDirect(DruidDataSource.java:1395)
+	at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1375)
+	at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1365)
+	at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:109)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:262)
+
+```
+
+核心的提示就是这个：
+
+Caused by: com.alibaba.druid.pool.GetConnectionTimeoutException: wait millis 60000, active 0, maxActive 500, creating 1, createElapseMillis 120001
+
+根据我目前查到的，能知道的是，抛出异常时，池子里的active Connection是0，所以不存在池子满了的情况，另外creating 1应该是代表需要创建一个connection，但是不知道因为什么原因，创建超过了我们设置的maxWait=60000也就是1分钟，createElapseMillis 120001意思应该是创建超过了两分钟
+
+ 
+
+由于之前其他环境没有遇到过，比较倾向于是服务端问题或网络问题，总结可能的问题如下 
+
+1.服务端：
+ 1）mysql：根据log的warn，好像这个版本是经过升级的，但是没有升级完全，需要执行下mysql_upgrade，不知道是否有影响；
+
+[Warning] InnoDB: Table mysql/innodb_table_stats has length mismatch in the column name table_name.  Please run mysql_upgrade
+
+ 2）网络波动，不清楚两台机器的部署情况
+
+2.配置问题：
+ 1）mysql connection string使用的是serverTimezone=Asia/Shanghai，服务器使用的应该是SGT Asia/Singapore，不过这个感觉应该没有影响，因为都是东八区
+ 2）druid配置问题，官方建议mysql不要开启maxPoolPreparedStatementPerConnectionSize，目前状态是开启了
+
+3.druid本身问题：
+ 1）版本过低，目前使用的1.1.20是19年的版本，但是我没有看到任何新版本的release note提到了我们遇到的问题，不过有人通过升级解决了问题
+ 2）druid本身的缺陷，我看到duird 一些开放的issue和关闭的issue从几年前到最近都有人提到这个问题，但是官方没有给出任何回应和解决，然后有人通过放弃阿里的druid，使用其他连接池解决了
+
+https://github.com/alibaba/druid/issues/3720
+ https://github.com/alibaba/druid/issues/2130
+ [https://github.com/alibaba/druid/wiki/DruidDataSource%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7%E5%88%97%E8%A1%A8](https://github.com/alibaba/druid/wiki/DruidDataSource配置属性列表)
+
+##### 脚本连接数据库也随机出错
+
+接着，同事反馈cron job也遇到过几次类似问题:
+
+error 2003 (hy000) can't connect to mysql server 110
+
+
+
+https://blog.csdn.net/qq1137623160/article/details/78927741
+
+最后其实感觉目前缺少的是：
+
+监控和load test performance test
+
+https://segmentfault.com/a/1190000022336871
+
+##### 发现端倪 Aborted_connects
+
+瞄了眼这篇文章，想到忘记认真看下连接数
+
+https://www.jianshu.com/p/07c85b8a7997
+
+执行 netstat -anp|grep 3306 大概三十多个，还算正常，然后
+
+show global status like '%connection%';
+
+结果：Connections=7772 Max_used_connections=60 
+
+查了下，好像是指服务器启动之后累积的，所以没有什么参考意义
+
+Connections：The number of connection attempts (successful or not) to the MySQL server. 
+Max_used_connections：The maximum number of connections that have been in use simultaneously since the server started. 
+
+show global status like '%thread%';
+
+结果：Threads_cached=8	Threads_connected=34	Threads_created=2232	Threads_running=1
+
+Threads_created应该也是累计的，Threads_connected应该是当前的，确实跟前面netstat差不多
+
+show processlist;
+
+结果显示三十多个程序，大部分都是sleep状态，唯一running的是我当前查询的这个线程；
+
+确认了下最大连接数
+
+SHOW VARIABLES LIKE "max_connections";
+
+结果是151默认值，远超34，应该没什么问题，但是总感觉这些sleep状态的threads/connections有些问题，
+
+然后看到了这个
+
+show global status like '%aborted%';
+
+结果：Aborted_clients 1095	Aborted connections 9
+
+这个有点意思：
+
+Aborted_clients：The number of connections that were aborted because the client died without closing the connection properly.
+
+Aborted_connects：The number of failed attempts to connect to the MySQL server. 
+
+然后猜测如下：
+Aborted_clients=1095, big number, probably means that we have some clients(app or scripts) connected to mysql, but failed to close mysql connections properly, caused lots of sleep threads/connections in mysql processlist;
+at some point in time, it may reached the max connections limit;
+and then some new connection request coming in, mysql then start to recycle zombies, most of the time is fine, but sometimes may delayed some seconds because of recycle taking time, caused Aborted_connects=9, small number, quite random
+
+根据Aborted_connects文档提示：
+
+For additional connection-related information, check the   [`Connection_errors_*`xxx`*`](https://dev.mysql.com/doc/refman/8.0/en/server-status-variables.html#statvar_Connection_errors_xxx)   status variables and the [`host_cache`](https://dev.mysql.com/doc/refman/8.0/en/performance-schema-host-cache-table.html) table.       
+
+show global status like '%errors%';
+
+select * from performance_schema.host_cache;
+
+不过并没有什么发现
+
+ 
 
 ## 4. SQL
 

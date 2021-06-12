@@ -34,6 +34,8 @@ field 闭合，既可以加也可以乘（由加群和乘“群”组合而成�
 
 符号:
 
+= ≠
+
 ◦ composition
 
 ⊆表示包含于 improper subset，下面有不等号≠的表示真包含于proper subset，但在同济版高等数学中，⊂表示包含于，下面有不等号的表示真包含于。
@@ -44,7 +46,7 @@ field 闭合，既可以加也可以乘（由加群和乘“群”组合而成�
 
 ∀ 任意		
 
-∈ 属于
+∈ 属于 ∉ 
 
 ≡ 同余符号　
 
@@ -62,6 +64,12 @@ https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-qu
 uppercase *Σ*, lowercase *σ*
 
 https://reference.wolfram.com/language/guide/GreekLetters.html.zh
+
+
+
+domain -> codomain	bijective surjective injective
+
+https://www.mathsisfun.com/sets/injective-surjective-bijective.html
 
 
 ## Cryptography

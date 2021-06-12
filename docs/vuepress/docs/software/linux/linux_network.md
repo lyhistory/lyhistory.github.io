@@ -8,6 +8,7 @@ pid查程序：
 cat /proc/21268/cmdline
 ls -l /proc/21268/exe
 ps -lef|grep 21268
+ps -eo pid,lstart,cmd |grep pid //程序启动时间
 ```
 
 
