@@ -1,7 +1,17 @@
+
+
 ## 系统参数
 
 ```
 cat /etc/os-release
+```
+
+
+
+LVS - Linux Virtual Server，即 Linux 虚拟服务器, Linux2.4 内核以后，LVS 已经是 Linux 标准内核的一部分
+
+```
+uname -a
 ```
 
 

@@ -964,7 +964,7 @@ Prove: Kernel(φ) < G subgroup:
 
 
 
-conjugate element
+**conjugate element**
 
 a,g ∈ G, the conjugate of g by a: aga<sup>-1</sup>
 
@@ -972,7 +972,7 @@ if G is abelian, aga<sup>-1</sup> = aa<sup>-1</sup>g = g
 
 
 
-Normal subgroup:
+### Normal subgroup 正规子群:
 
 H<G, ∀ h ∈ H ∀ g ∈ G, ghg<sup>-1</sup>∈ H, means that H has to be stable under conjugation by any element in G
 
@@ -1028,13 +1028,15 @@ h' = a◦h=> h'◦h<sup>-1</sup> = a , h<sup>-1</sup> ∈ H (h ∈ group H, exis
 
 
 
-if H is a Normal subgroup of G:
+if H is a Normal subgroup of G: ∀ a ∈ G, aH=Ha，即 aH ⊂ Ha  AND Ha ⊂ aH 
 
-H<G, ∀ h ∈ H ∀ g ∈ G, ghg<sup>-1</sup>∈ H, means that H has to be stable under conjugation by any element in G
+Prove: a◦h ∈ aH, h ∈ H, to show ∃ h' ∈ H, s.t. h'a = ah => h' = aha<sup>-1</sup> ,
 
-∀ a ∈ G, aH=Ha，即 aH ⊂ Ha  AND Ha ⊂ aH 
+because H is a normal subgroup of G, by the definition of normal subgroup:
 
-a◦h ∈ aH, h ∈ H, to show ∃ h' ∈ H, s.t. h'a = ah => h' = aha<sup>-1</sup> ,because H is a normal subgroup of G, this is true 得证
+> H<G, ∀ h ∈ H ∀ g ∈ G, ghg<sup>-1</sup>∈ H, means that H has to be stable under conjugation by any element in G
+
+so  h' = aha<sup>-1</sup> is true 得证
 
 
 
@@ -1118,7 +1120,7 @@ finite cyclic group: \<x\> = {e, x, x<sup>2</sup>, x<sup>3</sup>, ......x<sup>m-
 
 ## Quotient Groups
 
-N < G, G/N
+N < G (N is a subgroup of G and N is a normal subgroup), G/N
 
 ∀ n ∈ N
 

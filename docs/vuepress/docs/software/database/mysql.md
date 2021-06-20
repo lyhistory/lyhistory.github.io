@@ -118,6 +118,25 @@ https://stackoverflow.com/questions/10177465/grep-in-mysql-cli-interpretter
 
 ### 2.2 database management
 
+
+
+#### Users & Permissions
+
+[ 'User'@'%' and 'User'@'localhost'](https://stackoverflow.com/questions/11634084/are-users-user-and-userlocalhost-not-the-same)
+
+````
+SELECT user,host FROM mysql.user;
+
+SHOW GRANTS FOR 'test'@'localhost';
+GRANT ALL PRIVILEGES ON *.* TO 'test'@'localhost' WITH GRANT OPTION;
+REVOKE ALL ON *.* FROM 'test'@'localhost';
+flush privileges;
+
+DROP USER 'test'@'localhost';
+````
+
+
+
 #### Global Status
 
 ```
@@ -756,9 +775,432 @@ https://www.mysqltutorial.org/mysql-adjacency-list-tree/
 
 
 
+## 5. HA
+
+### 理论
+
+https://dev.mysql.com/doc/refman/8.0/en/replication.html
+
+In MySQL, replication involves the source database writing down every  change made to the data held within one or more databases in a special  file known as the *binary log*
+
+Once the replica instance has been initialized, it creates two threaded processes:
+
++ master-binary log=>slave-relay log
+
+  The first, called the *IO thread*, connects to the source MySQL instance and reads the binary log events  line by line, and then copies them over to a local file on the replica’s server called the *relay log*. 
+
++ slave-relay log=>slave db changes
+
+  The second thread, called the *SQL thread*, reads events from the relay log and then applies them to the replica instance as fast as possible.
+
+### 两种模式
+
++ 基于binary log, *binary log file position-based replication*
+
+  When you turn a MySQL instance into a replica using this method, you  must provide it with a set of binary log coordinates. These consist of  the name of the binary log file on the source which the replica must  read and a specific position within that file which represents the first database event the replica should copy to its own MySQL instance. 
+
+  These coordinates are important since replicas receive a copy of their  source’s entire binary log and, without the right coordinates, they will begin replicating every database event recorded within it. This can  lead to problems if you only want to replicate data after a certain  point in time or only want to replicate a subset of the source’s data.
+
+  Binary log file position-based replication is viable for many use cases, but this method can become clunky in more complex setups.
+
++ 基于 global transaction identifier GTID [starting with version 5.6 and above]
+
+  GTID stands for global transaction identifier (GTID) which uniquely  identifies a transaction committed on the server of origin (master). A  unique GTID is created when any transaction occurs. The GTID is not  just unique to the server on which it originates, but also across the  servers in any given replication setup. In other words, each transaction is mapped to a GTID.
+
+  MySQL GTIDs are displayed as a pair of coordinates, separated by a colon character (:) `GTID = source_id:transaction_id`
+
+  
+
+  This method involves creating a global transaction identifier (GTID)  for each transaction — or, an isolated piece of work performed by a  database — that the source MySQL instance executes.
+
+  The mechanics of transaction-based replication are similar to binary log file-based replication: whenever a database transaction occurs on the  source, MySQL assigns and records a GTID for the transaction in the  binary log file along with the transaction itself. The GTID and the  transaction are then transmitted to the source’s replicas for them to  process.
+
+  
+
+  When the replication takes place, the slave makes use of the same  GTIDs, irrespective of whether it acts as a master for any other nodes  or not. With each transaction replication, the same GTIDs and  transaction numbers also come along from the master and the slave will  write these to the binlog if it’s configured to write its data events.
+
+  To ensure a smooth, consistent and fault-tolerant replication, the  slave will then inform the master of the GTIDs that were a part of the  execution, which helps master node identify if any transaction did not  take place. The master node then informs the slave to carry out the  left-over transactions and thereby ensures that data replication takes  place accurately.
+
+  
+
+  MySQL’s transaction-based replication has a number of benefits over its  traditional replication method. For example, because both a source and  its replicas preserve GTIDs, if either the source or a replica encounter a transaction with a GTID that they have processed before they will  skip that transaction. This helps to ensure consistency between the  source and its replicas. Additionally, with transaction-based  replication replicas don’t need to know the binary log coordinates of  the next database event to process. This means that starting new  replicas or changing the order of replicas in a replication chain is far less complicated.
+
+### 相关权限
+
+REPLICATION CLIENT权限: replication user使用shell命令 SHOW MASTER STATUS, SHOW SLAVE STATUS和 SHOW BINARY LOGS来确定复制状态。
+
+REPLICATION SLAVE权限: SLAVE 进行replication，使用 show slave hosts ，show binlog events;等命令；
+
+假设想要在Slave上有权限运行"LOAD TABLE FROM MASTER" 或 "LOAD DATA FROM MASTER"语句的话，必须授予全局的 FILE 和 SELECT 权限：
+
+RELOAD 权限：Reset slave: Access denied; you need (at least one of) the RELOAD privilege(s) for this operation
+
+super权限：start slave，stop slave；
+
+### Replication Solution
+
+主机器需要允许从机器访问其3306端口
+
+#### 主从 - 基于binary log replication
+
+https://www.digitalocean.com/community/tutorials/how-to-set-up-replication-in-mysql
+
+```
+----------------------------------------------------------------------------
+step 1: config master and slave /etc/my.cnf And restart:
+----------------------------------------------------------------------------
+Master:
+server-id=1
+log-bin=mysql-bin #This defines the base name and location of MySQL’s binary log file,When commented out, as this directive is by default, binary logging is disabled. Your replica server must read the source’s binary log file so it knows when and how to replicate the source’s data
+
+binlog_do_db          = include_database_name 需要复制的数据库
+binlog_do_db          = db_1
+binlog_do_db          = db_2
+
+replicate-ignore-db = mysql  #忽略数据库，不需要复制
+replicate-ignore-db = information_schema
+replicate-ignore-db = performance_schema
+replicate-ignore-db = sys
+
+Slave:
+[mysqld]
+server-id=2
+log_bin                 = /var/log/mysql/mysql-bin.log
+binlog_do_db            =  跟master一致
+relay-log               = /var/log/mysql/mysql-relay-bin.log
+
+> sudo systemctl restart mysql
+
+----------------------------------------------------------------------------
+step 2: on master, create and grant repl user
+----------------------------------------------------------------------------
+
+good:
+mysql> CREATE USER 'replica_user'@'replica_server_ip' IDENTIFIED WITH mysql_native_password BY 'password';
+# Note that this command specifies that replica_user will use the mysql_native_password authentication plugin. It’s possible to instead use MySQL’s default authentication mechanism, caching_sha2_password, but this would require setting up an encrypted connection between the source and the replica. This kind of setup would be optimal for production environment: https://dev.mysql.com/doc/refman/8.0/en/replication-solutions-encrypted-connections.html
+
+bad: 任意ip都可以访问，不安全
+mysql> CREATE USER 'replica_user'@'%' IDENTIFIED BY '123456';
 
 
----
+mysql> GRANT REPLICATION SLAVE ON *.* TO 'replica_user'@'replica_server_ip';
+
+----------------------------------------------------------------------------
+step 3: on master: Retrieving Binary Log Coordinates from the Source
+----------------------------------------------------------------------------
+To make sure that no users change any data while you retrieve the coordinates, which could lead to problems, you’ll need to lock the database to prevent any clients from reading or writing data as you obtain the coordinates. 
+
+mysql> FLUSH TABLES WITH READ LOCK;
+mysql> SHOW MASTER STATUS; # return the current status information for the source’s binary log files
+
+Output
++------------------+----------+--------------+------------------+-------------------+
+| File             | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set |
++------------------+----------+--------------+------------------+-------------------+
+| mysql-bin.000001 |      899 | db           |                  |                   |
++------------------+----------+--------------+------------------+-------------------+
+1 row in set (0.00 sec)
+
+输出的file和position即下面用到的MASTER_LOG_FILE和MASTER_LOG_POS
+
+----------------------------------------------------------------------------
+step 4: dump and import, If Your Source Has Existing Data to Migrate
+----------------------------------------------------------------------------
+on master::
+If you have data on your source MySQL instance that you want to migrate to your replicas, you can do so by creating a snapshot of the database with the mysqldump utility. However, your database should still be currently locked. If you make any new changes in the same window, the database will automatically unlock. Likewise, the tables will automatically unlock if you exit the client. 
+For this reason, you must open a new terminal window or tab on your local machine so you can create the database snapshot without unlocking MySQL.
+
+> mysqldump -u root db > db.sql
+or
+> mysqldump -u repl -p 123456 --all-databases --master-data > dbdump.db
+
+
+Following that you can close this terminal window or tab and return to your first one, which should still have the MySQL shell open, then:
+mysql> UNLOCK TABLES;
+
+
+on slave:: import data
+> mysql -u root -p < dbdump.db
+or
+mysql> CREATE DATABASE db; 
+> mysql db < /tmp/db.sql
+
+
+----------------------------------------------------------------------------
+step 5: Slave: setting and start
+----------------------------------------------------------------------------
+
+mysql> CHANGE MASTER TO MASTER_HOST='source_server_ip',MASTER_PORT=3306,MASTER_USER='replica_user',MASTER_PASSWORD='password',MASTER_LOG_FILE='mysql-bin.000001',MASTER_LOG_POS=52113;
+
+mysql> START SLAVE;
+ 
+mysql> SHOW SLAVE STATUS\G;
+
+其中，Slave_IO_Running和Slave_SQL_Running均显示yes表示Replication工作正常，可通过其余参数来了解Replication的工作状态。
+
+
+
+Note: If your replica has an issue in connecting or replication stops unexpectedly, it may be that an event in the source’s binary log file is preventing replication. In such cases, you could run the SET GLOBAL SQL_SLAVE_SKIP_COUNTER command to skip a certain number of events following the binary log file position you defined in the previous command. This example only skips the first event:
+mysql> SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1;
+
+Following that, you’d need to start the replica again:
+mysql> START REPLICA;
+
+
+```
+
+#### 主从 - 基于GTID replication
+
+https://hevodata.com/learn/mysql-gtids-and-replication-set-up/
+
+gtid_executed：这个是已经执行过的所有的事物的GTID的一个系列串，也就是binary log里面已经落盘的事物的序列号。这个参数是只读的，不能够进行设置。
+
+gtid_purged：这个序列是指我们在binary log删除的事物的GTID的序列号。我们可以手动进行设置，方便我们做一些管理。
+
+```
+----------------------------------------------------------------------------
+step 1: config master and slave /etc/my.cnf And restart:
+----------------------------------------------------------------------------
+for master: 
+The Master server needs to be started with GTID mode enabled by setting the gtid_mode variable to ON. It is also essential that the enforce_gtid_consistency variable is enabled to make sure that only the statements which are safe for MySQL GTIDs Replication are logged. 
+[mysqld]
+server-id=1
+log-bin = mysql-bin
+binlog_format = row
+gtid-mode=ON
+enforce-gtid-consistency
+log-slave-updates
+
+for slave:
+[mysqld]
+server-id = 2
+log-bin = mysql-bin
+relay-log = relay-log-server
+relay-log = relay-log-server
+read-only = ON
+gtid-mode=ON
+enforce-gtid-consistency
+log-slave-updates
+
+----------------------------------------------------------------------------
+step 2: lock master&slave
+----------------------------------------------------------------------------
+on both master & slave:
+mysql> SET @@GLOBAL.read_only = ON;
+这次跟前面的lock方法不同，注意**不会影响slave同步复制的功能**
+
+----------------------------------------------------------------------------
+step 3: on master create replicator user
+----------------------------------------------------------------------------
+
+> mysql -uroot -p
+
+mysql> DROP USER 'replicator'@'localhost';
+--- mysql> REVOKE ALL ON *.* FROM 'replicator'@'localhost';
+
+# replicator@localhost可以管理master本机
+mysql> CREATE USER replicator@localhost IDENTIFIED BY 'password';
+mysql> GRANT SUPER,RELOAD,REPLICATION SLAVE ON *.* TO 'replicator'@'localhost' IDENTIFIED BY 'password';
+
+# 'replicator'@'replication_server_ip'在slave机器上replication_server_ip远程连接管理master以及进行基本的复制（最低需要REPLICATION SLAVE权限）
+mysql> CREATE USER replicator@replication_server_ip IDENTIFIED BY 'password';
+mysql> GRANT SUPER,RELOAD,REPLICATION SLAVE ON *.* TO 'replicator'@'replication_server_ip' IDENTIFIED BY 'password';
+
+mysql> flush privileges;
+
+mysql_config_editor set --login-path=host-rpl --host=localhost --port=3306 --user=replicator --password
+
+----------------------------------------------------------------------------
+step 4: on master: Retrieving Binary Log Coordinates from the Source
+----------------------------------------------------------------------------
+
+mysql> show master status
+mysql> show global variables like 'gtid_executed';
+两者输出的gtid_executed应该是一样的
+
+----------------------------------------------------------------------------
+step 5: dump and import, If Your Source Has Existing Data to Migrate
+----------------------------------------------------------------------------
+
+> mysqldump --all-databases -flush-privileges --single-transaction --flush-logs --triggers --routines --events -hex-blob --host=54.89.xx.xx --port=3306 --user=root  --password=XXXXXXXX > mysqlbackup_dump.sql
+# head -n30 mysqlbackup_dump.sql
+
+
+on slave:: import data
+mysql> show global variables like 'gtid_executed';
+如果是第一次，应该是空的
+mysql> source mysqlbackup_dump.sql ;
+mysql> show global variables like 'gtid_executed';
+导入完应该跟master一样了
+
+
+----------------------------------------------------------------------------
+step 6: Slave: setting and start
+----------------------------------------------------------------------------
+The slave should be configured to use the master with GTID based transactions as the source for data replication and to use GTID-based auto-positioning rather than file-based positioning.
+
+> mysql -uroot -p
+mysql> CHANGE MASTER TO
+MASTER_HOST = '54.89.xx.xx',
+MASTER_PORT = 3306,
+MASTER_USER = 'repl_user',
+MASTER_PASSWORD = 'XXXXXXXXX',
+MASTER_AUTO_POSITION = 1;
+
+mysql> start slave;
+mysql> show slave status\G
+
+mysql> SET @@GLOBAL.read_only = OFF;
+
+
+```
+
+https://www.cnblogs.com/shengdimaya/p/6897584.html
+
+#### 主主
+
+https://www.huaweicloud.com/articles/e85563c3c3c75c7d980466d800a8c43c.html
+
+上面的操作反过来操作一遍即可，但是注意：
+
+两个主自增id要分别为奇数偶数，不然有冲突
+
+```
+----------------------------------------------------------------------------
+step 1: config master & slave /etc/my.cnf And restart:
+----------------------------------------------------------------------------
+master:
+
+[mysqld]
+server-id = 1
+auto_increment_offset = 1
+auto_increment_increment = 2  #奇数ID
+
+
+log-bin = mysql-bin  #打开二进制功能,MASTER主服务器必须打开此项
+binlog-format=ROW
+log-slave-updates=true
+gtid-mode=on
+enforce-gtid-consistency=true
+master-info-repository=TABLE
+relay-log-info-repository=TABLE
+sync-master-info=1
+slave-parallel-workers=0
+sync_binlog=0
+binlog-checksum=CRC32
+master-verify-checksum=1
+slave-sql-verify-checksum=1
+binlog-rows-query-log_events=1
+max_binlog_size=1024M       #binlog单文件最大值
+
+replicate-ignore-db = mysql  #忽略不同步主从的数据库
+replicate-ignore-db = information_schema
+replicate-ignore-db = performance_schema
+replicate-ignore-db = sys
+
+max_connections = 3000
+max_connect_errors = 30
+
+lower_case_table_names=1      
+skip-name-resolve
+
+slave:
+[mysqld]
+server-id = 2
+auto_increment_offset = 2
+auto_increment_increment = 2    #偶数ID
+
+
+log-bin = mysql-bin    #打开二进制功能,MASTER主服务器必须打开此项
+binlog-format=ROW
+log-slave-updates=true
+gtid-mode=on
+enforce-gtid-consistency=true
+master-info-repository=TABLE
+relay-log-info-repository=TABLE
+sync-master-info=1
+slave-parallel-workers=0
+sync_binlog=0
+binlog-checksum=CRC32
+master-verify-checksum=1
+slave-sql-verify-checksum=1
+binlog-rows-query-log_events=1
+max_binlog_size=1024M         #binlog单文件最大值
+
+replicate-ignore-db = mysql   #忽略不同步主从的数据库
+replicate-ignore-db = information_schema
+replicate-ignore-db = performance_schema
+replicate-ignore-db = sys
+
+max_connections = 3000
+max_connect_errors = 30
+
+lower_case_table_names=1      
+skip-name-resolve
+
+
+
+----------------------------------------------------------------------------
+
+----------------------------------------------------------------------------
+```
+
+#### Reset Replication
+
+```
+on slave:
+mysql > stop slave;
+mysql > reset slave (all);
+	RESET SLAVE 不会改变复制连接使用的参数，例如master host, master port, master user, or master password
+	RESET SLAVE ALL 则会；
+    清除slave 复制时的master binlog的位置
+    清空master info, relay log info
+    删除所有的relay log文件，并创建一个新的relay log文件。
+    重置复制延迟(CHANGE MASTER TO 的 MASTER_DELAY参数指定的)为0。
+    
+on master:
+
+mysql > RESET MASTER
+
+    删除binlog索引文件中列出的所有binlog文件
+    清空binlog索引文件
+    创建一个新的binlog文件
+    清空系统变量gtid_purged和gtid_executed
+    在MySQL 5.7.5 及后续版本中, RESET MASTER还会会清空 mysql.gtid_executed 数据表。
+
+```
+
+### Sync Replication
+
+Synchronize both servers by setting them to read-only if the replication is running already by using the following command:
+
+```
+mysql> SET @@GLOBAL.read_only = ON;
+```
+
+解释：
+
+对于Mysql数据库读写状态，主要靠"read_only"全局参数来设定；默认情况下, 数据库是用于**读写操作**的，所以read_only参数也是0或faluse状态，这时候不论是本地用户还是远程访问数据库的用户，都可以进行读写操作；
+
+如需设置为**只读状态**，将该read_only参数设置为1或TRUE状态，但设置 read_only=1 状态有两个需要注意的地方：
+
+1) read_only=1只读模式，**不会影响slave同步复制的功能**，所以在MySQL slave库中设定了read_only=1后，通过 "show slave status\G" 命令查看salve状态，可以看到salve仍然会读取master上的日志，并且在slave库中应用日志，保证主从数据库同步一致；
+
+2) read_only=1只读模式，限定的是普通用户进行数据修改的操作，但不会限定具有super权限的用户的数据修改操作 (但是如果设置了"**super_read_only=on**"， 则就会限定具有super权限的用户的数据修改操作了)；在MySQL中设置read_only=1后，普通的应用用户进行insert、update、delete等会产生数据变化的DML操作时，都会报出数据库处于只读模式不能发生数据变化的错误，但具有super权限的用户，例如在本地或远程通过root用户登录到数据库，还是可以进行数据变化的DML操作；**(也就是说"real_only"只会禁止普通用户权限的mysql写操作，不能限制super权限用户的写操作； 如果要想连super权限用户的写操作也禁止，就使用"flush tables with read lock;"，这样设置也会阻止主从同步复制！)**
+
+https://www.cnblogs.com/kevingrace/p/10095332.html
+
+
+
+### Replication Troubleshooting 
+
+https://dev.mysql.com/doc/mysql-replication-excerpt/8.0/en/replication-problems.html
+
+不要轻易在两种不同的replication模式间切换：
+
+MySQL 5.7复制配置不规范修改导致的坑：http://blog.itpub.net/28218939/viewspace-2142235/
+
+https://www.cnblogs.com/shengdimaya/p/6897584.html
 
 ref:
 

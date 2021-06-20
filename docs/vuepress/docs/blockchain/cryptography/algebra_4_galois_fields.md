@@ -26,7 +26,7 @@ A field F is a set of elements with the following properties:
   + Inverse Exist
   + Commutative
 
-+ 乘法结构：乘“群”
++ 乘法结构：乘“群” （几乎是group甚至是abelian ，但是addictive identity不存在inverse）
 
   All elements of F except 0 form a multiplicative group with the group operation “×” and the neutral element 1.
 
@@ -66,7 +66,7 @@ https://en.wikipedia.org/wiki/Field_(mathematics)#Constructing_fields_from_rings
 
 Z = {0,1, -1, 2, -2, . . .}
 
-但是明显不满足乘法结构要求的存在乘法逆，所以这个不是Fileds
+但是明显不满足乘法结构要求的存在乘法逆，所以这个不是Fileds，（是 commutative ring）
 
 Fp , p = 2, 3, 5, 7 ,11, 13, ..... |Fp| = p
 
