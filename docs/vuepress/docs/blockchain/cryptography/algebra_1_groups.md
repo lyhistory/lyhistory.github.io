@@ -1016,7 +1016,7 @@ left coset of H under a: aH = {a◦h | h ∈ H}
 
 right coset of H under a: Ha
 
-a ∈ aH, a ∈ Ha， 因为subgroup H必然包含identity e
+a ∈ aH, a ∈ Ha， 因为subgroup H必然包含identity e，left cosets和right cosets必然不包含identity e，因为下面会证明cosets跟H元素完全不同，所以叫cosets而不是group
 
 if a ∈ H，跟前面的Cayley's theorem讲的内容一样，aH=Ha=H	(aH=Ha 还有几种情况：G是abelian group；或者H是normal subgroup)
 
@@ -1026,9 +1026,11 @@ aH = {a◦h | h ∈ H} , h' = a◦h, assume h' ∈ H
 
 h' = a◦h=> h'◦h<sup>-1</sup> = a , h<sup>-1</sup> ∈ H (h ∈ group H, exist inverse), so h'◦h<sup>-1</sup> ∈ H (closure), so a ∈ H, contradict to a ∉ H得证
 
+note: 当然很容易知道，aH的元素不仅distinct from H，各自也是不同的，也是利用反证，比如假设存在不同的h1 h2使得ah1=ah2，两边取a的逆就得到反证，因此aH的元素个数跟H的元素个数相同，即order相同
 
 
-if H is a Normal subgroup of G: ∀ a ∈ G, aH=Ha，即 aH ⊂ Ha  AND Ha ⊂ aH 
+
+if H is a Normal subgroup of G: ∀ a ∈ G, left cosets equal to right cosets:aH=Ha，即 aH ⊂ Ha  AND Ha ⊂ aH 
 
 Prove: a◦h ∈ aH, h ∈ H, to show ∃ h' ∈ H, s.t. h'a = ah => h' = aha<sup>-1</sup> ,
 
@@ -1120,11 +1122,44 @@ finite cyclic group: \<x\> = {e, x, x<sup>2</sup>, x<sup>3</sup>, ......x<sup>m-
 
 ## Quotient Groups
 
-N < G (N is a subgroup of G and N is a normal subgroup), G/N
+N < G (N is a subgroup of G and N is a normal subgroup 正规子群，conjunction stable：
 
-∀ n ∈ N
+∀ n ∈ N	∀ g ∈ G	gng<sup>-1</sup> ∈ N), 
 
-∀ g ∈ G
+we call G/N: Quotient Group G over N or Group G module group N
 
-g<sup>n</sup>g<sup>-1</sup> ∈ N
+现在开始构造Quotient Group，前面一节我们知道
 
+if H is a Normal subgroup of G: ∀ a ∈ G, left cosets equal to right cosets: aN=Na，意味着我们对large group G进行 Partition分区的话，就只有一种方式或一种结果，因为left cosets和right cosets相等，
+
+假设G被partition成：N, aN，bN。。。。
+
+G/N={	{N}, {aN}, {bN}, .....	}
+
+然后用符号来表示{N}, {aN}, {bN}，比如{N}包含identity，可以用e bar即e上面加一横，不好打出来，就这么写：e¯，这也叫做 equivalence class: forgot the load of elements in {N}, {aN}, {bN}，we are going to view them as one mathematical entity now, we're going to sort of contract them down and just denote them all basically to just be represented by a single symbol, kind of crushing them together into one blob rather than loads of elements, condensing it all down to think of it as one mathematical object.
+
+同理用a¯，b¯代表{aN}, {bN}
+
+G/N = {e¯, a¯, b¯...........}
+
+然后在构造其 composition law，
+
+a¯ ◦ b¯ 相当于两个cosets进行组合计算，这里的◦定义为：
+
+第一步： take representative from each cosets and compose，自然的a¯  b¯ 各自的representative是a 和 b（或者说是ae和be，e ∈ N），所以
+
+a¯ ◦ b¯ = a ◦ b，变回了G这个group元素a b的composition
+
+第二步：取 (a ◦ b)¯ 即a ◦ b的cosets {abN}
+
+问题：how do we know whichever representative we take within these cosets doesn't matter？换言之：
+
+假设我们不取特殊的a/ae和b/be，而是从a¯=aN取普通的 a◦n （∀ n ∈ N），同样取得b¯ 的representative b◦n' （∀ n' ∈ N），
+
+a¯ ◦ b¯ =  a◦n ◦ b◦n' ，现在要证明a◦n ◦ b◦n' 一定是属于(a ◦ b)¯ 即a ◦ b的cosets {abN}，再转换一下就是说一定存在 n'' ∈ N，从而让
+
+a◦n ◦ b◦n'= a◦b◦n''
+
+证明：a◦n ◦ b◦n' = a◦b◦b<sup>-1</sup>◦n ◦ b◦n' = a◦b◦(b<sup>-1</sup>◦n ◦ b)◦n'，而 b<sup>-1</sup>◦n ◦ b 对于normal group N来说就等于another element in N,
+
+所以(b<sup>-1</sup>◦n ◦ b)◦n'自然也是N的元素比如用n''表示，得证
