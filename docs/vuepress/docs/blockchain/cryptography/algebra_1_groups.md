@@ -1128,7 +1128,7 @@ N < G (N is a subgroup of G and N is a normal subgroup 正规子群，conjunctio
 
 we call G/N: Quotient Group G over N or Group G module group N
 
-现在开始构造Quotient Group，前面一节我们知道
+**现在开始构造Quotient Group**，前面一节我们知道
 
 if H is a Normal subgroup of G: ∀ a ∈ G, left cosets equal to right cosets: aN=Na，意味着我们对large group G进行 Partition分区的话，就只有一种方式或一种结果，因为left cosets和right cosets相等，
 
@@ -1142,7 +1142,7 @@ G/N={	{N}, {aN}, {bN}, .....	}
 
 G/N = {e¯, a¯, b¯...........}
 
-然后在构造其 composition law，
+**然后在构造其 composition law**，
 
 a¯ ◦ b¯ 相当于两个cosets进行组合计算，这里的◦定义为：
 
@@ -1163,3 +1163,71 @@ a◦n ◦ b◦n'= a◦b◦n''
 证明：a◦n ◦ b◦n' = a◦b◦b<sup>-1</sup>◦n ◦ b◦n' = a◦b◦(b<sup>-1</sup>◦n ◦ b)◦n'，而 b<sup>-1</sup>◦n ◦ b 对于normal group N来说就等于another element in N,
 
 所以(b<sup>-1</sup>◦n ◦ b)◦n'自然也是N的元素比如用n''表示，得证
+
+**现在要证明构造的composition law满足group的规则：**
+
+1. closure
+
+   很显然，我们定义的composition就是说两个cosets运算得到另一个cosets，G是由所有cosets partition组合的，所以闭合
+
+2. associativity
+
+   也挺显然的，因为根据定义，本来就是借助G的compose，写出来就是：
+
+   (a¯ ◦ b¯)◦ c¯ = (a ◦ b)¯◦ c¯ = ((a ◦ b)◦ c)¯
+
+   a¯ ◦( b¯◦ c¯) =a¯ ◦ (b ◦ c)¯ =  (a ◦ (b◦ c))¯
+
+   ((a ◦ b)◦ c = a ◦ (b◦ c) 所以对应的cosets当然也是一样的了，即((a ◦ b)◦ c)¯= (a ◦ (b◦ c))¯，所以
+
+   (a¯ ◦ b¯)◦ c¯ = a¯ ◦( b¯◦ c¯) 
+
+3. identity
+
+   e¯ ◦ a¯ = a¯ ◦ e¯ = a¯
+
+   同样是利用定义
+
+   e¯ ◦ a¯ = (e ◦ a)¯ = a¯ 同理，得证
+
+4. inverses exists
+
+   ∀ a¯ ∈ G/N，∃ a¯<sup>-1</sup> s.t a¯ ◦ a¯<sup>-1</sup> = a¯<sup>-1</sup>◦ a¯ =e¯
+
+   仍然是利用定义，对于a¯即aN来说，representative代表性的元素取 a◦e即a，因为
+
+   a∈ G，所以a◦a<sup>-1</sup> = a<sup>-1</sup>◦a =e ，自然我们根据定义
+
+   a¯ ◦ a<sup>-1</sup>¯  = (a◦a<sup>-1</sup>)¯ = e¯ 
+
+   当然 a<sup>-1</sup> 可能跟a在同一个cosets中，即a¯ 自己是自己的inverse，为什么取representative  a◦e即a，a¯ 中其他元素呢，我们前面已经证明过了**how do we know whichever representative we take within these cosets doesn't matter:**
+
+   试着证明下吧 
+
+   a◦n1 ◦ b◦n2 = a◦b◦b<sup>-1</sup>◦n1 ◦ b◦n2 = a◦b◦(b<sup>-1</sup>◦n1 ◦ b)◦n2，而 b<sup>-1</sup>◦n ◦ b 对于normal group N来说就等于another element in N 比如n3,
+
+   所以如果b是a的逆，则a◦b=e，从而a◦n1 ◦ b◦n2 =  a◦b◦(b<sup>-1</sup>◦n1 ◦ b)◦n2 = e◦n3◦n2 = n4，n4∈N即 n4∈ e¯  得证
+
+### 例子 Z/3Z
+
+Integer Z= {0, 1, -1, 2, -2, ..........}
+
+3Z = {3z | z ∈ Z } = { 0, 3, -3, 6, -6, .......} = 0¯
+
+1+3Z ={1+x | x ∈ 3Z } = { 1, 4, -2, 7, -5, .......} = 1¯
+
+2+3Z ={2+x | x ∈ 3Z } = { 2, 5, -1, 8, -4, .......} = 2¯
+
+note: 画一个数轴比较容易理解
+
+ Z/3Z = { 0¯,  1¯,  2¯}
+
+| ◦    | 0¯   | 1¯   | 2¯   |
+| ---- | ---- | ---- | ---- |
+| 0¯   | 0¯   | 1¯   | 2¯   |
+| 1¯   | 1¯   | 2¯   | 0¯   |
+| 2¯   | 2¯   | 0¯   | 1¯   |
+
+
+
+ Z/3Z isomorphic to C3，根据前面 Lagrange theorem知道，Z/3Z的order=3 prime，因此由non-identity元素生成的finite cyclic group，比如<1¯> 首先包含identity 0¯和1¯，然后1¯+1¯=2¯， 1¯+1¯+1¯=0¯终止，因此<1¯> = { 0¯,  1¯,  2¯}
