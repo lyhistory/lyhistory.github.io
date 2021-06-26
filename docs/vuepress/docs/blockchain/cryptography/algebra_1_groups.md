@@ -928,6 +928,10 @@ we konw  (a')<sup>-1</sup>  = φ(a<sup>-1</sup>) so we got (a')<sup>-1</sup> ∈
 
 
 
+there is no point in considering non-subjective homomorphisms, because you can always reduce it into thining in terms of a subjective homomorphims,
+
+
+
 Example:
 
 φ: (Z, +) -> S2
@@ -1231,3 +1235,44 @@ note: 画一个数轴比较容易理解
 
 
  Z/3Z isomorphic to C3，根据前面 Lagrange theorem知道，Z/3Z的order=3 prime，因此由non-identity元素生成的finite cyclic group，比如<1¯> 首先包含identity 0¯和1¯，然后1¯+1¯=2¯， 1¯+1¯+1¯=0¯终止，因此<1¯> = { 0¯,  1¯,  2¯}
+
+### 1st isomorphism theorem
+
+in previous section we know that there is no point in considering non-subjective homomorphisms, because you can always reduce it into thining in terms of a subjective homomorphims:
+
+φ: G->G'  (G' here must be subjective:for ∀ g' ∈ G' ∃ g ∈ G, s.t. φ(g)  = g', if G' is not subjective, we must turn it into Im(φ))
+
+for ∀ x,y ∈ G, φ(x ◦ y) = φ(x)  ◦ φ(y)
+
+G' is isomorphic to the quotient group of the domain group over/by the kernel of the homomorphism:
+
+G' is isomorphic to G/ker(φ)
+
+remind: Kernel(φ) = { g ∈ G | φ(g)=e<sub>G'</sub>} and all kernel group is normal subgroup
+
+G/ker(φ) means partition up G into cosets
+
+结论：within the same cosets of the kernel of the homomorphism(cosets: ker(φ), a◦ker(φ) ,b◦ker(φ) ...) are going to be mapped on to the same elements in G'(the co-domain by this homomorphims φ)
+
+Prove:  for all the elements in coset a¯=a◦ker(φ), will be mapped on the same elements in G' 
+
+=> for all the elements in coset a¯=a◦ker(φ) will be mapped on the same elements as element a
+
+=> φ: G->G' , so a mapped on to φ(a), all the other elements in coset a¯=a◦ker(φ) will be mapped on to φ(a)
+
+for n∈ker(φ), a◦n is arbitrary element of a¯=a◦ker(φ), so
+
+according to the law of homomorphims, φ(a◦n) = φ(a)  ◦ φ(n) and because n∈ker(φ), based on the definition of kernel group, φ(n)=e<sub>G'</sub>, so that φ(a◦n) = φ(a)  ◦ e<sub>G'</sub> =  φ(a)
+
+隐含结论：insight: basically if we use the kernel of the homomorphism(ker(φ)) to partition up the domain group, then the elements in the same cosets of the kernel of the homomorphism(cosets: ker(φ), a◦ker(φ) ,b◦ker(φ) ...) are all mapped on to the same element in the co-domain group, it tells us the same number of elements in the domain group are being mapped on 
+
+结论： if we elements in two different cosets of the kernel of the homomorphism(cosets: ker(φ), a◦ker(φ) ,b◦ker(φ) ...) , they have to be mapped on to differenet elements in the co-domain group G'
+
+Prove: element in a¯=a◦ker(φ) and b¯=b◦ker(φ) must be mapped on to different elements in the co-domain group G',
+
+prove by contradiction: take representatives a and b from a¯and b¯, let's assume that φ(a)=φ(b),
+
+compose φ(a) ◦ φ(b<sup>-1</sup>)=φ(b) ◦ φ(b<sup>-1</sup>), => φ(a◦b<sup>-1</sup>) = φ(b◦b<sup>-1</sup>) = φ(e<sub>G</sub>) = e<sub>G'</sub> ,it means that a◦b<sup>-1</sup> is the element of ker(φ),
+
+ a◦b<sup>-1</sup> = n, and n∈ker(φ) => a=n◦b means a is ian element in the right cosets of  the kernel of the homomorphism by b , and for normal subgroup, left cosets equal to right cosets, so that a ∈ b¯=b◦ker(φ) , contradict to the partition of G
+

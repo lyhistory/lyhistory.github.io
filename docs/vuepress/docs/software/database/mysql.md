@@ -84,6 +84,10 @@ mysqldump
 
 mysqladmin
 
+验证配置：`mysqld --verbose --help | grep skip-slave-start`
+
+mysqlbinlog https://dev.mysql.com/doc/refman/8.0/en/mysqlbinlog.html
+
 **3rd party:**
 
 http://sqlfiddle.com/
@@ -807,7 +811,28 @@ Once the replica instance has been initialized, it creates two threaded processe
 
   GTID stands for global transaction identifier (GTID) which uniquely  identifies a transaction committed on the server of origin (master). A  unique GTID is created when any transaction occurs. The GTID is not  just unique to the server on which it originates, but also across the  servers in any given replication setup. In other words, each transaction is mapped to a GTID.
 
-  MySQL GTIDs are displayed as a pair of coordinates, separated by a colon character (:) `GTID = source_id:transaction_id`
+  MySQL GTIDs are displayed as a pair of coordinates, separated by a colon character (:) `GTID = source_id(noramlly server uuid):transaction_id(sequential integer,start from 1, representing the order a transaction was committed on the source)`
+
+  server uuid: /var/lib/mysql/auto.cnf
+
+  GTID Set 
+
+  rather than just a single transaction id, an interval is given a range of transactions like `baecf819-a6a5-11e9-a78d-566f18fa0007:1-699` or
+
+  two ranges with a gap `baecf819-a6a5-11e9-a78d-566f18fa0007:1-699, 702-900`
+
+  + Retrieved _Gtid_Set:
+    + All GTIDs received from the master
+    + Resets on:
+      + CHANGE MASTER
+      + RESET SLAVE
+      + server restart(if relay-log-recovery is on)
+  + Executed_Gtid_Set:
+    + All GTIDs written to binary log
+    + Same value seen in:
+      + SHOW MASTER STATUS
+      + SHOW SLAVE STATUS
+      +  show global variables like 'gtid_executed';
 
   
 
@@ -841,7 +866,7 @@ super权限：start slave，stop slave；
 
 主机器需要允许从机器访问其3306端口
 
-#### 主从 - 基于binary log replication
+#### 主从 - 基于file based / binary log replication
 
 https://www.digitalocean.com/community/tutorials/how-to-set-up-replication-in-mysql
 
@@ -869,7 +894,7 @@ log_bin                 = /var/log/mysql/mysql-bin.log
 binlog_do_db            =  跟master一致
 relay-log               = /var/log/mysql/mysql-relay-bin.log
 
-> sudo systemctl restart mysql
+> sudo systemctl restart mysqld
 
 ----------------------------------------------------------------------------
 step 2: on master, create and grant repl user
@@ -903,6 +928,9 @@ Output
 
 输出的file和position即下面用到的MASTER_LOG_FILE和MASTER_LOG_POS
 
+sudo find / -name mysql-bin.000001
+mysqlbinlog /var/lib/mysql/mysql-bin.000001
+
 ----------------------------------------------------------------------------
 step 4: dump and import, If Your Source Has Existing Data to Migrate
 ----------------------------------------------------------------------------
@@ -935,7 +963,12 @@ mysql> CHANGE MASTER TO MASTER_HOST='source_server_ip',MASTER_PORT=3306,MASTER_U
 mysql> START SLAVE;
  
 mysql> SHOW SLAVE STATUS\G;
-
+Master_Log_File:	# source bin log
+Read_Master_Log_Pos: # source bin log position
+Relay_Log_File:		# slave relay log
+Relay_Log_Pos: 		# salve relay log position
+Relay_Master_Log_File:
+        
 其中，Slave_IO_Running和Slave_SQL_Running均显示yes表示Replication工作正常，可通过其余参数来了解Replication的工作状态。
 
 
@@ -949,46 +982,58 @@ mysql> START REPLICA;
 
 ```
 
-#### 主从 - 基于GTID replication
+#### 主从 - 基于GTID based replication
 
 https://hevodata.com/learn/mysql-gtids-and-replication-set-up/
 
-gtid_executed：这个是已经执行过的所有的事物的GTID的一个系列串，也就是binary log里面已经落盘的事物的序列号。这个参数是只读的，不能够进行设置。
+https://dev.mysql.com/doc/refman/5.7/en/replication-gtids-howto.html
 
-gtid_purged：这个序列是指我们在binary log删除的事物的GTID的序列号。我们可以手动进行设置，方便我们做一些管理。
+gtid_executed：这个是已经执行过的所有的事务的GTID的一个系列串，也就是binary log里面已经落库的事务的序列号。这个参数是只读的，不能够进行设置。
+
+gtid_purged：subsets of gtid_executed that are no longer in the binary logs 这个序列是指我们在binary log删除的事务的GTID的序列号。我们可以手动进行设置，方便我们做一些管理。
 
 ```
 ----------------------------------------------------------------------------
-step 1: config master and slave /etc/my.cnf And restart:
+step 1: lock master&slave
 ----------------------------------------------------------------------------
+on both master & slave:
+mysql> SET @@GLOBAL.read_only = ON;
+mysql> show global variables like 'read_only';
+这次跟前面的lock方法不同，注意**不会影响slave同步复制的功能**
+
+mysqladmin -uroot -p shutdown
+
+----------------------------------------------------------------------------
+step 2: config master and slave /etc/my.cnf And restart:
+----------------------------------------------------------------------------
+mysqld --defaults-file=/etc/my.cnf --validate-config
+
 for master: 
 The Master server needs to be started with GTID mode enabled by setting the gtid_mode variable to ON. It is also essential that the enforce_gtid_consistency variable is enabled to make sure that only the statements which are safe for MySQL GTIDs Replication are logged. 
 [mysqld]
 server-id=1
 log-bin = mysql-bin
-binlog_format = row
+#binlog_format = row
 gtid-mode=ON
-enforce-gtid-consistency
+enforce-gtid-consistency=ON
 log-slave-updates
+#read-only = ON #另一种方式设置readonly
+skip-slave-start #！！！！Important In addition, you should start replicas with the --skip-slave-start option before configuring the replica settings. Tells the replica server not to start the replication threads when the server starts. To start the threads later, use a START SLAVE statement. 
+
+> systemctl restart mysqld
 
 for slave:
 [mysqld]
 server-id = 2
 log-bin = mysql-bin
-relay-log = relay-log-server
-relay-log = relay-log-server
-read-only = ON
 gtid-mode=ON
-enforce-gtid-consistency
+enforce-gtid-consistency=ON
 log-slave-updates
+#read-only = ON #另一种方式设置readonly
+#relay-log = relay-log-server
+skip-slave-start #！！！！Important In addition, you should start replicas with the --skip-slave-start option before configuring the replica settings. Tells the replica server not to start the replication threads when the server starts. To start the threads later, use a START SLAVE statement. 
 
-----------------------------------------------------------------------------
-step 2: lock master&slave
-----------------------------------------------------------------------------
-on both master & slave:
-mysql> SET @@GLOBAL.read_only = ON;
-这次跟前面的lock方法不同，注意**不会影响slave同步复制的功能**
-
+> systemctl restart mysqld
 ----------------------------------------------------------------------------
 step 3: on master create replicator user
 ----------------------------------------------------------------------------
@@ -1017,7 +1062,15 @@ step 4: on master: Retrieving Binary Log Coordinates from the Source
 mysql> show master status
 mysql> show global variables like 'gtid_executed';
 两者输出的gtid_executed应该是一样的
+select * from mysql.gtid_executed;
 
+GTID = source_id(noramlly server uuid):transaction_id(sequential integer,start from 1, representing the order a transaction was committed on the source)
+
+mysqlbinlog /var/lib/mysql/mysql-bin.000001
+内容基本跟上面的file based replication的bin log一样，只不过多了：
+                    #210621 16:50:01 server id 2  end_log_pos 259 CRC32 0x7b8ba749  GTID    last_committed=0        sequence_number=1
+                    SET @@SESSION.GTID_NEXT= '878556a6-ff0e-11ea-bf92-566f18fa0008:3'/*!*/;
+                    # at 259
 ----------------------------------------------------------------------------
 step 5: dump and import, If Your Source Has Existing Data to Migrate
 ----------------------------------------------------------------------------
@@ -1025,17 +1078,30 @@ step 5: dump and import, If Your Source Has Existing Data to Migrate
 > mysqldump --all-databases -flush-privileges --single-transaction --flush-logs --triggers --routines --events -hex-blob --host=54.89.xx.xx --port=3306 --user=root  --password=XXXXXXXX > mysqlbackup_dump.sql
 # head -n30 mysqlbackup_dump.sql
 
+> mysqldump -flush-privileges --single-transaction --flush-logs --triggers --routines --events -hex-blob --host=localhost --user=root --password --databases db1 db2> source_dump.sql
+
+            SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
+            SET @@SESSION.SQL_LOG_BIN= 0;
+
+            --
+            -- GTID state at the beginning of the backup 
+            --
+
+            SET @@GLOBAL.GTID_PURGED='baecf819-a6a5-11e9-a78d-566f18fa0007:1-594';
+
 
 on slave:: import data
 mysql> show global variables like 'gtid_executed';
 如果是第一次，应该是空的
 mysql> source mysqlbackup_dump.sql ;
 mysql> show global variables like 'gtid_executed';
-导入完应该跟master一样了
 
+导入完应该跟master一样了? 跟file based replication不同，两台机器上产生的gtid本来就不同的，只不过slave会复制master上面产生的gtid transaction，
+
+另外发现readonly也变成了off，我以为第一步设置readonly会一直有效，看来是中间某一步改变了readonly（重启或者其他操作），再做一次Step 1
 
 ----------------------------------------------------------------------------
-step 6: Slave: setting and start
+step 6: Slave: setting and start	
 ----------------------------------------------------------------------------
 The slave should be configured to use the master with GTID based transactions as the source for data replication and to use GTID-based auto-positioning rather than file-based positioning.
 
@@ -1047,9 +1113,17 @@ MASTER_USER = 'repl_user',
 MASTER_PASSWORD = 'XXXXXXXXX',
 MASTER_AUTO_POSITION = 1;
 
+Take a new backup.  Existing backups that were made before you enabled GTIDs can no longer be used on these servers now that you have enabled GTIDs. Take a new backup at this point, so that you are not left without a usable backup. 
+
 mysql> start slave;
 mysql> show slave status\G
 
+			Retrieved_Gtid_Set:
+            Executed_Gtid_Set: baecf819-a6a5-11e9-a78d-566f18fa0007:
+                Auto_Position: 1
+----------------------------------------------------------------------------
+step 6: Finally touch: unlock
+----------------------------------------------------------------------------
 mysql> SET @@GLOBAL.read_only = OFF;
 
 
@@ -1057,7 +1131,7 @@ mysql> SET @@GLOBAL.read_only = OFF;
 
 https://www.cnblogs.com/shengdimaya/p/6897584.html
 
-#### 主主
+#### 主主 - 基于GTID replication
 
 https://www.huaweicloud.com/articles/e85563c3c3c75c7d980466d800a8c43c.html
 
@@ -1067,7 +1141,17 @@ https://www.huaweicloud.com/articles/e85563c3c3c75c7d980466d800a8c43c.html
 
 ```
 ----------------------------------------------------------------------------
-step 1: config master & slave /etc/my.cnf And restart:
+step 1: lock master&slave
+----------------------------------------------------------------------------
+on both master & slave:
+mysql> SET @@GLOBAL.read_only = ON;
+mysql> show global variables like 'read_only';
+这次跟前面的lock方法不同，注意**不会影响slave同步复制的功能**
+
+mysqladmin -uroot -p shutdown
+
+----------------------------------------------------------------------------
+step 2: config master & slave /etc/my.cnf And restart:
 ----------------------------------------------------------------------------
 master:
 
@@ -1080,8 +1164,8 @@ auto_increment_increment = 2  #奇数ID
 log-bin = mysql-bin  #打开二进制功能,MASTER主服务器必须打开此项
 binlog-format=ROW
 log-slave-updates=true
-gtid-mode=on
-enforce-gtid-consistency=true
+gtid-mode=ON
+enforce-gtid-consistency=ON
 master-info-repository=TABLE
 relay-log-info-repository=TABLE
 sync-master-info=1
@@ -1104,6 +1188,10 @@ max_connect_errors = 30
 lower_case_table_names=1      
 skip-name-resolve
 
+skip-slave-start #！！！！Important In addition, you should start replicas with the --skip-slave-start option before configuring the replica settings. Tells the replica server not to start the replication threads when the server starts. To start the threads later, use a START SLAVE statement. 
+
+> systemctl restart mysqld
+
 slave:
 [mysqld]
 server-id = 2
@@ -1114,8 +1202,8 @@ auto_increment_increment = 2    #偶数ID
 log-bin = mysql-bin    #打开二进制功能,MASTER主服务器必须打开此项
 binlog-format=ROW
 log-slave-updates=true
-gtid-mode=on
-enforce-gtid-consistency=true
+gtid-mode=ON
+enforce-gtid-consistency=ON
 master-info-repository=TABLE
 relay-log-info-repository=TABLE
 sync-master-info=1
@@ -1138,11 +1226,89 @@ max_connect_errors = 30
 lower_case_table_names=1      
 skip-name-resolve
 
+skip-slave-start #！！！！Important In addition, you should start replicas with the --skip-slave-start option before configuring the replica settings. Tells the replica server not to start the replication threads when the server starts. To start the threads later, use a START SLAVE statement. 
 
+> systemctl restart mysqld
 
 ----------------------------------------------------------------------------
+step 3: on BOTH two masters create replicator user
+----------------------------------------------------------------------------
+
+> mysql -uroot -p
+
+ON BOTH SERVER:
+# replicator@localhost可以管理master本机
+mysql> CREATE USER replicator@localhost IDENTIFIED BY 'password';
+mysql> GRANT SUPER,RELOAD,REPLICATION SLAVE ON *.* TO 'replicator'@'localhost' IDENTIFIED BY 'password';
+
+# 'replicator'@'replication_server_ip'在slave机器上replication_server_ip远程连接管理master以及进行基本的复制（最低需要REPLICATION SLAVE权限）
+ON SERVER 1:
+mysql> CREATE USER replicator@replication_server2_ip IDENTIFIED BY 'password';
+mysql> GRANT SUPER,RELOAD,REPLICATION SLAVE ON *.* TO 'replicator'@'replication_server2_ip' IDENTIFIED BY 'password';
+ON SERVER 2:
+mysql> CREATE USER replicator@replication_server1_ip IDENTIFIED BY 'password';
+mysql> GRANT SUPER,RELOAD,REPLICATION SLAVE ON *.* TO 'replicator'@'replication_server1_ip' IDENTIFIED BY 'password';
+
+mysql> flush privileges;
+
+mysql_config_editor set --login-path=host-rpl --host=localhost --port=3306 --user=replicator --password
 
 ----------------------------------------------------------------------------
+step 4: on BOTH two master: Retrieving Binary Log Coordinates from the Source
+----------------------------------------------------------------------------
+
+mysql> show master status
+mysql> show global variables like 'gtid_executed';
+两者输出的gtid_executed应该是一样的
+
+----------------------------------------------------------------------------
+step 5: dump and import, If Your Source Has Existing Data to Migrate
+----------------------------------------------------------------------------
+
+Method 1：
+> mysqldump --all-databases -flush-privileges --single-transaction --flush-logs --triggers --routines --events -hex-blob --host=54.89.xx.xx --port=3306 --user=root  --password=XXXXXXXX > mysqlbackup_dump.sql
+# head -n30 mysqlbackup_dump.sql
+
+
+on slave:: import data
+mysql> show global variables like 'gtid_executed';
+如果是第一次，应该是空的
+mysql> source mysqlbackup_dump.sql ;
+mysql> show global variables like 'gtid_executed';
+导入完应该跟master一样了
+
+Method 2：
+Create a dump file using mysqldump on the source server. Set the mysqldump option --master-data (with the default value of 1) to include a CHANGE MASTER TO statement with binary logging information. Set the --set-gtid-purged option to AUTO (the default) or ON, to include information about executed transactions in the dump. Then use the mysql client to import the dump file on the target server. 
+
+--master-data[=value]
+
+Use this option to dump a source replication server to produce a dump file that can be used to set up another server as a replica of the source. It causes the dump output to include a CHANGE MASTER TO statement that indicates the binary log coordinates (file name and position) of the dumped server. These are the source server coordinates from which the replica should start replicating after you load the dump file into the replica.
+
+If the option value is 2, the CHANGE MASTER TO statement is written as an SQL comment, and thus is informative only; it has no effect when the dump file is reloaded. If the option value is 1, the statement is not written as a comment and takes effect when the dump file is reloaded. If no option value is specified, the default value is 1. 
+
+----------------------------------------------------------------------------
+step 6: Both two Slave: setting and start
+----------------------------------------------------------------------------
+The slave should be configured to use the master with GTID based transactions as the source for data replication and to use GTID-based auto-positioning rather than file-based positioning.
+
+> mysql -uroot -p
+mysql> CHANGE MASTER TO
+MASTER_HOST = '54.89.xx.xx',
+MASTER_PORT = 3306,
+MASTER_USER = 'repl_user',
+MASTER_PASSWORD = 'XXXXXXXXX',
+MASTER_AUTO_POSITION = 1;
+
+Take a new backup.  Existing backups that were made before you enabled GTIDs can no longer be used on these servers now that you have enabled GTIDs. Take a new backup at this point, so that you are not left without a usable backup. 
+
+mysql> start slave;
+mysql> show slave status\G
+
+----------------------------------------------------------------------------
+step 6: Finally touch: unlock
+----------------------------------------------------------------------------
+mysql> SET @@GLOBAL.read_only = OFF;
+
 ```
 
 #### Reset Replication
@@ -1157,7 +1323,14 @@ mysql > reset slave (all);
     清空master info, relay log info
     删除所有的relay log文件，并创建一个新的relay log文件。
     重置复制延迟(CHANGE MASTER TO 的 MASTER_DELAY参数指定的)为0。
-    
+
+功能说明：用于删除SLAVE数据库的relaylog日志文件，并重新启用新的relaylog文件；
+
+reset slave 将使slave 忘记主从复制关系的位置信息。该语句将被用于干净的启动, 它删除master.info文件和relay-log.info 文件以及所有的relay log 文件并重新启用一个新的relaylog文件。
+
+使用reset slave之前必须使用stop slave 命令将复制进程停止。
+
+
 on master:
 
 mysql > RESET MASTER
@@ -1168,6 +1341,11 @@ mysql > RESET MASTER
     清空系统变量gtid_purged和gtid_executed
     在MySQL 5.7.5 及后续版本中, RESET MASTER还会会清空 mysql.gtid_executed 数据表。
 
+功能说明：删除所有的binglog日志文件，并将日志索引文件清空，重新开始所有新的日志文件。用于第一次进行搭建主从库时，进行主库binlog初始化工作；
+
+ 注意reset master 不同于purge binary log的两处地方
+1. reset master 将删除日志索引文件中记录的所有binlog文件，创建一个新的日志文件 起始值从000001 开始，然而purge binary log 命令并不会修改记录binlog的顺序的数值
+2. reset master 不能用于有任何slave 正在运行的主从关系的主库。因为在slave 运行时刻 reset master 命令不被支持，reset master 将master 的binlog从000001 开始记录,slave 记录的master log 则是reset master 时主库的最新的binlog,从库会报错无法找的指定的binlog文件。
 ```
 
 ### Sync Replication
@@ -1194,6 +1372,32 @@ https://www.cnblogs.com/kevingrace/p/10095332.html
 
 ### Replication Troubleshooting 
 
+#### gtid
+
+**GTID Set Gaps:**
+
+Executed_Gtid_Set
+
+uuid:1-111,113-120
+
+occur when slave_parrallel_workers > 1, A transaction is missing;
+
+**Finding transactions:**
+
+mysqlbinlog --no-defaults -vvv --base64-output=DECODE-ROWS --include-gtids='uuid:112' /var/lib/mysql/mysql-bin.xxxxx
+
+result: SET @@SESSION.GTID_NEXT='uuid:112'
+
+**Faking transactions:**
+
+set gtid_next='uuid:112'; BEGIN; COMMIT;
+
+**Skipping transactions:**
+
+sql_slave_skip_counter
+
+#### other
+
 https://dev.mysql.com/doc/mysql-replication-excerpt/8.0/en/replication-problems.html
 
 不要轻易在两种不同的replication模式间切换：
@@ -1207,3 +1411,50 @@ ref:
 https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-centos-7
 
 benchmark: http://www.itsecure.hu/library/image/CIS_Oracle_MySQL_Enterprise_Edition_5.7_Benchmark_v1.0.0.pdf
+
+Keepalived
+
+```
+! Configuration File for keepalived 
+
+global_defs {
+   router_id MYSQL0001    # router_id可随意配置，主备服务器配置需不同
+}
+
+vrrp_script chk_mysql {
+    script "/etc/keepalived/scripts/chk_mysql.sh"    #脚步地址
+    interval 1
+  
+}
+
+vrrp_instance VI_1 {
+    state BACKUP    # 主备keepalived节点此处必须都设置成BACKUP，否则非抢占模式不生效
+    interface eth0
+    virtual_router_id 54  # 同一个VIP的virtual_router_id必须一致
+    priority 100     # 优先级配置，数字越大，优先级越高（主的大，从的小）
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass 1111
+    }
+    nopreempt        # 非抢占模式，即master失效后，如重新上线，将不抢占VIP（主的需要，从的不需要）
+    track_script {
+        chk_mysql
+    }
+    track_interface {
+        eth0    
+    }
+    virtual_ipaddress {
+        192.168.100.150    虚拟Ip  #根据情况配置虚拟ip
+    }
+    notify_master /etc/keepalived/scripts/mysql_master.sh     #脚步地址
+    notify_backup /etc/keepalived/scripts/mysql_slave.sh
+    notify_fault /etc/keepalived/scripts/mysql_fault.sh
+#    notify_stop /etc/keepalived/scripts/mysql_stop.sh
+}
+
+
+```
+
+
+
