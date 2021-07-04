@@ -1,5 +1,69 @@
 ## jdk
 
+Jdk vs Openjdk
+
+https://www.oracle.com/technetwork/java/javase/downloads/index.html
+archive
+https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html
+
+Runtime source: rt.jar	/java/jre18XXX/lib
+
+No compiler is provided in this environment. Perhaps you are running on a JRE rather than a JDK? 
+https://stackoverflow.com/questions/19655184/no-compiler-is-provided-in-this-environment-perhaps-you-are-running-on-a-jre-ra
+
+![https://docs.oracle.com/javase/8/docs/](/docs/docs_image/software/java/java00.png)
+
+## jdk install
+
+difference between JAVA_HOME and update-alternatives
+
+https://unix.stackexchange.com/questions/123412/what-is-the-difference-between-java-home-and-update-alternatives
+
+update-java-alternatives vs update-alternatives --config java
+
+https://askubuntu.com/questions/315646/update-java-alternatives-vs-update-alternatives-config-java
+
+```
+-----------------------------------------
+--- java home:
+-----------------------------------------
+vim ~/.bash_profile
+
+export JAVA_HOME=/opt/jdk1.8.0_221
+PATH=$PATH:$HOME/.local/bin:$HOME/bin:$JAVA_HOME/bin
+export PATH
+
+source ~/.bash_profile
+-----------------------------------------
+--- UBUNTU:
+-----------------------------------------
+sudo add-apt-repository ppa:openjdk-r/ppa
+sudo apt-get update
+sudo apt-get install openjdk-8-jdk
+apt-cache search jdk
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+export PATH=$PATH:$JAVA_HOME/bin
+java -version
+```
+
+
+
+### $JAVA_HOME
+
+`$JAVA_HOME` is where software can be told to look through the use of an environment variable. Adding it to the `$PATH` simply adds the executables present in `$JAVA_HOME/bin` to your `$PATH`. This is sometimes necessary for certain applications.
+
+The 2 mechanisms are related but can be used together or independent  of each other, it really depends on the Java application which mechanism is preferable.
+
+
+
+### Alternatives
+
+Alternatives is a tool that will manage the locations of the installed software using links under the control of the `alternatives` tool. 
+
+These links are ultimately managed under `/etc/alternatives` with intermediate links created under a directory in `$PATH`, typically `/usr/bin`.
+
+
+
 ```
 查看系统安装的所有java版本
 update-alternatives --config java
@@ -22,26 +86,11 @@ $ ll /usr/bin/java
 lrwxrwxrwx 1 root root 22 Nov 25  2019 /usr/bin/java -> /etc/alternatives/java
 $ ll /etc/alternatives/java
 lrwxrwxrwx 1 root root 73 Nov 25  2019 /etc/alternatives/java -> /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.232.b09-0.el7_7.x86_64/jre/bin/java
-
-```
-
-difference between JAVA_HOME and update-alternatives
-
-https://unix.stackexchange.com/questions/123412/what-is-the-difference-between-java-home-and-update-alternatives
-
-```
-vim ~/.bash_profile
-
-export JAVA_HOME=/opt/jdk1.8.0_221
-PATH=$PATH:$HOME/.local/bin:$HOME/bin:$JAVA_HOME/bin
-export PATH
 ```
 
 
 
-update-java-alternatives vs update-alternatives --config java
 
-https://askubuntu.com/questions/315646/update-java-alternatives-vs-update-alternatives-config-java
 
 ## jdk troubleshooting
 

@@ -5,30 +5,11 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《java实用基础》
 
-## 1.Install 
-Jdk vs Openjdk
+## 1.jdk
 
-https://www.oracle.com/technetwork/java/javase/downloads/index.html
-archive
-https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html
+refer<buildingblock/java_jdk>
 
-Runtime source: rt.jar	/java/jre18XXX/lib
 
-UBUNTU
-```
-sudo add-apt-repository ppa:openjdk-r/ppa
-sudo apt-get update
-sudo apt-get install openjdk-8-jdk
-apt-cache search jdk
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
-export PATH=$PATH:$JAVA_HOME/bin
-java -version
-```
-
-No compiler is provided in this environment. Perhaps you are running on a JRE rather than a JDK? 
-https://stackoverflow.com/questions/19655184/no-compiler-is-provided-in-this-environment-perhaps-you-are-running-on-a-jre-ra
-
-![https://docs.oracle.com/javase/8/docs/](/docs/docs_image/software/java/java00.png)
 
 ## 2.Tools&IDE
 

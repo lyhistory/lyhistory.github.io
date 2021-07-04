@@ -4,6 +4,8 @@
 
 ```
 cat /etc/os-release
+
+hostnamectl 
 ```
 
 

@@ -1412,30 +1412,66 @@ https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-centos-
 
 benchmark: http://www.itsecure.hu/library/image/CIS_Oracle_MySQL_Enterprise_Edition_5.7_Benchmark_v1.0.0.pdf
 
-Keepalived
+Keepalived+ mysql 高可用
 
 ```
+-------------------------------------------------------------------------------
+1.	两台服务都安装nginx和keepalived
+-------------------------------------------------------------------------------
+yum install nginx
+yum install keepalived
+
+
+-------------------------------------------------------------------------------
+2. MYSQL check linux scripts
+-------------------------------------------------------------------------------
+vim /etc/keepalived/scripts/check_mysql.sh
+
+MYSQL=/usr/bin/mysql
+MYSQL_HOST=localhost
+MYSQL_USER=root
+MYSQL_PASSWORD=redhat
+
+$MYSQL -h $MYSQL_HOST -u $MYSQL_USER -p$MYSQL_PASSWORD -e "show status;" >/dev/null 2>&1
+
+if [ $? == 0 ]
+then
+  echo " $host mysql login successfully"
+  exit 0
+else
+  #echo " $host mysql login faild" #若mysql关闭，则keepalived关闭
+  killall keepalived
+  exit 2
+fi
+
+-------------------------------------------------------------------------------
+4. 修改keepalived配置文件
+-------------------------------------------------------------------------------
+sudo vim /etc/keepalived/keepalived.conf 
+
 ! Configuration File for keepalived 
 
 global_defs {
-   router_id MYSQL0001    # router_id可随意配置，主备服务器配置需不同
+   router_id MYSQL0001    # router_id可随意配置，主备服务器配置需不同 #运行keepalived的机器的一个标识，通常可设为hostname。故障发生时，发邮件时显示在邮件主题中的信息。
 }
 
 vrrp_script chk_mysql {
-    script "/etc/keepalived/scripts/chk_mysql.sh"    #脚步地址
-    interval 1
-  
+    script "/etc/keepalived/scripts/check_mysql.sh"    #脚步地址
+    interval 300  #脚本执行间隔 300秒
+    weight -5                    #脚本结果导致的优先级变更，检测失败（脚本返回非0）则优先级 -5
+    fall 2                    #检测连续2次失败才算确定是真失败。会用weight减少优先级（1-255之间）
+    rise 1                    #检测1次成功就算成功。但不修改优先级
 }
 
-vrrp_instance VI_1 {
+vrrp_instance VI_1 { #keepalived在同一virtual_router_id中priority（0-255）最大的会成为master，也就是接管VIP，当priority最大的主机发生故障后次priority将会接管
     state BACKUP    # 主备keepalived节点此处必须都设置成BACKUP，否则非抢占模式不生效
-    interface eth0
-    virtual_router_id 54  # 同一个VIP的virtual_router_id必须一致
+    interface eth0 #指定HA监测网络的接口。实例绑定的网卡，因为在配置虚拟IP的时候必须是在已有的网卡上添加的
+    virtual_router_id 54  # 同一个VIP的virtual_router_id必须一致 #虚拟路由标识，这个标识是一个数字，同一个vrrp实例使用唯一的标识。即同一vrrp_instance下，MASTER和BACKUP必须是一致的
     priority 100     # 优先级配置，数字越大，优先级越高（主的大，从的小）
-    advert_int 1
-    authentication {
-        auth_type PASS
-        auth_pass 1111
+    advert_int 1	#设定MASTER与BACKUP负载均衡器之间同步检查的时间间隔，单位是秒
+    authentication {	#设置验证类型和密码。主从必须一样
+        auth_type PASS	#设置vrrp验证类型，主要有PASS和AH两种
+        auth_pass 1111	#设置vrrp验证密码，在同一个vrrp_instance下，MASTER与BACKUP必须使用相同的密码才能正常通信
     }
     nopreempt        # 非抢占模式，即master失效后，如重新上线，将不抢占VIP（主的需要，从的不需要）
     track_script {
@@ -1454,7 +1490,43 @@ vrrp_instance VI_1 {
 }
 
 
+在10.136.100.49上，只需要改变:
+router_id MYSQL0001->MYSQL0002
+priority 101 -> priority 100，
+mcast_src_ip 10.136.100.48 -> mcast_src_ip 10.136.100.49即可。
+
+-------------------------------------------------------------------------------
+5. 启动
+-------------------------------------------------------------------------------
+
+systemctl start keepalived
+
+ip addr show eth0
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP qlen 1000
+    link/ether 56:6f:18:fa:00:08 brd ff:ff:ff:ff:ff:ff
+    inet 10.136.100.49/24 brd 10.136.100.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet 10.136.100.44/32 scope global eth0
+       valid_lft forever preferred_lft forever
+
+再启动另外一个机器的keepalived，执行 ip addr show eth0 并不会有类似上面的输出，除非是在前面的机器上执行 systemctl stop keepalived
+
+某台机器被选中的时候会出现如下日志，/var/log/messages ：
+
+Jun 15 17:01:08 sgkc2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) Transition to MASTER STATE
+Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) Entering MASTER STATE
+Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) setting protocol VIPs.
+Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: Sending gratuitous ARP on eth0 for 10.136.100.44
+Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) Sending/queueing gratuitous ARPs on eth0 for 10.136.100.44
+Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: Sending gratuitous ARP on eth0 for 10.136.100.44
+
+-------------------------------------------------------------------------------
+5. 状态检测
+-------------------------------------------------------------------------------
+sudo tcpdump -vvv -n -i eth0 dst 224.0.0.18 and src 10.136.100.48
 ```
+
+
 
 
 

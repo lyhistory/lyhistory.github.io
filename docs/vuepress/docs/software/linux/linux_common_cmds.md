@@ -19,6 +19,85 @@ sudo ln -s /home/lyhistory/.local/bin/tldr tldr (/usr/bin/tldr)
 export PATH=$PATH:$HOME/.local/bin
 ```
 
+## user and groups
+
+```
+查看用户：
+id username
+W
+Whoami
+groups
+vim /etc/passwd
+cut -d: -f1 /etc/passwd
+
+用户组：
+groups username
+less /etc/group
+groupadd groupname
+groupdel groupname
+su username #切换用户 
+添加新用户： 
+useradd username
+passwd username
+usermod -g groupname username -d /home/test
+useradd -g groupname username -d /home/test
+userdel username
+gpasswd -d groupname username
+
+/etc/sudoers
+visudo
+
+---------------------------------------------------------------------------------------
+--- ubuntu
+---------------------------------------------------------------------------------------
+Enable SUDO:
+	By default sudo is not installed on Debian, but you can install it. First enable su-mode:
+	You can use sudo -i which will ask for your password. You need to be in the sudoers group for that or have an entry in the /etc/sudoers file.
+	Another way is the command su - which will ask for the password of root, but accomplish the same.
+	su -
+	apt-get install sudo -y
+	
+    usermod -aG sudo yourusername
+    Make sure your sudoers file have sudo group added. Run:
+    visudo to modify sudoers file and add following line into it (if it is missing):
+
+    # Allow members of group sudo to execute any command
+    %sudo   ALL=(ALL:ALL) ALL
+    OR
+    chmod u+w /etc/sudoers
+    username ALL=(ALL) ALL
+    chmod u-w /etc/sudoers
+
+adduser username 
+sudo passwd USERNAME
+sudo usermod -aG sudo username
+su - username
+exit;
+sudo useradd xiaofeng -s /bin/bash -m
+usermod -aG docker peter
+
+
+---------------------------------------------------------------------------------------
+--- centos
+---------------------------------------------------------------------------------------
+Enable SUDO:
+    By default, on CentOS, members of the wheel group have sudo privileges.
+    https://support.hostway.com/hc/en-us/articles/115001509750-How-To-Install-and-Configure-Sudo
+
+useradd -s /bin/bash -m -G wheel username
+sudo usermod -aG wheel username
+Wheel group https://www.centos.org/forums/viewtopic.php?t=63386
+
+
+ssh-keygen -t rsa
+chmod 400 id_rsa
+ssh-copy-id -i ~/.ssh/id_rsa.pub username@serveripOrhostname
+scp ~/.ssh/id_rsa grs@adp116:~/.ssh
+
+```
+
+
+
 ## File Operation
 
 ### vim
