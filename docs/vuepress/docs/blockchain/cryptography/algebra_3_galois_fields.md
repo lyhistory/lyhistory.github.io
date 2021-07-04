@@ -8,7 +8,11 @@ In AES, Galois field arithmetic is used in most layers, especially in the S-Box 
 
 In order to have all four basic arithmetic operations (i.e., addition, subtraction, multiplication, division) in one structure, we need a set which contains an additive and a multiplicative group. This is what we call a field.
 
-## Definition 4.3.2 Field
+## Field
+
+### Definition 4.3.2 Field
+
+Note: Field is a non-zero communitive ring，实际上zero communitive ring {0} 也满足下面的properties
 
 A field F is a set of elements with the following properties:
 
@@ -60,9 +64,57 @@ The set R of real numbers is a field with the neutral element 0 for the additive
 
 https://en.wikipedia.org/wiki/Field_(mathematics)#Constructing_fields_from_rings
 
+### Characteristic of a Field
+
+Field is a non-zero communitive ring，根据Field定义属性，
+
+multiplicative identity normally denoted as 1 ∈ F, what you have to ask to work out the characteristic of a Field Ch(F)  is what is the smallest number of times I have to add 1 to itself to get back 0:
+
+1+1+..............+1 = 0
+
+there is a little caveat to this what if you can add one to itself as many times as you like and never get 0 back again, for example take rational numbers Q which is a filed, you can add 1 to itself as many times as you like and you'll get a bigger and bigger rational but you'll never come back to 0, so you might expect the Ch(F) to be infinity but it isn't, the way we define the characteristic of a field where you can add up 1 to itself arbitrarily many times and never get 0 back again is we define it to be zero, so the characteristic of Rational number Ch(Q) is defined to be zero
+
+Prime Field F<sub>2</sub> = { 0, 1 } 1+1=0,  ch(F<sub>2</sub>)=2
+
+n∈N, n*1 = 1+1....+1 (n times) 
+
+m,n∈N, n\*1+m\*1 = (n+m)\*1
+
+(n\*1)\*(m\*1) = (n\*m)\*1
+
+结论：
+
+<i>the characteristic of any field is either 0 or a prime number. A field of non-zero characteristic is called a field of *finite characteristic* or **positive characteristic** or **prime characteristic**.</i>
+
+Characteristic of a Field Ch(F) can only be zero or prime, ch(F)= 0 or prime(2,3,5....)
+
+Prove: assume Ch(F) = n = ab (non of a or b is 1)
+
+according to the definition, n\*1=0 => (ab)\*1 = 0 => (a\*1)\*(b\*1) = 0 implies that a\*1 =0 or b\*1=0, 
+
+for example, if a\*1=0 because  n = ab (non of a or b is 1) implies that a<n,b<n, means that we have found a smaller number a that times 1 equal to 0, this contradict to the definition of n is the characteristic of the field(the smallest )
+
+example:
+
+Fp=Z/(pZ) = { 0¯, 1¯, 2¯,(p-1)¯  }, Ch(Fp) = p , why?
+
+1¯+1¯= 2¯
+
+1¯+1¯+1¯=3¯
+
+p*1¯ = 1¯+1¯+...+1¯ (p times) =p¯ = 0¯
+
+Real number: Ch(R) = 0
+
+Rational number: Ch(Q) = 0
+
+Complex number: Ch(C)=0
+
 ## Prime Fields
 
-尝试构造Fields，首先要满足加法群abelian group，举例Integer
+### 尝试构造Fields
+
+首先要满足加法群abelian group，举例Integer
 
 Z = {0,1, -1, 2, -2, . . .}
 
@@ -74,7 +126,113 @@ Z/(pZ)
 
 pZ={np|n∈Z} = {0, p, -p, 2p, -2p,.........}
 
+Z是Abelian group
 
+根据normal group的结论：All subgroups of Abelian groups is normal subgroup，
+
+所以pZ也是normal group，means that when we construct the left and right coset partitions of the group integer Z, we'll get the same answer
+
+开始进行 partition，以left cosets为例：
+
+pZ = {0, p, -p, 2p, -2p,.........}, 	denoted by 0¯
+
+1+pZ = {1, 1+p, 1-p,1+ 2p, 1-2p,.........}, 	denoted by 1¯
+
+2+pZ = {2, 2+p, 2-p,2+ 2p, 2-2p,.........}, 	denoted by 2¯
+
+...
+
+p-1+pZ = {p-1, 2p-1, -1,3p-1, -p-1,.........}, 	denoted by (p-1)¯
+
+Z/(pZ) = { 0¯, 1¯, 2¯,(p-1)¯  } 刚好prime order p
+
+**Addition Composition Law**
+
+a¯+b¯=(a+b)¯ 前面在group章节中证明过，现在要证明其满足fileds的加法结构即加法结构下是Abelian group：
+
+1）closure，根据定义很明显 ∀ a¯,b¯ ∈ Z/(pZ),	a¯+b¯=(a+b)¯ ∈ Z/(pZ)
+
+2）associativity, (a¯+b¯)+c¯ =a¯+ (b¯+c¯)
+
+ (a¯+b¯)+c¯ = (a+b)¯ + c¯  = ((a+b)+c)¯
+
+a¯+ (b¯+c¯) = (a+(b+c))¯, (a+b)+c= a+(b+c) 得证
+
+3）identity
+
+a¯+ 0¯ = (a+0)¯ =a¯ 
+
+0¯ +a¯ = a¯
+
+4) inverse
+
+∀ a¯ ∈ Z/(pZ)
+
+a¯ + (-a+p)¯ = (a-a+p)¯=p¯=0¯
+
+5) communitativity
+
+a¯+b¯ = (a+b)¯ 
+
+b¯+a¯ = (b+a)¯ = (a+b)¯ =a¯+b¯
+
+
+
+**Multiplication Composition  Law**
+
+a¯b¯ = (ab)¯
+
+前面没有证明过multiplication，所以这里要证明该定义 well defined，
+
+for a¯,b¯ ∈ Z/(pZ), take arbitrary elements from a¯,b¯: a+z<sub>1</sub>p and b+z<sub>2</sub>p
+
+a¯b¯ =((a+z<sub>1</sub>p)(b+z<sub>2</sub>p))¯=(ab+az<sub>2</sub>p+z<sub>1</sub>pb+z<sub>1</sub>pz<sub>2</sub>p)¯
+
+a,b,p,z<sub>1</sub>,z<sub>2</sub>都是integer，所以根据commutativity以及associativity of multiplication for integer
+
+ab+az<sub>2</sub>p+z<sub>1</sub>pb+z<sub>1</sub>pz<sub>2</sub>p = ab+az<sub>2</sub>p+z<sub>1</sub>bp+z<sub>1</sub>pz<sub>2</sub>p = ab+(az<sub>2</sub>+z<sub>1</sub>b+z<sub>1</sub>pz<sub>2</sub>)p
+
+az<sub>2</sub>+z<sub>1</sub>b+z<sub>1</sub>pz<sub>2</sub> 必然是integer，即 az<sub>2</sub>+z<sub>1</sub>b+z<sub>1</sub>pz<sub>2 </sub>∈ Z，所以(az<sub>2</sub>+z<sub>1</sub>b+z<sub>1</sub>pz<sub>2</sub>)p ∈ pZ，所以ab+(az<sub>2</sub>+z<sub>1</sub>b+z<sub>1</sub>pz<sub>2</sub>)p ∈ (ab)¯
+
+接下来就是验证满足fileds的乘法结构：
+
+1）closure，根据定义很明显 ∀ a¯,b¯ ∈ Z/(pZ),	a¯b¯=(ab)¯ ∈ Z/(pZ)
+
+2）associativity, (a¯b¯)c¯ =((ab)c)¯ =a¯(b¯c¯) =(a(bc))¯
+
+3）identity
+
+1¯a¯=(1a)¯=a¯ = a¯1¯
+
+4) inverse
+
+∀ a¯ ∈ F\\{0¯}=Z/(pZ)\\{0¯} = { 1¯, 2¯,(p-1)¯  }={}, 
+
+∃ a¯<sup>-1</sup>∈F\\{0¯}, s.t. a¯◦a¯<sup>-1</sup>=a¯<sup>-1</sup>◦a¯=1¯ or ∃ b¯∈ F\\{0¯}, s.t. a¯◦b¯=b¯◦a¯=1¯
+
+first, prove a¯◦b¯<>0¯, if a¯◦b¯ = 0¯, means a¯◦b¯=zP =>ab=zp , so that the prime factor of a or b must contain p, but 
+
+a¯,b¯ ∈ { 1¯, 2¯,(p-1)¯  }  so the max of a,b is (p-1) < p 得证a¯◦b¯<>0¯
+
+second, prove for different b1,b2, a¯◦b1¯<>a¯◦b2¯, assume a¯◦b1¯= a¯◦b2¯, => (a◦b1)¯= (a◦b2)¯, means a◦b1 and a◦b2 in the same cosets, a◦b1=a◦b2+zp => a◦b1-a◦b2=zp => a(b1-b2) = zp ，跟前面一样the max of a,b1,b2 is (p-1) < p
+
+finally,
+
+b¯ ∈ { 1¯, 2¯,(p-1)¯  }  有 p-1种可能，然后每种可能跟a¯ 的 a¯◦b¯结果都是不同的，a¯◦b¯=(a◦b)¯∈ { 0¯, 1¯, 2¯,(p-1)¯  } 但是前面知道了a¯◦b¯<>0¯，所以自然的必然存在一个b¯使得 a¯◦b¯=1¯
+
+5) communitativity
+
+a¯b¯=(ab)¯ = b¯a¯=(ba)¯
+
+6) distributivity
+
+a¯(b¯+c¯) = a¯b¯+a¯c¯
+
+a¯(b¯+c¯) = a¯(b+c)¯ = (a(b+c))¯
+
+a¯b¯+a¯c¯ = (ab)¯+(ac)¯=(ab+ac)¯
+
+a(b+c)=ab+ac => (a(b+c))¯= (ab+ac)¯ 得证
 
 
 
@@ -97,7 +255,7 @@ Fields with a finite number of elements, which we call finite fields or Galois f
 A field with order m only exists if m is a **prime power**, i.e., m = p<sup>n</sup>, for some positive integer n and prime integer
 p. p is called **the characteristic 特征 of the finite field**.
 
-<i>the characteristic of any field is either 0 or a prime number. A field of non-zero characteristic is called a field of *finite characteristic* or **positive characteristic** or **prime characteristic**.</i>
+
 
 n=1 => Prime Fields
 

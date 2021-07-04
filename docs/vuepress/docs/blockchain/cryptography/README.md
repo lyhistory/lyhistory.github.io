@@ -20,7 +20,7 @@ ring  闭合，**multiple composition law**: 既要加(满足additive compositio
 
 ​	只从满足Additive composition law的加法环ring来说 === abelian group
 
-​	communitative ring ==- ring+满足乘法交换律
+​	communitative ring ==- ring+满足乘法交换律	例子：Integer Z = {0,1, -1, 2, -2, . . .}
 
 
 
@@ -28,11 +28,15 @@ field 闭合，既可以加也可以乘（由加群和乘“群”组合而成�
 
 ​	加群 === abelian group
 
-​	乘“群” === communitative ring+multiplicative inverse(except additive identity 所以不是群)
+​	乘“群” === communitative ring+multiplicative inverse(except additive identity 所以不是群，当然也可以说除掉addtive identity构成群)
 
-​	finite field : field with finite number of elements, the number of elements called order，乘法结构为循环群
+​	finite field : field with finite number of elements, the number of elements called order，除去additive identity的乘法结构为循环群
 
-符号:
+例子：prime finite field：Fp , p = 2, 3, 5, 7 ,11, 13, ..... |Fp| = p, Z/(pZ)={ 0¯, 1¯, 2¯,(p-1)¯  } 
+
+
+
+### 符号:
 
 = ≠
 
