@@ -12,7 +12,7 @@ In order to have all four basic arithmetic operations (i.e., addition, subtracti
 
 ### Definition 4.3.2 Field
 
-Note: Field is a non-zero communitive ring，实际上zero communitive ring {0} 也满足下面的properties
+Note: Field is a non-zero communitive ring+Inverse Exist(except additive Identity），实际上zero communitive ring {0} 也满足下面的properties
 
 A field F is a set of elements with the following properties:
 
@@ -315,6 +315,10 @@ https://math.stackexchange.com/questions/837562/why-is-the-multiplicative-group-
 在域中必有乘法单位元1，若作1+1+1+…运算，对无限域来说，则有可能n·1≠o，但在有限域中，1+1+…+1=0，否则该域必成为无限域。例如，在GF(2)中，1+1=0。
 
 
+
+## Field Extensions
+
+K / F , K Over F vector space
 
 
 
