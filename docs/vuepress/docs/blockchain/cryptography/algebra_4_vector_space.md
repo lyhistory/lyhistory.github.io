@@ -1,10 +1,12 @@
 前提：先要搞清楚 fields和prime fields
 
-Vector space V over Fields:
+## Vector space Definition
 
-V={...........}, the elements of the V is called Vectors
+Vector space V over Fields F:
 
-1. Addition Composition Law： must obey the axioms of Abelian Group
+V={...........}, the elements of the V is called **Vectors**
+
+### 1. Addition Composition Law： must obey the axioms of Abelian Group
 
 | +    | <-   | V    | ->   |
 | ---- | ---- | ---- | ---- |
@@ -14,7 +16,7 @@ V={...........}, the elements of the V is called Vectors
 
 Note: additive identity 0 here represents zero vector in the vector space, while 0 also can represents additive identity in Field in below, don't confuse each other
 
-2. Scalar multiplication Law:
+### 2. Scalar multiplication Law:
 
 | *    | <-   | V    | ->   |
 | ---- | ---- | ---- | ---- |

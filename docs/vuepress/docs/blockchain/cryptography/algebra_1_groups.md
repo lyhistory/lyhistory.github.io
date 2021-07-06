@@ -1126,7 +1126,7 @@ finite cyclic group: \<x\> = {e, x, x<sup>2</sup>, x<sup>3</sup>, ......x<sup>m-
 
 对于 order为prime number=P 的finite group G来说，从non-identity element x生成的finite Cyclic group \<x\> = {e, x, x<sup>2</sup>, x<sup>3</sup>, ......x<sup>m-1</sup> }  x<sup>m</sup> = e，m就是G的order = P，因为我们前面有结论其 subgroup |H|=1 or |G|，然后我们取出的是non-identity element x，所以 \<x\> 的 order就是等于|G|，所以m=P=|G|,x<sup>P</sup>=e，换句话说就是non-identity element x生成的finite Cyclic group \<x\> 就是整个 G，所以G is isomorphic to a finite cyclic group 即 C<sub>P</sub> 
 
-
+Note: 网络上很多说法不严谨，比如直接说素数阶群必为循环群 https://blog.csdn.net/qq_25847123/article/details/100572099
 
 ## Quotient Groups
 

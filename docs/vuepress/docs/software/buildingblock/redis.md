@@ -12,6 +12,7 @@ https://redis.io/topics/quickstart
 ### 1.1 简单安装
 
 ```
+yum install gcc
 
 $ wget https://download.redis.io/releases/redis-6.2.1.tar.gz
 $ tar xzf redis-6.2.1.tar.gz
