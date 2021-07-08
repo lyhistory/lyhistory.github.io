@@ -120,4 +120,70 @@ v1+(v2+v3) = ( (x1+(y1+z1), .................)
 
 3) identity = (0,0............0)
 
-### Multiplicative
+4) additive inverse
+
+v=(x1,x2,........xn)
+
+-v = (-x1,-x2,........-xn)
+
+v+(-v) =(x1+(-x1), x2+(-x2),...........) =  (0,0............0)
+
+5) communitative
+
+v=(x1,x2,........xn) ∈ F<sup>n</sup>
+
+v¯=(x1¯,x2¯,........xn¯) ∈ F<sup>n</sup>
+
+v+v¯=(x1+x1¯,x2+x2¯,........xn+xn¯) ∈ F<sup>n</sup>
+
+v¯+v=(x1¯+x1,x2¯+x2,........xn¯+xn) ∈ F<sup>n</sup>
+
+v+v¯=v¯+v
+
+### scalar Multiplication
+
+define scalar multiplication
+
+c ∈ F, v ∈ F<sup>n</sup>,
+
+cv=c(x1,x2.......xn) = ( cx1, cx2,......... cxn)
+
+1) closure
+
+∀ c ∈ F, v ∈ V=F<sup>n</sup>, cv ∈ V=F<sup>n</sup>
+
+cv= ( cx1, cx2,......... cxn), c, x1,x2...xn∈ F， when we multiple two elements in the field we got another element in the field, so cx1, cx2..........cxn are all elements in the field F, by the definition of F<sup>n</sup>: { (x1,x2,........xn) | xi ∈ F }, 
+
+cv= ( cx1, cx2,......... cxn) ∈ V=F<sup>n</sup>
+
+2) associativity
+
+∀ c<sub>1</sub>,c<sub>2</sub> ∈ F, v ∈ V=F<sup>n</sup>, c<sub>1</sub>(c<sub>2</sub>v) = (c<sub>1</sub>c<sub>2</sub>)v
+
+c<sub>1</sub>(c<sub>2</sub>v) = c<sub>1</sub>(c<sub>2</sub>x1, c<sub>2</sub>x2,......... c<sub>2</sub>xn) = (c<sub>1</sub>(c<sub>2</sub>x1), c<sub>1</sub>(c<sub>2</sub>x2),......... c<sub>1</sub>(c<sub>2</sub>xn))
+
+ (c<sub>1</sub>c<sub>2</sub>)v = ( (c<sub>1</sub>c<sub>2</sub>)x1,  (c<sub>1</sub>c<sub>2</sub>)x2........... (c<sub>1</sub>c<sub>2</sub>)xn)
+
+同样的by the definition of F<sup>n</sup>: { (x1,x2,........xn) | xi ∈ F }, 并且c<sub>1</sub>,c<sub>2</sub> ∈ F，所以
+
+c<sub>1</sub>(c<sub>2</sub>x1)= (c<sub>1</sub>c<sub>2</sub>)x1。。。。。。。。。。。c<sub>1</sub>(c<sub>2</sub>xn)= (c<sub>1</sub>c<sub>2</sub>)xn
+
+3) identity
+
+1 ∈ F, ∀ v ∈ V=F<sup>n</sup>, 1v = v1=v
+
+4) distributivity
+
+i) ∀ c ∈ F, v<sub>1</sub>,v<sub>2</sub> ∈ V, c(v<sub>1</sub>+v<sub>2</sub>) = cv<sub>1</sub>+cv<sub>2</sub> 证明方法同上，利用Field的distributivity
+
+ii) ∀ c<sub>1</sub>,c<sub>2</sub> ∈ F, v ∈ V, (c<sub>1</sub>+c<sub>2</sub>)v = c<sub>1</sub>v+c<sub>2</sub>v，这个可以先利用Field multiplicative communitive, 然后再用前面的distributivity
+
+(c<sub>1</sub>+c<sub>2</sub>)v = v(c<sub>1</sub>+c<sub>2</sub>) = vc<sub>1</sub>+vc<sub>2</sub> = c<sub>1</sub>v+c<sub>2</sub>v
+
+## V=R<sup>3</sup>
+
+R<sup>3</sup>={(x1,x2,x3)|xi ∈ R}
+
+the intuitive way of visualizing the vector space is that you can view each one of these as being an arrow basically in three-dimentionaly space, basically you can view each of these vectors as a position vecor where the x coordinate is x1, y coordinate is x2, z coordinate is x3,
+
+what is so wonderful about this is not only does it give us a picture for each vector but also gives us a picture of what it means to add two vectors together and scalar multiply vector
