@@ -1317,3 +1317,17 @@ F(a¯◦ b¯) = F((a◦ b)¯) = φ(a◦b) =  φ(a) ◦ φ(b)
 F(a¯) ◦ F(b¯)  = φ(a) ◦ φ(b)
 
 得证
+
+
+
+todo:
+
+Z<sup>*</sup><sub>p</sub> **Multiplicative group of integers modulo n / 整数模n乘法群** 
+
+在同余理论中，模 n 的互质同余类组成一个乘法群，称为整数模 n 乘法群，也称为模 n 既约剩余类。在环理论中，一个抽象代数的分支，也称这个群为整数模 n 的环的单位群（单位是指乘法可逆元）。
+
+这个群是数论的基石，在密码学、整数分解和素性测试均有运用。例如，关于这个群的阶（即群的“大小”），我们可以确定如果 n 是质数当且仅当阶数为 n-1。
+
+https://en.wikipedia.org/wiki/Multiplicative_group_of_integers_modulo_n
+
+https://baike.baidu.com/item/整数模n乘法群/22770365?fr=aladdin

@@ -1,8 +1,7 @@
+Modular Arithmetic
 
+## 1.Definition 1.4.1 Modulo Operation
 
-## 1. Modular Arithmetic
-
-### 1.1 Definition 1.4.1 Modulo Operation
 Let a, r,m ∈ Z (where Z is a set of all integers) and m > 0. We write
 	a ≡ r mod m
 if m divides a−r.
@@ -15,7 +14,9 @@ a = q ·m+r for 0 ≤ r < m
 
 Since a−r = q ·m (m divides a−r) we can now write: a ≡ r mod m. Note that r ∈ {0,1,2, . . . ,m−1}.
 
-#### The Remainder Is Not Unique
+### Properties
+
+#### 1) The Remainder Is Not Unique
 
  12 ≡3 mod9, 3 is a valid remainder since 9|(12−3)
  12 ≡ 21 mod 9, 21 is a valid remainder since 9|(21−3)
@@ -31,7 +32,7 @@ form what is called an **equivalence class**. There are eight other equivalence 
 ...
 {. . . ,−19,−10,−1, 8, 17,26,35, . . .}
 
-#### All Members of a Given Equivalence Class Behave Equivalently 同态？
+#### 2) All Members of a Given Equivalence Class Behave Equivalently 同态？
 
 If we have involved computations with a fixed modulus — which is usually the case in cryptography — we are free to choose the class element that results in the easiest computation.
 
@@ -47,7 +48,48 @@ We can now replace the intermediate results 81 by another member of the same equ
 
 
 
-### 1.4 Euclidean algorithms (Basic and Extended)
+### 模的逆
+
+⅓ mod 28 = 19 (3*19 mod 28 =1)
+
+如何计算参见后面的 Euclidean algorithm
+
+**证明x对n模运算的逆存在的前提是公约数gcd(x,n)=1 Proving that modular inverse only exists when gcd(n,x)=1**
+
+https://math.stackexchange.com/questions/2101189/proving-that-modular-inverse-only-exists-when-gcdn-x-1
+
+```
+If there is an inverse of x mod n, that gives us a number y so that xy≡1 mod n. That means that xy=kn+1, or (rearranging) that xy−kn=1.
+Now for any common divisor, c, of x and n we will have that c∣(xy−kn) which gives c∣1, that is, c=1. So that is an outcome - and therefore a requirement - of finding the inverse of xmodn
+```
+
+另一种证明没有看懂，在：https://baike.baidu.com/item/%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95
+
+
+
+### 负数的模：
+
+mod(a, n) = a - n * floor(a / n)
+
+
+
+-104 mod 28
+
+= -104 - 28*floor(-104/28)
+
+=-104 - 28*(-3.7) 不同程序结果不同，比如-3.7向下取整 -4 ，结果为8，向上取整或向零取整结果为-20
+
+
+
+### Ord的意思
+
+https://math.stackexchange.com/questions/638597/what-does-ord-mean/638604
+
+Ord29(x)=7 	====		x<sup>7</sup> ≡ 1mod29
+
+
+
+## 1.4 Euclidean algorithms (Basic and Extended)
 
 https://www.geeksforgeeks.org/euclidean-algorithms-basic-and-extended/
 
@@ -120,7 +162,7 @@ The algorithm is based on the below facts:
 Extended Euclidean algorithm also finds integer coefficients x and y such that: 
   ax + by = gcd(a, b) 
 
-It is well known that if the gcd(a, b) = r then there exist integers p and s so that:
+It is well known that if the gcd(a, b) = r then there exist integers x and y so that:
 
 gcd(a, b) = x(a) + y(b) = r
 
@@ -202,9 +244,9 @@ def gcdExtended(a, b):
 
 gcdExtended(57,81) |返回 gcd,x1,y1=(3,-7,3) , x=3-(81//57)*-7=3+floor(1.4)*7=10 y=-7 对应 3=10(57) -7(81)
 =>
-gcdExtended(81%57,81)=gcdExtended(24,57) |返回 gcd,x1,y1=(3,3,-1) , x=-1-(57//24)*3=-1-floor(2.3)*3=-7 y=3 对应 3=3(57) - 7(24)
+gcdExtended(81%57,57)=gcdExtended(24,57) |返回 gcd,x1,y1=(3,3,-1) , x=-1-(57//24)*3=-1-floor(2.3)*3=-7 y=3 对应 3=3(57) - 7(24)
 =>
-gcdExtended(57%24,57)=gcdExtended(9,24) |返回 gcd,x1,y1=(3,-1,1) , x=1-(24//9)*-1=1+floor(2.6)=3 y=-1 对应 3=3*9+-1*24
+gcdExtended(57%24,24)=gcdExtended(9,24) |返回 gcd,x1,y1=(3,-1,1) , x=1-(24//9)*-1=1+floor(2.6)=3 y=-1 对应 3=3*9+-1*24
 =>
 gcdExtended(24%9,9)=gcdExtended(6,9) |返回 gcd,x1,y1=(3,1,0) , x=0-(9//6)*1=-1 y=1 对应 3=-1*6+1*9
 =>
@@ -226,7 +268,7 @@ based on  Extended Algorithm We now know that if this is true, there exist integ
 
 =>
 
-xa = 1 + (-y)b, or in other words, xa=1 (mod n). So, x (reduced mod n if need be) is the inverse of a mod b. The extended Euclidean algorithm will give us a method for calculating p efficiently (note that in this application we do not care about the value for y, so we will simply ignore it.)
+xa = 1 + (-y)b, or in other words, xa=1 (mod b). So, x (reduced mod b if need be) is the inverse of a mod b. The extended Euclidean algorithm will give us a method for calculating x efficiently (note that in this application we do not care about the value for y, so we will simply ignore it.)
 
 =>
 

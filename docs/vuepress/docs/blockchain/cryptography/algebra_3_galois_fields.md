@@ -184,11 +184,78 @@ https://math.stackexchange.com/questions/633056/the-proof-that-a-finite-field-ha
 
 ### 例子1：Prime Fields GF(p)
 
+The most intuitive examples of finite fields are fields of prime order, i.e., fields with
+n=1. Elements of the field GF(p) can be represented by integers 0,1, . . . , p−1. The
+two operations of the field are modular integer addition and integer multiplication
+modulo p.
+
 Theorem 4.3.2 
 
 Let p be a prime. The integer ring Z<sub>p</sub> is denoted as GF(p) and is referred to as a **prime field**, or as a **Galois field(or Finite Fields) with a prime number of elements**. All nonzero elements of GF(p) have an inverse. Arithmetic in GF(p) is done modulo p.
 
 
+
+example1: 
+
+A very important prime field is GF(2), which is the smallest finite field that
+exists. Let’s have a look at the multiplication and addition tables for the field.
+Example 4.4. Let’s consider the small finite field GF(2)={0,1}. Arithmetic is simply
+done modulo 2, yielding the following arithmetic tables:
+addition
+
+| +    | 0    | 1    |
+| ---- | ---- | ---- |
+| 0    | 0    | 1    |
+| 1    | 1    | 0    |
+multiplication
+
+| ×    | 0    | 1    |
+| ---- | ---- | ---- |
+| 0    | 0    | 0    |
+| 1    | 0    | 1    |
+
+GF(2) addition, i.e., modulo 2 addition,
+is equivalent to an XOR gate. What we learn from the example above is that GF(2)
+multiplication is equivalent to the logical AND gate. The field GF(2) is important
+for AES.
+
+example 2：
+
+We consider the finite field GF(5) = {0,1,2,3,4}. The tables below
+describe how to add and multiply any two elements, as well as the additive and multiplicative inverse of the field elements. Using these tables, we can perform all
+calculations in this field without using modular reduction explicitly.
+
+additive inverse:
+
+−0 = 0
+−1 = 4
+−2 = 3
+−3 = 2
+−4 = 1
+
+| +    | 0    | 1    | 2    | 3    | 4    |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 0    | 1    | 2    | 3    | 4    |
+| 1    | 1    | 2    | 3    | 4    | 0    |
+| 2    | 2    | 3    | 4    | 0    | 1    |
+| 3    | 3    | 4    | 0    | 1    | 2    |
+| 4    | 4    | 0    | 1    | 2    | 3    |
+
+
+
+multiplicative inverse:
+1<sup>−1</sup> = 1
+2<sup>−1</sup> = 3
+3<sup>−1</sup> = 2
+4<sup>−1</sup> = 4
+
+| x    | 0    | 1    | 2    | 3    | 4    |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 0    | 0    | 0    | 0    | 0    |
+| 1    | 0    | 1    | 2    | 3    | 4    |
+| 2    | 0    | 2    | 4    | 1    | 3    |
+| 3    | 0    | 3    | 1    | 4    | 2    |
+| 4    | 0    | 4    | 3    | 2    | 1    |
 
 ### 例子2：构造Prime Fields Z/(pZ)
 
