@@ -14,7 +14,7 @@ V={...........}, the elements of the V is called **Vectors**
 | V    |      |      |      |
 | ->   |      |      |      |
 
-Note: additive identity 0 here represents zero vector in the vector space, while 0 also can represents additive identity in Field in below, don't confuse each other
+Note: additive identity 0 here represents **zero vector** in the vector space, while 0 also can represents additive identity in Field in below, don't confuse each other
 
 ### 2. Scalar multiplication Law:
 

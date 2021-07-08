@@ -1412,7 +1412,7 @@ https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-centos-
 
 benchmark: http://www.itsecure.hu/library/image/CIS_Oracle_MySQL_Enterprise_Edition_5.7_Benchmark_v1.0.0.pdf
 
-Keepalived+ mysql 高可用
+### Keepalived+ mysql 高可用
 
 ```
 -------------------------------------------------------------------------------
