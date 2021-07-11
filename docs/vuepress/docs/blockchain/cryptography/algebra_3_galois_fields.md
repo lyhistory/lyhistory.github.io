@@ -387,6 +387,8 @@ a(b+c)=ab+ac => (a(b+c))¯= (ab+ac)¯ 得证
 
 K / F , K Over F vector space
 
+AES: primitive polynomia 本原多项式
+
 
 
 

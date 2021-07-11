@@ -189,7 +189,7 @@ Permissions take a different meaning for directories. Here's what they mean:
   
   所以如果是修改了/etc/profile对root或sudo操作无效，要看下root下面的~/.bashXXX是不是有PATH设置，
   
-  如果还不生效，就要看下 Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin，可以使用 sudo -E 绕过
+  如果还不生效，就要看下/etc/sudoers: Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin，可以使用 sudo -E 绕过
   
   For some setups the `-E` switch will not work. To "workaround" it you can use `sudo env "PATH=$PATH" bash`. This will also carry your current `$PATH` forward to your `sudo` environment.
   
