@@ -107,8 +107,11 @@ mysql workbench
 mysql -uroot -p123456
 mysql --login-path=XXXX
 
+
 mysql_config_editor/login-path
 mysql_config_editor print --all
+mysql_config_editor set --login-path=host-rpl --host=localhost --port=3306 --user=replicator --password
+
 ```
 
 grep:

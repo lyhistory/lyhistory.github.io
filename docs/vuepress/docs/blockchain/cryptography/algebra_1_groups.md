@@ -114,6 +114,14 @@ take above example, commutative means that in the table it's symmetric down the 
 
 + (C, ·) is a group, i.e., the set of complex numbers u+iv with u,v ∈ R and i<sup>2</sup> =−1 together with the complex multiplication defined by (u1+iv1) · (u2+iv2) = (u1u2−v1v2)+i(u1v2+v1u2) forms an abelian group. The identity element of this group is e = 1, and the
   inverse a−1 of an element a = u+iv ∈ C is given by a<sup>−1</sup> = (u−iv)/(u<sup>2</sup>+v<sup>2</sup>).
+  
++ (Z<sub>n</sub><sup>*</sup>, ·): is defined as the set of positive integers smaller than n which are relatively prime to n. Thus, 
+  
+  the cardinality of  Z<sub>n</sub><sup>*</sup>equals Euler’s phi function evaluated for n, i.e., 
+  
+  |Z<sub>n</sub><sup>*</sup>| =Φ(n). For instance, 
+  
+  the group Z<sub>9</sub><sup>*</sup> has a cardinality ofΦ(9)=3<sup>2</sup>−3<sup>1</sup> =6.  the group consist of the six elements {1,2,4,5,7,8}.
 
 However, all of these groups do not play a significant role in cryptography **because we need groups with a finite number of elements**. Let us now consider the group Z<sub>n</sub><sup>∗</sup> which is very important for many cryptographic schemes such as：
 
@@ -275,6 +283,19 @@ t13 ◦ t12 =   σ
 
 ## Cyclic Groups
 
+Definition 8.2.3 Order of an element
+The order ord(a) of an element a of a group (G,◦) is the smallest positive integer k such that
+a<sup>k</sup> = a	 ◦ a ◦. . . ◦ a (k times)= 1, where 1 is the identity element of G.
+
+
+
+Definition 8.2.4 Cyclic Group
+A group G which contains an element α with maximum order
+ord(α) = |G| is said to be cyclic. Elements with maximum order
+are called primitive elements or generators.
+
+
+
 假设自然数 natural number
 
 n ∈ N = {1, 2, 3, 4, 5, 6, ..........n}
@@ -345,6 +366,89 @@ C4
 | σ             | σ             | σ<sup>2</sup> | σ<sup>3</sup> | i             |
 | σ<sup>2</sup> | σ<sup>2</sup> | σ<sup>3</sup> | i             | σ             |
 | σ<sup>3</sup> | σ<sup>3</sup> | i             | σ             | σ<sup>2</sup> |
+
+
+
+example 2: a = 3 is not a primitive element  of Z<sub>11</sub><sup>*</sup> = {1,2,3,4,5,6,7,8,9,10}., 
+
+a = 3 only generate partial of Z<sub>11</sub><sup>*</sup> {3,9,5,4,1}
+
+a<sup>1</sup> = 3
+a<sup>2</sup> = a · a = 3 · 3 = 9
+a<sup>3</sup> = a<sup>2</sup>  · a = 9 · 3 = 27 ≡ 5 mod 11
+a<sup>4</sup> = a<sup>3</sup>  · a = 5 · 3 = 15 ≡ 4 mod 11
+a<sup>5</sup> = a<sup>4</sup> · a = 4 · 3 = 12 ≡ 1 mod 11
+
+We see that from this point on, the powers of a run through the sequence {3,9,5,4,1}
+indefinitely.
+
+a<sup>6</sup> = a<sup>5</sup> · a ≡ 1 · a ≡ 3 mod 11
+a<sup>7</sup> = a<sup>5</sup> · a<sup>2</sup> ≡ 1 · a<sup>2</sup> ≡ 9 mod 11
+a<sup>8</sup> = a<sup>5</sup> · a<sup>3</sup> ≡ 1 · a<sup>3</sup> ≡ 5 mod 11
+a<sup>9</sup> = a<sup>5</sup> · a<sup>4</sup> ≡ 1 · a<sup>4</sup>≡ 4 mod 11
+a<sup>10</sup> = a<sup>5</sup> · a<sup>5</sup> ≡ 1 · 1 ≡ 1 mod 11
+a<sup>11</sup> = a<sup>10</sup> · a ≡ 1 · a ≡ 3 mod 11
+
+
+
+example 3: a = 2 is a primitive element  of Z<sub>11</sub><sup>*</sup> = {1,2,3,4,5,6,7,8,9,10}., 
+
+a = 2 generate the whole Z<sub>11</sub><sup>*</sup> 
+
+a = 2 							a<sup>6</sup> ≡ 9 mod 11
+a<sup>2</sup> = 4 							a<sup>7</sup> ≡ 7 mod 11
+a<sup>3</sup> = 8 							a<sup>8</sup> ≡ 3 mod 11
+a<sup>4</sup> ≡ 5 mod 11 			a<sup>9</sup>≡ 6 mod 11
+a<sup>5</sup>  ≡ 10 mod 11 			a<sup>10</sup> ≡ 1 mod 11
+
+From the last result it follows that ord(a) = 10 = |Z<sub>11</sub><sup>*</sup>|.
+
+This implies that a = 2 is a primitive element and Z<sub>11</sub><sup>*</sup> is cyclic
+
+
+
+Theorem 8.2.4 Let G be a finite cyclic group. Then it holds that
+1. The number of primitive elements of G is Φ(|G|).
+2. If |G| is prime, then all elements a <> 1 ∈ G are primitive.
+
+很容易理解，G是Cyclic  group，说明存在一个Cyclic set Permutation，由后面的Cayley's theorem可以知道每个元素本身就代表一种Cyclic set Permutation，比如1代表G->1G即旋转0度，2代表G->2G即旋转360/|G|度，3代表G->3G即旋转2*360/|G|度，依次类推，总之每个元素都代表旋转某个角度，但是:
+
+对于奇数个元素的G来说，旋转任意角度都能生成整个group，所以每个元素都是primitive element，
+
+而对于偶数个元素的G来说，只有旋转特定角度才能生成整个group，其他只能生成sub group
+
+Theorem 8.2.5 Cyclic Subgroup Theorem
+Let (G,◦) be a cyclic group. Then every element a ∈ G withord(a) = s is the primitive element of a cyclic subgroup with s elements.
+
+
+
+例子：
+
+Z<sub>11</sub><sup>*</sup> ={x mod 11| x=1,2....10} , 
+
+Z<sub>11</sub><sup>*</sup> = {1,2,3,4,5,6,7,8,9,10}.
+
+| Z<sub>11</sub><sup>*</sup> | = 10 不是prime，Φ(10) = (5−1)(2−1) = 4, 刚好对应下面只有2 6 7 8 可以生成整个group
+
+x=1, \<x\> ={1} ord(1) =1
+
+x=2, \<x\> ={1,2,3,4,5,6,7,8,9,10} ord(2) =10
+
+x=3, \<x\> ={3,9,5,4,1} ord(3) =5
+
+x=4, \<x\> ={4,5,9,3,1} ord(4) =5
+
+x=5, \<x\> ={5,3,4,9,1} ord(5) =5
+
+x=6, \<x\> ={1,2,3,4,5,6,7,8,9,10} ord(6) =10
+
+x=7, \<x\> ={1,2,3,4,5,6,7,8,9,10} ord(7) =10
+
+x=8, \<x\> ={1,2,3,4,5,6,7,8,9,10} ord(8) =10
+
+x=9, \<x\> ={9,4,3,5,1} ord(9) =5
+
+x=10, \<x\> ={10,1} ord(10) =2
 
 
 
@@ -669,11 +773,35 @@ inverse: 根据 x<sup>m</sup> = e => x<sup>1</sup> ◦ x<sup>m-1</sup> = e 找�
 
 
 
+Theorem 8.2.7
+Let G be a finite cyclic group of order n and let α be a generator of G. Then for every integer k that divides n there exists exactly one cyclic subgroup H of G of order k. This subgroup is generated by α<sup>n/k</sup>. H consists exactly of the elements a ∈ G which satisfy the condition a<sup>k</sup> = 1. There are no other subgroups.
+
+这个太容易证明了，首先cyclic group |G|=n， α 是generator，因此 a<sup>n</sup> = 1.
+
+cyclic subgroup H of G of order k，assume generator为 b，则 b<sup>k</sup> = 1.
+
+b属于G，因此b=a<sup>x</sup>	=> (a<sup>x</sup>)<sup>k</sup> = 1 =>  (a<sup>x</sup>)<sup>k</sup> = a<sup>n</sup> => x=n/k
+
+Example 8.10. We again consider the cyclic group Z<sub>11</sub><sup>*</sup>.We saw earlier that α = 8 is a primitive element in the group. If we want to have a generator β for the subgroup of order 2, we compute:
+β =α<sup>n/k</sup> = 8<sup>10/2</sup> = 8<sup>5</sup> = 32768 ≡ 10 mod 11.
+We can now verify that the element 10 in fact generates the subgroup with two
+elements: β<sup>1</sup> = 10, β<sup>2</sup> = 100 ≡ 1 mod 11, β<sup>3</sup> ≡ 10 mod 11, etc.
+Remark: Of course, there are smarter ways of computing 8<sup>5</sup> mod 11, e.g., through
+8<sup>5</sup> = 8<sup>2</sup> 8<sup>2</sup> 8 ≡ (−2)(−2)8 ≡ 32 ≡ 10 mod 11.
+
+
+
+
+
 由上述得出**Cyclic Group 定义**：
 
 Cyclic group both the finite and infinite cyclic groups what they contain basically is they need to **contain** an element x ∈ C such that the subgroup group generated by x \<x\> is actually equal to the entire group
 
 <1> = { 0, +1, +2, +3......., -1, -2, -3,..........}
+
+
+
+
 
 
 
@@ -1124,9 +1252,37 @@ infinite Cyclic group: \<x\> = {e, x, x<sup>2</sup>,x<sup>3</sup>............. x
 
 finite cyclic group: \<x\> = {e, x, x<sup>2</sup>, x<sup>3</sup>, ......x<sup>m-1</sup> }  x<sup>m</sup> = e
 
-对于 order为prime number=P 的finite group G来说，从non-identity element x生成的finite Cyclic group \<x\> = {e, x, x<sup>2</sup>, x<sup>3</sup>, ......x<sup>m-1</sup> }  x<sup>m</sup> = e，m就是G的order = P，因为我们前面有结论其 subgroup |H|=1 or |G|，然后我们取出的是non-identity element x，所以 \<x\> 的 order就是等于|G|，所以m=P=|G|,x<sup>P</sup>=e，换句话说就是non-identity element x生成的finite Cyclic group \<x\> 就是整个 G，所以G is isomorphic to a finite cyclic group 即 C<sub>P</sub> 
+对于 order为prime number=P 的finite group G来说，从non-identity element x生成的finite Cyclic group \<x\> = {e, x, x<sup>2</sup>, x<sup>3</sup>, ......x<sup>m-1</sup> }  x<sup>m</sup> = e，m就是G的order = P，因为我们前面有结论其 subgroup |H|=1 or |G|，然后我们取出的是non-identity element x，所以 \<x\> 的 order就是等于|G|，所以m=P=|G|,x<sup>P</sup>=e (x<sup>P</sup>=e is a generalization of Fermat’s Little Theorem for all cyclic groups)，换句话说就是non-identity element x生成的finite Cyclic group \<x\> 就是整个 G，所以G is isomorphic to a finite cyclic group 即 C<sub>P</sub> 
 
 Note: 网络上很多说法不严谨，比如直接说素数阶群必为循环群 https://blog.csdn.net/qq_25847123/article/details/100572099
+
+例子：
+
+Z<sub>11</sub><sup>*</sup> ={x mod 11| x=1,2....10} , 
+
+Z<sub>11</sub><sup>*</sup> = {1,2,3,4,5,6,7,8,9,10}.
+
+| Z<sub>11</sub><sup>*</sup> | = 10
+
+x=1, \<x\> ={1} ord(1) =1
+
+x=2, \<x\> ={1,2,3,4,5,6,7,8,9,10} ord(2) =10
+
+x=3, \<x\> ={3,9,5,4,1} ord(3) =5
+
+x=4, \<x\> ={4,5,9,3,1} ord(4) =5
+
+x=5, \<x\> ={5,3,4,9,1} ord(5) =5
+
+x=6, \<x\> ={1,2,3,4,5,6,7,8,9,10} ord(6) =10
+
+x=7, \<x\> ={1,2,3,4,5,6,7,8,9,10} ord(7) =10
+
+x=8, \<x\> ={1,2,3,4,5,6,7,8,9,10} ord(8) =10
+
+x=9, \<x\> ={9,4,3,5,1} ord(9) =5
+
+x=10, \<x\> ={10,1} ord(10) =2
 
 ## Quotient Groups
 

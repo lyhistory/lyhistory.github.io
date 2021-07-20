@@ -579,3 +579,450 @@ sr0+tr1=1
 
 => sm+ta = 1 => 两边mod m，s0+ta ≡ 1 (mod m) => ta ≡ 1 (mod m) 根据EEA的算法得出的t肯定是a<sup>Φ(m)-1</sup> 
 
+### RSA
+
+refer to draw.io <<cryptography-encryption>> https://app.diagrams.net/#G1l7hGpTWy3dLPROAwXYOAuClDMiugzqNL
+
+Mathematical Attacks
+The best mathematical cryptanalytical method we know is factoring the modulus. An attacker, Oscar, knows the modulus n, the public key e and the ciphertext y. His goal is to compute the private key d which has the property that e · d ≡ modΦ(n).
+**It seems that he could simply apply the extended Euclidean algorithm and compute d. However, he does not know the value of Φ(n). At this point factoring comes in: the best way to obtain this value is to decompose n into its primes p and q.** If Oscar can do this, the attack succeeds in three steps:
+Φ(n) = (p−1)(q−1)
+d<sup>−1</sup> ≡ e mod Φ(n)
+x ≡ y<sup>d</sup> mod n.
+In order to prevent this attack, the modulus must be sufficiently large. This is the sole reason why moduli of 1024 or more bit are needed for a RSA.
+
+### Public-Key Cryptosystems Based on the Discrete Logarithm Problem
+
+In the previous chapter we learned about the RSA public-key scheme. As we have seen, RSA is based on the hardness of factoring large integers. The integer factorization problem is said to be the one-way function of RSA. As we saw earlier, roughly speaking a function is one-way if it is computationally easy to compute the function f (x) = y, but computationally infeasible to invert the function: f <sup>−1</sup>(y) = x. The question is whether we can find other one-way functions for building asymmetric crypto schemes. It turns out that most non-RSA public-key algorithms with practical relevance are based on another one-way function, the discrete logarithm problem.
+
+The discrete logarithm problem is defined in what are called **cyclic groups**.
+
+#### Diffie–Hellman Key Exchange
+
+This fundamental key agreement technique is implemented in many open and commercial cryptographic protocols like
+Secure Shell (SSH), Transport Layer Security (TLS), and Internet Protocol Security (IPSec).The basic idea behind the DHKE is that exponentiation in Z<sup>∗</sup><sub>p</sub>, p prime, is aone-way function and that exponentiation is commutative, i.e.,
+k = (α<sup>x</sup>)<sup>y</sup> ≡ (α<sup>y</sup>)<sup>x</sup> mod p
+The value k ≡ (α<sup>x</sup>)<sup>y</sup> ≡ (α<sup>y</sup>)<sup>x</sup> mod p is the joint secret which can be used as the session key between the two parties.
+
+classic Diffie–Hellman key exchange protocol is in the group Z<sup>∗</sup><sub>p</sub>, where p is a prime. The protocol can be generalized, in particular to groups of elliptic curves. This gives rise to elliptic curve cryptography, which has become a very popular asymmetric scheme in practice. In order to better understand elliptic curves and schemes such as Elgamal encryption, which are also closely related
+to the DHKE, we introduce the discrete logarithm problem in the following sections.
+
+#### The Discrete Logarithm Problem in Prime Fields
+
+Definition 8.3.1 Discrete Logarithm Problem (DLP) in Z<sub>p</sub><sup>*</sup>
+
+Given is the finite cyclic group  Z<sub>p</sub><sup>*</sup> of order p−1 and a primitive element 
+
+α ∈  Z<sub>p</sub><sup>*</sup> 
+
+and another element β ∈  Z<sub>p</sub><sup>*</sup>. 
+
+The DLP is the problem of determining the integer 1 ≤ x ≤ p−1 such that: α<sup>x</sup> ≡β mod p
+
+such an integer x must exist since α is a primitive element and each group element can be expressed as a power of any primitive
+element. This integer x is called the discrete logarithm of β to the base α, and we can formally write:
+x = log<sub>α</sub><sup>β</sup> mod p.
+Computing discrete logarithms modulo a prime is a very hard problem if the parameters are sufficiently large. Since exponentiation α<sup>x</sup> ≡β mod p is computationally easy, this forms a one-way function.
+
+
+
+Example 8.11. We consider a discrete logarithm in the group Z<sub>47</sub><sup>*</sup>, in which α = 5 is a primitive element. For β = 41 the discrete logarithm problem is: Find the positive integer x such that 5<sup>x</sup> ≡ 41 mod 47
+Even for such small numbers, determining x is not entirely straightforward. By using a brute-force attack, i.e., systematically trying all possible values for x, we obtain the solution x = 15.
+
+In practice, it is often desirable to have a DLP in groups with prime cardinality in order to prevent the Pohlig–Hellman attack Since groups  Z<sub>p</sub><sup>*</sup> have cardinality p−1, which is obviously not prime, 
+
+one often uses DLPs in subgroups of  Z<sub>p</sub><sup>*</sup> with prime order, 
+
+rather than using the group  Z<sub>p</sub><sup>*</sup> itself. We illustrate this with an example.
+
+Example 8.12. We consider the group Z<sub>47</sub><sup>*</sup>  which has order 46. The subgroups in
+
+Z<sub>47</sub><sup>*</sup> have thus a cardinality of 23, 2 and 1. α = 2 is an element in the subgroup with 23 elements, and since 23 is a prime, α is a primitive element in the subgroup. A possible discrete logarithm problem is given for β = 36 (which is also in the subgroup): Find the positive integer x, 1 ≤ x ≤ 23, such that 2<sup>x</sup> ≡ 36 mod 47 By using a brute-force attack, we obtain a solution for x = 17.
+
+#### The Generalized Discrete Logarithm Problem
+
+The feature that makes the DLP particularly useful in cryptography is that it is not restricted to the multiplicative group Z<sub>p</sub><sup>*</sup>, p prime, but can be defined over any cyclic groups. This is called the generalized discrete logarithm problem (GDLP) and can be stated as follows.
+
+Definition 8.3.2 Generalized Discrete Logarithm Problem 
+
+Given is a finite cyclic group G with the group operation ◦ and cardinality n. We consider a primitive element α ∈ G and another
+element β ∈ G. The discrete logarithm problem is finding the integer x, where 1 ≤ x ≤ n, such that:
+β =α◦α ◦. . . ◦α (x times)=α<sup>x</sup>
+
+As in the case of the DLP in Z<sub>p</sub><sup>*</sup>, such an integer x must exist since α is a primitive element, and thus each element of the group G can be generated by repeated application of the group operation on α.
+It is important to realize that there are cyclic groups in which the DLP is not difficult. Such groups cannot be used for a public-key cryptosystem since the DLP is not a one-way function. Consider the following example.
+Example 8.13. This time we consider the additive group of integers modulo a prime. For instance, if we choose the prime p = 11, G = (Z11,+) is a finite cyclic group with the primitive element α = 2. Here is how α generates the group:
+
+| i    | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9    | 10   | 11   |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| iα   | 2    | 4    | 6    | 8    | 10   | 1    | 3    | 5    | 7    | 9    | 0    |
+
+We try now to solve the DLP for the element β = 3, i.e., we have to compute the integer 1 ≤ x ≤ 11 such that
+
+x · 2 = 2+2+. . .+2 x times ≡ 3 mod 11
+
+Here is how an “attack” against this DLP works. Even though the group operation is addition, we can express the relationship between α, β and the discrete logarithm x in terms of multiplication:
+x · 2 ≡ 3 mod 11.
+In order to solve for x, we simply have to invert the primitive element α:
+x ≡ 2<sup>−1</sup> · 3 mod 11
+
+Using, e.g., the extended Euclidean algorithm, we can compute 2<sup>−1</sup> ≡ 6 mod 11 from which the discrete logarithm follows as:
+x ≡ 2<sup>−1</sup> · 3 ≡ 7 mod 11
+
+The discrete logarithm can be verified by looking at the small table provided above.
+We can generalize the above trick to any group (Zn,+) for arbitrary n and elements α,β ∈ Zn. Hence, we conclude that the generalized DLP is computationally easy over Zn. The reason why the DLP can be solved here easily is that we have mathematical operations which are not in the additive group, namely multiplication and inversion
+
+After this counterexample we now list discrete logarithm problems that have been proposed for use in cryptography:
+1. The multiplicative group of the prime field Zp or a subgroup of it. For instance, the classical DHKE uses this group, but also Elgamal encryption or the Digital Signature Algorithm (DSA). These are the oldest and most widely used types of discrete logarithm systems.
+2. The cyclic group formed by an elliptic curve. They have become popular in practice over the last decade.
+3. The multiplicative group of a Galois field GF(2<sup>m</sup>) or a subgroup of it. These groups can be used completely analogous to multiplicative groups of prime fields, and schemes such as the DHKE can be realized with them. They are not as popular
+in practice because the attacks against them are somewhat more powerful than those against the DLP in Zp. Hence DLPs over GF(2<sup>m</sup>) require somewhat higher bit lengths for providing the same level of security than those over Zp.
+4. Hyperelliptic curves or algebraic varieties, which can be viewed as generalization as elliptic curves. They are currently rarely used in practice, but in particular hyperelliptic curves have some advantages such as short operand lengths
+
+#### Security of the Diffie–Hellman Key Exchange
+
+Let’s now consider the possibilities of a passive adversary, i.e., Oscar can only listen but not alter messages. His goal is to compute the session key kAB shared by Alice and Bob. Which information does Oscar get from observing the protocol?
+Certainly, Oscar knows α and p because these are public parameters chosen during the set-up protocol. In addition, Oscar can obtain the values A = kpub,A and B=kpub,B by eavesdropping on the channel during an execution of the key-exchange protocol. Thus, the question is whether he is capable of computing k = α<sup>ab</sup> from α, p,A ≡α<sup>a</sup> mod p and B ≡α<sup>b</sup> mod p. This problem is called the Diffie–Hellman problem (DHP). Like the discrete logarithm problem it can be generalized to arbitrary finite cyclic groups. Here is a more formal statement of the DHP:
+
+Definition 8.4.1 Generalized Diffie–Hellman Problem (DHP)
+Given is a finite cyclic group G of order n, a primitive element α ∈ G and two elements A = α<sup>a</sup> and B = α<sup>b</sup> in G. The Diffie–Hellman problem is to find the group element α<sup>ab</sup>.
+
+#### The Elgamal Encryption Scheme
+
+The protocol consists of two phases, the classical DHKE which is followed by the message encryption and decryption.
+Bob computes his private key d and public key β . This key pair does not change, i.e., it can be used for encrypting many messages. Alice, however, has to generate a new public–private key pair for the encryption of every message. Her private key
+is denoted by i and her public key by kE. The latter is an ephemeral (existing only temporarily) key, hence the index “E”. The joint key is denoted by kM because it is used for masking the plaintext. For the actual encryption, Alice simply multiplies the plaintext message x by the masking key kM in Z<sub>p</sub><sup>*</sup>. On the receiving side, Bob reverses the encryption by multipliying with the inverse mask. Note that one property of cyclic groups is that,
+
+given any key kM ∈ Z<sub>p</sub><sup>*</sup>, every messages x maps to another ciphertext if the two values are multiplied. 
+
+Moreover, if the key kM is randomly drawn from Z<sub>p</sub><sup>*</sup>, every ciphertext y ∈ {1,2, . . . , p−1} is equally likely.
+
+##### Computational Aspects
+
++ Key Generation 
+
++ During the key generation by the receiver (Bob in our example), a prime p must be generated, and the public and private have to be computed. Since the security of Elgamal also depends on the discrete logarithm problem, p should have a
+  length of at least 1024 bits. To generate such a prime, the prime-finding algorithms can be used. The private key should be generated by a true random number generater. The public key requires one exponentiation for which the square-and-multiply algorithm is used.
+
++ Encryption
+
+  Within the encryption procedure, two modular exponentiations and one modular multiplication are required for computing the ephemeral and the masking key, as well as for the message encryption. All operands involved have a bit length of log<sub>2</sub><sup>p</sup>. For efficient exponentiation, one should apply the square-and-multiply algorithm, It is important to note that the two exponentiations, which constitute almost all computations necessary, are independent of the plaintext. Hence, in some applications they can be precomputed at times of low computational load, stored and used when the actual encryption is needed. This can be a major advantage in practice.
+
++ Decryption The main steps of the decryption are first an exponentiation k<sub>M</sub> = k<sup>d</sup> mod p, using the square-and-multiply algorithm, followed by an inversion of k<sub>M</sub>,that is performed with the extended Euclidean algorithm. However, there is a shortcut based on Fermat’s Little Theorem that combines these two steps in a single one. from Fermat’s Little Theorem :
+
+  k<sub>E</sub><sup>p-1</sup>≡1 mod p
+
+  for all kE ∈ Z<sub>p</sub><sup>*</sup>. We can now merge Step 1 and 2 of the decryption as follows:
+
+  k<sub>M</sub><sup>-1</sup>≡ (k<sub>E</sub><sup>d</sup>)<sup>−1</sup> mod p
+  ≡ (k<sub>E</sub><sup>d</sup>)<sup>−1</sup>k<sub>E</sub><sup>p−1</sup> mod p
+  ≡ k<sub>E</sub><sup>p−d−1</sup> mod p
+
+  The equivalence relation allows us to compute the inverse of the masking key using a single exponentiation with the exponent (p−d −1). After that, one modular multiplication is required to recover x ≡ y · k<sub>M</sub><sup>-1</sup> mod p. As a consequence, decryption essentially requires one execution of the square-and-multiply algorithm followed by a single modular multiplication for recovering the plaintext.
+
+
+
+### Elliptic Curve Cryptosystems
+
+ECC is based on the generalized discrete logarithm problem, and thus DL-protocols such as the Diffie–Hellman key exchange can also be realized using elliptic curves.
+
+We start by giving a short introduction to the mathematical concept of elliptic curves, independent of their cryptographic applications. ECC is based on the generalized discrete logarithm problem. Hence, what we try to do first is to find a cyclic group on which we can build our cryptosystem. Of course, the mere existence of a cyclic group is not sufficient. The DL problem in this group must also be computationally hard, which means that it must have good one-way properties.
+We start by considering certain polynomials (e.g., functions with sums of exponents of x and y), and we plot them over the real numbers.
+Example 9.1. Let’s look at the polynomial equation x<sup>2</sup>+y<sup>2</sup> = r<sup>2</sup> over the real numbers R. If we plot all the pairs (x,y) which fulfill this equation in a coordinate system, we obtain a circle.
+Example 9.2. A slight generalization of the circle equation is to introduce coefficients to the two terms x<sup>2</sup> and y<sup>2</sup>, i.e., we look at the set of solutions to the equation a · x<sup>2</sup> +b · y<sup>2</sup> = c over the real numbers. It turns out that we obtain an ellipse.
+
+#### Definition of Elliptic Curves
+
+From the two examples above, we conclude that we can form certain types of curves from polynomial equations. By “curves”, we mean the set of points (x,y) which are solutions of the equations. For example, the point (x = r,y = 0) fulfills the equation of a circle and is, thus, in the set. The point (x = r/2,y = r/2) is not a solution to the polynomial x<sup>2</sup>+y<sup>2</sup> = r<sup>2</sup> and is, thus, not a set member. An elliptic curve is a special type of polynomial equation. For cryptographic use, we need to consider the curve not over the real numbers but over a finite field. The most popular choice is prime fields GF(p) , where all arithmetic is performed modulo a prime p.
+
+Definition 9.1.1 Elliptic Curve
+The elliptic curve over Zp, p > 3, is the set of all pairs (x,y) ∈ Zp which fulfill y<sup>2</sup> ≡ x<sup>3</sup>+a · x+b mod p 
+together with an imaginary point of infinity O, where a,b ∈ Zp
+and the condition 4 · a<sup>3</sup>+27 · b<sup>2</sup> <> 0 mod p.
+
+The definition of elliptic curve requires that the curve is nonsingular. Geometrically speaking, this means that the plot has no self-intersections or vertices, which is achieved if the discriminant of the curve −16(4a<sup>3</sup>+27b<sup>2</sup>) is nonzero.
+
+For cryptographic use we are interested in studying the curve over a prime field as in the definition. However, if we plot such an elliptic curve over Zp, we do not get anything remotely resembling a curve. However, nothing prevents us from taking an elliptic curve equation and plotting it over the set of real numbers.
+
+Example: y2 = x3 −3x+3 over R
+
+https://www.desmos.com/calculator/ialhd71we3
+
+We notice several things from this elliptic curve plot.First, the elliptic curve
+is symmetric with respect to the x-axis. This follows directly from the fact that for
+all values xi which are on the elliptic curve, both yi =根号下的(x<sub>i</sub><sup>3</sup> +a · x<sub>i</sub>+b) and yi =负根号下的(x<sub>i</sub><sup>3</sup> +a · x<sub>i</sub>+b) are solutions.
+
+Second, there is one intersection with the x-axis. This follows from the fact that it is a cubic equation if we solve for y = 0 which has one real solution (the intersection with the x-axis) and two complex solutions (which do not show up in the plot). There are also elliptic curves with three intersections with the x-axis(e.g, b=3,a=-5).
+
+We now return to our original goal of finding a curve with a large cyclic group, which is needed for constructing a discrete logarithm problem. The first task for finding a group is done, namely identifying a set of elements. In the elliptic curve case, the group elements are the points that fulfill y<sup>2</sup> ≡ x<sup>3</sup>+a · x+b mod p . The next question at hand is: How do we define a group operation with those points? Of course, we have to make sure that the group laws hold for the operation. 简言之，如何定义满足 y<sup>2</sup> ≡ x<sup>3</sup>+a · x+b mod p 的points的composition law，从而让其构成group
+
+#### Group Operations on Elliptic Curves
+
+Let’s denote the group operation with the addition symbol “+”. “Addition” means that given two points and their coordinates, say P = (x1,y1) and Q = (x2,y2), we have to compute the coordinates of a third point R such that:
+P+Q = R
+(x1,y1)+(x2,y2) = (x3,y3)
+
+As we will see below, it turns out that this addition operation looks quite arbitrary. Luckily, there is a nice geometric interpretation of the addition operation if we consider a curve defined over the real numbers. For this geometric interpretation, we have to distinguish two cases: the addition of two distinct points (named point addition) and the addition of one point to itself (named point doubling).
+
++ Point Addition P+Q 
+
+  This is the case where we compute R = P+Q and P <> Q. The construction works as follows: Draw a line through P and Q and obtain a third point of intersection between the elliptic curve and the line. Mirror this third intersection point along the x-axis. This mirrored point is, by definition, the point R. 
+
++ Point Doubling 
+
+  P+P This is the case where we compute P+Q but P=Q. Hence, we can write R = P+P = 2P. We need a slightly different construction here. We draw the tangent line through P and obtain a second point of intersection between this line and the elliptic curve. We mirror the point of the second intersection along the x-axis. This mirrored point is the result R of the doubling.
+
+You might wonder why the group operations have such an arbitrary looking form. Historically, this tangent-and-chord method was used to construct a third point if two points were already known, while only using the four standard algebraic operations
+add, subtract, multiply and divide. It turns out that if points on the elliptic curve are added in this very way, the set of points also fulfill most conditions necessary for a group, that is, closure, associativity, existence of an identity element and existence of an inverse. 简言之，这种看起来“随意”的构造方式可以让这种composition law满足group定义
+
+Of course, in a cryptosystem we cannot perform geometric constructions. However, by applying simple coordinate geometry, we can express both of the geometric constructions from above through analytic expressions, i.e., formulae. As stated above, these formulae only involve the four basic algebraic operations. These operations can be performed in any field, not only over the field of the real numbers. In particular, we can take the curve equation from above, but we now consider it over prime fields GF(p) rather than over the real numbers. This yields the following analytical expressions for the group operation.
+
+Elliptic Curve Point Addition and Point Doubling
+x<sub>3</sub> = s<sup>2</sup>−x<sub>1</sub>−x<sub>2</sub> mod p
+y<sub>3</sub> = s(x<sub>1</sub>−x<sub>3</sub>)−y<sub>1</sub> mod p
+where
+
+if P <> Q (point addition):	s =(y<sub>2</sub>−y<sub>1</sub>)/(x<sub>2</sub>−x<sub>1</sub>) mod p ; 两点求斜率很简单
+
+if P = Q (point doubling):	 s=(3x<sub>1</sub><sup>2</sup>+a)/2y<sub>1</sub> mod p ; 	y<sup>2</sup> ≡ x<sup>3</sup>+a · x+b两边对x求导，2yy'=3x<sup>2</sup>+a
+
+推导：
+
+y = sx+c. s = (-y<sub>3</sub>-y<sub>1</sub>)/(x<sub>3</sub>-x<sub>1</sub>)	Note:这里是-y<sub>3</sub>，因为根据前面知道我们是取两点连线和椭圆曲线的交点的对称点
+
+代入
+
+y<sup>2</sup> ≡ x<sup>3</sup>+a · x+b mod p 
+
+=》 (sx+c)<sup>2</sup>≡ x<sup>3</sup>+a · x+b mod p 
+
+=》s<sup>2</sup>x<sup>2</sup> + 2scx+ c<sup>2</sup> = x<sup>3</sup>+a · x+b
+
+=》 x<sup>3</sup>- s<sup>2</sup>x<sup>2</sup>  +(a-2sc) · x+b-c<sup>2</sup> = 0
+
+根据韦达定理(https://zh.wikipedia.org/wiki/%E9%9F%A6%E8%BE%BE%E5%AE%9A%E7%90%86)
+
+x<sub>1</sub>+x<sub>2</sub>+x<sub>3</sub>=s<sup>2</sup>
+
+=> x<sub>3</sub> = s<sup>2</sup>−x<sub>1</sub>−x<sub>2</sub> mod p
+
+ s = (-y<sub>3</sub>-y<sub>1</sub>)/(x<sub>3</sub>-x<sub>1</sub>) 
+
+=> y<sub>3</sub>+y<sub>1</sub> =  s(x<sub>1</sub>-x<sub>3</sub>) 
+
+=> y<sub>3</sub>=  s(x<sub>1</sub>-x<sub>3</sub>)- y<sub>1</sub>
+
+Note that the parameter s is the slope of the line through P and Q in the case of point addition, or the slope of the tangent through P in the case of point doubling.
+
+Even though we made major headway towards the establishment of a finite group, we are not there yet. One thing that is still missing is an identity (or neutral) element O such that: P+O = P
+
+for all points P on the elliptic curve. It turns out that there isn’t any point (x,y) that fulfills the condition. Instead we define an abstract point at infinity as the neutral element O. This point at infinity can be visualized as a point that is located towards
+“plus” infinity along the y-axis or towards “minus” infinity along the y-axis.
+
+According the group definition, we can now also define the inverse −P of any group element P as:
+
+P+(−P) = O.
+
+The question is how do we find −P? If we apply the tangent-and-chord method from above, it turns out that the inverse of the point P = (x<sub>p</sub>,y<sub>p</sub>) is the point −P = (x<sub>p</sub>,−y<sub>p</sub>), i.e., the point that is reflected along the x-axis.
+
+Note that finding the inverse of a point P = (x<sub>p</sub>,y<sub>p</sub>) is now trivial. We simply take the negative of its y coordinate. In the case of elliptic curves over a prime field GF(p) (the most interesting case in cryptography), this is easily achieved since −y<sub>p</sub> ≡ p−y<sub>p</sub> mod p, hence−P = (x<sub>p</sub>, p−y<sub>p</sub>).
+
+Example. We consider a curve over the small field Z<sub>17</sub>:
+
+E : y<sup>2</sup> ≡ x<sup>3</sup>+2x+2 mod 17.
+
+We want to double the point P = (5,1).
+2P= P+P = (5,1)+(5,1) = (x<sub>3</sub>,y<sub>3</sub>)
+
+s =(3x<sub>1</sub><sup>2</sup>+a)/2y<sub>1</sub> = (2 · 1)<sup>−1</sup>(3 · 5<sup>2</sup>+2) = 2<sup>−1</sup> · 9 ≡ 9 · 9 ≡ 13 mod 17
+
+x<sub>3</sub> = s<sup>2</sup>−x<sub>1</sub>−x<sub>2</sub> = 13<sup>2</sup>−5−5 = 159 ≡ 6 mod 17
+
+y<sub>3</sub> = s(x<sub>1</sub>−x<sub>3</sub>)−y<sub>1</sub> = 13(5−6)−1 = −14 ≡ 3 mod 17
+
+2P = (5,1)+(5,1) = (6,3)
+
+For illustrative purposes we check whether the result 2P = (6,3) is actually a point
+on the curve by inserting the coordinates into the curve equation:
+
+y<sup>2</sup> ≡ x<sup>3</sup>+2 · x+2 mod 17
+
+3<sup>2</sup> ≡ 6<sup>3</sup>+2 · 6+2 mod 17
+9 = 230 ≡ 9 mod 17
+
+#### Building a Discrete Logarithm Problem with Elliptic Curves
+
+Theorem 9.2.1 The points on an elliptic curve together with O have cyclic subgroups. Under certain conditions all points on an
+elliptic curve form a cyclic group.
+
+Please note that we have not proved the theorem. This theorem is extremely useful because we have a good understanding of the properties of cyclic groups. In particular, we know that by definition a primitive element must exist such that its powers generate the entire group. Moreover, we know quite well how to build cryptosystems from cyclic groups. Here is an example for the cyclic group of an elliptic curve.
+
+Example. We want to find all points on the curve:
+E : y<sup>2</sup> ≡ x<sup>3</sup>+2 · x+2 mod 17.
+
+It happens that all points on the curve form a cyclic group and that the order is #E = 19. For this specific curve the group order is a prime, so every element is primitive.
+As in the previous example we start with the primitive element P = (5,1). We compute now all “powers” of P. More precisely, since the group operation is addition, we compute P,2P, . . . , (#E)P. Here is a list of the elements that we obtain:
+
+1P = (5,1)
+
+2P = (5,1)+(5,1) = (6,3) 			11P = (13,10)
+3P = 2P+P = (10,6) 					12P = (0,11)
+4P = (3,1) 									13P = (16,4)
+5P = (9,16) 									14P = (9,1)
+6P = (16,13) 								15P = (3,16)
+7P = (0,6) 									16P = (10,11)
+8P = (13,7) 									17P = (6,14)
+9P = (7,6) 										18P = (5,16)
+10P = (7,11) 										19P = O
+
+It is also instructive to look at the last computation above, which yielded:
+
+19P = P + 18P  = (5,1)+(5,16) = O
+
+This means that P = (5,1) is the inverse of 18P = (5,16), and vice versa. This is easy to verify. We have to check whether the two x coordinates are identical and that the two y coordinates are each other’s additive inverse modulo 17. The first condition obviously hold and the second one too, since −1 ≡ 16 mod 17.
+另一种理解方式：
+
+s =(y<sub>2</sub>−y<sub>1</sub>)/(x<sub>2</sub>−x<sub>1</sub>) mod p = (16-1)/(5-5)= ∞
+
+x<sub>3</sub> = s<sup>2</sup>−x<sub>1</sub>−x<sub>2</sub> = ∞−5−5 = ∞≡ ∞ mod 17
+
+y<sub>3</sub> = s(x<sub>1</sub>−x<sub>3</sub>)−y<sub>1</sub> = ∞(5−∞)−1 ≡ ∞ mod 17
+
+=> 19P = (∞, ∞)
+
+From now on, the cyclic structure becomes visible since:
+20P = 19P+P = O +P = P
+21P = 2P
+
+To set up DL cryptosystems it is important to know the order of the group. Even though knowing the exact number of points on a curve is an elaborate task, we know the approximate number due to Hasse’s theorem.
+
+Theorem 9.2.2 Hasse’s theorem
+Given an elliptic curve E modulo p, the number of points on the curve is denoted by #E and is bounded by:
+p+1−2√p ≤ #E ≤ p+1+2√p.
+
+Hasse’s theorem, which is also known as Hasse’s bound, states that the number of points is roughly in the range of the prime p. This has major practical implications.
+For instance, if we need an elliptic curve with 2<sup>160</sup> elements, we have to use a prime of length of about 160 bit.
+Let’s now turn our attention to the details of setting up the discrete logarithm problem.
+
+Definition 9.2.1 Elliptic Curved Discrete Logarithm Problem (ECDLP)
+Given is an elliptic curve E. We consider a primitive element P and another element T. The DL problem is finding the integer d,
+where 1 ≤ d ≤ #E, such that:
+
+P+P+· · · +P (d times) = dP = T.  this operation is called point multiplication, since we can formally write T = dP. This terminology can be misleading, however, since we cannot directly multiply the integer d with a curve point P. Instead, dP is merely a convenient notation for the repeated application of the group operation (point addiction).
+
+In cryptosystems, d is the private key which is an integer, while the public key T is a point on the curve with coordinates T = (xT ,yT ). In contrast, in the case of the DL problem in Z<sub>p</sub><sup>*</sup>, both keys were integers.
+
+Example 9.6. We perform a point multiplication on the curve y2 ≡ x3+2x+2 mod
+17 that was also used in the previous example. We want to compute
+
+13P = P+P+. . .+P
+
+where P=(5,1). In this case, we can simply use the table that was compiled earlier:
+
+13P = (16,4).
+
+Point multiplication is analog to exponentiation in multiplicative groups. In order to do it efficiently, we can directly adopt the square-and-multiply algorithm. The only difference is that squaring becomes doubling and multiplication becomes addition of P. Here is the algorithm:
+
+Double-and-Add Algorithm for Point Multiplication
+Input: elliptic curve E together with an elliptic curve point P 
+
+a scalar d = Σ<sub>i=0</sub><sup>t</sup> d<sub>i</sub>2<sup>i</sup> with d<sub>i</sub> ∈ 0,1 and d<sub>t</sub> = 1
+Output: T = dP
+Initialization:
+T = P
+Algorithm:
+1 	FOR i = t −1 DOWNTO 0
+1.1  	T = T +T mod n
+			IF d<sub>i</sub> = 1
+1.2 		T = T +P mod n
+2 	RETURN (T)
+
+For a random scalar of length of t +1 bit, the algorithm requires on average 1.5t point doubles and additions. Verbally expressed, the algorithm scans the bit representation of the scalar d from left to right. It performs a doubling in every iteration, and only if the current bit has the value 1 does it perform an addition of P. Let’s look at an example.
+Example 9.7. We consider the scalar multiplication 26P, which has the following binary representation:
+26P = (11010<sub>2</sub>)P = (d<sub>4</sub>d<sub>3</sub>d<sub>2</sub>d<sub>1</sub>d<sub>0</sub>)<sub>2</sub> P.
+
+The algorithm scans the scalar bits starting on the left with d<sub>4</sub> and ending with the rightmost bit d<sub>0</sub>.
+
+Step:
+#0 P = 1<sub>2</sub> P inital setting, bit processed: d<sub>4</sub> = 1
+#1a P+P = 2P = 10<sub>2</sub> P DOUBLE, bit processed: d<sub>3</sub>
+#1b 2P+P = 3P = 10<sub>2</sub> P+1<sub>2</sub> P = 11<sub>2</sub> P ADD, since d<sub>3</sub> = 1
+#2a 3P+3P = 6P = 2(11<sub>2</sub> P) = 110<sub>2</sub> P DOUBLE, bit processed: d<sub>2</sub>
+#2b no ADD, since d<sub>2</sub> = 0
+#3a 6P+6P = 12P = 2(110<sub>2</sub> P) = 1100<sub>2</sub> P DOUBLE, bit processed: d<sub>1</sub>
+#3b 12P+P = 13P = 1100<sub>2</sub> P+1<sub>2</sub> P = 1101<sub>2</sub> P ADD, since d1 = 1
+#4a 13P+13P = 26P = 2(1101<sub>2</sub> P) = 11010<sub>2</sub> P DOUBLE, bit processed: d0
+#4b no ADD, since d0 = 0
+
+It is instructive to observe how the binary representation of the exponent evolves. We see that doubling results in a left shift of the scalar, with a 0 put in the rightmost position. By performing addition with P, a 1 is inserted into the rightmost position of the scalar. Compare how the highlighted exponents change from iteration to iteration.
+
+If we go back to elliptic curves over the real numbers, there is a nice geometric interpretation for the ECDLP: given a starting point P, we compute 2P, 3P, . . ., dP = T, effectively hopping back and forth on the elliptic curve. We then publish the starting point P (a public parameter) and the final point T (the public key). In order to break the cryptosystem, an attacker has to figure out how often we “jumped” on the elliptic curve. The number of hops is the secret d, the private key.
+
+#### Diffie–Hellman Key Exchange with Elliptic Curves
+
+In complete analogy to the conventional Diffie–Hellman key exchange (DHKE) introduced, we can now realize a key exchange using elliptic curves. This is referred to as elliptic curve Diffie–Hellman key exchange, or ECDH. First we have to agree on domain parameters, that is, a suitable elliptic curve over which we can work and a primitive element on this curve.
+
+
+
+In practice, often the x-coordinate is hashed and then used as a symmetric key. Typically,
+not all bits are needed. For instance, in a 160-bit ECC scheme, hashing the
+x-coordinate with SHA-1 results in a 160-bit output of which only 128 would be
+used as an AES key.
+
+Please note that elliptic curves are not restricted to the DHKE. In fact, almost all
+other discrete logarithm protocols, in particular digital signatures and encryption,
+e.g., variants of Elgamal, can also be realized and The widely used elliptic curve digital
+signature algorithms (ECDSA)
+
+#### Security
+
+Note that in practice finding a suitable elliptic curve is a relatively difficult task.
+The curves have to show certain properties in order to be secure
+
+
+
+The reason we use elliptic curves is that the ECDLP has very good one-way characteristics.
+If an attacker Oscar wants to break the ECDH, he has the following
+information: E, p, P, A, and B. He wants to compute the joint secret between Alice
+and Bob TAB = a · b · P. This is called the elliptic curve Diffie–Hellman problem
+(ECDHP). There appears to be only one way to compute the ECDHP, namely to
+solve either of the discrete logarithm problems:
+a = logP A
+or
+b = logP B
+
+
+
+If the elliptic curve is chosen with care, the best known attacks against the
+ECDLP are considerably weaker than the best algorithms for solving the DL problem
+modulo p, and the best factoring algorithms which are used for RSA attacks.
+In particular, the index-calculus algorithms, which are powerful attacks against the
+DLP modulo p, are not applicable against elliptic curves. For carefully selected elliptic
+curves, the only remaining attacks are generic DL algorithms, that is Shanks’
+baby-step giant-step method and Pollard’s rho method, which were described in
+Sect. 8.3.3. Since the number of steps required for such an attack is roughly equal
+
+
+
+to the square root of the group cardinality, a group order of at least 2160 should be
+used. According to Hasse’s theorem, this requires that the prime p used for the elliptic
+curve must be roughly 160-bit long. If we attack such a group with generic
+algorithms, we need around
+√
+2160 = 280 steps. A security level of 80 bit provides
+medium-term security. In practice, elliptic curve bit lengths up to 256 bit are commonly
+used, which provide security levels of up to 128 bit.
+It should be stressed that this security is only achieved if cryptographically strong
+elliptic curves are used. There are several families of curves that possess cryptographic
+weaknesses, e.g., supersingular curves. They are relatively easy to spot,
+however. In practice, often standardized curves such as ones proposed by the National
+Institute of Standards and Technology (NIST) are being used.
+
+
+
+Before using ECC, a curve with good cryptographic properties needs to be identified.
+In practice, a core requirement is that the cyclic group (or subgroup) formed
+by the curve points has prime order(猜测原因应该是，根据之前group的基础知识知道，prime order的group isomorphic to Cyclic group，即group中任意非identity的元素都可以生成整个group，如果选择的不是prime order则没有这个性质，非identity元素可能生成的是sub group，这样就有安全问题了，比如某个元素只能生成order=2的subgroup就很危险了，换句话说，在ECC中，相当于某个点无论选择什么私钥d都只能生成两个元素/公钥，换句话说，知道了公钥，任意选择一个私钥都有很大概率50%？猜中). Moreover, certain mathematical properties that
+lead to cryptographic weaknesses must be ruled out. Since assuring all these properties
+is a nontrivial and computationally demanding task, often standardized curves
+are used in practice.
