@@ -964,65 +964,42 @@ In complete analogy to the conventional Diffie–Hellman key exchange (DHKE) int
 
 
 
-In practice, often the x-coordinate is hashed and then used as a symmetric key. Typically,
-not all bits are needed. For instance, in a 160-bit ECC scheme, hashing the
-x-coordinate with SHA-1 results in a 160-bit output of which only 128 would be
-used as an AES key.
+In practice, often the x-coordinate is hashed and then used as a symmetric key. Typically,not all bits are needed. For instance, in a 160-bit ECC scheme, hashing the x-coordinate with SHA-1 results in a 160-bit output of which only 128 would be used as an AES key.
 
-Please note that elliptic curves are not restricted to the DHKE. In fact, almost all
-other discrete logarithm protocols, in particular digital signatures and encryption,
-e.g., variants of Elgamal, can also be realized and The widely used elliptic curve digital
-signature algorithms (ECDSA)
+Please note that elliptic curves are not restricted to the DHKE. In fact, almost all other discrete logarithm protocols, in particular digital signatures and encryption, e.g., variants of Elgamal, can also be realized and The widely used elliptic curve digital signature algorithms (ECDSA)
 
 #### Security
 
-Note that in practice finding a suitable elliptic curve is a relatively difficult task.
-The curves have to show certain properties in order to be secure
+Note that in practice finding a suitable elliptic curve is a relatively difficult task. The curves have to show certain properties in order to be secure.
 
 
 
-The reason we use elliptic curves is that the ECDLP has very good one-way characteristics.
-If an attacker Oscar wants to break the ECDH, he has the following
-information: E, p, P, A, and B. He wants to compute the joint secret between Alice
-and Bob TAB = a · b · P. This is called the elliptic curve Diffie–Hellman problem
-(ECDHP). There appears to be only one way to compute the ECDHP, namely to
-solve either of the discrete logarithm problems:
-a = logP A
-or
-b = logP B
+The reason we use elliptic curves is that the ECDLP has very good one-way characteristics. If an attacker Oscar wants to break the ECDH, he has the following information: E, p, P, A, and B. He wants to compute the joint secret between Alice and Bob T<sub>AB</sub> = a · b · P. This is called the elliptic curve Diffie–Hellman problem (ECDHP). There appears to be only one way to compute the ECDHP, namely to solve either of the discrete logarithm problems: a = log<sub>P</sub>A or b = log<sub>P</sub>B
 
 
 
-If the elliptic curve is chosen with care, the best known attacks against the
-ECDLP are considerably weaker than the best algorithms for solving the DL problem
-modulo p, and the best factoring algorithms which are used for RSA attacks.
-In particular, the index-calculus algorithms, which are powerful attacks against the
-DLP modulo p, are not applicable against elliptic curves. For carefully selected elliptic
-curves, the only remaining attacks are generic DL algorithms, that is Shanks’
-baby-step giant-step method and Pollard’s rho method, which were described in
-Sect. 8.3.3. Since the number of steps required for such an attack is roughly equal
+If the elliptic curve is chosen with care, the best known attacks against the ECDLP are considerably weaker than the best algorithms for solving the DL problem modulo p, and the best factoring algorithms which are used for RSA attacks. In particular, the index-calculus algorithms, which are powerful attacks against the DLP modulo p, are not applicable against elliptic curves. For carefully selected elliptic curves, the only remaining attacks are generic DL algorithms, that is Shanks’ baby-step giant-step method and Pollard’s rho method. Since the number of steps required for such an attack is roughly equal to the square root of the group cardinality, a group order of at least 2160 should be used. According to Hasse’s theorem, this requires that the prime p used for the elliptic curve must be roughly 160-bit long. If we attack such a group with generic algorithms, we need around √2160 = 280 steps. A security level of 80 bit provides medium-term security. In practice, elliptic curve bit lengths up to 256 bit are commonly used, which provide security levels of up to 128 bit. It should be stressed that this security is only achieved if cryptographically strong elliptic curves are used. There are several families of curves that possess cryptographic weaknesses, e.g., supersingular curves. They are relatively easy to spot, however. In practice, often standardized curves such as ones proposed by the National Institute of Standards and Technology (NIST) are being used.
 
 
 
-to the square root of the group cardinality, a group order of at least 2160 should be
-used. According to Hasse’s theorem, this requires that the prime p used for the elliptic
-curve must be roughly 160-bit long. If we attack such a group with generic
-algorithms, we need around
-√
-2160 = 280 steps. A security level of 80 bit provides
-medium-term security. In practice, elliptic curve bit lengths up to 256 bit are commonly
-used, which provide security levels of up to 128 bit.
-It should be stressed that this security is only achieved if cryptographically strong
-elliptic curves are used. There are several families of curves that possess cryptographic
-weaknesses, e.g., supersingular curves. They are relatively easy to spot,
-however. In practice, often standardized curves such as ones proposed by the National
-Institute of Standards and Technology (NIST) are being used.
+Before using ECC, a curve with good cryptographic properties needs to be identified. In practice, a core requirement is that the cyclic group (or subgroup) formed by the curve points has prime order(猜测原因应该是，根据之前group的基础知识知道，prime order的group isomorphic to Cyclic group，即group中任意非identity的元素都可以生成整个group，如果选择的不是prime order则没有这个性质，非identity元素可能生成的是sub group，这样就有安全问题了，比如某个元素只能生成order=2的subgroup就很危险了，换句话说，在ECC中，相当于某个点无论选择什么私钥d都只能生成两个元素/公钥，换句话说，知道了公钥，任意选择一个私钥都有很大概率50%？猜中). Moreover, certain mathematical properties that lead to cryptographic weaknesses must be ruled out. Since assuring all these properties is a nontrivial and computationally demanding task, often standardized curves are used in practice.
 
 
 
-Before using ECC, a curve with good cryptographic properties needs to be identified.
-In practice, a core requirement is that the cyclic group (or subgroup) formed
-by the curve points has prime order(猜测原因应该是，根据之前group的基础知识知道，prime order的group isomorphic to Cyclic group，即group中任意非identity的元素都可以生成整个group，如果选择的不是prime order则没有这个性质，非identity元素可能生成的是sub group，这样就有安全问题了，比如某个元素只能生成order=2的subgroup就很危险了，换句话说，在ECC中，相当于某个点无论选择什么私钥d都只能生成两个元素/公钥，换句话说，知道了公钥，任意选择一个私钥都有很大概率50%？猜中). Moreover, certain mathematical properties that
-lead to cryptographic weaknesses must be ruled out. Since assuring all these properties
-is a nontrivial and computationally demanding task, often standardized curves
-are used in practice.
+When implementing elliptic curves it is useful to view an ECC scheme as a structure with four layers. On the **bottom layer modular arithmetic**, i.e., arithmetic in the prime field GF(p), is performed. We need all four field operations: addition, subtraction, multiplication and inversion. On the next layer, the two group operations, point doubling and point addition, are realized. They make use of the arithmetic provided in the bottom layer. On the third layer, scalar multiplication is realized, which uses the group operations of the previous layer. The top layer implements the actual protocol, e.g., ECDH or ECDSA. **It is important to note that two entirely different finite algebraic structures are involved in an elliptic curve cryptosystem. There is a finite field GF(p) over which the curve is defined, and there is the cyclic group which is formed by the points on the curve.**
+
+In software, a highly optimized 256-bit ECC implementation on a 3-GHz, 64-bit CPU can take approximately 2 ms for one point multiplication. Slower throughputs due to smaller microprocessors or less optimized algorithms are common with performances in the range of 10 ms. For high-performance applications, e.g., for Internet servers that have to perform a large number of elliptic curve signatures per second, hardware implementations are desirable. The fastest implementations can compute a point multiplication in the range of 40 μs, while speeds of several 100 μs are more common.
+
+On the other side of the performance spectrum, ECC is the most attractive publickey algorithm for lightweight applications such as RFID tags. Highly compact ECC engines are possible which need as little as 10,000 gate equivalences and run at a speed of several tens of milliseconds. Even though ECC engines are much larger than implementations of symmetric ciphers such as 3DES, they are considerably smaller than RSA implementations.
+**The computational complexity of ECC is cubic in the bit length of the prime used. This is due to the fact that modular multiplication, which is the main operation on the bottom layer, is quadratic in the bit length, and scalar multiplication (i.e.,with the Double-and-Add algorithm) contributes another linear dimension, so that we have, in total, a cubic complexity. This implies that doubling the bit length of an ECC implementation results in performance degradation by a factor of roughly 2<sup>3</sup> = 8. **RSA and DL systems show the same cubic runtime behavior. The advantage of ECC over the other two popular public-key families is that the parameters have to be increased much more slowly to enhance the security level. For instance, doubling the effort of an attacker for a given ECC system requires an increase in the length of the parameter by 2 bits, whereas RSA or DL schemes require an increase of 20–30 bits. This behavior is due to the fact that only generic attacks are known ECC cryptosystems, whereas more powerful algorithms are available for attacking RSA and DL schemes.
+
+#### Further Reading
+
+
+
+#### Test
+
+1. Show that the condition 4a<sup>3</sup>+27b2 =0 mod p is fulfilled for the curve
+   y2 ≡ x3+2x+2 mod 17
+2. 
+
