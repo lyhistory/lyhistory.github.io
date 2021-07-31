@@ -995,11 +995,117 @@ On the other side of the performance spectrum, ECC is the most attractive public
 
 #### Further Reading
 
+##### History and General Remarks
+
+ ECC was independently invented in 1987 by Neal Koblitz and in 1986 by Victor Miller. During the 1990s there was much speculation about the security and practicality of ECC, especially if compared to RSA. After a period of intensive research, they appear nowadays very secure, just like RSA and DL schemes. An important step for building confidence in ECC was the issuing of two ANSI banking standards for elliptic curve digital signature and key establishment in 1999 and 2001, respectively [6, 7]. Interestingly, in Suite B—a collection of crypto algorithms selected by the NSA for use in US government systems—only ECC schemes are allowed as asymmetric algorithms [130]. Elliptic curves are also widely used in commercial standards such as IPsec or Transport Layer Security (TLS).
+At the time of writing, there still exist far more fielded RSA and DL applications than elliptic curve ones. This is mainly due to historical reasons and due to the quite complex patent situation of some ECC variants. Nevertheless, in many new applications
+with security needs, especially in embedded systems such as mobile devices, ECC is often the preferred public-key scheme. For instance, ECC is used in the most popular business handheld devices. Most likely, ECC will become more widespread in the years to come. Reference [100] describes the historical development of ECC with respect to scientific and commercial aspects, and makes excellent reading.
+
+For readers interested in a deeper understanding of ECC, the books [25, 24, 90, 44] are recommended. The overview article [103], even though a bit dated now, provides a good state-of-the-art summary as of the year 2000. For more recent developments, the annual Workshop on Elliptic Curve Cryptography (ECC) is recommended as an excellent resource [166]. The workshop includes both theoretical and applied topics related to ECC and related crypto schemes. There is also a rich literature that deals with the mathematics of elliptic curves [154, 101, 155], regardless of their use in cryptography.
+
+##### Implementation and Variants 
+
+In the first few years after the invention of ECC, these algorithms were believed to be computationally more complex than existing public-key schemes, especially RSA. This assumption is somewhat ironic in hindsight, given that ECC tends to be often faster than most other public-key schemes.
+During the 1990s, fast implementation techniques for ECC was intensively researched, which resulted in considerable performance improvements.
+
+In this chapter, elliptic curves over prime fields GF(p) were introduced. These are currently in practice somewhat more widely used than over other finite fields, but curves over binary Galois fields GF(2<sup>m</sup>) are also popular. For efficient implementations,
+improvements are possible at the finite field arithmetic layer, at the group operation layer and at the point multiplication layer. There is a wealth of techniques and in the following is a summary of the most common acceleration techniques in practice. For curves over GF(p), generalized Mersenne primes are often used at the arithmetic level. These are primes such as p=2<sup>192</sup>−2<sup>64</sup>−1. Their major advantage is that modulo reduction is extremely simple. If general primes are used, methods similar to those described in Sect. 7.10 are applicable. With respect to ECC over fields GF(2<sup>m</sup>), efficient arithmetic algorithms are described in [90]. On the group operation layer, several optimizations are possible. A popular one is to switch from the affine coordinates that were introduced here to projective coordinates, in which each point is represented as a triple (x,y, z). Their advantage is that no inversion is required within the group operation. The number of multiplications increases, however. On the next layer, fast scalar multiplication techniques are applicable. Improved versions of the Double-and-Add algorithm which make use of the fact that
+adding or subtracting a point come at almost identical costs are commonly being applied. An excellent compilation of efficient computation techniques for ECC is the book [90].
+
+A special type of elliptic curve that allows for particularly fast point multiplication is the Koblitz curve [158]. These are curves over GF(2<sup>m</sup>) where the coefficients have the values 0 or 1. There have also been numerous other suggestions for elliptic curves with good implementation properties. One such proposal involves elliptic curves over optimum extension fields, i.e., fields of the form GF(p<sup>m</sup>), p > 2 [10].
+As mentioned in Sect. 9.5, standardized curves are often being used in practice. A widely used set of curves is provided in the FIPS Standard [126, Appendix D].
+Alternatives are curves specified by the ECC Brainpool consortium or the Standards for Efficient Cryptography Group (SECG) [34, 9] .
+Elliptic curves also allow for many variants and generalization. They are a special case of hyperelliptic curves, which can also be used to build discrete logarithm cryptosystems [44]. A summary of implementation techniques for hyperelliptic curves is given in [175]. A completely different type of public-key scheme which also makes use of elliptic curves is identity-based cryptosystems [30], which have drawn much attention over the last few years.
+
 
 
 #### Test
 
-1. Show that the condition 4a<sup>3</sup>+27b2 =0 mod p is fulfilled for the curve
-   y2 ≡ x3+2x+2 mod 17
-2. 
+1. Show that the condition 4a<sup>3</sup>+27b<sup>2</sup> <> 0 mod p is fulfilled for the curve
+   y<sup>2</sup> ≡ x<sup>3</sup>+2x+2 mod 17
+   
+2. Perform the additions
 
+   (2,7)+(5,2)
+
+   (3,6)+(3,6)
+
+   in the group of the curve y<sup>2</sup> ≡ x<sup>3</sup>+2x+2 mod 17. Use only a pocket calculator.
+
+3. In this chapter the elliptic curve y<sup>2</sup> ≡x<sup>3</sup>+2x+2 mod 17 is given with #E =19.
+   Verify Hasse’s theorem for this curve.
+
+4. Let us again consider the elliptic curve y<sup>2</sup> ≡x<sup>3</sup>+2x+2 mod 17. Why are all
+   points primitive elements?
+   Note: In general it is not true that all elements of an elliptic curve are primitive.
+
+   order is prime
+
+5. Let E be an elliptic curve defined over Z<sub>7</sub>:
+   E : y<sup>2</sup> =x<sup>3</sup>+3x+2.
+
+   1) Compute all points on E over Z<sub>7</sub>.
+
+   2) What is the order of the group? (Hint: Do not miss the neutral element O.)
+
+   3) Given the element α =(0,3), determine the order of α. Is α a primitive element?
+
+6. In practice, a and k are both in the range p≈2<sup>150</sup> · · ·2<sup>250</sup>, and computing T =a·P and y<sub>0</sub> = k ·P is done using the Double-and-Add algorithm.
+
+   1) Illustrate how the algorithm works for a = 19 and for a = 160. Do not perform
+   elliptic curve operations, but keep P a variable.
+
+   2) How many (i) point additions and (ii) point doublings are required on average for one “multiplication”? Assume that all integers have n = log<sub>2</sub>p bit.
+
+   3) Assume that all integers have n = 160 bit, i.e., p is a 160-bit prime. Assume one group operation (addition or doubling) requires 20 μ sec. What is the time for one double-and-add operation?
+
+7. Given an elliptic curve E over Z<sub>29</sub> and the base point P = (8,10):
+   E :  y<sup>2</sup> =x<sup>3</sup>+4x+20 mod 29.
+   Calculate the following point multiplication k · P using the Double-and-Add algorithm. Provide the intermediate results after each step.
+
+   k = 9
+
+   k = 20
+
+8. Given is the same curve as in 7. The order of this curve is known to be #E = 37. Furthermore, an additional point Q = 15 · P = (14,23) on this curve is given. Determine the result of the following point multiplications by using as few group operations as possible, i.e., make smart use of the known point Q. Specify how you simplified the calculation each time.
+   Hint: In addition to using Q, use the fact that it is easy to compute −P.
+
+   16 ·P
+
+   38 ·P
+
+   53 ·P
+
+   14 ·P+4 ·Q
+
+   23 ·P+11 ·Q
+
+   You should be able to perform the scalar multiplications with considerably fewer steps than a straightforward application of the double-and-add algorithm would allow.
+
+9. Your task is to compute a session key in a DHKE protocol based on elliptic curves. Your private key is a = 6. You receive Bob’s public key B = (5,9). The elliptic curve being used is defined by
+   y<sup>2</sup> ≡x<sup>3</sup>+x+6 mod 11.
+
+10. An example for an elliptic curve DHKE is given in previous section. Verify the two scalar multiplications that Alice performs. Show the intermediate results within the group operation.
+
+11. After the DHKE, Alice and Bob possess a mutual secret point R = (x,y). The modulus of the used elliptic curve is a 64-bit prime. Now, we want to derive a session key for a 128-bit block cipher. The session key is calculated as follows:
+
+    K<sub>AB</sub> = h(x||y)
+
+    Describe an efficient brute-force attack against the symmetric cipher. How many of the key bits are truly random in this case? (Hint: You do not need to describe the mathematical details. Provide a list of the necessary steps. Assume you have a function that computes square roots modulo p.)
+
+12. Derive the formula for addition on elliptic curves. That is, given the coordinates for P and Q, find the coordinates for R = (x3,y3).
+
+    Hint: First, find the equation of a line through the two points. Insert this equation in the elliptic curve equation. At some point you have to find the roots of a cubic polynomial x<sup>3</sup>+a<sub>2</sub>x<sup>2</sup>+a<sub>1</sub>x+a<sub>0</sub>. If the three roots are denoted by x0,x1,x2, you can
+    use the fact that x0+x1+x2 = −a2.
+
+    
+
+https://www.certicom.com/content/certicom/en/21-elliptic-curve-addition-a-geometric-approach.html
+
+https://www.certicom.com/content/certicom/en/212-adding-the-points-P-and-P.html
+
+https://en.wikipedia.org/wiki/Elliptic_curve_point_multiplication
+
+https://juejin.cn/post/6844903900961570823
+
+https://www.desmos.com/calculator/ialhd71we3

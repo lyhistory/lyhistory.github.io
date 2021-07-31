@@ -129,6 +129,8 @@ https://stackoverflow.com/questions/10177465/grep-in-mysql-cli-interpretter
 
 #### Users & Permissions
 
+https://dev.mysql.com/doc/refman/5.7/en/privileges-provided.html
+
 [ 'User'@'%' and 'User'@'localhost'](https://stackoverflow.com/questions/11634084/are-users-user-and-userlocalhost-not-the-same)
 
 ````
@@ -469,6 +471,88 @@ FLUSH PRIVILEGES;
 http://stackoverflow.com/questions/32020024/upgrading-to-windows-10-breaks-mysql-workbench
 https://bugs.mysql.com/bug.php?id=75344
 
+#### mysqldump stored procedure --routines faild
+
+mysqldump: test_dbuser has insufficent privileges to SHOW CREATE PROCEDURE `pTEST`!
+
+```
+最开始是出现
+ERROR 1227 (42000) at line 5632: Access denied; you need (at least one of) the SUPER privilege(s) for this operation
+
+5618 --
+5619 -- Dumping routines for database 'db01'
+5620 --
+5621 /*!50003 DROP PROCEDURE IF EXISTS `pTEST1` */;
+5622 ALTER DATABASE `db01` CHARACTER SET utf8 COLLATE utf8_general_ci ;
+5623 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+5624 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+5625 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
+5626 /*!50003 SET character_set_client  = utf8 */ ;
+5627 /*!50003 SET character_set_results = utf8 */ ;
+5628 /*!50003 SET collation_connection  = utf8_general_ci */ ;
+5629 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+5630 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+5631 DELIMITER ;;
+5632 CREATE DEFINER=`test_dbuser`@`%` PROCEDURE `pTEST1`(IN i_asof DATE)
+5633 BEGIN
+5634 
+5635         DECLARE EXIT HANDLER FOR SQLEXCEPTION
+5636     BEGIN
+
+可以看到 5632 CREATE DEFINER=`test_dbuser`@`%` PROCEDURE `pTEST1`(IN i_asof DATE)
+所以我就直接
+mysql> GRANT SUPER ON *.* TO 'test_dbuser'@'%';                                                                
+然后后来我想到实际上执行mysqldump的语句是
+mysqldump --login-path=cn-dev-v01 --set-gtid-purged=OFF --no-tablespaces db01 >test
+cn-dev-v01的host是localhost，不是%，可以看到CREATE DEFINER=`test_dbuser`@`%` 不是 @`localhost`
+然后我想着设置cn-dev-v01 login path host为%，但是失败，因为%无法解析，自然无法连接db，只好改回来，
+然后再试发现又有问题：
+mysqldump: test_dbuser has insufficent privileges to SHOW CREATE PROCEDURE `pTEST1`!
+查了下
+https://dba.stackexchange.com/questions/184724/permissions-for-mysql-show-create-procedure
+To use either statement, you must be the user named in the routine DEFINER clause or have SELECT access to the mysql.proc table. If you do not have privileges for the routine itself, the value displayed for the Create Procedure or Create Function field will be NULL. 
+https://dev.mysql.com/doc/refman/5.7/en/show-create-procedure.html
+要给SELECT权限，SUPER不包含SELECT权限？？
+mysql> grant SELECT ON *.* TO 'test_dbuser'@'localhost';
+就好了
+
+然后又想到，既然'%'包含'localhost'，干脆直接删掉 test_dbuser@'localhost'
+DROP USER 'test_dbuser'@'localhost';
+这次虽然没有
+mysqldump: test_dbuser has insufficent privileges to SHOW CREATE PROCEDURE `pTEST1`!
+但是另外一个db02还是有这个问题
+mysqldump: test_dbuser has insufficent privileges to SHOW CREATE PROCEDURE `pTEST2`!
+
+1994 DELIMITER ;
+1995 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
+1996 /*!50003 SET character_set_client  = @saved_cs_client */ ;
+1997 /*!50003 SET character_set_results = @saved_cs_results */ ;
+1998 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+1999 /*!50003 DROP PROCEDURE IF EXISTS `pTEST2` */;
+2000 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+2001 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+2002 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
+2003 /*!50003 SET character_set_client  = utf8 */ ;
+2004 /*!50003 SET character_set_results = utf8 */ ;
+2005 /*!50003 SET collation_connection  = utf8_general_ci */ ;
+2006 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+2007 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+2008 DELIMITER ;;
+2009 CREATE DEFINER=`test_dbuser`@`%` PROCEDURE `pTEST2`(IN i_asof DATE)
+2010 BEGIN
+2011 
+2012         DECLARE EXIT HANDLER FOR SQLEXCEPTION
+2013     BEGIN
+
+再把SELECT加给'test_dbuser'@'%'即可
+mysql> grant SELECT ON *.* TO 'test_dbuser'@'%';
+最后revoke掉SUPER权限再试
+mysql> revoke SUPER ON *.* FROM 'test_dbuser'@'%';
+仍然成功
+```
+
+
+
 #### script import issue;
 
 ```
@@ -645,7 +729,7 @@ select duration,date_add(dateOfProgram,INTERVAL 2 DAY), IFNULL(date_add(startTim
 **批量生成truncate**
 
 ```
-mysql -h'HOST' -u'USERNAME' -p'PASSWORD' -e'SELECT CONCAT("TRUNCATE TABLE ",TABLE_NAME,";") FROM information_schema.TABLES WHERE TABLE_SCHEMA="clear" into outfile "/var/lib/mysql-files/truncate_db_clear.sql";'
+mysql -h'HOST' -u'USERNAME' -p'PASSWORD' -e'SELECT CONCAT("TRUNCATE TABLE ",TABLE_NAME,";") FROM information_schema.TABLES WHERE TABLE_SCHEMA="db01" into outfile "/var/lib/mysql-files/truncate_db01.sql";'
 
 SHOW VARIABLES LIKE "secure_file_priv" 查看能写到哪个目录
 ```
