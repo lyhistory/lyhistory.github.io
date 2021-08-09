@@ -89,10 +89,19 @@ sudo usermod -aG wheel username
 Wheel group https://www.centos.org/forums/viewtopic.php?t=63386
 
 
+ssh-keygen 
+or
 ssh-keygen -t rsa
+
 chmod 400 id_rsa
+
+ssh-copy-id username@serveripOrhostname
+or 
 ssh-copy-id -i ~/.ssh/id_rsa.pub username@serveripOrhostname
+
 scp ~/.ssh/id_rsa grs@adp116:~/.ssh
+
+ssh-keygen -R ip/hostname
 
 ```
 

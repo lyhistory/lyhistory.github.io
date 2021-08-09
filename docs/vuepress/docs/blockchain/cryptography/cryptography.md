@@ -840,6 +840,10 @@ x<sub>3</sub> = s<sup>2</sup>−x<sub>1</sub>−x<sub>2</sub> = 13<sup>2</sup>�
 
 y<sub>3</sub> = s(x<sub>1</sub>−x<sub>3</sub>)−y<sub>1</sub> = 13(5−6)−1 = −14 ≡ 3 mod 17
 
+​		mod(a, n) = a - n * floor(a / n)
+
+​		−14 mod 17 = -14 - 17*floor(-14/17) =-14 - 17*floor(-0.8) 不同程序结果不同，比如向下取整 -1 ，结果为3，向上取整或向零取整结果为?
+
 2P = (5,1)+(5,1) = (6,3)
 
 For illustrative purposes we check whether the result 2P = (6,3) is actually a point
@@ -1021,8 +1025,13 @@ Elliptic curves also allow for many variants and generalization. They are a spec
 
 #### Test
 
-1. Show that the condition 4a<sup>3</sup>+27b<sup>2</sup> <> 0 mod p is fulfilled for the curve
-   y<sup>2</sup> ≡ x<sup>3</sup>+2x+2 mod 17
+1. Show that the condition 4a<sup>3</sup>+27b<sup>2</sup> <> 0 mod p is fulfilled for the curve y<sup>2</sup> ≡ x<sup>3</sup>+2x+2 mod 17
+   
+   y<sup>2</sup> ≡ x<sup>3</sup>+a · x+b mod p 
+   
+   a=2, b=2
+   
+   4a<sup>3</sup>+27b<sup>2</sup>  = 4\*2<sup>3</sup>+27\*2<sup>2</sup> =140 mod 17 =4
    
 2. Perform the additions
 
@@ -1031,6 +1040,38 @@ Elliptic curves also allow for many variants and generalization. They are a spec
    (3,6)+(3,6)
 
    in the group of the curve y<sup>2</sup> ≡ x<sup>3</sup>+2x+2 mod 17. Use only a pocket calculator.
+
+   
+
+   1) (2,7)+(5,2)
+
+   s =(y2−y1)/(x2−x1) mod p 
+
+   x3 = s2−x1−x2 mod p 
+
+   y3=  s(x1-x3)- y1 mod p 
+
+   
+
+   s=(2-7)/(5-2) mod 17 =-5/3 mod 17 = 12*6 mod 17 = 4
+
+   ​		1/3 mod 17 = 6 mod 17 (3*6=18 mod 17 =1 mod 17)
+
+   ​		−5 mod 17 = -5 - 17\*floor(-5/17) =-5 - 17\*floor(-0.29) 不同程序结果不同，比如向下取整 -1 ，结果为12
+
+   x<sub>3</sub> = s<sup>2</sup>−x<sub>1</sub>−x<sub>2</sub> mod p = 4<sup>2</sup>−2−5 mod 17 = 6
+
+   y<sub>3</sub>=  s(x<sub>1</sub>-x<sub>3</sub>)- y<sub>1</sub> mod p  = 4(2-6) - 7 = -23 mod 17 = -23 - 17\*floor(-23/17) = -23 - 17\*floor(-1.35) = -23-17\*-2=11
+
+   2) (3,6)+(3,6)
+
+    s=(3x<sub>1</sub><sup>2</sup>+a)/2y<sub>1</sub> mod p
+
+   x3 = s2−x1−x2 mod p 
+
+   y3=  s(x1-x3)- y1 mod p 
+
+   
 
 3. In this chapter the elliptic curve y<sup>2</sup> ≡x<sup>3</sup>+2x+2 mod 17 is given with #E =19.
    Verify Hasse’s theorem for this curve.

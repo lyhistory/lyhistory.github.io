@@ -457,252 +457,7 @@ If it is desired to prevent the server from running without the password-validat
 
 service mysqld start --validate-password=FORCE_PLUS_PERMANENT
 
-### 2.3 Troubleshooting 
 
-#### Host 'xxx.xx.xxx.xxx' is not allowed to connect to this MySQL server**
-
-```
-CREATE USER 'test'@'%' IDENTIFIED BY '123456';
-GRANT ALL PRIVILEGES ON * . * TO 'test'@'%';
-FLUSH PRIVILEGES;
-```
-
-#### mysql workbench The type initializer for 'HtmlRenderer.Utils.FontsUtils' threw an exception.**
-http://stackoverflow.com/questions/32020024/upgrading-to-windows-10-breaks-mysql-workbench
-https://bugs.mysql.com/bug.php?id=75344
-
-#### mysqldump stored procedure --routines faild
-
-mysqldump: test_dbuser has insufficent privileges to SHOW CREATE PROCEDURE `pTEST`!
-
-```
-最开始是出现
-ERROR 1227 (42000) at line 5632: Access denied; you need (at least one of) the SUPER privilege(s) for this operation
-
-5618 --
-5619 -- Dumping routines for database 'db01'
-5620 --
-5621 /*!50003 DROP PROCEDURE IF EXISTS `pTEST1` */;
-5622 ALTER DATABASE `db01` CHARACTER SET utf8 COLLATE utf8_general_ci ;
-5623 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-5624 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-5625 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-5626 /*!50003 SET character_set_client  = utf8 */ ;
-5627 /*!50003 SET character_set_results = utf8 */ ;
-5628 /*!50003 SET collation_connection  = utf8_general_ci */ ;
-5629 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-5630 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-5631 DELIMITER ;;
-5632 CREATE DEFINER=`test_dbuser`@`%` PROCEDURE `pTEST1`(IN i_asof DATE)
-5633 BEGIN
-5634 
-5635         DECLARE EXIT HANDLER FOR SQLEXCEPTION
-5636     BEGIN
-
-可以看到 5632 CREATE DEFINER=`test_dbuser`@`%` PROCEDURE `pTEST1`(IN i_asof DATE)
-所以我就直接
-mysql> GRANT SUPER ON *.* TO 'test_dbuser'@'%';                                                                
-然后后来我想到实际上执行mysqldump的语句是
-mysqldump --login-path=cn-dev-v01 --set-gtid-purged=OFF --no-tablespaces db01 >test
-cn-dev-v01的host是localhost，不是%，可以看到CREATE DEFINER=`test_dbuser`@`%` 不是 @`localhost`
-然后我想着设置cn-dev-v01 login path host为%，但是失败，因为%无法解析，自然无法连接db，只好改回来，
-然后再试发现又有问题：
-mysqldump: test_dbuser has insufficent privileges to SHOW CREATE PROCEDURE `pTEST1`!
-查了下
-https://dba.stackexchange.com/questions/184724/permissions-for-mysql-show-create-procedure
-To use either statement, you must be the user named in the routine DEFINER clause or have SELECT access to the mysql.proc table. If you do not have privileges for the routine itself, the value displayed for the Create Procedure or Create Function field will be NULL. 
-https://dev.mysql.com/doc/refman/5.7/en/show-create-procedure.html
-要给SELECT权限，SUPER不包含SELECT权限？？
-mysql> grant SELECT ON *.* TO 'test_dbuser'@'localhost';
-就好了
-
-然后又想到，既然'%'包含'localhost'，干脆直接删掉 test_dbuser@'localhost'
-DROP USER 'test_dbuser'@'localhost';
-这次虽然没有
-mysqldump: test_dbuser has insufficent privileges to SHOW CREATE PROCEDURE `pTEST1`!
-但是另外一个db02还是有这个问题
-mysqldump: test_dbuser has insufficent privileges to SHOW CREATE PROCEDURE `pTEST2`!
-
-1994 DELIMITER ;
-1995 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
-1996 /*!50003 SET character_set_client  = @saved_cs_client */ ;
-1997 /*!50003 SET character_set_results = @saved_cs_results */ ;
-1998 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-1999 /*!50003 DROP PROCEDURE IF EXISTS `pTEST2` */;
-2000 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-2001 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-2002 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-2003 /*!50003 SET character_set_client  = utf8 */ ;
-2004 /*!50003 SET character_set_results = utf8 */ ;
-2005 /*!50003 SET collation_connection  = utf8_general_ci */ ;
-2006 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-2007 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-2008 DELIMITER ;;
-2009 CREATE DEFINER=`test_dbuser`@`%` PROCEDURE `pTEST2`(IN i_asof DATE)
-2010 BEGIN
-2011 
-2012         DECLARE EXIT HANDLER FOR SQLEXCEPTION
-2013     BEGIN
-
-再把SELECT加给'test_dbuser'@'%'即可
-mysql> grant SELECT ON *.* TO 'test_dbuser'@'%';
-最后revoke掉SUPER权限再试
-mysql> revoke SUPER ON *.* FROM 'test_dbuser'@'%';
-仍然成功
-```
-
-
-
-#### script import issue;
-
-```
--- Set new delimiter '$$'
-DELIMITER $$
-$$
--- Set default delimiter ';'
-DELIMITER ;
-```
-
-#### Fixing “Lock wait timeout exceeded; try restarting transaction” for a 'stuck" Mysql table?
-
-https://stackoverflow.com/questions/5836623/getting-lock-wait-timeout-exceeded-try-restarting-transaction-even-though-im
-
-```
-show processlist;
-kill <put_process_id_here>; 先干掉耗时长的process
-```
-
-#### upgrade trouble shooting
-
-https://dev.mysql.com/doc/refman/5.7/en/upgrade-troubleshooting.html
-
-#### Access denied for user 'root'@'localhost' (using password: NO) when trying to connect**
-
-通常是因为输入了中文字符的dash -- 或者从word文档copy出来的错误编码的参数符号--
-
-#### 随机出现的connection timeout
-
-##### 起因是duird连接池报错
-
-我们的一个springboot程序 使用了阿里druid，之前都好好的，上到生产遇到几次比较随机的错误：
-
-```
-Caused by: com.alibaba.druid.pool.GetConnectionTimeoutException: wait millis 60000, active 0, maxActive 500, creating 1, createElapseMillis 120001
-	at com.alibaba.druid.pool.DruidDataSource.getConnectionInternal(DruidDataSource.java:1682)
-	at com.alibaba.druid.pool.DruidDataSource.getConnectionDirect(DruidDataSource.java:1395)
-	at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1375)
-	at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1365)
-	at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:109)
-	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:262)
-
-```
-
-核心的提示就是这个：
-
-Caused by: com.alibaba.druid.pool.GetConnectionTimeoutException: wait millis 60000, active 0, maxActive 500, creating 1, createElapseMillis 120001
-
-根据我目前查到的，能知道的是，抛出异常时，池子里的active Connection是0，所以不存在池子满了的情况，另外creating 1应该是代表需要创建一个connection，但是不知道因为什么原因，创建超过了我们设置的maxWait=60000也就是1分钟，createElapseMillis 120001意思应该是创建超过了两分钟
-
- 
-
-由于之前其他环境没有遇到过，比较倾向于是服务端问题或网络问题，总结可能的问题如下 
-
-1.服务端：
- 1）mysql：根据log的warn，好像这个版本是经过升级的，但是没有升级完全，需要执行下mysql_upgrade，不知道是否有影响；
-
-[Warning] InnoDB: Table mysql/innodb_table_stats has length mismatch in the column name table_name.  Please run mysql_upgrade
-
- 2）网络波动，不清楚两台机器的部署情况
-
-2.配置问题：
- 1）mysql connection string使用的是serverTimezone=Asia/Shanghai，服务器使用的应该是SGT Asia/Singapore，不过这个感觉应该没有影响，因为都是东八区
- 2）druid配置问题，官方建议mysql不要开启maxPoolPreparedStatementPerConnectionSize，目前状态是开启了
-
-3.druid本身问题：
- 1）版本过低，目前使用的1.1.20是19年的版本，但是我没有看到任何新版本的release note提到了我们遇到的问题，不过有人通过升级解决了问题
- 2）druid本身的缺陷，我看到duird 一些开放的issue和关闭的issue从几年前到最近都有人提到这个问题，但是官方没有给出任何回应和解决，然后有人通过放弃阿里的druid，使用其他连接池解决了
-
-https://github.com/alibaba/druid/issues/3720
- https://github.com/alibaba/druid/issues/2130
- [https://github.com/alibaba/druid/wiki/DruidDataSource%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7%E5%88%97%E8%A1%A8](https://github.com/alibaba/druid/wiki/DruidDataSource配置属性列表)
-
-##### 脚本连接数据库也随机出错
-
-接着，同事反馈cron job也遇到过几次类似问题:
-
-error 2003 (hy000) can't connect to mysql server 110
-
-
-
-https://blog.csdn.net/qq1137623160/article/details/78927741
-
-最后其实感觉目前缺少的是：
-
-监控和load test performance test
-
-https://segmentfault.com/a/1190000022336871
-
-##### 发现端倪 Aborted_connects
-
-瞄了眼这篇文章，想到忘记认真看下连接数
-
-https://www.jianshu.com/p/07c85b8a7997
-
-执行 netstat -anp|grep 3306 大概三十多个，还算正常，然后
-
-show global status like '%connection%';
-
-结果：Connections=7772 Max_used_connections=60 
-
-查了下，好像是指服务器启动之后累积的，所以没有什么参考意义
-
-Connections：The number of connection attempts (successful or not) to the MySQL server. 
-Max_used_connections：The maximum number of connections that have been in use simultaneously since the server started. 
-
-show global status like '%thread%';
-
-结果：Threads_cached=8	Threads_connected=34	Threads_created=2232	Threads_running=1
-
-Threads_created应该也是累计的，Threads_connected应该是当前的，确实跟前面netstat差不多
-
-show processlist;
-
-结果显示三十多个程序，大部分都是sleep状态，唯一running的是我当前查询的这个线程；
-
-确认了下最大连接数
-
-SHOW VARIABLES LIKE "max_connections";
-
-结果是151默认值，远超34，应该没什么问题，但是总感觉这些sleep状态的threads/connections有些问题，
-
-然后看到了这个
-
-show global status like '%aborted%';
-
-结果：Aborted_clients 1095	Aborted connections 9
-
-这个有点意思：
-
-Aborted_clients：The number of connections that were aborted because the client died without closing the connection properly.
-
-Aborted_connects：The number of failed attempts to connect to the MySQL server. 
-
-然后猜测如下：
-Aborted_clients=1095, big number, probably means that we have some clients(app or scripts) connected to mysql, but failed to close mysql connections properly, caused lots of sleep threads/connections in mysql processlist;
-at some point in time, it may reached the max connections limit;
-and then some new connection request coming in, mysql then start to recycle zombies, most of the time is fine, but sometimes may delayed some seconds because of recycle taking time, caused Aborted_connects=9, small number, quite random
-
-根据Aborted_connects文档提示：
-
-For additional connection-related information, check the   [`Connection_errors_*`xxx`*`](https://dev.mysql.com/doc/refman/8.0/en/server-status-variables.html#statvar_Connection_errors_xxx)   status variables and the [`host_cache`](https://dev.mysql.com/doc/refman/8.0/en/performance-schema-host-cache-table.html) table.       
-
-show global status like '%errors%';
-
-select * from performance_schema.host_cache;
-
-不过并没有什么发现
-
- 
 
 ## 4. SQL
 
@@ -1332,13 +1087,17 @@ mysql> GRANT SUPER,RELOAD,REPLICATION SLAVE ON *.* TO 'replicator'@'localhost' I
 ON SERVER 1:
 mysql> CREATE USER replicator@replication_server2_ip IDENTIFIED BY 'password';
 mysql> GRANT SUPER,RELOAD,REPLICATION SLAVE ON *.* TO 'replicator'@'replication_server2_ip' IDENTIFIED BY 'password';
+mysql_config_editor set --login-path=host-rpl --host=replication_server2_ip --port=3306 --user=replicator --password
+
 ON SERVER 2:
 mysql> CREATE USER replicator@replication_server1_ip IDENTIFIED BY 'password';
 mysql> GRANT SUPER,RELOAD,REPLICATION SLAVE ON *.* TO 'replicator'@'replication_server1_ip' IDENTIFIED BY 'password';
+mysql_config_editor set --login-path=host-rpl --host=replication_server1_ip --port=3306 --user=replicator --password
+
 
 mysql> flush privileges;
 
-mysql_config_editor set --login-path=host-rpl --host=localhost --port=3306 --user=replicator --password
+
 
 ----------------------------------------------------------------------------
 step 4: on BOTH two master: Retrieving Binary Log Coordinates from the Source
@@ -1613,7 +1372,308 @@ Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: Sending gratuitous ARP o
 sudo tcpdump -vvv -n -i eth0 dst 224.0.0.18 and src 10.136.100.48
 ```
 
+## 3 Troubleshooting 
 
+### Host 'xxx.xx.xxx.xxx' is not allowed to connect to this MySQL server**
+
+```
+CREATE USER 'test'@'%' IDENTIFIED BY '123456';
+GRANT ALL PRIVILEGES ON * . * TO 'test'@'%';
+FLUSH PRIVILEGES;
+```
+
+### mysql workbench The type initializer for 'HtmlRenderer.Utils.FontsUtils' threw an exception.**
+
+http://stackoverflow.com/questions/32020024/upgrading-to-windows-10-breaks-mysql-workbench
+https://bugs.mysql.com/bug.php?id=75344
+
+### mysqldump stored procedure --routines faild
+
+mysqldump: test_dbuser has insufficent privileges to SHOW CREATE PROCEDURE `pTEST`!
+
+```
+最开始是出现
+ERROR 1227 (42000) at line 5632: Access denied; you need (at least one of) the SUPER privilege(s) for this operation
+
+5618 --
+5619 -- Dumping routines for database 'db01'
+5620 --
+5621 /*!50003 DROP PROCEDURE IF EXISTS `pTEST1` */;
+5622 ALTER DATABASE `db01` CHARACTER SET utf8 COLLATE utf8_general_ci ;
+5623 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+5624 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+5625 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
+5626 /*!50003 SET character_set_client  = utf8 */ ;
+5627 /*!50003 SET character_set_results = utf8 */ ;
+5628 /*!50003 SET collation_connection  = utf8_general_ci */ ;
+5629 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+5630 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+5631 DELIMITER ;;
+5632 CREATE DEFINER=`test_dbuser`@`%` PROCEDURE `pTEST1`(IN i_asof DATE)
+5633 BEGIN
+5634 
+5635         DECLARE EXIT HANDLER FOR SQLEXCEPTION
+5636     BEGIN
+
+可以看到 5632 CREATE DEFINER=`test_dbuser`@`%` PROCEDURE `pTEST1`(IN i_asof DATE)
+所以我就直接
+mysql> GRANT SUPER ON *.* TO 'test_dbuser'@'%';                                                                
+然后后来我想到实际上执行mysqldump的语句是
+mysqldump --login-path=cn-dev-v01 --set-gtid-purged=OFF --no-tablespaces db01 >test
+cn-dev-v01的host是localhost，不是%，可以看到CREATE DEFINER=`test_dbuser`@`%` 不是 @`localhost`
+然后我想着设置cn-dev-v01 login path host为%，但是失败，因为%无法解析，自然无法连接db，只好改回来，
+然后再试发现又有问题：
+mysqldump: test_dbuser has insufficent privileges to SHOW CREATE PROCEDURE `pTEST1`!
+查了下
+https://dba.stackexchange.com/questions/184724/permissions-for-mysql-show-create-procedure
+To use either statement, you must be the user named in the routine DEFINER clause or have SELECT access to the mysql.proc table. If you do not have privileges for the routine itself, the value displayed for the Create Procedure or Create Function field will be NULL. 
+https://dev.mysql.com/doc/refman/5.7/en/show-create-procedure.html
+要给SELECT权限，SUPER不包含SELECT权限？？
+mysql> grant SELECT ON *.* TO 'test_dbuser'@'localhost';
+就好了
+
+然后又想到，既然'%'包含'localhost'，干脆直接删掉 test_dbuser@'localhost'
+DROP USER 'test_dbuser'@'localhost';
+这次虽然没有
+mysqldump: test_dbuser has insufficent privileges to SHOW CREATE PROCEDURE `pTEST1`!
+但是另外一个db02还是有这个问题
+mysqldump: test_dbuser has insufficent privileges to SHOW CREATE PROCEDURE `pTEST2`!
+
+1994 DELIMITER ;
+1995 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
+1996 /*!50003 SET character_set_client  = @saved_cs_client */ ;
+1997 /*!50003 SET character_set_results = @saved_cs_results */ ;
+1998 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+1999 /*!50003 DROP PROCEDURE IF EXISTS `pTEST2` */;
+2000 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+2001 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+2002 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
+2003 /*!50003 SET character_set_client  = utf8 */ ;
+2004 /*!50003 SET character_set_results = utf8 */ ;
+2005 /*!50003 SET collation_connection  = utf8_general_ci */ ;
+2006 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+2007 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+2008 DELIMITER ;;
+2009 CREATE DEFINER=`test_dbuser`@`%` PROCEDURE `pTEST2`(IN i_asof DATE)
+2010 BEGIN
+2011 
+2012         DECLARE EXIT HANDLER FOR SQLEXCEPTION
+2013     BEGIN
+
+再把SELECT加给'test_dbuser'@'%'即可
+mysql> grant SELECT ON *.* TO 'test_dbuser'@'%';
+最后revoke掉SUPER权限再试
+mysql> revoke SUPER ON *.* FROM 'test_dbuser'@'%';
+仍然成功
+```
+
+### script import issue;
+
+```
+-- Set new delimiter '$$'
+DELIMITER $$
+$$
+-- Set default delimiter ';'
+DELIMITER ;
+```
+
+### Fixing “Lock wait timeout exceeded; try restarting transaction” for a 'stuck" Mysql table?
+
+https://stackoverflow.com/questions/5836623/getting-lock-wait-timeout-exceeded-try-restarting-transaction-even-though-im
+
+```
+show processlist;
+kill <put_process_id_here>; 先干掉耗时长的process
+```
+
+### upgrade trouble shooting
+
+https://dev.mysql.com/doc/refman/5.7/en/upgrade-troubleshooting.html
+
+### Access denied for user 'root'@'localhost' (using password: NO) when trying to connect**
+
+通常是因为输入了中文字符的dash -- 或者从word文档copy出来的错误编码的参数符号--
+
+### 随机出现的connection timeout
+
+##### 起因是duird连接池报错
+
+我们的一个springboot程序 使用了阿里druid，之前都好好的，上到生产遇到几次比较随机的错误：
+
+```
+Caused by: com.alibaba.druid.pool.GetConnectionTimeoutException: wait millis 60000, active 0, maxActive 500, creating 1, createElapseMillis 120001
+	at com.alibaba.druid.pool.DruidDataSource.getConnectionInternal(DruidDataSource.java:1682)
+	at com.alibaba.druid.pool.DruidDataSource.getConnectionDirect(DruidDataSource.java:1395)
+	at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1375)
+	at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:1365)
+	at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:109)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:262)
+
+```
+
+核心的提示就是这个：
+
+Caused by: com.alibaba.druid.pool.GetConnectionTimeoutException: wait millis 60000, active 0, maxActive 500, creating 1, createElapseMillis 120001
+
+根据我目前查到的，能知道的是，抛出异常时，池子里的active Connection是0，所以不存在池子满了的情况，另外creating 1应该是代表需要创建一个connection，但是不知道因为什么原因，创建超过了我们设置的maxWait=60000也就是1分钟，createElapseMillis 120001意思应该是创建超过了两分钟
+
+ 
+
+由于之前其他环境没有遇到过，比较倾向于是服务端问题或网络问题，总结可能的问题如下 
+
+1.服务端：
+ 1）mysql：根据log的warn，好像这个版本是经过升级的，但是没有升级完全，需要执行下mysql_upgrade，不知道是否有影响；
+
+[Warning] InnoDB: Table mysql/innodb_table_stats has length mismatch in the column name table_name.  Please run mysql_upgrade
+
+ 2）网络波动，不清楚两台机器的部署情况
+
+2.配置问题：
+ 1）mysql connection string使用的是serverTimezone=Asia/Shanghai，服务器使用的应该是SGT Asia/Singapore，不过这个感觉应该没有影响，因为都是东八区
+ 2）druid配置问题，官方建议mysql不要开启maxPoolPreparedStatementPerConnectionSize，目前状态是开启了
+
+3.druid本身问题：
+ 1）版本过低，目前使用的1.1.20是19年的版本，但是我没有看到任何新版本的release note提到了我们遇到的问题，不过有人通过升级解决了问题
+ 2）druid本身的缺陷，我看到duird 一些开放的issue和关闭的issue从几年前到最近都有人提到这个问题，但是官方没有给出任何回应和解决，然后有人通过放弃阿里的druid，使用其他连接池解决了
+
+https://github.com/alibaba/druid/issues/3720
+ https://github.com/alibaba/druid/issues/2130
+ [https://github.com/alibaba/druid/wiki/DruidDataSource%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7%E5%88%97%E8%A1%A8](https://github.com/alibaba/druid/wiki/DruidDataSource配置属性列表)
+
+##### 脚本连接数据库也随机出错
+
+接着，同事反馈cron job也遇到过几次类似问题:
+
+error 2003 (hy000) can't connect to mysql server 110
+
+
+
+https://blog.csdn.net/qq1137623160/article/details/78927741
+
+最后其实感觉目前缺少的是：
+
+监控和load test performance test
+
+https://segmentfault.com/a/1190000022336871
+
+##### 发现端倪 Aborted_connects
+
+瞄了眼这篇文章，想到忘记认真看下连接数
+
+https://www.jianshu.com/p/07c85b8a7997
+
+执行 netstat -anp|grep 3306 大概三十多个，还算正常，然后
+
+show global status like '%connection%';
+
+结果：Connections=7772 Max_used_connections=60 
+
+查了下，好像是指服务器启动之后累积的，所以没有什么参考意义
+
+Connections：The number of connection attempts (successful or not) to the MySQL server. 
+Max_used_connections：The maximum number of connections that have been in use simultaneously since the server started. 
+
+show global status like '%thread%';
+
+结果：Threads_cached=8	Threads_connected=34	Threads_created=2232	Threads_running=1
+
+Threads_created应该也是累计的，Threads_connected应该是当前的，确实跟前面netstat差不多
+
+show processlist;
+
+结果显示三十多个程序，大部分都是sleep状态，唯一running的是我当前查询的这个线程；
+
+确认了下最大连接数
+
+SHOW VARIABLES LIKE "max_connections";
+
+结果是151默认值，远超34，应该没什么问题，但是总感觉这些sleep状态的threads/connections有些问题，
+
+然后看到了这个
+
+show global status like '%aborted%';
+
+结果：Aborted_clients 1095	Aborted connections 9
+
+这个有点意思：
+
+Aborted_clients：The number of connections that were aborted because the client died without closing the connection properly.
+
+Aborted_connects：The number of failed attempts to connect to the MySQL server. 
+
+然后猜测如下：
+Aborted_clients=1095, big number, probably means that we have some clients(app or scripts) connected to mysql, but failed to close mysql connections properly, caused lots of sleep threads/connections in mysql processlist;
+at some point in time, it may reached the max connections limit;
+and then some new connection request coming in, mysql then start to recycle zombies, most of the time is fine, but sometimes may delayed some seconds because of recycle taking time, caused Aborted_connects=9, small number, quite random
+
+根据Aborted_connects文档提示：
+
+For additional connection-related information, check the   [`Connection_errors_*`xxx`*`](https://dev.mysql.com/doc/refman/8.0/en/server-status-variables.html#statvar_Connection_errors_xxx)   status variables and the [`host_cache`](https://dev.mysql.com/doc/refman/8.0/en/performance-schema-host-cache-table.html) table.       
+
+show global status like '%errors%';
+
+select * from performance_schema.host_cache;
+
+不过并没有什么发现
+
+ ### my.cnf not working
+
+```
+设置主从时，
+change master to失败：
+
+ERROR 1794 (HY000): Slave is not configured or failed to initialize properly. You must at least set --server-id to enable either a master or a slave. Additional error messages can be found in the MySQL error log.
+
+刚开始使用了  mysqld --verbose --help 来验证 my.cnf是否有效，看到输出确实是对的
+但是实际上连上数据库后执行：
+mysql> SHOW GLOBAL VARIABLES like 'server\_id';
++---------------+-------+
+| Variable_name | Value |
++---------------+-------+
+| server_id     | 0     |
++---------------+-------+
+1 row in set (0.00 sec)
+可以看到并没有生效
+
+查看了my.cnf也没有什么异常，怀疑是权限
+#ll /etc/my.cnf
+-rw-r----- 1 root root 2112 Aug  2 10:24 /etc/my.cnf
+可以看到除了root之外的用户都没有读取权限,
+虽然启动mysqld好像是通过root：service mysqld start，但是实际使用my.cnf的用户应该是：
+/etc/passwd
+mysql:x:27:27:MySQL Server:/var/lib/mysql:/bin/false
+
+更改权限，重启即可
+chmod o+r /etc/my.cnf
+
+补充：
+#service mysqld status
+Redirecting to /bin/systemctl status  mysqld.service
+● mysqld.service - MySQL Server
+   Loaded: loaded (/usr/lib/systemd/system/mysqld.service; enabled; vendor preset: disabled)
+   Active: active (running) since Mon 2021-08-02 15:59:34 SGT; 58min ago
+     Docs: man:mysqld(8)
+           http://dev.mysql.com/doc/refman/en/using-systemd.html
+  Process: 15300 ExecStart=/usr/sbin/mysqld --daemonize --pid-file=/var/run/mysqld/mysqld.pid $MYSQLD_OPTS (code=exited, status=0/SUCCESS)
+  Process: 15282 ExecStartPre=/usr/bin/mysqld_pre_systemd (code=exited, status=0/SUCCESS)
+ Main PID: 15303 (mysqld)
+   CGroup: /system.slice/mysqld.service
+           └─15303 /usr/sbin/mysqld --daemonize --pid-file=/var/run/mysqld/mysqld.pid
+查看了启动脚本/usr/lib/systemd/system/mysqld.service也没有发现什么异常
+
+找到启动脚本 /usr/lib/systemd/system/mysqld.service：
+。。。。。
+[Service]
+User=mysql
+Group=mysql
+。。。。
+# Start main service
+ExecStart=/usr/sbin/mysqld --daemonize --pid-file=/var/run/mysqld/mysqld.pid $MYSQLD_OPTS
+。。。。。。
+
+可以看到启动mysqld真正的用户是mysql
+
+```
 
 
 
