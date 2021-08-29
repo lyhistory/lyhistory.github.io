@@ -1076,20 +1076,32 @@ Elliptic curves also allow for many variants and generalization. They are a spec
 3. In this chapter the elliptic curve y<sup>2</sup> ≡x<sup>3</sup>+2x+2 mod 17 is given with #E =19.
    Verify Hasse’s theorem for this curve.
 
-4. Let us again consider the elliptic curve y<sup>2</sup> ≡x<sup>3</sup>+2x+2 mod 17. Why are all
-   points primitive elements?
+   Given an elliptic curve E modulo p, the number of points on the curve is denoted by #E and is bounded by:
+   p+1−2√p ≤ #E ≤ p+1+2√p.
+   
+   p=17, 17+1-2√17 ≤ #E ≤ 17+1+2√17 => 18-2\*4.12 ≤ #E ≤ 18+2\*4.12 => 9.75  ≤ #E ≤ 26.2
+   
+   
+   
+4. Let us again consider the elliptic curve y<sup>2</sup> ≡x<sup>3</sup>+2x+2 mod 17. Why are all points primitive elements?
    Note: In general it is not true that all elements of an elliptic curve are primitive.
 
-   order is prime
+   order is prime, refer <Group. Lagranges Theorem>
+
+   
 
 5. Let E be an elliptic curve defined over Z<sub>7</sub>:
    E : y<sup>2</sup> =x<sup>3</sup>+3x+2.
 
    1) Compute all points on E over Z<sub>7</sub>.
 
+   
+
    2) What is the order of the group? (Hint: Do not miss the neutral element O.)
 
    3) Given the element α =(0,3), determine the order of α. Is α a primitive element?
+
+   
 
 6. In practice, a and k are both in the range p≈2<sup>150</sup> · · ·2<sup>250</sup>, and computing T =a·P and y<sub>0</sub> = k ·P is done using the Double-and-Add algorithm.
 

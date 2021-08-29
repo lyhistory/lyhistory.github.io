@@ -126,3 +126,68 @@ virtual_server_group
 
 ```
 
+## Troubleshooting
+
+生产环境yum install keepalived报错：
+
+error：
+
+Error: Package: 1:net-snmp-agent-libs-5.7.2-49.....
+		Requires: libmysqlclient.so.18
+
+```
+开发环境没有任何问题，所以对比下开发环境
+先根据错误信息查下开发环境的依赖
+$ sudo yum deplist keepalived 
+	dependency: libnetsnmp.so.31()(64bit)                                                                          provider: net-snmp-libs.x86_64 1:5.7.2-49.el7_9.1                                                         dependency: libnetsnmpagent.so.31()(64bit)                                                                      provider: net-snmp-agent-libs.x86_64 1:5.7.2-49.el7_9.1 
+$ sudo yum deplist net-snmp-agent-libs.x86_64 1:5.7.2-49.el7_9.1
+	dependency: libmysqlclient.so.18()(64bit)
+   		provider: mariadb-libs.x86_64 1:5.5.68-1.el7
+  	dependency: libmysqlclient.so.18(libmysqlclient_18)(64bit)
+   		provider: mariadb-libs.x86_64 1:5.5.68-1.el7
+果然这里是依赖libmysqlclient.so.18，安装位置是 /usr/lib64/mysql/
+但是奇怪，这里的provider为啥是mariadb，
+奇怪是因为我之前是安装安装手册步骤删除了mariadb安装了mysql
+Repeat following steps in both master DB server and secondary DB server.
+1)	Login as root. Copy mysql installation packages and its dependencies to /apex/deploy/clearing
+•	mysql-community-client-5.7.32-1.el7.x86_64.rpm
+•	mysql-community-common-5.7.32-1.el7.x86_64.rpm
+•	mysql-community-libs-5.7.32-1.el7.x86_64.rpm
+•	mysql-community-server-5.7.32-1.el7.x86_64.rpm
+2)	Uninstall mariadb as it conflicts with mysql
+$ yum remove mariadb-libs-5.5.44-2.el7.x86_64
+3)	Install mysql-community-server-5.7.18 on DB 
+$ yum install mysql-community-{server,client,common,libs}-*
+
+继续看下mysql安装包
+$ yum list installed|grep mysql
+Skipping unreadable repository '/etc/yum.repos.d/redhat.repo'
+Skipping unreadable repository '/etc/yum.repos.d/rhel7_SIM.repo'
+mysql-community-client.x86_64         5.7.18-1.el7                @/mysql-community-client-5.7.18-1.el7.x86_64
+mysql-community-common.x86_64         5.7.18-1.el7                @/mysql-community-common-5.7.18-1.el7.x86_64
+mysql-community-libs.x86_64           5.7.18-1.el7                @/mysql-community-libs-5.7.18-1.el7.x86_64
+mysql-community-libs-compat.x86_64    5.7.25-1.el7                @/mysql-community-libs-compat-5.7.25-1.el7.x86_64
+mysql-community-server.x86_64         5.7.18-1.el7                @/mysql-community-server-5.7.18-1.el7.x86_64
+
+直觉怀疑缺少了 mysql-community-libs-compat.x86_64，对比生产环境，果然少了这个包
+
+$ sudo rpm -ql mysql-community-libs-compat
+/etc/ld.so.conf.d/mysql-x86_64.conf
+/usr/lib64/mysql
+/usr/lib64/mysql/libmysqlclient.so.18
+/usr/lib64/mysql/libmysqlclient.so.18.1.0
+/usr/lib64/mysql/libmysqlclient_r.so.18
+/usr/lib64/mysql/libmysqlclient_r.so.18.1.0
+/usr/share/doc/mysql-community-libs-compat-5.7.25
+/usr/share/doc/mysql-community-libs-compat-5.7.25/COPYING
+/usr/share/doc/mysql-community-libs-compat-5.7.25/README
+
+确定了，就是少了这个包
+
+补充，可以反查：
+sudo rpm -qf /usr/lib64/mysql/libmysqlclient.so.18
+mysql-community-libs-compat-5.7.25-1.el7.x86_64
+```
+
+
+

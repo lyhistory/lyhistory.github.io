@@ -146,6 +146,17 @@ find / -type f -name "Locations.xml" -print
 find . -type f -maxdepth 1 -exec basename "{}" \; | cut -d'.' -f1 | sort -u
 
 find zookeeper/ -group root
+
+find ./* -type f -follow -name \*.log -daystart -mtime +1 -print0 | xargs -0 rm
+
+find and delete::
+https://unix.stackexchange.com/questions/167823/finds-exec-rm-vs-delete
+find / -name ".DS_Store" -exec rm {} \;
+find / -name .DS_Store -delete
+A common method for avoiding the overhead of spawning an external process for each matched file is:
+find / -name .DS_Store -print0 | xargs -0 rm
+DO NOT do this: find / -delete -name .DS_Store
+
 ```
 
 ### GREP/zgrep

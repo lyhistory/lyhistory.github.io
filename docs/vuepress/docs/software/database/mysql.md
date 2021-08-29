@@ -26,6 +26,13 @@ other engine:
 
 ```
 tar -xvf mysql-5.7.26-1.el7.x86_64.rpm-bundle.tar
+•	mysql-community-client-5.7.32-1.el7.x86_64.rpm
+•	mysql-community-common-5.7.32-1.el7.x86_64.rpm
+•	mysql-community-libs-5.7.32-1.el7.x86_64.rpm
+•	mysql-community-libs-compat-5.7.32-1.el7.x86_64.rpm
+•	mysql-community-server-5.7.32-1.el7.x86_64.rpm
+
+
 yum install mysql-community-{server,client,common,libs}-* mysql-5.*­
 
 ?#Install error
