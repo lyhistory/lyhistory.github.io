@@ -94,6 +94,8 @@ set -x 可以显示shell在执行什么程序
 
 ## 用户身份和权限
 
+
+
 ```
 su _gvm
 This account is currently not available.
@@ -106,13 +108,290 @@ sudo sh -c "cmds"
 
 ```
 
-
-
 Permissions take a different meaning for directories. Here's what they mean:
 
 -  **r**ead determines if a user can view the directory's contents, i.e. do ls in it.
 -  **w**rite determines if a user can create new files or delete file in the directory. (Note here that this essentially means that a user with write access toa directory can delete files in the directory *even* if he/she doesn't have write permissions for the file! So be careful with this.)
 -  e**x**ecute determines if the user can cd into the directory.
+
+系统启动用户
+
+```
+-----------------------------------------------------
+--- mysql
+-----------------------------------------------------
+$ systemctl status mysqld
+● mysqld.service - MySQL Server
+   Loaded: loaded (/usr/lib/systemd/system/mysqld.service; enabled; vendor preset: disabled)                                                                                          
+   Active: active (running) since Thu 2021-07-08 09:44:33 SGT; 2 months 1 days ago
+     Docs: man:mysqld(8)
+           http://dev.mysql.com/doc/refman/en/using-systemd.html
+  Process: 2934 ExecStart=/usr/sbin/mysqld --daemonize --pid-file=/var/run/mysqld/mysqld.pid $MYSQLD_OPTS (code=exited, status=0/SUCCESS)                                             
+  Process: 2913 ExecStartPre=/usr/bin/mysqld_pre_systemd (code=exited, status=0/SUCCESS)
+ Main PID: 2936 (mysqld)
+   CGroup: /system.slice/mysqld.service
+           └─2936 /usr/sbin/mysqld --daemonize --pid-file=/var/run/mysqld/mysqld.pid
+
+$ vim /usr/lib/systemd/system/mysqld.service
+[Unit]
+Description=MySQL Server
+Documentation=man:mysqld(8)
+Documentation=http://dev.mysql.com/doc/refman/en/using-systemd.html
+After=network.target
+After=syslog.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+User=mysql
+Group=mysql
+
+Type=forking
+
+PIDFile=/var/run/mysqld/mysqld.pid
+.....
+# Start main service
+ExecStart=/usr/sbin/mysqld --daemonize --pid-file=/var/run/mysqld/mysqld.pid $MYSQLD_OPTS
+...........
+
+-----------------------------------------------------
+--- keepalived
+-----------------------------------------------------
+$ systemctl status keepalived
+● keepalived.service - LVS and VRRP High Availability Monitor
+   Loaded: loaded (/usr/lib/systemd/system/keepalived.service; disabled; vendor preset: disabled)
+   Active: active (running) since Sun 2021-08-29 14:39:15 SGT; 1 weeks 2 days ago
+  Process: 15401 ExecStart=/usr/sbin/keepalived $KEEPALIVED_OPTIONS (code=exited, status=0/SUCCESS)
+ Main PID: 15402 (keepalived)
+
+$ vim /usr/lib/systemd/system/keepalived.service
+[Unit]
+Description=LVS and VRRP High Availability Monitor
+After=syslog.target network-online.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/keepalived.pid
+KillMode=process
+EnvironmentFile=-/etc/sysconfig/keepalived
+ExecStart=/usr/sbin/keepalived $KEEPALIVED_OPTIONS
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target
+
+可以看到mysqld的实际用户是mysql，而keepalived没有指定，所以其用户就是执行启动命令systemctl start keepalived的用户
+
+```
+
+
+
+## About Env
+
+### env
+
+The files in /etc directory sets the respective shell configuration  for all the users on the system. This is normally set up by the system  administrator. 
+
+The files in the home directory of the user are user-specific, obviously. This allows users to create alias for frequently used commands or use a custom PATH variable for a program.
+
+i) 特定用户的PATH  ~/bashrc  ~/bash_profile
+
+ii) system wide全局PATH /etc/profile或/root/.bashrc  (/etc/environment?)
+
+Anything in `~/.profile` and `~/.bashrc` is run *after* `/etc/profile` and `/bash.bashrc` 
+
+所以如果是修改了/etc/profile对root或sudo操作无效，要看下root下面的~/.bashXXX是不是有PATH设置，
+
+如果还不生效，就要看下/etc/sudoers: Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin，可以使用 sudo -E 绕过
+
+For some setups the `-E` switch will not work. To "workaround" it you can use `sudo env "PATH=$PATH" bash`. This will also carry your current `$PATH` forward to your `sudo` environment.
+
+### 登录式 shell 和非登录式 shell 
+
+https://linuxhandbook.com/login-shell/
+
+https://unix.stackexchange.com/questions/38175/difference-between-login-shell-and-non-login-shell
+
+- 交互式 shell 指的是**在终端有交互的模式，用户输入命令，并在回车后立即执行的 shell**，这种模式也是大部分情况下用户执行的一种方式，比如 ssh 登录
+
+  You can start a new shell from your current shell (an interactive shell): $ bash  (subshell)
+
+- when you run a shell script, it runs in its own shell (a non-interactive shell). 
+
+  非交互式 shell 指的**是 bash shell 以命令脚本的形式执行**，这种模式下，shell 不会和用户有交互，而是读取脚本文件并执行，直到读取到文件 EOF 时结束
+
+- The login shell is the first process that is executed with your user ID when you log into an interactive session.
+
+  The login process tells the shell to behave as a login shell with a  convention: passing argument 0, which is normally the name of the shell  executable, with a `-` character prepended (e.g. `-bash` whereas it would normally be `bash`.
+
+  The login shell reads environment variable and other configuration from  /etc/profile and a profile file in the home directory. This allows you  to have tab completion, colored output and sets other stuff such as  umask etc.
+
+  登录式 shell 是**用户使用自己的 user ID 登录交互式 shell 的第一个进程**
+
+  login shell 会读取不同的配置文件，比如 bash 会读取 `/etc/profile` ， `~/.profile`，`~/.bash_profile` 等配置文件。而 zsh 会是 `/etc/zprofile` 和 `~/.zprofile`
+
+  When you log in on a text console, or through SSH, or with `su -`, you get an **interactive login** shell. When you log in in graphical mode (on an [X display manager](http://en.wikipedia.org/wiki/X_display_manager_(program_type))), you don't get a login shell, instead you get a session manager or a window manager.
+
+- non-login shell 
+
+  It's rare to run a **non-interactive login** shell, but  some X settings do that when you log in with a display manager, so as to arrange to read the profile files. Other settings (this depends on the  distribution and on the display manager) read `/etc/profile` and `~/.profile` explicitly, or don't read them. Another way to get a non-interactive  login shell is to log in remotely with a command passed through standard input which is not a terminal, e.g. `ssh example.com <my-script-which-is-stored-locally` (as opposed to `ssh example.com my-script-which-is-on-the-remote-machine`, which runs a non-interactive, non-login shell).
+
+  - **interactive, non-login** shell
+
+    When you start a shell in a terminal in an existing session (screen, X  terminal, Emacs terminal buffer, a shell inside another, etc.), you get  an **interactive, non-login** shell. That shell might read a shell configuration file (`~/.bashrc` for bash invoked as `bash`, `/etc/zshrc` and `~/.zshrc` for zsh, `/etc/csh.cshrc` and `~/.cshrc` for csh, the file indicated by the `ENV` variable for POSIX/XSI-compliant shells such as dash, ksh, and bash when invoked as `sh`, `$ENV` if set and `~/.mkshrc` for mksh, etc.).
+
+    当你在已经存在的终端 session 中开启一个 shell，比如在 screen, Tmux, X terminal 等中，会得到一个交互式，非登录 shell
+
+    只会读取 `~/.bashrc` 配置(`~/.bashrc` for bash, `/etc/zshrc` and `~/.zshrc` for zsh)。
+
+  - **non-interactive, non-login** shell
+
+    When a shell runs a script or a command passed on its command line, it's a **non-interactive, non-login** shell. Such shells run all the time: it's very common that when a  program calls another program, it really runs a tiny script in a shell  to invoke that other program. Some shells read a startup file in this  case (bash runs the file indicated by the `BASH_ENV` variable, zsh runs `/etc/zshenv` and `~/.zshenv`), but this is risky: the shell can be invoked in all sorts of contexts,  and there's hardly anything you can do that might not break something.
+
+    当 shell 执行一个脚本，或者通过命令行将命令传送过去执行，这时就是非交互，非登录的 shell
+
+    不会读取任何profile 或 rc
+
+  
+
+举例1：
+
+```
+echo $0
+- `-bash` 中 `-` 表示当前是一个 login shell
+- `bash` 表示不是 login shell
+
+用户在当前交互式的shell中执行：
+$ bash
+就会开启一个新的 subshell，这个subshell就是一个 non-login shell，在该subshell中可以读取`~/.bashrc` 也可以读取`~/.bash_profile`（继承parent）
+
+On desktop Linux, you don't use login shell. Your login is managed by a display manager. This is why when you open a terminal in Linux desktop, you'll see that even the first shell running in the terminal is not login shell. 
+```
+
+举例2：
+
+https://www.tecmint.com/change-a-users-default-shell-in-linux/
+
+There are several reasons for changing a user’s shell in Linux including the following:
+
+1. To [block or disable normal user logins](https://www.tecmint.com/block-or-disable-normal-user-logins-in-linux/) in Linux using a nologin shell.
+2. Use a shell wrapper script or program to login user commands before  they are sent to a shell for execution. Here, you specify the shell  wrapper as a user’s login shell.
+3. To meet a user’s demands (wants to use a specific shell), especially those with administrative rights
+
+举例3 non-interactive, non-login shell：
+
+使用crontab自动启动jar的时候，java代码中getHostName抛错，手动启动则没有问题
+
+```
+----------------------------------------------------------------------------------------------------------
+--- java code
+----------------------------------------------------------------------------------------------------------
+private Long getDataCenterId(){
+        int[] ints = StringUtils.toCodePoints(SystemUtils.getHostName());
+        int sums = 0;
+        for (int i: ints) {
+            sums += i;
+        }
+        return (long)(sums % 32);
+    }
+    
+Caused by: java.lang.NullPointerException
+	at com.quantdo.clear.tradecapture.util.IdWorkerConfiguration.getDataCenterId(IdWorkerConfiguration.java:64)
+	at com.quantdo.clear.tradecapture.util.IdWorkerConfiguration.getDateFromConfig(IdWorkerConfiguration.java:43)
+	
+查了下，在linux下面，SystemUtils.getHostName()实际是去获取linux env的HOSTNAME，
+在该linux机器上使用执行crontab对应相同的用户登录，并执行env，正常显示HOSTNAME（当然了，毕竟手动运行没问题）
+所以合理的怀疑是，crontab没有拿到env
+
+
+----------------------------------------------------------------------------------------------------------
+--- crontab
+----------------------------------------------------------------------------------------------------------
+$ crontab -e
+44 17 * * * /opt/scripts/start_some_service.sh && &>> /opt/logs/start_some_service`date +\%F`.log   2>&1
+
+----------------------------------------------------------------------------------------------------------
+--- start_some_service.sh
+----------------------------------------------------------------------------------------------------------
+$ vim start_some_service
+#!/bin/bash 
+
+readonly PROGNAME=$(basename $0)
+readonly PROGDIR=$(readlink -m $(dirname $0))
+
+# source env
+L_INVOCATION_DIR="$(pwd)"
+L_CMD_DIR="/opt/scripts"
+
+if [ "${L_INVOCATION_DIR}" != "${L_CMD_DIR}" ]; then
+  pushd ${L_CMD_DIR} &> /dev/null
+fi
+
+source ./_set_env.sh
+./start_service.sh A
+./start_service.sh B
+
+----------------------------------------------------------------------------------------------------------
+--- start_service.sh
+----------------------------------------------------------------------------------------------------------
+$ vim start_service.sh
+PID=`ps -aef | grep -v grep | grep "java -server -jar ./${1}.jar" | awk '{print $2}'`
+
+if [ ! -z "$PID" ]; then
+        echo "Service $1 already running on the server. PID is [$PID];"
+        exit 0
+fi
+
+ulimit -c unlimited
+
+nohup java -server -jar $1.jar > ../logs/`date +\%F`_$1_`date +\%H.%M.%S`.log 2>&1 &
+sleep 1
+PID=`ps -aef | grep -v grep | grep "java -server -jar ${1}.jar" | awk '{print $2}'`
+
+if [ ! -z "$PID" ]; then
+        echo "Service $1 started. PID is [$PID]"
+else
+        echo "Failed to start service $1"
+fi
+
+popd &>/dev/null
+
+
+----------------------------------------------------------------------------------------------------------
+--- 修复方式
+----------------------------------------------------------------------------------------------------------
+start_some_service.sh 替换 #!/bin/bash 为 #!/bin/bash -l
+或者crontab添加bash -l
+44 17 * * * bash -l /opt/scripts/start_some_service.sh && &>> /opt/logs/start_some_service`date +\%F`.log       2>&1
+----------------------------------------------------------------------------------------------------------
+--- 原因
+----------------------------------------------------------------------------------------------------------
+$ man 5 crontab
+............
+Several environment variables are set up automatically by the cron(8) daemon.  SHELL is set to /bin/sh, and LOGNAME and HOME are set from the /etc/passwd line of  the  crontab´s
+       owner.  HOME and SHELL can be overridden by settings in the crontab; LOGNAME can not.
+
+       (Note: the LOGNAME variable is sometimes called USER on BSD systems and is also automatically set).
+.............
+
+$ man bash
+ -l        Make bash act as if it had been invoked as a login shell (see INVOCATION below).
+
+The -l option tells bash to read all the various "profile" scripts, from /etc and from your home directory. Bash normally only does this for interactive sessions (in which bash is run without any command line parameters).
+
+Normal scripts have no business reading the profile; they're supposed to run in the environment they were given. That said, you might want to do this for personal scripts, maybe, if they're tightly bound to your environment and you plan to run them outside of a normal session.
+
+A crontab is one example of running a script outside your session, so yes, go do it!
+
+refer:
+https://unix.stackexchange.com/questions/422499/what-are-the-pros-and-cons-in-using-the-l-in-a-script-shebang/422505
+https://stackoverflow.com/questions/2229825/where-can-i-set-environment-variables-that-crontab-will-use
+https://stackoverflow.com/questions/36885909/cronjob-does-not-execute-a-script-that-works-fine-standalone/69100347#69100347
+ 
+```
+
+
 
 ## 安装包管理
 
@@ -179,19 +458,7 @@ Permissions take a different meaning for directories. Here's what they mean:
 
   1) set env variable or persist it in:
   
-  ​	e.g. export PATH=$PATH:/usr/local/go/bin
-  
-  ​	i) 特定用户的PATH  ~/bashrc  ~/bash_profile
-  
-  ​	ii) system wide全局PATH /etc/profile或/root/.bashrc  (/etc/environment?)
-  
-  Anything in `~/.profile` and `~/.bashrc` is run *after* `/etc/profile` and `/bash.bashrc` 
-  
-  所以如果是修改了/etc/profile对root或sudo操作无效，要看下root下面的~/.bashXXX是不是有PATH设置，
-  
-  如果还不生效，就要看下/etc/sudoers: Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin，可以使用 sudo -E 绕过
-  
-  For some setups the `-E` switch will not work. To "workaround" it you can use `sudo env "PATH=$PATH" bash`. This will also carry your current `$PATH` forward to your `sudo` environment.
+  ​	e.g. export PATH=$PATH:/usr/local/go/bin, more read section #About ENV
   
   2) or just mv it into /usr/local/bin/
   

@@ -1706,6 +1706,10 @@ Configuration或AutoConfiguration跟EnableAutoConfiguration是一对，
 
 https://docs.spring.io/spring-boot/docs/1.3.8.RELEASE/reference/html/using-boot-auto-configuration.html
 
+Create a Custom Auto-Configuration with Spring Boot
+
+https://www.baeldung.com/spring-boot-custom-auto-configuration
+
 创建一个starter
 hello-spring-boot-starter
 
@@ -1781,6 +1785,8 @@ com.chm.test.HelloAutoConfiguration
 
 https://blog.csdn.net/zxc123e/article/details/80222967
 ```
+
+
 
 ## 4. Troubleshooting
 

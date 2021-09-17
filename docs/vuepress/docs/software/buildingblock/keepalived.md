@@ -128,6 +128,8 @@ virtual_server_group
 
 ## Troubleshooting
 
+### Requires: libmysqlclient.so.18
+
 生产环境yum install keepalived报错：
 
 error：
@@ -190,4 +192,8 @@ mysql-community-libs-compat-5.7.25-1.el7.x86_64
 ```
 
 
+
+### failed to run external check scripts
+
+selinux 开关！
 

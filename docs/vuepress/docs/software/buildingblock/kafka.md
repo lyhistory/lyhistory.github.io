@@ -1370,7 +1370,7 @@ https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsu
 2. 计算结果表示了__consumer_offsets 的一个 partition比如`__consumer_offsets-10`
 3.  找到该`__consumer_offsets-10` 的 leader 所在的 broker如broker id=3，即该consumer group的GroupCoordinator， 
 4. 当该consumer group的GroupCoordinator挂掉时，也就是这个broker挂掉后，其他borkers（保存有`__consumer_offsets-10`的replica的节点）会选一个broker如broker id=1作为新的`__consumer_offsets-10`的leader，然后该broker会load 本机保存的`__consumer_offsets-10`replica到内存中，完成后，cient端就会discover该broker作为新的GroupCoordinator
-5. 当broker id=3恢复正常后，会抢回broker id=1之前接管的`__consumer_offsets-10`，重新作为该topic的leader，然后client端就重新discover broker id=3作为group coordinator，这种抢回的方式可以保证kafka节点任务均衡
+5. 当broker id=3恢复正常后，会抢回broker id=1之前接管的`__consumer_offsets-10`，重新作为该topic的leader，然后client端就重新discover broker id=3作为group coordinator，这种抢回的方式可以保证kafka节点任务均衡（注意，broker id=3恢复之后，通过kafka-topics.sh --list 查看，`__consumer_offsets-10`的leader仍然会是broker id 1，需要等到再接收一条新的kafka消息后，leader才会切换成broker id 3，外部topic也是如此，`__transaction_state`也是类似，可能是生产一条消息时更新）
 
 #### 4.1.1 跟borker交互
 
@@ -2316,6 +2316,18 @@ Kafka技术内幕-日志压缩 https://segmentfault.com/a/1190000005312891
 
 Note however that there cannot be more consumer instances(task) in a consumer group than partitions. 
 https://cwiki.apache.org/confluence/display/KAFKA/KIP-28+-+Add+a+processor+client
+
+### 4.5 Nodes expansion
+
+https://kafka.apache.org/documentation/#basic_ops_cluster_expansion
+
+注意，kafka是不可以动态扩增的，一旦配置好并且开启n个节点，第一个consumer接入的时候就会创建50个partition的`__consumer_offsets`并且在n个节点上平均分配，第一个producer接入的时候会创建50个`__transaction_state`并且在n个节点上平均分配，创建的外部topic也同样平均分配在n个节点上，如果扩增node到n+1，并不会自动的重新分配，需要手动migration；
+
+另外n最好是等于replica factor的设置，低于replica factor无法正常启动工作，高于replica factor则会造成节点浪费，比如
+
+replica factor=2，启动3个node，那么就出现比如 `__consumer_offsets_49`的replica分布在node 1和2上，所以只支持node1和2只能挂掉一个，同理其他的分布在node1和node3，node2和node3上，所以总的来说，只能挂掉3个节点的一个
+
+
 
 ## 5. Troubleshooting
 

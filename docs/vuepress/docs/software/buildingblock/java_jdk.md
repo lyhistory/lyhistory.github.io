@@ -94,7 +94,9 @@ lrwxrwxrwx 1 root root 73 Nov 25  2019 /etc/alternatives/java -> /usr/lib/jvm/ja
 
 ## jdk troubleshooting
 
-验证码无法显示，需要输出完整的错误日志
+### 验证码无法显示
+
+，需要输出完整的错误日志
 
 ```
 使用的是log4j2

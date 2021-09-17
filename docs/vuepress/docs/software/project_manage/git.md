@@ -77,6 +77,7 @@ git remote set-url origin git://test.com/repo.git
 ```
 git branch -vv
 git branch (-r/-a)
+git branch -m old_branch_name new_branch_name
 git checkout (-b) master
 
 //make it tracking remote branch
@@ -184,6 +185,7 @@ git show 15928170ffecd7022301a***:****.java
 https://stackoverflow.com/questions/1057564/pretty-git-branch-graphs
 
 git diff master..standardised-meetup-contract-xml
+git diff mybranch master -- myfile.cs
 ```
 
 

@@ -108,6 +108,10 @@ mysql workbench
 
 ### 2.1 mysql-cli
 
+vertical format:
+
+mysql> select * from table limit 1 \G;
+
 千万不要用双引号，尤其是password，所有的-u -p -e等等后面不要加空格！
 
 ```
@@ -1076,6 +1080,13 @@ lower_case_table_names=1
 skip-name-resolve
 
 skip-slave-start #！！！！Important In addition, you should start replicas with the --skip-slave-start option before configuring the replica settings. Tells the replica server not to start the replication threads when the server starts. To start the threads later, use a START SLAVE statement. 
+
+Note：
+1. 另外一种方式就是
+systemctl edit mysqld.service
+and then adding --skip-slave-start
+https://stackoverflow.com/questions/65434207/start-mysql-replication-server-with-skip-slave-start
+2. 配置完成主主复制之后一定要注释掉my.cnf里面的skip-slave-start，不然每次启动之后都要手动start slave
 
 > systemctl restart mysqld
 
