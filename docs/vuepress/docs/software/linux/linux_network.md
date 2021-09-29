@@ -83,3 +83,12 @@ grep -r -H "eth0" /var/log/
 ## 案例
 
 https://blog.cloudflare.com/this-is-strictly-a-violation-of-the-tcp-specification/
+
+
+
+https://serverfault.com/questions/199434/how-do-i-make-curl-use-keepalive-from-the-command-line
+
+```
+while :;do echo -e "GET / HTTP/1.1\nhost: $YOUR_VIRTUAL_HOSTNAME\n\n";sleep 1;done|telnet $YOUR_SERVERS_IP 80
+```
+

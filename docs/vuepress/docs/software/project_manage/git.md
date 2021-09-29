@@ -17,6 +17,7 @@ Understanding Tracking Branches in Git  https://lornajane.net/posts/2014/underst
 **Authentication**
 
 ```
+git config --global --list
 git config --global user.name "***"
 git config --global user.email "***"
 

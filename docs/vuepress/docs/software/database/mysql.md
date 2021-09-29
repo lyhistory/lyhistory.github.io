@@ -93,7 +93,19 @@ mysqladmin
 
 验证配置：`mysqld --verbose --help | grep skip-slave-start`
 
-mysqlbinlog https://dev.mysql.com/doc/refman/8.0/en/mysqlbinlog.html
+mysqlbinlog:
+
+https://dev.mysql.com/doc/refman/8.0/en/mysqlbinlog.html
+
+https://www.zhihu.com/tardis/sogou/art/66501464
+
+```
+sudo mysqlbinlog --verbose --start-position=653218764 --stop-position=653263629 /var/lib/mysql/mysql-bin.000007 > check-mysql-bin.000007-14
+
+--verbose 在BINLOG '之后打印sql语句
+```
+
+
 
 **3rd party:**
 
@@ -630,6 +642,26 @@ Managing Hierarchical Data in MySQL
 
 https://www.mysqltutorial.org/mysql-adjacency-list-tree/
 
+**Partition**
+
+```java
+public void createPartition(String theDate) {
+        String sql = "SELECT count(partition_name) FROM INFORMATION_SCHEMA.PARTITIONS WHERE  TABLE_SCHEMA =SCHEMA() AND TABLE_NAME='t_xxx';";
+        Integer result = jdbcTemplate.queryForObject(sql, Integer.class);
+        if (result == 0) {
+            sql = String.format("ALTER TABLE t_xxx PARTITION BY LIST COLUMNS(CreateDate) (PARTITION p%s VALUES IN ('%s'));", theDate, theDate);
+            jdbcTemplate.execute(sql);
+        } else {
+            sql = String.format("SELECT count(partition_name) FROM INFORMATION_SCHEMA.PARTITIONS WHERE  TABLE_SCHEMA =SCHEMA() AND TABLE_NAME='t_xxx' AND PARTITION_NAME = 'p%s' ", theDate);
+            Integer count = jdbcTemplate.queryForObject(sql, Integer.class);
+            if (count == 0) {
+                sql = String.format("ALTER TABLE t_xxx ADD PARTITION(PARTITION p%s VALUES IN ('%s'));", theDate, theDate);
+                jdbcTemplate.execute(sql);
+            }
+        }
+    }
+```
+
 
 
 ## 5. HA
@@ -869,9 +901,7 @@ log-bin = mysql-bin
 #binlog_format = row
 gtid-mode=ON
 enforce-gtid-consistency=ON
-log-slave-updates
 #read-only = ON #另一种方式设置readonly
-skip-slave-start #！！！！Important In addition, you should start replicas with the --skip-slave-start option before configuring the replica settings. Tells the replica server not to start the replication threads when the server starts. To start the threads later, use a START SLAVE statement. 
 
 > systemctl restart mysqld
 
@@ -909,7 +939,7 @@ mysql> flush privileges;
 mysql_config_editor set --login-path=host-rpl --host=localhost --port=3306 --user=replicator --password
 
 ----------------------------------------------------------------------------
-step 4: on master: Retrieving Binary Log Coordinates from the Source
+(no need) step 4: on master: Retrieving Binary Log Coordinates from the Source
 ----------------------------------------------------------------------------
 
 mysql> show master status
@@ -946,7 +976,8 @@ step 5: dump and import, If Your Source Has Existing Data to Migrate
 on slave:: import data
 mysql> show global variables like 'gtid_executed';
 如果是第一次，应该是空的
-mysql> source mysqlbackup_dump.sql ;
+mysql> SET @@GLOBAL.read_only = OFF;
+mysql> source source_dump.sql ;
 mysql> show global variables like 'gtid_executed';
 
 导入完应该跟master一样了? 跟file based replication不同，两台机器上产生的gtid本来就不同的，只不过slave会复制master上面产生的gtid transaction，
@@ -979,6 +1010,9 @@ step 6: Finally touch: unlock
 ----------------------------------------------------------------------------
 mysql> SET @@GLOBAL.read_only = OFF;
 
+ON SLAVE:
+> vim /etc/my.cnf
+ #skip-slave-start
 
 ```
 
@@ -1115,8 +1149,6 @@ mysql_config_editor set --login-path=host-rpl --host=replication_server1_ip --po
 
 mysql> flush privileges;
 
-
-
 ----------------------------------------------------------------------------
 step 4: on BOTH two master: Retrieving Binary Log Coordinates from the Source
 ----------------------------------------------------------------------------
@@ -1137,6 +1169,7 @@ Method 1：
 on slave:: import data
 mysql> show global variables like 'gtid_executed';
 如果是第一次，应该是空的
+mysql> SET @@GLOBAL.read_only = OFF;
 mysql> source mysqlbackup_dump.sql ;
 mysql> show global variables like 'gtid_executed';
 导入完应该跟master一样了
@@ -1172,6 +1205,9 @@ mysql> show slave status\G
 step 6: Finally touch: unlock
 ----------------------------------------------------------------------------
 mysql> SET @@GLOBAL.read_only = OFF;
+
+> vim /etc/my.cnf
+ #skip-slave-start
 
 ```
 
@@ -1527,6 +1563,36 @@ Caused by: com.alibaba.druid.pool.GetConnectionTimeoutException: wait millis 600
 	at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:109)
 	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:262)
 
+针对这个问题个人分析方法及解决方案 ：
+1、代码中存在获取DataSource Connection 没有释放的情况，可查询业务代码是否存在 未释放现象。
+2、程序并发数量大或者SQL执行较慢，数据库连接配置太小，可增大maxActive参数、增大wait millis 参数。
+3、检查数据库连接数是否配置过低，Linux文件句柄数是否需要调整
+4、此问题非druid框架引发，建议从业务代码、并发量进行分析排查。如若druid版本过低可升级，也可配置强制释放连接。
+以下配置：
+spring.datasource.druid.log-abandoned=true
+spring.datasource.druid.remove-abandoned=true
+#可根据具体情况酌情配置回收时间
+spring.datasource.druid.remove-abandoned-timeout=300
+
+
+###mysql show connections
+show processlist;
+show variables like 'max_connections';
+select substring_index(host,':' ,1) as client_ip,Command,Time from information_schema.processlist;
+
+### linux句柄数排错 mysql
+https://blog.csdn.net/qq_28423997/article/details/87880653
+https://blog.csdn.net/fygkchina/article/details/106537736
+
+### mysql timeout
+vi /etc/my.cnf
+ wait_timeout = 28800
+ interactive_timeout = 28800
+ select @@wait_timeout; 
+ 
+
+### druid VS hikari
+https://github.com/alibaba/druid/issues/3720
 ```
 
 核心的提示就是这个：

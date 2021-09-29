@@ -207,9 +207,18 @@ crontab是分用户的，默认为当前用户，可以通过-u指定用户
 
 日志
 
+https://unix.stackexchange.com/questions/207/where-are-cron-errors-logged
+
 /var/log/cron
 
 /var/spool/mail/root
+
+邮件： 
+
+```
+MAILTO=my.offsite.email@example.org
+00 15 * * *  echo "Just testing if crond sends email"
+```
 
 ## history
 

@@ -48,6 +48,8 @@ https://support.office.com/en-us/article/Use-AutoSum-to-sum-numbers-543941e7-e78
  
 ### 4.Find mismatch value comparing two column
 IF(ISERROR(MATCH(E2,$C$2:$C$13363,0)),"na",E2)
+Multiple columns:
+=IF(ISERROR(AND(MATCH(A2,$H$2:$H$46,0),MATCH(B2,$I$2:$I$46,0))),”na”,L2)
 
 ### 5.SumIF
 https://support.office.com/en-us/article/SUMIF-function-169b8c99-c05c-4483-a712-1697a653039b

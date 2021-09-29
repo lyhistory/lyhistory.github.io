@@ -385,10 +385,11 @@ Normal scripts have no business reading the profile; they're supposed to run in 
 A crontab is one example of running a script outside your session, so yes, go do it!
 
 refer:
+https://www.baeldung.com/linux/load-env-variables-in-cron-job
 https://unix.stackexchange.com/questions/422499/what-are-the-pros-and-cons-in-using-the-l-in-a-script-shebang/422505
 https://stackoverflow.com/questions/2229825/where-can-i-set-environment-variables-that-crontab-will-use
 https://stackoverflow.com/questions/36885909/cronjob-does-not-execute-a-script-that-works-fine-standalone/69100347#69100347
- 
+https://unix.stackexchange.com/questions/321315/get-cron-to-run-in-the-same-environment-as-i-get-with-ssh-login
 ```
 
 
