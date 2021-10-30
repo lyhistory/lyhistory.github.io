@@ -1715,6 +1715,8 @@ cat /opt/gitlab/version-manifest.txt
 
 https://docs.gitlab.com/ee/ci/README.html
 
+https://docs.gitlab.com/ee/ci/variables/
+
 ### Overview
 
 CICD 典型workflow
@@ -1764,7 +1766,9 @@ This file creates a pipeline, which runs for changes to the code in the reposito
 
 https://gitlab.com/gitlab-org/gitlab-foss/tree/master/lib/gitlab/ci/templates
 
+pre-defined variables
 
+https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
 
 **Pipeline**
 
@@ -1787,6 +1791,9 @@ https://docs.gitlab.com/runner/configuration/advanced-configuration.html
 After a runner is configured and available for your project, your CI/CD jobs can use the runner.
 
 Specify the name of the runner or its tags in your .gitlab-ci.yml file. Then, when you commit to your repository, the pipeline runs, and the runner’s executor processes the commands.
+
+/home/gitlab-runner/builds/
+
 ```
 
 ### 案例：JAVA application with Maven
@@ -1849,6 +1856,645 @@ deploy:jdk8:
   only:
     - master
 ```
+
+案例：Maven auto release
+
+初始版本：
+
+```
+.gitlab-ci.yml:
+image: maven:3.3.9-jdk-8
+
+cache:
+  paths:
+    - .m2/repository
+
+stages:
+  - build
+  - release
+
+build:stag:
+  stage: build
+  script:
+    - echo "test1"
+    - POM_VERSION=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.6.0:exec)
+    - echo "Package for stag $POM_VERSION"
+    - mvn package
+    - CLEAR_TARGET_DIR="$HOME/packages/$POM_VERSION"
+    - echo "Package successfully!"
+    - mkdir -p ${CLEAR_TARGET_DIR}
+    - echo "shipping artifacts to ${CLEAR_TARGET_DIR}";
+    - cp ${CI_PROJECT_DIR}/target/test-spring-redis*.jar ${CLEAR_TARGET_DIR};
+
+release:stag:
+  stage: release
+  needs: ['build:stag']
+  when: manual
+  script: 
+    - echo "Prepare release for stag"
+    - TD=`date +"%Y%m%d"`
+    - ReleaseVersion=0.0.2
+    - NextVersion=0.0.3
+    - mvn clean -DskipTests -Darguments=-DskipTests release:prepare -e -DreleaseVersion=$ReleaseVersion -DdevelopmentVersion=$NextVersion-SNAPSHOT -Dtag="$TD-$ReleaseVersion" -DscmDevelopmentCommitComment="prepare for next development iteration $NextVersion-SNAPSHOT"
+    - echo "Prepare release successfully!"
+    - if [ ! -f ci_settings.xml ];
+        then echo "CI settings missing\! If deploying to GitLab Maven Repository, please see https://docs.gitlab.com/ee/user/project/packages/maven_repository.html#creating-maven-packages-with-gitlab-cicd for instructions.";
+      fi
+    - if [ $? == 0 ]
+      then
+        echo "Perform release for stag"
+        mvn release:perform -e -Darguments="-Dmaven.javadoc.skip=true -Dmaven.test.skip=true" -s ci_settings.xml
+        echo "Perform release successfully!"
+      else
+        echo "Rollback release for stag"
+        mvn release:rollback
+        echo "Rollback release successfully!"
+      fi
+      
+      
+pom.xml:
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.lyhistory.redis</groupId>
+	<artifactId>test-spring-redis</artifactId>
+	<version>0.0.9-SNAPSHOT</version>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.6.RELEASE</version>
+	</parent>
+	<dependencies>
+		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-parent</artifactId> 
+			<version>2.4.3</version> <type>pom</type> </dependency> -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<!-- <version>2.4.3</version> -->
+		</dependency>
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+          <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.kstyrc</groupId>
+            <artifactId>embedded-redis</artifactId>
+            <version>0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.71</version>
+        </dependency>
+	</dependencies>
+	
+    <build>
+        <plugins>
+            <!-- JDK level -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>dll</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>so</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                </configuration>
+            </plugin>
+
+            <!-- 更新: mvn versions:set -DnewVersion=1.0.4-SNAPSHOT versions:update-child-modules
+                回滚: mvn versions:revert 提交: mvn versions:commit -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.7</version>
+            </plugin>
+			<plugin>
+			   <groupId>org.apache.maven.plugins</groupId>
+			   <artifactId>maven-release-plugin</artifactId>
+			</plugin>
+        </plugins>
+
+    </build>
+    <!-- 配置远程发布到私服,mvn deploy -->
+    <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <name>Nexus Release Repository</name>
+            <url>http://NEXUS_IP:18081/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://NEXUS_IP:18081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <scm>
+        <connection>scm:git:http://GITLAB_IP/apex-clear/next-gen/testci.git</connection>
+        <developerConnection>scm:git:http://GITLAB_IP/apex-clear/next-gen/testci.git</developerConnection>
+        <url>http://GITLAB_IP/apex-clear/next-gen/testci</url>
+        <tag>20211029-0.0.2</tag>
+    </scm>
+
+</project>
+
+ci_settings.xml:
+<settings>
+  <servers>
+    <server>
+      <id>nexus</id>
+      <username>admin</username>
+      <password>admin</password>
+    </server>
+	<!--
+	<server>
+      <id>origin</id>
+      <username>yue.liu</username>
+      <password>test@123456</password>
+    </server>
+	-->
+  </servers>
+  <mirrors>
+    <mirror>
+      <id>CN</id>
+      <name>Aliyun Nexus</name>
+      <url>http://NEXUS_IP:18081/repository/aliyun-repo/</url>
+      <mirrorOf>central</mirrorOf>
+    </mirror>
+    <mirror>
+      <id>mavenCentral</id>
+      <name>Maven Central</name>
+      <url>http://NEXUS_IP:18081/repository/maven-central/</url>
+      <mirrorOf>central</mirrorOf>
+    </mirror>
+  </mirrors>
+  <profiles>
+    <profile>
+      <id>nexus</id>
+      <!--Enable snapshots for the built in central repo to direct -->
+      <!--all requests to nexus via the mirror -->
+      <repositories>
+        <repository>
+          <id>central</id>
+          <url>http://central</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>central</id>
+          <url>http://central</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+  <activeProfiles>
+    <!--make the profile active all the time -->
+    <activeProfile>nexus</activeProfile>
+  </activeProfiles>
+</settings>
+```
+
+
+
+问题修复：
+
+```
+
+首先先总结下问题修复之后的整个逻辑：
+要知道的是，cicd pipeline执行的过程是我们配置的gitlab-runner agent机器上执行这个ci脚本，大概是首先gitlab会默认在gitlabrunner机器上根据对应的git在builds路径下：env.CI_PROJECT_DIR=/home/gitlab-runner/builds/Mtn6kdk-/0/testci 创建这个testci目录，然后再通过env.CI_REPOSITORY_URL=http://gitlab-ci-token:[MASKED]@GITLAB_IP/testci.git 这个临时的？token来clone gitlab服务器上的git代码
+
+[sgkc2-clncode-v01@SG/home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci]#git remote -v
+origin  http://gitlab-ci-token:mX2W8nN6WsMnzA_kWp1p@172.16.101.160/apex-clear/next-gen/testci.git (fetch)
+origin  http://gitlab-ci-token:mX2W8nN6WsMnzA_kWp1p@172.16.101.160/apex-clear/next-gen/testci.git (push)
+[sgkc2-clncode-v01@SG/home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci]#git status
+HEAD detached at d8ae1db
+nothing to commit, working tree clean
+env.GITLAB_USER_EMAIL=yue.liu@gitlab.com
+env.GITLAB_USER_LOGIN=yue.liu
+
+env.CI_SERVER_HOST=GITLAB_IP
+env.CI_API_V4_URL=http://GITLAB_IP/api/v4
+env.CI_SERVER_URL=http://GITLAB_IP
+env.CI_PIPELINE_URL=http://GITLAB_IP/testci/-/pipelines/823
+env.CI_PROJECT_URL=http://GITLAB_IP/testci
+
+env.CI_REPOSITORY_URL=http://gitlab-ci-token:[MASKED]@GITLAB_IP/testci.git
+env.CI_JOB_URL=http://GITLAB_IP/testci/-/jobs/2422
+
+?????????????????????????????????????????????????????????????????????????????????????????
+??? mvn clean -DskipTests -Darguments=-DskipTests release:prepare -e -DreleaseVersion=$ReleaseVersion -DdevelopmentVersion=$NextVersion-SNAPSHOT -Dtag="$TD-$ReleaseVersion" -DscmDevelopmentCommitComment="prepare for next development iteration $NextVersion-SNAPSHOT"
+?????????????????????????????????????????????????????????????????????????????????????????
+刚开始看到这几个帖子：
+https://forum.gitlab.com/t/getting-mvn-release-to-work-with-gitlab-ci/4904/2
+https://forum.gitlab.com/t/getting-mvn-release-to-work-with-gitlab-ci/4904
+https://forum.gitlab.com/t/git-push-from-inside-a-gitlab-runner/30554/5
+https://gitlab.com/gitlab-examples/ssh-private-key/
+https://www.tutorialspoint.com/gitlab/gitlab_ssh_key_setup.htm
+https://docs.gitlab.com/ee/ssh/
+https://docs.gitlab.com/ee/ci/ssh_keys/#verifying-the-ssh-host-keys
+https://docs.gitlab.com/ee/user/project/deploy_keys/index.html
+然后盲目的就想用ssh key的方式来搞，结果本地创建完id_rsa id_rsa.pub后，发现gitlab runner机器上~/.ssh下面有了，所以就直接在gitlab settings页面 cicd设置	SSH_PRIVATE_KEY，但是并没有在repo配置上id_rsa.pub
+结果当然是出错：
+[INFO] Executing: /bin/sh -c cd /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci && git push http://172.16.101.160/apex-clear/next-gen/test.git refs/heads/master:refs/heads/master
+[INFO] Working directory: /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  6.786 s
+[INFO] Finished at: 2021-10-28T10:08:09+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project test-spring-redis: Unable to commit files
+[ERROR] Provider message:
+[ERROR] The git-push command failed.
+[ERROR] Command output:
+[ERROR] fatal: could not read Username for 'http://172.16.101.160': No such device or address
+[ERROR] 
+[ERROR] -> [Help 1]
+org.apache.maven.lifecycle.LifecycleExecutionException: Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project test-spring-redis: Unable to commit files
+Provider message:
+The git-push command failed.
+Command output:
+fatal: could not read Username for 'http://172.16.101.160': No such device or address
+
+后来才注意到官方有步骤（还没有测试，后面会尝试，即使使用ssh，应该也需要提供username和email）：
+https://docs.gitlab.com/ee/ci/ssh_keys/
+GitLab currently doesn’t have built-in support for managing SSH keys in a build environment (where the GitLab Runner runs).
+SSH keys when using the Shell executor
+If you are using the Shell executor and not Docker, it is easier to set up an SSH key.
+
+You can generate the SSH key from the machine that GitLab Runner is installed on, and use that key for all projects that are run on this machine.
+
+First, log in to the server that runs your jobs.
+
+Then, from the terminal, log in as the gitlab-runner user:
+
+sudo su - gitlab-runner
+
+Generate the SSH key pair as described in the instructions to generate an SSH key. Do not add a passphrase to the SSH key, or the before_script will prompt for it.
+
+As a final step, add the public key from the one you created earlier to the services that you want to have an access to from within the build environment. If you are accessing a private GitLab repository you must add it as a deploy key.
+
+After generating the key, try to sign in to the remote server to accept the fingerprint:
+
+ssh example.com
+
+For accessing repositories on GitLab.com, you would use git@gitlab.com
+
+接着我没有回到正常思路，而是之间登录gitlab runner机器，在env.CI_PROJECT_DIR=/home/gitlab-runner/builds/Mtn6kdk-/0/testci目录下一顿操作，具体就是改了remote origin，以及设置config user和email，
+然后再执行cicd，估计是因为我的改动通过了某些步骤，但是又遇到一个问题：
+[INFO] Executing: /bin/sh -c cd /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci && git commit --verbose -F /tmp/maven-scm-1715089266.commit pom.xml
+[INFO] Working directory: /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci
+[INFO] Executing: /bin/sh -c cd /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci && git symbolic-ref HEAD
+[INFO] Working directory: /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  6.383 s
+[INFO] Finished at: 2021-10-26T09:45:23+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project test-spring-redis: An error is occurred in the checkin process: Exception while executing SCM command.: Detecting the current branch failed: fatal: ref HEAD is not a symbolic ref -> [Help 1]
+org.apache.maven.lifecycle.LifecycleExecutionException: Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project test-spring-redis: An error is occurred in the checkin process: Exception while executing SCM command.
+
+查了下，是说gitlab runner worked on detached header，需要checkout 到master，所以
+在mvn release prepare之前加了 git checkout master
+然后这个错误没有了，仍然是无法通过release prepare push changes，
+
+接着切换了思路，为什么非要ssh，我就用username password不行吗？
+所以我
+- git remote set-url origin http://yue.liu:test@123456@$CI_SERVER_HOST/workspace/testci.git
+发现错误提示是，无法解析123456@$CI_SERVER_HOST/workspace/testci.git
+原来密码中包含了@，git当成了后面的那个ip之前的@解析了，所以改成url encode
+- git remote set-url origin http://yue.liu:test%40123456@$CI_SERVER_HOST/workspace/testci.git
+仍然不成功，
+[INFO] Executing: /bin/sh -c cd /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci && git commit --verbose -F /tmp/maven-scm-81988903.commit pom.xml
+[INFO] Working directory: /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci
+[INFO] Executing: /bin/sh -c cd /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci && git symbolic-ref HEAD
+[INFO] Working directory: /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci
+[INFO] Executing: /bin/sh -c cd /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci && git push http://yue.liu:********@172.16.101.160/apex-clear/next-gen/testci.git refs/heads/master:refs/heads/master
+[INFO] Working directory: /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  6.707 s
+[INFO] Finished at: 2021-10-29T08:59:46+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project test-spring-redis: Unable to commit files
+[ERROR] Provider message:
+[ERROR] The git-push command failed.
+[ERROR] Command output:
+[ERROR] remote: HTTP Basic: Access denied
+[ERROR] fatal: Authentication failed for 'http://172.16.101.160/apex-clear/next-gen/testci.git/'
+[ERROR] -> [Help 1]
+org.apache.maven.lifecycle.LifecycleExecutionException: Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project test-spring-redis: Unable to commit files
+Provider message:
+The git-push command failed.
+Command output:
+remote: HTTP Basic: Access denied
+fatal: Authentication failed for 'http://172.16.101.160/apex-clear/next-gen/testci.git/'
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:215)
+
+然后又试着改了这个：
+<scm>
+        <connection>scm:git:http://yue.liu:Ly%40apex666666@172.16.101.160/apex-clear/next-gen/testci.git</connection>
+        <developerConnection>scm:git:http://yue.liu:Ly%40apex666666@172.16.101.160/apex-clear/next-gen/testci.git
+        </developerConnection>
+        <url>http://172.16.101.160/apex-clear/next-gen/testci</url>
+        <tag>20211018-0.0.1</tag>
+    </scm>
+还是不行！  
+终于看到这个：
+https://stackoverflow.com/questions/29120076/maven-and-gitlab-releaseprepare-uses-the-wrong-scm-url/69766718#69766718
+改成origin：
+<scm>
+        <connection>scm:git:origin</connection>
+        <developerConnection>scm:git:origin</developerConnection>
+        <url>http://172.16.101.160/apex-clear/next-gen/testci</url>
+        <tag>20211018-0.0.1</tag>
+    </scm>
+release prepare成功！！！！	
+
+?????????????????????????????????????????????????????????????????????????????????????????
+???   - if [ $? == 0 ]
+?????????????????????????????????????????????????????????????????????????????????????????
+这段gitlab ci脚本里面的if statement写法不符合gitlab规范：
+https://stackoverflow.com/questions/54761464/how-to-use-if-else-condition-on-gitlabci
+
+?????????????????????????????????????????????????????????????????????????????????????????
+??? mvn release:perform -e -Darguments="-Dmaven.javadoc.skip=true -Dmaven.test.skip=true" -s ci_settings.xml
+?????????????????????????????????????????????????????????????????????????????????????????
+
+[INFO] Executing: /bin/sh -c cd /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci/target && git clone --branch 20211029-0.0.4 origin /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci/target/checkout
+[INFO] Working directory: /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci/target
+[ERROR] The git-clone command failed.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.513 s
+[INFO] Finished at: 2021-10-29T11:52:57+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:perform (default-cli) on project test-spring-redis: Unable to checkout from SCM
+[ERROR] Provider message:
+[ERROR] The git-clone command failed.
+[ERROR] Command output:
+[ERROR] fatal: repository 'origin' does not exist
+[ERROR] -> [Help 1]
+org.apache.maven.lifecycle.LifecycleExecutionException: Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:perform (default-cli) on project test-spring-redis: Unable to checkout from SCM
+Provider message:
+The git-clone command failed.
+Command output:
+fatal: repository 'origin' does not exist
+
+shit！prepare可以识别origin，这里居然不识别，手动测试了下，果然不识别，改成
+mvn release:perform -DconnectionUrl='scm:git:http://yue.liu:test%40123456@GITLAB_IP/workspace/testci.git' 
+还是不行！！！
+最后想到是不是可以把用户名密码传给mvn，我真是太聪明了！
+https://stackoverflow.com/questions/1255593/externalising-scm-credentials-with-maven
+mvn release:prepare -Dusername=[username] -Dpassword=[password] 
+成功！！！！
+
+```
+
+最终版本：
+
+```
+.gitlab-ci.yml:
+image: maven:3.3.9-jdk-8
+  
+cache:
+  paths:
+    - .m2/repository
+
+stages:
+  - build
+  - release
+
+build:stag:
+  stage: build
+  script:
+    - echo "test1"
+    - POM_VERSION=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.6.0:exec)
+    - echo "Package for stag $POM_VERSION"
+    - mvn clean -DskipTests -Darguments=-DskipTests package
+    - CLEAR_TARGET_DIR="$HOME/packages/$POM_VERSION"
+    - echo "Package successfully!"
+    - mkdir -p ${CLEAR_TARGET_DIR}
+    - echo "shipping artifacts to ${CLEAR_TARGET_DIR}";
+    - cp ${CI_PROJECT_DIR}/target/test-spring-redis*.jar ${CLEAR_TARGET_DIR};
+
+release:stag:
+  stage: release
+  needs: ['build:stag']
+  when: manual
+  script:
+    - echo "add private key"
+    #- eval $(ssh-agent -s)
+    #- ssh-add ~/.ssh/id_rsa
+    - echo "whoami:"
+    - whoami
+    #- echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    #- echo -e "Host *\n\tStrictHostKeyChecking no\n\n" >> ~/.ssh/config
+    #- chmod 600 ~/.ssh/config
+    #- git config --global user.email "gitlab-runner@gitlab.com"
+    #- git config --global user.name "gitlab-runner" 
+    - git config --global user.email "yue.liu@gitlab.com"
+    - git config --global user.name "yue.liu"    
+    - echo "Prepare release for stag"
+    - TD=`date +"%Y%m%d"`
+    - ReleaseVersion=0.0.9
+    - NextVersion=0.1.0
+    - git checkout master && git pull
+    #- git remote set-url origin git@$CI_SERVER_HOST:workspace/testci.git
+    - git remote set-url origin http://yue.liu:test%40123456@$CI_SERVER_HOST/workspace/testci.git
+    - echo "ReleaseVersion $ReleaseVersion $NextVersion-SNAPSHOT"
+    - mvn clean -DskipTests -Darguments=-DskipTests release:prepare -e -DreleaseVersion=$ReleaseVersion -DdevelopmentVersion=$NextVersion-SNAPSHOT -Dtag="$TD-$ReleaseVersion" -DscmDevelopmentCommitComment="prepare for next development iteration $NextVersion-SNAPSHOT" -X -B
+    - echo "Prepare release successfully!"
+    - if [ ! -f ci_settings.xml ];
+        then echo "CI settings missing\! If deploying to GitLab Maven Repository, please see https://docs.gitlab.com/ee/user/project/packages/maven_repository.html#creating-maven-packages-with-gitlab-cicd for instructions.";
+      fi
+    - >
+      if [ $? == 0 ]; then
+        echo "Perform release for stag"
+        #echo "CI_RELEASE_PASSWORD=$CI_RELEASE_PASSWORD"
+        mvn release:perform -DconnectionUrl='scm:git:http://GITLAB_IP/workspace/testci.git' -Dusername="yue.liu" -Dpassword="test@123456" -e -Darguments="-Dmaven.javadoc.skip=true -Dmaven.test.skip=true" -s ci_settings.xml -B
+        echo "Perform release successfully!"
+      else
+        echo "Rollback release for stag"
+        mvn release:rollback
+        echo "Rollback release successfully!"
+      fi
+      
+      
+      
+pom.xml:
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.lyhistory.redis</groupId>
+	<artifactId>test-spring-redis</artifactId>
+	<version>0.0.9-SNAPSHOT</version>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.6.RELEASE</version>
+	</parent>
+	<dependencies>
+		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-parent</artifactId> 
+			<version>2.4.3</version> <type>pom</type> </dependency> -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<!-- <version>2.4.3</version> -->
+		</dependency>
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+          <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.kstyrc</groupId>
+            <artifactId>embedded-redis</artifactId>
+            <version>0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.71</version>
+        </dependency>
+	</dependencies>
+	
+    <build>
+        <plugins>
+            <!-- JDK level -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>dll</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>so</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                </configuration>
+            </plugin>
+
+            <!-- 更新: mvn versions:set -DnewVersion=1.0.4-SNAPSHOT versions:update-child-modules
+                回滚: mvn versions:revert 提交: mvn versions:commit -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.7</version>
+            </plugin>
+			<plugin>
+			   <groupId>org.apache.maven.plugins</groupId>
+			   <artifactId>maven-release-plugin</artifactId>
+			</plugin>
+        </plugins>
+
+    </build>
+    <!-- 配置远程发布到私服,mvn deploy -->
+    <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <name>Nexus Release Repository</name>
+            <url>http://NEXUS_IP:18081/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://NEXUS_IP:18081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <scm>
+        <connection>scm:git:origin</connection>
+        <developerConnection>scm:git:origin</developerConnection>
+        <url>http://GITLAB_IP/apex-clear/next-gen/testci</url>
+        <tag>20211029-0.0.2</tag>
+    </scm>
+
+</project>
+```
+
+
 
 ### 案例：Create-react-app
 

@@ -868,15 +868,216 @@ https://stackoverflow.com/questions/36427868/failed-to-execute-goal-org-apache-m
 
 自定义maven repository: e.g nexus repository
 #### 3.2.3 Lifecycle
-https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
-Maven -> Update Projects
-Maven package
-ethereumj-core maven package https://github.com/ethereum/ethereumj/issues/1018
 
-mvn clean build 
+mvn clean compile package install release
+
+https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
+
+##### Config
+
+**项目pom配置plugin**
+
+maven & maven.plugins & dependencies
+
+https://stackoverflow.com/questions/11881663/what-is-the-difference-in-maven-between-dependency-and-plugin-tags-in-pom-xml
+
+spring-boot-maven-plugin vs maven-compiler-plugin
+
+https://stackoverflow.com/questions/57687485/whats-the-difference-between-spring-boot-maven-plugin-and-maven-compiler-plu
+
+```
+<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+VS
+
+<build>
+        <plugins>
+            <!-- JDK level -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>dll</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>so</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                </configuration>
+            </plugin>
+
+            <!-- 更新: mvn versions:set -DnewVersion=1.0.4-SNAPSHOT versions:update-child-modules
+                回滚: mvn versions:revert 提交: mvn versions:commit -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.7</version>
+            </plugin>
+
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>application.properties</exclude>
+                </excludes>
+            </resource>
+        </resources>
+
+    </build>
+
+```
+
+**项目pom配置repository**
+
+https://stackoverflow.com/questions/35317118/repository-tag-under-distributionmanagement-vs-repositories
+
+- Repositories declared under the `distributionManagement` element will be used for deployment, i.e. when running `mvn deploy`.
+- The `repositories` element will be used for downloading dependencies of the project. The command is not necessarily `mvn install` but any command that requires Maven to fetch artifacts from a repository.
+
+```
+<distributionManagement>
+    <repository>
+        <id>...</id>
+        <name>...</name>
+        <url>...</url>
+    </repository>
+</distributionManagement> 
+
+<repositories>
+    <repository>
+        <id>...</id>
+        <name>...</name>
+        <layout>default</layout>
+        <url>...</url>
+    </repository>
+</repositories>
+```
+
+**全局配置**
+
+%USER_HOME%/.m2/settings.xml:
+
+https://stackoverflow.com/questions/32057282/maven-distributionmanagement-or-server-user-and-password-as-parameter
+
+**CI配置**
+
+https://docs.gitlab.com/ee/user/packages/maven_repository/#create-maven-packages-with-gitlab-cicd-by-using-maven
+
+##### Commands
+
++ mvn install command runs the install plugin used in the install phase to add artifact(s) to the local repository. The Install Plugin uses the information in the POM (groupId, artifactId, version) to determine the proper location of the artifact within the local repository.
+
+  The local repository is the local cache where all artifacts needed for the build are stored. By default, it is located in the user's home directory (~/.m2/repository) but the location can be configured in ~/.m2/settings.xml using the localRepository element
+
++ mvn deploy runs the deploy plugin which deploys an artifact to the remote repository
+
++ mvn release command runs the release plugin which is responsible for tagging the current code in the source control. In order to use the maven release plugin, you need to add the SCM section with a developerConnection which contains the URL of the source control management system pointing to the folder containing the pom.xml.
+
+  release:clean : performs clean-up after a release preparation.
+
+  release:prepare : prepare for a release in SCM.
+
+  release:rollback : rollback a previous release.
+
+  release:perform :  perform a release from SCM. This is the command which actually does the release by downloading the tagged version from SCM e.g. SVN or CVS or Git
+
+
+
+```
+
+mvn clean build -Dmaven.test.skip=true
 mvn clean install -DskipTests
 mvn clean install -P<profileName> 
 mvn compile exec:java (for sprint-boot alternative: mvn spring-boot:run)
+
+mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.6.0:exec
+
+--------------------------------------------------------------------------------
+--- release
+--------------------------------------------------------------------------------
+Target Project：
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.lyhistory.redis</groupId>
+	<artifactId>test-spring-redis</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	...............
+</project>
+
+The standard Maven plugin used by a Release Process is the maven-release-plugin – the configuration for this plugin is minimal:
+<plugin>
+   <groupId>org.apache.maven.plugins</groupId>
+   <artifactId>maven-release-plugin</artifactId>
+   <version>2.4.2</version>
+   <configuration>
+      <tagNameFormat>v@{project.version}</tagNameFormat>
+      <autoVersionSubmodules>true</autoVersionSubmodules>
+      <releaseProfiles>releases</releaseProfiles>
+   </configuration>
+</plugin>
+
+The Release process will interact with the Source Control of the project – this means we first need to define the <scm> element in our pom.xml:
+<scm>
+    <connection>scm:git:http://xxxxx/test.git</connection>
+    <developerConnection>scm:git:http://xxxxx/test.git
+    </developerConnection>
+    <url>http://xxxxx/test</url>
+    <tag>HEAD</tag>
+</scm>
+or using the git protocol:
+<scm>
+   <connection>scm:git:git@github.com:user/project.git</connection>
+   <url>scm:git:git@github.com:user/project.git</url>
+   <developerConnection>scm:git:git@github.com:user/project.git</developerConnection>
+</scm>
+    
+mvn clean -DskipTests -Darguments=-DskipTests release:prepare -e -DreleaseVersion=1.0.3 -DdevelopmentVersion=1.0.4-SNAPSHOT -Dtag="20211008-1.0.3" -DscmDevelopmentCommitComment="prepare for next development iteration 1.0.4-SNAPSHOT"
+
+In order for Maven to be able to release to a Nexus Repository Server, we need to define the repository information via the distributionManagement element:
+<distributionManagement>
+   <repository>
+      <id>nexus-releases</id>
+      <url>http://localhost:8081/nexus/content/repositories/releases</url>
+   </repository>
+</distributionManagement>
+
+mvn release:rollback
+mvn release:perform -e -Darguments="-Dmaven.javadoc.skip=true" -s ci_settings.xml
+
+
+#?Cannot prepare the release because you have local modifications :[pom.xml:modified]
+提交pom改动到git
+#?Caused by: org.apache.maven.shared.release.ReleaseFailureException: You don't have a SNAPSHOT project in the reactor projects list
+pom中version必须是SNAPSHOT后缀 <version>XXX-SNAPSHOT</version>
+
+```
+
+
+
+-DskipTests VS -Dmaven.test.skip=true
+
+Maven -> Update Projects
+Maven package
+ethereumj-core maven package https://github.com/ethereum/ethereumj/issues/1018
 
 https://gerardnico.com/maven/bin
 Unsupported major.minor version 52.0 https://blog.csdn.net/qq_36769100/article/details/78880341

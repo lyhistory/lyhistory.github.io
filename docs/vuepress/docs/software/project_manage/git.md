@@ -27,9 +27,17 @@ git config --global --unset user.password
 for windows:
 git config --global credential.helper wincred
 
-//Adding a new SSH key to your GitHub account
-https://help.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account
+username/password VS SSH:
+生成ssh后也是要通过命令行上传到repo的目录下：
+scp ~/.ssh/id_rsa.pub YOUR_USER@YOUR_IP:~/.ssh/authorized_keys/id_rsa.pub
+或者登录git repo网站，在setting或Preferences找到SSH Keys并将公钥贴到里面，
+上述过程中自然是需要验证用户credentials的，所以这就是ssh跟username/password绑定替代的过程
+
+cmdline:
+https://stackoverflow.com/questions/8588768/how-do-i-avoid-the-specification-of-the-username-and-password-at-every-git-push
+github:https://help.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account
 for windows user .ssh is under c:/users/<username>/
+gitlab:https://docs.gitlab.com/ee/ssh/
 
 ls -al ~/.ssh
 ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
@@ -39,6 +47,11 @@ $ eval $(ssh-agent -s)
 ssh-add ~/.ssh/id_rsa
 
 clip < ~/.ssh/id_rsa.pub
+~/.ssh/config 可以配置多个不同git站点的ssh key，以及给同一个git站点配置多个account；
+注意：
+1.非交互式的脚本使用的，在生成ssh key的时候最好不要带passphrase
+2.第一次ssh连接需要交互记住figureprints，如果要避免，可以主动连一次，或者echo -e "Host *\n\tStrictHostKeyChecking no\n\n" >> ~/.ssh/config或者
+ssh-keyscan <IP/HOST OF THE GIT SITE> >> ~/.ssh/known_hosts
 ```
 
 **Ignore**
@@ -70,6 +83,9 @@ git remote -v
 
 Change repo url:
 git remote set-url origin git://test.com/repo.git
+
+
+
 ```
 
 

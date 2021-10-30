@@ -153,9 +153,46 @@ def valid_date(s):
 Struct pack unpack
 https://www.reddit.com/r/learnpython/comments/tewfl/can_someone_explain_pack_and_unpack_to_me/
 
-
 #### numpy pandas
+
+https://pandas.pydata.org/docs/getting_started/intro_tutorials/01_table_oriented.html
+
+https://www.youtube.com/watch?v=6FXQJ-aK5MU
+
  df = pd.DataFrame({'B': [0, 1, 2, 3, 4]})
+
+```
+import pandas as pd
+from sqlalchemy import create_engine
+import pymysql
+import csv
+from sqlalchemy.sql import select
+
+sqlEngine1 = create_engine('mysql+pymysql://USERNAME:PASSWORD@IP1/DB')
+dbConnection1 = sqlEngine1.connect()
+sqlEngine2 = create_engine('mysql+pymysql://USERNAME:PASSWORD@IP1/DB')
+dbConnection2 = sqlEngine2.connect()
+
+df1 = pd.read_sql('select * from TABLE', dbConnection1)
+df1_target=df1[["COL1","COL2","COL3"]]
+df2 = pd.read_sql('select * from TABLE', con=dbConnection2)
+df2_target=df2[["COL1","COL2","COL3"]]
+
+#result = df1_target[~df1_target.apply(tuple, 1).isin(df2_target.apply(tuple, 1))]
+#print "db1.TABLE records not in db2.TABLE"
+#print result
+#result = df2_target[~df2_target.apply(tuple, 1).isin(df1_target.apply(tuple, 1))]
+#print "db2.TABLE records not in db1.TABLE"
+#print result
+
+result = df1_target.merge(df2_target, indicator=True, how='outer').loc[lambda v:v['_merge'] != 'both'].replace({'_merge':'left_only'},'db1 only').replace({'_merge':'right_only'},'db2 only')
+print result
+
+dbConnection1.close()
+dbConnection2.close()
+```
+
+
 
 #### Pymongo
 Bulk wirte
