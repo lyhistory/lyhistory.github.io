@@ -2,10 +2,10 @@ php version
 php extension
 php info - check configuration location
 php mongo - dll
- 
+
 PHP版本中的VC6,VC9,VC11,TS,NTS区别
 http://www.cnblogs.com/codersay/p/4301783.html
- 
+
 php显示源码/代码  short_open_tag = On https://www.oschina.net/question/5029_79046
 一个最简的Thinkphp3.2 操作Mongodb的例子（评论重要）  http://www.thinkphp.cn/code/567.html； http://www.thinkphp.cn/topic/22774.html
 php mongo驱动版本兼容：
@@ -59,7 +59,7 @@ Using namespaces: fallback to global function/constant
 http://www.php.net/manual/en/language.namespaces.fallback.php
 What is the difference between class and function in php?
 http://stackoverflow.com/questions/20649820/what-is-the-difference-between-class-and-function-in-php
- 
+
 http://www.php.net/manual/en/langref.php
 http://mamboforge.net/
 todo...
@@ -109,6 +109,9 @@ public static function html_to_obj($html) {
 
 ## 搭建环境和IDE调试
 http://www.cnblogs.com/suihui/p/4365107.html
+
+
+
 ### WAMP
 1.Upgraded to Windows 10 and now WAMP won't work, show up IIS page
 iisreset /stop,
@@ -149,7 +152,7 @@ Allow from all
 5..mysql error, check port, 127.0.0.1 instead of localhost
 6..output php code to browser because of short tag <?php?><??>
 php.ini short_open_tag = On (Caution, please be aware this php.ini is the one installed, not the one under \wamp\bin\php)
- 
+
 Creating multiple virtual hosts/websites in Wampserver
 https://www.virendrachandak.com/techtalk/creating-multiple-virtual-websites-in-wampserver/
 http://sourceforge.net/projects/wampserver/?source=typ_redirect
@@ -194,7 +197,7 @@ $cfg['Servers'][$i]['bookmarktable'] = 'pma_bookmark';
 to
 $cfg['Servers'][$i]['bookmarktable'] = 'pma__bookmark';
 congratulations! everything settled, enjoy now.
- 
+
 二、介绍phpstrom IDE的使用和强大的远程调试功能，常用的调试方法有xdebug和zend debugger，
 我们这里要介绍phpstorm+xdebug+xampp配置
 首先php.ini要修改配置如下：
@@ -239,7 +242,7 @@ http://xdebug.org/docs/
 
 Bitnami for XAMPP
 https://bitnami.com/stack/xampp?utm_source=bitnami&utm_medium=installer&utm_campaign=XAMPP%2BInstaller
- 
+
 详细讲述远程调试remote debugging的配置问题，上一篇只是大概描述了下基本配置，
 理解远程调试的精髓首先要明确本地+浏览器+服务器的关系，即local develop env(phpstorm)+browser(chrome with xdebug helper)+php server(php+xdebug)的关系
 
@@ -261,7 +264,7 @@ http://www.cnblogs.com/gaoxu387/p/3173194.html
 
 
 ## troubleshooting
-?#MD5withRSA
+### ?#MD5withRSA
 Recently when I made integration with a third-party payment supplier named '盛付通',somehow they gave me a wrong documentation at the first place, actually I don't bother to do the following 'research', but I'd like to learn something new,
 OK, in the 'wrong' document, the signature algorithm they are using is MD5withRSA,they require client to generate another private and public key pair, given steps(translate from Chinese):
 
@@ -297,7 +300,7 @@ They are used for storing the Server certificate, any Intermediate certificates 
 .PVK- files are used to store private keys for code signing. You can also create a certificate based on .pvk private key file.
 .PFX- stands for Personal Information Exchange format using a password-based symmetric key. It is used to exchange public and private objects in a single file. A pfx file can be created from .cer file. Can also be used to create a Software Publisher Certificate.
 .SNK- stands for Assembly Signature Key Attribute, only contain the RSA key (public/private or public only)
- 
+
 there is also a coding approach to extract snk from pfx
 ```
 ///
@@ -331,8 +334,7 @@ http://www.feichang56.com/openssl.html
 IIS6.0 + openssl执行版 + Windows2003--配置篇
 http://mixangel.blog.51cto.com/286311/135267
 
-
-?#failed to open stream: no suitable wrapper could be found
+### ?#failed to open stream: no suitable wrapper could be found
 https://stackoverflow.com/questions/6551379/file-get-contents-error
 
 ?#PHP parse_url bad practice
@@ -389,7 +391,7 @@ PHP magic_quotes_gpc的详细使用方法
 http://developer.51cto.com/art/200911/165392.htm
 http://php.net/manual/en/security.magicquotes.disabling.php
 stackoverflow.com/questions/6661406/best-method-of-disabling-php-magic-quotes-without-php-ini-or-htaccess
- 
+
 Notice: Undefined index:
 Ways to deal with the issue:
 
@@ -420,16 +422,16 @@ http://blog.tanist.co.uk/files/unserialize/
 
 How can I prevent SQL-injection in PHP?
 http://stackoverflow.com/questions/60174/how-can-i-prevent-sql-injection-in-php
- 
+
 Protect Against Malicious POST Requests
 https://perishablepress.com/protect-post-requests/
- 
+
 CURL
 CURL exec - Curl failed with error 0,
 http://stackoverflow.com/questions/8227909/curl-exec-always-returns-false
 Using cURL in PHP to access HTTPS (SSL/TLS) protected sites
 Return code is 0 SSL certificate problem: unable to get local issuer certificateCurl error: string(25) "Curl failed with error 0," NULL
 http://unitstep.net/blog/2009/05/05/using-curl-in-php-to-access-https-ssltls-protected-sites/
- 
+
 Return code is 500 string(25) "Curl failed with error 0," NULL
 this could be pramamter issues or other program handler problem.

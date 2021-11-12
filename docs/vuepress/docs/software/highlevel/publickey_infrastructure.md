@@ -147,7 +147,34 @@ a standard defining the format of public key certificates
 
  + ECC
 
-  
+  服务端配置例子：
+
+```
+-- redhat服务器配置:
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-hardening_tls_configuration
+#openssl ciphers -v
+#openssl ciphers -v 'HIGH'
+
+-- apache httpd服务端配置:
+/etc/httpd/conf.d/ssl.conf
+#   SSL Engine Switch:
+#   Enable/Disable SSL for this virtual host.
+SSLEngine on
+
+#   SSL Protocol support:
+# List the enable protocol levels with which clients will be able to
+# connect.  Disable SSLv2 access by default:
+SSLProtocol all -SSLv2 -SSLv3
+
+#   SSL Cipher Suite:
+#   List the ciphers that the client is permitted to negotiate.
+#   See the mod_ssl documentation for a complete list.
+SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
+
+注意有些SSLCipherSuite存在风险，需要配置好
+```
+
+
 
 **Step 2-Part 1: Cipher to exchange message with master secret key**
 

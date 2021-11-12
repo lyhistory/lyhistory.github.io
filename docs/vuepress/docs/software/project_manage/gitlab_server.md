@@ -1857,9 +1857,9 @@ deploy:jdk8:
     - master
 ```
 
-案例：Maven auto release
+### 案例：Maven auto release
 
-初始版本：
+#### 初始版本(buggy)：
 
 ```
 .gitlab-ci.yml:
@@ -1880,11 +1880,11 @@ build:stag:
     - POM_VERSION=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.6.0:exec)
     - echo "Package for stag $POM_VERSION"
     - mvn package
-    - CLEAR_TARGET_DIR="$HOME/packages/$POM_VERSION"
+    - TARGET_DIR="$HOME/packages/$POM_VERSION"
     - echo "Package successfully!"
-    - mkdir -p ${CLEAR_TARGET_DIR}
-    - echo "shipping artifacts to ${CLEAR_TARGET_DIR}";
-    - cp ${CI_PROJECT_DIR}/target/test-spring-redis*.jar ${CLEAR_TARGET_DIR};
+    - mkdir -p ${TARGET_DIR}
+    - echo "shipping artifacts to ${TARGET_DIR}";
+    - cp ${CI_PROJECT_DIR}/target/test-spring-redis*.jar ${TARGET_DIR};
 
 release:stag:
   stage: release
@@ -2025,9 +2025,9 @@ pom.xml:
         </snapshotRepository>
     </distributionManagement>
     <scm>
-        <connection>scm:git:http://GITLAB_IP/apex-clear/next-gen/testci.git</connection>
-        <developerConnection>scm:git:http://GITLAB_IP/apex-clear/next-gen/testci.git</developerConnection>
-        <url>http://GITLAB_IP/apex-clear/next-gen/testci</url>
+        <connection>scm:git:http://GITLAB_IP/testci.git</connection>
+        <developerConnection>scm:git:http://GITLAB_IP/testci.git</developerConnection>
+        <url>http://GITLAB_IP/testci</url>
         <tag>20211029-0.0.2</tag>
     </scm>
 
@@ -2103,17 +2103,17 @@ ci_settings.xml:
 
 
 
-问题修复：
+#### 问题修复：
 
 ```
 
 首先先总结下问题修复之后的整个逻辑：
 要知道的是，cicd pipeline执行的过程是我们配置的gitlab-runner agent机器上执行这个ci脚本，大概是首先gitlab会默认在gitlabrunner机器上根据对应的git在builds路径下：env.CI_PROJECT_DIR=/home/gitlab-runner/builds/Mtn6kdk-/0/testci 创建这个testci目录，然后再通过env.CI_REPOSITORY_URL=http://gitlab-ci-token:[MASKED]@GITLAB_IP/testci.git 这个临时的？token来clone gitlab服务器上的git代码
 
-[sgkc2-clncode-v01@SG/home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci]#git remote -v
-origin  http://gitlab-ci-token:mX2W8nN6WsMnzA_kWp1p@172.16.101.160/apex-clear/next-gen/testci.git (fetch)
-origin  http://gitlab-ci-token:mX2W8nN6WsMnzA_kWp1p@172.16.101.160/apex-clear/next-gen/testci.git (push)
-[sgkc2-clncode-v01@SG/home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci]#git status
+[]#git remote -v
+origin  http://gitlab-ci-token:mX2W8nN6WsMnzA_kWp1p@GITLAB_IP/testci.git (fetch)
+origin  http://gitlab-ci-token:mX2W8nN6WsMnzA_kWp1p@GITLAB_IP/testci.git (push)
+[]#git status
 HEAD detached at d8ae1db
 nothing to commit, working tree clean
 env.GITLAB_USER_EMAIL=yue.liu@gitlab.com
@@ -2142,8 +2142,8 @@ https://docs.gitlab.com/ee/ci/ssh_keys/#verifying-the-ssh-host-keys
 https://docs.gitlab.com/ee/user/project/deploy_keys/index.html
 然后盲目的就想用ssh key的方式来搞，结果本地创建完id_rsa id_rsa.pub后，发现gitlab runner机器上~/.ssh下面有了，所以就直接在gitlab settings页面 cicd设置	SSH_PRIVATE_KEY，但是并没有在repo配置上id_rsa.pub
 结果当然是出错：
-[INFO] Executing: /bin/sh -c cd /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci && git push http://172.16.101.160/apex-clear/next-gen/test.git refs/heads/master:refs/heads/master
-[INFO] Working directory: /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci
+[INFO] Executing: /bin/sh -c cd /home/gitlab-runner/builds/Mtn6kdk-/0/testci && git push http://GITLAB_IP/test.git refs/heads/master:refs/heads/master
+[INFO] Working directory: /home/gitlab-runner/builds/Mtn6kdk-/0/testci
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
@@ -2189,10 +2189,10 @@ For accessing repositories on GitLab.com, you would use git@gitlab.com
 
 接着我没有回到正常思路，而是之间登录gitlab runner机器，在env.CI_PROJECT_DIR=/home/gitlab-runner/builds/Mtn6kdk-/0/testci目录下一顿操作，具体就是改了remote origin，以及设置config user和email，
 然后再执行cicd，估计是因为我的改动通过了某些步骤，但是又遇到一个问题：
-[INFO] Executing: /bin/sh -c cd /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci && git commit --verbose -F /tmp/maven-scm-1715089266.commit pom.xml
-[INFO] Working directory: /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci
-[INFO] Executing: /bin/sh -c cd /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci && git symbolic-ref HEAD
-[INFO] Working directory: /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci
+[INFO] Executing: /bin/sh -c cd /home/gitlab-runner/builds/Mtn6kdk-/0/testci && git commit --verbose -F /tmp/maven-scm-1715089266.commit pom.xml
+[INFO] Working directory: /home/gitlab-runner/builds/Mtn6kdk-/0/testci
+[INFO] Executing: /bin/sh -c cd /home/gitlab-runner/builds/Mtn6kdk-/0/testci && git symbolic-ref HEAD
+[INFO] Working directory: /home/gitlab-runner/builds/Mtn6kdk-/0/testci
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
@@ -2213,12 +2213,12 @@ org.apache.maven.lifecycle.LifecycleExecutionException: Failed to execute goal o
 原来密码中包含了@，git当成了后面的那个ip之前的@解析了，所以改成url encode
 - git remote set-url origin http://yue.liu:test%40123456@$CI_SERVER_HOST/workspace/testci.git
 仍然不成功，
-[INFO] Executing: /bin/sh -c cd /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci && git commit --verbose -F /tmp/maven-scm-81988903.commit pom.xml
-[INFO] Working directory: /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci
-[INFO] Executing: /bin/sh -c cd /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci && git symbolic-ref HEAD
-[INFO] Working directory: /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci
-[INFO] Executing: /bin/sh -c cd /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci && git push http://yue.liu:********@172.16.101.160/apex-clear/next-gen/testci.git refs/heads/master:refs/heads/master
-[INFO] Working directory: /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci
+[INFO] Executing: /bin/sh -c cd /home/gitlab-runner/builds/Mtn6kdk-/0/testci && git commit --verbose -F /tmp/maven-scm-81988903.commit pom.xml
+[INFO] Working directory: /home/gitlab-runner/builds/Mtn6kdk-/0/testci
+[INFO] Executing: /bin/sh -c cd /home/gitlab-runner/builds/Mtn6kdk-/0/testci && git symbolic-ref HEAD
+[INFO] Working directory: /home/gitlab-runner/builds/Mtn6kdk-/0/testci
+[INFO] Executing: /bin/sh -c cd /home/gitlab-runner/builds/Mtn6kdk-/0/testci && git push http://yue.liu:********@GITLAB_IP/testci.git refs/heads/master:refs/heads/master
+[INFO] Working directory: /home/gitlab-runner/builds/Mtn6kdk-/0/testci
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
@@ -2230,22 +2230,22 @@ org.apache.maven.lifecycle.LifecycleExecutionException: Failed to execute goal o
 [ERROR] The git-push command failed.
 [ERROR] Command output:
 [ERROR] remote: HTTP Basic: Access denied
-[ERROR] fatal: Authentication failed for 'http://172.16.101.160/apex-clear/next-gen/testci.git/'
+[ERROR] fatal: Authentication failed for 'http://GITLAB_IP/testci.git/'
 [ERROR] -> [Help 1]
 org.apache.maven.lifecycle.LifecycleExecutionException: Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project test-spring-redis: Unable to commit files
 Provider message:
 The git-push command failed.
 Command output:
 remote: HTTP Basic: Access denied
-fatal: Authentication failed for 'http://172.16.101.160/apex-clear/next-gen/testci.git/'
+fatal: Authentication failed for 'http://GITLAB_IP/testci.git/'
     at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:215)
 
 然后又试着改了这个：
 <scm>
-        <connection>scm:git:http://yue.liu:Ly%40apex666666@172.16.101.160/apex-clear/next-gen/testci.git</connection>
-        <developerConnection>scm:git:http://yue.liu:Ly%40apex666666@172.16.101.160/apex-clear/next-gen/testci.git
+        <connection>scm:git:http://yue.liu:test%40123456@GITLAB_IP/testci.git</connection>
+        <developerConnection>scm:git:http://yue.liu:test%40123456@GITLAB_IP/testci.git
         </developerConnection>
-        <url>http://172.16.101.160/apex-clear/next-gen/testci</url>
+        <url>http://GITLAB_IP/testci</url>
         <tag>20211018-0.0.1</tag>
     </scm>
 还是不行！  
@@ -2255,7 +2255,7 @@ https://stackoverflow.com/questions/29120076/maven-and-gitlab-releaseprepare-use
 <scm>
         <connection>scm:git:origin</connection>
         <developerConnection>scm:git:origin</developerConnection>
-        <url>http://172.16.101.160/apex-clear/next-gen/testci</url>
+        <url>http://GITLAB_IP/testci</url>
         <tag>20211018-0.0.1</tag>
     </scm>
 release prepare成功！！！！	
@@ -2270,8 +2270,8 @@ https://stackoverflow.com/questions/54761464/how-to-use-if-else-condition-on-git
 ??? mvn release:perform -e -Darguments="-Dmaven.javadoc.skip=true -Dmaven.test.skip=true" -s ci_settings.xml
 ?????????????????????????????????????????????????????????????????????????????????????????
 
-[INFO] Executing: /bin/sh -c cd /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci/target && git clone --branch 20211029-0.0.4 origin /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci/target/checkout
-[INFO] Working directory: /home/gitlab-runner/builds/Mtn6kdk-/0/apex-clear/next-gen/testci/target
+[INFO] Executing: /bin/sh -c cd /home/gitlab-runner/builds/Mtn6kdk-/0/testci/target && git clone --branch 20211029-0.0.4 origin /home/gitlab-runner/builds/Mtn6kdk-/0/testci/target/checkout
+[INFO] Working directory: /home/gitlab-runner/builds/Mtn6kdk-/0/testci/target
 [ERROR] The git-clone command failed.
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
@@ -2301,9 +2301,12 @@ mvn release:prepare -Dusername=[username] -Dpassword=[password]
 
 ```
 
-最终版本：
+#### 最终版本
 
 ```
+-----------------------------------------------------------------------------
+--- 用户名密码
+-----------------------------------------------------------------------------
 .gitlab-ci.yml:
 image: maven:3.3.9-jdk-8
   
@@ -2322,11 +2325,11 @@ build:stag:
     - POM_VERSION=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.6.0:exec)
     - echo "Package for stag $POM_VERSION"
     - mvn clean -DskipTests -Darguments=-DskipTests package
-    - CLEAR_TARGET_DIR="$HOME/packages/$POM_VERSION"
+    - TARGET_DIR="$HOME/packages/$POM_VERSION"
     - echo "Package successfully!"
-    - mkdir -p ${CLEAR_TARGET_DIR}
-    - echo "shipping artifacts to ${CLEAR_TARGET_DIR}";
-    - cp ${CI_PROJECT_DIR}/target/test-spring-redis*.jar ${CLEAR_TARGET_DIR};
+    - mkdir -p ${TARGET_DIR}
+    - echo "shipping artifacts to ${TARGET_DIR}";
+    - cp ${CI_PROJECT_DIR}/target/test-spring-redis*.jar ${TARGET_DIR};
 
 release:stag:
   stage: release
@@ -2369,9 +2372,89 @@ release:stag:
         mvn release:rollback
         echo "Rollback release successfully!"
       fi
-      
-      
-      
+-----------------------------------------------------------------------------
+--- ssh
+-----------------------------------------------------------------------------      
+配置ssh key：
+https://docs.gitlab.com/ee/ci/ssh_keys/
+
+>> SSH keys when using the Shell executor
+If you are using the Shell executor and not Docker, it is easier to set up an SSH key.
+You can generate the SSH key from the machine that GitLab Runner is installed on, and use that key for all projects that are run on this machine.
+
+First, log in to the server that runs your jobs.
+Then, from the terminal, log in as the gitlab-runner user:
+sudo su - gitlab-runner
+
+Generate the SSH key pair as described in the instructions to generate an SSH key. Do not add a passphrase to the SSH key, or the before_script will prompt for it.
+
+As a final step, add the public key from the one you created earlier to the services that you want to have an access to from within the build environment. If you are accessing a private GitLab repository you must add it as a deploy key (Menu > Projects > Settings > Repository > Expand Deploy keyshttps://docs.gitlab.com/ee/user/project/deploy_keys/index.html).
+
+After generating the key, try to sign in to the remote server to accept the fingerprint:
+ssh example.com
+For accessing repositories on GitLab.com, you would use git@gitlab.com
+
+.gitlab_ci.yml:
+image: maven:3.3.9-jdk-8
+  
+cache:
+  paths:
+    - .m2/repository
+
+stages:
+  - build
+  - release
+
+build:stag:
+  stage: build
+  script:
+    - echo "test1"
+    - POM_VERSION=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.6.0:exec)
+    - echo "Package for stag $POM_VERSION"
+    - mvn clean -DskipTests -Darguments=-DskipTests package
+    - TARGET_DIR="$HOME/packages/$POM_VERSION"
+    - echo "Package successfully!"
+    - mkdir -p ${TARGET_DIR}
+    - echo "shipping artifacts to ${TARGET_DIR}";
+    - cp ${CI_PROJECT_DIR}/target/test-spring-redis*.jar ${TARGET_DIR};
+
+release:stag:
+  stage: release
+  needs: ['build:stag']
+  when: manual
+  script:
+    - echo "add private key"
+    - eval $(ssh-agent -s)
+    - ssh-add ~/.ssh/id_rsa
+    - cat ~/.ssh/id_rsa
+    - echo "whoami:"
+    - whoami
+    - git config --global user.email "yue.liu@gitlab.com"
+    - git config --global user.name "yue.liu"    
+    - echo "Prepare release for stag"
+    - TD=`date +"%Y%m%d"`
+    - ReleaseVersion=0.1.1
+    - NextVersion=0.1.2
+    - git checkout master && git pull
+    - git remote set-url origin git@$CI_SERVER_HOST:testci.git
+    - echo "ReleaseVersion $ReleaseVersion $NextVersion-SNAPSHOT"
+    - mvn clean -DskipTests -Darguments=-DskipTests release:prepare -e -DreleaseVersion=$ReleaseVersion -DdevelopmentVersion=$NextVersion-SNAPSHOT -Dtag="$TD-$ReleaseVersion" -DscmDevelopmentCommitComment="prepare for next development iteration $NextVersion-SNAPSHOT" -X -B
+    - echo "Prepare release successfully!"
+    - if [ ! -f ci_settings.xml ];
+        then echo "CI settings missing\! If deploying to GitLab Maven Repository, please see https://docs.gitlab.com/ee/user/project/packages/maven_repository.html#creating-maven-packages-with-gitlab-cicd for instructions.";
+      fi
+    - >
+      if [ $? == 0 ]; then
+        echo "Perform release for stag"
+        echo "CI_RELEASE_PASSWORD=$CI_RELEASE_PASSWORD"
+        mvn release:perform -DconnectionUrl='scm:git:git@GITLAB_IP:testci.git' -e -Darguments="-Dmaven.javadoc.skip=true -Dmaven.test.skip=true" -s ci_settings.xml -B
+        echo "Perform release successfully!"
+      else
+        echo "Rollback release for stag"
+        mvn release:rollback
+        echo "Rollback release successfully!"
+      fi
+
 pom.xml:
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -2487,14 +2570,18 @@ pom.xml:
     <scm>
         <connection>scm:git:origin</connection>
         <developerConnection>scm:git:origin</developerConnection>
-        <url>http://GITLAB_IP/apex-clear/next-gen/testci</url>
+        <url>http://GITLAB_IP/testci</url>
         <tag>20211029-0.0.2</tag>
     </scm>
 
 </project>
 ```
 
+#### 官方思路(未尝试)
 
+https://docs.gitlab.com/ee/ci/yaml/index.html#release
+
+https://docs.gitlab.com/ee/user/project/releases/index.html
 
 ### 案例：Create-react-app
 

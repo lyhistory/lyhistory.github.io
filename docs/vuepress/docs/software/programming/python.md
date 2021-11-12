@@ -155,7 +155,13 @@ https://www.reddit.com/r/learnpython/comments/tewfl/can_someone_explain_pack_and
 
 #### numpy pandas
 
+https://www.w3cschool.cn/hyspo/
+
 https://pandas.pydata.org/docs/getting_started/intro_tutorials/01_table_oriented.html
+
+Python之DataFrame常用方法小结 https://blog.csdn.net/a786150017/article/details/78573055
+
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html
 
 https://www.youtube.com/watch?v=6FXQJ-aK5MU
 

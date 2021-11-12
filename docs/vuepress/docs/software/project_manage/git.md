@@ -50,8 +50,10 @@ clip < ~/.ssh/id_rsa.pub
 ~/.ssh/config 可以配置多个不同git站点的ssh key，以及给同一个git站点配置多个account；
 注意：
 1.非交互式的脚本使用的，在生成ssh key的时候最好不要带passphrase
-2.第一次ssh连接需要交互记住figureprints，如果要避免，可以主动连一次，或者echo -e "Host *\n\tStrictHostKeyChecking no\n\n" >> ~/.ssh/config或者
-ssh-keyscan <IP/HOST OF THE GIT SITE> >> ~/.ssh/known_hosts
+2.第一次ssh连接需要交互记住figureprints，如果要避免，可以try to sign in to the remote server to accept the fingerprint 主动连一次:
+	ssh example.com
+	或者echo -e "Host *\n\tStrictHostKeyChecking no\n\n" >> ~/.ssh/config
+	或者ssh-keyscan <IP/HOST OF THE GIT SITE> >> ~/.ssh/known_hosts
 ```
 
 **Ignore**
