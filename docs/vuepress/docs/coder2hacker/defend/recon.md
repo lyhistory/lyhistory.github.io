@@ -14,3 +14,4 @@ Header unset X-Redirect-By
 ```
 
 Can't remove Server: Apache header https://stackoverflow.com/questions/35360516/cant-remove-server-apache-header/35363645
+

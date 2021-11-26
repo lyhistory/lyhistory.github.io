@@ -52,7 +52,7 @@ http://www.techug.com/post/open-source-licenses.html
 a.server端升级，客户端lib没有升级引发问题，如果redis server升级，stackexchange.redis client未升级导致无法连接server
 b.由于框架本身升级没有官方支持，或者因为已经对当前版本做了太多customize导致升级成本升高，以及升级带来的一连串影响，比如第三方的集成出现问题（加密方式）
 4).用法问题, 比如redis用做缓存是很好的,但是如果非要用来精确的业务逻辑相关则会有致命的问题,比如数据丢失: https://redis.io/topics/replication
- 
+
 Docker container 机器重启丢失
 
 ## 4. Cache问题
@@ -142,7 +142,7 @@ server post跟client post不同，client post，浏览器会帮忙处理携带co
 空字符 'test   ' != 'test'
 HTTP HTTPS同时兼容的坑
 跨域资源访问 Ajax跨域（CROS）请求中的Preflighted requests
- 
+
 6.10. 第三方集成的坑：
 熟悉各种加密算法，注意字典排序，参数名 参数值
 userid重复，用户改变用户名，使用openid（对外部的id，对内mapping）
@@ -255,7 +255,7 @@ RewriteCond %{REQUEST_FILENAME} !-d RewriteCond %{REQUEST_FILENAME} !-f RewriteR
 使用phpstudy2018的时候产生的问题：
 1）端口占用，很简单，参考iisreet /stop这篇文章
 2）由于vhosts.conf内容错误（多了某个符号或排版错乱）造成，更奇葩的是当我更改默认端口设置为8080时，程序自动会更改这个conf，但是由于bug，它会改错，造成无法启动，找了很久这个原因
- 
+
 阿里云的坑:
 mongodb的坑（连接池） https://bbs.aliyun.com/read/283922.html
 linux server root 密码包含大小写字母和特殊字符(否则登录失败)
@@ -301,7 +301,7 @@ solve: requestValidationMode="2.0"
 3.500 error
 a.check iis version, for higher version(7.5) place modules inside system.webserver instead of system.web
 // ]]></script>
- 
+
 4. Unrecognized targetFramework
 <!--
 [ConfigurationErrorsException]: Unrecognized attribute 'targetFramework'. Note that attribute names are case-sensitive. (*****\web.config line 20)
@@ -312,12 +312,12 @@ at System.Web.HttpRuntime.EnsureFirstRequestInit(HttpContext context)
 at System.Web.HttpRuntime.ProcessRequestNotificationPrivate(IIS7WorkerRequest wr, HttpContext context)
 -->
 open IIS -> Application Pools -> .NET Framework version
- 
+
 5. MVC yellow page, 'Ajax' not found
 project reference System.Web.MVC right click , copy to local : true
 6.Task.Factory.StartNew with uncaught Exceptions kills w3wp
 http://stackoverflow.com/questions/5054750/task-factory-startnew-with-uncaught-exceptions-kills-w3wp
- 
+
 7. mismatch between processor architecture
 in one solution, projects using different .net version or different build setting (extend: dependency loop)
 WHERE CAN I FIND MY IIS LOG FILES? https://www.loganalyzer.net/log-analysis/iis-log-files.html
@@ -374,13 +374,13 @@ Administrative Tools
 System Information
 window partition - disk manager
 ubuntu partition - use another linux system to do it ( because you cannot umount the disk when use let alone partition it)
- 
+
 SSH auto close - try admin, or remote server cannot connected ( try other machine out of your current intranet)
- 
+
 cannot find the menu?
 try tab for computer
 try hardware/software menu button or home button
- 
+
 google chrome freezes my laptop
 1. Try clearing your cache and cookies (Ctrl+Shift+Backspace). Start by clearing from the time period you started facing the issue, then expand to “beginning of time”.
 2. Uncheck Use hardware acceleration (Menu > Settings > Show Advanced Settings > System menu).
@@ -396,7 +396,23 @@ SnowflakeId算法思想及分析 https://www.doourbest.cn/2018/09/09/SnowflakeId
 It works fine but sometimes throw exception/cause problem
 
 ## 事件记录
-**乱码问题**
+### 异常跳转
+
+访问dev网站，自动跳转到生产网站，通过抓包分析找到x-redirect-by，发现是因为WordPress安装了一个多语言组件引起的，最后发现是因为dev网站错误指向了生产网站的数据库，多语言组件读取数据库默认的跳转连接
+
+### 网站上传功能突然有问题
+
+上传请求报错：failed net:Error_http2_protocol，但是实际上文件已经上传至服务端，好像是服务端无法正常返回
+
+https://stackoverflow.com/questions/58215104/whats-the-neterr-http2-protocol-error-about
+
+https://docs.microsoft.com/en-us/answers/questions/146869/neterr-http2-protocol-error-with-jquery-xmlhttpreq.html
+
+结合其他人遇到的cdn问题，我们网站确实用了腾讯云并且开启了强制http2协议，所以可能是因为cdn供应商升级造成的
+
+
+
+### 乱码问题
 
 Maven java project 乱码
 Step 1 首先在cmder下面测试乱码，设置cmder重启，并测试locale正确
@@ -433,7 +449,7 @@ http://byterot.blogspot.sg/2016/07/singleton-httpclient-dns.html
 https://aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/
 http://www.michaeltaylorp3.net/httpclient-is-it-really-thread-safe/
 http://www.nimaara.com/2016/11/01/beware-of-the-net-httpclient/
- 
+
 httpclient
 http://www.c-sharpcorner.com/UploadFile/dacca2/http-request-methods-get-post-put-and-delete/
 WebClient vs HttpClient vs HttpWebRequest

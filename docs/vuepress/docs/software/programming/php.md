@@ -51,6 +51,16 @@ Is using superglobals directly good or bad in PHP?
 http://stackoverflow.com/questions/3498207/is-using-superglobals-directly-good-or-bad-in-php
 
 ### 2. PHP.INI
+
+```
+#php -ini | grep 'php.ini'
+Configuration File (php.ini) Path => /etc/opt/rh/rh-php72
+Loaded Configuration File => /etc/opt/rh/rh-php72/php.ini
+
+```
+
+
+
 $_REQUEST vs $_GET and $_POST
 variables_order
 

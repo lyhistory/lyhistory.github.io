@@ -780,6 +780,15 @@ If a simple consumer(assign mode) tries to commit offsets with a group id which 
 
 --- INVALID_FETCH_SESSION_EPOCH.
 Node 1 was unable to process the fetch request with (sessionId=1972558084, epoch=904746): INVALID_FETCH_SESSION_EPOCH.
+
+--- UnkownProducerIdException
+基本原因就是producer创建后超过 retention expire 过期时间或者大小，所以被清理，kafka服务端向客户端报错后会立即重新注册该producer，所以最好的处理办法是callback中重试
+https://stackoverflow.com/questions/61084031/how-to-handle-unkownproduceridexception/69999568#69999568
+2021-11-16 09:08:29.206 [31mERROR[m [35m5527GG[m [ad | producer-1] [36mo.a.k.c.p.i.Sender[m : [Producer clientId=producer-1] The broker returned org.apache.kafka.common.errors.UnknownProducerIdException: This exception is raised by the broker if it could not locate the producer metadata associated with the producerId in question. This could happen if, for instance, the producer's records were deleted because their retention time had elapsed. Once the last records of the producerId are removed, the producer's metadata is removed from the broker, and future appends by the producer will return this exception. for topic-partition T-CLEAR-1 at offset -1. This indicates data loss on the broker, and should be investigated.
+2021-11-16 09:08:29.207 [32m INFO[m [35m5527GG[m [ad | producer-1] [36mo.a.k.c.p.i.TransactionManager[m : [Producer clientId=producer-1] ProducerId set to -1 with epoch -1
+2021-11-16 09:08:29.219 [32m INFO[m [35m5527GG[m [ad | producer-1] [36mo.a.k.c.p.i.TransactionManager[m : [Producer clientId=producer-1] ProducerId set to 35804 with epoch 0
+
+
 ```
 
 

@@ -151,7 +151,7 @@ $ sudo yum deplist net-snmp-agent-libs.x86_64 1:5.7.2-49.el7_9.1
 但是奇怪，这里的provider为啥是mariadb，
 奇怪是因为我之前是安装安装手册步骤删除了mariadb安装了mysql
 Repeat following steps in both master DB server and secondary DB server.
-1)	Login as root. Copy mysql installation packages and its dependencies to /apex/deploy/clearing
+1)	Login as root. Copy mysql installation packages and its dependencies to /opt
 •	mysql-community-client-5.7.32-1.el7.x86_64.rpm
 •	mysql-community-common-5.7.32-1.el7.x86_64.rpm
 •	mysql-community-libs-5.7.32-1.el7.x86_64.rpm

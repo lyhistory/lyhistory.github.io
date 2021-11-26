@@ -77,7 +77,8 @@ bin/zkCli.sh -server 127.0.0.1:2181
 	get /test
 	ls /test mywatcher
 	delete /test
-	
+
+​    rmr /test	
 
 ### 编译源码
 

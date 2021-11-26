@@ -67,10 +67,20 @@ https://start.spring.io/
 https://www.tutorialspoint.com/spring/spring_quick_guide.htm
 https://docs.spring.io/spring/docs/5.1.6.RELEASE/spring-framework-reference/ (spring boot 2.1.4 depend on spring 5.1.6)
 
-** architecture**
+### architecture
 ![](/docs/docs_image/software/java/java_spring01.png)
 
-** Spring AOP **
+### Beans
+
+**Spring uses the class name and converts the first letter to lowercase**.
+
+https://www.baeldung.com/spring-bean-names
+
+### Autowired
+
+https://www.baeldung.com/spring-autowire
+
+### Spring AOP
 
 AOP是aspect oriented programing的简称，意为面向切面编程。 spring aop使用了动态代理技术在运行期织入增强的代码，使用了两种代理机制，一种是基于jdk的动态代理，另一种是基于CGLib的动态代理。
 详细请看深入理解代理模式设计模式：代理模式
@@ -90,11 +100,11 @@ Spring / MyBatis——插件机制（AOP）
 https://blog.csdn.net/qq_22078107/article/details/85781594
 https://blog.csdn.net/u012525096/article/details/82389240
 
-
-** 代理
+### 代理
 动态代理 静态代理
 cglib 通过使用proxy设计模式 远程调用看起来像本地调用
 增强类 如mybatis，fastclassbyspringcglib
+
 ```
 保存生成的动态代理类或者增强类
 @EnableAsync
@@ -405,8 +415,83 @@ Realm
 
   https://github.com/spring-projects/spring-boot/tree/main/spring-boot-project/spring-boot-starters
 
+### 5.2 Compatibility Troubleshooting
 
-### 5.2 kafka
++ general 
+
+  查看release note，比如
+
+  https://stackoverflow.com/questions/61118552/zookeeper-3-5-x-backwards-compability-with-zookeeper-3-4-x-clients
+
+  - 3.4.x clients **compatible** with 3.5.x server
+  - 3.4.x and 3.5.x clients can be mixed on 3.5 server
+  - 3.5.x clients **incompatible** with 3.4 server
+
++ kafka
+
+  Kafka is tested against the Zookeeper version it comes with.
+
+  If you want to upgrade, you'll need to verify Zookeeper itself is  backwards compatible with older clients/protocols that Kafka may use.
+
+  https://github.com/apache/kafka/search?q=zookeeper+version&type=commits
+
+  https://archive.apache.org/dist/kafka/1.1.0/RELEASE_NOTES.html
+
+  
+
++ curator
+
+  curator-recipies 2.12.0=>
+
+  ​      curator-framework 2.12.0=>
+
+  ​      curator-client 2.12.0=>
+
+  ​      zookeeper 3.4.8
+
++ 使用 springfox2.9.2，升级springboot从2.0.5到2.4.5，遇到错误：
+
+  ```
+  Description:
+  
+  An attempt was made to call a method that does not exist. The attempt was made from the following location:
+  
+      org.springframework.hateoas.server.core.DelegatingLinkRelationProvider.<init>(DelegatingLinkRelationProvider.java:36)
+  
+  The following method did not exist:
+  
+      org.springframework.plugin.core.PluginRegistry.of([Lorg/springframework/plugin/core/Plugin;)Lorg/springframework/plugin/core/PluginRegistry;
+  
+  The method's class, org.springframework.plugin.core.PluginRegistry, is available from the following locations:
+  
+      jar:file:/C:/Users/yue.liu/.m2/repository/org/springframework/plugin/spring-plugin-core/1.2.0.RELEASE/spring-plugin-core-1.2.0.RELEASE.jar!/org/springframework/plugin/core/PluginRegistry.class
+  
+  The class hierarchy was loaded from the following locations:
+  
+      org.springframework.plugin.core.PluginRegistry: file:/C:/Users/yue.liu/.m2/repository/org/springframework/plugin/spring-plugin-core/1.2.0.RELEASE/spring-plugin-core-1.2.0.RELEASE.jar
+  
+  
+  Action:
+  
+  Correct the classpath of your application so that it contains a single, compatible version of org.springframework.plugin.core.PluginRegistry
+  ```
+
+  spring-boot-starter-data-rest
+  => spring-data-rest-webmvc
+  => spring-data-rest-core
+  => spring-plugin-core 
+
+  springfox-swagger2
+  => spring-plugin-core
+
+  https://github.com/springfox/springfox/issues/3052
+
+  https://github.com/springfox/springfox/releases
+
+  springfox 3.0: Requires SpringBoot 2.2+ (not tested with earlier versions)
+
+
+### 5.3 3rd-party&wrapper: kafka
 
 #### Client & Sever
 
@@ -470,7 +555,7 @@ Realm
 
   https://spring.io/projects/spring-kafka
 
-### 5.3 Redis
+### 5.4 3rd-party&wrapper: Redis
 
 https://github.com/spring-projects/spring-data-redis/issues/2061
 
@@ -505,85 +590,6 @@ https://github.com/spring-projects/spring-data-redis/issues/2061
   => spring-data-redis 2.4.8 
 
   => lettuce 6.0.4.RELEASE
-
-### 5.4 Redis
-
-#### Client & Server
-
-+ general 
-
-  查看release note，比如
-
-  https://stackoverflow.com/questions/61118552/zookeeper-3-5-x-backwards-compability-with-zookeeper-3-4-x-clients
-
-  - 3.4.x clients **compatible** with 3.5.x server
-  - 3.4.x and 3.5.x clients can be mixed on 3.5 server
-  - 3.5.x clients **incompatible** with 3.4 server
-
-+ kafka
-
-  Kafka is tested against the Zookeeper version it comes with.
-
-  If you want to upgrade, you'll need to verify Zookeeper itself is  backwards compatible with older clients/protocols that Kafka may use.
-
-  https://github.com/apache/kafka/search?q=zookeeper+version&type=commits
-
-  https://archive.apache.org/dist/kafka/1.1.0/RELEASE_NOTES.html
-
-  
-
-+ curator
-
-  curator-recipies 2.12.0=>
-
-  ​      curator-framework 2.12.0=>
-
-  ​      curator-client 2.12.0=>
-
-  ​      zookeeper 3.4.8
-
-### 5.5 Springfox
-
-使用 springfox2.9.2，升级springboot从2.0.5到2.4.5，遇到错误：
-
-```
-Description:
-
-An attempt was made to call a method that does not exist. The attempt was made from the following location:
-
-    org.springframework.hateoas.server.core.DelegatingLinkRelationProvider.<init>(DelegatingLinkRelationProvider.java:36)
-
-The following method did not exist:
-
-    org.springframework.plugin.core.PluginRegistry.of([Lorg/springframework/plugin/core/Plugin;)Lorg/springframework/plugin/core/PluginRegistry;
-
-The method's class, org.springframework.plugin.core.PluginRegistry, is available from the following locations:
-
-    jar:file:/C:/Users/yue.liu/.m2/repository/org/springframework/plugin/spring-plugin-core/1.2.0.RELEASE/spring-plugin-core-1.2.0.RELEASE.jar!/org/springframework/plugin/core/PluginRegistry.class
-
-The class hierarchy was loaded from the following locations:
-
-    org.springframework.plugin.core.PluginRegistry: file:/C:/Users/yue.liu/.m2/repository/org/springframework/plugin/spring-plugin-core/1.2.0.RELEASE/spring-plugin-core-1.2.0.RELEASE.jar
-
-
-Action:
-
-Correct the classpath of your application so that it contains a single, compatible version of org.springframework.plugin.core.PluginRegistry
-```
-
-spring-boot-starter-data-rest
-=> spring-data-rest-webmvc
-=> spring-data-rest-core
-=> spring-plugin-core 
-
-springfox-swagger2
-=> spring-plugin-core
-
-https://github.com/springfox/springfox/issues/3052
-
-https://github.com/springfox/springfox/releases
-
-springfox 3.0: Requires SpringBoot 2.2+ (not tested with earlier versions)
 
 ---
 
