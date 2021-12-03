@@ -53,5 +53,7 @@ https://www.cs.utexas.edu/~shmat/courses/cs380s_fall09/09setuid.pdf
 ```
 
 watch ss -tunpl4
+
+watch -n 5 "netstat -anp | grep ESTAB"
 ```
 
