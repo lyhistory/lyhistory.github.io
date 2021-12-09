@@ -10,6 +10,12 @@ https://reactjs.org/docs/glossary.html
 
 Though you may build a single-page application in React, it is not a requirement. React can also be used for enhancing small parts of existing websites with additional interactivity. Code written in React can coexist peacefully with markup rendered on the server by something like PHP, or with other client-side libraries. In fact, this is exactly how React is being used at Facebook.
 
+通过 react router可以实现多页面：
+
+`import { Router, BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'`
+
+页面切换的时候url变化，相应触发页面的WillUnmount生命周期
+
 **CDN**
 
 CDN stands for Content Delivery Network. CDNs deliver cached, static content from a network of servers across the globe.
@@ -934,6 +940,8 @@ Component:
 2)	componentDidMount is the API invoked after React renders a component in the DOM.
 3)	render is the API that “draws” the component on the screen.
 
+top level api: https://reactjs.org/docs/react-api.html
+
 #### 生命周期排查
 
 某个项目，由于需求是高度定制化的类似Excel的表格，市面没有现成产品，所以某高人通过模仿antd写了一套原生的表格组件，层层嵌套，大概是windowtable下面包了一层table叫Seperatetable
@@ -947,6 +955,8 @@ Component:
 ![](/docs/docs_image/software/programming/reactjs_lifecycle_02.png)
 
 此问题还在研究中
+
+willunmount已经被干掉了 https://reactjs.org/docs/react-component.html#componentwillunmount 
 
 ### ES6
 

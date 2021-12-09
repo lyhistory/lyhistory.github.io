@@ -593,6 +593,11 @@ npm i webpack webpack-cli --save-dev
 ```
 package.json
 ```
+  "name": "webpack-react-tutorial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  
 "scripts": {
   "build": "webpack --mode production"
 }
