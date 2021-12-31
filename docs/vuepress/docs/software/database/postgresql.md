@@ -6,7 +6,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《postgresql实用基础》
 
-## 1. Setup
+## 1. Get Start
 ### 1.1 Baisc Setup
 
 #### 1.1.1 install
@@ -99,205 +99,139 @@ C# 连接 PostgreSQL --- Npgsql的安装和使用 https://blog.csdn.net/chencglt
 删除“重复”的function或stored procedure，比如：bpchar和varchar：
 ![](/docs/docs_image/software/postgresql/postgresql01.png)
 
-### 1.2 High Availability
+#### 1.1.3 debug
 
-> Database servers can work together to allow a second server to take over quickly if the primary server fails (high availability), or to allow several computers to serve the same data (load balancing). Ideally, database servers could work together seamlessly. Web servers serving static web pages can be combined quite easily by merely load-balancing web requests to multiple machines. In fact, read-only database servers can be combined relatively easily too. Unfortunately, most database servers have a read/write mix of requests, and read/write servers are much harder to combine. This is because though read-only data needs to be placed on each server only once, a write to any server has to be propagated to all servers so that future read requests to those servers return consistent results.
->
-> This synchronization problem is the fundamental difficulty for servers working together. Because there is no single solution that eliminates the impact of the sync problem for all use cases, there are multiple solutions. Each solution addresses this problem in a different way, and minimizes its impact for a specific workload.
->
-> https://www.postgresql.org/docs/current/high-availability.html
+DBeaver:
 
-#### 1.2.1 Replication不同方案：
+How do you view PostgreSQL messages (such as RAISE NOTICE) in DBeaver?
 
-https://www.postgresql.org/docs/current/different-replication-solutions.html
-
-+ Shared Disk Failover：
-
-​	Shared hardware functionality is common in network storage devices.
-
-+ File System (Block Device) Replication
-
-A modified version of shared hardware functionality 
-
-DRBD is a popular file system replication solution for Linux.
-
-+ Write-Ahead Log Shipping
-
-A standby server can be implemented using file-based log shipping ([Section 26.2](https://www.postgresql.org/docs/current/warm-standby.html)) or streaming replication (see [Section 26.2.5](https://www.postgresql.org/docs/current/warm-standby.html#STREAMING-REPLICATION)), or a combination of both. For information on hot standby, see [Section 26.5](https://www.postgresql.org/docs/current/hot-standby.html).
-
-+ Logical Replication
-
-Allows a database server to send a stream of data modifications to another server.  [Chapter 30](https://www.postgresql.org/docs/current/logical-replication.html).([Chapter 48](https://www.postgresql.org/docs/current/logicaldecoding.html)
-
-+ Trigger-Based Master-Standby Replication
-
-The standby can answer read-only queries while the master server is running. The standby server is ideal for data warehouse queries.Slony-I is an example of this type of replication, with per-table granularity, and support for multiple standby servers. Because it updates the standby server asynchronously (in batches), there is possible data loss during fail over.
-
-+ Statement-Based Replication Middleware
-
-ach server operates independently. Read-write queries must be sent to all servers, so that every server receives any changes. But read-only queries can be sent to just one server, allowing the read workload to be distributed among them.Care must also be taken that all transactions either commit or abort on all servers, perhaps using two-phase commit ([PREPARE TRANSACTION](https://www.postgresql.org/docs/current/sql-prepare-transaction.html) and [COMMIT PREPARED](https://www.postgresql.org/docs/current/sql-commit-prepared.html)). Pgpool-II and Continuent Tungsten are examples of this type of replication.
-
-+ Asynchronous Multimaster Replication
-
-each server works independently, and periodically communicates with the other servers to identify conflicting transactions. The conflicts can be resolved by users or conflict resolution rules. Bucardo is an example of this type of replication.
-
-+ Synchronous Multimaster Replication
-
-PostgreSQL does not offer this type of replication
-
-+ Commercial Solutions
-
-+ Data Partitioning
-
-Data partitioning splits tables into data sets. Each set can be modified by only one server. For example, data can be partitioned by offices, e.g., London and Paris,
-
-+ Multiple-Server Parallel Query Execution
-
-Many of the above solutions allow multiple servers to handle multiple queries, but none allow a single query to use multiple servers to complete faster. This solution allows multiple servers to work concurrently on a single query. It is usually accomplished by splitting the data among servers and having each server execute its part of the query and return results to a central server where they are combined and returned to the user. 
-
-#### 1.2.2 具体方案1：warm standby or log shipping
-
-https://www.postgresql.org/docs/current/warm-standby.html
-
-The primary server operates in continuous archiving mode, while each standby server operates in continuous recovery mode, reading the WAL(write ahead logging) files from the primary(Directly moving WAL records from one database server to another is typically described as log shipping). 
-
-#### 1.2.3 具体方案2：hot standby 
-
-https://www.postgresql.org/docs/current/hot-standby.html
-
-#### 1.2.4 具体配置 温备/热备
-
-http://www.mamicode.com/info-detail-2466322.html
+you can use Ctrl+Shif+O or the button Show server output console on the left side of the script window.
 
 
 
-## 2. Gaps between Oracle PLSQL and PostgreSQL
-https://github.com/digoal/blog/blob/master/201607/20160714_01.md
+### 1.2 Basic concepts
 
-https://wiki.postgresql.org/wiki/Oracle_to_Postgres_Conversion
-
-### 2.1 oracle keep dense_rank CHANGE in postgresql 
-https://www.eversql.com/rank-vs-dense_rank-vs-row_number-in-postgresql/
-
-### 2.2 oracle is record, is table CHANGE in postgresql
-```
-type rec_tk is record(
-	tkno VARCHAR2(100),
-	cg_zdj number(12, 0) := 0,
-	cg_jsf number(12, 0) := 0
-);
-type tklist is table of rec_tk index by binary_integer;
-```
-
-修改为
-
-```
-create type rec_tk as(
-tkno VARCHAR(100),
-cg_zdj numeric(12,0),
-cg_jsf numeric(12,0)
-);
-
-#函数外执行创建类型的SQL
-create type rec_cjr as(
-cjrid varchar(30),
-tk rec_tk[]
-);
-#函数内对table的使用修改为数组的使用，数组的下标从1开始
-p_cjrs rec_cjr[];
-```
-
-## 基本概念
-
-psql命令
+https://www.tutorialspoint.com/postgresql/index.htm
 
 https://www.postgresql.org/docs/10/app-psql.html
 
-```
-\list
-\c [DATABASE]
-\d
-\du
-```
-
-
-
 表空间
 
+```
 postgres=# select * from pg_tablespace;
  oid  |  spcname   | spcowner | spcacl | spcoptions
 ------+------------+----------+--------+------------
  1663 | pg_default |       10 |        |
  1664 | pg_global  |       10 |        |
 (2 rows)
+```
 
-https://www.tutorialspoint.com/postgresql/index.htm
+psql命令
+
+```
+\list
+\c [DATABASE]
+\d
+\du
+
+\dx
+SELECT * FROM pg_extension;
+```
 
 
 
 
 
-## 3. Gramma
+## 2. Syntax
 
 Assign null or empty ‘’ to numberic,  to_number(‘’) throw exception, use if else instead
 Bigint default value is NULL not 0
 
-### 3.1 Basic
+### 2.1 Basic
 
-**format**:
-https://www.postgresql.org/docs/7.4/static/functions-formatting.html
-	Oracle to_char(param)
-	postgresql 	to_char(parma1, ‘999’)
-	Oracle to_date(str, ‘yyyy-mm-dd hh24:mi:ss’)
-	Postgresql to_timestamp(str, ‘yyyy-mm-dd hh24:mi:ss’)
-**Datetime**
-https://www.postgresql.org/docs/9.1/static/functions-datetime.html
-select extract (day from timestamp '2011-01-01 01:01:01' - timestamp '2001-01-01 01:01:01');
-**System**
+#### System
+
+```
 Oracle rownum / now(), sysdate	
 postgresql: limit / now(), CURRENT_DATE
-https://thebuild.com/blog/2018/08/07/does-anyone-really-know-what-time-it-is/
-**Concat**
-	Character string connector (||) will fail in postgresql when there is ‘’ or null
-	concat()
-	Format	v_sql := format($$select * from table where col1=%s$$,’test’)
-**NULL and empty string**
+
+NULL and empty string:
+
 Assign null or empty ‘’ to numberic,  to_number(‘’) throw exception, use if else instead
 Bigint default value is NULL not 0
 Oracle NVL()
 PGSQL coalesce()
-**Returning into**
+
+Returning into:
+
 https://stackoverflow.com/questions/7191902/cannot-select-from-update-returning-clause-in-postgres
 Oracle: SQL%ROWCOUNT
 PG: GET DIAGNOSTICS integer_var = ROW_COUNT;
+```
 
-**Tables and Views**
+
+
+#### Data Format
+
+https://www.postgresql.org/docs/9.1/functions-formatting.html
+
+https://www.postgresql.org/docs/9.1/static/functions-datetime.html
+
+https://thebuild.com/blog/2018/08/07/does-anyone-really-know-what-time-it-is/
+
+https://www.postgresql.org/docs/9.2/functions-datetime.html
+
+```
+Oracle to_char(param)
+postgresql 	to_char(parma1, ‘999’)
+
+**Concat**
+Character string connector (||) will fail in postgresql when there is ‘’ or null
+concat()
+Format	v_sql := format($$select * from table where col1=%s$$,’test’)
+
+**Datetime**
+Oracle to_date(str, ‘yyyy-mm-dd hh24:mi:ss’)
+Postgresql to_timestamp(str, ‘yyyy-mm-dd hh24:mi:ss’)
+select extract (day from timestamp '2011-01-01 01:01:01' - timestamp '2001-01-01 01:01:01');
+
+CURRENT_TIMESTAMP in milliseconds:
+SELECT (extract(epoch from now())*1000)::bigint;
+
+'2013-08-20 14:52:49'::timestamp
+to_timestamp('20/8/2013 14:52:49', 'DD/MM/YYYY hh24:mi:ss')
+to_timestamp('20/8/2013 14:52:49', 'DD/MM/YYYY hh24:mi:ss')::timestamp
+to_timestamp('20/8/2013 14:52:49', 'DD/MM/YYYY hh24:mi:ss') AT TIME ZONE 'UTC'
+
+select to_timestamp(epoch_column)::date;
+
+SELECT * FROM your-table
+WHERE EXTRACT(MINUTE FROM begin_time) = '45'
+ 
+```
+
+
+
+#### Tables and Views
 The new query must generate the same columns that were generated by the existing view query (that is, the same column names in the same order and with the same data types) (...)
 
-### 3.2 CRUD
+### 2.2 CRUD
+
+insert or update:
+
+最简单的思路：
 
 ```
-Oracle bulk collect into
-Pgsql Offset 
-/*CREATE TYPE t_my AS (
-    col1    numeric(16,6),
-    col2    numeric,
-    col3 bpchar(36)
-    );*/
-    
-do $$DECLARE   
-c cursor(os int) for select * from table limit 5 offset os;
-r record;
-v_name varchar(100)[];
-recs t_my[];
-BEGIN
-
-    select array (select row(0, col, 'aaa') from table1 limit 5 offset 10 ) into recs;
-    --v_games:= array_to_string(v_name,',');
-    raise notice '%', recs[1].col1;
-END
-$$;
+if exists (select * from table where ...) then
+	update
+else
+	insert
+end if;
 ```
+
+如果是基于primary key或index可以用 insert on conflict或者upsert：
+
+https://stackoverflow.com/questions/1109061/insert-on-duplicate-update-in-postgresql/1109198#1109198
 
 ```
 Oracle merge into
@@ -320,7 +254,25 @@ update set col3 = excluded.col3,
 
 For update
 
-### 3.3 Functions & Stored Procedure
+
+
+### 2.3 Functions & Stored Procedure
+
+```
+if condition_1 then
+  statement_1;
+elsif condition_2 then
+  statement_2
+...
+elsif condition_n then
+  statement_n;
+else
+  else-statement;
+end if;
+```
+
+
+
 Use the right type, character to numeric
 v_product := to_number(p_walletcode);
 
@@ -380,15 +332,16 @@ BEGIN
 END;
 ```
 
-### 3.4 Advanced
-**Temp table**
+### 2.4 Advanced
+
+#### Temp table
 https://github.com/yallie/pg_global_temp_tables
 ![](/docs/docs_image/software/postgresql/postgresql03.png)
 
-**Sequence**
+#### Sequence
 https://www.postgresql.org/docs/8.2/static/functions-sequence.html
 
-**Customized Types**
+#### Customized Types
 
 https://www.postgresql.org/docs/9.6/static/sql-createtype.html
 
@@ -400,10 +353,36 @@ https://stackoverflow.com/questions/570393/postgres-integer-arrays-as-parameters
 
 https://stackoverflow.com/questions/3660787/how-to-list-custom-types-using-postgres-information-schema
 
-**Analysis**
+```
+Oracle bulk collect into
+Pgsql Offset 
+/*CREATE TYPE t_my AS (
+    col1    numeric(16,6),
+    col2    numeric,
+    col3 bpchar(36)
+    );*/
+    
+do $$DECLARE   
+c cursor(os int) for select * from table limit 5 offset os;
+r record;
+v_name varchar(100)[];
+recs t_my[];
+BEGIN
+
+    select array (select row(0, col, 'aaa') from table1 limit 5 offset 10 ) into recs;
+    --v_games:= array_to_string(v_name,',');
+    raise notice '%', recs[1].col1;
+END
+$$;
+```
+
+
+
+#### Analysis
 Window function
 https://www.postgresql.org/docs/11/static/tutorial-window.html
 https://gist.github.com/dialogbox/454380d6a68344556350bb8dbf1d64e5
+
 ```
 select  col1, col2, min(col3)  points
  from (select t1.col1, t1.col2,
@@ -419,7 +398,7 @@ select  col1, col2, min(col3)  points
 order by 1,2;
 ```
 
-**Dynamic cursor**
+#### Dynamic cursor
 
 ```
 In sp pg_test:
@@ -445,7 +424,7 @@ END
 $function$
 ```
 
-**Scheduler**
+#### Scheduler
 
 https://github.com/citusdata/pg_cron
 https://crontab.guru/
@@ -454,15 +433,281 @@ SELECT cron.schedule('0 2 * * *', $$TODO$$);
 ![](/docs/docs_image/software/postgresql/postgresql04.png)
 https://www.pgadmin.org/docs/pgadmin3/1.22/pgagent.html
 
-**Message Flow / Protocol Flow**
+#### Message Flow / Protocol Flow
 https://www.postgresql.org/docs/11/static/protocol-flow.html
 Simple query:
 Recommended practice is to code frontends in a state-machine style that will accept any message type at any time that it could make sense, rather than wiring in assumptions about the exact sequence of messages
 Extended query:
 
-## 4. Drivers
+## 3. High Availability
 
-### 4.1 .NET npgsql
+> Database servers can work together to allow a second server to take over quickly if the primary server fails (high availability), or to allow several computers to serve the same data (load balancing). Ideally, database servers could work together seamlessly. Web servers serving static web pages can be combined quite easily by merely load-balancing web requests to multiple machines. In fact, read-only database servers can be combined relatively easily too. Unfortunately, most database servers have a read/write mix of requests, and read/write servers are much harder to combine. This is because though read-only data needs to be placed on each server only once, a write to any server has to be propagated to all servers so that future read requests to those servers return consistent results.
+>
+> This synchronization problem is the fundamental difficulty for servers working together. Because there is no single solution that eliminates the impact of the sync problem for all use cases, there are multiple solutions. Each solution addresses this problem in a different way, and minimizes its impact for a specific workload.
+>
+> https://www.postgresql.org/docs/current/high-availability.html
+
+### 3.1 Replication不同方案：
+
+https://www.postgresql.org/docs/current/different-replication-solutions.html
+
++ Shared Disk Failover：
+
+​	Shared hardware functionality is common in network storage devices.
+
++ File System (Block Device) Replication
+
+A modified version of shared hardware functionality 
+
+DRBD is a popular file system replication solution for Linux.
+
++ Write-Ahead Log Shipping
+
+A standby server can be implemented using file-based log shipping ([Section 26.2](https://www.postgresql.org/docs/current/warm-standby.html)) or streaming replication (see [Section 26.2.5](https://www.postgresql.org/docs/current/warm-standby.html#STREAMING-REPLICATION)), or a combination of both. For information on hot standby, see [Section 26.5](https://www.postgresql.org/docs/current/hot-standby.html).
+
++ Logical Replication
+
+Allows a database server to send a stream of data modifications to another server.  [Chapter 30](https://www.postgresql.org/docs/current/logical-replication.html).([Chapter 48](https://www.postgresql.org/docs/current/logicaldecoding.html)
+
++ Trigger-Based Master-Standby Replication
+
+The standby can answer read-only queries while the master server is running. The standby server is ideal for data warehouse queries.Slony-I is an example of this type of replication, with per-table granularity, and support for multiple standby servers. Because it updates the standby server asynchronously (in batches), there is possible data loss during fail over.
+
++ Statement-Based Replication Middleware
+
+ach server operates independently. Read-write queries must be sent to all servers, so that every server receives any changes. But read-only queries can be sent to just one server, allowing the read workload to be distributed among them.Care must also be taken that all transactions either commit or abort on all servers, perhaps using two-phase commit ([PREPARE TRANSACTION](https://www.postgresql.org/docs/current/sql-prepare-transaction.html) and [COMMIT PREPARED](https://www.postgresql.org/docs/current/sql-commit-prepared.html)). Pgpool-II and Continuent Tungsten are examples of this type of replication.
+
++ Asynchronous Multimaster Replication
+
+each server works independently, and periodically communicates with the other servers to identify conflicting transactions. The conflicts can be resolved by users or conflict resolution rules. Bucardo is an example of this type of replication.
+
++ Synchronous Multimaster Replication
+
+PostgreSQL does not offer this type of replication
+
++ Commercial Solutions
+
++ Data Partitioning
+
+Data partitioning splits tables into data sets. Each set can be modified by only one server. For example, data can be partitioned by offices, e.g., London and Paris,
+
++ Multiple-Server Parallel Query Execution
+
+Many of the above solutions allow multiple servers to handle multiple queries, but none allow a single query to use multiple servers to complete faster. This solution allows multiple servers to work concurrently on a single query. It is usually accomplished by splitting the data among servers and having each server execute its part of the query and return results to a central server where they are combined and returned to the user. 
+
+### 3.2具体方案1：warm standby or log shipping
+
+https://www.postgresql.org/docs/current/warm-standby.html
+
+The primary server operates in continuous archiving mode, while each standby server operates in continuous recovery mode, reading the WAL(write ahead logging) files from the primary(Directly moving WAL records from one database server to another is typically described as log shipping). 
+
+### 3.3 具体方案2：hot standby 
+
+https://www.postgresql.org/docs/current/hot-standby.html
+
+### 3.4 具体配置 温备/热备
+
+http://www.mamicode.com/info-detail-2466322.html
+
+## 4. Integreation - Drivers
+
+### 4.1 Java
+
+```
+pom.xml:
+<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        
+application.yml:       
+spring:
+  ##Druid DataSource数据库访问配置
+  datasource:
+    #is-dynamic-datasource: true
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:postgresql://HOST:5432/test
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    druid:
+      #连接池配置
+      #初始化时建立物理连接的个数
+      initialSize: 1
+      #最小连接池数量
+      minIdle: 0
+      #最大连接池数量
+      maxActive: 5
+      #获取连接时最大等待时间，单位毫秒。配置了maxWait之后，缺省启用公平锁，并发效率会有所下降，
+      #如果需要可以通过配置useUnfairLock属性为true使用非公平锁。
+      maxWait: 60000
+      #配置相隔多久进行一次检测(检测可以关闭的空闲连接),此处设置为1分钟检测一次。
+      timeBetweenEvictionRunsMillis: 60000
+      #一个连接在池中最小生存的时间(ms),此处设置为半小时。
+      minEvictableIdleTimeMillis: 1800000
+      #一个连接在池中最大生存的时间(ms),此处设置为7天。
+      maxEvictableIdleTimeMillis: 25200000
+      #用来检测连接是否有效的sql; 如果validationQuery为null，testOnBorrow、testOnReturn、testWhileIdle都不会启作用。
+      validationQuery: SELECT 1 FROM DUAL
+      #检测连接是否有效的超时时间,默认-1(单位:秒).
+      validationQueryTimeout: 5
+      #建议配置为true，不影响性能，并且保证安全性，申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，
+      #执行validationQuery检测连接是否有效。
+      testWhileIdle: true
+      #申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。
+      testOnBorrow: false
+      #归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
+      testOnReturn: false
+      #是否缓存preparedStatement，也就是PSCache;PSCache对支持游标的数据库性能提升巨大，比如说oracle;
+      #在mysql5.5以下的版本中没有PSCache功能，建议关闭掉。
+      poolPreparedStatements: true
+      #打开PSCache，并且指定每个连接上PSCache的大小
+      maxPoolPreparedStatementPerConnectionSize: 20
+      sharePreparedStatements: false
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      #connectionProperties: druid.stat.mergeSql=true;druid.stat.logSlowSql=true;druid.stat.slowSqlMillis=5000
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,log4j2
+      #要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。
+      #在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100
+      #此处默认为-1
+      maxOpenPreparedStatements: 10
+      #合并多个DruidDataSource的监控数据
+      useGlobalDataSourceStat: true
+      
+      
+@Service("jdbcService")
+public class JdbcServiceImpl implements JdbcService{
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
+    @Autowired
+    public DataSource dataSource;
+    
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+
+    private Connection connection;
+
+    public Connection getConnection() {
+        try {
+            if (connection == null || connection.isClosed()) {
+                connection = initConnection();
+            }
+        } catch (SQLException e) {
+            logger.error("Initialize connection failed: {}", e.getMessage(), e);
+        }
+        return connection;
+    }
+
+    public Connection initConnection(){
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            conn.setAutoCommit(false);
+        } catch (SQLException e) {
+            logger.error("Initialize connection failed: {}", e.getMessage(), e);
+        }
+        return conn;
+    }
+
+
+    @Override
+    public void savetList(List<Test> list) {
+        String sql = "insert into t_table(col1,col2) select ?,?,?,? where not exists (select col1 from t_table where col1=?)";
+        jdbcTemplate.batchUpdate(sql, list, 10000, new ParameterizedPreparedStatementSetter<Test>() {
+            @Override
+            public void setValues(java.sql.PreparedStatement ps, Test ac) throws SQLException {
+                ps.setString(1, ac.getName());
+                ps.setBigDecimal(2, ac.getValue());
+            }
+        });
+    }
+
+    @Override
+    public void callPgFunction() {
+        final SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withFunctionName("pg_calc_rate");
+        final Map<String, Object> result = jdbcCall.execute();
+
+        logger.info("jdbcCall result: {}",result.get("returnvalue"));
+    }
+
+pg_calc_rate:
+
+CREATE OR REPLACE FUNCTION public.pg_calc_rate()
+	RETURNS integer
+	LANGUAGE plpgsql
+AS $$
+declare
+	v_condition integer := -100;
+	v_product t_fundingrate.product%type := 'BTCP';
+	v_session t_fundingrate."session"%type := 'T+1';
+	v_trade_date t_fundingrate.trade_date%type := to_char(current_date-1,'yyyymmdd');
+	v_rate_type t_fundingrate.rate_type%type;
+	v_funding_rate t_fundingrate.funding_rate%type;
+	v_benchmark_price t_fundingrate.benchmark_price%type;
+	result integer;
+begin
+	
+	if not exists (select * from t_askbidprice where price_time/1000>=extract(epoch FROM cast(current_date-interval '1 day'+interval '19 hour'+interval '1 minute' as text)::timestamp AT TIME ZONE 'SGT')::int
+    and price_time/1000<=extract(epoch FROM cast(current_date+interval '5 hour' as text)::timestamp AT TIME ZONE 'SGT')::int) then
+		raise info 'Not exists impactmid data between [%,%]',cast(current_date-interval '1 day'+interval '19 hour'+interval '1 minute' as text)::timestamp,cast(current_date+interval '5 hour' as text)::timestamp;
+		v_condition := -200;
+	elsif not exists (select * from t_compassft where index_time/1000>=extract(epoch FROM cast(current_date-interval '1 day'+interval '19 hour'+interval '1 minute' as text)::timestamp AT TIME ZONE 'SGT')::int) then
+		raise info 'Not exists compassft data >= %',cast(current_date-interval '1 day'+interval '19 hour'+interval '1 minute' as text)::timestamp;
+    	v_condition := -100;
+	elsif not exists (select * from t_compassft where index_time/1000>=extract(epoch FROM cast(current_date+interval '5 hour' as text)::timestamp AT TIME ZONE 'SGT')::int) then
+    	raise info 'Not exists compassft data >= %',cast(current_date+interval '5 hour' as text)::timestamp;
+    	raise info 'To generate Tentative funding rate';
+    	v_condition := 0;
+    	v_rate_type := 'Tentative'; 
+    else
+		raise info 'To generate Confirmed funding rate';
+		v_condition := 100;
+		v_rate_type := 'Confirmed';
+	end if;
+
+	if v_condition >= 0 then
+		
+		select funding_rate,benchmark_price
+		into v_funding_rate,v_benchmark_price
+		from(
+			select 
+			avg((GREATEST(0::decimal,t2.impact_bid_price-t1.index_value)-GREATEST(0::decimal,t1.index_value-t2.impact_ask_price))/t1.index_value) as funding_rate,
+			avg(t1.index_value) as benchmark_price
+			from t_compassft t1 
+			inner join t_askbidprice t2 on t1.index_name=t2.product and t1.index_time=t2.price_time
+			where t1.index_time/1000<=
+			extract(epoch FROM cast(current_date+interval '5 hour' as text)::timestamp AT TIME ZONE 'SGT')::int
+			and t1.index_time/1000>=
+			extract(epoch FROM cast(current_date-interval '1 day'+interval '19 hour'+interval '1 minute' as text)::timestamp AT TIME ZONE 'SGT')::int
+			group by t1.index_name
+		) t;
+		
+		if exists (select * from t_fundingrate where product=v_product and "session"=v_session and trade_date=v_trade_date) then
+			raise info 'Update exists record product=%,session=%,trade_date=%',v_product,v_session,v_trade_date;
+			update t_fundingrate set funding_rate=v_funding_rate,remark=v_rate_type,rate_type=v_rate_type,publish_time=(extract(epoch from now())*1000)::bigint,benchmark_price=v_benchmark_price
+			where product=v_product and "session"=v_session and trade_date=v_trade_date;
+		else
+			raise info 'Insert new record';
+			insert into t_fundingrate
+			(product, "session", trade_date, funding_rate, remark, rate_type, publish_time, benchmark_price, currency)
+				select v_product,v_session,v_trade_date, v_funding_rate,
+				v_rate_type,v_rate_type,(extract(epoch from now())*1000)::bigint,v_benchmark_price,'USD';
+		end if;
+		
+	end if;
+	select v_condition into result;
+    RETURN result;
+END;
+$$
+;
+
+
+```
+
+
+
+### 4.2 .NET npgsql
 https://github.com/npgsql
 
 **about composite array**
@@ -605,3 +850,43 @@ https://www.postgresql.org/docs/9.5/static/sql-explain.html
 
 Refer
 https://www.asciitable.com
+
+## 5. Gaps between Oracle PLSQL and PostgreSQL
+
+https://github.com/digoal/blog/blob/master/201607/20160714_01.md
+
+https://wiki.postgresql.org/wiki/Oracle_to_Postgres_Conversion
+
+### 5.1 oracle keep dense_rank CHANGE in postgresql 
+
+https://www.eversql.com/rank-vs-dense_rank-vs-row_number-in-postgresql/
+
+### 5.2 oracle is record, is table CHANGE in postgresql
+
+```
+type rec_tk is record(
+	tkno VARCHAR2(100),
+	cg_zdj number(12, 0) := 0,
+	cg_jsf number(12, 0) := 0
+);
+type tklist is table of rec_tk index by binary_integer;
+```
+
+修改为
+
+```
+create type rec_tk as(
+tkno VARCHAR(100),
+cg_zdj numeric(12,0),
+cg_jsf numeric(12,0)
+);
+
+#函数外执行创建类型的SQL
+create type rec_cjr as(
+cjrid varchar(30),
+tk rec_tk[]
+);
+#函数内对table的使用修改为数组的使用，数组的下标从1开始
+p_cjrs rec_cjr[];
+```
+

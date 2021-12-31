@@ -1799,3 +1799,50 @@ https://www.baeldung.com/spring-boot-bean-definition-override-exception
 Caused by: org.springframework.beans.factory.BeanCurrentlyInCreationException: Error creating bean with name 'AAAA': Bean with name 'AAAA' has been injected into other beans [BBBB] in its raw version as part of a circular reference, but has eventually been wrapped. This means that said other beans do not use the final version of the bean. This is often the result of over-eager type matching - consider using 'getBeanNamesForType' with the 'allowEagerInit' flag turned off, for example.
 
 解决：加@Lazy
+
+### nohup: ignoring input no main manifest attribute
+
+```
+执行 
+nohup java -server -jar test.jar > `date +\%F`_funding-rate-datasource_`date +\%H.%M.%S`.log 2>&1
+log中内容为：
+nohup: ignoring input no main manifest attribute
+解决方法，pom增加：
+<build>
+        <finalName>funding-rate-datasource</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <configuration>
+                    <attach>true</attach>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- package -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
+            </plugin>
+            <!-- deploy -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+```
+
