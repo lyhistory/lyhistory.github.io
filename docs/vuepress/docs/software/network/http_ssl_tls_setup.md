@@ -1,0 +1,2095 @@
+https secure http
+
+wss secure websocket
+
+refer to 《network.md/tls》
+
+## SSL/TLS Certificate 证书类型
+
+工具：keytool openssl
+
+证书可以单纯只是包含ca认证的证书链（CA的签名）或自签名，以及公钥，也可以同时包含私钥，私钥当然可以独立于证书生成单独存储；
+
+带密码：spring boot mvc程序，这样好处是双重保护，因为需要同时需要密码和私钥才可以
+
+不带密码：ngnix，私钥或者是含有私钥的证书一定要控制读取权限
+
+按照生成方式分为：
+
++ self-sgined certificate
+
+```
+------------------------------------------------------------
+--- use openssl 不带密码
+------------------------------------------------------------
+sudo mkdir /etc/ssl/privatekey
+sudo chmod 700 /etc/ssl/privatekey
+sudo openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout /etc/ssl/privatekey/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
+
+vim nginx-selfsigned.crt
+	-----BEGIN CERTIFICATE-----
+	-----END CERTIFICATE-----
+
+vim /etc/ssl/privatekey/nginx-selfsigned.key
+	-----BEGIN PRIVATE KEY-----
+	-----END PRIVATE KEY-----
+
+openssl x509 -in nginx-selfsigned.crt -text -noout
+keytool -printcert -file /etc/ssl/certs/nginx-selfsigned.crt
+
+检查crt跟private key是否匹配：
+openssl x509 -noout -modulus -in test.crt | openssl md5
+openssl rsa -noout -modulus -in test.key | openssl md5
+两者输出的 Modulus 应该一直（RSA素数乘积，用来生成key pair）
+------------------------------------------------------------
+--- use keytool 带密码
+------------------------------------------------------------
+-- Generate a Java keystore and key pair
+keytool -genkey -alias mydomain -keyalg RSA -keystore keystore.jks  -keysize 2048
+-- Generate a certificate signing request (CSR) for an existing Java keystore
+keytool -certreq -alias mydomain -keystore keystore.jks -file mydomain.csr
+-- Import a root or intermediate CA certificate to an existing Java keystore
+keytool -import -trustcacerts -alias root -file Thawte.crt -keystore keystore.jks
+-- Import a signed primary certificate to an existing Java keystore
+keytool -import -trustcacerts -alias mydomain -file mydomain.crt -keystore keystore.jks
+-- Generate a keystore and self-signed certificate
+keytool -genkey -keyalg RSA -alias selfsigned -keystore keystore.jks -storepass password -validity 360 -keysize 2048
+-- Export a certificate from a keystore
+keytool -export -alias selfsigned -file selfsigned.crt -keystore keystore.jks
+
+keytool -genkey -alias secure_netty -keysize 2048 -validity 365 -keyalg RSA -dname "CN=localhost" -keypass 123456 -storepass 123456 -keystore selfsigned.jks
+keytool -export -alias secure_netty -keystore selfsigned.jks -storepass 123456 -file selfsigned.cer
+
+
+keytool -genkey -alias secure_tomcat -keysize 1024 -validity 365 -keyalg RSA -keypass 123456 -storepass 123456 -keystore selfsigned.keystore 
+keytool -list -v -keystore selfsigned.keystore
+	打印信息包含 Entry type: PrivateKeyEntry
+keytool -export -alias secure_tomcat -keystore selfsigned.keystore -file selfsigned.cer
+```
+
+
+
++ let's encrypt
+
+```
+//自动化工具
+wget https://dl.eff.org/certbot-auto
+chmod a+x certbot-auto
+./certbot-auto certonly --standalone -d  www.demoProject.com   # www.demoProject.com为你想要配置https的域名
+ls /etc/letsencrypt/live/
+
+//证书定时自动更新
+crontab -e    #编辑crontab
+30 2 * * 1 /root/certbot-auto renew --pre-hook "systemctl stop nginx" --post-hook "systemctl start nginx" >> /var/log/le-renew.log 2>&1 &
+root/certbot-auto renew --pre-hook "systemctl stop nginx" --post-hook "systemctl start nginx"
+
+```
+
++ “购买”免费证书
+
+  https://www.cztcms.cn/?p=826
+
++ dns解析提供商免费证书
+
+  cloudflare dns over tls
+
+  https://www.cloudflare.com/learning/dns/dns-over-tls/
+
+
+
+## Supporting https
+
+### browser
+
+浏览器自然是全面支持https的，不过不同浏览器的特性不同，比如
+
+chrome是采用了操作系统本身的CA证书链，
+
+而firefox是有完整自己的一套证书，所以对于渗透测试者来说，firefox是首选，因为不需要改变操作系统本身的证书，只需要安装给firefox本身就行了，当然firefox还有个特性是支持proxy，chrome还得装插件才行；
+
+注意：如果是自签证书，浏览器会提示，可以手动信任，之后就可以正常访问，但是下面的js http client则不同
+
+访问后端的时候需要注意cors也就是same origin的问题，比如reactjs项目本地测试默认开启nodejs服务：http://localhost:3000，这样访问后端服务，如果后端服务没有设置allow origin，因为后端服务端口一般不会刚好是3000，如果是其他端口，即使也是localhost服务，因为端口不同，不属于same origin，无法请求
+
+### js http client
+
+注意：跟上面不同的是，这里是没有用户交互的，而是js代码自动请求到后端，如果是自签证书，浏览器是不信任的，解决办法就是想办法手动从浏览器地址栏访问一次后端，然后手动加信任，之后应该就可以了，或者另外一种方式是
+
+```
+import axios from 'axios'
+import https from 'https'
+const result = await axios.post(
+    `https://${url}/login`,
+    body,
+    {
+      httpsAgent: new https.Agent({
+        rejectUnauthorized: false
+      })
+    }
+  )
+```
+
+这样会完全忽略证书验证，不太好，所以更好的方法是：
+
+https://stackoverflow.com/questions/51363855/how-to-configure-axios-to-use-ssl-certificate
+
+```
+const httpsAgent = new https.Agent({ ca: MY_CA_BUNDLE });
+```
+
+
+
+### nginx
+
+refer to 《buildingblock/nginx.md》
+
+```
+
+nginx.conf:
+ server {
+        listen       80;
+        listen 443 ssl;
+        listen [::]:443 ssl;
+        server_name  localhost;
+
+        ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+        ssl_certificate_key /etc/ssl/privatekey/nginx-selfsigned.key;
+        ssl_dhparam /etc/ssl/certs/dhparam.pem;
+```
+
+
+
+### springboot mvc
+
+首先MVC有自己的端口比如10001，内置的tomcat默认的http端口是8080，
+
+所有请求到spring mvc这个后台的都是通过 http://IP:10001 过来的，然后内部再交由tomcat 8080端口处理，
+
+如果设置https比如8443，如下：
+
+```
+yml：
+#debug: true
+server:
+  servlet:
+    context-path: /test
+  port:
+    10001
+  ssl:
+    key-store: selfsigned.keystore
+    key-store-password: 123456
+    keyStoreType: JKS
+    keyAlias: secure_tomcat
+    
+@EnableAsync
+@SpringBootApplication
+public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
+    /**
+     * http重定向到https
+     * @return
+     */
+    @Bean
+    public TomcatServletWebServerFactory servletContainer() {
+        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
+            @Override
+            protected void postProcessContext(Context context) {
+                SecurityConstraint constraint = new SecurityConstraint();
+                constraint.setUserConstraint("CONFIDENTIAL");
+                SecurityCollection collection = new SecurityCollection();
+                collection.addPattern("/*");
+                constraint.addCollection(collection);
+                context.addConstraint(constraint);
+            }
+        };
+        //这里tomcat.getPort拿到的就是8080
+        tomcat.addAdditionalTomcatConnectors(httpConnector(tomcat.getPort()));
+        return tomcat;
+    }
+
+    @Bean
+    public Connector httpConnector(int port) {
+        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+        connector.setScheme("http");
+        //Connector监听的http的端口号
+        connector.setPort(port);
+        connector.setSecure(false);
+        //监听到http的端口号后转向到的https的端口号
+        connector.setRedirectPort(8443);
+        return connector;
+    }
+}
+
+```
+
+注意到上面server本身就监听10001（应该是内置tomcat监听），然后为了https，需要创建tomcatfatory又出现一个http端口8080，为什么不可以直接扩展或override postProcessContext方法，可能是跟整个spring mvc的生命周期启动过程相关：
+
+https://zhuanlan.zhihu.com/p/81807865
+
+### netty
+
+https://blog.csdn.net/invadersf/article/details/80337380
+
+https://www.cnblogs.com/zhjh256/p/6488668.html
+
+```
+import io.netty.handler.ssl.SslHandler;
+public class SslChannelInitializer extends ChannelInitializer<Channel> {
+    private final SslContext context;
+
+    public SslChannelInitializer(SslContext context) { 
+        this.context = context;
+    }
+
+    @Override
+    protected void initChannel(Channel ch) throws Exception {
+        SSLEngine engine = context.newEngine(ch.alloc());
+        engine.setUseClientMode(false);
+        ch.pipeline().addFirst("ssl", new SslHandler(engine));
+        ChannelPipeline pipeline = ch.pipeline(); 
+        pipeline.addLast("frameDecoder", new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4));  
+        pipeline.addLast("frameEncoder", new LengthFieldPrepender(4));                
+        pipeline.addLast("decoder", new StringDecoder(Charset.forName("UTF-8")));  
+        pipeline.addLast("encoder", new StringEncoder(Charset.forName("UTF-8")));  
+        pipeline.addLast("spiderServerBusiHandler", new SpiderServerBusiHandler());
+    }
+}
+
+bossGroup = new NioEventLoopGroup(1);
+workerGroup = new NioEventLoopGroup(WORKER_GROUP_SIZE);
+channelClass = NioServerSocketChannel.class;
+logger.info("workerGroup size:" + WORKER_GROUP_SIZE);
+logger.info("preparing to start spider server...");
+b.group(bossGroup, workerGroup);  
+b.channel(channelClass);
+KeyManagerFactory keyManagerFactory = null;
+KeyStore keyStore = KeyStore.getInstance("JKS");
+keyStore.load(new FileInputStream("selfsigned.jks"), "sNetty".toCharArray());
+keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
+keyManagerFactory.init(keyStore,"123456".toCharArray());
+SslContext sslContext = SslContextBuilder.forServer(keyManagerFactory).build();
+b.childHandler(new SslChannelInitializer(sslContext)); 
+```
+
+
+
+## Basic model: client-server
+
+这里的client就是浏览器或手机端，
+
+这里的server指的是前后端代码集成一起的后端服务，
+
+比较直白，只有两方参与，浏览器不需要什么设置，后端服务如果是self host则需要其本身实现https，比如spring mvc，如果不是self host，而是host在比如nginx或iis中，则需要对nginx或iis配置https支持即可；
+
+
+
+## Complicated model: separated frontend/backend前后端分离
+
+举例前后端分离项目：
+1.(user interact ) browser request nginx for frontend resource 
+create self-signed cert and config nignx, so browser will talk to nginx through https (unsafe warning will be alert as it's self signed)
+
+2.(no user interact) js codes will make http call to backend service to retrieve data through nginx, nginx forward http request to backend service
+backend service has to implement and support https, and nginx also have to act as a https client to handshake with mgr
+
+3.(no user interact) js codes will connect to websocket server directly
+
+假设前端项目用的是create-reactjs-app脚手架，npm run start会开启一个nodejs服务，如下
+
+![](/docs/docs_image/software/network/ssl_local_env01.png)
+
+这种情况下显然是不可行的，首先：
+
+1.默认情况下，origin是https://127.0.0.1:3000，axios http client请求的host是 https://127.0.0.1:10001 ，会被same origin policy阻挡，
+
+注意如果是`<img src=https://127.0.0.1:3000/verifycode` 这种图片src的验证码是不会被block住的，因为img link script等标签不会受制于same origin policy
+
+2.浏览器用户互动的部分请求到的host是nodejs，而非用户互动的axios请求到的host是spring mvc，因为开发环境肯定都是自签证书，即使给nodejs设置好了自签证书，浏览器第一次会提醒用户不安全，用户选择继续访问后浏览器则记住该证书，但是axios请求的是spring mvc程序的证书，跟nodejs一般是不同的，这种情况下就会有问题
+
+1的一个解决办法是通过设置chrome浏览器，允许其跨域： https://segmentfault.com/a/1190000021711445
+
+2的一个解决方法是nodejs跟spring mvc用相同的证书，或者手动给浏览器安装证书：https://qastack.cn/superuser/27268/how-do-i-disable-the-warning-chrome-gives-if-a-security-certificate-is-not-trusted
+
+但是其实更完美的解决方法是加一个nginx，nginx作为proxy转发两者的流量到nodejs和springmvc，这样浏览器本身和其中的js代码axios http client只需要跟nginx进行handshake即可，而且origin和host都是test.local，不存在跨域问题，参考下面这张图：
+
+![](/docs/docs_image/software/network/ssl_local_env02.png)
+
+注意，关于websocket有两点：
+
+1. 如果网站使用了https，默认必须使用wss，ws会被浏览器block住，另外注意到，这里前端跟nginx之间是使用wss的，nginx跟真正的服务端仍然是明文ws通信，这个很正常，本来nginx就是反向代理，客户端不需要直接跟被代理的服务端连接，所以实际上同理后端的服务也可以只用http跟nginx通信；
+
+2. 如果是本地测试 127.0.0.1，特别要小心，如图域名使用test.local会出现问题：provisional headers are shown
+
+   解决办法是，nginx将server_name改为localhost即可
+
+而最终部署到服务器上则会简化，因为就不需要nodejs开发环境了：
+
+![](/docs/docs_image/software/network/ssl_product_env.png)
+
+
+
+测试完https后，想回去测试http，chrome经常会强制使用https，解决办法：
+
+https://superuser.com/questions/565409/how-to-stop-an-automatic-redirect-from-http-to-https-in-chrome
+
+1. Go to `chrome://net-internals/#hsts`. Enter *3rdrevolution.com* under **Delete domain security policies** and press the Delete button.
+2. Now go to `chrome://settings/clearBrowserData`, tick the box *Cached images and files* and press click the button *Clear data*.
+
+## Troubleshooting
+
+### 查看服务器支持的TLS版本
+
+```
+nmap -p 443 --script ssl-enum-ciphers <TARGET>
+
+openssl s_client -host api.compass-ft.com -port 443
+```
+
+### 查看服务器支持的cipher suite
+
+```
+To get a list of all cipher suites supported by your installation of OpenSSL, use the openssl command with the ciphers subcommand as follows:
+$ openssl ciphers -v 'ALL:COMPLEMENTOFALL'
+to only list suites that are defined as belonging to the HIGH group, use the following command:
+$ openssl ciphers -v 'HIGH'
+
+
+https://www.keyfactor.com/blog/cipher-suites-explained/
+TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384
+Key Exchange - Authentication - Cipher(algorithm, strength, mode) - Hash or MAC
+```
+
+
+
+### NET::ERR_CERT_COMMON_NAME_INVALID
+
+如果是设置，基本就是域名跟证书不一致，比如证书中的：
+
+```
+openssl x509 -noout -text -in test.crt
+Subject: CN = *.test.com
+nginx配置的server_name就需要是其子域名
+```
+
+如果是访问其他网站遇到，可能是dns解析问题：
+
+https://blog.csdn.net/zerooffdate/article/details/80513730
+
+
+
+### SSL_CTX_use_PrivateKey failed 
+
+emerg] SSL_CTX_use_PrivateKey failed (SSL: error:0B080074:x509 certificate routines:X509_check_private_key:key values mismatch)
+
+私钥和证书不匹配，验证
+
+```
+openssl x509 -noout -modulus -in certificate.crt | openssl md5
+openssl rsa -noout -modulus -in privateKey.key | openssl md5
+```
+
+
+
+### 服务端cert过期导致Handshake请求失败
+
+sprintboot访问一个https的api遇到问题：
+
+```
+2022-01-25 16:18:05.175 ^[[31mERROR^[[m ^[[35m30604GG^[[m [scheduling-1] ^[[36mc.a.m.f.u.HttpClientUtil^[[m : Get Exception Remote host closed connection during handshake
+
+javax.net.ssl.SSLHandshakeException: Remote host closed connection during handshake
+        at sun.security.ssl.SSLSocketImpl.readRecord(SSLSocketImpl.java:980)
+        at sun.security.ssl.SSLSocketImpl.performInitialHandshake(SSLSocketImpl.java:1363)
+        at sun.security.ssl.SSLSocketImpl.writeRecord(SSLSocketImpl.java:735)
+        at sun.security.ssl.AppOutputStream.write(AppOutputStream.java:123)
+        at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:82)
+        at java.io.BufferedOutputStream.flush(BufferedOutputStream.java:140)
+        at org.apache.commons.httpclient.HttpConnection.flushRequestOutputStream(HttpConnection.java:828)
+        at org.apache.commons.httpclient.HttpMethodBase.writeRequest(HttpMethodBase.java:2116)
+        at org.apache.commons.httpclient.HttpMethodBase.execute(HttpMethodBase.java:1096)
+        at org.apache.commons.httpclient.HttpMethodDirector.executeWithRetry(HttpMethodDirector.java:398)
+        at org.apache.commons.httpclient.HttpMethodDirector.executeMethod(HttpMethodDirector.java:171)
+        at org.apache.commons.httpclient.HttpClient.executeMethod(HttpClient.java:397)
+        at org.apache.commons.httpclient.HttpClient.executeMethod(HttpClient.java:323)
+        at com.lyhistory.middleware.fundingrate.util.HttpClientUtil.sendGet(HttpClientUtil.java:64)
+        at com.lyhistory.middleware.fundingrate.service.impl.CompassftServiceImpl.sendRequest(CompassftServiceImpl.java:25)
+        at com.lyhistory.middleware.fundingrate.job.CompassftJob.crawlData(CompassftJob.java:33)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:497)
+        at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:84)
+        at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+        at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+        at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+        at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+        at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+        at java.lang.Thread.run(Thread.java:745)
+Caused by: java.io.EOFException: SSL peer shut down incorrectly
+        at sun.security.ssl.InputRecord.read(InputRecord.java:505)
+        at sun.security.ssl.SSLSocketImpl.readRecord(SSLSocketImpl.java:961)
+        ... 28 more
+```
+
+但是此前在另外一台服务器上测试没有问题，确定了浏览器访问该api没有问题，然后在这台机器上curl一下
+
+```
+#curl https://api.compass-ft.com/v1/indexes/CCRTBTC/history?access_token=
+curl: (60) The certificate issuer's certificate has expired.  Check your system date and time.
+More details here: http://curl.haxx.se/docs/sslcerts.html
+
+curl performs SSL certificate verification by default, using a "bundle"
+ of Certificate Authority (CA) public keys (CA certs). If the default
+ bundle file isn't adequate, you can specify an alternate file
+ using the --cacert option.
+If this HTTPS server uses a certificate signed by a CA represented in
+ the bundle, the certificate verification probably failed due to a
+ problem with the certificate (it might be expired, or the name might
+ not match the domain name in the URL).
+If you'd like to turn off curl's verification of the certificate, use
+ the -k (or --insecure) option.
+```
+
+说是证书过期，浏览器查看一下果然过期了几天，可能是浏览器不会那么频繁的验证，在此前另外一台装好的机器上curl没问题，估计是首次访问才验证，后续就验证了或者定期检查，
+
+通知api提供商，提供商迅速更新了证书，浏览器看了下，确实更新了，postman也能访问，但是这台机器上仍然无法访问，curl也是一样的提示，
+
+根据curl的提示查看
+
+https://curl.se/docs/sslcerts.html
+
+- `openssl s_client -showcerts -servername server -connect server:443 > cacert.pem`
+- type "quit", followed by the "ENTER" key
+- The certificate will have "BEGIN CERTIFICATE" and "END CERTIFICATE" markers.
+- If you want to see the data in the certificate, you can do: "openssl x509 -inform PEM -in certfile -text -out certdata" where certfile is the cert you extracted from logfile. Look in certdata.
+
+结合这个帖子 https://stackoverflow.com/questions/24992976/openssl-telling-certificate-has-expired-when-it-has-not
+
+```
+openssl s_client -showcerts -servername api.compass-ft.com -connect api.compass-ft.com:443
+CONNECTED(00000003)
+depth=3 O = Digital Signature Trust Co., CN = DST Root CA X3
+verify error:num=10:certificate has expired
+notAfter=Sep 30 14:01:15 2021 GMT
+verify return:0
+---
+Certificate chain
+ 0 s:/CN=api.compass-ft.com
+   i:/C=US/O=Let's Encrypt/CN=R3
+-----BEGIN CERTIFICATE-----
+
+#openssl s_client -servername api.compass-ft.com -connect api.compass-ft.com:443
+CONNECTED(00000003)
+depth=3 O = Digital Signature Trust Co., CN = DST Root CA X3
+verify error:num=10:certificate has expired
+notAfter=Sep 30 14:01:15 2021 GMT
+verify return:0
+---
+Certificate chain
+ 0 s:/CN=api.compass-ft.com
+   i:/C=US/O=Let's Encrypt/CN=R3
+ 1 s:/C=US/O=Let's Encrypt/CN=R3
+   i:/C=US/O=Internet Security Research Group/CN=ISRG Root X1
+ 2 s:/C=US/O=Internet Security Research Group/CN=ISRG Root X1
+   i:/O=Digital Signature Trust Co./CN=DST Root CA X3
+---
+Server certificate
+-----BEGIN CERTIFICATE-----
+
+openssl s_client -servername api.compass-ft.com -connect api.compass-ft.com:443 2>/dev/null | openssl x509 -noout -dates
+```
+
+又从浏览器观察了这三级的证书链，都是正常的，所以怀疑是os上的根证书链中哪个可能过期了但一直没更新！
+
+```
+]#find / -type d -name "certs"
+/etc/pki/CA/certs
+/etc/pki/tls/certs
+/etc/openldap/certs
+
+#openssl x509 -in ca-bundle.crt -text
+
+openssl x509 -enddate -noout -in
+
+
+#curl -v https://api.compass-ft.com/v1/indexes/
+* About to connect() to api.compass-ft.com port 443 (#0)
+*   Trying 54.216.252.255...
+* Connected to api.compass-ft.com (54.216.252.255) port 443 (#0)
+* Initializing NSS with certpath: sql:/etc/pki/nssdb
+*   CAfile: /etc/pki/tls/certs/ca-bundle.crt
+  CApath: none
+* Server certificate:
+*       subject: CN=api.compass-ft.com
+*       start date: Dec 09 23:25:14 2021 GMT
+*       expire date: Mar 09 23:25:13 2022 GMT
+*       common name: api.compass-ft.com
+*       issuer: CN=R3,O=Let's Encrypt,C=US
+* NSS error -8162 (SEC_ERROR_EXPIRED_ISSUER_CERTIFICATE)
+* The certificate issuer's certificate has expired.  Check your system date and time.
+* Closing connection 0
+curl: (60) The certificate issuer's certificate has expired.  Check your system date and time.
+More details here: http://curl.haxx.se/docs/sslcerts.html
+
+curl performs SSL certificate verification by default, using a "bundle"
+ of Certificate Authority (CA) public keys (CA certs). If the default
+ bundle file isn't adequate, you can specify an alternate file
+ using the --cacert option.
+If this HTTPS server uses a certificate signed by a CA represented in
+ the bundle, the certificate verification probably failed due to a
+ problem with the certificate (it might be expired, or the name might
+ not match the domain name in the URL).
+If you'd like to turn off curl's verification of the certificate, use
+ the -k (or --insecure) option.
+
+```
+
+搜索得知：
+
+*For TLS certificates issued by Let’s Encrypt, the root certificate (DST Root CA X3) in the default chain expires on* ***September 30, 2021\****.*
+
+https://blog.devgenius.io/rhel-centos-7-fix-for-lets-encrypt-change-8af2de587fe4
+
+插曲：开始还一度怀疑是不是os支持的tls Protocol跟api服务商支持的不同
+
+```
+openssl ciphers -v | awk '{print $2}' | sort | uniq
+```
+
+### jdk版本bug导致Handshake失败
+
+跟前面一样dev上可以，生产上失败，错误输出也一样
+
+```
+2022-01-27 17:45:29.928 ^[[31mERROR^[[m ^[[35m25521GG^[[m [scheduling-1] ^[[36mc.a.m.f.u.HttpClientUtil^[[m : Get Exception Remote host closed connection during handshake
+
+javax.net.ssl.SSLHandshakeException: Remote host closed connection during handshake
+        at sun.security.ssl.SSLSocketImpl.readRecord(SSLSocketImpl.java:980)
+        at sun.security.ssl.SSLSocketImpl.performInitialHandshake(SSLSocketImpl.java:1363)
+        at sun.security.ssl.SSLSocketImpl.writeRecord(SSLSocketImpl.java:735)
+        at sun.security.ssl.AppOutputStream.write(AppOutputStream.java:123)
+        at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:82)
+        at java.io.BufferedOutputStream.flush(BufferedOutputStream.java:140)
+        at org.apache.commons.httpclient.HttpConnection.flushRequestOutputStream(HttpConnection.java:828)
+        at org.apache.commons.httpclient.HttpMethodBase.writeRequest(HttpMethodBase.java:2116)
+        at org.apache.commons.httpclient.HttpMethodBase.execute(HttpMethodBase.java:1096)
+        at org.apache.commons.httpclient.HttpMethodDirector.executeWithRetry(HttpMethodDirector.java:398)
+        at org.apache.commons.httpclient.HttpMethodDirector.executeMethod(HttpMethodDirector.java:171)
+        at org.apache.commons.httpclient.HttpClient.executeMethod(HttpClient.java:397)
+        at org.apache.commons.httpclient.HttpClient.executeMethod(HttpClient.java:323)
+        at com.lyhistory.middleware.fundingrate.util.HttpClientUtil.sendGet(HttpClientUtil.java:64)
+        at com.lyhistory.middleware.fundingrate.service.impl.CompassftServiceImpl.sendRequest(CompassftServiceImpl.java:25)
+        at com.lyhistory.middleware.fundingrate.job.CompassftJob.crawlData(CompassftJob.java:33)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:497)
+        at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:84)
+        at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+        at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+        at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+        at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+        at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+        at java.lang.Thread.run(Thread.java:745)
+Caused by: java.io.EOFException: SSL peer shut down incorrectly
+        at sun.security.ssl.InputRecord.read(InputRecord.java:505)
+        at sun.security.ssl.SSLSocketImpl.readRecord(SSLSocketImpl.java:961)
+        ... 28 more
+
+```
+
+通过这个帖子的提示https://stackoverflow.com/questions/21245796/javax-net-ssl-sslhandshakeexception-remote-host-closed-connection-during-handsh
+
+#### 进行debug输出更详细的handshake握手内容
+
+```
+[root@sgtcs-mdw-v02 funding-rate-datasource]# java -jar -Djavax.net.debug=all funding-rate-datasource.jar
+2022-01-28 09:11:49,757 main INFO Log4j appears to be running in a Servlet environment, but there's no log4j-web module available. If you want better web container support, please add the log4j-web JAR to your web archive or server lib directory.
+2022-01-28 09:11:49,766 main INFO jar:file:/opt/funding-rate-datasource/funding-rate-datasource.jar!/BOOT-INF/classes!/log4j2.yml does not support dynamic reconfiguration
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.4.5)
+
+2022-01-28 09:11:49.871  INFO 23127GG [kground-preinit] o.h.v.i.u.Version : HV000001: Hibernate Validator 6.1.7.Final
+2022-01-28 09:11:49.918  INFO 23127GG [main] o.s.b.StartupInfoLogger : Starting FundingRateMain v0.0.1-SNAPSHOT using Java 1.8.0_40 on sgtcs-mdw-v02 with PID 23127 (/opt/funding-rate-datasource/funding-rate-datasource.jar started by root in /opt/funding-rate-datasource)
+2022-01-28 09:11:49.926  INFO 23127GG [main] o.s.b.SpringApplication : The following profiles are active: datasource
+2022-01-28 09:11:51.084  INFO 23127GG [main] o.s.b.w.e.t.TomcatWebServer : Tomcat initialized with port(s): 10999 (http)
+2022-01-28 09:11:51.109  INFO 23127GG [main] o.a.j.l.DirectJDKLog : Initializing ProtocolHandler ["http-nio-10999"]
+2022-01-28 09:11:51.110  INFO 23127GG [main] o.a.j.l.DirectJDKLog : Starting service [Tomcat]
+2022-01-28 09:11:51.110  INFO 23127GG [main] o.a.j.l.DirectJDKLog : Starting Servlet engine: [Apache Tomcat/9.0.45]
+2022-01-28 09:11:51.170  INFO 23127GG [main] o.a.j.l.DirectJDKLog : Initializing Spring embedded WebApplicationContext
+2022-01-28 09:11:51.171  INFO 23127GG [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1197 ms
+2022-01-28 09:11:51.658  INFO 23127GG [main] o.s.s.c.ExecutorConfigurationSupport : Initializing ExecutorService 'applicationTaskExecutor'
+2022-01-28 09:11:51.853  INFO 23127GG [main] o.s.s.c.ExecutorConfigurationSupport : Initializing ExecutorService 'taskScheduler'
+2022-01-28 09:11:51.884  INFO 23127GG [main] o.a.j.l.DirectJDKLog : Starting ProtocolHandler ["http-nio-10999"]
+2022-01-28 09:11:51.907  INFO 23127GG [main] o.s.b.w.e.t.TomcatWebServer : Tomcat started on port(s): 10999 (http) with context path '/middleware'
+2022-01-28 09:11:51.922  INFO 23127GG [scheduling-1] c.a.m.f.j.CompassftJob : CompassftJob crawlData, start time is 09:11:51
+2022-01-28 09:11:51.924  INFO 23127GG [main] o.s.b.StartupInfoLogger : Started FundingRateMain in 2.449 seconds (JVM running for 3.494)
+keyStore is :
+keyStore type is : jks
+keyStore provider is :
+init keystore
+init keymanager of type SunX509
+trustStore is: /apps/3rd-party/java-se-8u40-ri/jre/lib/security/cacerts
+trustStore type is : jks
+trustStore provider is :
+init truststore
+trigger seeding of SecureRandom
+done seeding SecureRandom
+Ignoring unavailable cipher suite: TLS_DHE_DSS_WITH_AES_256_GCM_SHA384
+Ignoring unavailable cipher suite: TLS_RSA_WITH_AES_256_CBC_SHA
+Ignoring unavailable cipher suite: TLS_DHE_RSA_WITH_AES_256_GCM_SHA384
+Ignoring unavailable cipher suite: TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA
+Ignoring unavailable cipher suite: TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+Ignoring unavailable cipher suite: TLS_RSA_WITH_AES_256_CBC_SHA256
+Ignoring unavailable cipher suite: TLS_DHE_DSS_WITH_AES_256_CBC_SHA
+Ignoring unavailable cipher suite: TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384
+Ignoring unavailable cipher suite: TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384
+Ignoring unavailable cipher suite: TLS_RSA_WITH_AES_256_GCM_SHA384
+Ignoring unavailable cipher suite: TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384
+Ignoring unavailable cipher suite: TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384
+Ignoring unavailable cipher suite: TLS_ECDH_RSA_WITH_AES_256_CBC_SHA
+Ignoring unavailable cipher suite: TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384
+Ignoring unavailable cipher suite: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384
+Ignoring unavailable cipher suite: TLS_DHE_RSA_WITH_AES_256_CBC_SHA256
+Ignoring unavailable cipher suite: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
+Ignoring unavailable cipher suite: TLS_DHE_DSS_WITH_AES_256_CBC_SHA256
+Ignoring unavailable cipher suite: TLS_DHE_RSA_WITH_AES_256_CBC_SHA
+Ignoring unavailable cipher suite: TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+Ignoring unavailable cipher suite: TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+Allow unsafe renegotiation: false
+Allow legacy hello messages: true
+Is initial handshake: true
+Is secure renegotiation: false
+scheduling-1, setSoTimeout(0) called
+scheduling-1, setSoTimeout(60000) called
+Ignoring unsupported cipher suite: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256 for TLSv1
+Ignoring unsupported cipher suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256 for TLSv1
+Ignoring unsupported cipher suite: TLS_RSA_WITH_AES_128_CBC_SHA256 for TLSv1
+Ignoring unsupported cipher suite: TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256 for TLSv1
+Ignoring unsupported cipher suite: TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256 for TLSv1
+Ignoring unsupported cipher suite: TLS_DHE_RSA_WITH_AES_128_CBC_SHA256 for TLSv1
+Ignoring unsupported cipher suite: TLS_DHE_DSS_WITH_AES_128_CBC_SHA256 for TLSv1
+Ignoring unsupported cipher suite: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256 for TLSv1.1
+Ignoring unsupported cipher suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256 for TLSv1.1
+Ignoring unsupported cipher suite: TLS_RSA_WITH_AES_128_CBC_SHA256 for TLSv1.1
+Ignoring unsupported cipher suite: TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256 for TLSv1.1
+Ignoring unsupported cipher suite: TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256 for TLSv1.1
+Ignoring unsupported cipher suite: TLS_DHE_RSA_WITH_AES_128_CBC_SHA256 for TLSv1.1
+Ignoring unsupported cipher suite: TLS_DHE_DSS_WITH_AES_128_CBC_SHA256 for TLSv1.1
+%% No cached client session
+*** ClientHello, TLSv1.2
+RandomCookie:  GMT: 1626554840 bytes = { 233, 246, 57, 123, 111, 81, 50, 152, 19, 185, 227, 133, 240, 86, 55, 133, 151, 4, 29, 231, 232, 156, 23, 144, 11, 15, 125, 61 }
+Session ID:  {}
+Cipher Suites: [TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_DSS_WITH_AES_128_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_ECDSA_WITH_RC4_128_SHA, TLS_ECDHE_RSA_WITH_RC4_128_SHA, SSL_RSA_WITH_RC4_128_SHA, TLS_ECDH_ECDSA_WITH_RC4_128_SHA, TLS_ECDH_RSA_WITH_RC4_128_SHA, SSL_RSA_WITH_RC4_128_MD5, TLS_EMPTY_RENEGOTIATION_INFO_SCSV]
+Compression Methods:  { 0 }
+Extension elliptic_curves, curve names: {secp256r1, sect163k1, sect163r2, secp192r1, secp224r1, sect233k1, sect233r1, sect283k1, sect283r1, secp384r1, sect409k1, sect409r1, secp521r1, sect571k1, sect571r1, secp160k1, secp160r1, secp160r2, sect163r1, secp192k1, sect193r1, sect193r2, secp224k1, sect239k1, secp256k1}
+Extension ec_point_formats, formats: [uncompressed]
+Extension signature_algorithms, signature_algorithms: SHA512withECDSA, SHA512withRSA, SHA384withECDSA, SHA384withRSA, SHA256withECDSA, SHA256withRSA, SHA224withECDSA, SHA224withRSA, SHA1withECDSA, SHA1withRSA, SHA1withDSA, MD5withRSA
+***
+[write] MD5 and SHA1 hashes:  len = 207
+0000: 01 00 00 CB 03 03 61 F3   42 D8 E9 F6 39 7B 6F 51  ......a.B...9.oQ
+0010: 32 98 13 B9 E3 85 F0 56   37 85 97 04 1D E7 E8 9C  2......V7.......
+0020: 17 90 0B 0F 7D 3D 00 00   46 C0 23 C0 27 00 3C C0  .....=..F.#.'.<.
+0030: 25 C0 29 00 67 00 40 C0   09 C0 13 00 2F C0 04 C0  %.).g.@...../...
+0040: 0E 00 33 00 32 C0 2B C0   2F 00 9C C0 2D C0 31 00  ..3.2.+./...-.1.
+0050: 9E 00 A2 C0 08 C0 12 00   0A C0 03 C0 0D 00 16 00  ................
+0060: 13 C0 07 C0 11 00 05 C0   02 C0 0C 00 04 00 FF 01  ................
+0070: 00 00 5C 00 0A 00 34 00   32 00 17 00 01 00 03 00  ..\...4.2.......
+0080: 13 00 15 00 06 00 07 00   09 00 0A 00 18 00 0B 00  ................
+0090: 0C 00 19 00 0D 00 0E 00   0F 00 10 00 11 00 02 00  ................
+00A0: 12 00 04 00 05 00 14 00   08 00 16 00 0B 00 02 01  ................
+00B0: 00 00 0D 00 1A 00 18 06   03 06 01 05 03 05 01 04  ................
+00C0: 03 04 01 03 03 03 01 02   03 02 01 02 02 01 01     ...............
+scheduling-1, WRITE: TLSv1.2 Handshake, length = 207
+[Raw write]: length = 212
+0000: 16 03 03 00 CF 01 00 00   CB 03 03 61 F3 42 D8 E9  ...........a.B..
+0010: F6 39 7B 6F 51 32 98 13   B9 E3 85 F0 56 37 85 97  .9.oQ2......V7..
+0020: 04 1D E7 E8 9C 17 90 0B   0F 7D 3D 00 00 46 C0 23  ..........=..F.#
+0030: C0 27 00 3C C0 25 C0 29   00 67 00 40 C0 09 C0 13  .'.<.%.).g.@....
+0040: 00 2F C0 04 C0 0E 00 33   00 32 C0 2B C0 2F 00 9C  ./.....3.2.+./..
+0050: C0 2D C0 31 00 9E 00 A2   C0 08 C0 12 00 0A C0 03  .-.1............
+0060: C0 0D 00 16 00 13 C0 07   C0 11 00 05 C0 02 C0 0C  ................
+0070: 00 04 00 FF 01 00 00 5C   00 0A 00 34 00 32 00 17  .......\...4.2..
+0080: 00 01 00 03 00 13 00 15   00 06 00 07 00 09 00 0A  ................
+0090: 00 18 00 0B 00 0C 00 19   00 0D 00 0E 00 0F 00 10  ................
+00A0: 00 11 00 02 00 12 00 04   00 05 00 14 00 08 00 16  ................
+00B0: 00 0B 00 02 01 00 00 0D   00 1A 00 18 06 03 06 01  ................
+00C0: 05 03 05 01 04 03 04 01   03 03 03 01 02 03 02 01  ................
+00D0: 02 02 01 01                                        ....
+scheduling-1, received EOFException: error
+scheduling-1, handling exception: javax.net.ssl.SSLHandshakeException: Remote host closed connection during handshake
+scheduling-1, SEND TLSv1.2 ALERT:  fatal, description = handshake_failure
+scheduling-1, WRITE: TLSv1.2 Alert, length = 2
+[Raw write]: length = 7
+0000: 15 03 03 00 02 02 28                               ......(
+scheduling-1, called closeSocket()
+scheduling-1, called close()
+scheduling-1, called closeInternal(true)
+scheduling-1, called close()
+scheduling-1, called closeInternal(true)
+scheduling-1, called close()
+scheduling-1, called closeInternal(true)
+2022-01-28 09:11:52.563 ERROR 23127GG [scheduling-1] c.a.m.f.u.HttpClientUtil : Get Exception Remote host closed connection during handshake
+
+javax.net.ssl.SSLHandshakeException: Remote host closed connection during handshake
+        at sun.security.ssl.SSLSocketImpl.readRecord(SSLSocketImpl.java:980)
+        at sun.security.ssl.SSLSocketImpl.performInitialHandshake(SSLSocketImpl.java:1363)
+        at sun.security.ssl.SSLSocketImpl.writeRecord(SSLSocketImpl.java:735)
+        at sun.security.ssl.AppOutputStream.write(AppOutputStream.java:123)
+        at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:82)
+        at java.io.BufferedOutputStream.flush(BufferedOutputStream.java:140)
+        at org.apache.commons.httpclient.HttpConnection.flushRequestOutputStream(HttpConnection.java:828)
+        at org.apache.commons.httpclient.HttpMethodBase.writeRequest(HttpMethodBase.java:2116)
+        at org.apache.commons.httpclient.HttpMethodBase.execute(HttpMethodBase.java:1096)
+        at org.apache.commons.httpclient.HttpMethodDirector.executeWithRetry(HttpMethodDirector.java:398)
+        at org.apache.commons.httpclient.HttpMethodDirector.executeMethod(HttpMethodDirector.java:171)
+        at org.apache.commons.httpclient.HttpClient.executeMethod(HttpClient.java:397)
+        at org.apache.commons.httpclient.HttpClient.executeMethod(HttpClient.java:323)
+        at com.lyhistory.middleware.fundingrate.util.HttpClientUtil.sendGet(HttpClientUtil.java:64)
+        at com.lyhistory.middleware.fundingrate.service.impl.CompassftServiceImpl.sendRequest(CompassftServiceImpl.java:25)
+        at com.lyhistory.middleware.fundingrate.job.CompassftJob.crawlData(CompassftJob.java:33)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:497)
+        at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:84)
+        at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+        at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+        at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+        at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+        at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+        at java.lang.Thread.run(Thread.java:745)
+Caused by: java.io.EOFException: SSL peer shut down incorrectly
+        at sun.security.ssl.InputRecord.read(InputRecord.java:505)
+        at sun.security.ssl.SSLSocketImpl.readRecord(SSLSocketImpl.java:961)
+        ... 28 more
+
+2022-01-28 09:11:52.565  WARN 23127GG [scheduling-1] c.a.m.f.s.i.CompassftServiceImpl : Failed http request to https://api.compass-ft.com/v1/indexes/CCRTBTC/history?access_token=
+2022-01-28 09:11:52.565  INFO 23127GG [scheduling-1] c.a.m.f.j.CompassftJob : CompassftJob crawlData, end time is 09:11:52
+^C2022-01-28 09:11:57.032  INFO 23127GG [extShutdownHook] o.s.s.c.ExecutorConfigurationSupport : Shutting down ExecutorService 'taskScheduler'
+2022-01-28 09:11:57.033  INFO 23127GG [extShutdownHook] o.s.s.c.ExecutorConfigurationSupport : Shutting down ExecutorService 'applicationTaskExecutor'
+2022-01-28 09:11:57.034  INFO 23127GG [extShutdownHook] c.a.d.p.DruidDataSource : {dataSource-0} closing ...
+
+```
+
+
+
+#### 对比下dev环境成功的输出
+
+```
+[root@os-node3 funding-rate-datasource]# java -jar -Djavax.net.debug=all funding-rate-datasource.jar
+2022-01-28 10:45:45,321 main INFO Log4j appears to be running in a Servlet environment, but there's no log4j-web module available. If you want better web container support, please add the log4j-web JAR to your web archive or server lib directory.
+2022-01-28 10:45:45,337 main INFO jar:file:/opt/funding-rate-datasource/funding-rate-datasource.jar!/BOOT-INF/classes!/log4j2.yml does not support dynamic reconfiguration
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.4.5)
+
+2022-01-28 10:45:45.398  INFO 7939GG [kground-preinit] o.h.v.i.u.Version : HV000001: Hibernate Validator 6.1.7.Final
+2022-01-28 10:45:45.449  INFO 7939GG [main] o.s.b.StartupInfoLogger : Starting FundingRateMain v0.0.1-SNAPSHOT using Java 1.8.0_191 on os-node3 with PID 7939 (/opt/funding-rate-datasource/funding-rate-datasource.jar started by root in /opt/funding-rate-datasource)
+2022-01-28 10:45:45.453  INFO 7939GG [main] o.s.b.SpringApplication : The following profiles are active: datasource
+2022-01-28 10:45:46.738  INFO 7939GG [main] o.s.b.w.e.t.TomcatWebServer : Tomcat initialized with port(s): 10999 (http)
+2022-01-28 10:45:46.759  INFO 7939GG [main] o.a.j.l.DirectJDKLog : Initializing ProtocolHandler ["http-nio-10999"]
+2022-01-28 10:45:46.759  INFO 7939GG [main] o.a.j.l.DirectJDKLog : Starting service [Tomcat]
+2022-01-28 10:45:46.760  INFO 7939GG [main] o.a.j.l.DirectJDKLog : Starting Servlet engine: [Apache Tomcat/9.0.45]
+2022-01-28 10:45:46.814  INFO 7939GG [main] o.a.j.l.DirectJDKLog : Initializing Spring embedded WebApplicationContext
+2022-01-28 10:45:46.815  INFO 7939GG [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1311 ms
+2022-01-28 10:45:47.171  INFO 7939GG [main] o.s.s.c.ExecutorConfigurationSupport : Initializing ExecutorService 'applicationTaskExecutor'
+2022-01-28 10:45:47.355  INFO 7939GG [main] o.s.s.c.ExecutorConfigurationSupport : Initializing ExecutorService 'taskScheduler'
+2022-01-28 10:45:47.383  INFO 7939GG [main] o.a.j.l.DirectJDKLog : Starting ProtocolHandler ["http-nio-10999"]
+2022-01-28 10:45:47.402  INFO 7939GG [main] o.s.b.w.e.t.TomcatWebServer : Tomcat started on port(s): 10999 (http) with context path '/middleware'
+2022-01-28 10:45:47.414  INFO 7939GG [scheduling-1] c.a.m.f.j.CompassftJob : CompassftJob crawlData, start time is 10:45:47
+2022-01-28 10:45:47.417  INFO 7939GG [main] o.s.b.StartupInfoLogger : Started FundingRateMain in 2.496 seconds (JVM running for 8.733)
+Ignoring disabled cipher suite: SSL_RSA_WITH_DES_CBC_SHA
+Ignoring disabled cipher suite: SSL_DHE_DSS_EXPORT_WITH_DES40_CBC_SHA
+Ignoring disabled cipher suite: TLS_KRB5_WITH_DES_CBC_MD5
+Ignoring disabled cipher suite: SSL_DH_anon_EXPORT_WITH_RC4_40_MD5
+Ignoring disabled cipher suite: SSL_DH_anon_WITH_DES_CBC_SHA
+Ignoring disabled cipher suite: TLS_KRB5_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: TLS_KRB5_WITH_DES_CBC_SHA
+Ignoring disabled cipher suite: TLS_KRB5_EXPORT_WITH_DES_CBC_40_MD5
+Ignoring disabled cipher suite: TLS_ECDHE_ECDSA_WITH_RC4_128_SHA
+Ignoring disabled cipher suite: SSL_DHE_RSA_WITH_DES_CBC_SHA
+Ignoring disabled cipher suite: TLS_KRB5_WITH_3DES_EDE_CBC_MD5
+Ignoring disabled cipher suite: SSL_DH_anon_WITH_RC4_128_MD5
+Ignoring disabled cipher suite: SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: SSL_DH_anon_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: SSL_RSA_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: SSL_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA
+Ignoring disabled cipher suite: TLS_ECDH_anon_WITH_RC4_128_SHA
+Ignoring disabled cipher suite: SSL_DHE_DSS_WITH_DES_CBC_SHA
+Ignoring disabled cipher suite: TLS_KRB5_EXPORT_WITH_RC4_40_SHA
+Ignoring disabled cipher suite: SSL_RSA_EXPORT_WITH_DES40_CBC_SHA
+Ignoring disabled cipher suite: TLS_KRB5_WITH_RC4_128_SHA
+Ignoring disabled cipher suite: SSL_RSA_EXPORT_WITH_RC4_40_MD5
+Ignoring disabled cipher suite: TLS_KRB5_EXPORT_WITH_DES_CBC_40_SHA
+Ignoring disabled cipher suite: TLS_KRB5_EXPORT_WITH_RC4_40_MD5
+Ignoring disabled cipher suite: TLS_ECDH_ECDSA_WITH_RC4_128_SHA
+Ignoring disabled cipher suite: TLS_KRB5_WITH_RC4_128_MD5
+Ignoring disabled cipher suite: TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: SSL_RSA_WITH_RC4_128_SHA
+Ignoring disabled cipher suite: TLS_ECDH_anon_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: TLS_ECDH_RSA_WITH_RC4_128_SHA
+Ignoring disabled cipher suite: SSL_DH_anon_EXPORT_WITH_DES40_CBC_SHA
+Ignoring disabled cipher suite: SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: TLS_ECDHE_RSA_WITH_RC4_128_SHA
+Ignoring disabled cipher suite: SSL_RSA_WITH_RC4_128_MD5
+Ignoring disabled cipher suite: TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: SSL_RSA_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: SSL_RSA_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA
+Ignoring disabled cipher suite: SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA
+trustStore is: /etc/pki/java/cacerts
+trustStore type is : jks
+trustStore provider is : 
+init truststore
+adding as trusted cert:
+  Subject: CN=Hongkong Post Root CA 1, O=Hongkong Post, C=HK
+  Issuer:  CN=Hongkong Post Root CA 1, O=Hongkong Post, C=HK
+  Algorithm: RSA; Serial number: 0x3e8
+  Valid from Thu May 15 13:13:14 SGT 2003 until Mon May 15 12:52:29 SGT 2023
+
+adding as trusted cert:
+  Subject: CN=SecureTrust CA, O=SecureTrust Corporation, C=US
+  Issuer:  CN=SecureTrust CA, O=SecureTrust Corporation, C=US
+  Algorithm: RSA; Serial number: 0xcf08e5c0816a5ad427ff0eb271859d0
+  Valid from Wed Nov 08 03:31:18 SGT 2006 until Tue Jan 01 03:40:55 SGT 2030
+
+adding as trusted cert:
+  Subject: CN=Entrust Root Certification Authority - EC1, OU="(c) 2012 Entrust, Inc. - for authorized use only", OU=See www.entrust.net/legal-terms, O="Entrust, Inc.", C=US
+  Issuer:  CN=Entrust Root Certification Authority - EC1, OU="(c) 2012 Entrust, Inc. - for authorized use only", OU=See www.entrust.net/legal-terms, O="Entrust, Inc.", C=US
+  Algorithm: EC; Serial number: 0xa68b79290000000050d091f9
+  Valid from Tue Dec 18 23:25:36 SGT 2012 until Fri Dec 18 23:55:36 SGT 2037
+
+adding as trusted cert:
+  Subject: CN=DigiCert Global Root CA, OU=www.digicert.com, O=DigiCert Inc, C=US
+  Issuer:  CN=DigiCert Global Root CA, OU=www.digicert.com, O=DigiCert Inc, C=US
+  Algorithm: RSA; Serial number: 0x83be056904246b1a1756ac95991c74a
+  Valid from Fri Nov 10 08:00:00 SGT 2006 until Mon Nov 10 08:00:00 SGT 2031
+
+adding as trusted cert:
+  Subject: OU=Security Communication RootCA1, O=SECOM Trust.net, C=JP
+  Issuer:  OU=Security Communication RootCA1, O=SECOM Trust.net, C=JP
+  Algorithm: RSA; Serial number: 0x0
+  Valid from Tue Sep 30 12:20:49 SGT 2003 until Sat Sep 30 12:20:49 SGT 2023
+
+adding as trusted cert:
+  Subject: CN=QuoVadis Root CA 2 G3, O=QuoVadis Limited, C=BM
+  Issuer:  CN=QuoVadis Root CA 2 G3, O=QuoVadis Limited, C=BM
+  Algorithm: RSA; Serial number: 0x445734245b81899b35f2ceb82b3b5ba726f07528
+  Valid from Fri Jan 13 02:59:32 SGT 2012 until Mon Jan 13 02:59:32 SGT 2042
+
+adding as trusted cert:
+  Subject: CN=Hellenic Academic and Research Institutions RootCA 2015, O=Hellenic Academic and Research Institutions Cert. Authority, L=Athens, C=GR
+  Issuer:  CN=Hellenic Academic and Research Institutions RootCA 2015, O=Hellenic Academic and Research Institutions Cert. Authority, L=Athens, C=GR
+  Algorithm: RSA; Serial number: 0x0
+  Valid from Tue Jul 07 18:11:21 SGT 2015 until Sat Jun 30 18:11:21 SGT 2040
+
+adding as trusted cert:
+  Subject: CN=DigiCert Trusted Root G4, OU=www.digicert.com, O=DigiCert Inc, C=US
+  Issuer:  CN=DigiCert Trusted Root G4, OU=www.digicert.com, O=DigiCert Inc, C=US
+  Algorithm: RSA; Serial number: 0x59b1b579e8e2132e23907bda777755c
+  Valid from Thu Aug 01 20:00:00 SGT 2013 until Fri Jan 15 20:00:00 SGT 2038
+
+adding as trusted cert:
+  Subject: CN=Hellenic Academic and Research Institutions ECC RootCA 2015, O=Hellenic Academic and Research Institutions Cert. Authority, L=Athens, C=GR
+  Issuer:  CN=Hellenic Academic and Research Institutions ECC RootCA 2015, O=Hellenic Academic and Research Institutions Cert. Authority, L=Athens, C=GR
+  Algorithm: EC; Serial number: 0x0
+  Valid from Tue Jul 07 18:37:12 SGT 2015 until Sat Jun 30 18:37:12 SGT 2040
+
+adding as trusted cert:
+  Subject: CN=GeoTrust Primary Certification Authority, O=GeoTrust Inc., C=US
+  Issuer:  CN=GeoTrust Primary Certification Authority, O=GeoTrust Inc., C=US
+  Algorithm: RSA; Serial number: 0x18acb56afd69b6153a636cafdafac4a1
+  Valid from Mon Nov 27 08:00:00 SGT 2006 until Thu Jul 17 07:59:59 SGT 2036
+
+adding as trusted cert:
+  Subject: CN=OpenTrust Root CA G1, O=OpenTrust, C=FR
+  Issuer:  CN=OpenTrust Root CA G1, O=OpenTrust, C=FR
+  Algorithm: RSA; Serial number: 0x1120b39055397d7f366d64c2a79f6b638e67
+  Valid from Mon May 26 16:45:50 SGT 2014 until Fri Jan 15 08:00:00 SGT 2038
+
+adding as trusted cert:
+  Subject: OU=Security Communication RootCA2, O="SECOM Trust Systems CO.,LTD.", C=JP
+  Issuer:  OU=Security Communication RootCA2, O="SECOM Trust Systems CO.,LTD.", C=JP
+  Algorithm: RSA; Serial number: 0x0
+  Valid from Fri May 29 13:00:39 SGT 2009 until Tue May 29 13:00:39 SGT 2029
+
+adding as trusted cert:
+  Subject: OU=ePKI Root Certification Authority, O="Chunghwa Telecom Co., Ltd.", C=TW
+  Issuer:  OU=ePKI Root Certification Authority, O="Chunghwa Telecom Co., Ltd.", C=TW
+  Algorithm: RSA; Serial number: 0x15c8bd65475cafb897005ee406d2bc9d
+  Valid from Mon Dec 20 10:31:27 SGT 2004 until Wed Dec 20 10:31:27 SGT 2034
+
+adding as trusted cert:
+  Subject: CN=AffirmTrust Commercial, O=AffirmTrust, C=US
+  Issuer:  CN=AffirmTrust Commercial, O=AffirmTrust, C=US
+  Algorithm: RSA; Serial number: 0x7777062726a9b17c
+  Valid from Fri Jan 29 22:06:06 SGT 2010 until Tue Dec 31 22:06:06 SGT 2030
+
+adding as trusted cert:
+  Subject: CN=Certum Trusted Network CA, OU=Certum Certification Authority, O=Unizeto Technologies S.A., C=PL
+  Issuer:  CN=Certum Trusted Network CA, OU=Certum Certification Authority, O=Unizeto Technologies S.A., C=PL
+  Algorithm: RSA; Serial number: 0x444c0
+  Valid from Wed Oct 22 20:07:37 SGT 2008 until Mon Dec 31 20:07:37 SGT 2029
+
+adding as trusted cert:
+  Subject: CN=XRamp Global Certification Authority, O=XRamp Security Services Inc, OU=www.xrampsecurity.com, C=US
+  Issuer:  CN=XRamp Global Certification Authority, O=XRamp Security Services Inc, OU=www.xrampsecurity.com, C=US
+  Algorithm: RSA; Serial number: 0x50946cec18ead59c4dd597ef758fa0ad
+  Valid from Tue Nov 02 01:14:04 SGT 2004 until Mon Jan 01 13:37:19 SGT 2035
+
+adding as trusted cert:
+  Subject: CN=EC-ACC, OU=Jerarquia Entitats de Certificacio Catalanes, OU=Vegeu https://www.catcert.net/verarrel (c)03, OU=Serveis Publics de Certificacio, O=Agencia Catalana de Certificacio (NIF Q-0801176-I), C=ES
+  Issuer:  CN=EC-ACC, OU=Jerarquia Entitats de Certificacio Catalanes, OU=Vegeu https://www.catcert.net/verarrel (c)03, OU=Serveis Publics de Certificacio, O=Agencia Catalana de Certificacio (NIF Q-0801176-I), C=ES
+  Algorithm: RSA; Serial number: 0x-11d4c2142bde21eb579d53fb0c223bff
+  Valid from Wed Jan 08 07:00:00 SGT 2003 until Wed Jan 08 06:59:59 SGT 2031
+
+adding as trusted cert:
+  Subject: CN=Sonera Class2 CA, O=Sonera, C=FI
+  Issuer:  CN=Sonera Class2 CA, O=Sonera, C=FI
+  Algorithm: RSA; Serial number: 0x1d
+  Valid from Fri Apr 06 15:29:40 SGT 2001 until Tue Apr 06 15:29:40 SGT 2021
+
+adding as trusted cert:
+  Subject: CN=GeoTrust Primary Certification Authority - G2, OU=(c) 2007 GeoTrust Inc. - For authorized use only, O=GeoTrust Inc., C=US
+  Issuer:  CN=GeoTrust Primary Certification Authority - G2, OU=(c) 2007 GeoTrust Inc. - For authorized use only, O=GeoTrust Inc., C=US
+  Algorithm: EC; Serial number: 0x3cb2f4480a00e2feeb243b5e603ec36b
+  Valid from Mon Nov 05 08:00:00 SGT 2007 until Tue Jan 19 07:59:59 SGT 2038
+
+adding as trusted cert:
+  Subject: CN=Certinomis - Root CA, OU=0002 433998903, O=Certinomis, C=FR
+  Issuer:  CN=Certinomis - Root CA, OU=0002 433998903, O=Certinomis, C=FR
+  Algorithm: RSA; Serial number: 0x1
+  Valid from Mon Oct 21 17:17:18 SGT 2013 until Fri Oct 21 17:17:18 SGT 2033
+
+adding as trusted cert:
+  Subject: CN=COMODO ECC Certification Authority, O=COMODO CA Limited, L=Salford, ST=Greater Manchester, C=GB
+  Issuer:  CN=COMODO ECC Certification Authority, O=COMODO CA Limited, L=Salford, ST=Greater Manchester, C=GB
+  Algorithm: EC; Serial number: 0x1f47afaa62007050544c019e9b63992a
+  Valid from Thu Mar 06 08:00:00 SGT 2008 until Tue Jan 19 07:59:59 SGT 2038
+
+adding as trusted cert:
+  Subject: CN=ISRG Root X1, O=Internet Security Research Group, C=US
+  Issuer:  CN=ISRG Root X1, O=Internet Security Research Group, C=US
+  Algorithm: RSA; Serial number: 0x8210cfb0d240e3594463e0bb63828b00
+  Valid from Thu Jun 04 19:04:38 SGT 2015 until Mon Jun 04 19:04:38 SGT 2035
+
+adding as trusted cert:
+  Subject: CN=DigiCert High Assurance EV Root CA, OU=www.digicert.com, O=DigiCert Inc, C=US
+  Issuer:  CN=DigiCert High Assurance EV Root CA, OU=www.digicert.com, O=DigiCert Inc, C=US
+  Algorithm: RSA; Serial number: 0x2ac5c266a0b409b8f0b79f2ae462577
+  Valid from Fri Nov 10 08:00:00 SGT 2006 until Mon Nov 10 08:00:00 SGT 2031
+
+adding as trusted cert:
+  Subject: CN=TrustCor RootCert CA-1, OU=TrustCor Certificate Authority, O=TrustCor Systems S. de R.L., L=Panama City, ST=Panama, C=PA
+  Issuer:  CN=TrustCor RootCert CA-1, OU=TrustCor Certificate Authority, O=TrustCor Systems S. de R.L., L=Panama City, ST=Panama, C=PA
+  Algorithm: RSA; Serial number: 0xda9bec71f303b019
+  Valid from Thu Feb 04 20:32:16 SGT 2016 until Tue Jan 01 01:23:16 SGT 2030
+
+adding as trusted cert:
+  Subject: CN=GeoTrust Universal CA, O=GeoTrust Inc., C=US
+  Issuer:  CN=GeoTrust Universal CA, O=GeoTrust Inc., C=US
+  Algorithm: RSA; Serial number: 0x1
+  Valid from Thu Mar 04 13:00:00 SGT 2004 until Sun Mar 04 13:00:00 SGT 2029
+
+adding as trusted cert:
+  Subject: CN=GlobalSign, O=GlobalSign, OU=GlobalSign Root CA - R3
+  Issuer:  CN=GlobalSign, O=GlobalSign, OU=GlobalSign Root CA - R3
+  Algorithm: RSA; Serial number: 0x4000000000121585308a2
+  Valid from Wed Mar 18 18:00:00 SGT 2009 until Sun Mar 18 18:00:00 SGT 2029
+
+adding as trusted cert:
+  Subject: CN=GeoTrust Universal CA 2, O=GeoTrust Inc., C=US
+  Issuer:  CN=GeoTrust Universal CA 2, O=GeoTrust Inc., C=US
+  Algorithm: RSA; Serial number: 0x1
+  Valid from Thu Mar 04 13:00:00 SGT 2004 until Sun Mar 04 13:00:00 SGT 2029
+
+adding as trusted cert:
+  Subject: CN=Baltimore CyberTrust Root, OU=CyberTrust, O=Baltimore, C=IE
+  Issuer:  CN=Baltimore CyberTrust Root, OU=CyberTrust, O=Baltimore, C=IE
+  Algorithm: RSA; Serial number: 0x20000b9
+  Valid from Sat May 13 02:46:00 SGT 2000 until Tue May 13 07:59:00 SGT 2025
+
+adding as trusted cert:
+  Subject: CN=AAA Certificate Services, O=Comodo CA Limited, L=Salford, ST=Greater Manchester, C=GB
+  Issuer:  CN=AAA Certificate Services, O=Comodo CA Limited, L=Salford, ST=Greater Manchester, C=GB
+  Algorithm: RSA; Serial number: 0x1
+  Valid from Thu Jan 01 08:00:00 SGT 2004 until Mon Jan 01 07:59:59 SGT 2029
+
+adding as trusted cert:
+  Subject: OU=Starfield Class 2 Certification Authority, O="Starfield Technologies, Inc.", C=US
+  Issuer:  OU=Starfield Class 2 Certification Authority, O="Starfield Technologies, Inc.", C=US
+  Algorithm: RSA; Serial number: 0x0
+  Valid from Wed Jun 30 01:39:16 SGT 2004 until Fri Jun 30 01:39:16 SGT 2034
+
+adding as trusted cert:
+  Subject: CN=OpenTrust Root CA G2, O=OpenTrust, C=FR
+  Issuer:  CN=OpenTrust Root CA G2, O=OpenTrust, C=FR
+  Algorithm: RSA; Serial number: 0x1120a1691bbfbdb9bd52968f23e848bf2611
+  Valid from Mon May 26 08:00:00 SGT 2014 until Fri Jan 15 08:00:00 SGT 2038
+
+adding as trusted cert:
+  Subject: CN=VeriSign Class 3 Public Primary Certification Authority - G3, OU="(c) 1999 VeriSign, Inc. - For authorized use only", OU=VeriSign Trust Network, O="VeriSign, Inc.", C=US
+  Issuer:  CN=VeriSign Class 3 Public Primary Certification Authority - G3, OU="(c) 1999 VeriSign, Inc. - For authorized use only", OU=VeriSign Trust Network, O="VeriSign, Inc.", C=US
+  Algorithm: RSA; Serial number: 0x9b7e0649a33e62b9d5ee90487129ef57
+  Valid from Fri Oct 01 08:00:00 SGT 1999 until Thu Jul 17 07:59:59 SGT 2036
+
+adding as trusted cert:
+  Subject: OU=AC RAIZ FNMT-RCM, O=FNMT-RCM, C=ES
+  Issuer:  OU=AC RAIZ FNMT-RCM, O=FNMT-RCM, C=ES
+  Algorithm: RSA; Serial number: 0x5d938d306736c8061d1ac754846907
+  Valid from Wed Oct 29 23:59:56 SGT 2008 until Tue Jan 01 08:00:00 SGT 2030
+
+adding as trusted cert:
+  Subject: CN=GlobalSign Root CA, OU=Root CA, O=GlobalSign nv-sa, C=BE
+  Issuer:  CN=GlobalSign Root CA, OU=Root CA, O=GlobalSign nv-sa, C=BE
+  Algorithm: RSA; Serial number: 0x40000000001154b5ac394
+  Valid from Tue Sep 01 20:00:00 SGT 1998 until Fri Jan 28 20:00:00 SGT 2028
+
+adding as trusted cert:
+  Subject: CN=OpenTrust Root CA G3, O=OpenTrust, C=FR
+  Issuer:  CN=OpenTrust Root CA G3, O=OpenTrust, C=FR
+  Algorithm: EC; Serial number: 0x1120e6f84cfc24b0be0540acda831b34603f
+  Valid from Mon May 26 08:00:00 SGT 2014 until Fri Jan 15 08:00:00 SGT 2038
+
+adding as trusted cert:
+  Subject: CN=TÜRKTRUST Elektronik Sertifika Hizmet Sağlayıcısı H5, O=TÜRKTRUST Bilgi İletişim ve Bilişim Güvenliği Hizmetleri A.Ş., L=Ankara, C=TR
+  Issuer:  CN=TÜRKTRUST Elektronik Sertifika Hizmet Sağlayıcısı H5, O=TÜRKTRUST Bilgi İletişim ve Bilişim Güvenliği Hizmetleri A.Ş., L=Ankara, C=TR
+  Algorithm: RSA; Serial number: 0x8e17fe242081
+  Valid from Tue Apr 30 16:07:01 SGT 2013 until Fri Apr 28 16:07:01 SGT 2023
+
+adding as trusted cert:
+  Subject: CN=AffirmTrust Networking, O=AffirmTrust, C=US
+  Issuer:  CN=AffirmTrust Networking, O=AffirmTrust, C=US
+  Algorithm: RSA; Serial number: 0x7c4f04391cd4992d
+  Valid from Fri Jan 29 22:08:24 SGT 2010 until Tue Dec 31 22:08:24 SGT 2030
+
+adding as trusted cert:
+  Subject: CN=TWCA Global Root CA, OU=Root CA, O=TAIWAN-CA, C=TW
+  Issuer:  CN=TWCA Global Root CA, OU=Root CA, O=TAIWAN-CA, C=TW
+  Algorithm: RSA; Serial number: 0xcbe
+  Valid from Wed Jun 27 14:28:33 SGT 2012 until Tue Dec 31 23:59:59 SGT 2030
+
+adding as trusted cert:
+  Subject: CN=AffirmTrust Premium, O=AffirmTrust, C=US
+  Issuer:  CN=AffirmTrust Premium, O=AffirmTrust, C=US
+  Algorithm: RSA; Serial number: 0x6d8c1446b1a60aee
+  Valid from Fri Jan 29 22:10:36 SGT 2010 until Mon Dec 31 22:10:36 SGT 2040
+
+adding as trusted cert:
+  Subject: O=Government Root Certification Authority, C=TW
+  Issuer:  O=Government Root Certification Authority, C=TW
+  Algorithm: RSA; Serial number: 0x1f9d595ad72fc20644a5800869e35ef6
+  Valid from Thu Dec 05 21:23:33 SGT 2002 until Sun Dec 05 21:23:33 SGT 2032
+
+adding as trusted cert:
+  Subject: CN=GeoTrust Primary Certification Authority - G3, OU=(c) 2008 GeoTrust Inc. - For authorized use only, O=GeoTrust Inc., C=US
+  Issuer:  CN=GeoTrust Primary Certification Authority - G3, OU=(c) 2008 GeoTrust Inc. - For authorized use only, O=GeoTrust Inc., C=US
+  Algorithm: RSA; Serial number: 0x15ac6e9419b2794b41f627a9c3180f1f
+  Valid from Wed Apr 02 08:00:00 SGT 2008 until Wed Dec 02 07:59:59 SGT 2037
+
+adding as trusted cert:
+  Subject: CN=TWCA Root Certification Authority, OU=Root CA, O=TAIWAN-CA, C=TW
+  Issuer:  CN=TWCA Root Certification Authority, OU=Root CA, O=TAIWAN-CA, C=TW
+  Algorithm: RSA; Serial number: 0x1
+  Valid from Thu Aug 28 15:24:33 SGT 2008 until Tue Dec 31 23:59:59 SGT 2030
+
+adding as trusted cert:
+  Subject: CN=LuxTrust Global Root 2, O=LuxTrust S.A., C=LU
+  Issuer:  CN=LuxTrust Global Root 2, O=LuxTrust S.A., C=LU
+  Algorithm: RSA; Serial number: 0xa7ea6df4b449eda6a24859ee6b815d3167fbbb1
+  Valid from Thu Mar 05 21:21:57 SGT 2015 until Mon Mar 05 21:21:57 SGT 2035
+
+adding as trusted cert:
+  Subject: CN=Chambers of Commerce Root - 2008, O=AC Camerfirma S.A., SERIALNUMBER=A82743287, L=Madrid (see current address at www.camerfirma.com/address), C=EU
+  Issuer:  CN=Chambers of Commerce Root - 2008, O=AC Camerfirma S.A., SERIALNUMBER=A82743287, L=Madrid (see current address at www.camerfirma.com/address), C=EU
+  Algorithm: RSA; Serial number: 0xa3da427ea4b1aeda
+  Valid from Fri Aug 01 20:29:50 SGT 2008 until Sat Jul 31 20:29:50 SGT 2038
+
+adding as trusted cert:
+  Subject: C=DE, O=Atos, CN=Atos TrustedRoot 2011
+  Issuer:  C=DE, O=Atos, CN=Atos TrustedRoot 2011
+  Algorithm: RSA; Serial number: 0x5c33cb622c5fb332
+  Valid from Thu Jul 07 22:58:30 SGT 2011 until Wed Jan 01 07:59:59 SGT 2031
+
+adding as trusted cert:
+  Subject: CN=SSL.com EV Root Certification Authority RSA R2, O=SSL Corporation, L=Houston, ST=Texas, C=US
+  Issuer:  CN=SSL.com EV Root Certification Authority RSA R2, O=SSL Corporation, L=Houston, ST=Texas, C=US
+  Algorithm: RSA; Serial number: 0x56b629cd34bc78f6
+  Valid from Thu Jun 01 02:14:37 SGT 2017 until Sat May 31 02:14:37 SGT 2042
+
+adding as trusted cert:
+  Subject: CN=SwissSign Silver CA - G2, O=SwissSign AG, C=CH
+  Issuer:  CN=SwissSign Silver CA - G2, O=SwissSign AG, C=CH
+  Algorithm: RSA; Serial number: 0x4f1bd42f54bb2f4b
+  Valid from Wed Oct 25 16:32:46 SGT 2006 until Sat Oct 25 16:32:46 SGT 2036
+
+adding as trusted cert:
+  Subject: CN=SecureSign RootCA11, O="Japan Certification Services, Inc.", C=JP
+  Issuer:  CN=SecureSign RootCA11, O="Japan Certification Services, Inc.", C=JP
+  Algorithm: RSA; Serial number: 0x1
+  Valid from Wed Apr 08 12:56:47 SGT 2009 until Sun Apr 08 12:56:47 SGT 2029
+
+adding as trusted cert:
+  Subject: CN=SSL.com Root Certification Authority ECC, O=SSL Corporation, L=Houston, ST=Texas, C=US
+  Issuer:  CN=SSL.com Root Certification Authority ECC, O=SSL Corporation, L=Houston, ST=Texas, C=US
+  Algorithm: EC; Serial number: 0x75e6dfcbc1685ba8
+  Valid from Sat Feb 13 02:14:03 SGT 2016 until Wed Feb 13 02:14:03 SGT 2041
+
+adding as trusted cert:
+  Subject: CN=Entrust Root Certification Authority - G2, OU="(c) 2009 Entrust, Inc. - for authorized use only", OU=See www.entrust.net/legal-terms, O="Entrust, Inc.", C=US
+  Issuer:  CN=Entrust Root Certification Authority - G2, OU="(c) 2009 Entrust, Inc. - for authorized use only", OU=See www.entrust.net/legal-terms, O="Entrust, Inc.", C=US
+  Algorithm: RSA; Serial number: 0x4a538c28
+  Valid from Wed Jul 08 01:25:54 SGT 2009 until Sun Dec 08 01:55:54 SGT 2030
+
+adding as trusted cert:
+  Subject: CN=DigiCert Assured ID Root CA, OU=www.digicert.com, O=DigiCert Inc, C=US
+  Issuer:  CN=DigiCert Assured ID Root CA, OU=www.digicert.com, O=DigiCert Inc, C=US
+  Algorithm: RSA; Serial number: 0xce7e0e517d846fe8fe560fc1bf03039
+  Valid from Fri Nov 10 08:00:00 SGT 2006 until Mon Nov 10 08:00:00 SGT 2031
+
+adding as trusted cert:
+  Subject: OU=Go Daddy Class 2 Certification Authority, O="The Go Daddy Group, Inc.", C=US
+  Issuer:  OU=Go Daddy Class 2 Certification Authority, O="The Go Daddy Group, Inc.", C=US
+  Algorithm: RSA; Serial number: 0x0
+  Valid from Wed Jun 30 01:06:20 SGT 2004 until Fri Jun 30 01:06:20 SGT 2034
+
+adding as trusted cert:
+  Subject: CN=TrustCor RootCert CA-2, OU=TrustCor Certificate Authority, O=TrustCor Systems S. de R.L., L=Panama City, ST=Panama, C=PA
+  Issuer:  CN=TrustCor RootCert CA-2, OU=TrustCor Certificate Authority, O=TrustCor Systems S. de R.L., L=Panama City, ST=Panama, C=PA
+  Algorithm: RSA; Serial number: 0x25a1dfca33cb5902
+  Valid from Thu Feb 04 20:32:23 SGT 2016 until Mon Jan 01 01:26:39 SGT 2035
+
+adding as trusted cert:
+  Subject: CN=TUBITAK Kamu SM SSL Kok Sertifikasi - Surum 1, OU=Kamu Sertifikasyon Merkezi - Kamu SM, O=Turkiye Bilimsel ve Teknolojik Arastirma Kurumu - TUBITAK, L=Gebze - Kocaeli, C=TR
+  Issuer:  CN=TUBITAK Kamu SM SSL Kok Sertifikasi - Surum 1, OU=Kamu Sertifikasyon Merkezi - Kamu SM, O=Turkiye Bilimsel ve Teknolojik Arastirma Kurumu - TUBITAK, L=Gebze - Kocaeli, C=TR
+  Algorithm: RSA; Serial number: 0x1
+  Valid from Mon Nov 25 16:25:55 SGT 2013 until Sun Oct 25 16:25:55 SGT 2043
+
+adding as trusted cert:
+  Subject: CN=Secure Global CA, O=SecureTrust Corporation, C=US
+  Issuer:  CN=Secure Global CA, O=SecureTrust Corporation, C=US
+  Algorithm: RSA; Serial number: 0x75622a4e8d48a894df413c8f0f8eaa5
+  Valid from Wed Nov 08 03:42:28 SGT 2006 until Tue Jan 01 03:52:06 SGT 2030
+
+adding as trusted cert:
+  Subject: CN=AddTrust External CA Root, OU=AddTrust External TTP Network, O=AddTrust AB, C=SE
+  Issuer:  CN=AddTrust External CA Root, OU=AddTrust External TTP Network, O=AddTrust AB, C=SE
+  Algorithm: RSA; Serial number: 0x1
+  Valid from Tue May 30 18:48:38 SGT 2000 until Sat May 30 18:48:38 SGT 2020
+
+adding as trusted cert:
+  Subject: CN=T-TeleSec GlobalRoot Class 3, OU=T-Systems Trust Center, O=T-Systems Enterprise Services GmbH, C=DE
+  Issuer:  CN=T-TeleSec GlobalRoot Class 3, OU=T-Systems Trust Center, O=T-Systems Enterprise Services GmbH, C=DE
+  Algorithm: RSA; Serial number: 0x1
+  Valid from Wed Oct 01 18:29:56 SGT 2008 until Sun Oct 02 07:59:59 SGT 2033
+
+adding as trusted cert:
+  Subject: CN=DigiCert Global Root G3, OU=www.digicert.com, O=DigiCert Inc, C=US
+  Issuer:  CN=DigiCert Global Root G3, OU=www.digicert.com, O=DigiCert Inc, C=US
+  Algorithm: EC; Serial number: 0x55556bcf25ea43535c3a40fd5ab4572
+  Valid from Thu Aug 01 20:00:00 SGT 2013 until Fri Jan 15 20:00:00 SGT 2038
+
+adding as trusted cert:
+  Subject: CN=TrustCor ECA-1, OU=TrustCor Certificate Authority, O=TrustCor Systems S. de R.L., L=Panama City, ST=Panama, C=PA
+  Issuer:  CN=TrustCor ECA-1, OU=TrustCor Certificate Authority, O=TrustCor Systems S. de R.L., L=Panama City, ST=Panama, C=PA
+  Algorithm: RSA; Serial number: 0x84822c5f1c62d040
+  Valid from Thu Feb 04 20:32:33 SGT 2016 until Tue Jan 01 01:28:07 SGT 2030
+
+adding as trusted cert:
+  Subject: CN=Class 2 Primary CA, O=Certplus, C=FR
+  Issuer:  CN=Class 2 Primary CA, O=Certplus, C=FR
+  Algorithm: RSA; Serial number: 0x85bd4bf3d8dae369f694d75fc3a54423
+  Valid from Thu Jul 08 01:05:00 SGT 1999 until Sun Jul 07 07:59:59 SGT 2019
+
+adding as trusted cert:
+  Subject: CN=OISTE WISeKey Global Root GA CA, OU=OISTE Foundation Endorsed, OU=Copyright (c) 2005, O=WISeKey, C=CH
+  Issuer:  CN=OISTE WISeKey Global Root GA CA, OU=OISTE Foundation Endorsed, OU=Copyright (c) 2005, O=WISeKey, C=CH
+  Algorithm: RSA; Serial number: 0x413d72c7f46b1f81437df1d22854df9a
+  Valid from Mon Dec 12 00:03:44 SGT 2005 until Sat Dec 12 00:09:51 SGT 2037
+
+adding as trusted cert:
+  Subject: CN=GeoTrust Global CA, O=GeoTrust Inc., C=US
+  Issuer:  CN=GeoTrust Global CA, O=GeoTrust Inc., C=US
+  Algorithm: RSA; Serial number: 0x23456
+  Valid from Tue May 21 12:00:00 SGT 2002 until Sat May 21 12:00:00 SGT 2022
+
+adding as trusted cert:
+  Subject: CN=Network Solutions Certificate Authority, O=Network Solutions L.L.C., C=US
+  Issuer:  CN=Network Solutions Certificate Authority, O=Network Solutions L.L.C., C=US
+  Algorithm: RSA; Serial number: 0x57cb336fc25c16e6471617e3903168e0
+  Valid from Fri Dec 01 08:00:00 SGT 2006 until Tue Jan 01 07:59:59 SGT 2030
+
+adding as trusted cert:
+  Subject: CN=CFCA EV ROOT, O=China Financial Certification Authority, C=CN
+  Issuer:  CN=CFCA EV ROOT, O=China Financial Certification Authority, C=CN
+  Algorithm: RSA; Serial number: 0x184accd6
+  Valid from Wed Aug 08 11:07:01 SGT 2012 until Mon Dec 31 11:07:01 SGT 2029
+
+adding as trusted cert:
+  Subject: CN=GlobalSign, O=GlobalSign, OU=GlobalSign ECC Root CA - R5
+  Issuer:  CN=GlobalSign, O=GlobalSign, OU=GlobalSign ECC Root CA - R5
+  Algorithm: EC; Serial number: 0x605949e0262ebb55f90a778a71f94ad86c
+  Valid from Tue Nov 13 08:00:00 SGT 2012 until Tue Jan 19 11:14:07 SGT 2038
+
+adding as trusted cert:
+  Subject: CN=Hellenic Academic and Research Institutions RootCA 2011, O=Hellenic Academic and Research Institutions Cert. Authority, C=GR
+  Issuer:  CN=Hellenic Academic and Research Institutions RootCA 2011, O=Hellenic Academic and Research Institutions Cert. Authority, C=GR
+  Algorithm: RSA; Serial number: 0x0
+  Valid from Tue Dec 06 21:49:52 SGT 2011 until Mon Dec 01 21:49:52 SGT 2031
+
+adding as trusted cert:
+  Subject: CN=Certum Trusted Network CA 2, OU=Certum Certification Authority, O=Unizeto Technologies S.A., C=PL
+  Issuer:  CN=Certum Trusted Network CA 2, OU=Certum Certification Authority, O=Unizeto Technologies S.A., C=PL
+  Algorithm: RSA; Serial number: 0x21d6d04a4f250fc93237fcaa5e128de9
+  Valid from Thu Oct 06 16:39:56 SGT 2011 until Sat Oct 06 16:39:56 SGT 2046
+
+adding as trusted cert:
+  Subject: CN=Starfield Root Certificate Authority - G2, O="Starfield Technologies, Inc.", L=Scottsdale, ST=Arizona, C=US
+  Issuer:  CN=Starfield Root Certificate Authority - G2, O="Starfield Technologies, Inc.", L=Scottsdale, ST=Arizona, C=US
+  Algorithm: RSA; Serial number: 0x0
+  Valid from Tue Sep 01 08:00:00 SGT 2009 until Fri Jan 01 07:59:59 SGT 2038
+
+adding as trusted cert:
+  Subject: CN=IdenTrust Public Sector Root CA 1, O=IdenTrust, C=US
+  Issuer:  CN=IdenTrust Public Sector Root CA 1, O=IdenTrust, C=US
+  Algorithm: RSA; Serial number: 0xa0142800000014523cf467c00000002
+  Valid from Fri Jan 17 01:53:32 SGT 2014 until Tue Jan 17 01:53:32 SGT 2034
+
+adding as trusted cert:
+  Subject: CN=Entrust.net Certification Authority (2048), OU=(c) 1999 Entrust.net Limited, OU=www.entrust.net/CPS_2048 incorp. by ref. (limits liab.), O=Entrust.net
+  Issuer:  CN=Entrust.net Certification Authority (2048), OU=(c) 1999 Entrust.net Limited, OU=www.entrust.net/CPS_2048 incorp. by ref. (limits liab.), O=Entrust.net
+  Algorithm: RSA; Serial number: 0x3863def8
+  Valid from Sat Dec 25 01:50:51 SGT 1999 until Tue Jul 24 22:15:12 SGT 2029
+
+adding as trusted cert:
+  Subject: CN=Staat der Nederlanden Root CA - G3, O=Staat der Nederlanden, C=NL
+  Issuer:  CN=Staat der Nederlanden Root CA - G3, O=Staat der Nederlanden, C=NL
+  Algorithm: RSA; Serial number: 0x98a239
+  Valid from Thu Nov 14 19:28:42 SGT 2013 until Tue Nov 14 07:00:00 SGT 2028
+
+adding as trusted cert:
+  Subject: CN=TeliaSonera Root CA v1, O=TeliaSonera
+  Issuer:  CN=TeliaSonera Root CA v1, O=TeliaSonera
+  Algorithm: RSA; Serial number: 0x95be16a0f72e46f17b398272fa8bcd96
+  Valid from Thu Oct 18 20:00:50 SGT 2007 until Mon Oct 18 20:00:50 SGT 2032
+
+adding as trusted cert:
+  Subject: CN=thawte Primary Root CA, OU="(c) 2006 thawte, Inc. - For authorized use only", OU=Certification Services Division, O="thawte, Inc.", C=US
+  Issuer:  CN=thawte Primary Root CA, OU="(c) 2006 thawte, Inc. - For authorized use only", OU=Certification Services Division, O="thawte, Inc.", C=US
+  Algorithm: RSA; Serial number: 0x344ed55720d5edec49f42fce37db2b6d
+  Valid from Fri Nov 17 08:00:00 SGT 2006 until Thu Jul 17 07:59:59 SGT 2036
+
+adding as trusted cert:
+  Subject: CN=Go Daddy Root Certificate Authority - G2, O="GoDaddy.com, Inc.", L=Scottsdale, ST=Arizona, C=US
+  Issuer:  CN=Go Daddy Root Certificate Authority - G2, O="GoDaddy.com, Inc.", L=Scottsdale, ST=Arizona, C=US
+  Algorithm: RSA; Serial number: 0x0
+  Valid from Tue Sep 01 08:00:00 SGT 2009 until Fri Jan 01 07:59:59 SGT 2038
+
+adding as trusted cert:
+  Subject: CN=Visa eCommerce Root, OU=Visa International Service Association, O=VISA, C=US
+  Issuer:  CN=Visa eCommerce Root, OU=Visa International Service Association, O=VISA, C=US
+  Algorithm: RSA; Serial number: 0x1386354d1d3f06f2c1f96505d5901c62
+  Valid from Wed Jun 26 10:18:36 SGT 2002 until Fri Jun 24 08:16:12 SGT 2022
+
+adding as trusted cert:
+  Subject: CN=VeriSign Class 3 Public Primary Certification Authority - G4, OU="(c) 2007 VeriSign, Inc. - For authorized use only", OU=VeriSign Trust Network, O="VeriSign, Inc.", C=US
+  Issuer:  CN=VeriSign Class 3 Public Primary Certification Authority - G4, OU="(c) 2007 VeriSign, Inc. - For authorized use only", OU=VeriSign Trust Network, O="VeriSign, Inc.", C=US
+  Algorithm: EC; Serial number: 0x2f80fe238c0e220f486712289187acb3
+  Valid from Mon Nov 05 08:00:00 SGT 2007 until Tue Jan 19 07:59:59 SGT 2038
+
+adding as trusted cert:
+  Subject: CN=Staat der Nederlanden EV Root CA, O=Staat der Nederlanden, C=NL
+  Issuer:  CN=Staat der Nederlanden EV Root CA, O=Staat der Nederlanden, C=NL
+  Algorithm: RSA; Serial number: 0x98968d
+  Valid from Wed Dec 08 19:19:29 SGT 2010 until Thu Dec 08 19:10:28 SGT 2022
+
+adding as trusted cert:
+  Subject: CN=Entrust Root Certification Authority, OU="(c) 2006 Entrust, Inc.", OU=www.entrust.net/CPS is incorporated by reference, O="Entrust, Inc.", C=US
+  Issuer:  CN=Entrust Root Certification Authority, OU="(c) 2006 Entrust, Inc.", OU=www.entrust.net/CPS is incorporated by reference, O="Entrust, Inc.", C=US
+  Algorithm: RSA; Serial number: 0x456b5054
+  Valid from Tue Nov 28 04:23:42 SGT 2006 until Sat Nov 28 04:53:42 SGT 2026
+
+adding as trusted cert:
+  Subject: CN=DigiCert Assured ID Root G2, OU=www.digicert.com, O=DigiCert Inc, C=US
+  Issuer:  CN=DigiCert Assured ID Root G2, OU=www.digicert.com, O=DigiCert Inc, C=US
+  Algorithm: RSA; Serial number: 0xb931c3ad63967ea6723bfc3af9af44b
+  Valid from Thu Aug 01 20:00:00 SGT 2013 until Fri Jan 15 20:00:00 SGT 2038
+
+adding as trusted cert:
+  Subject: CN=SSL.com Root Certification Authority RSA, O=SSL Corporation, L=Houston, ST=Texas, C=US
+  Issuer:  CN=SSL.com Root Certification Authority RSA, O=SSL Corporation, L=Houston, ST=Texas, C=US
+  Algorithm: RSA; Serial number: 0x7b2c9bd316803299
+  Valid from Sat Feb 13 01:39:39 SGT 2016 until Wed Feb 13 01:39:39 SGT 2041
+
+adding as trusted cert:
+  Subject: CN=Amazon Root CA 4, O=Amazon, C=US
+  Issuer:  CN=Amazon Root CA 4, O=Amazon, C=US
+  Algorithm: EC; Serial number: 0x66c9fd7c1bb104c2943e5717b7b2cc81ac10e
+  Valid from Tue May 26 08:00:00 SGT 2015 until Sat May 26 08:00:00 SGT 2040
+
+adding as trusted cert:
+  Subject: CN=CA Disig Root R2, O=Disig a.s., L=Bratislava, C=SK
+  Issuer:  CN=CA Disig Root R2, O=Disig a.s., L=Bratislava, C=SK
+  Algorithm: RSA; Serial number: 0x92b888dbb08ac163
+  Valid from Thu Jul 19 17:15:30 SGT 2012 until Sat Jul 19 17:15:30 SGT 2042
+
+adding as trusted cert:
+  Subject: CN=DST Root CA X3, O=Digital Signature Trust Co.
+  Issuer:  CN=DST Root CA X3, O=Digital Signature Trust Co.
+  Algorithm: RSA; Serial number: 0x44afb080d6a327ba893039862ef8406b
+  Valid from Sun Oct 01 05:12:19 SGT 2000 until Thu Sep 30 22:01:15 SGT 2021
+
+adding as trusted cert:
+  Subject: CN=Buypass Class 2 Root CA, O=Buypass AS-983163327, C=NO
+  Issuer:  CN=Buypass Class 2 Root CA, O=Buypass AS-983163327, C=NO
+  Algorithm: RSA; Serial number: 0x2
+  Valid from Tue Oct 26 16:38:03 SGT 2010 until Fri Oct 26 16:38:03 SGT 2040
+
+adding as trusted cert:
+  Subject: CN=D-TRUST Root Class 3 CA 2 EV 2009, O=D-Trust GmbH, C=DE
+  Issuer:  CN=D-TRUST Root Class 3 CA 2 EV 2009, O=D-Trust GmbH, C=DE
+  Algorithm: RSA; Serial number: 0x983f4
+  Valid from Thu Nov 05 16:50:46 SGT 2009 until Mon Nov 05 16:50:46 SGT 2029
+
+adding as trusted cert:
+  Subject: CN=DigiCert Assured ID Root G3, OU=www.digicert.com, O=DigiCert Inc, C=US
+  Issuer:  CN=DigiCert Assured ID Root G3, OU=www.digicert.com, O=DigiCert Inc, C=US
+  Algorithm: EC; Serial number: 0xba15afa1ddfa0b54944afcd24a06cec
+  Valid from Thu Aug 01 20:00:00 SGT 2013 until Fri Jan 15 20:00:00 SGT 2038
+
+adding as trusted cert:
+  Subject: CN=SwissSign Gold CA - G2, O=SwissSign AG, C=CH
+  Issuer:  CN=SwissSign Gold CA - G2, O=SwissSign AG, C=CH
+  Algorithm: RSA; Serial number: 0xbb401c43f55e4fb0
+  Valid from Wed Oct 25 16:30:35 SGT 2006 until Sat Oct 25 16:30:35 SGT 2036
+
+adding as trusted cert:
+  Subject: CN=USERTrust ECC Certification Authority, O=The USERTRUST Network, L=Jersey City, ST=New Jersey, C=US
+  Issuer:  CN=USERTrust ECC Certification Authority, O=The USERTRUST Network, L=Jersey City, ST=New Jersey, C=US
+  Algorithm: EC; Serial number: 0x5c8b99c55a94c5d27156decd8980cc26
+  Valid from Mon Feb 01 08:00:00 SGT 2010 until Tue Jan 19 07:59:59 SGT 2038
+
+adding as trusted cert:
+  Subject: OU=certSIGN ROOT CA, O=certSIGN, C=RO
+  Issuer:  OU=certSIGN ROOT CA, O=certSIGN, C=RO
+  Algorithm: RSA; Serial number: 0x200605167002
+  Valid from Wed Jul 05 01:20:04 SGT 2006 until Sat Jul 05 01:20:04 SGT 2031
+
+adding as trusted cert:
+  Subject: CN=QuoVadis Root CA 2, O=QuoVadis Limited, C=BM
+  Issuer:  CN=QuoVadis Root CA 2, O=QuoVadis Limited, C=BM
+  Algorithm: RSA; Serial number: 0x509
+  Valid from Sat Nov 25 02:27:00 SGT 2006 until Tue Nov 25 02:23:33 SGT 2031
+
+adding as trusted cert:
+  Subject: CN=IdenTrust Commercial Root CA 1, O=IdenTrust, C=US
+  Issuer:  CN=IdenTrust Commercial Root CA 1, O=IdenTrust, C=US
+  Algorithm: RSA; Serial number: 0xa0142800000014523c844b500000002
+  Valid from Fri Jan 17 02:12:23 SGT 2014 until Tue Jan 17 02:12:23 SGT 2034
+
+adding as trusted cert:
+  Subject: CN=Deutsche Telekom Root CA 2, OU=T-TeleSec Trust Center, O=Deutsche Telekom AG, C=DE
+  Issuer:  CN=Deutsche Telekom Root CA 2, OU=T-TeleSec Trust Center, O=Deutsche Telekom AG, C=DE
+  Algorithm: RSA; Serial number: 0x26
+  Valid from Fri Jul 09 20:11:00 SGT 1999 until Wed Jul 10 07:59:00 SGT 2019
+
+adding as trusted cert:
+  Subject: CN=D-TRUST Root Class 3 CA 2 2009, O=D-Trust GmbH, C=DE
+  Issuer:  CN=D-TRUST Root Class 3 CA 2 2009, O=D-Trust GmbH, C=DE
+  Algorithm: RSA; Serial number: 0x983f3
+  Valid from Thu Nov 05 16:35:58 SGT 2009 until Mon Nov 05 16:35:58 SGT 2029
+
+adding as trusted cert:
+  Subject: CN=QuoVadis Root CA 1 G3, O=QuoVadis Limited, C=BM
+  Issuer:  CN=QuoVadis Root CA 1 G3, O=QuoVadis Limited, C=BM
+  Algorithm: RSA; Serial number: 0x78585f2ead2c194be3370735341328b596d46593
+  Valid from Fri Jan 13 01:27:44 SGT 2012 until Mon Jan 13 01:27:44 SGT 2042
+
+adding as trusted cert:
+  Subject: CN=USERTrust RSA Certification Authority, O=The USERTRUST Network, L=Jersey City, ST=New Jersey, C=US
+  Issuer:  CN=USERTrust RSA Certification Authority, O=The USERTRUST Network, L=Jersey City, ST=New Jersey, C=US
+  Algorithm: RSA; Serial number: 0x1fd6d30fca3ca51a81bbc640e35032d
+  Valid from Mon Feb 01 08:00:00 SGT 2010 until Tue Jan 19 07:59:59 SGT 2038
+
+adding as trusted cert:
+  Subject: CN=Izenpe.com, O=IZENPE S.A., C=ES
+  Issuer:  CN=Izenpe.com, O=IZENPE S.A., C=ES
+  Algorithm: RSA; Serial number: 0xb0b75a16485fbfe1cbf58bd719e67d
+  Valid from Thu Dec 13 21:08:28 SGT 2007 until Sun Dec 13 16:27:25 SGT 2037
+
+adding as trusted cert:
+  Subject: CN=GlobalSign, O=GlobalSign, OU=GlobalSign Root CA - R2
+  Issuer:  CN=GlobalSign, O=GlobalSign, OU=GlobalSign Root CA - R2
+  Algorithm: RSA; Serial number: 0x400000000010f8626e60d
+  Valid from Fri Dec 15 16:00:00 SGT 2006 until Wed Dec 15 16:00:00 SGT 2021
+
+adding as trusted cert:
+  Subject: CN=VeriSign Class 3 Public Primary Certification Authority - G5, OU="(c) 2006 VeriSign, Inc. - For authorized use only", OU=VeriSign Trust Network, O="VeriSign, Inc.", C=US
+  Issuer:  CN=VeriSign Class 3 Public Primary Certification Authority - G5, OU="(c) 2006 VeriSign, Inc. - For authorized use only", OU=VeriSign Trust Network, O="VeriSign, Inc.", C=US
+  Algorithm: RSA; Serial number: 0x18dad19e267de8bb4a2158cdcc6b3b4a
+  Valid from Wed Nov 08 08:00:00 SGT 2006 until Thu Jul 17 07:59:59 SGT 2036
+
+adding as trusted cert:
+  Subject: CN=QuoVadis Root CA 3, O=QuoVadis Limited, C=BM
+  Issuer:  CN=QuoVadis Root CA 3, O=QuoVadis Limited, C=BM
+  Algorithm: RSA; Serial number: 0x5c6
+  Valid from Sat Nov 25 03:11:23 SGT 2006 until Tue Nov 25 03:06:44 SGT 2031
+
+adding as trusted cert:
+  Subject: CN=Starfield Services Root Certificate Authority - G2, O="Starfield Technologies, Inc.", L=Scottsdale, ST=Arizona, C=US
+  Issuer:  CN=Starfield Services Root Certificate Authority - G2, O="Starfield Technologies, Inc.", L=Scottsdale, ST=Arizona, C=US
+  Algorithm: RSA; Serial number: 0x0
+  Valid from Tue Sep 01 08:00:00 SGT 2009 until Fri Jan 01 07:59:59 SGT 2038
+
+adding as trusted cert:
+  Subject: CN=OISTE WISeKey Global Root GB CA, OU=OISTE Foundation Endorsed, O=WISeKey, C=CH
+  Issuer:  CN=OISTE WISeKey Global Root GB CA, OU=OISTE Foundation Endorsed, O=WISeKey, C=CH
+  Algorithm: RSA; Serial number: 0x76b1205274f0858746b3f8231af6c2c0
+  Valid from Mon Dec 01 23:00:32 SGT 2014 until Thu Dec 01 23:10:31 SGT 2039
+
+adding as trusted cert:
+  Subject: CN=Amazon Root CA 3, O=Amazon, C=US
+  Issuer:  CN=Amazon Root CA 3, O=Amazon, C=US
+  Algorithm: EC; Serial number: 0x66c9fd5749736663f3b0b9ad9e89e7603f24a
+  Valid from Tue May 26 08:00:00 SGT 2015 until Sat May 26 08:00:00 SGT 2040
+
+adding as trusted cert:
+  Subject: CN=QuoVadis Root CA 3 G3, O=QuoVadis Limited, C=BM
+  Issuer:  CN=QuoVadis Root CA 3 G3, O=QuoVadis Limited, C=BM
+  Algorithm: RSA; Serial number: 0x2ef59b0228a7db7affd5a3a9eebd03a0cf126a1d
+  Valid from Fri Jan 13 04:26:32 SGT 2012 until Mon Jan 13 04:26:32 SGT 2042
+
+adding as trusted cert:
+  Subject: EMAILADDRESS=info@e-szigno.hu, CN=Microsec e-Szigno Root CA 2009, O=Microsec Ltd., L=Budapest, C=HU
+  Issuer:  EMAILADDRESS=info@e-szigno.hu, CN=Microsec e-Szigno Root CA 2009, O=Microsec Ltd., L=Budapest, C=HU
+  Algorithm: RSA; Serial number: 0xc27e43044e473f19
+  Valid from Tue Jun 16 19:30:18 SGT 2009 until Sun Dec 30 19:30:18 SGT 2029
+
+adding as trusted cert:
+  Subject: CN=NetLock Arany (Class Gold) Főtanúsítvány, OU=Tanúsítványkiadók (Certification Services), O=NetLock Kft., L=Budapest, C=HU
+  Issuer:  CN=NetLock Arany (Class Gold) Főtanúsítvány, OU=Tanúsítványkiadók (Certification Services), O=NetLock Kft., L=Budapest, C=HU
+  Algorithm: RSA; Serial number: 0x49412ce40010
+  Valid from Thu Dec 11 23:08:21 SGT 2008 until Wed Dec 06 23:08:21 SGT 2028
+
+adding as trusted cert:
+  Subject: CN=Actalis Authentication Root CA, O=Actalis S.p.A./03358520967, L=Milan, C=IT
+  Issuer:  CN=Actalis Authentication Root CA, O=Actalis S.p.A./03358520967, L=Milan, C=IT
+  Algorithm: RSA; Serial number: 0x570a119742c4e3cc
+  Valid from Thu Sep 22 19:22:02 SGT 2011 until Sun Sep 22 19:22:02 SGT 2030
+
+adding as trusted cert:
+  Subject: CN=Autoridad de Certificacion Firmaprofesional CIF A62634068, C=ES
+  Issuer:  CN=Autoridad de Certificacion Firmaprofesional CIF A62634068, C=ES
+  Algorithm: RSA; Serial number: 0x53ec3beefbb2485f
+  Valid from Wed May 20 16:38:15 SGT 2009 until Tue Dec 31 16:38:15 SGT 2030
+
+adding as trusted cert:
+  Subject: CN=Certplus Root CA G1, O=Certplus, C=FR
+  Issuer:  CN=Certplus Root CA G1, O=Certplus, C=FR
+  Algorithm: RSA; Serial number: 0x11205583e42d3e5456852d8337b72cdc4611
+  Valid from Mon May 26 08:00:00 SGT 2014 until Fri Jan 15 08:00:00 SGT 2038
+
+adding as trusted cert:
+  Subject: CN=Certigna, O=Dhimyotis, C=FR
+  Issuer:  CN=Certigna, O=Dhimyotis, C=FR
+  Algorithm: RSA; Serial number: 0xfedce3010fc948ff
+  Valid from Fri Jun 29 23:13:05 SGT 2007 until Tue Jun 29 23:13:05 SGT 2027
+
+adding as trusted cert:
+  Subject: CN=E-Tugra Certification Authority, OU=E-Tugra Sertifikasyon Merkezi, O=E-Tuğra EBG Bilişim Teknolojileri ve Hizmetleri A.Ş., L=Ankara, C=TR
+  Issuer:  CN=E-Tugra Certification Authority, OU=E-Tugra Sertifikasyon Merkezi, O=E-Tuğra EBG Bilişim Teknolojileri ve Hizmetleri A.Ş., L=Ankara, C=TR
+  Algorithm: RSA; Serial number: 0x6a683e9c519bcb53
+  Valid from Tue Mar 05 20:09:48 SGT 2013 until Fri Mar 03 20:09:48 SGT 2023
+
+adding as trusted cert:
+  Subject: C=ES, O=ACCV, OU=PKIACCV, CN=ACCVRAIZ1
+  Issuer:  C=ES, O=ACCV, OU=PKIACCV, CN=ACCVRAIZ1
+  Algorithm: RSA; Serial number: 0x5ec3b7a6437fa4e0
+  Valid from Thu May 05 17:37:37 SGT 2011 until Tue Dec 31 17:37:37 SGT 2030
+
+adding as trusted cert:
+  Subject: CN=QuoVadis Root Certification Authority, OU=Root Certification Authority, O=QuoVadis Limited, C=BM
+  Issuer:  CN=QuoVadis Root Certification Authority, OU=Root Certification Authority, O=QuoVadis Limited, C=BM
+  Algorithm: RSA; Serial number: 0x3ab6508b
+  Valid from Tue Mar 20 02:33:33 SGT 2001 until Thu Mar 18 02:33:33 SGT 2021
+
+adding as trusted cert:
+  Subject: CN=SSL.com EV Root Certification Authority ECC, O=SSL Corporation, L=Houston, ST=Texas, C=US
+  Issuer:  CN=SSL.com EV Root Certification Authority ECC, O=SSL Corporation, L=Houston, ST=Texas, C=US
+  Algorithm: EC; Serial number: 0x2c299c5b16ed0595
+  Valid from Sat Feb 13 02:15:23 SGT 2016 until Wed Feb 13 02:15:23 SGT 2041
+
+adding as trusted cert:
+  Subject: CN=Buypass Class 3 Root CA, O=Buypass AS-983163327, C=NO
+  Issuer:  CN=Buypass Class 3 Root CA, O=Buypass AS-983163327, C=NO
+  Algorithm: RSA; Serial number: 0x2
+  Valid from Tue Oct 26 16:28:58 SGT 2010 until Fri Oct 26 16:28:58 SGT 2040
+
+adding as trusted cert:
+  Subject: CN=thawte Primary Root CA - G2, OU="(c) 2007 thawte, Inc. - For authorized use only", O="thawte, Inc.", C=US
+  Issuer:  CN=thawte Primary Root CA - G2, OU="(c) 2007 thawte, Inc. - For authorized use only", O="thawte, Inc.", C=US
+  Algorithm: EC; Serial number: 0x35fc265cd9844fc93d263d579baed756
+  Valid from Mon Nov 05 08:00:00 SGT 2007 until Tue Jan 19 07:59:59 SGT 2038
+
+adding as trusted cert:
+  Subject: CN=VeriSign Universal Root Certification Authority, OU="(c) 2008 VeriSign, Inc. - For authorized use only", OU=VeriSign Trust Network, O="VeriSign, Inc.", C=US
+  Issuer:  CN=VeriSign Universal Root Certification Authority, OU="(c) 2008 VeriSign, Inc. - For authorized use only", OU=VeriSign Trust Network, O="VeriSign, Inc.", C=US
+  Algorithm: RSA; Serial number: 0x401ac46421b31321030ebbe4121ac51d
+  Valid from Wed Apr 02 08:00:00 SGT 2008 until Wed Dec 02 07:59:59 SGT 2037
+
+adding as trusted cert:
+  Subject: CN=Cybertrust Global Root, O="Cybertrust, Inc"
+  Issuer:  CN=Cybertrust Global Root, O="Cybertrust, Inc"
+  Algorithm: RSA; Serial number: 0x400000000010f85aa2d48
+  Valid from Fri Dec 15 16:00:00 SGT 2006 until Wed Dec 15 16:00:00 SGT 2021
+
+adding as trusted cert:
+  Subject: CN=Amazon Root CA 1, O=Amazon, C=US
+  Issuer:  CN=Amazon Root CA 1, O=Amazon, C=US
+  Algorithm: RSA; Serial number: 0x66c9fcf99bf8c0a39e2f0788a43e696365bca
+  Valid from Tue May 26 08:00:00 SGT 2015 until Sun Jan 17 08:00:00 SGT 2038
+
+adding as trusted cert:
+  Subject: OU=Trustis FPS Root CA, O=Trustis Limited, C=GB
+  Issuer:  OU=Trustis FPS Root CA, O=Trustis Limited, C=GB
+  Algorithm: RSA; Serial number: 0x1b1fadb620f924d3366bf7c7f18ca059
+  Valid from Tue Dec 23 20:14:06 SGT 2003 until Sun Jan 21 19:36:54 SGT 2024
+
+adding as trusted cert:
+  Subject: CN=GDCA TrustAUTH R5 ROOT, O="GUANG DONG CERTIFICATE AUTHORITY CO.,LTD.", C=CN
+  Issuer:  CN=GDCA TrustAUTH R5 ROOT, O="GUANG DONG CERTIFICATE AUTHORITY CO.,LTD.", C=CN
+  Algorithm: RSA; Serial number: 0x7d0997fef047ea7a
+  Valid from Wed Nov 26 13:13:15 SGT 2014 until Mon Dec 31 23:59:59 SGT 2040
+
+adding as trusted cert:
+  Subject: CN=Amazon Root CA 2, O=Amazon, C=US
+  Issuer:  CN=Amazon Root CA 2, O=Amazon, C=US
+  Algorithm: RSA; Serial number: 0x66c9fd29635869f0a0fe58678f85b26bb8a37
+  Valid from Tue May 26 08:00:00 SGT 2015 until Sat May 26 08:00:00 SGT 2040
+
+adding as trusted cert:
+  Subject: CN=GlobalSign, O=GlobalSign, OU=GlobalSign ECC Root CA - R4
+  Issuer:  CN=GlobalSign, O=GlobalSign, OU=GlobalSign ECC Root CA - R4
+  Algorithm: EC; Serial number: 0x2a38a41c960a04de42b228a50be8349802
+  Valid from Tue Nov 13 08:00:00 SGT 2012 until Tue Jan 19 11:14:07 SGT 2038
+
+adding as trusted cert:
+  Subject: CN=COMODO Certification Authority, O=COMODO CA Limited, L=Salford, ST=Greater Manchester, C=GB
+  Issuer:  CN=COMODO Certification Authority, O=COMODO CA Limited, L=Salford, ST=Greater Manchester, C=GB
+  Algorithm: RSA; Serial number: 0x4e812d8a8265e00b02ee3e350246e53d
+  Valid from Fri Dec 01 08:00:00 SGT 2006 until Tue Jan 01 07:59:59 SGT 2030
+
+adding as trusted cert:
+  Subject: EMAILADDRESS=pki@sk.ee, CN=EE Certification Centre Root CA, O=AS Sertifitseerimiskeskus, C=EE
+  Issuer:  EMAILADDRESS=pki@sk.ee, CN=EE Certification Centre Root CA, O=AS Sertifitseerimiskeskus, C=EE
+  Algorithm: RSA; Serial number: 0x5480f9a073ed3f004cca89d8e371e64a
+  Valid from Sat Oct 30 18:10:30 SGT 2010 until Wed Dec 18 07:59:59 SGT 2030
+
+adding as trusted cert:
+  Subject: CN=Global Chambersign Root - 2008, O=AC Camerfirma S.A., SERIALNUMBER=A82743287, L=Madrid (see current address at www.camerfirma.com/address), C=EU
+  Issuer:  CN=Global Chambersign Root - 2008, O=AC Camerfirma S.A., SERIALNUMBER=A82743287, L=Madrid (see current address at www.camerfirma.com/address), C=EU
+  Algorithm: RSA; Serial number: 0xc9cdd3e9d57d23ce
+  Valid from Fri Aug 01 20:31:40 SGT 2008 until Sat Jul 31 20:31:40 SGT 2038
+
+adding as trusted cert:
+  Subject: CN=COMODO RSA Certification Authority, O=COMODO CA Limited, L=Salford, ST=Greater Manchester, C=GB
+  Issuer:  CN=COMODO RSA Certification Authority, O=COMODO CA Limited, L=Salford, ST=Greater Manchester, C=GB
+  Algorithm: RSA; Serial number: 0x4caaf9cadb636fe01ff74ed85b03869d
+  Valid from Tue Jan 19 08:00:00 SGT 2010 until Tue Jan 19 07:59:59 SGT 2038
+
+adding as trusted cert:
+  Subject: CN=thawte Primary Root CA - G3, OU="(c) 2008 thawte, Inc. - For authorized use only", OU=Certification Services Division, O="thawte, Inc.", C=US
+  Issuer:  CN=thawte Primary Root CA - G3, OU="(c) 2008 thawte, Inc. - For authorized use only", OU=Certification Services Division, O="thawte, Inc.", C=US
+  Algorithm: RSA; Serial number: 0x600197b746a7eab4b49ad64b2ff790fb
+  Valid from Wed Apr 02 08:00:00 SGT 2008 until Wed Dec 02 07:59:59 SGT 2037
+
+adding as trusted cert:
+  Subject: CN=Certplus Root CA G2, O=Certplus, C=FR
+  Issuer:  CN=Certplus Root CA G2, O=Certplus, C=FR
+  Algorithm: EC; Serial number: 0x1120d991ceaea3e8c5e7ffe902afcf73bc55
+  Valid from Mon May 26 08:00:00 SGT 2014 until Fri Jan 15 08:00:00 SGT 2038
+
+adding as trusted cert:
+  Subject: CN=AffirmTrust Premium ECC, O=AffirmTrust, C=US
+  Issuer:  CN=AffirmTrust Premium ECC, O=AffirmTrust, C=US
+  Algorithm: EC; Serial number: 0x7497258ac73f7a54
+  Valid from Fri Jan 29 22:20:24 SGT 2010 until Mon Dec 31 22:20:24 SGT 2040
+
+adding as trusted cert:
+  Subject: CN=T-TeleSec GlobalRoot Class 2, OU=T-Systems Trust Center, O=T-Systems Enterprise Services GmbH, C=DE
+  Issuer:  CN=T-TeleSec GlobalRoot Class 2, OU=T-Systems Trust Center, O=T-Systems Enterprise Services GmbH, C=DE
+  Algorithm: RSA; Serial number: 0x1
+  Valid from Wed Oct 01 18:40:14 SGT 2008 until Sun Oct 02 07:59:59 SGT 2033
+
+adding as trusted cert:
+  Subject: CN=Staat der Nederlanden Root CA - G2, O=Staat der Nederlanden, C=NL
+  Issuer:  CN=Staat der Nederlanden Root CA - G2, O=Staat der Nederlanden, C=NL
+  Algorithm: RSA; Serial number: 0x98968c
+  Valid from Wed Mar 26 19:18:17 SGT 2008 until Wed Mar 25 19:03:10 SGT 2020
+
+adding as trusted cert:
+  Subject: CN=DigiCert Global Root G2, OU=www.digicert.com, O=DigiCert Inc, C=US
+  Issuer:  CN=DigiCert Global Root G2, OU=www.digicert.com, O=DigiCert Inc, C=US
+  Algorithm: RSA; Serial number: 0x33af1e6a711a9a0bb2864b11d09fae5
+  Valid from Thu Aug 01 20:00:00 SGT 2013 until Fri Jan 15 20:00:00 SGT 2038
+
+adding as trusted cert:
+  Subject: CN=SZAFIR ROOT CA2, O=Krajowa Izba Rozliczeniowa S.A., C=PL
+  Issuer:  CN=SZAFIR ROOT CA2, O=Krajowa Izba Rozliczeniowa S.A., C=PL
+  Algorithm: RSA; Serial number: 0x3e8a5d07ec55d232d5b7e3b65f01eb2ddce4d6e4
+  Valid from Mon Oct 19 15:43:30 SGT 2015 until Fri Oct 19 15:43:30 SGT 2035
+
+keyStore is : 
+keyStore type is : jks
+keyStore provider is : 
+init keystore
+init keymanager of type SunX509
+trigger seeding of SecureRandom
+done seeding SecureRandom
+Allow unsafe renegotiation: false
+Allow legacy hello messages: true
+Is initial handshake: true
+Is secure renegotiation: false
+scheduling-1, setSoTimeout(0) called
+scheduling-1, setSoTimeout(60000) called
+Ignoring unsupported cipher suite: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384 for TLSv1
+Ignoring unsupported cipher suite: TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384 for TLSv1
+Ignoring unsupported cipher suite: TLS_RSA_WITH_AES_256_CBC_SHA256 for TLSv1
+Ignoring unsupported cipher suite: TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384 for TLSv1
+Ignoring unsupported cipher suite: TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384 for TLSv1
+Ignoring unsupported cipher suite: TLS_DHE_RSA_WITH_AES_256_CBC_SHA256 for TLSv1
+Ignoring unsupported cipher suite: TLS_DHE_DSS_WITH_AES_256_CBC_SHA256 for TLSv1
+Ignoring unsupported cipher suite: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384 for TLSv1.1
+Ignoring unsupported cipher suite: TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384 for TLSv1.1
+Ignoring unsupported cipher suite: TLS_RSA_WITH_AES_256_CBC_SHA256 for TLSv1.1
+Ignoring unsupported cipher suite: TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384 for TLSv1.1
+Ignoring unsupported cipher suite: TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384 for TLSv1.1
+Ignoring unsupported cipher suite: TLS_DHE_RSA_WITH_AES_256_CBC_SHA256 for TLSv1.1
+Ignoring unsupported cipher suite: TLS_DHE_DSS_WITH_AES_256_CBC_SHA256 for TLSv1.1
+%% No cached client session
+update handshake state: client_hello[1]
+upcoming handshake states: server_hello[2]
+*** ClientHello, TLSv1.2
+RandomCookie:  GMT: 1626560475 bytes = { 112, 239, 236, 239, 122, 212, 244, 10, 144, 127, 175, 230, 81, 156, 57, 128, 83, 111, 76, 99, 217, 111, 179, 84, 241, 81, 103, 94 }
+Session ID:  {}
+Cipher Suites: [TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_RSA_WITH_AES_256_CBC_SHA256, TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384, TLS_DHE_RSA_WITH_AES_256_CBC_SHA256, TLS_DHE_DSS_WITH_AES_256_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDH_RSA_WITH_AES_256_CBC_SHA, TLS_DHE_RSA_WITH_AES_256_CBC_SHA, TLS_DHE_DSS_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_DSS_WITH_AES_128_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_AES_256_GCM_SHA384, TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_EMPTY_RENEGOTIATION_INFO_SCSV]
+Compression Methods:  { 0 }
+Extension elliptic_curves, curve names: {secp256r1, secp384r1, secp521r1}
+Extension ec_point_formats, formats: [uncompressed]
+Extension signature_algorithms, signature_algorithms: SHA512withECDSA, SHA512withRSA, SHA384withECDSA, SHA384withRSA, SHA256withECDSA, SHA256withRSA, SHA256withDSA, SHA224withECDSA, SHA224withRSA, SHA224withDSA, SHA1withECDSA, SHA1withRSA, SHA1withDSA
+Extension extended_master_secret
+Extension server_name, server_name: [type=host_name (0), value=api.compass-ft.com]
+***
+[write] MD5 and SHA1 hashes:  len = 212
+0000: 01 00 00 D0 03 03 61 F3   58 DB 70 EF EC EF 7A D4  ......a.X.p...z.
+0010: F4 0A 90 7F AF E6 51 9C   39 80 53 6F 4C 63 D9 6F  ......Q.9.SoLc.o
+0020: B3 54 F1 51 67 5E 00 00   56 C0 24 C0 28 00 3D C0  .T.Qg^..V.$.(.=.
+0030: 26 C0 2A 00 6B 00 6A C0   0A C0 14 00 35 C0 05 C0  &.*.k.j.....5...
+0040: 0F 00 39 00 38 C0 23 C0   27 00 3C C0 25 C0 29 00  ..9.8.#.'.<.%.).
+0050: 67 00 40 C0 09 C0 13 00   2F C0 04 C0 0E 00 33 00  g.@...../.....3.
+0060: 32 C0 2C C0 2B C0 30 00   9D C0 2E C0 32 00 9F 00  2.,.+.0.....2...
+0070: A3 C0 2F 00 9C C0 2D C0   31 00 9E 00 A2 00 FF 01  ../...-.1.......
+0080: 00 00 51 00 0A 00 08 00   06 00 17 00 18 00 19 00  ..Q.............
+0090: 0B 00 02 01 00 00 0D 00   1C 00 1A 06 03 06 01 05  ................
+00A0: 03 05 01 04 03 04 01 04   02 03 03 03 01 03 02 02  ................
+00B0: 03 02 01 02 02 00 17 00   00 00 00 00 17 00 15 00  ................
+00C0: 00 12 61 70 69 2E 63 6F   6D 70 61 73 73 2D 66 74  ..api.compass-ft
+00D0: 2E 63 6F 6D                                        .com
+scheduling-1, WRITE: TLSv1.2 Handshake, length = 212
+[Raw write]: length = 217
+0000: 16 03 03 00 D4 01 00 00   D0 03 03 61 F3 58 DB 70  ...........a.X.p
+0010: EF EC EF 7A D4 F4 0A 90   7F AF E6 51 9C 39 80 53  ...z.......Q.9.S
+0020: 6F 4C 63 D9 6F B3 54 F1   51 67 5E 00 00 56 C0 24  oLc.o.T.Qg^..V.$
+0030: C0 28 00 3D C0 26 C0 2A   00 6B 00 6A C0 0A C0 14  .(.=.&.*.k.j....
+0040: 00 35 C0 05 C0 0F 00 39   00 38 C0 23 C0 27 00 3C  .5.....9.8.#.'.<
+0050: C0 25 C0 29 00 67 00 40   C0 09 C0 13 00 2F C0 04  .%.).g.@...../..
+0060: C0 0E 00 33 00 32 C0 2C   C0 2B C0 30 00 9D C0 2E  ...3.2.,.+.0....
+0070: C0 32 00 9F 00 A3 C0 2F   00 9C C0 2D C0 31 00 9E  .2...../...-.1..
+0080: 00 A2 00 FF 01 00 00 51   00 0A 00 08 00 06 00 17  .......Q........
+0090: 00 18 00 19 00 0B 00 02   01 00 00 0D 00 1C 00 1A  ................
+00A0: 06 03 06 01 05 03 05 01   04 03 04 01 04 02 03 03  ................
+00B0: 03 01 03 02 02 03 02 01   02 02 00 17 00 00 00 00  ................
+00C0: 00 17 00 15 00 00 12 61   70 69 2E 63 6F 6D 70 61  .......api.compa
+00D0: 73 73 2D 66 74 2E 63 6F   6D                       ss-ft.com
+[Raw read]: length = 5
+0000: 16 03 03 00 37                                     ....7
+[Raw read]: length = 55
+0000: 02 00 00 33 03 03 94 62   C2 45 AD 7F 63 B8 F6 7C  ...3...b.E..c...
+0010: D4 D5 7A A7 89 AE AB FD   F0 82 F9 22 21 15 44 4F  ..z........"!.DO
+0020: 57 4E 47 52 44 01 00 C0   2F 00 00 0B FF 01 00 01  WNGRD.../.......
+0030: 00 00 0B 00 02 01 00                               .......
+scheduling-1, READ: TLSv1.2 Handshake, length = 55
+check handshake state: server_hello[2]
+*** ServerHello, TLSv1.2
+RandomCookie:  GMT: -1805532603 bytes = { 173, 127, 99, 184, 246, 124, 212, 213, 122, 167, 137, 174, 171, 253, 240, 130, 249, 34, 33, 21, 68, 79, 87, 78, 71, 82, 68, 1 }
+Session ID:  {}
+```
+
+#### 注意到
+
+生产上（失败）：
+
+trustStore is: /apps/3rd-party/java-se-8u40-ri/jre/lib/security/cacerts
+
+```
+Cipher Suites: [TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_DSS_WITH_AES_128_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_ECDSA_WITH_RC4_128_SHA, TLS_ECDHE_RSA_WITH_RC4_128_SHA, SSL_RSA_WITH_RC4_128_SHA, TLS_ECDH_ECDSA_WITH_RC4_128_SHA, TLS_ECDH_RSA_WITH_RC4_128_SHA, SSL_RSA_WITH_RC4_128_MD5, TLS_EMPTY_RENEGOTIATION_INFO_SCSV]
+```
+
+
+
+dev上（成功）：
+
+trustStore is: /etc/pki/java/cacerts
+
+ignore的都是 ***128-SHA
+
+```
+Cipher Suites: [TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_RSA_WITH_AES_256_CBC_SHA256, TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384, TLS_DHE_RSA_WITH_AES_256_CBC_SHA256, TLS_DHE_DSS_WITH_AES_256_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDH_RSA_WITH_AES_256_CBC_SHA, TLS_DHE_RSA_WITH_AES_256_CBC_SHA, TLS_DHE_DSS_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_DSS_WITH_AES_128_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_AES_256_GCM_SHA384, TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_EMPTY_RENEGOTIATION_INFO_SCSV]
+Compression Methods:  { 0 }
+```
+
+
+
+#### 查看一下服务器支持的TLS版本类型：
+
+https://stackoverflow.com/questions/28908835/ssl-peer-shut-down-incorrectly-in-java
+
+```
+> nmap -p 443 --script ssl-enum-ciphers api.compass-ft.com
+
+Starting Nmap 7.91 ( https://nmap.org ) at 2022-01-28 09:05 Malay Peninsula Standard Time
+
+Nmap scan report for api.compass-ft.com (108.128.72.146)
+Host is up (0.23s latency).
+Other addresses for api.compass-ft.com (not scanned): 54.73.26.109 54.216.252.255
+rDNS record for 108.128.72.146: ec2-108-128-72-146.eu-west-1.compute.amazonaws.com
+
+PORT    STATE SERVICE
+443/tcp open  https
+| ssl-enum-ciphers: 
+|   TLSv1.2: 
+|     ciphers: 
+|       TLS_RSA_WITH_AES_128_GCM_SHA256 (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_GCM_SHA384 (rsa 2048) - A
+|     compressors: 
+|       NULL
+|     cipher preference: server
+|     warnings: 
+|       Forward Secrecy not supported by any cipher
+|_  least strength: A
+
+Nmap done: 1 IP address (1 host up) scanned in 10.33 seconds
+
+
+```
+
+貌似支持128和256
+
+#### dev上用的java跟生产上的不同
+
+```
+生产：
+# java -version
+openjdk version "1.8.0_40"
+OpenJDK Runtime Environment (build 1.8.0_40-b25)
+OpenJDK 64-Bit Server VM (build 25.40-b25, mixed mode)
+
+dev:
+# java -version
+openjdk version "1.8.0_191"
+OpenJDK Runtime Environment (build 1.8.0_191-b12)
+OpenJDK 64-Bit Server VM (build 25.191-b12, mixed mode)
+```
+
+也没有很大差别，不过安装方式不同，可以看到前面输出两者使用的truststore不同，
+
+dev用的是os的 trustStore is: /etc/pki/java/cacerts
+
+生产用的是jre自己的 trustStore is: /apps/3rd-party/java-se-8u40-ri/jre/lib/security/cacerts
+
+试着用openjdk的cacerts请求一下，居然可以  
+
+```java
+   
+
+[root@sgtcs-mdw-v02 funding-rate-datasource]# curl -v --capath /opt/3rd-party/java-se-8u40-ri/jre/lib/security/cacerts https://api.compass-ft.com/v1/indexes/CCRTBTC/history?access_token=
+* About to connect() to api.compass-ft.com port 443 (#0)
+*   Trying 54.73.26.109...
+* Connected to api.compass-ft.com (54.73.26.109) port 443 (#0)
+* Initializing NSS with certpath: sql:/etc/pki/nssdb
+* warning: CURLOPT_CAPATH not a directory (/opt/3rd-party/java-se-8u40-ri/jre/lib/security/cacerts)
+*   CAfile: /etc/pki/tls/certs/ca-bundle.crt
+  CApath: /opt/3rd-party/java-se-8u40-ri/jre/lib/security/cacerts
+* SSL connection using TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+* Server certificate:
+*       subject: CN=api.compass-ft.com
+*       start date: Dec 09 23:25:14 2021 GMT
+*       expire date: Mar 09 23:25:13 2022 GMT
+*       common name: api.compass-ft.com
+*       issuer: CN=R3,O=Let's Encrypt,C=US
+> GET /v1/indexes/CCRTBTC/history?access_token= HTTP/1.1
+> User-Agent: curl/7.29.0
+> Host: api.compass-ft.com
+> Accept: */*
+
+
+```
+
+反过来用系统的ca给java程序试一下
+#java -jar -Djavax.net.debug=all -Djavax.net.ssl.trustStore=/etc/pki/java/cacerts funding-rate-datasource.jar
+仍然是不行
+
+**然后想到在dev上用生产的jdk版本试试，确实能够重现出错误！**
+
+openjdk-8u40-b25-linux-x64-10_feb_2015.tar.gz
+openjdk-8u41-b04-linux-x64-14_jan_2020.tar.gz
+这两个版本都有问题，可能是这个版本的jdk底层实现的tls handshake采用的cipher suite已经过时了;
+
+结合之前VAPT漏洞扫描遇到过的一个tls hardening的问题，我觉着也有可能：
+因为这个版本的jdk刚好优先使用了os所支持的某些比较不安全的cipher suite，然后compassft服务端对这些不安全的算法进行了屏蔽，所以另一种可能的解决办法是对os进行tls hardening可能可以解决这个问题
+
+#### java.security
+
+想到是否可以通过更改java security配置来修复这个问题：
+
+Additional information on Oracle's JDK and JRE Cryptographic Algorithms
+https://java.com/en/configure_crypto.html
+
+```
+[root@sgtcs-mdw-v02 java-se-8u40-ri]# grep -r -l "cipher" ./*
+./jre/lib/security/java.security
+./jre/lib/rt.jar
+./jre/lib/jsse.jar
+./jre/lib/management/management.properties
+./jre/lib/amd64/server/libjvm.so
+./lib/ct.sym
+./man/ja_JP.UTF-8/man1/keytool.1
+./man/man1/keytool.1
+./sample/jmx/jmx-scandir/src/etc/management.properties
+
+```
+
+参照dev上面的java.security配置，更改了生产，
+
+也试了jvm参数 java -jar -Djavax.net.debug=all -Djdk.tls.client.cipherSuites=TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384 funding-rate-datasource.jar
+
+不过没有解决，两种可能：
+
+一种可能是有些配置只是对当前的程序是server端有效，而我现在是client端；
+
+另一种可能是jdk处理握手的代码有hardcode https://github.com/AdoptOpenJDK/openjdk-jdk8u/blob/master/jdk/src/share/classes/sun/security/ssl/CipherSuite.java
+
+
+
+#### jdk9也不行
+
+JDK 9好像握手能够进行多几步了，但是居然爆了另外一个错误：
+
+```
+System property jdk.tls.client.cipherSuites is set to 'null'
+System property jdk.tls.server.cipherSuites is set to 'null'
+
+scheduling-1, handling exception: java.lang.RuntimeException: Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty
+%% Invalidated:  [Session-5, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256]
+scheduling-1, SEND TLSv1.2 ALERT:  fatal, description = internal_error
+scheduling-1, WRITE: TLSv1.2 Alert, length = 2
+[Raw write]: length = 7
+0000: 15 03 03 00 02 02 50                               ......P
+scheduling-1, called closeSocket()
+scheduling-1, called close()
+scheduling-1, called closeInternal(true)
+scheduling-1, called closeSocket()
+scheduling-1, called close()
+scheduling-1, called closeInternal(true)
+scheduling-1, called close()
+scheduling-1, called closeInternal(true)
+2022-01-31 12:05:52.181 ERROR 21924GG [scheduling-1] c.a.m.f.u.HttpClientUtil : Get Exception java.lang.RuntimeException: Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty
+
+javax.net.ssl.SSLException: java.lang.RuntimeException: Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty
+        at java.base/sun.security.ssl.Alerts.getSSLException(Alerts.java:214)
+        at java.base/sun.security.ssl.SSLSocketImpl.fatal(SSLSocketImpl.java:1969)
+        at java.base/sun.security.ssl.SSLSocketImpl.fatal(SSLSocketImpl.java:1921)
+        at java.base/sun.security.ssl.SSLSocketImpl.handleException(SSLSocketImpl.java:1904)
+        at java.base/sun.security.ssl.SSLSocketImpl.handleException(SSLSocketImpl.java:1830)
+        at java.base/sun.security.ssl.AppOutputStream.write(AppOutputStream.java:71)
+        at java.base/java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:81)
+        at java.base/java.io.BufferedOutputStream.flush(BufferedOutputStream.java:142)
+        at org.apache.commons.httpclient.HttpConnection.flushRequestOutputStream(HttpConnection.java:828)
+        at org.apache.commons.httpclient.HttpMethodBase.writeRequest(HttpMethodBase.java:2116)
+        at org.apache.commons.httpclient.HttpMethodBase.execute(HttpMethodBase.java:1096)
+        at org.apache.commons.httpclient.HttpMethodDirector.executeWithRetry(HttpMethodDirector.java:398)
+        at org.apache.commons.httpclient.HttpMethodDirector.executeMethod(HttpMethodDirector.java:171)
+        at org.apache.commons.httpclient.HttpClient.executeMethod(HttpClient.java:397)
+        at org.apache.commons.httpclient.HttpClient.executeMethod(HttpClient.java:323)
+        at com.lyhistory.middleware.fundingrate.util.HttpClientUtil.sendGet(HttpClientUtil.java:64)
+        at com.lyhistory.middleware.fundingrate.service.impl.CompassftServiceImpl.sendRequest(CompassftServiceImpl.java:25)
+        at com.lyhistory.middleware.fundingrate.job.CompassftJob.crawlData(CompassftJob.java:33)
+        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.base/java.lang.reflect.Method.invoke(Method.java:564)
+        at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:84)
+        at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+        at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:514)
+        at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:305)
+        at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:300)
+        at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
+        at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
+        at java.base/java.lang.Thread.run(Thread.java:844)
+Caused by: java.lang.RuntimeException: Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty
+        at java.base/sun.security.validator.PKIXValidator.<init>(PKIXValidator.java:89)
+        at java.base/sun.security.validator.Validator.getInstance(Validator.java:181)
+        at java.base/sun.security.ssl.X509TrustManagerImpl.getValidator(X509TrustManagerImpl.java:330)
+        at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrustedInit(X509TrustManagerImpl.java:180)
+        at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:192)
+        at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:133)
+        at java.base/sun.security.ssl.ClientHandshaker.checkServerCerts(ClientHandshaker.java:1825)
+        at java.base/sun.security.ssl.ClientHandshaker.serverCertificate(ClientHandshaker.java:1655)
+        at java.base/sun.security.ssl.ClientHandshaker.processMessage(ClientHandshaker.java:260)
+        at java.base/sun.security.ssl.Handshaker.processLoop(Handshaker.java:1086)
+        at java.base/sun.security.ssl.Handshaker.processRecord(Handshaker.java:1020)
+        at java.base/sun.security.ssl.SSLSocketImpl.processInputRecord(SSLSocketImpl.java:1137)
+        at java.base/sun.security.ssl.SSLSocketImpl.readRecord(SSLSocketImpl.java:1074)
+        at java.base/sun.security.ssl.SSLSocketImpl.readRecord(SSLSocketImpl.java:973)
+        at java.base/sun.security.ssl.SSLSocketImpl.performInitialHandshake(SSLSocketImpl.java:1402)
+        at java.base/sun.security.ssl.SSLSocketImpl.writeRecord(SSLSocketImpl.java:733)
+        at java.base/sun.security.ssl.AppOutputStream.write(AppOutputStream.java:67)
+        ... 24 more
+Caused by: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty
+        at java.base/java.security.cert.PKIXParameters.setTrustAnchors(PKIXParameters.java:200)
+        at java.base/java.security.cert.PKIXParameters.<init>(PKIXParameters.java:120)
+        at java.base/java.security.cert.PKIXBuilderParameters.<init>(PKIXBuilderParameters.java:104)
+        at java.base/sun.security.validator.PKIXValidator.<init>(PKIXValidator.java:86)
+        ... 40 more
+
+```
+
+中间还找到类似的bug https://bugs.openjdk.java.net/browse/JDK-8266562
+
+可以看到有的bug同时出现在多个版本，所以高版本的某个小版本可能并没有低版本的fix，
+
+#### openjdk8 update
+
+所以继续找openjdk8u191，没找到，只找到Oracle和redhat编译的，试了下Oracle的果然没问题
+
+https://www.oracle.com/java/technologies/javase/javase8-archive-downloads.html
+
+https://www.oracle.com/java/technologies/javase/8u191-relnotes.html
+
+https://developers.redhat.com/products/openjdk/download
+
+最后找到openjdk的8u系列的版本：
+
+openjdk build 1.8.0_191-b12
+openjdk site=> left panel click "java 8 update"=> click "wiki"
+https://openjdk.java.net/projects/jdk8u/
+=》
+https://wiki.openjdk.java.net/display/jdk8u
+Note:
+
+http://hg.openjdk.java.net/jdk8u/jdk8u/ 滚动到下面看到 Added tag jdk8u191-b12 for changeset 6432b2dd408cjdk8u191-b26
+
+虽然没有8u191的release，测试了8u的最高版本8u312b07，果然成功了！
+
+
+
+没有尝试的可能方案：
+
+HttpClient如何指定CipherSuites https://ask.csdn.net/questions/189433
+en.setEnabledCipherSuites(new String[]{"TLS_RSA_WITH_AES_128_CBC_SHA"});
+
+#### 解决之后研究原因
+
+https://bugs.openjdk.java.net/browse/JDK-8144544?jql=text%20~%20%22%5C%22Remote%20host%20closed%20connection%20during%20handshake%5C%22%22
+
+https://bugs.openjdk.java.net/browse/JDK-8144544
+
+看来这个比较像，有可能是interoperability issue
+
+> Check for alternate AES providers. If there's a bad provider, the peer could easily result in a bad padding.
+>
+> The submitter's environment may have been using IBM JDK and trying to use Oracle's keymanager SunX509 implementation. No further updates. Closing out as not an issue.
+
+openjdk ibm padding EOFException handshake
+
+https://www.ibm.com/support/pages/apar/IV37231
+
+> ```
+> The problem happens because the size of the "PreMaster Secret"
+> generated from ECDH KeyAgreement in IBMJCE provider
+> did not match openssl's counterpart for some of the EC curves.
+> ```
+
+
+
+https://wiki.openjdk.java.net/display/jdk8u
+
+下载代码，确实有很多相关的修复
+
+```
+git clone https://github.com/openjdk/jdk8u
+cd jdk8u/
+git status
+git tag
+git checkout jdk8u40-b25
+git checkout jdk8u191-b12
+git log -S"receiveChangeCipherSpec"
+git log -S"receiveChangeCipherSpec"
+git show b9d40c7d6cfa8f221bf1973821b97210e6f3a5be
+git log -S"provider"
+GIT SHOW b380264de3d82ceb291401dae06e9c605e36ebd0
+git show b380264de3d82ceb291401dae06e9c605e36ebd0
+git log -S"padding"
+git log -S"ECDH"
+git log -S"EC curve"
+```
+
+
+
+### 一些有意思的问题
+
+用jmeter通过ssl验证访问https https://cloud.tencent.com/developer/article/1199237?from=15425
+解决 HTTPS 证书失效菜刀连不上 https://cloud.tencent.com/developer/article/1399952?from=15425
+How can I disable a TLS cipher for only some protocols using JVM Config? https://stackoverflow.com/questions/52779312/java-how-can-i-disable-a-tls-cipher-for-only-some-protocols-using-jvm-config?rq=1
+
+Comparative study of TLS Cipher Suite supported by Java 8
+https://linuxtut.com/en/877120a7dfa9e4a0e1e3/
+

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>原理 | 计算机基础教程</title>
+    <meta name="description" content="软件开发教程，白帽黑客入门教程，区块链入门教程，物联网，大数据">
+    
+    
+    <link rel="preload" href="/docs/assets/css/0.styles.89d6372f.css" as="style"><link rel="preload" href="/docs/assets/js/app.936a98b5.js" as="script"><link rel="preload" href="/docs/assets/js/2.464c3f4a.js" as="script"><link rel="preload" href="/docs/assets/js/101.c1df9987.js" as="script"><link rel="prefetch" href="/docs/assets/js/10.cf213c53.js"><link rel="prefetch" href="/docs/assets/js/100.f68c1b0c.js"><link rel="prefetch" href="/docs/assets/js/102.87bfca65.js"><link rel="prefetch" href="/docs/assets/js/103.2b44e69e.js"><link rel="prefetch" href="/docs/assets/js/104.6dc9ef4c.js"><link rel="prefetch" href="/docs/assets/js/105.da843e96.js"><link rel="prefetch" href="/docs/assets/js/106.e6d02f9c.js"><link rel="prefetch" href="/docs/assets/js/107.ae28ca72.js"><link rel="prefetch" href="/docs/assets/js/108.188b45da.js"><link rel="prefetch" href="/docs/assets/js/109.24ad4659.js"><link rel="prefetch" href="/docs/assets/js/11.379679b1.js"><link rel="prefetch" href="/docs/assets/js/110.bdbd8051.js"><link rel="prefetch" href="/docs/assets/js/111.1ecaec83.js"><link rel="prefetch" href="/docs/assets/js/112.e01f034d.js"><link rel="prefetch" href="/docs/assets/js/113.e52cf288.js"><link rel="prefetch" href="/docs/assets/js/114.d8dc0ccf.js"><link rel="prefetch" href="/docs/assets/js/115.00b80e63.js"><link rel="prefetch" href="/docs/assets/js/116.6f7b8214.js"><link rel="prefetch" href="/docs/assets/js/117.796edc3f.js"><link rel="prefetch" href="/docs/assets/js/118.fb54fe23.js"><link rel="prefetch" href="/docs/assets/js/119.a82fa8af.js"><link rel="prefetch" href="/docs/assets/js/12.02b27ff9.js"><link rel="prefetch" href="/docs/assets/js/120.fa579ca0.js"><link rel="prefetch" href="/docs/assets/js/121.6ece3faa.js"><link rel="prefetch" href="/docs/assets/js/122.b10d6da8.js"><link rel="prefetch" href="/docs/assets/js/123.69af6582.js"><link rel="prefetch" href="/docs/assets/js/124.675da987.js"><link rel="prefetch" href="/docs/assets/js/125.dcbab5ef.js"><link rel="prefetch" href="/docs/assets/js/126.0b8ba560.js"><link rel="prefetch" href="/docs/assets/js/127.d1cec381.js"><link rel="prefetch" href="/docs/assets/js/128.42a9b27b.js"><link rel="prefetch" href="/docs/assets/js/129.174ffe03.js"><link rel="prefetch" href="/docs/assets/js/13.94bf8ea9.js"><link rel="prefetch" href="/docs/assets/js/130.55188bd8.js"><link rel="prefetch" href="/docs/assets/js/131.572a3158.js"><link rel="prefetch" href="/docs/assets/js/132.f975a28c.js"><link rel="prefetch" href="/docs/assets/js/133.31eef532.js"><link rel="prefetch" href="/docs/assets/js/134.09b6ae5a.js"><link rel="prefetch" href="/docs/assets/js/135.cacfb63e.js"><link rel="prefetch" href="/docs/assets/js/136.d863a8d8.js"><link rel="prefetch" href="/docs/assets/js/137.17c9be28.js"><link rel="prefetch" href="/docs/assets/js/138.67060eab.js"><link rel="prefetch" href="/docs/assets/js/139.6d5dc7ab.js"><link rel="prefetch" href="/docs/assets/js/14.b0817c32.js"><link rel="prefetch" href="/docs/assets/js/140.99a9938d.js"><link rel="prefetch" href="/docs/assets/js/141.40dd2ebc.js"><link rel="prefetch" href="/docs/assets/js/142.5c4b57ce.js"><link rel="prefetch" href="/docs/assets/js/143.bdc186e1.js"><link rel="prefetch" href="/docs/assets/js/144.f429554c.js"><link rel="prefetch" href="/docs/assets/js/145.63899c24.js"><link rel="prefetch" href="/docs/assets/js/146.73539926.js"><link rel="prefetch" href="/docs/assets/js/147.55ee7677.js"><link rel="prefetch" href="/docs/assets/js/148.a2e0f95a.js"><link rel="prefetch" href="/docs/assets/js/149.04549cde.js"><link rel="prefetch" href="/docs/assets/js/15.4345d207.js"><link rel="prefetch" href="/docs/assets/js/150.f3ce6c30.js"><link rel="prefetch" href="/docs/assets/js/151.2c8fb319.js"><link rel="prefetch" href="/docs/assets/js/152.6601dba8.js"><link rel="prefetch" href="/docs/assets/js/153.89aba1ed.js"><link rel="prefetch" href="/docs/assets/js/154.c135890d.js"><link rel="prefetch" href="/docs/assets/js/155.ef6e8e6b.js"><link rel="prefetch" href="/docs/assets/js/156.25e0dfac.js"><link rel="prefetch" href="/docs/assets/js/157.85354ff0.js"><link rel="prefetch" href="/docs/assets/js/158.553cd265.js"><link rel="prefetch" href="/docs/assets/js/159.e742301e.js"><link rel="prefetch" href="/docs/assets/js/16.954e2b24.js"><link rel="prefetch" href="/docs/assets/js/160.7a7abee7.js"><link rel="prefetch" href="/docs/assets/js/161.2fc7fb35.js"><link rel="prefetch" href="/docs/assets/js/162.484d90c2.js"><link rel="prefetch" href="/docs/assets/js/163.ee6dbadc.js"><link rel="prefetch" href="/docs/assets/js/164.3fcaa37b.js"><link rel="prefetch" href="/docs/assets/js/165.4023fa46.js"><link rel="prefetch" href="/docs/assets/js/166.a9ed1a15.js"><link rel="prefetch" href="/docs/assets/js/167.7c54ea52.js"><link rel="prefetch" href="/docs/assets/js/168.ff1d33e6.js"><link rel="prefetch" href="/docs/assets/js/169.ebcf8f3f.js"><link rel="prefetch" href="/docs/assets/js/17.66e4494f.js"><link rel="prefetch" href="/docs/assets/js/170.e3bf3ef8.js"><link rel="prefetch" href="/docs/assets/js/171.092b9a89.js"><link rel="prefetch" href="/docs/assets/js/172.ae61579e.js"><link rel="prefetch" href="/docs/assets/js/173.589e993c.js"><link rel="prefetch" href="/docs/assets/js/174.e5563272.js"><link rel="prefetch" href="/docs/assets/js/175.27f14d8a.js"><link rel="prefetch" href="/docs/assets/js/176.1fb3faa2.js"><link rel="prefetch" href="/docs/assets/js/177.0593a817.js"><link rel="prefetch" href="/docs/assets/js/178.1f4ef83d.js"><link rel="prefetch" href="/docs/assets/js/179.eea00b84.js"><link rel="prefetch" href="/docs/assets/js/18.10fafe7f.js"><link rel="prefetch" href="/docs/assets/js/180.03224077.js"><link rel="prefetch" href="/docs/assets/js/181.e83176bb.js"><link rel="prefetch" href="/docs/assets/js/182.9cc915a3.js"><link rel="prefetch" href="/docs/assets/js/183.e1dca22c.js"><link rel="prefetch" href="/docs/assets/js/184.4481fc41.js"><link rel="prefetch" href="/docs/assets/js/185.cbc3251f.js"><link rel="prefetch" href="/docs/assets/js/186.34d3c9aa.js"><link rel="prefetch" href="/docs/assets/js/187.36768409.js"><link rel="prefetch" href="/docs/assets/js/188.d06ccf45.js"><link rel="prefetch" href="/docs/assets/js/189.651f12a1.js"><link rel="prefetch" href="/docs/assets/js/19.c1cac792.js"><link rel="prefetch" href="/docs/assets/js/190.8df478d7.js"><link rel="prefetch" href="/docs/assets/js/191.05e5ac5e.js"><link rel="prefetch" href="/docs/assets/js/192.266305a9.js"><link rel="prefetch" href="/docs/assets/js/193.32a3f9e8.js"><link rel="prefetch" href="/docs/assets/js/194.8ee3ff68.js"><link rel="prefetch" href="/docs/assets/js/195.b8987f50.js"><link rel="prefetch" href="/docs/assets/js/196.7503f093.js"><link rel="prefetch" href="/docs/assets/js/197.f3f7b8ca.js"><link rel="prefetch" href="/docs/assets/js/198.eb91944d.js"><link rel="prefetch" href="/docs/assets/js/199.932edf43.js"><link rel="prefetch" href="/docs/assets/js/20.c73682e8.js"><link rel="prefetch" href="/docs/assets/js/200.f4c27482.js"><link rel="prefetch" href="/docs/assets/js/201.de45ebf2.js"><link rel="prefetch" href="/docs/assets/js/202.7ce62661.js"><link rel="prefetch" href="/docs/assets/js/203.0e625be4.js"><link rel="prefetch" href="/docs/assets/js/204.782f7cc8.js"><link rel="prefetch" href="/docs/assets/js/21.61052aac.js"><link rel="prefetch" href="/docs/assets/js/22.651edfb7.js"><link rel="prefetch" href="/docs/assets/js/23.3a09ed98.js"><link rel="prefetch" href="/docs/assets/js/24.45c2eb4e.js"><link rel="prefetch" href="/docs/assets/js/25.ba449961.js"><link rel="prefetch" href="/docs/assets/js/26.a00eaa1c.js"><link rel="prefetch" href="/docs/assets/js/27.f6476838.js"><link rel="prefetch" href="/docs/assets/js/28.4d61d9ca.js"><link rel="prefetch" href="/docs/assets/js/29.b4de7cd8.js"><link rel="prefetch" href="/docs/assets/js/3.4742910c.js"><link rel="prefetch" href="/docs/assets/js/30.575975e8.js"><link rel="prefetch" href="/docs/assets/js/31.8584f817.js"><link rel="prefetch" href="/docs/assets/js/32.11448813.js"><link rel="prefetch" href="/docs/assets/js/33.da122e30.js"><link rel="prefetch" href="/docs/assets/js/34.236f4e2c.js"><link rel="prefetch" href="/docs/assets/js/35.54e933cb.js"><link rel="prefetch" href="/docs/assets/js/36.48a99d0e.js"><link rel="prefetch" href="/docs/assets/js/37.e79e58c4.js"><link rel="prefetch" href="/docs/assets/js/38.e5a95726.js"><link rel="prefetch" href="/docs/assets/js/39.fed1d97c.js"><link rel="prefetch" href="/docs/assets/js/4.d10d7cc8.js"><link rel="prefetch" href="/docs/assets/js/40.75cce818.js"><link rel="prefetch" href="/docs/assets/js/41.30dc437a.js"><link rel="prefetch" href="/docs/assets/js/42.18ed9219.js"><link rel="prefetch" href="/docs/assets/js/43.7d07c4ce.js"><link rel="prefetch" href="/docs/assets/js/44.89f6ec95.js"><link rel="prefetch" href="/docs/assets/js/45.4b423079.js"><link rel="prefetch" href="/docs/assets/js/46.d6591ace.js"><link rel="prefetch" href="/docs/assets/js/47.d20da0f1.js"><link rel="prefetch" href="/docs/assets/js/48.2ae38531.js"><link rel="prefetch" href="/docs/assets/js/49.6f4cff67.js"><link rel="prefetch" href="/docs/assets/js/5.9dc24765.js"><link rel="prefetch" href="/docs/assets/js/50.b3bf1715.js"><link rel="prefetch" href="/docs/assets/js/51.ec7e74ef.js"><link rel="prefetch" href="/docs/assets/js/52.389c4e44.js"><link rel="prefetch" href="/docs/assets/js/53.d877654f.js"><link rel="prefetch" href="/docs/assets/js/54.eccf26cc.js"><link rel="prefetch" href="/docs/assets/js/55.d7c51471.js"><link rel="prefetch" href="/docs/assets/js/56.02d64560.js"><link rel="prefetch" href="/docs/assets/js/57.879be59b.js"><link rel="prefetch" href="/docs/assets/js/58.b6d34bad.js"><link rel="prefetch" href="/docs/assets/js/59.7024de3c.js"><link rel="prefetch" href="/docs/assets/js/6.ef7470f2.js"><link rel="prefetch" href="/docs/assets/js/60.4e92ac46.js"><link rel="prefetch" href="/docs/assets/js/61.9b6e1f30.js"><link rel="prefetch" href="/docs/assets/js/62.0b9e0e22.js"><link rel="prefetch" href="/docs/assets/js/63.4365d3a6.js"><link rel="prefetch" href="/docs/assets/js/64.b477e840.js"><link rel="prefetch" href="/docs/assets/js/65.f4e6017f.js"><link rel="prefetch" href="/docs/assets/js/66.40dcca2d.js"><link rel="prefetch" href="/docs/assets/js/67.b0168d74.js"><link rel="prefetch" href="/docs/assets/js/68.23ca1ba8.js"><link rel="prefetch" href="/docs/assets/js/69.c5fd06ec.js"><link rel="prefetch" href="/docs/assets/js/7.90fe7f47.js"><link rel="prefetch" href="/docs/assets/js/70.d0d040b8.js"><link rel="prefetch" href="/docs/assets/js/71.c1d040b2.js"><link rel="prefetch" href="/docs/assets/js/72.b804454d.js"><link rel="prefetch" href="/docs/assets/js/73.c158f4fc.js"><link rel="prefetch" href="/docs/assets/js/74.bb597759.js"><link rel="prefetch" href="/docs/assets/js/75.3185ec11.js"><link rel="prefetch" href="/docs/assets/js/76.52c523c9.js"><link rel="prefetch" href="/docs/assets/js/77.4e90f222.js"><link rel="prefetch" href="/docs/assets/js/78.a2fbff7a.js"><link rel="prefetch" href="/docs/assets/js/79.d543ee50.js"><link rel="prefetch" href="/docs/assets/js/8.757dd096.js"><link rel="prefetch" href="/docs/assets/js/80.8f614093.js"><link rel="prefetch" href="/docs/assets/js/81.1978a580.js"><link rel="prefetch" href="/docs/assets/js/82.853a07eb.js"><link rel="prefetch" href="/docs/assets/js/83.c8313bf2.js"><link rel="prefetch" href="/docs/assets/js/84.f47d13eb.js"><link rel="prefetch" href="/docs/assets/js/85.566c6687.js"><link rel="prefetch" href="/docs/assets/js/86.3cc51b3d.js"><link rel="prefetch" href="/docs/assets/js/87.6a485e5b.js"><link rel="prefetch" href="/docs/assets/js/88.ee52d47a.js"><link rel="prefetch" href="/docs/assets/js/89.afba37a5.js"><link rel="prefetch" href="/docs/assets/js/9.07559e13.js"><link rel="prefetch" href="/docs/assets/js/90.25d5fb38.js"><link rel="prefetch" href="/docs/assets/js/91.53f55933.js"><link rel="prefetch" href="/docs/assets/js/92.e70cc66c.js"><link rel="prefetch" href="/docs/assets/js/93.8c3140b1.js"><link rel="prefetch" href="/docs/assets/js/94.874520fe.js"><link rel="prefetch" href="/docs/assets/js/95.10acd69c.js"><link rel="prefetch" href="/docs/assets/js/96.b13d1d70.js"><link rel="prefetch" href="/docs/assets/js/97.ce0cb827.js"><link rel="prefetch" href="/docs/assets/js/98.1740d8d4.js"><link rel="prefetch" href="/docs/assets/js/99.75f44639.js">
+    <link rel="stylesheet" href="/docs/assets/css/0.styles.89d6372f.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/docs/" class="home-link router-link-active"><!----> <span class="site-name">计算机基础教程</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/docs/" class="nav-link">机器指令</a></div><div class="nav-item"><a href="/docs/software/" class="nav-link router-link-active">软件基础</a></div><div class="nav-item"><a href="/docs/coder2hacker/" class="nav-link">白帽黑客</a></div><div class="nav-item"><a href="/docs/blockchain/" class="nav-link">区块链</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/docs/" class="nav-link">机器指令</a></div><div class="nav-item"><a href="/docs/software/" class="nav-link router-link-active">软件基础</a></div><div class="nav-item"><a href="/docs/coder2hacker/" class="nav-link">白帽黑客</a></div><div class="nav-item"><a href="/docs/blockchain/" class="nav-link">区块链</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/docs/software/" class="sidebar-link">软件基础</a></li><li><a href="/docs/coder2hacker/" class="sidebar-link">黑客入门</a></li><li><a href="/docs/blockchain/" class="sidebar-link">区块链入门</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h2 id="原理"><a href="#原理" class="header-anchor">#</a> 原理</h2> <p>Keepalived是一个基于VRRP协议-Virtual Router Redundancy Protocol 来实现的服务高可用方案</p> <p>VRRP:</p> <p>VRRP全称 Virtual Router Redundancy Protocol，即 虚拟路由冗余协议。可以认为它是实现路由器高可用的容错协议，即将N台提供相同功能的路由器组成一个路由器组(Router Group)，这个组里面有一个master和多个backup，但在外界看来就像一台一样，构成虚拟路由器，拥有一个虚拟IP（vip，也就是路由器所在局域网内其他机器的默认路由），占有这个IP的master实际负责ARP相应和转发IP数据包，组中的其它路由器作为备份的角色处于待命状态。master会发组播消息，当backup在超时时间内收不到vrrp包时就认为master宕掉了，这时就需要根据VRRP的优先级来选举一个backup当master，保证路由器的高可用。</p> <p>在VRRP协议实现里，虚拟路由器使用 00-00-5E-00-01-XX 作为虚拟MAC地址，XX就是唯一的 VRID （Virtual Router IDentifier），这个地址同一时间只有一个物理路由器占用。在虚拟路由器里面的物理路由器组里面通过多播IP地址 <strong>224.0.0.18</strong> 来定时发送通告消息。每个Router都有一个 1-255 之间的优先级别，级别最高的（highest priority）将成为主控（master）路由器。通过降低master的优先权可以让处于backup状态的路由器抢占（pro-empt）主路由器的状态，两个backup优先级相同的IP地址较大者为master，接管虚拟IP。</p> <p>keepalived可以认为是VRRP协议在Linux上的实现，主要有三个模块，分别是core、check和vrrp。core模块为keepalived的核心，负责主进程的启动、维护以及全局配置文件的加载和解析。check负责健康检查，包括常见的各种检查方式。</p> <p>keepalived工作在TCP/IP 参考模型的 三层、四层、五层，也就是分别为：网络层，传输层和应用层, Layer3,4,5 工作在IP/TCP协议栈的IP层，TCP层，及应用层,原理分别如下：</p> <pre><code>Layer3：Keepalived使用Layer3的方式工作式时，Keepalived会定期向服务器群中的服务器发送一个ICMP的数据包（既我们平时用的Ping程序）,如果发现某台服务的IP地址没有激活，Keepalived便报告这台服务器失效，并将它从服务器群中剔除，这种情况的典型例子是某台服务器被非法关机。Layer3的方式是以服务器的IP地址是否有效作为服务器工作正常与否的标准。
+Layer4:如果您理解了Layer3的方式，Layer4就容易了。Layer4主要以TCP端口的状态来决定服务器工作正常与否。如web server的服务端口一般是80，如果Keepalived检测到80端口没有启动，则Keepalived将把这台服务器从服务器群中剔除。
+Layer7：Layer7就是工作在具体的应用层了，比Layer3,Layer4要复杂一点，在网络上占用的带宽也要大一些。Keepalived将根据用户的设定检查服务器程序的运行是否正常，如果与用户的设定不相符，则Keepalived将把服务器从服务器群中剔除。
+</code></pre> <p>1.选举策略</p> <p>首先，每个节点有一个初始优先级，由配置文件中的priority配置项指定，MASTER节点的priority应比BAKCUP高。运行过程中keepalived根据vrrp_script的weight设定，增加或减小节点优先级。规则如下：</p> <pre><code> 当weight &gt; 0时，vrrp_script script脚本执行返回0(成功)时优先级为priority + weight, 否则为priority。当BACKUP发现自己的优先级大于MASTER通告的优先级时，进行主从切换。
+ 当weight &lt; 0时，vrrp_script script脚本执行返回非0(失败)时优先级为priority + weight, 否则为priority。当BACKUP发现自己的优先级大于MASTER通告的优先级时，进行主从切换。
+当两个节点的优先级相同时，以节点发送VRRP通告的IP作为比较对象，IP较大者为MASTER。
+</code></pre> <p>2.priority和weight的设定</p> <pre><code>主从的优先级初始值priority和变化量weight设置非常关键，配错的话会导致无法进行主从切换。比如，当MASTER初始值定得太高，即使script脚本执行失败，也比BACKUP的priority + weight大，就没法进行VIP漂移了。
+所以priority和weight值的设定应遵循: abs(MASTER priority - BAKCUP priority) &lt; abs(weight)。一般情况下，初始值MASTER的priority值应该比较BACKUP大，但不能超过weight的绝对值。 另外，当网络中不支持多播(例如某些云环境)，或者出现网络分区的情况，keepalived BACKUP节点收不到MASTER的VRRP通告，就会出现脑裂(split brain)现象，此时集群中会存在多个MASTER节点。
+</code></pre> <p>3.常用命令</p> <pre><code>查看当前VIP在哪个节点上： ip addr show|grep &quot;scope global&quot; (查看VIP是否在筛选结果中)  或者 ip addr show|grep &lt;VIP&gt;
+查看日志tail /var/log/messages
+抓包命令：tcpdump -nn vrrp
+可以用这条命令来查看该网络中所存在的vrid：tcpdump -nn -i any net 224.0.0.0/8
+
+解绑VIP：ip addr del &lt;vip&gt; dev &lt;eth0&gt;
+
+绑定VIP：ip addr add &lt;vip&gt; dev &lt;eth0&gt;
+</code></pre> <div class="language- extra-class"><pre class="language-text"><code>                   +-------------+
+                   |    uplink   |
+                   +-------------+
+                          |
+                          +
+    MASTER            keep|alived         BACKUP
+172.101.2.100      172.101.2.99      172.101.2.101
++-------------+    +-------------+    +-------------+
+|   nginx01   |----|  virtualIP  |----|   nginx02   |
++-------------+    +-------------+    +-------------+
+                          |
+       +------------------+------------------+
+       |                                     |
++-------------+    				     +-------------+
+|    web01    |    				   	 |    web02    |
+————————————————   					 ———————————————
+</code></pre></div><h2 id="配置选项说明："><a href="#配置选项说明：" class="header-anchor">#</a> 配置选项说明：</h2> <div class="language- extra-class"><pre class="language-text"><code>-------------------------------------------------------------------------------
+global_defs
+-------------------------------------------------------------------------------
+    notification_email ： keepalived在发生诸如切换操作时需要发送email通知地址，后面的 smtp_server 相比也都知道是邮件服务器地址。也可以通过其它方式报警，毕竟邮件不是实时通知的。
+    router_id ： 机器标识，通常可设为hostname。故障发生时，邮件通知会用到
+-------------------------------------------------------------------------------
+vrrp_instance
+-------------------------------------------------------------------------------
+    state ： 指定instance(Initial)的初始状态，就是说在配置好后，这台服务器的初始状态就是这里指定的，但这里指定的不算，还是得要通过竞选通过优先级来确定。如果这里设置为MASTER，但如若他的优先级不及另外一台，那么这台在发送通告时，会发送自己的优先级，另外一台发现优先级不如自己的高，那么他会就回抢占为MASTER
+    interface ： 实例绑定的网卡，因为在配置虚拟IP的时候必须是在已有的网卡上添加的
+    mcast_src_ip ： 发送多播数据包时的源IP地址，这里注意了，这里实际上就是在那个地址上发送VRRP通告，这个非常重要，一定要选择稳定的网卡端口来发送，这里相当于heartbeat的心跳端口，如果没有设置那么就用默认的绑定的网卡的IP，也就是interface指定的IP地址
+    virtual_router_id ： 这里设置VRID，这里非常重要，相同的VRID为一个组，他将决定多播的MAC地址
+    priority ： 设置本节点的优先级，优先级高的为master
+    advert_int ： 检查间隔，默认为1秒。这就是VRRP的定时器，MASTER每隔这样一个时间间隔，就会发送一个advertisement报文以通知组内其他路由器自己工作正常
+    authentication ： 定义认证方式和密码，主从必须一样
+    virtual_ipaddress ： 这里设置的就是VIP，也就是虚拟IP地址，他随着state的变化而增加删除，当state为master的时候就添加，当state为backup的时候删除，这里主要是有优先级来决定的，和state设置的值没有多大关系，这里可以设置多个IP地址
+    track_script ： 引用VRRP脚本，即在 vrrp_script 部分指定的名字。定期运行它们来改变优先级，并最终引发主备切换。
+-------------------------------------------------------------------------------
+vrrp_script
+-------------------------------------------------------------------------------
+告诉 keepalived 在什么情况下切换，所以尤为重要。可以有多个 vrrp_script
+
+    script ： 自己写的检测脚本。也可以是一行命令如killall -0 nginx
+    interval 2 ： 每2s检测一次
+    weight -5 ： 检测失败（脚本返回非0）则优先级 -5
+    fall 2 ： 检测连续 2 次失败才算确定是真失败。会用weight减少优先级（1-255之间）
+    rise 1 ： 检测 1 次成功就算成功。但不修改优先级
+
+这里要提示一下script一般有2种写法：
+
+    通过脚本执行的返回结果，改变优先级，keepalived继续发送通告消息，backup比较优先级再决定
+    脚本里面检测到异常，直接关闭keepalived进程，backup机器接收不到advertisement会抢占IP
+
+上文 vrrp_script 配置部分，killall -0 nginx属于第1种情况，/etc/keepalived/check_nginx.sh属于第2种情况（脚本中关闭keepalived）。个人更倾向于通过shell脚本判断，但有异常时exit 1，正常退出exit 0，然后keepalived根据动态调整的 vrrp_instance 优先级选举决定是否抢占VIP：
+
+    如果脚本执行结果为0，并且weight配置的值大于0，则优先级相应的增加
+    如果脚本执行结果非0，并且weight配置的值小于0，则优先级相应的减少
+
+其他情况，原本配置的优先级不变，即配置文件中priority对应的值。
+
+提示：
+    优先级不会不断的提高或者降低
+    可以编写多个检测脚本并为每个检测脚本设置不同的weight（在配置中列出就行）
+    不管提高优先级还是降低优先级，最终优先级的范围是在[1,254]，不会出现优先级小于等于0或者优先级大于等于255的情况
+    在MASTER节点的 vrrp_instance 中 配置 nopreempt ，当它异常恢复后，即使它 prio 更高也不会抢占，这样可以避免正常情况下做无谓的切换
+
+以上可以做到利用脚本检测业务进程的状态，并动态调整优先级从而实现主备切换。
+-------------------------------------------------------------------------------
+virtual_server
+-------------------------------------------------------------------------------
+    虚拟服务器，来源vrrp_instance 中配置的 的虚拟IP地址，后面加空格加端口号
+-------------------------------------------------------------------------------
+virtual_server_group
+-------------------------------------------------------------------------------
+    用来定义virtual_server 组，一般在超大型的LVS中用到，一般LVS用不过这东西。
+
+
+</code></pre></div><h2 id="troubleshooting"><a href="#troubleshooting" class="header-anchor">#</a> Troubleshooting</h2> <h3 id="requires-libmysqlclient-so-18"><a href="#requires-libmysqlclient-so-18" class="header-anchor">#</a> Requires: libmysqlclient.so.18</h3> <p>生产环境yum install keepalived报错：</p> <p>error：</p> <p>Error: Package: 1:net-snmp-agent-libs-5.7.2-49.....
+Requires: libmysqlclient.so.18</p> <div class="language- extra-class"><pre class="language-text"><code>开发环境没有任何问题，所以对比下开发环境
+先根据错误信息查下开发环境的依赖
+$ sudo yum deplist keepalived 
+	dependency: libnetsnmp.so.31()(64bit)                                                                          provider: net-snmp-libs.x86_64 1:5.7.2-49.el7_9.1                                                         dependency: libnetsnmpagent.so.31()(64bit)                                                                      provider: net-snmp-agent-libs.x86_64 1:5.7.2-49.el7_9.1 
+$ sudo yum deplist net-snmp-agent-libs.x86_64 1:5.7.2-49.el7_9.1
+	dependency: libmysqlclient.so.18()(64bit)
+   		provider: mariadb-libs.x86_64 1:5.5.68-1.el7
+  	dependency: libmysqlclient.so.18(libmysqlclient_18)(64bit)
+   		provider: mariadb-libs.x86_64 1:5.5.68-1.el7
+果然这里是依赖libmysqlclient.so.18，安装位置是 /usr/lib64/mysql/
+但是奇怪，这里的provider为啥是mariadb，
+奇怪是因为我之前是安装安装手册步骤删除了mariadb安装了mysql
+Repeat following steps in both master DB server and secondary DB server.
+1)	Login as root. Copy mysql installation packages and its dependencies to /opt
+•	mysql-community-client-5.7.32-1.el7.x86_64.rpm
+•	mysql-community-common-5.7.32-1.el7.x86_64.rpm
+•	mysql-community-libs-5.7.32-1.el7.x86_64.rpm
+•	mysql-community-server-5.7.32-1.el7.x86_64.rpm
+2)	Uninstall mariadb as it conflicts with mysql
+$ yum remove mariadb-libs-5.5.44-2.el7.x86_64
+3)	Install mysql-community-server-5.7.18 on DB 
+$ yum install mysql-community-{server,client,common,libs}-*
+
+继续看下mysql安装包
+$ yum list installed|grep mysql
+Skipping unreadable repository '/etc/yum.repos.d/redhat.repo'
+Skipping unreadable repository '/etc/yum.repos.d/rhel7_SIM.repo'
+mysql-community-client.x86_64         5.7.18-1.el7                @/mysql-community-client-5.7.18-1.el7.x86_64
+mysql-community-common.x86_64         5.7.18-1.el7                @/mysql-community-common-5.7.18-1.el7.x86_64
+mysql-community-libs.x86_64           5.7.18-1.el7                @/mysql-community-libs-5.7.18-1.el7.x86_64
+mysql-community-libs-compat.x86_64    5.7.25-1.el7                @/mysql-community-libs-compat-5.7.25-1.el7.x86_64
+mysql-community-server.x86_64         5.7.18-1.el7                @/mysql-community-server-5.7.18-1.el7.x86_64
+
+直觉怀疑缺少了 mysql-community-libs-compat.x86_64，对比生产环境，果然少了这个包
+
+$ sudo rpm -ql mysql-community-libs-compat
+/etc/ld.so.conf.d/mysql-x86_64.conf
+/usr/lib64/mysql
+/usr/lib64/mysql/libmysqlclient.so.18
+/usr/lib64/mysql/libmysqlclient.so.18.1.0
+/usr/lib64/mysql/libmysqlclient_r.so.18
+/usr/lib64/mysql/libmysqlclient_r.so.18.1.0
+/usr/share/doc/mysql-community-libs-compat-5.7.25
+/usr/share/doc/mysql-community-libs-compat-5.7.25/COPYING
+/usr/share/doc/mysql-community-libs-compat-5.7.25/README
+
+确定了，就是少了这个包
+
+补充，可以反查：
+sudo rpm -qf /usr/lib64/mysql/libmysqlclient.so.18
+mysql-community-libs-compat-5.7.25-1.el7.x86_64
+</code></pre></div><h3 id="failed-to-run-external-check-scripts"><a href="#failed-to-run-external-check-scripts" class="header-anchor">#</a> failed to run external check scripts</h3> <p>selinux 开关！</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/docs/assets/js/app.936a98b5.js" defer></script><script src="/docs/assets/js/2.464c3f4a.js" defer></script><script src="/docs/assets/js/101.c1df9987.js" defer></script>
+  </body>
+</html>

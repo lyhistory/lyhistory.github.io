@@ -1,0 +1,663 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.15.2 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Mobile development strategy - LIU YUE’S - NOTES TO SHARE</title>
+<meta name="description" content="1.WebWebsites are open, no need to install, and the websites are easy to deploy and update compared to native app, no need wait for app store approval and updating always on server side.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="LIU YUE'S - NOTES TO SHARE">
+<meta property="og:title" content="Mobile development strategy">
+<meta property="og:url" content="http://localhost:4000/migrate-mobile_dev/">
+
+
+  <meta property="og:description" content="1.WebWebsites are open, no need to install, and the websites are easy to deploy and update compared to native app, no need wait for app store approval and updating always on server side.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-01-01T00:00:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/migrate-mobile_dev/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="LIU YUE'S - NOTES TO SHARE Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">LIU YUE'S - NOTES TO SHARE</a>
+        <ul class="visible-links"></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/content/images/common/liuyue.jpg" alt="LIU YUE" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">LIU YUE</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        古萧龙城好青年:wechat:lyhistory; Born in XiaoXian County,Anhui China; Bachelor in cst XMU, Master in se NUS; Enneagram Type 5;
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="mailto:lyhistory@gmail.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/lyhistory" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/lyhistory" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Mobile development strategy">
+    <meta itemprop="description" content="1.WebWebsites are open, no need to install, and the websites are easy to deploy and update compared to native app, no need wait for app store approval and updating always on server side.">
+    <meta itemprop="datePublished" content="January 01, 2019">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Mobile development strategy
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  5 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h1 id="1web">1.Web</h1>
+<p>Websites are open, no need to install, and the websites are easy to deploy and update compared to native app, no need wait for app store approval and updating always on server side.</p>
+
+<p>HTML5 is growing more robust and feature-rich, now with html5 device API, we are able to get access and control hardware like sensors/camera/battery. It enables web app to do most of the things that a native app can do.</p>
+
+<p>Web applications are relatively easy to move to other platforms, although there will be some compatibility issues for different devices, but it’s much easier than translating a native app from swift to java</p>
+
+<p>Web applications have gotten a bad reputation – sometimes slow, and websites always rely on network connectivity, and for game players, experience using mobile web may not as smooth as native apps.</p>
+
+<p>HTML5 compatibility on mobile and tablet browsers with testing on real devices</p>
+
+<p><strong>Framework:</strong>
+HTML5 powered framework like JQuery mobile/Sencha, etc</p>
+
+<p>Bootstrap –HTML/CSS/JS toolkit, mobile first front end framework for responsible layout;</p>
+
+<p>jquery mobile</p>
+
+<p>it gives a lot of mobile-oriented features like swipe-events, page transitions, allows for single/multipage applications, AJAX page preload, and history manipulation API, and lots of touch-friendly components/widgets, because everything is done through HTML5 markup, jQuery Mobile application still needs to process that markup in the background during the application real-time execution, and JavaScript is a workhorse, in that case. This combined with mobile browsers will result in below-average performances</p>
+
+<p>http://mobilehtml5.org/</p>
+
+<p>sample: http://www.girliemac.com/presentation-slides/html5-mobile-approach/deviceAPIs.html</p>
+
+<p>https://developer.mozilla.org/en/docs/Web/Guide/Mobile</p>
+
+<h1 id="2native">2.Native</h1>
+<p>1.andoird</p>
+
+<p>JIT JVM machine code, android runtime on linux os</p>
+
+<p>https://www.quora.com/Why-is-ART-better-than-Dalvik</p>
+
+<p>just-in-time compile java code to byte code or machine instruction code, which will later running on vm.</p>
+
+<p>http://www.zdnet.com/article/how-android-works-the-big-picture/</p>
+
+<p>2.ios</p>
+<h1 id="3hybrid">3.Hybrid:</h1>
+<p>Basically there are two types of hybrid frameworks:</p>
+
+<p>Frameworks like phonegap/cordova use web view, wraps application in a browser with no url bar, developer then builds the application as a web site, but it is packaged and looks like a native app on the device with limited native API access, because mobile browser is sandboxed from native APIs to ensure battery performance and device security.</p>
+
+<p>Another type of hybrid frameworks claims they are ‘truly native’ frameworks: react native/native script/xmaria, these frameworks are the huge improvements from the Phonegap/Cordova</p>
+
+<h2 id="1webview">1.webview</h2>
+<p>Phonegap client communicates with an application server to receive data using standard web protocols. Phonegap acts as a client for the user to interact with, the application server is normally a web server which performs business logic and calculations, and generally retrieves or persists data from a separate data repository.</p>
+<h2 id="2truly-native">2.truly native</h2>
+<p>Xamarin</p>
+
+<p>is a runtime for building cross-platform mobile applications using c# and the .NET framework, the .NET framework is not supported on either IOS or Android, Xamarin provides a close approximation of the .NET framework for these platforms via an open source port of .NET called Mono.</p>
+
+<p>native script:</p>
+
+<p> https://www.npmjs.com/package/nativescript#installation</p>
+
+<p>https://www.thepolyglotdeveloper.com/2016/04/my-experience-developing-with-telerik-nativescript/</p>
+
+<p>NativeScript simply executes JavaScript on the underlying native operating system.
+<img src="/content/images/post/20190101/mobiledev1.png" alt="" />
+<img src="/content/images/post/20190101/mobiledev2.png" alt="" /></p>
+
+<p>NativeScript is following the classic approach like Android. Running JavaScript on the UI thread allows NativeScript to deliver on one of its core guiding principles: provide high-performance access to 100% of native platform APIs through JavaScript. Period. No trade-offs. No limits.</p>
+
+<p>java script packaged by native script CLI(npm) to Java code/object-c, and finally compiled to byte code
+https://www.nativescript.org/blog/nativescript-and-xamarin
+Build Process</p>
+
+<p>Both NativeScript and Xamarin support building Android applications on Windows. They also both support building directly to iOS on a Mac. Due to the fact that Apple has restricted the building of iOS applications to a macOS machine, neither NativeScript nor Xamarin can build iOS apps directly on Windows. However, there are solutions provided by both frameworks for this issue.</p>
+
+<p>While iOS apps can be coded with Xamarin on a Windows machine, Xamarin requires ssh access to a macOS machine in order to do the actual build for iOS. There is no way around this. With Xamarin, the developer must have access to a Mac to build iOS binaries.</p>
+
+<p>In the case of NativeScript, the AppBuilder extension from Telerik provides a cloud build service that does not require the developer to own a Mac. This is essentially a networked Mac that we own and provide to developers as a service. The developer then builds on the Windows machine, the code is compiled on our servers and sent back to you in IPA format, ready to be installed on iOS.</p>
+
+<p>NativeScript also provides companion applications that can be downloaded from the iOS and Android app stores. These companion apps allow developers to load their applications on their devices without actually installing them. This is very helpful during the development process.</p>
+
+<p>Mobile web views are slow, and worse, they behave differently on different platforms and platform versions.  It is difficult to get consistency when using them and results in inconsistent experiences for the users of your applications.</p>
+
+<p>NativeScript instead maps the XML layouts and styles at build time to their native counterparts leaving you with a 100% native mobile application.  There are not inconsistencies in performance when it comes to native layouts and code.  Sure there may be differences in appearance, but that is normal between platform versions.</p>
+
+<p>React Native</p>
+
+<p>is using the Virtual DOM for updating the UI like React. React Native will calculate the changes in the background thread and keep the UI thread untouched if there is no change. So, UI will be very responsive. But, If the component makes a lot of calls to the native OS, then the app will be slow.</p>
+
+<p>https://www.infoq.com/articles/react-native-introduction
+##################################################</p>
+
+<p>web vs native:</p>
+
+<p>http://www.html5rocks.com/en/mobile/nativedebate/</p>
+
+<p>http://stackoverflow.com/questions/95635/what-does-a-just-in-time-jit-compiler-do</p>
+
+<p>A JIT compiler runs after the program has started and compiles the code (usually bytecode or some kind of VM instructions) on the fly (or just-in-time, as it’s called) into a form that’s usually faster, typically the host CPU’s native instruction set. A JIT has access to dynamic runtime information whereas a standard compiler doesn’t and can make better optimizations like inlining functions that are used frequently.</p>
+
+<p>This is in contrast to a traditional compiler that compiles all the code to machine language before the program is first run.</p>
+
+<p>To paraphrase, conventional compilers build the whole program as an EXE file BEFORE the first time you run it. For newer style programs, an assembly is generated with pseudocode (p-code). Only AFTER you execute the program on the OS (e.g., by double-clicking on its icon) will the (JIT) compiler kick in and generate machine code (m-code) that the Intel-based processor or whatever will understand.</p>
+
+<p>http://www.infoworld.com/article/2621943/mobile-development/13-essential-programming-tools-for-the-mobile-web.html</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2019-01-01T00:00:00+08:00">January 01, 2019</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Mobile+development+strategy%20http%3A%2F%2Flocalhost%3A4000%2Fmigrate-mobile_dev%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fmigrate-mobile_dev%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A4000%2Fmigrate-mobile_dev%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fmigrate-mobile_dev%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/migrate-itlaw/" class="pagination--pager" title="IT LAW
+">Previous</a>
+    
+    
+      <a href="/migrate-ooad/" class="pagination--pager" title="Object Oriented Analysis and Design
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/arp/" rel="permalink">troubleshooting intranet access issue raised by wrong arp
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">I got an issue access the shared folder on the other pc in the same intranet at home, actually it was working fine a few days ago.
+both pc are win10 os.
+
+</p>
+  </article>
+</div>
+
+        
+          
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/mysql_replication/" rel="permalink">Mysql replication test between different version
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Master: mysql5.7
+
+Slave: mysql8.0
+
+
+</p>
+  </article>
+</div>
+
+        
+          
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/storm/" rel="permalink">Apache storm starter
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">run WordCountTopology in Local Mode and (Local) Cluster Mode
+version: 1.2.2
+env: vms centos7
+example:https://github.com/apache/storm/blob/v1.2.2/examples/sto...</p>
+  </article>
+</div>
+
+        
+          
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hdfs/" rel="permalink">[Hadoop ecosystem] Chapter 1: Data Storage: HDFS
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Hadoop ecosystem series…
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form onsubmit="return googleCustomSearchExecute();" id="cse-search-box-form-id">
+    <input type="text" id="cse-search-input-box-id" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    </form>
+    <div id="results" class="results">
+        <gcse:searchresults-only></gcse:searchresults-only>    
+    </div></div>
+
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-9742852210287449",
+    enable_page_level_ads: true
+  });
+</script>
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://alphawallet.com/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-university" aria-hidden="true"></i> AlphaWallet</a></li>
+        
+      
+        
+          <li><a href="https://developers.google.com/edu/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-google" aria-hidden="true"></i> Google Course</a></li>
+        
+      
+        
+          <li><a href="http://vouchain.one/" rel="nofollow noopener noreferrer"><i class="fas fa-link" aria-hidden="true"></i> other</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2019 LIU YUE'S - NOTES TO SHARE. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script data-search-pseudo-elements defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+
+
+<script>
+  (function () {
+    var cx = '016202475545879656962:ot3scpbjy9y';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+
+  function googleCustomSearchExecute() {
+    var input = document.getElementById('cse-search-input-box-id');
+    var element = google.search.cse.element.getElement('searchresults-only0');
+    if (input.value == '') {
+      element.clearAllResults();
+    } else {
+      element.execute(input.value);
+    }
+    return false;
+  }
+
+  
+    $(document).ready(function () {
+      $('input#cse-search-input-box-id').on('keyup', function () {
+        googleCustomSearchExecute();
+      });
+    });
+  
+</script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/migrate-mobile_dev/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/migrate-mobile_dev"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://lyhistory.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>1. 基本场景 | 计算机基础教程</title>
+    <meta name="description" content="软件开发教程，白帽黑客入门教程，区块链入门教程，物联网，大数据">
+    
+    
+    <link rel="preload" href="/docs/assets/css/0.styles.89d6372f.css" as="style"><link rel="preload" href="/docs/assets/js/app.936a98b5.js" as="script"><link rel="preload" href="/docs/assets/js/2.464c3f4a.js" as="script"><link rel="preload" href="/docs/assets/js/136.d863a8d8.js" as="script"><link rel="prefetch" href="/docs/assets/js/10.cf213c53.js"><link rel="prefetch" href="/docs/assets/js/100.f68c1b0c.js"><link rel="prefetch" href="/docs/assets/js/101.c1df9987.js"><link rel="prefetch" href="/docs/assets/js/102.87bfca65.js"><link rel="prefetch" href="/docs/assets/js/103.2b44e69e.js"><link rel="prefetch" href="/docs/assets/js/104.6dc9ef4c.js"><link rel="prefetch" href="/docs/assets/js/105.da843e96.js"><link rel="prefetch" href="/docs/assets/js/106.e6d02f9c.js"><link rel="prefetch" href="/docs/assets/js/107.ae28ca72.js"><link rel="prefetch" href="/docs/assets/js/108.188b45da.js"><link rel="prefetch" href="/docs/assets/js/109.24ad4659.js"><link rel="prefetch" href="/docs/assets/js/11.379679b1.js"><link rel="prefetch" href="/docs/assets/js/110.bdbd8051.js"><link rel="prefetch" href="/docs/assets/js/111.1ecaec83.js"><link rel="prefetch" href="/docs/assets/js/112.e01f034d.js"><link rel="prefetch" href="/docs/assets/js/113.e52cf288.js"><link rel="prefetch" href="/docs/assets/js/114.d8dc0ccf.js"><link rel="prefetch" href="/docs/assets/js/115.00b80e63.js"><link rel="prefetch" href="/docs/assets/js/116.6f7b8214.js"><link rel="prefetch" href="/docs/assets/js/117.796edc3f.js"><link rel="prefetch" href="/docs/assets/js/118.fb54fe23.js"><link rel="prefetch" href="/docs/assets/js/119.a82fa8af.js"><link rel="prefetch" href="/docs/assets/js/12.02b27ff9.js"><link rel="prefetch" href="/docs/assets/js/120.fa579ca0.js"><link rel="prefetch" href="/docs/assets/js/121.6ece3faa.js"><link rel="prefetch" href="/docs/assets/js/122.b10d6da8.js"><link rel="prefetch" href="/docs/assets/js/123.69af6582.js"><link rel="prefetch" href="/docs/assets/js/124.675da987.js"><link rel="prefetch" href="/docs/assets/js/125.dcbab5ef.js"><link rel="prefetch" href="/docs/assets/js/126.0b8ba560.js"><link rel="prefetch" href="/docs/assets/js/127.d1cec381.js"><link rel="prefetch" href="/docs/assets/js/128.42a9b27b.js"><link rel="prefetch" href="/docs/assets/js/129.174ffe03.js"><link rel="prefetch" href="/docs/assets/js/13.94bf8ea9.js"><link rel="prefetch" href="/docs/assets/js/130.55188bd8.js"><link rel="prefetch" href="/docs/assets/js/131.572a3158.js"><link rel="prefetch" href="/docs/assets/js/132.f975a28c.js"><link rel="prefetch" href="/docs/assets/js/133.31eef532.js"><link rel="prefetch" href="/docs/assets/js/134.09b6ae5a.js"><link rel="prefetch" href="/docs/assets/js/135.cacfb63e.js"><link rel="prefetch" href="/docs/assets/js/137.17c9be28.js"><link rel="prefetch" href="/docs/assets/js/138.67060eab.js"><link rel="prefetch" href="/docs/assets/js/139.6d5dc7ab.js"><link rel="prefetch" href="/docs/assets/js/14.b0817c32.js"><link rel="prefetch" href="/docs/assets/js/140.99a9938d.js"><link rel="prefetch" href="/docs/assets/js/141.40dd2ebc.js"><link rel="prefetch" href="/docs/assets/js/142.5c4b57ce.js"><link rel="prefetch" href="/docs/assets/js/143.bdc186e1.js"><link rel="prefetch" href="/docs/assets/js/144.f429554c.js"><link rel="prefetch" href="/docs/assets/js/145.63899c24.js"><link rel="prefetch" href="/docs/assets/js/146.73539926.js"><link rel="prefetch" href="/docs/assets/js/147.55ee7677.js"><link rel="prefetch" href="/docs/assets/js/148.a2e0f95a.js"><link rel="prefetch" href="/docs/assets/js/149.04549cde.js"><link rel="prefetch" href="/docs/assets/js/15.4345d207.js"><link rel="prefetch" href="/docs/assets/js/150.f3ce6c30.js"><link rel="prefetch" href="/docs/assets/js/151.2c8fb319.js"><link rel="prefetch" href="/docs/assets/js/152.6601dba8.js"><link rel="prefetch" href="/docs/assets/js/153.89aba1ed.js"><link rel="prefetch" href="/docs/assets/js/154.c135890d.js"><link rel="prefetch" href="/docs/assets/js/155.ef6e8e6b.js"><link rel="prefetch" href="/docs/assets/js/156.25e0dfac.js"><link rel="prefetch" href="/docs/assets/js/157.85354ff0.js"><link rel="prefetch" href="/docs/assets/js/158.553cd265.js"><link rel="prefetch" href="/docs/assets/js/159.e742301e.js"><link rel="prefetch" href="/docs/assets/js/16.954e2b24.js"><link rel="prefetch" href="/docs/assets/js/160.7a7abee7.js"><link rel="prefetch" href="/docs/assets/js/161.2fc7fb35.js"><link rel="prefetch" href="/docs/assets/js/162.484d90c2.js"><link rel="prefetch" href="/docs/assets/js/163.ee6dbadc.js"><link rel="prefetch" href="/docs/assets/js/164.3fcaa37b.js"><link rel="prefetch" href="/docs/assets/js/165.4023fa46.js"><link rel="prefetch" href="/docs/assets/js/166.a9ed1a15.js"><link rel="prefetch" href="/docs/assets/js/167.7c54ea52.js"><link rel="prefetch" href="/docs/assets/js/168.ff1d33e6.js"><link rel="prefetch" href="/docs/assets/js/169.ebcf8f3f.js"><link rel="prefetch" href="/docs/assets/js/17.66e4494f.js"><link rel="prefetch" href="/docs/assets/js/170.e3bf3ef8.js"><link rel="prefetch" href="/docs/assets/js/171.092b9a89.js"><link rel="prefetch" href="/docs/assets/js/172.ae61579e.js"><link rel="prefetch" href="/docs/assets/js/173.589e993c.js"><link rel="prefetch" href="/docs/assets/js/174.e5563272.js"><link rel="prefetch" href="/docs/assets/js/175.27f14d8a.js"><link rel="prefetch" href="/docs/assets/js/176.1fb3faa2.js"><link rel="prefetch" href="/docs/assets/js/177.0593a817.js"><link rel="prefetch" href="/docs/assets/js/178.1f4ef83d.js"><link rel="prefetch" href="/docs/assets/js/179.eea00b84.js"><link rel="prefetch" href="/docs/assets/js/18.10fafe7f.js"><link rel="prefetch" href="/docs/assets/js/180.03224077.js"><link rel="prefetch" href="/docs/assets/js/181.e83176bb.js"><link rel="prefetch" href="/docs/assets/js/182.9cc915a3.js"><link rel="prefetch" href="/docs/assets/js/183.e1dca22c.js"><link rel="prefetch" href="/docs/assets/js/184.4481fc41.js"><link rel="prefetch" href="/docs/assets/js/185.cbc3251f.js"><link rel="prefetch" href="/docs/assets/js/186.34d3c9aa.js"><link rel="prefetch" href="/docs/assets/js/187.36768409.js"><link rel="prefetch" href="/docs/assets/js/188.d06ccf45.js"><link rel="prefetch" href="/docs/assets/js/189.651f12a1.js"><link rel="prefetch" href="/docs/assets/js/19.c1cac792.js"><link rel="prefetch" href="/docs/assets/js/190.8df478d7.js"><link rel="prefetch" href="/docs/assets/js/191.05e5ac5e.js"><link rel="prefetch" href="/docs/assets/js/192.266305a9.js"><link rel="prefetch" href="/docs/assets/js/193.32a3f9e8.js"><link rel="prefetch" href="/docs/assets/js/194.8ee3ff68.js"><link rel="prefetch" href="/docs/assets/js/195.b8987f50.js"><link rel="prefetch" href="/docs/assets/js/196.7503f093.js"><link rel="prefetch" href="/docs/assets/js/197.f3f7b8ca.js"><link rel="prefetch" href="/docs/assets/js/198.eb91944d.js"><link rel="prefetch" href="/docs/assets/js/199.932edf43.js"><link rel="prefetch" href="/docs/assets/js/20.c73682e8.js"><link rel="prefetch" href="/docs/assets/js/200.f4c27482.js"><link rel="prefetch" href="/docs/assets/js/201.de45ebf2.js"><link rel="prefetch" href="/docs/assets/js/202.7ce62661.js"><link rel="prefetch" href="/docs/assets/js/203.0e625be4.js"><link rel="prefetch" href="/docs/assets/js/204.782f7cc8.js"><link rel="prefetch" href="/docs/assets/js/21.61052aac.js"><link rel="prefetch" href="/docs/assets/js/22.651edfb7.js"><link rel="prefetch" href="/docs/assets/js/23.3a09ed98.js"><link rel="prefetch" href="/docs/assets/js/24.45c2eb4e.js"><link rel="prefetch" href="/docs/assets/js/25.ba449961.js"><link rel="prefetch" href="/docs/assets/js/26.a00eaa1c.js"><link rel="prefetch" href="/docs/assets/js/27.f6476838.js"><link rel="prefetch" href="/docs/assets/js/28.4d61d9ca.js"><link rel="prefetch" href="/docs/assets/js/29.b4de7cd8.js"><link rel="prefetch" href="/docs/assets/js/3.4742910c.js"><link rel="prefetch" href="/docs/assets/js/30.575975e8.js"><link rel="prefetch" href="/docs/assets/js/31.8584f817.js"><link rel="prefetch" href="/docs/assets/js/32.11448813.js"><link rel="prefetch" href="/docs/assets/js/33.da122e30.js"><link rel="prefetch" href="/docs/assets/js/34.236f4e2c.js"><link rel="prefetch" href="/docs/assets/js/35.54e933cb.js"><link rel="prefetch" href="/docs/assets/js/36.48a99d0e.js"><link rel="prefetch" href="/docs/assets/js/37.e79e58c4.js"><link rel="prefetch" href="/docs/assets/js/38.e5a95726.js"><link rel="prefetch" href="/docs/assets/js/39.fed1d97c.js"><link rel="prefetch" href="/docs/assets/js/4.d10d7cc8.js"><link rel="prefetch" href="/docs/assets/js/40.75cce818.js"><link rel="prefetch" href="/docs/assets/js/41.30dc437a.js"><link rel="prefetch" href="/docs/assets/js/42.18ed9219.js"><link rel="prefetch" href="/docs/assets/js/43.7d07c4ce.js"><link rel="prefetch" href="/docs/assets/js/44.89f6ec95.js"><link rel="prefetch" href="/docs/assets/js/45.4b423079.js"><link rel="prefetch" href="/docs/assets/js/46.d6591ace.js"><link rel="prefetch" href="/docs/assets/js/47.d20da0f1.js"><link rel="prefetch" href="/docs/assets/js/48.2ae38531.js"><link rel="prefetch" href="/docs/assets/js/49.6f4cff67.js"><link rel="prefetch" href="/docs/assets/js/5.9dc24765.js"><link rel="prefetch" href="/docs/assets/js/50.b3bf1715.js"><link rel="prefetch" href="/docs/assets/js/51.ec7e74ef.js"><link rel="prefetch" href="/docs/assets/js/52.389c4e44.js"><link rel="prefetch" href="/docs/assets/js/53.d877654f.js"><link rel="prefetch" href="/docs/assets/js/54.eccf26cc.js"><link rel="prefetch" href="/docs/assets/js/55.d7c51471.js"><link rel="prefetch" href="/docs/assets/js/56.02d64560.js"><link rel="prefetch" href="/docs/assets/js/57.879be59b.js"><link rel="prefetch" href="/docs/assets/js/58.b6d34bad.js"><link rel="prefetch" href="/docs/assets/js/59.7024de3c.js"><link rel="prefetch" href="/docs/assets/js/6.ef7470f2.js"><link rel="prefetch" href="/docs/assets/js/60.4e92ac46.js"><link rel="prefetch" href="/docs/assets/js/61.9b6e1f30.js"><link rel="prefetch" href="/docs/assets/js/62.0b9e0e22.js"><link rel="prefetch" href="/docs/assets/js/63.4365d3a6.js"><link rel="prefetch" href="/docs/assets/js/64.b477e840.js"><link rel="prefetch" href="/docs/assets/js/65.f4e6017f.js"><link rel="prefetch" href="/docs/assets/js/66.40dcca2d.js"><link rel="prefetch" href="/docs/assets/js/67.b0168d74.js"><link rel="prefetch" href="/docs/assets/js/68.23ca1ba8.js"><link rel="prefetch" href="/docs/assets/js/69.c5fd06ec.js"><link rel="prefetch" href="/docs/assets/js/7.90fe7f47.js"><link rel="prefetch" href="/docs/assets/js/70.d0d040b8.js"><link rel="prefetch" href="/docs/assets/js/71.c1d040b2.js"><link rel="prefetch" href="/docs/assets/js/72.b804454d.js"><link rel="prefetch" href="/docs/assets/js/73.c158f4fc.js"><link rel="prefetch" href="/docs/assets/js/74.bb597759.js"><link rel="prefetch" href="/docs/assets/js/75.3185ec11.js"><link rel="prefetch" href="/docs/assets/js/76.52c523c9.js"><link rel="prefetch" href="/docs/assets/js/77.4e90f222.js"><link rel="prefetch" href="/docs/assets/js/78.a2fbff7a.js"><link rel="prefetch" href="/docs/assets/js/79.d543ee50.js"><link rel="prefetch" href="/docs/assets/js/8.757dd096.js"><link rel="prefetch" href="/docs/assets/js/80.8f614093.js"><link rel="prefetch" href="/docs/assets/js/81.1978a580.js"><link rel="prefetch" href="/docs/assets/js/82.853a07eb.js"><link rel="prefetch" href="/docs/assets/js/83.c8313bf2.js"><link rel="prefetch" href="/docs/assets/js/84.f47d13eb.js"><link rel="prefetch" href="/docs/assets/js/85.566c6687.js"><link rel="prefetch" href="/docs/assets/js/86.3cc51b3d.js"><link rel="prefetch" href="/docs/assets/js/87.6a485e5b.js"><link rel="prefetch" href="/docs/assets/js/88.ee52d47a.js"><link rel="prefetch" href="/docs/assets/js/89.afba37a5.js"><link rel="prefetch" href="/docs/assets/js/9.07559e13.js"><link rel="prefetch" href="/docs/assets/js/90.25d5fb38.js"><link rel="prefetch" href="/docs/assets/js/91.53f55933.js"><link rel="prefetch" href="/docs/assets/js/92.e70cc66c.js"><link rel="prefetch" href="/docs/assets/js/93.8c3140b1.js"><link rel="prefetch" href="/docs/assets/js/94.874520fe.js"><link rel="prefetch" href="/docs/assets/js/95.10acd69c.js"><link rel="prefetch" href="/docs/assets/js/96.b13d1d70.js"><link rel="prefetch" href="/docs/assets/js/97.ce0cb827.js"><link rel="prefetch" href="/docs/assets/js/98.1740d8d4.js"><link rel="prefetch" href="/docs/assets/js/99.75f44639.js">
+    <link rel="stylesheet" href="/docs/assets/css/0.styles.89d6372f.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/docs/" class="home-link router-link-active"><!----> <span class="site-name">计算机基础教程</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/docs/" class="nav-link">机器指令</a></div><div class="nav-item"><a href="/docs/software/" class="nav-link router-link-active">软件基础</a></div><div class="nav-item"><a href="/docs/coder2hacker/" class="nav-link">白帽黑客</a></div><div class="nav-item"><a href="/docs/blockchain/" class="nav-link">区块链</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/docs/" class="nav-link">机器指令</a></div><div class="nav-item"><a href="/docs/software/" class="nav-link router-link-active">软件基础</a></div><div class="nav-item"><a href="/docs/coder2hacker/" class="nav-link">白帽黑客</a></div><div class="nav-item"><a href="/docs/blockchain/" class="nav-link">区块链</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/docs/software/" class="sidebar-link">软件基础</a></li><li><a href="/docs/coder2hacker/" class="sidebar-link">黑客入门</a></li><li><a href="/docs/blockchain/" class="sidebar-link">区块链入门</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h2 id="_1-基本场景"><a href="#_1-基本场景" class="header-anchor">#</a> 1. 基本场景</h2> <p>用户登录或认证授权有几个基本场景：</p> <ul><li>普通登录：
+用户+网站</li> <li>单点登录sso：
+用户+企业各种网站+企业SSO服务器</li> <li>第三方登录3rd party：
+用户+各种网站+某企业提供的SSO服务（第三方登录）</li> <li>无普通用户，只有application级别用户，这种一般是系统集成，需要系统之间的身份验证</li></ul> <p>注意这里的“第三方”由角度不同产生不同的叫法，比如：
+我是某个网站主，想要集成google登录，那么用户和我网站就是两方，google登录就是第三方登录提供商；
+如果我是某个登录提供商，比如我开发了一个登录系统，提供给外部网站集成我的登录方式，那外部网站就是我的Client或者叫第三方应用，用户和我的登录服务器就是两方；
+场景不同读者自行脑补切换；</p> <p>以下oauth2.0就是围绕着这几个场景衍生出不同的规范</p> <p>首先第一种普通登录采用传统的登录方式是，
+用户直接登录某个网站网页，然后登录信息传到网站服务端，服务端验证授权，然后生成cookie和session，session保存在服务端，cookie则通过response的set cookie返回到用户浏览器，
+cookie一般包含sessionid，后面的请求携带sessionid，则可以从服务端的session表查询到用户信息，一般这个都是比如asp或php框架实现的；
+可见sessionid一般不包含任何额外的信息；</p> <p>如果改造称为第二种单点登录，可以将session信息存到一个共享内存比如redis中，这样多个网站就可以通过读取redis来实现“单点登录”；</p> <p>但是如果有第三方合作网站可能想用我们的网站登录功能就会比较麻烦，通过下面的oauth2.0分析我们就会反向推导中为什么我说会很麻烦。</p> <p>下面开始讲解oath2.0；</p> <h2 id="_2-oauth2-0-framework-standard"><a href="#_2-oauth2-0-framework-standard" class="header-anchor">#</a> 2. oauth2.0 framework standard</h2> <p>协议： https://tools.ietf.org/html/rfc6749</p> <p>协议安全： https://tools.ietf.org/html/rfc6819</p> <p>基本概念：</p> <ul><li>Resource Owner：资源所有者。即用户。
+An entity capable of granting access to a protected resource. When the resource owner is a person, it is referred to as an end-user.</li> <li>Client：客户端（第三方应用），代表资源所有者并且经过所有者授权去访问受保护的资源的应用程序，比如某个网站。
+An application making protected resource requests on behalf of the resource owner and with its authorization.  The term &quot;client&quot; does not imply any particular implementation characteristics (e.g., whether the application executes on a server, a desktop, or other devices).</li> <li>HTTP service：HTTP服务提供商，简称服务提供商。这里是用来指第三方登录如github或者Google。</li> <li>User Agent：用户代理。本文中就是指浏览器。</li> <li>Authorization server：授权（认证）服务器。即服务提供商专门用来处理认证的服务器，在成功验证资源所有者并获得授权后向客户端发出访问令牌。
+The server issuing access tokens to the client after successfully authenticating the resource owner and obtaining authorization.</li> <li>Resource server：资源服务器，即服务提供商存放用户生成的资源的服务器。它与认证服务器，可以是同一台服务器，也可以是不同的服务器。
+The server hosting the protected resources, capable of accepting and responding to protected resource requests using access tokens.</li> <li>Access Token：访问令牌。使用合法的访问令牌获取受保护的资源，一般存储在User Agent浏览器端。</li> <li>Refresh Token：用来更新获取Access Token，一般存储在服务器端（实际是指这里的Client第三方应用端）；</li></ul> <p>标准流程：
+(A) The client requests authorization from the resource owner.
+The authorization request can be made directly to the resource owner(as shown), or preferably indirectly via the authorization server as an intermediary.</p> <p>(B) The client receives an authorization grant, which is a credential representing the resource owner's authorization,
+expressed using one of four grant types defined in this specification or using an extension grant type.
+The authorization grant type depends on the method used by the client to request authorization and the types supported by the authorization server.</p> <p>(C) The client requests an access token by authenticating with the authorization server and presenting the authorization grant.</p> <p>(D) The authorization server authenticates the client and validates the authorization grant, and if valid, issues an access token.</p> <p>(E) The client requests the protected resource from the resource server and authenticates by presenting the access token.</p> <p>(F) The resource server validates the access token, and if valid,serves the request.</p> <p>根据<strong>Authorization Grant</strong>的方式授权类型分为四种：authorization code, implicit, resource owner password credentials, and client credentials</p> <p><strong>An authorization grant is a credential representing the resource owner's authorization (to access its protected resources) used by the client to obtain an access token.</strong> <strong>This specification defines four grant types -- authorization code, implicit, resource owner password credentials, and client credentials -- as well as an extensibility mechanism for defining additional types.</strong></p> <h3 id="_2-1-授权码模式（authorization-code）"><a href="#_2-1-授权码模式（authorization-code）" class="header-anchor">#</a> 2.1 授权码模式（authorization code）</h3> <pre><code> +----------+
+ | Resource |
+ |   Owner  |
+ |          |
+ +----------+
+      ^
+      |
+     (B)
+ +----|-----+          Client Identifier      +---------------+
+ |         -+----(A)-- &amp; Redirection URI ----&gt;|               |
+ |  User-   |                                 | Authorization |
+ |  Agent  -+----(B)-- User authenticates ---&gt;|     Server    |
+ |          |                                 |               |
+ |         -+----(C)-- Authorization Code ---&lt;|               |
+ +-|----|---+                                 +---------------+
+   |    |                                         ^      v
+  (A)  (C)                                        |      |
+   |    |                                         |      |
+   ^    v                                         |      |
+ +---------+                                      |      |
+ |         |&gt;---(D)-- Authorization Code ---------'      |
+ |  Client |          &amp; Redirection URI                  |
+ |         |                                             |
+ |         |&lt;---(E)----- Access Token -------------------'
+ +---------+       (w/ Optional Refresh Token)
+</code></pre> <p>Note: The lines illustrating steps (A), (B), and (C) are broken into
+two parts as they pass through the user-agent.</p> <pre><code>                 Figure 3: Authorization Code Flow
+</code></pre> <p>(A)  客户端向资源所有者请求其授权
+授权请求可以直接对资源所有者进行，或者通过授权服务器作为中介进行间接访问（首选方案）。
+用户点击客户端网站的（第三方）登录按钮或者某个需要权限的操作：
+如果是直接点击第三方登录，客户端直接向授权服务器发起请求，如果是用户直接访问了某个资源，客户端会向资源服务器发起请求，然后资源服务器发现没有Access token，则会转发到授权服务器，
+总之授权服务器返回一个授权页面（如果用户已经登录了则返回一个授权页面，否则返回登录页面）；
+(A)The client initiates the flow by directing the resource owner's user-agent to the authorization endpoint.<br>
+The client includes its client identifier, requested scope, local state, and a redirection URI to which the authorization server will send the user-agent back once access is granted (or denied).</p> <p>(B)  客户端收到资源所有者的授权许可(用户点击允许或同意按钮)，返回凭证-授权码Code，这个授权许可是一个代表资源所有者授权的凭据
+(B)The authorization server authenticates the resource owner (via the user-agent) and establishes whether the resource owner grants or denies the client's access request.</p> <pre><code>(C)Assuming the resource owner grants access, the authorization server redirects the user-agent back to the client using the redirection URI provided earlier (in the request or during client registration).  
+The redirection URI includes an authorization code and any local state provided by the client earlier.
+注意这个redirect URI一般是对应Client应用的服务器端，当然对于授权服务器来说这个就是一次URL跳转回client的url，然后client的服务器端收到这个请求后，拿到授权码，然后就可以从服务器端发起下面步骤的请求；
+</code></pre> <p>(C)  客户端向授权服务器请求访问令牌，并出示授权许可-授权码code，请求访问令牌（access token）。
+如果客户端访问的是第三方登录，则一般需要同时出示client secret，如果是内部系统，可能只是通过写死的自签名cert验证即可；</p> <pre><code>(D)The client requests an access token from the authorization server's token endpoint by including the authorization code received in the previous step.  
+When making the request, the client authenticates with the authorization server.  
+The client includes the redirection URI used to obtain the authorization code for verification.
+</code></pre> <p>(D)  授权服务器对客户端身份进行认证，并校验授权许可，如果都是有效的，则发放访问令牌access token
+这个是两部分：一个是对客户端本身的身份认证，通过前面client secret对应的id以及绑定的比如网站domain，如果是内部系统，则简单通过比如写死的加解密或者白名单即可；
+另一个部分是验证授权码，如果资源服务器和认证服务器分开，则此时需要交互，或者访问一个共同的缓存或数据库；</p> <pre><code>(E)The authorization server authenticates the client, validates the authorization code, and ensures that the redirection URI received matches the URI used to redirect the client in step (C).  
+If valid, the authorization server responds back with an access token and, optionally, a refresh token.
+注意这里是说授权服务器“responds back”，不是redirect，应该就是服务器对服务器通信了，前两步client从服务器端接收到授权码后直接发起请求，所以此时第三方服务器端直接返回，
+client的服务器端收到响应后，**可以将access token发送给自己的客户端，然后将refresh token留存在服务端（安全性考虑）**
+</code></pre> <p>(E)  客户端向资源服务器请求受保护的资源，并出示访问令牌access token</p> <p>(F)  资源服务器校验访问令牌，如果令牌有效，则提供服务
+如果资源服务器和认证服务器是分开的，则此时需要交互，或者访问一个共同的缓存或数据库，或者如果这个access token本身可以解密出用户的足够信息，则不需要交互；</p> <p>设计思想：</p> <p>为什么需要授权码，授权码是用户resource owner跟第三方登录网站的协商过程，不然第三方网站不知道这个行为本身是否得到了用户的授权，
+你可能问为啥不直接给Access token呢，因为后面还需要验证这个网站即client id secret，当然如果都是公司内部网站或服务，不涉及三方，则不需要这一步，可以直接给Access token，即下面的Implicit方式</p> <p>The authorization code is obtained by using an authorization server as an intermediary between the client and resource owner.<br>
+Instead of requesting authorization directly from the resource owner, the client directs the resource owner to an authorization server (via its user-agent as defined in [RFC2616]), which in turn directs the resource owner back to the client with the authorization code.</p> <p>Before directing the resource owner back to the client with the authorization code, the authorization server authenticates the resource owner and obtains authorization.<br>
+Because the resource owner only authenticates with the authorization server, the resource owner's credentials are never shared with the client.</p> <p>The authorization code provides a few important security benefits, such as the ability to authenticate the client,
+as well as the transmission of the access token directly to the client without passing it through the resource owner's user-agent and potentially exposing it to others,
+including the resource owner.</p> <p><strong>实例:github验证授权例子</strong></p> <p>https://segmentfault.com/a/1190000013467122</p> <p>1）网站和Github之间的协商，注册获取，Github也给我发了两张门票，一张门票叫做Client Id，另一张门票叫做Client Secret。</p> <p>2）用户和Github(资源服务器）之间的协商</p> <p>用户进入我的网站，点击github登录按钮的时候，我的网站会将Github给我的Client Id交给用户，让他进入Github授权界面，如果此时用户没有登录，Github会提示登录（当然这不是OAuth2.0客户端部分应该关注的）。假设用户已经登录Github，那么Github看到用户手中的门票，就知道是我的网站让他过来的，于是就把我的网站获取的权限摆出来，并询问用户是否允许网站获取这些权限。</p> <div class="language- extra-class"><pre class="language-text"><code>// 用户登录 github，协商
+GET //github.com/login/oauth/authorize
+// 协商凭证
+params = {
+  client_id: &quot;xxxx&quot;,
+  redirect_uri: &quot;http://my-website.com&quot;
+}
+
+如果用户同意，在授权页面点击了确认授权后，页面会跳转到我预先设定的 redirect_uri并附带一个盖了章的门票code。
+
+// 协商成功后带着盖了章的 code
+Location: http://my-website.com?code=xxx
+
+这个时候，用户和 Github 之间的协商就已经完成，Github 也会在自己的系统中记录这次协商，表示该用户已经允许在我的网站访问上直接操作和使用他的部分资源。
+</code></pre></div><p>3）告诉Github(授权服务器）我的网站要来访问</p> <p>第二步中，我们已经拿到了盖过章的门票code（资源服务器授权码），但这个code 只能表明，用户允许我的网站从github上获取该用户的数据，如果我直接拿这个code去github访问数据一定会被拒绝，因为任何人都可以持有code，github并不知道code持有方就是该网站“本人”。</p> <p>还记得之前申请应用的时候github给我的两张门票么，Client Id在上一步中已经用过了，接下来轮到另一张门票Client Secret。</p> <div class="language- extra-class"><pre class="language-text"><code>// 网站和 github 之间的协商
+POST //github.com/login/oauth/access_token
+// 协商凭证包括 github 给用户盖的章和 github 发给我的门票
+params = {
+  code: &quot;xxx&quot;,
+  client_id: &quot;xxx&quot;,
+  client_secret: &quot;xxx&quot;,
+  redirect_uri: &quot;http://my-website.com&quot;
+}
+拿着用户盖过章的code和能够标识个人身份的client_id、client_secret去拜访 github，拿到最后的绿卡access_token。
+// 拿到最后的绿卡
+response = {
+  access_token: &quot;e72e16c7e42f292c6912e7710c838347ae178b4a&quot;
+  scope: &quot;user,gist&quot;
+  token_type: &quot;bearer&quot;,
+  refresh_token: &quot;xxxx&quot;
+}
+</code></pre></div><p>4）用户开始使用Github账号在我的网站上留言</p> <div class="language- extra-class"><pre class="language-text"><code>// 访问用户数据
+GET //api.github.com/user?access_token=e72e16c7e42f292c6912e7710c838347ae178b4a
+
+get中直接用access token是一种方式，还有一种方式是放在header中作为bearer token；
+
+上一步github已经把最后的绿卡access_token给我了，通过github提供的 API 加绿卡就能够访问用户的信息了，能获取用户的哪些权限在response 中也给了明确的说明，scope为user和gist，也就是只能获取user组和gist组两个小组的权限，user组中就包含了用户的名字和邮箱等信息了。
+
+// 告诉我用户的名字和邮箱
+response = {
+  username: &quot;barretlee&quot;,
+  email: &quot;barret.china@gmail.com&quot;
+}
+</code></pre></div><p><strong>注意:</strong></p> <ul><li><p>用户端只需要获得access token即可，refresh token需要由网站在服务器端保存，否则客户端不安全，这也是为什么access token比较短命的原因</p></li> <li><p>还有一个细节上面没有提到，就是资源服务器如何知道这个access token所对应的用户权限scope等等，这个在上面标准中并未提到，这个是涉及到具体实现,
+首先access token通过密码的方式一般都会把用户id放入里面，资源服务器通过跟授权服务器事先配置或者设计好加解密方法，可以解密出user id，然后其他信息呢，一般有如下方式:</p> <ul><li>self-encoded access tokens： verifying the tokens can be done entirely in the resource server without interacting with a database or external servers.
+JSON Web Token (JWT) https://www.oauth.com/oauth2-servers/access-tokens/self-encoded-access-tokens/
+github貌似是从token直接解密出来相关scope和权限，具体看https://spring.io/guides/tutorials/spring-boot-oauth2/，</li> <li>If your tokens are stored in a database, then verifying the token is simply a database lookup on the token table.</li> <li>use the Token Introspection spec to build an API to verify access tokens
+这个可以放在单独的server或者直接扔到授权服务器上
+https://www.oauth.com/oauth2-servers/token-introspection-endpoint/</li></ul></li></ul> <p>注意，spring security的oauth2.0貌似是采用了上面第三种方式，通过:</p> <blockquote><p>Spring security oauth exposes two endpoints for checking tokens (/oauth/check_token and /oauth/token_key) which are by default protected behind denyAll(). tokenKeyAccess() and checkTokenAccess() methods open these endpoints for use.
+<a href="https://howtodoinjava.com/spring-boot2/oauth2-auth-server/" target="_blank" rel="noopener noreferrer">Spring Boot 2 – OAuth2 Auth and Resource Server<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></blockquote> <h3 id="_2-2-implicit"><a href="#_2-2-implicit" class="header-anchor">#</a> 2.2 Implicit</h3> <pre><code> +----------+
+ | Resource |
+ |  Owner   |
+ |          |
+ +----------+
+      ^
+      |
+     (B)
+ +----|-----+          Client Identifier     +---------------+
+ |         -+----(A)-- &amp; Redirection URI ---&gt;|               |
+ |  User-   |                                | Authorization |
+ |  Agent  -|----(B)-- User authenticates --&gt;|     Server    |
+ |          |                                |               |
+ |          |&lt;---(C)--- Redirection URI ----&lt;|               |
+ |          |          with Access Token     +---------------+
+ |          |            in Fragment
+ |          |                                +---------------+
+ |          |----(D)--- Redirection URI ----&gt;|   Web-Hosted  |
+ |          |          without Fragment      |     Client    |
+ |          |                                |    Resource   |
+ |     (F)  |&lt;---(E)------- Script ---------&lt;|               |
+ |          |                                +---------------+
+ +-|--------+
+   |    |
+  (A)  (G) Access Token
+   |    |
+   ^    v
+ +---------+
+ |         |
+ |  Client |
+ |         |
+ +---------+
+</code></pre> <p>Note: The lines illustrating steps (A) and (B) are broken into two
+parts as they pass through the user-agent.</p> <pre><code>                   Figure 4: Implicit Grant Flow
+</code></pre> <p>(A)  The client initiates the flow by directing the resource owner's user-agent to the authorization endpoint.<br>
+The client includes its client identifier, requested scope, local state, and a redirection URI to which the authorization server will send the user-agent back once access is granted (or denied).</p> <p>(B)  The authorization server authenticates the resource owner (via the user-agent) and establishes whether the resource owner grants or denies the client's access request.</p> <p>(C)  Assuming the resource owner grants access, the authorization server redirects the user-agent back to the client using the redirection URI provided earlier.<br>
+The redirection URI includes the access token in the URI fragment.</p> <p>(D)  The user-agent follows the redirection instructions by making a request to the web-hosted client resource (which does not include the fragment per [RFC2616]).<br>
+The user-agent retains the fragment information locally.
+浏览器还会帮忙retain fragment information？这个需要继续了解，不过感觉到这步就结束了，后面三步不太明白为啥要写这么细，因为我想已经redirect到client这边了，client的服务器端自然会读取Access token，
+然后set cookie，不清楚为什么后面三步要写的这么具体，还说要javascript来读取这个url的Access token， 我猜测是不是为了防止CSRF攻击，
+最终在rfc6819#section-4.4.2找到答案,因为url的fragment就是#部分不会发送到服务器端，所以只能用前端脚本去解读出来！</p> <blockquote><p>In the implicit grant type flow, the access token is directly returned to the client as a fragment part of the redirect URI.<br>
+It is assumed that the token is not sent to the redirect URI target, as <strong>HTTP user agents do not send the fragment part of URIs to HTTP servers.</strong><br>
+Thus, an attacker cannot eavesdrop the access token on this communication path, and the token cannot leak through HTTP referrer headers.
+https://tools.ietf.org/html/rfc6819#section-4.4.2</p></blockquote> <blockquote><p>浏览器的redirect_uri是一个不安全信道，此方式不适合于传递敏感数据（如access_token）。因为uri可能通过HTTP referrer被传递给其它恶意站点，也可能存在于浏览器cacher或log文件中，这就给攻击者盗取access_token带来了很多机会。另外，此协议也不应该假设RO用户代理的行为是可信赖的，因为RO的浏览器可能早已被攻击者植入了跨站脚本用来监听access_token。因此，access_token通过RO的用户代理传递给Client，会显著扩大access_token被泄露的风险。 但authorization_code可以通过redirect_uri方式来传递，是因为authorization_code并不像access_token一样敏感。即使authorization_code被泄露，攻击者也无法直接拿到access_token，因为拿authorization_code去交换access_token是需要验证Client的真实身份。也就是说，除了Client之外，其他人拿authorization_code是没有用的。 此外，access_token应该只颁发给Client使用，其他任何主体（包括RO）都不应该获取access_token。协议的设计应能保证Client是唯一有能力获取access_token的主体。引入authorization_code之后，便可以保证Client是access_token的唯一持有人。当然，Client也是唯一的有义务需要保护access_token不被泄露。
+http://dearcharles.cn/2017/11/15/OAuth2-0%E5%8D%8F%E8%AE%AE%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/</p></blockquote> <p>(E)  The web-hosted client resource returns a web page (typically an HTML document with an embedded script) capable of accessing the full redirection URI including the fragment retained by the user-agent,
+and extracting the access token (and other parameters) contained in the fragment.</p> <p>(F)  The user-agent executes the script provided by the web-hosted client resource locally, which extracts the access token.</p> <p>(G)  The user-agent passes the access token to the client.</p> <p>设计思想：</p> <p>The implicit grant is a simplified authorization code flow optimized for clients implemented in a browser using a scripting language such as JavaScript.<br>
+In the implicit flow, instead of issuing the client an authorization code, the client is issued an access token directly (as the result of the resource owner authorization).<br>
+The grant type is implicit, as no intermediate credentials (such as an authorization code) are issued (and later used to obtain an access token).</p> <p>When issuing an access token during the implicit grant flow, the authorization server does not authenticate the client.<br>
+In some cases, the client identity can be verified via the redirection URI used to deliver the access token to the client.<br>
+The access token may be exposed to the resource owner or other applications with access to the resource owner's user-agent.</p> <p>Implicit grants improve the responsiveness and efficiency of some clients (such as a client implemented as an in-browser application),
+since it reduces the number of round trips required to obtain an access token.<br>
+However, this convenience should be weighed against the security implications of using implicit grants, such as those described in Sections 10.3 and 10.16, especially when the authorization code grant type is available.</p> <h3 id="_2-3-resource-owner-password-credentials"><a href="#_2-3-resource-owner-password-credentials" class="header-anchor">#</a> 2.3 Resource Owner Password Credentials</h3> <pre><code> +----------+
+ | Resource |
+ |  Owner   |
+ |          |
+ +----------+
+      v
+      |    Resource Owner
+     (A) Password Credentials
+      |
+      v
+ +---------+                                  +---------------+
+ |         |&gt;--(B)---- Resource Owner -------&gt;|               |
+ |         |         Password Credentials     | Authorization |
+ | Client  |                                  |     Server    |
+ |         |&lt;--(C)---- Access Token ---------&lt;|               |
+ |         |    (w/ Optional Refresh Token)   |               |
+ +---------+                                  +---------------+
+
+        Figure 5: Resource Owner Password Credentials Flow
+</code></pre> <p>(A)  The resource owner provides the client with its username and password.</p> <p>(B)  The client requests an access token from the authorization server's token endpoint by including the credentials received from the resource owner.<br>
+When making the request, the client authenticates with the authorization server.</p> <p>(C)  The authorization server authenticates the client and validates the resource owner credentials, and if valid, issues an access token.</p> <p>场景：</p> <ul><li>内部系统，用户直接向client提供用户名密码</li> <li>外部系统application级别的验证访问，相当于前面提到的client id和client secret注册！</li></ul> <p>设计思想：</p> <p>The resource owner password credentials (i.e., username and password) can be used directly as an authorization grant to obtain an access token.<br>
+The credentials should only be used when there is a high degree of trust between the resource owner and the client
+(e.g., the client is part of the device operating system or a highly privileged application),
+and when other authorization grant types are not available (such as an authorization code).</p> <p>Even though this grant type requires direct client access to the resource owner credentials,
+the resource owner credentials are used for a single request and are exchanged for an access token.<br>
+This grant type can eliminate the need for the client to store the resource owner credentials for future use, by exchanging the credentials with a long-lived access token or refresh token.</p> <h3 id="_2-4-client-credentials"><a href="#_2-4-client-credentials" class="header-anchor">#</a> 2.4 Client Credentials</h3> <pre><code> +---------+                                  +---------------+
+ |         |                                  |               |
+ |         |&gt;--(A)- Client Authentication ---&gt;| Authorization |
+ | Client  |                                  |     Server    |
+ |         |&lt;--(B)---- Access Token ---------&lt;|               |
+ |         |                                  |               |
+ +---------+                                  +---------------+
+
+                 Figure 6: Client Credentials Flow
+</code></pre> <p>(A)  The client authenticates with the authorization server and requests an access token from the token endpoint.</p> <p>(B)  The authorization server authenticates the client, and if valid, issues an access token.</p> <p>场景：
+通常就是外部系统application级别的验证访问，相当于前面提到的client id和client secret注册！这种情况下比前一种“Resource Owner Password Credentials”更适合！</p> <p>设计思想：</p> <p>The client credentials (or other forms of client authentication) can be used as an authorization grant when the authorization scope is limited to the protected resources under the control of the client,
+or to protected resources previously arranged with the authorization server.<br>
+Client credentials are used as an authorization grant typically when the client is acting on its own behalf (the client is also the resource owner) or is requesting access to protected resources based on an authorization previously arranged with the authorization server.</p> <h2 id="_3-oauth2-0-implementation："><a href="#_3-oauth2-0-implementation：" class="header-anchor">#</a> 3.Oauth2.0 implementation：</h2> <p>https://docs.spring.io/spring-security-oauth2-boot/docs/current/reference/htmlsingle/</p> <p>https://www.oauth.com/oauth2-servers/the-resource-server/
+Spring Boot OAuth 2.0 separating Authorization Service and Resource Service
+https://medium.com/@buddhiprabhath/spring-boot-oauth-2-0-separating-authorization-service-and-resource-service-1641ebced1f0
+https://github.com/buddhiprab/springboot-oauth2-separating-authorization_server-and-resource_server</p> <p>https://github.com/Baeldung/spring-security-oauth
+https://github.com/longfeizheng/sso-merryyou
+https://github.com/fengcharly/spring-security-oauth2.0
+https://github.com/lyhistory/oauth2-sso-demo</p> <h3 id="_3-1-oauth2-using-dotnetopenauth"><a href="#_3-1-oauth2-using-dotnetopenauth" class="header-anchor">#</a> 3.1 OAuth2 using DotNetOpenAuth</h3> <p>Start by Example of Communication through RSA</p> <p>Client/Hacker1: HI
+Server/Hacker2: Hi,I am server,( server send digital certificate)
+Client: (Action:Validate the certificate and got the public key[2048Bits],confirmed and then send random string *** to Server,Hacker2 failed)
+//Hacker1: (Action: send a simple string to server like 123456)
+Server: (Action: Calculated hash of the string,encrypt with private key, send message to Client/Hacker1)
+Client: (Action: decrypt message with public key and equal to hash(***), confirmed, Hacker1 failed)
+{ok, let's communicate with my Symmetric-key algorithm.}
+(Send the algorithm and key encrypt with public key)
+Server: &lt;Symmetric-key&amp;algorithm&gt;{Ok,what I can do for you}
+Client: &lt;Symmetric-key&amp;algorithm&gt;{I wanna check my bank balance}
+..................
+上面描述了HTTPS通信握手的过程，简短描述就是：
+1.浏览器发出https请求
+2.服务器回应发送包含公钥的证书（由CA颁发）
+3.浏览器生成随机密钥，并用公钥加密，发送给服务器
+4.服务器用私钥解密获取随机密钥
+Browser connects to a web server (website) secured with SSL (https). Browser requests that the server identify itself.
+Server sends a copy of its SSL Certificate, including the server’s public key.
+Browser checks the certificate root against a list of trusted CAs and that the certificate is unexpired, unrevoked, and that its common name is valid for the website that it is connecting to. If the browser trusts the certificate, it creates, encrypts, and sends back a symmetric session key using the server’s public key.
+Server decrypts the symmetric session key using its private key and sends back an acknowledgement encrypted with the session key to start the encrypted session.
+Server and Browser now encrypt all transmitted data with the session key.
+OAUTH2 flow</p> <p><img src="/docs/docs_image/software/programming/auth01.png" alt=""></p> <p>What Is SSL (Secure Sockets Layer) and What Are SSL Certificates?
+https://www.digicert.com/ssl.htm</p> <p><strong>install certificates</strong></p> <p>open visual studio developer command prompt, and run command
+makecert.exe -sr LocalMachine -ss My -a sha1 -n CN=AuthSrv -sky exchange -pe
+makecert.exe -sr LocalMachine -ss My -a sha1 -n CN=ResSrv -sky exchange -pe</p> <p>Attention:
+here this two digital certification is not for https or SSL, is only for OAuth2 token encryption,
+for https https://sg.godaddy.com/help/request-an-ssl-certificate-562
+relation between Oauth2 and https:
+Security considerations</p> <p>The OAuth2 protocol does not guarantee confidentiality and integrity of communications. That means you must protect HTTP communications using an additional layer. One possible solution is the usage of SSL/TLS (HTTPS) to encrypt the communication channel from the client to the server.
+The first version of OAuth (OAuth1) supported an authentication mechanism based on the HMAC algorithm to guarantee confidentiality and integrity; OAuth2 does not (although a Draft proposal exists to support MAC tokens). The lack of message hashing is the primary concern raised regarding the security of OAuth2, and the one most developers complain about (e.g. this blog post by Eran Hammer, the ex-lead of the OAuth specifications).
+In a nutshell, always use HTTPS for OAuth2, as it's the only way to guarantee message confidentiality and integrity with this protocol!</p> <p><img src="/docs/docs_image/software/programming/auth02.png" alt=""></p> <p><strong>grant full control of certificates to iis_iusrs</strong></p> <p><img src="/docs/docs_image/software/programming/auth03.png" alt=""></p> <p>then right click, select All Tasks/Manage Private Keys/Add/Advanced/Find Now,select IIS_IUSRS(if you can not find,look up and confirm your Locations, make sure it's under your own PC)
+Be aware, this is to demonstrate oauth2 on iis, in practice, Auth Server holds Auth Key pair(public&amp;private key)+ResSrv(public key), Res Server holds Res Key pair(public&amp;private key)+AuthSrv(public key), that's
+make it RSA, but actually this two server don't communicate with each other directly, Client will request access token from Auth Server, and then send request to Resource Server,Resource Server decrypt user info by authsrv public key.</p> <p>assumption : user agent(browser), client web site cl.com and Client app, oauth server web site srv.com, api web site: api.com,in this scenario,api web site is actually the resource server
+user visit client site and  oauth login on srv.com, client site server can get access api site to retrieve data
+oauth server code:</p> <div class="language- extra-class"><pre class="language-text"><code>oauth2.class
+[CustomizeAuthorize, HttpGet]
+[HttpHeader(&quot;X-Frame-Options&quot;, &quot;SAMEORIGIN&quot;)]
+public ActionResult Index(){//Authorize Page 授权页面
+var pendingRequest = AuthorizationServer.ReadAuthorizationRequest(); //generate Code
+pendingRequest.ExtraData[&quot;User&quot;] = this.User.Identity.Name;
+if (((OAuthServerHost)this.authorizationServer.AuthorizationServerServices).CanBeAutoApproved(pendingRequest))
+{
+var approval = this.authorizationServer.PrepareApproveAuthorizationRequest(pendingRequest, this.User.Identity.Name);
+var response = this.authorizationServer.Channel.PrepareResponse(approval);
+return response.AsActionResult();
+}
+var client = DB.Instance.GetClient(pendingRequest.ClientIdentifier);
+var model = new OAuthViewModel
+{
+AppKey = pendingRequest.ClientIdentifier,
+AppName = client.Name,
+Scope = pendingRequest.Scope,
+ResponseType = pendingRequest.ResponseType == EndUserAuthorizationResponseType.AccessToken ? &quot;token&quot; : &quot;code&quot;,
+Redirect = pendingRequest.Callback.AbsoluteUri,
+State = pendingRequest.ClientState
+};
+return View(model);
+}
+[CustomAuthorize, HttpPost]
+
+public ActionResult Index(bool approve)
+{
+var pendingRequest = this.authorizationServer.ReadAuthorizationRequest(); //will use Code and models
+IProtocolMessage responseMessage = null;
+if (approve)
+{
+DB.Instance.AddAuthorization(new ClientAuthorization
+{
+ClientIdentifier = pendingRequest.ClientIdentifier,
+Scope = pendingRequest.Scope,
+OpenId = this.User.Identity.Name,
+IssueDate = DateTime.UtcNow
+});
+responseMessage = this.authorizationServer.PrepareApproveAuthorizationRequest(pendingRequest, this.User.Identity.Name, pendingRequest.Scope); // change response to 302 redirect,redirect url is in pendingRequest
+}
+else
+{
+responseMessage = this.authorizationServer.PrepareRejectAuthorizationRequest(pendingRequest);
+}
+var response = this.authorizationServer.Channel.PrepareResponse(responseMessage);
+return response.AsActionResult();
+}
+[AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
+public ActionResult Token()
+{
+return this.authorizationServer.HandleTokenRequest(this.Request).AsActionResult();
+}
+CustomizeAuthorize.class :AuthorizeAttribute
+override bool AuthorizeCore(HttpContextBase httpContext){
+//check HttpContext.Request.IsAuthenticated
+//sometimes can check session also(set identity if session exists)
+}
+override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
+
+</code></pre></div><p>according to The OAuth 2.0 Authorization Framework
+Authorization Grant ........................................8
+1.3.1. Authorization Code ..................................8
+1.3.2. Implicit ............................................8
+1.3.3. Resource Owner Password Credentials .................9
+1.3.4. Client Credentials ..................................9</p> <ul><li>Type 1: Authorization Code:</li></ul> <div class="language- extra-class"><pre class="language-text"><code>client Code:
+private readonly WebServerClient client;
+private readonly static AuthorizationServerDescription authServerDesc = new AuthorizationServerDescription()
+{
+TokenEndpoint = new Uri(TOKEN_ENDPOINT),
+AuthorizationEndpoint = new Uri(AUTHZ_ENDPOINT),
+ProtocolVersion = ProtocolVersion.V20
+};
+client = new WebServerClient(authServerDesc, clientId);
+[HttpGet]
+public ActionResult Index()
+{
+client.RequestUserAuthorization(new[] { &quot;&quot; }, new Uri(Url.Action(&quot;login&quot;, &quot;home&quot;, null, this.Request.Url.Scheme)));
+return new EmptyResult();
+}
+[HttpGet]
+public async Task Login()
+{
+client.ClientCredentialApplicator = ClientCredentialApplicator.PostParameter(clientSecret);
+var authorization = client.ProcessUserAuthorization();//wait for token generated by oauthServer
+if (authorization != null)
+{
+if (authorization.AccessTokenExpirationUtc.HasValue)
+{
+client.RefreshAuthorization(authorization, TimeSpan.FromSeconds(30));
+}
+string token = authorization.AccessToken;
+string scope = &quot;user_name,nick_name,avatar_url&quot;;
+using (var httpClient = new ApiHttpClient(token))
+{
+var content = new StringContent(JsonConvert.SerializeObject(new { user_scope = scope }), Encoding.UTF8, &quot;application/json&quot;);
+//// setting for https only
+//System.Net.ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, errors) =&gt; true;
+var apiResponse = await httpClient.PostAsync(ApiEndPoint, content);
+if (apiResponse.IsSuccessStatusCode)
+{
+return new WrapperHttpResponseMessageResult(apiResponse);
+}
+return Content(&quot;call api failed&quot;);
+}
+}
+return Content(&quot;authorize failed&quot;);
+}
+public class ApiHttpClient : HttpClient
+{
+public ApiHttpClient(string accessToken)
+: base(new ApiMessageHandler(accessToken))
+{ }
+class ApiMessageHandler : MessageProcessingHandler
+{
+string accessToken;
+public ApiMessageHandler(string accessToken)
+: base(new HttpClientHandler())
+{
+this.accessToken = accessToken;
+}
+protected override HttpRequestMessage ProcessRequest(HttpRequestMessage request, CancellationToken cancellationToken)
+{
+request.Headers.Authorization = new AuthenticationHeaderValue(&quot;Bearer&quot;, this.accessToken);
+return request;
+}
+protected override HttpResponseMessage ProcessResponse(HttpResponseMessage response, CancellationToken cancellationToken)
+{
+return response;
+}
+}
+}
+
+</code></pre></div><p>Request capturing analysis:</p> <p>1.cl.com/home/login
+2.srv.com/oauth2?response_type=code&amp;client_id=123456&amp;redirect_uri=http:%2F%2Fcl.com%2Fhome%2Flogin&amp;scope=
+run CustomizeAuthorize, if not login yet(AuthorizeCore) will kick to (HandleUnauthorizedRequest)
+3.srv.com/home/login?customizeReturnUrl=%2Foauth2%3Fresponse_type%3Dcode%26client_id%3D123456%26redirect_uri%3Dhttp%3A%252F%252Fcl.com%252Fhome%252Flogin%26scope%3D
+at this point, you need to log return url for later redirection after successfully login.
+then post to login, success then redirect to customizeReturnUrl,
+run CustomizeAuthorize again,then enter action Index continue previous request
+4.srv.com/oauth2?response_type=code&amp;client_id=123456&amp;redirect_uri=http:%2F%2Fcl.com%2Fhome%2Flogin&amp;scope=
+first time will show Authorization Page(render with
+@using (Html.BeginForm())
+{
+@Html.Hidden(&quot;client_id&quot;, this.Model.AppKey)
+@Html.Hidden(&quot;redirect_uri&quot;, this.Model.Redirect)
+@Html.Hidden(&quot;state&quot;, this.Model.State)
+@Html.Hidden(&quot;scope&quot;, DotNetOpenAuth.OAuth2.OAuthUtilities.JoinScopes(this.Model.Scope))
+@Html.Hidden(&quot;response_type&quot;, this.Model.ResponseType)
+@Html.Hidden(&quot;approve&quot;, true)
+<button type="submit" class="btn1">Authorize Now</button>
+}
+) , when you click button 'Authorize Now',will post data back to oauth2/index?approve=true,after this redirect to original url:
+5.cl.com/home/login?code=*******
+now, client side start to post Client Secrect
+client.ClientCredentialApplicator = ClientCredentialApplicator.PostParameter(clientSecret);
+var authorization = client.ProcessUserAuthorization();[server side will check secrect and create token]
+successfully!!!</p> <ul><li>Type 2: Client Credentials: app level oauth</li></ul> <div class="language- extra-class"><pre class="language-text"><code>public async Task AppClient()
+{
+var token = await GetToken();
+string result = String.Empty;
+using (var apiHttpClient = new ApiHttpClient(token))
+{
+//// setting for https only
+//System.Net.ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, errors) =&gt; true;
+var content = new StringContent(&quot;{\&quot;param_key\&quot;:\&quot;param_value\&quot;}&quot;, Encoding.UTF8, &quot;application/json&quot;);
+var apiResponse = apiHttpClient.PostAsync(APIEndPoint, content).Result;
+if (apiResponse.IsSuccessStatusCode)
+{
+result = apiResponse.Content.ReadAsStringAsync().Result;
+return Content(result);
+}
+return Content(&quot;failed: &quot; + apiResponse.StatusCode.ToString());
+}
+}
+private async Task GetToken()
+{
+using (var httpClient = new OAuthHttpClient(clientId, clientSecret))
+{
+var content = new FormUrlEncodedContent(new Dictionary&lt;string, string&gt;
+{
+{&quot;grant_type&quot;, &quot;client_credentials&quot;}
+});
+var response = await httpClient.PostAsync(TOKEN_ENDPOINT, content);
+var responseContent = await response.Content.ReadAsStringAsync();
+if (response.StatusCode == System.Net.HttpStatusCode.OK)
+{
+return JObject.Parse(responseContent)[&quot;access_token&quot;].ToString();
+}
+return responseContent.ToString();
+}
+}
+
+</code></pre></div><p>Case Study:
+oauth2 server implementation interactive with third party oauth login</p> <p><img src="/docs/docs_image/software/programming/auth04.png" alt=""></p> <p>协议：</p> <p>The OAuth 2.0 Authorization Framework
+http://tools.ietf.org/html/rfc6749</p> <p>参考书籍：
+Pro ASP.NET Web API Security.pdf
+ASP.NET Identity
+参考阅读：
+http://bitoftech.net/2014/09/24/decouple-owin-authorization-server-resource-server-oauth-2-0-web-api/</p> <p>Security and cryptography
+http://dotnetcodr.com/security-and-cryptography/</p> <p>Makecert.exe（证书创建工具）
+http://msdn.microsoft.com/zh-cn/library/bfsktky3(v=vs.110).aspx</p> <p>IIS中的SSL Certificate 证书配置
+http://www.cnblogs.com/chyspace/archive/2011/02/17/1957326.html</p> <p>DotNetOpenAuth
+http://www.cnblogs.com/chyspace/archive/2011/02/17/1957326.html</p> <p>Real World OAuth using ASP.NET MVC
+http://www.dotnetcurry.com/showarticle.aspx?ID=907</p> <p>ASP.NET MVC 中实现真实世界中的 OAuth 身份认证
+http://www.oschina.net/translate/real-world-oauth-using-aspnet-mvc?cmp&amp;p=2</p> <p>用DotNetOpenAuth实现基于OAuth 2.0的web api授权
+http://www.cnblogs.com/fengwenit/p/3542566.html</p> <p>使用DotNetOpenAuth搭建OAuth2.0授权框架
+http://www.cnblogs.com/newton/p/3409984.html</p> <p>各种语言实现的oauth认证
+http://www.supesoft.com/News_Disp.asp?ID=4926</p> <p>Asp.Net MVC 4 Web API 中的安全认证-使用OAuth
+http://www.supesoft.com/News_Disp.asp?ID=4926</p> <p>[OAuth]基于DotNetOpenAuth实现Client Credentials Grant
+http://www.cnblogs.com/dudu/p/oauth-dotnetopenauth-client-credentials-grant.html</p> <p>扩展阅读：</p> <p>数字证书原理
+http://www.cnblogs.com/jeffreysun/archive/2010/06/24/1627247.html
+网上银行安全证书工作原理
+http://lordecho.wordpress.com/2009/02/17/%E7%BD%91%E4%B8%8A%E9%93%B6%E8%A1%8C%E5%AE%89%E5%85%A8%E8%AF%81%E4%B9%A6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/</p> <p>WCF开发框架之证书加密使用说明书
+http://www.cnblogs.com/wuhuacong/archive/2012/07/09/2582297.html</p> <p>OAuth 2.0 (without Signatures) is Bad for the Web
+http://hueniverse.com/2010/09/15/oauth-2-0-without-signatures-is-bad-for-the-web/</p> <p>AUTH flow:
+https://b.zmxy.com.cn/technology/openDoc.htm?relInfo=zhima.auth.info.authorize@1.0@1.3
+http://open.taobao.com/docs/doc.htm?articleId=102635&amp;docType=1&amp;treeId=1
+http://open.taobao.com/docs/doc.htm?spm=a219a.7629140.0.0.4PMVGd&amp;treeId=12&amp;articleId=105590&amp;docType=1
+http://www.junge85.com/post/859.html
+淘宝OAuth2.0服务 http://www.ganzhishi.com/txt.asp?id=1305
+OAuth2.0 用户验证授权标准 理解 www.cnblogs.com/hilow/p/3826425.html</p> <p>todo:</p> <p>https://tools.ietf.org/html/rfc2617
+Digest access authentication
+https://www.quora.com/What-is-the-difference-between-Basic-Auth-Digest-Auth-oAuth1-0-and-oAuth2-0-What-is-an-example-of-each-in-core-PHP
+consideration: grant type? store?
+full flow (username password ): http://bitoftech.net/2014/07/16/enable-oauth-refresh-tokens-angularjs-app-using-asp-net-web-api-2-owin/
+一个很重要的坑！Oauth2 with Angular: The right way https://jeremymarc.github.io/2014/08/14/oauth2-with-angular-the-right-way
+Enable OAuth Refresh Tokens in AngularJS App using ASP .NET Web API 2, and Owin  bitoftech.net/2014/07/16/enable-oauth-refresh-tokens-angularjs-app-using-asp-net-web-api-2-owin/
+sso, oauth2, identity
+https://tools.ietf.org/pdf/rfc6749.pdf  and  http://self-issued.info/docs/draft-ietf-oauth-v2-bearer.html
+http://bchavez.bitarmory.com/archive/2015/07/19/asp-net-identity-oauth-2-social-login-web-api-2.aspx
+oatuh -- openid http://softwareas.com/oauth-openid-youre-barking-up-the-wrong-tree-if-you-think-theyre-the-same-thing/
+refresh token - https://github.com/openid/AppAuth-Android/issues/178
+OAuth 2.0 is an Authorization protocol. The idea behind OAuth is that you (the resource owner) can delegate access privileges to a third-party. An example is a Web app being able to post on your Facebook wall for you. Again, in very simplistic terms, this materializes by sending a 302 redirect to the user when she accesses a protected resource. That 302 redirects the user, for example to Facebook's oauth login page (https://www.facebook.com/dialog/oauth?client_id=...&amp;redirect_url=[yourwebapp]&amp;scope=[permissionsrequiredfromuser]). After you login to facebook, accept the permission request, facebook will send a 302 redirect to the redirect_url you provided with an access_token that you can then use to send requests on behalf of the user that provided the credentials. For example, to get information about the user you'd perform a request to https://graph.facebook.com/me?access_token=[access_token]. There are variations for this workflow. They are all explained in the links at the end of the answer.
+OpenDotNetAuth
+https://github.com/DotNetOpenAuth/DotNetOpenAuth
+https://github.com/DotNetOpenAuth/DotNetOpenAuth/wiki/Security-scenarios
+https://gitter.im/DotNetOpenAuth/DotNetOpenAuth
+https://geektalk.info/question/16855131/dotnetopenauth-openid-flow-w-own-auth-server
+ASP.NET Identity has nothing to do with ASP.NET. Talk about poor naming... It provides functionality to save and retrieve user's data from a data source. It also provides you with the ability to associate claims and roles to the users, other &quot;login providers&quot; (that would be the case when you &quot;login with facebook&quot; and your user_id from facebook gets associated with your local user id, this information is stored in the AspNetUserLogins table).The way you see it being used in the MVC project template is in the Account controller and the CookieAuthenticationMiddleware.
+Form Authenciation -&gt; Membership -&gt; Identity (ASP.NET https://docs.microsoft.com/en-us/aspnet/identity/overview/getting-started/introduction-to-aspnet-identity)
+http://www.techstrikers.com/Articles/understanding-asp.net-identity.php
+https://forums.asp.net/t/2014967.aspx?What+is+the+difference+between+form+authentication+Membership+API+and+newly+introduce+Identity
+http://jlabusch.github.io/oauth2-server/
+https://brockallen.com/2013/10/20/the-good-the-bad-and-the-ugly-of-asp-net-identity/#missingdata
+Scenario :
+http://www.nakov.com/blog/2014/12/22/webapi-owin-identity-custom-login-service/</p> <p>Terminology:
+Token Based vs Cookie Based:
+Authentication: Cookies vs JWTs and why you’re doing it wrong https://www.slideshare.net/derekperkins/authentication-cookies-vs-jwts-and-why-youre-doing-it-wrong
+https://docs.google.com/drawings/d/1wtiF_UK2e4sZVorvfBUZh2UCaZq9sTCGoaDojSdwp7I/edit
+https://auth0.com/blog/cookies-vs-tokens-definitive-guide/
+Claim based: http://stackoverflow.com/questions/6786887/explain-claims-based-authentication-to-a-5-year-old
+Token authentication
+Request to server is signed by &quot;token&quot; - usually it means setting specific http header, however they can be send in any part of http request (POST body, etc.)
+Pros:
+You can authorize only the request you wish to authorize (cookies - even the authorization cookie are send for every single request)
+Immune to XSRF (short example of XSRF - I'll send you a link in email that will look like <img src="http://bank.com?withdraw=1000&amp;to=myself"> and if you're logged in via cookie authentication to bank.com and bank.com doesn't have any means of XSRF protection I'll withdraw money from your account simply by the fact that your browser will trigger authorized get request to that url). Note there are anti forgery measure you can do with cookie-based authentication - but you have to implement those.
+Cookies are bound to single domain. Cookie created on domain foo.com can't be read by domain bar.com, while you can send token to any domain you like. This is especially useful for single page applications that are consuming multiple services that are requiring authorization - so I can have web app on domain myapp.com that can make authorized client-side requests to myservice1.com and to myservice2.com.
+Cons:
+You have to store token somewhere; while cookies are stored &quot;out of the box&quot;, the location that comes to mind is localStorage (con: the token is persisted even after you close browser window), sessionStorage (pro: the token is discarded after you close browser window, con: opening new tab (ctrl+click) will render that tab anonymous) and cookies (pro: the token is discarded after you close browser window (that is if you'll use session cookie), you will be authenticated in tab opened by ctrl+click, you're immune to XSRF since you're ignoring cookie for authentication, you just use it as token storage, con: cookies are send out for every single request, if this cookie is not marked as https only you're open to man in the middle attack)
+It is slightly easier to do XSS attack against token based authentication (i.e. if I'm able to run injected script on your site I can stole your token; however cookie based authentication is not a silver bullet either - while cookies marked as http-only can't be read by client, client can still make request on your behalf that will automatically include the authorization cookie)
+Request for download a file, that is supposed to work only for authorized users requires you to use File API, the same request works out of the box for cookie-based authentication
+Cookie authentication
+Request to server is always signed in by authorization cookie
+Pros:
+Cookie can be marked as &quot;http-only&quot; which makes them impossible to be read on client side, this is better for XSS-attack protection
+Came out of the box - you don't have to implement any code on client side
+Cons:
+Bound to single domain (so if you have single page application that makes requests to multiple services you can end up doing crazy stuff like reverse proxy)
+Vulnerable to XSRF, you have to implement extra measures to make your site protected against cross site request forgery
+Are send out for every single request (even for request that doesn't require authentication)
+Overall I'd say tokens give you better flexibility (you're not bound to single domain), downside is you have to do quite some coding by yourself.
+--http://stackoverflow.com/questions/17000835/token-authentication-vs-cookies</p> <p>jwt https://jwt.io/</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/docs/assets/js/app.936a98b5.js" defer></script><script src="/docs/assets/js/2.464c3f4a.js" defer></script><script src="/docs/assets/js/136.d863a8d8.js" defer></script>
+  </body>
+</html>

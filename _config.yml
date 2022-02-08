@@ -1,0 +1,129 @@
+﻿# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+title: "LIU YUE'S - NOTES TO SHARE"
+email: "lyhistory@gmail.com"
+description: "tech notes;"
+#baseurl: "/lyhistory.github.io"
+url: "https://lyhistory.github.io"
+logo: "/content/images/common/liuyue_origin.jpg"
+minimal_mistakes_skin    : "sunrise" 
+#"default" 
+
+# Build settings
+markdown: kramdown
+remote_theme: "mmistakes/minimal-mistakes@4.17.1"
+# Outputting
+permalink: /:categories/:title/
+paginate: 5 # amount of posts to show
+paginate_path: /page:num/
+timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+
+# Plugins (previously gems:)
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jemoji
+  - jekyll-include-cache
+  - jekyll-admin
+
+author:
+  name   : "LIU YUE"
+  avatar : "/content/images/common/qrcode_xingqiu.png"
+  bio    : "古萧龙城IT青年:wechat:lyhistory; Born in XiaoXian County,Anhui China; Bachelor in cst XMU, Master in se NUS; Enneagram Type 5;"
+  #email  : "lyhistory@gmail.com"
+  #uri    : "https://twitter.com/lyhistory"
+  links:
+    - label: "机器指令-白帽黑客&区块链"
+      icon: "fas fa-fw fa-dragon"
+      url: "https://lyhistory.com/docs/"
+    - label: "微信公众号: coder2hacker"
+      icon: "fas fa-fw fa-wechat"
+      url: "https://coder2hacker.hns.to"
+    - label: "发邮件Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: mailto:lyhistory@gmail.com
+    - label: "发密信Keybase"
+      icon: "fab fa-keybase"
+      url: "https://keybase.io/lyhistory"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/lyhistory"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/lyhistory"
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
+include:
+    - docs/_navbar.md
+    - docs/_sidebar.md
+#exclude:
+#    - docs
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
+footer:
+  links:
+    - label: "AlphaWallet"
+      icon: "fas fa-fw fa-university"
+      url: https://alphawallet.com/
+    - label: "机器指令-白帽黑客&区块链&计算机基础"
+      icon: "fas fa-fw fa-dragon"
+      url: https://lyhistory.com/docs/
+    - label: "Sea Shepherd"
+      icon: "fas fa-fw fa-whale"
+      url: https://seashepherd.org/
+    - label: "Google Course"
+      icon: "fab fa-fw fa-google"
+      url: https://developers.google.com/edu/
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
+      
+comments:
+  provider: "disqus"
+  disqus:
+    shortname: "lyhistory"
+search                   : true
+search_full_content      : true
+# lunr (default), algolia, google
+search_provider          : google
+
+google:
+  search_engine_id       : 016202475545879656962:ot3scpbjy9y
+  instant_search         : true 
+# Analytics
+analytics:
+  provider               : google 
+  # false (default), "google", "google-universal", "custom"
+  google:
+    tracking_id          : UA-55774263-1
+    anonymize_ip         : false

@@ -1,0 +1,16 @@
+
+基于注入的漏洞利用
+
+## sql注入
+
+例子：
+我在使用pgsql的驱动npgsql的时候发现的一个官方数据库bug，由此跟npgsql的作者展开了对话，
+从对话中我明白了作者设计驱动的原则是要避免使用simple query协议，采用
+
+https://github.com/npgsql/npgsql/issues/2078
+
+![network](/docs/docs_image/coder2hacker/ch6injection/sql_injection01.png)
+
+Creating placeholders, preventing SQL injections https://forums.asp.net/t/1868638.aspx?Creating+placeholders+preventing+SQL+injections
+
+https://www.postgresql.org/docs/9.3/static/protocol-flow.html#AEN99742
