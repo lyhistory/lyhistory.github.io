@@ -113,6 +113,15 @@ Pushing to a remote https://help.github.com/articles/pushing-to-a-remote/
 tag
 git tag
 git checkout tags/v1.0.8
+
+
+清空commits
+git checkout --orphan tmp-master # create a temporary branch
+git add -A  # Add all files and commit them
+git commit -m 'Add files'
+git branch -D master # Deletes the master branch
+git branch -m master # Rename the current branch to master
+git push -f origin master # Force push master branch to Git server
 ```
 
 ### 1.5 About commit
