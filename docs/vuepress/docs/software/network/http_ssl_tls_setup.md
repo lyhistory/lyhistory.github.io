@@ -65,6 +65,14 @@ keytool -genkey -alias secure_tomcat -keysize 1024 -validity 365 -keyalg RSA -ke
 keytool -list -v -keystore selfsigned.keystore
 	打印信息包含 Entry type: PrivateKeyEntry
 keytool -export -alias secure_tomcat -keystore selfsigned.keystore -file selfsigned.cer
+
+example:
+java import self-signed certificate
+keytool.exe -import -trustcacerts -keystore ../lib/security/cacerts  -storepass changeit -noprompt -alias myownaliasformysystem -file "\saved-certs\ca.cert"
+https://stackoverflow.com/questions/11617210/how-to-properly-import-a-selfsigned-certificate-into-java-keystore-that-is-avail
+
+tomcat:
+https://support.microfocus.com/kb/doc.php?id=7022204
 ```
 
 
@@ -2083,6 +2091,9 @@ git log -S"EC curve"
 ```
 
 
+### CertificateException: No subject alternative names present
+When the server certificate is having Subject Alternative Names (SAN), the requesting home name must match with one of the SANs. If the server’s SSL certificate does not have SANs, then the requesting home name must match with the Common Name (CN) of the certificate.
+https://stackoverflow.com/questions/29157861/java-certificateexception-no-subject-alternative-names-matching-ip-address
 
 ### 一些有意思的问题
 

@@ -29,6 +29,9 @@ strace -ff -o prefix
 
 **JDK Tools**
 
+DEBUG:
+java -jar -Djavax.net.debug=all
+
 JVM参数 
 https://stackoverflow.com/questions/43087831/complete-list-of-jvm-options
 java -XX:+UnlockDiagnosticVMOptions -XX:+UnlockExperimentalVMOptions -XX:+PrintFlagsFinal -XX:+PrintFlagsWithComments -version
