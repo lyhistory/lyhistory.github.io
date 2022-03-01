@@ -44,7 +44,7 @@ dtoverlay=pi3-enable-wifi
 https://www.raspberrypi.org/forums/viewtopic.php?t=211383
 
 ## 1. Setup
-Step 1: burn image
+### Step 1: burn image
 Download image 
 Then format Sdcard with ‘SD Card Formatter’ and write image into the sdcard with ‘Win32DiskImage’
 https://www.raspberrypi.org/downloads/
@@ -53,15 +53,17 @@ https://www.raspberrypi.org/documentation/installation/installing-images/README.
 https://www.sdcard.org/downloads/formatter/
 https://sourceforge.net/projects/win32diskimager/
 
-Step 2: config
+### Step 2: config
 Connect to monitor(change monitor setting) or config for headless install:
+
 Config wifi manually and enable ssh
 SETTING UP A RASPBERRY PI HEADLESS https://www.raspberrypi.org/documentation/configuration/wireless/headless.md
 https://blog.twofei.com/772/
+
 Issue: auto wifi not working
 Raspbian version: buster 
 
-Step 3: boot
+### Step 3: boot
 Using ip scanner https://www.advanced-ip-scanner.com/ or router admin to find out the ip for ssh connect
 Default login: pi/raspberry
 Once login, Enable SSH/VNC/wifi/CAMERA….
@@ -73,28 +75,24 @@ sudo apt-get install python3
 sudo apt-get install python3-pip 
 pip3 install picamera https://www.raspberrypi.org/documentation/linux/software/python.md
 
-Step 4. Handy tools
+Run ssh on startup/boot
+https://www.raspberrypi.org/forums/viewtopic.php?f=66&t=86950
+http://raspberrypi.stackexchange.com/questions/1747/starting-ssh-automatically-at-boot-time
+
+### Step 4. Handy tools
 tools for android phone user all you need are here: http://www.makeuseof.com/tag/6-android-apps-every-raspberry-pi-owner/
 virtual keyboard: sudo  apt-get install matchbox
 remote access： https://www.raspberrypi.org/documentation/remote-access/
 
-?#issue: sdcard format and partition
-a. if your sdcard more than 32G, windows disk manager may not be able to format it correctly, I am not sure abt mac and other os, use sdcard formatter instead
-b. if you find there are some unallocated spaces, then your sdcard may has been corrupted due to some improper operations, then you definitely need to delete the partition and repartition it.
-c. remember partition it as primary not logic, and better choose FAT32 format
+## Troubleshooting
+### sdcard format and partition
++ a. if your sdcard more than 32G, windows disk manager may not be able to format it correctly, I am not sure abt mac and other os, use sdcard formatter instead
++ b. if you find there are some unallocated spaces, then your sdcard may has been corrupted due to some improper operations, then you definitely need to delete the partition and repartition it.
++ c. remember partition it as primary not logic, and better choose FAT32 format
 format tool: https://www.sdcard.org/downloads/formatter_4/eula_windows/index.html
 partition tool: http://www.partition-tool.com/partner/app.htm
 
-?#issue VNC raspbian cannot currently show the desktop
-Enable boot to desktop(lite version by default boot to console)
-sudo apt-get install lxsession https://www.raspberrypi.org/forums/viewtopic.php?t=216737#p1486094
-
-?#issue Raspbian buster lite no wireless interfaces found
-https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md
-ip link show
-https://raspberrypi.stackexchange.com/questions/89704/rpi3-model-b-no-wireless-interface-found
-
-?#issue: network access
+### Network access
 A. wifi connected, no internet access
 B. cannot connect to wifi
 C. static ip address
@@ -124,10 +122,37 @@ wifi country code
 http://raspberrypi.stackexchange.com/questions/44183/wifi-country-code-resetting
 https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=81021
 
-?#issue: Resolution
+### Screen Display/Monitor & Resolution
+if your monitor supports multiple ports, config the correct one
+![](/docs/docs_image/software/hardware/raspberry01.png)
+
+7 Inch 1024*600 HDMI LCD Display with Touch Screen https://www.elecrow.com/wiki/index.php?title=7_Inch_1024*600_HDMI_LCD_Display_with_Touch_Screen
+
+http://hackaday.com/2014/11/02/using-cell-phone-screens-with-any-hdmi-interface/
+https://howtoraspberrypi.com/raspberry-pi-hdmi-not-working/
+
+VGA Adapter: RGB IN DVI-D DVI-I
+It turns out that a typical digital monitor only accepts DVI-D connectors. A standard DVI-I connector (left) may be converted to a DVI-D (right) by removing the 4 additional pins surround the big pin.
+This extraction is easily done using a long-nose plier.
+
 https://www.youtube.com/watch?v=FWSHrTHKg0w#t=156.177646
 
-?#issue: Power supply
+### keyboard & mouse
+laggy wifi mouse
+```
+vim /boot/cmdline.txt
+usbhid.mousepoll=8
+You can change the number to anything from 0-8. The lower the number the smoother the mouse movement will be, but the higher the load on the CPU. 
+
+for readonly:
+ LibreELEC mounts /flash as read-only, so you need to look which device and partition it is and remount it as writeable:
+eg: df -h (to see mounted partitions), then:
+mount -o remount,rw /dev/mmcblk0p8 /flash
+```
+keyboard issue, e.g quotes key
+https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=24751
+
+### Power supply
 5V 2.1A
 if power brownout you will see a lighting bolt on top right corner.
 Don't use usb connected your computer, it may burn your motherboard, be carefully when use phone power supply, USB connectors normally imply 5V (but note that some cheap USB connected chargers [not "power supplies"] may be unregulated, and when lightly loaded may output more than 5Volt, even 6Volt or more),
@@ -137,20 +162,24 @@ http://raspi-ups.appspot.com/en/index.jsp
 power supply switch https://www.pi-supply.com/product/pi-supply-raspberry-pi-power-switch/?v=79cba1185463
 https://www.youtube.com/watch?v=YpAYDcW_Jx0
 
-?#issue.Screen Display/Monitor
-if your monitor supports multiple ports, config the correct one
-![](/docs/docs_image/software/hardware/raspberry01.png)
+### Raspbian related issue:
++ VNC raspbian cannot currently show the desktop
+Enable boot to desktop(lite version by default boot to console)
+sudo apt-get install lxsession https://www.raspberrypi.org/forums/viewtopic.php?t=216737#p1486094
 
-http://hackaday.com/2014/11/02/using-cell-phone-screens-with-any-hdmi-interface/
-https://howtoraspberrypi.com/raspberry-pi-hdmi-not-working/
++ Raspbian buster lite no wireless interfaces found
+https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md
+ip link show
+https://raspberrypi.stackexchange.com/questions/89704/rpi3-model-b-no-wireless-interface-found
 
-VGA Adapter: RGB IN DVI-D DVI-I
-It turns out that a typical digital monitor only accepts DVI-D connectors. A standard DVI-I connector (left) may be converted to a DVI-D (right) by removing the 4 additional pins surround the big pin.
-This extraction is easily done using a long-nose plier.
-
-?# keyboard issue, e.g quotes key
-https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=24751
-
+### Ubuntu related issue:
+?#pro01： ubuntu welcome to emergency mode
+Using a VNC client that requests the wrong amount of colors, will crash the application (displaying an “emergency recovery shell” on screen).
+http://www.berryterminal.com/doku.php/berryboot/headless_installation
+http://raspberrypi.stackexchange.com/questions/37558/how-to-troubleshoot-a-headless-pi-that-boots-into-emergency-mode
+https://ubuntu-mate.community/t/getting-emergency-mode-screen-on-boot-up-every-time/2626/3
+https://ubuntu-mate.community/t/getting-emergency-mode-screen-on-boot-up-every-time/2626/5
+https://www.raspberrypi.org/forums/viewtopic.php?f=56&t=124149
 
 ## 2.More
 
@@ -176,10 +205,7 @@ sudo apt-get install feh
 feh -d -S filename ./
 ```
 
-### 2.2. Display screen
-7 Inch 1024*600 HDMI LCD Display with Touch Screen https://www.elecrow.com/wiki/index.php?title=7_Inch_1024*600_HDMI_LCD_Display_with_Touch_Screen
-
-### 2.3.Cooling system
+### 2.2.Cooling system
 yes, you need, http://raspberrypi.stackexchange.com/questions/22928/does-the-raspberry-pi-need-a-cooling-system, https://www.zhihu.com/question/20767376
 heat sink
 https://www.youtube.com/watch?v=1AYGnw6MwFM
@@ -187,24 +213,11 @@ https://www.youtube.com/watch?v=1AYGnw6MwFM
 water cooling
 https://www.youtube.com/watch?v=RggpIEYh9VU
 
-### 2.4.Run ssh on startup/boot
-https://www.raspberrypi.org/forums/viewtopic.php?f=66&t=86950
-http://raspberrypi.stackexchange.com/questions/1747/starting-ssh-automatically-at-boot-time
-
-### 2.5 Diagnosis
-?#pro01： ubuntu welcome to emergency mode
-Using a VNC client that requests the wrong amount of colors, will crash the application (displaying an “emergency recovery shell” on screen).
-http://www.berryterminal.com/doku.php/berryboot/headless_installation
-http://raspberrypi.stackexchange.com/questions/37558/how-to-troubleshoot-a-headless-pi-that-boots-into-emergency-mode
-https://ubuntu-mate.community/t/getting-emergency-mode-screen-on-boot-up-every-time/2626/3
-https://ubuntu-mate.community/t/getting-emergency-mode-screen-on-boot-up-every-time/2626/5
-https://www.raspberrypi.org/forums/viewtopic.php?f=56&t=124149
-
-### 2.6 Read analog
+### 2.3 Read analog
 https://www.raspberrypi.org/forums/viewtopic.php?f=37&t=137207
 https://learn.adafruit.com/reading-a-analog-in-and-controlling-audio-volume-with-the-raspberry-pi/overview
 
-## 3. Use Case
+## 3. Use Cases
 
 ### 3.1 Auto Watering system
 Arduino, solenoid valve with a power supply, breadboard, electronic water sensor, rain bird sprinkler head, and a relay.
@@ -227,12 +240,24 @@ https://www.raspberrypi.org/forums/viewtopic.php?t=169666
 https://www.youtube.com/watch?v=i_r3z1jYHAc
 https://www.youtube.com/watch?v=KJKhRLKXr-Q
 
-todo:
-
-Pie-Top
+### Pie-Top
 https://pimylifeup.com/pi-top-review/
 https://3dprint.com/45158/pi-top-version-3/
+pi-top install hands on
+http://makezine.com/2015/11/16/hands-on-with-pi-top-the-raspberry-pi-powered-laptop/
 
+### Ethereum Node
+Build a RespNode http://raspnode.com/diyEthereumGeth.html#homenet
+中文安装全记录： http://blog.csdn.net/iracer/article/details/51620051
+
+### Kali
+run kali on raspberry
+http://www.thesecurityblogger.com/installing-and-troubleshooting-kali-linux-on-raspberry-pi/
+
+### 树莓派 太阳能板 + nxtcoin pos +移动硬盘
+https://www.nxter.org/how-to-set-up-a-nxt-node-on-a-raspberry-pi-2/
+
+## todo:
 37 in 1 sensor kit: https://www.modmypi.com/download/37-piece-sensor-description.pdf
 heartbeat/Fingertip measuring heartbeat
 http://forum.arduino.cc/index.php?topic=230713.0
@@ -243,13 +268,6 @@ https://www.raspberrypi.org/forums/viewtopic.php?f=93&t=18138
 shift register(sn74hc595n)
 Graphic Display(R61526 16PIN)
 
-
-Build a RespNode http://raspnode.com/diyEthereumGeth.html#homenet
-中文安装全记录： http://blog.csdn.net/iracer/article/details/51620051
-pi-top install hands on
-http://makezine.com/2015/11/16/hands-on-with-pi-top-the-raspberry-pi-powered-laptop/
-
-
 Images:
 images for miner: http://cryptomining-blog.com/tag/raspberry-pi-mining/
 http://www.digital-coins.net/wordpress/index.php/2014/12/20/setup-your-raspberry-pi-as-mining-device-controller/
@@ -257,8 +275,7 @@ ubuntu mate for raspberry https://ubuntu-mate.org/raspberry-pi/
 run standard raspbian on pi-top
 https://www.raspberrypi.org/forums/viewtopic.php?f=29&t=149151&p=990308
 https://github.com/rricharz/pi-top-install
-run kali on raspberry
-http://www.thesecurityblogger.com/installing-and-troubleshooting-kali-linux-on-raspberry-pi/
+
 multiple boot with berryboot (predefined os: rasbian/ubuntu mate,core/kali,etc.
 http://www.geekfan.net/5244/
 www.howtogeek.com/141325/how-to-multi-boot-your-raspberry-pi-with-berryboot/
@@ -271,8 +288,3 @@ ethereum version: ethembedded.com/?page_id=171
 http://www.multibootpi.com/
 
 How to Make a Raspberry Pi VPN Server https://www.electromaker.io/tutorial/blog/raspberry-pi-vpn-server
-
-
-
-树莓派 太阳能板 + nxtcoin pos +移动硬盘
-https://www.nxter.org/how-to-set-up-a-nxt-node-on-a-raspberry-pi-2/

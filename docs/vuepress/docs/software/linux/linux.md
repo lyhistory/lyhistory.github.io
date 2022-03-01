@@ -503,10 +503,9 @@ https://unix.stackexchange.com/questions/321315/get-cron-to-run-in-the-same-envi
   + deb包安装的，可以用dpkg -l | grep "软件或者包的名字"；
   + yum方法安装的，可以用yum list installed | grep "软件名或者包名"；
   + apt方法安装的，apt list --installed|grep "TEXT"
-  + 如果是以源码包自己编译安装的，例如.tar.gz或者tar.bz2形式的，这个只能看可执行文件是否存在了，如果是以root用户安装的，可执行程序通常都在/sbin:/usr/bin目录下。
+  + 如果是以源码包自己编译安装的，例如.tar.gz或者tar.bz2形式的，这个只能看可执行文件是否存在了，如果是以root用户安装的，可执行程序通常都在/usr/local/sbin:/usr/bin目录下。
 
 + 安装后找不到命令，因为安装的位置不在系统path上，可以参考上面的“解压后使用”的方式中的，link或设置环境变量方式来搞；
-
 
 ### apt
 
@@ -567,13 +566,128 @@ DNF, or Dandified Yum, which is the next major version of the Yum  package manag
 
 https://www.rootusers.com/how-to-install-dnf-package-manager-in-centosrhel/
 
+## 服务管理 service/systemctl 
 
+### System V 
+is the oldest init system, used in
+Debian 6 and earlier
+Ubuntu 9.04 and earlier
+CentOS 5 and earlier
+In System V, an init script is a shell script. They are also called rc (run command) scripts. The scripts are located under the **/etc/init.d** directory
+
+```
+To make a service restart after a crash or reboot, you can usually add a line like this to the init script:
+ms:2345:respawn:/bin/sh /usr/bin/service_name
+
+To enable/disable a System V service to start at system boot time, run this command:
+sudo chkconfig service_name on
+sudo chkconfig service_name off
+sudo service service_name status
+
+update-rc.d - install and remove System-V style init script links
+https://manpages.ubuntu.com/manpages/xenial/man8/update-rc.d.8.html
+  https://askubuntu.com/questions/72127/when-you-run-update-rc-d-myscript-default-what-is-called-on-startup-shutdown#:~:text=If%20defaults%20is%20used%20then,overridden%20if%20there%20are%20dependencies.
+```
+
+### Upstart 
+came after System V and was used in
+Ubuntu 9.10 to Ubuntu 14.10, including Ubuntu 14.04
+CentOS 6
+
+To keep things simple, Upstart is backward-compatible with System V. The /etc/init.d/rc script still runs to manage native System V services. Its main difference is the way it allows multiple events to be associated with a service. This event-based architecture allowed Upstart to be a flexible service manager. 
+At startup, Upstart will run any System V init scripts normally. It will then look under the /etc/init directory and execute the shell commands in each service configuration file.
+The files have a naming style of service_name.conf
+
+### systemd 
+is the newest Linux service manager, used in
+Debian 7 and above
+Ubuntu 15.04 and above
+CentOS 7 and above
+
+systemd is backward-compatible with System V commands and initialization scripts. That means any System V service will also run under systemd.
+The main difference between systemd and the other two init methods is that systemd is responsible for the initialization of service daemons and other types of resources like device operating system paths, mount points, sockets, etc. The naming style for a unit file is service_name.unit_type. So, you will see files like dbus.service, sshd.socket, or home.mount
+
+main location:
+```
+/lib/systemd/system/
+/etc/systemd/system
+```
+
+```
+ls -l /etc/systemd/system/default.target
+sudo ls -l /etc/systemd/system/multi-user.target.wants/*.service
+sudo systemctl show --property "Requires" multi-user.target | fmt -10
+sudo systemctl show --property "Requires" basic.target | fmt -10
+sudo systemctl show --property "Wants" basic.target | fmt -10
+
+sudo vi /etc/systemd/system/multi-user.target.wants/xxx.service
+
+
+How To Configure a Linux Service to Start Automatically After a Crash or Reboot https://www.digitalocean.com/community/tutorials/how-to-configure-a-linux-service-to-start-automatically-after-a-crash-or-reboot-part-2-reference
+sudo systemctl daemon-reload
+sudo systemctl restart mysqld.service
+```
+
+### example -openvpn on kali linux
+因为某国直接使用openvpn有问题，所以要开启scramble模式，因此我卸载了kali默认的openvpn，
+安装了scramble option
+```
+apt remove openvpn
+then
+make install the patched version
+```
+结果无法用service/systemctl启动openvpn
+```
+$service/systemctl start openvpn
+failed to start .service unit is masked
+
+Check that the unit file is a symlink to /dev/null:
+$file /etc/systemd/system/openvpn.service
+
+/lib/systemd/system/openvpn.service: symbolic link to /dev/null
+
+```
+
+删除无效link后重启：
+```
+$sudo rm /lib/systemd/system/openvpn.service
+$sudo systemctl daemon-reload
+
+$service/systemctl start openvpn 
+
+忘记尝试 sudo systemctl unmask openvpn.service
+```
+但是这一次显示状态有点奇怪：
+```
+$service/systemctl status openvpn
+State active (exited) 
+```
+means that systemd has successfully run the commands but that it does not know there is a daemon to monitor.
+https://unix.stackexchange.com/questions/241970/what-does-status-active-exited-mean-for-a-systemd-service
+
+```
+$which open
+/usr/local/sbin/openvpn
+
+$sudo find / -name "openvpn.service"
+/run/systemd/generator.late/openvpn.service
+
+$/etc/init.d/openvpn still point to:
+/usr/sbin/openvpn
+
+configuration file for /etc/init.d/openvpn: /etc/default/openvpn  
+
+修改 /etc/init.d/openvpn指向 /usr/local/sbin/openvpn即可
+```
+
+install /etc/init.d/script
+https://askubuntu.com/questions/335242/how-to-install-an-init-d-script
 
 ## 基础服务
 
 ### 网络
 
-**Ubuntu**
+#### Ubuntu
 
 注意,对于Ubuntu 17.10 switched from ifupdown (which uses the /etc/network/interfaces file) to netplan,
 
@@ -624,7 +738,7 @@ network:
 
 
 
-**Debain based : Kali**
+#### Debain based : Kali
 
 ```
 --- for debain:
@@ -676,7 +790,7 @@ default via 192.168.0.1 dev eth0 onlink
 
 
 
-**Centos**
+#### Centos
 
 ```
 --- for centos
