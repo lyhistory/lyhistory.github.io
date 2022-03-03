@@ -50,9 +50,5 @@ finally publish to: ..\docs\
 ```
 
 ```
-npm view vuepress version
-npm outdated
-npm update
-
 npm install vuepress@latest
 ```

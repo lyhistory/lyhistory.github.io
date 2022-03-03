@@ -2,7 +2,14 @@
 
 而现在我告诉你，有办法永久拥有域名而且是顶级域名TLD: top level domain，比如 fromchina，然后你可以出售子域名：factory.fromchina；silk.fromchina等等；
 
+[Sign up to get a decentralized top-level domain name!](https://www.namebase.io/register/htz6x1)
+
 下面就就通过介绍Handshake握手协议、HNS握手币和Namebase平台来讲解普通人怎么获取顶级域名！
+
+::: tip
+新闻: 近期namebase被传统域名巨头namecheap收购,
+[点击官方注册地址](https://www.namebase.io/register/htz6x1)
+:::
 
 ## 什么是握手协议Handshake protocol
 
@@ -226,7 +233,9 @@ https://namebase.io/manage/redirects
 
 ## 参考链接
 
-https://community.namebase.io/
+[Sign up to get a decentralized top-level domain name!](https://www.namebase.io/register/htz6x1)
+
+[namebase community](https://www.namebase.io/register/htz6x1)
 
 https://learn.namebase.io/
 
