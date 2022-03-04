@@ -153,10 +153,11 @@ A closure is the combination of a function and the scope object in which it was 
 Var, let and const- what's the difference?
 https://dev.to/sarah_chima/var-let-and-const--whats-the-difference-69e
 
-## 2. nodejs/reactjs开发环境
+## 2. nodejs/reactjs共同开发环境
 
-### 2.1 共同环境配置
+### 2.1 npm
 
+#### npm安装
 ```
 ---------------------------------------------------------------------------------------
 --- ubuntu
@@ -227,31 +228,48 @@ yum install -y nodejs
 Windows upgrade npm
 npm install -g npm-windows-upgrade npm-windows-upgrade
 ```
+#### npm 使用
 
-安装验证：
+**npm包路径node module path：**
+
+%appdata%\Roaming\npm\node_modules
+或
+~/node_modules/
+
+**常用命令**
 ```
+--------------------------------------------
+--- view
+--------------------------------------------
 node --version 
 npm --version
 npx -version
 
 node -v
 npm -v
+
+npm list -g --depth=0
+npm view vuepress version
+npm outdated
+
+--------------------------------------------
+--- install
+--------------------------------------------
+npm install -D(--save-dev)
+https://stackoverflow.com/questions/23177336/what-does-npm-d-flag-mean
+https://stackoverflow.com/questions/19223051/what-does-save-dev-mean-in-npm-install-grunt-save-dev
+
+npm install vuepress@latest
+--------------------------------------------
+--- update
+--------------------------------------------
+Use npm outdated to discover dependencies that are out of date
+Use npm update to perform safe dependency upgrades
+Use npm install <packagename>@latest to upgrade to the latest major version of a package
+Use npx npm-check-updates -u and npm install to upgrade all dependencies to their latest major versions
 ```
 
-**npm包路径node module path： **
-```
-%appdata%\Roaming\npm\node_modules
-或
-~/node_modules/
-```
-
-
-
-npm私有仓库搭建 https://www.jianshu.com/p/cf2e9f580e6d
-
-
-
-**项目package.json： **
+**项目package.json：**
 
 不管是手动创建还是自动创建的nodejs或者reactjs项目，比如：
 nodejs的webpack（比如truffle的https://www.trufflesuite.com/boxes/webpack），
@@ -280,23 +298,8 @@ b)执行脚本 scripts
     "eject": "react-scripts eject"
   },
 ```
-
-JSX: javascript extension 
-
-#### **Debug**
-
-```
-.eslintrc.js
-rules: {
-    'no-debugger': 0,
-    .....
-  }
-  
-然后代码里面可以用 debugger 下断点
-
-```
-
-
+#### npm仓库
+npm私有仓库搭建 https://www.jianshu.com/p/cf2e9f580e6d
 
 ### 2.2 vscode
 
@@ -337,10 +340,18 @@ preference->settings->search eslint->edit in settings.json
         "source.fixAll": true
     }
 ```
+#### Debug
 
+```
+.eslintrc.js
+rules: {
+    'no-debugger': 0,
+    .....
+  }
+  
+然后代码里面可以用 debugger 下断点
 
-
-
+```
 
 ## 3.nodejs开发
 

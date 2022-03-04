@@ -47,8 +47,7 @@ resources: \docs\vuepress\docs\.vuepress\public
 custom css: \docs\vuepress\docs\.vuepress\styles
 build result: \docs\vuepress\docs\.vuepress\dist
 finally publish to: ..\docs\
-```
 
-```
+--update:
 npm install vuepress@latest
 ```
