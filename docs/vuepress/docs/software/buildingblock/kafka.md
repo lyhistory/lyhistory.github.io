@@ -150,8 +150,8 @@ vim ~/kafka/config/server.properties:
 broker.id=0
 
 port=9092
-host.name=10.136.100.48
-advertised.host.name=10.136.100.48
+host.name=X.X.X.48
+advertised.host.name=X.X.X.48
 advertised.port=9092
 
 delete.topic.enable = true
@@ -643,7 +643,7 @@ SNP就是我们后面会提到的所谓自己维护的增量快照
 [2021-04-14 11:14:27,347] INFO [Controller id=0] New partition creation callback for T-XXX-SNP-2,T-XXX-SNP-1,T-XXX-SNP-0 (kafka.controller.KafkaController)
 
 最后变成一张broker map：
-[2021-04-14 11:18:36,979] DEBUG [Controller id=0] Preferred replicas by broker Map(1 -> Map(T-JOB-SNP-0 -> Vector(1),  __consumer_offsets-27 -> Vector(1), T-TEST-1 -> Vector(1, 0), __transaction_state-2 -> Vector(1, 3), __transaction_state-20 -> Vector(1, 3), __consumer_offsets-33 -> Vector(1), T-DBMS-SNP-0 -> Vector(1), T-CAPTURE-0 -> Vector(1, 0), __consumer_offsets-36 -> Vector(1), __transaction_state-29 -> Vector(1, 0), __consumer_offsets-42 -> Vector(1), __consumer_offsets-3 -> Vector(1), __consumer_offsets-18 -> Vector(1), __transaction_state-38 -> Vector(1, 3), T-CLEAR-SNP-2 -> Vector(1, 3), T-MEMBER-1 -> Vector(1, 0), __consumer_offsets-15 -> Vector(1), __consumer_offsets-24 -> Vector(1), T-EOD-1 -> Vector(1, 0), T-QUOTATION-2 -> Vector(1, 0), __transaction_state-14 -> Vector(1, 3), __transaction_state-44 -> Vector(1, 3), T-RISK-0 -> Vector(1, 3), T-RISK-SNP-2 -> Vector(1), __transaction_state-32 -> Vector(1, 3), __consumer_offsets-48 -> Vector(1), T-CAPTURE-SNP-1 -> Vector(1), T-CLEAR-0 -> Vector(1, 0), T-EOD-SNP-1 -> Vector(1), __transaction_state-17 -> Vector(1, 0), __transaction_state-23 -> Vector(1, 0), __transaction_state-47 -> Vector(1, 0), __consumer_offsets-6 -> Vector(1), T-QUOTATION-SNP-1 -> Vector(1), __transaction_state-26 -> Vector(1, 3), T-JOB-2 -> Vector(1, 0), __transaction_state-5 -> Vector(1, 0), __transaction_state-8 -> Vector(1, 3)
+[2021-04-14 11:18:36,979] DEBUG [Controller id=0] Preferred replicas by broker Map(1 -> Map(T-JOB-SNP-0 -> Vector(1),  __consumer_offsets-27 -> Vector(1), T-TEST-1 -> Vector(1, 0), __transaction_state-2 -> Vector(1, 3), __transaction_state-20 -> Vector(1, 3), __consumer_offsets-33 -> Vector(1), T-DBMS-SNP-0 -> Vector(1), T-CAPTURE-0 -> Vector(1, 0), __consumer_offsets-36 -> Vector(1), __transaction_state-29 -> Vector(1, 0), __consumer_offsets-42 -> Vector(1), __consumer_offsets-3 -> Vector(1), __consumer_offsets-18 -> Vector(1), __transaction_state-38 -> Vector(1, 3), T-TEST-SNP-2 -> Vector(1, 3), T-MEMBER-1 -> Vector(1, 0), __consumer_offsets-15 -> Vector(1), __consumer_offsets-24 -> Vector(1), T-EOD-1 -> Vector(1, 0), T-QUOTATION-2 -> Vector(1, 0), __transaction_state-14 -> Vector(1, 3), __transaction_state-44 -> Vector(1, 3), T-RISK-0 -> Vector(1, 3), T-RISK-SNP-2 -> Vector(1), __transaction_state-32 -> Vector(1, 3), __consumer_offsets-48 -> Vector(1), T-CAPTURE-SNP-1 -> Vector(1), T-TEST-0 -> Vector(1, 0), T-EOD-SNP-1 -> Vector(1), __transaction_state-17 -> Vector(1, 0), __transaction_state-23 -> Vector(1, 0), __transaction_state-47 -> Vector(1, 0), __consumer_offsets-6 -> Vector(1), T-QUOTATION-SNP-1 -> Vector(1), __transaction_state-26 -> Vector(1, 3), T-JOB-2 -> Vector(1, 0), __transaction_state-5 -> Vector(1, 0), __transaction_state-8 -> Vector(1, 3)
 
 ---------------------------------------------------------------------------
 --- elect Controller from controller.log
@@ -664,8 +664,8 @@ SNP就是我们后面会提到的所谓自己维护的增量快照
 ---------------------------------------------------------------------------
 --- closed kafka client, from server.log or kafkaServer.out
 
-[2021-04-16 17:51:05,705] INFO [GroupCoordinator 3]: Member consumer-1-416c9379-0f89-48f4-b125-eadf648d57c7 in group CLEAR-REALTIME-SZL has failed, removing it from the group (kafka.coordinator.group.GroupCoordinator)
-[2021-04-16 17:51:05,707] INFO [GroupCoordinator 3]: Preparing to rebalance group CLEAR-REALTIME-SZL in state PreparingRebalance with old generation 1 (__consumer_offsets-49) (reason: removing member consumer-1-416c9379-0f89-48f4-b125-eadf648d57c7 on heartbeat expiration) (kafka.coordinator.group.GroupCoordinator)
+[2021-04-16 17:51:05,705] INFO [GroupCoordinator 3]: Member consumer-1-416c9379-0f89-48f4-b125-eadf648d57c7 in group TEST-REALTIME-SZL has failed, removing it from the group (kafka.coordinator.group.GroupCoordinator)
+[2021-04-16 17:51:05,707] INFO [GroupCoordinator 3]: Preparing to rebalance group TEST-REALTIME-SZL in state PreparingRebalance with old generation 1 (__consumer_offsets-49) (reason: removing member consumer-1-416c9379-0f89-48f4-b125-eadf648d57c7 on heartbeat expiration) (kafka.coordinator.group.GroupCoordinator)
 客户端consumer group所有的consumer都停掉了，所以是empty，然后整个group宣布dead
 [2021-04-16 17:51:05,707] INFO [GroupCoordinator 3]: Group XXX-SZL with generation 2 is now empty (__consumer_offsets-49) (kafka.coordinator.group.GroupCoordinator)
 [2021-04-16 17:53:56,956] INFO [GroupMetadataManager brokerId=3] Group XXX-SZL transitioned to Dead in generation 2 (kafka.coordinator.group.GroupMetadataManager)
@@ -677,7 +677,46 @@ SNP就是我们后面会提到的所谓自己维护的增量快照
 [2021-04-15 08:59:31,977] INFO [KafkaServer id=3] Starting controlled shutdown (kafka.server.KafkaServer)
 [2021-04-15 08:59:32,066] INFO [ReplicaFetcherManager on broker 3] Removed fetcher for partitions Set(__transaction_state-45, __transaction_state-27, __transaction_state-9, T-XXX-2, T-XXX-1, __transaction_state-39, __transaction_state-36, ...... __transaction_state-0) (kafka.server.ReplicaFetcherManager)
 
+-------------------------------------------------------- 
+--- consumer subscribe topic 引起的rebalance
+[2022-03-12 18:33:00,630] INFO [GroupCoordinator 3]: 
+	Preparing to rebalance group TEST-TRADEFRONT-SZL in state PreparingRebalance with old generation 0 (__consumer_offsets-43) 
+	(reason: Adding new member consumer-2-808a151c-06dd-4df8-83fc-8b1b15a53a4d) (kafka.coordinator.group.GroupCoordinator)
+[2022-03-12 18:33:00,631] INFO [GroupCoordinator 3]: 
+	Stabilized group TEST-TRADEFRONT-SZL generation 1 (__consumer_offsets-43) (kafka.coordinator.group.GroupCoordinator)
+[2022-03-12 18:33:00,634] INFO [GroupCoordinator 3]: 
+	Assignment received from leader for group TEST-TRADEFRONT-SZL for generation 1 (kafka.coordinator.group.GroupCoordinator)
 
+-----------------------------------------------------
+--- consumer removed
+[2022-03-12 18:41:58,862] INFO [GroupCoordinator 3]: 
+	Member consumer-2-808a151c-06dd-4df8-83fc-8b1b15a53a4d in group TEST-TRADEFRONT-SZL has failed, removing it from the group (kafka.coordinator.group.GroupCoordinator)
+[2022-03-12 18:41:58,862] INFO [GroupCoordinator 3]: 
+	Preparing to rebalance group TEST-TRADEFRONT-SZL in state PreparingRebalance with old generation 1 (__consumer_offsets-43) 
+	(reason: removing member consumer-2-808a151c-06dd-4df8-83fc-8b1b15a53a4d on heartbeat expiration) (kafka.coordinator.group.GroupCoordinator)
+[2022-03-12 18:41:58,863] INFO [GroupCoordinator 3]: 
+	Group TEST-TRADEFRONT-SZL with generation 2 is now empty (__consumer_offsets-43) (kafka.coordinator.group.GroupCoordinator)
+[2022-03-12 18:43:22,158] INFO [GroupCoordinator 3]: 
+	Preparing to rebalance group TEST-TRADEFRONT-SZL in state PreparingRebalance with old generation 2 (__consumer_offsets-43) 
+	(reason: Adding new member consumer-2-aedafa05-22cb-4130-8e91-927c99f3fd06) (kafka.coordinator.group.GroupCoordinator)
+[2022-03-12 18:43:22,159] INFO [GroupCoordinator 3]: 
+	Stabilized group TEST-TRADEFRONT-SZL generation 3 (__consumer_offsets-43) (kafka.coordinator.group.GroupCoordinator)
+[2022-03-12 18:43:22,162] INFO [GroupCoordinator 3]: 
+	Assignment received from leader for group TEST-TRADEFRONT-SZL for generation 3 (kafka.coordinator.group.GroupCoordinator)
+[2022-03-12 18:46:57,292] INFO [GroupMetadataManager brokerId=3] Removed 0 expired offsets in 0 milliseconds. (kafka.coordinator.group.GroupMetadataManager)
+[2022-03-12 18:54:50,418] INFO [GroupCoordinator 3]: 
+	Member consumer-2-aedafa05-22cb-4130-8e91-927c99f3fd06 in group TEST-TRADEFRONT-SZL has failed, removing it from the group (kafka.coordinator.group.GroupCoordinator)
+[2022-03-12 18:54:50,418] INFO [GroupCoordinator 3]: 
+	Preparing to rebalance group TEST-TRADEFRONT-SZL in state PreparingRebalance with old generation 3 (__consumer_offsets-43) (reason: removing member consumer-2-aedafa05-22cb-4130-8e91-927c99f3fd06 on heartbeat expiration) (kafka.coordinator.group.GroupCoordinator)
+[2022-03-12 18:54:50,418] INFO [GroupCoordinator 3]: 
+	Group TEST-TRADEFRONT-SZL with generation 4 is now empty (__consumer_offsets-43) (kafka.coordinator.group.GroupCoordinator)
+[2022-03-12 18:56:57,292] INFO [GroupMetadataManager brokerId=3] 
+	Group TEST-TRADEFRONT-SZL transitioned to Dead in generation 4 (kafka.coordinator.group.GroupMetadataManager)
+
+Reasons:
+A consumer left the group (clean shut down)
+A consumer seems to be dead in the view of Kafka
+https://stackoverflow.com/questions/54183045/unexpected-failing-rebalancing-of-consumers
 ```
 
 
@@ -719,9 +758,9 @@ consumer.poll(Duration.ofMillis(10_000L));
 2021-04-01 14:38:41.369  INFO 32380GG [RKER-RECOVERY-2] ordinator$FindCoordinatorResponseHandler : [Consumer clientId=consumer-2, groupId=RESTORE-1] Discovered group coordinator 1.1.1.1:9092 (id: 2147483647 rack: null)
 
 如果触发了rebalance，则接着打印
-2021-03-31 08:59:01.727  INFO 20080GG [XXX-MANAGER] o.a.k.c.c.i.AbstractCoordinator : [Consumer clientId=consumer-1, groupId=CLEAR-PRICEENGINE-SZL] (Re-)joining group
-2021-03-31 08:59:01.904  INFO 20080GG [XXX-MANAGER] o.a.k.c.c.i.AbstractCoordinator : [Consumer clientId=consumer-1, groupId=CLEAR-PRICEENGINE-SZL] (Re-)joining group
-2021-03-31 08:59:04.122  INFO 20080GG [XXX-MANAGER] o.a.k.c.c.i.AbstractCoordinator$1 : [Consumer clientId=consumer-1, groupId=CLEAR-PRICEENGINE-SZL] Successfully joined group with generation 10
+2021-03-31 08:59:01.727  INFO 20080GG [XXX-MANAGER] o.a.k.c.c.i.AbstractCoordinator : [Consumer clientId=consumer-1, groupId=TEST-PRICEENGINE-SZL] (Re-)joining group
+2021-03-31 08:59:01.904  INFO 20080GG [XXX-MANAGER] o.a.k.c.c.i.AbstractCoordinator : [Consumer clientId=consumer-1, groupId=TEST-PRICEENGINE-SZL] (Re-)joining group
+2021-03-31 08:59:04.122  INFO 20080GG [XXX-MANAGER] o.a.k.c.c.i.AbstractCoordinator$1 : [Consumer clientId=consumer-1, groupId=TEST-PRICEENGINE-SZL] Successfully joined group with generation 10
 
 ---------------------------------------------------------------------------
 --- todo
@@ -784,7 +823,7 @@ Node 1 was unable to process the fetch request with (sessionId=1972558084, epoch
 --- UnkownProducerIdException
 基本原因就是producer创建后超过 retention expire 过期时间或者大小，所以被清理，kafka服务端向客户端报错后会立即重新注册该producer，所以最好的处理办法是callback中重试
 https://stackoverflow.com/questions/61084031/how-to-handle-unkownproduceridexception/69999568#69999568
-2021-11-16 09:08:29.206 [31mERROR[m [35m5527GG[m [ad | producer-1] [36mo.a.k.c.p.i.Sender[m : [Producer clientId=producer-1] The broker returned org.apache.kafka.common.errors.UnknownProducerIdException: This exception is raised by the broker if it could not locate the producer metadata associated with the producerId in question. This could happen if, for instance, the producer's records were deleted because their retention time had elapsed. Once the last records of the producerId are removed, the producer's metadata is removed from the broker, and future appends by the producer will return this exception. for topic-partition T-CLEAR-1 at offset -1. This indicates data loss on the broker, and should be investigated.
+2021-11-16 09:08:29.206 [31mERROR[m [35m5527GG[m [ad | producer-1] [36mo.a.k.c.p.i.Sender[m : [Producer clientId=producer-1] The broker returned org.apache.kafka.common.errors.UnknownProducerIdException: This exception is raised by the broker if it could not locate the producer metadata associated with the producerId in question. This could happen if, for instance, the producer's records were deleted because their retention time had elapsed. Once the last records of the producerId are removed, the producer's metadata is removed from the broker, and future appends by the producer will return this exception. for topic-partition T-TEST-1 at offset -1. This indicates data loss on the broker, and should be investigated.
 2021-11-16 09:08:29.207 [32m INFO[m [35m5527GG[m [ad | producer-1] [36mo.a.k.c.p.i.TransactionManager[m : [Producer clientId=producer-1] ProducerId set to -1 with epoch -1
 2021-11-16 09:08:29.219 [32m INFO[m [35m5527GG[m [ad | producer-1] [36mo.a.k.c.p.i.TransactionManager[m : [Producer clientId=producer-1] ProducerId set to 35804 with epoch 0
 
@@ -834,7 +873,7 @@ KAFKA Internal transaction topic: `__transaction_state`
 
 ```
 echo "exclude.internal.topics=false" > consumer.config
-./bin/kafka-console-consumer.sh --consumer.config consumer.config --formatter "kafka.coordinator.transaction.TransactionLog\$TransactionLogMessageFormatter" --bootstrap-server 0.136.100.45:9092,10.136.100.46:9092,10.136.100.47:9092 --topic __transaction_state --from-beginning
+./bin/kafka-console-consumer.sh --consumer.config consumer.config --formatter "kafka.coordinator.transaction.TransactionLog\$TransactionLogMessageFormatter" --bootstrap-server 0.136.100.45:9092,X.X.X.46:9092,X.X.X.47:9092 --topic __transaction_state --from-beginning
 ```
 
 
@@ -1179,13 +1218,13 @@ https://docs.confluent.io/platform/current/installation/configuration
 
 ##### 复制因子 replica factor 详解
 
-min.insync.replicas同时控制external topic 以及internal topic` __consumer_offsets`和`__transaction_state`，transaction.state.\*只控制`__transaction_state`（transaction.state.log.min.isr overriden min.insync.replicas），
+min.insync.replicas（default value=1）同时控制external topic 以及internal topic` __consumer_offsets`和`__transaction_state`，transaction.state.\*只控制`__transaction_state`（transaction.state.log.min.isr overriden min.insync.replicas），
 offsets.topic.replication.factor控制offsets topic也就是`__consumer_offsets`，必须跟broker个数一致(小于等于，默认值为3，如果是两个节点就不行了，所以不要轻易使用默认值），否则无法启动
 default.replication.factor控制automatically created topics，应该是值的external topic
 
 
 
-+ if offsets.topic.replication.factor > brokers数量，kafka client无法启动（无法Discover group coordinator）, kafka server报错：
++ if offsets.topic.replication.factor > brokers数量，~~kafka client无法启动（无法Discover group coordinator）~~应该是kafka sever无法正常创建internal topic consumer_offset, kafka server报错：
 
 ```
 ERROR [KafkaApi-0] Number of alive brokers '2' does not meet the required replication factor '3' for the offsets topic (configured via 'offsets.topic.replication.factor'). This error can be ignored if the cluster is starting up and not all brokers are up yet. (kafka.server.KafkaApis)
@@ -1217,13 +1256,13 @@ org.apache.kafka.common.errors.NotEnoughReplicasException: The size of the curre
 kafka consumer client discover group之后无法join group，在revoke之后，rejoining group停顿几分钟后狂刷日志：
 
 ```
-2021-06-09 10:17:23.076 ^[[32m INFO^[[m ^[[35m26210GG^[[m [CLEAR-MANAGER] ^[[36mo.a.k.c.c.i.AbstractCoordinator^[[m : [Consumer clientId=consumer-1, groupId=CLEAR-REALTIME-SZL] Group
+2021-06-09 10:17:23.076 ^[[32m INFO^[[m ^[[35m26210GG^[[m [TEST-MANAGER] ^[[36mo.a.k.c.c.i.AbstractCoordinator^[[m : [Consumer clientId=consumer-1, groupId=TEST-REALTIME-SZL] Group
 coordinator XXXX:9092 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery                                                                        
-2021-06-09 10:17:23.186 ^[[32m INFO^[[m ^[[35m26210GG^[[m [CLEAR-MANAGER] ^[[36mordinator$FindCoordinatorResponseHandler^[[m : [Consumer clientId=consumer-1, groupId=CLEAR-REALTIME-SZL] Discovered group coordinator XXXX:9092 (id: 2147483647 rack: null)
-2021-06-09 10:17:23.187 ^[[32m INFO^[[m ^[[35m26210GG^[[m [CLEAR-MANAGER] ^[[36mo.a.k.c.c.i.AbstractCoordinator^[[m : [Consumer clientId=consumer-1, groupId=CLEAR-REALTIME-SZL] Group
+2021-06-09 10:17:23.186 ^[[32m INFO^[[m ^[[35m26210GG^[[m [TEST-MANAGER] ^[[36mordinator$FindCoordinatorResponseHandler^[[m : [Consumer clientId=consumer-1, groupId=TEST-REALTIME-SZL] Discovered group coordinator XXXX:9092 (id: 2147483647 rack: null)
+2021-06-09 10:17:23.187 ^[[32m INFO^[[m ^[[35m26210GG^[[m [TEST-MANAGER] ^[[36mo.a.k.c.c.i.AbstractCoordinator^[[m : [Consumer clientId=consumer-1, groupId=TEST-REALTIME-SZL] Group
 coordinator XXXX8:9092 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery                                                                        
-2021-06-09 10:17:23.288 ^[[32m INFO^[[m ^[[35m26210GG^[[m [CLEAR-MANAGER] ^[[36mordinator$FindCoordinatorResponseHandler^[[m : [Consumer clientId=consumer-1, groupId=CLEAR-REALTIME-SZL] Discovered group coordinator XXXX:9092 (id: 2147483647 rack: null)
-2021-06-09 10:17:23.289 ^[[32m INFO^[[m ^[[35m26210GG^[[m [CLEAR-MANAGER] ^[[36mo.a.k.c.c.i.AbstractCoordinator^[[m : [Consumer clientId=consumer-1, groupId=CLEAR-REALTIME-SZL] (Re-)joining group
+2021-06-09 10:17:23.288 ^[[32m INFO^[[m ^[[35m26210GG^[[m [TEST-MANAGER] ^[[36mordinator$FindCoordinatorResponseHandler^[[m : [Consumer clientId=consumer-1, groupId=TEST-REALTIME-SZL] Discovered group coordinator XXXX:9092 (id: 2147483647 rack: null)
+2021-06-09 10:17:23.289 ^[[32m INFO^[[m ^[[35m26210GG^[[m [TEST-MANAGER] ^[[36mo.a.k.c.c.i.AbstractCoordinator^[[m : [Consumer clientId=consumer-1, groupId=TEST-REALTIME-SZL] (Re-)joining group
 ```
 
 
@@ -1231,16 +1270,52 @@ coordinator XXXX8:9092 (id: 2147483647 rack: null) is unavailable or invalid, wi
 kafka server端狂刷日志：
 
 ```
-[2021-06-09 10:18:43,146] INFO [GroupCoordinator 0]: Preparing to rebalance group CLEAR-REALTIME-SZL in state PreparingRebalance with old generation 393 (__consumer_offsets-49) (reaso
+[2021-06-09 10:18:43,146] INFO [GroupCoordinator 0]: Preparing to rebalance group TEST-REALTIME-SZL in state PreparingRebalance with old generation 393 (__consumer_offsets-49) (reaso
 n: error when storing group assignment during SyncGroup (member: consumer-1-0c90d042-0326-4cf2-a870-bb2ae055d140)) (kafka.coordinator.group.GroupCoordinator)                          
-[2021-06-09 10:18:43,349] INFO [GroupCoordinator 0]: Stabilized group CLEAR-REALTIME-SZL generation 394 (__consumer_offsets-49) (kafka.coordinator.group.GroupCoordinator)             
-[2021-06-09 10:18:43,349] INFO [GroupCoordinator 0]: Assignment received from leader for group CLEAR-REALTIME-SZL for generation 394 (kafka.coordinator.group.GroupCoordinator)        
+[2021-06-09 10:18:43,349] INFO [GroupCoordinator 0]: Stabilized group TEST-REALTIME-SZL generation 394 (__consumer_offsets-49) (kafka.coordinator.group.GroupCoordinator)             
+[2021-06-09 10:18:43,349] INFO [GroupCoordinator 0]: Assignment received from leader for group TEST-REALTIME-SZL for generation 394 (kafka.coordinator.group.GroupCoordinator)        
 [2021-06-09 10:18:43,349] ERROR [ReplicaManager broker=0] Error processing append operation on partition __consumer_offsets-49 (kafka.server.ReplicaManager)                           
 org.apache.kafka.common.errors.NotEnoughReplicasException: The size of the current ISR Set(0) is insufficient to satisfy the min.isr requirement of 2 for partition __consumer_offsets-
 49  
 ```
 
+服务端borker节点上topic 正常状态（每个topic的partition的leader和replica状态）
+```
+[2022-03-16 15:55:15,899] TRACE [Controller id=0] Leader imbalance ratio for broker 2 is 0.0 (kafka.controller.KafkaController)
+[2022-03-16 15:55:15,899] DEBUG [Controller id=0] Topics not in preferred replica for broker 1 Map() (kafka.controller.KafkaController)
+[2022-03-16 15:55:15,899] TRACE [Controller id=0] Leader imbalance ratio for broker 1 is 0.0 (kafka.controller.KafkaController)
+[2022-03-16 15:55:15,899] DEBUG [Controller id=0] Topics not in preferred replica for broker 0 Map() (kafka.controller.KafkaController)
+[2022-03-16 15:55:15,899] TRACE [Controller id=0] Leader imbalance ratio for broker 0 is 0.0 (kafka.controller.KafkaController)
+```
+非正常状态
+```
+failed to complete preferred replica leader election 
 
+[2022-03-16 10:58:02,837] ERROR [Controller id=1] Error completing preferred replica leader election for partition T-TRADE-1 (kafka.controller.KafkaController)
+kafka.common.StateChangeFailedException: Failed to elect leader for partition T-TRADE-1 under strategy PreferredReplicaPartitionLeaderElectionStrategy
+        at kafka.controller.PartitionStateMachine.$anonfun$doElectLeaderForPartitions$9(PartitionStateMachine.scala:390)
+        at scala.collection.mutable.ResizableArray.foreach(ResizableArray.scala:62)
+        at scala.collection.mutable.ResizableArray.foreach$(ResizableArray.scala:55)
+        at scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:49)
+        at kafka.controller.PartitionStateMachine.doElectLeaderForPartitions(PartitionStateMachine.scala:388)
+        at kafka.controller.PartitionStateMachine.electLeaderForPartitions(PartitionStateMachine.scala:315)
+        at kafka.controller.PartitionStateMachine.doHandleStateChanges(PartitionStateMachine.scala:225)
+        at kafka.controller.PartitionStateMachine.handleStateChanges(PartitionStateMachine.scala:141)
+        at kafka.controller.KafkaController.kafka$controller$KafkaController$$onPreferredReplicaElection(KafkaController.scala:649)
+        at kafka.controller.KafkaController.$anonfun$checkAndTriggerAutoLeaderRebalance$6(KafkaController.scala:1008)
+        at scala.collection.immutable.Map$Map3.foreach(Map.scala:195)
+        at kafka.controller.KafkaController.kafka$controller$KafkaController$$checkAndTriggerAutoLeaderRebalance(KafkaController.scala:989)
+        at kafka.controller.KafkaController$AutoPreferredReplicaLeaderElection$.process(KafkaController.scala:1020)
+        at kafka.controller.ControllerEventManager$ControllerEventThread.$anonfun$doWork$1(ControllerEventManager.scala:94)
+        at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+        at kafka.metrics.KafkaTimer.time(KafkaTimer.scala:31)
+        at kafka.controller.ControllerEventManager$ControllerEventThread.doWork(ControllerEventManager.scala:94)
+        at kafka.utils.ShutdownableThread.run(ShutdownableThread.scala:82)
+[2022-03-16 10:58:02,837] WARN [Controller id=1] Partition T-TEST-SNP-2 failed to complete preferred replica leader election to 2. Leader is still 0 (kafka.controller.KafkaController)
+[2022-03-16 10:58:02,837] WARN [Controller id=1] Partition T-TEST-0 failed to complete preferred replica leader election to 2. Leader is still 0 (kafka.controller.KafkaController)
+[2022-03-16 10:58:02,838] INFO [Controller id=1] Partition T-TEST2-SNP-2 completed preferred replica leader election. New leader is 2 (kafka.controller.KafkaController)
+[2022-03-16 10:58:02,838] WARN [Controller id=1] Partition T-TEST2-1 failed to complete preferred replica leader election to 2. Leader is still 0 (kafka.controller.KafkaController)
+```
 
 ##### 通用配置
 
@@ -1251,8 +1326,8 @@ broker.id=0
 
 ############################# Socket Server Settings #############################
 port=9092
-host.name=10.136.100.48
-advertised.host.name=10.136.100.48
+host.name=X.X.X.48
+advertised.host.name=X.X.X.48
 advertised.port=9092
 listeners = PLAINTEXT://your.host.name:9092
 #advertised.listeners=PLAINTEXT://your.host.name:9092 //This is the metadata that’s passed back to clients.
@@ -1594,6 +1669,9 @@ https://kafka.apache.org/23/javadoc/index.html?org/apache/kafka/clients/producer
 acks=all
 
 if the producer receives an  acknowledgement (ack) from the Kafka broker and acks=all, it means that  the message has been written exactly once to the Kafka topic
+
+When a producer sets acks to "all" (or "-1"), min.insync.replicas specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful. If this minimum cannot be met, then the producer will raise an exception (either NotEnoughReplicas or NotEnoughReplicasAfterAppend).
+When used together, min.insync.replicas and acks allow you to enforce greater durability guarantees. A typical scenario would be to create a topic with a replication factor of 3, set min.insync.replicas to 2, and produce with acks of "all". This will ensure that the producer raises an exception if a majority of replicas do not receive a write.
 
 ##### 关键API
 
