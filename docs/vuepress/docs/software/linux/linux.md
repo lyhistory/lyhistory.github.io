@@ -297,8 +297,8 @@ private Long getDataCenterId(){
     }
     
 Caused by: java.lang.NullPointerException
-	at com.quantdo.clear.tradecapture.util.IdWorkerConfiguration.getDataCenterId(IdWorkerConfiguration.java:64)
-	at com.quantdo.clear.tradecapture.util.IdWorkerConfiguration.getDateFromConfig(IdWorkerConfiguration.java:43)
+	at com.lyhistory.util.IdWorkerConfiguration.getDataCenterId(IdWorkerConfiguration.java:64)
+	at com.lyhistory.util.IdWorkerConfiguration.getDateFromConfig(IdWorkerConfiguration.java:43)
 	
 查了下，在linux下面，SystemUtils.getHostName()实际是去获取linux env的HOSTNAME，
 在该linux机器上使用执行crontab对应相同的用户登录，并执行env，正常显示HOSTNAME（当然了，毕竟手动运行没问题）

@@ -478,19 +478,19 @@ https://mp.weixin.qq.com/s/t1ZUXvAUKlIt5UtiZFh1VQ
 ```
 [sgkc2-devclr-v08@SG/opt/haproxy-2.2.1]$netstat -anp|grep :80
 tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      3945/nginx: master
-tcp        0      0 10.136.100.48:80        10.30.30.94:25748       ESTABLISHED 15394/nginx: worker
+tcp        0      0 x.x.x.48:80        10.30.30.94:25748       ESTABLISHED 15394/nginx: worker
 tcp        0      0 127.0.0.1:80            127.0.0.1:10693         ESTABLISHED 15394/nginx: worker
 tcp        0      0 127.0.0.1:10693         127.0.0.1:80            ESTABLISHED 25613/haproxy
 
 这个10693的端口是做什么的先不用管，是我测试的haproxy；
-我们主要看这个10.30.30.94:25748是客户端的连接，访问10.136.100.48:80，即nginx的监听的80端口，然后nginx立马会转发产生跟本地的websocket服务器也就是10.136.100.48:19090的连接，所以会占用一个nginx的端口，比如13576，下面可以看到，这里有两个连接，占用了两个nginx的端口13576和18973，因为是双向连接，所以还有反过来的连接
+我们主要看这个10.30.30.94:25748是客户端的连接，访问x.x.x.48:80，即nginx的监听的80端口，然后nginx立马会转发产生跟本地的websocket服务器也就是x.x.x.48:19090的连接，所以会占用一个nginx的端口，比如13576，下面可以看到，这里有两个连接，占用了两个nginx的端口13576和18973，因为是双向连接，所以还有反过来的连接
 
 [sgkc2-devclr-v08@SG/opt/haproxy-2.2.1]$netstat -anp|grep :19090
 tcp        0      0 0.0.0.0:19090           0.0.0.0:*               LISTEN      3136/java
-tcp        0      0 10.136.100.48:13576     10.136.100.48:19090     ESTABLISHED 15394/nginx: worker
-tcp        0      0 10.136.100.48:19090     10.136.100.48:13576     ESTABLISHED 3136/java
-tcp        0      0 10.136.100.48:18973     10.136.100.48:19090     ESTABLISHED 15394/nginx: worker
-tcp        0      0 10.136.100.48:19090     10.136.100.48:18973     ESTABLISHED 3136/java
+tcp        0      0 x.x.x.48:13576     x.x.x.48:19090     ESTABLISHED 15394/nginx: worker
+tcp        0      0 x.x.x.48:19090     x.x.x.48:13576     ESTABLISHED 3136/java
+tcp        0      0 x.x.x.48:18973     x.x.x.48:19090     ESTABLISHED 15394/nginx: worker
+tcp        0      0 x.x.x.48:19090     x.x.x.48:18973     ESTABLISHED 3136/java
 ```
 
 所以Nginx 作为反向代理时，大量的短链接，可能导致 Nginx 上的 TCP 连接处于 `time_wait` 状态：

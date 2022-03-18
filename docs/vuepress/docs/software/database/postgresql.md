@@ -105,6 +105,15 @@ C# 连接 PostgreSQL --- Npgsql的安装和使用 https://blog.csdn.net/chencglt
 删除“重复”的function或stored procedure，比如：bpchar和varchar：
 ![](/docs/docs_image/software/postgresql/postgresql01.png)
 
+
+https://stackoverflow.com/questions/6405127/how-do-i-specify-a-password-to-psql-non-interactively
+PGPASSWORD=postgres psql --host IP --port 5432 -U postgres -d DBNAME -c "query;"
+PGPASSWORD=postgres psql --host IP --port 5432 -U postgres -d DBNAME -f file.sql
+
+psql: error: FATAL: Ident authentication failed
+To configure IDENT authentication, add entries to the /etc/postgresql/12/main/pg_ident.conf file. There are detailed comments in the file to guide you.
+
+
 #### 1.1.3 debug
 
 DBeaver:
@@ -156,7 +165,6 @@ select * from pg_stat_activity where pid=3567;
 
 \copy (query) to result.csv csv header
 
-PGPASSWORD=postgres psql --host IP --port 5432 -U postgres -d DBNAME -c "query;"
 ```
 
 ## 2. Syntax
@@ -702,6 +710,8 @@ https://www.postgresql.org/docs/current/hot-standby.html
 http://www.mamicode.com/info-detail-2466322.html
 
 ## 4. Integreation - Drivers
+
+download: https://jdbc.postgresql.org/download.html
 
 ### 4.1 Java
 

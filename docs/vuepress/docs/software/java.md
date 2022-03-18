@@ -64,18 +64,18 @@ https://stackoverflow.com/questions/20018866/specifying-sourcepath-in-jdb-what-a
 
 Debug jar file
 
-~~-sourcepath -classpath com.quantdo.framework.websocket.WebSocketApplication
-java -jar -agentlib:jdwp=transport=dt_shmem,address=jdbconn,server=y,suspend=n C:\Workspace\EclipseWorkspace\quantdo-websocket\quantdo-websocket.jar
+~~-sourcepath -classpath com.lyhistory.framework.websocket.WebSocketApplication
+java -jar -agentlib:jdwp=transport=dt_shmem,address=jdbconn,server=y,suspend=n C:\Workspace\EclipseWorkspace\lyhistory-websocket\lyhistory-websocket.jar
 jdb -attach jdbconn
 jdb -sourcepath BOOT-INF/classes/ -classpath . org.springframework.boot.loader.JarLauncher~~
 
 ```
 
 jdb -sourcepath BOOT-INF/classes/ -classpath .;BOOT-INF/classes/
-stop at com.quantdo.framework.websocket.endpoint.GeneralWebSocketEndpoint:54
-stop at com.quantdo.framework.websocket.handler.DefaultWebSocketMessageHandler:32
+stop at com.lyhistory.framework.websocket.endpoint.GeneralWebSocketEndpoint:54
+stop at com.lyhistory.framework.websocket.handler.DefaultWebSocketMessageHandler:32
 stop in DefaultWebSocketMessageHandler.receiveMessage
-stop in com.quantdo.framework.websocket.endpoint.GeneralWebSocketEndpoint.onMessage
+stop in com.lyhistory.framework.websocket.endpoint.GeneralWebSocketEndpoint.onMessage
 stop in com.alibaba.fastjson.parser.JSONLexerBase.scanString
 	  public final void scanString() {
 	  public String scanString(char expectNextChar) {
@@ -83,10 +83,10 @@ stop at com.alibaba.fastjson.parser.JSONLexerBase:880
 run org.springframework.boot.loader.JarLauncher
 
 jdb -sourcepath BOOT-INF/classes/ -classpath .;BOOT-INF/classes/;BOOT-INF/lib/
-	stop at com.quantdo.framework.cache.autoconfigure.support.WebsocketMessageListener:35
+	stop at com.lyhistory.framework.cache.autoconfigure.support.WebsocketMessageListener:35
 	stop at org.springframework.data.redis.listener.RedisMessageListenerContainer:968
-	stop at com.quantdo.framework.websocket.endpoint.GeneralWebSocketEndpoint:54
-stop at com.quantdo.framework.websocket.handler.DefaultWebSocketMessageHandler:32
+	stop at com.lyhistory.framework.websocket.endpoint.GeneralWebSocketEndpoint:54
+stop at com.lyhistory.framework.websocket.handler.DefaultWebSocketMessageHandler:32
 stop at com.alibaba.fastjson.parser.JSONLexerBase:880
 run org.springframework.boot.loader.JarLauncher
 

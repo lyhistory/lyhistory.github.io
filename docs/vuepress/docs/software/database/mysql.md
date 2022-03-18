@@ -1390,10 +1390,10 @@ vrrp_instance VI_1 { #keepalived在同一virtual_router_id中priority（0-255）
 }
 
 
-在10.136.100.49上，只需要改变:
+在x.x.x.49上，只需要改变:
 router_id MYSQL0001->MYSQL0002
 priority 101 -> priority 100，
-mcast_src_ip 10.136.100.48 -> mcast_src_ip 10.136.100.49即可。
+mcast_src_ip x.x.x.48 -> mcast_src_ip x.x.x.49即可。
 
 -------------------------------------------------------------------------------
 5. 启动
@@ -1404,9 +1404,9 @@ systemctl start keepalived
 ip addr show eth0
 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP qlen 1000
     link/ether 56:6f:18:fa:00:08 brd ff:ff:ff:ff:ff:ff
-    inet 10.136.100.49/24 brd 10.136.100.255 scope global eth0
+    inet x.x.x.49/24 brd x.x.x.255 scope global eth0
        valid_lft forever preferred_lft forever
-    inet 10.136.100.44/32 scope global eth0
+    inet x.x.x.44/32 scope global eth0
        valid_lft forever preferred_lft forever
 
 再启动另外一个机器的keepalived，执行 ip addr show eth0 并不会有类似上面的输出，除非是在前面的机器上执行 systemctl stop keepalived
@@ -1416,14 +1416,14 @@ ip addr show eth0
 Jun 15 17:01:08 sgkc2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) Transition to MASTER STATE
 Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) Entering MASTER STATE
 Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) setting protocol VIPs.
-Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: Sending gratuitous ARP on eth0 for 10.136.100.44
-Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) Sending/queueing gratuitous ARPs on eth0 for 10.136.100.44
-Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: Sending gratuitous ARP on eth0 for 10.136.100.44
+Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: Sending gratuitous ARP on eth0 for x.x.x.44
+Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) Sending/queueing gratuitous ARPs on eth0 for x.x.x.44
+Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: Sending gratuitous ARP on eth0 for x.x.x.44
 
 -------------------------------------------------------------------------------
 5. 状态检测
 -------------------------------------------------------------------------------
-sudo tcpdump -vvv -n -i eth0 dst 224.0.0.18 and src 10.136.100.48
+sudo tcpdump -vvv -n -i eth0 dst 224.0.0.18 and src x.x.x.48
 ```
 
 ## 3 Troubleshooting 

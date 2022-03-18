@@ -1581,14 +1581,14 @@ public class RedisProperties {
 + 其中最简单的string类型
 
   ```
-  spring.redis.host=10.136.100.48
+  spring.redis.host=x.x.x.48
   spring.redis.port=6379
   ```
 
 + 复杂类型如private Cluster cluster，很简单，进去看Cluster的成员即可，只是注意maxRedirects在application.properties写作：
 
   ```
-  spring.redis.cluster.nodes=10.136.100.48:6379,10.136.100.48:6380,10.136.100.48:6381,10.136.100.49:6379,10.136.100.49:6380,10.136.100.49:6381,10.136.100.50:6379,10.136.100.50:6380,10.136.100.50:6381
+  spring.redis.cluster.nodes=x.x.x.48:6379,x.x.x.48:6380,x.x.x.48:6381,x.x.x.49:6379,x.x.x.49:6380,x.x.x.49:6381,x.x.x.50:6379,x.x.x.50:6380,x.x.x.50:6381
   spring.redis.cluster.max-redirects=3
   ```
 

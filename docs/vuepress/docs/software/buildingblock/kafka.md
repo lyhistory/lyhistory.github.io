@@ -453,13 +453,13 @@ popd &>/dev/null
 systemctl stop firewalld
 
 Test from windows bat
-.\kafka-console-producer.bat --broker-list 192.168.56.101:9092 --topic test
-C:\Workspace\Temp\kafka_2.12-2.2.1\bin\windows> .\kafka-console-consumer.bat --bootstrap-server 192.168.56.101:9092 --from-beginning --topic test
+.\kafka-console-producer.bat --broker-list x.x.x.x:9092 --topic test
+C:\Workspace\Temp\kafka_2.12-2.2.1\bin\windows> .\kafka-console-consumer.bat --bootstrap-server x.x.x.x:9092 --from-beginning --topic test
 
 Test from windows with python
 pip install python-kafka
 #python NO brokeravaialble
-producer = KafkaProducer(bootstrap_servers=['192.168.56.101:9092'], api_version=(0,10))
+producer = KafkaProducer(bootstrap_servers=['x.x.x.x:9092'], api_version=(0,10))
 #assert type(value_bytes) in (bytes, bytearray, memoryview, type(None)) AssertionError
  producer.send('test', 'hi'.encode('utf-8'))
 
@@ -522,7 +522,9 @@ https://dzone.com/articles/kafka-producer-and-consumer-example
 
 默认配置：
 
-https://kafka.apache.org/documentation/
+https://kafka.apache.org/documentation.html#configuration
+https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/ConsumerConfig.html
+
 
 
 
@@ -717,8 +719,16 @@ Reasons:
 A consumer left the group (clean shut down)
 A consumer seems to be dead in the view of Kafka
 https://stackoverflow.com/questions/54183045/unexpected-failing-rebalancing-of-consumers
-```
 
+----Shrinking ISR from
+代表有broker节点失联或挂掉
+----Expanding ISR from
+代码broker节点恢复或新增节点
+
+----Will not attempt to authenticate using SASL (unknown error)
+kafka server端无法连接zookeeper或者连接异常
+
+```
 
 
 ##### kafka client端日志解析
@@ -812,7 +822,7 @@ Attempt to heartbeat failed for since member id consumer-1-c4ff67d3-b776-4994-91
 - https://www.cnblogs.com/chuijingjing/p/12797035.html
 
 --- Group coordinator is unavailable or invalid
-Group coordinator 192.168.11.55:9092 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery
+Group coordinator x.x.x.x:9092 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery
 
 --- CommitFailedException
 If a simple consumer(assign mode) tries to commit offsets with a group id which matches an active consumer group, the coordinator will reject the commit (which will result in a CommitFailedException). However, there won’t be any errors if another simple consumer instance shares the same group id.
@@ -873,7 +883,7 @@ KAFKA Internal transaction topic: `__transaction_state`
 
 ```
 echo "exclude.internal.topics=false" > consumer.config
-./bin/kafka-console-consumer.sh --consumer.config consumer.config --formatter "kafka.coordinator.transaction.TransactionLog\$TransactionLogMessageFormatter" --bootstrap-server 0.136.100.45:9092,X.X.X.46:9092,X.X.X.47:9092 --topic __transaction_state --from-beginning
+./bin/kafka-console-consumer.sh --consumer.config consumer.config --formatter "kafka.coordinator.transaction.TransactionLog\$TransactionLogMessageFormatter" --bootstrap-server x.x.x.x:9092,X.X.X.46:9092,X.X.X.47:9092 --topic __transaction_state --from-beginning
 ```
 
 
@@ -2412,7 +2422,7 @@ https://kafka.apache.org/documentation/#basic_ops_cluster_expansion
 
 另外n最好是等于replica factor的设置，低于replica factor无法正常启动工作，高于replica factor则会造成节点浪费，比如
 
-replica factor=2，启动3个node，那么就出现比如 `__consumer_offsets_49`的replica分布在node 1和2上，所以只支持node1和2只能挂掉一个，同理其他的分布在node1和node3，node2和node3上，所以总的来说，只能挂掉3个节点的一个
+replica factor=2，启动3个node，那么就出现比如 `__consumer_offsets_49`的replica分布在node 1和2上，所以min.isr=1的情况下只支持node1和2只能挂掉一个，同理其他的分布在node1和node3，node2和node3上，所以总的来说，只能挂掉3个节点的一个，假设挂掉两个node1和2，node3上有replica的topic没问题，但是`__consumer_offsets_49`显然就挂了
 
 
 
@@ -2478,6 +2488,7 @@ bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic T-.*
 
 
 ### 删除topic后无法创建，提示已存在，但是找不到 org.apache.kafka.common.errors.TopicExistsException
+```
 
 是zookeeper跟kafka数据不一致，
 
@@ -2499,7 +2510,269 @@ rm -rf ../zookeeper/zkdata/version-2/*
 rm -rf ../zookeeper/logs/version-2/*
 rm -rf kafka-logs/*
 rm -rf logs/*
+```
+### 网络故障造成kafka集群出错 或者 造成kafka client端程序读取 metadata 超过默认 30s 抛错
 
+异常日志分析：
+```
+场景1：
+现在dev上3个节点配置 borker 0 1 2：
+offsets.topic.replication.factor=3
+min.insync.isr=2
+transaction.state.log.replication.factor=3
+transaction.state.log.min.isr=2
+default.replication.factor=3
+正常挂掉1个是没问题的，但是居然挂掉2个居然都能启动client端（能成功join group，kafka成功rebalance）：
+这个比较诡异，就是测试的时候其实只有两个活着的节点，broker 0不知道被谁用root更改了几个kafka-logs文件权限，造成borker 0停了，
+，然后测试断开broker 2的网络，只有broker 1一个可用节点，client端居然能够启动并且订阅topic，只不过恢复的时候（onPartitionAssign内部进一步访问kafka读取快照数据）抛错，比如可能是恢复的时候创建临时consumer，kafka服务端向zookeeper注册的时候出现超时（下面有zookeeper问题的log），
+2022-03-12 18:33:29.793 [31mERROR[m [35m15732GG[m [TEST-MANAGER] [36mo.a.k.c.c.i.ConsumerCoordinator[m : [Consumer clientId=consumer-2, groupId=TEST-TRADEFRONT-SZL] User provided listener com.quantdo.clear.core.boot.SimpleWorkBalancer failed on partition assignment
+
+com.quantdo.clear.core.exception.RecoveryException: Failed Recovery Worker
+	at com.quantdo.clear.core.boot.SimpleWorkBalancer.onPartitionsAssigned(SimpleWorkBalancer.java:54)
+	at org.apache.kafka.clients.consumer.internals.ConsumerCoordinator.onJoinComplete(ConsumerCoordinator.java:292)
+	at org.apache.kafka.clients.consumer.internals.AbstractCoordinator.joinGroupIfNeeded(AbstractCoordinator.java:410)
+	at org.apache.kafka.clients.consumer.internals.AbstractCoordinator.ensureActiveGroup(AbstractCoordinator.java:344)
+	at org.apache.kafka.clients.consumer.internals.ConsumerCoordinator.poll(ConsumerCoordinator.java:342)
+	at org.apache.kafka.clients.consumer.KafkaConsumer.updateAssignmentMetadataIfNeeded(KafkaConsumer.java:1226)
+	at org.apache.kafka.clients.consumer.KafkaConsumer.poll(KafkaConsumer.java:1191)
+	at org.apache.kafka.clients.consumer.KafkaConsumer.poll(KafkaConsumer.java:1176)
+	at com.quantdo.clear.core.boot.SimpleWorkerManager.doServe(SimpleWorkerManager.java:96)
+	at com.quantdo.clear.core.boot.AdministrableService.serve(AdministrableService.java:98)
+	at com.quantdo.clear.core.boot.AdministrableService.start(AdministrableService.java:36)
+	at com.quantdo.clear.core.boot.Starter$$Lambda$826/315805187.run(Unknown Source)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: com.quantdo.clear.core.exception.RecoveryException: Failed Recovery Worker
+	at com.quantdo.clear.core.boot.SimpleWorkBalancer.getWorkState(SimpleWorkBalancer.java:64)
+	at com.quantdo.clear.core.boot.SimpleWorkBalancer$$Lambda$872/1231621690.apply(Unknown Source)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1374)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:512)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:502)
+	at java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151)
+	at java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:418)
+	at com.quantdo.clear.core.boot.SimpleWorkBalancer.onPartitionsAssigned(SimpleWorkBalancer.java:52)
+	... 12 more
+Caused by: java.util.concurrent.ExecutionException: org.apache.kafka.common.errors.TimeoutException: Failed to get offsets by times in 30000ms
+	at java.util.concurrent.FutureTask.report(FutureTask.java:122)
+	at java.util.concurrent.FutureTask.get(FutureTask.java:192)
+	at com.quantdo.clear.core.boot.SimpleWorkBalancer.getWorkState(SimpleWorkBalancer.java:62)
+	... 22 more
+Caused by: org.apache.kafka.common.errors.TimeoutException: Failed to get offsets by times in 30000ms
+
+但是正常不应该能够订阅topic，应该抛出错误类似：
+1 partitions have leader brokers without a matching listener （因为factor=2，挂了2台了肯定有节点的leader不在了）
+或者
+insufficient isr (min.isr=2>live broker=1)
+从而导致client无法join group：
+Group coordinator XXXX:9092 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery
+
+猜测1： broker 0并非真的挂，只是因为kafka log文件权限为root，造成kafka服务处于异常状态（还可以跟其他机器沟通），所以此时仍然满足min.isr=2的要求
+否定：根据broker 0上面的日志，可以看到kafka根本没有对应时间段的任何日志
+猜测2: 虽然broker 2网络断开，此时 broker 2 对于 broker 1 来说属于假死状态，尚未更新metadata，所以没有检测出insufficient isr
+验证：发现断网后出现如下错误 Opening socket connection to server sgkc2-devclr-v07/x.x.x.47:2181. Will not attempt to authenticate using SASL (unknown error)
+比较可靠的猜测：猜测2基本对的，不过不是假死，而是本身就已经成了孤立节点，又无法与broker 0和2的zookeeper通信更新信息，从而造成kafka服务端异常，产生了绕过min.isr限制的假象
+[2022-03-14 08:59:39,144] WARN Client session timed out, have not heard from server in 4002ms for sessionid 0x17862f2bedc0004 (org.apache.zookeeper.ClientCnxn)
+[2022-03-14 08:59:39,145] INFO Client session timed out, have not heard from server in 4002ms for sessionid 0x17862f2bedc0004, closing socket connection and attempting reconnect (org.apache.zookeeper.ClientCnxn)
+[2022-03-14 08:59:39,826] INFO Opening socket connection to server sgkc2-devclr-v07/x.x.x.47:2181. Will not attempt to authenticate using SASL (unknown error) (org.apache.zookeeper.ClientCnxn)
+[2022-03-14 08:59:41,829] WARN Client session timed out, have not heard from server in 2583ms for sessionid 0x17862f2bedc0004 (org.apache.zookeeper.ClientCnxn)
+[2022-03-14 08:59:41,829] INFO Client session timed out, have not heard from server in 2583ms for sessionid 0x17862f2bedc0004, closing socket connection and attempting reconnect (org.apache.zookeeper.ClientCnxn)
+[2022-03-14 08:59:42,820] INFO Opening socket connection to server sgkc2-devclr-v05/x.x.x.45:2181. Will not attempt to authenticate using SASL (unknown error) (org.apache.zookeeper.ClientCnxn)
+[2022-03-14 08:59:42,821] INFO Socket error occurred: sgkc2-devclr-v05/x.x.x.45:2181: Connection refused (org.apache.zookeeper.ClientCnxn)
+[2022-03-14 09:00:00,597] INFO [ReplicaFetcher replicaId=1, leaderId=2, fetcherId=0] Error sending fetch request (sessionId=2095832195, epoch=8913816) to node 2: java.io.IOException: Connection to 2 was disconnected before the response was read. (org.apache.kafka.clients.FetchSessionHandler)
+[2022-03-14 09:00:00,598] WARN [ReplicaFetcher replicaId=1, leaderId=2, fetcherId=0] Error in response for fetch request (type=FetchRequest, replicaId=1, maxWait=500, minBytes=1, maxBytes=10485760, fetchData={}, isolationLevel=READ_UNCOMMITTED, toForget=, metadata=(sessionId=2095832195, epoch=8913816)) (kafka.server.ReplicaFetcherThread)
+java.io.IOException: Connection to 2 was disconnected before the response was read
+        at org.apache.kafka.clients.NetworkClientUtils.sendAndReceive(NetworkClientUtils.java:100)
+        at kafka.server.ReplicaFetcherBlockingSend.sendRequest(ReplicaFetcherBlockingSend.scala:100)
+        at kafka.server.ReplicaFetcherThread.fetchFromLeader(ReplicaFetcherThread.scala:193)
+        at kafka.server.AbstractFetcherThread.processFetchRequest(AbstractFetcherThread.scala:280)
+        at kafka.server.AbstractFetcherThread.$anonfun$maybeFetch$3(AbstractFetcherThread.scala:132)
+        at kafka.server.AbstractFetcherThread.$anonfun$maybeFetch$3$adapted(AbstractFetcherThread.scala:131)
+        at scala.Option.foreach(Option.scala:274)
+        at kafka.server.AbstractFetcherThread.maybeFetch(AbstractFetcherThread.scala:131)
+        at kafka.server.AbstractFetcherThread.doWork(AbstractFetcherThread.scala:113)
+        at kafka.utils.ShutdownableThread.run(ShutdownableThread.scala:82)
+。。。
+[2022-03-14 09:00:32,612] INFO [ReplicaFetcher replicaId=1, leaderId=2, fetcherId=0] Error sending fetch request (sessionId=2095832195, epoch=INITIAL) to node 2: java.net.SocketTimeoutException: Failed to connect within 30000 ms. (org.apache.kafka.clients.FetchSessionHandler)
+[2022-03-14 09:00:32,612] WARN [ReplicaFetcher replicaId=1, leaderId=2, fetcherId=0] Error in response for fetch request (type=FetchRequest, replicaId=1, maxWait=500, minBytes=1, maxBytes=10485760, fetchData={T-TRADE-CHK-0=(fetchOffset=0, logStartOffset=0, maxBytes=1048576, currentLeaderEpoch=Optional[0]), T-EOD-SNP-1=(fetchOffset=86, logStartOffset=86, maxBytes=1048576, currentLeaderEpoch=Optional[0]), T-DBMS-CHK-0=(fetchOffset=2002, logStartOffset=1992, maxBytes=1048576, currentLeaderEpoch=Optional[0]), T-CAPTURE-2=(fetchOffset=2002, logStartOffset=1992, maxBytes=1048576, currentLeaderEpoch=Optional[0])}, isolationLevel=READ_UNCOMMITTED, toForget=, metadata=(sessionId=2095832195, epoch=INITIAL)) (kafka.server.ReplicaFetcherThread)
+java.net.SocketTimeoutException: Failed to connect within 30000 ms
+        at kafka.server.ReplicaFetcherBlockingSend.sendRequest(ReplicaFetcherBlockingSend.scala:96)
+        at kafka.server.ReplicaFetcherThread.fetchFromLeader(ReplicaFetcherThread.scala:193)
+        at kafka.server.AbstractFetcherThread.processFetchRequest(AbstractFetcherThread.scala:280)
+        at kafka.server.AbstractFetcherThread.$anonfun$maybeFetch$3(AbstractFetcherThread.scala:132)
+        at kafka.server.AbstractFetcherThread.$anonfun$maybeFetch$3$adapted(AbstractFetcherThread.scala:131)
+        at scala.Option.foreach(Option.scala:274)
+        at kafka.server.AbstractFetcherThread.maybeFetch(AbstractFetcherThread.scala:131)
+        at kafka.server.AbstractFetcherThread.doWork(AbstractFetcherThread.scala:113)
+        at kafka.utils.ShutdownableThread.run(ShutdownableThread.scala:82)
+
+场景2：类似上面场景
+现在dev上3个节点配置 borker 0 1 2：
+offsets.topic.replication.factor=3 
+min.insync.replicas=1 
+transaction.state.log.replication.factor=3 
+transaction.state.log.min.isr=1 
+default.replication.factor=3 
+
+同时断开了broker 0 和 2的网络，然后启动kafka client，此时kafka client端所在的网络分区内只能连接到 borker 1，同样出现了场景1中的情形，
+可以正常subscribe topic并且kafka server端borker 1正常进行了rebalance，但是接下来client端在onPartitionAssigned内进一步访问kafka获取一些快照数据时产生超时错误
+
+不过跟场景1不太一样的是，后来broker 2恢复了，并且broker 1成功连接了broker 2（以及其同一机器上的zookeeper），只不过过程中fetch的时候出错
+虽然 18:09:48,061 连接上了，但是后面fetch io错误
+[2022-03-12 18:10:07,087] INFO Opening socket connection to server vm-v01/x.x.x.x:2181. Will not attempt to authenticate using SASL (unknown error) (org.apache.zookeeper.ClientCnxn)
+[2022-03-12 18:10:07,089] INFO Socket connection established to vm-v01/x.x.x.x:2181, initiating session (org.apache.zookeeper.ClientCnxn)
+[2022-03-12 18:10:07,093] INFO Session establishment complete on server vm-v01/x.x.x.x:2181, sessionid = 0x27b6bf74fac000e, negotiated timeout = 6000 (org.apache.zookeeper.ClientCnxn)
+[2022-03-12 18:10:07,093] INFO [ZooKeeperClient] Connected. (kafka.zookeeper.ZooKeeperClient)
+
+注意到关键词：Shrinking
+[2022-03-12 18:10:07,139] INFO [Partition __consumer_offsets-43 broker=3] Shrinking ISR from 3,1,4 to 3. Leader: (highWatermark: 115, endOffset: 120). Out of sync replicas: (brokerId: 1, endOffset: 115) (brokerId: 4, endOffset: 116). (kafka.cluster.Partition)
+紧接着又expand？
+[2022-03-12 18:10:07,381] INFO [Partition __consumer_offsets-43 broker=3] Expanding ISR from 3 to 3,4 (kafka.cluster.Partition)
+
+但是fetch错误
+[2022-03-12 18:10:07,471] INFO [ReplicaFetcher replicaId=3, leaderId=4, fetcherId=0] Shutting down (kafka.server.ReplicaFetcherThread)
+[2022-03-12 18:10:07,471] INFO [ReplicaFetcher replicaId=3, leaderId=4, fetcherId=0] 
+	Error sending fetch request (sessionId=346995240, epoch=1677663) to node 4: 
+	java.io.IOException: Client was shutdown before response was read. (org.apache.kafka.clients.FetchSessionHandler)
+[2022-03-12 18:10:07,471] INFO [ReplicaFetcher replicaId=3, leaderId=4, fetcherId=0] Stopped (kafka.server.ReplicaFetcherThread)
+[2022-03-12 18:10:07,471] INFO [ReplicaFetcher replicaId=3, leaderId=4, fetcherId=0] Shutdown completed (kafka.server.ReplicaFetcherThread)
+
+可见网络还是不稳定或者broker 1 和 2之间的通信同步出现错误
+
+场景3：
+既然前面两个场景中都是有两个节点不正常，再测试一次：
+broker 0 1 2，断网broker 2（以及其服务器上面的zookeeper节点）
+同样启动kafka-client，仍然跟前面类似，client端能够启动并且订阅topic，只不过恢复的时候（onPartitionAssign内部进一步访问kafka读取快照数据）抛错；
+但是再试了几次发现这个错误有点意思，刚开始的时候，每次都会随机成功某几个partition，直到2小时后才稳定的成功（后面再测试几轮实际是随机成功和失败）
+程序的main consumer subscribe topic基本都没有问题 （中间只有一次出现了场景5中的无法启动的问题），
+然后onPartitionAssign内部进一步访问kafka读取快照数据的时候不稳定
+读取快照自然用的不是subscribe而是
+        TopicPartition topicPartition = new TopicPartition(config.getSnapshotTopic(), partition);
+        Consumer<String, Snapshot> consumer = createConsumer(partition);
+        long lastOffset = consumer.endOffsets(Collections.singleton(topicPartition)).get(topicPartition) - 2;
+        if (lastOffset < 0) {
+            lastOffset = 0;
+        }
+        consumer.assign(Collections.singleton(topicPartition));
+        consumer.seek(topicPartition, lastOffset);
+        ConsumerRecords<String, Snapshot> records = consumer.poll(Duration.ofMillis(10_000L));
+        Snapshot snapshot = null;
+        for (ConsumerRecord<String, Snapshot> record : records) {
+            snapshot = record.value();
+        }
+        consumer.close();
+通过加日志，发现错误都是发生在endOffsets这里，默认的timeout应该是30s， 
+这个问题就是读取metadata出现问题，
+最终反复测试确定根源：
+如果某个broker节点是直接杀死，只要该节点网络通的，client端读取metadata就不会超时，
+但是如果某个broker节点所在服务器网络断开，client端的kafka cluster配置中仍有该broker的信息，那么client端读取metadata的时候可能会尝试连接有问题的节点由于网络重试造成超时，
+所以解决方案：
+1）修改 consumer.properties.bootstrap.servers，移除坏节点
+2）修改api调用，增加timeout时间到5分钟（实测超时在2分钟左右）：consumer.endOffsets(Collections.singleton(topicPartition),Duration.ofMillis(300000)).get(topicPartition)
+3）修改配置 consumer.properties.request.timeout.ms，注意这个只对org.apache.kafka.clients.consumer.KafkaConsumer生效，我们这里用的是org.apache.kafka.clients.consumer.Consumer
+
+场景4：
+1. broker 0 1 2 都启动
+2.停 broker 2，启动kafka client端服务正常，expected
+3.停broker 0，无法启动kafka client端服务，expected
+4.恢复broker2，无法启动kafka client端服务，报错，unexpected
+  client端仍然是报错跟3一样，[Consumer clientId=consumer-2, groupId=TEST-SZL] 1 partitions have leader brokers without a matching listener, including [T-TRADE-1]，
+  kafka服务端报错：
+  [2022-03-16 10:58:02,825] TRACE [Controller id=1] Leader imbalance ratio for broker 2 is 0.1282051282051282 (kafka.controller.KafkaController)
+[2022-03-16 10:58:02,825] INFO [Controller id=1] Starting preferred replica leader election for partitions T-TEST-SNP-2,T-TEST-0,T-TRADE-SNP-2,T-TRADE-1,T-CAPTURE-1 (kafka.controller.KafkaController)
+[2022-03-16 10:58:02,836] ERROR [Controller id=1] Error completing preferred replica leader election for partition T-TEST-0 (kafka.controller.KafkaController)
+kafka.common.StateChangeFailedException: Failed to elect leader for partition T-TEST-0 under strategy PreferredReplicaPartitionLeaderElectionStrategy
+        at kafka.controller.PartitionStateMachine.$anonfun$doElectLeaderForPartitions$9(PartitionStateMachine.scala:390)
+        at scala.collection.mutable.ResizableArray.foreach(ResizableArray.scala:62)
+        at scala.collection.mutable.ResizableArray.foreach$(ResizableArray.scala:55)
+        at scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:49)
+        at kafka.controller.PartitionStateMachine.doElectLeaderForPartitions(PartitionStateMachine.scala:388)
+        at kafka.controller.PartitionStateMachine.electLeaderForPartitions(PartitionStateMachine.scala:315)
+        at kafka.controller.PartitionStateMachine.doHandleStateChanges(PartitionStateMachine.scala:225)
+        at kafka.controller.PartitionStateMachine.handleStateChanges(PartitionStateMachine.scala:141)
+        at kafka.controller.KafkaController.kafka$controller$KafkaController$$onPreferredReplicaElection(KafkaController.scala:649)
+        at kafka.controller.KafkaController.$anonfun$checkAndTriggerAutoLeaderRebalance$6(KafkaController.scala:1008)
+        at scala.collection.immutable.Map$Map3.foreach(Map.scala:195)
+        at kafka.controller.KafkaController.kafka$controller$KafkaController$$checkAndTriggerAutoLeaderRebalance(KafkaController.scala:989)
+        at kafka.controller.KafkaController$AutoPreferredReplicaLeaderElection$.process(KafkaController.scala:1020)
+        at kafka.controller.ControllerEventManager$ControllerEventThread.$anonfun$doWork$1(ControllerEventManager.scala:94)
+        at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+        at kafka.metrics.KafkaTimer.time(KafkaTimer.scala:31)
+        at kafka.controller.ControllerEventManager$ControllerEventThread.doWork(ControllerEventManager.scala:94)
+        at kafka.utils.ShutdownableThread.run(ShutdownableThread.scala:82)
+[2022-03-16 10:58:02,837] WARN [Controller id=1] Partition T-TEST-0 failed to complete preferred replica leader election to 2. Leader is still 0 (kafka.controller.KafkaController)
+原因分析：应该是由于操作频率过快，启停kafka borker的时候没有给足时间做failover，可见kafka服务本身可以看到他的健壮性有问题了，居然无法选举新leader
+
+重新设计连续测试场景：
+-----------------------------------
+--- borker 0 1 2 alive
+-----------------------------------
+start kafka client
+test kafka client
+-----------------------------------
+--- kill 2(both zookeeper&kafka), borker 0 1 alive
+-----------------------------------
+test kafka client
+restart kafka client
+test kafka client
+
+-----------------------------------
+--- resume 2, borker 0 1 2 alive
+-----------------------------------
+test kafka client
+restart kafka client
+test kafka client
+
+-----------------------------------
+--- shutdown network for borker 2, borker 0 1 alive
+-----------------------------------
+test kafka client	
+restart kafka client
+test kafka client
+
+
+场景5：跟前面类似，只不过这次是kafka客户端启停太快
+断开 borker 2网络, borker 0 1 alive
+第一次重启kafka client端（stop then start）失败！
+    2022-03-16 17:14:21.728  INFO 370GG [main] o.a.k.c.u.AppInfoParser$AppInfo : Kafka version: 2.2.0
+		2022-03-16 17:14:21.728  INFO 370GG [main] o.a.k.c.u.AppInfoParser$AppInfo : Kafka commitId: 05fcfde8f69b0349
+		2022-03-16 17:15:21.737  INFO 370GG [main] ConditionEvaluationReportLoggingListener : 
+
+		Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+		2022-03-16 17:15:21.767 ERROR 370GG [main] o.s.b.SpringApplication : Application run failed
+
+		org.apache.kafka.common.errors.TimeoutException: Timeout expired while fetching topic metadata
+
+		2022-03-16 17:15:21.808  INFO 370GG [main] o.s.s.c.ExecutorConfigurationSupport : Shutting down ExecutorService 'applicationTaskExecutor'
+		2022-03-16 17:15:21.809  INFO 370GG [main] o.a.k.c.p.KafkaProducer : [Producer clientId=producer-1] Closing the Kafka producer with timeoutMillis = 9223372036854775807 ms.
+		2022-03-16 17:15:21.816  INFO 370GG [main] c.a.d.p.DruidDataSource : {dataSource-1} closing ...
+		2022-03-16 17:15:21.831  INFO 370GG [main] c.a.d.p.DruidDataSource : {dataSource-1} closed
+    possible reason:
+		停掉 kafka client大概是在：
+		2022-03-16 17:13:51.918 ^[[32m INFO^[[m ^[[35m30256GG^[[m [QFJ Timer] ^[[36mc.q.c.f.f.s.AbstractApplication^[[m : fix server toAdmin: [8=FIX.4.4|9=60|35=0|34=683|49=EXEC|52=20220316-09:13:51.918|56=EXCHANGE_FS|10=167|]
+		然后很快启动了 kafka client：
+		2022-03-16 17:14:17.944 ^[[32m INFO^[[m ^[[35m370GG^[[m [main] ^[[36mo.s.b.StartupInfoLogger^[[m : Starting TradeFrontMain v1.1.0-SNAPSHOT using Java 1.8.0_40 on sgkc2-devclr-v05 with PID 370 (/apex/apps/clearing/core/220303/kafka client.jar started by clear in /apex/apps/clearing/core)
+		2022-03-16 17:14:17.955 ^[[32mDEBUG^[[m ^[[35m370GG^[[m [main] ^[[36mo.s.b.StartupInfoLogger^[[m : Running with Spring Boot v2.4.5, Spring v5.3.6
+		2022-03-16 17:14:17.956 ^[[32m INFO^[[m ^[[35m370GG^[[m [main] ^[[36mo.s.b.SpringApplication^[[m : The following profiles are active: dev
+		2022-03-16 17:14:19.821 ^[[32m INFO^[[m ^[[35m370GG^[[m [main] ^[[36mo.s.b.w.e.t.TomcatWebServer^[[m : Tomcat initialized with port(s): 10102 (http)
+		2022-03-16 17:14:19.835 ^[[32m INFO^[[m ^[[35m370GG^[[m [main] ^[[36mo.a.j.l.DirectJDKLog^[[m : Initializing ProtocolHandler ["http-nio-10102"]
+		2022-03-16 17:14:19.836 ^[[32m INFO^[[m ^[[35m370GG^[[m [main] ^[[36mo.a.j.l.DirectJDKLog^[[m : Starting service [Tomcat]
+		2022-03-16 17:14:19.836 ^[[32m INFO^[[m ^[[35m370GG^[[m [main] ^[[36mo.a.j.l.DirectJDKLog^[[m : Starting Servlet engine: [Apache Tomcat/9.0.45]
+		对应的group coordinator在broker 1上：
+		[2022-03-16 17:14:07,063] INFO [GroupCoordinator 1]: Member consumer-2-f852e86d-7db8-4943-b378-097fe08415f8 in group TEST-SZL has failed, removing it from the group (kafka.coordinator.group.GroupCoordinator)
+		[2022-03-16 17:14:07,064] INFO [GroupCoordinator 1]: Preparing to rebalance group TEST-SZL in state PreparingRebalance with old generation 1 (__consumer_offsets-43) (reason: removing member consumer-2-f852e86d-7db8-4943-b378-097fe08415f8 on heartbeat expiration) (kafka.coordinator.group.GroupCoordinator)
+		[2022-03-16 17:14:07,065] INFO [GroupCoordinator 1]: Group TEST-SZL with generation 2 is now empty (__consumer_offsets-43) (kafka.coordinator.group.GroupCoordinator)
+		[2022-03-16 17:15:54,415] INFO [GroupMetadataManager brokerId=1] Group TEST-SZL transitioned to Dead in generation 2 (kafka.coordinator.group.GroupMetadataManager)
+		可以看到在kafka client启动的时候，刚好是group coordinator在处理remove之前的kafka client consumer的时候，所以造成读取offset时间超时！
+
+经验总结：
+1. 遇到网络故障，即使自动恢复了，也最好要启停一下zookeeper和kafka
+2. 启停kafka服务操作时不要动作太快
+3. 启停kafka客户端操作时也不要动作太快
+
+这些异常情况可能也是kafka最终抛弃zookeeper的原因！
+```
 
 
 

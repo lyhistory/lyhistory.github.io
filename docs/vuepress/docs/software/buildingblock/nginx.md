@@ -191,7 +191,7 @@ State or Province Name (full name) []:
 Locality Name (eg, city) [Default City]:
 Organization Name (eg, company) [Default Company Ltd]:LYHISTORY
 Organizational Unit Name (eg, section) []:IT
-Common Name (eg, your name or your server's hostname) []:10.136.100.48
+Common Name (eg, your name or your server's hostname) []:x.x.x.48
 Email Address []:tech-mgmt@asiapacificex.com
 
 -nodes: This tells OpenSSL to skip the option to secure our certificate with a passphrase. We need Nginx to be able to read the file, without user intervention, when the server starts up. A passphrase would prevent this from happening because we would have to enter it after every restart.
@@ -535,7 +535,7 @@ https://blog.csdn.net/super_lixiang/article/details/82707805
 
 ### keepalived 配置
 
-以机器10.136.100.48和10.136.100.49为举例
+以机器x.x.x.48和x.x.x.49为举例
 
 ```
 -------------------------------------------------------------------------------
@@ -615,7 +615,7 @@ vrrp_script check_run { #检测nginx服务是否在运行。有很多方式，�
 vrrp_instance VI_1 { #keepalived在同一virtual_router_id中priority（0-255）最大的会成为master，也就是接管VIP，当priority最大的主机发生故障后次priority将会接管
     state MASTER	#指定keepalived的角色，MASTER表示此主机是主服务器，BACKUP表示此主机是备用服务器。注意这里的state指定instance(Initial)的初始状态，就是说在配置好后，这台服务器的初始状态就是这里指定的，但这里指定的不算，还是得要通过竞选通过优先级来确定。如果这里设置为MASTER，但如若他的优先级不及另外一台，那么这台在发送通告时，会发送自己的优先级，另外一台发现优先级不如自己的高，那么他会就回抢占为MASTER
     interface eth0	#指定HA监测网络的接口。实例绑定的网卡，因为在配置虚拟IP的时候必须是在已有的网卡上添加的
-    # mcast_src_ip 10.136.100.48 # 发送多播数据包时的源IP地址，这里注意了，这里实际上就是在哪个地址上发送VRRP通告，这个非常重要，一定要选择稳定的网卡端口来发送，这里相当于heartbeat的心跳端口，如果没有设置那么就用默认的绑定的网卡的IP，也就是interface指定的IP地址
+    # mcast_src_ip x.x.x.48 # 发送多播数据包时的源IP地址，这里注意了，这里实际上就是在哪个地址上发送VRRP通告，这个非常重要，一定要选择稳定的网卡端口来发送，这里相当于heartbeat的心跳端口，如果没有设置那么就用默认的绑定的网卡的IP，也就是interface指定的IP地址
     virtual_router_id 51	#虚拟路由标识，这个标识是一个数字，同一个vrrp实例使用唯一的标识。即同一vrrp_instance下，MASTER和BACKUP必须是一致的
     priority 101	#定义优先级，数字越大，优先级越高，在同一个vrrp_instance下，MASTER的优先级必须大于BACKUP的优先级
     advert_int 1	#设定MASTER与BACKUP负载均衡器之间同步检查的时间间隔，单位是秒
@@ -627,11 +627,11 @@ vrrp_instance VI_1 { #keepalived在同一virtual_router_id中priority（0-255）
         check_run	#引用VRRP脚本，即在 vrrp_script 部分指定的名字。定期运行它们来改变优先级，并最终引发主备切换。     
     }
     virtual_ipaddress {	#VRRP HA 虚拟地址 如果有多个VIP，继续换行填写
-        10.136.100.44
+        x.x.x.44
     }
 }
 
-virtual_server 10.136.100.44 443 {
+virtual_server x.x.x.44 443 {
     delay_loop 6
     lb_algo rr
     lb_kind NAT
@@ -639,7 +639,7 @@ virtual_server 10.136.100.44 443 {
     persistence_timeout 50
     protocol TCP
 
-    real_server 10.136.100.48 443 {
+    real_server x.x.x.48 443 {
         weight 3
         TCP_CHECK {
             connect_timeout 3
@@ -648,7 +648,7 @@ virtual_server 10.136.100.44 443 {
         }
     }
    
-    real_server 10.136.100.49 443 {
+    real_server x.x.x.49 443 {
         weight 3
         TCP_CHECK {
             connect_timeout 3
@@ -658,8 +658,8 @@ virtual_server 10.136.100.44 443 {
     }
 }
 
-在10.136.100.49上，只需要改变:
-state MASTER -> state BACKUP，priority 101 -> priority 100，mcast_src_ip 10.136.100.48 -> mcast_src_ip 10.136.100.49即可。
+在x.x.x.49上，只需要改变:
+state MASTER -> state BACKUP，priority 101 -> priority 100，mcast_src_ip x.x.x.48 -> mcast_src_ip x.x.x.49即可。
 
 
 -------------------------------------------------------------------------------
@@ -671,9 +671,9 @@ systemctl start keepalived
 ip addr show eth0
 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP qlen 1000
     link/ether 56:6f:18:fa:00:08 brd ff:ff:ff:ff:ff:ff
-    inet 10.136.100.49/24 brd 10.136.100.255 scope global eth0
+    inet x.x.x.49/24 brd x.x.x.255 scope global eth0
        valid_lft forever preferred_lft forever
-    inet 10.136.100.44/32 scope global eth0
+    inet x.x.x.44/32 scope global eth0
        valid_lft forever preferred_lft forever
 
 再启动另外一个机器的keepalived，执行 ip addr show eth0 并不会有类似上面的输出，除非是在前面的机器上执行 systemctl stop keepalived
@@ -683,14 +683,14 @@ ip addr show eth0
 Jun 15 17:01:08 sgkc2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) Transition to MASTER STATE
 Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) Entering MASTER STATE
 Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) setting protocol VIPs.
-Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: Sending gratuitous ARP on eth0 for 10.136.100.44
-Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) Sending/queueing gratuitous ARPs on eth0 for 10.136.100.44
-Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: Sending gratuitous ARP on eth0 for 10.136.100.44
+Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: Sending gratuitous ARP on eth0 for x.x.x.44
+Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) Sending/queueing gratuitous ARPs on eth0 for x.x.x.44
+Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: Sending gratuitous ARP on eth0 for x.x.x.44
 
 -------------------------------------------------------------------------------
 5. 状态检测
 -------------------------------------------------------------------------------
-sudo tcpdump -vvv -n -i eth0 dst 224.0.0.18 and src 10.136.100.48
+sudo tcpdump -vvv -n -i eth0 dst 224.0.0.18 and src x.x.x.48
 ```
 
 
