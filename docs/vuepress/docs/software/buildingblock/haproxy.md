@@ -252,11 +252,11 @@ vi /etc/rc.d/init.d/haproxy  #这里需要把BIN的值替换为BIN=haproxy安装
    Active: failed (Result: exit-code) since Tue 2020-07-28 19:52:56 SGT; 13min ago
      Docs: man:systemd-sysv-generator(8)
 
-Jul 28 19:52:56 sgkc2-devclr-v08 haproxy[13682]: Errors found in configuration file, check it with 'haproxy check'.
-Jul 28 19:52:56 sgkc2-devclr-v08 systemd[1]: haproxy.service: control process exited, code=exited status=1
-Jul 28 19:52:56 sgkc2-devclr-v08 systemd[1]: Failed to start SYSV: HA-Proxy is a TCP/HTTP reverse proxy which is particularly suited for high availability environments..
-Jul 28 19:52:56 sgkc2-devclr-v08 systemd[1]: Unit haproxy.service entered failed state.
-Jul 28 19:52:56 sgkc2-devclr-v08 systemd[1]: haproxy.service failed.
+Jul 28 19:52:56 vm2-devclr-v08 haproxy[13682]: Errors found in configuration file, check it with 'haproxy check'.
+Jul 28 19:52:56 vm2-devclr-v08 systemd[1]: haproxy.service: control process exited, code=exited status=1
+Jul 28 19:52:56 vm2-devclr-v08 systemd[1]: Failed to start SYSV: HA-Proxy is a TCP/HTTP reverse proxy which is particularly suited for high availability environments..
+Jul 28 19:52:56 vm2-devclr-v08 systemd[1]: Unit haproxy.service entered failed state.
+Jul 28 19:52:56 vm2-devclr-v08 systemd[1]: haproxy.service failed.
 
 /usr/local/sbin/haproxy -c -- /etc/haproxy/haproxy.cfg
 检查无问题

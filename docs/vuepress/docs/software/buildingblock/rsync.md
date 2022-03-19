@@ -315,14 +315,14 @@ rsync error: some files/attrs were not transferred (see previous errors) (code 2
 
 换用
 
-[root@sgkc2-cicd-v01 test]# rsync --daemon --config=/etc/rsyncd.conf                                         [root@sgkc2-cicd-v01 test]# netstat -anp | grep :973                        
+[root@vm2-cicd-v01 test]# rsync --daemon --config=/etc/rsyncd.conf                                         [root@vm2-cicd-v01 test]# netstat -anp | grep :973                        
 tcp     0    0 0.0.0.0:973       0.0.0.0:*        LISTEN    1597/rsync                                      tcp6    0    0 :::973         :::*           LISTEN    1597/rsync                           
-[root@sgkc2-cicd-v01 test]# firewall-cmd --permanent --add-port=973/tcp                             
+[root@vm2-cicd-v01 test]# firewall-cmd --permanent --add-port=973/tcp                             
  success                                                                                                     
-[root@sgkc2-cicd-v01 test]# firewall-cmd --reload  
+[root@vm2-cicd-v01 test]# firewall-cmd --reload  
  
  
-[root@sgkc2-cicd-v01 test]# find / -name rsync
+[root@vm2-cicd-v01 test]# find / -name rsync
 /etc/selinux/targeted/active/modules/100/rsync
 /usr/bin/rsync
 /opt/gitlab/embedded/bin/rsync
@@ -330,9 +330,9 @@ tcp     0    0 0.0.0.0:973       0.0.0.0:*        LISTEN    1597/rsync          
 但是实际上我发现不是端口问题，换回873也是成功的；
 然后再看systemctl的rsync服务脚本，发现跟我手动rsync --daemon并没有区别？？
 
-[root@sgkc2-cicd-v01 test]# find / -name rsyncd.service
+[root@vm2-cicd-v01 test]# find / -name rsyncd.service
 /usr/lib/systemd/system/rsyncd.service
-[root@sgkc2-cicd-v01 test]# vim /usr/lib/systemd/system/rsyncd.service
+[root@vm2-cicd-v01 test]# vim /usr/lib/systemd/system/rsyncd.service
 [Unit]
 Description=fast remote file copy program daemon
 ConditionPathExists=/etc/rsyncd.conf
@@ -403,7 +403,7 @@ rsync -avz rsync_backup@172.26.101.133::gitlab_path6 /etc/ssh --password-file=/e
 可以看到往/var里面写东西的有两个 
 /var/log/gitlab和/var/opt/gitlab
 
-[root@sgkc2-cicd-gitlab-v01 ~]# du -sh /var/*
+[root@vm2-cicd-gitlab-v01 ~]# du -sh /var/*
 0       /var/adm
 515M    /var/cache
 0       /var/crash
@@ -421,7 +421,7 @@ rsync -avz rsync_backup@172.26.101.133::gitlab_path6 /etc/ssh --password-file=/e
 ....
 可以看到问题出在 /var/opt/gitlab/prometheus
 
-[root@sgkc2-cicd-gitlab-v01 ~]# du -sh /var/opt/gitlab/prometheus/*
+[root@vm2-cicd-gitlab-v01 ~]# du -sh /var/opt/gitlab/prometheus/*
 18G     /var/opt/gitlab/prometheus/data
 8.0K    /var/opt/gitlab/prometheus/prometheus.yml
 24K     /var/opt/gitlab/prometheus/rules

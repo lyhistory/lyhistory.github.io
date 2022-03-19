@@ -680,12 +680,12 @@ ip addr show eth0
 
 某台机器被选中的时候会出现如下日志，/var/log/messages ：
 
-Jun 15 17:01:08 sgkc2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) Transition to MASTER STATE
-Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) Entering MASTER STATE
-Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) setting protocol VIPs.
-Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: Sending gratuitous ARP on eth0 for x.x.x.44
-Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) Sending/queueing gratuitous ARPs on eth0 for x.x.x.44
-Jun 15 17:01:09 sgkc2-devclr-v08 Keepalived_vrrp[4850]: Sending gratuitous ARP on eth0 for x.x.x.44
+Jun 15 17:01:08 vm2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) Transition to MASTER STATE
+Jun 15 17:01:09 vm2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) Entering MASTER STATE
+Jun 15 17:01:09 vm2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) setting protocol VIPs.
+Jun 15 17:01:09 vm2-devclr-v08 Keepalived_vrrp[4850]: Sending gratuitous ARP on eth0 for x.x.x.44
+Jun 15 17:01:09 vm2-devclr-v08 Keepalived_vrrp[4850]: VRRP_Instance(VI_1) Sending/queueing gratuitous ARPs on eth0 for x.x.x.44
+Jun 15 17:01:09 vm2-devclr-v08 Keepalived_vrrp[4850]: Sending gratuitous ARP on eth0 for x.x.x.44
 
 -------------------------------------------------------------------------------
 5. 状态检测

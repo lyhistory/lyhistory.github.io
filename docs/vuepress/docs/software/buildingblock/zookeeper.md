@@ -66,7 +66,7 @@ Resolved: yum install glibc.i686
 
 $ java -version
 bash: /apps/dependency/java-se-8u40-ri/bin/java: /lib/ld-linux.so.2: bad ELF interpreter: No such file or directory
-[clear@sgkc2-devclr-v08 dependency]$ /lib/ld-linux.so.2: bad ELF interpreter: No such file or directory
+[liuyue@vm2-devclr-v08 dependency]$ /lib/ld-linux.so.2: bad ELF interpreter: No such file or directory
 
 
 https://zookeeper.apache.org/doc/r3.3.3/zookeeperStarted.html

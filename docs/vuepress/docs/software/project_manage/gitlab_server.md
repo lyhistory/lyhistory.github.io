@@ -41,7 +41,7 @@ run: redis: (pid 15829) 499822s; run: log: (pid 9405) 584287s
 run: redis-exporter: (pid 15834) 499822s; run: log: (pid 10179) 584178s
 run: sidekiq: (pid 16818) 499486s; run: log: (pid 9864) 584214s
 
-[root@sgkc2-cicd-v02 liuyue]# netstat -anp|grep "15789"
+[root@vm-cicd-v02 liuyue]# netstat -anp|grep "15789"
 unix  2      [ ACC ]     STREAM     LISTENING     1264397  15789/postgres       /var/opt/gitlab/postgresql/.s.PGSQL.5432
 
 一个是Active Internet connections，称为有源TCP连接，其中"Recv-Q"和"Send-Q"指%0A的是接收队列和发送队列。这些数字一般都应该是0。如果不是则表示软件包正在队列中堆积。这种情况只能在非常少的情况见到。
@@ -88,11 +88,11 @@ https://blog.csdn.net/u012598668/java/article/details/40080245
 
 ### 1.1 http/https over nginx:
 
-git request: http://172.26.101.133:8088/root/test-gitaly-cluster.git
+git request: http://X.X.X.133:8088/root/test-gitaly-cluster.git
 
-user/admin dashboard request: http://172.26.101.133:8088/root/test-gitaly-cluster
+user/admin dashboard request: http://X.X.X.133:8088/root/test-gitaly-cluster
 
-grafana request: http://172.26.101.133:8088/-/grafana/?orgId=1
+grafana request: http://X.X.X.133:8088/-/grafana/?orgId=1
 
 sudo vim /var/opt/gitlab/nginx/conf/nginx.conf
 
@@ -119,7 +119,7 @@ server {
   listen *:8088;
 
 
-  server_name 172.26.101.134;
+  server_name X.X.X.134;
   
 location / {
     proxy_cache off;
@@ -166,7 +166,7 @@ https://juejin.im/post/5cf680f86fb9a07ed5248cda
 documentRoot前端的对应目录是/opt/gitlab/embedded/service/gitlab-rails/public 
 
 ```
-[root@sgkc2-cicd-v01 liuyue]# ps -lef | grep "rail"
+[root@vm-cicd-v01 liuyue]# ps -lef | grep "rail"
 4 S root      5033 22189  0  80   0 - 28203 pipe_w 14:52 pts/1    00:00:00 grep --color=auto rail
 4 S git       6848  6504  0  80   0 - 166286 ep_pol Jun29 ?       00:10:55 /opt/gitlab/embedded/bin/gitlab-workhorse -listenNetwork unix -listenUmask 0 -listenAddr /var/opt/gitlab/gitlab-workhorse/socket -authBackend http://localhost:8080 -authSocket /var/opt/gitlab/gitlab-rails/sockets/gitlab.socket -documentRoot /opt/gitlab/embedded/service/gitlab-rails/public -pprofListenAddr  -prometheusListenAddr localhost:9229 -secretPath /opt/gitlab/embedded/service/gitlab-rails/.gitlab_workhorse_secret -logFormat json -config config.toml
 4 S git       7038  6502  0  80   0 - 257481 poll_s Jun29 ?       00:09:25 puma 4.3.3.gitlab.2 (unix:///var/opt/gitlab/gitlab-rails/sockets/gitlab.socket,tcp://127.0.0.1:8080) [gitlab-puma-worker]
@@ -208,7 +208,7 @@ https://juejin.im/post/5cf6832c51882520724c84ff
 
 ### 1.2 ssh over gitlab-shell
 
-git@172.26.101.133:root/test-gitaly-cluster.git
+git@X.X.X.133:root/test-gitaly-cluster.git
 
 
 
@@ -325,14 +325,14 @@ for firstime install use -i or -U, for upgrade use -U
 总结：
 cd /opt/
 rpm -ivh gitlab-ce-13.0.7-ce.0.el7.x86_64.rpm 
-vim /etc/gitlab/gitlab.rb (change external_url="http://172.26.101.133:8088")
+vim /etc/gitlab/gitlab.rb (change external_url="http://X.X.X.133:8088")
 sudo gitlab-ctl reconfigure
 firewall-cmd --zone=public --add-port=8088/tcp --permanent
 firewall-cmd --reload
 
 after all this:
 access from your browser
-http://172.26.101.133:8088
+http://X.X.X.133:8088
 
 it will ask for changing password, default username: admin@example.com
 
@@ -364,7 +364,7 @@ https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md
 
 /etc/gitlab/gitlab.rb
 
-​	change external_url="http://172.26.101.133:8088" 这个端口会写入到/var/opt/gitlab/nginx/conf/gitlab-http.conf
+​	change external_url="http://X.X.X.133:8088" 这个端口会写入到/var/opt/gitlab/nginx/conf/gitlab-http.conf
 
 sudo gitlab-ctl reconfigure
 
@@ -398,7 +398,7 @@ firewall-cmd --list-ports
 
  /opt/gitlab/embedded/service/gitlab-rails/config/gitlab.yml（模板：/opt/gitlab/embedded/service/gitlab-rails/config/gitlab.yml.exmaple）
 
-说回到 前端http://172.26.101.133:8088
+说回到 前端http://X.X.X.133:8088
 
 默认用户名root/ admin@example.com 可以从log中获取：
 
@@ -408,7 +408,7 @@ sudo grep -nr "admin" /var/log/gitlab/
 
 监控前端（从nginx配置获取）：
 
-172.26.101.134:8088/-/grafana/login
+X.X.X.134:8088/-/grafana/login
 
 注意这个8088也将会是Gitaly集群的internal_api_url
 
@@ -430,9 +430,9 @@ auth_key?
 
 首先login配置
 
-172.26.101.134:8088/-/grafana/login
+X.X.X.134:8088/-/grafana/login
 
-http://172.26.101.134:8088/oauth/authorize?access_type=online&client_id=a797f89033dee951dac900905d7b447191f743bcd9afa3a970be4a6864ee0661&redirect_uri=http%3A%2F%2F172.26.101.134%3A8088%2F-%2Fgrafana%2Flogin%2Fgitlab&response_type=code&scope=api&state=o2t3bzD7ek3TPoIPHqDVaLc_HSInTqdBK9IlS2dHhnc%3D
+http://X.X.X.134:8088/oauth/authorize?access_type=online&client_id=a797f89033dee951dac900905d7b447191f743bcd9afa3a970be4a6864ee0661&redirect_uri=http%3A%2F%2FX.X.X.134%3A8088%2F-%2Fgrafana%2Flogin%2Fgitlab&response_type=code&scope=api&state=o2t3bzD7ek3TPoIPHqDVaLc_HSInTqdBK9IlS2dHhnc%3D
 
 ?# gitlab The redirect URI included is not valid.
 
@@ -442,7 +442,7 @@ https://grafana.com/docs/grafana/latest/auth/gitlab/
 
 回到gitlab前端的管理员area， Applications->Add 
 
-callback url: http://172.26.101.134:8088/-/grafana/login/gitlab
+callback url: http://X.X.X.134:8088/-/grafana/login/gitlab
 
 将clientid和secret配置到：/var/opt/gitlab/grafana/grafana.ini
 
@@ -450,10 +450,10 @@ callback url: http://172.26.101.134:8088/-/grafana/login/gitlab
 [auth.gitlab]
 client_id
 client_secret
-root_url = http://172.26.101.134:8088/-/grafana
-auth_url = http://172.26.101.134:8088/oauth/authorize
-token_url = http://172.26.101.134:8088/oauth/token
-api_url = http://172.26.101.134:8088/api/v4
+root_url = http://X.X.X.134:8088/-/grafana
+auth_url = http://X.X.X.134:8088/oauth/authorize
+token_url = http://X.X.X.134:8088/oauth/token
+api_url = http://X.X.X.134:8088/api/v4
 ```
 
 gitlab-ctl restart grafana
@@ -474,7 +474,7 @@ curl 127.0.0.1:9100/metrics -s | head
 
 应该只有prometheus自带UI:
 
-http://172.26.101.133:9090/graph
+http://X.X.X.133:9090/graph
 
 但是浏览器无法打开，netstat发现9090只监听本地端口，所以要修改
 
@@ -523,9 +523,9 @@ rate(process_cpu_seconds_total{job="gitaly"}[1m])
 - job_name: praefect-gitaly
   static_configs:
   - targets:
-    - 172.26.101.136:9236
-    - 172.26.101.137:9236
-    - 172.26.101.138:9236
+    - X.X.X.136:9236
+    - X.X.X.137:9236
+    - X.X.X.138:9236
 ```
 
 果然是有，我们依样画葫芦，可以同样修改上面的node
@@ -535,9 +535,9 @@ rate(process_cpu_seconds_total{job="gitaly"}[1m])
    'job_name' => 'praefect-gitaly-nodes',   
    'static_configs' => [                    
      'targets' => [                         
-       '172.26.101.136:9100', # gitaly-1    
-       '172.26.101.137:9100', # gitaly-2    
-       '172.26.101.138:9100', # gitaly-3    
+       'X.X.X.136:9100', # gitaly-1    
+       'X.X.X.137:9100', # gitaly-2    
+       'X.X.X.138:9100', # gitaly-3    
      ]                                      
    ]                                        
  }                                          
@@ -572,7 +572,7 @@ firewall-cmd --zone=public --add-port=9100/tcp --permanent
 
 firewall-cmd --reload
 
-回到gitlab-server，在http://172.26.101.133:9090/graph
+回到gitlab-server，在http://X.X.X.133:9090/graph
 
 rate(process_cpu_seconds_total{job="praefect-gitaly-nodes"}[1m])
 
@@ -833,7 +833,7 @@ https://yum.postgresql.org/rpmchart/
    58  sudo systemctl enable postgresql-12
    59  sudo systemctl start postgresql-12
    
-   [liuyue@sgkc2-cicd-v02 ~]$ sudo ps -lef|grep "postgre"
+   [liuyue@vm-cicd-v02 ~]$ sudo ps -lef|grep "postgre"
 4 S postgres   987     1  0  80   0 - 99348 poll_s 16:59 ?        00:00:00 /usr/pgsql-12/bin/postmaster -D /var/lib/pgsql/12/data/
 1 S postgres   989   987  0  80   0 - 62944 ep_pol 16:59 ?        00:00:00 postgres: logger
 1 S postgres   991   987  0  80   0 - 99348 ep_pol 16:59 ?        00:00:00 postgres: checkpointer
@@ -873,7 +873,7 @@ create user gitlabuser password 'gitlab';
 CREATE ROLE praefect WITH LOGIN CREATEDB PASSWORD 'PRAEFECT_SQL_PASSWORD';
 ALTER ROLE praefect with PASSWORD 'test';
 然后再从Praefect服务器用新创建的用户连过来
-/opt/gitlab/embedded/bin/psql -U praefect -d template1 -h 172.26.101.134
+/opt/gitlab/embedded/bin/psql -U praefect -d template1 -h X.X.X.134
 
 > CREATE DATABASE praefect_production WITH ENCODING=UTF8;
  By creating the database while connected as the praefect user, we are confident they have access.
@@ -1012,7 +1012,7 @@ gitlab_shell['secret_token'] = 'GITLAB_SHELL_SECRET_TOKEN' 这个是对应gitlab
 
 \# Don't forget to copy `/etc/gitlab/gitlab-secrets.json` from Gitaly client to Gitaly server. （？这句话是因为什么，是不是跟gitlab_shell['secret_token'] 不同的验证方式，公私钥验证？）
 
-gitlab_rails['internal_api_url'] = '172.26.101.133:8088' 对应gitlab server API，
+gitlab_rails['internal_api_url'] = 'X.X.X.133:8088' 对应gitlab server API，
 
 internal_api_url 会在gitlab-ctl reconfigure的时候被赋值到/opt/gitlab/embedded/service/gitlab-shell/config.yml以及
 
@@ -1034,7 +1034,7 @@ gitlab_url: "http://127.0.0.1:8080"
 ```
 postgresql server open port 5432 to praefect server;
 ​	on praefect server: sudo -u git /opt/gitlab/embedded/bin/praefect -config /var/opt/gitlab/praefect/config.toml sql-ping
-/opt/gitlab/embedded/bin/psql -U praefect -d template1 -h 172.26.101.134
+/opt/gitlab/embedded/bin/psql -U praefect -d template1 -h X.X.X.134
 
 praefect server open port 2305 and 9652 to gitlab server;
 ​	on gitlab server: gitlab-rake gitlab:gitaly:check
@@ -1215,7 +1215,7 @@ systemctl start gitlab-runsvdir
 sudo gitlab-ctl reconfigure
 sudo gitlab-ctl start
 from source:
-sudo scp root@172.26.101.133:/var/opt/gitlab/backups/1600046306_2020_09_14_13.3.0-ee_gitlab_backup.tar /var/opt/gitlab/backups/
+sudo scp root@X.X.X.133:/var/opt/gitlab/backups/1600046306_2020_09_14_13.3.0-ee_gitlab_backup.tar /var/opt/gitlab/backups/
 sudo chown git.git /var/opt/gitlab/backups/1600046306_2020_09_14_13.3.0-ee_gitlab_backup.tar
 
 sudo gitlab-ctl stop unicorn
@@ -1231,7 +1231,7 @@ The backup file 1600046306_2020_09_14_13.3.0-ee_gitlab_backup_gitlab_backup.tar 
 sudo gitlab-backup restore 不加参数居然是可以工作的，所以/var/opt/gitlab/backups下面只放一个tar
 
 restore `/etc/gitlab/gitlab-secrets.json`
-sudo scp root@172.26.101.133:/etc/gitlab/config_backup/gitlab_config_1598345534_2020_08_25.tar /etc/gitlab/
+sudo scp root@X.X.X.133:/etc/gitlab/config_backup/gitlab_config_1598345534_2020_08_25.tar /etc/gitlab/
 sudo mv /etc/gitlab /etc/gitlab.$(date +%s)
 sudo tar -xf gitlab_config_1598345534_2020_08_25.tar -C /
 tar: Removing leading `/' from member names 这句话不知道什么意思
@@ -1694,7 +1694,7 @@ ps -lef | grep gitlab
 5、删除所有包含gitlab文件
 find / -name gitlab | xargs rm -rf
 yum localinstall gitlab-ce-13.0.7-ce.0.el7.x86_64.rpm
-scp root@172.26.101.136:/etc/gitlab/gitlab.rb /etc/gitlab/
+scp root@X.X.X.136:/etc/gitlab/gitlab.rb /etc/gitlab/
 vim /etc/gitlab/gitlab.rb
 # ruby_block[wait for praefect service socket] action run
 systemctl start gitlab-runsvdir
@@ -2154,14 +2154,14 @@ https://docs.gitlab.com/ee/user/project/deploy_keys/index.html
 [ERROR] Provider message:
 [ERROR] The git-push command failed.
 [ERROR] Command output:
-[ERROR] fatal: could not read Username for 'http://172.16.101.160': No such device or address
+[ERROR] fatal: could not read Username for 'http://X.X.X.160': No such device or address
 [ERROR] 
 [ERROR] -> [Help 1]
 org.apache.maven.lifecycle.LifecycleExecutionException: Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.5.3:prepare (default-cli) on project test-spring-redis: Unable to commit files
 Provider message:
 The git-push command failed.
 Command output:
-fatal: could not read Username for 'http://172.16.101.160': No such device or address
+fatal: could not read Username for 'http://X.X.X.160': No such device or address
 
 后来才注意到官方有步骤（还没有测试，后面会尝试，即使使用ssh，应该也需要提供username和email）：
 https://docs.gitlab.com/ee/ci/ssh_keys/
@@ -2688,14 +2688,14 @@ gitlab-ctl tail
 然后从Praefect测试到Gitaly nodes的连通性
 
 ```
-2020/08/21 15:25:38 [tcp://172.26.101.137:8075]: checking health...
-2020/08/21 15:25:38 [tcp://172.26.101.138:8075]: dialed successfully!
-2020/08/21 15:25:38 [tcp://172.26.101.138:8075]: checking health...
-2020/08/21 15:25:38 [tcp://172.26.101.136:8075]: dialed successfully!
-2020/08/21 15:25:38 [tcp://172.26.101.136:8075]: checking health...
-2020/08/21 15:25:38 [tcp://172.26.101.138:8075]: ERROR: unable to request health check: rpc error: code = PermissionDenied desc = permission denied
-2020/08/21 15:25:38 [tcp://172.26.101.137:8075]: ERROR: unable to request health check: rpc error: code = PermissionDenied desc = permission denied
-2020/08/21 15:25:38 [tcp://172.26.101.136:8075]: ERROR: unable to request health check: rpc error: code = PermissionDenied desc = permission denied
+2020/08/21 15:25:38 [tcp://X.X.X.137:8075]: checking health...
+2020/08/21 15:25:38 [tcp://X.X.X.138:8075]: dialed successfully!
+2020/08/21 15:25:38 [tcp://X.X.X.138:8075]: checking health...
+2020/08/21 15:25:38 [tcp://X.X.X.136:8075]: dialed successfully!
+2020/08/21 15:25:38 [tcp://X.X.X.136:8075]: checking health...
+2020/08/21 15:25:38 [tcp://X.X.X.138:8075]: ERROR: unable to request health check: rpc error: code = PermissionDenied desc = permission denied
+2020/08/21 15:25:38 [tcp://X.X.X.137:8075]: ERROR: unable to request health check: rpc error: code = PermissionDenied desc = permission denied
+2020/08/21 15:25:38 [tcp://X.X.X.136:8075]: ERROR: unable to request health check: rpc error: code = PermissionDenied desc = permission denied
 rpc error: code = PermissionDenied desc = permission denied
 ```
 
@@ -2716,20 +2716,20 @@ systemctl enable ntpd
 
 ```
 WARN[0000] ignoring configured election strategy as failover is disabled  election_strategy=local pid=6972
-2020/08/21 17:02:07 [tcp://172.26.101.138:8075]: dialing...
-2020/08/21 17:02:07 [tcp://172.26.101.136:8075]: dialing...
-2020/08/21 17:02:07 [tcp://172.26.101.137:8075]: dialing...
-2020/08/21 17:02:07 [tcp://172.26.101.138:8075]: dialed successfully!
-2020/08/21 17:02:07 [tcp://172.26.101.138:8075]: checking health...
-2020/08/21 17:02:07 [tcp://172.26.101.136:8075]: dialed successfully!
-2020/08/21 17:02:07 [tcp://172.26.101.136:8075]: checking health...
-[root@sgkc2-cicd-proxy-v03 opt]# .101.137:8075]: dialed successfully!
+2020/08/21 17:02:07 [tcp://X.X.X.138:8075]: dialing...
+2020/08/21 17:02:07 [tcp://X.X.X.136:8075]: dialing...
+2020/08/21 17:02:07 [tcp://X.X.X.137:8075]: dialing...
+2020/08/21 17:02:07 [tcp://X.X.X.138:8075]: dialed successfully!
+2020/08/21 17:02:07 [tcp://X.X.X.138:8075]: checking health...
+2020/08/21 17:02:07 [tcp://X.X.X.136:8075]: dialed successfully!
+2020/08/21 17:02:07 [tcp://X.X.X.136:8075]: checking health...
+[root@vm-cicd-proxy-v03 opt]# .101.137:8075]: dialed successfully!
 ```
 
 然后从前端访问测试，发现创建的时候报错503 not available，这又是啥，结果测试从gitlab server到Praefect的连通性，发现Praefect不通，最后发现Praefect忘记启动了！
 
 ```
-[root@sgkc2-cicd-v01 opt]# gitlab-rake gitlab:gitaly:check
+[root@vm-cicd-v01 opt]# gitlab-rake gitlab:gitaly:check
 Checking Gitaly ...
 
 Gitaly: ... default ... OK
@@ -2756,7 +2756,7 @@ curl --request POST --header "Private-Token: <your_access_token>" --header "Cont
 
 Admin头像->settings->Access Tokens，创建api权限获取token：测试
 
-http://172.26.101.133/api/v4/projects?access_token=5L74k2hxQrKYdKNNG8Ne
+http://X.X.X.133/api/v4/projects?access_token=5L74k2hxQrKYdKNNG8Ne
 
 
 
@@ -2931,7 +2931,7 @@ Everything up-to-date
 还是常规操作查看gitlab server日志，刚开始我是一个个日志去/var/log/gitlab里面看，结果没发现异常，然后又去到Praefect和Gitaly都没异常，说明从gitlab server到Praefect到Gitaly一路畅通，最后其实是我漏了gitlab server的一些日志，通过这个命令可以看全面：
 gitlab-ctl tail
 ==> /var/log/gitlab/nginx/gitlab_access.log <==
-10.30.30.94 - - [11/Dec/2020:11:15:26 +0800] "GET /assets/favicon-7901bd695fb93edb07975966062049829afb56cf11511236e61bcf425070e36e.png HTTP/1.1" 200 1611 "http://172.26.101.133/dummyproject/dummy_project" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36" -
+10.30.30.94 - - [11/Dec/2020:11:15:26 +0800] "GET /assets/favicon-7901bd695fb93edb07975966062049829afb56cf11511236e61bcf425070e36e.png HTTP/1.1" 200 1611 "http://X.X.X.133/dummyproject/dummy_project" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36" -
 
 ==> /var/log/gitlab/puma/puma_stdout.log <==
 {"timestamp":"2020-12-11T03:15:27.086Z","pid":10524,"message":"PumaWorkerKiller: Consuming 7400.09765625 mb with master and 8 workers."}
@@ -3007,7 +3007,7 @@ lib/gitlab/metrics/requests_rack_middleware.rb:49:in `call'
 lib/gitlab/middleware/release_env.rb:12:in `call'
 
 ==> /var/log/gitlab/gitlab-workhorse/current <==
-{"content_type":"text/html; charset=utf-8","correlation_id":"QlUs3cmwEw6","duration_ms":297,"host":"172.26.101.133","level":"info","method":"GET","msg":"access","proto":"HTTP/1.1","referrer":"http://172.26.101.133/","remote_addr":"127.0.0.1:0","remote_ip":"127.0.0.1","status":500,"system":"http","time":"2020-12-11T11:15:30+08:00","uri":"/dummyproject/dummy_project","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0","written_bytes":2926}
+{"content_type":"text/html; charset=utf-8","correlation_id":"QlUs3cmwEw6","duration_ms":297,"host":"X.X.X.133","level":"info","method":"GET","msg":"access","proto":"HTTP/1.1","referrer":"http://X.X.X.133/","remote_addr":"127.0.0.1:0","remote_ip":"127.0.0.1","status":500,"system":"http","time":"2020-12-11T11:15:30+08:00","uri":"/dummyproject/dummy_project","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0","written_bytes":2926}
 
 很容易就发现：
 ActionView::Template::Error (undefined method `change_reviewer_merge_request'这段，通过在gitlab.com 搜索后面的详情第一个error：“app/views/shared/notifications/_custom_notifications.html.haml:29:in `public_send'”
@@ -3017,7 +3017,7 @@ https://gitlab.com/gitlab-org/gitlab/-/issues/5752
 
 gitlab-rake db:migrate:status
 发现很多down的
-[root@sgkc2-cicd-v01 opt]# gitlab-rake db:migrate:status|grep notification
+[root@vm-cicd-v01 opt]# gitlab-rake db:migrate:status|grep notification
    up     20190115054216  Add error notification sent to remote mirrors
    up     20190320174702  Add lets encrypt notification email to application settings
    up     20190327163904  Add notification email to notification settings
@@ -3185,12 +3185,12 @@ vim /var/log/gitlab/gitlab-workhorse/current
 
 ```
 
-[root@sgsg3-gitlab-v01 gitlab]# grep -r -l "exception" /var/log/gitlab/
+[root@vm-gitlab-v01 gitlab]# grep -r -l "exception" /var/log/gitlab/
 /var/log/gitlab/gitlab-rails/production_json.log
 /var/log/gitlab/gitlab-rails/exceptions_json.log
 /var/log/gitlab/sidekiq/current
 
-{"method":"GET","path":"/frontend","format":"html","controller":"ProjectsController","action":"show","status":500,"time":"2021-05-11T06:16:37.525Z","params":[{"key":"namespace_id","value":"XXXX"},{"key":"id","value":"clear-frontend"}],"remote_ip":"172.16.200.106","user_id":5,"username":"yue.liu","ua":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36","correlation_id":"SjP5M2qxjT2","meta.user":"yue.liu","meta.project":"frontend","meta.root_namespace":"test","meta.caller_id":"ProjectsController#show","meta.feature_category":"projects","gitaly_calls":8,"gitaly_duration_s":0.039444,"redis_calls":26,"redis_duration_s":0.008223,"redis_read_bytes":3442,"redis_write_bytes":3001,"redis_cache_calls":25,"redis_cache_duration_s":0.007496,"redis_cache_read_bytes":3259,"redis_cache_write_bytes":1471,"redis_shared_state_calls":1,"redis_shared_state_duration_s":0.000727,"redis_shared_state_read_bytes":183,"redis_shared_state_write_bytes":1530,"queue_duration_s":0.004365,"cpu_s":0.18,"exception.class":"ActionView::Template::Error","exception.message":"7:permission denied. debug_error_string:{\"created\":\"@1620713797.523463298\",\"description\":\"Error received from peer ipv4:X.X.X.162:2305\",\"file\":\"src/core/lib/surface/call.cc\",\"file_line\":1055,\"grpc_message\":\"permission denied\",\"grpc_status\":7}","exception.backtrace":[],"db_duration_s":0.02671,"view_duration_s":0.0,"duration_s":0.20744,"db_count":45,"db_write_count":0,"db_cached_count":7}
+{"method":"GET","path":"/frontend","format":"html","controller":"ProjectsController","action":"show","status":500,"time":"2021-05-11T06:16:37.525Z","params":[{"key":"namespace_id","value":"XXXX"},{"key":"id","value":"test-frontend"}],"remote_ip":"172.16.200.106","user_id":5,"username":"yue.liu","ua":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36","correlation_id":"SjP5M2qxjT2","meta.user":"yue.liu","meta.project":"frontend","meta.root_namespace":"test","meta.caller_id":"ProjectsController#show","meta.feature_category":"projects","gitaly_calls":8,"gitaly_duration_s":0.039444,"redis_calls":26,"redis_duration_s":0.008223,"redis_read_bytes":3442,"redis_write_bytes":3001,"redis_cache_calls":25,"redis_cache_duration_s":0.007496,"redis_cache_read_bytes":3259,"redis_cache_write_bytes":1471,"redis_shared_state_calls":1,"redis_shared_state_duration_s":0.000727,"redis_shared_state_read_bytes":183,"redis_shared_state_write_bytes":1530,"queue_duration_s":0.004365,"cpu_s":0.18,"exception.class":"ActionView::Template::Error","exception.message":"7:permission denied. debug_error_string:{\"created\":\"@1620713797.523463298\",\"description\":\"Error received from peer ipv4:X.X.X.162:2305\",\"file\":\"src/core/lib/surface/call.cc\",\"file_line\":1055,\"grpc_message\":\"permission denied\",\"grpc_status\":7}","exception.backtrace":[],"db_duration_s":0.02671,"view_duration_s":0.0,"duration_s":0.20744,"db_count":45,"db_write_count":0,"db_cached_count":7}
 ```
 
 既然 Error received from peer ipv4:X.X.X.162:2305，那就继续看看Praefect
@@ -3246,7 +3246,7 @@ sudo firewall-cmd --list-all
 ### gitlab-ctl
 
 ```
-[liuyue@sgkc2-cicd-v02 ~]$ gitlab-ctl help
+[liuyue@vm-cicd-v02 ~]$ gitlab-ctl help
 omnibus-ctl: command (subcommand)
 check-config
   Check if there are any configuration in gitlab.rb that is removed in specified version
@@ -3329,7 +3329,7 @@ Container Registry Commands:
 ### gitlab-rails
 
 ```
-[liuyue@sgkc2-cicd-v02 opt]$ sudo gitlab-rails help
+[liuyue@vm-cicd-v02 opt]$ sudo gitlab-rails help
 [sudo] password for liuyue:
 The most common rails commands are:
  generate     Generate new code (short-cut alias: "g")

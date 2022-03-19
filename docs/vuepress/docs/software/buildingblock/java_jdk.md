@@ -150,7 +150,7 @@ Also one might need to install at least one font (`dejavu`, `liberation`, etc).
 对比了一个正常的环境，发现有
 
 ```
-[sgkc2-devclr-v08@SG/home/clear]$ll /usr/share/fonts/
+[vm2-devclr-v08@SG/home/clear]$ll /usr/share/fonts/
 total 4
 drwxr-xr-x 2 root root 4096 Nov 25  2019 dejavu
 ```
@@ -164,7 +164,7 @@ https://docs.oracle.com/javase/9/intl/font-configuration-files.htm
 https://docs.oracle.com/javase/8/docs/technotes/guides/intl/fontconfig.html
 
 ```
-[sgkc2-devclr-v05@SG/root]#find / -name "fontconfig*"
+[vm2-devclr-v05@SG/root]#find / -name "fontconfig*"
 /var/cache/fontconfig
 /usr/lib64/girepository-1.0/fontconfig-2.0.typelib
 /usr/share/doc/fontconfig-2.10.95

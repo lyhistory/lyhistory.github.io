@@ -476,7 +476,7 @@ https://mp.weixin.qq.com/s/t1ZUXvAUKlIt5UtiZFh1VQ
 这个对业务有何影响，如果服务器上是用nginx作为反向代理，意思是，客户端是请求到nginx，然后nginx再作为客户端请求到具体的程序或后台服务，比如java spring mvc程序，websocket等，get post请求mvc程序执行速度比较快，所以不好观察，除非是想办法模拟高并发，我觉着用websocket举例更容易，可以看到
 
 ```
-[sgkc2-devclr-v08@SG/opt/haproxy-2.2.1]$netstat -anp|grep :80
+[vm2-devclr-v08@SG/opt/haproxy-2.2.1]$netstat -anp|grep :80
 tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      3945/nginx: master
 tcp        0      0 x.x.x.48:80        10.30.30.94:25748       ESTABLISHED 15394/nginx: worker
 tcp        0      0 127.0.0.1:80            127.0.0.1:10693         ESTABLISHED 15394/nginx: worker
@@ -485,7 +485,7 @@ tcp        0      0 127.0.0.1:10693         127.0.0.1:80            ESTABLISHED 
 这个10693的端口是做什么的先不用管，是我测试的haproxy；
 我们主要看这个10.30.30.94:25748是客户端的连接，访问x.x.x.48:80，即nginx的监听的80端口，然后nginx立马会转发产生跟本地的websocket服务器也就是x.x.x.48:19090的连接，所以会占用一个nginx的端口，比如13576，下面可以看到，这里有两个连接，占用了两个nginx的端口13576和18973，因为是双向连接，所以还有反过来的连接
 
-[sgkc2-devclr-v08@SG/opt/haproxy-2.2.1]$netstat -anp|grep :19090
+[vm2-devclr-v08@SG/opt/haproxy-2.2.1]$netstat -anp|grep :19090
 tcp        0      0 0.0.0.0:19090           0.0.0.0:*               LISTEN      3136/java
 tcp        0      0 x.x.x.48:13576     x.x.x.48:19090     ESTABLISHED 15394/nginx: worker
 tcp        0      0 x.x.x.48:19090     x.x.x.48:13576     ESTABLISHED 3136/java

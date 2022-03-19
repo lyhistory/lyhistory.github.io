@@ -27,8 +27,8 @@ public class DruidConfig {
 spring.datasource.url=jdbc:mysql://XXXXX:3306/clear?useCursorFetch=true&defaultFetchSize=100&rewriteBatchedStatements=true&useServerPrepStmts=false&cachePrepStmts=true&useCompression=true&autoReconnect=true&useUnicode=true&characterEncoding=utf-8&connectionCollation=utf8_general_ci&useSSL=false&serverTimezone=Asia/Shanghai
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.datasource.type=com.alibaba.druid.pool.DruidDataSource
-spring.datasource.username=clear_dbuser
-spring.datasource.password=Espresso1!
+spring.datasource.username=test_dbuser
+spring.datasource.password=PASSWORD
 spring.datasource.initialSize=10
 spring.datasource.minIdle=100
 spring.datasource.maxActive=500
@@ -67,9 +67,9 @@ public class DruidProperties {
   datasource:
     is-dynamic-datasource: true
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://XXXXX/clear?characterEncoding=utf-8&autoReconnect=true&useSSL=false&serverTimezone=UTC
-    username: clear_dbuser
-    password: Espresso1!
+    url: jdbc:mysql://XXXXX/?characterEncoding=utf-8&autoReconnect=true&useSSL=false&serverTimezone=UTC
+    username: test_dbuser
+    password: PASSWORD
     driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
       #连接池配置

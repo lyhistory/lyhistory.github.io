@@ -1,3 +1,10 @@
+http协议
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Connection_management_in_HTTP_1.x
+Short-lived connections
+=>Persistent connections(http 1.1默认）
+=>HTTP pipelining(http2)
+
+
 ## Basic
 
 chrome/network right click -> header options->protocol，可以看到http/1.1
@@ -268,3 +275,5 @@ curl --include \
 ## refer:
 
 记录一次面试中的HTTP请求相关问题 https://www.cnblogs.com/daisygogogo/p/10741597.html
+
+

@@ -1,14 +1,20 @@
 ## install
 
-```
 https://golang.org/doc/install
+https://go.dev/doc/install
+```
+1. Extract the archive you downloaded into /usr/local, creating a Go tree in /usr/local/go.
 
-tar -C /usr/local -xzf go1.15.4.linux-amd64.tar.gz
+$ rm -rf /usr/local/go && tar -C /usr/local -xzf go1.17.8.linux-amd64.tar.gz
+
+2.Add /usr/local/go/bin to the PATH environment variable
 
 $HOME/.profile or /etc/profile (for a system-wide installation)
 export PATH=$PATH:/usr/local/go/bin
 
-go version
+$ source $HOME/.profile.
+
+$ go version
 /usr/local/go/bin/go
 
 但是我可能对 system-wide installation 有误解，因为使用其他用户比如root之后无法找到 go,
@@ -24,7 +30,7 @@ Defaults    env_keep += "GOPATH"
 
 
 
-## grama
+## Grama
 
 refer《an introduction to programming in go》
 
