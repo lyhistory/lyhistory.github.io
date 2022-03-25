@@ -975,6 +975,7 @@ http://antirez.com/news/96
 > 1.Make sure the port Redis uses to listen for connections (by default 6379 and additionally 16379 if you run Redis in cluster mode, plus 26379 for Sentinel) is firewalled, so that it is not possible to contact Redis from the outside world.
 > 2.Use a configuration file where the bind directive is set in order to guarantee that Redis listens on only the network interfaces you are using. For example only the loopback interface (127.0.0.1) if you are accessing Redis just locally from the same computer, and so forth.
 > 3.Use the requirepass option in order to add an additional layer of security so that clients will require to authenticate using the AUTH command.
+但是要非常注意，redis服务端如果要配置requirepass，如果是cluster一定要同时配置 masterauth，否则无法replication，当然也无法failover!!!
 > 4.Use spiped or another SSL tunneling software in order to encrypt traffic between Redis servers and Redis clients if your environment requires encryption.
 
 > Disabling of specific commands
