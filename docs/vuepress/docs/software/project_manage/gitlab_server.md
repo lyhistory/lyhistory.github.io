@@ -268,15 +268,25 @@ for the gitaly storage, based on the documentation, we come out with this gitaly
 it has a praefect as router between gitlab server and gitaly nodes;
 ```
 
-## 2. Install 安装(手动)
+## 2. Install 安装(手动)(Omnibus版本)
 
 https://git-scm.com/book/en/v2/Git-on-the-Server-GitLab
 
-ce版本源码：https://gitlab.com/gitlab-org/gitlab-foss/-/tree/master
+GitLab FOSS is a read-only mirror of GitLab, with all proprietary code removed. This project was previously used to host GitLab Community Edition, but all development has now moved to https://gitlab.com/gitlab-org/gitlab.
+
+differences between Omnibus and source installations
+https://gitlab.com/gitlab-org/gitlab-foss/-/issues/15412
+Omnibus uses gitlab-ctlfor managing the services and can do so separately. On source, if you want to restart and use our service file, you need to restart all the components
+
+ce版本源码：
+  https://gitlab.com/gitlab-org/gitlab-foss/-/tree/master
+  https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md
 
 官方安装文档：https://about.gitlab.com/install/#centos-7
 
 下面采用离线安装 https://docs.gitlab.com/omnibus/manual_install.html
+https://docs.gitlab.com/ee/topics/offline/
+
 
 ### 2.1 硬件准备
 
@@ -314,7 +324,9 @@ dpkg -i gitlab-ce-<version>.deb
 # CentOS/RHEL
 rpm -Uvh gitlab-ce-<version>.rpm
 
-下载 https://packages.gitlab.com/gitlab/gitlab-ce
+下载 
+https://packages.gitlab.com/gitlab/
+https://packages.gitlab.com/gitlab/gitlab-ce
 
 sudo mv gitlab-ce-13.0.7-ce.0.el7.x86_64.rpm /opt/
 

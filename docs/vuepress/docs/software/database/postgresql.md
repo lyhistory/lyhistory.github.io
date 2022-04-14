@@ -148,7 +148,7 @@ postgres=# select * from pg_tablespace;
 psql命令
 
 ```
-\list
+\l \list
 \c [DATABASE]
 \d
 \d TABLE_NAME
@@ -156,6 +156,9 @@ psql命令
 
 \dx
 SELECT * FROM pg_extension;
+
+--format output
+\x on
 
 解锁 unlock
 dbname=# select pid from pg_locks l join pg_class t on l.relation = t.oid where t.relname = 'tablename';
@@ -565,6 +568,16 @@ $function$
 ```
 
 ### 2.6 Advanced
+
+#### index
+注意，跟mysql不同，postgresql的索引是schema级别的，不是table级别的，所以虽然是
+create index IDX_NAME on TABLE(COLUMN) IDX_NAME也不能重复！
+Indexes and tables (and views, and sequences, and...) are stored in the pg_class catalog, and they're unique per schema due to a unique key on it
+
+```
+select * from pg_class c join pg_namespace ns on c.relnamespace = ns.oid where c.relname='idx_time_202204';
+```
+https://stackoverflow.com/questions/27306539/at-what-level-do-postgres-index-names-need-to-be-unique
 
 #### Temp table
 https://github.com/yallie/pg_global_temp_tables
