@@ -148,6 +148,8 @@ def valid_date(s):
         raise argparse.ArgumentTypeError(msg)
 ```
 
+self in Python class https://www.geeksforgeeks.org/self-in-python-class/
+    
 ### 3.2 libaray
 
 Struct pack unpack

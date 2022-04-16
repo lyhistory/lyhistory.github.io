@@ -73,7 +73,12 @@ dimensions: 52mm x 34mm
 
 ### PCB-Printed Circuit Board 印制电路板 - 芯片的载体
 PCB类型，如何通过板子画出电路图？
+电路板上如何区分交流直流
+
 如何用万用表测找出电路板的坏的地方？电容爆炸？
+https://www.elecfans.com/d/1695230.html
+http://news.eeworld.com.cn/Test_and_measurement/ic521913.html
+https://www.youtube.com/watch?v=ejDGCiJ-aVs
 
 http://news.eeworld.com.cn/Test_and_measurement/ic514591.html
 1、看元件的状态
