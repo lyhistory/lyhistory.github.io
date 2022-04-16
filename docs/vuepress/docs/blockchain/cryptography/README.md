@@ -8,33 +8,21 @@ Abstract Algebra: 构造新的number system，通常只说 加和乘（减和除
 
 group 闭合，**Single composition law**: 要么加，要么乘(必须存在inverse)
 
-​	abelian group：满足交换律
-
-​	Cyclic Groups
-
-​	subgroup
-
-
++ abelian group：满足交换律
++ Cyclic Groups
++ subgroup
 
 ring  闭合，**multiple composition law**: 既要加(满足additive composition law)，又要乘(满足multiplicative composition law，环中乘法不一定有单位元也不一定要满足交换律，不一定存在inverse)
-
-​	只从满足Additive composition law的加法环ring来说 === abelian group
-
-​	communitative ring ==- ring+满足乘法交换律	例子：Integer Z = {0,1, -1, 2, -2, . . .}
-
++ 只从满足Additive composition law的加法环ring来说 === abelian group
++ communitative ring ==- ring+满足乘法交换律	例子：Integer Z = {0,1, -1, 2, -2, . . .}
 
 
 field 闭合，既可以加也可以乘（由加群和乘“群”组合而成）
-
-​	加群 === abelian group
-
-​	乘“群” === communitative ring+multiplicative inverse(except additive identity 所以不是群，当然也可以说除掉addtive identity构成群)
-
-​	finite field : field with finite number of elements, the number of elements called order，除去additive identity的乘法结构为循环群
++ 加群 === abelian group
++ 乘“群” === communitative ring+multiplicative inverse(except additive identity 所以不是群，当然也可以说除掉addtive identity构成群)
++ finite field : field with finite number of elements, the number of elements called order，除去additive identity的乘法结构为循环群
 
 例子：prime finite field：Fp , p = 2, 3, 5, 7 ,11, 13, ..... |Fp| = p, Z/(pZ)={ 0¯, 1¯, 2¯,(p-1)¯  } 
-
-
 
 ### 符号:
 
@@ -57,8 +45,7 @@ field 闭合，既可以加也可以乘（由加群和乘“群”组合而成�
 ∀ 任意		
 
 ∈ 属于 ∉ 
-
-≡ 同余符号　
+≡ 同余符号
 
 累加累乘
 
@@ -86,8 +73,6 @@ https://www.mathsisfun.com/sets/injective-surjective-bijective.html
 
 block ciphers VS stream ciphers
 
-
-
 3 problems:
 
 + how to communicate safely => encryption/decryption
@@ -99,8 +84,6 @@ PKI: public key infrastructure (Public-Key Cryptosystems) === Asymmetric Cryptog
 DLP: Discrete Logarithm Problem
 
 DHK: Diffie–Hellman key exchange
-
-
 
 ## Encryption
 
@@ -126,8 +109,6 @@ AES
   + DHK
   + Elgamal Encryption
   + ECC
-
-  
 
 
 ## Signature

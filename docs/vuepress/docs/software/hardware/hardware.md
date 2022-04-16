@@ -9,10 +9,16 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 ## 1.Fundamentals 
 Electronics Foundations: https://www.linkedin.com/learning/electronics-foundations-fundamentals
 
-引脚高低电平
-	 内部拉起？拉电流弱
-	外部：接电阻，又5v引脚供电，又称低电平控制/负极控制，灌电流强
-电阻：
+### 公式
+欧姆公式
+http://www.54benniao.com/view/28.html
+![](/docs/docs_image/software/hardware/basic/02_ohm.png)
+https://zhidao.baidu.com/question/78519916
+
+### 电子元器件  Electronic Components
+https://en.wikipedia.org/wiki/Electronic_symbol
+
+R 电阻：
 色环图
 ![](/docs/docs_image/software/hardware/basic/01_resistor.png)
 快速：两个红色 220欧， 一个红色 10k，一个黄一个紫色 4.7k，没有比较亮的颜色(棕黑黑) 1k
@@ -20,11 +26,7 @@ Electronics Foundations: https://www.linkedin.com/learning/electronics-foundatio
 LED
 长正短负
 
-欧姆公式
-http://www.54benniao.com/view/28.html
-![](/docs/docs_image/software/hardware/basic/02_ohm.png)
-
-https://zhidao.baidu.com/question/78519916
+C 电容
 
 铜线/杜邦线能通过的最大电流
 
@@ -62,7 +64,37 @@ suitable breadboard types: MB-102, ZY-60
 dimensions: 52mm x 34mm
 可编程逻辑电源/新能源MEMS/传感技术测量仪表嵌入式技术制造/封装模拟技术连接器EMC/EMI设计光电显示存储技术EDA/IC设计处理器/DSP接口/总线/驱动控制/MCURF/无线
 
+引脚高低电平
+	 内部拉起？拉电流弱
+	外部：接电阻，又5v引脚供电，又称低电平控制/负极控制，灌电流强
 
+
+### IC板 逻辑门电路
+
+### PCB-Printed Circuit Board 印制电路板 - 芯片的载体
+PCB类型，如何通过板子画出电路图？
+如何用万用表测找出电路板的坏的地方？电容爆炸？
+
+http://news.eeworld.com.cn/Test_and_measurement/ic514591.html
+1、看元件的状态
+拿到一块出故障的电路板，首先观察电路板有没有明显的元件损坏，如电解电容烧毁和鼓胀、电阻烧坏以及功率器件的烧损等。
+
+2、看电路板的焊接
+如印制电路板有没有变形翘曲；有没有焊点脱落、明显虚焊；电路板覆铜皮有没有翘起、烧糊变黑。
+
+3、观察元件的插件
+如集成电路、二极管、电路板电源变压器等方向有没插错。
+
+4、电阻电容电感的简单测试
+使用万用表对量程内的电阻、电容、电感等可怀疑元件进行简单的测试，测试有否电阻阻值变大、电容短路、开路和容值变化、电感短路和开路等现象。
+
+5、上电测试
+经过上述简单观察和测试后，无法排除故障，可进行上电测试。首先测试电路板供电是否正常。如电路板的交流电源是否异常、稳压器输出是否异常、开关电源输出和波形是否异常等
+
+6、刷程序
+对于有单片机、DSP、CPLD等可编程元件，可考虑重新刷一遍程序，排除程序运行异常造成的电路故障。
+
+## 2.常见芯片-程序烧录
 
 Common tips 
 1.install correct drive
@@ -76,8 +108,6 @@ USB-SERIAL CH340/341 (pre-install successful,  install ' 驱动精灵' and conne
 晶振频率
 调整波特率一超时 -- 改用低速下载
 
-
-## 2.芯片
 ：atmel,stc,pic,avr,凌阳，80C51，arm
  
 https://hackaday.io/
