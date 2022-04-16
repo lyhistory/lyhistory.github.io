@@ -94,7 +94,7 @@ set -x 可以显示shell在执行什么程序
 
 ## 用户身份和权限
 
-
+su – The difference between the su and the hyphenated su – commands is the su command without arguments keeps almost all environment variables belonging to the original user. Contrary to this, the hyphenated su – command clears most environment variables.
 
 ```
 su _gvm

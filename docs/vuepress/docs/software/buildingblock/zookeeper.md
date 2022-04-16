@@ -236,6 +236,8 @@ Here are some common problems you can avoid by configuring      ZooKeeper correc
 
 ## 工具/日志排查
 
+./bin/zkServer.sh start-foreground
+
 https://zookeeper.apache.org/doc/r3.3.2/zookeeperAdmin.html
 
 工具集合：
@@ -344,11 +346,11 @@ https://zookeeper.apache.org/doc/current/zookeeperProgrammers.html
 ![](/docs/docs_image/software/zookeeper/zookeeper03.png)
 ![](/docs/docs_image/software/zookeeper/zookeeper04.png)
 ![](/docs/docs_image/software/zookeeper/zookeeper05.png)
-Semaphores  
-Queues  
+Semaphores 
+Queues 
 Leader election
-Group  membership  
-Barriers  
+Group membership 
+Barriers 
 Configuration
 
 ZooKeeper has a built-in sanity check of 1M, to prevent it from being used as a large data store, but in general it is used to store much smaller pieces of data.

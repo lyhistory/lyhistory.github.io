@@ -788,6 +788,12 @@ Kafka常见错误整理 https://cloud.tencent.com/developer/article/1508919
 The size of the current ISR Set(0) is insufficient to satisfy the min.isr requirement
 https://stackoverflow.com/questions/62770272/notenoughreplicasexception-the-size-of-the-current-isr-set2-is-insufficient-t
 
+例如：对于producer来说就是
+The size of the current ISR Set(0) is insufficient to satisfy the min.isr requirement of 2 for partition __transaction_state-
+对应client端的错误日志为：
+java.lang.reflect.UndeclaredThrowableException: null
+Caused by: org.apache.kafka.common.errors.TimeoutException: Timeout expired while initializing transactional state in 60000ms.
+
 --- LEADER_NOT_AVAILABLE: 
 topic 可能不存在，kafka api默认会自动创建
 
@@ -2525,10 +2531,10 @@ default.replication.factor=3
 正常挂掉1个是没问题的，但是居然挂掉2个居然都能启动client端（能成功join group，kafka成功rebalance）：
 这个比较诡异，就是测试的时候其实只有两个活着的节点，broker 0不知道被谁用root更改了几个kafka-logs文件权限，造成borker 0停了，
 ，然后测试断开broker 2的网络，只有broker 1一个可用节点，client端居然能够启动并且订阅topic，只不过恢复的时候（onPartitionAssign内部进一步访问kafka读取快照数据）抛错，比如可能是恢复的时候创建临时consumer，kafka服务端向zookeeper注册的时候出现超时（下面有zookeeper问题的log），
-2022-03-12 18:33:29.793 [31mERROR[m [35m15732GG[m [TEST-MANAGER] [36mo.a.k.c.c.i.ConsumerCoordinator[m : [Consumer clientId=consumer-2, groupId=TEST-TRADEFRONT-SZL] User provided listener com.quantdo.clear.core.boot.SimpleWorkBalancer failed on partition assignment
+2022-03-12 18:33:29.793 [31mERROR[m [35m15732GG[m [TEST-MANAGER] [36mo.a.k.c.c.i.ConsumerCoordinator[m : [Consumer clientId=consumer-2, groupId=TEST-TRADEFRONT-SZL] User provided listener com.lyhistory.core.boot.SimpleWorkBalancer failed on partition assignment
 
-com.quantdo.clear.core.exception.RecoveryException: Failed Recovery Worker
-	at com.quantdo.clear.core.boot.SimpleWorkBalancer.onPartitionsAssigned(SimpleWorkBalancer.java:54)
+com.lyhistory.core.exception.RecoveryException: Failed Recovery Worker
+	at com.lyhistory.core.boot.SimpleWorkBalancer.onPartitionsAssigned(SimpleWorkBalancer.java:54)
 	at org.apache.kafka.clients.consumer.internals.ConsumerCoordinator.onJoinComplete(ConsumerCoordinator.java:292)
 	at org.apache.kafka.clients.consumer.internals.AbstractCoordinator.joinGroupIfNeeded(AbstractCoordinator.java:410)
 	at org.apache.kafka.clients.consumer.internals.AbstractCoordinator.ensureActiveGroup(AbstractCoordinator.java:344)
@@ -2536,14 +2542,14 @@ com.quantdo.clear.core.exception.RecoveryException: Failed Recovery Worker
 	at org.apache.kafka.clients.consumer.KafkaConsumer.updateAssignmentMetadataIfNeeded(KafkaConsumer.java:1226)
 	at org.apache.kafka.clients.consumer.KafkaConsumer.poll(KafkaConsumer.java:1191)
 	at org.apache.kafka.clients.consumer.KafkaConsumer.poll(KafkaConsumer.java:1176)
-	at com.quantdo.clear.core.boot.SimpleWorkerManager.doServe(SimpleWorkerManager.java:96)
-	at com.quantdo.clear.core.boot.AdministrableService.serve(AdministrableService.java:98)
-	at com.quantdo.clear.core.boot.AdministrableService.start(AdministrableService.java:36)
-	at com.quantdo.clear.core.boot.Starter$$Lambda$826/315805187.run(Unknown Source)
+	at com.lyhistory.core.boot.SimpleWorkerManager.doServe(SimpleWorkerManager.java:96)
+	at com.lyhistory.core.boot.AdministrableService.serve(AdministrableService.java:98)
+	at com.lyhistory.core.boot.AdministrableService.start(AdministrableService.java:36)
+	at com.lyhistory.core.boot.Starter$$Lambda$826/315805187.run(Unknown Source)
 	at java.lang.Thread.run(Thread.java:745)
-Caused by: com.quantdo.clear.core.exception.RecoveryException: Failed Recovery Worker
-	at com.quantdo.clear.core.boot.SimpleWorkBalancer.getWorkState(SimpleWorkBalancer.java:64)
-	at com.quantdo.clear.core.boot.SimpleWorkBalancer$$Lambda$872/1231621690.apply(Unknown Source)
+Caused by: com.lyhistory.core.exception.RecoveryException: Failed Recovery Worker
+	at com.lyhistory.core.boot.SimpleWorkBalancer.getWorkState(SimpleWorkBalancer.java:64)
+	at com.lyhistory.core.boot.SimpleWorkBalancer$$Lambda$872/1231621690.apply(Unknown Source)
 	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
 	at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1374)
 	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:512)
@@ -2552,12 +2558,12 @@ Caused by: com.quantdo.clear.core.exception.RecoveryException: Failed Recovery W
 	at java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174)
 	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
 	at java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:418)
-	at com.quantdo.clear.core.boot.SimpleWorkBalancer.onPartitionsAssigned(SimpleWorkBalancer.java:52)
+	at com.lyhistory.core.boot.SimpleWorkBalancer.onPartitionsAssigned(SimpleWorkBalancer.java:52)
 	... 12 more
 Caused by: java.util.concurrent.ExecutionException: org.apache.kafka.common.errors.TimeoutException: Failed to get offsets by times in 30000ms
 	at java.util.concurrent.FutureTask.report(FutureTask.java:122)
 	at java.util.concurrent.FutureTask.get(FutureTask.java:192)
-	at com.quantdo.clear.core.boot.SimpleWorkBalancer.getWorkState(SimpleWorkBalancer.java:62)
+	at com.lyhistory.core.boot.SimpleWorkBalancer.getWorkState(SimpleWorkBalancer.java:62)
 	... 22 more
 Caused by: org.apache.kafka.common.errors.TimeoutException: Failed to get offsets by times in 30000ms
 
@@ -2571,15 +2577,15 @@ Group coordinator XXXX:9092 (id: 2147483647 rack: null) is unavailable or invali
 猜测1： broker 0并非真的挂，只是因为kafka log文件权限为root，造成kafka服务处于异常状态（还可以跟其他机器沟通），所以此时仍然满足min.isr=2的要求
 否定：根据broker 0上面的日志，可以看到kafka根本没有对应时间段的任何日志
 猜测2: 虽然broker 2网络断开，此时 broker 2 对于 broker 1 来说属于假死状态，尚未更新metadata，所以没有检测出insufficient isr
-验证：发现断网后出现如下错误 Opening socket connection to server vm2-devclr-v07/x.x.x.47:2181. Will not attempt to authenticate using SASL (unknown error)
+验证：发现断网后出现如下错误 Opening socket connection to server sgkc2-devclr-v07/x.x.x.47:2181. Will not attempt to authenticate using SASL (unknown error)
 比较可靠的猜测：猜测2基本对的，不过不是假死，而是本身就已经成了孤立节点，又无法与broker 0和2的zookeeper通信更新信息，从而造成kafka服务端异常，产生了绕过min.isr限制的假象
 [2022-03-14 08:59:39,144] WARN Client session timed out, have not heard from server in 4002ms for sessionid 0x17862f2bedc0004 (org.apache.zookeeper.ClientCnxn)
 [2022-03-14 08:59:39,145] INFO Client session timed out, have not heard from server in 4002ms for sessionid 0x17862f2bedc0004, closing socket connection and attempting reconnect (org.apache.zookeeper.ClientCnxn)
-[2022-03-14 08:59:39,826] INFO Opening socket connection to server vm2-devclr-v07/x.x.x.47:2181. Will not attempt to authenticate using SASL (unknown error) (org.apache.zookeeper.ClientCnxn)
+[2022-03-14 08:59:39,826] INFO Opening socket connection to server sgkc2-devclr-v07/x.x.x.47:2181. Will not attempt to authenticate using SASL (unknown error) (org.apache.zookeeper.ClientCnxn)
 [2022-03-14 08:59:41,829] WARN Client session timed out, have not heard from server in 2583ms for sessionid 0x17862f2bedc0004 (org.apache.zookeeper.ClientCnxn)
 [2022-03-14 08:59:41,829] INFO Client session timed out, have not heard from server in 2583ms for sessionid 0x17862f2bedc0004, closing socket connection and attempting reconnect (org.apache.zookeeper.ClientCnxn)
-[2022-03-14 08:59:42,820] INFO Opening socket connection to server vm2-devclr-v05/x.x.x.45:2181. Will not attempt to authenticate using SASL (unknown error) (org.apache.zookeeper.ClientCnxn)
-[2022-03-14 08:59:42,821] INFO Socket error occurred: vm2-devclr-v05/x.x.x.45:2181: Connection refused (org.apache.zookeeper.ClientCnxn)
+[2022-03-14 08:59:42,820] INFO Opening socket connection to server sgkc2-devclr-v05/x.x.x.45:2181. Will not attempt to authenticate using SASL (unknown error) (org.apache.zookeeper.ClientCnxn)
+[2022-03-14 08:59:42,821] INFO Socket error occurred: sgkc2-devclr-v05/x.x.x.45:2181: Connection refused (org.apache.zookeeper.ClientCnxn)
 [2022-03-14 09:00:00,597] INFO [ReplicaFetcher replicaId=1, leaderId=2, fetcherId=0] Error sending fetch request (sessionId=2095832195, epoch=8913816) to node 2: java.io.IOException: Connection to 2 was disconnected before the response was read. (org.apache.kafka.clients.FetchSessionHandler)
 [2022-03-14 09:00:00,598] WARN [ReplicaFetcher replicaId=1, leaderId=2, fetcherId=0] Error in response for fetch request (type=FetchRequest, replicaId=1, maxWait=500, minBytes=1, maxBytes=10485760, fetchData={}, isolationLevel=READ_UNCOMMITTED, toForget=, metadata=(sessionId=2095832195, epoch=8913816)) (kafka.server.ReplicaFetcherThread)
 java.io.IOException: Connection to 2 was disconnected before the response was read
@@ -2752,7 +2758,7 @@ test kafka client
 		停掉 kafka client大概是在：
 		2022-03-16 17:13:51.918 ^[[32m INFO^[[m ^[[35m30256GG^[[m [QFJ Timer] ^[[36mc.q.c.f.f.s.AbstractApplication^[[m : fix server toAdmin: [8=FIX.4.4|9=60|35=0|34=683|49=EXEC|52=20220316-09:13:51.918|56=EXCHANGE_FS|10=167|]
 		然后很快启动了 kafka client：
-		2022-03-16 17:14:17.944 ^[[32m INFO^[[m ^[[35m370GG^[[m [main] ^[[36mo.s.b.StartupInfoLogger^[[m : Starting TradeFrontMain v1.1.0-SNAPSHOT using Java 1.8.0_40 on vm2-devclr-v05 with PID 370 (/apex/apps/clearing/core/220303/kafka client.jar started by clear in /apex/apps/clearing/core)
+		2022-03-16 17:14:17.944 ^[[32m INFO^[[m ^[[35m370GG^[[m [main] ^[[36mo.s.b.StartupInfoLogger^[[m : Starting TradeFrontMain v1.1.0-SNAPSHOT using Java 1.8.0_40 on XXXX with PID 370 (/lyhistory/kafka client.jar started by clear in /lyhistory)
 		2022-03-16 17:14:17.955 ^[[32mDEBUG^[[m ^[[35m370GG^[[m [main] ^[[36mo.s.b.StartupInfoLogger^[[m : Running with Spring Boot v2.4.5, Spring v5.3.6
 		2022-03-16 17:14:17.956 ^[[32m INFO^[[m ^[[35m370GG^[[m [main] ^[[36mo.s.b.SpringApplication^[[m : The following profiles are active: dev
 		2022-03-16 17:14:19.821 ^[[32m INFO^[[m ^[[35m370GG^[[m [main] ^[[36mo.s.b.w.e.t.TomcatWebServer^[[m : Tomcat initialized with port(s): 10102 (http)
