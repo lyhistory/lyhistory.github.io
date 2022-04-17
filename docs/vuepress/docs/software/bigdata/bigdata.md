@@ -454,3 +454,4 @@ Apache Ambari Installation https://docs.hortonworks.com/HDPDocuments/Ambari-2.6.
 What is the difference between using Ambari for HDP and not using it in Hortonworks? https://www.quora.com/What-is-the-difference-between-using-Ambari-for-HDP-and-not-using-it-in-Hortonworks
 Ambari and HDP Installation: Quick Start for new Virtual Machine Users https://community.hortonworks.com/articles/69385/ambari-and-hdp-installation-quick-start-for-new-vi.html
 
+<disqus/>
