@@ -325,3 +325,5 @@ http://solidcon.com/internet-of-things-2015/public/schedule/detail/40797
 
 automated dinosaur game bot https://www.reddit.com/r/arduino/comments/c5o4kf/i_made_an_automated_dinosaur_game_bot/
 	LDR sensor 光敏电阻
+
+[	](https://c.51diantang.com/)
