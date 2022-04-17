@@ -108,3 +108,4 @@ Cryptography with Python
 https://samsclass.info/124/Defcon-BSidesLV-2016-crypto.shtml
 
 
+<disqus/>

@@ -358,3 +358,5 @@ Coursera上机器学习课程（公开课）汇总推荐
 http://blog.coursegraph.com/tag/机器学习
 斯坦福机器学习笔记 https://legacy.gitbook.com/book/yoyoyohamapi/mit-ml/details
 http://openclassroom.stanford.edu/MainFolder/DocumentPage.php?course=MachineLearning&doc=exercises/ex7/ex7.html
+
+<disqus/>

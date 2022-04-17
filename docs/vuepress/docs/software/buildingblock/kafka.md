@@ -3022,3 +3022,5 @@ SendKafkaMsg_SaveMemory()不能跟SendKafkaMsg_SaveOffset()为一个事务一起
 因此就可以理解下图：
 
 ![](/docs/docs_image/software/buildingblock/kafka/kafka25.png)
+
+<disqus/>

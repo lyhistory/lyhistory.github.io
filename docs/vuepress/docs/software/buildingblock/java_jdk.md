@@ -241,3 +241,5 @@ xorg-x11-fonts ，继而搜索 linux install xorg-x11-fonts，得到
 ```
 yum install xorg-x11-fonts-Type1
 ```
+
+<disqus/>

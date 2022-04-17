@@ -349,9 +349,9 @@ https://allprivatekeys.com/
 
    比如这个[bonusbitcoin](http://bonusbitcoin.co/?ref=23BF9639C6DF)
 
-3. (推荐) 很多交易所都有新人活动，而且各种节日都有活动，送的其实真不少，我随便刷了几个元旦活动就收了差不多100美刀，也能换不少
+3. [推荐coinhako,目前有赠送活动](https://www.coinhako.com/affiliations/sign_up/LYHISTORY_76989)
 
-   ![](/docs/docs_image/blockchain/aex_1.png)
+
 
 ## 实时数据
 
@@ -366,3 +366,5 @@ https://bitcoinal.com/
 bitcoiner聚会：
 
 https://www.recklessvr.com/
+
+<disqus/>

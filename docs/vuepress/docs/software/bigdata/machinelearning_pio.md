@@ -623,3 +623,5 @@ Predictionio version and template version
 
 Hadoop: Cannot use Jps command https://stackoverflow.com/questions/11738070/hadoop-cannot-use-jps-command
 https://medium.com/@nidhisatrawala1992/thank-you-vaghawan-ojha-7afaea05a27d
+
+<disqus/>

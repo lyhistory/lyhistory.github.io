@@ -175,3 +175,5 @@ http://storm.apache.org/releases/current/Trident-tutorial.html
 
 For batch processing(control spout)
 https://github.com/ptgoetz/storm-signals
+
+<disqus/>
