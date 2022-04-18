@@ -445,3 +445,5 @@ http://unitstep.net/blog/2009/05/05/using-curl-in-php-to-access-https-ssltls-pro
 
 Return code is 500 string(25) "Curl failed with error 0," NULL
 this could be pramamter issues or other program handler problem.
+
+<disqus/>

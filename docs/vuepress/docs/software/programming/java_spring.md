@@ -601,3 +601,5 @@ ref
 [重新理解微服务](https://zhuanlan.zhihu.com/p/25843782)
 [架构设计漫步：从单体架构、SOA到微服务](https://www.jianshu.com/p/6fe0795c782d)
 [Microservices](https://martinfowler.com/articles/microservices.html)
+
+<disqus/>

@@ -150,3 +150,5 @@ chrome.storage.sync.get(['targetTabID'], function(result) {
   });
   
 ![](/docs/docs_image/software/webdev/chrom_extension03.png)
+
+<disqus/>

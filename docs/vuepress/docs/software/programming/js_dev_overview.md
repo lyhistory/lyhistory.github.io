@@ -1111,3 +1111,5 @@ ref:
 [Getting started with REACT.js, using Webpack and Babel](https://medium.com/@siddharthac6/getting-started-with-react-js-using-webpack-and-babel-66549f8fbcb8)
 
 [How to Setup React and Node JS in a project](https://www.codementor.io/@kakarganpat/how-to-setup-react-and-node-js-in-a-project-koxwqbssl)
+
+<disqus/>

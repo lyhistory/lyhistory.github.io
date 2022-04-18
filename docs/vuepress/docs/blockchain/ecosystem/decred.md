@@ -98,3 +98,4 @@ Decred奖励的分配方案是：60%分配给miner矿工，30%分配给validator
 
 ![](/docs/docs_image/blockchain/aex_2.png)
 
+<disqus/>

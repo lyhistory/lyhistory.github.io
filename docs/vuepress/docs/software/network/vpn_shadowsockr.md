@@ -120,3 +120,5 @@ ref:
 [利用shadowsocks打造局域网透明网关](https://medium.com/@oliviaqrs/%E5%88%A9%E7%94%A8shadowsocks%E6%89%93%E9%80%A0%E5%B1%80%E5%9F%9F%E7%BD%91%E7%BF%BB%E5%A2%99%E9%80%8F%E6%98%8E%E7%BD%91%E5%85%B3-fb82ccb2f729)
 Squid 代理服务器
 http://www.ciphermagic.cn/chrome-scientific-internet-access.html
+
+<disqus/>

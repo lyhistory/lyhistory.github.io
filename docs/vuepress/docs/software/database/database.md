@@ -28,3 +28,5 @@ https://pgbouncer.github.io/usage.html#quick-start
 
 Performance monitor config
 https://docs.oracle.com/cd/E15296_01/doc.111/e15167/featConnecting.htm#CJAFIDDC
+
+<disqus/>

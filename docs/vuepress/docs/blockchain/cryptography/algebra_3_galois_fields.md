@@ -390,6 +390,6 @@ K / F , K Over F vector space
 AES: primitive polynomia 本原多项式
 
 
-
+<disqus/>
 
 

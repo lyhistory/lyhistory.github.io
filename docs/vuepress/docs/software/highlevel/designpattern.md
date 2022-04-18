@@ -280,3 +280,5 @@ address resolver / service locator
 ref:
 
 [PHP design pattern](http://www.php5dp.com/)
+
+<disqus/>

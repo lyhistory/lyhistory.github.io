@@ -227,6 +227,7 @@ module.exports = {
 + ]
 }
 ```
+https://codecook.de/articles/2021/05/01/vuepress-global-footer/#the-problem
 
 ### 3.3 公司站点
 
@@ -275,3 +276,4 @@ solr - search engine
 bootstrap  - Ace Responsive BootStrap 3 Dashboard / Admin Template https://github.com/bopoda/ace
 AngularJS - BlurAdmin - https://akveo.github.io/blur-admin/articles/001-getting-started/
 
+<disqus/>

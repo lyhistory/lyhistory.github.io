@@ -277,3 +277,5 @@ finally {
 ?#issues unresolved: cannot call sp
 Keywords tried: registerOutParameter INOUT refcursor
 https://jdbc.postgresql.org/documentation/head/callproc.html
+
+<disqus/>

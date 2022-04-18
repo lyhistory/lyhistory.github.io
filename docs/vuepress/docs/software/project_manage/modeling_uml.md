@@ -43,3 +43,5 @@ class => solid line with a unfilled diamond (is part of) => the other class
 A special type of aggregation where parts are destroyed when the whole is destroyed
 
 class => solid line with a filled diamond (live and die with ) => the other class
+
+<disqus/>

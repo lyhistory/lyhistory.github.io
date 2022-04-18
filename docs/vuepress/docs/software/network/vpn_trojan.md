@@ -115,3 +115,5 @@ ref:
 [trojan教程](https://tlanyan.me/trojan-tutorial/)
 [软路由安装LEDE固件及科学上网设置教程](https://www.youtube.com/watch?v=Q7D8iSHzyDg)
 [openwrt使用trojan教程](https://www.atrandys.com/2020/2324.html)
+
+<disqus/>

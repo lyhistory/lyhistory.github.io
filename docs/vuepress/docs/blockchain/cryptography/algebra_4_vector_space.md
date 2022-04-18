@@ -187,3 +187,5 @@ R<sup>3</sup>={(x1,x2,x3)|xi ∈ R}
 the intuitive way of visualizing the vector space is that you can view each one of these as being an arrow basically in three-dimentionaly space, basically you can view each of these vectors as a position vecor where the x coordinate is x1, y coordinate is x2, z coordinate is x3,
 
 what is so wonderful about this is not only does it give us a picture for each vector but also gives us a picture of what it means to add two vectors together and scalar multiply vector
+
+<disqus/>

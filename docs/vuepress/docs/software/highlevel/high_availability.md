@@ -30,3 +30,4 @@ high availability强调consistency，但是failover时数据也可能会因为�
 
 参考《gitlab_server》 《postgresql》
 
+<disqus/>

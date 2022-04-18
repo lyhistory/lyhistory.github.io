@@ -809,3 +809,5 @@ Overall I'd say tokens give you better flexibility (you're not bound to single d
 --http://stackoverflow.com/questions/17000835/token-authentication-vs-cookies
  
 jwt https://jwt.io/
+
+<disqus/>

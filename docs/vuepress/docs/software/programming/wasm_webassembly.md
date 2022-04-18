@@ -38,3 +38,5 @@ npx asinit .
 
 
 所以浏览器的vm会同时执行js和wasm，两者不是替代，而是并存关系
+
+<disqus/>

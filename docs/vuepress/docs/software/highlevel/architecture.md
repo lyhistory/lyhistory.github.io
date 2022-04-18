@@ -307,3 +307,5 @@ https://eng.uber.com/multitenancy-microservice-architecture/
 .NET技术+25台服务器怎样支撑世界第54大网站 https://www.csdn.net/article/2014-07-22/2820774-stackoverflow-update-560m-pageviews-a-month-25-servers
 
 可伸缩性最佳实践：来自eBay的经验 https://kb.cnblogs.com/page/157745/
+
+<disqus/>

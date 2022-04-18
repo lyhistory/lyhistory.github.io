@@ -79,3 +79,5 @@ https://uphold.com/en/brave
 
 [Brave Browser, BATs, and the Attention Economy](https://www.youtube.com/watch?v=yR-ayASDdrE&feature=youtu.be)
 https://news.ycombinator.com/item?id=13940613
+
+<disqus/>

@@ -461,3 +461,5 @@ Beware of the .NET HttpClient www.nimaara.com/2016/11/01/beware-of-the-net-httpc
 C#中HttpClient使用注意：预热与长连接 www.cnblogs.com/dudu/p/csharp-httpclient-attention.html
 How to correctly use PostAsync and PutAsync? RSS https://forums.asp.net/t/1773007.aspx?How+to+correctly+use+PostAsync+and+PutAsync+
 Task.Run vs Task.Factory.StartNew https://blogs.msdn.microsoft.com/pfxteam/2011/10/24/task-run-vs-task-factory-startnew/
+
+<disqus/>

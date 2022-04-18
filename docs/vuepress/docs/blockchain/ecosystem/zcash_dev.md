@@ -120,3 +120,4 @@ POOL
 	nheqminer_zcash -l usa -u t1J1uyuQuPJrgBGpJjf8mB9QvMjGuCWrv4C -t 4 -cd 0
 	nheqminer_zcash -l usa -u t1J1uyuQuPJrgBGpJjf8mB9QvMjGuCWrv4C -t 6
 
+<disqus/>

@@ -375,3 +375,4 @@ download mysqlclient from http://www.lfd.uci.edu/~gohlke/pythonlibs/#mysql-pytho
 pip install wheel 
 pip install mysqlclient‑1.4.2‑cp37‑cp37m‑win_amd64.whl
 
+<disqus/>

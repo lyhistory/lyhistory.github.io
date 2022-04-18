@@ -50,3 +50,4 @@ http://stackoverflow.com/questions/28319339/show-hide-onclick-angularjs
 
 http://stackoverflow.com/questions/29041464/angular-ensure-list-is-updated-without-page-reload
 
+<disqus/>

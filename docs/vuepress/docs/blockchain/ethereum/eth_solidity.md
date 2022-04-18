@@ -380,3 +380,5 @@ The following represents a list of tutorials/resources that could help to learn 
 + ICO/DApp development, additional list of useful resources: https://medium.com/@robbertvermeulen/learn-solidity-the-ethereum-smart-contract-programming-language-7f106fc26d6
 + Official solidity tutorials: https://ethereumbuilders.gitbooks.io/guide/content/en/solidity_tutorials.html
 + Official solidity documentation: http://solidity.readthedocs.io/en/latest/
+
+<disqus/>

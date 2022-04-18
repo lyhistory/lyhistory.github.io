@@ -195,3 +195,5 @@ As long as everybody is speaking UTF-8, this should all work swimmingly. If they
 Refer:
 http://kunststube.net/encoding/
 https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/
+
+<disqus/>

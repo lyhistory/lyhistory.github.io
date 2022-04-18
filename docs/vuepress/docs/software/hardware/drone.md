@@ -128,3 +128,5 @@ https://hexoplus.com/product/hexo_drone_3d
 
 
 Drone with Raspberry and Arduino/Multiwii (part 1) https://holadimake.wordpress.com/2014/06/22/drone-with-raspberry-and-arduinomultiwii-part-1/comment-page-1/
+
+<disqus/>

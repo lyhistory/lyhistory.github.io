@@ -172,3 +172,5 @@ refer:
 https://strongvpn.com/setup-linux-openvpn/
 https://shenzhensuzy.wordpress.com/2019/01/26/openvpn-with-xor-patch/
 https://scramblevpn.wordpress.com/2017/03/26/raspberry-pi-and-patched-openvpn-server-built-from-source-code-2-4-1/
+
+<disqus/>

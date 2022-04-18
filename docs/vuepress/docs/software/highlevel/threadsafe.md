@@ -235,3 +235,5 @@ http://csharpindepth.com/Articles/General/Singleton.aspx
 Thread Safety In C# [www.c-sharpcorner.com/UploadFile/1c8574/thread-safety369/](http://www.c-sharpcorner.com/UploadFile/1c8574/thread-safety369/)
 
 System.timer Thread.timer
+
+<disqus/>

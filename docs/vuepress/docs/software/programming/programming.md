@@ -11,3 +11,5 @@ https://codeburst.io/declarative-vs-imperative-programming-a8a7c93d9ad2
 
 
 To get our feet wet, when you follow tutorial, We strongly recommend typing code by hand as you’re working through the tutorial and not using copy/paste. This will help you develop muscle memory and a stronger understanding.
+
+<disqus/>

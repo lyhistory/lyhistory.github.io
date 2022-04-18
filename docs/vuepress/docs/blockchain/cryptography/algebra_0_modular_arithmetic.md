@@ -528,3 +528,5 @@ Here is the check that t(x) is in fact the inverse of x<sup>2</sup>, where we us
 t<sub>4</sub>(x) · x<sup>2</sup> = x<sup>4</sup>+x<sup>3</sup>+x<sup>2</sup>
 ≡ (x<sup>2</sup>+x)+(x+1)+x<sup>2</sup> mod P(x)
 ≡ 1 mod P(x)
+
+<disqus/>

@@ -1487,3 +1487,5 @@ Z<sup>*</sup><sub>p</sub> **Multiplicative group of integers modulo n / 整数�
 https://en.wikipedia.org/wiki/Multiplicative_group_of_integers_modulo_n
 
 https://baike.baidu.com/item/整数模n乘法群/22770365?fr=aladdin
+
+<disqus/>

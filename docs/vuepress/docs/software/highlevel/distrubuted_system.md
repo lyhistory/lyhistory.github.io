@@ -983,3 +983,5 @@ Asynchronous repair: The correction is not part of a read or write operation.
 
 Whereas EC is only a liveness guarantee (updates will be observed eventually), Strong Eventual Consistency (SEC) adds the safety guarantee that any two nodes that have received the same (unordered) set of updates will be in the same state. If, furthermore, the system is monotonic, the application will never suffer rollbacks. Conflict-free replicated data types are a common approach to ensuring SEC.[10]
 ```
+
+<disqus/>

@@ -35,3 +35,4 @@ Favourite
 You can save a toot for later, and let the author know that you liked it, by favouriting it.
 ```
 
+<disqus/>

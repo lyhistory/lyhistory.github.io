@@ -305,3 +305,5 @@ https://askubuntu.com/questions/1060980/eth0-not-configured-but-it-was-working-e
 
 
 ![](/docs/docs_image/software/linux/vm_network03.png)
+
+<disqus/>
