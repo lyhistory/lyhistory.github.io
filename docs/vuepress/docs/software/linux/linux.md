@@ -523,6 +523,8 @@ apt list --installed | grep "PKG"
 ### yum
 
 ```
+yum list/search/info package-name
+yum update package-name
 yum history
 yum history info 21
 
@@ -565,6 +567,7 @@ repolist: 55,117
 DNF, or Dandified Yum, which is the next major version of the Yum  package manager was introduced with Fedora 18. As of Fedora 22, it has  become the default package manager.
 
 https://www.rootusers.com/how-to-install-dnf-package-manager-in-centosrhel/
+
 
 ## 服务管理 service/systemctl 
 
