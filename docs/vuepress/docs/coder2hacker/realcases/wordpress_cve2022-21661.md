@@ -283,3 +283,6 @@ public function query( $query ) {
 
 虽然是核心的bug,触发则是由 theme或者plugin调用的时候传入可控变量引起的,
 用你善于发现的眼睛去发现惊喜吧
+
+refer:
+https://stackdiary.com/sql-injection-in-wordpress-core-cve-2022-21661/
