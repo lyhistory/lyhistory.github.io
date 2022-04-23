@@ -1,24 +1,5 @@
-php version
-php extension
-php info - check configuration location
-php mongo - dll
 
-PHP版本中的VC6,VC9,VC11,TS,NTS区别
-http://www.cnblogs.com/codersay/p/4301783.html
-
-php显示源码/代码  short_open_tag = On https://www.oschina.net/question/5029_79046
-一个最简的Thinkphp3.2 操作Mongodb的例子（评论重要）  http://www.thinkphp.cn/code/567.html； http://www.thinkphp.cn/topic/22774.html
-php mongo驱动版本兼容：
-https://docs.mongodb.com/ecosystem/drivers/driver-compatibility-reference/#reference-compatibility-mongodb-php
-使用 thinkphp 3.2.3 连接 mongodb 数据库 blog.csdn.net/yqxllwy/article/details/52251988
-
-TS NTS(N)
-ISAPI
-CGI
-Fast CGI
-
-
-## 基础
+## Grammar
 ### 1.Superglobals vs Variable variables
 Translation faulty:
 http://php.net/manual/en/language.variables.variable.php
@@ -50,19 +31,6 @@ http://programmers.stackexchange.com/questions/154588/are-there-any-good-use-cas
 Is using superglobals directly good or bad in PHP?
 http://stackoverflow.com/questions/3498207/is-using-superglobals-directly-good-or-bad-in-php
 
-### 2. PHP.INI
-
-```
-#php -ini | grep 'php.ini'
-Configuration File (php.ini) Path => /etc/opt/rh/rh-php72
-Loaded Configuration File => /etc/opt/rh/rh-php72/php.ini
-
-```
-
-
-
-$_REQUEST vs $_GET and $_POST
-variables_order
 
 ### 2.Class and Function
 Using namespaces: fallback to global function/constant
@@ -117,64 +85,171 @@ public static function html_to_obj($html) {
 ```
 中文一个字在不同的encoding下会有不同的字节长度 2-3
 
+### $_REQUEST vs $_GET and $_POST
+variables_order
+
+### $_FILES tmp_name
+
+https://www.php.net/manual/en/reserved.variables.files.php
+
+windows默认是%AppData%\Local\Temp
+
+linux默认是 /tmp
+
+打印方法：sys_get_temp_dir()
+
+设置方法：php.ini: upload_tmp_dir
+
 ## 搭建环境和IDE调试
-http://www.cnblogs.com/suihui/p/4365107.html
+
+### Versions
+TS NTS(N)
+ISAPI
+CGI
+Fast CGI
+PHP版本中的VC6,VC9,VC11,TS,NTS区别
+http://www.cnblogs.com/codersay/p/4301783.html
+
+?#使用php5.2时遇到，error_incomplete_chunked_encoding，换用5.6即可
+
+?# php5.5 changes:
+
+ignore. Deprecated: mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead
 
 
+### PHP.INI 常用配置
 
-### WAMP
-1.Upgraded to Windows 10 and now WAMP won't work, show up IIS page
-iisreset /stop,
-if got 404 not found error, open SERVICES.MSC  or Port 80 being used by Server: Microsoft-HTTPAPI/2.0 , stop "Web Deployment Agent Service"
-Then Apache > Service > Install Service will prompt you to press Enter to install as normal.
-2.The server encountered an internal error or misconfiguration and was unable to complete your request
-check logs/apache_error.log
-3. .htaccess: Invalid command 'RewriteEngine',
-LoadModule rewrite_module modules/mod_rewrite.so
-4.multi-site :
-wamp\bin\apache\apache2.4.9\conf\httpd.conf
-?# Virtual hosts
-Include conf/extra/httpd-vhosts.conf
-httpd-vhosts.conf
-<VirtualHost *:80>
-ServerAdmin admin@localhost
-DocumentRoot "c:/wamp/www"
-ServerName localhost
-ServerAlias www.localhost.com
-ErrorLog "logs/localhost-error.log"
-CustomLog "logs/localhost-access.log" common
-</VirtualHost>
-<VirtualHost *:80>
-DocumentRoot "c:/wamp/www/site1"
-ServerName site1.com
-</VirtualHost>
-<VirtualHost *:80>
-DocumentRoot "c:/wamp/www/site2"
-ServerName site2.com
-<Directory "c:/wamp/www/site2">
-Options Indexes FollowSymLinks MultiViews
-AllowOverride None
-Order allow,deny
-Allow from all
-</Directory>
-</VirtualHost>
+```
+#php -ini | grep 'php.ini'
+Configuration File (php.ini) Path => /etc/opt/rh/rh-php72
+Loaded Configuration File => /etc/opt/rh/rh-php72/php.ini
 
-5..mysql error, check port, 127.0.0.1 instead of localhost
-6..output php code to browser because of short tag <?php?><??>
-php.ini short_open_tag = On (Caution, please be aware this php.ini is the one installed, not the one under \wamp\bin\php)
+<?php
+phpinfo();
+?>
 
-Creating multiple virtual hosts/websites in Wampserver
-https://www.virendrachandak.com/techtalk/creating-multiple-virtual-websites-in-wampserver/
-http://sourceforge.net/projects/wampserver/?source=typ_redirect
+php version
+php extension
 
-### XAMPP
-上篇是在iis中host php，这篇我们用原汤化原食，使用XAMPP(集成了apache+mysql phpadmin+tomcat)+PHPStorm搭建环境。
+short_open_tag = On #php显示源码/代码   https://www.oschina.net/question/5029_79046
+```
+### phpstudy+vscode+xdebug
+**step 1: 给vscode配置外部php executor（phpstudy)**
+https://code.visualstudio.com/docs/languages/php
+
+ctrl+shift+P 打开 setting.json
+php.validate.executablePath
+
+```
+{
+    "workbench.colorTheme": "Relax Eyes",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "C_Cpp.updateChannel": "Insiders",
+    "php.executablePath": "",
+    "php.validate.executablePath": "D:/phpstudy_pro/Extensions/php/php7.3.4nts/php.exe"
+}
+```
+**step 2: 开启listen for xdebug**
+vscode开启debug，deubg=》新建配置选择 listen for xdebug，
+
+```
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Listen for XDebug",
+            "type": "php",
+            "request": "launch",
+            "port": 9000,
+            "xdebugSettings": {
+                "max_children": 1000,
+                "max_data": 512,
+                "max_depth": 3
+                }
+      }
+            
+        },
+        {
+            "name": "Launch currently open script",
+            "type": "php",
+            "request": "launch",
+            "program": "${file}",
+            "cwd": "${fileDirname}",
+            "port": 9000
+        }
+    ]
+}
+```
+注意xdebug settings是为了vscode watch变量的时候不受默认限制
+https://github.com/xdebug/vscode-php-debug#supported-launchjson-settings
+
+**step 3: phpstudy php配置xdebug extenstion**
+PHP Debug Extension
+
+https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug
+
+创建phpinfo文件，访问获取相应php的路径：
+
+```
+phpinfo.php放到网站根目录:
+<?php
+phpinfo();
+?>
+
+访问：
+http://testphp.local/phpinfo.php
+
+获得：
+**Loaded Configuration File**：D:\phpstudy_pro\Extensions\php\php7.3.4nts\php.ini
+```
+
+https://xdebug.org/wizard
+
+贴入phpinfo内容，根据提示下载配置，比如
+
+```
+Download php_xdebug-2.9.6-7.3-vc15-nts-x86_64.dll
+
+如果找不到相应版本，可以去https://xdebug.org/download/historical 手动下载
+注意要根据 phpinfo下载相应的版本，比如Architecture	x86则下载32位的
+注意测试5.5的版本及以下都不成功，需要用php5.6版本以上
+
+Move the downloaded file to D:\phpstudy_pro\Extensions\php\php7.3.4nts\ext
+Edit D:\phpstudy_pro\Extensions\php\php7.3.4nts\php.ini and add the line
+zend_extension = D:\phpstudy_pro\Extensions\php\php7.3.4nts\ext\php_xdebug-2.9.6-7.3-vc15-nts-x86_64.dll
+Restart the webserver
+```
+
+php.ini添加：
+
+```ini
+[XDebug]
+xdebug.remote_enable = 1
+xdebug.remote_autostart = 1
+xdebug.remote_host=localhost
+xdebug.remote_port=9000（对应vscode的端口）
+```
+或者直接在phpstudy->系统环境找到php配置，enable xdebug，填上端口号（对应vscode的端口）
+
+重启phpstudy
+
+查看phpinfo是否有xdebug
+
+
+PHP Intelephense
+https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client
+
+
+### XAMPP+PHPStorm+xdebug
+集成了apache+mysql phpadmin+tomcat)+PHPStorm。
 
 With a static IP/single developer
 ![](/docs/docs_image/software/programming/php01.gif)
 With an unknown IP/multiple developers
 ![](/docs/docs_image/software/programming/php02.gif)
-一、XAMPP
 
 安装过程不必多说，好像有一步需要选择自动启动service（这样以后就无需开启xampp就自动service中启动apache mysql等等），不过没关系，以后手动启动也是可以
 启动的时候总是不顺利的，一般来说80端口肯定是被占用的，你可以cmd命令行netstat -aon|findstr "80"查看端口是否被使用，如果被占用，更改下端口即可，还有SSL端口默认是443
@@ -208,15 +283,18 @@ to
 $cfg['Servers'][$i]['bookmarktable'] = 'pma__bookmark';
 congratulations! everything settled, enjoy now.
 
-二、介绍phpstrom IDE的使用和强大的远程调试功能，常用的调试方法有xdebug和zend debugger，
+phpstrom IDE的使用和强大的远程调试功能，常用的调试方法有xdebug和zend debugger，
 我们这里要介绍phpstorm+xdebug+xampp配置
 首先php.ini要修改配置如下：
+```
 zend_extension = "C:\xampp\php\ext\php_xdebug.dll"
 xdebug.remote_enable = 1
 xdebug.remote_handler = "dbgp" 调试协议，xdebug两种调试协议，GDB和DBGP
 xdebug.remote_host = "localhost"
-xdebug.remote_mode = "req" 调试方式，req:php开始执行时，xdebug与IDE建立连接，jit:php稚轩到断点处或者error时，蔡玉IDE建立连接
-xdebug.remote_port = 9000 （请先确认9000端口是否被占用，方法见上篇）
+xdebug.remote_mode = "req" 调试方式，req:php开始执行时，xdebug与IDE建立连接，jit:php稚轩到断点处或者error时，跟IDE建立连接
+xdebug.remote_port = 9000 
+```
+
 然后phpstorm内配置：
 File->Settings
 找到PHP（最新版本是在Languages&Frameworks下面）-> Debug，设置xdebug prot同上9000，
@@ -271,45 +349,120 @@ http://confluence.jetbrains.com/display/PhpStorm/Zero-configuration+Web+Applicat
 4.xdebug download    PHP的(Thread Safe与Non Thread Safe)
 http://www.cnblogs.com/gaoxu387/p/3173194.html
 
+### WAMP
 
+Creating multiple virtual hosts/websites in Wampserver
+https://www.virendrachandak.com/techtalk/creating-multiple-virtual-websites-in-wampserver/
+http://sourceforge.net/projects/wampserver/?source=typ_redirect
 
-## troubleshooting
+### host php in IIS
+https://docs.microsoft.com/en-us/iis/application-frameworks/scenario-build-a-php-website-on-iis/configure-a-php-website-on-iis
+
+Upgraded to Windows 10 and now WAMP won't work, show up IIS page
+iisreset /stop,
+if got 404 not found error, open SERVICES.MSC  or Port 80 being used by Server: Microsoft-HTTPAPI/2.0 , stop "Web Deployment Agent Service"
+Then Apache > Service > Install Service will prompt you to press Enter to install as normal.
+
+### PHP Hosts Troubleshooting
+
+multi-site :
+
+httpd-vhosts.conf
+```
+<VirtualHost *:80>
+ServerAdmin admin@localhost
+DocumentRoot "c:/wamp/www"
+ServerName localhost
+ServerAlias www.localhost.com
+ErrorLog "logs/localhost-error.log"
+CustomLog "logs/localhost-access.log" common
+</VirtualHost>
+<VirtualHost *:80>
+DocumentRoot "c:/wamp/www/site1"
+ServerName site1.com
+</VirtualHost>
+<VirtualHost *:80>
+DocumentRoot "c:/wamp/www/site2"
+ServerName site2.com
+<Directory "c:/wamp/www/site2">
+Options Indexes FollowSymLinks MultiViews
+AllowOverride None
+Order allow,deny
+Allow from all
+</Directory>
+</VirtualHost>
+```
+
+The server encountered an internal error or misconfiguration and was unable to complete your request
+check logs/apache_error.log
+
+.htaccess: Invalid command 'RewriteEngine',
+LoadModule rewrite_module modules/mod_rewrite.so
+
+.mysql error, check port, 127.0.0.1 instead of localhost
+
+## PHP Troubleshooting
 ### ?#MD5withRSA
-Recently when I made integration with a third-party payment supplier named '盛付通',somehow they gave me a wrong documentation at the first place, actually I don't bother to do the following 'research', but I'd like to learn something new,
-OK, in the 'wrong' document, the signature algorithm they are using is MD5withRSA,they require client to generate another private and public key pair, given steps(translate from Chinese):
+Recently when I made integration with a third-party payment supplier named '盛付通',somehow they mistakenly gave me a wrong documentation at first, in the 'wrong' document, the signature algorithm they are using is MD5withRSA,they require client to generate another private and public key pair, given steps:
 
 tools:platform_private_key.pem openssl sn.exe
+
 1.	generate cert from private key：
 openssl req -new -x509 -days 365 -key platform_private_key.pem -out platform_cert.crt
-1.	create pfx file：
-openssl pkcs12 -export -out platform_cert.pfx -inkey platform_private_key.pem -in platform_cert.crt
-1.	generate snk format public key file from pfx：
-sn -p platform_cert.pfx platform_public.snk
-4.
-convert platform_public.snk to Base64 encoding string and upload it to their '盛付通' platform.
 
-At the very beginning, I was confused by above steps,why design in this manner, but we haven't buy such service, they don't want to give any support and clarification, kept telling me I don't need to read that document..... curious driven, after google online,I guess the whole story might be that the platform holds platform-private-key and dispense platform-public-key to clients, while clients required to generate client-private-key and client-public-key,by uploading , platform keeps client-public-key also,this approach might intend to double secure, so work flow might be:
+2.	create pfx file：
+openssl pkcs12 -export -out platform_cert.pfx -inkey platform_private_key.pem -in platform_cert.crt
+
+3.	generate snk format public key file from pfx：
+sn -p platform_cert.pfx platform_public.snk
+
+4.convert platform_public.snk to Base64 encoding string and upload it to their '盛付通' platform.
+
+At the very beginning, I was confused by above steps,why design in this manner, unforunately they don't provide any support and clarification, kept telling me I don't need to read that document..... curious driven, after google online,I guess the whole story might be that the platform holds platform-private-key and dispense platform-public-key to clients, while clients required to generate client-private-key and client-public-key,by uploading , platform keeps client-public-key also,this approach might intend to double secure, so work flow might be:
+
 1. Client post payment info which encrypt using client-private-key,
+   
 2. Platform receive post info, decrypt using client-public-key, validation and processing payment successfully
+   
 3. Platform encrypt payment result using platform-private-key, then notify Client
+   
 4. Client received notification, decrypt it using platform-public-key.....
 
 Let me make introduction of all the formats mentioned above:
+
 PEM Format
+
 It is the most common format that Certificate Authorities issue certificates in. It contains the ‘—–BEGIN CERTIFICATE—–” and “—–END CERTIFICATE—–” statements.
 Several PEM certificates and even the Private key can be included in one file, one below the other. But most platforms(eg:- Apache) expects the certificates and Private key to be in separate files.
+
 > They are Base64 encoded ACII files
+
 > They have extensions such as .pem, .crt, .cer, .key
+
 > Apache and similar servers uses PEM format certificates
+
+
 PFX/PKCS#12
+
 They are used for storing the Server certificate, any Intermediate certificates & Private key in one encryptable file.
+
 > They are Binary format files
+
 > They have extensions .pfx, .p12
+
 > Typically used on Windows OS to import and export certificates and Private keys
-.CER- stands for Microsoft X.509 certificate, certificate stored in the X.509 standard format. This certificate contains information about the certificate's owner... along with public and private keys.
-.PVK- files are used to store private keys for code signing. You can also create a certificate based on .pvk private key file.
-.PFX- stands for Personal Information Exchange format using a password-based symmetric key. It is used to exchange public and private objects in a single file. A pfx file can be created from .cer file. Can also be used to create a Software Publisher Certificate.
-.SNK- stands for Assembly Signature Key Attribute, only contain the RSA key (public/private or public only)
+
+.CER- 
+stands for Microsoft X.509 certificate, certificate stored in the X.509 standard format. This certificate contains information about the certificate's owner... along with public and private keys.
+
+.PVK- 
+files are used to store private keys for code signing. You can also create a certificate based on .pvk private key file.
+
+.PFX- 
+stands for Personal Information Exchange format using a password-based symmetric key. It is used to exchange public and private objects in a single file. A pfx file can be created from .cer file. Can also be used to create a Software Publisher Certificate.
+
+.SNK- 
+stands for Assembly Signature Key Attribute, only contain the RSA key (public/private or public only)
 
 there is also a coding approach to extract snk from pfx
 ```
@@ -347,16 +500,48 @@ http://mixangel.blog.51cto.com/286311/135267
 ### ?#failed to open stream: no suitable wrapper could be found
 https://stackoverflow.com/questions/6551379/file-get-contents-error
 
-?#PHP parse_url bad practice
-today I identified an issue when install OneBase.org php framework( which is based on Thinkphp 5.0)
+### ?#PHP parse_url bad practice
+identified an issue when install OneBase.org php framework( which is based on Thinkphp 5.0)
 the root cause is callling of php internal function parse_url, when your password includes special character like #, the parse_url function wrongly split the string,
 work around is by adding a / at the tail of $url
 small issue, but may waste plenty of time investigating it because of layering and encapsulation
 
 
-## PHP Snippets
+## PHP Code Snippets
 
-**upload large files**
+### 伪随机 mt_rand()
+
+https://www.cnblogs.com/zaqzzz/p/9997855.html
+
+```
+<?php  
+mt_srand(12345);    //分发seed种子，
+//然后种子有了后，靠mt_rand()生成随机数
+echo mt_rand()."<br/>"; //第一次
+echo mt_rand()."<br/>"; //第二次
+....
+echo mt_rand()."<br/>"; //第n次
+?>  
+任意执行上面程序，会发现每一次生成的“随机数”顺序都是一样的，第一次的永远是一样的，第二次的也是....
+原因： 生成伪随机数是线性的，你可以理解为y=ax,x就是种子，知道种子后，可以确定你输出伪随机数的序列。
+知道你的随机数序列，可以确定你的种子。当然实际上更复杂肯定。
+
+```
+
+
+
+工具: php_mt_seed (PHP mt_rand() seed cracker)
+
+https://www.openwall.com/php_mt_seed/
+
+```
+tar zxvf php_mt_seed-4.0.tar.gz
+cd php_mt_seed-4.0/
+make
+./php_mt_seed <给个随机数> 可以算出seed
+```
+
+### upload large files
 upload images
 export PDF tcpdf
 https://www.sitepoint.com/upload-large-files-in-php/
@@ -366,12 +551,13 @@ http://stackoverflow.com/questions/9848295/strict-standards-only-variables-shoul
 SMS
 XML PARSE
 
-**Illegal string-offset**
-```
+### Illegal string-offset
+
 PHP safe check
 from 5.3 upgrade to 5.4
 http://stackoverflow.com/questions/24017096/deploying-cakephp-to-php-5-4-16-gives-illegal-string-offset-in-cakephps-core
 And as it's working in PHP 5.3, it is not going to work in PHP 5.4 because as I have cast my array into a string, I should cast it back to an array (or to be more precise: use my previously created string from the array as an array) which gives this error/warning in PHP 5.4.
+```
 foreach(array('_GET','_POST','_COOKIE','_REQUEST') as $key) {
 if (isset($$key)){
 foreach($$key as $_key => $_value){
@@ -379,8 +565,9 @@ $$key[$_key] = safe_str($_value);
 }
 }
 }
- 
+ ```
 http://stackoverflow.com/questions/24151713/looping-variable-variables-illegal-string-offset
+```
 foreach(array('_GET','_POST','_COOKIE','_REQUEST') as $key) {
 if (isset($$key)){
 $temp=array();
@@ -394,9 +581,10 @@ $temp[$_key] = safe_str($_value);
 ${$key}=$temp;
 }
 }
+```
 http://stackoverflow.com/questions/23895204/php-5-5-12-illegal-string-offset-on-a-valid-array
 http://stackoverflow.com/questions/15361392/how-do-i-correct-this-illegal-string-offset
-```
+
 PHP magic_quotes_gpc的详细使用方法
 http://developer.51cto.com/art/200911/165392.htm
 http://php.net/manual/en/security.magicquotes.disabling.php
@@ -413,7 +601,7 @@ Uninitialized string offset: 0
 is_array()
 Non-static method xxx:xxx() should not be called statically
 
-**php session null**
+### php session null
 
 debug steps：
 1、create phpinfo.php :
@@ -426,7 +614,7 @@ you can set session.cookie_domain="" in php.ini
 5、lack of write permission on session.save_path, or the path not exits, by default, windows uses '%SystemRoot%\TEMP', unix uses '/tmp'
 6、when session.auto_start = on, execute session_start() will generate new session_id.and check whether session_start() at wrong position
 
-**serialize unserialize**
+### serialize unserialize
 a:2:{i:0;a:3:{s:2:"id";s:1:"1";s:3:"num";s:1:"3";s:4:"desc";s:3:"50%";}i:1;a:3:{s:2:"id";s:1:"3";s:3:"num";s:1:"4";s:4:"desc";s:32:"交通便利";}}
 http://blog.tanist.co.uk/files/unserialize/
 
@@ -445,5 +633,8 @@ http://unitstep.net/blog/2009/05/05/using-curl-in-php-to-access-https-ssltls-pro
 
 Return code is 500 string(25) "Curl failed with error 0," NULL
 this could be pramamter issues or other program handler problem.
+
+refer：
+http://www.cnblogs.com/suihui/p/4365107.html
 
 <disqus/>
