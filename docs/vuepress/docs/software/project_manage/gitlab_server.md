@@ -1764,6 +1764,55 @@ With GitLab CI/CD you can also:
 - Install your own [GitLab Runner](https://docs.gitlab.com/runner/).
 - [Schedule pipelines](https://docs.gitlab.com/ee/ci/pipelines/schedules.html).
 - Check for app vulnerabilities with [Security Test reports](https://docs.gitlab.com/ee/user/application_security/index.html).
+### install and config gitlab runner
+
+STEP 1: INSTALL
+Install it on a server separate than where GitLab is installed
+https://docs.gitlab.com/runner/install/index.html
+
+STEP 2: REGISTER
+一台runner可以注册多个executor
+
+https://docs.gitlab.com/runner/register/
+
+```
+sudo gitlab-runner 
+Enter your GitLab instance URL (also known as the gitlab-ci coordinator URL). 如果是self host就是register token旁边的url即本地的gitlab server url，如果是gitlab则是https://gitlab.com
+Enter the token you obtained to register the runner. 
+  //For a shared runner, have an administrator go to the GitLab Admin Area and click Overview > Runners
+  //For a group runner, go to Settings > CI/CD and expand the Runners section
+  //For a project-specific runner, go to Settings > CI/CD and expand the Runners section
+Enter a description for the runner. You can change this value later in the GitLab user interface.
+Enter the tags associated with the runner, separated by commas. You can change this value later in the GitLab user interface.
+Enter any optional maintenance note for the runner.
+Provide the runner executor. (https://docs.gitlab.com/runner/executors/index.html)
+If you entered docker as your executor, you are asked for the default image to be used for projects that do not define one in .gitlab-ci.yml.
+
+one line:
+sudo gitlab-runner register \
+  --non-interactive \
+  --url "https://gitlab.com/" \
+  --registration-token "PROJECT_REGISTRATION_TOKEN" \
+  --executor "docker" \
+  --docker-image alpine:latest \
+  --description "docker-runner" \
+  --maintenance-note "Free-form maintainer notes about this runner" \
+  --tag-list "docker,aws" \
+  --run-untagged="true" \
+  --locked="false" \
+  --access-level="not_protected"
+```
+
+
+Advance config:
+https://docs.gitlab.com/runner/configuration/advanced-configuration.html
+GitLab Runner does not require a restart when you change most options. This includes parameters in the [[runners]] section and most parameters in the global section, except for listen_address. 
+
+issues:
+This job is stuck because the project doesn't have any runners online assigned to it.Go to project CI settings
+
+Run untagged jobs
+Indicates whether this runner can pick jobs without tags
 
 ### Setup
 
@@ -1806,6 +1855,60 @@ Specify the name of the runner or its tags in your .gitlab-ci.yml file. Then, wh
 
 /home/gitlab-runner/builds/
 
+```
+### 案例：Create-react-app
+
+https://dev.to/christianmontero/gitlab-ci-cd-example-with-a-dockerized-reactjs-app-1cda
+
+https://medium.com/recraftrelic/automating-reactjs-app-deployment-using-gitlab-12e0bf92461b
+
+```
+image: node:latest
+# This folder is cached between builds
+# http://docs.gitlab.com/ee/ci/yaml/README.html#cache
+cache:
+  paths:
+    - node_modules/
+
+stages:
+  - build
+  - deploy
+
+build:dev:
+  stage: build
+  image: node:latest
+  script: 
+    - echo "Start building App for dev"
+    - npm install --force
+    - npm run build
+    - echo "Build successfully!"
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - build
+  only:
+    - /^dev_.*$/
+
+deploy:dev:
+  stage: deploy
+  needs: ['build:dev']
+  when: manual
+  script: 
+    - echo "Start deploying App for dev"
+    - FOLDER=`date +"%y%m%d"`
+    - INSATLL_TARGET_DIR=/opt/html/$FOLDER
+    - ssh -q root@HOST "mkdir -p $INSATLL_TARGET_DIR"
+    - scp -rp ./build/* root@HOST:${INSATLL_TARGET_DIR}/;
+    - ssh -q root@HOST "cd $INSATLL_TARGET_DIR/.. && ln -nsf $FOLDER current"
+    - echo "Deploy successfully!"
+  only:
+    - /^dev_.*$/
+```
+注意 script中的scp和ssh需要在gitlab-runner机器上设置到远程机器的免密登录：
+```
+su - gitlab-runner
+ssh-keygen -t rsa
+ssh-copy-id -i id_rsa root@TargetHost
 ```
 
 ### 案例：JAVA application with Maven
@@ -2594,56 +2697,6 @@ pom.xml:
 https://docs.gitlab.com/ee/ci/yaml/index.html#release
 
 https://docs.gitlab.com/ee/user/project/releases/index.html
-
-### 案例：Create-react-app
-
-https://dev.to/christianmontero/gitlab-ci-cd-example-with-a-dockerized-reactjs-app-1cda
-
-https://medium.com/recraftrelic/automating-reactjs-app-deployment-using-gitlab-12e0bf92461b
-
-```
-image: node:latest
-# This folder is cached between builds
-# http://docs.gitlab.com/ee/ci/yaml/README.html#cache
-cache:
-  paths:
-    - node_modules/
-
-stages:
-  - build
-  - deploy
-
-build:dev:
-  stage: build
-  image: node:latest
-  script: 
-    - echo "Start building App for dev"
-    - npm install --force
-    - npm run build
-    - echo "Build successfully!"
-  artifacts:
-    expire_in: 1 hour
-    paths:
-      - build
-  only:
-    - /^dev_.*$/
-
-deploy:dev:
-  stage: deploy
-  needs: ['build:dev']
-  when: manual
-  script: 
-    - echo "Start deploying App for dev"
-    - FOLDER=`date +"%y%m%d"`
-    - INSATLL_TARGET_DIR=/opt/html/$FOLDER
-    - ssh -q root@HOST "mkdir -p $INSATLL_TARGET_DIR"
-    - scp -rp ./build/* root@HOST:${INSATLL_TARGET_DIR}/;
-    - ssh -q root@HOST "cd $INSATLL_TARGET_DIR/.. && ln -nsf $FOLDER current"
-    - echo "Deploy successfully!"
-  only:
-    - /^dev_.*$/
-```
-
 
 
 ### 案例：自动生成merge request

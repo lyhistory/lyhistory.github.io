@@ -198,7 +198,7 @@ SHOW CREATE TABLE innodb_index_stats;
 
 
 
-#### Security
+#### Security hardening
 
 **disable remote Access**
 
@@ -218,6 +218,7 @@ service mysqld stop/start
 
 **turn off local_infile**
 
+https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_local_infile
 https://dev.mysql.com/doc/refman/8.0/en/load-data-local-security.html
 
 ```
@@ -225,7 +226,12 @@ SHOW VARIABLES WHERE Variable_name = 'local_infile';
 SET GLOBAL local_infile = 'OFF';
 ```
 
+应该主要是禁用 select into lcoalfile, loaddata from localfile
 
+**disable log-raw**
+比如一些敏感的 statement 如果 log-raw=ON 则会日志记下original statement，否则会进行一定的修改掩盖
+
+https://dev.mysql.com/doc/refman/5.7/en/server-options.html#option_mysqld_log-raw
 
 #### backup&restore
 
@@ -440,8 +446,10 @@ For Red Hat Enterprise Linux/Oracle Linux/CentOS systems:
 yum install mysql-community-{server,client,common,libs}-* mysql-5.*­
 
 For Red Hat Enterprise Linux, Oracle Linux, CentOS, and Fedora systems, use the following command to start MySQL:
+```
 service mysqld start
-mysql-upgrade -uroot -pPassword
+mysql-upgrade -uroot -pPassword //[Warning] InnoDB: Table mysql/innodb_table_stats has length mismatch in the column name table_name.  Please run mysql_upgrade
+```
 Once the server restarts, run mysql_upgrade to check and possibly resolve any incompatibilities between the old data and the upgraded software. mysql_upgrade also performs other functions; see Section 4.4.7, “mysql_upgrade — Check and Upgrade MySQL Tables” for details.
 If you use replication, review Section 16.4.3, “Upgrading a Replication Setup”.
 warning Table mysql/innodb_table_stats has length mismatch in the column name table_name. Please run mysql_upgrade
@@ -1428,6 +1436,8 @@ sudo tcpdump -vvv -n -i eth0 dst 224.0.0.18 and src x.x.x.48
 
 ## 3 Troubleshooting 
 
+vim /var/log/mysqld.log
+注意，默认时区为 UTC
 ### Host 'xxx.xx.xxx.xxx' is not allowed to connect to this MySQL server**
 
 ```
@@ -1758,6 +1768,192 @@ ExecStart=/usr/sbin/mysqld --daemonize --pid-file=/var/run/mysqld/mysqld.pid $MY
 可以看到启动mysqld真正的用户是mysql
 
 ```
+
+### Replication Issues::Got fatal error 1236 from master when reading data from binary log: 'Binary log is not open'
+Background: MASTER A<->MASTER B, both are master&slaves
+
+```
+ON SERVER B: 
+mysql> show slave status\G;
+*************************** 1. row ***************************
+               Slave_IO_State: 
+                  Master_Host: SERVER_A_IP
+                  Master_User: replicator
+                  Master_Port: 3306
+                Connect_Retry: 60
+              Master_Log_File: mysql-bin.000012
+          Read_Master_Log_Pos: 341592308
+               Relay_Log_File: sgkc2-devclr-v06-relay-bin.000033
+                Relay_Log_Pos: 341592521
+        Relay_Master_Log_File: mysql-bin.000012
+             Slave_IO_Running: No
+            Slave_SQL_Running: Yes
+              Replicate_Do_DB: 
+Master_SSL_Verify_Server_Cert: No
+                Last_IO_Errno: 1236
+                Last_IO_Error: Got fatal error 1236 from master when reading data from binary log: 'Binary log is not open'
+               Last_SQL_Errno: 0
+               Last_SQL_Error: 
+  Replicate_Ignore_Server_Ids: 
+             Master_Server_Id: 1
+                  Master_UUID: db4cbf6c-d96e-11eb-872a-566f18fa0034
+             Master_Info_File: mysql.slave_master_info
+                    SQL_Delay: 0
+          SQL_Remaining_Delay: NULL
+      Slave_SQL_Running_State: Slave has read all relay log; waiting for more updates
+           Master_Retry_Count: 86400
+                  Master_Bind: 
+      Last_IO_Error_Timestamp: 220303 14:43:40
+     Last_SQL_Error_Timestamp: 
+               Master_SSL_Crl: 
+           Master_SSL_Crlpath: 
+           Retrieved_Gtid_Set: db4cbf6c-d96e-11eb-872a-566f18fa0034:1-230351
+            Executed_Gtid_Set: db4cbf6c-d96e-11eb-872a-566f18fa0034:1-230351
+                Auto_Position: 1
+         Replicate_Rewrite_DB: 
+                 Channel_Name: 
+           Master_TLS_Version: 
+
+mysql> show master status;
++------------------+-----------+--------------+------------------+-----------------------------------------------+
+| File             | Position  | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set                             |
++------------------+-----------+--------------+------------------+-----------------------------------------------+
+| mysql-bin.000009 | 945084747 |              |                  | db4cbf6c-d96e-11eb-872a-566f18fa0034:1-230351 |
++------------------+-----------+--------------+------------------+-----------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SHOW BINARY LOGS;
++------------------+------------+
+| Log_name         | File_size  |
++------------------+------------+
+| mysql-bin.000001 | 1075544412 |
+| mysql-bin.000002 | 1073857153 |
+| mysql-bin.000003 | 1074315226 |
+| mysql-bin.000004 | 1073856204 |
+| mysql-bin.000005 | 1075105942 |
+| mysql-bin.000006 | 1075591706 |
+| mysql-bin.000007 | 1074646766 |
+| mysql-bin.000008 | 1075091646 |
+| mysql-bin.000009 |  945084747 |
++------------------+------------+
+9 rows in set (0.00 sec)
+
+
+ON SERVER A:
+mysql> show slave status\G;
+*************************** 1. row ***************************
+               Slave_IO_State: 
+                  Master_Host: B
+                  Master_User: replicator
+                  Master_Port: 3306
+                Connect_Retry: 60
+              Master_Log_File: mysql-bin.000009
+          Read_Master_Log_Pos: 945084747
+               Relay_Log_File: sgkc2-devclr-v05-relay-bin.000021
+                Relay_Log_Pos: 367
+        Relay_Master_Log_File: mysql-bin.000009
+             Slave_IO_Running: No
+            Slave_SQL_Running: No
+  Replicate_Ignore_Server_Ids: 
+             Master_Server_Id: 0
+                  Master_UUID: 435441ed-10f1-11ea-b6f4-566f18fa0032
+             Master_Info_File: mysql.slave_master_info
+                    SQL_Delay: 0
+          SQL_Remaining_Delay: NULL
+      Slave_SQL_Running_State: 
+           Master_Retry_Count: 86400
+                  Master_Bind: 
+      Last_IO_Error_Timestamp: 
+     Last_SQL_Error_Timestamp: 
+               Master_SSL_Crl: 
+           Master_SSL_Crlpath: 
+           Retrieved_Gtid_Set: 
+            Executed_Gtid_Set: db4cbf6c-d96e-11eb-872a-566f18fa0034:1-230351
+                Auto_Position: 1
+         Replicate_Rewrite_DB: 
+                 Channel_Name: 
+           Master_TLS_Version:   
+mysql> show master status;
+Empty set (0.00 sec)
+mysql> SHOW BINARY LOGS;
+ERROR 1381 (HY000): You are not using binary logging
+
+提示没有开通binary logging 功能
+vim /etc/my.cnf
+#log-bin = mysql-bin                                                     #打开二进制功能,MASTER主服务器必须打开此
+someone has commentted out the log-bin!!!
+
+```
+在 SERVER A 上继续查看日志：
+
+```
+2022-03-03T06:40:04.873013Z 0 [Note] Shutting down plugin 'binlog'
+2022-03-03T06:40:06.275534Z 0 [Note] /usr/sbin/mysqld: Shutdown complete
+
+2022-03-03T06:40:22.048599Z 0 [Warning] Changed limits: max_open_files: 5000 (requested 15000)
+2022-03-03T06:40:22.048850Z 0 [Warning] Changed limits: table_open_cache: 995 (requested 2000)
+2022-03-03T06:40:22.238472Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2022-03-03T06:40:22.244013Z 0 [Note] /usr/sbin/mysqld (mysqld 5.7.32) starting as process 4110 ...
+2022-03-03T06:40:22.292202Z 0 [Warning] You need to use --log-bin to make --log-slave-updates work.
+2022-03-03T06:40:22.292245Z 0 [Warning] You need to use --log-bin to make --binlog-format work.
+
+```
+可以看到有人在2022-03-03T06:40关闭了log-bin的功能
+
+继续查看SERVER A上的binary log：
+```
+vim /var/lib/mysql/mysql-bin.index
+./mysql-bin.000001
+./mysql-bin.000002
+./mysql-bin.000003
+./mysql-bin.000004
+./mysql-bin.000005
+./mysql-bin.000006
+./mysql-bin.000007
+./mysql-bin.000008
+./mysql-bin.000009
+./mysql-bin.000010
+./mysql-bin.000011
+./mysql-bin.000012
+
+不过目录/var/lib/mysql/下只剩下mysql-bin.000012，经过查看history，发现是有人手动删除
+```
+
+#### Resolve:
+既然A上面的bin log已经被删除不完整了，而且已经很久没有开启bin log，中间很多操作也没有记录下来，所以只能重头重新做起
+```
+
+
+ON SERVER A:
+mysql> stop slave;  
+mysql> reset slave all //断掉A作为slave，B作为master的复制
+
+ON SERVER B:
+mysql> stop slave;
+
+dump data from A TO B
+
+ON SERVER A:
+> mysqldump -flush-privileges --single-transaction --flush-logs --triggers --routines --events -hex-blob --host=localhost --user=root --password --databases --set-gtid-purged=OFF DB_NAME> source_dump.sql
+
+ON SERVER B:
+import data dump：
+source source_dump.sql;
+mysql> reset master; //由于客户端都是连A，B上并没有任何mysql操作，所以这个可以不做
+mysql> reset slave all //断掉B作为slave，A作为master的复制
+
+enable log-bin on SERVER A and restart
+mysql> show master status;
+mysql> reset master; //
+
+CHANGE MASTER ON A&B
+START SLAVE ON A&B
+```
+
+### ERROR 1049 (42000): Unknown database
+show databases 可以看到该db比如 TEST_DB，但是 use TEST_DB提示错误找不到，
+原来是 my.cnf开启了 lower_case_table_names=1 
+注释掉重启mysql即可！
 
 
 
