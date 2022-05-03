@@ -24,8 +24,22 @@ git config --global user.email "***"
 //如何更新用户密码：
 for linux:
 git config --global --unset user.password
+
 for windows:
 git config --global credential.helper wincred
+for ubuntu:
+git config credential.helper 'store [options]'
+```
+$ git config credential.helper store
+$ git push http://example.com/repo.git
+Username: <type your username>
+Password: <type your password>
+
+[several days later]
+$ git push http://example.com/repo.git
+[your credentials are used automatically]
+
+```
 
 username/password VS SSH:
 生成ssh后也是要通过命令行上传到repo的目录下：
