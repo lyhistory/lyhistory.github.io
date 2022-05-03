@@ -58,6 +58,12 @@ source .bashrc
 mkvirtualenv --python=/usr/bin/python3 bitcoin
 ```
 
+### PIP package manager
+```
+pip install packagename
+pip show packagename
+```
+
 ### 1.2 IDE - VSCode(Visual Studio Code)
 ```
 ctrl+shift+P
@@ -214,23 +220,16 @@ https://groups.google.com/forum/#!msg/mongodb-user/UPz1bnaYS8Q/6PQiPMn7J9IJ
 
 
 #### Selenium
-Greasemonkey
+
+similar products: Greasemonkey TAmpermonkey
+
+##### python api
 http://selenium-python.readthedocs.io/getting-started.html
 https://media.readthedocs.org/pdf/selenium-python-test/latest/selenium-python-test.pdf
 
+example:
 https://www.hongkiat.com/blog/automate-create-login-bot-python-selenium/
 
-python selenium chrome webdriver giving me data; page
-https://www.reddit.com/r/learnpython/comments/6cfzov/trouble_with_selenium_and_chrome_webdriver/
-https://stackoverflow.com/questions/46143639/python-selenium-chrome-webdriver-giving-me-data-page
-
-https://sites.google.com/a/chromium.org/chromedriver/
-https://stackoverflow.com/questions/49162667/unknown-error-call-function-result-missing-value-for-selenium-send-keys-even
-Check chrome version because its auto upgrading
-
-https://chromedriver.storage.googleapis.com/index.html
-
-chromedriver.exe put in `C:\Users\XXX\AppData\Local\Programs\Python\Python37-32\Scripts\`
 
 Wait for page loading
 https://stackoverflow.com/questions/26566799/how-to-wait-until-the-page-is-loaded-with-selenium-for-python
@@ -240,7 +239,6 @@ python Message: unknown error: Element is not clickable at point
 ```
 executor.executeScript("arguments[0].click();", firstbutton);
 ```
-
 https://stackoverflow.com/questions/37879010/selenium-debugging-element-is-not-clickable-at-point-x-y
 Single result and multi result
 https://stackoverflow.com/questions/42216174/selecting-a-button-list-object-has-no-attribute-click-python-selenium?rq=1
@@ -279,9 +277,31 @@ inspect on disappering element，有些元素是鼠标mouse hover才显示，所
 5.Selenium Element not visible exception或者selenium.common.exceptions.ElementClickInterceptedException: Message: element click intercepted（刚好页面上某个按钮的位置被某个漂浮的比如feedback icon挡住）
  the html element is created from JavaScript, that is why webdriver cannot see it, use driver.execute_script("javascript code here")
 
-Serverless
-https://www.serverlessops.io/blog/serverless-contact-form-for-static-websites
 
+##### chrome webdriver
+
+download: https://sites.google.com/chromium.org/driver/
+            https://chromedriver.storage.googleapis.com/index.html
+note: Check chrome version first(chrome may auto upgrading)
+chromedriver.exe put in `C:\Users\XXX\AppData\Local\Programs\Python\Python37-32\Scripts\`
+
+issue:python selenium chrome webdriver giving me data; page
+https://stackoverflow.com/questions/46143639/python-selenium-chrome-webdriver-giving-me-data-page
+https://www.reddit.com/r/learnpython/comments/6cfzov/trouble_with_selenium_and_chrome_webdriver/
+
+other issues:
+https://stackoverflow.com/questions/49162667/unknown-error-call-function-result-missing-value-for-selenium-send-keys-even
+
+
+##### firefox webdriver
+
+download: https://github.com/mozilla/geckodriver/releases
+
+compatibility: geckodriver releases, and required versions of Selenium and Firefox:
+https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
+
+issue: our Firefox profile cannot be loaded. It may be missing or inaccessible
+unsolved: about:profiles
 
 ### 3.3 GUI
 http://pyqt.sourceforge.net/Docs/PyQt5/

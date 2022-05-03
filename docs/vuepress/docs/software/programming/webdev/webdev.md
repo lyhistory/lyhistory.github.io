@@ -276,4 +276,7 @@ solr - search engine
 bootstrap  - Ace Responsive BootStrap 3 Dashboard / Admin Template https://github.com/bopoda/ace
 AngularJS - BlurAdmin - https://akveo.github.io/blur-admin/articles/001-getting-started/
 
+Serverless
+https://www.serverlessops.io/blog/serverless-contact-form-for-static-websites
+
 <disqus/>
