@@ -1764,11 +1764,44 @@ With GitLab CI/CD you can also:
 - Install your own [GitLab Runner](https://docs.gitlab.com/runner/).
 - [Schedule pipelines](https://docs.gitlab.com/ee/ci/pipelines/schedules.html).
 - Check for app vulnerabilities with [Security Test reports](https://docs.gitlab.com/ee/user/application_security/index.html).
+
+### Key Concepts
+
+**.gitlab-ci.yml**
+GitLab CI/CD is configured by a file called .gitlab-ci.yml placed at the repository’s root. 
+This file creates a pipeline, which runs for changes to the code in the repository. Pipelines consist of one or more stages that run in order and can each contain one or more jobs that run in parallel. These jobs (or scripts) get executed by the GitLab Runner agent.
+
+.gitlab-ci.yml模板：
+https://gitlab.com/gitlab-org/gitlab-foss/tree/master/lib/gitlab/ci/templates
+
+pre-defined variables
+https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
+
+**ci_settings.xml**
+serves as Maven’s settings.xml file
+https://docs.gitlab.com/ee/user/packages/maven_repository/
+
+**Pipeline**
+
+https://docs.gitlab.com/ee/ci/pipelines/pipeline_architectures.html
+
+编写.gitlab-ci.yml时可以通过visualize查看pipeline
+
+**Runner&executor**
+下面即将配置的gitlab-runner
+
 ### install and config gitlab runner
+
+https://docs.gitlab.com/runner/
+
+https://docs.gitlab.com/runner/executors/README.html
+
 
 STEP 1: INSTALL
 Install it on a server separate than where GitLab is installed
 https://docs.gitlab.com/runner/install/index.html
+
+/etc/gitlab-runner/config.toml
 
 STEP 2: REGISTER
 一台runner可以注册多个executor
@@ -1803,6 +1836,15 @@ sudo gitlab-runner register \
   --access-level="not_protected"
 ```
 
+```
+
+After a runner is configured and available for your project, your CI/CD jobs can use the runner.
+
+Specify the name of the runner or its tags in your .gitlab-ci.yml file. Then, when you commit to your repository, the pipeline runs, and the runner’s executor processes the commands.
+
+/home/gitlab-runner/builds/
+
+```
 
 Advance config:
 https://docs.gitlab.com/runner/configuration/advanced-configuration.html
@@ -1814,48 +1856,10 @@ This job is stuck because the project doesn't have any runners online assigned t
 Run untagged jobs
 Indicates whether this runner can pick jobs without tags
 
-### Setup
+troubleshoot gitlab-runner:
+https://docs.gitlab.com/runner/faq/
 
-```
-配置：
-GitLab CI/CD is configured by a file called .gitlab-ci.yml placed at the repository’s root. 
-逻辑：
-This file creates a pipeline, which runs for changes to the code in the repository. Pipelines consist of one or more stages that run in order and can each contain one or more jobs that run in parallel. These jobs (or scripts) get executed by the GitLab Runner agent.
-```
 
-.gitlab-ci.yml模板：
-
-https://gitlab.com/gitlab-org/gitlab-foss/tree/master/lib/gitlab/ci/templates
-
-pre-defined variables
-
-https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
-
-**Pipeline**
-
-https://docs.gitlab.com/ee/ci/pipelines/pipeline_architectures.html
-
-编写.gitlab-ci.yml时可以通过visualize查看pipeline
-
-**Runner&executor**
-
-https://docs.gitlab.com/runner/
-
-https://docs.gitlab.com/runner/executors/README.html
-
-```
-配置/注册：
-前端UI->Admin Area->Runners 以及 Settings > CI/CD and expand Runners
-https://docs.gitlab.com/runner/configuration/advanced-configuration.html
-/etc/gitlab-runner/config.toml
-
-After a runner is configured and available for your project, your CI/CD jobs can use the runner.
-
-Specify the name of the runner or its tags in your .gitlab-ci.yml file. Then, when you commit to your repository, the pipeline runs, and the runner’s executor processes the commands.
-
-/home/gitlab-runner/builds/
-
-```
 ### 案例：Create-react-app
 
 https://dev.to/christianmontero/gitlab-ci-cd-example-with-a-dockerized-reactjs-app-1cda
@@ -1911,7 +1915,7 @@ ssh-keygen -t rsa
 ssh-copy-id -i id_rsa root@TargetHost
 ```
 
-### 案例：JAVA application with Maven
+### 案例：Maven template(standard core lifecycle)
 
 https://gitlab.com/gitlab-org/gitlab-foss/-/blob/master/lib/gitlab/ci/templates/Maven.gitlab-ci.yml
 
@@ -1972,7 +1976,7 @@ deploy:jdk8:
     - master
 ```
 
-### 案例：Maven auto release
+### 案例：Maven auto release(non-lifecycle, tools: use maven-release-plugin)
 
 #### 初始版本(buggy)：
 
@@ -2220,11 +2224,10 @@ ci_settings.xml:
 
 #### 问题修复：
 
-```
-
 首先先总结下问题修复之后的整个逻辑：
 要知道的是，cicd pipeline执行的过程是我们配置的gitlab-runner agent机器上执行这个ci脚本，大概是首先gitlab会默认在gitlabrunner机器上根据对应的git在builds路径下：env.CI_PROJECT_DIR=/home/gitlab-runner/builds/Mtn6kdk-/0/testci 创建这个testci目录，然后再通过env.CI_REPOSITORY_URL=http://gitlab-ci-token:[MASKED]@GITLAB_IP/testci.git 这个临时的？token来clone gitlab服务器上的git代码
 
+```
 []#git remote -v
 origin  http://gitlab-ci-token:mX2W8nN6WsMnzA_kWp1p@GITLAB_IP/testci.git (fetch)
 origin  http://gitlab-ci-token:mX2W8nN6WsMnzA_kWp1p@GITLAB_IP/testci.git (push)
@@ -2242,7 +2245,9 @@ env.CI_PROJECT_URL=http://GITLAB_IP/testci
 
 env.CI_REPOSITORY_URL=http://gitlab-ci-token:[MASKED]@GITLAB_IP/testci.git
 env.CI_JOB_URL=http://GITLAB_IP/testci/-/jobs/2422
-
+```
+##### Release Prepare
+```
 ?????????????????????????????????????????????????????????????????????????????????????????
 ??? mvn clean -DskipTests -Darguments=-DskipTests release:prepare -e -DreleaseVersion=$ReleaseVersion -DdevelopmentVersion=$NextVersion-SNAPSHOT -Dtag="$TD-$ReleaseVersion" -DscmDevelopmentCommitComment="prepare for next development iteration $NextVersion-SNAPSHOT"
 ?????????????????????????????????????????????????????????????????????????????????????????
@@ -2374,7 +2379,10 @@ https://stackoverflow.com/questions/29120076/maven-and-gitlab-releaseprepare-use
         <tag>20211018-0.0.1</tag>
     </scm>
 release prepare成功！！！！	
+```
 
+##### Release Peform
+```
 ?????????????????????????????????????????????????????????????????????????????????????????
 ???   - if [ $? == 0 ]
 ?????????????????????????????????????????????????????????????????????????????????????????
@@ -2417,159 +2425,7 @@ mvn release:prepare -Dusername=[username] -Dpassword=[password]
 ```
 
 #### 最终版本
-
 ```
------------------------------------------------------------------------------
---- 用户名密码
------------------------------------------------------------------------------
-.gitlab-ci.yml:
-image: maven:3.3.9-jdk-8
-  
-cache:
-  paths:
-    - .m2/repository
-
-stages:
-  - build
-  - release
-
-build:stag:
-  stage: build
-  script:
-    - echo "test1"
-    - POM_VERSION=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.6.0:exec)
-    - echo "Package for stag $POM_VERSION"
-    - mvn clean -DskipTests -Darguments=-DskipTests package
-    - TARGET_DIR="$HOME/packages/$POM_VERSION"
-    - echo "Package successfully!"
-    - mkdir -p ${TARGET_DIR}
-    - echo "shipping artifacts to ${TARGET_DIR}";
-    - cp ${CI_PROJECT_DIR}/target/test-spring-redis*.jar ${TARGET_DIR};
-
-release:stag:
-  stage: release
-  needs: ['build:stag']
-  when: manual
-  script:
-    - echo "add private key"
-    #- eval $(ssh-agent -s)
-    #- ssh-add ~/.ssh/id_rsa
-    - echo "whoami:"
-    - whoami
-    #- echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    #- echo -e "Host *\n\tStrictHostKeyChecking no\n\n" >> ~/.ssh/config
-    #- chmod 600 ~/.ssh/config
-    #- git config --global user.email "gitlab-runner@gitlab.com"
-    #- git config --global user.name "gitlab-runner" 
-    - git config --global user.email "yue.liu@gitlab.com"
-    - git config --global user.name "yue.liu"    
-    - echo "Prepare release for stag"
-    - TD=`date +"%Y%m%d"`
-    - ReleaseVersion=0.0.9
-    - NextVersion=0.1.0
-    - git checkout master && git pull
-    #- git remote set-url origin git@$CI_SERVER_HOST:workspace/testci.git
-    - git remote set-url origin http://yue.liu:test%40123456@$CI_SERVER_HOST/workspace/testci.git
-    - echo "ReleaseVersion $ReleaseVersion $NextVersion-SNAPSHOT"
-    - mvn clean -DskipTests -Darguments=-DskipTests release:prepare -e -DreleaseVersion=$ReleaseVersion -DdevelopmentVersion=$NextVersion-SNAPSHOT -Dtag="$TD-$ReleaseVersion" -DscmDevelopmentCommitComment="prepare for next development iteration $NextVersion-SNAPSHOT" -X -B
-    - echo "Prepare release successfully!"
-    - if [ ! -f ci_settings.xml ];
-        then echo "CI settings missing\! If deploying to GitLab Maven Repository, please see https://docs.gitlab.com/ee/user/project/packages/maven_repository.html#creating-maven-packages-with-gitlab-cicd for instructions.";
-      fi
-    - >
-      if [ $? == 0 ]; then
-        echo "Perform release for stag"
-        #echo "CI_RELEASE_PASSWORD=$CI_RELEASE_PASSWORD"
-        mvn release:perform -DconnectionUrl='scm:git:http://GITLAB_IP/workspace/testci.git' -Dusername="yue.liu" -Dpassword="test@123456" -e -Darguments="-Dmaven.javadoc.skip=true -Dmaven.test.skip=true" -s ci_settings.xml -B
-        echo "Perform release successfully!"
-      else
-        echo "Rollback release for stag"
-        mvn release:rollback
-        echo "Rollback release successfully!"
-      fi
------------------------------------------------------------------------------
---- ssh
------------------------------------------------------------------------------      
-配置ssh key：
-https://docs.gitlab.com/ee/ci/ssh_keys/
-
->> SSH keys when using the Shell executor
-If you are using the Shell executor and not Docker, it is easier to set up an SSH key.
-You can generate the SSH key from the machine that GitLab Runner is installed on, and use that key for all projects that are run on this machine.
-
-First, log in to the server that runs your jobs.
-Then, from the terminal, log in as the gitlab-runner user:
-sudo su - gitlab-runner
-
-Generate the SSH key pair as described in the instructions to generate an SSH key. Do not add a passphrase to the SSH key, or the before_script will prompt for it.
-
-As a final step, add the public key from the one you created earlier to the services that you want to have an access to from within the build environment. If you are accessing a private GitLab repository you must add it as a deploy key (Menu > Projects > Settings > Repository > Expand Deploy keyshttps://docs.gitlab.com/ee/user/project/deploy_keys/index.html).
-
-After generating the key, try to sign in to the remote server to accept the fingerprint:
-ssh example.com
-For accessing repositories on GitLab.com, you would use git@gitlab.com
-
-.gitlab_ci.yml:
-image: maven:3.3.9-jdk-8
-  
-cache:
-  paths:
-    - .m2/repository
-
-stages:
-  - build
-  - release
-
-build:stag:
-  stage: build
-  script:
-    - echo "test1"
-    - POM_VERSION=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.6.0:exec)
-    - echo "Package for stag $POM_VERSION"
-    - mvn clean -DskipTests -Darguments=-DskipTests package
-    - TARGET_DIR="$HOME/packages/$POM_VERSION"
-    - echo "Package successfully!"
-    - mkdir -p ${TARGET_DIR}
-    - echo "shipping artifacts to ${TARGET_DIR}";
-    - cp ${CI_PROJECT_DIR}/target/test-spring-redis*.jar ${TARGET_DIR};
-
-release:stag:
-  stage: release
-  needs: ['build:stag']
-  when: manual
-  script:
-    - echo "add private key"
-    - eval $(ssh-agent -s)
-    - ssh-add ~/.ssh/id_rsa
-    - cat ~/.ssh/id_rsa
-    - echo "whoami:"
-    - whoami
-    - git config --global user.email "yue.liu@gitlab.com"
-    - git config --global user.name "yue.liu"    
-    - echo "Prepare release for stag"
-    - TD=`date +"%Y%m%d"`
-    - ReleaseVersion=0.1.1
-    - NextVersion=0.1.2
-    - git checkout master && git pull
-    - git remote set-url origin git@$CI_SERVER_HOST:testci.git
-    - echo "ReleaseVersion $ReleaseVersion $NextVersion-SNAPSHOT"
-    - mvn clean -DskipTests -Darguments=-DskipTests release:prepare -e -DreleaseVersion=$ReleaseVersion -DdevelopmentVersion=$NextVersion-SNAPSHOT -Dtag="$TD-$ReleaseVersion" -DscmDevelopmentCommitComment="prepare for next development iteration $NextVersion-SNAPSHOT" -X -B
-    - echo "Prepare release successfully!"
-    - if [ ! -f ci_settings.xml ];
-        then echo "CI settings missing\! If deploying to GitLab Maven Repository, please see https://docs.gitlab.com/ee/user/project/packages/maven_repository.html#creating-maven-packages-with-gitlab-cicd for instructions.";
-      fi
-    - >
-      if [ $? == 0 ]; then
-        echo "Perform release for stag"
-        echo "CI_RELEASE_PASSWORD=$CI_RELEASE_PASSWORD"
-        mvn release:perform -DconnectionUrl='scm:git:git@GITLAB_IP:testci.git' -e -Darguments="-Dmaven.javadoc.skip=true -Dmaven.test.skip=true" -s ci_settings.xml -B
-        echo "Perform release successfully!"
-      else
-        echo "Rollback release for stag"
-        mvn release:rollback
-        echo "Rollback release successfully!"
-      fi
-
 pom.xml:
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -2690,6 +2546,163 @@ pom.xml:
     </scm>
 
 </project>
+```
+
+##### http with password
+```
+-----------------------------------------------------------------------------
+--- 用户名密码
+-----------------------------------------------------------------------------
+.gitlab-ci.yml:
+image: maven:3.3.9-jdk-8
+  
+cache:
+  paths:
+    - .m2/repository
+
+stages:
+  - build
+  - release
+
+build:stag:
+  stage: build
+  script:
+    - echo "test1"
+    - POM_VERSION=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.6.0:exec)
+    - echo "Package for stag $POM_VERSION"
+    - mvn clean -DskipTests -Darguments=-DskipTests package
+    - TARGET_DIR="$HOME/packages/$POM_VERSION"
+    - echo "Package successfully!"
+    - mkdir -p ${TARGET_DIR}
+    - echo "shipping artifacts to ${TARGET_DIR}";
+    - cp ${CI_PROJECT_DIR}/target/test-spring-redis*.jar ${TARGET_DIR};
+
+release:stag:
+  stage: release
+  needs: ['build:stag']
+  when: manual
+  script:
+    - echo "add private key"
+    #- eval $(ssh-agent -s)
+    #- ssh-add ~/.ssh/id_rsa
+    - echo "whoami:"
+    - whoami
+    #- echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    #- echo -e "Host *\n\tStrictHostKeyChecking no\n\n" >> ~/.ssh/config
+    #- chmod 600 ~/.ssh/config
+    #- git config --global user.email "gitlab-runner@gitlab.com"
+    #- git config --global user.name "gitlab-runner" 
+    - git config --global user.email "yue.liu@gitlab.com"
+    - git config --global user.name "yue.liu"    
+    - echo "Prepare release for stag"
+    - TD=`date +"%Y%m%d"`
+    - ReleaseVersion=0.0.9
+    - NextVersion=0.1.0
+    - git checkout master && git pull
+    #- git remote set-url origin git@$CI_SERVER_HOST:workspace/testci.git
+    - git remote set-url origin http://yue.liu:test%40123456@$CI_SERVER_HOST/workspace/testci.git
+    - echo "ReleaseVersion $ReleaseVersion $NextVersion-SNAPSHOT"
+    - mvn clean -DskipTests -Darguments=-DskipTests release:prepare -e -DreleaseVersion=$ReleaseVersion -DdevelopmentVersion=$NextVersion-SNAPSHOT -Dtag="$TD-$ReleaseVersion" -DscmDevelopmentCommitComment="prepare for next development iteration $NextVersion-SNAPSHOT" -X -B
+    - echo "Prepare release successfully!"
+    - if [ ! -f ci_settings.xml ];
+        then echo "CI settings missing\! If deploying to GitLab Maven Repository, please see https://docs.gitlab.com/ee/user/project/packages/maven_repository.html#creating-maven-packages-with-gitlab-cicd for instructions.";
+      fi
+    - >
+      if [ $? == 0 ]; then
+        echo "Perform release for stag"
+        #echo "CI_RELEASE_PASSWORD=$CI_RELEASE_PASSWORD"
+        mvn release:perform -DconnectionUrl='scm:git:http://GITLAB_IP/workspace/testci.git' -Dusername="yue.liu" -Dpassword="test@123456" -e -Darguments="-Dmaven.javadoc.skip=true -Dmaven.test.skip=true" -s ci_settings.xml -B
+        echo "Perform release successfully!"
+      else
+        echo "Rollback release for stag"
+        mvn release:rollback
+        echo "Rollback release successfully!"
+      fi
+```
+##### ssh paswordless
+```
+-----------------------------------------------------------------------------
+--- ssh
+-----------------------------------------------------------------------------      
+配置ssh key：
+https://docs.gitlab.com/ee/ci/ssh_keys/
+
+>> SSH keys when using the Shell executor
+If you are using the Shell executor and not Docker, it is easier to set up an SSH key.
+You can generate the SSH key from the machine that GitLab Runner is installed on, and use that key for all projects that are run on this machine.
+
+First, log in to the server that runs your jobs.
+Then, from the terminal, log in as the gitlab-runner user:
+sudo su - gitlab-runner
+
+Generate the SSH key pair as described in the instructions to generate an SSH key. Do not add a passphrase to the SSH key, or the before_script will prompt for it.
+
+As a final step, add the public key from the one you created earlier to the services that you want to have an access to from within the build environment. If you are accessing a private GitLab repository you must add it as a deploy key (Menu > Projects > Settings > Repository > Expand Deploy keyshttps://docs.gitlab.com/ee/user/project/deploy_keys/index.html).
+
+After generating the key, try to sign in to the remote server to accept the fingerprint:
+ssh example.com
+For accessing repositories on GitLab.com, you would use git@gitlab.com
+
+.gitlab_ci.yml:
+image: maven:3.3.9-jdk-8
+  
+cache:
+  paths:
+    - .m2/repository
+
+stages:
+  - build
+  - release
+
+build:stag:
+  stage: build
+  script:
+    - echo "test1"
+    - POM_VERSION=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.6.0:exec)
+    - echo "Package for stag $POM_VERSION"
+    - mvn clean -DskipTests -Darguments=-DskipTests package
+    - TARGET_DIR="$HOME/packages/$POM_VERSION"
+    - echo "Package successfully!"
+    - mkdir -p ${TARGET_DIR}
+    - echo "shipping artifacts to ${TARGET_DIR}";
+    - cp ${CI_PROJECT_DIR}/target/test-spring-redis*.jar ${TARGET_DIR};
+
+release:stag:
+  stage: release
+  needs: ['build:stag']
+  when: manual
+  script:
+    - echo "add private key"
+    - eval $(ssh-agent -s)
+    - ssh-add ~/.ssh/id_rsa
+    - cat ~/.ssh/id_rsa
+    - echo "whoami:"
+    - whoami
+    - git config --global user.email "yue.liu@gitlab.com"
+    - git config --global user.name "yue.liu"    
+    - echo "Prepare release for stag"
+    - TD=`date +"%Y%m%d"`
+    - ReleaseVersion=0.1.1
+    - NextVersion=0.1.2
+    - git checkout master && git pull
+    - git remote set-url origin git@$CI_SERVER_HOST:testci.git
+    - echo "ReleaseVersion $ReleaseVersion $NextVersion-SNAPSHOT"
+    - mvn clean -DskipTests -Darguments=-DskipTests release:prepare -e -DreleaseVersion=$ReleaseVersion -DdevelopmentVersion=$NextVersion-SNAPSHOT -Dtag="$TD-$ReleaseVersion" -DscmDevelopmentCommitComment="prepare for next development iteration $NextVersion-SNAPSHOT" -X -B
+    - echo "Prepare release successfully!"
+    - if [ ! -f ci_settings.xml ];
+        then echo "CI settings missing\! If deploying to GitLab Maven Repository, please see https://docs.gitlab.com/ee/user/project/packages/maven_repository.html#creating-maven-packages-with-gitlab-cicd for instructions.";
+      fi
+    - >
+      if [ $? == 0 ]; then
+        echo "Perform release for stag"
+        echo "CI_RELEASE_PASSWORD=$CI_RELEASE_PASSWORD"
+        mvn release:perform -DconnectionUrl='scm:git:git@GITLAB_IP:testci.git' -e -Darguments="-Dmaven.javadoc.skip=true -Dmaven.test.skip=true" -s ci_settings.xml -B
+        echo "Perform release successfully!"
+      else
+        echo "Rollback release for stag"
+        mvn release:rollback
+        echo "Rollback release successfully!"
+      fi
 ```
 
 #### 官方思路(未尝试)
