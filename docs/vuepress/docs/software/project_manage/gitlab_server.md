@@ -13,15 +13,32 @@ https://docs.gitlab.com/ee/development/architecture.html
 
 https://about.gitlab.com/handbook/engineering/infrastructure/production/architecture/#service-architecture
 
-https://juejin.im/post/5cf67d355188255508118def
-
-完整文档
-
-https://docs.gitlab.com/omnibus/README.html#installation-and-configuration-using-omnibus-package
-
 ![](/docs/docs_image/software/project_manage/git/gitlab01.png)
 
 
+### Components
+https://docs.gitlab.com/ee/development/architecture.html#component-details
+
++ Access Layer 接入层
+  - Nginx：静态 web 服务器
+  - gitlab-shell：负责处理ssh请求,用于处理 Git 命令和修改 authorized keys 列表
+
++ Middleware Layer 中间层
+  - gitlab-workhorse: 负责处理http/https请求,轻量级的反向代理服务器, gitlab workhorse对于本地静态文件请求（例如浏览器请求的html、js、css文件）会自己处理掉，对于纯git操作请求会转发给gitaly，对于其他动态请求会转发给unicorn处理
+  - unicorn：An HTTP server for Rack applications，GitLab Rails 应用是托管在这个服务器上面的，相当于java里面的tomcat，是一个开源项目
+    unicorn就是gitlab的主server程序，它会调用其他各个组件完成复杂的动态请求处理
+    https://blog.csdn.net/gg_18826075157/java/article/details/107117595
+  - logrotate：日志文件管理工具
+  - sidekiq：用于在后台执行队列任务（异步执行）
+
++ 存储层：
+  - PostgreSQL：类似于mysql，存储业务数据，比如有哪些项目组，某个项目组下有哪些项目，某项目下哪些人有权限等等
+  - redis：用于缓存热点数据以及存储异步任务，sidekiq这组件会定期拉取分发异步任务给worker执行
+  - gitaly：存储底层代码文件，提供rpc接口对外提供git操作服务
+
++ 其他（显示层等）
+  - gitlab pages
+  - *-exporter+grafana+prometheus: 监控
 
 ```
 sudo gitlab-ctl status
@@ -50,41 +67,6 @@ unix  2      [ ACC ]     STREAM     LISTENING     1264397  15789/postgres       
 Proto显示连接使用的协议,RefCnt表示连接到本套接口上的进程号,Types显示套接口的类型,State显示套接口当前的状态,Path表示连接到套接口的其它进程使用的路径名。
 https://blog.csdn.net/u012598668/java/article/details/40080245
 ```
-
-
-
-接入层
-
-- Nginx：静态 web 服务器
-
-- gitlab-shell：负责处理ssh请求,用于处理 Git 命令和修改 authorized keys 列表
-
-- gitlab-workhorse: 负责处理http/https请求,轻量级的反向代理服务器, gitlab workhorse对于本地静态文件请求（例如浏览器请求的html、js、css文件）会自己处理掉，对于纯git操作请求会转发给gitaly，对于其他动态请求会转发给unicorn处理
-
-  
-
-- unicorn：An HTTP server for Rack applications，GitLab Rails 应用是托管在这个服务器上面的，相当于java里面的tomcat，是一个开源项目
-
-  unicorn就是gitlab的主server程序，它会调用其他各个组件完成复杂的动态请求处理
-  https://blog.csdn.net/gg_18826075157/java/article/details/107117595
-
-- logrotate：日志文件管理工具
-
-- sidekiq：用于在后台执行队列任务（异步执行）
-
-  
-
-底层存储：
-
-+ PostgreSQL：类似于mysql，存储业务数据，比如有哪些项目组，某个项目组下有哪些项目，某项目下哪些人有权限等等
-+ redis：用于缓存热点数据以及存储异步任务，sidekiq这组件会定期拉取分发异步任务给worker执行
-+ gitaly：存储底层代码文件，提供rpc接口对外提供git操作服务
-
-
-
-*-exporter+grafana+prometheus: 监控
-
-
 
 ### 1.1 http/https over nginx:
 
@@ -269,6 +251,8 @@ it has a praefect as router between gitlab server and gitaly nodes;
 ```
 
 ## 2. Install 安装(手动)(Omnibus版本)
+
+https://docs.gitlab.com/omnibus/README.html#installation-and-configuration-using-omnibus-package
 
 https://git-scm.com/book/en/v2/Git-on-the-Server-GitLab
 

@@ -1951,10 +1951,13 @@ START SLAVE ON A&B
 ```
 
 ### ERROR 1049 (42000): Unknown database
+[Warning] 'db' entry 'xxx@%' had database in mixed case that has been forced to lowercase because lower_case_table_names is set. It will not be possible to remove this privilege using REVOKE.
+
 show databases 可以看到该db比如 TEST_DB，但是 use TEST_DB提示错误找不到，
 原来是 my.cnf开启了 lower_case_table_names=1 
 注释掉重启mysql即可！
 
+https://stackoverflow.com/questions/19678769/error-1049-42000-unknown-database-mydatabasename
 
 
 <disqus/>
