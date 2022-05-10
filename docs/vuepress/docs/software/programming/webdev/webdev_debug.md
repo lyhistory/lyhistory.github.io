@@ -12,6 +12,15 @@ phpstudy
 
 ## 工具
 
+### html
+
+inspect on disappering element，有些元素是鼠标mouse hover才显示，所以直接用开发者工具inspect是不行的，
+需要在相关的parent上面右键设置一个Break on->subtree modifications
+
+### network
+
+network-> right click on requests -> Copy -> Copy as Curl(bash)
+
 chrome:
 chrome://net-export/
 https://netlog-viewer.appspot.com/#sockets
