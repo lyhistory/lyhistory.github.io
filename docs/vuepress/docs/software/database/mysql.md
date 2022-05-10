@@ -405,10 +405,6 @@ done
 
 ```
 
-
-
-
-
 #### upgrade 
 
 EXAMPLE: from 5.7.18 to 5.7.26
@@ -457,8 +453,6 @@ https://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-23.html
 
 Installation of previous versions of MySQL using older packages might have created a configuration file named /usr/my.cnf. It is highly recommended that you examine the contents of the file and migrate the desired settings inside to the file /etc/my.cnf file, then remove /usr/my.cnf.
 
-
-
 #### plugins
 https://dev.mysql.com/doc/refman/5.7/en/server-plugins.html
 https://dev.mysql.com/doc/refman/5.7/en/plugin-loading.html#server-plugin-installing
@@ -487,7 +481,6 @@ validate-password=FORCE_PLUS_PERMANENT
 If it is desired to prevent the server from running without the password-validation plugin, use --validate-password with a value of FORCE or FORCE_PLUS_PERMANENT to force server startup to fail if the plugin does not initialize successfully.
 
 service mysqld start --validate-password=FORCE_PLUS_PERMANENT
-
 
 
 ## 4. SQL
@@ -519,8 +512,6 @@ mysql -h'HOST' -u'USERNAME' -p'PASSWORD' -e'SELECT CONCAT("TRUNCATE TABLE ",TABL
 
 SHOW VARIABLES LIKE "secure_file_priv" 查看能写到哪个目录
 ```
-
-
 
 **Performance on index : when join a large table**
 
@@ -634,8 +625,6 @@ CLOSE cursor_a;
 END;
 SELECT * FROM userNames;
 END
-$$
-
 ```
 
 **Recursive query**
@@ -669,8 +658,6 @@ public void createPartition(String theDate) {
         }
     }
 ```
-
-
 
 ## 5. HA
 
@@ -1536,7 +1523,6 @@ mysql> revoke SUPER ON *.* FROM 'test_dbuser'@'%';
 ```
 -- Set new delimiter '$$'
 DELIMITER $$
-$$
 -- Set default delimiter ';'
 DELIMITER ;
 ```
@@ -1952,7 +1938,8 @@ START SLAVE ON A&B
 
 ### ERROR 1049 (42000): Unknown database
 show databases 可以看到该db比如 TEST_DB，但是 use TEST_DB提示错误找不到，
-原来是 my.cnf开启了 lower_case_table_names=1 
+/var/lib/mysql 查看目录下存在 TEST_DB这个数据库的文件夹，拥有者是mysql，文件权限也正确，
+最后发现原来是 my.cnf开启了 lower_case_table_names=1 
 注释掉重启mysql即可！
 
 

@@ -426,7 +426,7 @@ https://unix.stackexchange.com/questions/321315/get-cron-to-run-in-the-same-envi
 
   `yum info/search <packagename>`
 
-+ deb或rpm安装 
++ deb或rpm安装 / AppImage
 
   download deb for ubuntu or rpm for centos, and install it, it will help you install all related dependencies
 
@@ -452,7 +452,8 @@ https://unix.stackexchange.com/questions/321315/get-cron-to-run-in-the-same-envi
     如果是第一次安装可以用rpm -ivh gitlab-ce-<version>.rpm
     yum localinstall gitlab-ce-<version>.rpm
     ```
-    
+    AppImage for all:
+    is a universal software package format, 只需要下载然后给可执行权限
     
 
 + 解压直接使用 download tar file, and extract, then:

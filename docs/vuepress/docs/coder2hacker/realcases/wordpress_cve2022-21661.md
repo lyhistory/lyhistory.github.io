@@ -54,9 +54,13 @@ https://github.com/WordPress/wordpress-develop/commit/17efac8c8ec64555eff5cf51a3
 ## 重现
 环境搭建去我网站上自己找,不再重复,
 
-注意，目前官方下载的5.8.2版本中已经包含修复，重现需要注释相应代码
-方法一:
+注意，目前官方下载的5.8.2版本中已经包含修复，重现需要注释相应代码；
+开启debug：define( 'WP_DEBUG', true );
+
 添加测试代码:
+
+方法一:
+默认主题直接添加
 ```
 wp-content\themes\twentytwentyone\functions.php:
 function wp_query_test(){
@@ -68,6 +72,7 @@ function wp_query_test(){
 }
 add_action('wp_ajax_nopriv_test','wp_query_test',1);
 ```
+
 方法二:
 创建插件并安装
 wp_query_test.php
@@ -280,8 +285,10 @@ public function query( $query ) {
     ...
 }
 ```
-
-虽然是核心的bug,触发则是由 theme或者plugin调用的时候传入可控变量引起的,
+总结：
+1. 虽然是核心的bug,触发则是由 theme或者plugin调用的时候传入可控变量引起的
+2. 如果没有开启debug模式，则可以使用盲注
+   
 用你善于发现的眼睛去发现惊喜吧
 
 refer:
