@@ -25,11 +25,14 @@ git config --global user.email "***"
 for linux:
 git config --global --unset user.password
 
+for macos:
+$ git credential-osxkeychain erase
+
 for windows:
 git config --global credential.helper wincred
 for ubuntu:
 git config credential.helper 'store [options]'
-```
+
 $ git config credential.helper store
 $ git push http://example.com/repo.git
 Username: <type your username>
@@ -230,7 +233,13 @@ git diff master..standardised-meetup-contract-xml
 git diff mybranch master -- myfile.cs
 ```
 
+### 1.7 Github personal token
 
+```
+$ git clone https://github.com/username/repo.git
+Username: your_username
+Password: your_token
+```
 
 ## 2.Advance
 ### 2.1 About submodule/subtree/worktree
@@ -365,7 +374,7 @@ git reset HEAD~1 undo the latest commit
 
 
 
-## 4. 案例：set up git server & fork uptream
+## 4. Git server & fork uptream
 
 https://git-scm.com/book/en/v2/Git-on-the-Server-Setting-Up-the-Server
 
