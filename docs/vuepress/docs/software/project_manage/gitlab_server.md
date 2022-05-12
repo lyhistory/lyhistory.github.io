@@ -2689,12 +2689,94 @@ release:stag:
       fi
 ```
 
-#### 官方思路(未尝试)
-
+#### 官方方案：Gitlab release tool
+跟前面相比，限制是不能够更改pom文件为下一次release准备，只能打tag以及在gitlab项目页面上的release页面显示
 https://docs.gitlab.com/ee/ci/yaml/index.html#release
-
 https://docs.gitlab.com/ee/user/project/releases/index.html
+In GitLab, a release enables you to create a snapshot of your project for your users, including installation packages and release notes. You can create a GitLab release on any branch. Creating a release also creates a Git tag to mark the release point in the source code.
 
++ Using a job in your CI/CD pipeline.
+  手动触发
+  git tag "tag-name" #触发job后，tag-name 会赋值给$CI_COMMIT_TAG 
+  ```
+  release_job:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  rules:
+    - if: $CI_COMMIT_TAG                  # Run this job when a tag is created manually
+  script:
+    - echo "running release_job"
+  release:
+    name: 'Release $CI_COMMIT_TAG'
+    description: 'Created using the release-cli $EXTRA_DESCRIPTION'  # $EXTRA_DESCRIPTION must be defined
+    tag_name: '$CI_COMMIT_TAG'                                       # elsewhere in the pipeline.
+    ref: '$CI_COMMIT_TAG'
+    milestones:
+      - 'm1'
+      - 'm2'
+      - 'm3'
+    released_at: '2020-07-15T08:00:00Z'  # Optional, is auto generated if not defined, or can use a variable.
+    assets: # Optional, multiple asset links
+      links:
+        - name: 'asset1'
+          url: 'https://example.com/assets/1'
+        - name: 'asset2'
+          url: 'https://example.com/assets/2'
+          filepath: '/pretty/url/1' # optional
+          link_type: 'other' # optional
+  ```
+
+  自动触发：merge代码到某个branch后自动触发，tag名字写在git repo的VERSION中
+
+  ```
+  prepare_job:
+  stage: prepare                                              # This stage must run before the release stage
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never                                             # Do not run this job when a tag is created manually
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH             # Run this job when commits are pushed or merged to the default branch
+  script:
+    - echo "EXTRA_DESCRIPTION=some message" >> variables.env  # Generate the EXTRA_DESCRIPTION and TAG environment variables
+    - echo "TAG=v$(cat VERSION)" >> variables.env             # and append to the variables.env file
+  artifacts:
+    reports:
+      dotenv: variables.env                                   # Use artifacts:reports:dotenv to expose the variables to other jobs
+
+  release_job:
+    stage: release
+    image: registry.gitlab.com/gitlab-org/release-cli:latest
+    needs:
+      - job: prepare_job
+        artifacts: true
+    rules:
+      - if: $CI_COMMIT_TAG
+        when: never                                  # Do not run this job when a tag is created manually
+      - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH  # Run this job when commits are pushed or merged to the default branch
+    script:
+      - echo "running release_job for $TAG"
+    release:
+      name: 'Release $TAG'
+      description: 'Created using the release-cli $EXTRA_DESCRIPTION'  # $EXTRA_DESCRIPTION and the $TAG
+      tag_name: '$TAG'                                                 # variables must be defined elsewhere
+      ref: '$CI_COMMIT_SHA'                                            # in the pipeline. For example, in the
+      milestones:                                                      # prepare_job
+        - 'm1'
+        - 'm2'
+        - 'm3'
+      released_at: '2020-07-15T08:00:00Z'  # Optional, is auto generated if not defined, or can use a variable.
+      assets:
+        links:
+          - name: 'asset1'
+            url: 'https://example.com/assets/1'
+          - name: 'asset2'
+            url: 'https://example.com/assets/2'
+            filepath: '/pretty/url/1' # optional
+            link_type: 'other' # optional
+  ```
++ In the Releases page.
++ In the Tags page.
++ Using the Releases API.
+  https://docs.gitlab.com/ee/api/releases/index.html#create-a-release
 
 ### 案例：自动生成merge request
 

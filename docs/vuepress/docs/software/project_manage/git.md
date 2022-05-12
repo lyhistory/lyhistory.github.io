@@ -14,7 +14,7 @@ Non-tracking branch
 Understanding Tracking Branches in Git  https://lornajane.net/posts/2014/understanding-tracking-branches-in-git
 
 ### 1.2 Config
-**Authentication**
+#### Authentication
 
 ```
 git config --global --list
@@ -56,6 +56,7 @@ github:https://help.github.com/en/github/authenticating-to-github/adding-a-new-s
 for windows user .ssh is under c:/users/<username>/
 gitlab:https://docs.gitlab.com/ee/ssh/
 
+```
 ls -al ~/.ssh
 ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 
@@ -73,7 +74,7 @@ clip < ~/.ssh/id_rsa.pub
 	或者ssh-keyscan <IP/HOST OF THE GIT SITE> >> ~/.ssh/known_hosts
 ```
 
-**Ignore**
+#### Ignore
 
 ```
 //首次添加
@@ -93,7 +94,8 @@ git status
 git push origin feature/desktop-magiclink
 
 ```
-**display Chinese character**
+
+#### display Chinese character
 git config core.quotepath false
 
 ### 1.3 About repo
@@ -102,8 +104,6 @@ git remote -v
 
 Change repo url:
 git remote set-url origin git://test.com/repo.git
-
-
 
 ```
 
@@ -128,9 +128,11 @@ Pushing to a remote https://help.github.com/articles/pushing-to-a-remote/
 
 
 tag
+Tags are ref's that point to specific points in Git history. Tagging is generally used to capture a point in history that is used for a marked version release (i.e. v1.0.1). A tag is like a branch that doesn’t change.
+```
 git tag
 git checkout tags/v1.0.8
-
+```
 
 清空commits
 git checkout --orphan tmp-master # create a temporary branch

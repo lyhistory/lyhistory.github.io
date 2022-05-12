@@ -223,8 +223,12 @@ MAILTO=my.offsite.email@example.org
 ## history
 
 ```
+for i in {1..N}; do history -d START_NUM; done
+
 #Delete your Linux history without leaving a trace!
 history -d $((HISTCMD-1)) && history -d [line entry number]
+
+
 ```
 
 ## remote
