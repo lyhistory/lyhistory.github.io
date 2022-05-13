@@ -1,4 +1,6 @@
-## install
+## Get Start
+
+### install
 
 https://golang.org/doc/install
 https://go.dev/doc/install
@@ -28,11 +30,61 @@ https://www.cnblogs.com/chr-wonder/p/8464224.html
 Defaults    env_keep += "GOPATH"
 ```
 
+### PATH
 
+GOPATH
+```
+$HOME/go on Unix-like systems
+%USERPROFILE%\go on Windows
+```
+GOPATH/bin
+GOPATH/pkg
+
+
+GOROOT
+
+
+### Debug with vscode
+
++ Delve
+    ```
+    go install github.com/go-delve/delve/cmd/dlv@latest
+    ```
+
+    vscode go debug Delve DAP server (PID: 5884) is not responding
+
+    ctrl+shift+P open settings.json，最后添加
+    ```
+    "go.delveConfig": {
+            "debugAdapter": "legacy",
+        }
+    ``
+    https://github.com/golang/vscode-go/blob/master/docs/debugging.md
+
+    字符限制
+    launch.json
+    ```
+    "dlvLoadConfig": {
+                "followPointers": true,
+                "maxVariableRecurse": 1,
+                "maxStringLen": 400,
+                "maxArrayValues": 64,
+                "maxStructFields": -1
+            }
+    ```
++ GDB
++ PrintIn
 
 ## Grama
 
-refer《an introduction to programming in go》
+refer:
+https://go.dev/doc/effective_go
+《an introduction to programming in go》
+
+### The blank identifier
+https://stackoverflow.com/questions/27764421/what-is-underscore-comma-in-a-go-declaration
+
+### todo
 
 Page25
 Type 
