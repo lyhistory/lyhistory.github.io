@@ -16,6 +16,11 @@ other engine:
 
 **MyISAM**: https://kinsta.com/knowledgebase/convert-myisam-to-innodb/
 
+**ndb**
+
+```
+mysqlshow -uroot -pP@ssw0rd -i DBNAME;
+```
 ## 1.Setup 
 
 ### 1.1 Install on centos
@@ -94,6 +99,9 @@ mysqladmin
 验证配置：`mysqld --verbose --help | grep skip-slave-start`
 
 mysqlbinlog:
+
+--verbose
+--base64-output=DECODE-ROWS
 
 https://dev.mysql.com/doc/refman/8.0/en/mysqlbinlog.html
 
@@ -640,6 +648,8 @@ Managing Hierarchical Data in MySQL
 https://www.mysqltutorial.org/mysql-adjacency-list-tree/
 
 **Partition**
+
+mysql> show create table TABLE_NAME\G;
 
 ```java
 public void createPartition(String theDate) {
@@ -1420,8 +1430,13 @@ Jun 15 17:01:09 vm2-devclr-v08 Keepalived_vrrp[4850]: Sending gratuitous ARP on 
 -------------------------------------------------------------------------------
 sudo tcpdump -vvv -n -i eth0 dst 224.0.0.18 and src x.x.x.48
 ```
+## 6 System Table
+sys
+information_schema 
+performance_schema
+mysql
 
-## 3 Troubleshooting 
+## 7 Troubleshooting 
 
 vim /var/log/mysqld.log
 注意，默认时区为 UTC
@@ -1755,7 +1770,113 @@ ExecStart=/usr/sbin/mysqld --daemonize --pid-file=/var/run/mysqld/mysqld.pid $MY
 
 ```
 
-### Replication Issues::Got fatal error 1236 from master when reading data from binary log: 'Binary log is not open'
+### Replication Issues
+
+#### Replication Issues::handler error HA_ERR_KEY_NOT_FOUND
+A<->B 双主，互为主备
+
+A:
+mysql> show master status;
++------------------+-----------+--------------+------------------+---------------------------------------------------------------------------------------------+
+| File             | Position  | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set                                                                           |
++------------------+-----------+--------------+------------------+---------------------------------------------------------------------------------------------+
+| mysql-bin.000019 | 785823599 |              |                  | 4a79ada9-5f9c-11eb-8dea-525400b19818:1-2642682,
+52a0ed6b-5f9c-11eb-b408-525400f12e4f:1-1183 |
++------------------+-----------+--------------+------------------+---------------------------------------------------------------------------------------------+
+mysql> show slave status\G;
+Last_SQL_Error: Could not execute Delete_rows event on table XXXX; Can't find record in 'XXXX', Error_code: 1032; handler error HA_ERR_KEY_NOT_FOUND; the event's master log mysql-bin.000006, end_log_pos 51662949
+
+到该机器的master机器B上找:
+mysql> show master status;
++------------------+-----------+--------------+------------------+---------------------------------------------------------------------------------------------+
+| File             | Position  | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set                                                                           |
++------------------+-----------+--------------+------------------+---------------------------------------------------------------------------------------------+
+| mysql-bin.000011 | 909786110 |              |                  | 4a79ada9-5f9c-11eb-8dea-525400b19818:1-2642666,
+52a0ed6b-5f9c-11eb-b408-525400f12e4f:1-1186 |
++------------------+-----------+--------------+------------------+---------------------------------------------------------------------------------------------+
+注意到A上52a0ed6b-5f9c-11eb-b408-525400f12e4f:1-1183，B是52a0ed6b-5f9c-11eb-b408-525400f12e4f:1-1186
+B就是52a0ed6b-5f9c-11eb-b408-525400f12e4f，
+所以在B上查找 52a0ed6b-5f9c-11eb-b408-525400f12e4f:1184
+mysqlbinlog --verbose /var/lib/mysql/mysql-bin.000006 > check-mysql-bin.000006
+```
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+SET @@SESSION.GTID_NEXT= '52a0ed6b-5f9c-11eb-b408-525400f12e4f:1184'/*!*/;
+# at 51654542
+#220110 11:54:59 server id 2  end_log_pos 51654620 CRC32 0x5ec1b3e8     Query   thread_id=16    exec_time=0     error_code=0
+SET TIMESTAMP=1641786899/*!*/;
+SET @@session.sql_mode=1436549152/*!*/;
+SET @@session.auto_increment_increment=2, @@session.auto_increment_offset=2/*!*/;
+BEGIN
+/*!*/;
+# at 51654620
+# at 51654672
+#220110 11:54:59 server id 2  end_log_pos 51654744 CRC32 0x6aeb7e9f     Table_map: `DB`.`XXXX` mapped to number 9217
+# at 51654744
+#220110 11:54:59 server id 2  end_log_pos 51662949 CRC32 0xc3f5e895     Delete_rows: table id 9217
+# at 51662949
+```
+果然 52a0ed6b-5f9c-11eb-b408-525400f12e4f:1184就是delete语句
+当然也可以在A机器上查看relay binlog
+mysqlbinlog --verbose --base64-output=DECODE-ROWS /var/lib/mysql/relay-bin.000022 > check-relay-bin.000022
+
+##### 解决方法：
+
++ 方法一：reset整个master slave
+
++ 方法二：skip error
+  ```
+  mysql> stop slave;
+  mysql> SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1;
+  mysql> START SLAVE;
+
+  批量处理：
+  $ while true; do if [[ $(mysql -uroot -pP@ssw0rd -e "SHOW SLAVE STATUS\G" | grep "Last_SQL_Error:" | grep -c "HA_ERR_KEY_NOT_FOUND") -gt 0 ]]; then mysql -uroot -pP@ssw0rd -e "STOP SLAVE; SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1; START SLAVE;"; else break; fi; sleep 1; done
+  ```
+  ERROR 1858 (HY000): sql_slave_skip_counter can not be set when the server is running with @@GLOBAL.GTID_MODE = ON. Instead, for each transaction that you want to skip, generate an empty transaction with the same GTID as the transaction
++ 方法 三： fake transaction
+  ```
+  mysql> stop slave;
+  mysql> SET @@SESSION.GTID_NEXT= '52a0ed6b-5f9c-11eb-b408-525400f12e4f:1184'; 
+  #1184是出错的地方 定位方法：
+    > 通过mysqlbinlog -v去relay log找到出错的地方
+    > 更简单的，对比Retrieved_Gtid_Set 和 Executed_Gtid_Set，Executed_Gtid_Set最后一条加1即下一条就是
+  mysql> begin ; commit ;
+  mysql> start slave;
+  ERROR 1837 (HY000): When @@SESSION.GTID_NEXT is set to a GTID, you must explicitly set it to a different value after a COMMIT or ROLLBACK. Please check GTID_NEXT variable manual page for detailed explanation. Current @@SESSION.GTID_NEXT is '878556a6-ff0e-11ea-bf92-566f18fa0008:1184'.
+  mysql> SET GTID_NEXT="AUTOMATIC";
+
+  ```
++ 方法四：直接忽视（比较危险）
+  my.cnf: [mysqld] slave-skip-errors=1032
+
+##### 仍然存在的疑问：
+Could not execute Delete_rows event on table XXXX; Can't find record in 'XXXX', Error_code: 1032; handler error HA_ERR_KEY_NOT_FOUND;
+说明A机器上做删除的时候某条记录不存在，那就奇怪了，因为A和B是互为主备，既然B上面删除成功了，说明这条数据在B上存在，那应该也在A上也存在才对，
+或者说如果A上的这条记录被删除了，那删除的动作也会同步到B，
+如果是刚好B上面删除的时候A上面也删除了，当B同步到A的时候，A已经删除过了所以出现错误，反过来，那B也应该有错误才对，但是B上的同步正常没有错误，
+所以怎么都无法说通，
+除非是说可能在B上发起的delete操作也是找不到记录，但是并不会产生问题，但是replication到A的时候，A作为slave会比较严格，所以将not found错误记录出来；
+
+这里有点解释值得看一下：
+> If a statement produces the same error (identical error code) on both the source and the replica, the error is logged, but replication continues.
+> If a statement produces different errors on the source and the replica, the replication SQL thread terminates, and the replica writes a message to its error log and waits for the database administrator to decide what to do about the error. 
+> Replica Errors During Replication https://dev.mysql.com/doc/mysql-replication-excerpt/5.7/en/replication-features-slaveerrors.html
+
+跟我的猜测差不多，总之就是同样的delete语句在A和B上的报错不同，
+文档提到了两边的版本和engine，
+`$mysqlshow -uroot -pP@ssw0rd -i DBNAME TABLENAME;`
+确认了下，两边完全一致
+
+进一步看了下A和B的时间，发现B比A快了2分钟，不知道是否有关
+
+REFER:
+https://bugs.mysql.com/bug.php?id=94827
+https://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-20.html
+https://dev.mysql.com/doc/mysql-errors/5.7/en/server-error-reference.html#error_er_key_not_found
+https://severalnines.com/blog/mysql-tutorial-troubleshooting-mysql-replication-part-2
+https://www.etlbi.com/blog/2018/08/11/mysql-gtid-1032-error/
+
+#### Replication Issues::Got fatal error 1236 from master when reading data from binary log: 'Binary log is not open'
 Background: MASTER A<->MASTER B, both are master&slaves
 
 ```
@@ -1905,7 +2026,7 @@ vim /var/lib/mysql/mysql-bin.index
 不过目录/var/lib/mysql/下只剩下mysql-bin.000012，经过查看history，发现是有人手动删除
 ```
 
-#### Resolve:
+##### Reset:
 既然A上面的bin log已经被删除不完整了，而且已经很久没有开启bin log，中间很多操作也没有记录下来，所以只能重头重新做起
 ```
 
