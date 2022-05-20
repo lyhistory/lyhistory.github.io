@@ -75,6 +75,9 @@ python -m pip install scrapy
 
 ## 2. Python Usage
 
+python2 to 3 convert:
+`2to3-2.7 <Dir> -w -n -o <OutputDir>`
+
 ### 2.1 Run scripts
 Nohup
 Run it in session (eg. use Screen)
@@ -370,6 +373,10 @@ A Hands-On Introduction to Neural Networks https://hackernoon.com/a-hands-on-int
 
 
 ## 5. troubleshooting
+
+?#taberror inconsistent use of tabs and spaces in indentation
+Open the file with Vim. type :retab , and :x . Run the file again
+https://stackoverflow.com/questions/48735671/use-vim-retab-to-solve-taberror-inconsistent-use-of-tabs-and-spaces-in-indentat
 
 Package install 
 ?# fatal error: pyconfig.h: No such file or directory#include "pyconfig.h"^ compilation terminated.error: command 'gcc' failed with exit status 1

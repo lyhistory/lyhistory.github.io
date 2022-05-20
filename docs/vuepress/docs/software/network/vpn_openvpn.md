@@ -101,6 +101,10 @@ To disconnect use:
 $ sudo systemctl stop openvpn@strongvpn.service
 ```
 
+openvpn程序是如何读取 strongvpn.conf
+sudo service openvpn status
+找到 /etc/init.d/openvpn 查看代码就知道是读取 /etc/openvpn/*.conf文件
+
 ### DNS traffic
 Some Ubuntu systems require a script to make sure DNS traffic passes through the VPN tunnel.
 This is not necessary unless you successfully connect then cannot access web sites by host name.
@@ -166,6 +170,14 @@ $/etc/init.d/openvpn 指向错误路径:
 修改 /etc/init.d/openvpn指向 /usr/local/sbin/openvpn即可
 ```
 
+### 连上vpn但是无法访问
+
+尝试修改DNS
+```
+/etc/resolv.conf
+如果上面这个文件是动态修改的，则需要修改（dynamic resolv.conf file for glibc generated）：
+/etc/resolvconf/resolv.conf.d/base
+```
 
 refer:
 
