@@ -347,6 +347,11 @@ GUI：
 
 + https://github.com/airbnb/kafkat
 
+
+单机命令 --broker-list
+集群命令 --bootstrap-server
+
+
 #### 2.2.1 单机 Local 调试
 
 Quick start
@@ -408,6 +413,9 @@ bin/kafka-verifiable-producer.sh --topic consumer-tutorial --max-messages 200000
 ##### Consumer 
 
 ```
+bin/kafka-topics.sh --list --zookeeper localhost:2181
+bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic "ngs.svl.20220519.fib.result"
+
 bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic my-replicated-topic
 
 bin/kafka-console-consumer.sh --bootstrap-server <你的kafka配置> --topic T-RISK --partition 0 --offset 3350 --max-messages 1
@@ -416,6 +424,30 @@ bin/kafka-console-consumer.sh --bootstrap-server <你的kafka配置> --topic T-R
 bin/kafka-consumer-groups.sh --new-consumer --describe --group consumer-tutorial-group --bootstrap-server localhost:9092 
 =>
 shows all the partitions assigned within the consumer group, which consumer instance owns it, and the last committed offset (reported here as the “current offset”). The lag of a partition is the difference between the log end offset and the last committed offset. 
+
+#count total messages for a topic:
+kafka-console-consumer.sh \
+--from-beginning \
+--bootstrap-server <BROKER:PORT> \
+--property print.key=true \
+--property print.value=false \
+--property print.partition \
+--topic <TOPIC_NAME> | tail -n 10|grep "Msg Count="
+
+$ kafka-run-class.sh kafka.tools.GetOffsetShell \
+--broker-list <HOST1:PORT,HOST2:PORT> \
+--topic <TOPIC_NAME>
+
+kafka-run-class.sh kafka.admin.ConsumerGroupCommand \
+--group <GROUP_NAME> \
+--bootstrap-server localhost:9092 \
+--describe
+
+kafka-run-class.sh kafka.tools.ConsumerOffsetChecker \
+--topic <TOPIC_NAME> \
+--zookeeper localhost:2181 \
+--group <GROUP_NAME>
+
 
 #!/usr/bin/bash
 # Copyright (c) 2016 AsiaInvestment Pte. Ltd. Singapore
@@ -2779,6 +2811,12 @@ test kafka client
 
 这些异常情况可能也是kafka最终抛弃zookeeper的原因！
 ```
+### 时钟漂移
+client端日志
+2022-03-14 09:00:56.202 ^[[32m INFO^[[m ^[[35m16686GG^[[m [JOB-MANAGER] ^[[36mordinator$FindCoordinatorResponseHandler^[[m : [Consumer clientId=consumer-2, groupId=TEST-SZL] Discovered group coordinator HOST2:9092 (id: 2147483646 rack: null)
+但是在机器HOST2上没有找到对应时间段日志，最后发现 HOST2比HOST1和3时钟快了几分钟，对应kafka日志刚好是四分钟[2022-03-14 09:04:23,689]
+[2022-03-14 09:04:23,689] INFO [GroupCoordinator 1]: 
+	Preparing to rebalance group TEST-SZL in state PreparingRebalance with old generation 0 (__consumer_offsets-43) (reason: Adding new member consumer-2-ab88af5d-b206-48fb-a38b-ead5e50ad76e) (kafka.coordinator.group.GroupCoordinator)
 
 
 
