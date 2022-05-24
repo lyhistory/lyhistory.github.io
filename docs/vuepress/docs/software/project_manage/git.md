@@ -339,6 +339,19 @@ GIT: FETCH AND MERGE, DON’T PULL http://longair.net/blog/2009/04/16/git-fetch-
 create merge request / pull request
 How to Git PR From The Command Line https://hackernoon.com/how-to-git-pr-from-the-command-line-a5b204a57ab1
 
+? not-by-me changes/files never touched by me, merge的时候出现很多并非自己做的更改待commit
+https://stackoverflow.com/questions/9189867/after-a-git-merge-conflict-a-lot-of-files-i-didnt-touch-become-changes-to-be-c
+属于正常现象：
+解释
+```
+git checkout qa
+git pull
+git checkout feature
+git merge qa
+git status 此时可能出现一堆待committed的变动，并非本人更改，其实是正常的，因为远程的feature上面并没有qa最新的改动，如果这里不带上其他人的改动，
+那么在远程上创建从feature到qa的merge request就会出现很多不一致
+```
+
 ## 3.Best Practice
 The seven rules of a great git commit message:
 https://chris.beams.io/posts/git-commit/
