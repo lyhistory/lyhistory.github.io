@@ -1137,7 +1137,8 @@ tk rec_tk[]
 p_cjrs rec_cjr[];
 ```
 
-
+## 6. System Table
+select * FROM information_schema.triggers
 
 ## todo
 
