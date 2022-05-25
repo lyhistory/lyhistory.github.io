@@ -113,6 +113,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/bigdata/bigdata">大数据 Big Data</a></li>
 		<li><a href="/docs/software/bigdata/machinelearning">机器学习Machine Learning</a></li>
 		<li><a href="/docs/software/bigdata/machinelearning_pio">机器学习Machine Learning PIO</a></li>
+		<li><a href="/docs/software/bigdata/flink">Flink</a></li>
 	</ul>
 	<p>-------------------------</p>
 	<h3>项目管理</h3>
@@ -122,6 +123,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/project_manage/monitor">实时监控</a></li>
 		<li><a href="/docs/software/project_manage/monitor_logging">日志监控</a></li>
 		<li><a href="/docs/software/project_manage/cloud_google">google cloud</a></li>
+		<li><a href="/docs/software/project_manage/cloud_aws">aws cloud</a></li>
 		<li><a href="/docs/software/project_manage/modeling_uml">Modeling UML</a></li>
 		<li><a href="/docs/software/project_manage/test_jmeter">JMeter</a></li>
 		<li><a href="/docs/software/project_manage/test_stress_test">Stress Test</a></li>
