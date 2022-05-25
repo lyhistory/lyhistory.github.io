@@ -469,14 +469,100 @@ https://www.jianshu.com/p/890137e60597
             )as t2
 			where temp_table.index_time=t2.index_time;
 ```
-### 2.4 子表继承
+### 2.4 Trigger
+
+A trigger function is created with the CREATE FUNCTION command, declaring it as a function with no arguments and a return type of trigger (for data change triggers) or event_trigger (for database event triggers). Special local variables named TG_something are automatically defined 
+
+A trigger function must return either NULL or a record/row value having exactly the structure of the table the trigger was fired for.
+
+Example 1:
+Row-level triggers fired BEFORE can return null to signal the trigger manager to skip the rest of the operation for this row (i.e., subsequent triggers are not fired, and the INSERT/UPDATE/DELETE does not occur for this row)
+
+This example trigger ensures that any insert, update or delete of a row in the emp table is recorded (i.e., audited) in the emp_audit table. The current time and user name are stamped into the row, together with the type of operation performed on it.
+```
+CREATE TABLE emp (
+    empname           text NOT NULL,
+    salary            integer
+);
+
+CREATE TABLE emp_audit(
+    operation         char(1)   NOT NULL,
+    stamp             timestamp NOT NULL,
+    userid            text      NOT NULL,
+    empname           text      NOT NULL,
+    salary integer
+);
+
+CREATE OR REPLACE FUNCTION process_emp_audit() RETURNS TRIGGER AS $emp_audit$
+    BEGIN
+        --
+        -- Create a row in emp_audit to reflect the operation performed on emp,
+        -- making use of the special variable TG_OP to work out the operation.
+        --
+        IF (TG_OP = 'DELETE') THEN
+            INSERT INTO emp_audit SELECT 'D', now(), user, OLD.*;
+        ELSIF (TG_OP = 'UPDATE') THEN
+            INSERT INTO emp_audit SELECT 'U', now(), user, NEW.*;
+        ELSIF (TG_OP = 'INSERT') THEN
+            INSERT INTO emp_audit SELECT 'I', now(), user, NEW.*;
+        END IF;
+        RETURN NULL; -- result is ignored since this is an AFTER trigger
+    END;
+$emp_audit$ LANGUAGE plpgsql;
+
+CREATE TRIGGER emp_audit
+AFTER INSERT OR UPDATE OR DELETE ON emp
+    FOR EACH ROW EXECUTE FUNCTION process_emp_audit();
+```
+
+Example 2:
+
+If a nonnull value is returned then the operation proceeds with that row value. Returning a row value different from the original value of NEW alters the row that will be inserted or updated. Thus, if the trigger function wants the triggering action to succeed normally without altering the row value, NEW (or a value equal thereto) has to be returned. To alter the row to be stored, it is possible to replace single values directly in NEW and return the modified NEW, or to build a complete new record/row to return. In the case of a before-trigger on DELETE, the returned value has no direct effect, but it has to be nonnull to allow the trigger action to proceed. Note that NEW is null in DELETE triggers, so returning that is usually not sensible. The usual idiom in DELETE triggers is to return OLD.
+
+This example trigger ensures that any time a row is inserted or updated in the table, the current user name and time are stamped into the row. And it checks that an employee's name is given and that the salary is a positive value.
+
+```
+CREATE TABLE emp (
+    empname text,
+    salary integer,
+    last_date timestamp,
+    last_user text
+);
+
+CREATE FUNCTION emp_stamp() RETURNS trigger AS $emp_stamp$
+    BEGIN
+        -- Check that empname and salary are given
+        IF NEW.empname IS NULL THEN
+            RAISE EXCEPTION 'empname cannot be null';
+        END IF;
+        IF NEW.salary IS NULL THEN
+            RAISE EXCEPTION '% cannot have null salary', NEW.empname;
+        END IF;
+
+        -- Who works for us when they must pay for it?
+        IF NEW.salary < 0 THEN
+            RAISE EXCEPTION '% cannot have a negative salary', NEW.empname;
+        END IF;
+
+        -- Remember who changed the payroll when
+        NEW.last_date := current_timestamp;
+        NEW.last_user := current_user;
+        RETURN NEW;
+    END;
+$emp_stamp$ LANGUAGE plpgsql;
+
+CREATE TRIGGER emp_stamp BEFORE INSERT OR UPDATE ON emp
+    FOR EACH ROW EXECUTE FUNCTION emp_stamp();
+```
+
+### 2.5 子表继承
 
 SELECT，UPDATE和DELETE--支持这个"ONLY"符号
 
 Similarly an inheritance link can be removed from a child using the NO INHERIT variant of ALTER TABLE. Dynamically adding and removing inheritance links like this can be useful when the inheritance relationship is being used for table partitioning (see Section 5.9)[https://www.postgresql.org/docs/12/ddl-partitioning.html].
 
 
-### 2.5 Partition 分区
+### 2.6 Partition 分区
 
 Inheritance Partitioning VS postgresl12 原生 built-in Declarative  Partitioning
 https://www.postgresql.org/docs/12/ddl-partitioning.html#DDL-PARTITIONING-USING-INHERITANCE
@@ -567,7 +653,7 @@ $function$
 
 ```
 
-### 2.6 Advanced
+### 2.7 Advanced
 
 #### index
 注意，跟mysql不同，postgresql的索引是schema级别的，不是table级别的，所以虽然是
@@ -683,6 +769,14 @@ https://www.postgresql.org/docs/11/static/protocol-flow.html
 Simple query:
 Recommended practice is to code frontends in a state-machine style that will accept any message type at any time that it could make sense, rather than wiring in assumptions about the exact sequence of messages
 Extended query:
+
+#### Lock
+https://www.postgresql.org/docs/current/explicit-locking.html
++ Table-Level Locks
++ Row-Level Locks
++ Page-Level Locks
++ Deadlocks
++ Advisory Locks
 
 ## 3. High Availability
 
