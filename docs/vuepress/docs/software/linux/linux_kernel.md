@@ -18,6 +18,8 @@ uname -a
 
 ## cpu/memory
 
+top shift+E 切换 bytes Mb Gb
+
 ### 内存
 
 ![](/docs/docs_image/software/linux/linux_memory.png)

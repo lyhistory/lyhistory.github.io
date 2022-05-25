@@ -32,9 +32,7 @@ https://unix.stackexchange.com/questions/314985/combining-tail-journalctl
 
 https://blog.csdn.net/liwenxia626/article/details/80791704
 
-top
 通过top -Hp <PID>可以查看该进程下各个线程的cpu使用情况；
-shift+E 切换 bytes Mb Gb
 
 对于JAVA程序可以：
 

@@ -66,13 +66,16 @@ ipcheck.need.sh
   + [ExpressVPN 镜像1](https://tfiflve.com/refer-a-friend/30-days-free?referrer_id=68966376&utm_campaign=referrals&utm_medium=copy_link&utm_source=referral_dashboard)
   + [ExpressVPN 镜像2](https://upghsbc.com/refer-a-friend/30-days-free?referrer_id=68966376&utm_campaign=referrals&utm_medium=copy_link&utm_source=referral_dashboard)
   + [ExpressVPN 镜像3](https://www.expressrefer.com/refer-a-friend/30-days-free?referrer_id=68966376&utm_campaign=referrals&utm_medium=copy_link&utm_source=referral_dashboard)
+  
 + StrongVPN：
 
   + [StrongVPN 镜像1](https://intranet.strongconnectivity.com/services/strongvpn/refer/204835b682517019/)
   + [StrongVPN 镜像2](https://intranet.reliablehosting.com/services/strongvpn/refer/204835b682517019/)
   + [StrongVPN 镜像3](https://intranet.strongvpn.com/services/strongvpn/refer/204835b682517019/)
-
-
+  + strongvpn legacy download:
+      + [windows](https://mirror2.reliablehosting.com/win/StrongVPN_Win-latest.exe)
+      + [mac](https://mirror2.reliablehosting.com/mac/StrongVPN_Mac-latest.dmg)
+      + [android](https://mirror2.reliablehosting.com/android/1.7.0.apk)
 
 还有开源的[protonvpn](https://protonvpn.com)
 
