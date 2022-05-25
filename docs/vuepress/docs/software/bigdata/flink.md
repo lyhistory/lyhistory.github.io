@@ -1,8 +1,14 @@
 https://flink.apache.org/
 
+![](https://flink.apache.org/img/flink-home-graphic.png)
 
 ## Intro
-### Streams
+### Architecture
+https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/concepts/flink-architecture/
+![](https://nightlies.apache.org/flink/flink-docs-release-1.15/fig/processes.svg)
+
+### Key Concepts
+#### Streams
 Obviously, streams are a fundamental aspect of stream processing. However, streams can have different characteristics that affect how a stream can and should be processed. Flink is a versatile processing framework that can handle any kind of stream.
 
 **Bounded and unbounded streams:** 
@@ -17,7 +23,7 @@ Streams can be unbounded or bounded, i.e., fixed-sized data sets. Flink has soph
 **Real-time and recorded streams:** 
 All data are generated as streams. There are two ways to process the data. Processing it in real-time as it is generated or persisting the stream to a storage system, e.g., a file system or object store, and processed it later. Flink applications can process recorded or real-time streams.
 
-### State
+#### State
 Every non-trivial streaming application is stateful, i.e., only applications that apply transformations on individual events do not require state. Any application that runs basic business logic needs to remember events or intermediate results to access them at a later point in time, for example when the next event is received or after a specific time duration.
 Application state is a first-class citizen in Flink. You can see that by looking at all the features that Flink provides in the context of state handling.
 
@@ -32,7 +38,7 @@ Flink is able to maintain application state of several terabytes in size due to 
 + Scalable Applications: 
 Flink supports scaling of stateful applications by redistributing the state to more or fewer workers.
 
-### Time
+#### Time
 + Event-time Mode: 
 Applications that process streams with event-time semantics compute results based on timestamps of the events. Thereby, event-time processing allows for accurate and consistent results regardless whether recorded or real-time events are processed.
 + Watermark Support: 
@@ -42,8 +48,110 @@ When processing streams in event-time mode with watermarks, it can happen that a
 + Processing-time Mode: 
 In addition to its event-time mode, Flink also supports processing-time semantics which performs computations as triggered by the wall-clock time of the processing machine. The processing-time mode can be suitable for certain applications with strict low-latency requirements that can tolerate approximate results.
 
-## Layered APIs
-### Stateful Event-Driven Applications - ProcessFunctions(events,state,time)
+#### Other
++ Checkpoint Storage
+  
+  The location where the State Backend will store its snapshot during a checkpoint (Java Heap of JobManager or Filesystem).
++ Flink Application Cluster
+  
+  A Flink Application Cluster is a dedicated Flink Cluster that only executes Flink Jobs from one Flink Application. The lifetime of the Flink Cluster is bound to the lifetime of the Flink Application.
++ Flink Job Cluster
+  
+  A Flink Job Cluster is a dedicated Flink Cluster that only executes a single Flink Job. The lifetime of the Flink Cluster is bound to the lifetime of the Flink Job. This deployment mode has been deprecated since Flink 1.15.
++ Flink Cluster
+
+  A distributed system consisting of (typically) one JobManager and one or more Flink TaskManager processes.
++ Event
+  
+  An event is a statement about a change of the state of the domain modelled by the application. Events can be input and/or output of a stream or batch processing application. Events are special types of records.
++ ExecutionGraph/Physical Graph
+  
+  A physical graph is the result of translating a Logical Graph for execution in a distributed runtime. The nodes are Tasks and the edges indicate input/output-relationships or partitions of data streams or data sets.
++ Function
+
+  Functions are implemented by the user and encapsulate the application logic of a Flink program. Most Functions are wrapped by a corresponding Operator.
++ Instance
+  
+  The term instance is used to describe a specific instance of a specific type (usually Operator or Function) during runtime. As Apache Flink is mostly written in Java, this corresponds to the definition of Instance or Object in Java. In the context of Apache Flink, the term parallel instance is also frequently used to emphasize that multiple instances of the same Operator or Function type are running in parallel.
++ Flink Application
+  
+  A Flink application is a Java Application that submits one or multiple Flink Jobs from the main() method (or by some other means). Submitting jobs is usually done by calling execute() on an execution environment.
+
+  The jobs of an application can either be submitted to a long running Flink Session Cluster, to a dedicated Flink Application Cluster, or to a Flink Job Cluster.
++ Flink Job
+  
+  A Flink Job is the runtime representation of a logical graph (also often called dataflow graph) that is created and submitted by calling execute() in a Flink Application.
++ JobGraph / Logical Graph
+  
+  A logical graph is a directed graph where the nodes are Operators and the edges define input/output-relationships of the operators and correspond to data streams or data sets. A logical graph is created by submitting jobs from a Flink Application.
+
+  Logical graphs are also often referred to as dataflow graphs. 
++ Flink JobManager
+  
+  The JobManager is the orchestrator of a Flink Cluster. It contains three distinct components: Flink Resource Manager, Flink Dispatcher and one Flink JobMaster per running Flink Job.
++ Flink JobMaster
+  
+  JobMasters are one of the components running in the JobManager. A JobMaster is responsible for supervising the execution of the Tasks of a single job.
++ JobResultStore
+
+  The JobResultStore is a Flink component that persists the results of globally terminated (i.e. finished, cancelled or failed) jobs to a filesystem, allowing the results to outlive a finished job. These results are then used by Flink to determine whether jobs should be subject to recovery in highly-available clusters.
++ Managed State
+
+  Managed State describes application state which has been registered with the framework. For Managed State, Apache Flink will take care about persistence and rescaling among other things.
++ Operator
+
+  Node of a Logical Graph. An Operator performs a certain operation, which is usually executed by a Function. Sources and Sinks are special Operators for data ingestion and data egress.
++ Operator Chain
+
+  An Operator Chain consists of two or more consecutive Operators without any repartitioning in between. Operators within the same Operator Chain forward records to each other directly without going through serialization or Flink’s network stack.
++ Partition
+
+  A partition is an independent subset of the overall data stream or data set. A data stream or data set is divided into partitions by assigning each record to one or more partitions. Partitions of data streams or data sets are consumed by Tasks during runtime. A transformation which changes the way a data stream or data set is partitioned is often called repartitioning.
++ Record
+
+  Records are the constituent elements of a data set or data stream. Operators and Functions receive records as input and emit records as output.
++ (Runtime) Execution Mode
+
+  DataStream API programs can be executed in one of two execution modes: BATCH or STREAMING. See Execution Mode for more details.
++ Flink Session Cluster
+  
+  A long-running Flink Cluster which accepts multiple Flink Jobs for execution. The lifetime of this Flink Cluster is not bound to the lifetime of any Flink Job. Formerly, a Flink Session Cluster was also known as a Flink Cluster in session mode. Compare to Flink Application Cluster.
++ State Backend
+
+  For stream processing programs, the State Backend of a Flink Job determines how its state is stored on each TaskManager (Java Heap of TaskManager or (embedded) RocksDB).
++ Sub-Task
+
+  A Sub-Task is a Task responsible for processing a partition of the data stream. The term “Sub-Task” emphasizes that there are multiple parallel Tasks for the same Operator or Operator Chain.
++ Table Program
+
+  A generic term for pipelines declared with Flink’s relational APIs (Table API or SQL).
++ Task
+
+  Node of a Physical Graph. A task is the basic unit of work, which is executed by Flink’s runtime. Tasks encapsulate exactly one parallel instance of an Operator or Operator Chain.
++ Flink TaskManager
+
+  TaskManagers are the worker processes of a Flink Cluster. Tasks are scheduled to TaskManagers for execution. They communicate with each other to exchange data between subsequent Tasks.
++ Transformation
+
+  A Transformation is applied on one or more data streams or data sets and results in one or more output data streams or data sets. A transformation might change a data stream or data set on a per-record basis, but might also only change its partitioning or perform an aggregation. While Operators and Functions are the “physical” parts of Flink’s API, Transformations are only an API concept. Specifically, most transformations are implemented by certain Operators.
++ 
+
+## install&deployment
+### local
+https://nightlies.apache.org/flink/flink-docs-release-1.15//docs/try-flink/local_installation/
+https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/try-flink/flink-operations-playground/
+https://nightlies.apache.org/flink/flink-docs-release-1.14//docs/try-flink/local_installation/
+
+### production
+https://nightlies.apache.org/flink/flink-docs-master/docs/deployment/overview/
+hdfs
+
+https://flink.apache.org/training.html
+
+## API&Libs
+### Layered APIs
+![](https://nightlies.apache.org/flink/flink-docs-release-1.15/fig/levels_of_abstraction.svg)
+#### Stateful Event-Driven Applications - ProcessFunctions(events,state,time)
 ProcessFunctions are the most expressive function interfaces that Flink offers. Flink provides ProcessFunctions to process individual events from one or two input streams or events that were grouped in a window. ProcessFunctions provide fine-grained control over time and state. A ProcessFunction can arbitrarily modify its state and register timers that will trigger a callback function in the future. Hence, ProcessFunctions can implement complex per-event business logic as required for many stateful event-driven applications.
 ```
 /**
@@ -104,7 +212,7 @@ public static class StartEndDuration
 }
 ```
 
-### Stream-&Batch Data Processing - DataStream API(streams,windows)
+#### Stream-&Batch Data Processing - DataStream API(streams,windows)
 The DataStream API provides primitives for many common stream processing operations, such as windowing, record-at-a-time transformations, and enriching events by querying an external data store. The DataStream API is available for Java and Scala and is based on functions, such as map(), reduce(), and aggregate(). Functions can be defined by extending interfaces or as Java or Scala lambda functions.
 ```
 // a stream of website clicks
@@ -128,23 +236,30 @@ DataStream<Tuple2<String, Long>> result = clicks
   .reduce((a, b) -> Tuple2.of(a.f0, a.f1 + b.f1));
 ```
 
-### High-level Analytics API - SQL/TableAPI(dynamic tables)
+#### High-level Analytics API - SQL/TableAPI(dynamic tables)
 Flink features two relational APIs, the Table API and SQL. Both APIs are unified APIs for batch and stream processing, i.e., queries are executed with the same semantics on unbounded, real-time streams or bounded, recorded streams and produce the same results. The Table API and SQL leverage Apache Calcite for parsing, validation, and query optimization. They can be seamlessly integrated with the DataStream and DataSet APIs and support user-defined scalar, aggregate, and table-valued functions.
 ```
 SELECT userId, COUNT(*)
 FROM clicks
 GROUP BY SESSION(clicktime, INTERVAL '30' MINUTE), userId
 ```
+### Advanced APIs
+#### Stateful Functions: A Platform-Independent Stateful Serverless Stack
+https://nightlies.apache.org/flink/flink-statefun-docs-stable/
 
-## Libraries
+#### Flink ML: Apache Flink Machine Learning Library
+https://nightlies.apache.org/flink/flink-ml-docs-stable/
+https://nightlies.apache.org/flink/flink-ml-docs-release-2.0/docs/try-flink-ml/quick-start/
 
-### Complex Event Processing (CEP): 
+### Libraries
+
+#### Complex Event Processing (CEP): 
 Pattern detection is a very common use case for event stream processing. Flink’s CEP library provides an API to specify patterns of events (think of regular expressions or state machines). The CEP library is integrated with Flink’s DataStream API, such that patterns are evaluated on DataStreams. Applications for the CEP library include network intrusion detection, business process monitoring, and fraud detection.
 
-### DataSet API: 
+#### DataSet API: 
 The DataSet API is Flink’s core API for batch processing applications. The primitives of the DataSet API include map, reduce, (outer) join, co-group, and iterate. All operations are backed by algorithms and data structures that operate on serialized data in memory and spill to disk if the data size exceed the memory budget. The data processing algorithms of Flink’s DataSet API are inspired by traditional database operators, such as hybrid hash-join or external merge-sort.
 
-### Gelly: 
+#### Gelly: 
 Gelly is a library for scalable graph processing and analysis. Gelly is implemented on top of and integrated with the DataSet API. Hence, it benefits from its scalable and robust operators. Gelly features built-in algorithms, such as label propagation, triangle enumeration, and page rank, but provides also a Graph API that eases the implementation of custom graph algorithms.
 
 ## Operations
@@ -193,17 +308,6 @@ Flink integrates nicely with many common logging and monitoring services and pro
 + Metrics: Flink features a sophisticated metrics system to collect and report system and user-defined metrics. Metrics can be exported to several reporters, including JMX, Ganglia, Graphite, Prometheus, StatsD, Datadog, and Slf4j.
 + REST API: Flink exposes a REST API to submit a new application, take a savepoint of a running application, or cancel an application. The REST API also exposes meta data and collected metrics of running or completed applications.
 
-## Stateful Functions: A Platform-Independent Stateful Serverless Stack
-https://nightlies.apache.org/flink/flink-statefun-docs-stable/
-
-## Flink ML: Apache Flink Machine Learning Library
-https://nightlies.apache.org/flink/flink-ml-docs-stable/
-https://nightlies.apache.org/flink/flink-ml-docs-release-2.0/docs/try-flink-ml/quick-start/
 
 
-## install&deployment
-https://nightlies.apache.org/flink/flink-docs-release-1.14//docs/try-flink/local_installation/
-https://nightlies.apache.org/flink/flink-docs-master/docs/deployment/overview/
-hdfs
 
-https://flink.apache.org/training.html
