@@ -500,10 +500,16 @@ https://unix.stackexchange.com/questions/321315/get-cron-to-run-in-the-same-envi
 
 + 安装后管理
 
-  + rpm包安装的，可以用rpm -qa | grep "软件或者包的名字"。
-  + deb包安装的，可以用dpkg -l | grep "软件或者包的名字"；
-  + yum方法安装的，可以用yum list installed | grep "软件名或者包名"；
-  + apt方法安装的，apt list --installed|grep "TEXT"
+  + rpm:
+    ```
+    rpm -qa | grep "package name"。
+    yum list installed | grep "package name"
+    ```
+  + deb:
+    ```
+    dpkg -l | grep "package name"
+    apt list --installed|grep "package name"
+    ```；
   + 如果是以源码包自己编译安装的，例如.tar.gz或者tar.bz2形式的，这个只能看可执行文件是否存在了，如果是以root用户安装的，可执行程序通常都在/usr/local/sbin:/usr/bin目录下。
 
 + 安装后找不到命令，因为安装的位置不在系统path上，可以参考上面的“解压后使用”的方式中的，link或设置环境变量方式来搞；
@@ -512,7 +518,7 @@ https://unix.stackexchange.com/questions/321315/get-cron-to-run-in-the-same-envi
 
 ```
 apt vs apt-get
-apt update
+更新repo：apt update
 apt upgrade / apt full-upgrade
 apt search "PKG"
 apt list --installed | grep "PKG"
@@ -524,11 +530,15 @@ apt list --installed | grep "PKG"
 ### yum
 
 ```
+更新repo：yum clean all / yum repolist / yum check-update 
+yum provides package-name / rpm -q --provides openssl
 yum list/search/info package-name
 yum update package-name
 yum history
 yum history info 21
 
+// find references
+rpm -q --whatrequires openssl
 
 [root@liuyuelocal ~]# yum repolist
 Loaded plugins: fastestmirror, langpacks
@@ -826,3 +836,93 @@ systemctl restart network
 
 ```
 
+## Troubleshooting
+
+### error: Package Requires
+```
+[lyhistory/opt]#nginx -v
+nginx version: nginx/1.12.1
+[lyhistory/opt]#yum localinstall nginx-1.20.1-1.el7.ngx.x86_64.rpm 
+Loaded plugins: product-id, search-disabled-repos, subscription-manager
+This system is not registered to Red Hat Subscription Management. You can use subscription-manager to register.
+Examining nginx-1.20.1-1.el7.ngx.x86_64.rpm: 1:nginx-1.20.1-1.el7.ngx.x86_64
+Marking nginx-1.20.1-1.el7.ngx.x86_64.rpm as an update to 1:nginx-1.12.1-1.el7.ngx.x86_64
+Resolving Dependencies
+--> Running transaction check
+---> Package nginx.x86_64 1:1.12.1-1.el7.ngx will be updated
+---> Package nginx.x86_64 1:1.20.1-1.el7.ngx will be an update
+--> Processing Dependency: libcrypto.so.10(OPENSSL_1.0.2)(64bit) for package: 1:nginx-1.20.1-1.el7.ngx.x86_64
+--> Finished Dependency Resolution
+Error: Package: 1:nginx-1.20.1-1.el7.ngx.x86_64 (/nginx-1.20.1-1.el7.ngx.x86_64)
+           Requires: libcrypto.so.10(OPENSSL_1.0.2)(64bit)
+ You could try using --skip-broken to work around the problem
+** Found 2 pre-existing rpmdb problem(s), 'yum check' output follows:
+redhat-access-insights-1.0.6-0.el7.noarch has missing requires of libcgroup
+redhat-access-insights-1.0.6-0.el7.noarch has missing requires of libcgroup-tools
+[lyhistory/opt]#cat /etc/os-release 
+NAME="Red Hat Enterprise Linux Server"
+VERSION="7.2 (Maipo)"
+ID="rhel"
+ID_LIKE="fedora"
+VERSION_ID="7.2"
+PRETTY_NAME="Red Hat Enterprise Linux Server 7.2 (Maipo)"
+ANSI_COLOR="0;31"
+CPE_NAME="cpe:/o:redhat:enterprise_linux:7.2:GA:server"
+HOME_URL="https://www.redhat.com/"
+BUG_REPORT_URL="https://bugzilla.redhat.com/"
+
+REDHAT_BUGZILLA_PRODUCT="Red Hat Enterprise Linux 7"
+REDHAT_BUGZILLA_PRODUCT_VERSION=7.2
+REDHAT_SUPPORT_PRODUCT="Red Hat Enterprise Linux"
+REDHAT_SUPPORT_PRODUCT_VERSION="7.2"
+
+
+[lyhistory/opt]#openssl version
+OpenSSL 1.0.1e-fips 11 Feb 2013
+
+[lyhistory/opt]#rpm -q --provides openssl
+openssl = 1:1.0.1e-42.el7_1.9
+openssl(x86-64) = 1:1.0.1e-42.el7_1.9
+[lyhistory/opt]#rpm -q --provides openssl-libs | grep libcrypto.so.10
+libcrypto.so.10()(64bit)
+libcrypto.so.10(OPENSSL_1.0.1)(64bit)
+libcrypto.so.10(OPENSSL_1.0.1_EC)(64bit)
+libcrypto.so.10(libcrypto.so.10)(64bit)
+
+
+[lyhistory/opt]#yum localinstall openssl-libs-1.0.2k-19.el7.x86_64.rpm 
+Loaded plugins: product-id, search-disabled-repos, subscription-manager
+This system is not registered to Red Hat Subscription Management. You can use subscription-manager to register.
+Examining openssl-libs-1.0.2k-19.el7.x86_64.rpm: 1:openssl-libs-1.0.2k-19.el7.x86_64
+Marking openssl-libs-1.0.2k-19.el7.x86_64.rpm as an update to 1:openssl-libs-1.0.1e-42.el7_1.9.x86_64
+Resolving Dependencies
+--> Running transaction check
+---> Package openssl-libs.x86_64 1:1.0.1e-42.el7_1.9 will be updated
+--> Processing Dependency: openssl-libs(x86-64) = 1:1.0.1e-42.el7_1.9 for package: 1:openssl-devel-1.0.1e-42.el7_1.9.x86_64
+--> Processing Dependency: openssl-libs(x86-64) = 1:1.0.1e-42.el7_1.9 for package: 1:openssl-1.0.1e-42.el7_1.9.x86_64
+---> Package openssl-libs.x86_64 1:1.0.2k-19.el7 will be an update
+--> Finished Dependency Resolution
+Error: Package: 1:openssl-1.0.1e-42.el7_1.9.x86_64 (@anaconda/7.2)
+           Requires: openssl-libs(x86-64) = 1:1.0.1e-42.el7_1.9
+           Removing: 1:openssl-libs-1.0.1e-42.el7_1.9.x86_64 (@anaconda/7.2)
+               openssl-libs(x86-64) = 1:1.0.1e-42.el7_1.9
+           Updated By: 1:openssl-libs-1.0.2k-19.el7.x86_64 (/openssl-libs-1.0.2k-19.el7.x86_64)
+               openssl-libs(x86-64) = 1:1.0.2k-19.el7
+Error: Package: 1:openssl-devel-1.0.1e-42.el7_1.9.x86_64 (@local-repo)
+           Requires: openssl-libs(x86-64) = 1:1.0.1e-42.el7_1.9
+           Removing: 1:openssl-libs-1.0.1e-42.el7_1.9.x86_64 (@anaconda/7.2)
+               openssl-libs(x86-64) = 1:1.0.1e-42.el7_1.9
+           Updated By: 1:openssl-libs-1.0.2k-19.el7.x86_64 (/openssl-libs-1.0.2k-19.el7.x86_64)
+               openssl-libs(x86-64) = 1:1.0.2k-19.el7
+ You could try using --skip-broken to work around the problem
+** Found 2 pre-existing rpmdb problem(s), 'yum check' output follows:
+redhat-access-insights-1.0.6-0.el7.noarch has missing requires of libcgroup
+redhat-access-insights-1.0.6-0.el7.noarch has missing requires of libcgroup-tools
+
+[lyhistory]#rpm -q --whatrequires openssl
+nginx-1.12.1-1.el7.ngx.x86_64
+
+yum remove openssl-libs-1.0.1e-42.el7_1.9.x86_64
+
+
+```
