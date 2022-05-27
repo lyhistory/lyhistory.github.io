@@ -922,7 +922,42 @@ redhat-access-insights-1.0.6-0.el7.noarch has missing requires of libcgroup-tool
 [lyhistory]#rpm -q --whatrequires openssl
 nginx-1.12.1-1.el7.ngx.x86_64
 
-yum remove openssl-libs-1.0.1e-42.el7_1.9.x86_64
 
 
+```
+尝试解决
+```
+[lyhistory]#yum remove openssl-libs.x86_64 / yum remove openssl-libs-1.0.1e-42.el7_1.9.x86_64
+Loaded plugins: product-id, search-disabled-repos, subscription-manager
+This system is not registered to Red Hat Subscription Management. You can use subscription-manager to register.
+Resolving Dependencies
+--> Running transaction check
+---> Package openssl-libs.x86_64 1:1.0.1e-42.el7_1.9 will be erased
+....
+--> Finished Dependency Resolution
+Error: Trying to remove "systemd", which is protected
+Error: Trying to remove "yum", which is protected
+```
+失败！
+
+最终解决
+```
+cd /etc/yum.repos.d/
+vi nginx.repo
+  [nginx]
+  name=nginx repo
+  baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
+  gpgcheck=0
+  enabled=1
+                 
+yum clean all 
+yum repolist 
+yum update nginx 
+rpm -qa | grep nginx 
+nginx -v
+```
+
+未尝试的另一种方案：
+```
+yum swap -- remove openssl-libs-1.0.1e-42.el7_1.9.x86_64 -- install openssl-libs-1.0.2k-19.el7.x86_64.rpm 
 ```
