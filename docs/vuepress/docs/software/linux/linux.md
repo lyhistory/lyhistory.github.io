@@ -189,6 +189,19 @@ WantedBy=multi-user.target
 
 ## About Env
 
+先确认默认的shell: BASH OR ZSH OR..
+```
+echo $0 or echo $SHELL or ps -p $$
+
+```
+改变默认shell
+```
+cat /etc/shells
+type -a bash
+chsh -s /usr/bin/bash
+restart
+```
+
 ### env
 
 The files in /etc directory sets the respective shell configuration  for all the users on the system. This is normally set up by the system  administrator. 
@@ -196,6 +209,9 @@ The files in /etc directory sets the respective shell configuration  for all the
 The files in the home directory of the user are user-specific, obviously. This allows users to create alias for frequently used commands or use a custom PATH variable for a program.
 
 i) 特定用户的PATH  ~/bashrc  ~/bash_profile
+   + Bash Startup Files
+  When a "login shell" starts up, it reads the file /etc/profile and then ~/.bash_profile or ~/.bash_login or ~/.profile (whichever one exists - it only reads ONE of these, checking for them in the order mentioned).
+  When a "non-login shell" starts up, it reads the file /etc/bashrc and then the file ~/.bashrc.
 
 ii) system wide全局PATH /etc/profile或/root/.bashrc  (/etc/environment?)
 

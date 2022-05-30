@@ -12,7 +12,8 @@ $ rm -rf /usr/local/go && tar -C /usr/local -xzf go1.17.8.linux-amd64.tar.gz
 2.Add /usr/local/go/bin to the PATH environment variable
 
 $HOME/.profile or /etc/profile (for a system-wide installation)
-export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/go
+export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
 $ source $HOME/.profile.
 
@@ -31,6 +32,8 @@ Defaults    env_keep += "GOPATH"
 ```
 
 ### PATH
+
+`go env`
 
 GOPATH
 ```

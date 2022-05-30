@@ -11,7 +11,10 @@ ps -lef|grep 21268
 ps -eo pid,lstart,cmd |grep pid //程序启动时间
 ```
 
-
+## dns
+/etc/dhcp/dhclient.conf // Change #prepend domain-name-servers line, add the dns you want. Example:
+prepend domain-name-servers 1.1.1.1, 8.8.8.8;
+https://unix.stackexchange.com/questions/174349/what-overwrites-etc-resolv-conf-on-every-boot
 
 ## 软硬限制
 
