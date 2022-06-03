@@ -1835,6 +1835,7 @@ mysqlbinlog --verbose --base64-output=DECODE-ROWS /var/lib/mysql/relay-bin.00002
   ERROR 1858 (HY000): sql_slave_skip_counter can not be set when the server is running with @@GLOBAL.GTID_MODE = ON. Instead, for each transaction that you want to skip, generate an empty transaction with the same GTID as the transaction
 + 方法 三： fake transaction
   ```
+  在A:
   mysql> stop slave;
   mysql> SET @@SESSION.GTID_NEXT= '52a0ed6b-5f9c-11eb-b408-525400f12e4f:1184'; 
   #1184是出错的地方 定位方法：
@@ -1844,6 +1845,9 @@ mysqlbinlog --verbose --base64-output=DECODE-ROWS /var/lib/mysql/relay-bin.00002
   mysql> start slave;
   ERROR 1837 (HY000): When @@SESSION.GTID_NEXT is set to a GTID, you must explicitly set it to a different value after a COMMIT or ROLLBACK. Please check GTID_NEXT variable manual page for detailed explanation. Current @@SESSION.GTID_NEXT is '878556a6-ff0e-11ea-bf92-566f18fa0008:1184'.
   mysql> SET GTID_NEXT="AUTOMATIC";
+
+  注意到有趣的现象：回到B上查看slave status会发现：Retrieved_Gtid_Set多了一条 XXXX:1184 也就是在A上执行的1184空语句
+
 
   ```
 + 方法四：直接忽视（比较危险）
@@ -2005,7 +2009,7 @@ someone has commentted out the log-bin!!!
 2022-03-03T06:40:22.292245Z 0 [Warning] You need to use --log-bin to make --binlog-format work.
 
 ```
-可以看到有人在2022-03-03T06:40关闭了log-bin的功能
+~~可以看到有人在2022-03-03T06:40关闭了log-bin的功能~~(误解，这是因为重启，但是确实是config里面被人关闭了binlog，有人注释掉了log-bin = mysql-bin )
 
 继续查看SERVER A上的binary log：
 ```

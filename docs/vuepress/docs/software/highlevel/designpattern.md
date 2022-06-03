@@ -103,6 +103,8 @@ https://www.tutorialspoint.com/design_pattern/template_pattern.htm
 
 ![](/docs/docs_image/software/designpattern/designpattern02.png)
 
+**chain of responsibility**
+
 **Observation pattern**
 problem:
 when a change in the object requires change in the others, and you don't know how many of them need changes.
