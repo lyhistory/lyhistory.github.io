@@ -6,6 +6,8 @@
 cat /etc/os-release
 
 hostnamectl 
+
+hostnamectl status
 ```
 
 

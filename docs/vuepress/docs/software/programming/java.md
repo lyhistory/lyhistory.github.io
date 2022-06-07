@@ -5,6 +5,11 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《java实用基础》
 
+
+## Misconception
+Java always passes arguments by value, NOT by reference.
+https://stackoverflow.com/questions/40480/is-java-pass-by-reference-or-pass-by-value/12429953#12429953
+
 ## 1.jdk
 
 refer<buildingblock/java_jdk>
