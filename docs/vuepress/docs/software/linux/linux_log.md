@@ -42,7 +42,7 @@ jstack -F <PID/Thread ID>
 
 ## 案例
 
-### who killed java process?
+### java程序莫名其妙“自动关闭” who killed java process?
 
 https://qzy.im/blog/2020/07/oom-killer-killed-java-process-in-linux/
 
@@ -67,6 +67,10 @@ debug crashed application
 https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/developer_guide/debugging-crashed-application
 
 最后仍然是根据/var/log/messages的错误信息关掉了crontab，从而解决
+
+++ 又一次遇到，这次日志里面是：
+Jun 13 19:15:12 sgsg3-clear-v01 kernel: type=1701 audit(1655118912.145:16370687): auid=1000 uid=1000 gid=500 ses=2267378 subj=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 pid=30986 comm="java" reason="memory violation" sig=6
+memory violation，不是程序本身有问题就是jvm有问题或者其他os问题，~~只能对java程序加debug参数进行记录~~ 发现java crash之后会在程序路径下生产一个core.XXX文件
 
 ### web server nginx not responding?
 

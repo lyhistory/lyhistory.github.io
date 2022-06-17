@@ -20,7 +20,7 @@ refer<buildingblock/java_jdk>
 
 ### 2.1 Tools
 
-**Decompiler**
+#### Decompiler
 
 Reverse class to view code http://java-decompiler.github.io/
 分析JVM	
@@ -28,14 +28,18 @@ JVisualVM https://www.cnblogs.com/xifengxiaoma/p/9402497.html
 Java ServiceabilityAgent(HSDB)使用和分析
 https://liuzhengyang.github.io/2017/05/27/serviceabilityagent/
 
-**Linux tools**
+#### Linux tools
 
 strace -ff -o prefix
 
-**JDK Tools**
+#### JDK Tools
 
 DEBUG:
+tls/ssl:
 java -jar -Djavax.net.debug=all
+
+java -XX:ErrorFile=/var/log/java/java_error%p.log
+If the -XX:ErrorFile=file flag is not specified, the default log file name is hs_err_pid.log, where pid is the PID of the process.
 
 JVM参数 
 https://stackoverflow.com/questions/43087831/complete-list-of-jvm-options
@@ -1638,17 +1642,115 @@ file:/opt/XXX.jar!/BOOT-INF/lib/XXX-1.0-SNAPSHOT.jar!/libXXXJNI.so
 getClass().getResourceAsStream("/filename");
 https://stackoverflow.com/questions/20389255/reading-a-resource-file-from-within-jar
 
-### 6.2 More
+### 6.2 JVM Crash debug
+troubleshooting with hotspot vm
+https://docs.oracle.com/javase/8/docs/technotes/guides/troubleshoot/index.html
+https://enos.itcollege.ee/~jpoial/allalaadimised/reading/JVM_Troubleshooting_Guide.pdf
+https://www.javaadvent.com/2021/12/diagnosing_a_jvm_crash.html
+
+core file(core.XXX):
+In case of a JVM crash, the operating system creates a core dump file which is a memory snapshot of a running process. A core dump is created by the operating system when a fatal or unhandled error like signal or system exception occurs.
+https://docs.oracle.com/cd/E13150_01/jrockit_jvm/jrockit/geninfo/diagnos/dumpfile.html
+
+https://www.javaadvent.com/2021/12/diagnosing_a_jvm_crash.html
+
+如果是Oracle的jdk，可以使用bin下面的 jvisualvm 可视化工具打开分析core文件
 
 #### 6.2.1 Hsdb
-java -cp .:$JAVA_HOME/lib/sa-jdi.jar sun.jvm.hotspot.CLHSDB
-java -cp .:$JAVA_HOME/lib/sa-jdi.jar sun.jvm.hotspot.CLHSDB $JAVA_HOME/bin/java /opt/core.10759
+```
+hsdb> help
+Available commands:
+  assert true | false
+  attach pid | exec core
+  buildreplayjars [ all | app | boot ]  | [ prefix ]
+  class name
+  classes
+  detach
+  dis address [length]
+  disassemble address
+  dumpcfg { -a | id }
+  dumpclass { address | name } [ directory ]
+  dumpcodecache
+  dumpheap [ file ]
+  dumpideal { -a | id }
+  dumpilt { -a | id }
+  dumpreplaydata { <address > | -a | <thread_id> }
+  echo [ true | false ]
+  examine [ address/count ] | [ address,address]
+  field [ type [ name fieldtype isStatic offset address ] ]
+  findpc address
+  flags [ flag | -nd ]
+  help [ command ]
+  history
+  inspect expression
+  intConstant [ name [ value ] ]
+  jdis address
+  jhisto
+  jseval script
+  jsload file
+  jstack [-v]
+  livenmethods
+  longConstant [ name [ value ] ]
+  mem address [ length ]
+  pmap
+  print expression
+  printall
+  printas type expression
+  printmdo [ -a | expression ]
+  printstatics [ type ]
+  pstack [-v]
+  quit
+  reattach
+  revptrs address
+  scanoops start end [ type ]
+  search [ heap | perm | rawheap | codecache | threads ] value
+  source filename
+  symbol address
+  symboldump
+  symboltable name
+  sysprops
+  thread { -a | id }
+  threads
+  tokenize ...
+  type [ type [ name super isOop isInteger isUnsigned size ] ]
+  universe
+  verbose true | false
+  versioncheck [ true | false ]
+  vmstructsdump
+  whatis address
+  where { -a | id }
+
+
+```
+
+
+版本问题，如果产品上装了多个JVM环境的化，注意core dump要和JVM的分析的版本一致（比如用的是openjdk还是oracle的）
+SA环境需要root权限
 
 案例分享：如何通过JVM crash 的日志和core dump定位和分析Instrument引起的JVM crash
 https://blog.csdn.net/raintungli/article/details/77790829
 https://blog.csdn.net/qq_31865983/article/details/98480703
 
+
+
+```
+
+java -cp .:$JAVA_HOME/lib/sa-jdi.jar sun.jvm.hotspot.CLHSDB
+java -cp .:$JAVA_HOME/lib/sa-jdi.jar sun.jvm.hotspot.CLHSDB $JAVA_HOME/bin/java /opt/core.10759
 java -cp .:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.232.b09-0.el7_7.x86_64/lib/sa-jdi.jar sun.jvm.hotspot.CLHSDB /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.232.b09-0.el7_7.x86_64/bin/java /opt/core.10759
+
+hsdb> threads
+.....
+30977 main
+hsdb> where 30977
+Thread 30977 Address: 0x00007fbd80008800
+
+Java Stack Trace for main
+Thread state = BLOCKED
+
+hsdb> jhisto
+```
+### 6.3 More
 
 #### 6.2.2 Java外挂
 https://www.codercto.com/a/18543.html

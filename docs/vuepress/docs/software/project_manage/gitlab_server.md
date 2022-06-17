@@ -2403,7 +2403,7 @@ mvn release:perform -DconnectionUrl='scm:git:http://yue.liu:test%40123456@GITLAB
 还是不行！！！
 最后想到是不是可以把用户名密码传给mvn，我真是太聪明了！
 https://stackoverflow.com/questions/1255593/externalising-scm-credentials-with-maven
-mvn release:prepare -Dusername=[username] -Dpassword=[password] 
+mvn release:perform -Dusername=[username] -Dpassword=[password] 
 成功！！！！
 
 ```

@@ -745,4 +745,48 @@ socket.addEventListener('message', function (event) {
 
 后来才有人反馈firefox可以，才意识到firefox默认proxy设置成了blank，chrome不使用插件的情况下默认是系统的proxy
 
+### nginx location proxy_pass 404
+```
+server {
+		listen       80;
+        location /test {
+            proxy_pass http://127.0.0.1:10001;
+            proxy_redirect    off;
+            proxy_set_header  Host $host;
+            proxy_set_header  X-real-ip $remote_addr;
+            proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+```
+刚开始一直怀疑是nginx问题，结果发现10001对应的java服务挂了，开启debug模式发现问题：
+java -Djavax.net.debug=all -jar teset.jar
+原来是一个字体引起的
+java: symbol lookup error: /lib64/libfontconfig.so.1: undefined symbol: FT_Get_Advance
+
+
+$ ll /usr/lib64/libfontconfig.so.1
+lrwxrwxrwx. 1 root root 23 Jun 15 17:05 /usr/lib64/libfontconfig.so.1 -> libfontconfig.so.1.11.1
+
+nm -D /usr/lib64/libfontconfig.so.1 | grep FT_Get_Advance
+
+第一次尝试：
+mv /usr/lib64/libfreetype.so.6 /usr/lib64/libfreetype.so.6_renamed
+
+2022-06-17 19:50:55.845 ERROR 26353GG [io-10001-exec-2] c.q.f.w.a.CommonExceptionHandler : InternalException: Handler dispatch failed; nested exception is java.lang.UnsatisfiedLinkError: /apex/apps/clearing/3rd-party/openjdk-8u312-b07/jre/lib/amd64/libfontmanager.so: libfreetype.so.6: cannot open shared object file: No such file or directory
+
+org.springframework.web.util.NestedServletException: Handler dispatch failed; nested exception is java.lang.UnsatisfiedLinkError: /apex/apps/clearing/3rd-party/openjdk-8u312-b07/jre/lib/amd64/libfontmanager.so: libfreetype.so.6: cannot open shared object file: No such file or directory
+        at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1075)
+        at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:962)
+        at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+        at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+        at javax.servlet.http.HttpServlet.service(HttpServlet.java:626)
+        at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+        at javax.servlet.http.HttpServlet.service(HttpServlet.java:733)
+
+第二次(solved)：
+https://www.bookstack.cn/read/WeBASE-1.2.4-zh/96bb971c90544168.md
+```
+yum -y install gcc
+yum -y install gcc-c++
+```
+
 <disqus/>

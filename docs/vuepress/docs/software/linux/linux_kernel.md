@@ -17,6 +17,7 @@ LVS - Linux Virtual Server，即 Linux 虚拟服务器, Linux2.4 内核以后，
 ```
 uname -a
 ```
+linux show architecture `uname -m`
 
 ## cpu/memory
 
