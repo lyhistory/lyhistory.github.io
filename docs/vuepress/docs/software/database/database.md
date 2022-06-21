@@ -1,6 +1,13 @@
 
+## Terms
+Tcl - Transaction Control Languages
+The TCL commands are:  
+COMMIT
+ROLLBACK
+SAVEPOINT
 
-##Protocol
+
+## Protocol
 simple query vs extended protocol
 https://github.com/npgsql/npgsql/issues/370
 Hacking SQL Server https://groupby.org/conference-session-abstracts/hacking-sql-server/
