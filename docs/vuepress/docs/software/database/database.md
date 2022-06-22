@@ -6,6 +6,7 @@ COMMIT
 ROLLBACK
 SAVEPOINT
 
+WAL - Write-Ahead Logging
 
 ## Protocol
 simple query vs extended protocol
