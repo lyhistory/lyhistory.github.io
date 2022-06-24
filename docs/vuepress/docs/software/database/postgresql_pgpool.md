@@ -631,7 +631,7 @@ server3:5432:postgres:postgres:<postgres user passowrd>
 | -------------------- | --------------------------- | ------------------------- |
 | PostgreSQL  Version  | 12.7                        | -                         |
 | port                 | 5432                        | -                         |
-| $PGDATA              | /apex/ngs/svl/postgres/data | -                         |
+| $PGDATA              | /lyhistory/workspace/postgres/data | -                         |
 | Archive  mode        | on                          | /var/lib/pgsql/archivedir |
 | Replication  Slots   | Enable ?                    | -                         |
 | Start  automatically | Disable                     | -                         |
@@ -643,8 +643,7 @@ server3:5432:postgres:postgres:<postgres user passowrd>
 # yum install http://www.pgpool.net/yum/rpms/4.1/redhat/rhel-7-x86_64/pgpool-II-release-4.1-1.noarch.rpm
 # yum install pgpool-II-pg11-*
 ```
-##### 2.2.2.2 Pgpool-II Configuration for streaming replicaton mode
-**Common Config**
+##### 2.2.2.2 Pgpool-II Configuration - Common Settings
 ```
 $ cp -p /etc/pgpool-II/pgpool.conf.sample-stream /etc/pgpool-II/pgpool.conf
 
@@ -699,7 +698,7 @@ backend_application_name1 = 'server2'
 backend_application_name2 = 'server3'
 ```
 
-**Failover configuration**
+##### 2.2.2.3 Pgpool-II Configuration - Failover configuration
 ```
 failover_command = '/etc/pgpool-II/failover.sh %d %h %p %D %m %H %M %P %r %R %N %S'
 follow_master_command = '/etc/pgpool-II/follow_master.sh %d %h %p %D %m %M %H %P %r %R'
@@ -710,7 +709,7 @@ $ vi /etc/pgpool-II/follow_master.sh.sample  /etc/pgpool-II/follow_master.sh
 $ chmod +x /etc/pgpool-II/{failover.sh,follow_master.sh}
 ```
 
-**Pgpool-II Online Recovery Configurations**
+##### 2.2.2.4 Pgpool-II Configuration - Online Recovery Configurations
 ```
 $vim /etc/pgpool-II/pgpool.conf
 
@@ -727,14 +726,14 @@ recovery_1st_stage_command = 'recovery_1st_stage'
 [server1]$ chmod +x /var/lib/pgsql/11/data/{recovery_1st_stage,pgpool_remote_start}
 
 ```
-##### 2.2.2.3 install pgpool_recovery
+
 In order to use the online recovery functionality, the functions of pgpool_recovery, pgpool_remote_start, pgpool_switch_xlog are required, so we need install pgpool_recovery on template1 of PostgreSQL server server1.
 ```
 [server1]# su - postgres
 [server1]$ psql template1 -c "CREATE EXTENSION pgpool_recovery"
 ```
 
-##### 2.2.2.4 Client Authentication Configuration
+##### 2.2.2.5 Pgpool-II Configuration - Client Authentication Configuration
 Because in the section Before Starting, we already set PostgreSQL authentication method to scram-sha-256, it is necessary to set a client authentication by Pgpool-II to connect to backend nodes
 ```
 vim /etc/pgpool-II/pool_hba.conf
@@ -757,7 +756,7 @@ pgpool:AESheq2ZMZjynddMWk5sKP/Rw==
 postgres:AESHs/pWL5rtXy2IwuzroHfqg==
 ```
 
-##### 2.2.2.5 Watchdog Configuration
+##### 2.2.2.6 Pgpool-II Configuration - Watchdog Configuration
 ```
 //Enable watchdog functionality on server1, server2, server3.
    use_watchdog = on
@@ -912,7 +911,14 @@ server3
       heartbeat_device1 = ''
      
 ```
-##### 2.2.2.6 Logging
+##### 2.2.2.7 Pgpool-II Configuration - /etc/sysconfig/pgpool Configuration
+```
+//If you want to ignore the pgpool_status file at startup of Pgpool-II, add "- D" to the start option OPTS to /etc/sysconfig/pgpool.
+[all servers]# vi /etc/sysconfig/pgpool 
+    ...
+    OPTS=" -D -n"
+```
+##### 2.2.2.8 Pgpool-II Configuration - Logging
 ```
 log_destination = 'syslog'
     # Where to log
@@ -937,31 +943,25 @@ log_destination = 'syslog'
    
 [all servers]# systemctl restart rsyslog
 ```
-##### 2.2.2.7 PCP Command Configuration
+##### 2.2.2.9 Pgpool-II Configuration - PCP Command Configuration
 ```
 //Since user authentication is required to use the PCP command, specify user name and md5 encrypted password in pcp.conf. Here we create the encrypted password for pgpool user, and add "username:encrypted password" in /etc/pgpool-II/pcp.conf.
 [all servers]# echo 'pgpool:'`pg_md5 PCP passowrd` >> /etc/pgpool-II/pcp.conf
 ```
-##### 2.2.2.8 .pcppass
+##### 2.2.2.10 Pgpool-II Configuration - .pcppass
 ```
 //Since follow_master_command script has to execute PCP command without entering the password, we create .pcppass in the home directory of Pgpool-II startup user (root user).
 [all servers]# echo 'localhost:9898:pgpool:pgpool' > ~/.pcppass
     [all servers]# chmod 600 ~/.pcppass
 ```
-##### 2.2.2.9 other
-```
-//If you want to ignore the pgpool_status file at startup of Pgpool-II, add "- D" to the start option OPTS to /etc/sysconfig/pgpool.
-[all servers]# vi /etc/sysconfig/pgpool 
-    ...
-    OPTS=" -D -n"
-```
-##### 2.2.2.10 firewall for Pgpool-II
+
+##### 2.2.2.11 firewall for Pgpool-II
 ```
 [all servers]# firewall-cmd --permanent --zone=public --add-port=9999/tcp --add-port=9898/tcp --add-port=9000/tcp  --add-port=9694/udp
 [all servers]# firewall-cmd --reload
 ```
 
-##### 2.2.2.11 Summary
+##### 2.2.2.12 Summary
 
 | **Item**              | **Value**                                           | **Detail**                                                 |
 | --------------------- | --------------------------------------------------- | ---------------------------------------------------------- |
@@ -975,7 +975,16 @@ log_destination = 'syslog'
 | Running  mode         | streaming  replication mode                         | -                                                          |
 | Watchdog              | on                                                  | Life  check method: heartbeat                              |
 | Start  automatically  | Disable                                             | -                                                          |
-#### 2.2.3 Starting/Stopping Pgpool-II
+
+#### 2.2.3 Assign Permission and set env path
+
+chown –R postgres:postgres /var/lib/pgsql/12，
+
+vim /var/lib/pgsql/.bash_profile
+    PATH=$PATH:/usr/pgsql-12/bin
+    export PATH
+
+#### 2.2.4 Starting/Stopping Pgpool-II
 Before starting Pgpool-II, please start PostgreSQL servers first. Also, when stopping PostgreSQL, it is necessary to stop Pgpool-II first
 
 ```
@@ -983,7 +992,7 @@ Before starting Pgpool-II, please start PostgreSQL servers first. Also, when sto
  # systemctl start pgpool.service
 ```
 
-#### 2.2.4 Set up PostgreSQL standby server
+#### 2.2.5 Set up PostgreSQL standby server
 
 First, we should set up PostgreSQL standby server by using Pgpool-II online recovery functionality. Ensure that recovery_1st_stage and pgpool_remote_start scripts used by pcp_recovery_node command are in database cluster directory of PostgreSQL primary server (server1).
 ```
@@ -1005,7 +1014,7 @@ First, we should set up PostgreSQL standby server by using Pgpool-II online reco
     2       | server3  | 5432 | up     | 0.333333  | standby | 0          | false             | 0                 | streaming         | async                  | 2019-08-06 11:14:20
     (3 rows)
 ```
-#### 2.2.5 Switching active/standby watchdog
+#### 2.2.6 Switching active/standby watchdog
 ```
 //Confirm the watchdog status by using pcp_watchdog_info. The Pgpool-II server which is started first run as MASTER.
   # pcp_watchdog_info -h 192.168.137.150 -p 9898 -U pgpool
@@ -1038,7 +1047,7 @@ First, we should set up PostgreSQL standby server by using Pgpool-II online reco
     server3:9999 Linux server3 server3 9999 9000 7 STANDBY
 
 ```
-#### 2.2.6 Failover
+#### 2.2.7 Failover
 ```
 //First, use psql to connect to PostgreSQL via virtual IP, and verify the backend informations.
 # psql -h 192.168.137.150 -p 9999 -U pgpool postgres -c "show pool_nodes"
@@ -1099,7 +1108,7 @@ First, we should set up PostgreSQL standby server by using Pgpool-II online reco
     reply_time       | 2019-08-06 11:42:59.823961+09
 ```
 
-#### 2.2.7 Online Recovery
+#### 2.2.8 Online Recovery
 ```
 //Here, we use Pgpool-II online recovery functionality to restore server1 (old primary server) as a standby. Before restoring the old primary server, please ensure that recovery_1st_stage and pgpool_remote_start scripts exist in database cluster directory of current primary server server2.
   # pcp_recovery_node -h 192.168.137.150 -p 9898 -U pgpool -n 0
