@@ -3,9 +3,18 @@ https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/index.html
 
 Pgpool-II
 
-## What is
 
-Pgpool-II is a proxy software that sits between PostgreSQL servers and a PostgreSQL database client. It provides the following features:
+
+## 1.Knowledge base
+
+### 1.1 What is
+Pgpool-II is a proxy server sitting between clients and PostgreSQL. Pgpool-II understands the wire level protocol used by PostgreSQL called "frontend and backend protocol". For more details of the protocol, see the PostgreSQL manual. No modified PostgreSQL is required to use Pgpool-II (more precisely, you will need a few extensions to use full functions of Pgpool-II). So Pgpool-II can cope with variety of PostgreSQL versions. In theory, even the earliest version of PostgreSQL can be used with Pgpool-II. Same thing can be said to client side. As long as it follows the protocol, Pgpool-II happily accept connections from it, no matter what kind of languages or drivers it uses.
+
+Pgpool-II consists of multiple process. There is a **main process**, which is the parent process of all other process. It is responsible for forking child process each of which accepts connections from clients. There are some **worker process** those are forked from the main process as well, which is responsible for detecting streaming replication delay. There is also a special process called **"pcp process"**, which is solely used for management of Pgpool-II itself. Pgpool-II has a built-in high availability function called **"watchdog"**. Watchdog consists of some process. For more details of watchdog, see Chapter 4.
+
+![](https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/process-diagram.gif)
+
+It provides the following features:
 
 + Connection Pooling
 Pgpool-II maintains established connections to the PostgreSQL servers, and reuses them whenever a new connection with the same properties (i.e. user name, database, protocol version, and other connection parameters if any) comes in. It reduces the connection overhead, and improves system's overall throughput.
@@ -31,13 +40,12 @@ Watchdog can coordinate multiple Pgpool-II, create a robust cluster system and a
 + In Memory Query Cache
 In memory query cache allows to save a pair of SELECT statement and its result. If an identical SELECTs comes in, Pgpool-II returns the value from cache. Since no SQL parsing nor access to PostgreSQL are involved, using in memory cache is extremely fast. On the other hand, it might be slower than the normal path in some cases, because it adds some overhead of storing cache data.
 
-## Restrictions
+### 1.2 Restrictions
 https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/restrictions.html
 
-## Knowledge base
 https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/admin.html
 
-### Installation of Pgpool-II
+### 1.3 Installation of Pgpool-II
 
 **install from source or rpm**
 
@@ -47,6 +55,8 @@ install from rpm:
 ```
 yum install http://www.pgpool.net/yum/rpms/4.0/redhat/rhel-7-x86_64/pgpool-II-release-4.0-1.noarch.rpm
 yum install pgpool-II-pg11
+
+rpm direct download: https://yum.postgresql.org/rpmchart/
 
 pg11 means PostgreSQL 11. Pgpool-II needs PostgreSQL's library and extensions directory. Since the directory paths are different in the particular PostgreSQL versions, You must choose appropriate RPM for your PostgreSQL rpm installation. We also assume you are using PostgreSQL community rpms. Optionally you can install:
 yum install pgpool-II-pg11-debuginfo
@@ -85,7 +95,7 @@ https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/install-docs.html
 
 
 
-### Configuration(Server Setup and Operation)
+### 1.4 Configuration(Server Setup and Operation)
 
 + if installed from rpm: all the Pgpool-II configuration files live in **/etc/pgpool-II**
 + if installed from source code: **$prefix/etc/pgpool.conf by default** (/usr/local/etc )
@@ -136,7 +146,7 @@ For Pgpool-II to recognize PostgreSQL backend servers, you need to configure bac
 
 https://www.pgpool.net/docs/pgpool-II-4.1.1/en/html/runtime-config-backend-settings.html
 
-### Watchdog
+### 1.5 Watchdog
 Watchdog is a sub process of Pgpool-II to add high availability. Watchdog is used to resolve the single point of failure by coordinating multiple pgpool-II nodes. 
 To ensure the quorum mechanism properly works, the number of pgpool-II nodes must be odd in number and greater than or equal to 3.
 
@@ -184,7 +194,7 @@ Lifecheck process is a sub-component of watchdog, its job is to monitor the heal
 #### Integrating external lifecheck with watchdog
 https://www.pgpool.net/docs/pgpool-II-4.1.1/en/html/tutorial-watchdog-integrating-external-lifecheck.html
 
-### Server Configuration
+### 1.6 Server Configuration
 https://www.pgpool.net/docs/pgpool-II-4.1.1/en/html/runtime-config.html
 
 **Setting Parameters**
@@ -217,7 +227,7 @@ Watchdog
 
 Misc Configuration Parameters
 
-### Client Authentication
+### 1.6 Client Authentication
 https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/client-authentication.html
 
 The pool_hba.conf File
@@ -228,16 +238,16 @@ Using different methods for frontend and backend authentication
 
 Using AES256 encrypted passwords in pool_passwd
 
-### Performance Considerations
+### 1.7 Performance Considerations
 https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/performance.html
 
 
-## Pgpool-II + Watchdog Setup Example
+## 2. Pgpool-II + Watchdog Setup Example
 https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/example-configs.html
 
-### Single Node
+### 2.1 Simple two Nodes Replication
 
-#### Installing Pgpool-II
+#### 2.1.1 Installing Pgpool-II
 ```
 $ ./configure
 $ make
@@ -247,7 +257,7 @@ configure script collects your system information and use it for the compilation
 
 make command compiles the source code, and make install will install the executables. You must have write permission on the installation directory.
 
-#### Configuration
+#### 2.1.2 Configuration
 ```
 //Configuration Files
 $ cp /usr/local/etc/pgpool.conf.sample /usr/local/etc/pgpool.conf
@@ -275,7 +285,7 @@ $ vim /etc/pgpool-II/pgpool.conf
     backend_weight2 = 1
 
 ```
-#### Starting/Stopping Pgpool-II
+#### 2.1.3 Starting/Stopping Pgpool-II
 ```
 $ pgpool
 The above command, however, prints no log messages because Pgpool-II detaches the terminal. If you want to show Pgpool-II log messages, you pass -n option to pgpool command so Pgpool-II is executed as non-daemon process, and the terminal will not be detached.
@@ -299,7 +309,7 @@ $ pgpool -m fast stop
 
 ```
 
-#### Configuring Replication
+#### 2.1.4 Configuring Replication
 we'll use three database nodes,
 
 ```
@@ -327,7 +337,7 @@ $ for port in 5432 5433 5434; do
      > done
 ```
 
-#### Watchdog Configuration Example
+#### 2.1.5 Watchdog Configuration Example
 What you need is 2 Linux boxes on which Pgpool-II is installed and a PostgreSQL on the same machine or in the other one. It is enough that 1 node for backend exists. You can use watchdog with Pgpool-II in any mode: replication mode, master/slave mode and raw mode.
 This example uses use "osspc16" as an Active node and "osspc20" as a Standby node. "Someserver" means one of them.
 
@@ -476,7 +486,7 @@ arping_path = '/usr/sbin'           # arping command path
 arping_cmd = 'arping -U $_IP_$ -w 1'
 ```
 
-### Streaming replication configuration using Pgpool-II+ Watchdog Setup Example
+### 2.2 Pgpool-II+ Watchdog Setup (Streaming replication mode)
 In this example, we use 3 Pgpool-II servers to manage PostgreSQL servers to create a robust cluster system and avoid the single point of failure or split brain.
 
 ![](https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/cluster_40.gif)
@@ -485,7 +495,8 @@ In this example, we use 3 Pgpool-II servers to manage PostgreSQL servers to crea
 We assume that all the Pgpool-II servers and the PostgreSQL servers are in the same subnet.
 We use 3 servers with CentOS 7.4. Let these servers be server1, server2, server3. We install PostgreSQL and Pgpool-II on each server.
 
-#### Install PostgreSQL by using PostgreSQL YUM repository.
+#### 2.2.1 Stepup postgresql server (data nodes) 
+##### 2.2.1.1 Install PostgreSQL by using PostgreSQL YUM repository.
 ```
 # yum install https://download.postgresql.org/pub/repos/yum/11/redhat/rhel-7-x86_64/pgdg-centos11-11-2.noarch.rpm
 # yum install postgresql11 postgresql11-libs postgresql11-devel postgresql11-server
@@ -530,7 +541,7 @@ vi data/log/postgresql-Fri.log
 su - postgres 
 ```
 
-#### Set up PostgreSQL streaming replication on the primary server.
+##### 2.2.1.2 Set up PostgreSQL streaming replication on the primary server.
 ```
 //First, we create the directory /var/lib/pgsql/archivedir to store WAL segments on all servers. In this example, only Primary node archives WAL locally.
 [all servers]# su - postgres
@@ -550,7 +561,7 @@ wal_log_hints = on
 ```
 We use the online recovery functionality of Pgpool-II to setup standby server after the primary server is started.
 
-#### create users
+##### 2.2.1.4 create users
 Because of the security reasons, we create a user repl solely used for replication purpose, and a user pgpool for streaming replication delay check and health check of Pgpool-II.
 ```
 [server1]# psql -U postgres -p 5432
@@ -565,7 +576,7 @@ postgres=# \password postgres
 GRANT pg_monitor TO pgpool;
 ```
 
-#### enable scram-sha-256 authentication method
+##### 2.2.1.5 enable scram-sha-256 authentication method
 Assuming that all the Pgpool-II servers and the PostgreSQL servers are in the same subnet and edit pg_hba.conf to enable scram-sha-256 authentication method.
 ```
 vi /lyhistory/workspace/postgres/data/pg_hba.conf 
@@ -573,7 +584,7 @@ host    all             all             samenet                 scram-sha-256
      host    replication     all             samenet                 scram-sha-256
 ```
 
-#### passwordless SSH 
+##### 2.2.1.6 passwordless SSH 
 To use the automated failover and online recovery of Pgpool-II, the settings that allow passwordless SSH to all backend servers between Pgpool-II execution user (default root user) and postgres user and between postgres user and postgres user are necessary. Execute the following command on all servers to set up passwordless SSH. The generated key file name is id_rsa_pgpool.
 ```
 [all servers]# cd ~/.ssh
@@ -593,7 +604,7 @@ test:
 ssh postgres@serverX -i ~/.ssh/id_rsa_pgpool
 ```
 
-#### allow repl user without specifying password for streaming replication and online recovery
+##### 2.2.1.7 allow repl user without specifying password for streaming replication and online recovery
 
 ```
 [all servers]# su - postgres
@@ -608,17 +619,31 @@ server3:5432:postgres:postgres:<postgres user passowrd>
     
 ```
 
-#### firewall for postgres
+##### 2.2.1.8 firewall for postgres
 ```
 [all servers]# firewall-cmd --permanent --zone=public --add-service=postgresql
 [all servers]# firewall-cmd --reload
 ```
-#### Install Pgpool-II
+
+##### 2.2.1.9 Summary
+
+| **Item**             | **Value**                   | **Detail**                |
+| -------------------- | --------------------------- | ------------------------- |
+| PostgreSQL  Version  | 12.7                        | -                         |
+| port                 | 5432                        | -                         |
+| $PGDATA              | /apex/ngs/svl/postgres/data | -                         |
+| Archive  mode        | on                          | /var/lib/pgsql/archivedir |
+| Replication  Slots   | Enable ?                    | -                         |
+| Start  automatically | Disable                     | -                         |
+
+#### 2.2.2 Setup Pgpool-II+Watchdog
+
+##### 2.2.2.1 Install Pgpool-II
 ```
 # yum install http://www.pgpool.net/yum/rpms/4.1/redhat/rhel-7-x86_64/pgpool-II-release-4.1-1.noarch.rpm
 # yum install pgpool-II-pg11-*
 ```
-#### Pgpool-II Configuration for streaming replicaton mode
+##### 2.2.2.2 Pgpool-II Configuration for streaming replicaton mode
 **Common Config**
 ```
 $ cp -p /etc/pgpool-II/pgpool.conf.sample-stream /etc/pgpool-II/pgpool.conf
@@ -702,14 +727,14 @@ recovery_1st_stage_command = 'recovery_1st_stage'
 [server1]$ chmod +x /var/lib/pgsql/11/data/{recovery_1st_stage,pgpool_remote_start}
 
 ```
-#### install pgpool_recovery
+##### 2.2.2.3 install pgpool_recovery
 In order to use the online recovery functionality, the functions of pgpool_recovery, pgpool_remote_start, pgpool_switch_xlog are required, so we need install pgpool_recovery on template1 of PostgreSQL server server1.
 ```
 [server1]# su - postgres
 [server1]$ psql template1 -c "CREATE EXTENSION pgpool_recovery"
 ```
 
-#### Client Authentication Configuration
+##### 2.2.2.4 Client Authentication Configuration
 Because in the section Before Starting, we already set PostgreSQL authentication method to scram-sha-256, it is necessary to set a client authentication by Pgpool-II to connect to backend nodes
 ```
 vim /etc/pgpool-II/pool_hba.conf
@@ -731,13 +756,8 @@ db password: [postgres user's passowrd]
 pgpool:AESheq2ZMZjynddMWk5sKP/Rw==
 postgres:AESHs/pWL5rtXy2IwuzroHfqg==
 ```
-#### firewall for Pgpool-II
-```
-[all servers]# firewall-cmd --permanent --zone=public --add-port=9999/tcp --add-port=9898/tcp --add-port=9000/tcp  --add-port=9694/udp
-[all servers]# firewall-cmd --reload
-```
 
-#### Watchdog Configuration
+##### 2.2.2.5 Watchdog Configuration
 ```
 //Enable watchdog functionality on server1, server2, server3.
    use_watchdog = on
@@ -892,7 +912,7 @@ server3
       heartbeat_device1 = ''
      
 ```
-#### Logging
+##### 2.2.2.6 Logging
 ```
 log_destination = 'syslog'
     # Where to log
@@ -917,25 +937,45 @@ log_destination = 'syslog'
    
 [all servers]# systemctl restart rsyslog
 ```
-#### PCP Command Configuration
+##### 2.2.2.7 PCP Command Configuration
 ```
 //Since user authentication is required to use the PCP command, specify user name and md5 encrypted password in pcp.conf. Here we create the encrypted password for pgpool user, and add "username:encrypted password" in /etc/pgpool-II/pcp.conf.
 [all servers]# echo 'pgpool:'`pg_md5 PCP passowrd` >> /etc/pgpool-II/pcp.conf
 ```
-#### .pcppass
+##### 2.2.2.8 .pcppass
 ```
 //Since follow_master_command script has to execute PCP command without entering the password, we create .pcppass in the home directory of Pgpool-II startup user (root user).
 [all servers]# echo 'localhost:9898:pgpool:pgpool' > ~/.pcppass
     [all servers]# chmod 600 ~/.pcppass
 ```
-#### other
+##### 2.2.2.9 other
 ```
 //If you want to ignore the pgpool_status file at startup of Pgpool-II, add "- D" to the start option OPTS to /etc/sysconfig/pgpool.
 [all servers]# vi /etc/sysconfig/pgpool 
     ...
     OPTS=" -D -n"
 ```
-#### Starting/Stopping Pgpool-II
+##### 2.2.2.10 firewall for Pgpool-II
+```
+[all servers]# firewall-cmd --permanent --zone=public --add-port=9999/tcp --add-port=9898/tcp --add-port=9000/tcp  --add-port=9694/udp
+[all servers]# firewall-cmd --reload
+```
+
+##### 2.2.2.11 Summary
+
+| **Item**              | **Value**                                           | **Detail**                                                 |
+| --------------------- | --------------------------------------------------- | ---------------------------------------------------------- |
+| Pgpool-II  Version    | 4.1.1                                               | -                                                          |
+| port                  | 9999                                                | Pgpool-II  accepts connections                             |
+| 9898                  | PCP  process accepts connections                    |                                                            |
+| 9000                  | watchdog  accepts connections                       |                                                            |
+| 9694                  | UDP  port for receiving Watchdog's heartbeat signal |                                                            |
+| Config  file          | /etc/pgpool-II/pgpool.conf                          | Pgpool-II  config file                                     |
+| Pgpool-II  start user | postgres  (Pgpool-II 4.1 or later)                  | Pgpool-II  4.0 or before, the default startup user is root |
+| Running  mode         | streaming  replication mode                         | -                                                          |
+| Watchdog              | on                                                  | Life  check method: heartbeat                              |
+| Start  automatically  | Disable                                             | -                                                          |
+#### 2.2.3 Starting/Stopping Pgpool-II
 Before starting Pgpool-II, please start PostgreSQL servers first. Also, when stopping PostgreSQL, it is necessary to stop Pgpool-II first
 
 ```
@@ -943,7 +983,7 @@ Before starting Pgpool-II, please start PostgreSQL servers first. Also, when sto
  # systemctl start pgpool.service
 ```
 
-##### Set up PostgreSQL standby server
+#### 2.2.4 Set up PostgreSQL standby server
 
 First, we should set up PostgreSQL standby server by using Pgpool-II online recovery functionality. Ensure that recovery_1st_stage and pgpool_remote_start scripts used by pcp_recovery_node command are in database cluster directory of PostgreSQL primary server (server1).
 ```
@@ -965,7 +1005,7 @@ First, we should set up PostgreSQL standby server by using Pgpool-II online reco
     2       | server3  | 5432 | up     | 0.333333  | standby | 0          | false             | 0                 | streaming         | async                  | 2019-08-06 11:14:20
     (3 rows)
 ```
-##### Switching active/standby watchdog
+#### 2.2.5 Switching active/standby watchdog
 ```
 //Confirm the watchdog status by using pcp_watchdog_info. The Pgpool-II server which is started first run as MASTER.
   # pcp_watchdog_info -h 192.168.137.150 -p 9898 -U pgpool
@@ -998,7 +1038,7 @@ First, we should set up PostgreSQL standby server by using Pgpool-II online reco
     server3:9999 Linux server3 server3 9999 9000 7 STANDBY
 
 ```
-##### Failover
+#### 2.2.6 Failover
 ```
 //First, use psql to connect to PostgreSQL via virtual IP, and verify the backend informations.
 # psql -h 192.168.137.150 -p 9999 -U pgpool postgres -c "show pool_nodes"
@@ -1059,7 +1099,7 @@ First, we should set up PostgreSQL standby server by using Pgpool-II online reco
     reply_time       | 2019-08-06 11:42:59.823961+09
 ```
 
-##### Online Recovery
+#### 2.2.7 Online Recovery
 ```
 //Here, we use Pgpool-II online recovery functionality to restore server1 (old primary server) as a standby. Before restoring the old primary server, please ensure that recovery_1st_stage and pgpool_remote_start scripts exist in database cluster directory of current primary server server2.
   # pcp_recovery_node -h 192.168.137.150 -p 9898 -U pgpool -n 0
@@ -1076,6 +1116,24 @@ First, we should set up PostgreSQL standby server by using Pgpool-II online reco
     2       | server3  | 5432 | up     | 0.333333  | standby | 0          | true              | 0                 | streaming         | async                  | 2019-08-06 11:36:15
     (3 rows)
 ```
-## Manage a PostgreSQL cluster with streaming replication using Pgpool-II
+## pgpool_setup (Streaming replication mode)
 https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/tutorial.html
+```
+pgpool_setup
+
+
+```
+
+
+## Manage PgPool-II
+```
+
+psql -h <VirtualIP> -p 9999 -U pgpool postgres -c "show pool_nodes"
+
+pgbench 
+
+pg_ctl 
+
+pcp_recovery_node 
+```
 

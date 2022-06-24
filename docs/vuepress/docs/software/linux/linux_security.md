@@ -16,8 +16,14 @@ chcon 会被重新标记
 使用semanage
 getenforce 
 
-## /etc/cron.allow 
+## Linux-PAM
 
+Linux-PAM (short for Pluggable Authentication Modules which evolved from the Unix-PAM architecture) is a powerful suite of shared libraries used to dynamically authenticate a user to applications (or services) in a Linux system.
+
+```
+/etc/pam.d/crond
+/etc/cron.allow 
+```
 
 ## example
 
