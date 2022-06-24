@@ -78,7 +78,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/database/database">数据库基础</a></li>
 		<li><a href="/docs/software/database/mysql">mysql</a></li>
 		<li><a href="/docs/software/database/oracle">oracle</a></li>
-		<li><a href="/docs/software/database/postgresql">postgresql</a></li>	
+		<li><a href="/docs/software/database/postgresql">postgresql</a></li>
+		<li><a href="/docs/software/database/postgresql_pgpool">postgresql pgpool</a></li>	
 		<li><a href="/docs/software/database/mongodb">mongodb</a></li>
 	</ul>
 	<p>-------------------------</p>
@@ -124,6 +125,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/project_manage/monitor_logging">日志监控</a></li>
 		<li><a href="/docs/software/project_manage/cloud_google">google cloud</a></li>
 		<li><a href="/docs/software/project_manage/cloud_aws">aws cloud</a></li>
+		<li><a href="/docs/software/project_manage/cloud_huawei">huawei cloud</a></li>
 		<li><a href="/docs/software/project_manage/modeling_uml">Modeling UML</a></li>
 		<li><a href="/docs/software/project_manage/test_jmeter">JMeter</a></li>
 		<li><a href="/docs/software/project_manage/test_stress_test">Stress Test</a></li>

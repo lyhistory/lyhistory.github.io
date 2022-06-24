@@ -12,7 +12,7 @@ Pgpool-II is a proxy server sitting between clients and PostgreSQL. Pgpool-II un
 
 Pgpool-II consists of multiple process. There is a **main process**, which is the parent process of all other process. It is responsible for forking child process each of which accepts connections from clients. There are some **worker process** those are forked from the main process as well, which is responsible for detecting streaming replication delay. There is also a special process called **"pcp process"**, which is solely used for management of Pgpool-II itself. Pgpool-II has a built-in high availability function called **"watchdog"**. Watchdog consists of some process. For more details of watchdog, see Chapter 4.
 
-![](https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/process-diagram.gif)
+![](/docs/docs_image/software/postgresql/pgpool-ii_architect.gif)
 
 It provides the following features:
 
@@ -489,7 +489,7 @@ arping_cmd = 'arping -U $_IP_$ -w 1'
 ### 2.2 Pgpool-II+ Watchdog Setup (Streaming replication mode)
 In this example, we use 3 Pgpool-II servers to manage PostgreSQL servers to create a robust cluster system and avoid the single point of failure or split brain.
 
-![](https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/cluster_40.gif)
+![](/docs/docs_image/software/postgresql/pgpool-ii+watchdog_cluster_example.gif)
 
 **REQUIREMENT:**
 We assume that all the Pgpool-II servers and the PostgreSQL servers are in the same subnet.
@@ -547,7 +547,7 @@ su - postgres
 [all servers]# su - postgres
 [all servers]$ mkdir /var/lib/pgsql/archivedir
 
-//Then we edit the configuration file $PGDATA/postgresql.conf on server1 (primary) as follows. Enable wal_log_hints to use pg_rewind. Since the Primary may become a Standby later, we set hot_standby = on.
+//Then we edit the configuration file $PGDATA/postgresql.conf on ~~server1 (primary)~~ all servers as follows. Enable wal_log_hints to use pg_rewind. Since the Primary may become a Standby later, we set hot_standby = on.
 
 listen_addresses = '*'
 archive_mode = on
