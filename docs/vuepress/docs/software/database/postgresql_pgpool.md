@@ -950,9 +950,10 @@ log_destination = 'syslog'
 ```
 ##### 2.2.2.10 Pgpool-II Configuration - .pcppass
 ```
-//Since follow_master_command script has to execute PCP command without entering the password, we create .pcppass in the home directory of Pgpool-II startup user (root user).
+//Since follow_master_command script has to execute PCP command without entering the password, we create .pcppass in the home directory of Pgpool-II startup user (root user). If doesn’t have root access, repeated same step under postgres user home directory (/var/lib/pgsql), make sure the permission is 600.
+
 [all servers]# echo 'localhost:9898:pgpool:pgpool' > ~/.pcppass
-    [all servers]# chmod 600 ~/.pcppass
+[all servers]# chmod 600 ~/.pcppass
 ```
 
 ##### 2.2.2.11 firewall for Pgpool-II
@@ -1130,7 +1131,6 @@ https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/tutorial.html
 ```
 pgpool_setup
 
-
 ```
 
 
@@ -1138,11 +1138,43 @@ pgpool_setup
 ```
 
 psql -h <VirtualIP> -p 9999 -U pgpool postgres -c "show pool_nodes"
+pcp_watchdog_info -p 9898 -h <Virtual IP> -U pgpool
 
 pgbench 
 
 pg_ctl 
 
 pcp_recovery_node 
+
+
+
 ```
 
+## Troubleshooting
+
+### pcp_recovery_node error
+#### ERROR: executing recovery
+```
+pcp_recovery_node 
+
+ERROR: executing recovery, execution of command failed at "1st stage"
+DETAIL: command:"recovery_1st_stage"
+
+vi /lyhistory/workspace/postgres/data/log/postgresql-Mon.log
+
+2022-06-27 12:00:21.267 +08 [9557] LOG:  database system is ready to accept connections
+sh: /lyhistory/workspace/postgres/data/recovery_1st_stage: /bin/bash^M: bad interpreter: No such file or directory
+2022-06-27 12:02:53.154 +08 [9825] ERROR:  pgpool_recovery failed
+2022-06-27 12:02:53.154 +08 [9825] STATEMENT:  SELECT pgpool_recovery('recovery_1st_stage', 'sghc1_prod_nss_alpha_v02', '/lyhistory/workspace/postgres/data', '5432', 1, '5432')
+sh: /lyhistory/workspace/postgres/data/recovery_1st_stage: /bin/bash^M: bad interpreter: No such file or directory
+
+
+dos2unix recovery_1st_stage
+```
+
+#### ERROR:  executing remote start failed with error: "ERROR:  pgpool_remote_start failed
+奇怪，再试一次就可以成功 just retry one more time
+
+### Failover failed
+vm1 master vm2&vm3 是slave
+杀掉vm1的postgres，vm2成为master，但是vm3也down掉（但是5432仍然在监听，systemctl status是dead状态）

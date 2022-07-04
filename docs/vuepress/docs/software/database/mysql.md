@@ -143,6 +143,11 @@ mysql_config_editor/login-path
 mysql_config_editor print --all
 mysql_config_editor set --login-path=host-rpl --host=localhost --port=3306 --user=replicator --password
 
+找回密码:
+my_print_defaults -s client (需要安装mysql-server)
+或者可以
+decrypt ~/.mylogin.cnf
+https://github.com/PyMySQL/myloginpath
 ```
 
 grep:

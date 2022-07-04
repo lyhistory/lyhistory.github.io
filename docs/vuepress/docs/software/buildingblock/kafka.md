@@ -1266,11 +1266,16 @@ https://docs.confluent.io/platform/current/installation/configuration
 
 ##### 复制因子 replica factor 详解
 
-min.insync.replicas（default value=1）同时控制external topic 以及internal topic` __consumer_offsets`和`__transaction_state`，transaction.state.\*只控制`__transaction_state`（transaction.state.log.min.isr overriden min.insync.replicas），
+min.insync.replicas（default value=1）
+https://accu.org/journals/overload/28/159/kozlovski/
+同时控制external topic 以及internal topic` __consumer_offsets`和`__transaction_state`，
+transaction.state.\*只控制`__transaction_state`（transaction.state.log.min.isr overriden min.insync.replicas），
 offsets.topic.replication.factor控制offsets topic也就是`__consumer_offsets`，必须跟broker个数一致(小于等于，默认值为3，如果是两个节点就不行了，所以不要轻易使用默认值），否则无法启动
-default.replication.factor控制automatically created topics，应该是值的external topic
+default.replication.factor控制external topic（有时候称为automatically created topics，手动或自动创建auto.create.topics.enable默认是true）
 
 
++ if living/avaliable brokers < default.replication.factor
+无法创建topic，报错：InvalidReplicationFactorException
 
 + if offsets.topic.replication.factor > brokers数量，~~kafka client无法启动（无法Discover group coordinator）~~应该是kafka sever无法正常创建internal topic consumer_offset, kafka server报错：
 
@@ -1298,6 +1303,9 @@ org.apache.kafka.common.errors.NotEnoughReplicasException: The size of the curre
 ```
 
 注意如果不停掉kafka producer程序，上述日志会快速的在kafka/logs/server.log 中刷入，潜在可能会造成磁盘问题
+
++ if living/avaliable brokers <min.insync.replicas && producer.properties.acks=all：
+producer报错 NotEnoughReplicasException
 
 + if (live isr 活着的节点中并且是isr的节点数) <min.insync.replicas of` __consumer_offsets`:
 
@@ -1364,6 +1372,9 @@ kafka.common.StateChangeFailedException: Failed to elect leader for partition T-
 [2022-03-16 10:58:02,838] INFO [Controller id=1] Partition T-TEST2-SNP-2 completed preferred replica leader election. New leader is 2 (kafka.controller.KafkaController)
 [2022-03-16 10:58:02,838] WARN [Controller id=1] Partition T-TEST2-1 failed to complete preferred replica leader election to 2. Leader is still 0 (kafka.controller.KafkaController)
 ```
+
++ 丢数据：min.insync.replicas=2 && unclean.leader.election.enable=true (It is default value)
+https://stackoverflow.com/questions/57277370/min-insync-replicas-vs-unclean-leader-election
 
 ##### 通用配置
 
@@ -2465,6 +2476,60 @@ replica factor=2，启动3个node，那么就出现比如 `__consumer_offsets_49
 
 
 ## 5. Troubleshooting
+
+### Caused by: org.apache.kafka.common.errors.InvalidReplicationFactorException: Replication factor is below 1 or larger than the number of available brokers.
+配置
+```
+offsets.topic.replication.factor=3
+min.insync.replicas=1
+transaction.state.log.replication.factor=3
+transaction.state.log.min.isr=1
+default.replication.factor=3
+```
+一个节点挂了，然后启动kafka client（并且此时topic还未创建），报错
+```
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2022-06-27 06:20:09.825 [31mERROR[m [35m2506GG[m [main] [36mo.s.b.SpringApplication[m : Application run failed
+
+org.apache.kafka.common.KafkaException: Unexpected error fetching metadata for topic T-TEST
+	at org.apache.kafka.clients.consumer.internals.Fetcher.getTopicMetadata(Fetcher.java:327)
+	at org.apache.kafka.clients.consumer.KafkaConsumer.partitionsFor(KafkaConsumer.java:1803)
+	at org.apache.kafka.clients.consumer.KafkaConsumer.partitionsFor(KafkaConsumer.java:1771)
+	....
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:108)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:58)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:88)
+Caused by: org.apache.kafka.common.errors.InvalidReplicationFactorException: Replication factor is below 1 or larger than the number of available brokers.
+```
+很正常，因为创建topic需要活着的节点>=replication.factor,对应这段代码是在请求 getTopicMetadata 触发kafka服务端创建topic
+```
+@Override
+    public List<PartitionInfo> partitionsFor(String topic, Duration timeout) {
+        acquireAndEnsureOpen();
+        try {
+            Cluster cluster = this.metadata.fetch();
+            List<PartitionInfo> parts = cluster.partitionsForTopic(topic);
+            if (!parts.isEmpty())
+                return parts;
+
+            Timer timer = time.timer(timeout);
+            Map<String, List<PartitionInfo>> topicMetadata = fetcher.getTopicMetadata(
+                    new MetadataRequest.Builder(Collections.singletonList(topic), true), timer);
+            return topicMetadata.get(topic);
+        } finally {
+            release();
+        }
+    }
+
+auto.create.topics.enable
+
+MetadataRequest auto create kafka topic InvalidReplicationFactorException
+
+https://cwiki.apache.org/confluence/display/KAFKA/KIP-361%3A+Add+Consumer+Configuration+to+Disable+Auto+Topic+Creation
+
+```
+然后还有一个kafka client程序也是类似问题，只不过这个程序使用了多个topic: Topic1 Topic2，Topic1事先已经创建了所以没有问题，在请求 Topic2的 metadata的时候（endoffset）也是自动创建失败产生类似报错
 
 ### Fatal error during KafkaServer startup. Prepare to shutdown (kafka.server.KafkaServer)
 

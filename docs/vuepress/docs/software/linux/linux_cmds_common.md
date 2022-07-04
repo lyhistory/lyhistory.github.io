@@ -222,6 +222,13 @@ MAILTO=my.offsite.email@example.org
 
 ## history
 
+history with datetime
+```
+~/.bashrc:
+export HISTTIMEFORMAT="%d/%m/%y %H:%M "
+```
+
+Delete your Linux history without leaving a trace!
 ```
 for i in {1..N}; do history -d START_NUM; done
 

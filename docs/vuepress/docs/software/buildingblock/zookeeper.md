@@ -63,23 +63,18 @@ Resolved: yum install glibc.i686
 ```
 
 
-
-$ java -version
-bash: /apps/dependency/java-se-8u40-ri/bin/java: /lib/ld-linux.so.2: bad ELF interpreter: No such file or directory
-[liuyue@vm2-devclr-v08 dependency]$ /lib/ld-linux.so.2: bad ELF interpreter: No such file or directory
-
-
 https://zookeeper.apache.org/doc/r3.3.3/zookeeperStarted.html
 
+```
 bin/zkCli.sh -server 127.0.0.1:2181
-	help
-	ls /
-	get /test
-	ls /test mywatcher
-	delete /test
-
-​    rmr /test	
-
+[zk: localhost:2181(CONNECTED) 0] help
+[zk: localhost:2181(CONNECTED) 0] ls /
+[zk: localhost:2181(CONNECTED) 0] get /test
+[zk: localhost:2181(CONNECTED) 0] ls /test mywatcher
+[zk: localhost:2181(CONNECTED) 0] delete /test
+[zk: localhost:2181(CONNECTED) 0] rmr /test	
+[zk: localhost:2181(CONNECTED) 0] stat /brokers/topics/T-MEMBER
+```
 ### 编译源码
 
 https://www.cnblogs.com/MangoCai/p/10846187.html
