@@ -27,3 +27,6 @@ auto mount:
 
 example:
 https://stackoverflow.com/questions/51663585/centos-disk-lvm-extension/52312111#52312111
+
+
+<disqus/>

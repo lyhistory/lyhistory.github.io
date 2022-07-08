@@ -15,7 +15,10 @@ The Google Public DNS IPv6 addresses are as follows:
 2001:4860:4860::8844
 ```
 
-
+**Great Feature: dual stack**
+只需要监听ipv6，同时可以通过ipv4访问了！
+IPv6 only bound services accessible from IPv4 on dual stack Linux host: how does it work?
+https://serverfault.com/questions/992612/ipv6-only-bound-services-accessible-from-ipv4-on-dual-stack-linux-host-how-does?rq=1
 
 ## 路由器-宿主机-virtualbox
 

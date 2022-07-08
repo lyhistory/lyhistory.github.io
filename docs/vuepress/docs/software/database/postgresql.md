@@ -9,7 +9,40 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 ## 1. Get Start
 ### 1.1 Baisc Setup
 
+| postgresql-client  | libraries and client binaries                    |
+| ------------------ | ------------------------------------------------ |
+| postgresql-server  | core database server                             |
+| postgresql-contrib | additional supplied modules                      |
+| postgresql-devel   | libraries and headers for C language development |
+
 #### 1.1.1 install
+
+method1:
+```
+sudo yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+sudo yum install -y postgresql12-server
+sudo /usr/pgsql-12/bin/postgresql-12-setup initdb
+sudo systemctl enable postgresql-12
+sudo systemctl start postgresql-12
+```
+
+method2:
+```
+download:
+https://www.postgresql.org/download/linux/redhat/
+https://yum.postgresql.org/rpmchart/
+https://download.postgresql.org/pub/repos/yum/12/redhat/rhel-7.6-x86_64/
+
+postgresql12-libs-12.7-1PGDG.rhel7.x86_64.rpm 
+postgresql12-contrib-12.7-1PGDG.rhel7.x86_64.rpm
+postgresql12-12.7-1PGDG.rhel7.x86_64.rpm 
+postgresql12-server-12.7-1PGDG.rhel7.x86_64.rpm
+
+yum install ./postgresql12-libs-12.7-1PGDG.rhel7.x86_64.rpm 
+yum install ./postgresql12-12.7-1PGDG.rhel7.x86_64.rpm 
+yum install ./postgresql12-contrib-12.7-1PGDG.rhel7.x86_64.rpm -y
+yum install ./postgresql12-server-12.7-1PGDG.rhel7.x86_64.rpm -y
+```
 
 ```
 $ locate bin/postgres
@@ -21,13 +54,10 @@ postgres (PostgreSQL) 12.7
 
 #### 1.1.2 client连接
 
-直接psql连接是不行的，要切换成os root用户 sudo su
-
-然后执行  su - postgres
-
-进入bash，输入psql就进入到plsql命令窗口，执行\l就可以看到所有db
-
+##### psql
 ```
+su - postgres
+进入bash，输入psql就进入到plsql命令窗口，执行\l就可以看到所有db
 为啥默认角色:postgres呢，执行：
 \du
                                    List of roles
@@ -42,9 +72,7 @@ sudo -u postgres createuser owning_user
 sudo -u postgres createdb -O owning_user dbname
 ```
 
-
-
-理解一下posgresql的用户概念
+##### 理解一下posgresql的用户概念
 
 the `postgres` PostgreSQL user account already exists and is configured to be accessible via `peer` authentication for unix sockets in `pg_hba.conf`
 
@@ -65,67 +93,45 @@ https://stackoverflow.com/questions/18664074/getting-error-peer-authentication-f
 **开启远程连接：**
 
 https://blog.csdn.net/zhangzeyuaaa/article/details/77941039
-
+```
 step 1：开启监听：
 
- /var/lib/pgsql/12/data/postgresql.conf
+vim /var/lib/pgsql/12/data/postgresql.conf
 
-`listen_addresses = '*'          # what IP address(es) to listen on;`
+listen_addresses = '*'          # what IP address(es) to listen on;
 
-step 2：修改访问规则
-
-md5方式：
+step 2：修改访问规则, md5方式：
 
 vim /var/lib/pgsql/12/data/pg_hba.conf 
 
-`host    all             all             0.0.0.0/0            md5`
+host    all             all             0.0.0.0/0            md5
 
----------------------------------------------
-
-https://www.tutorialspoint.com/postgresql/index.htm
-https://serverfault.com/questions/110154/whats-the-default-superuser-username-password-for-postgres-after-a-new-install
-
-Postgresql
-https://serverfault.com/questions/110154/whats-the-default-superuser-username-password-for-postgres-after-a-new-install
-
-Server based database
-Replication
-
+step 3：md5方式需要设置密码然后再重启：
 su - postgres
-psql
+$ psql -U postgres -p 5432
+postgres=# \password postgres
 
-Client
-    Offical: Pgadmin 4    https://www.pgadmin.org/download/
-    Pgadmin3 LTS by BigSQL (don’t support 11g)
-    DBeaver (not good)
-
-CLI
-C# 连接 PostgreSQL --- Npgsql的安装和使用 https://blog.csdn.net/chencglt/article/details/77706226 
-
-删除“重复”的function或stored procedure，比如：bpchar和varchar：
-![](/docs/docs_image/software/postgresql/postgresql01.png)
+systemctl restart  postgresql-12
 
 
 https://stackoverflow.com/questions/6405127/how-do-i-specify-a-password-to-psql-non-interactively
 PGPASSWORD=postgres psql --host IP --port 5432 -U postgres -d DBNAME -c "query;"
 PGPASSWORD=postgres psql --host IP --port 5432 -U postgres -d DBNAME -f file.sql
-
-psql: error: FATAL: Ident authentication failed
-To configure IDENT authentication, add entries to the /etc/postgresql/12/main/pg_ident.conf file. There are detailed comments in the file to guide you.
+```
 
 
-#### 1.1.3 debug
+##### Client
++ CLI
++ Offical: Pgadmin 4    https://www.pgadmin.org/download/
++ Pgadmin3 LTS by BigSQL (don’t support 11g)
++ DBeaver 
+    **show all databases**
+    On the connection, right-click -> `Edit connection` -> `Connection settings` -> on the tabbed panel, select `PostgreSQL`, check the box `Show all databases`.
 
-DBeaver:
+    **How do you view PostgreSQL messages (such as RAISE NOTICE) in DBeaver?**
+    you can use Ctrl+Shif+O or the button Show server output console on the left side of the script window.
 
-**show all databases**
-
-On the connection, right-click -> `Edit connection` -> `Connection settings` -> on the tabbed panel, select `PostgreSQL`, check the box `Show all databases`.
-
-**How do you view PostgreSQL messages (such as RAISE NOTICE) in DBeaver?**
-
-you can use Ctrl+Shif+O or the button Show server output console on the left side of the script window.
-
+C# 连接 PostgreSQL --- Npgsql 
 
 
 ### 1.2 Basic concepts
@@ -1234,7 +1240,17 @@ p_cjrs rec_cjr[];
 ## 6. System Table
 select * FROM information_schema.triggers
 
+## Troubleshooting
+
+删除“重复”的function或stored procedure，比如：bpchar和varchar：
+![](/docs/docs_image/software/postgresql/postgresql01.png)
+
+psql: error: FATAL: Ident authentication failed
+To configure IDENT authentication, add entries to the /etc/postgresql/12/main/pg_ident.conf file. There are detailed comments in the file to guide you.
+
 ## todo
+
+
 
 ```
 CREATE OR REPLACE FUNCTION public.pg_calc_nightsession_funding_rate()
@@ -1334,5 +1350,12 @@ $function$
 ;
 
 ```
+
+refer:
+
+https://www.tutorialspoint.com/postgresql/index.htm
+https://serverfault.com/questions/110154/whats-the-default-superuser-username-password-for-postgres-after-a-new-install
+
+https://serverfault.com/questions/110154/whats-the-default-superuser-username-password-for-postgres-after-a-new-install
 
 <disqus/>

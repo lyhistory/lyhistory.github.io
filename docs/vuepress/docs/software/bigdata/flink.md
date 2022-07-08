@@ -588,5 +588,12 @@ Flink integrates nicely with many common logging and monitoring services and pro
 + REST API: Flink exposes a REST API to submit a new application, take a savepoint of a running application, or cancel an application. The REST API also exposes meta data and collected metrics of running or completed applications.
 
 
+## Troubleshooting
 
+### flink task manager not starting
+
+1.检查每个节点的日志，看是否是因为host或端口连不上，然后检查相应端口是否正常监听以及防火墙配置
+2.flink已经rename slave=》workers，注意文件改动
+
+<disqus/>
 
