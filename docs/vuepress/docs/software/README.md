@@ -50,8 +50,9 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/programming/java_spring">基础:基于spring分布式微服务入门</a></li>
 		<li><a href="/docs/software/programming/java_springboot">基础:springboot原理解析</a></li>
         <li><a href="/docs/software/programming/java_springboot_sourcecode" >基础:springboot源码阅读</a></li>
-		<li><a href="/docs/software/buildingblock/apache_httpd_server">server:apache httpd</a></li> 
-		<li><a href="/docs/software/buildingblock/nginx">server: nginx</a></li>
+		<li><a href="/docs/software/buildingblock/server_apache_httpd">server:apache httpd</a></li> 
+		<li><a href="/docs/software/buildingblock/server_nginx">server: nginx</a></li>
+		<li><a href="/docs/software/buildingblock/server_jetty">server: jetty</a></li>
 		<li><a href="/docs/software/buildingblock/servlet">server:servlet</a></li>
         <li><a href="/docs/software/buildingblock/nio_epoll">基础:BIO/NIO/多路复用/NETTY</a></li>
 		<li><a href="/docs/software/buildingblock/nio_netty">基础:nio netty</a></li>

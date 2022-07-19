@@ -105,7 +105,12 @@ ssh-keygen -R ip/hostname
 
 ```
 
+## String Operation
 
+```
+多行变成一行，逗号隔开（去掉最后一个逗号）
+tr '\n' ',' < input.txt | sed 's/,$/\n/'
+```
 
 ## File Operation
 

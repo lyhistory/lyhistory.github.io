@@ -176,6 +176,15 @@ select * from pg_stat_activity where pid=3567;
 
 ```
 
+### utilities
+```
+pg_dump -s dbName > db_schema_dump.sql
+
+
+# dump users
+pg_dumpall --globals-only  --file=globals.sql
+
+```
 ## 2. Syntax
 
 Assign null or empty ‘’ to numberic,  to_number(‘’) throw exception, use if else instead
@@ -674,6 +683,8 @@ https://stackoverflow.com/questions/27306539/at-what-level-do-postgres-index-nam
 #### Temp table
 https://github.com/yallie/pg_global_temp_tables
 ![](/docs/docs_image/software/postgresql/postgresql03.png)
+
+https://stackoverflow.com/questions/41178844/are-temporary-tables-in-postgresql-visible-over-all-client-sessions
 
 #### Sequence
 https://www.postgresql.org/docs/8.2/static/functions-sequence.html

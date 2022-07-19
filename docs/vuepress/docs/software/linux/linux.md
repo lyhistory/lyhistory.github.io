@@ -550,6 +550,8 @@ apt list --installed | grep "PKG"
 yum provides package-name / rpm -q --provides openssl
 yum list/search/info package-name
 yum update package-name
+# list dependency
+yum deplist package-name
 yum history
 yum history info 21
 

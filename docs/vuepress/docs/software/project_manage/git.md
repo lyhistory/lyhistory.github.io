@@ -107,7 +107,8 @@ git remote set-url origin git://test.com/repo.git
 
 ```
 
-
+example: move git with full commit history
+https://www.atlassian.com/git/tutorials/git-move-repository
 
 ### 1.4 About branch
 ```

@@ -232,7 +232,11 @@ resolveArgument
 ```
 
 
+## web server VS servlet container
 
+A Servlet Container is a Web Server that must be able to run Java Servlets.
+
+Web Server, on the other hand, is a broader term including all software running and communicating through HTTP protocol.
 
 
 ---
