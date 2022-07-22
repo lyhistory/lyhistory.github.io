@@ -72,6 +72,11 @@ https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/de
 Jun 13 19:15:12 sgsg3-clear-v01 kernel: type=1701 audit(1655118912.145:16370687): auid=1000 uid=1000 gid=500 ses=2267378 subj=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 pid=30986 comm="java" reason="memory violation" sig=6
 memory violation，不是程序本身有问题就是jvm有问题或者其他os问题，~~只能对java程序加debug参数进行记录~~ 发现java crash之后会在程序路径下生产一个core.XXX文件
 
+### Linux system time temporally jumps
+某交易系统时间瞬间（几百毫秒）加了16个小时，造成某条交易信息时间变成盘后，然后触发系统自动闭盘，然后又迅速恢复正常
+temporally jump / sudden leap / time sudden shift
+https://unix.stackexchange.com/questions/460983/linux-system-time-temporally-jumps
+
 ### web server nginx not responding?
 
 可以ping，可以telnet 80端口，但是网站无法访问，之前遇到过一次，是因为路由器或交换机等设备的网络防火墙设置问题，
