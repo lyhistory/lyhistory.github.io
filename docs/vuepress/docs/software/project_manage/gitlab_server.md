@@ -1428,7 +1428,9 @@ praefect_production-# \dt
 
 
 
-### 备份迁移
+### Migration 迁移
+
+https://about.gitlab.com/handbook/customer-success/playbooks/server-migrations.html
 
 https://docs.gitlab.com/omnibus/settings/backups.html
 

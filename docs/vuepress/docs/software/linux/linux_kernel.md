@@ -21,6 +21,11 @@ linux show architecture `uname -m`
 
 ## cpu/memory
 
+```
+cat /proc/cpuinfo
+cat /proc/meminfo
+```
+
 top shift+E 切换 bytes Mb Gb
 
 ### 内存
