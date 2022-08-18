@@ -548,7 +548,25 @@ TIME_WAIT 状态：
 - 允许 `time_wait` 状态的 socket 被重用
 - 缩减 `time_wait` 时间，设置为 `1 MSL`（即，2 mins）
 
+### 3.5 端口占用冲突 Ephemeral ports
 
+某应用程序监听端口9001，但是发现该端口已经被本地一个client端占用
+
+An ephemeral port is a communications endpoint of a transport layer protocol of the Internet protocol suite that is used for only a short period of time for the duration of a communication session.
+除了给常用服务保留的Well-known Port numbers之外，给客户端的端口号通常是动态分配的，称为ephemeral port（临时端口），在Linux系统上临时端口号的取值范围是通过这个内核参数定义的：net.ipv4.ip_local_port_range (/proc/sys/net/ipv4/ip_local_port_range)，端口号动态分配时并不是从小到大依次选取的，而是按照特定的算法随机分配的。
+
+```
+We need to change ephemeral ports range in linux server to avoid port clash with application ports. Instructions below.
+1.	Show current ephemeral port range using command below
+$   sysctl net.ipv4.ip_local_port_range
+2.	Add the following configuration to /etc/sysctl.conf to change this to the preferred range (32768 61000)
+net.ipv4.ip_local_port_range = 32768 61000
+3.	Activate the new settings with command below
+$   sysctl -p
+4.	Verify settings using command below
+$   sysctl net.ipv4.ip_local_port_range
+
+```
 
 ## 4. 协议详解
 

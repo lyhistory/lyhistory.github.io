@@ -125,6 +125,9 @@ PGPASSWORD=postgres psql --host IP --port 5432 -U postgres -d DBNAME -f file.sql
 + Offical: Pgadmin 4    https://www.pgadmin.org/download/
 + Pgadmin3 LTS by BigSQL (don’t support 11g)
 + DBeaver 
+    **offline install**
+    org.postgresql.Driver
+    jdbc:postgresql://{host}:{port}/dbname
     **show all databases**
     On the connection, right-click -> `Edit connection` -> `Connection settings` -> on the tabbed panel, select `PostgreSQL`, check the box `Show all databases`.
 
