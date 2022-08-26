@@ -789,4 +789,20 @@ yum -y install gcc
 yum -y install gcc-c++
 ```
 
+### ClientAbortException
+前端=》nginx=》后端服务
+```
+后端异常：
+org.apache.catalina.connector.ClientAbortException: java.io.IOException: Broken pipe
+
+nginx日志：
+
+10.34.100.15 - - [17/Aug/2022:20:39:05 +0800] "POST /test HTTP/1.1" 499 0 "https://test.com/test" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36"
+10.34.100.15 - - [17/Aug/2022:20:39:06 +0800] "POST /test HTTP/1.1" 200 12176 "https://test.com/test" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36"
+
+可以看到pattern是一直有两个同一个时间的日志，一个是 499 一个是200，499代表client端也就是浏览器关闭了请求，而服务端还在往buffer写返回，所以抛错
+```
+经调查发现前端页面渲染的两个组件内部有重复的api调用
+
+
 <disqus/>

@@ -4,8 +4,16 @@ https://flink.apache.org/
 
 ## Intro
 ### Architecture
+
+Flink is a distributed system and requires effective allocation and management of compute resources in order to execute streaming applications. It integrates with all common cluster resource managers such as Hadoop YARN and Kubernetes, but can also be set up to run as a standalone cluster or even as a library.
+
 https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/concepts/flink-architecture/
 ![](https://nightlies.apache.org/flink/flink-docs-release-1.15/fig/processes.svg)
+
+#### JobManager
+The JobManager has a number of responsibilities related to coordinating the distributed execution of Flink Applications: it decides when to schedule the next task (or set of tasks), reacts to finished tasks or execution failures, coordinates checkpoints, and coordinates recovery on failures, among others. This process consists of three different components:
+
+#### 
 
 ### Key Concepts
 #### Streams
