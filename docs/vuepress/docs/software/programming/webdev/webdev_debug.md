@@ -741,7 +741,10 @@ socket.addEventListener('message', function (event) {
 
 ```
 
-观察到，chrome下偶尔成功，多数时间失败，上chrome终极大杀器 netlog viewer，发现跟前面一样的原因；
+观察到，chrome下偶尔成功，多数时间失败，上chrome终极大杀器 netlog viewer，
+chrome://net-export
+https://netlog-viewer.appspot.com
+发现跟前面一样的原因；
 
 后来才有人反馈firefox可以，才意识到firefox默认proxy设置成了blank，chrome不使用插件的情况下默认是系统的proxy
 

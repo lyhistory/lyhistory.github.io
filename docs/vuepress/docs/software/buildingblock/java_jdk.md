@@ -15,6 +15,15 @@ https://stackoverflow.com/questions/19655184/no-compiler-is-provided-in-this-env
 
 ## jdk install
 
+推荐安装方式：
+```
+直接解压到比如
+/opt/java-1.8
+ln -s java-1.8 java
+然后添加PATH :/opt/java
+这样方便升级java以及测试各种版本
+```
+
 difference between JAVA_HOME and update-alternatives
 
 https://unix.stackexchange.com/questions/123412/what-is-the-difference-between-java-home-and-update-alternatives
@@ -34,16 +43,7 @@ PATH=$PATH:$HOME/.local/bin:$HOME/bin:$JAVA_HOME/bin
 export PATH
 
 source ~/.bash_profile
------------------------------------------
---- UBUNTU:
------------------------------------------
-sudo add-apt-repository ppa:openjdk-r/ppa
-sudo apt-get update
-sudo apt-get install openjdk-8-jdk
-apt-cache search jdk
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
-export PATH=$PATH:$JAVA_HOME/bin
-java -version
+
 ```
 
 
@@ -89,7 +89,33 @@ lrwxrwxrwx 1 root root 73 Nov 25  2019 /etc/alternatives/java -> /usr/lib/jvm/ja
 ```
 
 
+### 系统安装
 
+```
+-----------------------------------------
+--- UBUNTU:
+-----------------------------------------
+sudo add-apt-repository ppa:openjdk-r/ppa
+sudo apt-get update
+sudo apt-get install openjdk-8-jdk
+apt-cache search jdk
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+export PATH=$PATH:$JAVA_HOME/bin
+java -version
+-----------------------------------------
+--- centos:
+-----------------------------------------
+yum install
+
+yum list installed|grep java
+
+yum remove java-1.8.0-openjdk-headless
+
+#rpm -qa|grep jre
+  jre1.8-1.8.0_221-fcs.x86_64
+
+rpm -e jre1.8-1.8.0_221-fcs	
+```
 
 
 ## jdk troubleshooting

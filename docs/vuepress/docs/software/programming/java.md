@@ -1486,6 +1486,9 @@ JVM是一份本地化的程序，本质上是可执行的文件，是静态的�
 
 #### 堆heap
 
+ Heap memory  =  The younger generation  +  The old generation  +  Forever 
+ The younger generation  = Eden District  +  Two Survivor District （From and To）
+
 字节码引擎后在后台线程执行垃圾收集（minor gc和full gc），当发生垃圾收集的时候，会stop the world暂停当前活跃的线程
 
 gc root
@@ -1508,6 +1511,56 @@ jdk调优工具jvisualvm （插件 visualgc）
 图中下部分给出了调优的例子
 
 [双十一电商网站亿级流量JVM调优实战视频教程全集](https://www.bilibili.com/video/av74868832/)
+
+```
+jmap -heap <pid>
+print result:
+using thread-local object allocation.
+Parallel GC with 8 thread(s)
+
+Heap Configuration:
+   MinHeapFreeRatio         = 0
+   MaxHeapFreeRatio         = 100
+   MaxHeapSize              = 5221908480 (4980.0MB)
+   NewSize                  = 109051904 (104.0MB)
+   MaxNewSize               = 1740636160 (1660.0MB)
+   OldSize                  = 218103808 (208.0MB)
+   NewRatio                 = 2
+   SurvivorRatio            = 8
+   MetaspaceSize            = 21807104 (20.796875MB)
+   CompressedClassSpaceSize = 1073741824 (1024.0MB)
+   MaxMetaspaceSize         = 17592186044415 MB
+   G1HeapRegionSize         = 0 (0.0MB)
+
+Heap Usage:
+PS Young Generation
+Eden Space:
+   capacity = 967835648 (923.0MB)
+   used     = 368550864 (351.4774932861328MB)
+   free     = 599284784 (571.5225067138672MB)
+   38.079901764478095% used
+From Space:
+   capacity = 2097152 (2.0MB)
+   used     = 0 (0.0MB)
+   free     = 2097152 (2.0MB)
+   0.0% used
+To Space:
+   capacity = 20447232 (19.5MB)
+   used     = 0 (0.0MB)
+   free     = 20447232 (19.5MB)
+   0.0% used
+PS Old Generation
+   capacity = 207618048 (198.0MB)
+   used     = 22015016 (20.995155334472656MB)
+   free     = 185603032 (177.00484466552734MB)
+   10.60361380528922% used
+
+21451 interned Strings occupying 2317096 bytes.
+
+
+XX:SurvivorRatio
+https://blog.csdn.net/flyfhj/article/details/86630105
+```
 
 #### JAVA内存模型 JMM
 
@@ -1607,20 +1660,60 @@ jps
 jinfo <PROCESS ID>
 cat /proc/<PROCESS ID>/limits
 ```
+#### JSTAT
+JVM Statistical monitoring tools
 
-#### JSTACK
+```
+jstat -gc <PID> 250 4 //sampling interval is 250ms,Sampling number for 4
+
+Output:
+S0C、S1C、S0U、S1U：Survivor 0/1 Area capacity （Capacity） And usage （Used）
+EC、EU：Eden Area capacity and usage 
+OC、OU： Capacity and usage of older generations 
+PC、PU： Permanent generation capacity and usage 
+YGC、YGT： The younger generation GC Times and GC Time consuming 
+FGC、FGCT：Full GC Times and Full GC Time consuming 
+GCT：GC Total time 
+```
+
+hprof: to show CPU Usage rate , Statistics heap memory usage .
+```
+java -agentlib:hprof[=options] ToBeProfiledClass
+java -Xrunprof[:options] ToBeProfiledClass
+javac -J-agentlib:hprof[=options] ToBeProfiledClass
+
+example:
+java -agentlib:hprof=cpu=samples,interval=20,depth=3 Hello
+
+Every other day on the top 20 Millisecond sampling CPU Consumption information , The stack depth is 3, Generated profile File name is java.hprof.txt, In the current directory .
+```
+
+#### JSTACK -> Live Process|Core dump
 查死锁
-jstack -J-d64 $JAVA_HOME/bin/java core.xxxxx
+jstack -J-d64 -l -m $JAVA_HOME/bin/java core.xxxxx
 
+查内存泄露
+```
+top -Hp <PID>
+输出结果，TIME一列查看时间占用比较久的 NID
+printf "%x" <NID>
+jstack <PID>|grep <NID IN hex format>
+```
+https://www.cnblogs.com/duanxz/p/5487576.html
 
 #### JMAP | JHAT
 查内存占用，jhat追查内存泄露
 https://programs.wiki/wiki/performance-test-and-analysis-tools-jps-jstack-jmap-jhat-jstat-hprof-use-details.html
 
 jmap -J-d64
+```
 jmap -heap 
 jmap -histo
+```
 
+
+
+jmap + jhat
 ```
 jmap -dump:format=b,file=core.xxxxx.dump  $JAVA_HOME/bin/java core.xxxxx
 
@@ -1784,9 +1877,12 @@ thread <THREADID>
 ![测试例子](/docs/docs_image/software/java/java01.png)
 
 #### GDB
-
+```
 gdb $JAVA_HOME/bin/java core.xxxxx
-
+>where
+>bt
+```
+https://blog.csdn.net/haolipengzhanshen/article/details/106728244?ops_request_misc=%7B%22request_id%22%3A%22165362535516781818746673%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&request_id=165362535516781818746673&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-106728244-null-null.142%5Ev11%5Epc_search_result_control_group,157%5Ev12%5Enew_style1&utm_term=free%28%29%3A+invalid+size&spm=1018.2226.3001.4187
 
 Refer:
 案例分享：如何通过JVM crash 的日志和core dump定位和分析Instrument引起的JVM crash
