@@ -145,6 +145,7 @@ $ tail log/flink-*-taskexecutor-*.out
 ```
 
 WordCount:
+https://github.com/apache/flink/blob/master/flink-examples/flink-examples-streaming/src/main/java/org/apache/flink/streaming/examples/wordcount/WordCount.java
 ```
 public class WordCount
 {

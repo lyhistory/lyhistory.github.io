@@ -1455,6 +1455,18 @@ https://www.baeldung.com/maven-deploy-nexus
 	JAVA需要经过一次编译成class文件，然后交给JVM跑，Python不需要编译，直接py交给PVM解释运行
 	
 ### 5.1 基本概念
+
+Linux的内存空间地址从低到高一般分为五个部分：内核空间、栈区域、堆区域、BBS段、数据段和代码段
+
+内核空间：我们在编写应用程序（非内核空间程序）的时候，这一块地址我们是不能够使用的
+栈区域：程序中局部变量、函数参数、返回地址的地方地址。地址从低到高分配
+堆区域：由malloc,calloc等创建的空间，是运行的时候由程序申请的。地址由高到低
+BBS段：未初始化或初值为0的全局变量和静态局部变量
+数据段：已初始化且初值非0的全局变量和静态局部变量
+代码段：可执行代码、字符串字面值、只读变量
+
+
+
 java代码编译-->java class-->JDK安装的JVM翻译成对应操作系统的机器码
 
 javap java.class 可以把汇编指令/机器码反编译成jvm指令/字节码指令；
@@ -1488,6 +1500,9 @@ JVM是一份本地化的程序，本质上是可执行的文件，是静态的�
 
  Heap memory  =  The younger generation  +  The old generation  +  Forever 
  The younger generation  = Eden District  +  Two Survivor District （From and To）
+
+ps_survivor_space
+https://stackoverflow.com/questions/14436183/ps-survivor-space-almost-full
 
 字节码引擎后在后台线程执行垃圾收集（minor gc和full gc），当发生垃圾收集的时候，会stop the world暂停当前活跃的线程
 
@@ -1831,13 +1846,14 @@ Available commands:
 ```
 
 
-#### JDB
+#### JDB 
 https://docs.oracle.com/javase/8/docs/technotes/tools/unix/jdb.html
 https://stackoverflow.com/questions/20018866/specifying-sourcepath-in-jdb-what-am-i-doing-wrong
 https://stackoverflow.com/questions/19843096/how-to-debug-a-java-application-without-access-to-the-source-code/58555431#58555431
 https://stackoverflow.com/questions/3668379/use-a-jar-with-source-as-source-for-jdb/58603802#58603802
 
 ```
+Live:
 java -jar -agentlib:jdwp=transport=dt_shmem,address=jdbconn,server=y,suspend=n C:\Workspace\EclipseWorkspace\lyhistory-websocket\lyhistory-websocket.jar
 jdb -attach jdbconn
 jdb -sourcepath BOOT-INF/classes/ -classpath . org.springframework.boot.loader.JarLauncher
@@ -1861,18 +1877,105 @@ stop at com.lyhistory.framework.websocket.handler.DefaultWebSocketMessageHandler
 stop at com.alibaba.fastjson.parser.JSONLexerBase:880
 run org.springframework.boot.loader.JarLauncher
 
-next
-cont
-step up
-step out
-locals
-print 
-where
-where all
-list
-threads
-thread <THREADID>
+** command list **
+connectors                -- list available connectors and transports in this VM
 
+run [class [args]]        -- start execution of application's main class
+
+threads [threadgroup]     -- list threads
+thread <thread id>        -- set default thread
+suspend [thread id(s)]    -- suspend threads (default: all)
+resume [thread id(s)]     -- resume threads (default: all)
+where [<thread id> | all] -- dump a thread's stack
+wherei [<thread id> | all]-- dump a thread's stack, with pc info
+up [n frames]             -- move up a thread's stack
+down [n frames]           -- move down a thread's stack
+kill <thread id> <expr>   -- kill a thread with the given exception object
+interrupt <thread id>     -- interrupt a thread
+
+print <expr>              -- print value of expression
+dump <expr>               -- print all object information
+eval <expr>               -- evaluate expression (same as print)
+set <lvalue> = <expr>     -- assign new value to field/variable/array element
+locals                    -- print all local variables in current stack frame
+
+classes                   -- list currently known classes
+class <class id>          -- show details of named class
+methods <class id>        -- list a class's methods
+fields <class id>         -- list a class's fields
+
+threadgroups              -- list threadgroups
+threadgroup <name>        -- set current threadgroup
+
+stop in <class id>.<method>[(argument_type,...)]
+                          -- set a breakpoint in a method
+stop at <class id>:<line> -- set a breakpoint at a line
+clear <class id>.<method>[(argument_type,...)]
+                          -- clear a breakpoint in a method
+clear <class id>:<line>   -- clear a breakpoint at a line
+clear                     -- list breakpoints
+catch [uncaught|caught|all] <class id>|<class pattern>
+                          -- break when specified exception occurs
+ignore [uncaught|caught|all] <class id>|<class pattern>
+                          -- cancel 'catch' for the specified exception
+watch [access|all] <class id>.<field name>
+                          -- watch access/modifications to a field
+unwatch [access|all] <class id>.<field name>
+                          -- discontinue watching access/modifications to a field
+trace [go] methods [thread]
+                          -- trace method entries and exits.
+                          -- All threads are suspended unless 'go' is specified
+trace [go] method exit | exits [thread]
+                          -- trace the current method's exit, or all methods' exits
+                          -- All threads are suspended unless 'go' is specified
+untrace [methods]         -- stop tracing method entrys and/or exits
+step                      -- execute current line
+step up                   -- execute until the current method returns to its caller
+stepi                     -- execute current instruction
+next                      -- step one line (step OVER calls)
+cont                      -- continue execution from breakpoint
+
+list [line number|method] -- print source code
+use (or sourcepath) [source file path]
+                          -- display or change the source path
+exclude [<class pattern>, ... | "none"]
+                          -- do not report step or method events for specified classes
+classpath                 -- print classpath info from target VM
+
+monitor <command>         -- execute command each time the program stops
+monitor                   -- list monitors
+unmonitor <monitor#>      -- delete a monitor
+read <filename>           -- read and execute a command file
+
+lock <expr>               -- print lock info for an object
+threadlocks [thread id]   -- print lock info for a thread
+
+pop                       -- pop the stack through and including the current frame
+reenter                   -- same as pop, but current frame is reentered
+redefine <class id> <class file name>
+                          -- redefine the code for a class
+
+disablegc <expr>          -- prevent garbage collection of an object
+enablegc <expr>           -- permit garbage collection of an object
+
+!!                        -- repeat last command
+<n> <command>             -- repeat command n times
+# <command>               -- discard (no-op)
+help (or ?)               -- list commands
+version                   -- print version information
+exit (or quit)            -- exit debugger
+
+<class id>: a full class name with package qualifiers
+<class pattern>: a class name with a leading or trailing wildcard ('*')
+<thread id>: thread number as reported in the 'threads' command
+<expr>: a Java(TM) Programming Language expression.
+Most common syntax is supported.
+
+Startup commands can be placed in either "jdb.ini" or ".jdbrc"
+in user.home or user.dir
+
+Core dump:
+jdb -connect sun.jvm.hotspot.jdi.SACoreAttachingConnector:javaExecutable=$JAVA_HOME/bin/java,core=core.XXXX
 ```
 ![测试例子](/docs/docs_image/software/java/java01.png)
 
@@ -1884,7 +1987,30 @@ gdb $JAVA_HOME/bin/java core.xxxxx
 ```
 https://blog.csdn.net/haolipengzhanshen/article/details/106728244?ops_request_misc=%7B%22request_id%22%3A%22165362535516781818746673%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&request_id=165362535516781818746673&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-106728244-null-null.142%5Ev11%5Epc_search_result_control_group,157%5Ev12%5Enew_style1&utm_term=free%28%29%3A+invalid+size&spm=1018.2226.3001.4187
 
+#### Arthas（阿尔萨斯）
+https://github.com/alibaba/arthas
+https://arthas.aliyun.com/doc/
+
+case study: https://github.com/alibaba/arthas/issues?q=label%3Auser-case
+
+```
+unzip arthas-bin.zip -d arthas
+cd arthas
+java -jar arthas-boot.jar
+>dashboard
+
+java -javaagent:/tmp/test/arthas-agent.jar -jar math-game.jar
+./as.sh --select <program name>
+```
+#### MAT
+https://www.eclipse.org/mat/downloads.php
+```
+jmap -dump:format=b,file=core.26635.dump  $JAVA_HOME/bin/java core.26635 
+```
+
 Refer:
+https://blog.csdn.net/wuxiaolongah/article/details/119333948?spm=1001.2101.3001.6650.6&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-6-119333948-blog-6333467.pc_relevant_multi_platform_whitelistv4&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-6-119333948-blog-6333467.pc_relevant_multi_platform_whitelistv4&utm_relevant_index=9
+https://developer.aliyun.com/article/608529
 案例分享：如何通过JVM crash 的日志和core dump定位和分析Instrument引起的JVM crash
 https://blog.csdn.net/raintungli/article/details/77790829
 https://blog.csdn.net/qq_31865983/article/details/98480703
