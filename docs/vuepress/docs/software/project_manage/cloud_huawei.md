@@ -1,0 +1,66 @@
+华为云
+
+
+## 网络
+
+### 虚拟私有云VPC virtual private cloud
+
+产品架构：
+https://support.huaweicloud.com/vpc_faq/vpc_faq_0001.html
+![](https://support.huaweicloud.com/vpc_faq/zh-cn_image_0000001184839114.png)
+
+首先从服务的角度来看，VPC指的是一种云（Cloud），这与它的字面意思相符。对于基础架构服务（IaaS），云就是指资源池。你或许听过公有云（Public Cloud）、私有云（Private Cloud）、混合云（Hybrid Cloud）。不过，VPC不属于这三种云中任一种。这是一种运行在公有云上，将一部分公有云资源为某个用户隔离出来，给这个用户私有使用的资源的集合。VPC是这么一种云，它由公有云管理，运行在公共资源上，但是保证每个用户之间的资源是隔离，用户在使用的时候不受其他用户的影响，感觉像是在使用自己的私有云一样。
+从这种意义上看，VPC不是网络，我们可以对比VPC和它一个字面上相近的概念：VPN（Virtual Private Network）。VPN在公共的网络资源上虚拟隔离出一个个用户网络，例如IPsec VPN可以是在互联网上构建连接用户私有网络的隧道，MPLS VPN更是直接在运营商的PE设备上划分隔离的VRF给不同的用户。从提供服务的角度来，说如果VPC指的只是网络的话，那它跟VPN的概念是重复的。所以，从公有云所提供的服务来说，VPC应该理解成，向用户提供的隔离资源的集合。
+
++ 通过VPC对等连接功能，实现同一区域内不同VPC下的私网IP互通。
+    同一区域的VPC: 对等连接 https://support.huaweicloud.com/usermanual-vpc/zh-cn_topic_0046655036.html
++ 通过EIP或NAT网关，使得VPC内的云服务器可以与公网Internet互通。
++ 通过虚拟专用网络VPN、云连接、云专线及企业交换机将VPC和您的数据中心连通
+    不同区域的VPC: 云连接 https://support.huaweicloud.com/cc/index.html
+
+subnet
+
+
+VPC拓扑：
++ VPC之间：对等网络
++ VPC内部：
+    + 子网之间：路由表 三层
+    + 子网内部：二层
+
+
+路由表：
+https://support.huaweicloud.com/intl/zh-cn/productdesc-vpc/zh-cn_topic_0038263963.html
+
+DNS云解析服务：
+    公网域名
+    内网域名
+   怎样切换内网DNS？ https://support.huaweicloud.com/intl/zh-cn/dns_faq/dns_faq_005.html
+
+VIP: 虚拟IP
+https://support.huaweicloud.com/intl/zh-cn/usermanual-vpc/vpc_vip_0001.html
+1. 在华为云的控制台, 添加一个虚拟 IP, 然后绑定 vm1, vm2...vm6 这个 6 台云主机
+2. 在其中一台上, 将 vip 配置到网卡上,为虚拟IP地址绑定弹性公网IP或弹性云服务器:
+https://support.huaweicloud.com/intl/zh-cn/usermanual-vpc/zh-cn_topic_0067802474.html
+
+但是这个配置不建议配置在网卡的持久化配置里面, 这个 IP 一般都是漂移用的
+一般情况下, 都会用比如 keepalived, 或者 Pacemaker 这种集群管理软件去管理
+
+弹性云服务器的网卡绑定虚拟IP地址后，该虚拟IP地址无法ping通时，如何排查？
+https://support.huaweicloud.com/intl/zh-cn/vpc_faq/vpc_faq_0083.html
+
+
+弹性负载均衡 ELB
+
+
+## 创建OS
+硬盘加密，否则华为可以直接看到所有数据
+
+## PASS产品
+ECS
+
+
+## 安全合规
+安全组
+
+Cloud Certificate Manager，CCM
+https://www.huaweicloud.com/intl/zh-cn/product/scm.html?agencyId=5e86556c08824ce6802d7aaf127f33a7&region=ap-southeast-3

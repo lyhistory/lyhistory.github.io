@@ -1,4 +1,45 @@
+## VPC
+### Basics for creating an Internet-connected VPC
+1. Choosing an address range
+Recommended: RFC1918 range /16(64K addresses) 172.31.0.0/16 (avoid ranges that overlap with other networks to which you might connect)
+2. Setting up subnets in Availability Zones
+Recommended: /24 subnets(251 addresses)
+example: one subnet per Availability Zone:
+Availability Zone 1: 172.31.0.0/24
+Availability Zone 2: 172.31.1.0/24
+Availability Zone 3: 172.31.2.0/24
 
+3. Creating a route to the Internet
++ Route tables contain rules for which packets go where
++ Your VPC has a default route table
++ but you can assign different route tables to different subnets
+example:
+```
+default:
+Destination     Target
+172.31.0.0/16   local
+
+after create internet gateway:
+Destination     Target
+172.31.0.0/16   local
+0.0.0.0/0       igw-xxxxxx
+```
+
+4. Authorizing traffic to/from the VPC
++ Network ACLs = stateless firewall rules
++ Security groups = stateful firewall
+
+### More scenarios
+
++ non-internet facing VPC access the internet by routing to NAT in the internet facing VPC
++ VPC Peering
+    1. Initiate peering request
+    2. Accept peering request
+    3. create routes
++ Extend your own network to VPC
+    - VPN
+    - Direct Connect
+    
 ## The AWS Command Line Interface (CLI)
 is a unified tool to manage your AWS services. With just one tool to download and configure, you can control multiple AWS services from the command line and automate them through scripts.
 
