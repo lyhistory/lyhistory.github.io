@@ -387,7 +387,7 @@ https://www.obj-sys.com/asn1tutorial/node1.html
 路由器使用寻径协议来获得网络信息，采用基于“寻径矩阵”的寻径算法和准则来选择最优路径。按照OSI参考模型，路由器是一个网络层系统。路由器分为单协议路由器和多协议路由器。     
 比如如果给你一个IP地址为116.24.143.126,子网掩码255.255.255.224,也就是在这段地址中有32个地址,其中30个可用,去掉网关,还有29个可分配.地址是从116.24.143.96-127,第一个可用的IP是97,最后一个是126,这个例子里,你拿126做网关了,所以从97至125这29个地址是可被你分配的. 同理.116.24.143.126,掩码255.255.255.0,那你就有253个地址可被你分配使用.也就是1-125,127-254. 116.24.143.166,掩码是255.255.255.128,就是有125个地址可被你分配使用.即129-165,167-254.  每段地址有多少可用,不是看IP的最后一位数,而是看子网掩码
 
-#### 二层 三层网络
+#### 二层 三层网络 VLAN=》VXLAN=>云服务 VPC
 OSI七层网络模型中：
 物理层，数据链路层和网络层是低三层网络，其余四层是高三层网络，其中二层网络指的就是数据链路层，三层网络指的就是网络层
 
@@ -396,6 +396,40 @@ OSI七层网络模型中：
 假设现有如下网络拓扑图，ABCD四台主机属于10.0.0.0子网，网关指向路由器1的10.0.0.1，EFGH四台主机属于10.0.1.0子网，网关指向路由器2的10.0.1.1；
 ![](https://upload-images.jianshu.io/upload_images/12699780-a1492123d12cad19.png?imageMogr2/auto-orient/strip|imageView2/2/w/875/format/webp)
 ref: https://blog.csdn.net/cj2580/article/details/80107037
+
+
+https://www.anquanke.com/post/id/87158
+https://www.sdnlab.com/20510.html
+
++ VLAN Virtual local Area Network:
+	the computers, servers and other network devices are logically connected regardless of their physical location,
+	VLANs can logically create several virtual networks to separate the network broadcast traffic, one of the main reason of creating VLAN is for traffic management because as a local area network grows and more network devices are added, the frequency of the broadcasts will also increase and the network will get heavily congested with data, but by creating VLANs which divided up the network into smaller broadcast domains, it will help alleviate the broadcast traffic.
+	VLAN identifiers 12bits=4094 VLANs
+	https://www.youtube.com/watch?v=jC6MJTh9fRE
++ VXLAN:
+	Virtual extensible Local Area Network, at its most basic level VXLAN is a tunneling protocol that tunnels ethernet Layer2 二层 traffic over an IP Layer3 network 三层, it's an extension to VLAN, it encapsulates a Layer2 ethernet frame into a udp packet and then transmit this packet over a Layer3 network, VXLAN is a formal internet standard specified in RFC7348, if you go back to OSI model VXLAN is another Application Layer protocol based on UDP that runs on port 4789, why we need VXLAN: the traditional layer 2 networks have issues due to below three main reasons:
+	- Spanning-tree blocks any redundant links to avoid loops, blocking links to create a loop free topology gets the job done but it also means we pay for the links we can't use
+	- limitted amount of VLANs, VXLAN overcomes this limitation by using a longer logical network identifier that is 24 bit which allows more VLANs and therefore more logical network isolation for large network such as cloud that typically include many VMs
+	- large mac address tables, before server virtualization a switch only had to learn one mac address per switch port, with server virtualization we run many VMs or containers on a single physical server, each VM has a virtual nick and a virtual mac address, the number of addresses in the mac address table of switches has grown exponentially, the switch has to learn many mac addresses on a single switch port, a Top-Of-Rack(TOR) switch in data center could connect to 24 or 28 physical servers, a data center could have many racks so each switch has to store the mac address of all VMs that communicates with each other, we requrie much larger mac address tables compared to network without server virtualization,
+	with benefits that VLANs can't provide:
+	- 16 million VXLANs
+	- migration of VMs, migration of virtual machines between servers that exists in separtate layer 2 domains by tunneling the traffic over layer 3 networks, the funtionality allows you to dynamically allocate resources within or between data centers without being constrained by layer 2 boundaries or being forced to create large or geographically streached layer 2 domains
+	https://www.youtube.com/watch?v=QPqVtguOz4w
++ VPC:
+	A VPC isolates computing resources from the other computing resources available in the public cloud. The key technologies for isolating a VPC from the rest of the public cloud are:
+	Subnets: A subnet is a range of IP addresses within a network that are reserved so that they're not available to everyone within the network, essentially dividing part of the network for private use. In a VPC these are private IP addresses that are not accessible via the public Internet, unlike typical IP addresses, which are publicly visible.
+
+	- VLAN: A LAN is a local area network, or a group of computing devices that are all connected to each other without the use of the Internet. A VLAN is a virtual LAN. Like a subnet, a VLAN is a way of partitioning a network, but the partitioning takes place at a different layer within the OSI model (layer 2 instead of layer 3).
+
+	- VPN: A virtual private network (VPN) uses encryption to create a private network over the top of a public network. VPN traffic passes through publicly shared Internet infrastructure – routers, switches, etc. – but the traffic is scrambled and not visible to anyone.
+
+	A VPC will have a dedicated subnet and VLAN that are only accessible by the VPC customer. This prevents anyone else within the public cloud from accessing computing resources within the VPC – effectively placing the "Reserved" sign on the table. The VPC customer connects via VPN to their VPC, so that data passing into and out of the VPC is not visible to other public cloud users.
+
+	Some VPC providers offer additional customization with:
+
+		- Network Address Translation (NAT): This feature matches private IP addresses to a public IP address for connections with the public Internet. With NAT, a public-facing website or application could run in a VPC.
+		- BGP route configuration: Some providers allow customers to customize BGP routing tables for connecting their VPC with their other infrastructure. (Learn how BGP works.)
+		https://www.cloudflare.com/learning/cloud/what-is-a-virtual-private-cloud/
 
 **同一子网通信**
 先看同一子网内通信情况，A向C发送数据，这种情况下都是ip指定的，假设所有主机，交换机和路由器都刚刚通电，没缓存任何MAC映射和路由表。A在向C发送数据之前，是知道C的ip地址，发现它俩在同一物理子网，于是A试图在物理子网内来寻找C,但是在物理子网内寻址是通过MAC地址的，A并不知道C的MAC地址，于是A发送了一个ARP广播包，ARP广播用的地址是ff:ff:ff:ff:ff:ff,包内容如下：

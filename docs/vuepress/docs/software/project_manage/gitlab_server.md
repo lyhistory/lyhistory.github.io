@@ -1795,7 +1795,7 @@ STEP 2: REGISTER
 https://docs.gitlab.com/runner/register/
 
 ```
-sudo gitlab-runner 
+sudo gitlab-runner register
 Enter your GitLab instance URL (also known as the gitlab-ci coordinator URL). 如果是self host就是register token旁边的url即本地的gitlab server url，如果是gitlab则是https://gitlab.com
 Enter the token you obtained to register the runner. 
   //For a shared runner, have an administrator go to the GitLab Admin Area and click Overview > Runners
