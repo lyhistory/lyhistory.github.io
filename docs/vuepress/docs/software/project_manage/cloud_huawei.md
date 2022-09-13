@@ -5,6 +5,8 @@
 
 ### 虚拟私有云VPC virtual private cloud
 
+华为云可以在同一个子网中跨不同的az可用区，其他的云商一般只能在同一个可用区内创建子网；
+
 产品架构：
 https://support.huaweicloud.com/vpc_faq/vpc_faq_0001.html
 ![](https://support.huaweicloud.com/vpc_faq/zh-cn_image_0000001184839114.png)

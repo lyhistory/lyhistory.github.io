@@ -1,3 +1,16 @@
+## Bash script VS Shell Script
+
+Bash scripting is scripting specifically for Bash	Shell scripting is scripting in any shell
+
+## bash parameter expansion
+${parameter//find/replace}
+
+```
+INSTALL_TARGET_SERVERs='IP1,IP2'
+for i in ${INSTALL_TARGET_SERVERs//,/ }; do echo "$i"; done
+for i in ${INSTALL_TARGET_SERVERs//,/$IFS}; do echo "$i"; done
+```
+
 ## bash variables
 
 $0、$1、$2、$#、$@、$*、$? 
@@ -17,7 +30,46 @@ $?	可以获取到执行 ./test.sh a b 命令后的返回值。在执行一个�
 	当执行自定义的 bash 函数时，$? 对应该函数调用 return 命令返回的值。如果没有主动调用 return 命令，默认返回为 0。
 ```
 
+The default value of IFS is a three-character string comprising a space, tab, and newline:
+```
+$ echo "$IFS" | cat -et
+ ^I$
+$
 
+$ echo "$IFS" | cat -et
+ ^I$
+$
+$ string="foo bar foo:bar"
+$ for i in $string; do echo "[$i] extracted"; done
+[foo] extracted
+[bar] extracted
+[foo:bar] extracted
+$ IFS=":"  && echo "$IFS" | cat -et
+:$
+$ for i in $string; do echo "[$i] extracted"; done
+[foo bar foo] extracted
+[bar] extracted
+$ unset IFS  && echo "$IFS" | cat -et
+$
+$ for i in $string; do echo "[$i] extracted"; done
+[foo] extracted
+[bar] extracted
+[foo:bar] extracted
+
+
+input.csv:
+Record is : SNo,Quantity,Price,Value
+Record is : 1,2,20,40
+Record is : 2,5,10,50
+
+#! /bin/bash
+while IFS="," read -r rec1 rec2
+do
+  echo "Displaying Record-$rec1"
+  echo "Price: $rec2"
+done < <(cut -d "," -f1,3 input.csv | tail -n +2)
+
+```
 
 ## bash's operators
 

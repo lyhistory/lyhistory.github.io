@@ -715,7 +715,8 @@ https://stackoverflow.com/questions/27740692/request-stalled-for-a-long-time-occ
 
 https://stackoverflow.com/questions/53736912/neterr-connection-reset-when-large-file-takes-longer-than-a-minute/70180666#70180666
 
-### websocket connection issue
+### websocket issues
+#### websocket connection issue
 
 这次遇到的问题：
 
@@ -748,6 +749,85 @@ https://netlog-viewer.appspot.com
 
 后来才有人反馈firefox可以，才意识到firefox默认proxy设置成了blank，chrome不使用插件的情况下默认是系统的proxy
 
+#### websocket 301
+nginx config:
+```
+  location /websocket/ {
+            proxy_pass http://127.0.0.1:10001/websocket;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "Upgrade";
+            proxy_set_header X-Real-IP $remote_addr;
+                        proxy_read_timeout 600s;
+        }
+
+```
+请求 
+```
+Request URL: ws://X.X.X.X/websocket
+Request Method: GET
+
+结果
+"GET /websocket HTTP/1.1" 301 169 "
+```
+测试：
+```
+# curl --include \
+>      --no-buffer \
+>      --header "Connection: Upgrade" \
+>      --header "Upgrade: websocket" \
+>      --header "Host: example.com:80" \
+>      --header "Origin: http://X.X.X.X" \
+>      --header "Sec-WebSocket-Key: wRPCh4fPSMIpX7yMcpgABA==" \
+>      --header "Sec-WebSocket-Version: 13" \
+>      "http://X.X.X.X/websocket"
+HTTP/1.1 301 Moved Permanently
+Server: nginx/1.22.0
+Date: Mon, 12 Sep 2022 09:37:18 GMT
+Content-Type: text/html
+Content-Length: 169
+Location: http://example.com/websocket/
+Connection: keep-alive
+
+<html>
+<head><title>301 Moved Permanently</title></head>
+<body>
+<center><h1>301 Moved Permanently</h1></center>
+<hr><center>nginx/1.22.0</center>
+</body>
+</html>
+
+
+[root@sghc1-prod-acs-app-v01 ~]# curl --include \
+>      --no-buffer \
+>      --header "Connection: Upgrade" \
+>      --header "Upgrade: websocket" \
+>      --header "Host: example.com:80" \
+>      --header "Origin: http://X.X.X.X" \
+>      --header "Sec-WebSocket-Key: wRPCh4fPSMIpX7yMcpgABA==" \
+>      --header "Sec-WebSocket-Version: 13" \
+>      "http://X.X.X.X/websocket/"
+HTTP/1.1 101 Switching Protocols
+Server: nginx/1.22.0
+Date: Mon, 12 Sep 2022 09:36:48 GMT
+Connection: upgrade
+upgrade: websocket
+sec-websocket-accept: NwKFJc0S/lPR4qpqWC7LzZ7CQj4=
+
+▒l{"code":0,"message":"welcome!","sessionId":"1a1050ad-bbb6-4ccd-bfce-a84688e6017d","success":true}
+```
+区别就在最后的 ending slash /
+
+所以修改nginx配置
+```
+location /websocket/ 
+=>
+location /websocket
+```
+https://nginx.org/en/CHANGES-1.22
+```
+    *) Bugfix: special characters were not escaped during automatic redirect
+       with appended trailing slash.
+```
 ### nginx location proxy_pass 404
 ```
 server {
