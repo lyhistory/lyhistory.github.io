@@ -114,7 +114,14 @@ https://yq.aliyun.com/articles/80217
 
 https://segmentfault.com/a/1190000009368204
 
+## offline install
 
+```
+tar xvf node-v16.17.0-linux-x64.tar.xz
+vim /etc/profile.d/nodejs.sh:
+#!/bin/sh
+export PATH=/opt/node-v12.16.2-linux-s390x/bin:$PATH
+```
 
 ## troubleshooting
 

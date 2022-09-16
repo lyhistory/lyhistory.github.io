@@ -162,6 +162,50 @@ https://stackoverflow.com/questions/10177465/grep-in-mysql-cli-interpretter
 ### 2.2 database management
 
 
+#### house keeping disk space /var/lib/mysql/
+```
+[ERROR] Disk is full writing './mysql-bin.000099' (Errcode: 16062400 - No space left on device). Waiting for someone to free space...
+```
+**expire_logs_days**
+The number of days for automatic binary log file removal. The default is 0, which means “no automatic removal.” Possible removals happen at startup and when the binary log is flushed. Log flushing occurs as indicated in Section 5.4, “MySQL Server Logs”.
+
+To remove binary log files manually, use the PURGE BINARY LOGS statement. See Section 13.4.1.1, “PURGE BINARY LOGS Statement”.
+
+```
+mysql> show variables like 'expire_logs_days';
++------------------+-------+
+| Variable_name    | Value |
++------------------+-------+
+| expire_logs_days | 0     |
++------------------+-------+
+1 row in set (0.00 sec)
+
+mysql> show variables like 'max_binlog_size';
++-----------------+------------+
+| Variable_name   | Value      |
++-----------------+------------+
+| max_binlog_size | 1073741824 |
++-----------------+------------+
+1 row in set (0.01 sec)
+
+For the binary log, you can set the expire_logs_days system variable to expire binary log files automatically after a given number of days (see Section 5.1.7, “Server System Variables”). If you are using replication, you should set the variable no lower than the maximum number of days your replicas might lag behind the source. To remove binary logs on demand, use the PURGE BINARY LOGS statement (see Section 13.4.1.1, “PURGE BINARY LOGS Statement”).
+
+To force MySQL to start using new log files, flush the logs. Log flushing occurs when you execute a FLUSH LOGS statement or a mysqladmin flush-logs, mysqladmin refresh, mysqldump --flush-logs, or mysqldump --master-data command. See Section 13.7.6.3, “FLUSH Statement”, Section 4.5.2, “mysqladmin — A MySQL Server Administration Program”, and Section 4.5.4, “mysqldump — A Database Backup Program”. In addition, the server flushes the binary log automatically when current binary log file size reaches the value of the max_binlog_size system variable.
+
+
+自动清除：
+[mysqld]
+expire_logs_days=7
+
+> flush logs
+
+手动清除：
+Manually prune bin log:
+mysql>purge binary logs to 'bin.XXX';
+
+mysql>purge binary logs before '2022-01-01 23:59:59';
+
+```
 
 #### Users & Permissions
 

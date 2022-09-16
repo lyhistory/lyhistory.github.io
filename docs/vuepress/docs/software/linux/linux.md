@@ -475,14 +475,20 @@ https://unix.stackexchange.com/questions/321315/get-cron-to-run-in-the-same-envi
 + 解压直接使用 download tar file, and extract, then:
 
   1) set env variable or persist it in:
-  
-  ​	e.g. export PATH=$PATH:/usr/local/go/bin, more read section #About ENV
-  
+    ```
+  ​	e.g. vim ~/.bash_profile
+  export PATH=$PATH:/usr/local/go/bin, more read section #About ENV
+
+   e.g. Create one file test.sh in /etc/profile.d with following content:
+   #!/bin/sh
+   export PATH=/opt/something/bin:$PATH
+    ```
   2) or just mv it into /usr/local/bin/
   
   3) or link
   
-  ​	`cd /usr/bin sudo ln -s /home/lyhistory/.local/bin/tldr tldr` OR
+  ​	`cd /usr/bin sudo ln -s /home/lyhistory/.local/bin/tldr tldr` 
+  OR
   
   ​	`sudo ln -sf /usr/local/share/$PHANTOM_JS/bin/phantomjs /usr/local/bin`
   

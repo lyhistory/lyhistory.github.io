@@ -53,6 +53,7 @@ https://support.huaweicloud.com/intl/zh-cn/vpc_faq/vpc_faq_0083.html
 
 弹性负载均衡 ELB
 
+企业交换机 https://support.huaweicloud.com/intl/zh-cn/productdesc-esw/esw_pd_0003.html
 
 ## 创建OS
 硬盘加密，否则华为可以直接看到所有数据
