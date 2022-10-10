@@ -10,10 +10,57 @@ Flink is a distributed system and requires effective allocation and management o
 https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/concepts/flink-architecture/
 ![](https://nightlies.apache.org/flink/flink-docs-release-1.15/fig/processes.svg)
 
+The Client is not part of the runtime and program execution, but is used to prepare and send a dataflow to the JobManager. After that, the client can disconnect (detached mode), or stay connected to receive progress reports (attached mode). The client runs either as part of the Java/Scala program that triggers the execution, or in the command line process ./bin/flink run ....
+
 #### JobManager
 The JobManager has a number of responsibilities related to coordinating the distributed execution of Flink Applications: it decides when to schedule the next task (or set of tasks), reacts to finished tasks or execution failures, coordinates checkpoints, and coordinates recovery on failures, among others. This process consists of three different components:
 
-#### 
+##### ResourceManager
+is responsible for resource de-/allocation and provisioning in a Flink cluster — it manages task slots, which are the unit of resource scheduling in a Flink cluster (see TaskManagers). Flink implements multiple ResourceManagers for different environments and resource providers such as YARN, Kubernetes and standalone deployments. In a standalone setup, the ResourceManager can only distribute the slots of available TaskManagers and cannot start new TaskManagers on its own.
+
+##### Dispatcher
+provides a REST interface to submit Flink applications for execution and starts a new JobMaster for each submitted job. It also runs the Flink WebUI to provide information about job executions.
+
+##### JobMaster
+is responsible for managing the execution of a single JobGraph. Multiple jobs can run simultaneously in a Flink cluster, each having its own JobMaster.
+
+#### TaskManagers 
+(also called workers) execute the tasks of a dataflow, and buffer and exchange the data streams.
+
+There must always be at least one TaskManager. The smallest unit of resource scheduling in a TaskManager is a task slot. The number of task slots in a TaskManager indicates the number of concurrent processing tasks. Note that multiple operators may execute in a task slot
+
+Each worker (TaskManager) is a JVM process, and may execute one or more subtasks in separate threads. To control how many tasks a TaskManager accepts, it has so called task slots (at least one).
+
+Each task slot represents a fixed subset of resources of the TaskManager. A TaskManager with three slots, for example, will dedicate 1/3 of its managed memory to each slot. Slotting the resources means that a subtask will not compete with subtasks from other jobs for managed memory, but instead has a certain amount of reserved managed memory. Note that no CPU isolation happens here; currently slots only separate the managed memory of tasks.
+
+By adjusting the number of task slots, users can define how subtasks are isolated from each other. Having one slot per TaskManager means that each task group runs in a separate JVM (which can be started in a separate container, for example). Having multiple slots means more subtasks share the same JVM. Tasks in the same JVM share TCP connections (via multiplexing) and heartbeat messages. They may also share data sets and data structures, thus reducing the per-task overhead.
+
+By default, Flink allows subtasks to share slots even if they are subtasks of different tasks, so long as they are from the same job. The result is that one slot may hold an entire pipeline of the job. Allowing this slot sharing has two main benefits:
+
+![](./flink_wordcount.png)
+
+##### parallelism
+https://nightlies.apache.org/flink/flink-docs-master/docs/dev/datastream/execution/parallel/
+
++ A Flink cluster needs exactly as many task slots as the highest parallelism used in the job. No need to calculate how many tasks (with varying parallelism) a program contains in total.
+
++ It is easier to get better resource utilization. Without slot sharing, the non-intensive source/map() subtasks would block as many resources as the resource intensive window subtasks. With slot sharing, increasing the base parallelism in our example from two to six yields full utilization of the slotted resources, while making sure that the heavy subtasks are fairly distributed among the TaskManagers.
+
+example:
+
+If run with parallelism of two in a cluster with 2 task managers, each offering 3 slots, the scheduler will use 5 task slots, like this:
+
+![](./flink_taskslot_example1.png)
+
+However, if the base parallelism is increased to six, then the scheduler will do this (note that the sink remains at a parallelism of one in this example):
+
+![](./flink_taskslot_example2.png)
+
+##### Operator Chaining
+
+![](./flink_taskslot_example3.png)
+http://wuchong.me/blog/2016/05/09/flink-internals-understanding-execution-resources/
+https://stackoverflow.com/questions/62664972/what-happens-if-total-parallel-instances-of-operators-are-higher-than-the-parall
 
 ### Key Concepts
 #### Streams
@@ -126,6 +173,7 @@ In addition to its event-time mode, Flink also supports processing-time semantic
 
 ## install&deployment
 ### local Standalone
+https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/deployment/resource-providers/standalone/overview/
 https://nightlies.apache.org/flink/flink-docs-release-1.15//docs/try-flink/local_installation/
 https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/try-flink/flink-operations-playground/
 https://nightlies.apache.org/flink/flink-docs-release-1.14//docs/try-flink/local_installation/
@@ -436,6 +484,9 @@ vim flink-root-taskexecutor-0-vm01.log
 2022-05-26 19:05:08,474 INFO  org.apache.flink.runtime.net.ConnectionUtils                  - Retrieved new target address /X.X.X.3:13002.
 ```
 
+### Failover&Recoery
+https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/try-flink/flink-operations-playground/
+
 ## API&Libs
 ### Layered APIs
 ![](https://nightlies.apache.org/flink/flink-docs-release-1.15/fig/levels_of_abstraction.svg)
@@ -523,6 +574,8 @@ DataStream<Tuple2<String, Long>> result = clicks
   // count clicks per session. Define function as lambda function.
   .reduce((a, b) -> Tuple2.of(a.f0, a.f1 + b.f1));
 ```
+try out:
+https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/try-flink/datastream/
 
 #### High-level Analytics API - SQL/TableAPI(dynamic tables)
 Flink features two relational APIs, the Table API and SQL. Both APIs are unified APIs for batch and stream processing, i.e., queries are executed with the same semantics on unbounded, real-time streams or bounded, recorded streams and produce the same results. The Table API and SQL leverage Apache Calcite for parsing, validation, and query optimization. They can be seamlessly integrated with the DataStream and DataSet APIs and support user-defined scalar, aggregate, and table-valued functions.
@@ -531,6 +584,10 @@ SELECT userId, COUNT(*)
 FROM clicks
 GROUP BY SESSION(clicktime, INTERVAL '30' MINUTE), userId
 ```
+
+try out:
+https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/try-flink/table_api/
+
 ### Advanced APIs
 #### Stateful Functions: A Platform-Independent Stateful Serverless Stack
 https://nightlies.apache.org/flink/flink-statefun-docs-stable/

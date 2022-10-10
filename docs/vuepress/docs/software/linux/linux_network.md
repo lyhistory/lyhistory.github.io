@@ -28,7 +28,7 @@ Soft nofile:开启文件数软限制
 [Linux最大文件数限制的那些事](https://www.huaweicloud.com/articles/31d10c0fcca16be1e0c478c748bc0c08.html)
 
 
-
+/etc/security/limits.conf 
 ```
 $ulimit -Hn //查看硬件资源限制
 65536

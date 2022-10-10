@@ -1980,8 +1980,15 @@ jdb -connect sun.jvm.hotspot.jdi.SACoreAttachingConnector:javaExecutable=$JAVA_H
 ![测试例子](/docs/docs_image/software/java/java01.png)
 
 #### GDB
+https://darkdust.net/files/GDB%20Cheat%20Sheet.pdf
+
 ```
-gdb $JAVA_HOME/bin/java core.xxxxx
+$ export LD_LIBRARY_PATH=/customized/lib
+$ gdb --args bin/HelloWorld config/some.xml
+<gdb>run
+
+
+$ gdb $JAVA_HOME/bin/java core.xxxxx
 >where
 >bt
 ```

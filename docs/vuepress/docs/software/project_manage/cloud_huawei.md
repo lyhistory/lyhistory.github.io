@@ -51,7 +51,10 @@ https://support.huaweicloud.com/intl/zh-cn/usermanual-vpc/zh-cn_topic_0067802474
 https://support.huaweicloud.com/intl/zh-cn/vpc_faq/vpc_faq_0083.html
 
 
-弹性负载均衡 ELB
+### 弹性负载均衡 ELB
+
++ 使用四层协议的负载均衡，监听器收到访问请求后，将请求直接转发给后端服务器。转发过程仅修改报文中目标IP地址和源IP地址，将目标地址改为后端云服务器的IP地址，源地址改为负载均衡器的IP地址。四层协议连接的建立，即三次握手是客户端和后端服务器直接建立的，负载均衡只是进行了数据的转发。
++ 使用七层协议的负载均衡，也称为“内容交换”。监听器收到访问请求后，需要识别并通过HTTP/HTTPS协议报文头中的相关字段，进行数据的转发。监听器收到访问请求后，先代理后端服务器和客户端建立连接（三次握手），接收客户端发送的包含应用层内容的报文，然后根据报文中的特定字段和流量分配策略判断需要转发的后端服务器。此场景中，负载均衡类似一个代理服务器，分别和客户端以及后端服务器建立连接。
 
 企业交换机 https://support.huaweicloud.com/intl/zh-cn/productdesc-esw/esw_pd_0003.html
 

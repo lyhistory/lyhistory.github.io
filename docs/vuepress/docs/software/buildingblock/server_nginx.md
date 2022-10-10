@@ -145,6 +145,36 @@ https://www.cnblogs.com/cangqinglang/p/12174407.html
 
 ## 配置
 
+### rewirte
+break last permnant
+https://serverfault.com/questions/379675/nginx-reverse-proxy-url-rewrite
+
+### proxy_pass or proxy_redirect
+
+
+port_in_redirect 
+
+https://blog.51cto.com/miaocbin/1893701
+
+https://stackoverflow.com/questions/59852217/nginx-proxy-pass-or-proxy-redirect
+
+https://stackoverflow.com/questions/17738088/rewrite-root-address-to-a-subdirectory-in-nginx
+
+https://stackoverflow.com/questions/15414810/whats-the-difference-of-host-and-http-host-in-nginx
+
+设置了 proxy_pass target_ip:port 后，nginx默认会将 host header值设置为 proxy_host即target_ip:port，
+如果 target_ip:port对应的服务对这个header没有检查要求则不重要，否则可能会有问题，比如：
+https://stackoverflow.com/questions/14352690/change-host-header-in-nginx-reverse-proxy
+https://serverfault.com/questions/598202/make-nginx-to-pass-hostname-of-the-upstream-when-reverseproxying
+https://stackoverflow.com/questions/5834025/how-to-preserve-request-url-with-nginx-proxy-pass
+
+$http_host equals always the HTTP_HOST request header.
+$host equals $http_host, lowercase and without the port number (if present), except when HTTP_HOST is absent or is an empty value. In that case, $host equals the value of the server_name directive of the server which processed the request.
+
+https://stackoverflow.com/questions/73169860/proxy-pass-forward-request-to-specific-server-according-to-the-host-header-on
+
+https://crashtest-security.com/invalid-host-header/
+
 ### HTTPS
 
 官方：
