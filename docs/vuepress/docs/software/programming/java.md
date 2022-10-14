@@ -1642,6 +1642,7 @@ https://docs.oracle.com/javase/8/docs/technotes/guides/troubleshoot/tooldescr016
 #### Debug Live Process:
 tls/ssl:
 java -jar -Djavax.net.debug=all
+java -jar -Djavax.net.debug=help
 
 java -XX:ErrorFile=/var/log/java/java_error%p.log
 If the -XX:ErrorFile=file flag is not specified, the default log file name is hs_err_pid.log, where pid is the PID of the process.

@@ -3,6 +3,8 @@
 
 ## 网络
 
+### NAT 网关
+
 ### 虚拟私有云VPC virtual private cloud
 
 华为云可以在同一个子网中跨不同的az可用区，其他的云商一般只能在同一个可用区内创建子网；
@@ -56,7 +58,18 @@ https://support.huaweicloud.com/intl/zh-cn/vpc_faq/vpc_faq_0083.html
 + 使用四层协议的负载均衡，监听器收到访问请求后，将请求直接转发给后端服务器。转发过程仅修改报文中目标IP地址和源IP地址，将目标地址改为后端云服务器的IP地址，源地址改为负载均衡器的IP地址。四层协议连接的建立，即三次握手是客户端和后端服务器直接建立的，负载均衡只是进行了数据的转发。
 + 使用七层协议的负载均衡，也称为“内容交换”。监听器收到访问请求后，需要识别并通过HTTP/HTTPS协议报文头中的相关字段，进行数据的转发。监听器收到访问请求后，先代理后端服务器和客户端建立连接（三次握手），接收客户端发送的包含应用层内容的报文，然后根据报文中的特定字段和流量分配策略判断需要转发的后端服务器。此场景中，负载均衡类似一个代理服务器，分别和客户端以及后端服务器建立连接。
 
+ELB网络流量路径说明 https://support.huaweicloud.com/intl/zh-cn/productdesc-elb/elb_ug_fz_0003_01.html 
+
 企业交换机 https://support.huaweicloud.com/intl/zh-cn/productdesc-esw/esw_pd_0003.html
+
+### 接入方式
+#### 云连接（Cloud Connect）
+为用户提供一种能够快速构建跨区域VPC之间以及云上多VPC与云下多数据中心之间的高速、优质、稳定的网络能力，帮助用户打造一张具有企业级规模和通信能力的全球云上网络。
+https://support.huaweicloud.com/intl/zh-cn/function-cc/index.html
+
+#### 全球加速服务 GA
+https://support.huaweicloud.com/intl/zh-cn/productdesc-ga/ga_01_0001.html
+
 
 ## 创建OS
 硬盘加密，否则华为可以直接看到所有数据
