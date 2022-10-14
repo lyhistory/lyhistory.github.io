@@ -145,6 +145,23 @@ https://www.cnblogs.com/cangqinglang/p/12174407.html
 
 ## 配置
 
+### 变量
+
+When using NGINX as a proxy, there are four sets of headers:
+
+client -> nginx: the client request headers
+nginx -> upstream: the upstream request headers
+upstream -> nginx: the upstream response headers
+nginx -> client: the client response headers
+
+
+| from	| to | type	| read (variable) | write (directive)	|
+| - | - | - | - | - |
+| client	|	nginx	|	request	|	$http_name	|	–	|
+| ngnix	|	upstream	|	request	|	–	|	proxy_set_header	|
+| upstream	|	nginx	|	response	|	$upstream_http_name	|	–	|
+| nginx	|	client	|	response	|	$sent_http_name	add_header	|
+
 ### rewirte
 break last permnant
 https://serverfault.com/questions/379675/nginx-reverse-proxy-url-rewrite
@@ -225,7 +242,7 @@ Locality Name (eg, city) [Default City]:
 Organization Name (eg, company) [Default Company Ltd]:LYHISTORY
 Organizational Unit Name (eg, section) []:IT
 Common Name (eg, your name or your server's hostname) []:x.x.x.48
-Email Address []:tech-mgmt@asiapacificex.com
+Email Address []:test@lyhistory.com
 
 -nodes: This tells OpenSSL to skip the option to secure our certificate with a passphrase. We need Nginx to be able to read the file, without user intervention, when the server starts up. A passphrase would prevent this from happening because we would have to enter it after every restart.
 -newkey rsa:2048: This specifies that we want to generate a new certificate and a new key at the same time. We did not create the key that is required to sign the certificate in a previous step, so we need to create it along with the certificate. The rsa:2048 portion tells it to make an RSA key that is 2048 bits long.
@@ -457,7 +474,21 @@ stream {
 
 ```
 
+### http 转 https
 
+```
+if ($scheme = http) {
+    return 301 https://$host$request_uri;
+}
+如果状态码返回301或者302，当post数据到http协议时，重定向后会出现请求方法变为 get，post数据丢失。
+
+if ($scheme = http) {
+    return 307 https://$host$request_uri;
+}
+
+307、308 都可以保持post数据的重定向，包括请求方法也不会变化。
+307是临时，308是永久
+```
 
 ### 其他
 
@@ -774,5 +805,10 @@ else
 fi
 ```
 
+## Troubleshooting
+
+```
+add_header debug1 'host:$host,http_host $http_host,proxy_host:$proxy_host,X-Real-IP:$remote_addr';
+```
 
 <disqus/>

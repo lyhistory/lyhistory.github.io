@@ -85,6 +85,254 @@ Content-Type: text/html; charset=UTF-8
 
 注意到X-Redirect-By: Polylang，就是这个鬼，wordpress一个插件，最后查明原因是，dev的db配置成了生产的，所以估计这个polylang就使用了生产的域名！
 
+### Auto follow redirection (3xx)
+
+起因：
+
+一个java程序使用spring web client RestTemplate 访问华为云上的elb url:
+http://api.lyhistory.com/api/v1/testit/
+，华为云上配置elb的策略是自动转到https即
+https://api.lyhistory.com/api/v1/testit/
+
+程序报错：
+```
+2022-10-14 18:45:58.891 ERROR 1540GG [scheduling-1] c.q.c.m.s.i.xxx : Failed to query xxx. Error:Could not extract response: no suitable HttpMessageConverter found for response type [class com.lyhistory.testmodel] and content type [text/html]
+
+```
+
+
+#### 调查：
+
+```
+
+正常应该是返回json，而不是text/html
+
+curl一下试试
+
+curl --header "Authorization: XXXXXX" http://api.lyhistory.com/api/v1/testit/
+
+返回  301 Moved Permanently
+
+加上auto follow redirection：
+curl -L --header "Authorization: XXXXXX" http://api.lyhistory.com/api/v1/testit/
+则返回正常！
+
+
+使用hackbar测试华为云看看chrome network的请求长啥样
+
+get
+
+1st request:
+>
+GET /api/v1/testit/ HTTP/1.1
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.115 Safari/537.36
+
+<
+HTTP/1.1 307 Internal Redirect
+Location: https://api.lyhistory.com/api/v1/testit/
+Cross-Origin-Resource-Policy: Cross-Origin
+Non-Authoritative-Reason: HSTS
+
+
+2nd request:
+>
+GET /api/v1/testit/ HTTP/1.1
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+Connection: keep-alive
+Host: api.lyhistory.com
+If-None-Match: W/"1ff-0SzbxxK5OAa9GvtZs8XPKShpiHo"
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: cross-site
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.115 Safari/537.36
+authorization: XXXXXX
+sec-ch-ua: " Not A;Brand";v="99", "Chromium";v="102", "Google Chrome";v="102"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+
+<
+HTTP/1.1 200 OK
+Date: Fri, 14 Oct 2022 10:37:49 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 511
+Connection: keep-alive
+Access-Control-Allow-Origin: *
+X-RateLimit-Limit: 360
+X-RateLimit-Remaining: 359
+X-RateLimit-Reset: 1665759419
+Content-Security-Policy: default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+X-DNS-Prefetch-Control: off
+Expect-CT: max-age=0
+X-Frame-Options: SAMEORIGIN
+Strict-Transport-Security: max-age=15552000; includeSubDomains
+X-Download-Options: noopen
+X-Content-Type-Options: nosniff
+X-Permitted-Cross-Domain-Policies: none
+Referrer-Policy: no-referrer
+X-XSS-Protection: 0
+ETag: W/"1ff-gghi4jHEutMe/7viD10y38cnRdU"
+Server: elb
+
+```
+
+学习：HSTS 307 internal redirect:
+The HTTP 307 Internal Redirect response is a variant of the 307 Temporary Redirect status code. It’s not defined by the HTTP standard and is just a local browser implementation.
+
+https://www.nginx.com/blog/http-strict-transport-security-hsts-and-nginx/
+https://kinsta.com/knowledgebase/307-redirect/#understanding-http-307-internal-redirect-for-httpsonly-sites
+
+看起来华为云elb http to https跳转没有问题，只要正常follow redirect就可以，看来我们的java程序RestTemplate应该是没有自动follow redirect所以得到了第一次返回的redirection的html响应结果，
+
+#### 验证：
+```
+刚开始使用
+java -Djavax.net.debug=all jarfile 
+但是奇怪并没有额外输出http connection的信息？
+
+只好用strace抓一下
+strace -o strace.out -s 4096 -e trace=network -f -p <PID>
+
+
+11937 accept(30,  <unfinished ...>
+11938 socket(AF_INET, SOCK_STREAM, IPPROTO_IP) = 38
+11938 connect(38, {sa_family=AF_INET, sin_port=htons(80), sin_addr=inet_addr("x.x.x.x")}, 16) = 0
+11938 getsockname(38, {sa_family=AF_INET, sin_port=htons(42404), sin_addr=inet_addr("10.20.1.101")}, [16]) = 0
+11938 setsockopt(38, SOL_TCP, TCP_NODELAY, [1], 4) = 0
+11938 sendto(38, "GET /api/v1/testit/ HTTP/1.1\r\nAccept: application/json, application/*+json\r\nAuthorization: XXXXXX\r\nUser-Agent: Java/1.8.0_40\r\nHost: api.lyhistory.com\r\nConnection: keep-alive\r\n\r\n", 215, 0, NULL, 0) = 215
+11938 recvfrom(38, "HTTP/1.1 301 Moved Permanently\r\nDate: Fri, 14 Oct 2022 01:40:00 GMT\r\nContent-Type: text/html\r\nContent-Length: 134\r\nConnection: keep-alive\r\nLocation: https://api.lyhistory.com:443/api/v1/testit/\r\nServer: elb\r\n\r\n<html>\r\n<head><title>301 Moved Permanently</title></head>\r\n<body>\r\n<center><h1>301 Moved Permanently</h1></center>\r\n</body>\r\n</html>\r\n", 8192, 0, NULL, NULL) = 360
+14483 +++ exited with 0 +++
+
+果然是 301 Moved Permanently
+```
+
+#### 重现：
+本地暂时没法访问云上资源，直接本地用nginx模拟：
+```
+
+server {
+        listen       80;
+        server_name  test.local;
+        return 307 https://$host$request_uri;
+    }
+server {
+		underscores_in_headers on;
+		#listen       80;
+        listen 443 ssl;
+        server_name  test.local;
+
+		add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+		add_header Access-Control-Allow-Headers Authorization;
+		
+        ssl_certificate clear-selfsigned.crt;
+        ssl_certificate_key clear-selfsigned.key;
+		
+        location /test{
+			default_type application/json;
+			return 200 '{"success":"true","error":"hello world"}';
+		}
+}
+
+使用hackerbar对比一下华为云elb：
+get http://test.local/test
+
+1st request:
+>
+GET /test HTTP/1.1
+Host: test.local
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9
+test: 111222333
+authorization: B873PGZRZK4MVWGVKZ8HQHMTB92K
+
+<
+HTTP/1.1 307 Temporary Redirect
+Server: nginx/1.17.6
+Date: Fri, 14 Oct 2022 10:33:54 GMT
+Content-Type: text/html
+Content-Length: 171
+Connection: keep-alive
+Location: https://test.local/test
+
+2nd request:
+>
+GET /test HTTP/1.1
+Host: test.local
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Site: cross-site
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Dest: document
+sec-ch-ua: " Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"
+sec-ch-ua-mobile: ?0
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+
+<
+HTTP/1.1 200 OK
+Server: nginx/1.17.6
+Date: Fri, 14 Oct 2022 10:33:54 GMT
+Content-Type: application/json
+Content-Length: 40
+Connection: keep-alive
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Access-Control-Allow-Headers: Authorization
+
+
+```
+然后本地启动java程序，可以重现出那个错误！
+
+但是调试过程，发现 RestTempate默认的factory本身就是默认 auto follow redirect
+```
+public boolean getInstanceFollowRedirects() {
+         return instanceFollowRedirects;
+     }
+instanceFollowRedirects=true
+```
+那为什么没有跳转呢，其实重现的时候，只要一步步调试就可以看到这个code
+sun.net.www.protocol.http.HttpURLConnection
+```
+if (!this.url.getProtocol().equalsIgnoreCase(var3.getProtocol())) {
+/* 2625 */                      return false;
+/*      */ 
+/*      */                   }
+```
+对比了当前协议和跳转的协议，不同就直接返回！
+
+#### 根源：
+
+"After discussion among Java Networking engineers, it is felt that we shouldn't automatically follow redirect from one protocol to another, for instance, from http to https and vise versa, doing so may have serious security consequences. Thus the fix is to return the server responses for redirect. Check response code and Location header field value for redirect information. It's the application's responsibility to follow the redirect."
+-- https://bugs.openjdk.org/browse/JDK-8190312
+-- https://stackoverflow.com/questions/1884230/httpurlconnection-doesnt-follow-redirect-from-http-to-https
+
+
+
+调查中还发现nginx模拟的时候第二次请求的authorization header自动被抹掉了，debug Rest Template才发现这段代码
+sun.net.www.protocol.http.HttpURLConnection
+```
+if (!this.isUserProxyAuth) {
+/* 1686 */                         this.requests.remove("Proxy-Authorization");
+/*      */                      }
+```
+nginx redirect 跳转不能带原有的header（安全问题），只能走反向代理才可以
+https://segmentfault.com/q/1010000011377374
+https://www.reddit.com/r/nginx/comments/ox1vfb/missing_headers_after_redirect/
+
+
 ### wordpress upload failed empty response
 
 描述：
@@ -585,7 +833,7 @@ https://netlog-viewer.appspot.com/#sockets
 | --------------------------------- | ------- | ------------ | ------ | ------------------------------------------------------------ | ------------ | ------------ | ------- |
 | Name                              | Pending | Top Priority | Active | Idle                                                         | Connect Jobs | Backup Timer | Stalled |
 | ssl/dev.xxx.com:443               | 0       | -            | 0      | [2](https://netlog-viewer.appspot.com/#events&q=id:1208669,1208667) | 0            | stopped      | false   |
-| ssl/hrs.asiapacificex.com:443     | 0       | -            | 0      | [2](https://netlog-viewer.appspot.com/#events&q=id:1208111,1208329) | 0            | stopped      | false   |
+| ssl/hrs.lyhistory.com:443     | 0       | -            | 0      | [2](https://netlog-viewer.appspot.com/#events&q=id:1208111,1208329) | 0            | stopped      | false   |
 
 
 

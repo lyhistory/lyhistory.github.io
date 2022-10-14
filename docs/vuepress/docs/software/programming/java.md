@@ -1640,6 +1640,7 @@ https://docs.oracle.com/javase/8/docs/technotes/guides/troubleshoot/tooldescr016
 
 
 #### Debug Live Process:
+##### javax.net.debug
 tls/ssl:
 java -jar -Djavax.net.debug=all
 java -jar -Djavax.net.debug=help
@@ -1658,6 +1659,8 @@ https://stackoverflow.com/questions/11922681/differences-between-java-cp-and-jav
 java -server -jar *.jar
 java程序启动参数-D含义详解 https://www.cnblogs.com/grefr/p/6087955.html
 
+##### strace
+strace -tt -f -o /tmp/output.log -p {pid}
 
 #### Analysis Core dump 
 
