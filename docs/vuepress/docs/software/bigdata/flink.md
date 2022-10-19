@@ -40,7 +40,7 @@ By adjusting the number of task slots, users can define how subtasks are isolate
 
 By default, Flink allows subtasks to share slots even if they are subtasks of different tasks, so long as they are from the same job. The result is that one slot may hold an entire pipeline of the job. Allowing this slot sharing has two main benefits:
 
-![](./flink_wordcount.png)
+![](/docs/docs_image/software/bigdata/flink_wordcount.png)
 
 ##### parallelism
 https://nightlies.apache.org/flink/flink-docs-master/docs/dev/datastream/execution/parallel/
@@ -53,15 +53,15 @@ example:
 
 If run with parallelism of two in a cluster with 2 task managers, each offering 3 slots, the scheduler will use 5 task slots, like this:
 
-![](./flink_taskslot_example1.png)
+![](/docs/docs_image/software/bigdata/flink_taskslot_example1.png)
 
 However, if the base parallelism is increased to six, then the scheduler will do this (note that the sink remains at a parallelism of one in this example):
 
-![](./flink_taskslot_example2.png)
+![](/docs/docs_image/software/bigdata/flink_taskslot_example2.png)
 
 ##### Operator Chaining
 
-![](./flink_taskslot_example3.png)
+![](/docs/docs_image/software/bigdata/flink_taskslot_example3.png)
 http://wuchong.me/blog/2016/05/09/flink-internals-understanding-execution-resources/
 https://stackoverflow.com/questions/62664972/what-happens-if-total-parallel-instances-of-operators-are-higher-than-the-parall
 

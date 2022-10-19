@@ -122,6 +122,11 @@ assertion error caused by rlp version upgrade https://github.com/ethereum/pyethe
 
 
 ### 2.3 Develop with Golang
+
+https://github.com/ethereum/go-ethereum/wiki
+https://decentralize.today/introducing-perigord-golang-tools-for-ethereum-dapp-development-60556c2d9fd
+Ethereum Development with Go https://goethereumbook.org
+
 https://goethereumbook.org/ethereum-development-with-go.pdf
 https://goethereumbook.org/client-setup/
 
