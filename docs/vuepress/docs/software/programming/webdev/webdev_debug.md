@@ -182,9 +182,10 @@ Server: elb
 
 学习：HSTS 307 internal redirect:
 The HTTP 307 Internal Redirect response is a variant of the 307 Temporary Redirect status code. It’s not defined by the HTTP standard and is just a local browser implementation.
-
+302 to 307:https://rtfm.co.ua/en/http-redirects-post-and-get-requests-and-lost-data/
 https://www.nginx.com/blog/http-strict-transport-security-hsts-and-nginx/
 https://kinsta.com/knowledgebase/307-redirect/#understanding-http-307-internal-redirect-for-httpsonly-sites
+Spring的RestTemplate自动重定向，如何拿到重定向后的地址？ https://blog.csdn.net/m0_37657841/article/details/107391699
 
 看起来华为云elb http to https跳转没有问题，只要正常follow redirect就可以，看来我们的java程序RestTemplate应该是没有自动follow redirect所以得到了第一次返回的redirection的html响应结果，
 
@@ -1076,6 +1077,41 @@ https://nginx.org/en/CHANGES-1.22
     *) Bugfix: special characters were not escaped during automatic redirect
        with appended trailing slash.
 ```
+
+#### webscoket failed switch Protocol/lost upgrade header
+
+**描述：**
+
+华为云上配置：
+浏览器/App => CDN或高防等代理 => Web应用防火墙 => 源站服务器
+
+websocket服务位于源站服务器，通过nginx反向代理，nginx配置：
+```
+location /test/wsPublicMessage {
+    if ( $http_upgrade = '' ){
+        add_header debug $http_x_forwarded_for;
+        return 465;
+        }
+        proxy_pass http://XXX ;
+        #proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+               
+```
+发现从公网访问，到达nginx的时候 http_upgrade为空，
+但是直接修改本地hosts文件域名指向源站服务器则没有问题，说明问题出在中间的CDN或高防等代理或者Web应用防火墙
+
+**调查：**
+修改域名的cname指向Web应用防火墙，绕过cdn，问题解决
+
+**原因：**
+华为云cdn服务限制：
+>域名服务范围为中国大陆境外或全球时：
+>支持HTTP、HTTPS协议；不支持其他协议，如FTP、TCP、UDP、WebSocket、WSS等协议。
+
 ### nginx location proxy_pass 404
 ```
 server {

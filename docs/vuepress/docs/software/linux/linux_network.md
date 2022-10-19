@@ -5,8 +5,12 @@
 pid查程序：
 
 ```
+//查看程序完整启动命令
 cat /proc/21268/cmdline
+
+//查看程序路径
 ls -l /proc/21268/exe
+
 ps -lef|grep 21268
 ps -eo pid,lstart,cmd |grep pid //程序启动时间
 ```

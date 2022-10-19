@@ -24,6 +24,27 @@ https://www.cnblogs.com/lbangel/p/3406084.html
 
 **client**:
 
+#### oracle for linux developer
+download and install instant client
+https://www.oracle.com/sg/database/technologies/instant-client/linux-x86-64-downloads.html
+
+```
+rpm -qa|grep oracle
+rpm -ivh oracle-instantclient11.2-basic-11.2.0.4.0-1.x86_64.rpm
+rpm -ivh oracle-instantclient11.2-devel-11.2.0.4.0-1.x86_64.rpm
+rpm -ivh oracle-instantclient11.2-sqlplus-11.2.0.4.0-1.x86_64.rpm
+
+# export environment variables required by "sqlplus" command
+export ORACLE_HOME=/usr/lib/oracle/11.2/client64
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib:.
+export PATH=$PATH:$ORACLE_HOME/bin
+```
+
+https://oracle.github.io/node-oracledb/INSTALL.html#quickstart
+
+#### oracle for .net developer
+
+Oracle.DataAccess.dll
 Oracle Client
 http://www.oracle.com/technetwork/database/enterprise-edition/downloads/112010-win32soft-098987.html
 
@@ -32,11 +53,6 @@ Oracle SQL Developer
 http://www.oracle.com/technetwork/developer-tools/sql-developer/downloads/index.html
 Register Oracle DLL into global assembly cache.
 http://msdn.microsoft.com/en-us/library/dkkx7f79(v=vs.110).aspx
-
-Oracle.DataAccess.dll
-
-
-** oracle for .net developer **
 
 download http://www.oracle.com/us/products/tools/utilsoft-087491.html
 

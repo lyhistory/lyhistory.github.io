@@ -70,6 +70,11 @@ https://support.huaweicloud.com/intl/zh-cn/function-cc/index.html
 #### 全球加速服务 GA
 https://support.huaweicloud.com/intl/zh-cn/productdesc-ga/ga_01_0001.html
 
+#### WAF
+
+浏览器/App => CDN或高防等代理 => Web应用防火墙 => 源站服务器
+
+![](./cloud_huawei_waf.png)
 
 ## 创建OS
 硬盘加密，否则华为可以直接看到所有数据
