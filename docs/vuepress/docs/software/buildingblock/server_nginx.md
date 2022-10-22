@@ -12,7 +12,7 @@ https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-
 
 包安装：yum install apt install
 
-手动按照：
+手动安装：
 
 [PCRE](http://pcre.org/) – Supports regular expressions. Required by the NGINX [Core](https://nginx.org/en/docs/ngx_core_module.html) and [Rewrite](https://nginx.org/en/docs/http/ngx_http_rewrite_module.html) modules.
 
@@ -115,6 +115,12 @@ sudo iptables -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
 locate actually using config:
 nginx -t
 
+netstat -anp|grep LISTEN
+ll /proc/PID/exe
+lrwxrwxrwx. 1 root root 0 Oct 21 14:23 /proc/XXX/exe -> /usr/local/nginx/sbin/nginx
+# /usr/local/nginx/sbin/nginx -t
+nginx: the configuration file /usr/local/nginx/conf/nginx.conf syntax is ok
+nginx: configuration file /usr/local/nginx/conf/nginx.conf test is successful
 ```
 
 /usr/local/nginx/conf/nginx.conf

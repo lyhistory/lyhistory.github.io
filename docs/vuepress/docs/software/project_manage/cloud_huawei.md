@@ -70,11 +70,15 @@ https://support.huaweicloud.com/intl/zh-cn/function-cc/index.html
 #### 全球加速服务 GA
 https://support.huaweicloud.com/intl/zh-cn/productdesc-ga/ga_01_0001.html
 
-#### WAF
+### WAF
 
 浏览器/App => CDN或高防等代理 => Web应用防火墙 => 源站服务器
 
 ![](/docs/docs_image/software/project_manage/cloud/cloud_huawei_waf.png)
+
+### 例子
+
+浏览器=》cdn=》waf地址池=》防火墙（只开放访问给waf地址池）=》elb(elb 公网地址eip=>NAT=>内网elb ip)=》源服务器，
 
 ## 创建OS
 硬盘加密，否则华为可以直接看到所有数据

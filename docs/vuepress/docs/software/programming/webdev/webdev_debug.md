@@ -314,7 +314,7 @@ if (!this.url.getProtocol().equalsIgnoreCase(var3.getProtocol())) {
 ```
 对比了当前协议和跳转的协议，不同就直接返回！
 
-#### 根源：
+#### 根源 root cause：
 
 "After discussion among Java Networking engineers, it is felt that we shouldn't automatically follow redirect from one protocol to another, for instance, from http to https and vise versa, doing so may have serious security consequences. Thus the fix is to return the server responses for redirect. Check response code and Location header field value for redirect information. It's the application's responsibility to follow the redirect."
 -- https://bugs.openjdk.org/browse/JDK-8190312
@@ -850,7 +850,7 @@ https://netlog-viewer.appspot.com/#sockets
 
 #### 问题梳理
 
-首先，chrome使用了机器本身设定的proxy，我是公司电脑，连vpn访问网站会经过默认的proxy server，就是前面的172.16.101.100，
+首先，chrome使用了机器本身设定的proxy，我是公司电脑，连vpn访问网站会经过默认的 proxy server，就是前面的 172.16.101.100，
 
 firefox可以设定proxy，然后想起来最初使用firefox测试的时候，设置的是no-proxy，
 
@@ -1138,9 +1138,9 @@ nm -D /usr/lib64/libfontconfig.so.1 | grep FT_Get_Advance
 第一次尝试：
 mv /usr/lib64/libfreetype.so.6 /usr/lib64/libfreetype.so.6_renamed
 
-2022-06-17 19:50:55.845 ERROR 26353GG [io-10001-exec-2] c.q.f.w.a.CommonExceptionHandler : InternalException: Handler dispatch failed; nested exception is java.lang.UnsatisfiedLinkError: /apex/apps/clearing/3rd-party/openjdk-8u312-b07/jre/lib/amd64/libfontmanager.so: libfreetype.so.6: cannot open shared object file: No such file or directory
+2022-06-17 19:50:55.845 ERROR 26353GG [io-10001-exec-2] c.q.f.w.a.CommonExceptionHandler : InternalException: Handler dispatch failed; nested exception is java.lang.UnsatisfiedLinkError: /opt/3rd-party/openjdk-8u312-b07/jre/lib/amd64/libfontmanager.so: libfreetype.so.6: cannot open shared object file: No such file or directory
 
-org.springframework.web.util.NestedServletException: Handler dispatch failed; nested exception is java.lang.UnsatisfiedLinkError: /apex/apps/clearing/3rd-party/openjdk-8u312-b07/jre/lib/amd64/libfontmanager.so: libfreetype.so.6: cannot open shared object file: No such file or directory
+org.springframework.web.util.NestedServletException: Handler dispatch failed; nested exception is java.lang.UnsatisfiedLinkError: /opt/3rd-party/openjdk-8u312-b07/jre/lib/amd64/libfontmanager.so: libfreetype.so.6: cannot open shared object file: No such file or directory
         at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1075)
         at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:962)
         at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
@@ -1171,5 +1171,215 @@ nginx日志：
 ```
 经调查发现前端页面渲染的两个组件内部有重复的api调用
 
+### 请求大量数据时返回截断中断 net::ERR_INCOMPLETE_CHUNKED_ENCODING 
+
+请求 size=100没问题
+https://api.lyhistory.com/hismin?size=100&datatype=7&instrumentid=BTCP&startday=20221020&starttime=19:35
+
+请求 size=1000返回被截断
+https://api.lyhistory.com/hismin?size=1000&datatype=7&instrumentid=BTCP&startday=20221020&starttime=19:35
+
+具体错误：
++ chrome显示：net::ERR_INCOMPLETE_CHUNKED_ENCODING 
++ firefox：SyntaxError: JSON.parse: end of data after property value in object at line 3606 column 23 of the JSON data
+
+#### 浏览器=》cdn=》waf地址池=》防火墙（只开放访问给waf地址池）=》elb(elb 公网地址eip=>NAT=>内网elb ip)=》源服务器(nginx反向代理->proxy_pass to upstream)，
+
+
+```
+453138: URL_REQUEST
+https://api.lyhistory.com/hismin?size=1000&datatype=7&instrumentid=BTCP&startday=20221020&starttime=19:35
+Start Time: 2022-10-21 08:53:14.450
+
+t=23755 [st=  0] +REQUEST_ALIVE  [dt=760]
+                  --> priority = "HIGHEST"
+                  --> traffic_annotation = 63171670
+                  --> url = "https://api.lyhistory.com/hismin?size=1000&datatype=7&instrumentid=BTCP&startday=20221020&starttime=19:35"
+t=23755 [st=  0]    NETWORK_DELEGATE_BEFORE_URL_REQUEST  [dt=0]
+t=23755 [st=  0]   +URL_REQUEST_START_JOB  [dt=759]
+                    --> initiator = "chrome-extension://ginpbkfigcoaokgflihfhhmglmbchinc"
+                    --> load_flags = 65794 (BYPASS_CACHE | CAN_USE_RESTRICTED_PREFETCH | MAIN_FRAME_DEPRECATED)
+                    --> method = "GET"
+                    --> network_isolation_key = "https://lyhistory.com https://lyhistory.com"
+                    --> privacy_mode = "disabled"
+                    --> request_type = "main frame"
+                    --> site_for_cookies = "SiteForCookies: {site=https://lyhistory.com; schemefully_same=true}"
+                    --> url = "https://api.lyhistory.com/hismin?size=1000&datatype=7&instrumentid=BTCP&startday=20221020&starttime=19:35"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, EXCLUDE_NOT_ON_PATH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, EXCLUDE_NOT_ON_PATH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, EXCLUDE_NOT_ON_PATH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, EXCLUDE_NOT_ON_PATH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, EXCLUDE_NOT_ON_PATH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, EXCLUDE_NOT_ON_PATH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "EXCLUDE_DOMAIN_MISMATCH, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "INCLUDE, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "INCLUDE, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "INCLUDE, DO_NOT_WARN"
+t=23755 [st=  0]      COOKIE_INCLUSION_STATUS
+                      --> operation = "send"
+                      --> status = "INCLUDE, DO_NOT_WARN"
+t=23755 [st=  0]      NETWORK_DELEGATE_BEFORE_START_TRANSACTION  [dt=6]
+t=23761 [st=  6]      HTTP_CACHE_GET_BACKEND  [dt=0]
+t=23761 [st=  6]      HTTP_CACHE_DOOM_ENTRY  [dt=0]
+                      --> net_error = -2 (ERR_FAILED)
+t=23761 [st=  6]      HTTP_CACHE_CREATE_ENTRY  [dt=0]
+t=23761 [st=  6]      HTTP_CACHE_ADD_TO_ENTRY  [dt=0]
+t=23761 [st=  6]     +HTTP_STREAM_REQUEST  [dt=442]
+t=23761 [st=  6]        HTTP_STREAM_JOB_CONTROLLER_BOUND
+                        --> source_dependency = 453146 (HTTP_STREAM_JOB_CONTROLLER)
+t=24203 [st=448]        HTTP_STREAM_REQUEST_BOUND_TO_JOB
+                        --> source_dependency = 453147 (HTTP_STREAM_JOB)
+t=24203 [st=448]     -HTTP_STREAM_REQUEST
+t=24203 [st=448]     +HTTP_TRANSACTION_SEND_REQUEST  [dt=0]
+t=24203 [st=448]        HTTP_TRANSACTION_SEND_REQUEST_HEADERS
+                        --> GET /hismin?size=1000&datatype=7&instrumentid=BTCP&startday=20221020&starttime=19:35 HTTP/1.1
+                            Host: api.lyhistory.com
+                            Connection: keep-alive
+                            Pragma: no-cache
+                            Cache-Control: no-cache
+                            sec-ch-ua: " Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"
+                            sec-ch-ua-mobile: ?0
+                            Upgrade-Insecure-Requests: 1
+                            User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36
+                            Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+                            Sec-Fetch-Site: cross-site
+                            Sec-Fetch-Mode: navigate
+                            Sec-Fetch-Dest: document
+                            Accept-Encoding: gzip, deflate, br
+                            Accept-Language: en-US,en;q=0.9
+                            Cookie: [161 bytes were stripped]
+t=24203 [st=448]     -HTTP_TRANSACTION_SEND_REQUEST
+t=24203 [st=448]     +HTTP_TRANSACTION_READ_HEADERS  [dt=311]
+t=24203 [st=448]        HTTP_STREAM_PARSER_READ_HEADERS  [dt=311]
+t=24514 [st=759]        HTTP_TRANSACTION_READ_RESPONSE_HEADERS
+                        --> HTTP/1.1 200 OK
+                            Date: Fri, 21 Oct 2022 00:53:15 GMT
+                            Content-Type: application/json; charset=utf-8
+                            Transfer-Encoding: chunked
+                            Connection: keep-alive
+                            Server: CloudWAF
+                            Content-Encoding: gzip
+                            via: EA-SGP-EDGE1-CACHE5[90],EA-SGP-EDGE1-CACHE5[ovl,89],EA-MAS-cyberjaya-GLOBAL1-CACHE1[ovl,69]
+t=24514 [st=759]     -HTTP_TRANSACTION_READ_HEADERS
+t=24514 [st=759]      HTTP_CACHE_WRITE_INFO  [dt=0]
+t=24514 [st=759]      HTTP_CACHE_WRITE_DATA  [dt=0]
+t=24514 [st=759]      HTTP_CACHE_WRITE_INFO  [dt=0]
+t=24514 [st=759]      NETWORK_DELEGATE_HEADERS_RECEIVED  [dt=0]
+t=24514 [st=759]      URL_REQUEST_FILTERS_SET
+                      --> filters = "GZIP"
+t=24514 [st=759]   -URL_REQUEST_START_JOB
+t=24514 [st=759]    URL_REQUEST_DELEGATE_RESPONSE_STARTED  [dt=1]
+t=24515 [st=760]    HTTP_TRANSACTION_READ_BODY  [dt=0]
+t=24515 [st=760]    URL_REQUEST_JOB_BYTES_READ
+                    --> byte_count = 3086
+t=24515 [st=760]    URL_REQUEST_JOB_FILTERED_BYTES_READ
+                    --> byte_count = 65536
+t=24515 [st=760]    URL_REQUEST_JOB_FILTERED_BYTES_READ
+                    --> byte_count = 16211
+t=24515 [st=760]    HTTP_TRANSACTION_READ_BODY  [dt=0]
+                    --> net_error = -355 (ERR_INCOMPLETE_CHUNKED_ENCODING)
+t=24515 [st=760]    FAILED
+                    --> net_error = -355 (ERR_INCOMPLETE_CHUNKED_ENCODING)
+t=24515 [st=760] -REQUEST_ALIVE
+                  --> net_error = -355 (ERR_INCOMPLETE_CHUNKED_ENCODING)
+```
+
+#### 浏览器=》源服务器(nginx反向代理->proxy_pass to upstream)
+200 但是 chrome network status: (failed)net::ERR_CONTENT_LENGTH_MISMATCH
+
+curl测试：
+```
+1curl: (18) transfer closed with 235509 bytes remaining to read
+```
+
+#### 根源 root cause
+```
+tail -f vi /usr/local/nginx/logs/error.log
+
+2022/10/21 14:20:25 [crit] 15692#0: *357 open() "/usr/local/nginx/proxy_temp/1/05/0000000051" failed (13: Permission denied) while reading upstream, client: 172.31.252.99, server: api.lyhistory.com, request: "POST /hismin HTTP/1.1", upstream: "http://127.0.0.1:8085/hismin", host: "172.31.252.69"
+
+# ps -ef|grep nginx
+root     15690     1  0 Oct20 ?        00:00:00 nginx: master process /usr/local/nginx/sbin/nginx
+nobody   15691 15690  0 Oct20 ?        00:00:00 nginx: worker process
+nobody   15692 15690  0 Oct20 ?        00:00:00 nginx: worker process
+nobody   15693 15690  0 Oct20 ?        00:00:00 nginx: worker process
+nobody   15694 15690  0 Oct20 ?        00:00:00 nginx: worker process
+
+发现master是root权限，worker是nobody，莫非是：
+请求size=100的时候 master就可以搞定，1000的时候要拉worker过来干活结果发现没有权限
+（从之前的请求可以看到response Content-Length: 317256, 317256/1024=309KB,肯定upstream返回的数据量是超过了nginx某些默认的缓冲区大小，所以要写入临时文件中）
+
+实际proxy_temp nobody有权限
+drwx------. 12 nobody root   96 Oct 21 15:08 proxy_temp
+
+发现nobody没有/usr/local/nginx这个路径的权限
+修复：chmod a+rx nginx
+
+```
 
 <disqus/>
