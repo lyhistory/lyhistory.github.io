@@ -165,6 +165,88 @@ nginx.conf:
         ssl_dhparam /etc/ssl/certs/dhparam.pem;
 ```
 
+### jdk java client
+
+Cacerts are default Trust store provided by every JVM vendor. We will see this cacerts file under JRE/lib/security folder. 
+
+如果不导入证书输出错误：
+trustAnchors parameter must be non-empty
+or
+javax.net.ssl.SSLHandshakeException: java.security.cert.CertificateException: No name matching found
+
+
+keystore 默认密码 changeit
+
+查看/验证
+
+```
+C:\Program Files\Java\jdk1.8.0_231\bin
+
+C:\Program Files\Java\jdk1.8.0_231\jre\lib\security\cacerts
+
+
+C:\WINDOWS\system32>keytool.exe -list -v -keystore "C:\Program Files\Java\jdk1.8.0_231\jre\lib\security\cacerts"
+Enter keystore password:
+Keystore type: JKS
+Keystore provider: SUN
+
+Your keystore contains XX entries
+
+Alias name: verisignclass2g2ca [jdk]
+Creation date: 25 Aug 2016
+Entry type: trustedCertEntry
+
+Owner: OU=VeriSign Trust Network, OU="(c) 1998 VeriSign, Inc. - For authorized use only", OU=Class 2 Public Primary Certification Authority - G2, O="VeriSign, Inc.", C=US
+Issuer: OU=VeriSign Trust Network, OU="(c) 1998 VeriSign, Inc. - For authorized use only", OU=Class 2 Public Primary Certification Authority - G2, O="VeriSign, Inc.", C=US
+Serial number: b92f60cc889fa17a4609b85b706c8aaf
+Valid from: Mon May 18 08:00:00 SRET 1998 until: Wed Aug 02 07:59:59 SRET 2028
+Certificate fingerprints:
+Signature algorithm name: SHA1withRSA
+Subject Public Key Algorithm: 1024-bit RSA key
+Version: 1
+
+
+*******************************************
+*******************************************
+
+
+Alias name: test-selfsigned
+Creation date: 25 Oct 2022
+Entry type: trustedCertEntry
+
+Owner: CN=test.local, OU=APEX, O=APEX, L=SG, ST=SG, C=SG
+Issuer: CN=test.local, OU=APEX, O=APEX, L=SG, ST=SG, C=SG
+Serial number: c79bfcff9e2a5aa77fd103e685f650a825346b9
+Valid from: Tue Oct 18 10:50:58 SRET 2022 until: Fri Oct 15 10:50:58 SRET 2032
+Certificate fingerprints:
+         
+Signature algorithm name: SHA256withRSA
+Subject Public Key Algorithm: 2048-bit RSA key
+Version: 3
+
+```
+
+导入
+
+```
+C:\Program Files\Java\jdk1.8.0_231\bin>keytool.exe -importcert -file test-selfsigned.crt -keystore "C:\Program Files\Java\jdk1.8.0_231\jre\lib\security\cacerts" -alias "test-selfsigned"
+Enter keystore password:
+Owner: CN=test.local, OU=APEX, O=APEX, L=SG, ST=SG, C=SG
+Issuer: CN=test.local, OU=APEX, O=APEX, L=SG, ST=SG, C=SG
+Serial number: c79bfcff9e2a5aa77fd103e685f650a825346b9
+Valid from: Tue Oct 18 10:50:58 SGT 2022 until: Fri Oct 15 10:50:58 SGT 2032
+Certificate fingerprints:
+
+Signature algorithm name: SHA256withRSA
+Subject Public Key Algorithm: 2048-bit RSA key
+Version: 3
+
+Extensions:
+
+Trust this certificate? [no]:  yes
+Certificate was added to keystore
+
+```
 
 
 ### springboot mvc
