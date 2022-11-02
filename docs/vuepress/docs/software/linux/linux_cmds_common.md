@@ -183,6 +183,11 @@ grep -H -r "/apps/lib" ~ | cut -d: -f1 | sort -u
 
 ```
 
+#### batch replace string in folder
+```
+grep -rl oldtext . | xargs sed -i 's/oldtext/newtext/g'
+```
+
 ### split
 
 ```
