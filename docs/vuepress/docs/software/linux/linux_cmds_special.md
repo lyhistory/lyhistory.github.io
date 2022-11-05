@@ -58,3 +58,25 @@ watch ss -tunpl4
 watch -n 5 "netstat -anp | grep ESTAB"
 ```
 
+## fc-cache
+
+```
+$ yum install gcc
+$ yum install gcc-c++
+$ yum install xorg-x11-fonts-Type1
+
+$ cat /etc/fonts/fonts.conf
+...
+<!-- Font directory list -->
+
+        <dir>/usr/share/fonts</dir>
+        <dir>/usr/share/X11/fonts/Type1</dir> <dir>/usr/share/X11/fonts/TTF</dir> <dir>/usr/local/share/fonts</dir>
+        <dir prefix="xdg">fonts</dir>
+        <!-- the following element will be removed in the future -->
+        <dir>~/.fonts</dir>
+...
+$ fc-cache --force
+$ ll ~/.cache/fontconfig/
+如果访问比如java程序验证码则会对应生成
+~/.java/fonts/1.8.0_40/fcinfo-1-sghc2-prod-acs-app-v02.novalocal-RedHat-7.9-en.properties
+```

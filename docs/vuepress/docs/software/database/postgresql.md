@@ -57,7 +57,9 @@ postgres (PostgreSQL) 12.7
 ##### psql
 ```
 su - postgres
-进入bash，输入psql就进入到plsql命令窗口，执行\l就可以看到所有db
+进入bash，输入
+#psql
+就进入到plsql命令窗口，执行\l就可以看到所有db
 为啥默认角色:postgres呢，执行：
 \du
                                    List of roles

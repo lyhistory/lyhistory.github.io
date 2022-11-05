@@ -265,7 +265,9 @@ https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/de
 xorg-x11-fonts ，继而搜索 linux install xorg-x11-fonts，得到
 
 ```
-yum install xorg-x11-fonts-Type1
+$ yum install xorg-x11-fonts-Type1
+$ fc-cache --force
+
 ```
 
 <disqus/>

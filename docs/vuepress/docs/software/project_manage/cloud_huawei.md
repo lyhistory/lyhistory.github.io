@@ -86,6 +86,8 @@ https://support.huaweicloud.com/intl/zh-cn/productdesc-ga/ga_01_0001.html
 ## PASS产品
 ECS
 
+## 主机安全 Host Security Service
+https://www.huaweicloud.com/product/hss.html
 
 ## 安全合规
 安全组

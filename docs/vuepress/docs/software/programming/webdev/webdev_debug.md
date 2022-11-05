@@ -1135,6 +1135,10 @@ lrwxrwxrwx. 1 root root 23 Jun 15 17:05 /usr/lib64/libfontconfig.so.1 -> libfont
 
 nm -D /usr/lib64/libfontconfig.so.1 | grep FT_Get_Advance
 
+$ nm -D /usr/lib64/libfontconfig.so.1 | grep FT_Get_Advance
+                 U FT_Get_Advance
+
+
 第一次尝试：
 mv /usr/lib64/libfreetype.so.6 /usr/lib64/libfreetype.so.6_renamed
 
