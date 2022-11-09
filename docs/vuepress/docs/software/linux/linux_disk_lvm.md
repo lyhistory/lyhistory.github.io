@@ -23,12 +23,13 @@ lvm lun
 
 https://landoflinux.com/linux_lvm_command_examples.html
 ```
-lvdisplay
-
-vgdisplay
 
 pvdisplay
+vgdisplay
+lvdisplay
 
+pvs
+vgs
 lvs
 df -TH
 
@@ -45,6 +46,7 @@ lsblk
 mount new disk
 https://support-intl.huaweicloud.com/zh-cn/qs-evs/evs_01_0033.html
 
+### example mount raw disk
 ```
 fdisk -l /dev/vdb
 
@@ -54,11 +56,31 @@ mount /dev/vdb1 /test
 
 mount -a
 
-```
+##auto mount:
 
-auto mount:
-```
  vim /etc/fstab
+    /dev/vdb        /lyhistory/  xfs     defaults        0 0
+
+```
+### example mount lvm
+```
+fdisk -l
+fdisk -l /dev/vdb
+pvcreate /dev/vdb1
+vgdisplay -l
+pvs
+vgcreate lyhistory-vg /dev/vdb1
+vgs
+lvcreate -l 100%FREE -n lyhistory lyhistory-vg
+lvdisplay
+mkfs.xfs /dev/lyhistory-vg/lyhistory
+vi /etc/fstab
+    /dev/lyhistory-vg/lyhistory       /lyhistory                    xfs    defaults        0 0
+
+mkdir /lyhistory
+mount -a
+mount -l
+fdisk -l
 ```
 
 example:

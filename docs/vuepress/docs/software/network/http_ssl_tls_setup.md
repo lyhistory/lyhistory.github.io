@@ -214,8 +214,8 @@ Alias name: test-selfsigned
 Creation date: 25 Oct 2022
 Entry type: trustedCertEntry
 
-Owner: CN=test.local, OU=APEX, O=APEX, L=SG, ST=SG, C=SG
-Issuer: CN=test.local, OU=APEX, O=APEX, L=SG, ST=SG, C=SG
+Owner: CN=test.local, OU=LYHISTORY, O=LYHISTORY, L=SG, ST=SG, C=SG
+Issuer: CN=test.local, OU=LYHISTORY, O=LYHISTORY, L=SG, ST=SG, C=SG
 Serial number: c79bfcff9e2a5aa77fd103e685f650a825346b9
 Valid from: Tue Oct 18 10:50:58 SRET 2022 until: Fri Oct 15 10:50:58 SRET 2032
 Certificate fingerprints:
@@ -231,8 +231,8 @@ Version: 3
 ```
 C:\Program Files\Java\jdk1.8.0_231\bin>keytool.exe -importcert -file test-selfsigned.crt -keystore "C:\Program Files\Java\jdk1.8.0_231\jre\lib\security\cacerts" -alias "test-selfsigned"
 Enter keystore password:
-Owner: CN=test.local, OU=APEX, O=APEX, L=SG, ST=SG, C=SG
-Issuer: CN=test.local, OU=APEX, O=APEX, L=SG, ST=SG, C=SG
+Owner: CN=test.local, OU=LYHISTORY, O=LYHISTORY, L=SG, ST=SG, C=SG
+Issuer: CN=test.local, OU=LYHISTORY, O=LYHISTORY, L=SG, ST=SG, C=SG
 Serial number: c79bfcff9e2a5aa77fd103e685f650a825346b9
 Valid from: Tue Oct 18 10:50:58 SGT 2022 until: Fri Oct 15 10:50:58 SGT 2032
 Certificate fingerprints:
