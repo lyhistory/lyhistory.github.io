@@ -1499,7 +1499,9 @@ Default:	300000 (5 minutes)
   The only problem with this is that a spurious rebalance might be triggered if the consumer takes longer than the session timeout to process messages. You should therefore set the session timeout large enough to make this unlikely. The default is 30 seconds, but it’s not unreasonable to set it as high as several minutes. The only downside of a larger session timeout is that it will take longer for the coordinator to detect genuine consumer crashes.
 ```
 
+“The message is 1626232 bytes when serialized which is larger than the maximum request size you have configured with the max.request.size configuration.”
 
+producer.properties.max.request.size=838860800 800M
 
 ### 4.1 Consumer Indepth
 
@@ -1744,11 +1746,11 @@ initTransactions
 >
 > https://docs.google.com/document/d/11Jqy_GjUGtdXJK94XGsEIK7CP1SnQGdp2eF0wSw9ra8/edit
 >
-> ### 2. Getting a producer Id -- the InitPidRequest
+> 2. Getting a producer Id -- the InitPidRequest
 >
 > After discovering the location of its coordinator, the next step is to retrieve the producer’s PID. This is achieved by issuing a InitPidRequest to the transaction coordinator
 >
-> #### 2.1 When an TransactionalId is specified
+> 2.1 When an TransactionalId is specified
 >
 > If the transactional.id configuration is set, this TransactionalId passed along with the InitPidRequest, and the mapping to the corresponding PID is logged in the transaction  log in step 2a. This enables us to return the same PID for the  TransactionalId to future instances of the producer, and hence enables  recovering or aborting previously incomplete transactions.
 >
@@ -2462,6 +2464,31 @@ Kafka技术内幕-日志压缩 https://segmentfault.com/a/1190000005312891
 
 Note however that there cannot be more consumer instances(task) in a consumer group than partitions. 
 https://cwiki.apache.org/confluence/display/KAFKA/KIP-28+-+Add+a+processor+client
+
+#### Kafka Fetch Session剖析
+https://stackoverflow.com/questions/54823733/kafka-invalid-fetch-session-epoch
+https://www.cnblogs.com/smartloli/p/14352489.html
+
+对于客户端来说，什么时候一个分区会被包含到增量的拉取请求中：
+
+Client通知Broker，分区的maxBytes，fetchOffset，LogStartOffset改变了；
+分区在之前的增量拉取会话中不存在，Client想要增加这个分区，从而来拉取新的分区；
+分区在增量拉取会话中，Client要删除。
+对于服务端来说，增量分区包含到增量的拉取响应中：
+
+Broker通知Client分区的HighWaterMark或者brokerLogStartOffset改变了；
+分区有新的数据
+
+#### retention / delete
+
+log.retention.check.interval.ms:default 5 minutes. So the broker log-segments are checked every 5 minutes to see if they can be deleted according to the retention policies.
+
+topic1 configuration had retention policy set (retention.ms=60000), so if there was at least one existing message in an active segment of topic1, that segment would get closed and deleted if it was idle for long enough. Since log.retention.check.interval.ms is broker configuration, it's not affected by changes on the topic. Also retention.ms has to pass after the last message is produced to the segment. So after the last message is produced to that segment, segment will be deleted in not less than retention.ms milliseconds and not more than retention.ms+log.retention.check.interval.ms.
+
+So the "segment of just 35 bytes, which contained just one message, was deleted after the minute (maybe a little more)" happened because retention check by chance happened almost immediately after the message was produced to that segment. Broker then had just to wait 60 seconds to be sure no new message will be produced to that segment (in which case deletion would't happen) and since there was none, it deleted the segment
+
+https://stackoverflow.com/questions/41048041/kafka-deletes-segments-even-before-segment-size-is-reached
+
 
 ### 4.5 Nodes expansion
 

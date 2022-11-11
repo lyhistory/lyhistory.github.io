@@ -84,6 +84,10 @@ show jdk version that maven dependent on: mvn -version
 4).右键 Open type Hierarchy，可以显示依赖中的接口实现
 5).选中class名字，然后Ctrl+shift+T，或者从菜单Navigate->Open Type，可以显示这个class是在哪个jar包中，及其物理位置；
 
+**runnable jar**
+right click Main.java=>export Runnable JAR file=>Launch configuration(select Main)
+
+
 **Remote Debug(attach jar)：**
 
 https://stackoverflow.com/questions/6855520/attach-debugger-to-application-using-eclipse/23297651

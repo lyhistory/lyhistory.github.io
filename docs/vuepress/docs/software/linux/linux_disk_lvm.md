@@ -83,8 +83,28 @@ mount -l
 fdisk -l
 ```
 
-example:
+### example lvm resize
 https://stackoverflow.com/questions/51663585/centos-disk-lvm-extension/52312111#52312111
+
+```
+
+1) pvresize /dev/sda2
+
+    ,after execute, pls run pvs to check whether the pv size increased, if not, stop here
+
+2) vgextend centos /dev/sda2
+
+    ,after execute,pls check your vgs, see whether the size increased, if so go on to the next
+
+3) lvextend -l 100%FREE /dev/mapper/centos-root
+
+    ,after this, check lvs, if the root size not increased, go on
+
+4) try:
+
+    xfs_growfs /dev/mapper/centos-root or resize2fs /dev/mapper/centos-root
+
+```
 
 
 <disqus/>

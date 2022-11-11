@@ -78,7 +78,8 @@ https://support.huaweicloud.com/intl/zh-cn/productdesc-ga/ga_01_0001.html
 
 ### 例子
 
-浏览器=》cdn=》waf地址池=》防火墙（只开放访问给waf地址池）=》elb(elb 公网地址eip=>NAT=>内网elb ip)=》源服务器，
+入流量：
+浏览器=》cdn=》waf地址池=》负载均衡器elb 公网地址<只开放访问给waf地址池>（ELB NAT到内网，后端指向防火墙服务inbound）=》 再转到内部http负载均衡器=》源服务器，
 
 ## 创建OS
 硬盘加密，否则华为可以直接看到所有数据
@@ -94,3 +95,6 @@ https://www.huaweicloud.com/product/hss.html
 
 Cloud Certificate Manager，CCM
 https://www.huaweicloud.com/intl/zh-cn/product/scm.html?agencyId=5e86556c08824ce6802d7aaf127f33a7&region=ap-southeast-3
+
+
+云防火墙 CFW

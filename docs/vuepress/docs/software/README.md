@@ -96,6 +96,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
         <li><a href="/docs/software/linux/linux">linux基础</a></li>
         <li><a href="/docs/software/linux/linux_cmds_common">linux常用命令</a></li>
         <li><a href="/docs/software/linux/linux_cmds_special">linux特殊命令</a></li>
+		<li><a href="/docs/software/linux/linux_disk_lvm">linux磁盘系统</a></li>
         <li><a href="/docs/software/linux/linux_kernel">linux内核</a></li>
 		<li><a href="/docs/software/linux/linux_log">linux log</a></li>
 		<li><a href="/docs/software/linux/linux_network">linux network</a></li>
