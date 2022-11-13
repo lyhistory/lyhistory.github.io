@@ -76,10 +76,27 @@ https://support.huaweicloud.com/intl/zh-cn/productdesc-ga/ga_01_0001.html
 
 ![](/docs/docs_image/software/project_manage/cloud/cloud_huawei_waf.png)
 
-### 例子
+### 流量路径
 
-入流量：
+https://support.huaweicloud.com/intl/zh-cn/productdesc-elb/elb_ug_fz_0003_01.html#elb_ug_fz_0003_01__zh-cn_topic_0166333709_section133601141145610
+
+**从公网进入的流量**
+
+![](https://support.huaweicloud.com/intl/zh-cn/productdesc-elb/zh-cn_image_0000001181376003.png)
+
+从互联网进入的流量, 主要是访问VPC-COM中的应用, 如WEB等, 这些应用需要开放给互联网用户, 进入的流量首先云防火墙(IPS), 可以过滤掉恶意网络攻击流量, 再经过 VPC-FWOUT 的安全组的访问控制, 最后经过CheckPoint防火墙进行DNAT操作才能访问到目标服务器. 
+
+example: www.lyhistory.com 云解析到 cdn
 浏览器=》cdn=》waf地址池=》负载均衡器elb 公网地址<只开放访问给waf地址池>（ELB NAT到内网，后端指向防火墙服务inbound）=》 再转到内部http负载均衡器=》源服务器，
+
+**访问公网的出去的流量**
+
+![](https://support.huaweicloud.com/intl/zh-cn/productdesc-elb/zh-cn_image_0000001135576398.png)
+
+云上的云服务器要访问Internet资源, 需要先经过虚拟私有云VPC-COM中的proxy服务器(趋势科技), 再经过VPC-FWOUT中的安全组规则, 最后经过CheckPoint防火墙做SNAT后进入互联网.
+
+example：
+VPC-COM内网ecs实例机器访问google.com，内网路由表没有google.com对应的内网路径，所以路由匹配 0.0.0.0 走华为云的对等连接peering-com-fwout 到VPC-FWOUT，该VPC-FWOUT的路由表 **rtb-VPC-FWOUT**  0.0.0.0下一跳类型为虚拟IP--该虚拟ip是绑定到子网subnet-fwout，而子网subnet-fwout可以直接绑定ECS实例：ecs-fwout (上面运行防火墙服务比如checkpoint) ，最后经过防火墙进行DNAT操作才能访问到目标服务器. 
 
 ## 创建OS
 硬盘加密，否则华为可以直接看到所有数据

@@ -1040,12 +1040,35 @@ A VPN tunnel, however, is fully encrypted. The "P in VPN indicates private. VPN 
 > A VPN is created by establishing a virtual point-to-point connection through the use of dedicated circuits or with tunneling protocols over existing networks. A VPN available from the public Internet can provide some of the benefits of a wide area network (WAN). From a user perspective, the resources available within the private network can be accessed remotely
 > https://en.wikipedia.org/wiki/Virtual_private_network
 
+##### IPSec
+In computing, Internet Protocol Security (IPsec) is a secure network protocol suite that authenticates and encrypts packets of data to provide secure encrypted communication between two computers over an Internet Protocol network. It is used in virtual private networks (VPNs).
+
+
 ### 4.4 其他network测试工具
 
 network丢包延迟重复模拟器 https://jagt.github.io/clumsy/
 
 
 ## 5.Network architecture
+
+### example: huawei cloud
+
+**从公网进入的流量**
+
+从互联网进入的流量, 主要是访问VPC-COM中的应用, 如WEB等, 这些应用需要开放给互联网用户, 进入的流量首先云防火墙(IPS), 可以过滤掉恶意网络攻击流量, 再经过 VPC-FWOUT 的安全组的访问控制, 最后经过CheckPoint防火墙进行DNAT操作才能访问到目标服务器. 
+
+example: www.lyhistory.com 云解析到 cdn
+浏览器=》cdn=》waf地址池=》负载均衡器elb 公网地址<只开放访问给waf地址池>（ELB NAT到内网，后端指向防火墙服务inbound）=》 再转到内部http负载均衡器=》源服务器，
+
+**访问公网的出去的流量**
+
+云上的云服务器要访问Internet资源, 需要先经过虚拟私有云VPC-COM中的proxy服务器(趋势科技), 再经过VPC-FWOUT中的安全组规则, 最后经过CheckPoint防火墙做SNAT后进入互联网.
+
+example：
+VPC-COM内网ecs实例机器访问google.com，内网路由表没有google.com对应的内网路径，所以路由匹配 0.0.0.0 走华为云的对等连接peering-com-fwout 到VPC-FWOUT，该VPC-FWOUT的路由表 **rtb-VPC-FWOUT**  0.0.0.0下一跳类型为虚拟IP--该虚拟ip是绑定到子网subnet-fwout，而子网subnet-fwout可以直接绑定ECS实例：ecs-fwout (上面运行防火墙服务比如checkpoint) ，最后经过防火墙进行DNAT操作才能访问到目标服务器. 
+
+
+------
 
 Network Protocols and Architecture
 https://www.coursera.org/learn/network-protocols-architecture
