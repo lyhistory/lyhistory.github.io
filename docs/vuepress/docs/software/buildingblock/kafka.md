@@ -2641,7 +2641,21 @@ rm -rf ../zookeeper/logs/version-2/*
 rm -rf kafka-logs/*
 rm -rf logs/*
 ```
-### 网络故障造成kafka集群出错 或者 造成kafka client端程序读取 metadata 超过默认 30s 抛错
+### 时钟漂移
+client端日志
+2022-03-14 09:00:56.202 ^[[32m INFO^[[m ^[[35m16686GG^[[m [JOB-MANAGER] ^[[36mordinator$FindCoordinatorResponseHandler^[[m : [Consumer clientId=consumer-2, groupId=TEST-SZL] Discovered group coordinator HOST2:9092 (id: 2147483646 rack: null)
+但是在机器HOST2上没有找到对应时间段日志，最后发现 HOST2比HOST1和3时钟快了几分钟，对应kafka日志刚好是四分钟[2022-03-14 09:04:23,689]
+[2022-03-14 09:04:23,689] INFO [GroupCoordinator 1]: 
+	Preparing to rebalance group TEST-SZL in state PreparingRebalance with old generation 0 (__consumer_offsets-43) (reason: Adding new member consumer-2-ab88af5d-b206-48fb-a38b-ead5e50ad76e) (kafka.coordinator.group.GroupCoordinator)
+
+
+### 网络故障 / kafka集群有节点挂掉（不是正常停节点，而是broker节点所在服务器网络断开或暴力停机）
+
+#### 造成kafka client端程序读取 metadata 超过默认 30s 抛错
+
+public java.util.Map<TopicPartition,java.lang.Long> endOffsets(java.util.Collection<TopicPartition> partitions)
+
+TimeoutException - if the offset metadata could not be fetched before the amount of time allocated by **request.timeout.ms expires**
 
 异常日志分析：
 ```
@@ -2796,7 +2810,7 @@ broker 0 1 2，断网broker 2（以及其服务器上面的zookeeper节点）
 这个问题就是读取metadata出现问题，
 最终反复测试确定根源：
 如果某个broker节点是直接杀死，只要该节点网络通的，client端读取metadata就不会超时，
-但是如果某个broker节点所在服务器网络断开，client端的kafka cluster配置中仍有该broker的信息，那么client端读取metadata的时候可能会尝试连接有问题的节点由于网络重试造成超时，
+但是如果某个broker节点所在服务器网络断开，client端的kafka cluster配置中仍有该broker的信息，那么client端读取metadata的时候可能会尝试连接有问题的节点由于网络重试造成超时
 所以解决方案：
 1）修改 consumer.properties.bootstrap.servers，移除坏节点
 2）修改api调用，增加timeout时间到5分钟（实测超时在2分钟左右）：consumer.endOffsets(Collections.singleton(topicPartition),Duration.ofMillis(300000)).get(topicPartition)
@@ -2903,14 +2917,29 @@ test kafka client
 
 这些异常情况可能也是kafka最终抛弃zookeeper的原因！
 ```
-### 时钟漂移
-client端日志
-2022-03-14 09:00:56.202 ^[[32m INFO^[[m ^[[35m16686GG^[[m [JOB-MANAGER] ^[[36mordinator$FindCoordinatorResponseHandler^[[m : [Consumer clientId=consumer-2, groupId=TEST-SZL] Discovered group coordinator HOST2:9092 (id: 2147483646 rack: null)
-但是在机器HOST2上没有找到对应时间段日志，最后发现 HOST2比HOST1和3时钟快了几分钟，对应kafka日志刚好是四分钟[2022-03-14 09:04:23,689]
-[2022-03-14 09:04:23,689] INFO [GroupCoordinator 1]: 
-	Preparing to rebalance group TEST-SZL in state PreparingRebalance with old generation 0 (__consumer_offsets-43) (reason: Adding new member consumer-2-ab88af5d-b206-48fb-a38b-ead5e50ad76e) (kafka.coordinator.group.GroupCoordinator)
 
+#### 造成kafka client端程序poll自己维护的offset topic出现问题
+结合前面 【4.1.3 不依赖interal offset，自己维护offset exactly-once】
+public ConsumerRecords<K,V> poll(java.time.Duration timeout)
 
+This method returns immediately if there are records available. Otherwise, it will await the passed timeout. If the timeout expires, an empty record set will be returned. 
+
+```
+consumer.seek(topicPartition, snpoffset);
+        ConsumerRecords<String, SimpleSnapshot> records = consumer.poll(Duration.ofMillis(10_000L));
+        if(records!=null) {
+            System.out.println("records not null, count=" + String.valueOf(records.count()));
+        }
+```
+和前面情况类似，经过实际测试，发现这个10s的设置，指定的offset有时候能返回正确的message，有时候返回empty record！，
+然后改成 30000 即5分钟则没有问题
+
+#### 造成kafka client端程序读取 metadata 超过默认 1分钟 抛错
+
+public java.util.List<PartitionInfo> partitionsFor(java.lang.String topic)
+Get metadata about the partitions for a given topic. This method will issue a remote call to the server if it does not already have any metadata about the given topic.
+
+TimeoutException - if the offset metadata could not be fetched before the amount of time allocated by **default.api.timeout.ms** expires.
 
 ## Reference
 + kafka原理

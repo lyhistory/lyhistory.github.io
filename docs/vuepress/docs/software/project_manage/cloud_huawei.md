@@ -78,6 +78,7 @@ https://support.huaweicloud.com/intl/zh-cn/productdesc-ga/ga_01_0001.html
 
 ### 流量路径
 
+#### 业务流量
 https://support.huaweicloud.com/intl/zh-cn/productdesc-elb/elb_ug_fz_0003_01.html#elb_ug_fz_0003_01__zh-cn_topic_0166333709_section133601141145610
 
 **从公网进入的流量**
@@ -97,6 +98,11 @@ example: www.lyhistory.com 云解析到 cdn
 
 example：
 VPC-COM内网ecs实例机器访问google.com，内网路由表没有google.com对应的内网路径，所以路由匹配 0.0.0.0 走华为云的对等连接peering-com-fwout 到VPC-FWOUT，该VPC-FWOUT的路由表 **rtb-VPC-FWOUT**  0.0.0.0下一跳类型为虚拟IP--该虚拟ip是绑定到子网subnet-fwout，而子网subnet-fwout可以直接绑定ECS实例：ecs-fwout (上面运行防火墙服务比如checkpoint) ，最后经过防火墙进行DNAT操作才能访问到目标服务器. 
+
+#### 运维流量
+
+外部=》互联网=》[华为云]（VPN=》ssh=》云资源）
+office=》AD域控=》[华为云]（堡垒机=》ssh/rdp=》云资源）
 
 ## 创建OS
 硬盘加密，否则华为可以直接看到所有数据

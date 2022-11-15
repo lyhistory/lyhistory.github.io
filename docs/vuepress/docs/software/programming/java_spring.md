@@ -269,7 +269,7 @@ Thymeleaf https://www.baeldung.com/thymeleaf-in-spring-mvc
 
 spring cloud定义了接口标准，然后各家各组件做了不同实现；
 
-**从总体上看：**
+### 从总体上看：
 
 + 从入口开始，DNS动态解析 - -> 机房内负载均衡(LVS+Keepalived) 
 	动静分离可以放这里做，
@@ -298,7 +298,7 @@ spring cloud定义了接口标准，然后各家各组件做了不同实现；
 	微服务之间调用：先通过服务治理的注册中心获取服务列表到本地
 		=>经过断路器用hystrix，sentinel（限流，服务降级）
 	
-	​		hystrix 降级（从try catch升级为面向切面编程AOP ）熔断 隔离（线程池[远程服务]/信号量[本地服务] 线程池之间隔离） 
+	​		hystrix 服务降级（从try catch升级为面向切面编程AOP ，比如redis连不上降级查数据库）熔断 隔离（线程池[远程服务]/信号量[本地服务] 线程池之间隔离） 
 ​	=>经过负载均衡用netflix ribbon或springcloud loadbanlancer，
 	​	=>最后通过封装的http或者tcp client端调用远程服务，一般用Feigin或者其底层的restTemplate，
 	
@@ -321,7 +321,7 @@ spring cloud定义了接口标准，然后各家各组件做了不同实现；
 	=> 最后获取分布式锁 zookeeper acurator，redlock
 	
 
-**从厂家看:**
+### 从厂家看:
 
 + netflix全家桶：
 
