@@ -6,6 +6,9 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《公钥基础设施Public key infrastructure》
 
+
+## Clarification
+注意本篇主要是在应用实现层面描述PKI，密码学层面参考 [Cryptograhy Fundamental](../../blockchain/cryptography/cryptography)，下面总结一下密码学层面的知识点：
 [private reference- cryptography](HardDrive:/blockchain/cryptography):
 
 ​		https://www.youtube.com/playlist?list=PLoJC20gNfC2gAB-eg7oaUTheB_JgQY4-q
@@ -38,7 +41,7 @@ PKI supports all the above four requirements with methods such as secure messagi
 
 	is a concept, or a way, to ensure that the sender or receiver of a message cannot deny either sending or receiving such a message in future. One of the important audit checks for non-repudiation is a time stamp. The time stamp is an audit trail that provides information of the time the message is sent by the sender and the time the message is received by the receiver.
 
-**Public key cryptography**ss
+**Public key cryptography**
 
 Public key cryptography (negotiating exchange symmetric master secret key)
 	Rsa dsa ecdsa ecc
@@ -46,6 +49,9 @@ Symmetric (Exchange message)
 	Des …
 Hash function (Integrity)
 	Md5 hmac
+
+
+下面开始从软件应用层面总结：
 
 ## 1.Overview
 
@@ -374,8 +380,9 @@ JSON Web Token (JWT) Signing
 https://auth0.com/blog/json-web-token-signing-algorithms-overview/
 https://stackoverflow.com/questions/38588319/understanding-rsa-signing-for-jwt
 
-### 4.2 SSL/ TLS / HTTPS
+### 4.2(1) SSL/ TLS / HTTPS
 
+[read more](../network/http_ssl_tls_setup)
 TLS in redis https://docs.redis.com/latest/rc/security/database-security/tls-ssl/
 TLS in https => /software/network/http_ssl_tls_setup.md
 
@@ -410,6 +417,10 @@ On windows for iis
 https://medium.com/the-new-control-plane/generating-self-signed-certificates-on-windows-7812a600c2d8
 https://medium.com/@tbusser/creating-a-browser-trusted-self-signed-ssl-certificate-2709ce43fd15
 https://www.sslshopper.com/article-how-to-create-a-self-signed-certificate-in-iis-7.html
+
+### 4.2(2) SSL PIN (Key Distribution Problem)
+这里说的 Key Distribution Problem 是应用层面，密码学层面指的密码学上的密钥交换算法参考 [Diffie–Hellman key exchange (DHKE)](../../blockchain/cryptography/cryptography)
+https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning
 
 ### 4.3 SSH
 跟SSL的区别：
