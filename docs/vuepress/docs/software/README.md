@@ -137,7 +137,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<h3>硬件开发经验</h3>
 	<ul>
         <li><a href="/docs/software/hardware/hardware" >硬件基础和IOT介绍</a></li>
-        <li><a href="/docs/software/hardware/android_rom" >安卓rom相关</a></li>
+        <li><a href="/docs/software/hardware/mobile/android_rom" >安卓rom相关</a></li>
         <li><a href="/docs/software/hardware/raspberry" >raspberry树莓派</a></li>
         <li><a href="/docs/software/hardware/arduino" >arduino</a></li>
         <li><a href="/docs/software/hardware/dk_nrf52" >nRF52开发入门</a></li>
