@@ -67,7 +67,7 @@ vim curl-format.txt
 "size_header": %{size_header}\n
 }
 
-
+    
 curl -v -w "@curl-format.txt" -H "Connection: close" http://X.X.X.X/api/call
 ```
 
