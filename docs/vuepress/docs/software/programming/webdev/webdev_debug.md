@@ -1,3 +1,10 @@
+## Basics
+
+### TTFB
+time to first byte
+https://web.dev/ttfb/
+[](./network_request_phase.png)
+
 ## web容器：
 
 tomcat
@@ -37,6 +44,32 @@ When Mozilla’s built-in logging capabilities aren’t good enough, and you nee
 
 
 ## Troubleshooting
+
+### Performance issue
+#### website calling another api server
+表现为：网站页面显示从api获取的数据很慢，内网访问ttfb半分钟，外网访问直接timeout
+
+分别从网站服务器和api服务器本身测试，不是网站服务器和api服务器之间的网络问题，确实是api服务器的问题：
+time_starttransfer - time_appconnect is practically the same as Time To First Byte (TTFB) 
+```
+vim curl-format.txt
+{\n
+"time_redirect": %{time_redirect},\n
+"time_namelookup": %{time_namelookup},\n
+"time_connect": %{time_connect},\n
+"time_appconnect": %{time_appconnect},\n
+"time_pretransfer": %{time_pretransfer},\n
+"time_starttransfer": %{time_starttransfer},\n
+"time_total": %{time_total},\n
+"size_request": %{size_request},\n
+"size_upload": %{size_upload},\n
+"size_download": %{size_download},\n
+"size_header": %{size_header}\n
+}
+
+
+curl -v -w "@curl-format.txt" -H "Connection: close" http://X.X.X.X/api/call
+```
 
 ### 301 auto redirect
 
