@@ -1,9 +1,14 @@
+---
+sidebarDepth: 4
+---
+
 ## Basics
 
 ### TTFB
 time to first byte
 https://web.dev/ttfb/
-[](./network_request_phase.png)
+
+![](/docs/docs_image/software/programming/web/network_request_phase.png)
 
 ## web容器：
 

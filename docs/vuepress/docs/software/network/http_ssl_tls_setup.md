@@ -1,3 +1,7 @@
+---
+sidebarDepth: 2
+---
+
 https secure http
 
 wss secure websocket
