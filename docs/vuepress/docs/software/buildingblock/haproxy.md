@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 ## 1. intro
 
 https://cbonte.github.io/haproxy-dconv/2.3/intro.html

@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 ## 日志系统
 
 Simple Logging Facade for Java (abbreviated SLF4J) – acts as a [facade](https://en.wikipedia.org/wiki/Facade_pattern) for different logging frameworks (e.g. [java.util.logging, logback, Log4j](https://www.baeldung.com/java-logging-intro)). It offers a generic API making the logging independent of the actual implementation.

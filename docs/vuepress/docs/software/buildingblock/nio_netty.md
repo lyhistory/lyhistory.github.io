@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 nio basics refer to 《nio_epoll》
 
 https://blog.csdn.net/twypx/article/details/84543518

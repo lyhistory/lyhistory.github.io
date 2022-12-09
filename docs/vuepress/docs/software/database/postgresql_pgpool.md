@@ -1,3 +1,8 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
 
 https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/index.html
 

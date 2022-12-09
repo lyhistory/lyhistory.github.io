@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 single thread queue - LMAX DisruptorHigh Performance Inter-Thread Messaging Library 
 https://lmax-exchange.github.io/disruptor/
 

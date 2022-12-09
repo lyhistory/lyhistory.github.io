@@ -1,4 +1,8 @@
-华为云
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
 
 
 ## 网络

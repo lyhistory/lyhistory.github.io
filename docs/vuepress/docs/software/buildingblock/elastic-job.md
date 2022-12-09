@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 历史：
 
 当当网的分布式作业框架dangdang

@@ -1,3 +1,8 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
 
 圣杯与银弹 · 没用的设计模式
 https://draveness.me/holy-grail-design-pattern/

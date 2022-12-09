@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 声明 本文基于网上一些教程资料总结的，知识都是公开的，没有认真参阅计算机专业文献，难免有疏漏，我尝试着复现IO BIO NIO 多路复用 netty的发展历史，并尝试融会贯通了基于TCP/IP协议传输控制层和应用层的抽象--socket“协议”；
 
 

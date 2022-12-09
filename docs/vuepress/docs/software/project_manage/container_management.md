@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 容器管理/虚拟机管理
 
 kubernetes (k8s) 与 Docker 关系

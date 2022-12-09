@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 https://flink.apache.org/
 
 ![](https://flink.apache.org/img/flink-home-graphic.png)

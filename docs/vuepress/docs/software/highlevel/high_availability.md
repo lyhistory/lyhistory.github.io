@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 首先什么是HA，
 
 最严格的ha就是主主（双活或多活），都负责读写，对于数据库来说，写操作需要通知到所有节点，这种一般是利用共识算法来达成一致性，区块链是极限的HA，参考我的文章《distributed_system》；

@@ -1,3 +1,8 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
 
 ## 1.Overview
 Supervise training(give the right answer first-training set examples)

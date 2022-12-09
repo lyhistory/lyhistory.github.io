@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 
 ## U盘启动
 市面上很多一键u盘启动制作工具都有病毒，比如某某菜等，不小心电脑就成为别人的肉鸡，还是选用开源透明的工具比较靠谱：

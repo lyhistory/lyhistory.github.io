@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 ## 原理
 
 Keepalived是一个基于VRRP协议-Virtual Router Redundancy Protocol 来实现的服务高可用方案

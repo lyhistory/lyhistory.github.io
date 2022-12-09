@@ -1,3 +1,8 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
 
 ## 1. 基本场景
 用户登录或认证授权有几个基本场景：

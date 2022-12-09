@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 rsync是一个可以增量备份的工具，有时候又称为文件或系统镜像工具，常常跟虚拟IP一起，可以搞一个假的HA高可用方案，比如gitlab server就常常用rsync搞成所谓的高可用，其实是冷备
 
 Rsync is a wonderful little utility that's amazingly easy to set up on your machines. Rather than have a scripted FTP session, or some other form of file transfer script -- rsync copies only the diffs of files that have actually changed, compressed and through ssh if you want to for security.  That's a mouthful -- but what it means is:

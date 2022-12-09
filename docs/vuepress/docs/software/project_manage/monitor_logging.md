@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 参考：[Threat Hunting: Log Monitoring Lab Setup with ELK](https://www.hackingarticles.in/threat-hunting-log-monitoring-lab-setup-with-elk/)
 
 1. **Elasticsearch:** It is a restful search engine that stores or holds all of the collected Data.
