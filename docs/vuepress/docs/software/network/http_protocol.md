@@ -11,7 +11,11 @@ chrome/network right click -> header options->protocol，可以看到http/1.1
 
 ### headers
 
-**Hop-by-hop headers**
+#### 基础类型
+
+**End-to-End headers:**
+
+**Hop-by-hop headers:**
 
 比如：
 
@@ -45,7 +49,8 @@ client到proxied server是end to end，而client和proxy以及，proxy和proxied
 
 ````
 
-
+#### header->Link
+[Adding CSS to a Page via HTTP Headers](https://www.impressivewebs.com/adding-css-to-a-page-via-http-headers/)
 
 ### methods
 
