@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 https://www.tutorialspoint.com/assembly_programming/index.htm
 
 ## 架构

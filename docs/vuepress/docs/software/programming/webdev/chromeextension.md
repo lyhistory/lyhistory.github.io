@@ -1,6 +1,12 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 https://developer.chrome.com/extensions/overview
 
-##0X00 chrome extension基础
+## 0X00 chrome extension基础
 
 chrome插件本质就是一堆HTML,CSS,JavaScript和一些配置文件的集合，可以拓展用户的浏览器体验
 
@@ -93,7 +99,7 @@ chrome.tabs.executeScript(targetTabID, {
 还需要注意chromeAPI基本都是异步的，所以如果你的代码逻辑有依赖，需要放到callback里面
 
 
-##0X01 我遇到的问题
+## 0X01 我遇到的问题
 
 首先我想加入一个快捷键功能，不用鼠标点来点去，很简单，manifest加入
 "commands": {

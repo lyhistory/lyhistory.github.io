@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 visual studio code不是visual studio哦，这个工具实在是强大，可以开发各种程序：
 Python、c++、nodejs等等，
 还有各种插件，比如PlatformIO，可以方便的开发各种硬件；

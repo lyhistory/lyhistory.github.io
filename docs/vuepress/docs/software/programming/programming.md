@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 https://codeburst.io/declarative-vs-imperative-programming-a8a7c93d9ad2
 1: Imperative Programming
     1.A: Procedural Programming

@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 npm, nodejs, reactjs, javascript, typescript ?
 
 javascript是nodejs、reactjs和浏览器都在使用的一种编程语言, nodejs reactjs和浏览器用的都是javascript;

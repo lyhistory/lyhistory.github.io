@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 ## Bash script VS Shell Script
 
 Bash scripting is scripting specifically for Bash	Shell scripting is scripting in any shell

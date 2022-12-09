@@ -1,3 +1,8 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
 
 Life of a URLRequest
 https://chromium.googlesource.com/chromium/src/+/HEAD/net/docs/life-of-a-url-request.md

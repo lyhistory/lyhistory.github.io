@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 http协议
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Connection_management_in_HTTP_1.x
 Short-lived connections

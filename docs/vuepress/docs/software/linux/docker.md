@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 https://docs.docker.com/get-started/#container-diagram
 
 https://docs.docker.com/get-started/swarm-deploy/

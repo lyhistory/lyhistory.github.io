@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 [official documents](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-documentation)
 
 自动配置、起步依赖、Actuator、命令行界面(CLI) 是Spring Boot最重要的4大核心特性

@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 前端必读：浏览器内部工作原理 https://kb.cnblogs.com/page/129756/
 
 

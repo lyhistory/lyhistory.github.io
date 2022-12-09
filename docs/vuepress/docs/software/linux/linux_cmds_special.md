@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 ## systemd
 https://www.freedesktop.org/software/systemd/man/systemd.exec.html
 

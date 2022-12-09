@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 Performance 
 ASP.NET Performance Monitoring: A Developer’s How to Guide
 https://stackify.com/asp-net-performance-monitoring-developers-guide/
