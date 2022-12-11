@@ -89,12 +89,16 @@ footer:
     - label: "机器指令-白帽黑客&区块链&计算机基础"
       icon: "fas fa-fw fa-dragon"
       url: https://lyhistory.com/docs/
-    - label: "Sea Shepherd"
-      icon: "fas fa-fw fa-whale"
-      url: https://seashepherd.org/
     - label: "Google Course"
       icon: "fab fa-fw fa-google"
       url: https://developers.google.com/edu/
+    - label: "wikipedia"
+      icon: "fab fa-fw fa-wikipedia-w"
+      url: https://www.wikipedia.org/
+    - label: "Sea Shepherd"
+      icon: "fas fa-fw fa-leaf"
+      url: https://seashepherd.org/
+    
 defaults:
   # _posts
   - scope:
