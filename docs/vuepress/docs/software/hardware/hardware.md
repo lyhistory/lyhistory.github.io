@@ -99,7 +99,15 @@ http://news.eeworld.com.cn/Test_and_measurement/ic514591.html
 6、刷程序
 对于有单片机、DSP、CPLD等可编程元件，可考虑重新刷一遍程序，排除程序运行异常造成的电路故障。
 
-## 2.常见芯片-程序烧录
+## 常见芯片模块
+
+### 串口ttl转usb
+
+TTL - Transistor-Transistor Logic,晶体管晶体管逻辑电路
+
+从稳定性来看，ft3232 > cp2102 > ch340
+
+## 2.常见控制芯片-程序烧录
 
 Common tips 
 1.install correct drive

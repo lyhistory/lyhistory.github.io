@@ -136,8 +136,23 @@ phpinfo();
 php version
 php extension
 
-short_open_tag = On #php显示源码/代码   https://www.oschina.net/question/5029_79046
 ```
+#### short_open_tag
+short_open_tag = On #php显示源码/代码   https://www.oschina.net/question/5029_79046
+
+#### max_execution_time int
+This sets the maximum time in seconds a script is allowed to run before it is terminated by the parser. This helps prevent poorly written scripts from tying up the server. The default setting is 30. When running PHP from the command line the default setting is 0.
+
+On non Windows systems, the maximum execution time is not affected by system calls, stream operations etc. Please see the set_time_limit() function for more details.
+
+Your web server can have other timeout configurations that may also interrupt PHP execution. Apache has a Timeout directive and IIS has a CGI timeout function. Both default to 300 seconds. See your web server documentation for specific details.
+
+#### size
++ upload_max_filesize:
+    The maximum size of an uploaded file.
++ post_max_size:
+    Sets max size of post data allowed. This setting also affects file upload. To upload large files, this value must be larger than upload_max_filesize. Generally speaking, memory_limit should be larger than post_max_size. When an int is used, the value is measured in bytes. Shorthand notation, as described in this FAQ, may also be used. If the size of post data is greater than post_max_size, the $_POST and $_FILES superglobals are empty. This can be tracked in various ways, e.g. by passing the $_GET variable to the script processing the data, i.e. <form action="edit.php?processed=1">, and then checking if $_GET['processed'] is set.
+
 ### phpstudy+vscode+xdebug
 **step 1: 给vscode配置外部php executor（phpstudy)**
 https://code.visualstudio.com/docs/languages/php

@@ -54,6 +54,7 @@ client到proxied server是end to end，而client和proxy以及，proxy和proxied
       - Upgrade
 
 ````
+#### header->X-Redirect-By
 
 #### header->Link
 [Adding CSS to a Page via HTTP Headers](https://www.impressivewebs.com/adding-css-to-a-page-via-http-headers/)

@@ -78,7 +78,7 @@ vim curl-format.txt
 curl -v -w "@curl-format.txt" -H "Connection: close" http://X.X.X.X/api/call
 ```
 
-### 301 auto redirect
+### 301 auto redirect - X-Redirect-By
 
 事件：dev.site.com 总是自动跳转到www.site.com
 

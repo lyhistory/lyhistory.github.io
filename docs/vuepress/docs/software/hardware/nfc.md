@@ -105,7 +105,7 @@ NFC手机贴
 
 nfc模块-PN532
 
-### 手机复制M1卡
+### （普通人）手机复制M1卡
 
 https://nfctool.cn/nfcphone_phone
 
@@ -113,4 +113,19 @@ https://nfctool.cn/nfcphone_phone
 复制母卡卡号
 复制母卡数据
 
-### 树莓派读写卡
+### （程序员）PN532模块读写复制M1卡
+
+华为钱包 + PN532模块 + 串口转USB模块 + UID复制卡 + 原始母卡
+
+连接电脑的PN532上位机
+
+### 程序员）PN532模块+蓝牙读写复制M1卡
+
+MTools - Mifare ACR122 PN532
+http://www.appgodlike.com/index/info/?appId=tk.toolkeys.mtools&country=FJ&lang=en_FJ&apptype=1
+
+手机OTG连接搭配MTools 或 Nfc-Tools 使用
+手机蓝牙连接搭配MTools 或 Nfc-Tools 使用
+
+串口-蓝牙一体式PN532
+https://why.yuyeye.cc/post/how-to-diy-usb-bluetooth-all-in-one-pn532/
