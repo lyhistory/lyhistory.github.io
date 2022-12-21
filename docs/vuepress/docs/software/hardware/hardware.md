@@ -6,6 +6,48 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《硬件基础与物联网IOT》
 
+
+## 集成电路基本概念
+
++ 集成电路 IC-Integrated Circuit 又称 芯片 Integrated Circuit Chip, an integrated circuit or monolithic integrated circuit (also referred to as an IC, a chip, or a microchip) is a set of electronic circuits on one small flat piece (or "chip") of semiconductor material, usually silicon.
++ 印刷电路板 PCB-Printed Circuit Board
+  是芯片IC的载体
++ 单片机/单片微型计算机 Single Chip Microcomputer，它是把中央处理器（Central Process Unit；CPU）的频率与规格做适当缩减，并将内存（memory）、计数器（Timer）、USB、A／D转换、UART、PLC、DMA等周边接口，甚至LCD驱动电路都整合在单一芯片上，形成芯片级的计算机，为不同的应用场合做不同组合控制
+  单片机是一种芯片IC；
++ CPU MCU MPU
+  中央处理器（CPU）是电脑中的核心配件，其功能主要是解释计算机指令以及处理计算机软件中的数据。中央处理器主要包括两个部分，即控制器、运算器，其中还包括高速缓冲存储器及实现它们之间联系的数据、控制的总线。处理器架构设计的迭代更新以及集成电路工艺的不断提升促使CPU不断发展完善，从最初专用于数学计算到广泛应用于通用计算，从4位到8位、16位、32位处理器，最后到64位处理器，从各厂商互不兼容到不同指令集架构规范的出现，CPU 自诞生以来一直在飞速发展。
+  CPU逐渐发展出来三个分枝：
+  一个是DSP（Digital Signal Processing／Processor，数字信号处理），
+  另外两个是MCU（Micro Control Unit，微控制器单元）和MPU（Micro Processor Unit，微处理器单元）。
+  Two basic processing platforms for implementing embedded systems:
+  - **MCU-Microcontroller Unit - Arduinos**
+  These devices have varying amounts of integrated Flash (<= 2MB) and RAM (<= 1MB), and are designed to run bare-metal code or a real-time operating system (RTOS), like FreeRTOS. 
+  An example of an MCU based system is most Arduinos(ATmega328 8-bit Microcontroller)
+  - **MPU- microprocessor unit - Raspberry PI**
+  The second is the Linux-capable Microprocessor Unit (MPU). An MPU typically does not have embedded Flash and RAM — at least on the same die. 
+  an example of an MPU based system is the Raspberry PI(RP2040). 
+  The fundamental difference between MCU/RTOS and MPU/Linux systems is the memory architecture and the amount of memory in the system.
+  http://bec-systems.com/site/1540/microcontroller-mcu-or-microprocessor-mpu
++ 电子元器件 Electronic Components
+  是电子电路中的基本元素，通常是个别封装，并具有两个或以上的引线或金属接点。电子元件须相互连接以构成一个具有特定功能的电子电路，例如：放大器、无线电接收机、振荡器等，连接电子元件常见的方式之一是焊接到印刷电路板上。电子元件也许是单独的封装（电阻器、电容器、电感器、晶体管、二极管等），或是各种不同复杂度的群组，例如：集成电路（运算放大器、排阻、逻辑门等）。
++ 逻辑门电路
+  逻辑门（Logic Gates)是在集成电路(Integrated Circuit)上的基本组件；
+  最常用的集成门电路有
+  - TTL系列集成逻辑门
+  - CMOS系列集成逻辑门
+  两大类。就其功能而言，常用的有与门、或门、非门、与非门、或非门、与或非门、异或门以及集电极开路（OC）门、三态（TS）门等
+  在数字电路中，所谓“门”就是只能实现基本逻辑关系的电路。最基本的逻辑关系是与、或、非，最基本的逻辑门是与门、或门和非门。逻辑门可以用电阻、电容、二极管、三极管等分立原件构成，成为分立元件门。也可以将门电路的所有器件及连接导线制作在同一块半导体基片上，构成集成逻辑门电路
+  集成电路按照单位芯片面积集成门电路的个数，分为：
+  - 小规模集成电路（SSI）
+  - 中规模集成电路(MSI)
+  - 大规模集成电路(LSI)
+  - 超大规模集成电路(VLSI)
+  从制造工艺上来看，数字集成电路可分为：
+  - 双极型集成电路
+  - 单极型集成电路
++ PLC-programmable logic controller
+
+
 ## 1.Fundamentals 
 Electronics Foundations: https://www.linkedin.com/learning/electronics-foundations-fundamentals
 
@@ -15,7 +57,7 @@ http://www.54benniao.com/view/28.html
 ![](/docs/docs_image/software/hardware/basic/02_ohm.png)
 https://zhidao.baidu.com/question/78519916
 
-### 电子元器件  Electronic Components
+### 电子元器件 Electronic Components
 https://en.wikipedia.org/wiki/Electronic_symbol
 
 R 电阻：
@@ -69,8 +111,6 @@ dimensions: 52mm x 34mm
 	外部：接电阻，又5v引脚供电，又称低电平控制/负极控制，灌电流强
 
 
-### IC板 逻辑门电路
-
 ### PCB-Printed Circuit Board 印制电路板 - 芯片的载体
 PCB类型，如何通过板子画出电路图？
 电路板上如何区分交流直流
@@ -99,7 +139,13 @@ http://news.eeworld.com.cn/Test_and_measurement/ic514591.html
 6、刷程序
 对于有单片机、DSP、CPLD等可编程元件，可考虑重新刷一遍程序，排除程序运行异常造成的电路故障。
 
-## 常见芯片模块
+## 通信协议
+针脚：SDA SDL RX TX
+
+UART、RS232、RS485、I2C、SPI、CAN
+
+
+## 常用芯片-模块
 
 ### 串口ttl转usb
 
@@ -107,7 +153,18 @@ TTL - Transistor-Transistor Logic,晶体管晶体管逻辑电路
 
 从稳定性来看，ft3232 > cp2102 > ch340
 
-## 2.常见控制芯片-程序烧录
++ cp2102
+  [CP210x USB to UART Bridge VCP Drivers](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads)
++ ch340
+  
+windows驱动，device manager=》Ports(COM&LPT)
+
+
+### RFID模块
+RC522和PN532的区别
+协议支持的类型PN比RC系列更多，PN支持NFC协议，RC主要是ISO14443A/B
+
+## 常用芯片-单片机
 
 Common tips 
 1.install correct drive

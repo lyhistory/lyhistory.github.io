@@ -5,6 +5,23 @@
 
 GMW
 
+GMV Gross Merchandise Volume 成交总额
+
+Milk Run 上门取件
+
+Word first 万里汇
+
+PQI Product Quality Indicator 商品质量指数
+
+PV Page View 页面浏览量/点击量
+
+UV Unique Visitor 访问人数
+
+IPV Item Page View 搜索浏览量
+
+IPV-UV 浏览过商品详情的独立访问者
+
+
 ## 流量
 
 ### 关键词

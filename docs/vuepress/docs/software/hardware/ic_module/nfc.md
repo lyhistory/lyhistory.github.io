@@ -107,6 +107,7 @@ nfc模块-PN532
 
 ### （普通人）手机复制M1卡
 
+一般的手机都不支持复制加密卡，即使是非加密卡有的也一般需要用一个中介卡先模拟卡号（也不排除有的手机可以直接模拟，听说有很牛逼的手机可以直接模拟加密卡）：
 https://nfctool.cn/nfcphone_phone
 
 华为钱包 + 蓝牙读卡器 + UID复制卡 + 原始母卡
@@ -115,11 +116,53 @@ https://nfctool.cn/nfcphone_phone
 
 ### （程序员）PN532模块读写复制M1卡
 
-华为钱包 + PN532模块 + 串口转USB模块 + UID复制卡 + 原始母卡
+UART
+
+NXP PN532
+PN532扩展板 https://www.waveshare.net/shop/PN532-NFC-HAT.htm
+https://www.waveshare.net/wiki/PN532_NFC_HAT#.E4.BA.A7.E5.93.81.E5.8F.82.E6.95.B0
+
+| |	SET0 | SET1 |
+| - | - | - |
+| UART | L | L |
+| SPI | L | H |
+| IIC | H | L |
+
+#### （程序员）windows+PN532模块读写复制M1卡
+UART方式
+华为钱包 + PN532模块 + 串口转USB模块(cp2102) + UID复制卡/中介卡/魔术卡 + 原始母卡
 
 连接电脑的PN532上位机
 
-### 程序员）PN532模块+蓝牙读写复制M1卡
+安装cp2102驱动
+[MifareOneTool下载](https://github.com/lyhistory/hardware_MifareOneTool)
+
++ 母卡到新卡步骤(MifareOneTool)：
+  1.复制卡模式，检测PN532模块是否连接成功
+  2.放母卡然后点击扫描卡片
+  3.点击检测加密（支持SAK=08/18/28)
+  4.点击一键解原卡（保存后缀为dump文件）
+  5.拿下母卡，放上新卡，点击写C/FUID卡
++ 母卡到手机/手环步骤：：
+  1.检测PN532模块是否连接成功
+  2.放母卡然后点击扫描卡片
+  3.点击检测加密（支持SAK=08/18/28)
+  4.点击一键解原卡（保存后缀为dump文件）
+  5.高级模式=》HEX编辑器，打开之前保存的后缀为.dump文件
+  6.点击扇区0，后选中第0块的前8位数字，复制
+  7.点击文件->新建，新建一个文件
+  8.点击工具->修改UID，并在弹窗界面内粘贴复制的8位序列号
+  9.点击另存为（此文件为.mfd为后缀的文件）
+  10.拿下母卡，放上空白UID复制卡，点击高级操作模式的=》cuid写，选择刚才的mfd文件写入空白卡
+  10.写入卡号：将手机/手环放置在空白卡上，华为手机默认钱包，添加新门卡。
+  11.写入数据：将手机/手环放置在PN532读卡模块上，选择复制卡模式，点击CUID写->选择后缀为dump的文件写入。
+
+1）如果写入mfd没有 64/64则再多次重试，如果重试不成功，则说明卡片有问题，建议换一个空白UID卡
+
+2）如果上面一键解原卡失败，则使用其他工具破解，比如蛐蛐的 PN532_GUI：
+跑出密钥之后回到MifareOneTool，在复制卡模式页点击知一密破解，填入跑出来的密钥，保存 dump 文件。
+
+#### （程序员）PN532模块+蓝牙读写复制M1卡
 
 MTools - Mifare ACR122 PN532
 http://www.appgodlike.com/index/info/?appId=tk.toolkeys.mtools&country=FJ&lang=en_FJ&apptype=1
@@ -129,3 +172,11 @@ http://www.appgodlike.com/index/info/?appId=tk.toolkeys.mtools&country=FJ&lang=e
 
 串口-蓝牙一体式PN532
 https://why.yuyeye.cc/post/how-to-diy-usb-bluetooth-all-in-one-pn532/
+
+#### （程序员）Raspberry+PN532模块读写复制M1卡
+SPI方式
+
+
+
+https://github-9233.github.io/2020/02/22/hack-miband4-nfc/
+https://f002.backblazeb2.com/file/sec-news-backup/files/writeup/www.91ri.org/_16081_html/index.html

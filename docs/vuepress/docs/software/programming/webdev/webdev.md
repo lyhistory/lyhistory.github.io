@@ -262,6 +262,8 @@ hugo -s D:\sourcecode\ -d D:\publish\
 
 然后为了加速，我选择了cloudflare做dns解析，方法：
 https://blog.cloudflare.com/secure-and-fast-github-pages-with-cloudflare/
+https://developers.cloudflare.com/dns/zone-setups/full-setup/setup/
+
 基本就是去注册一个cloudflare的免费dns服务，然后根据提示去你的域名供应商处更改默认的dns为cloudflare提供的两个dns即可；
 至于加速的原理，还需要研究下，参考[在GitHub Pages上使用CloudFlare的免费SSL指南](https://penguin-g.github.io/2017/11/23/Secure-and-fast-GitHub-Pages-with-CloudFlare/)
 
