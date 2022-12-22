@@ -422,6 +422,10 @@ https://www.sslshopper.com/article-how-to-create-a-self-signed-certificate-in-ii
 这里说的 Key Distribution Problem 是应用层面，密码学层面指的密码学上的密钥交换算法参考 [Diffie–Hellman key exchange (DHKE)](../../blockchain/cryptography/cryptography)
 https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning
 
+主要是指app开发，对于浏览器来说由于历史原因 HKPK 已经被淘汰；
+注意：不要直接pin certificate，否则certificate更新会很麻烦要同时更新app，可以pin public key（更新证书的时候保持public key不变）或者pin上一层CA的证书：
+it is recommended to place the pin on the intermediate certificate of the CA that issued the server certificate, to ease certificates renewals and rotations.
+
 ### 4.3 SSH
 跟SSL的区别：
 SSL的公钥信息和身份信息（填的地区邮箱网址等）需要用x.509自签或者ca对证书进行签名（自签就是自己用自己的私钥签名，相当于我生成了一对公私钥，现在要对公钥认证，自己再拿着这个私钥签名，所以叫自签； 如果是ca签发，当然是ca机构用他们自己的私钥对请求认证的公钥进行签名），

@@ -485,9 +485,106 @@ E--->路由2	xx:xx:xx:xx:xx:ae	xx:xx:xx:xx:xx:cd	10.0.0.6	10.0.0.2	99	88	...	...
 路由1--->A	xx:xx:xx:xx:xx:ca	xx:xx:xx:xx:xx:aa	10.0.0.6	10.0.0.2	99	88	.....	....
 数据包在路由1和2中的1，4端口中进行转发时，因为是在设备内部，因此可以直接转发，不用变换帧头，从而提高效率，另外如果A向其他子网的FGH发送数据时，过程基本上一样，只不过不会通过广播寻址，而是直接将数据包发送给路由器出口网关。
 
+#### VPN & DNS resolve
+连接VPN后：
+```
+>ipconfig /all
 
+Windows IP Configuration
 
+   Host Name . . . . . . . . . . . . : TEST-LP
+   Primary Dns Suffix  . . . . . . . : lyhistory.com
+   Node Type . . . . . . . . . . . . : Hybrid
+   IP Routing Enabled. . . . . . . . : No
+   WINS Proxy Enabled. . . . . . . . : No
+   DNS Suffix Search List. . . . . . : lyhistory.com
 
+VPN_Access - X.X.X.X:
+
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : VPN IP: - X.X.X.X
+   Physical Address. . . . . . . . . :
+   DHCP Enabled. . . . . . . . . . . : No
+   Autoconfiguration Enabled . . . . : Yes
+   IPv4 Address. . . . . . . . . . . : 172.x.x.x(Preferred)
+   Subnet Mask . . . . . . . . . . . : 255.255.255.255
+   Default Gateway . . . . . . . . . :
+   DNS Servers . . . . . . . . . . . : 192.168.111.100
+                                       x.x.x.x
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+
+Wireless LAN adapter Wi-Fi:
+
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : Intel(R) Dual Band Wireless-AC 8265
+   Physical Address. . . . . . . . . : 
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+   IPv4 Address. . . . . . . . . . . : 192.x.x.x(Preferred)
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Lease Obtained. . . . . . . . . . : Wednesday, 7 December 2022 8:53:28 AM
+   Lease Expires . . . . . . . . . . : Thursday, 15 December 2022 9:08:12 AM
+   Default Gateway . . . . . . . . . : 192.168.5.1
+   DHCP Server . . . . . . . . . . . : 192.168.5.1
+   DNS Servers . . . . . . . . . . . : 1.1.1.1
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+```
+
+测试：
+```
+>nslookup google.com
+Server:  UnKnown
+Address:  192.168.111.100
+
+Non-authoritative answer:
+Name:    google.com
+Addresses:  2404:6800:4003:c04::64
+          2404:6800:4003:c04::8b
+          2404:6800:4003:c04::65
+          2404:6800:4003:c04::66
+          172.217.194.113
+          172.217.194.139
+          172.217.194.101
+          172.217.194.100
+          172.217.194.138
+          172.217.194.102
+```
+
+断开VPN测试：
+```
+>nslookup google.com
+Server:  one.one.one.one
+Address:  1.1.1.1
+
+Non-authoritative answer:
+Name:    google.com
+Addresses:  2607:f8b0:4005:813::200e
+          142.251.32.46
+```
+#### Proxy Server (VS/&)  VPN
+
+[example: Overview of the BIG-IP APM Edge Client Web Proxy for Windows](https://support.f5.com/csp/article/K36727588)
+```
+Here is an example of a basic PAC file script:
+
+function FindProxyForURL(url, host) {
+ // If the hostname matches, send direct to the destination.
+     if (dnsDomainIs(host, "f5.com") ||
+         shExpMatch(host, "(*.example.com|example.ca)"))
+         return "DIRECT";
+   
+ // All other traffic forwards to the upstream web/forward proxy server
+     return "PROXY myproxy.domain.com:8080";
+ }
+
+In this example, find the HTTP host the user typed; if the host is f5.com or it contains *.example.com or example.ca,  do not proxy these two hosts.   For all other traffic,  send the traffic to "myproxy.domain.com on port 8080"
+```
+
+[How DNS lookups work when using an HTTP proxy (or not) in IE](https://serverfault.com/questions/169816/how-dns-lookups-work-when-using-an-http-proxy-or-not-in-ie)
+
+[How to connect to VPN through Proxy Server](https://superuser.com/questions/842109/how-to-connect-to-vpn-through-proxy-server)
+
+[Proxy Settings Not Applied to VPN Connection](https://social.technet.microsoft.com/Forums/en-US/40475834-c6fa-4c6a-8881-50b82859e8fd/proxy-settings-not-applied-to-vpn-connection?forum=win10itpronetworking)
 
 ## 2.Packet Sniffer
 
