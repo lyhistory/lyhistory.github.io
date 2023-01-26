@@ -79,6 +79,73 @@ https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/de
 Jun 13 19:15:12 sgsg3-clear-v01 kernel: type=1701 audit(1655118912.145:16370687): auid=1000 uid=1000 gid=500 ses=2267378 subj=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 pid=30986 comm="java" reason="memory violation" sig=6
 memory violation，不是程序本身有问题就是jvm有问题或者其他os问题，~~只能对java程序加debug参数进行记录~~ 发现java crash之后会在程序路径下生产一个core.XXX文件
 
+### systemd not working
+
+设置的开机启动在某次异常断电重启后没有恢复：
+\etc\systemd\system\zookeeper.service
+```
+[Unit]
+Description=The Zookeeper Daemon
+Wants=syslog.target
+
+[Service]
+Type=forking
+User=zookeeper
+ExecStart=/scripts/zookeeper.sh --start
+
+[Install]
+WantedBy=multi-user.target
+```
+
+[An unexpected shutdown from power loss:(note that you have a system boot event without a prior system shutdown event)](https://unix.stackexchange.com/questions/9819/how-to-find-out-from-the-logs-what-caused-system-shutdown):
+```
+#last -x
+
+runlevel (to lvl 3)   3.10.0-327.el7.x Sun Oct  2 12:34 - 11:20 (94+22:46) <-- the system was running since this momemnt
+reboot   system boot  3.10.0-327.el7.x Sun Oct  2 12:34 - 11:20 (94+22:46) <-- then we've a boot WITHOUT a prior shutdown
+```
+系统异常停机（断电）
+
+
+/var/log/audit/audit.log
+```
+type=SERVICE_START msg=audit(1664685262.826:27): pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=rsyslog comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+type=SERVICE_START msg=audit(1664685262.944:28): pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=NetworkManager comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+type=SERVICE_START msg=audit(1664685263.032:29): pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=redis comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+type=SERVICE_START msg=audit(1664685263.239:30): pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=kafka comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+type=SERVICE_START msg=audit(1664685263.255:31): pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=NetworkManager-dispatcher comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+type=SERVICE_START msg=audit(1664685263.308:32): pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=wpa_supplicant comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+type=SERVICE_START msg=audit(1664685263.430:33): pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=polkit comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+type=SERVICE_STOP msg=audit(1664685263.731:34): pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=kafka comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=failed'
+type=SERVICE_START msg=audit(1664685263.837:35): pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=zookeeper comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+type=SERVICE_STOP msg=audit(1664685263.837:36): pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=zookeeper comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+type=SERVICE_START msg=audit(1664685268.223:37): pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=NetworkManager-wait-online comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+type=SERVICE_STOP msg=audit(1664685268.223:38): pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=NetworkManager-wait-online comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+```
+可以看到在zookeeper启动前后有 NetworkManager 相关的启动信息，比如NetworkManager-wait-online，所以也许zookeeper启动需要依赖network，再去查一下zookeeper的日志，没有太多发现，只是看到这个时间段确实有error
+
+尝试解决：
+```
+[Unit]
+Description=The Zookeeper Daemon
+Documentation=http://zookeeper.apache.org
+Wants=syslog.target
+Requires=network.target
+After=network.target
+
+[Service]
+Type=forking
+User=zookeeper
+Group=zookeeper
+ExecStart=/scripts/zookeeper.sh --start
+
+[Install]
+WantedBy=multi-user.target
+
+```
+
+https://stackoverflow.com/questions/45222669/centos-7-systemd-requires-and-after-values-for-kafka-to-depend-on-local-zookeepe
+
 ### Linux system time temporally jumps
 某交易系统时间瞬间（几百毫秒）加了16个小时，造成某条交易信息时间变成盘后，然后触发系统自动闭盘，然后又迅速恢复正常
 temporally jump / sudden leap / time sudden shift

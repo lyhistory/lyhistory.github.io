@@ -832,7 +832,13 @@ $   sysctl net.ipv4.ip_local_port_range
 
 ## 4. 协议详解
 
-### 4.1 网络层的协议测试工具
+### 4.1 链路层协议
+
+**LLDP链路层发现协议**
+
+LLDP（链路层发现协议）是定义在802.1ab中的一个二层协议，接入网络的设备可以通过其，将管理地址、设备标识、接口标识等信息发送给同一个局域网络的其它设备。
+
+### 4.2 网络层的协议测试工具
 
 1) **ICMP协议**：ping，tracert
 
@@ -932,7 +938,7 @@ NAT技术无法从外部网络向内网建立连接，所以如果外网要访�
 三层转发基本原理 https://blog.csdn.net/baidu_24553027/article/details/54928580
 NAT地址转换 https://blog.csdn.net/hjgblog/article/details/23356409
 
-### 4.2 传输层的协议测试工具
+### 4.3 传输层的协议测试工具
 
 参见《/doc/software/network/vpn》
 注意ping和trcert都是走ICMP协议，并不是tcp协议，如果想追踪tcp需要用：
@@ -951,7 +957,7 @@ https://serverfault.com/questions/199434/how-do-i-make-curl-use-keepalive-from-t
 $ while :;do echo -e "GET / HTTP/1.1\nhost: $YOUR_VIRTUAL_HOSTNAME\n\n";sleep 1;done|telnet $YOUR_SERVERS_IP 80
 ```
 
-### 4.3 应用层之“协议”
+### 4.4 应用层之“协议”
 应用层的协议有FTP、HTTP、websocket、TELNET、SMTP、DHCP、DNS等协议：
 
 #### **DHCP协议**
@@ -1027,7 +1033,7 @@ https通信是http建立在tls上，最新的tls1.3(SSL is deprecated predecesso
 
 TLS握手发生在TCP握手结束之后，具体参考《publickey_infrastructure.md/[#](https://lyhistory.com/docs/software/highlevel/publickeyinfrastructure.html#_3-1-ssl-tls)3.1 SSL/TLS》
 
-### 4.3 应用层之proxy代理服务器
+### 4.5 应用层之proxy代理服务器
 
 前面说过NAT技术和代理服务器技术的区别，现在具体说下代理服务器
 
@@ -1065,11 +1071,11 @@ https://medium.com/@ryanwendel/forwarding-reverse-shells-through-a-jump-box-usin
 
 https://www.offensive-security.com/metasploit-unleashed/portfwd/
 
-#### 4.3.1 ICMP Tunnel
+#### 4.5.1 ICMP Tunnel
 
 Ping Power — ICMP Tunnel https://infosecwriteups.com/ping-power-icmp-tunnel-31e2abb2aaea
 
-#### 4.3.2 http tunnel
+#### 4.5.2 http tunnel
 
 定义：
 > HTTP tunneling is used to create a network link between two computers in conditions of restricted network connectivity including firewalls, NATs and ACLs, among other restrictions. The tunnel is created by an intermediary called a proxy server which is usually located in a DMZ.
@@ -1086,7 +1092,7 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT
 [HTTP Tunnel使用的几种使用（经典）](https://blog.csdn.net/zhangxinrun/article/details/5942260)
 [http tunnel和入侵检测的理解](https://blog.csdn.net/gx11251143/article/details/104518461)
 
-#### 4.3.3 tcp tunnel
+#### 4.5.3 tcp tunnel
 
 跟http tunnel利用http connect，还需要一个proxy server来建立双向通道并做流量转发的操作；
 tcp tunnel一般不需要通过一个proxy server，而是借助安装在本地或者远程的软件来做“端口转发”，比如利用ssh将两台电脑的端口进行映射；
@@ -1155,7 +1161,7 @@ proxychains nmap -Pn -sT 172.17.0.0/24
 
 
 
-#### 4.3.4 VPN
+#### 4.5.4 VPN
 
 A VPN tunnel, however, is fully encrypted. The "P in VPN indicates private. VPN tunnels are typically achieved with IPSeC, SSL, PPTP,  TCP Crypt (this is a new protocol), etc.
 
@@ -1166,7 +1172,7 @@ A VPN tunnel, however, is fully encrypted. The "P in VPN indicates private. VPN 
 In computing, Internet Protocol Security (IPsec) is a secure network protocol suite that authenticates and encrypts packets of data to provide secure encrypted communication between two computers over an Internet Protocol network. It is used in virtual private networks (VPNs).
 
 
-### 4.4 其他network测试工具
+### 4.6 其他network测试工具
 
 network丢包延迟重复模拟器 https://jagt.github.io/clumsy/
 

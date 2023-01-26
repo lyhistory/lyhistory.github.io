@@ -1125,7 +1125,7 @@ https://nginx.org/en/CHANGES-1.22
 华为云上配置：
 浏览器/App => CDN或高防等代理 => Web应用防火墙 => 源站服务器
 
-websocket服务位于源站服务器，通过nginx反向代理，nginx配置：
+websocket服务位于源站服务器，通过nginx反向代理，nginx配置 debug：
 ```
 location /test/wsPublicMessage {
     if ( $http_upgrade = '' ){
