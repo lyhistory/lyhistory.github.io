@@ -103,6 +103,7 @@ dataDir=C:\Workspace\Repository\zookeeper-release-3.5.6\dataDir
 
 ### 管理脚本
 
+
 ```shell
 readonly PROGNAME=$(basename $0)
 readonly PROGDIR=$(readlink -m $(dirname $0))
@@ -183,6 +184,24 @@ else
 fi
 
 exit $L_RETURN_FLAG
+```
+### 自动启动
+
+```
+[Unit]
+Description=The Zookeeper Daemon
+Wants=syslog.target
+Requires=network.target
+After=network.target
+
+[Service]
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/jdk/bin
+Type=forking
+User=root
+ExecStart=/bin/zkCli.sh start
+
+[Install]
+WantedBy=multi-user.target
 ```
 
 ### admin 

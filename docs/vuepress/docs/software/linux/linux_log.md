@@ -91,7 +91,7 @@ Wants=syslog.target
 [Service]
 Type=forking
 User=zookeeper
-ExecStart=/scripts/zookeeper.sh --start
+ExecStart=/bin/zkCli.sh start
 
 [Install]
 WantedBy=multi-user.target
@@ -137,7 +137,7 @@ After=network.target
 Type=forking
 User=zookeeper
 Group=zookeeper
-ExecStart=/scripts/zookeeper.sh --start
+ExecStart=/bin/zkCli.sh start
 
 [Install]
 WantedBy=multi-user.target
@@ -146,6 +146,37 @@ WantedBy=multi-user.target
 
 https://stackoverflow.com/questions/45222669/centos-7-systemd-requires-and-after-values-for-kafka-to-depend-on-local-zookeepe
 
+仍然无法启动
+
+#systemctl status zookeeper
+● zookeeper.service - The Zookeeper Daemon
+   Loaded: loaded (/etc/systemd/system/zookeeper.service; enabled; vendor preset: disabled)
+   Active: inactive (dead) since Fri 2023-01-27 16:27:07 SGT; 2s ago
+  Process: 4032 ExecStart=/apex/apps/clearing/scripts/zookeeper.sh --start (code=exited, status=0/SUCCESS)
+ Main PID: 3649 (code=exited, status=127)
+
+vim /apex/apps/clearing/3rd-party/zookeeper/bin/zookeeper.out
+Unable to find Java
+
+最终修复
+```
+[Unit]
+Description=The Zookeeper Daemon
+Documentation=http://zookeeper.apache.org
+Wants=syslog.target
+Requires=network.target
+After=network.target
+
+[Service]
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/jdk/bin
+Type=forking
+User=zookeeper
+Group=zookeeper
+ExecStart=/bin/zkCli.sh start
+
+[Install]
+WantedBy=multi-user.target
+```
 ### Linux system time temporally jumps
 某交易系统时间瞬间（几百毫秒）加了16个小时，造成某条交易信息时间变成盘后，然后触发系统自动闭盘，然后又迅速恢复正常
 temporally jump / sudden leap / time sudden shift

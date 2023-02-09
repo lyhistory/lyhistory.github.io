@@ -351,6 +351,17 @@ log路径：也是排查错误的路径
 /var/log/gitlab/
 
 
+单机版gitlab可以执行`gitlab-rake gitlab:check`即可全面单机检测
+
+单个检查：
+```
+gitlab:gitlab_shell:check
+gitlab:gitaly:check
+gitlab:sidekiq:check
+gitlab:incoming_email:check
+gitlab:ldap:check
+gitlab:app:check
+```
 
 ### 2.4 Configuration
 
@@ -1021,7 +1032,7 @@ gitlab_url: "http://127.0.0.1:8080"
 
 就是对应的gitlab server上面的puma web服务（unicorn）
 
-#### 3.1.3 测试连通性
+#### 3.1.3 测试连通性|健康检查
 
 单机版gitlab可以执行`gitlab-rake gitlab:check`即可全面单机检测
 
@@ -1634,9 +1645,89 @@ sudo gitlab-rake gitlab:check SANITIZE=true
 ```
 
 
+### 服务升级(upgrade policy)+卸载
 
-### 服务升级(update policy)+卸载
+#### 主要规则
+Although you can generally upgrade through multiple GitLab versions in one go, sometimes this can cause issues.
 
+**升级到 minor version**
+
+[upgrade path](https://docs.gitlab.com/ee/update/#upgrade-paths)
+
+When not explicitly specified, upgrade GitLab to the latest available patch release rather than the first patch release, for example 13.8.8 instead of 13.8.0. This includes versions you must stop at on the upgrade path as there may be fixes for issues relating to the upgrade process. Specifically around a major version, crucial database schema and migration patches are included in the latest patch releases.
+
+**升级到 major version**
+Upgrading the major version requires more attention. Backward-incompatible changes and migrations are reserved for major versions. Follow the directions carefully as we cannot guarantee that upgrading between major versions is seamless.
+
+A major upgrade requires the following steps:
+
++ Start by identifying a supported upgrade path. This is essential for a successful major version upgrade.
++ Upgrade to the latest minor version of the preceding major version.
++ Upgrade to the “dot zero” release of the next major version (X.0.Z).
++ Optional. Follow the upgrade path, and proceed with upgrading to newer releases of that major version.
+
+
+关于upgrade path，gitlab不保证每次升级都是100%成功的：
+
+Find where your version sits in the upgrade path below, and upgrade GitLab accordingly, while also consulting the [version-specific upgrade instructions](https://docs.gitlab.com/ee/update/README.html#version-specific-upgrading-instructions)” 例如参考Troubleshooting中的“版本升级后出现500无法访问project”
+
+#### 升级
+
+https://docs.gitlab.com/ee/update/package/index.html
+
+1. 执行 background_migration
+When upgrading to a new major version, remember to first [check for background migrations](https://docs.gitlab.com/ee/update/background_migrations.html).
+
+```
+sudo gitlab-rails runner -e production 'puts Gitlab::BackgroundMigration.remaining'
+sudo gitlab-rails runner -e production 'puts Gitlab::Database::BackgroundMigration::BatchedMigration.queued.count'
+For GitLab 14.0-14.9:
+sudo gitlab-rails runner -e production 'puts Gitlab::Database::BackgroundMigration::BatchedMigration.failed.count'
+For GitLab 14.10 and later:
+sudo gitlab-rails runner -e production 'puts Gitlab::Database::BackgroundMigration::BatchedMigration.with_status(:failed).count'
+```
+
+On the top bar, select Main menu > Admin.
+On the left sidebar, select Monitoring > Background Migrations.
+
+2. 按照确定的Upgrade path开始安装
+
+The GitLab database is backed up before installing a newer GitLab version. You may skip this automatic database backup by creating an empty file at /etc/gitlab/skip-auto-backup
+
+```
+rpm -Uvh <package_name> 
+
+#Upgrade complete! If your GitLab server is misbehaving try running
+sudo gitlab-ctl restart
+
+```
+
+#### 升级后检查
+
+**健康检查:**
+
+```
+sudo gitlab-ctl status
+sudo gitlab-rake gitlab:check SANITIZE=true
+
+gitlab-rake gitlab:check | grep no
+gitlab-rake db:migrate:status | grep down
+```
+**查看版本号：**
+
+https://docs.gitlab.com/omnibus/package-information/
+Once the Omnibus GitLab package is installed, all versions of the bundled libraries are located in /opt/gitlab/version-manifest.txt.
+```
+gitlab server上可以执行： 
+gitlab-rake gitlab:env:info
+
+Praefect和Gitaly上面不可以，可以通过：
+yum list installed|grep "gitlab"
+或
+cat /opt/gitlab/version-manifest.txt
+```
+
+#### 坑
 这里有关于升级的policy：
 
 要注意：大小版本、ce还是ee及安装方法
@@ -1647,15 +1738,8 @@ https://docs.gitlab.com/ee/update/
 
 https://docs.gitlab.com/omnibus/update
 
-有个坑：Praefect和Gitaly升级都没问题，但是对于gitlab server，如果是在停止状态下升级，会出现错误，因为gitlab server升级时会进行自动备份，服务都停了就无法备份了，所以要`sudo touch /etc/gitlab/skip-auto-backup`关掉自动backup即可
+对于集群有个坑：Praefect和Gitaly升级都没问题，但是对于gitlab server，如果是在停止状态下升级，会出现错误，因为gitlab server升级时会进行自动备份，服务都停了就无法备份了，所以要`sudo touch /etc/gitlab/skip-auto-backup`关掉自动backup即可
 
-另外注意：
-
-When upgrading to a new major version, remember to first [check for background migrations](https://docs.gitlab.com/ee/update/README.html#checking-for-background-migrations-before-upgrading).
-
-关于upgrade path，gitlab不保证每次升级都是100%成功的：
-
-“Although you can generally upgrade through multiple GitLab versions in one go, sometimes this can cause issues.Find where your version sits in the upgrade path below, and upgrade GitLab accordingly, while also consulting the [version-specific upgrade instructions](https://docs.gitlab.com/ee/update/README.html#version-specific-upgrading-instructions)” 例如参考Troubleshooting中的“版本升级后出现500无法访问project”
 
 其他如下：
 
@@ -1697,17 +1781,9 @@ vim /etc/gitlab/gitlab.rb
 # ruby_block[wait for praefect service socket] action run
 systemctl start gitlab-runsvdir
 gitlab-ctl reconfigure
-
-升级后查看版本号：
-https://docs.gitlab.com/omnibus/package-information/
-Once the Omnibus GitLab package is installed, all versions of the bundled libraries are located in /opt/gitlab/version-manifest.txt.
-
-gitlab server上可以执行： gitlab-rake gitlab:env:info
-Praefect和Gitaly上面不可以，可以通过：
-yum list installed|grep "gitlab"
-或
-cat /opt/gitlab/version-manifest.txt
 ```
+
+
 
 ## 5. CICD
 

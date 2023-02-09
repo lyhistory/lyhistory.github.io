@@ -46,7 +46,7 @@ keytool -printcert -file /etc/ssl/certs/nginx-selfsigned.crt
 检查crt跟private key是否匹配：
 openssl x509 -noout -modulus -in test.crt | openssl md5
 openssl rsa -noout -modulus -in test.key | openssl md5
-两者输出的 Modulus 应该一直（RSA素数乘积，用来生成key pair）
+两者输出的 Modulus 应该一致（RSA素数乘积，用来生成key pair）
 ------------------------------------------------------------
 --- use keytool 带密码
 ------------------------------------------------------------

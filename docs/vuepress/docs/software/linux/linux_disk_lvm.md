@@ -5,6 +5,8 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
+磁盘 disk (/dev/vda)=》分区 part (vda1 vda2.., fdisk /dev/vda) =》physical volume 物理卷 =》logic volume 逻辑卷
+
 ## built-in tools
 
 ```
@@ -31,12 +33,14 @@ https://landoflinux.com/linux_lvm_command_examples.html
 ```
 
 pvdisplay
+    pvdisplay -m    #显示逻辑卷和物理卷的关系 Display the mapping of physical extents to LVs and logical extents.
 vgdisplay
 lvdisplay
 
-pvs
-vgs
-lvs
+pvs - Display information about physical volumes
+vgs - Display information about volume groups
+lvs  - Display information about logical volumes
+
 df -TH
 
 fdisk -l
@@ -70,6 +74,7 @@ mount -a
 ```
 ### example mount lvm
 ```
+new:
 fdisk -l
 fdisk -l /dev/vdb
 pvcreate /dev/vdb1
@@ -87,6 +92,27 @@ mkdir /lyhistory
 mount -a
 mount -l
 fdisk -l
+
+---------------------
+extend:
+lvs
+pvs
+pvcreate /dev/vdc
+vgextend rhel /dev/vdc
+lvcreate -n optgitlab -L 50G rhel
+lvcreate -n loggitlab -L 50G rhel
+vgs
+cd /var/opt/
+mkdir gitlab
+cd /var/log/
+mkdir gitlab
+mkfs.xfs /dev/rhel/optgitlab
+mkfs.xfs /dev/rhel/loggitlab
+vi /etc/fstab
+    /dev/rhel/optgitlab     /var/opt/gitlab xfs     defaults        0 0
+    /dev/rhel/loggitlab     /var/log/gitlab xfs     defaults        0 0
+
+mount -a
 ```
 
 ### example lvm resize

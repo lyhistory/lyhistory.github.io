@@ -236,6 +236,27 @@ MAILTO=my.offsite.email@example.org
 00 15 * * *  echo "Just testing if crond sends email"
 ```
 
+You (trade) are not allowed to access to (crontab) because of pam configuration.
+
+问题排查思路：
+
+检查crond权限。
+1、cat /etc/corn.deny，文件是空的。
+2、ll /usr/bin/crontab，具备S权限位，正常。
+
+检查PAM模块。
+cat /etc/pam.d/crond
+
+查看系统日志
+cat /var/log/secure
+
+Jan 24 19:20:01 sghc1-prod-mdapi-v01 crond[19391]: pam_unix(crond:account): expired password for user test (password aged)
+设置永不过期
+```
+# chage -l test
+# chage -M 99999 test
+```
+
 ## history
 
 history with datetime
