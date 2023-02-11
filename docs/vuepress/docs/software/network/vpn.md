@@ -40,7 +40,7 @@ SSH无法连接，SSR连不上，网站打不开；
 + 使用cloudflare cdn中转服务器流量；
 + 换ip：
 
-	如果用Vultr（[点击这里去vultr官网领取100美金免费体验](https://www.vultr.com/?ref=7398935)），可以随时删除服务，重新创建新的服务就会分配新的IP；
+	如果用[Vultr](https://www.vultr.com/?ref=7398935)（[目前vultr还可以领取100美金免费体验，点击此处，没有门槛直接用](https://www.vultr.com/?ref=8972472-8H)），可以随时删除服务，重新创建新的服务就会分配新的IP；
 	如果用[搬瓦工，官网地址](https://bandwagonhost.com/aff.php?aff=58544)，需要花点钱几美金就可以换ip，不用删除服务重新创建；
 	联系vps服务器服务商；
 + 构建服务器群组，比如采用软路由openwrt，多几个节点，缺点当然是费用高，另外一种方式可以考虑购买现成的服务器群组比如[ButterflyVPN](https://www.youtube.com/watch?v=FeRgNwa0eOA)
@@ -62,12 +62,7 @@ ipcheck.need.sh
 ### 2.2 直接买
 
 比如有我个人经常用的
-+ ExpressVPN:
-  + [ExpressVPN 镜像1](https://tfiflve.com/refer-a-friend/30-days-free?referrer_id=68966376&utm_campaign=referrals&utm_medium=copy_link&utm_source=referral_dashboard)
-  + [ExpressVPN 镜像2](https://upghsbc.com/refer-a-friend/30-days-free?referrer_id=68966376&utm_campaign=referrals&utm_medium=copy_link&utm_source=referral_dashboard)
-  + [ExpressVPN 镜像3](https://www.expressrefer.com/refer-a-friend/30-days-free?referrer_id=68966376&utm_campaign=referrals&utm_medium=copy_link&utm_source=referral_dashboard)
-  
-+ StrongVPN：
++ StrongVPN(推荐)：
 
   + [StrongVPN 镜像1](https://intranet.strongconnectivity.com/services/strongvpn/refer/204835b682517019/)
   + [StrongVPN 镜像2](https://intranet.reliablehosting.com/services/strongvpn/refer/204835b682517019/)
@@ -76,6 +71,14 @@ ipcheck.need.sh
       + [windows](https://mirror2.reliablehosting.com/win/StrongVPN_Win-latest.exe)
       + [mac](https://mirror2.reliablehosting.com/mac/StrongVPN_Mac-latest.dmg)
       + [android](https://mirror2.reliablehosting.com/android/1.7.0.apk)
+
+
++ ExpressVPN:
+  + [ExpressVPN 镜像1](https://tfiflve.com/refer-a-friend/30-days-free?referrer_id=68966376&utm_campaign=referrals&utm_medium=copy_link&utm_source=referral_dashboard)
+  + [ExpressVPN 镜像2](https://upghsbc.com/refer-a-friend/30-days-free?referrer_id=68966376&utm_campaign=referrals&utm_medium=copy_link&utm_source=referral_dashboard)
+  + [ExpressVPN 镜像3](https://www.expressrefer.com/refer-a-friend/30-days-free?referrer_id=68966376&utm_campaign=referrals&utm_medium=copy_link&utm_source=referral_dashboard)
+  
+
 
 还有开源的[protonvpn](https://protonvpn.com)
 

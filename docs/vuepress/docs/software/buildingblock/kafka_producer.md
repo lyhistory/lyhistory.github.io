@@ -5,7 +5,7 @@ https://kafka.apache.org/23/javadoc/index.html?org/apache/kafka/clients/producer
 ## 关键API及源码解读
 
 ### 事务型 Transactional Producer 
-![](./kafka_producer_0.png)
+![](/docs/docs_image/software/buildingblock/kafka/kafka_producer_0.png)
 
 
 + initTransactions - Sets up a producer to use transactions.
@@ -59,7 +59,7 @@ What does the group coordinator do when it received an initProducerId call? Firs
 
 Here come the transaction states. A transaction is in one particular state and is allowed to switch to different states according to some rules. States and transitions look like this:
 
-![](./kafka_transaction_state.png)
+![](/docs/docs_image/software/buildingblock/kafka/kafka_transaction_state.png)
 
 In case there is no information about the transaction, the coordinator creates an Empty state. However, if there is already a transaction for this id, there are three possible results. Those depend on the transaction state:
 + Ongoing - There is an ongoing transaction started by the previous instance of the producer, so the broker will assume the old producer is dead, and abort this transaction. It has to do some cleaning, so it asks the new producer instance to retry later. While aborting the transaction, the broker will fence off the old producer preventing him from committing the transaction, if it was not dead but just disappear for a while.
@@ -312,17 +312,17 @@ Additionally, it will raise InterruptException if interrupted. It is safe to ret
 ### Fence机制实例
 下面图示来自[When Kafka transactions might fail](https://tgrez.github.io/posts/2019-04-13-kafka-transactions.html)
 wrong:
-![](./kafka_producer_1.png)
-![](./kafka_producer_2.png)
-![](./kafka_producer_3.png)
-![](./kafka_producer_4.png)
-![](./kafka_producer_5.png)
-![](./kafka_producer_6.png)
-![](./kafka_producer_7.png)
+![](/docs/docs_image/software/buildingblock/kafka/kafka_producer_1.png)
+![](/docs/docs_image/software/buildingblock/kafka/kafka_producer_2.png)
+![](/docs/docs_image/software/buildingblock/kafka/kafka_producer_3.png)
+![](/docs/docs_image/software/buildingblock/kafka/kafka_producer_4.png)
+![](/docs/docs_image/software/buildingblock/kafka/kafka_producer_5.png)
+![](/docs/docs_image/software/buildingblock/kafka/kafka_producer_6.png)
+![](/docs/docs_image/software/buildingblock/kafka/kafka_producer_7.png)
 
 correct:
-![](./kafka_producer_8.png)
-![](./kafka_producer_9.png)
+![](/docs/docs_image/software/buildingblock/kafka/kafka_producer_8.png)
+![](/docs/docs_image/software/buildingblock/kafka/kafka_producer_9.png)
 
 代码示例：
 
