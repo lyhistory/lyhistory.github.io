@@ -563,6 +563,19 @@ Addresses:  2607:f8b0:4005:813::200e
 ```
 #### Proxy Server (VS/&)  VPN
 
+##### Proxy Server VS VPN
+
+VPNs are Virtual Private Servers that encrypt all of a users’ web activity and device IP addresses. Typically, they come in the form of either an app or a browser extension.
+![VPN](/docs/docs_image/software/network/vpn.jpg)
+
+VPN协议：PPTP，L2TP，OpenVPN，IPSec。其中L2TP和PPTP作为最老牌的vpn，是工作在OSI七层模型的数据链路层
+
+A Proxy server, on the other hand, is a computer that stands between the user and their server that hides only their device IP address, not all of their web activity. It also works on one website or app, not several.
+![Proxy Server](/docs/docs_image/software/network/proxy_server.jpg)
+
+代理协议及工具：Shadowsocks，Shadowsocks-R ，Socks5，VMess，VLESS，Trojann，V2Ray，Xray，Clash
+
+##### Connect to VPN through Proxy Server
 [example: Overview of the BIG-IP APM Edge Client Web Proxy for Windows](https://support.f5.com/csp/article/K36727588)
 ```
 Here is an example of a basic PAC file script:

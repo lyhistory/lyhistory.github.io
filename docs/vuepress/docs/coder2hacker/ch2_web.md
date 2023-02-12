@@ -11,8 +11,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 ### 1.1 网络基础
 
 详解具体参考：
-+ [网络基础](/docs/software/network/network")
-+ [Github系列网络事件记录](/docs/software/network/network2github")
++ [网络基础](/docs/software/network/network)
++ [Github系列网络事件记录](/docs/software/network/network2github)
 	
 
 网络分层根据协议栈有四层五层七层的不同分法

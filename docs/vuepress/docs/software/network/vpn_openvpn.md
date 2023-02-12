@@ -4,7 +4,10 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
-## Install 安装
+如果你已经购买了VPN服务比如strong vpn或者express vpn等，他们会提供openvpn的客户端配置文件，您只需查看下面的客户端安装步骤；
+如果你是要服务端也亲自安装，则需要购买服务器，然后参考下面client端和server端的安装步骤
+
+## Client Install 客户端安装
 
 ### 基本版本
 
@@ -128,6 +131,10 @@ script-security 2
 up /etc/openvpn/scripts/update-systemd-resolved
 down /etc/openvpn/scripts/update-systemd-resolved
 ```
+
+## Server Install 服务端安装
+
+[Create On Demand Disposable OpenVPN Endpoints on AWS.](https://github.com/ttlequals0/autovpn)
 
 ## Troubleshooting 问题排查
 
