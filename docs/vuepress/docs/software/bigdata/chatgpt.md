@@ -6,25 +6,72 @@ https://community.modelscope.cn/63ca5f30406cc1159771878f.html
 v2ray:
 http://git.io/v2ray.sh
 
-ufw allow port
-ufw status
+
 apt install -y nginx
+sudo rm /etc/nginx/sites-enabled/default
+sudo mkdir -p /var/www/html/shiyela
+sudo chown -R $USER:$USER /var/www/html
+sudo chmod -R 755 /var/www/
+vim /var/www/html/shiyela/index.html
 ```
-location / {
+<html>
+    <head>
+        <title>Welcome</title>
+    </head>
+    <body>
+        <h1>Success! Your Nginx server is successfully configured. </h1>
+<p>This is a sample page.</p>
+    </body>
+</html>
+
+
+sudo vim /etc/nginx/sites-available/shiyela
+server {
+        listen 80;
+        listen [::]:80;
+
+        root /var/www/html/shiyela;
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name test.com www.test.com;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+}
+
+sudo ln -s /etc/nginx/sites-available/shiyela /etc/nginx/sites-enabled/
+```
+
+```
+server {
+	listen       80;
+    #listen 443 http2 ssl;
+    #listen [::]:443 http2 ssl;
+
+    #server_name server_IP_address;
+
+    #ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+    #ssl_certificate_key /etc/ssl/privatekey/nginx-selfsigned.key;
+    #ssl_dhparam /etc/ssl/certs/dhparam.pem;
+
+    location / {
         add_header Content-Type text/html;
 
         return 200 '<html><body>Hello World</body></html>';
     }
 
     location /chatbot {
-    proxy_pass http://my_app_upstream;
-    proxy_set_header Host $http_host;
-    # ...
+        proxy_pass http://my_app_upstream;
+        proxy_set_header Host $http_host;
+    }
 }
+
+
 https://stackoverflow.com/questions/5834025/how-to-preserve-request-url-with-nginx-proxy-pass
 https://serverfault.com/questions/1113782/using-nginx-as-a-forward-proxy-in-a-relay-server-for-v2ray-connection
 ```
-curl --header "Host: example.com" http://127.0.0.1/
+curl --header "Host: google.com" http://shiyela.com/
 
 https://www.4spaces.org/1073.html
 
