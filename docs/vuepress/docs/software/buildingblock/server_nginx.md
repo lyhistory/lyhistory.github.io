@@ -159,6 +159,9 @@ https://www.cnblogs.com/cangqinglang/p/12174407.html
 
 ### 变量
 
+header中设置：$http_变量名
+query参数中： $arg_变量名
+
 When using NGINX as a proxy, there are four sets of headers:
 
 client -> nginx: the client request headers

@@ -418,7 +418,14 @@ https://medium.com/the-new-control-plane/generating-self-signed-certificates-on-
 https://medium.com/@tbusser/creating-a-browser-trusted-self-signed-ssl-certificate-2709ce43fd15
 https://www.sslshopper.com/article-how-to-create-a-self-signed-certificate-in-iis-7.html
 
-### 4.2(2) SSL PIN (Key Distribution Problem)
+### 4.2(2) DNS over TLS and DNS over HTTPS different
+> Each standard was developed separately and has its own RFC* documentation, but the most important difference between DoT and DoH is what port they use. DoT only uses port 853, while DoH uses port 443, which is the port that all other HTTPS traffic uses as well.
+
+> Because DoT has a dedicated port, anyone with network visibility can see DoT traffic coming and going, even though the requests and responses themselves are encrypted. In contrast, with DoH, DNS queries and responses are camouflaged within other HTTPS traffic, since it all comes and goes from the same port.
+
+> https://www.cloudflare.com/learning/dns/dns-over-tls/
+
+### 4.2(3) SSL PIN (Key Distribution Problem)
 这里说的 Key Distribution Problem 是应用层面，密码学层面指的密码学上的密钥交换算法参考 [Diffie–Hellman key exchange (DHKE)](../../blockchain/cryptography/cryptography)
 https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning
 

@@ -261,11 +261,16 @@ hugo -s D:\sourcecode\ -d D:\publish\
 在你的域名供应商处加一个cname，具体看这里 https://help.github.com/en/github/working-with-github-pages/configuring-a-custom-domain-for-your-github-pages-site
 
 然后为了加速，我选择了cloudflare做dns解析，方法：
-https://blog.cloudflare.com/secure-and-fast-github-pages-with-cloudflare/
-https://developers.cloudflare.com/dns/zone-setups/full-setup/setup/
 
-基本就是去注册一个cloudflare的免费dns服务，然后根据提示去你的域名供应商处更改默认的dns为cloudflare提供的两个dns即可；
-至于加速的原理，还需要研究下，参考[在GitHub Pages上使用CloudFlare的免费SSL指南](https://penguin-g.github.io/2017/11/23/Secure-and-fast-GitHub-Pages-with-CloudFlare/)
+1.注册cloudflare,添加网站，然后根据提示去你的域名供应商处更改默认的dns为cloudflare提供的两个dns即可；
+[1](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup/)
+
+2.SSL mode
+在 SSL/TLS页面，选择SSL mode： Full but not Full (Strict):
+
+3.至于加速的原理，还需要研究下.
+
+[2](https://blog.cloudflare.com/secure-and-fast-github-pages-with-cloudflare/)
 
 ## 4.More to explore
 
