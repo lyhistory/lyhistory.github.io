@@ -72,6 +72,9 @@ This mechanism is how a client behind an HTTP proxy can access websites using SS
 
 ## websocket
 
+**socket vs websocket:**
+Even though they achieve (in general) similar things, yes, they are really different. WebSockets typically run from browsers connecting to Application Server over a protocol similar to HTTP that runs over TCP/IP. So they are primarily for Web Applications that require a permanent connection to its server. On the other hand, plain sockets are more powerful and generic. They run over TCP/IP but they are not restricted to browsers or HTTP protocol. They could be used to implement any kind of communication.
+
 To turn a connection between a client and server from HTTP/1.1 into WebSocket, the [protocol switch](https://tools.ietf.org/html/rfc2616#section-14.42) mechanism available in HTTP/1.1 is used.
 
 protocol switch 是要在http头部加上 "Upgrade"，但是这个header是跳对跳的，所以client-server没有问题，但是如果中间是带有proxy的，比如：
@@ -283,6 +286,54 @@ curl --include \
 ```
 
 
+## http proxy
+
+Web servers and web browsers need to communicate with each other. HTTP/S, or HyperText Transfer Protocol (Secure), serves as a means of retrieving desired information that lives on the web in specific scripting languages such as HTML and CSS. HTTP/HTTPS helps people connect with browsers in order to collect target data from certain browsers. This may include: Written text/Visuals/Videos/Web pages /Geolocation / Geospatial data,
+
+Each individual request is individual, meaning that a new session is initiated on a per-case basis. HTTP/HTTPS proxies are purpose-built to serve as an intermediary between HTTP/HTTPS-based browsers, and the requesting party. As with other proxy-based tools, HTTP/HTTPS is meant to provide entities that are looking to collect information an extra layer of anonymity and protection.
+
+HTTP proxies can be customized based on a business’s unique requirements. One major HTTP use case is ‘content caching’. What this essentially means is that it enables a reduction in pressure on servers from clients that are requesting the same information on a regular basis (this can be an entire website or specific web pages, for example). It makes the previously retrieved version available locally without creating a new server connection. This works especially well for international Content Distribution/Delivery Networks (CDNs). 
+
+HTTP proxies can also serve as a form of “digital bouncer”, deciding which requesters and data packets receive entry to your server/database and which are given the boot. In this context, HTTP proxies are used for network security, especially when internal company networks are connected to the internet, which can increase the possibility of external malicious cyber-threats. 
+
+HTTP proxies are also uniquely positioned in a way that can be conducive to better data collection by increasing success rates. HTTP proxies can accomplish this by adapting headers on an as-needed basis to match target site criteria. This may include criteria such as:
+
+HTTP header User-Agent, e.g., Microsoft Edge: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge/14.14393
+HTTP header Accept-Language, e.g., FR- (French)
+
+https://banzaicloud.com/blog/http-proxy-in-the-cloud-native-world/
+
+## socks/socks5 proxy
+
+SOCKS, otherwise known as SOCKet Secure, is similar to HTTP/HTTPS protocols in that they are used in order to connect “clients” with a third-party site, serving as a buffer and a tunnel of sorts through which requests can be safely routed. 
+
+The key difference between HTTP/HTTPS and SOCKS protocols lies in the fact that SOCKS was built with the capability of being able to service requests that require high volumes of traffic. This may include things such as:
+
++ Load balancing
++ Peer-to-Peer activities
++ Music/video/data streaming
+SOCKS empowers the user to circumvent geolocation-based restrictions, while maintaining complete anonymity. It also employs Transmission Control Protocol (TCP), which establishes a more stable/secure mode of connection, and delivery over networks. It uses the data equivalent of a “zip file” so that it can transmit a group of data points, related title tags, and other information that is crucial to processing and analyzing the information in question. It also uses end-to-end encryption, ensuring that only the requesting party can download and decipher the data parcel in question. It is also especially useful when attempting to access hard-to-reach open-source data that is being hidden or cordoned-off behind digital boundaries such as firewalls. 
+
+
+What differentiates ‘SOCKS5’ from ‘SOCKS’?
+SOCKS is categorized as a layer 5 protocol, meaning that it can only be used to tunnel protocols that are running on and above “layer 5” in the Open Systems Interconnection (OSI) model. The implications of this include the ability to take care of requests of the following varieties:
+
++ HTTP
++ HTTPS
++ POP3
++ SMTP
++ FTP
+This is chiefly due to the fact that it operates at layer 5 – somewhere between SSL (layer 7) and TCP/UDP (layer 4). 
+
+In an attempt to help dispel common confusion, one needs to know that SOCKS currently exist in 2 main formats:
+
+SOCKS4: On the authentication level, SOCKS4 is not conducive to tasks requiring authentication, while SOCKS5 is purpose-built to handle a diverse assortment of authentication methods.
+SOCKS5: SOCKS5 supports User Datagram Protocol (UDP) proxies, while SOCKS4 does not. 
+To clarify: UDPs are useful when transferring ‘messages’ or ‘Datagrams’ without having to use handshakes, error checks, or flow controls. This means that it is conducive for low-latency / fast data transfers. But it also has its drawbacks, namely UDP cannot check for ordering/error functionalities meaning it is great when speed, and not error-checking is the main priority.  Additionally, UDP operates as part of its protocol, for a time in ‘connectionless mode’, a sort of ‘lawless’ state of being which can sometimes expose systems/activities to exploitation. 
+
+Lastly, SOCKS5 is considered to establish a more secure connection as it does so using TCP authentication while employing a fully encrypted Secure Shell (SSH) tunneling methodology.
+
+https://brightdata.com/blog/leadership/socks5-proxy-vs-http-proxy
 
 ## refer:
 

@@ -104,7 +104,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/linux/linux_security">linux security</a></li>
         <li><a href="/docs/software/linux/rsync">rsync</a></li>
         <li><a href="/docs/software/linux/selinux">selinux</a></li>
-		<li><a href="/docs/software/network/vpn">vpn梯子基础</a></li>
+		<li><a href="/docs/software/network/vpn&proxy_server">vpn梯子基础</a></li>
 		<li><a href="/docs/software/network/vpn_openvpn">OpenVPNS</a></li>
 		<li><a href="/docs/software/network/proxy_v2ray">shadowsocketR搭梯子</a></li>
 		<li><a href="/docs/software/network/proxy_shadowsockr">shadowsocketR搭梯子</a></li>

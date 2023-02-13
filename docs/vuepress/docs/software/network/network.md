@@ -561,6 +561,25 @@ Name:    google.com
 Addresses:  2607:f8b0:4005:813::200e
           142.251.32.46
 ```
+#### Proxy VS Tunnel
+The terms are often intermixed, **tunnel providers are called proxies.**
+
+Originally, tunneling is the technique of using one protocol to transport data inside another protocol.
+
+A proxy (as in proxy representative) A proxy acts as an intermediary. It will hide your IP address from the destination (unless it adds it in a HTTP header field such as "Forward"). A proxy uses the same protocol throughout, it can alter the network flow, do caching or security scanning etc. So it's more of an extra hop on the way to the destination.
+
+For example you can use a SOCKS proxy as a HTTP tunnel, i.e. you transport HTTP over it. This is due to the fact that SOCKS is a protocol that is designed to tunnel IP packets.
+
+To add to the confusion, you can use a HTTP proxy to transport some other protocols such as FTP.
+
+A good example for a tunnel is a VPN. Tunnels are often used to evade censorship or firewall rules blocking traffic.
+https://stackoverflow.com/questions/46804813/http-tunnel-vs-http-proxy#:~:text=Originally%2C%20tunneling%20is%20the%20technique,such%20as%20%22Forward%22).
+
+When navigating through different networks of the Internet, proxy servers and HTTP tunnels are facilitating access to content on the World Wide Web. A proxy can be on the user's local computer, or anywhere between the user's computer and a destination server on the Internet. 
+
+#### SOCKS vs. HTTP Proxies
+https://brightdata.com/blog/leadership/socks5-proxy-vs-http-proxy
+
 #### Proxy Server (VS/&)  VPN
 
 ##### Proxy Server VS VPN
@@ -1052,7 +1071,7 @@ TLS握手发生在TCP握手结束之后，具体参考《publickey_infrastructur
 
 代理服务器的作用：
 
-- VPN: 广域网中的代理。
+- [翻*:)墙: 广域网中的代理。跟vpn是不同的技术](/docs/software/network/vpn)
 - 负载均衡: 局域网中的代理。
 - 端口转发: http/ssh tunnel 隧道技术
 
@@ -1084,11 +1103,13 @@ https://medium.com/@ryanwendel/forwarding-reverse-shells-through-a-jump-box-usin
 
 https://www.offensive-security.com/metasploit-unleashed/portfwd/
 
-#### 4.5.1 ICMP Tunnel
+### 4.6 Tunnel
+
+#### 4.6.1 ICMP Tunnel
 
 Ping Power — ICMP Tunnel https://infosecwriteups.com/ping-power-icmp-tunnel-31e2abb2aaea
 
-#### 4.5.2 http tunnel
+#### 4.6.2 http tunnel
 
 定义：
 > HTTP tunneling is used to create a network link between two computers in conditions of restricted network connectivity including firewalls, NATs and ACLs, among other restrictions. The tunnel is created by an intermediary called a proxy server which is usually located in a DMZ.
@@ -1105,7 +1126,7 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT
 [HTTP Tunnel使用的几种使用（经典）](https://blog.csdn.net/zhangxinrun/article/details/5942260)
 [http tunnel和入侵检测的理解](https://blog.csdn.net/gx11251143/article/details/104518461)
 
-#### 4.5.3 tcp tunnel
+#### 4.6.3 tcp tunnel
 
 跟http tunnel利用http connect，还需要一个proxy server来建立双向通道并做流量转发的操作；
 tcp tunnel一般不需要通过一个proxy server，而是借助安装在本地或者远程的软件来做“端口转发”，比如利用ssh将两台电脑的端口进行映射；
@@ -1174,7 +1195,7 @@ proxychains nmap -Pn -sT 172.17.0.0/24
 
 
 
-#### 4.5.4 VPN
+#### 4.6.4 VPN
 
 A VPN tunnel, however, is fully encrypted. The "P in VPN indicates private. VPN tunnels are typically achieved with IPSeC, SSL, PPTP,  TCP Crypt (this is a new protocol), etc.
 
@@ -1185,7 +1206,7 @@ A VPN tunnel, however, is fully encrypted. The "P in VPN indicates private. VPN 
 In computing, Internet Protocol Security (IPsec) is a secure network protocol suite that authenticates and encrypts packets of data to provide secure encrypted communication between two computers over an Internet Protocol network. It is used in virtual private networks (VPNs).
 
 
-### 4.6 其他network测试工具
+### 4.7 其他network测试工具
 
 network丢包延迟重复模拟器 https://jagt.github.io/clumsy/
 
