@@ -166,6 +166,10 @@ linux客户端：
 https://v2raya.org/docs/prologue/introduction/
 https://www.xiaoglt.top/v2ray-linux客户端v2raya下载安装及使用教程-支持vmess-vless-ss-ssr-trojan/
 
+其他：
+https://itlanyan.com/v2ray-clients-download/
+
+
 ### 民间脚本(推荐小白，保姆式一步步即可)：
 
 #### 服务端
@@ -205,6 +209,11 @@ routing https://www.v2ray.com/en/configuration/routing.html
 https://www.v2ray.com/en/configuration/overview.html#inboundobject
 https://www.v2ray.com/en/configuration/protocols.html
 
+案例学习：
+https://github.com/nondanee/UnblockNeteaseMusic/issues/148
+https://github.com/v2ray/v2ray-core/issues/663
+
+
 ## 流量伪装
 
 ### V2ray web+http2+tls
@@ -220,4 +229,5 @@ https://ericclose.github.io/V2Ray-TLS-WebSocket-Nginx-with-Cloudflare.html
 
 https://www.xiaoglt.top/v2ray%e9%ab%98%e7%ba%a7%e6%8a%80%e5%b7%a7%ef%bc%9a%e6%b5%81%e9%87%8f%e4%bc%aa%e8%a3%85/
 
+https://blog.cascade.moe/posts/nginx-proxy-v2ray-ws/
 
