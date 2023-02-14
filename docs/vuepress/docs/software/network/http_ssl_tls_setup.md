@@ -22,7 +22,7 @@ refer to 《network.md/tls》
 
 按照生成方式分为：
 
-+ self-sgined certificate
+### self-sgined certificate
 
 ```
 ------------------------------------------------------------
@@ -81,9 +81,9 @@ tomcat:
 https://support.microfocus.com/kb/doc.php?id=7022204
 ```
 
+### 三方免费证书
 
-
-+ let's encrypt
+#### let's encrypt
 
 ```
 //自动化工具
@@ -99,15 +99,9 @@ root/certbot-auto renew --pre-hook "systemctl stop nginx" --post-hook "systemctl
 
 ```
 
-+ “购买”免费证书
-
-  https://www.cztcms.cn/?p=826
-
-+ dns解析提供商免费证书
-
-  cloudflare dns over tls
-
-  https://www.cloudflare.com/learning/dns/dns-over-tls/
+#### cloudflare dns解析提供商免费证书
+[cloudflare比较特殊，它提供给了所谓 dns over tls，添加网站到cloudflare并且替换域名商的dns解析为cloudflare之后，dns的解析会被云朵点亮代表收到cloudflare保护](https://www.cloudflare.com/learning/dns/dns-over-tls/)；
+[然后cloudflare提供了几种加密模式，具体参考下面](#案例-use-case-2-client-cdn-server)
 
 
 
@@ -377,7 +371,7 @@ b.childHandler(new SslChannelInitializer(sslContext));
 
 
 
-## Basic model: client-server
+## 案例 Use Case 1: client-server
 
 这里的client就是浏览器或手机端，
 
@@ -385,16 +379,77 @@ b.childHandler(new SslChannelInitializer(sslContext));
 
 比较直白，只有两方参与，浏览器不需要什么设置，后端服务如果是self host则需要其本身实现https，比如spring mvc，如果不是self host，而是host在比如nginx或iis中，则需要对nginx或iis配置https支持即可；
 
+## 案例 Use Case 2: client-cdn-server
+
+example: 网站使用cloudflare的证书
+
+Cloudflare 提供几种模式 Encryption modes：
++ flexible 
+  allows HTTPS connections between your visitor and Cloudflare, but all connections between Cloudflare and your origin are made through HTTP. As a result, an SSL certificate is not required on your origin.
+  这种模式 server端无需配置tls
++ full
+  Cloudflare allows HTTPS connections between your visitor and Cloudflare and makes connections to the origin using the scheme requested by the visitor. If your visitor uses http, then Cloudflare connects to the origin using plaintext HTTP and vice versa.
+  这种模式 server端可以配置
+  - self-signed 自签证书
+  - Cloudflare Origin CA,[Cloudflare Origin Certificate 是一个只被 Cloudflare 信任的证书，不被浏览器所信任，所以使用「Cloudflare Origin Certificate」就必须在前面使用 Cloudflare 添加 DNS 记录时将云朵点亮，即 ☁ Proxied。如果不点亮云朵，您的网站将无法安全访问，同时代理也会无法正常连接。](https://community.cloudflare.com/t/https-certificate-not-trusted/3610/11)
+  - or purchased from a Certificate Authority)
++ full(strict)
+  Cloudflare does everything in Full mode but also enforces more stringent requirements for origin certificates.
+  这种模式server端需要使用cloudflare认可的证书：
+  - Issued by a [publicly trusted certificate authority ](https://github.com/cloudflare/cfssl_trust)
+  - or [Cloudflare’s Origin CA, The “Cloudflare Origin Certificate” is a certificate that is only trusted by Cloudflare, not by browsers.](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca/)
+
+### 配置例子：client-cloudflare-server, full strict模式并开启authenticated origin pulls
+
+1. Cloudflare’s Origin CA生成：
+cloudflare管理页面=>SSL/TLS=>Origin Server点击生成证书；
+保存证书至 /etc/ssl/cloudflare_cert.pem
+保存key至 /etc/ssl/cloudflare_key.pem
+
+2. SSL/TLS 加密模式改为 Full (strict) 
+
+3. Edge Certificates=>Minimum TLS Version」改为「TLS 1.2」
+
+4. Enable authenticated origin pulls
+   如果在 Nginx 服务器上设置了「Authenticated Origin Pulls」，就可以确保它只接受来自 Cloudflare 服务器的请求，防止任何其他人直接连接到 Nginx 服务器,
+   cloudflare管理页面=>SSL/TLS=>Origin Server,打开「Authenticated Origin Pulls」 。
+   
+   然后[访问该页面](https://developers.cloudflare.com/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/),可以找到下载client证书链接:
+   [download authenticated_origin_pull_ca.pem](https://developers.cloudflare.com/ssl/static/authenticated_origin_pull_ca.pem)
+   将证书 authenticated_origin_pull_ca.pem 的内容写入到服务器的 /etc/ssl/cloudflare_client.crt 中
+
+5. nginx 配置:
+   ```
+   server {
+      listen 443 ssl http2;
+      listen [::]:443 ssl http2;
+
+      ssl_certificate /etc/ssl/cert.pem;
+      ssl_certificate_key /etc/ssl/key.pem;
+      ssl_client_certificate /etc/ssl/cloudflare.crt;
+      ssl_verify_client on;
+      ssl_session_timeout 1d;
+      ssl_session_cache shared:MozSSL:10m;  # about 40000 sessions
+      ssl_session_tickets off;
+
+      # intermediate configuration
+      ssl_protocols TLSv1.2 TLSv1.3;
+      ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
+      ssl_prefer_server_ciphers off;
+
+      # HSTS (ngx_http_headers_module is required) (63072000 seconds)
+      add_header Strict-Transport-Security "max-age=63072000" always;
+   ```
 
 
-## Complicated model: separated frontend/backend前后端分离
+## 案例 Use Case 2: separated frontend/backend前后端分离
 
 举例前后端分离项目：
 1.(user interact ) browser request nginx for frontend resource 
 create self-signed cert and config nignx, so browser will talk to nginx through https (unsafe warning will be alert as it's self signed)
 
 2.(no user interact) js codes will make http call to backend service to retrieve data through nginx, nginx forward http request to backend service
-backend service has to implement and support https, and nginx also have to act as a https client to handshake with mgr
+backend service has to implement and support https, and nginx also have to act as a https client to handshake with the backend service
 
 3.(no user interact) js codes will connect to websocket server directly
 

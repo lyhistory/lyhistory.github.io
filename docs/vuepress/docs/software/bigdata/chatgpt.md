@@ -7,41 +7,6 @@ v2ray:
 http://git.io/v2ray.sh
 
 
-apt install -y nginx
-sudo rm /etc/nginx/sites-enabled/default
-sudo mkdir -p /var/www/html/shiyela
-sudo chown -R $USER:$USER /var/www/html
-sudo chmod -R 755 /var/www/
-vim /var/www/html/shiyela/index.html
-```
-<html>
-    <head>
-        <title>Welcome</title>
-    </head>
-    <body>
-        <h1>Success! Your Nginx server is successfully configured. </h1>
-<p>This is a sample page.</p>
-    </body>
-</html>
-
-
-sudo vim /etc/nginx/sites-available/shiyela
-server {
-        listen 80;
-        listen [::]:80;
-
-        root /var/www/html/shiyela;
-        index index.html index.htm index.nginx-debian.html;
-
-        server_name test.com www.test.com;
-
-        location / {
-                try_files $uri $uri/ =404;
-        }
-}
-
-sudo ln -s /etc/nginx/sites-available/shiyela /etc/nginx/sites-enabled/
-```
 
 ```
 server {

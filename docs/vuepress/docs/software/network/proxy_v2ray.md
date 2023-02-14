@@ -90,7 +90,7 @@ sudo vim /usr/local/etc/v2ray/config.json
             "settings":{
                 "clients":[
                     {
-                        "id":"9dfe7fee-d08f-44f8-ad2d-300d4c9c3a0e",
+                        "id":"<这里访问https://www.uuidgenerator.net/生成UUID替换>",
                         "alterId":0
                     }
                 ]
@@ -120,6 +120,8 @@ alterId：根据新 V2Ray 白话文指南 – VMess，推荐值为 0，代表启
 service v2ray start
 ```
 
+//开防火墙
+ufw allow <port>
 // 安裝最新發行的 geoip.dat 和 geosite.dat 只更新 .dat 資料檔
 ```
 # bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-dat-release.sh)
@@ -129,6 +131,7 @@ service v2ray start
 ```
 # bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh) --remove
 ```
+
 
 ---Discarded start:
 ~~https://www.v2ray.com/en/welcome/install.html~~
@@ -164,9 +167,31 @@ https://github.com/v2ray/V2RayN
 
 linux客户端：
 https://v2raya.org/docs/prologue/introduction/
-https://www.xiaoglt.top/v2ray-linux客户端v2raya下载安装及使用教程-支持vmess-vless-ss-ssr-trojan/
 
-其他：
+1. 安装 V2Ray 内核#
+   可以直接安装V2RAY，不过还是推荐V2RayA的官方方法：
+   ```
+   curl -Ls https://mirrors.v2raya.org/go.sh | sudo bash
+   //安装后可以关掉服务，因为 v2rayA 不依赖于该 systemd 服务
+   sudo systemctl disable v2ray --now
+   ```
+2. 安装 v2rayA
+   ```
+   wget -qO - https://apt.v2raya.org/key/public-key.asc | sudo tee /etc/apt/trusted.gpg.d/v2raya.asc
+   echo "deb https://apt.v2raya.org/ v2raya main" | sudo tee /etc/apt/sources.list.d/v2raya.list
+   sudo apt update
+   sudo apt install v2raya
+   ```
+3. 启动 v2rayA / 设置 v2rayA 自动启动
+   ```
+   sudo systemctl start v2raya.service
+   sudo systemctl enable v2raya.service
+   ```
+4. http://localhost:2017/
+   
+
+
+其他客户端：
 https://itlanyan.com/v2ray-clients-download/
 
 
@@ -216,18 +241,216 @@ https://github.com/v2ray/v2ray-core/issues/663
 
 ## 流量伪装
 
-### V2ray web+http2+tls
-理论上http2省去了upgrade的请求，性能更好。但实际使用中两者没有明显区别，加之某些web服务器（例如Nginx）不支持后端服务器为http2，所以websocket的方式更流行。如果你要上http2，记得web服务器不能用Nginx，要用支持反代http2的Caddy等软件。
+### V2ray web+websocket+tls
 
-V2ray HTTP/2+TLS+WEB 一键部署
-https://iitii.github.io/2022/03/02/1
+#### v2ray 配置
+```
+{
+    "log":{
+        "loglevel":"warning"
+    },
+    "routing":{
+        "domainStrategy":"AsIs",
+        "rules":[
+            {
+                "type":"field",
+                "ip":[
+                    "geoip:private"
+                ],
+                "outboundTag":"block"
+            }
+        ]
+    },
+    "inbounds":[
+        {
+            "listen":"127.0.0.1",
+            "port":10000,
+            "protocol":"vmess",
+            "settings":{
+                "clients":[
+                    {
+                        "id":"<这里访问https://www.uuidgenerator.net/生成UUID替换>",
+                        "alterId":0
+                   }
+                ]
+            },
+            "streamSettings":{
+                "network":"ws",
+                "wsSettings":{
+                    "path":"/lyhistory"
+                }
+            }
+        }
+    ],
+    "outbounds":[
+        {
+            "protocol":"freedom",
+            "tag":"direct"
+        },
+        {
+            "protocol":"blackhole",
+            "tag":"block"
+        }
+    ]
+}
+```
 
-### V2ray web+websocket+tls 和 
+#### nginx安装及http配置
+```
+sudo apt install nginx
+sudo ufw allow 'Nginx Full'
 
-V2Ray (WebSocket + TLS + Web + Cloudflare) 手动配置详细说明
-https://ericclose.github.io/V2Ray-TLS-WebSocket-Nginx-with-Cloudflare.html
+sudo rm /etc/nginx/sites-enabled/default
+sudo mkdir -p /var/www/html/mysite
+sudo chown -R $USER:$USER /var/www/html
+sudo chmod -R 755 /var/www/
+vim /var/www/html/mysite/index.html
+
+<html>
+    <head>
+        <title>Welcome</title>
+    </head>
+    <body>
+        <h1>Hello World!</h1>
+        <p>This is a sample page.</p>
+    </body>
+</html>
+
+
+sudo vim /etc/nginx/sites-available/mysite
+server {
+        listen 80;
+        listen [::]:80;
+
+        root /var/www/html/mysite;
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name lyhistory.com www.lyhistory.com;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+}
+
+sudo ln -s /etc/nginx/sites-available/mysite /etc/nginx/sites-enabled/
+
+为了防止可能出现的内存问题，
+sudo vim /etc/nginx/nginx.conf
+http {
+    ...
+    server_names_hash_bucket_size 64;
+    ...
+}
+
+nginx -s reload
+
+ufw allow 'Nginx Full'
+```
+
+#### cloudflare保护
+1. Cloudflare’s Origin CA生成：
+cloudflare管理页面=>SSL/TLS=>Origin Server 点击生成证书；
+保存证书至 /etc/ssl/cloudflare_cert.pem, 保存key至 /etc/ssl/cloudflare_key.pem
+
+2. SSL/TLS 加密模式改为 Full (strict) 
+
+3. Edge Certificates=>Minimum TLS Version」改为「TLS 1.2」
+
+4. Enable authenticated origin pulls
+   确保 Nginx 只接受来自 Cloudflare 服务器的请求，防止任何其他人直接连接到 Nginx 服务器,
+   cloudflare管理页面=>SSL/TLS=>Origin Server,打开「Authenticated Origin Pulls」 。
+   
+   然后[访问该页面](https://developers.cloudflare.com/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/),可以找到下载client证书链接:
+   [download authenticated_origin_pull_ca.pem](https://developers.cloudflare.com/ssl/static/authenticated_origin_pull_ca.pem)
+   将证书 authenticated_origin_pull_ca.pem 的内容写入到服务器的 /etc/ssl/cloudflare_client.crt 中
+
+#### nginx配置ssl
+```
+sudo vim /etc/nginx/sites-available/mysite
+
+server {
+  listen 80 default_server;
+  listen [::]:80 default_server;
+
+  server_name lyhistory.com www.lyhistory.com;
+
+  return 301 https://$host$request_uri;
+}
+
+server {
+  listen 443 ssl http2;
+  listen [::]:443 ssl http2;
+
+  ssl_certificate /etc/ssl/cloudflare_cert.pem;
+  ssl_certificate_key /etc/ssl/cloudflare_key.pem;
+  ssl_client_certificate /etc/ssl/cloudflare_client.crt;
+  ssl_verify_client on;
+  ssl_session_timeout 1d;
+  ssl_session_cache shared:MozSSL:10m;  # about 40000 sessions
+  ssl_session_tickets off;
+
+  # intermediate configuration
+  ssl_protocols TLSv1.2 TLSv1.3;
+  ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
+  ssl_prefer_server_ciphers off;
+
+  # HSTS (ngx_http_headers_module is required) (63072000 seconds)
+  add_header Strict-Transport-Security "max-age=63072000" always;
+
+  server_name lyhistory.com www.lyhistory.com;
+
+  root /var/www/html/mysite;
+  index index.html index.htm index.nginx-debian.html;
+
+
+  location / {
+    try_files $uri $uri/ =404;
+  }
+
+  location /lyhistory {
+    if ($http_upgrade != "websocket") {
+      return 404;
+    }
+    proxy_redirect off;
+    proxy_pass http://127.0.0.1:10000;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
+}
+
+```
+nginx -s reload
+
+#### V2ray client配置
+```
+地址（address）：可以填写您注册的域名（也可以是 Cloudflare 的 CDN IP）
+端口（port）：HTTPS 端口号，即填写 443
+用户 ID（id）：与 V2Ray 服务端的配置一致，也就是之前生成的 UUID
+额外 ID（alterId）：与 V2Ray 服务端的配置一致，即 0
+加密方式（security）：自动，即 auto
+传输协议（network）：WebSocket，即 ws
+伪装类型（type）：none
+伪装域名（host）：填写您注册的域名
+路径（path）：与 V2Ray 服务端的配置一致，即 /lyhistory
+底层传输安全（tls）：tls
+跳过证书验证（allowInsecure）：false 。
+```
+
+refer:
+[V2Ray (WebSocket + TLS + Web + Cloudflare) 手动配置详细说明](https://ericclose.github.io/V2Ray-TLS-WebSocket-Nginx-with-Cloudflare.html)
+
 
 https://www.xiaoglt.top/v2ray%e9%ab%98%e7%ba%a7%e6%8a%80%e5%b7%a7%ef%bc%9a%e6%b5%81%e9%87%8f%e4%bc%aa%e8%a3%85/
 
 https://blog.cascade.moe/posts/nginx-proxy-v2ray-ws/
 
+### V2ray web+http2+tls
+理论上http2省去了upgrade的请求，性能更好。但实际使用中两者没有明显区别，加之某些web服务器（例如Nginx）不支持后端服务器为http2，所以websocket的方式更流行。如果你要上http2，记得web服务器不能用Nginx，要用支持反代http2的Caddy等软件。
+
+V2ray HTTP/2+TLS+WEB 一键部署
+https://iitii.github.io/2022/03/02/1
