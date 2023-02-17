@@ -21,6 +21,8 @@ Don't Use Apache Kafka Consumer Groups the Wrong Way! https://dzone.com/articles
 2)	Having consumers as part of different consumer groups means providing the “publish/subscribe” pattern where the messages from topic partitions are sent to all the consumers across the different groups.
 https://dzone.com/articles/dont-use-apache-kafka-consumer-groups-the-wrong-wa
 
+线程安全：You can’t have multiple consumers that belong to the same group in one thread and you can’t have multiple threads safely use the same consumer. One consumer per thread is the rule. To run multiple consumers in the same group in one application, you will need to run each in its own thread. It is useful to wrap the consumer logic in its own object and then use Java’s ExecutorService to start multiple threads each with its own consumer. The Confluent blog has a tutorial that shows how to do just that.
+
 
 ##### 关键API
 
@@ -32,13 +34,71 @@ public ConsumerRecords<K,V> poll(long timeout)
 
 The poll API returns fetched records based on the current position. 
 
-On each poll, consumer will try to use the last consumed offset as the starting offset and fetch sequentially. The last consumed offset can be manually set through [`seek(TopicPartition, long)`](https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#seek-org.apache.kafka.common.TopicPartition-long-) or automatically set as the last committed offset for the subscribed list of partitions 即如果不显示调用 seek来设置其位置，将会自动使用interal offset来定位其最后一次消费的位置。
+---每一次poll的行为：
+**On each poll, consumer will try to use the last consumed offset as the starting offset and fetch sequentially**. The last consumed offset can be manually set through [`seek(TopicPartition, long)`](https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#seek-org.apache.kafka.common.TopicPartition-long-) or automatically set as the last committed offset for the subscribed list of partitions 即如果不显示调用 seek来设置其位置，将会自动使用interal offset来定位其最后一次消费的位置。
 
 更完整的：
 
 When the group is **first created**, the position will be set according to the reset policy (which is typically either set to the earliest or latest offset for each partition defined by the auto.offset.reset). Once the consumer begins committing offsets, then each **later rebalance** will reset the position to the last committed offset. The parameter passed to poll controls the maximum amount of time that the consumer will block while it awaits records at the current position. The consumer returns immediately as soon as any records are available, but it will wait for the full timeout specified before returning if nothing is available.
 
-注意：只是subscribe topic并不能立即引发rebalance，可以在subscribe之后poll，从而立即引发rebalance：
+---第一次（reblance之后的第一次）poll的行为：
+：
+
+The poll loop does a lot more than just get data. The first time you call poll() with a new consumer, it is responsible for finding the GroupCoordinator, joining the consumer group, and receiving a partition assignment.[注意：只是subscribe topic并不能立即引发rebalance，可以在subscribe之后poll，从而立即引发rebalance] If a rebalance is triggered, it will be handled inside the poll loop as well. And of course the heartbeats that keep consumers alive are sent from within the poll loop. For this reason, we try to make sure that whatever processing we do between iterations is fast and efficient.
+
+---连续poll的行为？看源码
+从上一次的fetch positions继续往下拉取
+
+```
+private ConsumerRecords<K, V> poll(final Timer timer, final boolean includeMetadataInTimeout) {
+    acquireAndEnsureOpen();
+    try {
+        if (this.subscriptions.hasNoSubscriptionOrUserAssignment()) {
+            throw new IllegalStateException("Consumer is not subscribed to any topics or assigned any partitions");
+        }
+
+        do {
+            client.maybeTriggerWakeup();
+
+            if (includeMetadataInTimeout) {
+                if (!updateAssignmentMetadataIfNeeded(timer)) {
+                    return ConsumerRecords.empty();
+                }
+            } else {
+                while (!updateAssignmentMetadataIfNeeded(time.timer(Long.MAX_VALUE))) {
+                    log.warn("Still waiting for metadata");
+                }
+            }
+
+            final Map<TopicPartition, List<ConsumerRecord<K, V>>> records = pollForFetches(timer);
+            if (!records.isEmpty()) {
+                if (fetcher.sendFetches() > 0 || client.hasPendingRequests()) {
+                    client.pollNoWakeup();
+                }
+
+                return this.interceptors.onConsume(new ConsumerRecords<>(records));
+            }
+        } while (timer.notExpired());
+
+        return ConsumerRecords.empty();
+    } finally {
+        release();
+    }
+}
+
+boolean updateAssignmentMetadataIfNeeded(final Timer timer) {
+    if (coordinator != null && !coordinator.poll(timer)) {
+        return false;
+    }
+
+    return updateFetchPositions(timer);
+}
+
+1.Polling coordinator for updates — ensure we’re up-to-date with our group’s coordinator.
+2.Updating fetch positions — ensure every partition assigned to this consumer has a fetch position. If it is missing then consumer uses auto.offset.reset value to set it (set it to earliest, latest or throw exception).
+
+```
+[Kafka Consumer poll behaviour](https://medium.com/@abhishekit00/kafka-tutorial-part-ii-cd1e6d1775b2)
 
 https://stackoverflow.com/questions/38754865/kafka-pattern-subscription-rebalancing-is-not-being-triggered-on-new-topic/66758840#66758840
 
