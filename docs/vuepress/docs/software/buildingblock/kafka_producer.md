@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 3
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 Since the 0.11.0.0 release, Kafka has added support to allow its producers to send messages to different topic partitions in a transactional and idempotent manner https://kafka.apache.org/documentation/#semantics
 
 https://kafka.apache.org/23/javadoc/index.html?org/apache/kafka/clients/producer/KafkaProducer.html
@@ -39,7 +45,7 @@ This means that if your producer sends messages slower than once a week it will 
 
 
 ### Data Flow
-![](./kafka_transactional_messaging_dataflow.png)
+![](/docs/docs_image/software/buildingblock/kafka/kafka_transactional_messaging_dataflow.png)
 
 In the diagram above, the sharp edged boxes represent distinct machines. The rounded boxes at the bottom represent Kafka topic partitions, and the diagonally rounded boxes represent logical entities which run inside brokers.
 Each arrow represents either an RPC, or a write to a Kafka topic. These operations occur in the sequence indicated by the numbers next to each arrow. The sections below are numbered to match the operations in the diagram above, and describe the operation in question.

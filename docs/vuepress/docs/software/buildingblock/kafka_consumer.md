@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 3
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 https://kafka.apache.org/23/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html
 
 https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#poll-long-
