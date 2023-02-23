@@ -147,12 +147,10 @@ https://github.com/lyhistory/learn_coding
 Java always passes arguments by value, NOT by reference.
 https://stackoverflow.com/questions/40480/is-java-pass-by-reference-or-pass-by-value/12429953#12429953
 
-### 2.2 JAVA BASICS
-
 JAVA版本：J2SE vs J2ME vs J2EE
 https://www.geeksforgeeks.org/j2se-vs-j2me-vs-j2ee-whats-the-difference/
 
-**[POJO VS Java Beans](https://www.tutorialspoint.com/pojo-vs-java-beans)**
+### [POJO VS Java Beans](https://www.tutorialspoint.com/pojo-vs-java-beans)**
 POJO: Plain-Old-Java-Object
 Java Beans: The only difference between both the classes is Java make java beans objects serialized so that the state of a bean class could be preserved in case required.
 So due to this a Java Bean class must either implements Serializable or Externalizable interface.
@@ -206,7 +204,7 @@ https://blog.csdn.net/mine_song/article/details/72651388
 
 父线程捕获子线程异常需要利用executorservice
 
-**JAXB**
+### JAXB
 ```
 xjc -XautoNameResolution -p com.lyhistory.test test.xsd
 ```
@@ -240,6 +238,8 @@ Customizing JAXB Bindings https://docs.oracle.com/javase/tutorial/jaxb/intro/cus
 ```
 xjc -XautoNameResolution -p com.lyhistory.test -extension -b jaxb-bindings.xjb
 ```
+### exceptions
+[java exceptions](/docs/software/programming/java_exceptions)
 
 ### 2.3 JAVA ADVANCE
 

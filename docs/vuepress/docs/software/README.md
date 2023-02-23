@@ -60,6 +60,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/buildingblock/zookeeper" >分布式框架zookeeper</a></li>
 		<li><a href="/docs/software/buildingblock/redis">分布式缓存redis</a></li>
 		<li><a href="/docs/software/buildingblock/kafka">分布式消息队列kafka</a></li>
+		<li><a href="/docs/software/buildingblock/kafka_consumer">kafka Consumer 深入分析消费者</a></li>
+		<li><a href="/docs/software/buildingblock/kafka_producer">kafka Producer 深入分析生产者</a></li>	
         <li><a href="/docs/software/buildingblock/storm">流式处理storm</a></li>
 		<li><a href="/docs/software/buildingblock/keepalived">keepalived</a></li>
 		<li><a href="/docs/software/buildingblock/rsync">rsync</a></li>
