@@ -2585,6 +2585,8 @@ https://medium.com/eleven-labs/cqrs-pattern-c1d6f8517314
 https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs
 https://docs.microsoft.com/en-us/azure/architecture/patterns/materialized-view
 
+https://cwiki.apache.org/confluence/display/KAFKA/A+Guide+To+The+Kafka+Protocol
+
 ## Presentaion
 
 ---
