@@ -163,9 +163,11 @@ Optionally run service v2ray start|stop|status|reload|restart|force-reload to co
 
 
 #### 客户端：
+
+##### Windows客户端
 https://github.com/v2ray/V2RayN
 
-linux客户端：
+##### linux客户端：
 https://v2raya.org/docs/prologue/introduction/
 
 1. 安装 V2Ray 内核#
@@ -190,8 +192,7 @@ https://v2raya.org/docs/prologue/introduction/
 4. http://localhost:2017/
    
 
-
-其他客户端：
+##### 手机客户端：
 https://itlanyan.com/v2ray-clients-download/
 
 

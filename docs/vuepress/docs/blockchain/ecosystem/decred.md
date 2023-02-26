@@ -93,9 +93,4 @@ Decred奖励的分配方案是：60%分配给miner矿工，30%分配给validator
 | 至今动态                 |      | [Decred日报](https://decred.org/press/)                      |
 
 
-
-如何购买DCR，推荐笔者使用了六年的AEX（前身比特时代），长按/扫描图片二维码：
-
-![](/docs/docs_image/blockchain/aex_2.png)
-
 <disqus/>
