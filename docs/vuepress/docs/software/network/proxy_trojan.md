@@ -6,7 +6,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《trojan梯子》
 
-首先当然是先购买vps了，[推荐：传送前去机场](/docs/software/network/vps.html)
+首先当然是先购买vps了，[推荐：传送前去机场](/docs/software/network/vps)
 
 ## 1.前置准备
 

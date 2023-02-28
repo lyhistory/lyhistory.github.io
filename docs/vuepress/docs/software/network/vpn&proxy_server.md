@@ -17,7 +17,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 [具体原理参考](/docs/software/network/network.html)
 
 + 推荐小白直接使用下面的现成产品即可；
-+ 对于有基本知识或勇于尝试的同学们推荐机场：[传送前去机场](/docs/software/network/vps.html)
++ 对于有基本知识或勇于尝试的同学们推荐机场：[传送前去机场](/docs/software/network/vps)
 
 ## 1. VPN:)(:翻墙
 
