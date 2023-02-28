@@ -4,6 +4,8 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
+首先当然是先购买vps了，[推荐：传送前去机场](/docs/software/network/vps.html)
+
 ## 基本安装
 
 server: V2ray-core

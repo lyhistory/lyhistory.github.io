@@ -371,6 +371,8 @@ Collaborative Filtering - RDD-based API https://spark.apache.org/docs/latest/mll
 A Hands-On Introduction to Neural Networks https://hackernoon.com/a-hands-on-introduction-to-neural-networks-6a03afb468b1
 初探机器学习检测 PHP Webshell https://paper.seebug.org/526/
 
+### API
+FASTAPI https://fastapi.tiangolo.com/
 
 ## 5. troubleshooting
 

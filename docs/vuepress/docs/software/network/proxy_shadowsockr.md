@@ -6,35 +6,13 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《ShadowsocksR梯子》
 
-ShadowsocksR是Shadowsock的升级版，本文教你简单三步实现ShadowsocksR搭建,如有疑问可以[加我知识星球](https://t.zsxq.com/3BayjMb)一对一指导；
+首先当然是先购买vps了，[推荐：传送前去机场](/docs/software/network/vps.html)
+
+ShadowsocksR是Shadowsock的升级版
 
 ---
 
-## 第一步：购买VPS服务器
-
-搭梯子只能用国外vps,推荐知名的vultr，价格优惠速度快且稳定,而且最近有提供100美金的免费体验,基本上你可以免费使用一年:
-
-[点击这里去vultr官网领取100美金免费体验](https://www.vultr.com/?ref=8491735-6G)
-
-如果对英文不熟悉也没有关系,可以鼠标右键可以选择翻译成中文,浏览器都有这个功能;
-
-vultr充值方式很多：
-
-+ 支付宝(2017年8月30日之后Vutrl就支持支付宝付款了）
-
-+ paypal（paypal是国际知名的第三方支付服务商，相当于国内的支付宝。注册后绑定银行卡还可以购买国外商品）
-
-+ 信用卡
-
-![](/docs/docs_image/software/network/vps/vultr01.png)
-
-购买vps服务器时，系统推荐选择CentOS 6.X64位的系统（系统版本不要选的太高，不要选centos7！centos7默认的防火墙可能会干扰ssr的正常连接！）
-
-vultr按小时计费，可以随时删掉重新部署。
-
-![](/docs/docs_image/software/network/vps/vultr02.png)
-
-## 第二步：部署VPS服务器
+## 部署VPS服务器
 
 连接服务器,可以使用Xshell、cmder或者putty等工具,输入前面记下来的ip地址用户密码,默认ssh端口是22;
 
@@ -94,9 +72,7 @@ chmod +x shadowsocks-all.sh
 
 苹果：  ios设备：淘宝上买一个美区ID，然后去App Store下载软件potatso lite
 
-## 第三步:
-
-对速度要求不高的话，此步骤可省略
+## 对速度要求不高的话，此步骤可省略
 
 + 1. BBR加速
 https://ssr.tools/199
