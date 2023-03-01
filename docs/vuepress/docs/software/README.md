@@ -73,7 +73,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<!--
 		<li><a href="/docs/software/buildingblock/druid">druid</a></li> 
 		-->
-		<li><a href="/docs/software/buglist">踩坑记录-诡异bug</a></li>
+		
 	</ul>
 	<p>-------------------------</p>
 	<h3>数据库</h3>
@@ -148,9 +148,11 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/hardware/ic_module/nfc" >NFC</a></li>
     </ul>
 	<p>-------------------------</p>
-	<h3>附录</h3>
+	<h3>MISC 附录</h3>
 	<ul>
+		<li><a href="/docs/software/terminology">terminology</a></li>
 		<li><a href="/docs/software/cheatsheet">cheatsheet</a></li>
+		<li><a href="/docs/software/buglist">刚参加工作时候的踩坑记录</a></li>
 	</ul>
 </div>
 

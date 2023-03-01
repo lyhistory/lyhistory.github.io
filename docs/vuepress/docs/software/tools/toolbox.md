@@ -7,6 +7,7 @@ https://mremoteng.org/download
 For Windows
 - Sysinternals
 https://technet.microsoft.com/en-us/bb545027
+erverything https://voidtools.com/
 
 Easy BCD 修复引导分区
 老毛桃扩展C盘分区
