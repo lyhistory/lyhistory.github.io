@@ -8,11 +8,9 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 
 
-sourcecode:
+[Kafka Client sourcecode in Java](https://github.com/apache/kafka/tree/trunk/clients)
 
-client:https://github.com/apache/kafka
-
-server: https://github.com/a0x8o/kafka
+[kafka Server sourcecode in Scala](https://github.com/apache/kafka/tree/trunk/core/src/main/scala/kafka)
 
 ## 1. Basic concepts
 

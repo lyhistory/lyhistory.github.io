@@ -2016,7 +2016,307 @@ private class EndTxnHandler extends TxnRequestHandler {
     }
 因为client在server端恢复期间通信超过transaction timeout的默认1分钟时间，所以kafka brokers bump epoch，使得当前的producer过期，返回response INVALID_PRODUCER_EPOCH，然后commitTransaction抛出ProducerFencedException被 try catch抓住后执行了 abortTransaction，然后就是前面stacktrace的过程了has error抛出org.apache.kafka.common.KafkaException: Cannot execute transactional method because we are in an error state
 ```
+##### 验证
 
+###### Client端配置 transaction.timeout.ms
+```
+// visible for testing
+    @SuppressWarnings("unchecked")
+    KafkaProducer(Map<String, Object> configs,
+                  Serializer<K> keySerializer,
+                  Serializer<V> valueSerializer,
+                  Metadata metadata,
+                  KafkaClient kafkaClient,
+                  ProducerInterceptors interceptors,
+                  Time time) {
+        ProducerConfig config = new ProducerConfig(ProducerConfig.addSerializerToConfig(configs, keySerializer,
+                valueSerializer));
+                ...............
+                this.transactionManager = configureTransactionState(config, logContext, log);
+                ...............
+}
+private static TransactionManager configureTransactionState(ProducerConfig config, LogContext logContext, Logger log) {
+
+        TransactionManager transactionManager = null;
+
+        ...............
+
+        if (idempotenceEnabled) {
+            String transactionalId = config.getString(ProducerConfig.TRANSACTIONAL_ID_CONFIG);
+            int transactionTimeoutMs = config.getInt(ProducerConfig.TRANSACTION_TIMEOUT_CONFIG);
+            long retryBackoffMs = config.getLong(ProducerConfig.RETRY_BACKOFF_MS_CONFIG);
+            transactionManager = new TransactionManager(logContext, transactionalId, transactionTimeoutMs, retryBackoffMs);
+            if (transactionManager.isTransactional())
+                log.info("Instantiated a transactional producer.");
+            else
+                log.info("Instantiated an idempotent producer.");
+        }
+
+        return transactionManager;
+    }
+ public synchronized TransactionalRequestResult initializeTransactions() {
+        ensureTransactional();
+        transitionTo(State.INITIALIZING);
+        setProducerIdAndEpoch(ProducerIdAndEpoch.NONE);
+        this.nextSequence.clear();
+        InitProducerIdRequest.Builder builder = new InitProducerIdRequest.Builder(transactionalId, transactionTimeoutMs);
+        InitProducerIdHandler handler = new InitProducerIdHandler(builder);
+        enqueueRequest(handler);
+        return handler.result;
+    }
+``` 
+###### 服务端逻辑
+
+接收配置 handleInitProducerIdRequest
+```
+core\src\main\scala\kafka\server\KafkaApis.scala
+case ApiKeys.INIT_PRODUCER_ID => handleInitProducerIdRequest(request, requestLocal)
+
+def handleInitProducerIdRequest(request: RequestChannel.Request, requestLocal: RequestLocal): Unit = {
+    val initProducerIdRequest = request.body[InitProducerIdRequest]
+    val transactionalId = initProducerIdRequest.data.transactionalId
+
+    if (transactionalId != null) {
+      if (!authHelper.authorize(request.context, WRITE, TRANSACTIONAL_ID, transactionalId)) {
+        requestHelper.sendErrorResponseMaybeThrottle(request, Errors.TRANSACTIONAL_ID_AUTHORIZATION_FAILED.exception)
+        return
+      }
+    } else if (!authHelper.authorize(request.context, IDEMPOTENT_WRITE, CLUSTER, CLUSTER_NAME, true, false)
+        && !authHelper.authorizeByResourceType(request.context, AclOperation.WRITE, ResourceType.TOPIC)) {
+      requestHelper.sendErrorResponseMaybeThrottle(request, Errors.CLUSTER_AUTHORIZATION_FAILED.exception)
+      return
+    }
+
+    def sendResponseCallback(result: InitProducerIdResult): Unit = {
+      def createResponse(requestThrottleMs: Int): AbstractResponse = {
+        val finalError =
+          if (initProducerIdRequest.version < 4 && result.error == Errors.PRODUCER_FENCED) {
+            // For older clients, they could not understand the new PRODUCER_FENCED error code,
+            // so we need to return the INVALID_PRODUCER_EPOCH to have the same client handling logic.
+            Errors.INVALID_PRODUCER_EPOCH
+          } else {
+            result.error
+          }
+        val responseData = new InitProducerIdResponseData()
+          .setProducerId(result.producerId)
+          .setProducerEpoch(result.producerEpoch)
+          .setThrottleTimeMs(requestThrottleMs)
+          .setErrorCode(finalError.code)
+        val responseBody = new InitProducerIdResponse(responseData)
+        trace(s"Completed $transactionalId's InitProducerIdRequest with result $result from client ${request.header.clientId}.")
+        responseBody
+      }
+      requestHelper.sendResponseMaybeThrottle(request, createResponse)
+    }
+
+    val producerIdAndEpoch = (initProducerIdRequest.data.producerId, initProducerIdRequest.data.producerEpoch) match {
+      case (RecordBatch.NO_PRODUCER_ID, RecordBatch.NO_PRODUCER_EPOCH) => Right(None)
+      case (RecordBatch.NO_PRODUCER_ID, _) | (_, RecordBatch.NO_PRODUCER_EPOCH) => Left(Errors.INVALID_REQUEST)
+      case (_, _) => Right(Some(new ProducerIdAndEpoch(initProducerIdRequest.data.producerId, initProducerIdRequest.data.producerEpoch)))
+    }
+
+    producerIdAndEpoch match {
+      case Right(producerIdAndEpoch) => txnCoordinator.handleInitProducerId(transactionalId, initProducerIdRequest.data.transactionTimeoutMs,
+        producerIdAndEpoch, sendResponseCallback, requestLocal)
+      case Left(error) => requestHelper.sendErrorResponseMaybeThrottle(request, error.exception)
+    }
+  }
+  
+core\src\main\scala\kafka\coordinator\transaction\TransactionCoordinator.scala
+
+txnCoordinator.handleInitProducerId(transactionalId, initProducerIdRequest.data.transactionTimeoutMs,
+        producerIdAndEpoch, sendResponseCallback, requestLocal)
+		
+ def handleInitProducerId(transactionalId: String,
+                           transactionTimeoutMs: Int,
+                           expectedProducerIdAndEpoch: Option[ProducerIdAndEpoch],
+                           responseCallback: InitProducerIdCallback,
+                           requestLocal: RequestLocal = RequestLocal.NoCaching): Unit = {
+
+    if (transactionalId == null) {
+      // if the transactional id is null, then always blindly accept the request
+      // and return a new producerId from the producerId manager
+      val producerId = producerIdManager.generateProducerId()
+      responseCallback(InitProducerIdResult(producerId, producerEpoch = 0, Errors.NONE))
+    } else if (transactionalId.isEmpty) {
+      // if transactional id is empty then return error as invalid request. This is
+      // to make TransactionCoordinator's behavior consistent with producer client
+      responseCallback(initTransactionError(Errors.INVALID_REQUEST))
+    } else if (!txnManager.validateTransactionTimeoutMs(transactionTimeoutMs)) {
+      // check transactionTimeoutMs is not larger than the broker configured maximum allowed value
+      responseCallback(initTransactionError(Errors.INVALID_TRANSACTION_TIMEOUT))
+    } else {
+      val coordinatorEpochAndMetadata = txnManager.getTransactionState(transactionalId).flatMap {
+        case None =>
+          val producerId = producerIdManager.generateProducerId()
+          val createdMetadata = new TransactionMetadata(transactionalId = transactionalId,
+            producerId = producerId,
+            lastProducerId = RecordBatch.NO_PRODUCER_ID,
+            producerEpoch = RecordBatch.NO_PRODUCER_EPOCH,
+            lastProducerEpoch = RecordBatch.NO_PRODUCER_EPOCH,
+            txnTimeoutMs = transactionTimeoutMs,
+            state = Empty,
+            topicPartitions = collection.mutable.Set.empty[TopicPartition],
+            txnLastUpdateTimestamp = time.milliseconds())
+          txnManager.putTransactionStateIfNotExists(createdMetadata)
+
+        case Some(epochAndTxnMetadata) => Right(epochAndTxnMetadata)
+      }
+
+      val result: ApiResult[(Int, TxnTransitMetadata)] = coordinatorEpochAndMetadata.flatMap {
+        existingEpochAndMetadata =>
+          val coordinatorEpoch = existingEpochAndMetadata.coordinatorEpoch
+          val txnMetadata = existingEpochAndMetadata.transactionMetadata
+
+          txnMetadata.inLock {
+            prepareInitProducerIdTransit(transactionalId, transactionTimeoutMs, coordinatorEpoch, txnMetadata,
+              expectedProducerIdAndEpoch)
+          }
+      }
+
+      result match {
+        case Left(error) =>
+          responseCallback(initTransactionError(error))
+
+        case Right((coordinatorEpoch, newMetadata)) =>
+          if (newMetadata.txnState == PrepareEpochFence) {
+            // abort the ongoing transaction and then return CONCURRENT_TRANSACTIONS to let client wait and retry
+            def sendRetriableErrorCallback(error: Errors): Unit = {
+              if (error != Errors.NONE) {
+                responseCallback(initTransactionError(error))
+              } else {
+                responseCallback(initTransactionError(Errors.CONCURRENT_TRANSACTIONS))
+              }
+            }
+
+            endTransaction(transactionalId,
+              newMetadata.producerId,
+              newMetadata.producerEpoch,
+              TransactionResult.ABORT,
+              isFromClient = false,
+              sendRetriableErrorCallback,
+              requestLocal)
+          } else {
+            def sendPidResponseCallback(error: Errors): Unit = {
+              if (error == Errors.NONE) {
+                info(s"Initialized transactionalId $transactionalId with producerId ${newMetadata.producerId} and producer " +
+                  s"epoch ${newMetadata.producerEpoch} on partition " +
+                  s"${Topic.TRANSACTION_STATE_TOPIC_NAME}-${txnManager.partitionFor(transactionalId)}")
+                responseCallback(initTransactionMetadata(newMetadata))
+              } else {
+                info(s"Returning $error error code to client for $transactionalId's InitProducerId request")
+                responseCallback(initTransactionError(error))
+              }
+            }
+
+            txnManager.appendTransactionToLog(transactionalId, coordinatorEpoch, newMetadata,
+              sendPidResponseCallback, requestLocal = requestLocal)
+          }
+      }
+    }
+  }
+```
+
+```
+  
+/**
+   * Startup logic executed at the same time when the server starts up.
+   */
+  def startup(retrieveTransactionTopicPartitionCount: () => Int, enableTransactionalIdExpiration: Boolean = true): Unit = {
+    info("Starting up.")
+    scheduler.startup()
+    scheduler.schedule("transaction-abort",
+      () => abortTimedOutTransactions(onEndTransactionComplete),
+      txnConfig.abortTimedOutTransactionsIntervalMs,
+      txnConfig.abortTimedOutTransactionsIntervalMs
+    )
+    txnManager.startup(retrieveTransactionTopicPartitionCount, enableTransactionalIdExpiration)
+    txnMarkerChannelManager.start()
+    isActive.set(true)
+
+    info("Startup complete.")
+  }
+
+=>
+private[transaction] def abortTimedOutTransactions(onComplete: TransactionalIdAndProducerIdEpoch => EndTxnCallback): Unit = {
+
+    txnManager.timedOutTransactions().foreach { txnIdAndPidEpoch =>
+      txnManager.getTransactionState(txnIdAndPidEpoch.transactionalId).foreach {
+        case None =>
+          error(s"Could not find transaction metadata when trying to timeout transaction for $txnIdAndPidEpoch")
+
+        case Some(epochAndTxnMetadata) =>
+          val txnMetadata = epochAndTxnMetadata.transactionMetadata
+          val transitMetadataOpt = txnMetadata.inLock {
+            if (txnMetadata.producerId != txnIdAndPidEpoch.producerId) {
+              error(s"Found incorrect producerId when expiring transactionalId: ${txnIdAndPidEpoch.transactionalId}. " +
+                s"Expected producerId: ${txnIdAndPidEpoch.producerId}. Found producerId: " +
+                s"${txnMetadata.producerId}")
+              None
+            } else if (txnMetadata.pendingTransitionInProgress) {
+              debug(s"Skipping abort of timed out transaction $txnIdAndPidEpoch since there is a " +
+                "pending state transition")
+              None
+            } else {
+              Some(txnMetadata.prepareFenceProducerEpoch())
+            }
+          }
+
+          transitMetadataOpt.foreach { txnTransitMetadata =>
+            endTransaction(txnMetadata.transactionalId,
+              txnTransitMetadata.producerId,
+              txnTransitMetadata.producerEpoch,
+              TransactionResult.ABORT,
+              isFromClient = false,
+              onComplete(txnIdAndPidEpoch),
+              RequestLocal.NoCaching)
+          }
+      }
+    }
+  }
+=>
+core\src\main\scala\kafka\coordinator\transaction\TransactionStateManager.scala
+// this is best-effort expiration of an ongoing transaction which has been open for more than its
+  // txn timeout value, we do not need to grab the lock on the metadata object upon checking its state
+  // since the timestamp is volatile and we will get the lock when actually trying to transit the transaction
+  // metadata to abort later.
+  def timedOutTransactions(): Iterable[TransactionalIdAndProducerIdEpoch] = {
+    val now = time.milliseconds()
+    inReadLock(stateLock) {
+      transactionMetadataCache.flatMap { case (_, entry) =>
+        entry.metadataPerTransactionalId.filter { case (_, txnMetadata) =>
+          if (txnMetadata.pendingTransitionInProgress) {
+            false
+          } else {
+            txnMetadata.state match {
+              case Ongoing =>
+                txnMetadata.txnStartTimestamp + txnMetadata.txnTimeoutMs < now 判断是否过期
+              case _ => false                                   
+            }
+          }
+        }.map { case (txnId, txnMetadata) =>
+          TransactionalIdAndProducerIdEpoch(txnId, txnMetadata.producerId, txnMetadata.producerEpoch)
+        }
+      }
+    }
+  }
+
+txnMetadata.prepareFenceProducerEpoch()
+
+ def prepareFenceProducerEpoch(): TxnTransitMetadata = {
+    if (producerEpoch == Short.MaxValue)
+      throw new IllegalStateException(s"Cannot fence producer with epoch equal to Short.MaxValue since this would overflow")
+
+    // If we've already failed to fence an epoch (because the write to the log failed), we don't increase it again.
+    // This is safe because we never return the epoch to client if we fail to fence the epoch
+    val bumpedEpoch = if (hasFailedEpochFence) producerEpoch else (producerEpoch + 1).toShort
+
+    prepareTransitionTo(PrepareEpochFence, producerId, bumpedEpoch, RecordBatch.NO_PRODUCER_EPOCH, txnTimeoutMs,
+      topicPartitions.toSet, txnStartTimestamp, txnLastUpdateTimestamp)
+  }
+可以看到这里将epoch加1
+
+```
 #### The client hasn't received acknowledgment for some previously sent messages and can no longer retry them. It isn't safe to continue.
 有了上面的基础，这部分时间很简单
 
@@ -2100,7 +2400,9 @@ retry.backoff.ms = 150
 linger.ms = 5
 ```
 延长：
-transaction.timeout.ms
+delivery.timeout.ms >= request.timeout.ms + linger.ms
+对于我们前面的问题应该不需要改变delivery timeout，这个是跟send有关，我们的问题是出在commit，所以延长
+transaction.timeout.ms <= broker(transaction.max.timeout.ms)
 在服务端故障恢复的几分钟内，让客户端有足够的时间重试而不是直接被服务端expire
 
 注意数值不能超过服务端broker的配置（默认15分钟）：

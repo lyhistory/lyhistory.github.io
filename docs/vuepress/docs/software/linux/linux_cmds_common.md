@@ -46,7 +46,7 @@ su username #切换用户
 useradd username
 passwd username
 usermod -g groupname username -d /home/test
-useradd -g groupname username -d /home/test
+useradd -g groupname username -d /home/test （注意，最好用home目录，之前碰到过一个问题：用其他系统盘或数据盘，其他人更改了文件夹权限，造成.ssh/id_rsa权限过大，不满足系统安全要求，造成passwordless login失败）
 userdel username
 gpasswd -d groupname username
 

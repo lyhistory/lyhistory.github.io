@@ -29,7 +29,8 @@ OSI七层是抽象的模型，而TCP/IP四层或五层是比较具体的协议�
 五层模型
 
 + Layer 5: Application
-	FTP、HTTP、HTTPS、websocket、TELNET、SMTP、DNS等协议;
+	FTP、HTTP、HTTPS、websocket、P2P, TELNET、SMTP、DNS等协议;
+	金融FIX协议；
 + Layer 4: Transport
 	TCP协议与UDP协议
 + Layer 3: Network/Internet
@@ -51,16 +52,14 @@ OSI七层是抽象的模型，而TCP/IP四层或五层是比较具体的协议�
 + Layer 2: Data link layer (ethernet)
 + Layer 1: Physical layer (network cable / wifi)
 
-
+### 1.0 数据通信流程
+[利用 TCP IP 模型理解数据通信过程](https://bbs.huaweicloud.com/blogs/366735)
 
 听了马士兵的关于TCP的讲解，还是感觉挺有收获的，大概总结下整体过程：
-
-
 
 ![网络分层](/docs/docs_image/software/network/network00_1.png)
 
 ![网络分层](/docs/docs_image/software/network/network00_2.png)
-
 
 
 用户从应用层发起http get request，比如通过浏览器或者直接通过shell命令
@@ -219,6 +218,8 @@ Arpspoof https://www.youtube.com/watch?v=8SIP36Fym7U
 设备：
 + 路由器: 路由器是连接两个或多个网络的硬件设备，在网络间起网关的作用，是读取每一个数据包中的地址然后决定如何传送的专用智能性的网络设备。它能够理解不同的协议，例如某个局域网使用的以太网协议，因特网使用的TCP/IP协议。这样，路由器可以分析各种不同类型网络传来的数据包的目的地址，把非TCP/IP网络的地址转换成TCP/IP地址，或者反之；再根据选定的路由算法把各数据包按最佳路线传送到指定位置。所以路由器可以把非TCP/ IP网络连接到因特网上。
 
+[网络层概念太多搞不清？这里一次性给你做好总结](https://bbs.huaweicloud.com/blogs/341734)
+
 layer3是路由器router（ip网段寻址）
 Layer 3 involves working with IP addresses, which should be familiar to any sysadmin. IP addressing provides hosts with a way to reach other hosts that are outside of their local network (though we often use them on local networks as well).
 The lack of an IP address can be caused by a local misconfiguration, such as an incorrect network interface config file, or it can be caused by problems with DHCP.
@@ -247,6 +248,9 @@ IPv4 addresses consist of four 8-bit decimal values known as "octets", each sepa
 
 In CIDR notation, the lowest IP address in the range is written explicitly, followed by another number that indicates how many bits from the start of the given address are fixed for the entire range. For example, 10.0.0.0/8 indicates that the first 8 bits are fixed (the first octet). In other words, this range includes all IP addresses from 10.0.0.0 to 10.255.255.255. 
 ```
+
+**单播、广播和多播IP地址**
+[除地址类别外，还可根据传输的消息特征将IP地址分为单播、广播或多播。](https://juejin.cn/post/6844903645629120526)
 
 **子网掩码、ip地址、主机号、网络号、网络地址、广播地址**
 IPV4地址：4段十进制，共32位二进制，如：192.168.1.1 二进制就是：11000000｜10101000｜00000001｜00000001
@@ -289,7 +293,6 @@ C类IP地址
 子网掩码为255.255.255.0
 
 Penetration Testing Tools Cheat Sheet https://highon.coffee/blog/penetration-testing-tools-cheat-sheet/
-
 
 **Public ip vs NAT**
 
@@ -404,7 +407,24 @@ https://www.obj-sys.com/asn1tutorial/node1.html
 路由器使用寻径协议来获得网络信息，采用基于“寻径矩阵”的寻径算法和准则来选择最优路径。按照OSI参考模型，路由器是一个网络层系统。路由器分为单协议路由器和多协议路由器。     
 比如如果给你一个IP地址为116.24.143.126,子网掩码255.255.255.224,也就是在这段地址中有32个地址,其中30个可用,去掉网关,还有29个可分配.地址是从116.24.143.96-127,第一个可用的IP是97,最后一个是126,这个例子里,你拿126做网关了,所以从97至125这29个地址是可被你分配的. 同理.116.24.143.126,掩码255.255.255.0,那你就有253个地址可被你分配使用.也就是1-125,127-254. 116.24.143.166,掩码是255.255.255.128,就是有125个地址可被你分配使用.即129-165,167-254.  每段地址有多少可用,不是看IP的最后一位数,而是看子网掩码
 
+#### 二层广播 三层IP协议广播/组播 四层UDP协议广播/组播 
+[Can I use broadcast or multicast for TCP?](https://stackoverflow.com/questions/21266008/can-i-use-broadcast-or-multicast-for-tcp)
+No, you can't. TCP is a protocol for communication between exactly two endpoints. Compared to UDP it features reliable transport, that means, that packets get not only send, but it is expected that the peer acknowledges the receipt of the data and that data will be retransmitted if the acknowledgment is missing. And because Broadcast and Multicast only send but never receive data, the reliability of TCP cannot be implemented on top of these protocols.
+
+上面网络层介绍了三种IP地址：单播地址，广播地址，多播地址。对于这些通讯方式的理解是：单播地址是一对一的通讯，广播是一对多的通讯，多播是一对多的通讯。多播是对一个特定的通讯主体集合的通讯。广播与多播仅仅应用于UDP协议。单播的典型方式是TCP协议。
+
+在交换以太网上运行TCP/IP环境下：
+二层广播是在数据链路层的广播，它 的广播范围是二层交换机连接的所有端口；二层广播不能通过路由器。
+三层广播就是在网络层的广播，它的范围是同一IP子网内的设备，子网广播也不能通过路由器。
+第三层的数据必须通过第二层的封装再发送，所以三层广播必然通过二层广播来实现。
+设想在同一台二层交换机上连接2个ip子网的设备，所有的设备都可以接收到二层广播，但三层广播只对本子网设备有效，非本子网的设备也会接收到广播包，但会被丢弃。
+安装一个sniffer，抓个广播包，
+
+[组播 VLAN](https://support.huawei.com/enterprise/zh/doc/EDOC1100169967/3ed5e570)
+
 #### 二层 三层网络 VLAN=》VXLAN=>云服务 VPC
+[走近数据中心大二层网络](https://bbs.huaweicloud.com/blogs/219820)
+[单播、多播、广播、组播、泛播、冲突域、广播域、VLAN概念汇总](https://bbs.huaweicloud.com/blogs/307508)
 OSI七层网络模型中：
 物理层，数据链路层和网络层是低三层网络，其余四层是高三层网络，其中二层网络指的就是数据链路层，三层网络指的就是网络层
 
