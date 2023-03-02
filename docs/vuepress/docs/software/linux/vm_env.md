@@ -119,6 +119,8 @@ dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all
 windows store: ubuntu
 ```
 
+其中virtual box网络配置参考：[基于virtualbox构建网络环境](/docs/software/network/vm_env_network)
+
 ### 2.2 本地开发环境配置例子
 //obselete: not free: virtualbox + xshell + xmanager + virtualenv
 

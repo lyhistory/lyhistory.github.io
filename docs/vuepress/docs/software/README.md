@@ -92,8 +92,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
         <li><a href="/docs/software/network/http_protocol">http协议实用</a></li>	
         <li><a href="/docs/software/network/http_ssl_tls_setup">ssl/tls环境配置(https|wss)</a></li>	
 		<li><a href="/docs/software/network/ipv6">IPV6</a></li>
+		<li><a href="/docs/software/network/vm_env_network">基于virtualbox构建网络环境</a></li>
         <li><a href="/docs/software/linux/vm_env">开发测试环境-虚拟机和容器</a></li>
-        <li><a href="/docs/software/linux/vm_env_network">基于virtualbox构建网络环境</a></li>
 		<!--<li><a href="/docs/software/linux/docker">docker</a></li>-->
         <li><a href="/docs/software/linux/linux">linux基础</a></li>
         <li><a href="/docs/software/linux/linux_cmds_common">linux常用命令</a></li>

@@ -18,6 +18,8 @@ https://www.virtualbox.org/manual/ch06.html
 | NATservice |  + | PortForward |+ | + |PortForward |
 
 ### 1.1 NAT Network. 
+![https://www.cnblogs.com/liugp/p/16410259.html](/docs/docs_image/software/network/vm_nat.png)
+
 A NAT network is a type of internal network that allows outbound connections. See Section 6.4, “Network Address Translation Service”.
 
 有虚拟路由，所以guest可以直接通过10.0.2.2:<PORT>访问host的服务,b包括vpn服务等
@@ -45,6 +47,8 @@ vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
 ```
 
 ### 1.2 Bridged networking. 
+![https://www.cnblogs.com/liugp/p/16410259.html](/docs/docs_image/software/network/vm_bridge.png)
+
 This is for more advanced networking needs, such as network simulations and running servers in a guest. When enabled, Oracle VM VirtualBox connects to one of your installed network cards and exchanges network packets directly, circumventing your host operating system's network stack.
 ![](/docs/docs_image/software/linux/vm_network05.png)
 
@@ -53,6 +57,7 @@ This can be used to create a different kind of software-based network which is v
 ![](/docs/docs_image/software/linux/vm_network06.png)
 
 ### 1.4 Host-only networking. 
+![https://www.cnblogs.com/liugp/p/16410259.html](/docs/docs_image/software/network/vm_hostonly.png)
 This can be used to create a network containing the host and a set of virtual machines, without the need for the host's physical network interface. Instead, a virtual network interface, similar to a loopback interface, is created on the host, providing connectivity among virtual machines and the host.
 
 ![](/docs/docs_image/software/linux/vm_network07.png)

@@ -2025,6 +2025,14 @@ https://kafka.apache.org/documentation/#basic_ops_cluster_expansion
 replica factor=2，启动3个node，那么就出现比如 `__consumer_offsets_49`的replica分布在node 1和2上，所以min.isr=1的情况下只支持node1和2只能挂掉一个，同理其他的分布在node1和node3，node2和node3上，所以总的来说，只能挂掉3个节点的一个，假设挂掉两个node1和2，node3上有replica的topic没问题，但是`__consumer_offsets_49`显然就挂了
 
 
+## Performance metric monitoring
+[Benchmarking Apache Kafka: 2 Million Writes Per Second (On Three Cheap Machines)](https://engineering.linkedin.com/kafka/benchmarking-apache-kafka-2-million-writes-second-three-cheap-machines)
+
+[Apache Kafka® Performance](https://developer.confluent.io/learn/kafka-performance/)
+
+[Monitoring Kafka performance metrics](https://www.datadoghq.com/blog/monitoring-kafka-performance-metrics/)
+
+[scripting approach to run performance tests](https://github.com/gkoenig/kafka-benchmarking)
 
 ## 5. Troubleshooting
 
