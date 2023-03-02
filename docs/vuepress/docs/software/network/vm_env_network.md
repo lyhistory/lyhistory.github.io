@@ -26,10 +26,10 @@ A NAT network is a type of internal network that allows outbound connections. Se
 Port forwarding for NAT:
 https://www.virtualbox.org/manual/ch06.html#natforward
 
-![](/docs/docs_image/software/linux/vm_network01.png)
+![](/docs/docs_image/software/network/vm_network01.png)
 
-![](/docs/docs_image/software/linux/vm_network02.png)
-![](/docs/docs_image/software/linux/vm_network03.png)
+![](/docs/docs_image/software/network/vm_network02.png)
+![](/docs/docs_image/software/network/vm_network03.png)
 
 netstat -aon | findstr 'PORT'
 tasklist | findstr 'PID'
@@ -37,7 +37,7 @@ tasklist /fi "pid eq 4444"
 
 "c:\Program Files\Oracle\VirtualBox\VBoxManage" modifyvm Test_centos7 --natpf1 "guestssh,tcp,,2222,,22"
 But failed on the second rule??? "c:\Program Files\Oracle\VirtualBox\VBoxManage" modifyvm Test_centos7 --natpf2 "guestkafka,tcp,,9092,,9092", work around: add in VB Network settings
-![](/docs/docs_image/software/linux/vm_network04.png)
+![](/docs/docs_image/software/network/vm_network04.png)
 
 ?#No network access for NAT, change dns settings, for centos:
 ```
@@ -50,22 +50,22 @@ vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
 ![https://www.cnblogs.com/liugp/p/16410259.html](/docs/docs_image/software/network/vm_bridge.png)
 
 This is for more advanced networking needs, such as network simulations and running servers in a guest. When enabled, Oracle VM VirtualBox connects to one of your installed network cards and exchanges network packets directly, circumventing your host operating system's network stack.
-![](/docs/docs_image/software/linux/vm_network05.png)
+![](/docs/docs_image/software/network/vm_network05.png)
 
 ### 1.3 Internal networking. 
 This can be used to create a different kind of software-based network which is visible to selected virtual machines, but not to applications running on the host or to the outside world.
-![](/docs/docs_image/software/linux/vm_network06.png)
+![](/docs/docs_image/software/network/vm_network06.png)
 
 ### 1.4 Host-only networking. 
 ![https://www.cnblogs.com/liugp/p/16410259.html](/docs/docs_image/software/network/vm_hostonly.png)
 This can be used to create a network containing the host and a set of virtual machines, without the need for the host's physical network interface. Instead, a virtual network interface, similar to a loopback interface, is created on the host, providing connectivity among virtual machines and the host.
 
-![](/docs/docs_image/software/linux/vm_network07.png)
+![](/docs/docs_image/software/network/vm_network07.png)
 
 ?#host-only模式下客户机vm无法访问位于host宿主机上面的web服务，比如192.168.207.1:8080
 原因：不像在NAT和bridge模式下有virtual route虚拟路由，host only是直接连接的，所以宿主机访问主机如同访问外网(没有经过虚拟路由)，所以会受到宿主机上面的一些权限限制，比如
 可以看到下图，10.0.2.2就是NAT模式的虚拟路由，所以可以直接通过这个路由访问宿主机host的服务
-![](/docs/docs_image/software/linux/vm_network08.png)
+![](/docs/docs_image/software/network/vm_network08.png)
 
 Ping不通：如果宿主机是win10，文件与打印机共享开启
 
@@ -132,7 +132,7 @@ https://blog.pythian.com/test-lab-using-virtualbox-nat-networking/
 https://vorkbaard.nl/set-up-a-testlab-in-virtualbox-with-a-virtual-lan/
 'Bridged' and 'Host Only' network settings in Virtualbox https://superuser.com/questions/1352678/bridged-and-host-only-network-settings-in-virtualbox-advice-please
 
-![](/docs/docs_image/software/linux/vm_network09.png)
+![](/docs/docs_image/software/network/vm_network09.png)
 
 https://askubuntu.com/questions/113604/how-to-run-virtualbox-on-bridged-and-host-only-networks
 http://christophermaier.name/2010/09/01/host-only-networking-with-virtualbox/
@@ -314,7 +314,5 @@ https://networkengineering.stackexchange.com/questions/37896/ping-port-number
 ### eth0 not found or not configured simply restart vm
 https://askubuntu.com/questions/1060980/eth0-not-configured-but-it-was-working-earlier
 
-
-![](/docs/docs_image/software/linux/vm_network03.png)
 
 <disqus/>
