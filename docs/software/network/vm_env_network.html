@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>1.Virtualbox network mode | 计算机基础教程</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <script async="true" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9742852210287449" crossorigin="anonymous"></script>
+    <script>
+			(function() { // DON'T EDIT BELOW THIS LINE
+			
+			})();
+		 </script>
+    <meta name="description" content="软件开发教程，白帽黑客入门教程，区块链入门教程，物联网，大数据">
+    
+    <link rel="preload" href="/docs/assets/css/0.styles.d4eb5ad8.css" as="style"><link rel="preload" href="/docs/assets/js/app.e34ffad9.js" as="script"><link rel="preload" href="/docs/assets/js/2.19baf9f4.js" as="script"><link rel="preload" href="/docs/assets/js/191.78f7a84e.js" as="script"><link rel="preload" href="/docs/assets/js/11.0d0890d4.js" as="script"><link rel="prefetch" href="/docs/assets/js/10.f3208242.js"><link rel="prefetch" href="/docs/assets/js/100.1e97dfe0.js"><link rel="prefetch" href="/docs/assets/js/101.a4de3d57.js"><link rel="prefetch" href="/docs/assets/js/102.f6c7c3bb.js"><link rel="prefetch" href="/docs/assets/js/103.37a3ff90.js"><link rel="prefetch" href="/docs/assets/js/104.0c7d2b38.js"><link rel="prefetch" href="/docs/assets/js/105.6e434728.js"><link rel="prefetch" href="/docs/assets/js/106.dee87b0f.js"><link rel="prefetch" href="/docs/assets/js/107.ae4b430d.js"><link rel="prefetch" href="/docs/assets/js/108.ba2b1b84.js"><link rel="prefetch" href="/docs/assets/js/109.5d5f4d7a.js"><link rel="prefetch" href="/docs/assets/js/110.797f4993.js"><link rel="prefetch" href="/docs/assets/js/111.5dd57ee3.js"><link rel="prefetch" href="/docs/assets/js/112.02f166af.js"><link rel="prefetch" href="/docs/assets/js/113.409b0da1.js"><link rel="prefetch" href="/docs/assets/js/114.923e568b.js"><link rel="prefetch" href="/docs/assets/js/115.536f84e0.js"><link rel="prefetch" href="/docs/assets/js/116.4b1ee4e2.js"><link rel="prefetch" href="/docs/assets/js/117.5678c086.js"><link rel="prefetch" href="/docs/assets/js/118.c42e7d4a.js"><link rel="prefetch" href="/docs/assets/js/119.b8a933d1.js"><link rel="prefetch" href="/docs/assets/js/12.eec9a325.js"><link rel="prefetch" href="/docs/assets/js/120.cbc00934.js"><link rel="prefetch" href="/docs/assets/js/121.fc33450d.js"><link rel="prefetch" href="/docs/assets/js/122.52ebb560.js"><link rel="prefetch" href="/docs/assets/js/123.58bc0796.js"><link rel="prefetch" href="/docs/assets/js/124.8f410c2f.js"><link rel="prefetch" href="/docs/assets/js/125.c10ee5d3.js"><link rel="prefetch" href="/docs/assets/js/126.7111d193.js"><link rel="prefetch" href="/docs/assets/js/127.554023bb.js"><link rel="prefetch" href="/docs/assets/js/128.7eadb145.js"><link rel="prefetch" href="/docs/assets/js/129.14ba004d.js"><link rel="prefetch" href="/docs/assets/js/13.396f202f.js"><link rel="prefetch" href="/docs/assets/js/130.10c7092d.js"><link rel="prefetch" href="/docs/assets/js/131.7f82ec40.js"><link rel="prefetch" href="/docs/assets/js/132.d1cab817.js"><link rel="prefetch" href="/docs/assets/js/133.ed78f017.js"><link rel="prefetch" href="/docs/assets/js/134.1a56d88f.js"><link rel="prefetch" href="/docs/assets/js/135.de857a7c.js"><link rel="prefetch" href="/docs/assets/js/136.e499eb2b.js"><link rel="prefetch" href="/docs/assets/js/137.b1a8511c.js"><link rel="prefetch" href="/docs/assets/js/138.e7c73561.js"><link rel="prefetch" href="/docs/assets/js/139.26fe201c.js"><link rel="prefetch" href="/docs/assets/js/14.d62fcd5d.js"><link rel="prefetch" href="/docs/assets/js/140.fb57d47e.js"><link rel="prefetch" href="/docs/assets/js/141.1291136c.js"><link rel="prefetch" href="/docs/assets/js/142.5324272d.js"><link rel="prefetch" href="/docs/assets/js/143.45f8afa4.js"><link rel="prefetch" href="/docs/assets/js/144.1393c8d9.js"><link rel="prefetch" href="/docs/assets/js/145.86e39846.js"><link rel="prefetch" href="/docs/assets/js/146.660a6ab2.js"><link rel="prefetch" href="/docs/assets/js/147.a55e8747.js"><link rel="prefetch" href="/docs/assets/js/148.37521f8f.js"><link rel="prefetch" href="/docs/assets/js/149.f1449cbb.js"><link rel="prefetch" href="/docs/assets/js/15.fb68fc8c.js"><link rel="prefetch" href="/docs/assets/js/150.e0262d23.js"><link rel="prefetch" href="/docs/assets/js/151.b52929a7.js"><link rel="prefetch" href="/docs/assets/js/152.1761ea70.js"><link rel="prefetch" href="/docs/assets/js/153.147011cb.js"><link rel="prefetch" href="/docs/assets/js/154.40a2cd77.js"><link rel="prefetch" href="/docs/assets/js/155.d6707b88.js"><link rel="prefetch" href="/docs/assets/js/156.e43dcfdb.js"><link rel="prefetch" href="/docs/assets/js/157.e53ce2a9.js"><link rel="prefetch" href="/docs/assets/js/158.5cd4a166.js"><link rel="prefetch" href="/docs/assets/js/159.ba166ef0.js"><link rel="prefetch" href="/docs/assets/js/16.3814251d.js"><link rel="prefetch" href="/docs/assets/js/160.82d3a206.js"><link rel="prefetch" href="/docs/assets/js/161.85b16924.js"><link rel="prefetch" href="/docs/assets/js/162.b40c8665.js"><link rel="prefetch" href="/docs/assets/js/163.79e22feb.js"><link rel="prefetch" href="/docs/assets/js/164.d08b3bdb.js"><link rel="prefetch" href="/docs/assets/js/165.ca8f710f.js"><link rel="prefetch" href="/docs/assets/js/166.c89530c7.js"><link rel="prefetch" href="/docs/assets/js/167.ea4c661e.js"><link rel="prefetch" href="/docs/assets/js/168.d13945fd.js"><link rel="prefetch" href="/docs/assets/js/169.7a38638c.js"><link rel="prefetch" href="/docs/assets/js/17.e9925149.js"><link rel="prefetch" href="/docs/assets/js/170.77c93e9e.js"><link rel="prefetch" href="/docs/assets/js/171.e4d3f9db.js"><link rel="prefetch" href="/docs/assets/js/172.49036033.js"><link rel="prefetch" href="/docs/assets/js/173.963dae3f.js"><link rel="prefetch" href="/docs/assets/js/174.8a54ceea.js"><link rel="prefetch" href="/docs/assets/js/175.6616e96a.js"><link rel="prefetch" href="/docs/assets/js/176.7a4d6095.js"><link rel="prefetch" href="/docs/assets/js/177.1e1b666e.js"><link rel="prefetch" href="/docs/assets/js/178.43b36cdf.js"><link rel="prefetch" href="/docs/assets/js/179.c3d7e79f.js"><link rel="prefetch" href="/docs/assets/js/18.4b9ec677.js"><link rel="prefetch" href="/docs/assets/js/180.3eab928b.js"><link rel="prefetch" href="/docs/assets/js/181.f02e6a22.js"><link rel="prefetch" href="/docs/assets/js/182.73d60356.js"><link rel="prefetch" href="/docs/assets/js/183.f6609d08.js"><link rel="prefetch" href="/docs/assets/js/184.41339adf.js"><link rel="prefetch" href="/docs/assets/js/185.1c83d82c.js"><link rel="prefetch" href="/docs/assets/js/186.7547cf79.js"><link rel="prefetch" href="/docs/assets/js/187.aa4cd555.js"><link rel="prefetch" href="/docs/assets/js/188.bc840f88.js"><link rel="prefetch" href="/docs/assets/js/189.fcb1e43c.js"><link rel="prefetch" href="/docs/assets/js/19.b8ce86c6.js"><link rel="prefetch" href="/docs/assets/js/190.be923ad9.js"><link rel="prefetch" href="/docs/assets/js/192.fd858402.js"><link rel="prefetch" href="/docs/assets/js/193.528b30dc.js"><link rel="prefetch" href="/docs/assets/js/194.557a9dd1.js"><link rel="prefetch" href="/docs/assets/js/195.59c8345c.js"><link rel="prefetch" href="/docs/assets/js/196.8bb879a3.js"><link rel="prefetch" href="/docs/assets/js/197.460bc368.js"><link rel="prefetch" href="/docs/assets/js/198.191fc53c.js"><link rel="prefetch" href="/docs/assets/js/199.4b03318b.js"><link rel="prefetch" href="/docs/assets/js/20.774a5c53.js"><link rel="prefetch" href="/docs/assets/js/200.77af3aa8.js"><link rel="prefetch" href="/docs/assets/js/201.8857ca41.js"><link rel="prefetch" href="/docs/assets/js/202.a154aef2.js"><link rel="prefetch" href="/docs/assets/js/203.313383f6.js"><link rel="prefetch" href="/docs/assets/js/204.28fbc6d8.js"><link rel="prefetch" href="/docs/assets/js/205.bd7834c7.js"><link rel="prefetch" href="/docs/assets/js/206.15a3b0e5.js"><link rel="prefetch" href="/docs/assets/js/207.2481aea8.js"><link rel="prefetch" href="/docs/assets/js/208.3a4915fe.js"><link rel="prefetch" href="/docs/assets/js/209.377180a1.js"><link rel="prefetch" href="/docs/assets/js/21.be95e52b.js"><link rel="prefetch" href="/docs/assets/js/210.d42da9bb.js"><link rel="prefetch" href="/docs/assets/js/211.d5188875.js"><link rel="prefetch" href="/docs/assets/js/212.ba739d5d.js"><link rel="prefetch" href="/docs/assets/js/213.15b6b53a.js"><link rel="prefetch" href="/docs/assets/js/214.f31ebebf.js"><link rel="prefetch" href="/docs/assets/js/215.1ecd9ac0.js"><link rel="prefetch" href="/docs/assets/js/216.63a0adc1.js"><link rel="prefetch" href="/docs/assets/js/217.432dcfc6.js"><link rel="prefetch" href="/docs/assets/js/218.c7aa2565.js"><link rel="prefetch" href="/docs/assets/js/219.944103c5.js"><link rel="prefetch" href="/docs/assets/js/22.c3b61cc1.js"><link rel="prefetch" href="/docs/assets/js/220.a5072a8d.js"><link rel="prefetch" href="/docs/assets/js/221.0fd087e9.js"><link rel="prefetch" href="/docs/assets/js/222.0bc31600.js"><link rel="prefetch" href="/docs/assets/js/223.23f0f7c2.js"><link rel="prefetch" href="/docs/assets/js/224.dd13f94d.js"><link rel="prefetch" href="/docs/assets/js/225.e6c3fb11.js"><link rel="prefetch" href="/docs/assets/js/226.57920ffa.js"><link rel="prefetch" href="/docs/assets/js/227.f5a83af0.js"><link rel="prefetch" href="/docs/assets/js/228.af9aafa3.js"><link rel="prefetch" href="/docs/assets/js/229.498a6909.js"><link rel="prefetch" href="/docs/assets/js/23.c5eb2b20.js"><link rel="prefetch" href="/docs/assets/js/230.6ed95fe9.js"><link rel="prefetch" href="/docs/assets/js/231.d83f6856.js"><link rel="prefetch" href="/docs/assets/js/232.bdbe3eee.js"><link rel="prefetch" href="/docs/assets/js/233.f507fa99.js"><link rel="prefetch" href="/docs/assets/js/234.cca05346.js"><link rel="prefetch" href="/docs/assets/js/235.40d89f67.js"><link rel="prefetch" href="/docs/assets/js/236.023fff06.js"><link rel="prefetch" href="/docs/assets/js/237.69fa95f9.js"><link rel="prefetch" href="/docs/assets/js/238.45b4b4e9.js"><link rel="prefetch" href="/docs/assets/js/239.b3a6f8a6.js"><link rel="prefetch" href="/docs/assets/js/24.236aa6e6.js"><link rel="prefetch" href="/docs/assets/js/240.9601d0eb.js"><link rel="prefetch" href="/docs/assets/js/241.77520147.js"><link rel="prefetch" href="/docs/assets/js/242.7d097361.js"><link rel="prefetch" href="/docs/assets/js/243.f02cee9e.js"><link rel="prefetch" href="/docs/assets/js/244.9e5ef1cf.js"><link rel="prefetch" href="/docs/assets/js/245.da86efbd.js"><link rel="prefetch" href="/docs/assets/js/246.d7ae78c2.js"><link rel="prefetch" href="/docs/assets/js/247.c9236fcf.js"><link rel="prefetch" href="/docs/assets/js/248.2c542a39.js"><link rel="prefetch" href="/docs/assets/js/249.4b8f2142.js"><link rel="prefetch" href="/docs/assets/js/25.f1044978.js"><link rel="prefetch" href="/docs/assets/js/26.0ba68b91.js"><link rel="prefetch" href="/docs/assets/js/27.32eb7be6.js"><link rel="prefetch" href="/docs/assets/js/28.73cc592d.js"><link rel="prefetch" href="/docs/assets/js/29.6d5f2780.js"><link rel="prefetch" href="/docs/assets/js/3.f802a52b.js"><link rel="prefetch" href="/docs/assets/js/30.d5c33afe.js"><link rel="prefetch" href="/docs/assets/js/31.1af68d8c.js"><link rel="prefetch" href="/docs/assets/js/32.51872e81.js"><link rel="prefetch" href="/docs/assets/js/33.9bf4bd3a.js"><link rel="prefetch" href="/docs/assets/js/34.fb6b55a7.js"><link rel="prefetch" href="/docs/assets/js/35.f3fa2b99.js"><link rel="prefetch" href="/docs/assets/js/36.88160ef7.js"><link rel="prefetch" href="/docs/assets/js/37.47407043.js"><link rel="prefetch" href="/docs/assets/js/38.8cfc3fa3.js"><link rel="prefetch" href="/docs/assets/js/39.8cea3124.js"><link rel="prefetch" href="/docs/assets/js/4.87a085ff.js"><link rel="prefetch" href="/docs/assets/js/40.0e95e49f.js"><link rel="prefetch" href="/docs/assets/js/41.25f830fa.js"><link rel="prefetch" href="/docs/assets/js/42.6a59dae9.js"><link rel="prefetch" href="/docs/assets/js/43.179a3a4e.js"><link rel="prefetch" href="/docs/assets/js/44.2b670765.js"><link rel="prefetch" href="/docs/assets/js/45.186ee937.js"><link rel="prefetch" href="/docs/assets/js/46.dfa410e7.js"><link rel="prefetch" href="/docs/assets/js/47.382514f2.js"><link rel="prefetch" href="/docs/assets/js/48.9266a51f.js"><link rel="prefetch" href="/docs/assets/js/49.3e1a0b35.js"><link rel="prefetch" href="/docs/assets/js/5.2646bdfb.js"><link rel="prefetch" href="/docs/assets/js/50.34179a71.js"><link rel="prefetch" href="/docs/assets/js/51.41c2b79d.js"><link rel="prefetch" href="/docs/assets/js/52.e64b8700.js"><link rel="prefetch" href="/docs/assets/js/53.e4758561.js"><link rel="prefetch" href="/docs/assets/js/54.9164e8ca.js"><link rel="prefetch" href="/docs/assets/js/55.b1e5e5c7.js"><link rel="prefetch" href="/docs/assets/js/56.cee05449.js"><link rel="prefetch" href="/docs/assets/js/57.c9e94c8b.js"><link rel="prefetch" href="/docs/assets/js/58.24fccd30.js"><link rel="prefetch" href="/docs/assets/js/59.3e17ec1a.js"><link rel="prefetch" href="/docs/assets/js/6.3cc966ae.js"><link rel="prefetch" href="/docs/assets/js/60.0e7218d9.js"><link rel="prefetch" href="/docs/assets/js/61.dcd89abc.js"><link rel="prefetch" href="/docs/assets/js/62.717995a9.js"><link rel="prefetch" href="/docs/assets/js/63.70e463ab.js"><link rel="prefetch" href="/docs/assets/js/64.99697a9d.js"><link rel="prefetch" href="/docs/assets/js/65.5378c5c2.js"><link rel="prefetch" href="/docs/assets/js/66.129c3a72.js"><link rel="prefetch" href="/docs/assets/js/67.af038e2b.js"><link rel="prefetch" href="/docs/assets/js/68.2adbba1b.js"><link rel="prefetch" href="/docs/assets/js/69.38f80734.js"><link rel="prefetch" href="/docs/assets/js/7.eb6b708c.js"><link rel="prefetch" href="/docs/assets/js/70.7ec64cc9.js"><link rel="prefetch" href="/docs/assets/js/71.ad1e09f5.js"><link rel="prefetch" href="/docs/assets/js/72.aaa4b482.js"><link rel="prefetch" href="/docs/assets/js/73.b4cc002f.js"><link rel="prefetch" href="/docs/assets/js/74.4a38e726.js"><link rel="prefetch" href="/docs/assets/js/75.0867bad7.js"><link rel="prefetch" href="/docs/assets/js/76.88852a65.js"><link rel="prefetch" href="/docs/assets/js/77.a4d910a2.js"><link rel="prefetch" href="/docs/assets/js/78.81ecd669.js"><link rel="prefetch" href="/docs/assets/js/79.73eb4944.js"><link rel="prefetch" href="/docs/assets/js/8.b6421d2a.js"><link rel="prefetch" href="/docs/assets/js/80.f90865a3.js"><link rel="prefetch" href="/docs/assets/js/81.d6124305.js"><link rel="prefetch" href="/docs/assets/js/82.b9a0e7c1.js"><link rel="prefetch" href="/docs/assets/js/83.b5335197.js"><link rel="prefetch" href="/docs/assets/js/84.9e2e40c7.js"><link rel="prefetch" href="/docs/assets/js/85.91aa99ac.js"><link rel="prefetch" href="/docs/assets/js/86.8ac58043.js"><link rel="prefetch" href="/docs/assets/js/87.e9397d0e.js"><link rel="prefetch" href="/docs/assets/js/88.d7b44f45.js"><link rel="prefetch" href="/docs/assets/js/89.21bda459.js"><link rel="prefetch" href="/docs/assets/js/9.d2c64cad.js"><link rel="prefetch" href="/docs/assets/js/90.514c7421.js"><link rel="prefetch" href="/docs/assets/js/91.90af5162.js"><link rel="prefetch" href="/docs/assets/js/92.2ef1050d.js"><link rel="prefetch" href="/docs/assets/js/93.6acd4178.js"><link rel="prefetch" href="/docs/assets/js/94.d393ab94.js"><link rel="prefetch" href="/docs/assets/js/95.0a4126a9.js"><link rel="prefetch" href="/docs/assets/js/96.d9074dde.js"><link rel="prefetch" href="/docs/assets/js/97.853ec4e2.js"><link rel="prefetch" href="/docs/assets/js/98.ca2692e1.js"><link rel="prefetch" href="/docs/assets/js/99.dfa79bb1.js">
+    <link rel="stylesheet" href="/docs/assets/css/0.styles.d4eb5ad8.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/docs/" class="home-link router-link-active"><!----> <span class="site-name">计算机基础教程</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/docs/" class="nav-link">
+  机器指令
+</a></div><div class="nav-item"><a href="/docs/software/" class="nav-link router-link-active">
+  软件基础
+</a></div><div class="nav-item"><a href="/docs/coder2hacker/" class="nav-link">
+  白帽黑客
+</a></div><div class="nav-item"><a href="/docs/blockchain/" class="nav-link">
+  区块链
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/docs/" class="nav-link">
+  机器指令
+</a></div><div class="nav-item"><a href="/docs/software/" class="nav-link router-link-active">
+  软件基础
+</a></div><div class="nav-item"><a href="/docs/coder2hacker/" class="nav-link">
+  白帽黑客
+</a></div><div class="nav-item"><a href="/docs/blockchain/" class="nav-link">
+  区块链
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>1.Virtualbox network mode</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/docs/software/network/vm_env_network.html#_1-virtualbox-network-mode" class="sidebar-link">1.Virtualbox network mode</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/software/network/vm_env_network.html#_1-1-nat-network" class="sidebar-link">1.1 NAT Network.</a></li><li class="sidebar-sub-header"><a href="/docs/software/network/vm_env_network.html#_1-2-bridged-networking" class="sidebar-link">1.2 Bridged networking.</a></li><li class="sidebar-sub-header"><a href="/docs/software/network/vm_env_network.html#_1-3-internal-networking" class="sidebar-link">1.3 Internal networking.</a></li><li class="sidebar-sub-header"><a href="/docs/software/network/vm_env_network.html#_1-4-host-only-networking" class="sidebar-link">1.4 Host-only networking.</a></li></ul></li><li><a href="/docs/software/network/vm_env_network.html#_2-build-local-lab-network" class="sidebar-link">2 Build local Lab network</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/software/network/vm_env_network.html#_2-1-linux-configuration" class="sidebar-link">2.1 Linux configuration</a></li><li class="sidebar-sub-header"><a href="/docs/software/network/vm_env_network.html#_2-2-基于network类型构建复杂的环境" class="sidebar-link">2.2 基于network类型构建复杂的环境</a></li></ul></li><li><a href="/docs/software/network/vm_env_network.html#_3-troubleshooting" class="sidebar-link">3 troubleshooting</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/software/network/vm_env_network.html#bridged-mode-not-assign-ip-address-and-route" class="sidebar-link">bridged mode not assign ip address and route</a></li><li class="sidebar-sub-header"><a href="/docs/software/network/vm_env_network.html#can-access-internet-but-cannot-ping" class="sidebar-link">Can access internet but cannot ping</a></li><li class="sidebar-sub-header"><a href="/docs/software/network/vm_env_network.html#eth0-not-found-or-not-configured-simply-restart-vm" class="sidebar-link">eth0 not found or not configured simply restart vm</a></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h2 id="_1-virtualbox-network-mode"><a href="#_1-virtualbox-network-mode" class="header-anchor">#</a> 1.Virtualbox network mode</h2> <p>https://www.virtualbox.org/manual/ch06.html</p> <table><thead><tr><th>Mode</th> <th style="text-align:center;">VM-&gt;Host</th> <th style="text-align:center;">VM&lt;-Host</th> <th style="text-align:center;">VM1&lt;-&gt;VM2</th> <th style="text-align:center;">VM-&gt;Net/LAN</th> <th style="text-align:center;">VM&lt;-Net/LAN</th></tr></thead> <tbody><tr><td>Host-only</td> <td style="text-align:center;">+</td> <td style="text-align:center;">+</td> <td style="text-align:center;">+</td> <td style="text-align:center;">-</td> <td style="text-align:center;">-</td></tr> <tr><td>Internal</td> <td style="text-align:center;">-</td> <td style="text-align:center;">-</td> <td style="text-align:center;">+</td> <td style="text-align:center;">-</td> <td style="text-align:center;">-</td></tr> <tr><td>Bridged</td> <td style="text-align:center;">+</td> <td style="text-align:center;">+</td> <td style="text-align:center;">+</td> <td style="text-align:center;">+</td> <td style="text-align:center;">+</td></tr> <tr><td>NAT</td> <td style="text-align:center;">+</td> <td style="text-align:center;">PortForward</td> <td style="text-align:center;">-</td> <td style="text-align:center;">+</td> <td style="text-align:center;">PortForward</td></tr> <tr><td>NATservice</td> <td style="text-align:center;">+</td> <td style="text-align:center;">PortForward</td> <td style="text-align:center;">+</td> <td style="text-align:center;">+</td> <td style="text-align:center;">PortForward</td></tr></tbody></table> <h3 id="_1-1-nat-network"><a href="#_1-1-nat-network" class="header-anchor">#</a> 1.1 NAT Network.</h3> <p><img src="/docs/docs_image/software/network/vm_nat.png" alt="https://www.cnblogs.com/liugp/p/16410259.html"></p> <p>A NAT network is a type of internal network that allows outbound connections. See Section 6.4, “Network Address Translation Service”.</p> <p>有虚拟路由，所以guest可以直接通过10.0.2.2:<PORT>访问host的服务,b包括vpn服务等
+Port forwarding for NAT:
+https://www.virtualbox.org/manual/ch06.html#natforward</PORT></p> <p><img src="/docs/docs_image/software/network/vm_network01.png" alt=""></p> <p><img src="/docs/docs_image/software/network/vm_network02.png" alt=""> <img src="/docs/docs_image/software/network/vm_network03.png" alt=""></p> <p>netstat -aon | findstr 'PORT'
+tasklist | findstr 'PID'
+tasklist /fi &quot;pid eq 4444&quot;</p> <p>&quot;c:\Program Files\Oracle\VirtualBox\VBoxManage&quot; modifyvm Test_centos7 --natpf1 &quot;guestssh,tcp,,2222,,22&quot;
+But failed on the second rule??? &quot;c:\Program Files\Oracle\VirtualBox\VBoxManage&quot; modifyvm Test_centos7 --natpf2 &quot;guestkafka,tcp,,9092,,9092&quot;, work around: add in VB Network settings
+<img src="/docs/docs_image/software/network/vm_network04.png" alt=""></p> <p>?#No network access for NAT, change dns settings, for centos:</p> <div class="language- extra-class"><pre class="language-text"><code>vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
+	DNS1=8.8.8.8
+	ONBOOT=yes
+</code></pre></div><h3 id="_1-2-bridged-networking"><a href="#_1-2-bridged-networking" class="header-anchor">#</a> 1.2 Bridged networking.</h3> <p><img src="/docs/docs_image/software/network/vm_bridge.png" alt="https://www.cnblogs.com/liugp/p/16410259.html"></p> <p>This is for more advanced networking needs, such as network simulations and running servers in a guest. When enabled, Oracle VM VirtualBox connects to one of your installed network cards and exchanges network packets directly, circumventing your host operating system's network stack.
+<img src="/docs/docs_image/software/network/vm_network05.png" alt=""></p> <h3 id="_1-3-internal-networking"><a href="#_1-3-internal-networking" class="header-anchor">#</a> 1.3 Internal networking.</h3> <p>This can be used to create a different kind of software-based network which is visible to selected virtual machines, but not to applications running on the host or to the outside world.
+<img src="/docs/docs_image/software/network/vm_network06.png" alt=""></p> <h3 id="_1-4-host-only-networking"><a href="#_1-4-host-only-networking" class="header-anchor">#</a> 1.4 Host-only networking.</h3> <p><img src="/docs/docs_image/software/network/vm_hostonly.png" alt="https://www.cnblogs.com/liugp/p/16410259.html">
+This can be used to create a network containing the host and a set of virtual machines, without the need for the host's physical network interface. Instead, a virtual network interface, similar to a loopback interface, is created on the host, providing connectivity among virtual machines and the host.</p> <p><img src="/docs/docs_image/software/network/vm_network07.png" alt=""></p> <p>?#host-only模式下客户机vm无法访问位于host宿主机上面的web服务，比如192.168.207.1:8080
+原因：不像在NAT和bridge模式下有virtual route虚拟路由，host only是直接连接的，所以宿主机访问主机如同访问外网(没有经过虚拟路由)，所以会受到宿主机上面的一些权限限制，比如
+可以看到下图，10.0.2.2就是NAT模式的虚拟路由，所以可以直接通过这个路由访问宿主机host的服务
+<img src="/docs/docs_image/software/network/vm_network08.png" alt=""></p> <p>Ping不通：如果宿主机是win10，文件与打印机共享开启</p> <p>Port telnet不通:如果宿主机是win10，Turn Windows Defender Firewall off</p> <p>Video::NAT, Bridged and Internal Networking
+https://www.youtube.com/watch?v=iEj42l4otNY
+https://www.youtube.com/watch?v=cDF4X7RmV4Q
+https://www.youtube.com/watch?v=VWKZqa2RjpA</p> <h2 id="_2-build-local-lab-network"><a href="#_2-build-local-lab-network" class="header-anchor">#</a> 2 Build local Lab network</h2> <h3 id="_2-1-linux-configuration"><a href="#_2-1-linux-configuration" class="header-anchor">#</a> 2.1 Linux configuration</h3> <p>Golden trace rule:
+https://forums.kali.org/showthread.php?20846-Troubleshooting-Internet-Network-Access</p> <p>Networkmanager configuration
+https://wiki.debian.org/NetworkConfiguration
+Kali network configuration
+The default network configuration relies on DHCP to obtain an IP address, DNS server, and gateway
+https://kali.training/topic/configuring-the-network/
+http://www.solutionsatexperts.com/ip-address-configuration-in-kali-linux/</p> <p>How to configure Network Adapter in Kali Linux using Command Line Interface https://www.youtube.com/watch?v=JL2_fnzCZbE
+Allow-hotplug ?</p> <p>Restart network after change config
+https://www.cyberciti.biz/faq/linux-restart-network-interface/
+reload /etc/resolv.conf
+https://askubuntu.com/questions/224966/how-do-i-get-resolvconf-to-regenerate-resolv-conf-after-i-change-etc-network-in</p> <p>常用命令：</p> <div class="language- extra-class"><pre class="language-text"><code>Ifconfig
+Ip route show
+ip a show eth0
+Route -n
+Ip addr
+Ip route
+
+cat /etc/network/interfaces
+
+echo &quot;iface eth0 inet dhcp&quot; &gt;&gt; /etc/network/interfaces
+/etc/init.d/networking restart
+
+ifdown eth0
+ifup eth0
+dhclient eth0
+Or manually::
+Ifconfig eth0 192.168.1.1 netmask 255.255.255.0 up
+	route add default gw 192.168.0.1 eth0
+	ip route add default via 192.168.0.1 dev eth0
+
+sudo service network-manager restart 
+
+</code></pre></div><h3 id="_2-2-基于network类型构建复杂的环境"><a href="#_2-2-基于network类型构建复杂的环境" class="header-anchor">#</a> 2.2 基于network类型构建复杂的环境</h3> <p>https://www.youtube.com/watch?v=AiWRmMzwwJM
+https://sandilands.info/sgordon/building-internal-network-virtualbox
+https://blog.pythian.com/test-lab-using-virtualbox-nat-networking/
+https://vorkbaard.nl/set-up-a-testlab-in-virtualbox-with-a-virtual-lan/
+'Bridged' and 'Host Only' network settings in Virtualbox https://superuser.com/questions/1352678/bridged-and-host-only-network-settings-in-virtualbox-advice-please</p> <p><img src="/docs/docs_image/software/network/vm_network09.png" alt=""></p> <p>https://askubuntu.com/questions/113604/how-to-run-virtualbox-on-bridged-and-host-only-networks
+http://christophermaier.name/2010/09/01/host-only-networking-with-virtualbox/</p> <p>VirtualBox: two network interfaces (NAT and host-only ones) https://unix.stackexchange.com/questions/37122/virtualbox-two-network-interfaces-nat-and-host-only-ones-in-a-debian-guest-on
+Images
+https://developer.microsoft.com/en-us/microsoft-edge/tools/vms</p> <h2 id="_3-troubleshooting"><a href="#_3-troubleshooting" class="header-anchor">#</a> 3 troubleshooting</h2> <h3 id="bridged-mode-not-assign-ip-address-and-route"><a href="#bridged-mode-not-assign-ip-address-and-route" class="header-anchor">#</a> bridged mode not assign ip address and route</h3> <ul><li>方法一： dhclient eth0
+https://unix.stackexchange.com/questions/174573/dhcp-kali-linux
+Havne’t try this manual method::ip route add default via ip-of-router-on-local-network dev enp0s3 https://superuser.com/questions/1075988/virtualbox-bridged-network-is-unreachable</li></ul> <div class="language- extra-class"><pre class="language-text"><code>less /var/logs/messages 
+Apr  1 03:05:04 kali NetworkManager[431]: &lt;info&gt;  [1554102304.0124] device (eth0): carrier: link connected
+...............
+Apr  1 03:05:05 kali NetworkManager[431]: &lt;info&gt;  [1554102305.3947] manager: NetworkManager state is now CONNECTED_LOCAL
+Apr  1 03:05:05 kali NetworkManager[431]: &lt;info&gt;  [1554102305.4044] device (eth1): Activation: successful, device activated.
+Apr  1 03:05:05 kali NetworkManager[431]: &lt;info&gt;  [1554102305.4072] manager: startup complete
+</code></pre></div><p>dhclient eth0</p> <div class="language- extra-class"><pre class="language-text"><code>Apr  1 03:09:49 kali NetworkManager[431]: &lt;info&gt;  [1554102589.2543] keyfile: add connection /run/NetworkManager/system-connections/eth0.nmconnection (effc3b34-06a5-49dd-886b-d21223855eac,&quot;eth0&quot;)
+Apr  1 03:09:49 kali NetworkManager[431]: &lt;info&gt;  [1554102589.2623] device (eth0): Activation: starting connection 'eth0' (effc3b34-06a5-49dd-886b-d21223855eac)
+.........
+Apr  1 03:09:49 kali NetworkManager[431]: &lt;info&gt;  [1554102589.3036] manager: NetworkManager state is now CONNECTED_GLOBAL
+</code></pre></div><ul><li><p>方法二 设置静态ip（注意ip不要冲突了，不然有各种异常出现）</p> <div class="language- extra-class"><pre class="language-text"><code>宿主机查看当前网络：
+Wireless LAN adapter Wi-Fi:
+
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : Intel(R) Dual Band Wireless-AC 8265
+   Physical Address. . . . . . . . . : 00-28-F8-22-E9-5D
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+   Link-local IPv6 Address . . . . . : fe80::61e4:8e32:fb58:74a4%26(Preferred)
+   IPv4 Address. . . . . . . . . . . : 192.168.0.141(Preferred)
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Lease Obtained. . . . . . . . . . : Tuesday, 17 November 2020 10:59:55 AM
+   Lease Expires . . . . . . . . . . : Tuesday, 24 November 2020 10:59:54 AM
+   Default Gateway . . . . . . . . . : 192.168.0.1
+   DHCP Server . . . . . . . . . . . : 192.168.0.1
+   DHCPv6 IAID . . . . . . . . . . . : 134228216
+   DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-21-C8-05-55-00-28-F8-22-E9-5D
+   DNS Servers . . . . . . . . . . . : 172.17.5.36
+                                       172.17.5.4
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+
+----------------------------------------------------------------------------
+--- for ubuntu:
+----------------------------------------------------------------------------
+默认会出现类似下面的结果,其中 ipv4对应的是enp0s3:avahi的169的地址,
+lyhistory@lyhistory-VirtualBox:~$ ifconfig
+enp0s3: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+        inet6 2404:e801:2001:3955:357e:c623:5742:484a  prefixlen 64  scopeid 0x0&lt;global&gt;
+        inet6 2404:e801:2001:3955:543b:3df2:4b55:43b1  prefixlen 64  scopeid 0x0&lt;global&gt;
+        inet6 fe80::2228:aebf:fda5:523b  prefixlen 64  scopeid 0x20&lt;link&gt;
+        ether 08:00:27:64:46:ce  txqueuelen 1000  (Ethernet)
+        RX packets 7632  bytes 1432852 (1.4 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 7961  bytes 1009450 (1.0 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+enp0s3:avahi: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+        inet 169.254.7.153  netmask 255.255.0.0  broadcast 169.254.255.255
+        ether 08:00:27:64:46:ce  txqueuelen 1000  (Ethernet)
+
+lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 11328  bytes 898386 (898.3 KB)
+      RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 11328  bytes 898386 (898.3 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        
+根据&lt;&lt;Linux.md/网络&gt;&gt;部分的原理,ubuntu 17以上版本都是UI的network manager来控制的，所以直接打开控制面板来设置静态IP和DNS即可
+address 192.168.0.109
+netmask 255.255.255.0
+gateway 192.168.0.1
+DNS: 8.8.8.8
+设置完等一会即可        
+----------------------------------------------------------------------------
+--- for 其他debain:
+----------------------------------------------------------------------------
+配置静态ip
+/etc/network/interfaces：
+#auto eth0
+#iface eth0 inet dhcp
+auto eth0
+iface eth0 inet static
+address 192.168.0.109
+netmask 255.255.255.0
+gateway 192.168.0.1
+
+sudo ifdown eth0
+sudo ifup eth0
+or
+sudo /etc/init.d/networking restart
+
+如果还是无法上网（上面172.17.5.36是某ISP提供的，貌似虚拟机无法用）：
+/etc/resolv.conf
+nameserver 8.8.8.8
+
+sudo systemctl restart systemd-resolved.service
+
+解决后看下当前路由情况：
+route -n
+
+#Verify new IP settings:
+ip a s eth0
+#Verify new routing settings:
+ip r
+#Verify DNS servers settings:
+cat /etc/resolv.conf
+#Verify the internet connectivity:
+ping -c 4 google.com
+
+root@kali:/home/lyhistory# ip -4 addr
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    inet 192.168.0.109/24 brd 192.168.0.255 scope global eth0
+       valid_lft forever preferred_lft forever
+
+root@kali:/home/lyhistory# ip route
+default via 192.168.0.1 dev eth0 onlink 
+192.168.0.0/24 dev eth0 proto kernel scope link src 192.168.0.109 
+----------------------------------------------------------------------------
+--- for centos
+----------------------------------------------------------------------------
+vim /etc/sysconfig/network-scripts/ifcfg-eth0
+HWADDR=00:08:A2:0A:BA:B8
+TYPE=Ethernet
+#BOOTPROTO=dhcp
+BOOTPROTO=none	
+# Server IP #
+IPADDR=192.168.0.110
+# Subnet #
+PREFIX=24
+# Set default gateway IP #
+GATEWAY=192.168.0.1
+# Set dns servers #
+DNS1=8.8.8.8
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+# Disable ipv6 #
+IPV6INIT=no
+NAME=eth0
+# This is system specific and can be created using 'uuidgen eth0' command #
+UUID=41171a6f-bce1-44de-8a6e-cf5e782f8bd6
+DEVICE=eth0
+ONBOOT=yes
+
+systemctl restart network
+
+
+</code></pre></div></li></ul> <h3 id="can-access-internet-but-cannot-ping"><a href="#can-access-internet-but-cannot-ping" class="header-anchor">#</a> Can access internet but cannot ping</h3> <p>Firewall setting
+Outbound port
+https://askubuntu.com/questions/608194/have-internet-connection-but-cant-ping-external-sites
+https://networkengineering.stackexchange.com/questions/37896/ping-port-number</p> <h3 id="eth0-not-found-or-not-configured-simply-restart-vm"><a href="#eth0-not-found-or-not-configured-simply-restart-vm" class="header-anchor">#</a> eth0 not found or not configured simply restart vm</h3> <p>https://askubuntu.com/questions/1060980/eth0-not-configured-but-it-was-working-earlier</p> <div id="disqus_thread"></div></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/docs/assets/js/app.e34ffad9.js" defer></script><script src="/docs/assets/js/2.19baf9f4.js" defer></script><script src="/docs/assets/js/191.78f7a84e.js" defer></script><script src="/docs/assets/js/11.0d0890d4.js" defer></script>
+  </body>
+</html>
