@@ -1783,6 +1783,48 @@ systemctl start gitlab-runsvdir
 gitlab-ctl reconfigure
 ```
 
+#### 升级例子
+gitlab 13.8.8 升级到 14.3.6
+```
+1.
+sudo gitlab-rails runner -e production 'puts Gitlab::BackgroundMigration.remaining'
+rpm -Uvh gitlab-ee-13.8.8-ce.0.el7.x86_64.rpm
+gitlab-rake gitlab:env:info
+gitlab-rake gitlab:check | grep no
+gitlab-rake db:migrate:status | grep down
+sudo gitlab-ctl restart
+check dashboard
+
+2.
+sudo gitlab-rails runner -e production 'puts Gitlab::BackgroundMigration.remaining'
+rpm -Uvh gitlab-ee-13.12.15-ce.0.el7.x86_64.rpm
+gitlab-rake gitlab:env:info
+gitlab-rake gitlab:check | grep no
+gitlab-rake db:migrate:status | grep down
+sudo gitlab-ctl restart
+check dashboard
+
+3.
+sudo gitlab-rails runner -e production 'puts Gitlab::BackgroundMigration.remaining'
+rpm -Uvh gitlab-ee-14.0.12-ce.0.el7.x86_64.rpm
+gitlab-rake gitlab:env:info
+gitlab-rake gitlab:check | grep no
+gitlab-rake db:migrate:status | grep down
+sudo gitlab-ctl restart
+check dashboard
+
+4.
+sudo gitlab-rails runner -e production 'puts Gitlab::BackgroundMigration.remaining'
+sudo gitlab-rails runner -e production 'puts Gitlab::Database::BackgroundMigration::BatchedMigration.queued.count'
+sudo gitlab-rails runner -e production 'puts Gitlab::Database::BackgroundMigration::BatchedMigration.failed.count'
+rpm -Uvh gitlab-ee-14.3.6-ce.0.el7.x86_64.rpm
+gitlab-rake gitlab:env:info
+gitlab-rake gitlab:check | grep no
+gitlab-rake db:migrate:status | grep down
+sudo gitlab-ctl restart
+check dashboard
+
+```
 
 
 ## 5. CICD

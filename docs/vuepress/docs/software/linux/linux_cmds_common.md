@@ -172,6 +172,13 @@ DO NOT do this: find / -delete -name .DS_Store
 
 ### GREP/zgrep
 
+-a, --text
+              Process a binary file as if it were text; this is
+              equivalent to the --binary-files=text option.
+-i, --ignore-case
+              Ignore case distinctions in patterns and input data, so
+              that characters that differ only in case match each other.
+
 https://www.cyberciti.biz/faq/howto-use-grep-command-in-linux-unix/
 
 ```
@@ -186,6 +193,8 @@ grep -H -r "create_db.sh" ~ | cut -d: -f1 | sort -u
 
 grep -H -r "/apps/lib" ~ | cut -d: -f1 | sort -u
 
+
+cat Syslog.log | iconv -f GBK -t UTF-8|grep -ai "SEARCH TEXT"
 
 ```
 

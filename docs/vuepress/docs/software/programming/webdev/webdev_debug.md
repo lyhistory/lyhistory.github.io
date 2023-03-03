@@ -1139,7 +1139,9 @@ location /test/wsPublicMessage {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
-               
+
+
+curl -k https://xxx/test/wsPublicMessage -vv -H "Sec-WebSocket-Version: 13" -H "Connection: Upgrade" -H "Upgrade: websocket" -H "Sec-WebSocket-Key: csoXmf407963ymLeVKMqDw=="
 ```
 发现从公网访问，到达nginx的时候 http_upgrade为空，
 但是直接修改本地hosts文件域名指向源站服务器则没有问题，说明问题出在中间的CDN或高防等代理或者Web应用防火墙

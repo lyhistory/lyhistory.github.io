@@ -281,6 +281,9 @@ fi
 
 exit $L_RETURN_FLAG
 
+注意：
+如果是使用云上的DMS，zookeeper是不开放的，所以查询节点可以换用：
+kafka/bin/kafka-broker-api-versions.sh --bootstrap-server "xxxx" | awk '/id/{print $1}'	
 ------------------------------------------------------------------------
 --- Restricting the Kafka User  as a security precaution. 
 ------------------------------------------------------------------------
