@@ -10,14 +10,13 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 本文对象是明辨是非的研究者，请不要做中国法律规定范围之外的事情，
 由于特殊的国情，我国屏蔽了一些海外的网络服务，作为IT从业者为了工作学习不得不通过一些技术手段访问海外服务，这种手段俗称：翻:)(:墙、梯子、科学上网，本文纯粹从技术角度出发普及计算机理论基础，比如IP TCP UDP协议，ping telent tracert 软路由等工具，正向代理反向代理，流量加密中转等等，
 
-通常有两种常用方式：
+通常有两种常用方式([具体原理参考这里](/docs/software/network/network)，小白请忽略这里，继续看下面)：
 + VPN:)(:翻墙
 + Proxy server代理上网
 
-[具体原理参考](/docs/software/network/network.html)
-
 + 推荐小白直接使用下面的现成产品即可；
-+ 对于有基本知识或勇于尝试的同学们推荐机场：[传送前去机场](/docs/software/network/vps)
++ 对于有基本知识或勇于尝试的同学们可以选择下面的自建方式；
++ 对于公司团队，可以两者都搞：购买现成产品+自建，互为备用；
 
 ## 1. VPN:)(:翻墙
 
@@ -146,7 +145,7 @@ http Proxy=>Socks=>Socks5=>Shadowsocks，Shadowsocks-R=>VMESS
 #### 2.2.2 搭建步骤
 
 + [shadowsocketR搭梯子](/docs/software/network/proxy_shadowsockr)
-+ [V2ray搭梯子](/docs/software/network/proxy_v2ray)
++ [V2ray搭梯子](/docs/software/network/proxy_v2ray)（推荐）
 + [trojan搭梯子](/docs/software/network/proxy_trojan)
 + more to explore
 

@@ -70,10 +70,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/buildingblock/logging">logging</a></li>
 		<li><a href="/docs/software/buildingblock/mybatis">玩转mybatis</a></li> 
 		<li><a href="/docs/software/buildingblock/disruptor">disruptor</a></li> 
-		<!--
-		<li><a href="/docs/software/buildingblock/druid">druid</a></li> 
-		-->
-		
+		<!--<li><a href="/docs/software/buildingblock/druid">druid</a></li>-->
 	</ul>
 	<p>-------------------------</p>
 	<h3>数据库</h3>

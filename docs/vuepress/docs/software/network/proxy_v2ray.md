@@ -8,9 +8,13 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 ## 基本安装
 
-server: V2ray-core
-client: v2rayN
-V2ray Linux客户端V2rayA
+服务器端: V2ray-core
+
+Windows客户端: v2rayN
+
+Linux客户端：V2rayA
+
+安卓客户端： V2rayNG
 
 ### 官方(不推荐小白，需要自行配置)：
 
