@@ -711,6 +711,15 @@ https://brightdata.com/blog/leadership/socks5-proxy-vs-http-proxy
 VPNs are Virtual Private Servers that encrypt all of a users’ web activity and device IP addresses. Typically, they come in the form of either an app or a browser extension.
 ![VPN](/docs/docs_image/software/network/vpn.jpg)
 
+VPN如何工作：
+1) The vpn client establishes a connection to the server. 
+2) Both ends verify what they are. 
+3) Then the client and the server  exchange what are called “public keys” – they’re like one-way equations that allow you to encrypt data, but not decrypt it. 
+4) The client takes the server’s public key and uses it to make your data unreadable to ISPs, hackers, and other malicious actors.
+5) The data travels to the server, which uses its own private key to make that data usable.
+6) The server sends the decrypted data to the website or service you wanted to reach. The server also puts its own IP address (like an online street address) on the data, so your online destination thinks you’re connecting from the server’s location – very handy when bypassing geo-blocking. 
+7) When something is sent to you, the server grabs it, uses the client’s public key to encrypt it, and sends it your way for the client to decrypt. 
+
 VPN协议：PPTP，L2TP，OpenVPN，IPSec。其中L2TP和PPTP作为最老牌的vpn，是工作在OSI七层模型的数据链路层
 
 A Proxy server, on the other hand, is a computer that stands between the user and their server that hides only their device IP address, not all of their web activity. It also works on one website or app, not several.
@@ -718,28 +727,20 @@ A Proxy server, on the other hand, is a computer that stands between the user an
 
 代理协议及工具：Shadowsocks，Shadowsocks-R ，Socks5，VMess，VLESS，Trojann，V2Ray，Xray，Clash
 
-##### Connect to VPN through Proxy Server
-[example: Overview of the BIG-IP APM Edge Client Web Proxy for Windows](https://support.f5.com/csp/article/K36727588)
-```
-Here is an example of a basic PAC file script:
+##### VPN over Proxy Server
 
-function FindProxyForURL(url, host) {
- // If the hostname matches, send direct to the destination.
-     if (dnsDomainIs(host, "f5.com") ||
-         shExpMatch(host, "(*.example.com|example.ca)"))
-         return "DIRECT";
-   
- // All other traffic forwards to the upstream web/forward proxy server
-     return "PROXY myproxy.domain.com:8080";
- }
+场景：
+allow the administrator to configure protection, control and filtering of outbound web traffic when the VPN tunnel is connected;
+layering security:
+    Proxy servers protect you from malicious websites - access out.
+    VPN protects you from malicious intruders - access in.
 
-In this example, find the HTTP host the user typed; if the host is f5.com or it contains *.example.com or example.ca,  do not proxy these two hosts.   For all other traffic,  send the traffic to "myproxy.domain.com on port 8080"
-```
+[Example: ](#example-vpnproxy服务器从私人电脑在任何地方访问办公网络及外网)
 
+[Overview of the BIG-IP APM Edge Client Web Proxy for Windows](https://support.f5.com/csp/article/K36727588)
+[Layering network security with VPN proxy together](https://openvpn.net/solutions/use-cases/vpn-proxy/)
 [How DNS lookups work when using an HTTP proxy (or not) in IE](https://serverfault.com/questions/169816/how-dns-lookups-work-when-using-an-http-proxy-or-not-in-ie)
-
 [How to connect to VPN through Proxy Server](https://superuser.com/questions/842109/how-to-connect-to-vpn-through-proxy-server)
-
 [Proxy Settings Not Applied to VPN Connection](https://social.technet.microsoft.com/Forums/en-US/40475834-c6fa-4c6a-8881-50b82859e8fd/proxy-settings-not-applied-to-vpn-connection?forum=win10itpronetworking)
 
 ## 2.Packet Sniffer
@@ -1388,6 +1389,128 @@ leaf access switch
 一套配置是指一个BB+一个FW+一个DC，BB通过防火墙连接DC,DC再连接access layer，access layer连接服务器；
 两个datacenter各自有两套配置，两个datacenter的两套配置各自通过一条黑色物理电缆连接，一条一个运营商，
 然后可以看到逻辑上蓝色和黑色是分开的，但物理上是用黑色同一条线，逻辑上是通过协议来区分的，协议就是在通信的header里面加多一点信息来区分BB和DC
+
+### example: VPN+Proxy服务器（从私人电脑在任何地方访问办公网络及外网）
+
+例如：
+Remote Access VPN（加密访问流量，从而可以在任何地方安全访问办公网络，如使用checkpoint vpn，设置自定义DNS服务器）+ 代理服务器 （split traffic 有些流量走内网，有些走外网，并且代理服务器内设置有防火墙规则可以对访问进行限制以及记录）
+
+用户电脑安装 vpn client并设置 系统代理 windows system proxy => pac script
+
+pac script:
+规则大概就是，dns解析（这里是自定义的dns服务器，不是公共的）出来的如果是内网ip则直接访问，否则（是外网）则需要走Proxy服务器
+```
+function NextFindProxyForURL(url, host) {
+    // If the requested website is hosted within the internal network, send direct.
+    if (isPlainHostName(host) ||
+        shExpMatch(host, "*.local") ||
+        isInNet(dnsResolve(host), "192.168.0.0",  "255.255.0.0") ||
+        isInNet(dnsResolve(host), "x.x.x.x", "255.255.255.255") ||
+        isInNet(host, "x.x.x.x", "255.255.255.255")
+        return "DIRECT";
+
+	if (dnsDomainIs(host, "example.com") || 
+              dnsDomainIs(host,"www.example.com"))
+        return "DIRECT";
+
+    if (isInNet(myIpAddress(), "x.x.x.0", "255.255.252.0")){
+        return "PROXY x.x.x.x:8080";
+	}
+
+    // DEFAULT RULE: All other traffic, use below proxies, in fail-over order.
+      return "PROXY x.x.x.x:8080";
+ }
+
+
+function FindProxyForURL (url, host)
+{
+    var resolvedIP ;
+
+    if (isResolvable(host))
+        resolvedIP = dnsResolve(host);
+    else
+        return NextFindProxyForURL(url, host);
+
+
+	 if (isInNet(resolvedIP, "x.x.x.x", "255.255.255.255") 	||
+		isInNet(resolvedIP, "x.x.x.x", "255.255.255.255") 	||
+		(resolvedIP== "127.0.0.1")	||
+		(host=="127.0.0.1")	||
+		(url=="127.0.0.1"))
+		return "DIRECT";
+	else
+		return NextFindProxyForURL(url, host);
+}
+
+```
+
+Checkpoint VPN =》Advanced proxy settings (默认detect proxy from IE settings，不过我好像设置了no proxy也没有什么作用？)
+
+首先VPN会增加一条路由，比如：
+
+192.168.1.101 是本地无线路由的ip，电脑通过vpn客户端成功连接vpn则会获取到vpn分配的内网ip 172.16.10.101，增加路由（临时路由？）从 192.168.1.101 到 vpn的网关172.26.1.100，
+这样所有流量就会走vpn了
+```
+route print
+Active Routes:
+Network Destination        Netmask          Gateway       Interface  Metric
+          0.0.0.0          0.0.0.0      192.168.1.100      192.168.1.101     35
+          192.168.1.101  255.255.255.255    172.26.1.100    172.16.10.101      1
+```
+
+
+员工电脑访问网站A，浏览器首先是走vpn配置的dns服务器（ipconfig /all 查看）进行域名解析，拿到ip后对比pac规则，如果是内网ip直接访问；
+如果是外网，比如通过chrome访问https://www.google.com/search?q=test，
+
+浏览器检测到 pac proxy：
+```
+t=39031 [st=0] +HTTP_STREAM_JOB_CONTROLLER  [dt=6]
+                --> is_preconnect = false
+                --> privacy_mode = "disabled"
+                --> url = "https://www.google.com/search?q=test&rlz=1C1GCEU_enSG1047SG1047&oq=test&aqs=chrome..69i57j0i67l3j0i67i433j69i60j69i65j69i60.1924j0j1&sourceid=chrome&ie=UTF-8"
+t=39031 [st=0]    HTTP_STREAM_JOB_CONTROLLER_BOUND
+                  --> source_dependency = 53302 (URL_REQUEST)
+t=39031 [st=0]   +PROXY_RESOLUTION_SERVICE  [dt=5]
+t=39032 [st=1]     +HOST_RESOLVER_MANAGER_REQUEST  [dt=0]
+                    --> allow_cached_response = true
+                    --> dns_query_type = 1
+                    --> host = "www.google.com:0"
+                    --> is_speculative = false
+                    --> network_anonymization_key = "https://google.com null same_site"
+                    --> secure_dns_policy = 0
+t=39032 [st=1]        HOST_RESOLVER_MANAGER_CACHE_HIT
+                      --> results = {"aliases":[],"expiration":"13322549710063767","ip_endpoints":[{"endpoint_address":"142.251.10.103","endpoint_port":0},{"endpoint_address":"142.251.10.105","endpoint_port":0},{"endpoint_address":"142.251.10.99","endpoint_port":0},{"endpoint_address":"142.251.10.106","endpoint_port":0},{"endpoint_address":"142.251.10.147","endpoint_port":0},{"endpoint_address":"142.251.10.104","endpoint_port":0}]}
+t=39032 [st=1]        HOST_RESOLVER_MANAGER_CACHE_HIT
+                      --> results = {"aliases":[],"expiration":"13322549710063767","ip_endpoints":[{"endpoint_address":"142.251.10.103","endpoint_port":0},{"endpoint_address":"142.251.10.105","endpoint_port":0},{"endpoint_address":"142.251.10.99","endpoint_port":0},{"endpoint_address":"142.251.10.106","endpoint_port":0},{"endpoint_address":"142.251.10.147","endpoint_port":0},{"endpoint_address":"142.251.10.104","endpoint_port":0}]}
+t=39032 [st=1]     -HOST_RESOLVER_MANAGER_REQUEST
+t=39036 [st=5]      PROXY_RESOLUTION_SERVICE_RESOLVED_PROXY_LIST
+                    --> pac_string = "PROXY X.X.X.X:8080"
+t=39036 [st=5]   -PROXY_RESOLUTION_SERVICE
+t=39036 [st=5]    HTTP_STREAM_JOB_CONTROLLER_PROXY_SERVER_RESOLVED
+                  --> proxy_server = "PROXY X.X.X.X:8080"
+t=39036 [st=5]    HTTP_STREAM_REQUEST_STARTED_JOB
+                  --> source_dependency = 53305 (HTTP_STREAM_JOB)
+t=39037 [st=6] -HTTP_STREAM_JOB_CONTROLLER
+53305: HTTP_STREAM_JOB
+https://www.google.com/
+Start Time: 2023-03-06 12:15:01.539
+```
+该http请求中携带有proxy，vpn client网关将该http请求加密然后发送到vpn server，vpn server解密后拆包后发现proxy就将请求继续转发到proxy server，然后代理服务器经过过滤审查放行之后再去到最终的目的地，所以最终外网看到的员工的公网地址实际是代理服务器的公网地址；
+
+如果此时使用wireshark抓包则会发现包的 destination 就是代理服务器的IP，即上面的 PROXY X.X.X.X:8080 的 X.X.X.X
+
+注意：
++ 如果 nslookup google.com 肯定显示的是google的公网地址，因为dns resolve on UDP 不是一个browser traffic
++ nslookup myip.opendns.com resolver1.opendns.com 查询到的myip是本地网络的公网IP，而不是VPN或者代理服务器的公网IP，原因应该也是 dns resolve on UDP 不是一个browser traffic
+
+同理，当我们访问whatsmyip.com来查看当前公网IP的时候，显示的公网IP也将是代理服务器的IP，如果只用了VPN没用代理服务器，则是显示VPN服务器的IP,
+如果显示的是自己本地网络的公网IP，则说明访问路径存在问题，比如：
+[vpn is working but ip address not changing](https://superuser.com/questions/700287/vpn-is-working-but-ip-address-not-changing)
+
+再比如之前使用用友的财务web版本的时候，设置了ip白名单（放了公司代理服务器的公网IP），但是某个同事在家中访问的时候被拦截，原因就是pac文件失效，造成流量没有去代理服务器而是直接从本地网卡出去到用友的网站；
+
+### example: VPN 分流 split/selective traffic
+https://superuser.com/questions/12022/how-can-i-make-the-windows-vpn-route-selective-traffic-by-destination-network
 
 todo:
 

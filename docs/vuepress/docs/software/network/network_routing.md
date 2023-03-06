@@ -22,3 +22,8 @@ Open Shortest Path First (OSPF) is a link-state routing protocol that was develo
 路由环路
 
 在维护路由表信息的时候，如果在拓扑发生改变后，网络收敛缓慢产生了不协调或者矛盾的路由选择条目，就会发生路由环路的问题，这种条件下，路由器对无法到达的网络路由不予理睬，导致用户的数据包不停在网络上循环发送，最终造成网络资源的严重浪费。
+
+## 路由表 网关
+
+理解Windows中的路由表和默认网关
+https://developer.aliyun.com/article/447528
