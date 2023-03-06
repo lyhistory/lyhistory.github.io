@@ -1,0 +1,312 @@
+## Math 
+标点符号 http://language.chinadaily.com.cn/trans/2010-09/08/content_11276232.htm
+calculus ˈkælkjələs [医] 结石，石，积石，牙垢; [数]运算，演算，微积分（学）;
+curriculum kəˈrɪkjələm 全部课程，课程
+均匀分布 evenly/uniform distribution
+convolutional 卷积码，褶积码
+orthogonal ɔ:'θɒgənl [数] 直角的; 矩形的; 直交的; 互相垂直的;
+taxonomy (a strict hierarchical categorization) vs folksonomy
+curvature 曲率; 弯曲; 曲度; 弯曲部分;
+polygon
+triangulation
+coordinate axis system quadrant https://en.wikipedia.org/wiki/Quadrant_(plane_geometry)
+quadratic function （parabolic） axis of symmetry(对称中轴线） vertex（顶点，抛物线顶点）
+Chart: Radar Bar Pie Polar Area Doughnut Line
+bracket
+double braces
+regularly proportional 成正比例  inversely proportional 反比
+denominator 分母
+delimiter 分节符
+oval rhombus diamond rectangle
+对角线方向
+Describe Data graph: sharply gradually , fluctuate, peaks(峰值）valley, decline
+http://forum.wordreference.com/threads/terms-to-describe-a-graph.2403210/
+ 
+proportion dimension angular radial invariant variance divergence convergence
+diameter daɪˈæmɪtə(r) 直径
+multiplicity vs cardinality  http://the-difference-between.com/cardinality/multiplicity
+notation
+oval shape
+granularity 粒度 fine-grained 细粒度
+ratio
+accumulation
+permutation and combination 排列组合
+Normal distribution  bell curve
+
+## Software engineer 
+This is a pretty straightforward collapse operation where we make the elements arrange themselves in a vertical fashion as opposed to horizontally.
+I’ll only depict the operative element. Any markup within it that is not immediately relevant will be truncated [it’s still there but I just won’t show it] and replaced with the HTML comment with caption ‘MARKUP TRUNCATED’ [I’ll also do the same for Javascript code with caption ‘CODE TRUNCATED’].
+Now this task is a real doozy. We’re going to need to enable two different navigational systems, one for the original website, and the other for the mobile website. However, they have to consume the same markup space.
+ 
+userland code https://en.wikipedia.org/wiki/User_space
+concurrent vs parallel
+https://softwareengineering.stackexchange.com/questions/190719/the-difference-between-concurrent-and-parallel-execution
+scope creep
+screen scraping or screen crawling
+We’re planning to make some changes to our Terms of Service to stop companies from scraping profile information from multiple websites and spamming users.
+http://meta.stackexchange.com/questions/277369/a-terms-of-service-update-restricting-companies-that-scrape-your-profile-informa
+extract (get retrieve)
+Using web scraper tools to extract flight information from the ** website
+populate (fill)
+strikethrough
+
+punctuation
+delimiter 分界符
+wildcard 通配符
+metric Velocity
+vertical/horizontal, portrait/landscape portrait shape, landscape orientation,
+The terms portrait and landscape refer to different orientations of the paper -- whether it is oriented vertically or horizontally. A page with portrait orientation, typical for letters, memos, and other text documents, is taller than it is wide.
+Columns may be circular or polygonal in cross section, and are generally at least four times more taller than they are wide
+partition line / break line 分割线 dotted line ...  dashed line ----
+compart 分隔若干份 compartment (different with cell ?)
+1.a separate section or part of a structure or container.  synonyms:  section, part, partition
+2.an area in which something can be considered in isolation from other things.  synonyms:   domain, field, sphere, realm, area, department, sector, section, division, part
+Attributes should be shown in their respective compartments in the class symbols.
+increment decrement cumulative
+preliminary version
+Tree Stucture
+ontology
+stick figure 火柴人
+You must first of all obtain a list of all the sub-areas contained within specified area(including all their sub-areas, and so on for all levels of containment)
+Although the links between objects may be duplicated, introducing some redundancy, it is useful if traversal of the hierarchy has to take place in both direction, i.e. if it necessary to be able to go from a child to its parents as well as from a parent to its children. Possible problem is loss of consistency(i.e. A links to B but not vice versa), due to programming/maintenance errors.
+反转 inversion
+不可逆 irrevocably sealed
+隔离 绝缘 insulate
+Database interactions should be encapsulated within private methods, insulating the consumer from the details of the database and its associated tables.
+A factory is the location of a concrete class in the code at which objects are constructed. The intent in employing the pattern is to insulate the creation of objects from their usage and to create families of related objects without having to depend on their concrete classes.
+隔离 孤立isolate
+The Repository pattern helps to isolate both the service and the list access code. Isolation makes it easier to treat them as independent services and to replace them with mock objects in unit tests.
+segregate congregate
+shrink & zoom & magnification（放大率） & resolution（分辨率）
+shrink :
+1. a. To become or appear to become smaller: The shadows shrank as the sun rose higher. The mountains shrank in the distance as we drove away.
+b. To become smaller from exposure to heat, moisture, or cold: The sweater shrank in the wash.
+2. To become reduced in amount or value; dwindle: His savings quickly shrank. The market for that product has been shrinking.
+3. To move back or away, especially in fear: "She shrank back against the wall and flattened her palms against it" (Pearl S. Buck).
+4. To show reluctance; hesitate: We should not shrink from making such a sacrifice.
+shrink volume 缩小容量
+compression 压缩
+zoom out photog films television to decrease rapidly the magnification of the image of a distant object by means of a zoom lens
+deduct subtract( subtractor / subtraction)
+tunnel pipeline
+emerge&arise&surface
+It is too much to ask that future unspecified requirements would somehow be found in the system, but the system should be constructed such that when new requirements do emerge, they can implemented straightforwardly without incurring nugatory work.
+loophole & Vulnerability
+loophole is more related with computer tech. Vulnerability is more about human character.
+ substitute / replace with
+In MySQL, physically, a schema is synonymous with a database. You can substitute the keyword SCHEMA instead of DATABASE, in MySQL SQL syntax, for example using CREATE SCHEMA instead of CREATE DATABASE.
+surrogate 代理人(代表 representative)
+coordinator
+originator
+caretaker
+stakeholder
+initiator
+time-scale / time line/schedule/milestone
+开始 着手 commence
+once they commence business, the developers will have time, during the subsequent six months, to complete all the planned functionality and make enhancements to optimize system performance and usability.
+委托 指派任务 delegate assign appoint (charge) commission task   designate 指定 选派 标明
+you have recently been appointed the technical lead on a new project.
+They have charged me with the task of achieving the time-scales,but also ensuring that a production quality system is developed.
+多余的 redundant duplicated
+小心 be cautious/aware/be noted
+sequence consequence subsequence
+underlying underpin underneath
+Channels provide the underlying communication between queue managers.
+mystery puzzle magic secret
+barrier obstacle
+anticipate foresee expect await
+prior previous http://grammarist.com/usage/prior-previous/
+prior to
+in advance Tickets can be purchased for departures from tomorrow and up to 1 year in advance.
+in chronological order   Alphabetical
+Dummy vs. Stub vs. Spy vs. Fake vs. Mock
+workaround vs solution 
+appraise/appraisal assess/assessment evaluate/evaluation
+estimate underestimate
+incognito anonymous private
+模糊 不清 vague fuzz blur
+枯燥 tedious boring dry
+容易错的/狡猾的 tricky
+易变的需求 volatile implementation
+监视监督 surveillance
+演绎 推理 deduce
+reasonable rational
+hassle 困难 麻烦
+granular
+impending
+prompt
+lame
+preparatory
+assume suppose <premise>
+Do we accept the Repository decoupling premise?
+/* NUS */
+handed-in 上交 hand out hands on
+downstream
+visualizer
+breakout room
+transposed on to plain paper
+concrete and abstract
+nontrivial
+recommended, not mandated
+soft/hard copy
+identify domain objects
+indicate team number
+breakout room
+compensate for
+occasionally reload
+If a User's machine crashes,the network suffers an outage or a machine is turned off unexpectedly, the project
+file might require repair to compensate for the sudden inconsistency; a repair facility is provided(.....) to
+carry out this task
+back up regularly
+objects embody the runtime dynamisms
+object-oriented system is a system which is made out of dynamic objects,which delivers a solution through
+collaborations.
+Designing and developing an OO System involves Abstraction - the process of defining objects.
+Real world objects are transformed into an automated world comprising the software equivalents of the real world objects.
+Extracting relevant characteristics of real world objects into software objects.
+OO Misconceptions
+Many still think OO means programming in OO programming languages,but programming issues are only a part
+in relation to larger issues of OO analysis,design and management.
+Software engineering involves more things than programming languages,it involves planning, requirements
+gathering, analysis, design, implementation, testing, deployment, maintenance etc.
+Needs for development methodology and good understanding of fundamental concepts of OO,involves achieving
+best practices through leveraging on the fundamental concepts of OO.
+descendent ancestor
+Polymorphism is the most powerful OO feature, the ability to manipulate different objects that have a common set of operations which can be
+enforced via an interface or a superclass.
+Supports plug-and-run benefits, allowing plugging of objects of different classes as long as that the objects
+conform to the interface required,allow a more flexible reuse of code by plugging any object that meets the
+minimum requirement for the job.
+Unified Modelling Language
+UML support visual modelling during software development process.
+Convergence through process frameworks.
+adequacy
+caveat warning
+captures the topology of a system's hardware.
+Activate the toolbox: Under diagram, select Toolbox to bring up the toolbox, relevant to the active diagram.
+Docking the toolbox: You could overlay the toolbox over the project browser window so that they are all docked nicely.
+perspective vs aspect https://sg.answers.yahoo.com/question/index?qid=20120325094717AAHh6PU
+The requirements specification documents just hit your desk.
+Use Cases provide the central thread(binding) throughout analysis, design and testing.
+building block
+standalone cluster
+ 
+### high frequency Software Engineering words
+outsourcing subcontract  architecture guideline artifacts
+Artifacts and Deliverables
+inception elaboration construction transition
+utilize facilitate perspective perform activities
+verification and validation assessment and certification
+reflect impact
+feasibility acceptability suitability
+maintainability extensibility reusability Increased-Productivity enhanced-quality clarity elgance
+rigidity fragility immobility
+effectiveness & efficiency
+authorization & authentication
+nature/characteristics
+dummy data
+annotate
+semantic
+resolve（解析）
+interoperate
+intermediate
+interrelated ~relevant irrelevant
+interchangeable
+pre-populate
+propagate : product quantity is changed but not propagated
+incorporated into the system
+commission
+dominate
+establish a substantial user base
+compartment
+refactoring restructure
+multiplicity cardinality
+facilitate
+replicate/reproduce（重现/重复）
+duplicate
+Geographical areas may overlap and intersect liberally.
+legacy obsolete vs deprecate
+Vecotr and HashTable are legacy classes corresponding to ArrayList and HashMap
+arbitrary ordering natural ordering
+comparison criteria
+clash / conflict
+The codes for the three patterns are stored in separate folders with appropriate namespaces so that there would not be clashes in entity names.
+identical / same
+You may use the other menu items to run and test the other patterns which also perform identical function.
+rules violation validation
+sketch a diagram
+state the name
+identity the views
+depict : Singapore's multi-racial diversity is also depicted in the coin design. The obverse design features the Singapore Coat of Arms.
+tabulate search results
+pertain
+optimal capacity
+low frequency words:
+volatile
+transient
+prevail / exsits
+duplex pattern suitable for situations where workflow like situation prevails.
+scope
+comply with
+conform to
+mitigate oversight
+prescribe
+scaffolding
+streamline restructure centralize rationalize
+orchestrate and streamline the business processes
+forces/considerations/constraints
+
+### complicated expression
+
+D3.js is a JavaScript library that is widely used in data visualisation and animation. The power of d3.js and its flexibility, comes at the expense of its steep learning curve. There are some libraries built on top of it that provide numerous off-the-shelf charts in order to make the users’ life easier, however, learning to work with d3.js is essential sometimes, especially when you need to create sophisticated and custom visualisations.
+If you are not familiar with d3.js, you can read this introduction. In brief, just like jQuery and other DOM manipulation frameworks, it allows you to dynamically manipulate the properties and attributes of your HTML document elements. Nevertheless, it doesn’t stop here. Its power comes from two additional functionality. It can also create and manipulate SVG elements, and it can also bind the DOM or SVG elements to arrays of data, so that any changes in that data will be reflected on those elements they are binded to. There are numerous SVG shapes, such as circles, rectangles, paths and texts. Those shapes serve as the building blocks of your visualisations. For example, a bar chart is composed of multiple rectangles. while a scatter plot is made of circles scattered in different parts of you drawing area. You may also want to see this interactive tutorial about creating and manipulation SVG elements, as well as binding them to data arrays. - See more at: http://schoolofdata.org/2013/10/01/pie-and-donut-charts-in-d3-js
+----------------------------------
+The system shall be capable of performing optimally when the following are simultaneously using the system performing typical tasks.
+Spiral Model(unit-1 prototype)
+The model reflects the underlying concept that each cycle involves a progression that addresses the same sequence of steps for each portion of the product and for each of its levels of elaboration.
+WorkFlow: State Machine https://msdn.microsoft.com/en-us/library/gg983472(v=vs.110).aspx
+Drag an Assign activity from the Primitives section of the Toolbox and drop onto the Exit section of the state.
+Type Turns into the To box and Turns + 1 into the Enter a C# expression or Enter a VB expression box.
+Return to the overall state machine view in the workflow designer by clicking StateMachine in the breadcrumb display at the top of the workflow designer.
+Drag a FinalState activity from the State Machine section of the Toolbox, hover it over the Enter Guess state, and drop it onto the triangle that appears to the right of the Enter Guess state so that a transition is created between Enter Guess and FinalState.
+The default name of the transition is T2. Click the transition in the workflow designer to select it, and set its DisplayName to Guess Correct. Then click and select the FinalState, and drag it to the right so that there is room for the full transition name to be displayed without overlaying either of the two states. This will make it easier to complete the remaining steps in the tutorial.
+Double-click the newly renamed Guess Correct transition in the workflow designer to expand it.
+Drag a ReadInt activity from the NumberGuessWorkflowActivities section of the Toolbox and drop it in the Trigger section of the transition.
+In the Properties Window for the ReadInt activity, type "EnterGuess" including the quotes into the BookmarkName property value box, and type Guess into the Result property value box
+Type the following expression into the Guess Correct transition’s Condition property value box.
+instruction of create work flow https://lyhistory.com/archives/808.html
+tutorial of mulesoft https://lyhistory.com/archives/1187.html
+instruction of create
+instruction of 'Insert a section break' in word https://support.office.com/en-US/article/Insert-a-section-break-EEF20FD8-E38C-4BA6-A027-E503BDF8375C
+help of github https://help.github.com/articles/fork-a-repo/
+[/accordion_item]
+denote indicate imply implicate annotate state
+evaluate assess appraise https://www.researchgate.net/post/What_is_the_difference_between_assessment_appraisal_and_evaluation
+Pascal/camel casing
+These are relatively standard IT system requirements.
+cut-over period 切换期间
+intelligent error reporting
+data capture - the action or process of gathering data, especially from an automatic device, control system, or sensor.
+data dump - a large amount of data transferred from one system or location to another.
+data replication - is the frequent electronic copying data from a database in one computer or server to a database in another so that all users share the same level of information. The result is a distributed database in which users can access data relevant to their tasks without interfering with the work of others.
+dummy data - In Informatics, dummy data is benign information that does not contain any useful data, but serves to reserve space where real data is nominally present. Dummy data can be used as a placeholder for both testing and operational purposes.
+ The Manual system is slow to operate and has resulted in either inadequate stocks of furniture being available to meet demand, or excessive stocks of furniture being built up.
+You can use an app to show your own customized, glanceable display of signal strength
+
+performant
+ 
+data silo   data vault data warehouse
+ 
+epoch[ˈi:pɒk 时期; 纪元; 世; 新时代;
+epoch iteration https://zhidao.baidu.com/question/201951328759691645.html
+
+ 
+
+Man accidentally 'deletes his entire company' with one line of bad code
+http://www.independent.co.uk/life-style/gadgets-and-tech/news/man-accidentally-deletes-his-entire-company-with-one-line-of-bad-code-a6984256.html
+Why do Chinese websites look so busy?
+https://econsultancy.com/blog/67466-why-do-chinese-websites-look-so-busy
+Drones
+http://www.channelnewsasia.com/news/business/singapore/airbus-unit-caas-to-trial/2522846.html
+man-accidentally-deletes-his-entire-company-with-one-line-of-bad-code www.independent.co.uk/life-style/gadgets-and-tech/news/man-accidentally-deletes-his-entire-company-with-one-line-of-bad-code-a6984256.html
+2.1 million WeChat “false rumors” deleted daily https://walkthechat.com/centership-of-wechat-rumors-on-wechat-2-1million-rumors-deleated-daily/
