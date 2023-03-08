@@ -221,7 +221,16 @@ PG: GET DIAGNOSTICS integer_var = ROW_COUNT;
 
 #### Data Format
 
+**varchar to numeric**
 ```
+'12.01'::numeric
+```
+**Date**
+```
+规范数据：
+SELECT to_char('20230308 1:1:1.1'::timestamp, 'yyyymmdd HH24:MI:SS:MS'); =》 20230308 01:01:01:100
+但是注意：  SELECT to_timestamp('20230308 1:1:1.1', 'yyyymmdd HH24:MI:SS:MS'); =》2023-03-08 01:01:01.100 带- 并不是我们想要的格式
+
 select timestamp'20211227';
 select to_timestamp('2021-12-24 05:00:00','yyyy-mm-dd hh24:mi:ss');
 select cast(current_date-interval '4 day'+interval '5 hour' as text)::timestamp
@@ -597,6 +606,8 @@ ALTER TABLE measurement DETACH PARTITION measurement_y2006m02;
 PARTITIONING-USING-INHERITANCE:
 ALTER TABLE measurement_y2006m02 NO INHERIT measurement;
 ```
+
+注意，如果创建分区比如 measurement_y2006m02 之前插入的数据是在 父表 measurement里面，查询可以使用 ONLY 关键字
 
 https://www.postgresql.org/docs/current/plpgsql-trigger.html
 

@@ -1,4 +1,6 @@
 wireshark
+capture network:
+You can run Get-NetAdapter -IncludeHidden in Windows PowerShell and match up the Name property. The InterfaceDescription property is what will be displayed in the Device Manager.
 
 How to Decrypt SSL with Wireshark
 

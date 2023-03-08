@@ -466,6 +466,14 @@ http://ip.yqie.com/tips/f94e7b8826754ce0a9fbe7c8a94f8b97.htm
 https://www.obj-sys.com/asn1tutorial/node1.html
 
 ### 概念对比
+#### 路由 VS NAT
+本质区别：数据包通过路由可以从一个网络到另一个网络，他是通过数据包的目的IP和源IP实现的，当一个数据包进入路由器是，路由器会根据她的目标ip和源ip在路由表中查找，并将数据包原封不动的传向路由器的某个端口。而数据包通过NAT，NAT将会根据规则将数据包中的源ip和目标IP改变，并在NAT机器上做改变记录。
+
+简而言之，路由不改变数据包包头信息，NAT则改变;
+
+表面区别:路由打通的两个网段地位是公平的，既都是公网或都是私网，理解起来比较简单，因为路由不改变包头信息，所以如果用路由连接公网和私网的话，目的地址为私网(192.168.1.2)的数据包在公网上找不到归宿。其实路由表里面也没有相关的路由信息。
+
+NAT打通的可以是两个公平的网络，也可以是一个内网和一个外网。
 #### 路由器 网关 网卡 网桥
 + 网关 网桥 网卡
 网关是邮电局,所有的信息必须通过这里的打包、封箱、寻址，才能发出去与收进来；网卡是设备，也就是邮电局邮筒，你家的信箱；而网桥是邮递员，但他只负责一个镇里面(局域网)不负责广域网
@@ -1129,6 +1137,8 @@ $ while :;do echo -e "GET / HTTP/1.1\nhost: $YOUR_VIRTUAL_HOSTNAME\n\n";sleep 1;
 
 ​	参考私人笔记《hacker_theory/tools_metasploit》以及类似的vm实验环境配置；
 
+[configure proxy setting through dhcp option 252](https://serverfault.com/questions/707586/is-it-possible-to-configure-proxy-setting-through-dhcp) 
+
 #### **DNS协议 **
 ​	DNS测试工具windows:nslookup, linux: dig 
 
@@ -1502,12 +1512,36 @@ Start Time: 2023-03-06 12:15:01.539
 注意：
 + 如果 nslookup google.com 肯定显示的是google的公网地址，因为dns resolve on UDP 不是一个browser traffic
 + nslookup myip.opendns.com resolver1.opendns.com 查询到的myip是本地网络的公网IP，而不是VPN或者代理服务器的公网IP，原因应该也是 dns resolve on UDP 不是一个browser traffic
++ 如果使用curl查询当前ip，会发现默认是绕过了代理服务器，暴露的是真实的本地网络的公网ip，如果使用vpn则暴露的是VPN公网IP，因为如果使用proxy需要特别指定给curl --proxy "proxy server"
+    ```
+    不信你试试不加proxy
+    curl 'https://zh-hans.ipshu.com/my_info' \
+    -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' \
+    -H 'Accept-Language: en-US,en;q=0.9' \
+    -H 'Connection: keep-alive' \
+    -H 'Referer: https://www.google.com/' \
+    -H 'Sec-Fetch-Dest: document' \
+    -H 'Sec-Fetch-Mode: navigate' \
+    -H 'Sec-Fetch-Site: cross-site' \
+    -H 'Sec-Fetch-User: ?1' \
+    -H 'Upgrade-Insecure-Requests: 1' \
+    -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36' \
+    -H 'sec-ch-ua: "Not?A_Brand";v="8", "Chromium";v="108", "Google Chrome";v="108"' \
+    -H 'sec-ch-ua-mobile: ?0' \
+    -H 'sec-ch-ua-platform: "Windows"' \
+    --compressed
+    ```
++ 跟curl相反，浏览器默认是使用系统proxy，绕过代理服务器需要设置no proxy
++ 不管是curl还是设置了no proxy的浏览器，暴露的是真实的本地网络的公网ip，如果使用vpn则暴露的是VPN公网IP，不过有一种情况，比如通过DHCP option 252 配置了pac proxy，然后使用比如checkpoint vpn配置了自定义的DHCP，那么no proxy的状态下会同时绕过VPN，然后直接暴露的是本地网络的公网ip
 
 同理，当我们访问whatsmyip.com来查看当前公网IP的时候，显示的公网IP也将是代理服务器的IP，如果只用了VPN没用代理服务器，则是显示VPN服务器的IP,
 如果显示的是自己本地网络的公网IP，则说明访问路径存在问题，比如：
 [vpn is working but ip address not changing](https://superuser.com/questions/700287/vpn-is-working-but-ip-address-not-changing)
 
-再比如之前使用用友的财务web版本的时候，设置了ip白名单（放了公司代理服务器的公网IP），但是某个同事在家中访问的时候被拦截，原因就是pac文件失效，造成流量没有去代理服务器而是直接从本地网卡出去到用友的网站；
+再比如之前使用用友的财务web版本的时候，设置了ip白名单（放了公司代理服务器的公网IP），但是某个同事在家中访问的时候被拦截，原因有些复杂：
+安全上使用了 checkpoint VPN配置的自定义的DHCP，然后通过DHCP option 252 配置了pac proxy, 所以连接VPN自动获取IP的同时会拉取pac文件，然后vpn客户端也会根据pac的配置连接代理服务器，但是因为一些原因连接不上，造成电脑虽然连上了VPN客户端，但是VPN并没有工作，所以浏览器访问的时候还是走了本地网络而不是VPN，从而用友的网站检测到的是用户自己的家庭网络公网IP;
+但是有个疑问：浏览器默认不是会用系统proxy吗，即使VPN失效，应该依然走proxy呀，这个我也不好说，不过可能的情况是，正常情况下是vpn client将http请求加密后送到vpn服务器，然后vpn服务器解密后送到代理服务器，可能用户本地直连proxy服务器也是不通的，所以也就没走代理服务器了；
+佐证：看到网上中英文社区都有人提到，在代理失效后浏览器无法上网，办法就是在 LAN settings 中选用自动检测，而刚好该用户电脑配置的也是自动检测的pac脚本，所以代理失效（连不上）浏览器会自动直连上网
 
 ### example: VPN 分流 split/selective traffic
 https://superuser.com/questions/12022/how-can-i-make-the-windows-vpn-route-selective-traffic-by-destination-network
