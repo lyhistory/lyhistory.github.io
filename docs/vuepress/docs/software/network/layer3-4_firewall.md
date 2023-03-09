@@ -4,6 +4,8 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
+A firewall generally works at layer 3 and 4 of the OSI model. Layer 3 is the Network Layer where IP works and Layer 4 is the Transport Layer, where TCP and UDP function. Many firewalls today have advanced up the OSI layers and can even understand Layer 7 – the Application Layer.
+
 inbound
 outbound
 

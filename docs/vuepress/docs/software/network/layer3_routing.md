@@ -1,3 +1,5 @@
+
+
 Routing is the process of selecting a path for traffic in a network or between or across multiple networks. Broadly, routing is performed in many types of networks, including circuit-switched networks, such as the public switched telephone network (PSTN), and computer networks, such as the Internet.
 
 In packet switching networks, routing is the higher-level decision making that directs network packets from their source toward their destination through intermediate network nodes by specific packet forwarding mechanisms. Packet forwarding is the transit of network packets from one network interface to another. Intermediate nodes are typically network hardware devices such as:
@@ -12,6 +14,8 @@ The routing process usually directs forwarding on the basis of routing tables. R
 Routing, in a narrower sense of the term, often refers to IP routing and is contrasted with bridging. IP routing assumes that network addresses are structured and that similar addresses imply proximity within the network. Structured addresses allow a single routing table entry to represent the route to a group of devices. In large networks, structured addressing (routing, in the narrow sense) outperforms unstructured addressing (bridging). Routing has become the dominant form of addressing on the Internet. Bridging is still widely used within local area networks.
 
 ## 路由表 routing table
+
+计算机和路由器既有ARP表，也有路由表
 
 windows路由表详解
 https://mp.weixin.qq.com/s/Dep37CyOd0Szr_fzjQFOkA
