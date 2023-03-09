@@ -2332,6 +2332,9 @@ convertible debt 可换债务;
 pacifically www.urbandictionary.com/define.php?term=pacifically
 min-entropy 最小熵
 trifecta traɪ'fektə n. 赌马时，押中某一场前三名的赛马，排名序完全押中; [例句]What would achieving this kind of trifecta really mean? 一举连下三城，究竟意味着什么？
+in the wild:
+Part of the use of the slang term “in the wild,” which was popularized by the HBO TV series "Silicon Valley," relies upon an analogy to the natural world. In nature, people look for wildlife and plants in the wild, where they are beyond any human monitoring or supervision.
+
 ## Latin
 De facto is a Latin phrase that means in fact (literally by or from fact) in the sense of "in practice but not necessarily ordained by law" or "in practice or actuality, but not officially established", as opposed to de jure.
  

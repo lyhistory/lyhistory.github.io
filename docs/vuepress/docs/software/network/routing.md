@@ -19,9 +19,20 @@ https://mp.weixin.qq.com/s/Dep37CyOd0Szr_fzjQFOkA
 理解Windows中的路由表和默认网关
 https://developer.aliyun.com/article/447528
 
-Example: VPN 改变路由
-0.0.0.0/1 covers 0.0.0.0 – 127.255.255.255
-127.0.0.0/1 covers 128.0.0.1 – 255.255.255.255
+**Example: VPN 改变路由**
+```
+===========================================================================
+
+IPv4 Route Table
+===========================================================================
+Active Routes:
+Network Destination        Netmask          Gateway       Interface  Metric
+          0.0.0.0          0.0.0.0      192.168.5.1     192.168.5.24     50
+          0.0.0.0        128.0.0.0      100.64.38.1      100.64.38.3      6
+		128.0.0.0        128.0.0.0      100.64.38.1      100.64.38.3      6
+```
+0.0.0.0/128.0.0.0 covers 0.0.0.0 – 127.255.255.255
+128.0.0.0/128.0.0.0 covers 128.0.0.1 – 255.255.255.255
 
 The reason this works is because when it comes to routing, a more specific route is always preferred over a more general route. And 0.0.0.0/0.0.0.0 (the default gateway) is as general as it gets. But if we insert the above two routes, the fact they are more specific means one of them will always be chosen before 0.0.0.0/0.0.0.0 since those two routes still cover the entire IP spectrum (0.0.0.0 thru 255.255.255.255).
 
