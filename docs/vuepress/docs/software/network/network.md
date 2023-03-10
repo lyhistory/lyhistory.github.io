@@ -9,8 +9,11 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 参考 [局域网技术与组网工程 第二版]
 计算机网络是节点和链路的集合，可以为两个或多个特定节点建立连接，以在这些节点之间进行通信：
 
-+ 按网络拓扑结构分类
+## 导读
++ 按网络物理拓扑结构分类
 网络拓扑结构是指网络中节点（设备）和链路（连接网络设备的信道）的几何形状，常见：总线型、星型、环型、树型、网型和混合型
++ 按网络逻辑拓扑结构分类
+网络结构经历了二层网络架构、三层网络架构以及最近兴起的大二层网络架构。
 + 按网络的覆盖范围分类
 局域网(LAN - Local Area Network) 城域网(MAN - Metropolitan Area Network) 广域网(WAN - Wide Area Network) 和 因特网(Internet)
 
@@ -47,11 +50,13 @@ OSI七层是抽象的模型，而TCP/IP四层或五层是比较具体的协议�
 + Layer 4: Transport
 	TCP协议与UDP协议
 + Layer 3: Network/Internet
-	IP协议、ICMP协议、RIP，OSPF，BGP，IGMP
+	IP协议、ICMP协议、RIP，OSPF，BGP，IGMP,VXLAN
 + Layer 2: Data Link
-	SLIP，CSLIP，PPP，ARP，RARP，MTU
+	SLIP，CSLIP，PPP，ARP，RARP，MTU,VLAN
 + Layer 1: Physical	
 	ISO2110，IEEE802。IEEE802.2
+
+OSI七层网络模型中：物理层，数据链路层和网络层是低三层网络，其余四层是高三层网络，其中二层网络指的就是数据链路层，三层网络指的就是网络层
 
 注意：websocket是完整的应用层协议，所以不会访问raw tcp packets，但是常用的socket是可以的，因为它是基于应用层和传输层的抽象，并不是一个协议
 
@@ -295,6 +300,8 @@ Arpspoof https://www.youtube.com/watch?v=8SIP36Fym7U
 设备：
 + 路由器: 路由器是连接两个或多个网络的硬件设备，在网络间起网关的作用，是读取每一个数据包中的地址然后决定如何传送的专用智能性的网络设备。它能够理解不同的协议，例如某个局域网使用的以太网协议，因特网使用的TCP/IP协议。这样，路由器可以分析各种不同类型网络传来的数据包的目的地址，把非TCP/IP网络的地址转换成TCP/IP地址，或者反之；再根据选定的路由算法把各数据包按最佳路线传送到指定位置。所以路由器可以把非TCP/ IP网络连接到因特网上。
 
+在数据链路层，物理信号以帧为单位进行组织，而每帧信号都需要一个目标地址和一个源地址，该地址基本上使用的是网卡MAC地址，在一层工作的主要是集线器和交换机，集线器会将所有帧信号投放到各个端口，因此连接端口的主机会收到很多没有意义的数据帧，这将造成集线器和主机之间信道冲突剧烈，因此集线器一般情况下使用较少，而交换机具有MAC地址学习记忆功能，能够准确的将数据帧投放到指定端口，从而大大地提高了数据传输效率；而在L2层，数据只能在一个子网间进行交换，如果要跨子网传输数据，则需要借助L3层的路径规划功能，也就是路由器的工作原理；
+
 [网络层概念太多搞不清？这里一次性给你做好总结](https://bbs.huaweicloud.com/blogs/341734)
 
 layer3是路由器router（ip网段寻址）
@@ -465,545 +472,15 @@ http://ip.yqie.com/tips/f94e7b8826754ce0a9fbe7c8a94f8b97.htm
 
 https://www.obj-sys.com/asn1tutorial/node1.html
 
-### 概念对比
-#### 路由 VS NAT
-本质区别：数据包通过路由可以从一个网络到另一个网络，他是通过数据包的目的IP和源IP实现的，当一个数据包进入路由器是，路由器会根据她的目标ip和源ip在路由表中查找，并将数据包原封不动的传向路由器的某个端口。而数据包通过NAT，NAT将会根据规则将数据包中的源ip和目标IP改变，并在NAT机器上做改变记录。
+## 2. 协议详解
 
-简而言之，路由不改变数据包包头信息，NAT则改变;
-
-表面区别:路由打通的两个网段地位是公平的，既都是公网或都是私网，理解起来比较简单，因为路由不改变包头信息，所以如果用路由连接公网和私网的话，目的地址为私网(192.168.1.2)的数据包在公网上找不到归宿。其实路由表里面也没有相关的路由信息。
-
-NAT打通的可以是两个公平的网络，也可以是一个内网和一个外网。
-#### 路由器 网关 网卡 网桥
-+ 网关 网桥 网卡
-网关是邮电局,所有的信息必须通过这里的打包、封箱、寻址，才能发出去与收进来；网卡是设备，也就是邮电局邮筒，你家的信箱；而网桥是邮递员，但他只负责一个镇里面(局域网)不负责广域网
-
-网桥你可以理解为少口交换机，他们都能转发MAC地址，工作在前两层（物理层和数据链路层），只能分析MAC地址不能解析IP地址，只不过一般的网桥没有交换机插口多，是早期的网络产品，现在基本已经淘汰。路由器更好理解了，他能工作在前三层(物理层，数据链路层和网络层），一般只工作在第三层，顾名思义，他能“路由”网络层里的重要东西，就是IP地址，举个例子，两台主机如果IP地址在同一网段，比如192.168.1.1和192.168.1.2，它们之间通讯只要有个网桥或交换机就行了，甚至什么设备不用直接一个网线连就行(现在的操作系统都很智能，不像以前的95，98），但是如果他们工作在不同网段，像172.16.50.1和192.168.1.1，明显IP不同类，这是要通讯就得需要一个路由，帮助他们选择路径，select path(选择路径)在中文意思里就叫路由，能完成这个工作的设备叫路由器，当然你光有设备还不行，你的设置它，就是规定它如何选择路径，这是你就得给他一个网关地址，告诉它如果机器A要访问B,通讯IP地址不同类，就让A把数据包给网关地址，让网关来处理，而网关就是路由器的IP地址，说白了就是给路由器，让它来处理，替主机A来找到主机B
-
-+ 网卡和路由器
-要说网卡和路由器的区别，他们存在着很大的区别，唯一的连接就是它们之间的那根网线。网卡工作在物理层，路由器工作在网络层，网卡是用来连上路由的，就像手机与基站的区别，网卡是你你电脑上面的，通过网卡你才能和路由相连，路由是用来连上外网的，只有连上外网你才能上网。。电脑(网卡)-路由-上网。一个是接收器，一个是发射器。网卡是安装在电脑里面的!算是电脑连上网络的最基础层吧!有了网卡你就可以连上网路由器是连接网卡和网卡之间,就是电脑和电脑的那个工具!有可路由器你就可以建个局域网和多台机用一个帐号上网！所以说网卡是地基,路由器就是连接网卡的桥梁!
-
-+ 网关和路由器
-顾名思义，网关（Gateway）就是一个网络连接到另一个网络的“关口”。        
-按照不同的分类标准，网关也有很多种。TCP/IP协议里的网关是最常用的，在这里我们所讲的“网关”均指TCP/IP协议下的网关。 
-那么网关到底是什么呢？网关实质上是一个网络通向其他网络的IP地址。比如有网络A和网络B，网络A的IP地址范围为“192.168.1.1~192. 168.1.254”，子网掩码为255.255.255.0；网络B的IP地址范围为“192.168.2.1~192.168.2.254”，子网掩码为255.255.255.0。在没有路由器的情况下，两个网络之间是不能进行TCP/IP通信的，即使是两个网络连接在同一台交换机（或集线器）上，TCP/IP协议也会根据子网掩码（255.255.255.0）判定两个网络中的主机处在不同的网络里。而要实现这两个网络之间的通信，则必须通过网关。如果网络A中的主机发现数据包的目的主机不在本地网络中，就把数据包转发给它自己的网关，再由网关转发给网络B的网关，网络B的网关再转发给网络B的某个主机。网络B向网络A转发数据包的过程也是如此。
-所以说，只有设置好网关的IP地址，TCP/IP协议才能实现不同网络之间的相互通信。那么这个IP地址是哪台机器的IP地址呢？网关的IP地址是具有路由功能的设备的IP地址，具有路由功能的设备有路由器、启用了路由协议的服务器（实质上相当于一台路由器）、代理服务器（也相当于一台路由器）。     
-路由器（Router）是一种负责寻径的网络设备，它在互连网络中从多条路径中寻找通讯量最少的一条网络路径提供给用户通信。路由器用于连接多个逻辑上分开的网络。对用户提供最佳的通信路径，路由器利用路由表为数据传输选择路径，路由表包含网络地址以及各地址之间距离的清单，路由器利用路由表查找数据包从当前位置到目的地址的正确路径。路由器使用最少时间算法或最优路径算法来调整信息传递的路径，如果某一网络路径发生故障或堵塞，路由器可选择另一条路径，以保证信息的正常传输。路由器可进行数据格式的转换，成为不同协议之间网络互连的必要设备。     
-路由器使用寻径协议来获得网络信息，采用基于“寻径矩阵”的寻径算法和准则来选择最优路径。按照OSI参考模型，路由器是一个网络层系统。路由器分为单协议路由器和多协议路由器。     
-比如如果给你一个IP地址为116.24.143.126,子网掩码255.255.255.224,也就是在这段地址中有32个地址,其中30个可用,去掉网关,还有29个可分配.地址是从116.24.143.96-127,第一个可用的IP是97,最后一个是126,这个例子里,你拿126做网关了,所以从97至125这29个地址是可被你分配的. 同理.116.24.143.126,掩码255.255.255.0,那你就有253个地址可被你分配使用.也就是1-125,127-254. 116.24.143.166,掩码是255.255.255.128,就是有125个地址可被你分配使用.即129-165,167-254.  每段地址有多少可用,不是看IP的最后一位数,而是看子网掩码
-
-#### 三层 四层交换？
-三层交换机就是具有部分路由器功能的交换机，工作在OSI网络标准模型的第三层：网络层。 三层交换机的最重要目的是加快大型局域网内部的数据交换，所具有的路由功能也是为这目的服务的，能够做到一次路由，多次转发。 对于数据包转发等规律性的过程由硬件高速实现，而像路由信息更新、路由表维护、路由计算、路由确定等功能，由软件实现。
-[三层交换机与路由器傻傻分不清楚](https://zhuanlan.zhihu.com/p/64455461)
-
-显然，第二层交换机和第三层交换机都是基于端口地址的端到端的交换过程，虽然这种基于MAC地址和IP地址的交换机技术，能够极大地提高各节点之间的数据传输率，但却无法根据端口主机的应用需求来自主确定或动态限制端口的交换过程和数据流量，即缺乏第四层智能应用交换需求。第四层交换机不仅可以完成端到端交换，还能根据端口主机的应用特点，确定或限制它的交换流量。
-简单地说，第四层交换机是基于传输层数据包的交换过程的，是一类基于TCP/IP协议应用层的用户应用交换需求的新型局域网交换机。第四层交换机支持TCP/UDP第四层以下的所有协议，可识别至少80个字节的数据包包头长度，可根据TCP/UDP端口号来区分数据包的应用类型，从而实现应用层的访问控制和服务质量保证。所以，与其说第四层交换机是硬件网络设备，还不如说它是软件网络管理系统。也就是说，第四层交换机是一类以软件技术为主，以硬件技术为辅的网络管理交换设备。
-[到底什么是“四层/七层”交换技术](https://cloud.tencent.com/developer/article/1047558)
-
-#### 二层广播 三层IP协议广播/组播 四层UDP协议广播/组播 
-TCP可以广播吗？
-答一 不可以：
-[Can I use broadcast or multicast for TCP?](https://stackoverflow.com/questions/21266008/can-i-use-broadcast-or-multicast-for-tcp)
-No, you can't. TCP is a protocol for communication between exactly two endpoints. Compared to UDP it features reliable transport, that means, that packets get not only send, but it is expected that the peer acknowledges the receipt of the data and that data will be retransmitted if the acknowledgment is missing. And because Broadcast and Multicast only send but never receive data, the reliability of TCP cannot be implemented on top of these protocols.
-
-答二 “可以”(It does not implement "real" broadcasting, it just implements a subscribe and publish scenario with many subscribers and on publisher. )：
-Now why TCP broadcasting is necessary and even multicasting. Well, suppose you created a WebSocket server or any simple plain TCP server and millions of clients are connected to a single channel for like live streaming of a channel going on and people connected to that channels are writing comments now web-browser does not support UDP yet, WebRTC is based on UDP but is a caller callee protocol. So we will talk about browser connected to a WebSocket server and pushing messages concurrently and the messages need to be shown back to the clients in the UI of other clients who are writing comments or whatever in that case what server does is it creates a hashmap of the array and put all clients socket object inside the array and can map the array to a hashmap using a key as channel name and whenever a message is received it iterates over the array and send the message to all socket that is in the array. 
-https://sudeepdasgupta.medium.com/broadcasting-and-multicasting-millions-of-clients-using-tcp-5794d784829a
-
-总结：
-TCP is generally unicast that means the server needs to send the response to each client individually whereas UDP has multicast and broadcast support. Multicast means server transmits data to a group and client connected to the same group gets the data. 
-虽然前面有人可以实现所谓TCP的广播，实际上并不是真正的广播而是在代码层面通过遍历仍然是一个个的单独向clients发送消息，所以要理解“广播”在不同的场景下的含义
-
-上面网络层介绍了三种IP地址：单播地址，广播地址，多播地址。对于这些通讯方式的理解是：单播地址是一对一的通讯，广播是一对多的通讯，多播是一对多的通讯。多播是对一个特定的通讯主体集合的通讯。广播与多播仅仅应用于UDP协议。单播的典型方式是TCP协议。
-
-在交换以太网上运行TCP/IP环境下：
-二层广播是在数据链路层的广播，它 的广播范围是二层交换机连接的所有端口；二层广播不能通过路由器。
-三层广播就是在网络层的广播，它的范围是同一IP子网内的设备，子网广播也不能通过路由器。
-第三层的数据必须通过第二层的封装再发送，所以三层广播必然通过二层广播来实现。
-设想在同一台二层交换机上连接2个ip子网的设备，所有的设备都可以接收到二层广播，但三层广播只对本子网设备有效，非本子网的设备也会接收到广播包，但会被丢弃。
-安装一个sniffer，抓个广播包，
-
-路由器默认是不转发UDP广播包的，这样可以净化内网环境。但是某些特殊场合，需要使用udp广播，最常见的是DHCP服务，因为给每个网段都架设DHCP服务器，效率太低。怎么办呢？
-cisco有ip广播转发的解决方案：DHCP中继代理和UDP广播转发。
-
-广播帧属于二层并不会跨越三层，所以为了解决广播风暴，可以使用三层设备隔离广播域，减小广播域范围。比如使用路由器来隔离广播域，由于路由器是三层设备，对数据的转发容易形成瓶颈，所以一般我们使用VLAN来隔离广播域。
-
-[组播 VLAN](https://support.huawei.com/enterprise/zh/doc/EDOC1100169967/3ed5e570)
-
-案例：交易系统UDP广播 https://zhuanlan.zhihu.com/p/607346470
-华为deh跨AZ子网内广播
-
-#### 二层 三层网络 VLAN=》VXLAN=>云服务 VPC
-[走近数据中心大二层网络](https://bbs.huaweicloud.com/blogs/219820)
-[单播、多播、广播、组播、泛播、冲突域、广播域、VLAN概念汇总](https://bbs.huaweicloud.com/blogs/307508)
-OSI七层网络模型中：
-物理层，数据链路层和网络层是低三层网络，其余四层是高三层网络，其中二层网络指的就是数据链路层，三层网络指的就是网络层
-
-在数据链路层，物理信号以帧为单位进行组织，而每帧信号都需要一个目标地址和一个源地址，该地址基本上使用的是网卡MAC地址，在一层工作的主要是集线器和交换机，集线器会将所有帧信号投放到各个端口，因此连接端口的主机会收到很多没有意义的数据帧，这将造成集线器和主机之间信道冲突剧烈，因此集线器一般情况下使用较少，而交换机具有MAC地址学习记忆功能，能够准确的将数据帧投放到指定端口，从而大大地提高了数据传输效率；而在L2层，数据只能在一个子网间进行交换，如果要跨子网传输数据，则需要借助L3层的路径规划功能，也就是路由器的工作原理；
-
-假设现有如下网络拓扑图，ABCD四台主机属于10.0.0.0子网，网关指向路由器1的10.0.0.1，EFGH四台主机属于10.0.1.0子网，网关指向路由器2的10.0.1.1；
-![](https://upload-images.jianshu.io/upload_images/12699780-a1492123d12cad19.png?imageMogr2/auto-orient/strip|imageView2/2/w/875/format/webp)
-ref: https://blog.csdn.net/cj2580/article/details/80107037
-
-
-https://www.anquanke.com/post/id/87158
-https://www.sdnlab.com/20510.html
-
-+ VLAN Virtual local Area Network:
-	the computers, servers and other network devices are logically connected regardless of their physical location,
-	VLANs can logically create several virtual networks to separate the network broadcast traffic, one of the main reason of creating VLAN is for traffic management because as a local area network grows and more network devices are added, the frequency of the broadcasts will also increase and the network will get heavily congested with data, but by creating VLANs which divided up the network into smaller broadcast domains, it will help alleviate the broadcast traffic.
-	VLAN identifiers 12bits=4094 VLANs
-	https://www.youtube.com/watch?v=jC6MJTh9fRE
-+ VXLAN:
-	Virtual extensible Local Area Network, at its most basic level VXLAN is a tunneling protocol that tunnels ethernet Layer2 二层 traffic over an IP Layer3 network 三层, it's an extension to VLAN, it encapsulates a Layer2 ethernet frame into a udp packet and then transmit this packet over a Layer3 network, VXLAN is a formal internet standard specified in RFC7348, if you go back to OSI model VXLAN is another Application Layer protocol based on UDP that runs on port 4789, why we need VXLAN: the traditional layer 2 networks have issues due to below three main reasons:
-	- Spanning-tree blocks any redundant links to avoid loops, blocking links to create a loop free topology gets the job done but it also means we pay for the links we can't use
-	- limitted amount of VLANs, VXLAN overcomes this limitation by using a longer logical network identifier that is 24 bit which allows more VLANs and therefore more logical network isolation for large network such as cloud that typically include many VMs
-	- large mac address tables, before server virtualization a switch only had to learn one mac address per switch port, with server virtualization we run many VMs or containers on a single physical server, each VM has a virtual nick and a virtual mac address, the number of addresses in the mac address table of switches has grown exponentially, the switch has to learn many mac addresses on a single switch port, a Top-Of-Rack(TOR) switch in data center could connect to 24 or 28 physical servers, a data center could have many racks so each switch has to store the mac address of all VMs that communicates with each other, we requrie much larger mac address tables compared to network without server virtualization,
-	with benefits that VLANs can't provide:
-	- 16 million VXLANs
-	- migration of VMs, migration of virtual machines between servers that exists in separtate layer 2 domains by tunneling the traffic over layer 3 networks, the funtionality allows you to dynamically allocate resources within or between data centers without being constrained by layer 2 boundaries or being forced to create large or geographically streached layer 2 domains
-	https://www.youtube.com/watch?v=QPqVtguOz4w
-	[Linux VXLAN](https://cloud.tencent.com/developer/article/1476722)
-+ VPC:
-	A VPC isolates computing resources from the other computing resources available in the public cloud. The key technologies for isolating a VPC from the rest of the public cloud are:
-	Subnets: A subnet is a range of IP addresses within a network that are reserved so that they're not available to everyone within the network, essentially dividing part of the network for private use. In a VPC these are private IP addresses that are not accessible via the public Internet, unlike typical IP addresses, which are publicly visible.
-
-	- VLAN: A LAN is a local area network, or a group of computing devices that are all connected to each other without the use of the Internet. A VLAN is a virtual LAN. Like a subnet, a VLAN is a way of partitioning a network, but the partitioning takes place at a different layer within the OSI model (layer 2 instead of layer 3).
-
-	- VPN: A virtual private network (VPN) uses encryption to create a private network over the top of a public network. VPN traffic passes through publicly shared Internet infrastructure – routers, switches, etc. – but the traffic is scrambled and not visible to anyone.
-
-	A VPC will have a dedicated subnet and VLAN that are only accessible by the VPC customer. This prevents anyone else within the public cloud from accessing computing resources within the VPC – effectively placing the "Reserved" sign on the table. The VPC customer connects via VPN to their VPC, so that data passing into and out of the VPC is not visible to other public cloud users.
-
-	Some VPC providers offer additional customization with:
-
-		- Network Address Translation (NAT): This feature matches private IP addresses to a public IP address for connections with the public Internet. With NAT, a public-facing website or application could run in a VPC.
-		- BGP route configuration: Some providers allow customers to customize BGP routing tables for connecting their VPC with their other infrastructure. (Learn how BGP works.)
-		https://www.cloudflare.com/learning/cloud/what-is-a-virtual-private-cloud/
-
-**同一子网通信**
-先看同一子网内通信情况，A向C发送数据，这种情况下都是ip指定的，假设所有主机，交换机和路由器都刚刚通电，没缓存任何MAC映射和路由表。A在向C发送数据之前，是知道C的ip地址，发现它俩在同一物理子网，于是A试图在物理子网内来寻找C,但是在物理子网内寻址是通过MAC地址的，A并不知道C的MAC地址，于是A发送了一个ARP广播包，ARP广播用的地址是ff:ff:ff:ff:ff:ff,包内容如下：
-
-源MAC	目标MAC	源IP	目标IP
-xx:xx:xx:xx:xx:aa	ff:ff:ff:ff:ff:ff	10.0.0.2	10.0.04
-交换机收到ARP广播后，首先会学习到主机A是连接到1端口的，然后缓存起来，同时在缓存中查找C的MAC地址，没找到便将这个广播包从所有端口发出去(1端口除外)，交换机2收到广播包后，也会在缓存中查找C的MAC地址，没找到同样进行转发，其中B，D主机收到广播包后发现和自己无关便丢弃，而C收到广播后便会进行回应，来告知自己的身份，内容格式如下：
-
-源MAC	目标MAC	源IP	目标IP
-xx:xx:xx:xx:xx:ac	xx:xx:xx:xx:xx:aa	10.0.0.4	10.0.0.2
-这个对于参与的交换机也是个学习的过程，在过程中记忆了主机A和主机C的ip地址和mac地址，AC找到彼此后，便可以在同一子网内依靠mac地址进行相互通信，格式如下：
-
-源MAC	目标MAC	源IP	目标IP
-C--->A	xx:xx:xx:xx:xx:ac	xx:xx:xx:xx:xx:aa	10.0.0.4	10.0.0.2
-A--->C	xx:xx:xx:xx:xx:aa	xx:xx:xx:xx:xx:ac	10.0.0.2	10.0.0.4
-
-**跨物理子网通信**
-同样假设所有设备都刚刚通电，没有缓存任何信息，这时A向E发送数据，A是知道E的ip地址，发现属于同一网段，同样不知道E的mac地址，于是A同样发送ARP广播包,BCD没有响应，但是路由器1收到广播后，为了避免广播风暴，会把自己的mac地址告诉A，格式如下：
-
-源MAC	目标MAC	源IP	目标IP
-xx:xx:xx:xx:xx:ca	xx:xx:xx:xx:xx:aa	10.0.0.1	10.0.0.2
-A等待超时后，会知道E不在当前物理子网内，于是会向路由器1发送数据包，路由器收到数据包后，发现没有缓存E的ip地址，于是路由器1开始寻找E的过程。相比较交换机的广播找人，路由器寻址的空间范围更大，很多情况下是整个internet网络，要跨很多网络运营商，因此L3层面路由器的路径寻址计算协议涉及很多，例如：RIP、OSPF、IS-IS、BGP、IGRP等协议。路由器计算路径时，是无法窥探整个互联网的，因此每台路由器都是通过路由算法找到下一跳的最优路径，这些最优路径汇集起来就是完整的寻址路径，换句话说，路由器的转发路径不是一台路由器选出来的，而是很多路由器共同选择出来的最优下一跳地址序列；在这里为了解释原理，假设路由器1直接找到了路由器2。
-
-这样路由器1开始想路由器2发送数据包，路由器2便开始在自己的物理子网内寻找E,进过一次广播后，发现E在自己子网内，于是向前一跳，找到离自己最近的路由器1，反馈自己离E主机最近，最终经过“A->广播->路由器->路由器寻址->找到E主机所在子网”过程的A,便可以和E进行通信了。由于A和E之间经历了多个物理子网，因此需要经历多次L2的转发才能实现数据包的转达，在这个过程中，ip包外包的数据帧中的mac地址是不断变换的。在A-E-A的过程中，数据帧和IP包的地址经历了如下过程(假设A的通信端口是88，而E的是99)：
-去包：
-
-源MAC	目标MAC	源IP	目标IP	源端口	目的端口	用户数据	帧尾
-A--->路由1	xx:xx:xx:xx:xx:aa	xx:xx:xx:xx:xx:ca	10.0.0.2	10.0.0.6	88	99	.....	....
-路由1--->路由2	xx:xx:xx:xx:xx:cb	xx:xx:xx:xx:xx:cc	10.0.0.2	10.0.0.6	88	99	...	.....
-路由2--->E	xx:xx:xx:xx:xx:cd	xx:xx:xx:xx:xx:ae	10.0.0.2	10.0.0.6	88	99	...	.....
-回包:
-
-源MAC	目标MAC	源IP	目标IP	源端口	目的端口	用户数据	帧尾
-E--->路由2	xx:xx:xx:xx:xx:ae	xx:xx:xx:xx:xx:cd	10.0.0.6	10.0.0.2	99	88	...	.....
-路由2--->路由1	xx:xx:xx:xx:xx:cc	xx:xx:xx:xx:xx:cb	10.0.0.6	10.0.0.2	99	88	...	.....
-路由1--->A	xx:xx:xx:xx:xx:ca	xx:xx:xx:xx:xx:aa	10.0.0.6	10.0.0.2	99	88	.....	....
-数据包在路由1和2中的1，4端口中进行转发时，因为是在设备内部，因此可以直接转发，不用变换帧头，从而提高效率，另外如果A向其他子网的FGH发送数据时，过程基本上一样，只不过不会通过广播寻址，而是直接将数据包发送给路由器出口网关。
-
-#### VPN & DNS resolve
-连接VPN后：
-```
->ipconfig /all
-
-Windows IP Configuration
-
-   Host Name . . . . . . . . . . . . : TEST-LP
-   Primary Dns Suffix  . . . . . . . : lyhistory.com
-   Node Type . . . . . . . . . . . . : Hybrid
-   IP Routing Enabled. . . . . . . . : No
-   WINS Proxy Enabled. . . . . . . . : No
-   DNS Suffix Search List. . . . . . : lyhistory.com
-
-VPN_Access - X.X.X.X:
-
-   Connection-specific DNS Suffix  . :
-   Description . . . . . . . . . . . : VPN IP: - X.X.X.X
-   Physical Address. . . . . . . . . :
-   DHCP Enabled. . . . . . . . . . . : No
-   Autoconfiguration Enabled . . . . : Yes
-   IPv4 Address. . . . . . . . . . . : 172.x.x.x(Preferred)
-   Subnet Mask . . . . . . . . . . . : 255.255.255.255
-   Default Gateway . . . . . . . . . :
-   DNS Servers . . . . . . . . . . . : 192.168.111.100
-                                       x.x.x.x
-   NetBIOS over Tcpip. . . . . . . . : Enabled
-
-Wireless LAN adapter Wi-Fi:
-
-   Connection-specific DNS Suffix  . :
-   Description . . . . . . . . . . . : Intel(R) Dual Band Wireless-AC 8265
-   Physical Address. . . . . . . . . : 
-   DHCP Enabled. . . . . . . . . . . : Yes
-   Autoconfiguration Enabled . . . . : Yes
-   IPv4 Address. . . . . . . . . . . : 192.x.x.x(Preferred)
-   Subnet Mask . . . . . . . . . . . : 255.255.255.0
-   Lease Obtained. . . . . . . . . . : Wednesday, 7 December 2022 8:53:28 AM
-   Lease Expires . . . . . . . . . . : Thursday, 15 December 2022 9:08:12 AM
-   Default Gateway . . . . . . . . . : 192.168.5.1
-   DHCP Server . . . . . . . . . . . : 192.168.5.1
-   DNS Servers . . . . . . . . . . . : 1.1.1.1
-   NetBIOS over Tcpip. . . . . . . . : Enabled
-```
-
-测试：
-```
->nslookup google.com
-Server:  UnKnown
-Address:  192.168.111.100
-
-Non-authoritative answer:
-Name:    google.com
-Addresses:  2404:6800:4003:c04::64
-          2404:6800:4003:c04::8b
-          2404:6800:4003:c04::65
-          2404:6800:4003:c04::66
-          172.217.194.113
-          172.217.194.139
-          172.217.194.101
-          172.217.194.100
-          172.217.194.138
-          172.217.194.102
-```
-
-断开VPN测试：
-```
->nslookup google.com
-Server:  one.one.one.one
-Address:  1.1.1.1
-
-Non-authoritative answer:
-Name:    google.com
-Addresses:  2607:f8b0:4005:813::200e
-          142.251.32.46
-```
-#### Proxy VS Tunnel
-The terms are often intermixed, **tunnel providers are called proxies.**
-
-Originally, tunneling is the technique of using one protocol to transport data inside another protocol.
-
-A proxy (as in proxy representative) A proxy acts as an intermediary. It will hide your IP address from the destination (unless it adds it in a HTTP header field such as "Forward"). A proxy uses the same protocol throughout, it can alter the network flow, do caching or security scanning etc. So it's more of an extra hop on the way to the destination.
-
-For example you can use a SOCKS proxy as a HTTP tunnel, i.e. you transport HTTP over it. This is due to the fact that SOCKS is a protocol that is designed to tunnel IP packets.
-
-To add to the confusion, you can use a HTTP proxy to transport some other protocols such as FTP.
-
-A good example for a tunnel is a VPN. Tunnels are often used to evade censorship or firewall rules blocking traffic.
-https://stackoverflow.com/questions/46804813/http-tunnel-vs-http-proxy#:~:text=Originally%2C%20tunneling%20is%20the%20technique,such%20as%20%22Forward%22).
-
-When navigating through different networks of the Internet, proxy servers and HTTP tunnels are facilitating access to content on the World Wide Web. A proxy can be on the user's local computer, or anywhere between the user's computer and a destination server on the Internet. 
-
-#### SOCKS vs. HTTP Proxies
-https://brightdata.com/blog/leadership/socks5-proxy-vs-http-proxy
-
-#### Proxy Server (VS/&)  VPN
-
-##### Proxy Server VS VPN
-
-VPNs are Virtual Private Servers that encrypt all of a users’ web activity and device IP addresses. Typically, they come in the form of either an app or a browser extension.
-![VPN](/docs/docs_image/software/network/vpn.jpg)
-
-VPN如何工作：
-1) The vpn client establishes a connection to the server. 
-2) Both ends verify what they are. 
-3) Then the client and the server  exchange what are called “public keys” – they’re like one-way equations that allow you to encrypt data, but not decrypt it. 
-4) The client takes the server’s public key and uses it to make your data unreadable to ISPs, hackers, and other malicious actors.
-5) The data travels to the server, which uses its own private key to make that data usable.
-6) The server sends the decrypted data to the website or service you wanted to reach. The server also puts its own IP address (like an online street address) on the data, so your online destination thinks you’re connecting from the server’s location – very handy when bypassing geo-blocking. 
-7) When something is sent to you, the server grabs it, uses the client’s public key to encrypt it, and sends it your way for the client to decrypt. 
-
-VPN协议：PPTP，L2TP，OpenVPN，IPSec。其中L2TP和PPTP作为最老牌的vpn，是工作在OSI七层模型的数据链路层
-
-A Proxy server, on the other hand, is a computer that stands between the user and their server that hides only their device IP address, not all of their web activity. It also works on one website or app, not several.
-![Proxy Server](/docs/docs_image/software/network/proxy_server.jpg)
-
-代理协议及工具：Shadowsocks，Shadowsocks-R ，Socks5，VMess，VLESS，Trojann，V2Ray，Xray，Clash
-
-##### VPN over Proxy Server
-
-场景：
-allow the administrator to configure protection, control and filtering of outbound web traffic when the VPN tunnel is connected;
-layering security:
-    Proxy servers protect you from malicious websites - access out.
-    VPN protects you from malicious intruders - access in.
-
-[Example: ](#example-vpnproxy服务器从私人电脑在任何地方访问办公网络及外网)
-
-[Overview of the BIG-IP APM Edge Client Web Proxy for Windows](https://support.f5.com/csp/article/K36727588)
-[Layering network security with VPN proxy together](https://openvpn.net/solutions/use-cases/vpn-proxy/)
-[How DNS lookups work when using an HTTP proxy (or not) in IE](https://serverfault.com/questions/169816/how-dns-lookups-work-when-using-an-http-proxy-or-not-in-ie)
-[How to connect to VPN through Proxy Server](https://superuser.com/questions/842109/how-to-connect-to-vpn-through-proxy-server)
-[Proxy Settings Not Applied to VPN Connection](https://social.technet.microsoft.com/Forums/en-US/40475834-c6fa-4c6a-8881-50b82859e8fd/proxy-settings-not-applied-to-vpn-connection?forum=win10itpronetworking)
-
-## 2.Packet Sniffer
-
-[更多抓包方法](/docs/coder2hacker/ch2_web)
-
-A packet sniffer is simply a piece of software that allows you to capture packets on your network. Tcpdump and Wireshark are examples of packet sniffers. Tcpdump provides a CLI packet sniffer, and Wireshark provides a feature-rich GUI for sniffing and analyzing packets.
-By default, tcpdump operates in promiscuous mode. This simply means that all packets reaching a host will be sent to tcpdump for inspection. This setting even includes traffic that was not destined for the specific host that you are capturing on, such as broadcast and multicast traffic. Of course, tcpdump isn’t some magical piece of software: It can only capture those packets that somehow reach one of the physical interfaces on your machine.
-
-Looking at the above captures provides us with basic information about the packets traversing our network. It looks like these packets contain Spanning Tree Protocol (STP) output, perhaps from an upstream switch. Technically, these aren’t packets, they’re layer two frames. However, you’ll hear the terms used interchangeably when discussing packet captures.
-Knowing how to adjust the verbosity of your capture is important, as it allows you to dig deeper into the actual data contained within the packets.
-The verbosity level of tcpdump is controlled by appending between one and three -v flags to the command:
-
-![tcpdump](/docs/docs_image/software/network/network06.png)
-
-處于LISTEN狀態的socket:
-    Recv-Q表示了current listen backlog隊列元素數目(等待用戶調用accept的完成3次握手的socket)
-    Send-Q表示了listen socket最大能容納的backlog.這個數目由listen時指定,且不能大於 /proc/sys/net/ipv4/tcp_max_syn_backlog;
-    
-對於非LISTEN socket:
-    Recv-Q表示了receive queue中的位元組數目(等待接收的下一個tcp段的序號-尚未從內核空間copy到用戶空間的段最前面的一個序號)
-    Send-Q表示發送queue中容納的位元組數(已加入發送隊列中最後一個序號-輸出段中最早一個未確認的序號)
-	
-More
-https://blog.cloudflare.com/this-is-strictly-a-violation-of-the-tcp-specification/
-https://102.alibaba.com/detail?id=140
-http://netkiller.sourceforge.net/linux/system/network/ch14s02.html
-https://www.jianshu.com/p/30b861cac826
-
-netstat属于net-tools工具集,ss属于iproute工具集
-
-ss比netstat快的主要原因是，netstat是遍历/proc下面每个PID目录，ss直接读/proc/net下面的统计信息。所以ss执行的时候消耗资源以及消耗的时间都比netstat少很多。
-当服务器的socket连接数量非常大时（如上万个），无论是使用netstat命令还是直接cat /proc/net/tcp执行速度都会很慢，相比之下ss可以节省很多时间。ss快的秘诀在于，它利用了TCP协议栈中tcp_diag，这是一个用于分析统计的模块，可以获得Linux内核中的第一手信息。如果系统中没有tcp_diag，ss也可以正常运行，只是效率会变得稍微慢但仍然比netstat要快。
-
-在服务器产生大量sockets连接时，我们会使用这个命令在做宏观统计
-ss -s
-查看所有打开的网络端口
-ss -pl
-查看这台服务器上所有的socket连接
-TCP sockets -ta
-UDP sockets -ua
-RAW sockets -wa
-UNIX sockets -xa
-
-实时流量监听：
-nethogs -v 2
-
-## 3.实战问题
-
-### 3.1 wireshark
-配置如下
-
-![nginx](/docs/docs_image/software/network/network07.png)
-
-本地浏览器通过前端访问位于另一个vpn网段的server10.***.48的/wescoket，
-然后nginx会forward到9090端口，首先我直接从server上抓(转发的)包
-sudo tcpdump -c 1 -X port 9090
-没有抓到，因为默认是抓取eth0，而这个是nginx通过本地lo转发，所以需要指定-i lo或者-i any
-最终实时监控命令
-```
-sudo sh -c 'tcpdump -i any -X port 9090 -l | tee dat'
-sudo sh -c 'tcpdump -i any -X host 192.168.207.4 -l | tee dat'
-```
-
-![packet](/docs/docs_image/software/network/network08.png)
-
-这里看不懂这些ASCII‘乱码’,尝试用在线工具http://packetor.com/，https://hpd.gasmi.net/ 解析失败
-所以想到直接在前端用wireshark抓包，interfaces这里显示了很多ipconfig下面没有的名字，然后试了半天，才知道内网走的是这个Local Area Connection*12
-
-![wireshark](/docs/docs_image/software/network/network09.png)
-
-可以看到还有SSH的请求干扰视线，所以果断关掉（其实也可以加过滤条件比如tcp.port!=22），但是发现黑色背景的tcp不断的出现，然后关掉网站，居然还在，决定根据端口查一下
-netstat -aon | find /i "53072"
-tasklist /fi "pid eq 81304"
-居然是chrome，关掉chrome就完全停掉了
-
-进一步看下http请求，看到左侧的箭头表示request和response，然后中间的两个点表示相关联的（https://www.wireshark.org/docs/wsug_html_chunked/ChUsePacketListPaneSection.html
-），应该是http底层依赖的tcp请求，然后后面的TCP Keep Alive基本就是与之想的，应该是http header里面的keep alive起作用
-https://www.imperva.com/learn/performance/http-keep-alive/
-
-使用wireshark还有个要注意的是，比如 http.host contains lyhistory.github.io
-因为我的域名是解析到github page  所以host不是我自己的lyhistory.com了
-
-### 3.2 一次排查send-q
-
-![send-q](/docs/docs_image/software/network/network10.png)
-
-可以看到有 50 100 128
-根据网上资料，排查系统参数
-
-![tcp backlog](/docs/docs_image/software/network/network11.png)
-
-可以看到128是因为这里的设置限制
-然后 google了下50，看到
-
-![server socket](/docs/docs_image/software/network/network12.png)
-
-但是实际上我根据cat /proc/<PID>/cmdline查到实际上这个程序是quickfix server，然后查了下是用的
-NioSocketAcceptor
-https://mina.apache.org/mina-project/gen-docs/2.1.2/apidocs/org/apache/mina/transport/socket/SocketAcceptor.html
-
-虽然这里没有写默认是多少，大概可以先猜测一下，java应该都是统一的默认50；
-所以我在quickfix java提了个proposal https://github.com/quickfix-j/quickfixj/issues/248
-同样的
-```cat /proc/<PID>/cmdline```
-查到了100的对应程序之一是我们的一个继承了spring-boot-starter-web程序，然后搜了下貌似tomcat默认就是100，所以查了下dependency，
-这里确实是spring-boot-starter-web依赖于tomcat；
-然后想到既然都是java程序受各种限制，比如socket默认的50以及tomcat默认的100，那么128又是怎么来的，搜了下，果然，比如websocket，这里是用了netty，然后有自定义的config
-
-![backlog](/docs/docs_image/software/network/network13.png)
-
-然后再查到其他的一些程序，比如kafka和zookeeper默认50
-然后可以看到显示出来的redis-server和nginx都是128
-
-再后来遇到另外一个问题：
-[the ESTAB tcp connection remains even after closed initiator](https://github.com/quickfix-j/quickfixj/issues/269)
-![server socket](/docs/docs_image/software/network/network15.png)
-我配错了heartbeat，然后导致了一个神奇的现象，客户端连接服务端，由于他这个协议里面是客户端主动发起heartbeat，所以我配错了之后，即使客户端断掉(连接之后过二十分钟再断)，服务端就认为连接一直在，
-所以会一直保持这个ESTABLISHED连接，除非重启服务端，然后因为quickfix不允许同一个配置的initiator多次连接，所以再连接都变成了TIME_WAIT;
-
-参考：记一次惊心的网站TCP队列问题排查经历https://zhuanlan.zhihu.com/p/36731397
-https://juejin.im/post/5d8488256fb9a06b065cad98
-https://cloud.tencent.com/developer/article/1143712
-
-### 3.3 死亡ping
-
-
-
-```
-ping -l 65500 目标ip -t （65500 表示数据长度上限，-t 表示不停地ping目标地址） 这就是简单的拒绝服务攻击。
-```
-
-> 首先是因为以太网长度有限，IP包片段被分片。当一个IP包的长度超过以太网帧的最大尺寸（以太网头部和尾部除外）时，包就会被分片，作为多个帧来发送。接收端的机器提取各个分片，并重组为一个完整的IP包。在正常情况下，IP头包含整个IP包的长度。当一个IP包被分片以后，头只包含各个分片的长度。分片并不包含整个IP包的长度信息，因此IP包一旦被分片，重组后的整个IP包的总长度只有在所在分片都接受完毕之后才能确定。
->     在IP协议规范中规定了一个IP包的最大尺寸，而大多数的包处理程序又假设包的长度超过这个最大尺寸这种情况是不会出现的。因此，包的重组代码所分配的内存区域也最大不超过这个最大尺寸。这样，超大的包一旦出现，包当中的额外数据就会被写入其他正常区域。这很容易导致系统进入非稳定状态，是一种典型的缓存溢出（Buffer Overflow）攻击。在防火墙一级对这种攻击进行检测是相当难的，因为每个分片包看起来都很正常。
->     由于使用ping工具很容易完成这种攻击，以至于它也成了这种攻击的首选武器，这也是这种攻击名字的由来。当然，还有很多程序都可以做到这一点，因此仅仅阻塞ping的使用并不能完全解决这个漏洞。预防死亡之ping的最好方法是对操作系统打补丁，使内核将不再对超过规定长度的包进行重组。
->
-> https://zixuephp.net/article-99.html
-
-### 3.4 大量TIME_WAIT状态的TCP 连接
-
-https://mp.weixin.qq.com/s/t1ZUXvAUKlIt5UtiZFh1VQ
-
-这个跟前面开篇介绍的TCP三次握手和端口有关，
-
-在高并发的场景中，会出现批量的 `TIME_WAIT` 的 TCP 连接，短时间后，所有的 `TIME_WAIT` 全都消失，被回收，端口包括服务，均正常。即，在高并发的场景下，`TIME_WAIT` 连接存在，属于正常现象。
-
-如果是持续的高并发场景：
-
-- 一部分 `TIME_WAIT` 连接被回收，但新的 `TIME_WAIT` 连接产生；
-- 一些极端情况下，会出现**大量**的 `TIME_WAIT` 连接。
-
-这个对业务有何影响，如果服务器上是用nginx作为反向代理，意思是，客户端是请求到nginx，然后nginx再作为客户端请求到具体的程序或后台服务，比如java spring mvc程序，websocket等，get post请求mvc程序执行速度比较快，所以不好观察，除非是想办法模拟高并发，我觉着用websocket举例更容易，可以看到
-
-```
-[vm2-devclr-v08@SG/opt/haproxy-2.2.1]$netstat -anp|grep :80
-tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      3945/nginx: master
-tcp        0      0 x.x.x.48:80        10.30.30.94:25748       ESTABLISHED 15394/nginx: worker
-tcp        0      0 127.0.0.1:80            127.0.0.1:10693         ESTABLISHED 15394/nginx: worker
-tcp        0      0 127.0.0.1:10693         127.0.0.1:80            ESTABLISHED 25613/haproxy
-
-这个10693的端口是做什么的先不用管，是我测试的haproxy；
-我们主要看这个10.30.30.94:25748是客户端的连接，访问x.x.x.48:80，即nginx的监听的80端口，然后nginx立马会转发产生跟本地的websocket服务器也就是x.x.x.48:19090的连接，所以会占用一个nginx的端口，比如13576，下面可以看到，这里有两个连接，占用了两个nginx的端口13576和18973，因为是双向连接，所以还有反过来的连接
-
-[vm2-devclr-v08@SG/opt/haproxy-2.2.1]$netstat -anp|grep :19090
-tcp        0      0 0.0.0.0:19090           0.0.0.0:*               LISTEN      3136/java
-tcp        0      0 x.x.x.48:13576     x.x.x.48:19090     ESTABLISHED 15394/nginx: worker
-tcp        0      0 x.x.x.48:19090     x.x.x.48:13576     ESTABLISHED 3136/java
-tcp        0      0 x.x.x.48:18973     x.x.x.48:19090     ESTABLISHED 15394/nginx: worker
-tcp        0      0 x.x.x.48:19090     x.x.x.48:18973     ESTABLISHED 3136/java
-```
-
-所以Nginx 作为反向代理时，大量的短链接，可能导致 Nginx 上的 TCP 连接处于 `time_wait` 状态：
-
-- 每一个 time_wait 状态，都会占用一个「本地端口」，上限为 `65535`(16 bit，2 Byte)；
-- 当大量的连接处于 `time_wait` 时，新建立 TCP 连接会出错，**address already in use : connect** 异常
-
-统计：各种连接的数量
-
-`netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'`
-
-TCP 本地端口数量，上限为 `65535`（6.5w），这是因为 TCP 头部使用 `16 bit`，存储「**端口号**」，因此约束上限为 `65535`。
-
-大量的 `TIME_WAIT` 状态 TCP 连接存在，其本质原因是什么？
-
-- 大量的**短连接**存在
-- 特别是 HTTP 请求中，如果 `connection` 头部取值被设置为 `close` 时，基本都由「**服务端**」发起**主动关闭连接**
-- 而，`TCP 四次挥手`关闭连接机制中，为了保证 `ACK 重发`和`丢弃延迟数据`，设置 `time_wait` 为 2 倍的 `MSL`（报文最大存活时间）
-
-TIME_WAIT 状态：
-
-- TCP 连接中，**主动关闭连接**的一方出现的状态；（收到 FIN 命令，进入 TIME_WAIT 状态，并返回 ACK 命令）
-- 保持 2 个 `MSL` 时间，即，`4 分钟`；（MSL 为 2 分钟）
-
-解决上述 `time_wait` 状态大量存在，导致新连接创建失败的问题，一般解决办法：
-
-1、**客户端**，HTTP 请求的头部，connection 设置为 keep-alive，保持存活一段时间：现在的浏览器，一般都这么进行了 2、**服务器端**，
-
-- 允许 `time_wait` 状态的 socket 被**重用**
-- 缩减 `time_wait` 时间，设置为 `1 MSL`（即，2 mins）
-
-更多细节，参考：
-
-- https://www.cnblogs.com/yjf512/p/5327886.html
-
-几个核心要点
-
-1、 **time_wait 状态的影响**：
-
-- TCP 连接中，「主动发起关闭连接」的一端，会进入 time_wait 状态
-- time_wait 状态，默认会持续 `2 MSL`（报文的最大生存时间），一般是 2x2 mins
-- time_wait 状态下，TCP 连接占用的端口，无法被再次使用
-- TCP 端口数量，上限是 6.5w（`65535`，16 bit）
-- 大量 time_wait 状态存在，会导致新建 TCP 连接会出错，**address already in use : connect** 异常
-
-2、 **现实场景**：
-
-- 服务器端，一般设置：**不允许**「主动关闭连接」
-- 但 HTTP 请求中，http 头部 connection 参数，可能设置为 close，则，服务端处理完请求会主动关闭 TCP 连接
-- 现在浏览器中， HTTP 请求 `connection` 参数，一般都设置为 `keep-alive`
-- Nginx 反向代理场景中，可能出现大量短链接，服务器端，可能存在
-
-3、 **解决办法：服务器端**，
-
-- 允许 `time_wait` 状态的 socket 被重用
-- 缩减 `time_wait` 时间，设置为 `1 MSL`（即，2 mins）
-
-### 3.5 端口占用冲突 Ephemeral ports
-
-某应用程序监听端口9001，但是发现该端口已经被本地一个client端占用
-
-An ephemeral port is a communications endpoint of a transport layer protocol of the Internet protocol suite that is used for only a short period of time for the duration of a communication session.
-除了给常用服务保留的Well-known Port numbers之外，给客户端的端口号通常是动态分配的，称为ephemeral port（临时端口），在Linux系统上临时端口号的取值范围是通过这个内核参数定义的：net.ipv4.ip_local_port_range (/proc/sys/net/ipv4/ip_local_port_range)，端口号动态分配时并不是从小到大依次选取的，而是按照特定的算法随机分配的。
-
-```
-We need to change ephemeral ports range in linux server to avoid port clash with application ports. Instructions below.
-1.	Show current ephemeral port range using command below
-$   sysctl net.ipv4.ip_local_port_range
-2.	Add the following configuration to /etc/sysctl.conf to change this to the preferred range (32768 61000)
-net.ipv4.ip_local_port_range = 32768 61000
-3.	Activate the new settings with command below
-$   sysctl -p
-4.	Verify settings using command below
-$   sysctl net.ipv4.ip_local_port_range
-
-```
-
-## 4. 协议详解
-
-### 4.1 链路层协议
+### 2.1 链路层协议
 
 **LLDP链路层发现协议**
 
 LLDP（链路层发现协议）是定义在802.1ab中的一个二层协议，接入网络的设备可以通过其，将管理地址、设备标识、接口标识等信息发送给同一个局域网络的其它设备。
 
-### 4.2 网络层的协议测试工具
+### 2.2 网络层的协议测试工具
 
 #### **ICMP协议**：ping，tracert
 
@@ -1107,7 +584,7 @@ NAT地址转换 https://blog.csdn.net/hjgblog/article/details/23356409
 https://www.linuxprobe.com/igmp-tcpip.html
 通常，我们把工作在网络层的IP 组播称为“三层组播”，相应的组播协议称为“三层组播协议”，包括IGMP、PIM、MSDP、MBGP等;把工作在数据链路层的IP 组播称为“二层组播”，相应的组播协议称为“二层组播协议”，包括IGMP Snooping、组播VLAN 等。
 
-### 4.3 传输层的协议测试工具
+### 2.3 传输层的协议测试工具
 
 参见《/doc/software/network/vpn》
 注意ping和trcert都是走ICMP协议，并不是tcp协议，如果想追踪tcp需要用：
@@ -1126,7 +603,7 @@ https://serverfault.com/questions/199434/how-do-i-make-curl-use-keepalive-from-t
 $ while :;do echo -e "GET / HTTP/1.1\nhost: $YOUR_VIRTUAL_HOSTNAME\n\n";sleep 1;done|telnet $YOUR_SERVERS_IP 80
 ```
 
-### 4.4 应用层之“协议”
+### 2.4 应用层之“协议”
 应用层的协议有FTP、HTTP、websocket、TELNET、SMTP、DHCP、DNS等协议：
 
 #### **DHCP协议**
@@ -1204,7 +681,7 @@ https通信是http建立在tls上，最新的tls1.3(SSL is deprecated predecesso
 
 TLS握手发生在TCP握手结束之后，具体参考《publickey_infrastructure.md/[#](https://lyhistory.com/docs/software/highlevel/publickeyinfrastructure.html#_3-1-ssl-tls)3.1 SSL/TLS》
 
-### 4.5 应用层之proxy代理服务器
+### 2.5 应用层之proxy代理服务器
 
 前面说过NAT技术和代理服务器技术的区别，现在具体说下代理服务器
 
@@ -1242,13 +719,13 @@ https://medium.com/@ryanwendel/forwarding-reverse-shells-through-a-jump-box-usin
 
 https://www.offensive-security.com/metasploit-unleashed/portfwd/
 
-### 4.6 Tunnel
+### 2.6 Tunnel
 
-#### 4.6.1 ICMP Tunnel
+#### 2.6.1 ICMP Tunnel
 
 Ping Power — ICMP Tunnel https://infosecwriteups.com/ping-power-icmp-tunnel-31e2abb2aaea
 
-#### 4.6.2 http tunnel
+#### 2.6.2 http tunnel
 
 定义：
 > HTTP tunneling is used to create a network link between two computers in conditions of restricted network connectivity including firewalls, NATs and ACLs, among other restrictions. The tunnel is created by an intermediary called a proxy server which is usually located in a DMZ.
@@ -1265,7 +742,7 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT
 [HTTP Tunnel使用的几种使用（经典）](https://blog.csdn.net/zhangxinrun/article/details/5942260)
 [http tunnel和入侵检测的理解](https://blog.csdn.net/gx11251143/article/details/104518461)
 
-#### 4.6.3 tcp tunnel
+#### 2.6.3 tcp tunnel
 
 跟http tunnel利用http connect，还需要一个proxy server来建立双向通道并做流量转发的操作；
 tcp tunnel一般不需要通过一个proxy server，而是借助安装在本地或者远程的软件来做“端口转发”，比如利用ssh将两台电脑的端口进行映射；
@@ -1332,9 +809,7 @@ proxychains nmap -Pn -sT 172.17.0.0/24
 方法二：使用 meterpreter autoroute
 ```
 
-
-
-#### 4.6.4 VPN
+#### 2.6.4 VPN
 
 A VPN tunnel, however, is fully encrypted. The "P in VPN indicates private. VPN tunnels are typically achieved with IPSeC, SSL, PPTP,  TCP Crypt (this is a new protocol), etc.
 
@@ -1345,15 +820,621 @@ A VPN tunnel, however, is fully encrypted. The "P in VPN indicates private. VPN 
 In computing, Internet Protocol Security (IPsec) is a secure network protocol suite that authenticates and encrypts packets of data to provide secure encrypted communication between two computers over an Internet Protocol network. It is used in virtual private networks (VPNs).
 
 
-### 4.7 其他network测试工具
+### 2.7 其他network测试工具
 
 network丢包延迟重复模拟器 https://jagt.github.io/clumsy/
 
+## 3. 概念对比
 
-## 5. 组网 Network architecture
+### 二层广播 三层IP协议广播/组播 四层UDP协议广播/组播 
+
+TCP可以广播吗？
+答一 不可以：
+[Can I use broadcast or multicast for TCP?](https://stackoverflow.com/questions/21266008/can-i-use-broadcast-or-multicast-for-tcp)
+No, you can't. TCP is a protocol for communication between exactly two endpoints. Compared to UDP it features reliable transport, that means, that packets get not only send, but it is expected that the peer acknowledges the receipt of the data and that data will be retransmitted if the acknowledgment is missing. And because Broadcast and Multicast only send but never receive data, the reliability of TCP cannot be implemented on top of these protocols.
+
+答二 “可以”(It does not implement "real" broadcasting, it just implements a subscribe and publish scenario with many subscribers and on publisher. )：
+Now why TCP broadcasting is necessary and even multicasting. Well, suppose you created a WebSocket server or any simple plain TCP server and millions of clients are connected to a single channel for like live streaming of a channel going on and people connected to that channels are writing comments now web-browser does not support UDP yet, WebRTC is based on UDP but is a caller callee protocol. So we will talk about browser connected to a WebSocket server and pushing messages concurrently and the messages need to be shown back to the clients in the UI of other clients who are writing comments or whatever in that case what server does is it creates a hashmap of the array and put all clients socket object inside the array and can map the array to a hashmap using a key as channel name and whenever a message is received it iterates over the array and send the message to all socket that is in the array. 
+https://sudeepdasgupta.medium.com/broadcasting-and-multicasting-millions-of-clients-using-tcp-5794d784829a
+
+总结：
+TCP is generally unicast that means the server needs to send the response to each client individually whereas UDP has multicast and broadcast support. Multicast means server transmits data to a group and client connected to the same group gets the data. 
+虽然前面有人可以实现所谓TCP的广播，实际上并不是真正的广播而是在代码层面通过遍历仍然是一个个的单独向clients发送消息，所以要理解“广播”在不同的场景下的含义
+
+上面网络层介绍了三种IP地址：单播地址，广播地址，多播地址。对于这些通讯方式的理解是：单播地址是一对一的通讯，广播是一对多的通讯，多播是一对多的通讯。多播是对一个特定的通讯主体集合的通讯。广播与多播仅仅应用于UDP协议。单播的典型方式是TCP协议。
+
+在交换以太网上运行TCP/IP环境下：
+二层广播是在数据链路层的广播，它 的广播范围是二层交换机连接的所有端口；二层广播不能通过路由器。
+三层广播就是在网络层的广播，它的范围是同一IP子网内的设备，子网广播也不能通过路由器。
+第三层的数据必须通过第二层的封装再发送，所以三层广播必然通过二层广播来实现。
+设想在同一台二层交换机上连接2个ip子网的设备，所有的设备都可以接收到二层广播，但三层广播只对本子网设备有效，非本子网的设备也会接收到广播包，但会被丢弃。
+安装一个sniffer，抓个广播包，
+
+路由器默认是不转发UDP广播包的，这样可以净化内网环境。但是某些特殊场合，需要使用udp广播，最常见的是DHCP服务，因为给每个网段都架设DHCP服务器，效率太低。怎么办呢？
+cisco有ip广播转发的解决方案：DHCP中继代理和UDP广播转发。
+
+广播帧属于二层并不会跨越三层，所以为了解决广播风暴，可以使用三层设备隔离广播域，减小广播域范围。比如使用路由器来隔离广播域，由于路由器是三层设备，对数据的转发容易形成瓶颈，所以一般我们使用VLAN来隔离广播域。
+
+**案例：**
+华为云上vpc，某交易系统需要进行UDP广播 ，但是对于普通的ECS实例来说，因为物理资源交换机是跟其他租户共用的，所以被限流产生丢包，搜易只能使用专属主机deh，专属主机的网络设备是独立的，不会影响其他主机。
+
+### VPN & DNS resolve
+连接VPN后：
+```
+>ipconfig /all
+
+Windows IP Configuration
+
+   Host Name . . . . . . . . . . . . : TEST-LP
+   Primary Dns Suffix  . . . . . . . : lyhistory.com
+   Node Type . . . . . . . . . . . . : Hybrid
+   IP Routing Enabled. . . . . . . . : No
+   WINS Proxy Enabled. . . . . . . . : No
+   DNS Suffix Search List. . . . . . : lyhistory.com
+
+VPN_Access - X.X.X.X:
+
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : VPN IP: - X.X.X.X
+   Physical Address. . . . . . . . . :
+   DHCP Enabled. . . . . . . . . . . : No
+   Autoconfiguration Enabled . . . . : Yes
+   IPv4 Address. . . . . . . . . . . : 172.x.x.x(Preferred)
+   Subnet Mask . . . . . . . . . . . : 255.255.255.255
+   Default Gateway . . . . . . . . . :
+   DNS Servers . . . . . . . . . . . : 192.168.111.100
+                                       x.x.x.x
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+
+Wireless LAN adapter Wi-Fi:
+
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : Intel(R) Dual Band Wireless-AC 8265
+   Physical Address. . . . . . . . . : 
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+   IPv4 Address. . . . . . . . . . . : 192.x.x.x(Preferred)
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Lease Obtained. . . . . . . . . . : Wednesday, 7 December 2022 8:53:28 AM
+   Lease Expires . . . . . . . . . . : Thursday, 15 December 2022 9:08:12 AM
+   Default Gateway . . . . . . . . . : 192.168.5.1
+   DHCP Server . . . . . . . . . . . : 192.168.5.1
+   DNS Servers . . . . . . . . . . . : 1.1.1.1
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+```
+
+测试：
+```
+>nslookup google.com
+Server:  UnKnown
+Address:  192.168.111.100
+
+Non-authoritative answer:
+Name:    google.com
+Addresses:  2404:6800:4003:c04::64
+          2404:6800:4003:c04::8b
+          2404:6800:4003:c04::65
+          2404:6800:4003:c04::66
+          172.217.194.113
+          172.217.194.139
+          172.217.194.101
+          172.217.194.100
+          172.217.194.138
+          172.217.194.102
+```
+
+断开VPN测试：
+```
+>nslookup google.com
+Server:  one.one.one.one
+Address:  1.1.1.1
+
+Non-authoritative answer:
+Name:    google.com
+Addresses:  2607:f8b0:4005:813::200e
+          142.251.32.46
+```
+### Proxy VS Tunnel
+The terms are often intermixed, **tunnel providers are called proxies.**
+
+Originally, tunneling is the technique of using one protocol to transport data inside another protocol.
+
+A proxy (as in proxy representative) A proxy acts as an intermediary. It will hide your IP address from the destination (unless it adds it in a HTTP header field such as "Forward"). A proxy uses the same protocol throughout, it can alter the network flow, do caching or security scanning etc. So it's more of an extra hop on the way to the destination.
+
+For example you can use a SOCKS proxy as a HTTP tunnel, i.e. you transport HTTP over it. This is due to the fact that SOCKS is a protocol that is designed to tunnel IP packets.
+
+To add to the confusion, you can use a HTTP proxy to transport some other protocols such as FTP.
+
+A good example for a tunnel is a VPN. Tunnels are often used to evade censorship or firewall rules blocking traffic.
+https://stackoverflow.com/questions/46804813/http-tunnel-vs-http-proxy#:~:text=Originally%2C%20tunneling%20is%20the%20technique,such%20as%20%22Forward%22).
+
+When navigating through different networks of the Internet, proxy servers and HTTP tunnels are facilitating access to content on the World Wide Web. A proxy can be on the user's local computer, or anywhere between the user's computer and a destination server on the Internet. 
+
+### SOCKS vs. HTTP Proxies
+https://brightdata.com/blog/leadership/socks5-proxy-vs-http-proxy
+
+### Proxy Server (VS/&)  VPN
+
+#### Proxy Server VS VPN
+
+VPNs are Virtual Private Servers that encrypt all of a users’ web activity and device IP addresses. Typically, they come in the form of either an app or a browser extension.
+![VPN](/docs/docs_image/software/network/vpn.jpg)
+
+VPN如何工作：
+1) The vpn client establishes a connection to the server. 
+2) Both ends verify what they are. 
+3) Then the client and the server  exchange what are called “public keys” – they’re like one-way equations that allow you to encrypt data, but not decrypt it. 
+4) The client takes the server’s public key and uses it to make your data unreadable to ISPs, hackers, and other malicious actors.
+5) The data travels to the server, which uses its own private key to make that data usable.
+6) The server sends the decrypted data to the website or service you wanted to reach. The server also puts its own IP address (like an online street address) on the data, so your online destination thinks you’re connecting from the server’s location – very handy when bypassing geo-blocking. 
+7) When something is sent to you, the server grabs it, uses the client’s public key to encrypt it, and sends it your way for the client to decrypt. 
+
+VPN协议：PPTP，L2TP，OpenVPN，IPSec。其中L2TP和PPTP作为最老牌的vpn，是工作在OSI七层模型的数据链路层
+
+A Proxy server, on the other hand, is a computer that stands between the user and their server that hides only their device IP address, not all of their web activity. It also works on one website or app, not several.
+![Proxy Server](/docs/docs_image/software/network/proxy_server.jpg)
+
+代理协议及工具：Shadowsocks，Shadowsocks-R ，Socks5，VMess，VLESS，Trojann，V2Ray，Xray，Clash
+
+#### VPN over Proxy Server
+
+场景：
+allow the administrator to configure protection, control and filtering of outbound web traffic when the VPN tunnel is connected;
+layering security:
+    Proxy servers protect you from malicious websites - access out.
+    VPN protects you from malicious intruders - access in.
+
+[Example: ](#example-vpnproxy服务器从私人电脑在任何地方访问办公网络及外网)
+
+[Overview of the BIG-IP APM Edge Client Web Proxy for Windows](https://support.f5.com/csp/article/K36727588)
+[Layering network security with VPN proxy together](https://openvpn.net/solutions/use-cases/vpn-proxy/)
+[How DNS lookups work when using an HTTP proxy (or not) in IE](https://serverfault.com/questions/169816/how-dns-lookups-work-when-using-an-http-proxy-or-not-in-ie)
+[How to connect to VPN through Proxy Server](https://superuser.com/questions/842109/how-to-connect-to-vpn-through-proxy-server)
+[Proxy Settings Not Applied to VPN Connection](https://social.technet.microsoft.com/Forums/en-US/40475834-c6fa-4c6a-8881-50b82859e8fd/proxy-settings-not-applied-to-vpn-connection?forum=win10itpronetworking)
+
+## 4. 抓包技术 Packet Sniffer
+
+[更多抓包方法](/docs/coder2hacker/ch2_web)
+
+A packet sniffer is simply a piece of software that allows you to capture packets on your network. Tcpdump and Wireshark are examples of packet sniffers. Tcpdump provides a CLI packet sniffer, and Wireshark provides a feature-rich GUI for sniffing and analyzing packets.
+By default, tcpdump operates in promiscuous mode. This simply means that all packets reaching a host will be sent to tcpdump for inspection. This setting even includes traffic that was not destined for the specific host that you are capturing on, such as broadcast and multicast traffic. Of course, tcpdump isn’t some magical piece of software: It can only capture those packets that somehow reach one of the physical interfaces on your machine.
+
+Looking at the above captures provides us with basic information about the packets traversing our network. It looks like these packets contain Spanning Tree Protocol (STP) output, perhaps from an upstream switch. Technically, these aren’t packets, they’re layer two frames. However, you’ll hear the terms used interchangeably when discussing packet captures.
+Knowing how to adjust the verbosity of your capture is important, as it allows you to dig deeper into the actual data contained within the packets.
+The verbosity level of tcpdump is controlled by appending between one and three -v flags to the command:
+
+![tcpdump](/docs/docs_image/software/network/network06.png)
+
+處于LISTEN狀態的socket:
+    Recv-Q表示了current listen backlog隊列元素數目(等待用戶調用accept的完成3次握手的socket)
+    Send-Q表示了listen socket最大能容納的backlog.這個數目由listen時指定,且不能大於 /proc/sys/net/ipv4/tcp_max_syn_backlog;
+    
+對於非LISTEN socket:
+    Recv-Q表示了receive queue中的位元組數目(等待接收的下一個tcp段的序號-尚未從內核空間copy到用戶空間的段最前面的一個序號)
+    Send-Q表示發送queue中容納的位元組數(已加入發送隊列中最後一個序號-輸出段中最早一個未確認的序號)
+	
+More
+https://blog.cloudflare.com/this-is-strictly-a-violation-of-the-tcp-specification/
+https://102.alibaba.com/detail?id=140
+http://netkiller.sourceforge.net/linux/system/network/ch14s02.html
+https://www.jianshu.com/p/30b861cac826
+
+netstat属于net-tools工具集,ss属于iproute工具集
+
+ss比netstat快的主要原因是，netstat是遍历/proc下面每个PID目录，ss直接读/proc/net下面的统计信息。所以ss执行的时候消耗资源以及消耗的时间都比netstat少很多。
+当服务器的socket连接数量非常大时（如上万个），无论是使用netstat命令还是直接cat /proc/net/tcp执行速度都会很慢，相比之下ss可以节省很多时间。ss快的秘诀在于，它利用了TCP协议栈中tcp_diag，这是一个用于分析统计的模块，可以获得Linux内核中的第一手信息。如果系统中没有tcp_diag，ss也可以正常运行，只是效率会变得稍微慢但仍然比netstat要快。
+
+在服务器产生大量sockets连接时，我们会使用这个命令在做宏观统计
+ss -s
+查看所有打开的网络端口
+ss -pl
+查看这台服务器上所有的socket连接
+TCP sockets -ta
+UDP sockets -ua
+RAW sockets -wa
+UNIX sockets -xa
+
+实时流量监听：
+nethogs -v 2
+
+
+## 5.实战问题
+
+### 5.1 wireshark
+配置如下
+
+![nginx](/docs/docs_image/software/network/network07.png)
+
+本地浏览器通过前端访问位于另一个vpn网段的server10.***.48的/wescoket，
+然后nginx会forward到9090端口，首先我直接从server上抓(转发的)包
+sudo tcpdump -c 1 -X port 9090
+没有抓到，因为默认是抓取eth0，而这个是nginx通过本地lo转发，所以需要指定-i lo或者-i any
+最终实时监控命令
+```
+sudo sh -c 'tcpdump -i any -X port 9090 -l | tee dat'
+sudo sh -c 'tcpdump -i any -X host 192.168.207.4 -l | tee dat'
+```
+
+![packet](/docs/docs_image/software/network/network08.png)
+
+这里看不懂这些ASCII‘乱码’,尝试用在线工具http://packetor.com/，https://hpd.gasmi.net/ 解析失败
+所以想到直接在前端用wireshark抓包，interfaces这里显示了很多ipconfig下面没有的名字，然后试了半天，才知道内网走的是这个Local Area Connection*12
+
+![wireshark](/docs/docs_image/software/network/network09.png)
+
+可以看到还有SSH的请求干扰视线，所以果断关掉（其实也可以加过滤条件比如tcp.port!=22），但是发现黑色背景的tcp不断的出现，然后关掉网站，居然还在，决定根据端口查一下
+netstat -aon | find /i "53072"
+tasklist /fi "pid eq 81304"
+居然是chrome，关掉chrome就完全停掉了
+
+进一步看下http请求，看到左侧的箭头表示request和response，然后中间的两个点表示相关联的（https://www.wireshark.org/docs/wsug_html_chunked/ChUsePacketListPaneSection.html
+），应该是http底层依赖的tcp请求，然后后面的TCP Keep Alive基本就是与之想的，应该是http header里面的keep alive起作用
+https://www.imperva.com/learn/performance/http-keep-alive/
+
+使用wireshark还有个要注意的是，比如 http.host contains lyhistory.github.io
+因为我的域名是解析到github page  所以host不是我自己的lyhistory.com了
+
+### 5.2 一次排查send-q
+
+![send-q](/docs/docs_image/software/network/network10.png)
+
+可以看到有 50 100 128
+根据网上资料，排查系统参数
+
+![tcp backlog](/docs/docs_image/software/network/network11.png)
+
+可以看到128是因为这里的设置限制
+然后 google了下50，看到
+
+![server socket](/docs/docs_image/software/network/network12.png)
+
+但是实际上我根据cat /proc/<PID>/cmdline查到实际上这个程序是quickfix server，然后查了下是用的
+NioSocketAcceptor
+https://mina.apache.org/mina-project/gen-docs/2.1.2/apidocs/org/apache/mina/transport/socket/SocketAcceptor.html
+
+虽然这里没有写默认是多少，大概可以先猜测一下，java应该都是统一的默认50；
+所以我在quickfix java提了个proposal https://github.com/quickfix-j/quickfixj/issues/248
+同样的
+```cat /proc/<PID>/cmdline```
+查到了100的对应程序之一是我们的一个继承了spring-boot-starter-web程序，然后搜了下貌似tomcat默认就是100，所以查了下dependency，
+这里确实是spring-boot-starter-web依赖于tomcat；
+然后想到既然都是java程序受各种限制，比如socket默认的50以及tomcat默认的100，那么128又是怎么来的，搜了下，果然，比如websocket，这里是用了netty，然后有自定义的config
+
+![backlog](/docs/docs_image/software/network/network13.png)
+
+然后再查到其他的一些程序，比如kafka和zookeeper默认50
+然后可以看到显示出来的redis-server和nginx都是128
+
+再后来遇到另外一个问题：
+[the ESTAB tcp connection remains even after closed initiator](https://github.com/quickfix-j/quickfixj/issues/269)
+![server socket](/docs/docs_image/software/network/network15.png)
+我配错了heartbeat，然后导致了一个神奇的现象，客户端连接服务端，由于他这个协议里面是客户端主动发起heartbeat，所以我配错了之后，即使客户端断掉(连接之后过二十分钟再断)，服务端就认为连接一直在，
+所以会一直保持这个ESTABLISHED连接，除非重启服务端，然后因为quickfix不允许同一个配置的initiator多次连接，所以再连接都变成了TIME_WAIT;
+
+参考：记一次惊心的网站TCP队列问题排查经历https://zhuanlan.zhihu.com/p/36731397
+https://juejin.im/post/5d8488256fb9a06b065cad98
+https://cloud.tencent.com/developer/article/1143712
+
+### 5.3 死亡ping
+
+```
+ping -l 65500 目标ip -t （65500 表示数据长度上限，-t 表示不停地ping目标地址） 这就是简单的拒绝服务攻击。
+```
+
+> 首先是因为以太网长度有限，IP包片段被分片。当一个IP包的长度超过以太网帧的最大尺寸（以太网头部和尾部除外）时，包就会被分片，作为多个帧来发送。接收端的机器提取各个分片，并重组为一个完整的IP包。在正常情况下，IP头包含整个IP包的长度。当一个IP包被分片以后，头只包含各个分片的长度。分片并不包含整个IP包的长度信息，因此IP包一旦被分片，重组后的整个IP包的总长度只有在所在分片都接受完毕之后才能确定。
+>     在IP协议规范中规定了一个IP包的最大尺寸，而大多数的包处理程序又假设包的长度超过这个最大尺寸这种情况是不会出现的。因此，包的重组代码所分配的内存区域也最大不超过这个最大尺寸。这样，超大的包一旦出现，包当中的额外数据就会被写入其他正常区域。这很容易导致系统进入非稳定状态，是一种典型的缓存溢出（Buffer Overflow）攻击。在防火墙一级对这种攻击进行检测是相当难的，因为每个分片包看起来都很正常。
+>     由于使用ping工具很容易完成这种攻击，以至于它也成了这种攻击的首选武器，这也是这种攻击名字的由来。当然，还有很多程序都可以做到这一点，因此仅仅阻塞ping的使用并不能完全解决这个漏洞。预防死亡之ping的最好方法是对操作系统打补丁，使内核将不再对超过规定长度的包进行重组。
+>
+> https://zixuephp.net/article-99.html
+
+### 5.4 大量TIME_WAIT状态的TCP 连接
+
+https://mp.weixin.qq.com/s/t1ZUXvAUKlIt5UtiZFh1VQ
+
+这个跟前面开篇介绍的TCP三次握手和端口有关，
+
+在高并发的场景中，会出现批量的 `TIME_WAIT` 的 TCP 连接，短时间后，所有的 `TIME_WAIT` 全都消失，被回收，端口包括服务，均正常。即，在高并发的场景下，`TIME_WAIT` 连接存在，属于正常现象。
+
+如果是持续的高并发场景：
+
+- 一部分 `TIME_WAIT` 连接被回收，但新的 `TIME_WAIT` 连接产生；
+- 一些极端情况下，会出现**大量**的 `TIME_WAIT` 连接。
+
+这个对业务有何影响，如果服务器上是用nginx作为反向代理，意思是，客户端是请求到nginx，然后nginx再作为客户端请求到具体的程序或后台服务，比如java spring mvc程序，websocket等，get post请求mvc程序执行速度比较快，所以不好观察，除非是想办法模拟高并发，我觉着用websocket举例更容易，可以看到
+
+```
+[vm2-devclr-v08@SG/opt/haproxy-2.2.1]$netstat -anp|grep :80
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      3945/nginx: master
+tcp        0      0 x.x.x.48:80        10.30.30.94:25748       ESTABLISHED 15394/nginx: worker
+tcp        0      0 127.0.0.1:80            127.0.0.1:10693         ESTABLISHED 15394/nginx: worker
+tcp        0      0 127.0.0.1:10693         127.0.0.1:80            ESTABLISHED 25613/haproxy
+
+这个10693的端口是做什么的先不用管，是我测试的haproxy；
+我们主要看这个10.30.30.94:25748是客户端的连接，访问x.x.x.48:80，即nginx的监听的80端口，然后nginx立马会转发产生跟本地的websocket服务器也就是x.x.x.48:19090的连接，所以会占用一个nginx的端口，比如13576，下面可以看到，这里有两个连接，占用了两个nginx的端口13576和18973，因为是双向连接，所以还有反过来的连接
+
+[vm2-devclr-v08@SG/opt/haproxy-2.2.1]$netstat -anp|grep :19090
+tcp        0      0 0.0.0.0:19090           0.0.0.0:*               LISTEN      3136/java
+tcp        0      0 x.x.x.48:13576     x.x.x.48:19090     ESTABLISHED 15394/nginx: worker
+tcp        0      0 x.x.x.48:19090     x.x.x.48:13576     ESTABLISHED 3136/java
+tcp        0      0 x.x.x.48:18973     x.x.x.48:19090     ESTABLISHED 15394/nginx: worker
+tcp        0      0 x.x.x.48:19090     x.x.x.48:18973     ESTABLISHED 3136/java
+```
+
+所以Nginx 作为反向代理时，大量的短链接，可能导致 Nginx 上的 TCP 连接处于 `time_wait` 状态：
+
+- 每一个 time_wait 状态，都会占用一个「本地端口」，上限为 `65535`(16 bit，2 Byte)；
+- 当大量的连接处于 `time_wait` 时，新建立 TCP 连接会出错，**address already in use : connect** 异常
+
+统计：各种连接的数量
+
+`netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'`
+
+TCP 本地端口数量，上限为 `65535`（6.5w），这是因为 TCP 头部使用 `16 bit`，存储「**端口号**」，因此约束上限为 `65535`。
+
+大量的 `TIME_WAIT` 状态 TCP 连接存在，其本质原因是什么？
+
+- 大量的**短连接**存在
+- 特别是 HTTP 请求中，如果 `connection` 头部取值被设置为 `close` 时，基本都由「**服务端**」发起**主动关闭连接**
+- 而，`TCP 四次挥手`关闭连接机制中，为了保证 `ACK 重发`和`丢弃延迟数据`，设置 `time_wait` 为 2 倍的 `MSL`（报文最大存活时间）
+
+TIME_WAIT 状态：
+
+- TCP 连接中，**主动关闭连接**的一方出现的状态；（收到 FIN 命令，进入 TIME_WAIT 状态，并返回 ACK 命令）
+- 保持 2 个 `MSL` 时间，即，`4 分钟`；（MSL 为 2 分钟）
+
+解决上述 `time_wait` 状态大量存在，导致新连接创建失败的问题，一般解决办法：
+
+1、**客户端**，HTTP 请求的头部，connection 设置为 keep-alive，保持存活一段时间：现在的浏览器，一般都这么进行了 2、**服务器端**，
+
+- 允许 `time_wait` 状态的 socket 被**重用**
+- 缩减 `time_wait` 时间，设置为 `1 MSL`（即，2 mins）
+
+更多细节，参考：
+
+- https://www.cnblogs.com/yjf512/p/5327886.html
+
+几个核心要点
+
+1、 **time_wait 状态的影响**：
+
+- TCP 连接中，「主动发起关闭连接」的一端，会进入 time_wait 状态
+- time_wait 状态，默认会持续 `2 MSL`（报文的最大生存时间），一般是 2x2 mins
+- time_wait 状态下，TCP 连接占用的端口，无法被再次使用
+- TCP 端口数量，上限是 6.5w（`65535`，16 bit）
+- 大量 time_wait 状态存在，会导致新建 TCP 连接会出错，**address already in use : connect** 异常
+
+2、 **现实场景**：
+
+- 服务器端，一般设置：**不允许**「主动关闭连接」
+- 但 HTTP 请求中，http 头部 connection 参数，可能设置为 close，则，服务端处理完请求会主动关闭 TCP 连接
+- 现在浏览器中， HTTP 请求 `connection` 参数，一般都设置为 `keep-alive`
+- Nginx 反向代理场景中，可能出现大量短链接，服务器端，可能存在
+
+3、 **解决办法：服务器端**，
+
+- 允许 `time_wait` 状态的 socket 被重用
+- 缩减 `time_wait` 时间，设置为 `1 MSL`（即，2 mins）
+
+### 5.5 端口占用冲突 Ephemeral ports
+
+某应用程序监听端口9001，但是发现该端口已经被本地一个client端占用
+
+An ephemeral port is a communications endpoint of a transport layer protocol of the Internet protocol suite that is used for only a short period of time for the duration of a communication session.
+除了给常用服务保留的Well-known Port numbers之外，给客户端的端口号通常是动态分配的，称为ephemeral port（临时端口），在Linux系统上临时端口号的取值范围是通过这个内核参数定义的：net.ipv4.ip_local_port_range (/proc/sys/net/ipv4/ip_local_port_range)，端口号动态分配时并不是从小到大依次选取的，而是按照特定的算法随机分配的。
+
+```
+We need to change ephemeral ports range in linux server to avoid port clash with application ports. Instructions below.
+1.	Show current ephemeral port range using command below
+$   sysctl net.ipv4.ip_local_port_range
+2.	Add the following configuration to /etc/sysctl.conf to change this to the preferred range (32768 61000)
+net.ipv4.ip_local_port_range = 32768 61000
+3.	Activate the new settings with command below
+$   sysctl -p
+4.	Verify settings using command below
+$   sysctl net.ipv4.ip_local_port_range
+
+```
+
+## 6. 组网 Network architecture
 
 组网技术是指以太网组网技术和ATM局域网的组网技术。
 
+### 小范围的二层网络架构
+
+传统的数据交换都是在OSI 参考模型的数据链路层发生的，也就是按照MAC 地址进行寻址并进行数据转发，并建立和维护一个MAC 地址表，
+用来记录接收到的数据包中的MAC 地址及其所对应的端口。此种类型的网络均为小范围的二层网络。
+
+例子：
+
+假设现有如下网络拓扑图，ABCD四台主机属于10.0.0.0子网，网关指向路由器1的10.0.0.1，EFGH四台主机属于10.0.1.0子网，网关指向路由器2的10.0.1.1；
+![](./layer2-3.png)
+
+**同一子网通信**
+先看同一子网内通信情况，A向C发送数据，这种情况下都是ip指定的，假设所有主机，交换机和路由器都刚刚通电，没缓存任何MAC映射和路由表。A在向C发送数据之前，是知道C的ip地址，发现它俩在同一物理子网，于是A试图在物理子网内来寻找C,但是在物理子网内寻址是通过MAC地址的，A并不知道C的MAC地址，于是A发送了一个ARP广播包，ARP广播用的地址是ff:ff:ff:ff:ff:ff,包内容如下：
+
+源MAC	目标MAC	源IP	目标IP
+xx:xx:xx:xx:xx:aa	ff:ff:ff:ff:ff:ff	10.0.0.2	10.0.04
+交换机收到ARP广播后，首先会学习到主机A是连接到1端口的，然后缓存起来，同时在缓存中查找C的MAC地址，没找到便将这个广播包从所有端口发出去(1端口除外)，交换机2收到广播包后，也会在缓存中查找C的MAC地址，没找到同样进行转发，其中B，D主机收到广播包后发现和自己无关便丢弃，而C收到广播后便会进行回应，来告知自己的身份，内容格式如下：
+
+源MAC	目标MAC	源IP	目标IP
+xx:xx:xx:xx:xx:ac	xx:xx:xx:xx:xx:aa	10.0.0.4	10.0.0.2
+这个对于参与的交换机也是个学习的过程，在过程中记忆了主机A和主机C的ip地址和mac地址，AC找到彼此后，便可以在同一子网内依靠mac地址进行相互通信，格式如下：
+
+源MAC	目标MAC	源IP	目标IP
+C--->A	xx:xx:xx:xx:xx:ac	xx:xx:xx:xx:xx:aa	10.0.0.4	10.0.0.2
+A--->C	xx:xx:xx:xx:xx:aa	xx:xx:xx:xx:xx:ac	10.0.0.2	10.0.0.4
+
+**跨物理子网通信**
+同样假设所有设备都刚刚通电，没有缓存任何信息，这时A向E发送数据，A是知道E的ip地址，发现属于同一网段，同样不知道E的mac地址，于是A同样发送ARP广播包,BCD没有响应，但是路由器1收到广播后，为了避免广播风暴，会把自己的mac地址告诉A，格式如下：
+
+源MAC	目标MAC	源IP	目标IP
+xx:xx:xx:xx:xx:ca	xx:xx:xx:xx:xx:aa	10.0.0.1	10.0.0.2
+A等待超时后，会知道E不在当前物理子网内，于是会向路由器1发送数据包，路由器收到数据包后，发现没有缓存E的ip地址，于是路由器1开始寻找E的过程。相比较交换机的广播找人，路由器寻址的空间范围更大，很多情况下是整个internet网络，要跨很多网络运营商，因此L3层面路由器的路径寻址计算协议涉及很多，例如：RIP、OSPF、IS-IS、BGP、IGRP等协议。路由器计算路径时，是无法窥探整个互联网的，因此每台路由器都是通过路由算法找到下一跳的最优路径，这些最优路径汇集起来就是完整的寻址路径，换句话说，路由器的转发路径不是一台路由器选出来的，而是很多路由器共同选择出来的最优下一跳地址序列；在这里为了解释原理，假设路由器1直接找到了路由器2。
+
+这样路由器1开始想路由器2发送数据包，路由器2便开始在自己的物理子网内寻找E,进过一次广播后，发现E在自己子网内，于是向前一跳，找到离自己最近的路由器1，反馈自己离E主机最近，最终经过“A->广播->路由器->路由器寻址->找到E主机所在子网”过程的A,便可以和E进行通信了。由于A和E之间经历了多个物理子网，因此需要经历多次L2的转发才能实现数据包的转达，在这个过程中，ip包外包的数据帧中的mac地址是不断变换的。在A-E-A的过程中，数据帧和IP包的地址经历了如下过程(假设A的通信端口是88，而E的是99)：
+去包：
+
+源MAC	目标MAC	源IP	目标IP	源端口	目的端口	用户数据	帧尾
+A--->路由1	xx:xx:xx:xx:xx:aa	xx:xx:xx:xx:xx:ca	10.0.0.2	10.0.0.6	88	99	.....	....
+路由1--->路由2	xx:xx:xx:xx:xx:cb	xx:xx:xx:xx:xx:cc	10.0.0.2	10.0.0.6	88	99	...	.....
+路由2--->E	xx:xx:xx:xx:xx:cd	xx:xx:xx:xx:xx:ae	10.0.0.2	10.0.0.6	88	99	...	.....
+回包:
+
+源MAC	目标MAC	源IP	目标IP	源端口	目的端口	用户数据	帧尾
+E--->路由2	xx:xx:xx:xx:xx:ae	xx:xx:xx:xx:xx:cd	10.0.0.6	10.0.0.2	99	88	...	.....
+路由2--->路由1	xx:xx:xx:xx:xx:cc	xx:xx:xx:xx:xx:cb	10.0.0.6	10.0.0.2	99	88	...	.....
+路由1--->A	xx:xx:xx:xx:xx:ca	xx:xx:xx:xx:xx:aa	10.0.0.6	10.0.0.2	99	88	.....	....
+数据包在路由1和2中的1，4端口中进行转发时，因为是在设备内部，因此可以直接转发，不用变换帧头，从而提高效率，另外如果A向其他子网的FGH发送数据时，过程基本上一样，只不过不会通过广播寻址，而是直接将数据包发送给路由器出口网关。
+
+ref: https://blog.csdn.net/cj2580/article/details/80107037
+
+总结一、二层网络的工作流程：
+1）数据包接收：首先交换机接收某端口中传输过来的数据包，并对该数据包的源文件进行解析，获取其源MAC 地址，确定发放源数据包主机
+2）传输数据包到目的MAC 地址：首先判断目的MAC 地址是否存在，如果交换机所存储的MAC 地址表中有此MAC 地址所对应的端口，那么直接将数据包发送给这个端口;如果在交换机存储列表中找不到对应的目的MAC 地址，交换机则会对数据包进行全端口广播，直至收到目的设备的回应，交换机通过此次广播学习、记忆并建立目的MAC 地址和目的端口的对应关系，以备以后快速建立与该目的设备的联系;
+3）如果交换机所存储的MAC 地址表中没有此地址，就会将数据包广播发送到所有端口上，当目的终端给出回应时，交换机又学习到了一个新的MAC 地址与端口的对应关系，并存储在自身的MAC 地址表中。当下次发送数据的时候就可以直接发送到这个端口而非广播发送了。
+
+以上就是交换机将一个MAC 地址添加到列表的流程，该过程循环往复，交换机就能够对整个网络中存在的MAC 地址进行记忆并添加到地址列表，这就是二层(OSI 二层)交换机对MAC 地址进行建立、维护的全过程。
+
+从上述过程不难看出，传统的二层网络结构模式虽然运行简便但在很大程度上限制了网络规模的扩大，由于传统网络结构中采用的是广播的方式来实现数据的传输，极易形成广播风暴，进而造成网络的瘫痪。这就是各个计算机研究机构所面临的“二层网络存在的天然瓶颈”，由于该瓶颈的存在，使得大规模的数据传输和资源共享难以实现，基于传统的二层网络结构也很难实现局域网络规模化。
+
+为了适应大规模网络的产生于发展，基于分层、简化的思想，三层网络模式被成功设计推出。三层网络架构的基本思想就是将大规模、较复杂的
+网络进行分层次分模块处理，为每个模块指定对应的功能，各司其职，互不干扰，大大提高了数据传输的速率。
+
+### 三层网络架构
+
+二、三层网络结构的设计，顾名思义，具有三个层次：核心层、汇聚层、接入层。下面将对三个层次的作用分别进行说明。
+1）核心层：在互联网中承载着网络服务器与各应用端口间的传输功能，是整个网络的支撑脊梁和数据传输通道，重要性不言而喻。因此，网络对于核心层要求极高，核心层必须具备数据存储的高安全性，数据传输的高效性和可靠性，对数据错误的高容错性，以及数据管理方面的便捷性和高适应性等性能。在核心层搭建中，设备的采购必须严格按需采购，满足上述功能需求，这就对交换机的带宽以及数据承载能力提出了更高的要求，因为核心层一旦堵塞将造成大面积网络瘫痪，因此必须配备高性能的数据冗余转接设备和防止负载过剩的均衡过剩负载的设备，以降低各核心层交换机所需承载的数据量，以保障网络高速、安全的运转。
+2）汇聚层：连接网络的核心层和各个接入的应用层，在两层之间承担“媒介传输”的作用。每个应用接入都经过汇聚层进行数据处理，再与核心层进行有效的连接，通过汇聚层的有效整合对核心层的荷载量进行降低。根据汇聚层的作用要求，汇聚层应该具备以下功能：实施安全功能、工作组整体接入功能、虚拟网络过滤功能等。因此，汇聚层中设备的采购必须具备三层网络的接入交换功能，同时支持虚拟网络的创建功能，从而实现不同网络间的数据隔离安全，能够将大型网络进行分段划分，化繁为简。
+3）接入层：接入层的面向对象主要是终端客户，为终端客户提供接入功能，区别于核心层和汇聚层提供各种策略的功能。接入层的主要功能是规划同一网段中的工作站个数，提高各接入终端的带宽。在搭建网络架构时，既要考虑网络的综合实用性，也要考虑经济效益，因此在接入层设备采购时可以选择数据链路层中较低端的交换机，而不是越高端越昂贵越好。
+
+随着近年来互联网的应用规模急剧扩张，对数据传输的要求也越来越高，基于数据整合的云计算技术逐渐受到人们的关注。计算机网络作为当今社会各种信息的传输媒介，其组成架构也即将发生重大变革。鉴于传统三层网络VLan 隔离以及STP 收敛上的缺陷，传统网络结构急需打破。现有研究机构开始致力于新型高效网络架构的研发与探索，结合早期的扁平化架构的原有二层网络与现有三层网络的优缺点提出了大二层网络架构。
+
+### 大二层网络架构
+技术：
+网络虚拟化（网络厂商主导技术）
+路由二层转发（网络厂商主导技术）
+Overlay（IT厂商主导技术）
+
+1）为什么需要大二层网络
+
+传统的三层数据中心架构结构的设计是为了应付服务客户端-服务器应用程序的纵贯式大流量，同时使网络管理员能够对流量流进行管理。工程师在这些架构中采用生成树协议(STP)来优化客户端到服务器的路径和支持连接冗余，通常将二层网络的范围限制在网络接入层以下，避免出现大范围的二层广播域； 
+
+虚拟化从根本上改变了数据中心网络架构的需求，既虚拟化引入了虚拟机动态迁移技术。从而要求网络支持大范围的二层域。从根本上改变了传统三层网络统治数据中心网络的局面。具体的来说，虚拟化技术的一项伴生技术—虚拟机动态迁移（如VMware的VMotion）在数据中心得到了广泛的应用，虚拟机迁移要求虚拟机迁移前后的IP和MAC地址不变，这就需要虚拟机迁移前后的网络处于同一个二层域内部。由于客户要求虚拟机迁移的范围越来越大，甚至是跨越不同地域、不同机房之间的迁移，所以使得数据中心二层网络的范围越来越大，甚至出现了专业的大二层网络这一新领域专题。 
+
+思考两个问题：
+a）IP及MAC不变的理由？
+对业务透明、业务不中断
+b）IP及MAC不变，那么为什么必须是二层域内？
+IP不变，那么就不能够实现基于IP的寻址（三层），那么只能实现基于MAC的寻址，既二层寻址，大二层，顾名思义，此是二层网络，根据MAC地址进行寻址
+
+2）传统的二层网络大不起来的原因
+
+在数据中心网络中，“区域”对应VLAN的划分。相同VLAN内的终端属于同一广播域，具有一致的VLAN-ID，二层连通；不同VLAN内的终端需要通过网关互相访问，二层隔离，三层连通。传统的数据中心设计，区域和VLAN的划分粒度是比较细的，这主要取决于“需求”和“网络规模”。 
+
+传统的数据中心主要是依据功能进行区域划分，例如WEB、APP、DB，办公区、业务区、内联区、外联区等等。不同区域之间通过网关和安全设备互访，保证不同区域的可靠性、安全性。同时，不同区域由于具有不同的功能，因此需要相互访问数据时，只要终端之间能够通信即可，并不一定要求通信双方处于同一VLAN或二层网络。 
+
+传统的数据中心网络技术， STP是二层网络中非常重要的一种协议。用户构建网络时，为了保证可靠性，通常会采用冗余设备和冗余链路，这样就不可避免的形成环路。而二层网络处于同一个广播域下，广播报文在环路中会反复持续传送，形成广播风暴，瞬间即可导致端口阻塞和设备瘫痪。因此，为了防止广播风暴，就必须防止形成环路。这样，既要防止形成环路，又要保证可靠性，就只能将冗余设备和冗余链路变成备份设备和备份链路。即冗余的设备端口和链路在正常情况下被阻塞掉，不参与数据报文的转发。只有当前转发的设备、端口、链路出现故障，导致网络不通的时候，冗余的设备端口和链路才会被打开，使得网络能够恢复正常。实现这些自动控制功能的就是STP（Spanning Tree Protocol，生成树协议）。 由于STP的收敛性能等原因，一般情况下STP的网络规模不会超过100台交换机。同时由于STP需要阻塞掉冗余设备和链路，也降低了网络资源的带宽利用率。因此在实际网络规划时，从转发性能、利用率、可靠性等方面考虑，会尽可能控制STP网络范围。 
+
+随着数据大集中的发展和虚拟化技术的应用，数据中心的规模与日俱增，不仅对二层网络的区域范围要求也越来越大，在需求和管理水平上也提出了新的挑战。 
+
+数据中心区域规模和业务处理需求的增加，对于集群处理的应用越来越多，集群内的服务器需要在一个二层VLAN下。同时，虚拟化技术的应用，在带来业务部署的便利性和灵活性基础上，虚拟机的迁移问题也成为必须要考虑的问题。为了保证虚拟机承载业务的连续性，虚拟机迁移前后的IP地址不变，因此虚拟机的迁移范围需要在同一个二层VLAN下。反过来即，二层网络规模有多大，虚拟机才能迁移有多远。 
+
+传统的基于STP备份设备和链路方案已经不能满足数据中心规模、带宽的需求，并且STP协议几秒至几分钟的故障收敛时间，也不能满足数据中心的可靠性要求。因此，需要能够有新的技术，在满足二层网络规模的同时，也能够充分利用冗余设备和链路，提升链路利用率，而且数据中心的故障收敛时间能够降低到亚秒甚至毫秒级。 
+
+3）实现大二层网络的技术
+
+大二层网络是针对当前最火热的虚拟化数据中心的虚拟机动态迁移这一特定需求而提出的概念，对于其他类型的网络并无特殊的价值和意义。
+
+在虚拟化数据中心里，一台物理服务器被虚拟化为多台逻辑服务器，被称为虚拟机VM，每个VM都可以独立运行，有自己的OS、APP，在网络层面有自己独立的MAC地址和IP地址。而VM动态迁移是指将VM从一个物理服务器迁移到另一个物理服务器，并且要保证在迁移过程中，VM的业务不能中断。
+
+为了实现VM动态迁移时，在网络层面要求迁移时不仅VM的IP地址不变、而且运行状态也必须保持（例如TCP会话状态），这就要求迁移的起始和目标位置必须在同一个二层网络域之中。
+
+所以，为了实现VM的大范围甚至跨地域的动态迁移，就要求把VM迁移可能涉及的所有服务器都纳入同一个二层网络域，这样才能实现VM的大范围无障碍迁移。这就是大二层网络的需求由来，一个真正意义的大二层网络至少要能容纳1万以上的主机，才能称之为大二层网络。而传统的基于VLAN+xSTP的二层网络，由于环路和广播风暴、以及xSTP协议的性能限制等原因，通常能容纳的主机数量不会超过1K，无法实现大二层网络。当前，实现大二层网络的主要技术有以下几种：
+
+a）网络设备虚拟化技术
+
+网络设备虚拟化是将相互冗余的两台或多台物理网络设备组合在一起，虚拟化成一台逻辑网络设备，在整个网络中只呈现为一个节点。例如华为的CSS框式堆叠、iStack盒式堆叠、SVF框盒堆叠技术等。
+
+网络设备虚拟化再配合链路聚合技术，就可以把原来网络的多节点、多链路的结构变成逻辑上单节点、单链路的结构，解决了二层网络中的环路问题。没有了环路问题，就不需要xSTP，二层网络就可以范围无限（只要虚拟网络设备的接入能力允许），从而实现大二层网络。
+
+b）大二层转发技术
+
+大二层转发技术是通过定义新的转发协议，改变传统二层网络的转发模式，将三层网络的路由转发模式引入到二层网络中。例如TRILL、SPB等。
+
+以TRILL为例，TRILL协议在原始以太帧外封装一个TRILL帧头，再封装一个新的以太帧来实现对原始以太帧的透明传输，支持TRILL的交换机可通过TRILL帧头里的Nickname标识来进行转发，而Nickname就像路由一样，可通过IS-IS路由协议进行收集、同步和更新。
+
+c）Overlay技术
+
+Overlay技术是通过用隧道封装的方式，将源主机发出的原始二层报文封装后在现有网络中进行透明传输，从而实现主机之间的二层通信。通过封装和解封装，相当于一个大二层网络叠加在现有的基础网络之上，所以称为Overlay技术。
+
+Overlay技术通过隧道封装的方式，忽略承载网络的结构和细节，可以把整个承载网络当作一台“巨大无比的二层交换机”， 每一台主机都是直连在“交换机”的一个端口上。而承载网络之内如何转发都是 “交换机”内部的事情，主机完全不可见。Overlay技术主要有VXLAN、NVGRE、STT等。
+
+4）大二层网络需要有多大、及技术选型 
+
+1. 数据中心内 
+大二层首先需要解决的是数据中心内部的网络扩展问题，通过大规模二层网络和VLAN延伸，实现虚拟机在数据中心内部的大范围迁移。由于数据中心内的大二层网络都要覆盖多个接入交换机和核心交换机，主要有以下两类技术。
+
+a） 虚拟交换机技术 
+虚拟交换机技术的出发点很简单，属于工程派。既然二层网络的核心是环路问题，而环路问题是随着冗余设备和链路产生的，那么如果将相互冗余的两台或多台设备、两条或多条链路合并成一台设备和一条链路，就可以回到之前的单设备、单链路情况，环路自然也就不存在了。尤其是交换机技术的发展，虚拟交换机从低端盒式设备到高端框式设备都已经广泛应用，具备了相当的成熟度和稳定度。因此，虚拟交换机技术成为目前应用最广的大二层解决方案。 虚拟交换机技术的代表是H3C公司的IRF、Cisco公司的VSS，其特点是只需要交换机软件升级即可支持，应用成本低，部署简单。目前这些技术都是各厂商独立实现和完成的，只能同一厂商的相同系列产品之间才能实施虚拟化。同时，由于高端框式交换机的性能、密度越来越高，对虚拟交换机的技术要求也越来越高，目前框式交换机的虚拟化密度最高为4:1。虚拟交换机的密度限制了二层网络的规模大约在1万～2万台服务器左右。
+
+b） 隧道技术 
+隧道技术属于技术派，出发点是借船出海。二层网络不能有环路，冗余链路必须要阻塞掉，但三层网络显然不存在这个问题，而且还可以做ECMP（等价链路），能否借用过来呢？通过在二层报文前插入额外的帧头，并且采用路由计算的方式控制整网数据的转发，不仅可以在冗余链路下防止广播风暴，而且可以做ECMP。这样可以将二层网络的规模扩展到整张网络，而不会受核心交换机数量的限制。
+隧道技术的代表是TRILL、SPB，都是通过借用IS-IS路由协议的计算和转发模式，实现二层网络的大规模扩展。这些技术的特点是可以构建比虚拟交换机技术更大的超大规模二层网络（应用于大规模集群计算），但尚未完全成熟，目前正在标准化过程中。同时传统交换机不仅需要软件升级，还需要硬件支持。
+
+ 2. 跨数据中心 
+随着数据中心多中心的部署，虚拟机的跨数据中心迁移、灾备，跨数据中心业务负载分担等需求，使得二层网络的扩展不仅是在数据中心的边界为止，还需要考虑跨越数据中心机房的区域，延伸到同城备份中心、远程灾备中心。 
+一般情况下，多数据中心之间的连接是通过路由连通的，天然是一个三层网络。而要实现通过三层网络连接的两个二层网络互通，就必须实现“L2 over L3”。 
+
+L2oL3技术也有许多种，例如传统的VPLS（MPLS L2VPN）技术，以及新兴的Cisco OTV、H3C EVI技术，都是借助隧道的方式，将二层数据报文封装在三层报文中，跨越中间的三层网络，实现两地二层数据的互通。这种隧道就像一个虚拟的桥，将多个数据中心的二层网络贯穿在一起。 
+
+也有部分虚拟化和软件厂商提出了软件的L2 over L3技术解决方案。例如VMware的VXLAN、微软的NVGRE，在虚拟化层的vSwitch中将二层数据封装在UDP、GRE报文中，在物理网络拓扑上构建一层虚拟化网络层，从而摆脱对网络设备层的二层、三层限制。这些技术由于性能、扩展性等问题，也没有得到广泛的使用。
+
+## 7. 概念对比
+
+### VPC VLAN VXLAN
+
+#### VPC
+虚拟私有云 (VPC) 是托管在公共云内的安全、孤立的私有云（不是真正的单租户私有云，而是多租户虚拟私有云）。
+VPC 将具有专用的子网和 VLAN，仅 VPC 客户可以访问。这样可以防止公共云中的任何其他人访问 VPC 内的计算资源 - 有效地在桌子上放置“预留”牌。VPC 客户通过 VPN 连接到其 VPC，因此其他公共云用户看不到传入和传出 VPC 的数据。
+
+A VPC isolates computing resources from the other computing resources available in the public cloud. 
+A VPC will have a dedicated subnet and VLAN that are only accessible by the VPC customer. This prevents anyone else within the public cloud from accessing computing resources within the VPC – effectively placing the "Reserved" sign on the table. The VPC customer connects via VPN to their VPC, so that data passing into and out of the VPC is not visible to other public cloud users.
+
+The key technologies for isolating a VPC from the rest of the public cloud are:
+- 子网 Subnets: 
+    A subnet is a range of IP addresses within a network that are reserved so that they're not available to everyone within the network, essentially dividing part of the network for private use. In a VPC these are private IP addresses that are not accessible via the public Internet, unlike typical IP addresses, which are publicly visible.
+    子网是网络中的一个 IP 地址范围，它们被预留，因此对网络内的每个人都不可用，实际上是划分了一部分网络供私人使用。在 VPC 中，这些是地址是私有 IP 地址，无法通过公共互联网访问，这不同于通常可见的典型 IP 地址。
+- VLAN: 
+    A LAN is a local area network, or a group of computing devices that are all connected to each other without the use of the Internet. A VLAN is a virtual LAN. Like a subnet, a VLAN is a way of partitioning a network, but the partitioning takes place at a different layer within the OSI model (layer 2 instead of layer 3).
+    LAN 是局域网，也就是一组未通过互联网相互连接的计算设备。VLAN 是虚拟 LAN。就像子网一样，VLAN 是对网络进行分区的一种方式，但是分区发生在 OSI 模型的另一层（第二层而不是第三层）。
+
+- VPN: 
+    A virtual private network (VPN) uses encryption to create a private network over the top of a public network. VPN traffic passes through publicly shared Internet infrastructure – routers, switches, etc. – but the traffic is scrambled and not visible to anyone.
+    虚拟专用网络 (VPN) 使用加密在公用网络的顶部创建专用网。VPN 流量通过公众共享的互联网基础设施（路由器、交换机等）进行传输，但是流量是混乱的，任何人都看不到。
+
+
+VPC 将具有专用的子网和 VLAN，仅 VPC 客户可以访问。这样可以防止公共云中的任何其他人访问 VPC 内的计算资源 - 有效地在桌子上放置“预留”牌。VPC 客户通过 VPN 连接到其 VPC，因此其他公共云用户看不到传入和传出 VPC 的数据。
+一些 VPC 提供商通过以下方式提供其他自定义：
++ 网络地址转换 (NAT)：此功能将专用 IP 地址与公用 IP 地址进行匹配，以便与公用互联网连接。使用 NAT，可以在 VPC 中运行面向公众的网站或应用程序。Network Address Translation (NAT): This feature matches private IP addresses to a public IP address for connections with the public Internet. With NAT, a public-facing website or application could run in a VPC.
++ BGP 路由配置：一些提供商允许客户定制 BGP 路由表，以将其 VPC 与其他基础设备连接。BGP route configuration: Some providers allow customers to customize BGP routing tables for connecting their VPC with their other infrastructure. (Learn how BGP works.)
+
+#### VLAN Virtual local Area Network:
+the computers, servers and other network devices are logically connected regardless of their physical location,
+VLANs can logically create several virtual networks to separate the network broadcast traffic, one of the main reason of creating VLAN is for traffic management because as a local area network grows and more network devices are added, the frequency of the broadcasts will also increase and the network will get heavily congested with data, but by creating VLANs which divided up the network into smaller broadcast domains, it will help alleviate the broadcast traffic.
+VLAN identifiers 12bits=4094 VLANs
+https://www.youtube.com/watch?v=jC6MJTh9fRE
+#### （IT厂商主导技术）VXLAN:
+Virtual extensible Local Area Network, at its most basic level VXLAN is a tunneling protocol that tunnels ethernet Layer2 二层 traffic over an IP Layer3 network 三层, it's an extension to VLAN, it encapsulates a Layer2 ethernet frame into a udp packet and then transmit this packet over a Layer3 network, VXLAN is a formal internet standard specified in RFC7348, if you go back to OSI model VXLAN is another Application Layer protocol based on UDP that runs on port 4789, why we need VXLAN: the traditional layer 2 networks have issues due to below three main reasons:
+- Spanning-tree blocks any redundant links to avoid loops, blocking links to create a loop free topology gets the job done but it also means we pay for the links we can't use
+- limitted amount of VLANs, VXLAN overcomes this limitation by using a longer logical network identifier that is 24 bit which allows more VLANs and therefore more logical network isolation for large network such as cloud that typically include many VMs
+- large mac address tables, before server virtualization a switch only had to learn one mac address per switch port, with server virtualization we run many VMs or containers on a single physical server, each VM has a virtual nick and a virtual mac address, the number of addresses in the mac address table of switches has grown exponentially, the switch has to learn many mac addresses on a single switch port, a Top-Of-Rack(TOR) switch in data center could connect to 24 or 28 physical servers, a data center could have many racks so each switch has to store the mac address of all VMs that communicates with each other, we requrie much larger mac address tables compared to network without server virtualization,
+with benefits that VLANs can't provide:
+- 16 million VXLANs
+- migration of VMs, migration of virtual machines between servers that exists in separtate layer 2 domains by tunneling the traffic over layer 3 networks, the funtionality allows you to dynamically allocate resources within or between data centers without being constrained by layer 2 boundaries or being forced to create large or geographically streached layer 2 domains
+https://www.youtube.com/watch?v=QPqVtguOz4w
+[Linux VXLAN](https://cloud.tencent.com/developer/article/1476722)
+
+## 8.实例
 ### example: 虚拟机网络模式：桥接 VS NAT
 参考：[基于virtualbox构建网络环境](/docs/software/network/vm_env_network)
 
@@ -1571,5 +1652,18 @@ ref:
 
 化繁为简！开发者尝鲜阿里小程序云平台，实操讲解如何打造智能小车！ https://yq.aliyun.com/articles/700749?spm=a2c4e.11163080.searchblog.48.32e02ec1I9PHCG
 技术宅之---用手机实现“移动网关” https://yq.aliyun.com/articles/702875?spm=a2c4e.11163080.searchblog.32.32e02ec1I9PHCG
+
+网络知识梳理--OSI七层网络与TCP/IP五层网络架构及二层/三层网络 https://www.cnblogs.com/kevingrace/p/5909719.html
+
+[走近数据中心大二层网络](https://bbs.huaweicloud.com/blogs/219820)
+
+
+https://www.anquanke.com/post/id/87158
+https://www.sdnlab.com/20510.html
+
+[组播 VLAN](https://support.huawei.com/enterprise/zh/doc/EDOC1100169967/3ed5e570)
+交易系统设计要点 https://zhuanlan.zhihu.com/p/607346470
+
+[单播、多播、广播、组播、泛播、冲突域、广播域、VLAN概念汇总](https://bbs.huaweicloud.com/blogs/307508)
 
 <disqus/>

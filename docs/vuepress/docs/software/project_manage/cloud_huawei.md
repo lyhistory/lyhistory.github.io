@@ -15,6 +15,7 @@ Dedicated Cloud（以下简称DeC）是华为面向企业、政府、金融等�
 + 弹性计算服务ECS
 + 裸金属服务 BMS bare metal
 + 专属主机 DEH
+    场景：某交易系统需要udp广播，但是华为普通的ECS机器所在的网络的交换机是跟其他租户共用的，所以华为会限流，以免量大了对其他租户造成影响，造成丢包，这种情况下只能使用专属主机，可以自行设置交换机频段
 
 
 私有云、公有云、专属云间的商业逻辑
@@ -44,8 +45,8 @@ https://bbs.huaweicloud.com/blogs/114839
 https://support.huaweicloud.com/vpc_faq/vpc_faq_0001.html
 ![](https://support.huaweicloud.com/vpc_faq/zh-cn_image_0000001184839114.png)
 
-首先从服务的角度来看，VPC指的是一种云（Cloud），这与它的字面意思相符。对于基础架构服务（IaaS），云就是指资源池。你或许听过公有云（Public Cloud）、私有云（Private Cloud）、混合云（Hybrid Cloud）。不过，VPC不属于这三种云中任一种。这是一种运行在公有云上，将一部分公有云资源为某个用户隔离出来，给这个用户私有使用的资源的集合。VPC是这么一种云，它由公有云管理，运行在公共资源上，但是保证每个用户之间的资源是隔离，用户在使用的时候不受其他用户的影响，感觉像是在使用自己的私有云一样。
-从这种意义上看，VPC不是网络，我们可以对比VPC和它一个字面上相近的概念：VPN（Virtual Private Network）。VPN在公共的网络资源上虚拟隔离出一个个用户网络，例如IPsec VPN可以是在互联网上构建连接用户私有网络的隧道，MPLS VPN更是直接在运营商的PE设备上划分隔离的VRF给不同的用户。从提供服务的角度来，说如果VPC指的只是网络的话，那它跟VPN的概念是重复的。所以，从公有云所提供的服务来说，VPC应该理解成，向用户提供的隔离资源的集合。
+规划子网 subnet
+https://support.huaweicloud.com/usermanual-vpc/vpc_0001.html
 
 + 通过VPC对等连接功能，实现同一区域内不同VPC下的私网IP互通。
     同一区域的VPC: 对等连接 https://support.huaweicloud.com/usermanual-vpc/zh-cn_topic_0046655036.html
@@ -53,7 +54,6 @@ https://support.huaweicloud.com/vpc_faq/vpc_faq_0001.html
 + 通过虚拟专用网络VPN、云连接、云专线及企业交换机将VPC和您的数据中心连通
     不同区域的VPC: 云连接 https://support.huaweicloud.com/cc/index.html
 
-subnet
 
 
 VPC拓扑：
