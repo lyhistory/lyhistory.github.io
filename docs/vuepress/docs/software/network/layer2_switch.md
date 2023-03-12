@@ -25,7 +25,7 @@ Reply from *192.168.0.141*: Destination host unreachable.
 ```
 the ip "Reply from " is the source machine, it indicates that it's something wrong with the source machine, 
 then I run 'arp -a', 
-![](./arp.png)
+![](/docs/docs_image/software/network/arp.png)
 now things get a bit clear, the target ip isn't in the arp table, I tried arp -d to reset arp, but not working, so I decided the easiest way is to restart router to clear the arp table;
 after restarting router, all settled!
 

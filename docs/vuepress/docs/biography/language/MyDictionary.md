@@ -2301,7 +2301,7 @@ packed 拥挤 crowded
  
 
 
-## Urban Dictionary
+## Urban Dictionary(SLANG)
 non-trivial https://www.zhihu.com/question/20681622
 KARMA 佛教 因果报应 因缘
 opcodes 操作码; 伪代码;
