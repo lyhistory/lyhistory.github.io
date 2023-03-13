@@ -17,5 +17,18 @@ https://help.aliyun.com/document_detail/160096.html?spm=5176.19540786.0.0.c29046
 弹性裸金属服务器（ECS Bare Metal Instance，简称为EBM）是一款同时兼具虚拟机弹性和物理机性能及特性的新型计算类产品，是基于阿里云完全自主研发的下一代虚拟化技术而打造的新型计算类服务器产品
 
 
+安全：
+TLS:
+应用之间;
+
+
+IPSEC:
+point-to-site VPN network connection via a public network,
+site-to-site VPN connection across region and countries;
+point-to-point IPSEC VPN can also be implemented for connecting an internal workstation to another internal workstation;
+
+Private leased line (also known as MPLS) :
+can be use to connect between a Cloud Service Provider and the company on-premise.
+
 
 

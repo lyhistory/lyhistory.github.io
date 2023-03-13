@@ -147,3 +147,6 @@ An error occurred (UnauthorizedOperation) when calling the DescribeInstances ope
 
 ## aws shell
 https://github.com/awslabs/aws-shell
+
+## AWS Security Reference Architecture
+[AWS Security Reference Architecture](https://docs.aws.amazon.com/prescriptive-guidance/latest/security-reference-architecture/welcome.html)

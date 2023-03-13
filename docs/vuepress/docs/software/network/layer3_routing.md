@@ -76,6 +76,8 @@ OSPF and RIP are Interior Gateway Protocols (IGP) and distribute routing informa
 Therefore, both are confined to a single domain for routing (intra-domain). whereas BGP is a Exterior Gateway Protocol, primarily designed to be used to route between routing domains (inter-domain).
 ### BGP
 
+Private leased line (also known as MPLS) provides a dedicated connection that offers lots of bandwidth and it does not route through the Internet. The connection is routed using BGP (border gateway protocol) usually via a telecom provider at their backend infrastructure to establish the secure connection.
+
 ### IGP
 OSPF
 Open Shortest Path First (OSPF) is a link-state routing protocol that was developed for IP networks and is based on the Shortest Path First (SPF) algorithm. OSPF is an Interior Gateway Protocol (IGP).

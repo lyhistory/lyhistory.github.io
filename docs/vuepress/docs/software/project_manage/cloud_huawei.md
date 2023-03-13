@@ -144,10 +144,12 @@ ECS
 https://www.huaweicloud.com/product/hss.html
 
 ## 安全合规
+
+[华为云零信任能力成熟度模型白皮书](https://res-static.hc-cdn.cn/cloudbu-site/china/zh-cn/TrustCenter/WithePaper/HUAWEICLOUD_ZTCMM.pdf)
+
 安全组
 
-Cloud Certificate Manager，CCM
-https://www.huaweicloud.com/intl/zh-cn/product/scm.html?agencyId=5e86556c08824ce6802d7aaf127f33a7&region=ap-southeast-3
+[Cloud Certificate Manager，CCM](https://www.huaweicloud.com/intl/zh-cn/product/scm.html?agencyId=5e86556c08824ce6802d7aaf127f33a7&region=ap-southeast-3)
 
 
 云防火墙 CFW
