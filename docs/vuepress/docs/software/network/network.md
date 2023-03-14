@@ -1299,22 +1299,27 @@ ref: https://blog.csdn.net/cj2580/article/details/80107037
 为了适应大规模网络的产生于发展，基于分层、简化的思想，三层网络模式被成功设计推出。三层网络架构的基本思想就是将大规模、较复杂的
 网络进行分层次分模块处理，为每个模块指定对应的功能，各司其职，互不干扰，大大提高了数据传输的速率。
 
-### 三层网络架构
+### 三层网络架构(vlan+xstp)
 
 二、三层网络结构的设计，顾名思义，具有三个层次：核心层、汇聚层、接入层。下面将对三个层次的作用分别进行说明。
 1）核心层：在互联网中承载着网络服务器与各应用端口间的传输功能，是整个网络的支撑脊梁和数据传输通道，重要性不言而喻。因此，网络对于核心层要求极高，核心层必须具备数据存储的高安全性，数据传输的高效性和可靠性，对数据错误的高容错性，以及数据管理方面的便捷性和高适应性等性能。在核心层搭建中，设备的采购必须严格按需采购，满足上述功能需求，这就对交换机的带宽以及数据承载能力提出了更高的要求，因为核心层一旦堵塞将造成大面积网络瘫痪，因此必须配备高性能的数据冗余转接设备和防止负载过剩的均衡过剩负载的设备，以降低各核心层交换机所需承载的数据量，以保障网络高速、安全的运转。
 2）汇聚层：连接网络的核心层和各个接入的应用层，在两层之间承担“媒介传输”的作用。每个应用接入都经过汇聚层进行数据处理，再与核心层进行有效的连接，通过汇聚层的有效整合对核心层的荷载量进行降低。根据汇聚层的作用要求，汇聚层应该具备以下功能：实施安全功能、工作组整体接入功能、虚拟网络过滤功能等。因此，汇聚层中设备的采购必须具备三层网络的接入交换功能，同时支持虚拟网络的创建功能，从而实现不同网络间的数据隔离安全，能够将大型网络进行分段划分，化繁为简。
 3）接入层：接入层的面向对象主要是终端客户，为终端客户提供接入功能，区别于核心层和汇聚层提供各种策略的功能。接入层的主要功能是规划同一网段中的工作站个数，提高各接入终端的带宽。在搭建网络架构时，既要考虑网络的综合实用性，也要考虑经济效益，因此在接入层设备采购时可以选择数据链路层中较低端的交换机，而不是越高端越昂贵越好。
 
+![](./three_tier_architecture.png)
+汇聚是网络的分界点，汇聚交换机以下是L2网络，以上是L3网络，每组汇聚交换机是一个pod，根据业务分区分模块。pod内是一个或者多个VLAN网络，一个POD对应一个广播域。
+[这种架构部署简单，（vlan+xstp）技术成熟。](https://blog.51cto.com/u_11533525/2438361)
+
+the computers, servers and other network devices are logically connected regardless of their physical location,
+VLANs can logically create several virtual networks to separate the network broadcast traffic, one of the main reason of creating VLAN is for traffic management because as a local area network grows and more network devices are added, the frequency of the broadcasts will also increase and the network will get heavily congested with data, but by creating VLANs which divided up the network into smaller broadcast domains, it will help alleviate the broadcast traffic.
+VLAN identifiers 12bits=4094 VLANs
+https://www.youtube.com/watch?v=jC6MJTh9fRE
+
 随着近年来互联网的应用规模急剧扩张，对数据传输的要求也越来越高，基于数据整合的云计算技术逐渐受到人们的关注。计算机网络作为当今社会各种信息的传输媒介，其组成架构也即将发生重大变革。鉴于传统三层网络VLan 隔离以及STP 收敛上的缺陷，传统网络结构急需打破。现有研究机构开始致力于新型高效网络架构的研发与探索，结合早期的扁平化架构的原有二层网络与现有三层网络的优缺点提出了大二层网络架构。
 
-### 大二层网络架构
-技术：
-网络虚拟化（网络厂商主导技术）
-路由二层转发（网络厂商主导技术）
-Overlay（IT厂商主导技术）
+### 大二层网络架构 (spine and leaf architecture)
 
-1）为什么需要大二层网络
+#### 为什么需要大二层网络
 
 传统的三层数据中心架构结构的设计是为了应付服务客户端-服务器应用程序的纵贯式大流量，同时使网络管理员能够对流量流进行管理。工程师在这些架构中采用生成树协议(STP)来优化客户端到服务器的路径和支持连接冗余，通常将二层网络的范围限制在网络接入层以下，避免出现大范围的二层广播域； 
 
@@ -1326,7 +1331,7 @@ a）IP及MAC不变的理由？
 b）IP及MAC不变，那么为什么必须是二层域内？
 IP不变，那么就不能够实现基于IP的寻址（三层），那么只能实现基于MAC的寻址，既二层寻址，大二层，顾名思义，此是二层网络，根据MAC地址进行寻址
 
-2）传统的二层网络大不起来的原因
+传统的二层网络大不起来的原因:
 
 在数据中心网络中，“区域”对应VLAN的划分。相同VLAN内的终端属于同一广播域，具有一致的VLAN-ID，二层连通；不同VLAN内的终端需要通过网关互相访问，二层隔离，三层连通。传统的数据中心设计，区域和VLAN的划分粒度是比较细的，这主要取决于“需求”和“网络规模”。 
 
@@ -1340,9 +1345,9 @@ IP不变，那么就不能够实现基于IP的寻址（三层），那么只能�
 
 传统的基于STP备份设备和链路方案已经不能满足数据中心规模、带宽的需求，并且STP协议几秒至几分钟的故障收敛时间，也不能满足数据中心的可靠性要求。因此，需要能够有新的技术，在满足二层网络规模的同时，也能够充分利用冗余设备和链路，提升链路利用率，而且数据中心的故障收敛时间能够降低到亚秒甚至毫秒级。 
 
-3）实现大二层网络的技术
+#### 实现大二层网络的技术
 
-大二层网络是针对当前最火热的虚拟化数据中心的虚拟机动态迁移这一特定需求而提出的概念，对于其他类型的网络并无特殊的价值和意义。
+大二层网络是针对当前最火热的虚拟化数据中心的虚拟机(服务器虚拟化)动态迁移这一特定需求而提出的概念，对于其他类型的网络并无特殊的价值和意义。
 
 在虚拟化数据中心里，一台物理服务器被虚拟化为多台逻辑服务器，被称为虚拟机VM，每个VM都可以独立运行，有自己的OS、APP，在网络层面有自己独立的MAC地址和IP地址。而VM动态迁移是指将VM从一个物理服务器迁移到另一个物理服务器，并且要保证在迁移过程中，VM的业务不能中断。
 
@@ -1350,25 +1355,106 @@ IP不变，那么就不能够实现基于IP的寻址（三层），那么只能�
 
 所以，为了实现VM的大范围甚至跨地域的动态迁移，就要求把VM迁移可能涉及的所有服务器都纳入同一个二层网络域，这样才能实现VM的大范围无障碍迁移。这就是大二层网络的需求由来，一个真正意义的大二层网络至少要能容纳1万以上的主机，才能称之为大二层网络。而传统的基于VLAN+xSTP的二层网络，由于环路和广播风暴、以及xSTP协议的性能限制等原因，通常能容纳的主机数量不会超过1K，无法实现大二层网络。当前，实现大二层网络的主要技术有以下几种：
 
-a）网络设备虚拟化技术
+1. 网络/物理设备虚拟化技术-堆叠（网络厂商主导技术）
 
-网络设备虚拟化是将相互冗余的两台或多台物理网络设备组合在一起，虚拟化成一台逻辑网络设备，在整个网络中只呈现为一个节点。例如华为的CSS框式堆叠、iStack盒式堆叠、SVF框盒堆叠技术等。
+    网络设备虚拟化是将相互冗余的两台或多台物理网络设备组合在一起，虚拟化成一台逻辑网络设备，在整个网络中只呈现为一个节点。例如华为的CSS框式堆叠、iStack盒式堆叠、SVF框盒堆叠技术等。
 
-网络设备虚拟化再配合链路聚合技术，就可以把原来网络的多节点、多链路的结构变成逻辑上单节点、单链路的结构，解决了二层网络中的环路问题。没有了环路问题，就不需要xSTP，二层网络就可以范围无限（只要虚拟网络设备的接入能力允许），从而实现大二层网络。
+    网络设备虚拟化再配合链路聚合技术，就可以把原来网络的多节点、多链路的结构变成逻辑上单节点、单链路的结构，解决了二层网络中的环路问题。没有了环路问题，就不需要xSTP，二层网络就可以范围无限（只要虚拟网络设备的接入能力允许），从而实现大二层网络。
 
-b）大二层转发技术
 
-大二层转发技术是通过定义新的转发协议，改变传统二层网络的转发模式，将三层网络的路由转发模式引入到二层网络中。例如TRILL、SPB等。
+    例如华为的CSS/iStack、Cisco的VSS和H3C的IRF等，可以将同一网络层次上的同类型或同型号交换机多虚一，又称为横向虚拟化
+    ![](./network_virtualization_css-istack.png)
 
-以TRILL为例，TRILL协议在原始以太帧外封装一个TRILL帧头，再封装一个新的以太帧来实现对原始以太帧的透明传输，支持TRILL的交换机可通过TRILL帧头里的Nickname标识来进行转发，而Nickname就像路由一样，可通过IS-IS路由协议进行收集、同步和更新。
+    随着设备虚拟化技术的发展，一种更加极致的“纵向虚拟化”技术出现了――混堆，例如华为的SVF、Cisco的FEX、H3C的IRF3。纵向虚拟化可以将不同网络层次、不同类型的交换机多虚一
+    ![](./network_virtualization_svf.png)
 
-c）Overlay技术
+    设备虚拟化系统本身的规模限制:虚拟化后所有设备的控制平面合一，只有一个主控节点，其它都是备份角色，控制平面是1:N备份的（1+1=2在这里不适用）。因此，整个系统的物理节点规模就受限于主控节点的处理能力，不是想做多大就做多大的。例如框式设备虚拟化一般<4台，盒式设备一般<20～30台。目前最大规模的虚拟化系统大概可以支持接入1～2万台主机，可以从容应付一般的中、小型数据中心，但对于一些超大型的数据中心来说，就显得力不从心了。这也就是为什么接下来会出现TRILL、VXLAN等大二层技术的原因了
 
-Overlay技术是通过用隧道封装的方式，将源主机发出的原始二层报文封装后在现有网络中进行透明传输，从而实现主机之间的二层通信。通过封装和解封装，相当于一个大二层网络叠加在现有的基础网络之上，所以称为Overlay技术。
+2. 网络/物理设备虚拟化技术-大二层转发技术/路由二层转发（网络厂商主导技术）
 
-Overlay技术通过隧道封装的方式，忽略承载网络的结构和细节，可以把整个承载网络当作一台“巨大无比的二层交换机”， 每一台主机都是直连在“交换机”的一个端口上。而承载网络之内如何转发都是 “交换机”内部的事情，主机完全不可见。Overlay技术主要有VXLAN、NVGRE、STT等。
+    网络设备厂商，基于硬件设备开发出了EVI（Ethernet Virtualization Interconnect）、TRILL（Transparent Interconnection of Lots of Links)、SPB（Shortest Path Bridging）等大二层技术。这些技术通过网络边缘设备对流量进行封装/解封装，构造一个逻辑的二层拓扑，同时对链路充分利用、表项资源分担、多租户等问题采取各自的解决方法。此类技术一般要求网络边缘设备必须支持相应的协议，优点是硬件设备表项容量大、转发速度快。
 
-4）大二层网络需要有多大、及技术选型 
+    大二层转发技术是通过定义新的转发协议，改变传统二层网络的转发模式，将三层网络的路由转发模式引入到二层网络中。例如TRILL、SPB等。
+
+    以TRILL为例，TRILL协议在原始以太帧外封装一个TRILL帧头，再封装一个新的以太帧来实现对原始以太帧的透明传输，支持TRILL的交换机可通过TRILL帧头里的Nickname标识来进行转发，而Nickname就像路由一样，可通过IS-IS路由协议进行收集、同步和更新。
+
+    然而，通过网络设备虚拟化技术，TRILL、EVN技术构建的物理上的大二层网络可以将虚拟机迁移的范围扩大，但是构建物理上的大二层，难免要对原来的网络做较大的改动，并且大二层网络的范围依然会受到种种条件的限制，VXLAN技术能很好的解决上述问题。
+
+3. Overlay技术（IT厂商主导技术）
+
+    虚拟化软件厂商，从自身出发，提出了VXLAN（Virtual eXtensible LAN）、NVGRE（Network Virtualization Using Generic Routing Encapsulation）、STT（A Stateless Transport Tunneling Protocol for Network Virtualization）等一系列技术。这部分技术利用主机上的虚拟交换机（vSwitch）作为网络边缘设备，对流量进行封装/解封装。优点是对网络硬件设备没有过多要求。
+
+    - Underlay网络对应物理网络；
+    - Overlay网络对应虚拟网络；
+
+    Overlay技术是通过用隧道封装的方式，将源主机发出的原始二层报文封装后在现有网络中进行透明传输，从而实现主机之间的二层通信。通过封装和解封装，相当于一个大二层网络叠加在现有的基础网络之上，所以称为Overlay技术。
+
+    Overlay技术通过隧道封装的方式，忽略承载网络的结构和细节，可以把整个承载网络当作一台“巨大无比的二层交换机”， 每一台主机都是直连在“交换机”的一个端口上。而承载网络之内如何转发都是 “交换机”内部的事情，主机完全不可见。Overlay技术主要有VXLAN、NVGRE、STT等。
+
+    Virtual extensible Local Area Network, at its most basic level VXLAN is a tunneling protocol that tunnels ethernet Layer2 二层 traffic over an IP Layer3 network 三层, it's an extension to VLAN, it encapsulates a Layer2 ethernet frame into a udp packet and then transmit this packet over a Layer3 network, VXLAN is a formal internet standard specified in RFC7348, if you go back to OSI model VXLAN is another Application Layer protocol based on UDP that runs on port 4789, why we need VXLAN: the traditional layer 2 networks have issues due to below three main reasons:
+    - Spanning-tree blocks any redundant links to avoid loops, blocking links to create a loop free topology gets the job done but it also means we pay for the links we can't use
+    - limitted amount of VLANs, VXLAN overcomes this limitation by using a longer logical network identifier that is 24 bit which allows more VLANs and therefore more logical network isolation for large network such as cloud that typically include many VMs
+    - large mac address tables, before server virtualization a switch only had to learn one mac address per switch port, with server virtualization we run many VMs or containers on a single physical server, each VM has a virtual nick and a virtual mac address, the number of addresses in the mac address table of switches has grown exponentially, the switch has to learn many mac addresses on a single switch port, a Top-Of-Rack(TOR) switch in data center could connect to 24 or 28 physical servers, a data center could have many racks so each switch has to store the mac address of all VMs that communicates with each other, we requrie much larger mac address tables compared to network without server virtualization,
+    with benefits that VLANs can't provide:
+    - 16 million VXLANs
+    - migration of VMs, migration of virtual machines between servers that exists in separtate layer 2 domains by tunneling the traffic over layer 3 networks, the funtionality allows you to dynamically allocate resources within or between data centers without being constrained by layer 2 boundaries or being forced to create large or geographically streached layer 2 domains
+    https://www.youtube.com/watch?v=QPqVtguOz4w
+    [Linux VXLAN](https://cloud.tencent.com/developer/article/1476722)
+
+#### 实现大二层网络的技术之VXLAN技术细节：
++ VTEP（VXLAN Tunnel Endpoints，VXLAN隧道端点）
+
+VXLAN网络的边缘设备，是VXLAN隧道的起点和终点，VXLAN报文的相关处理均在这上面进行。总之，它是VXLAN网络中绝对的主角。VTEP既可以是一***立的网络设备（比如华为的CE系列交换机），也可以是虚拟机所在的服务器。那它究竟是如何发挥作用的呢？答案稍候揭晓。
+
++ VNI（VXLAN Network Identifier，VXLAN 网络标识符）
+
+前文提到，以太网数据帧中VLAN只占了12比特的空间，这使得VLAN的隔离能力在数据中心网络中力不从心。而VNI的出现，就是专门解决这个问题的。VNI是一种类似于VLAN ID的用户标示，一个VNI代表了一个租户，属于不同VNI的虚拟机之间不能直接进行二层通信。VXLAN报文封装时，给VNI分配了足够的空间使其可以支持海量租户的隔离。详细的实现，我们将在后文中介绍。
+
++ VXLAN隧道
+
+“隧道”是一个逻辑上的概念，它并不新鲜，比如大家熟悉的GRE。说白了就是将原始报文“变身”下，加以“包装”，好让它可以在承载网络（比如IP网络）上传输。从主机的角度看，就好像原始报文的起点和终点之间，有一条直通的链路一样。而这个看起来直通的链路，就是“隧道”。顾名思义，“VXLAN隧道”便是用来传输经过VXLAN封装的报文的，它是建立在两个VTEP之间的一条虚拟通道。
+
+![VXLAN 传输过程](./tcp_ip_vxlan)
+
+注：更详细的流程图（VXLAN同子网和不同子网通信流程包括arp学习），参考[技术发烧友：认识VXLAN](https://forum.huawei.com/enterprise/zh/thread/580901140361527296)
+
+图中 Host-A 和 Host-B 位于 VNI 10 的 VXLAN，通过 VTEP-1 和 VTEP-2 之间建立的 VXLAN 隧道通信。数据传输过程如下：
+
+Host-A 向 Host-B 发送数据时，Host-B 的 MAC 和 IP 作为数据包的目标 MAC 和 IP，Host-A 的 MAC 作为数据包的源 MAC 和 IP，然后通过 VTEP-1 将数据发送出去。
+
+VTEP-1 从自己维护的映射表中找到 MAC-B 对应的 VTEP-2，然后执行 VXLAN 封装，加上 VXLAN 头，UDP 头，以及外层 IP 和 MAC 头。此时的外层 IP 头，目标地址为 VTEP-2 的 IP，源地址为 VTEP-1 的 IP。同时由于下一跳是 Router-1，所以外层 MAC 头中目标地址为 Router-1 的 MAC。
+
+数据包从 VTEP-1 发送出后，外部网络的路由器会依据外层 IP 头进行路由，最后到达与 VTEP-2 连接的路由器 Router-2。
+
+Router-2 将数据包发送给 VTEP-2。VTEP-2 负责解封数据包，依次去掉外层 MAC 头，外层 IP 头，UDP 头 和 VXLAN 头。VTEP-2 依据目标 MAC 地址将数据包发送给 Host-B。
+
+上面的流程我们看到 VTEP 是 VXLAN 的最核心组件，负责数据的封装和解封。隧道也是建立在 VTEP 之间的，VTEP 负责数据的传送。
+
+1. 哪些VTEP间需要建立VXLAN隧道？
+通过VXLAN隧道，“二层域”可以突破物理上的界限，实现大二层网络中VM之间的通信。所以，连接在不同VTEP上的VM之间如果有“大二层”互通的需求，这两个VTEP之间就需要建立VXLAN隧道。换言之，同一大二层域内的VTEP之间都需要建立VXLAN隧道。比如假设VTEP_1连接的VM、VTEP_2连接的VM以及VTEP_3连接的VM之间需要“大二层”互通，那VTEP_1、VTEP_2和VTEP_3之间就需要两两建立VXLAN隧道
+
+2. 什么是“同一大二层域”？
+前面提到的“同一大二层域”，就类似于传统网络中VLAN（虚拟局域网）的概念，只不过在VXLAN网络中，它有另外一个名字，叫做Bridge-Domain，简称BD。
+我们知道，不同的VLAN是通过VLAN ID来进行区分的，那不同的BD是如何进行区分的呢？其实前面已经提到了，就是通过VNI来区分的。对于CE系列交换机而言，BD与VNI是1：1的映射关系，这种映射关系是通过在VTEP上配置命令行建立起来的。
+
+3. 哪些报文要进入VXLAN隧道？
+回答这个问题之前，不妨先让我们想下VLAN技术中，交换机对于接收和发送的报文是如何进行处理的。我们知道，报文要进入交换机进行下一步处理，首先得先过接口这一关，可以说接口掌控着对报文的“生杀大权”。传统网络中定义了三种不同类型的接口：Access、Trunk、Hybrid。这三种类型的接口虽然应用场景不同，但他们的最终目的是一样的：一是根据配置来检查哪些报文是允许通过的；二是判断对检查通过的报***怎样的处理。
+
+其实在VXLAN网络中，VTEP上的接口也承担着类似的任务，只不过在CE系列交换机中，这里的接口不是物理接口，而是一个叫做“二层子接口”的逻辑接口。类似的，二层子接口主要做两件事：一是根据配置来检查哪些报文需要进入VXLAN隧道；二是判断对检查通过的报***怎样的处理。下面我们就来看下，二层子接口是如何完成这两件事的。
+
+在二层子接口上，可以根据需要定义不同的流封装类型（类似于传统网络中不同的接口类型）。CE系列交换机目前支持三种不同的流封装类型，分别是dot1q、untag和default，它们各自对报文的处理方式如下表所示。有了这张表，你就能明白哪些报文要进VXLAN隧道了。
+|  流封装类型  |                     允许进入VXLAN隧道的报文类型                      |                  报文进行封装前的处理                   |                                             收到VXLAN报文并解封装后的处理                                             |
+|---------|-----------------------------------------------------------|-----------------------------------------------|-----------------------------------------------------------------------------------------------------------|
+|  dot1q  | 只允许携带指定VLAN Tag的报文进入VXLAN隧道。  （这里的“指定VLAN Tag”是通过命令进行配置的） |        进行VXLAN封装前，先剥掉原始报文的外层VLAN Tag。         | 进行VXLAN解封装后：  若内层原始报文带有VLAN Tag，则先将该VLAN Tag替换为指定的VLAN Tag，再转发；  若内层原始报文不带VLAN Tag，则先将其添加指定的VLAN Tag，再转发。 |
+|  untag  |                只允许不携带VLAN Tag的报文进入VXLAN隧道。                |     进行VXLAN封装前，不对原始报***处理，即不添加任何VLAN Tag。     |                              进行VXLAN解封装后，不对原始报***处理，即不添加/不替换/不剥掉任何VLAN Tag。                               |
+| default |             允许所有报文进入VXLAN隧道，不论报文是否携带VLAN Tag。             | 进行VXLAN封装前，不对原始报***处理，即不添加/不替换/不剥掉任何VLAN Tag。 |                              进行VXLAN解封装后，不对原始报***处理，即不添加/不替换/不剥掉任何VLAN Tag。                               |
+
+4. 如何确定报文属于哪个BD
+只要将二层子接口加入指定的BD，然后根据二层子接口上的配置，就可以确定报文属于哪个BD啦！
+
+
+
+#### 大二层网络需要有多大、及技术选型 
 
 1. 数据中心内 
 大二层首先需要解决的是数据中心内部的网络扩展问题，通过大规模二层网络和VLAN延伸，实现虚拟机在数据中心内部的大范围迁移。由于数据中心内的大二层网络都要覆盖多个接入交换机和核心交换机，主要有以下两类技术。
@@ -1394,7 +1480,6 @@ L2oL3技术也有许多种，例如传统的VPLS（MPLS L2VPN）技术，以及�
 + 南北向是数据中心内部机器和数据中心外（互联网）的流量。
 
 隔离性通常可以分为两个层面，一是不同租户间的网络隔离，鉴于安全考虑，不同租户间内部网络不可达；二是同一租户内部不同子网（vlan）间的隔离，为业务规模较大的租户提供的多层组网能力。
-
 
 
 #### 软件定义的隔离 software-defined segmentation : software-defined Perimeter - SDN
@@ -1450,9 +1535,19 @@ Hyper-V微隔离：以VM为单位进行隔离。
 
 ## 7. 概念对比
 
-### VPC VLAN VXLAN
+### server virtualization vs network virtualization
+Server virtualization is decoupling of computing resources such as CPU, memory, storage etc from underlying physical hardware. Whereas, Network virtualization is decoupling of networking resources such as switches, routers, firewalls, load balancers etc from underlying physical network hardware.
+![](./server_network_virtualization.png)
 
-#### VPC
+### 经典网络 VS VPC & VPC VS VXLAN
+经典网络 VS VPC: 虽然各家都没有公布自己的实现细节，但是这里有点类似VXLAN和VLAN的关系
+
+vpc是基于vxlan吗？
+各家厂商的vpc实现细节各有不同不能一概而论,
+从AWS公布的资料看，VPC的数据封装与VXLAN这类网络Overlay技术也很像, 需要澄清的是，AWS在2010年就已经开始应用VPC，而VXLAN标准是2014年才终稿;
+阿里云的介绍有提到“使用vxlan协议对每个vpc网络进行隔离”;
+华为云： provider:network_type 扩展属性：网络类型（支持vxlan，geneve），租户只能创建vxlan类型网络。
+
 虚拟私有云 (VPC) 是托管在公共云内的安全、孤立的私有云（不是真正的单租户私有云，而是多租户虚拟私有云）。
 VPC 将具有专用的子网和 VLAN，仅 VPC 客户可以访问。这样可以防止公共云中的任何其他人访问 VPC 内的计算资源 - 有效地在桌子上放置“预留”牌。VPC 客户通过 VPN 连接到其 VPC，因此其他公共云用户看不到传入和传出 VPC 的数据。
 
@@ -1472,26 +1567,10 @@ The key technologies for isolating a VPC from the rest of the public cloud are:
     虚拟专用网络 (VPN) 使用加密在公用网络的顶部创建专用网。VPN 流量通过公众共享的互联网基础设施（路由器、交换机等）进行传输，但是流量是混乱的，任何人都看不到。
 
 
-VPC 将具有专用的子网和 VLAN，仅 VPC 客户可以访问。这样可以防止公共云中的任何其他人访问 VPC 内的计算资源 - 有效地在桌子上放置“预留”牌。VPC 客户通过 VPN 连接到其 VPC，因此其他公共云用户看不到传入和传出 VPC 的数据。
 一些 VPC 提供商通过以下方式提供其他自定义：
 + 网络地址转换 (NAT)：此功能将专用 IP 地址与公用 IP 地址进行匹配，以便与公用互联网连接。使用 NAT，可以在 VPC 中运行面向公众的网站或应用程序。Network Address Translation (NAT): This feature matches private IP addresses to a public IP address for connections with the public Internet. With NAT, a public-facing website or application could run in a VPC.
 + BGP 路由配置：一些提供商允许客户定制 BGP 路由表，以将其 VPC 与其他基础设备连接。BGP route configuration: Some providers allow customers to customize BGP routing tables for connecting their VPC with their other infrastructure. (Learn how BGP works.)
 
-#### VLAN Virtual local Area Network:
-the computers, servers and other network devices are logically connected regardless of their physical location,
-VLANs can logically create several virtual networks to separate the network broadcast traffic, one of the main reason of creating VLAN is for traffic management because as a local area network grows and more network devices are added, the frequency of the broadcasts will also increase and the network will get heavily congested with data, but by creating VLANs which divided up the network into smaller broadcast domains, it will help alleviate the broadcast traffic.
-VLAN identifiers 12bits=4094 VLANs
-https://www.youtube.com/watch?v=jC6MJTh9fRE
-#### （IT厂商主导技术）VXLAN:
-Virtual extensible Local Area Network, at its most basic level VXLAN is a tunneling protocol that tunnels ethernet Layer2 二层 traffic over an IP Layer3 network 三层, it's an extension to VLAN, it encapsulates a Layer2 ethernet frame into a udp packet and then transmit this packet over a Layer3 network, VXLAN is a formal internet standard specified in RFC7348, if you go back to OSI model VXLAN is another Application Layer protocol based on UDP that runs on port 4789, why we need VXLAN: the traditional layer 2 networks have issues due to below three main reasons:
-- Spanning-tree blocks any redundant links to avoid loops, blocking links to create a loop free topology gets the job done but it also means we pay for the links we can't use
-- limitted amount of VLANs, VXLAN overcomes this limitation by using a longer logical network identifier that is 24 bit which allows more VLANs and therefore more logical network isolation for large network such as cloud that typically include many VMs
-- large mac address tables, before server virtualization a switch only had to learn one mac address per switch port, with server virtualization we run many VMs or containers on a single physical server, each VM has a virtual nick and a virtual mac address, the number of addresses in the mac address table of switches has grown exponentially, the switch has to learn many mac addresses on a single switch port, a Top-Of-Rack(TOR) switch in data center could connect to 24 or 28 physical servers, a data center could have many racks so each switch has to store the mac address of all VMs that communicates with each other, we requrie much larger mac address tables compared to network without server virtualization,
-with benefits that VLANs can't provide:
-- 16 million VXLANs
-- migration of VMs, migration of virtual machines between servers that exists in separtate layer 2 domains by tunneling the traffic over layer 3 networks, the funtionality allows you to dynamically allocate resources within or between data centers without being constrained by layer 2 boundaries or being forced to create large or geographically streached layer 2 domains
-https://www.youtube.com/watch?v=QPqVtguOz4w
-[Linux VXLAN](https://cloud.tencent.com/developer/article/1476722)
 
 ## 8.实例
 ### example: 虚拟机网络模式：桥接 VS NAT

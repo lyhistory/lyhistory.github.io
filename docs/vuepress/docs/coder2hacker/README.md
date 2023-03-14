@@ -11,17 +11,13 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 <div>
 	<h3>白帽黑客渗透技术入门</h3>
     <span>
-        ------------------------------------------------------
         --- 实战篇
-        ------------------------------------------------------
     </span>
 	<ul>
 		<li><a href="/docs/coder2hacker/attack_vectors/domain_takeover">子域名接管/劫持</a></li>
     </ul>
     <span>
-        ------------------------------------------------------
         --- 理论篇[会筛选不敏感的慢慢更]
-        ------------------------------------------------------
     </span>
 	<ul>
 		<li><a href="/docs/coder2hacker/ch1_intro">Chapter 1．道德黑客和渗透测试介绍</a></li>
@@ -39,9 +35,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/coder2hacker/basics_http">HTTP基础</a></li>
 	</ul>
 	<span>
-        ------------------------------------------------------
         --- 防御篇
-        ------------------------------------------------------
     </span>
 	<ul>
 		<li><a href="/docs/coder2hacker/defend/security_architecture">安全架构</a></li>

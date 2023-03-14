@@ -6,13 +6,19 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 ## Basic 
 
+### 系统参数：	
+
+```
 查看命令类型:	type 'cmd' 
 
-查看系统：	cat /etc/os-release
+cat /etc/os-release
 
-man
+修改hostname:  hostnamectl set-hostname 
+```
 
-tldr:	https://tldr.sh/
+### 帮助文档：
+
+man AND tldr:	https://tldr.sh/
 
 ```
 npm install -g tldr 

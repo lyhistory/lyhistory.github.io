@@ -272,8 +272,47 @@ https://www.youtube.com/watch?v=h1bifLAnrXA
 
 
 
-### 2.2 About fork
-1) normal fork
+### 2.2 About fork & upstream
+When you clone a Forked repository to your local, the forked repository is considered as the remote origin, and the repository you forked from is upstream.
+
+```
+初始化
+$ git remote rename origin upstream
+C:\Workspace\Repository\test>git remote -v
+upstream        http://<anotherip>/test.git (fetch)
+upstream        http://<anotherip>/test.git (push)
+
+$ git remote add origin git@<ip>:/git_home/test.git
+$ git remote -v
+origin  git@<ip>:/git_home/test.git (fetch)
+origin  git@<ip>:/git_home/test.git (push)
+upstream        http://<anotherip>/test.git (fetch)
+upstream        http://<anotherip>/test.git (push)
+$ git push origin master
+
+同步upstream到origin / sync forking repo
+git checkout master
+git pull upstream master 
+git push origin master
+OR 
+https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/syncing-a-fork
+git fetch upstream
+git checkout master
+git merge upstream/main
+
+提交到upstream
+正常merge
+git push upstream master
+
+强制同步到upstream
+https://github.community/t/syncing-a-fork-leaves-me-one-commit-ahead-of-upstream-master/1435
+git checkout master
+git reset --hard upstream/master
+git push --force
+
+```
+
+#### normal fork
 https://www.youtube.com/watch?v=_NrSWLQsDL4
 
 Sync with upstream
@@ -289,7 +328,7 @@ git checkout feature/desktop-magiclink
 git merge master
 git push
 
-2) fork from other source
+#### fork from other source
 https://gist.github.com/DavideMontersino/810ebaa170a2aa2d2cad
 https://stackoverflow.com/questions/6286571/are-git-forks-actually-git-clones
 Example:
@@ -310,7 +349,7 @@ git push upstream master
 ```
 ![](/docs/docs_image/software/project_manage/git/git02.png)
 
-3) auto sync from upstream/origin
+#### auto sync from upstream/origin
 https://stackoverflow.com/questions/23793062/can-forks-be-synced-automatically-in-github
 
 ### 2.3 About workflow - wrap up all the previous knowledge
@@ -390,18 +429,18 @@ git reset HEAD~1 undo the latest commit
 --force overwrite existing code in repository
 ```
 
+## 4. Git server
 
-
-## 4. Git server & fork uptream
+A bare Git repository is typically used as a Remote Repository that is sharing a repository among several different people. You don't do work right inside the remote repository so there's no Working Tree (the files in your project that you edit), just bare repository data. And that's it.
 
 https://git-scm.com/book/en/v2/Git-on-the-Server-Setting-Up-the-Server
 
+### 从头创建空仓并提交
 ```
 $mkdir test.git
 $cd test.git/
 $git init --bare
 Initialized empty Git repository in /git_home/test.git/
-
 ```
 
 本地：全新提交
@@ -412,63 +451,31 @@ $ cd myproject
 $ git init
 $ git add .
 $ git commit -m 'Initial commit'
-$ git remote add origin git@gitserver:/srv/git/project.git
+$ git remote add origin git@gitserver:/git_home/test.git/
 $ git push origin master
 ```
 
-本地：已有git转成空仓发布
+### 本地：已有git转成空仓发布
 
+假定带工作目录的git仓库已创建，并位于/git_home/src 目录下。
 ```
 https://blog.csdn.net/chenzhengfeng/article/details/81743626
 
-git clone --bare /home/project/sw
+cd /git_home/test
+git clone --bare /git_home/src
 touch sw/git-daemon-export-ok
 ```
-
-
-
-本地：upstream提交
-
-https://blog.csdn.net/liuchaoxuan/article/details/80656145
+### 例子：windows本地用git创建备份
 
 ```
-初始化
-$ git remote rename origin upstream
-C:\Workspace\Repository\test>git remote -v
-upstream        http://<anotherip>/test.git (fetch)
-upstream        http://<anotherip>/test.git (push)
+在移动硬盘上创建远程repo
+$ git init --bare test.git
+Initialized empty Git repository in H:/Backup/test.git
+在本机上拉取
+git clone H:/Backup/test.git
 
-$ git remote add origin git@<ip>:/git_home/test.git
-$ git remote -v
-origin  git@<ip>:/git_home/test.git (fetch)
-origin  git@<ip>:/git_home/test.git (push)
-upstream        http://<anotherip>/test.git (fetch)
-upstream        http://<anotherip>/test.git (push)
-$ git push origin master
-
-同步upstream到origin / sync forking repo
-git checkout master
-git pull upstream master 
-git push origin master
-OR 
-https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/syncing-a-fork
-git fetch upstream
-git checkout master
-git merge upstream/main
-
-提交到upstream
-正常merge
-git push upstream master
-
-强制同步到upstream
-https://github.community/t/syncing-a-fork-leaves-me-one-commit-ahead-of-upstream-master/1435
-git checkout master
-git reset --hard upstream/master
-git push --force
-
+然后将本机需要备份的内容扔进去提交即可
 ```
-
-
 
 ## 5.Troubleshooting 
 
