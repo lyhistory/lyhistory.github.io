@@ -43,8 +43,9 @@ cp \docs\.vuepress\dist\* ..\docs\ (from \lyhistory.github.io\docs\vuepress\docs
 gitignore nodemodules
 
 config: \docs\vuepress\docs\.vuepress\config.js
-resources: \docs\vuepress\docs\.vuepress\public
+resources(images and files): \docs\vuepress\docs\.vuepress\public
 custom css: \docs\vuepress\docs\.vuepress\styles
+3rd party components: \docs\vuepress\docs\.vuepress\components
 build result: \docs\vuepress\docs\.vuepress\dist
 finally publish to: ..\docs\
 

@@ -1306,7 +1306,7 @@ ref: https://blog.csdn.net/cj2580/article/details/80107037
 2）汇聚层：连接网络的核心层和各个接入的应用层，在两层之间承担“媒介传输”的作用。每个应用接入都经过汇聚层进行数据处理，再与核心层进行有效的连接，通过汇聚层的有效整合对核心层的荷载量进行降低。根据汇聚层的作用要求，汇聚层应该具备以下功能：实施安全功能、工作组整体接入功能、虚拟网络过滤功能等。因此，汇聚层中设备的采购必须具备三层网络的接入交换功能，同时支持虚拟网络的创建功能，从而实现不同网络间的数据隔离安全，能够将大型网络进行分段划分，化繁为简。
 3）接入层：接入层的面向对象主要是终端客户，为终端客户提供接入功能，区别于核心层和汇聚层提供各种策略的功能。接入层的主要功能是规划同一网段中的工作站个数，提高各接入终端的带宽。在搭建网络架构时，既要考虑网络的综合实用性，也要考虑经济效益，因此在接入层设备采购时可以选择数据链路层中较低端的交换机，而不是越高端越昂贵越好。
 
-![](./three_tier_architecture.png)
+![](/docs/docs_image/software/network/three_tier_architecture.png)
 汇聚是网络的分界点，汇聚交换机以下是L2网络，以上是L3网络，每组汇聚交换机是一个pod，根据业务分区分模块。pod内是一个或者多个VLAN网络，一个POD对应一个广播域。
 [这种架构部署简单，（vlan+xstp）技术成熟。](https://blog.51cto.com/u_11533525/2438361)
 
@@ -1363,10 +1363,10 @@ IP不变，那么就不能够实现基于IP的寻址（三层），那么只能�
 
 
     例如华为的CSS/iStack、Cisco的VSS和H3C的IRF等，可以将同一网络层次上的同类型或同型号交换机多虚一，又称为横向虚拟化
-    ![](./network_virtualization_css-istack.png)
+    ![](/docs/docs_image/software/network/network_virtualization_css-istack.png)
 
     随着设备虚拟化技术的发展，一种更加极致的“纵向虚拟化”技术出现了――混堆，例如华为的SVF、Cisco的FEX、H3C的IRF3。纵向虚拟化可以将不同网络层次、不同类型的交换机多虚一
-    ![](./network_virtualization_svf.png)
+    ![](/docs/docs_image/software/network/network_virtualization_svf.png)
 
     设备虚拟化系统本身的规模限制:虚拟化后所有设备的控制平面合一，只有一个主控节点，其它都是备份角色，控制平面是1:N备份的（1+1=2在这里不适用）。因此，整个系统的物理节点规模就受限于主控节点的处理能力，不是想做多大就做多大的。例如框式设备虚拟化一般<4台，盒式设备一般<20～30台。目前最大规模的虚拟化系统大概可以支持接入1～2万台主机，可以从容应付一般的中、小型数据中心，但对于一些超大型的数据中心来说，就显得力不从心了。这也就是为什么接下来会出现TRILL、VXLAN等大二层技术的原因了
 
@@ -1414,7 +1414,7 @@ VXLAN网络的边缘设备，是VXLAN隧道的起点和终点，VXLAN报文的�
 
 “隧道”是一个逻辑上的概念，它并不新鲜，比如大家熟悉的GRE。说白了就是将原始报文“变身”下，加以“包装”，好让它可以在承载网络（比如IP网络）上传输。从主机的角度看，就好像原始报文的起点和终点之间，有一条直通的链路一样。而这个看起来直通的链路，就是“隧道”。顾名思义，“VXLAN隧道”便是用来传输经过VXLAN封装的报文的，它是建立在两个VTEP之间的一条虚拟通道。
 
-![VXLAN 传输过程](./tcp_ip_vxlan)
+![VXLAN 传输过程](/docs/docs_image/software/network/tcp_ip_vxlan.png)
 
 注：更详细的流程图（VXLAN同子网和不同子网通信流程包括arp学习），参考[技术发烧友：认识VXLAN](https://forum.huawei.com/enterprise/zh/thread/580901140361527296)
 
@@ -1537,7 +1537,7 @@ Hyper-V微隔离：以VM为单位进行隔离。
 
 ### server virtualization vs network virtualization
 Server virtualization is decoupling of computing resources such as CPU, memory, storage etc from underlying physical hardware. Whereas, Network virtualization is decoupling of networking resources such as switches, routers, firewalls, load balancers etc from underlying physical network hardware.
-![](./server_network_virtualization.png)
+![](/docs/docs_image/software/network/server_network_virtualization.png)
 
 ### 经典网络 VS VPC & VPC VS VXLAN
 经典网络 VS VPC: 虽然各家都没有公布自己的实现细节，但是这里有点类似VXLAN和VLAN的关系
