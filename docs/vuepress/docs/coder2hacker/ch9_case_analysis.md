@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 [认证授权漏洞 auth](/docs/coder2hacker/realcase/auth)
 
 [redis](/docs/coder2hacker/realcase/redis)

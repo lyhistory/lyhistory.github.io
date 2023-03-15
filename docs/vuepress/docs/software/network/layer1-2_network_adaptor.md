@@ -1,3 +1,8 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
 
 网络适配器网络适配器又称网卡或网络接口卡（NIC），英文名NetworkInterfaceCard
 

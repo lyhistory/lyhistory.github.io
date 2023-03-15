@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 HTTP基础
 
 状态码：信息收集（**扫描后台，扫描文件**）

@@ -1,10 +1,15 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
 
 参考
-+ [计算机基础-编程](/docs/software/programming/programming.md)
-+ [计算机基础-JS编程](/docs/software/programming/nodejs&reactjs.md)
-+ [计算机基础-python编程](/docs/software/programming/python.md)
-+ [计算机基础-php编程](/docs/software/programming/php.md)
-+ more: /docs/software/programming/*
++ [计算机基础-编程](/docs/software/programming/programming)
++ [计算机基础-JS编程](/docs/software/programming/js_dev_overview)
++ [计算机基础-python编程](/docs/software/programming/python)
++ [计算机基础-php编程](/docs/software/programming/php)
++ [more:](/docs/software/programming)
 
 语言本身的灵活性会给黑客带来很多机会，比如占了客户端漏洞很大比重的csrf/xss，基本是围绕着html js的context展开，
 

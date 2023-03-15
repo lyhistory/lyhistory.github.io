@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 3
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 [Center of Internet security](https://www.cisecurity.org/cis-benchmarks/)
 
 Security reference architecture based on Technology Risk Management - TRM

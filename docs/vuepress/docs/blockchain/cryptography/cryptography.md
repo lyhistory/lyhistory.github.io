@@ -457,7 +457,7 @@ the Euclidean algorithm, Euler’s phi function as well as Fermat’s Little The
 
 ### Euclidean algorithm
 
-refer to <<algebra_0_modular_arithmetic.md>>
+refer to [algebra_0_modular_arithmetic.md](/docs/blockchain/cryptography/algebra_0_modular_arithmetic)
 
 ### Euler’s Phi Function
 

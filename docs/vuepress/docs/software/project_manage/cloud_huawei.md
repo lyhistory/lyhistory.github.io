@@ -6,10 +6,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 ## 产品
 
-+ 私有云 Private Cloud
 + 虚拟私有云 VPC
-+ 公有云
-+ 混合云 
 + 专属云 DEC
 Dedicated Cloud（以下简称DeC）是华为面向企业、政府、金融等用户，提供计算、存储、网络、管控多级隔离方式的综合解决方案。用户像乘坐“头等舱”一样，享受各种专属服务，如独享自己的资源池，与其他公共租户物理隔离，同时提供企业级维护、迁移、优化服务，满足用户特定业务性能、应用场景以及安全合规的不同要求。
 + 弹性计算服务ECS
@@ -17,26 +14,11 @@ Dedicated Cloud（以下简称DeC）是华为面向企业、政府、金融等�
 + 专属主机 DEH
     场景：某交易系统需要udp广播，但是华为普通的ECS机器所在的网络的交换机是跟其他租户共用的，所以华为会限流(带宽可以购买，但是这种属于内部线路的而且是广播流量，估计不太好控制，所以只能限流)，以免量大了对其他租户造成影响，造成丢包，这种情况下只能使用专属主机，可以自行设置交换机频段
 
-私有云、公有云、专属云间的商业逻辑
-https://bbs.huaweicloud.com/blogs/114839
-
-专属主机与专属云区别：
-场景方面
-专属云可以配套专属分布式存储、专属企业存储、专属裸金属服务器等专属服务，提供完整的资源隔离方案。
-
-专属主机则只能提供计算隔离主机，使用更灵活，适合对计算资源隔离、使用灵活性有要求的客户。
-
-功能方面
-专属云需要独立开通专属云帐号，专属云资源和公共ECS属于不同VPC，虚拟机不能相互迁移。
-
-专属主机上创建的虚拟机和公共ECS属于同一VPC，虚拟机可以相互冷迁移。
-
-
 ## 网络
 
-### NAT 网关
-
 ### 虚拟私有云VPC virtual private cloud
+you can configure IP address range
+faciliates internal network management and configuration and allows you to implement secure and quick network changes, you can also customize the ECS access rule within a security group and between security groups to improve ECS security
 
 华为云可以在同一个子网中跨不同的az可用区，其他的云商一般只能在同一个可用区内创建子网；
 
@@ -82,6 +64,7 @@ https://support.huaweicloud.com/intl/zh-cn/usermanual-vpc/zh-cn_topic_0067802474
 弹性云服务器的网卡绑定虚拟IP地址后，该虚拟IP地址无法ping通时，如何排查？
 https://support.huaweicloud.com/intl/zh-cn/vpc_faq/vpc_faq_0083.html
 
+### NAT 网关
 
 ### 弹性负载均衡 ELB
 

@@ -30,9 +30,10 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/coder2hacker/ch8_scanner">Chapter 8. 自动扫描器</a></li>
 		<li><a href="/docs/coder2hacker/ch9_case_analysis">Chapter 9. 实例分析</a></li>
 		<li><a href="/docs/coder2hacker/ch10_social_engineer">Chapter 10. 社会工程学</a></li>
-		<li><a href="/docs/coder2hacker/ch11_cobalt_strike">Chapter 11.对抗</a></li>
-		<li><a href="/docs/coder2hacker/overview_security_client2server">客户端服务端通信安全概览</a></li>
-		<li><a href="/docs/coder2hacker/basics_http">HTTP基础</a></li>
+		<li><a href="/docs/coder2hacker/ch11_cobalt_strike">Chapter 11.红蓝对抗</a></li>
+		<li><a href="/docs/coder2hacker/overview_security_client2server">番外篇：客户端服务端通信安全概览</a></li>
+		<li><a href="/docs/coder2hacker/hackers_view_http_protocol">番外篇：黑客视角之HTTP协议</a></li>
+		<li><a href="/docs/coder2hacker/hackers_view_programming">番外篇：黑客视角之编程</a></li>
 	</ul>
 	<span>
         --- 防御篇

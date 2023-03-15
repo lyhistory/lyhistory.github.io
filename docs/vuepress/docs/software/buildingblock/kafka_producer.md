@@ -2414,10 +2414,13 @@ transaction.max.timeout.ms
     Valid Values:	[1,...]
     Importance:	high
     Update Mode:	read-only
-    
+
+另外结合我们之前分析的另外一个事故“kafka client端程序读取 metadata 超过默认 30s 抛错”，当时实测读取meta data需要5分钟，所以可以设置 transaction.timeout.ms 为10分钟即 600000
 
 [未来的改进：KIP-691: Enhance Transactional Producer Exception Handling](https://cwiki.apache.org/confluence/display/KAFKA/KIP-691%3A+Enhance+Transactional+Producer+Exception+Handling)
 
+#### 后记
+看到[这里](https://stackoverflow.com/questions/56460688/kafka-ignoring-transaction-timeout-ms-for-producer)有人说设置transaction.timeout.ms不生效，不过他的问题是将timeout设置为比默认1分钟还要小的时间，然后brokers默认好像是每间隔分钟去检查一次是否timeout，所以设置transaction.timeout.ms小于1分钟是没有作用的，他的情况实际上是需要用另一个配置解决transaction.abort.timed.out.transaction.cleanup.interval.ms
 -----------------------------------------------------------------------
 REFER:
 https://www.cnblogs.com/luozhiyun/p/12079527.html
