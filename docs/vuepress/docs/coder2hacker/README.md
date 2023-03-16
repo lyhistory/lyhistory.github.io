@@ -36,6 +36,12 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/coder2hacker/hackers_view_programming">番外篇：黑客视角之编程</a></li>
 	</ul>
 	<span>
+        --- 武器库
+    </span>
+	<ul>
+		<li><a href="/docs/coder2hacker/weapon_vault/tools_packet-analyzer_wireshark">抓包分析-Wireshark</a></li>
+    </ul>
+	<span>
         --- 防御篇
     </span>
 	<ul>

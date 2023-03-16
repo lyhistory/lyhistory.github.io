@@ -51,10 +51,20 @@ TLS:
 应用之间;
 
 
+## VPN (IPSEC vs MPLS)
+Traditionally, the biggest obstacle standing in the way of more widespread adoption of cloud services has been security. While many organizations focus on whether a cloud service provider is capable of keeping data secure, the connection between the organization and the cloud is at least as critical to security. An unsecured Internet connection is a major weakness that can be easily infiltrated.
+A virtual private network (VPN) is viewed as the solution to this problem because it provides a secure pipeline to the cloud. There are two main types of VPNs. An IPSec VPN uses encryption protocols to securely transport data packets via the public Internet. 
+
 IPSEC:
-point-to-site VPN network connection via a public network,
-site-to-site VPN connection across region and countries;
-point-to-point IPSEC VPN can also be implemented for connecting an internal workstation to another internal workstation;
++ point-to-site VPN network connection via a public network,
++ site-to-site VPN connection across region and countries;
++ point-to-point IPSEC VPN can also be implemented for connecting an internal workstation to another internal workstation;
+
+However, the public Internet isn’t capable of distinguishing and prioritizing different applications.
+This can cause problems when dealing with a number of different applications, especially real-time applications that are delay-sensitive. Because IPSec was designed to encrypt traffic between two fixed sites, there is less network capacity for application traffic, resulting in congestion when users are dispersed across multiple sites. As a result, this approach requires costly additional connections and complex configurations to handle peak traffic.
+
+VPNs based upon Multi-Protocol Label Switching (MPLS), on the other hand, are set up over service provider backbones and support additional security. With MPLS VPNs, data packets are prioritized according to application performance metrics. Traffic can be automatically re-routed in milliseconds and encryption is not required. As we discussed in a previous post, this ensures that Quality of Service (QoS) requirements are met for multimedia applications such as voice and video.
+MPLS VPNs are also ideal for cloud connectivity and to support mobile users. Because they provide infrastructure redundancy, Class of Service (CoS) capabilities for prioritizing traffic, any-to-any connectivity and single-operator management, they create an enterprise-class application networking platform on top of a secure transport mechanism.
 
 Private leased line (also known as MPLS) :
 can be use to connect between a Cloud Service Provider and the company on-premise.
