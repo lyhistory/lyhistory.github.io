@@ -76,6 +76,9 @@ ELB网络流量路径说明 https://support.huaweicloud.com/intl/zh-cn/productde
 企业交换机 https://support.huaweicloud.com/intl/zh-cn/productdesc-esw/esw_pd_0003.html
 
 ### 接入方式
+#### VPN
+#### 云专线 Direct Connect
+https://support.huaweicloud.com/productdesc-dc/zh-cn_topic_0032053183.html
 #### 云连接（Cloud Connect）
 为用户提供一种能够快速构建跨区域VPC之间以及云上多VPC与云下多数据中心之间的高速、优质、稳定的网络能力，帮助用户打造一张具有企业级规模和通信能力的全球云上网络。
 https://support.huaweicloud.com/intl/zh-cn/function-cc/index.html

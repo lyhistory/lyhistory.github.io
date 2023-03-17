@@ -4,10 +4,12 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
+## 云商
 + [Huawei Cloud](/docs/software/project_manage/cloud_huawei)
 + [Google Cloud](/docs/software/project_manage/cloud_google)
 + [AWS Cloud](/docs/software/project_manage/cloud_aws)
 
+## 云分类
 + 私有云 Private Cloud
 + 虚拟私有云 VPC
 + 公有云
@@ -46,12 +48,13 @@ https://bbs.huaweicloud.com/blogs/114839
 弹性裸金属服务器（ECS Bare Metal Instance，简称为EBM）是一款同时兼具虚拟机弹性和物理机性能及特性的新型计算类产品，是基于阿里云完全自主研发的下一代虚拟化技术而打造的新型计算类服务器产品
 
 
-安全：
+## 安全：
 TLS:
 应用之间;
 
 
 ## VPN (IPSEC vs MPLS)
+### IPSEC
 Traditionally, the biggest obstacle standing in the way of more widespread adoption of cloud services has been security. While many organizations focus on whether a cloud service provider is capable of keeping data secure, the connection between the organization and the cloud is at least as critical to security. An unsecured Internet connection is a major weakness that can be easily infiltrated.
 A virtual private network (VPN) is viewed as the solution to this problem because it provides a secure pipeline to the cloud. There are two main types of VPNs. An IPSec VPN uses encryption protocols to securely transport data packets via the public Internet. 
 
@@ -60,6 +63,7 @@ IPSEC:
 + site-to-site VPN connection across region and countries;
 + point-to-point IPSEC VPN can also be implemented for connecting an internal workstation to another internal workstation;
 
+### MPLS
 However, the public Internet isn’t capable of distinguishing and prioritizing different applications.
 This can cause problems when dealing with a number of different applications, especially real-time applications that are delay-sensitive. Because IPSec was designed to encrypt traffic between two fixed sites, there is less network capacity for application traffic, resulting in congestion when users are dispersed across multiple sites. As a result, this approach requires costly additional connections and complex configurations to handle peak traffic.
 
@@ -69,5 +73,10 @@ MPLS VPNs are also ideal for cloud connectivity and to support mobile users. Bec
 Private leased line (also known as MPLS) :
 can be use to connect between a Cloud Service Provider and the company on-premise.
 
+[MPLS简介](https://bbs.huaweicloud.com/blogs/313996)
 
+
+## 云专线 Direct Connect
+
+用于搭建用户本地数据中心与云VPC之间高速、低时延、稳定安全的专属连接通道，充分利用云服务优势的同时，继续使用现有的IT设施，实现灵活一体，可伸缩的混合云计算环境。
 

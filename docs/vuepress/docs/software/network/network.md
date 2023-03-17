@@ -379,7 +379,7 @@ Penetration Testing Tools Cheat Sheet https://highon.coffee/blog/penetration-tes
 
 **Public ip vs NAT**
 
-详细见后面 4.1 
+详细见后面 2.2 
 
 NAT stands for Network Address Translation. In the context of our network, NAT is how one (public) IP address is turned into many (private) IP addresses. 
 A public IP address is an address that is exposed to the Internet. If you search for "what's my IP" on the Internet, you'll find the public IP address your computer is using.
@@ -536,6 +536,13 @@ DNAT Destination Network Address Translation 目的网络地址转换
 + SNAT
 SNAT Source Network Address Translation 源网络地址转换，其作用是将ip数据包的源地址转换成另外一个地址，可能有人觉得奇怪，好好的为什么要进行ip地址转换啊，为了弄懂这个问题，我们要看一下局域网用户上公网的原理，假设内网主机A（192.168.2.8）要和外网主机B（61.132.62.131）通信，A向B发出IP数据包，如果没有SNAT对A主机进行源地址转换，A与B主机的通讯会不正常中断，因为当路由器将内网的数据包发到公网IP后，公网IP会给你的私网IP回数据包，这时，公网IP根本就无法知道你的私网IP应该如何走了。所以问它上一级路由器，当然这是肯定的，因为从公网上根本就无法看到私网IP，因此你无法给他通信。为了实现数据包的正确发送及返回，网关必须将A的址转换为一个合法的公网地址，同时为了以后B主机能将数据包发送给A，这个合法的公网地址必须是网关的外网地址，如果是其它公网地址的话，B会把数据包发送到其它网关，而不是A主机所在的网关，A将收不到B发过来的数据包，所以内网主机要上公网就必须要有合法的公网地址，而得到这个地址的方法就是让网关进行SNAT(源地址转换），将内网地址转换成公网址(一般是网关的外部地址），所以大家经常会看到为了让内网用户上公网，我们必须在routeros的firewall中设置snat，俗称IP地址欺骗或伪装（masquerade)
 
+三种类型：
++ Static NAT
+    Static NAT is of the types of NAT that is used for One-to-One Translation of Ports or IP Addresses. In other words, for example in this NAT type, one Private IP Address is mapped to one Public IP Address
++ Dynamic NAT
+    Dynamic NAT is one of the NAT types that is used with a Public IP Address Pool and works with more than one Public IP Address. Here, multiple Private IP Addresses are mapped to a Pool of Public IP Addresses.And these IP Addresses are given to the Internal users randomly. So, it is difficult to reach any Internal user from outside.
++ PAT (NAT Overload)
+    PAT (Port Address Translation) is one of the NAT types that is also known as NAT Overload. Here, many Private IP Addresses are translated to one Public IP Address. The traffic distinguisher in PAT are Port Numbers,  TCP/UDP ports are used in PAT (NAT Overload).
 NAT技术实现：
 
 1）基本IP地址替换
@@ -1237,6 +1244,10 @@ $   sysctl net.ipv4.ip_local_port_range
 ## 6. （数据中心/云）组网 Network architecture
 
 组网技术是指以太网组网技术和ATM局域网的组网技术。
+
+internet intranet extranet ethernet：
+the Internet is open to the entire world, whereas an intranet is a private space, usually within a business. An extranet is essentially a combination of both the Internet and an intranet. An extranet is like an intranet that allows access only to certain outside individuals or businesses.
+The internet connects users from all over the world in a single massive network. Devices on the internet can talk to one another using the global infrastructure. Ethernet connects devices in a local area network (LAN), which is a much smaller collection of interconnected devices.
 
 ### 小范围的二层网络架构
 
