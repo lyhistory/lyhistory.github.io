@@ -4,6 +4,7 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
+## 基本概念
 Routing is the process of selecting a path for traffic in a network or between or across multiple networks. Broadly, routing is performed in many types of networks, including circuit-switched networks, such as the public switched telephone network (PSTN), and computer networks, such as the Internet.
 
 In packet switching networks, routing is the higher-level decision making that directs network packets from their source toward their destination through intermediate network nodes by specific packet forwarding mechanisms. Packet forwarding is the transit of network packets from one network interface to another. Intermediate nodes are typically network hardware devices such as:
@@ -17,7 +18,27 @@ The routing process usually directs forwarding on the basis of routing tables. R
 
 Routing, in a narrower sense of the term, often refers to IP routing and is contrasted with bridging. IP routing assumes that network addresses are structured and that similar addresses imply proximity within the network. Structured addresses allow a single routing table entry to represent the route to a group of devices. In large networks, structured addressing (routing, in the narrow sense) outperforms unstructured addressing (bridging). Routing has become the dominant form of addressing on the Internet. Bridging is still widely used within local area networks.
 
-**路由器 网关 网卡 网桥**
+### 路由器 VS 网关（不是具体某一层）
+路由器是产品，网关是概念
+
+路由器用于连接两个相似类型的网络，网关用于连接两个不同的网络。由于这种逻辑，路由器可能被视为网关，但网关并不总是被视为路由器。路由器是最常用的网关，用于将家庭或企业网络连接到互联网。
+
+所有网络都有一个边界，限制与直接连接到它的设备的通信。因此，如果网络想要与该边界之外的设备，节点或网络通信，则它们需要网关的功能。网关通常被表征为路由器和调制解调器的组合。
+
+网关在网络边缘实现，并管理从该网络内部或外部定向的所有数据。当一个网络想要与另一个网络通信时，数据包将传递到网关，然后通过最有效的路径路由到目的地。除路由数据外，网关还将存储有关主机网络内部路径的信息以及遇到的任何其他网络的路径。
+
+网关基本上是协议转换器，促进两个协议之间的兼容性，并在开放系统互连（OSI）模型的任何层上操作。
+
+网关类型：
++ Web应用程序防火墙： 此类型过滤来自Web服务器的流量并查看应用程序层数据。
++ 云存储网关：此类型使用各种云存储服务API调用转换存储请求。它允许组织将存储从私有云集成到应用程序中，而无需迁移到公共云。
++ API、OA或 XML 网关： 此类型管理流入和流出服务，面向微服务的体系结构或基于XML的Web服务的流量。
++ 物联网网关： 此类型聚合来自物联网环境中设备的传感器数据，在传感器协议之间进行转换，并在向前发送之前处理传感器数据。
++ 媒体网关 ： 此类型将数据从一种网络所需的格式转换为另一种网络所需的格式。
++ 电子邮件安全网关：此类型可防止传输违反公司政策或将以恶意目的传输信息的电子邮件。
++ VoIP中继网关 ：这种类型便于使用普通老式电话服务设备，如固定电话和传真机，以及IP语音（VoIP）网络。
+
+### 路由器 网关（网络层） 网卡 网桥
 + 网关 网桥 网卡
 网关是邮电局,所有的信息必须通过这里的打包、封箱、寻址，才能发出去与收进来；网卡是设备，也就是邮电局邮筒，你家的信箱；而网桥是邮递员，但他只负责一个镇里面(局域网)不负责广域网
 
@@ -35,7 +56,7 @@ Routing, in a narrower sense of the term, often refers to IP routing and is cont
 路由器使用寻径协议来获得网络信息，采用基于“寻径矩阵”的寻径算法和准则来选择最优路径。按照OSI参考模型，路由器是一个网络层系统。路由器分为单协议路由器和多协议路由器。     
 比如如果给你一个IP地址为116.24.143.126,子网掩码255.255.255.224,也就是在这段地址中有32个地址,其中30个可用,去掉网关,还有29个可分配.地址是从116.24.143.96-127,第一个可用的IP是97,最后一个是126,这个例子里,你拿126做网关了,所以从97至125这29个地址是可被你分配的. 同理.116.24.143.126,掩码255.255.255.0,那你就有253个地址可被你分配使用.也就是1-125,127-254. 116.24.143.166,掩码是255.255.255.128,就是有125个地址可被你分配使用.即129-165,167-254.  每段地址有多少可用,不是看IP的最后一位数,而是看子网掩码
 
-**路由 VS NAT**
+### 路由 VS NAT
 本质区别：数据包通过路由可以从一个网络到另一个网络，他是通过数据包的目的IP和源IP实现的，当一个数据包进入路由器是，路由器会根据她的目标ip和源ip在路由表中查找，并将数据包原封不动的传向路由器的某个端口。而数据包通过NAT，NAT将会根据规则将数据包中的源ip和目标IP改变，并在NAT机器上做改变记录。
 
 简而言之，路由不改变数据包包头信息，NAT则改变;
@@ -78,13 +99,42 @@ VPNs do this to avoid messing w/ existing routes. They don’t need to delete an
 ## Protocols
 OSPF and RIP are Interior Gateway Protocols (IGP) and distribute routing information within an autonomous system, 
 Therefore, both are confined to a single domain for routing (intra-domain). whereas BGP is a Exterior Gateway Protocol, primarily designed to be used to route between routing domains (inter-domain).
-### BGP
+
+一般会先使用IGP协议在自治系统内部计算和发现路由条目，再通过BGP协议将IGP协议产生的路由传递至其他的AS（自治系统）。
+
+BGP解决的是AS之间的路由学习问题，当今互联网是全球互联，在中国，互联网运营商有移动、电信和联通。每个公司都有自己的自治系统，并且内部运行IGP协议。但是互联网又要求互联，所以通过BGP就可以在电信和联通等之间学习对方的AS内部路由，使电信和联通的用户之间互相通信。
+
+
+### 内部网关协议 Interior Gateway Protocol，IGP
+
+主要包含RIP、OSPF、ISIS、EIGRP
+
+IGP路由协议运行在AS内部，解决的是AS内部的选路问题。主要作用是发现、计算路由。
+
+OSPF
+Open Shortest Path First (OSPF) is a link-state routing protocol that was developed for IP networks and is based on the Shortest Path First (SPF) algorithm. OSPF is an Interior Gateway Protocol (IGP).
+
+### 外部网关协议 Exterior Gateway Protocol，EGP
+
+通常就是指BGP，它运行在AS与AS之间，解决的是AS之间的选路问题。BGP的主要作用是控制路由条目的传播和选择最优路由。
+
+在BGP术语中，全球互联网是由成千上万相关联的自治系统(AS)组成，其中每一个AS代表每一个特定运营商提供的一个网络管理域（据说，美国前总统乔治.布什都有自己的 AS 编号）
+
++ 单线：服务器上只接一根网线。优点就是超级稳定，速度很快。缺点是不能访问其他运营商的网络 
++ 双线：服务器上接两根不同通讯运营商的网线。为了解决联通不能访问电信网络，电信不能访问联通网络的问题，双线应运而生。优点可以访问其他运营商的网络，缺点就是不稳定，访问别家网络时延迟较高。 
++ 三线、多线：服务器上接三或以上根不同通讯运营商的网线。通常三线也被称为多线。国内除了电信联通外，还有移动和众多小的通讯运营商，所以多线就问世了。多线的优点和缺点和其实和双线一样， 
++ BGP线路：无论是单线，双线，还是多线，都需要有对应的IP地址，即双线双IP、多线多IP，访问速度还是非常有限制的。但BGP可以做到多线单IP，通过每个供应商独有的AS号来实现互联互通。还有个优点就是当其中一条线路挂了，能实现迅速链接其他网络，减少故障带来的损失。当然BGP也是有缺点的，最大的一点就是费用比较高。
+
+BGP
 
 Private leased line (also known as MPLS) provides a dedicated connection that offers lots of bandwidth and it does not route through the Internet. The connection is routed using BGP (border gateway protocol) usually via a telecom provider at their backend infrastructure to establish the secure connection.
 
-### IGP
-OSPF
-Open Shortest Path First (OSPF) is a link-state routing protocol that was developed for IP networks and is based on the Shortest Path First (SPF) algorithm. OSPF is an Interior Gateway Protocol (IGP).
+[Quagga 把 LINUX 变成 BGP 路由器](https://linux.cn/article-4609-1.html)
+
+如何注册BGP，可以找一个本地互联网注册机构 Local Internet Registry (LIR) 或  区域互联网注册机构 RIR:
+[BGP简介和如何申请个人ASN](https://linuxword.com/?p=6287)
+
+[Advice for getting my own ASN](https://www.reddit.com/r/ipv6/comments/yoesvg/advice_for_getting_my_own_asn/)
 
 ## 问题
 路由环路

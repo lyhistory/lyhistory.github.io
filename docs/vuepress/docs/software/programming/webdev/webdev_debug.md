@@ -1021,7 +1021,7 @@ const socket = new WebSocket('ws://localhost:8080');
 
 // Connection opened
 socket.addEventListener('open', function (event) {
-    socket.send('Hello Server!');
+    socket.send('Hello Server!'); // normally should be subscribe example send('{"oper":"subscribe","topic":"TOPIC NAME"}');
 });
 
 // Listen for messages
