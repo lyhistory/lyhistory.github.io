@@ -18,6 +18,6 @@ gitlab cicd
 
 针对设备或基础服务的cicd（安全补丁，运维部署）
 
-宝塔 www.bt.cn
+[宝塔 www.bt.cn](https://www.bt.cn/btcode.html)
 
 Chef Vs Puppet Vs Ansible

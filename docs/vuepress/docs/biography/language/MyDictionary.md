@@ -844,7 +844,7 @@ cum  及; 和; 与; <拉>连同
 passion for in about? https://ell.stackexchange.com/questions/62659/shall-i-use-pursue-my-passion-for-or-in
 infra 在下，以下，下文
 
-Nouns
+## Nouns
 Individual Name nouns
 agnostic 不可知论者
 apprentice əˈprentɪs 学徒，徒弟; 新手
@@ -906,7 +906,7 @@ trusty
 trustee
 outlier
 actuator
-common nouns
+### common nouns
 acronym ˈækrənɪm 缩写词
 acre [ˈeɪkə(r)]
 arbitrage [ˈɑ:bɪtrɑ:ʒ]仲裁; 套汇，套利
@@ -1010,6 +1010,7 @@ franchise ˈfræntʃaɪz 特许权; 选举权; 参政权; 经销权;
 friction 摩擦
 frontier 边疆 尚未开发的
 fudge 软糖 胡言
+fungi 真菌
 fuss 大惊小怪; 忙乱; 大惊小怪的人; 争吵;
 gauge ɡeɪdʒ 评估; 测量的标准或范围; 尺度，标准; 测量仪器;
 gamut 全范围 音阶 音域
@@ -1165,7 +1166,7 @@ wage
 wrath rɒθ 愤怒; 激怒
 workaround 变通办法
 criterion -> criteria
-Adjective -> Noun
+## Adjective -> Noun
 implicit -> implication
 explicit -> explication
 intuitive-> intuitiveness
@@ -1226,7 +1227,7 @@ irrelevant
 irresponsible 不负责任的
 irrespective不顾的 不考虑的
 irregular
-Compound Nouns 复合名词
+## Compound Nouns 复合名词
 safeguard
 subtotal
 electromagnetic
@@ -1342,7 +1343,7 @@ texture 质地; 结构; 本质
 moisture 水分; 湿气; 潮湿; 降雨量;
 to noun
 mean=> means is a means to
-Verb --> Noun
+### Verb --> Noun
 continue continuity
 compare comparison
 compile compilation
@@ -1363,7 +1364,7 @@ practice - practicality
 retrieve retrieval
 slip slippage
 specify specifier
-Both verb & noun
+### Both verb & noun
 campaign kæmˈpeɪn 运动; 战役; 竞选运动; 季节性竞赛
 lag jet lag/ internet lag/ lag time
 
@@ -1632,6 +1633,7 @@ suboptimal 未达最佳标准的; 不最理想的; 不最适宜的; 不最满意
 susceptible səˈseptəbl 易受影响的; 易受感染的; 善感的; 可以接受或允许的
 symmetric 相称性的，均衡的
 tactile 触觉的; 触觉感知的; 能触知的; 有形的
+tactic 策略 战术
 tactical strategic
 tertiary ˈtɜ:ʃəri 第三的; <医>第三期的; (T-) <地>第三纪的; <化>叔的; https://zhidao.baidu.com/question/1174862072019548819.html
 temporal 时间的; 世俗的; 暂存的; <语>表示时间的
@@ -1660,7 +1662,7 @@ wrought 制造的; 加工的; 经装饰的; （金属） 锤打成形的  wrough
 time-dependent effects
 verbose 冗长的，啰唆的，累赘的
 
-noun to adjective
+### noun to adjective
 domain -> dominant
 problematic
 hypothesis -> hypothetical
