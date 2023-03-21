@@ -50,7 +50,7 @@ When the group is **first created**, the position will be set according to the r
 ---第一次（reblance之后的第一次）poll的行为：
 ：
 
-The poll loop does a lot more than just get data. The first time you call poll() with a new consumer, it is responsible for finding the GroupCoordinator, joining the consumer group, and receiving a partition assignment.[注意：只是subscribe topic并不能立即引发rebalance，可以在subscribe之后poll，从而立即引发rebalance] If a rebalance is triggered, it will be handled inside the poll loop as well. And of course the heartbeats that keep consumers alive are sent from within the poll loop. For this reason, we try to make sure that whatever processing we do between iterations is fast and efficient.
+The poll loop does a lot more than just get data. The first time you call poll() with a new consumer, it is responsible for finding the GroupCoordinator, joining the consumer group, and receiving a partition assignment.[注意：只是subscribe topic并不能立即引发rebalance，可以在subscribe之后第一次poll，从而立即引发rebalance] If a rebalance is triggered, it will be handled inside the poll loop as well. And of course the heartbeats that keep consumers alive are sent from within the poll loop. For this reason, we try to make sure that whatever processing we do between iterations is fast and efficient.
 
 ---连续poll的行为？看源码
 从上一次的fetch positions继续往下拉取

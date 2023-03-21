@@ -95,6 +95,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/network/layer2_switch">二层: 交换机</a></li>
 		<li><a href="/docs/software/network/layer1-2_network_adaptor">一二层: 网卡</a></li>
 		<li><a href="/docs/software/network/layer1_fiber_optic">一层: 光纤光电</a></li>
+		<li><a href="/docs/software/network/layer_x">X层: 工作在各层</a></li>
 		<li><a href="/docs/software/network/network_virtualbox_mode">基于virtualbox构建网络环境</a></li>
         <li><a href="/docs/software/linux/vm_env">开发测试环境-虚拟机和容器</a></li>
 		<li><a href="/docs/software/network/vpn&proxy_server">vpn梯子基础</a></li>

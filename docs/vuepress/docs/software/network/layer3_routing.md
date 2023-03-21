@@ -29,15 +29,6 @@ Routing, in a narrower sense of the term, often refers to IP routing and is cont
 
 网关基本上是协议转换器，促进两个协议之间的兼容性，并在开放系统互连（OSI）模型的任何层上操作。
 
-网关类型：
-+ Web应用程序防火墙： 此类型过滤来自Web服务器的流量并查看应用程序层数据。
-+ 云存储网关：此类型使用各种云存储服务API调用转换存储请求。它允许组织将存储从私有云集成到应用程序中，而无需迁移到公共云。
-+ API、OA或 XML 网关： 此类型管理流入和流出服务，面向微服务的体系结构或基于XML的Web服务的流量。
-+ 物联网网关： 此类型聚合来自物联网环境中设备的传感器数据，在传感器协议之间进行转换，并在向前发送之前处理传感器数据。
-+ 媒体网关 ： 此类型将数据从一种网络所需的格式转换为另一种网络所需的格式。
-+ 电子邮件安全网关：此类型可防止传输违反公司政策或将以恶意目的传输信息的电子邮件。
-+ VoIP中继网关 ：这种类型便于使用普通老式电话服务设备，如固定电话和传真机，以及IP语音（VoIP）网络。
-
 ### 路由器 网关（网络层） 网卡 网桥
 + 网关 网桥 网卡
 网关是邮电局,所有的信息必须通过这里的打包、封箱、寻址，才能发出去与收进来；网卡是设备，也就是邮电局邮筒，你家的信箱；而网桥是邮递员，但他只负责一个镇里面(局域网)不负责广域网
@@ -64,6 +55,18 @@ Routing, in a narrower sense of the term, often refers to IP routing and is cont
 表面区别:路由打通的两个网段地位是公平的，既都是公网或都是私网，理解起来比较简单，因为路由不改变包头信息，所以如果用路由连接公网和私网的话，目的地址为私网(192.168.1.2)的数据包在公网上找不到归宿。其实路由表里面也没有相关的路由信息。
 
 NAT打通的可以是两个公平的网络，也可以是一个内网和一个外网。
+
+### MPLS VS IP Routing
+In MPLS, the switching of traffic is based on the labels assigned to the network packets. While in IP routing, it is based on the destination IP address. In MPLS, a fixed and dedicated path is established for the routing of network packets.
+
+IP Routing:
+Before routers can forward a packet to its final IP address, they must first determine where the packet needs to go. Routers do this by referencing and maintaining a routing table, which tells them how to forward each packet. Each router examines the packet's headers, consults its internal routing table, and forwards the packet to the next network. A router in the next network goes through the same process, and the process repeats until the packet arrives at its destination.
+
+This approach to routing works well for most purposes; most of the Internet runs using IP addresses and routing tables. However, some users or organizations want their data to travel faster over paths they can directly control.
+
+MPLS:
+In typical Internet routing, each individual router makes decisions independently based on its own internal routing table. Even if two packets come from the same place and are going to the same destination, they may take different network paths if a router updates its routing table after the first packet passes through. However, with MPLS, packets take the same path every time.
+MPLS can be "private" in the sense that only one organization uses certain MPLS paths. However, MPLS does not encrypt traffic. If packets are intercepted along the paths, they can be read. A virtual private network (VPN) does provide encryption and is one method for keeping network connections truly private.
 
 ## 路由表 routing table
 

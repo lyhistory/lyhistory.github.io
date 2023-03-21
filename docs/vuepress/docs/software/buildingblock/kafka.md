@@ -2341,16 +2341,18 @@ broker 0 1 2，断网broker 2（以及其服务器上面的zookeeper节点）
             snapshot = record.value();
         }
         consumer.close();
+```
 通过加日志，发现错误都是发生在endOffsets这里，默认的timeout应该是30s， 
 这个问题就是读取metadata出现问题，
 最终反复测试确定根源：
 如果某个broker节点是直接杀死，只要该节点网络通的，client端读取metadata就不会超时，
 但是如果某个broker节点所在服务器网络断开，client端的kafka cluster配置中仍有该broker的信息，那么client端读取metadata的时候可能会尝试连接有问题的节点由于网络重试造成超时
-所以解决方案：
+##### 所以解决方案：
 1）修改 consumer.properties.bootstrap.servers，移除坏节点
 2）修改api调用，增加timeout时间到5分钟（实测超时在2分钟左右）：consumer.endOffsets(Collections.singleton(topicPartition),Duration.ofMillis(300000)).get(topicPartition)
-3）修改配置 consumer.properties.request.timeout.ms，注意这个只对org.apache.kafka.clients.consumer.KafkaConsumer生效，我们这里用的是org.apache.kafka.clients.consumer.Consumer
+3）修改配置 consumer.properties.request.timeout.ms=300000，注意这个只对org.apache.kafka.clients.consumer.KafkaConsumer生效，我们这里用的是org.apache.kafka.clients.consumer.Consumer
 
+```
 场景4：
 1. broker 0 1 2 都启动
 2.停 broker 2，启动kafka client端服务正常，expected
@@ -2475,6 +2477,52 @@ public java.util.List<PartitionInfo> partitionsFor(java.lang.String topic)
 Get metadata about the partitions for a given topic. This method will issue a remote call to the server if it does not already have any metadata about the given topic.
 
 TimeoutException - if the offset metadata could not be fetched before the amount of time allocated by **default.api.timeout.ms** expires.
+
+### This member will leave the group because consumer poll timeout has expired
+
+[36m.c.i.AbstractCoordinator$HeartbeatThread^[[m : 
+[Consumer clientId=consumer-1, groupId=TEST-SZL] 
+This member will leave the group because consumer poll timeout has expired. This means the time between subsequent calls to poll() was longer than the configured max.poll.interval.ms, which typically implies that the poll loop is spending too much time processing messages. You can address this either by increasing max.poll.interval.ms or by reducing the maximum size of batches returned in poll() with max.poll.records.
+[[36mo.a.k.c.c.i.AbstractCoordinator^[[m : [
+Consumer clientId=consumer-1, groupId=TEST-SZL] Member consumer-1-7f40d109-cd66-4554-82a9-376f1922c1b5 sending LeaveGroup request to coordinator x.x.x.x:9092 (id: 2147483647 rack: null)
+
+分析：
+观察到的现象是，每次我们删除了所有topic，然后重新启动程序的时候（程序设置了auto.create.topics.enable=true），第一次consumer join group后，过了五分钟后就报上面的错误；
+
+该程序的主要逻辑：
+```
+private void start(ApplicationContext context) {
+        if (managerThread == null) {
+            workerManager = new SimpleWorkerManager(workContext);
+            managerThread = new Thread(workerManager::start);
+            managerThread.setDaemon(true);
+            managerThread.setName(config.getTaskType() + "-MANAGER");
+            managerThread.start();
+        }
+    }
+SimpleWorkerManager的构造方法中调用了kafka的消息订阅
+this.kafkaConsumer.subscribe(Collections.singleton(context.getConfig().getTaskTopic()), new SimpleWorkBalancer(context.getRestorer(), this::removeWorker, this::addWorker));
+
+然后strat()方法是去poll消息
+ConsumerRecords<String, Info> records = kafkaConsumer.poll(pollDuration);
+```
+After subscribing to a set of topics, the consumer will automatically join the group when poll(Duration) is invoked.
+
+所以问题出在第一次poll引起的rebalance的处理时间过长，超过了max.poll.interval.ms，然后我们查一下这个配置：
+
+> The maximum delay between invocations of poll() when using consumer group management. This places an upper bound on the amount of time that the consumer can be idle before fetching more records. If poll() is not called before expiration of this timeout, then the consumer is considered failed and the group will rebalance in order to reassign the partitions to another member. For consumers using a non-null group.instance.id which reach this timeout, partitions will not be immediately reassigned. Instead, the consumer will stop sending heartbeats and partitions will be reassigned after expiration of session.timeout.ms. This mirrors the behavior of a static consumer which has shutdown.
+> Type:	int
+> Default:	300000 (5 minutes)
+> Valid Values:	[1,...]
+> Importance:	medium
+
+此时我想到了[前面的另外一个bug做的修复](#网络故障--kafka集群有节点挂掉不是正常停节点而是broker节点所在服务器网络断开或暴力停机) request.timeout.ms 我设置成了5分钟，然后应该是在reblance的过程中，我们程序的逻辑会去从kafka中恢复我们自己管理的快照，但是由于所有topic已经删除，所以读取的时候可能会等待5分钟，然后 max.poll.interval.ms 默认也是5分钟，自然就timeout了，所以修复办法是延长 max.poll.interval.ms到更长的时间
+
+注意：
+> Also as part of KIP-266, the default value of request.timeout.ms has been changed to 30 seconds. The previous value was a little higher than 5 minutes to account for maximum time that a rebalance would take. Now we treat the JoinGroup request in the rebalance as a special case and use a value derived from max.poll.interval.ms for the request timeout. All other request types use the timeout defined by request.timeout.ms
+> Notable changes in 0.10.2.1
+> The default values for two configurations of the StreamsConfig class were changed to improve the resiliency of Kafka Streams applications. The internal Kafka Streams producer retries default value was changed from 0 to 10. The internal Kafka Streams consumer max.poll.interval.ms default value was changed from 300000 to Integer.MAX_VALUE.
+> The new Java Consumer now supports heartbeating from a background thread. There is a new configuration max.poll.interval.ms which controls the maximum time between poll invocations before the consumer will proactively leave the group (5 minutes by default). The value of the configuration request.timeout.ms (default to 30 seconds) must always be smaller than max.poll.interval.ms(default to 5 minutes), since that is the maximum time that a JoinGroup request can block on the server while the consumer is rebalance. Finally, the default value of session.timeout.ms has been adjusted down to 10 seconds, and the default value of max.poll.records has been changed to 500.
 
 ## Reference
 + kafka原理
