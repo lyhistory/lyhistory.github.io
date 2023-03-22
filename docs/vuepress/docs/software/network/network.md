@@ -753,7 +753,7 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT
 跟http tunnel利用http connect，还需要一个proxy server来建立双向通道并做流量转发的操作；
 tcp tunnel一般不需要通过一个proxy server，而是借助安装在本地或者远程的软件来做“端口转发”，比如利用ssh将两台电脑的端口进行映射；
 
-** ssh tunnel**
+**ssh tunnel**
 
 https://zhuanlan.zhihu.com/p/57630633
 
@@ -771,7 +771,7 @@ ssh -R 80:localhost:3000 serveo.net
 
 [例子来源](https://www.youtube.com/watch?v=AtuAdk4MwWw)
 
-** ssh tunnel control **
+**ssh tunnel control**
 SSH tunneling is a powerful tool, but it can also be abused. 
 Controlling tunneling is particularly important when moving services to Amazon AWS or other cloud computing services.
 
@@ -780,7 +780,7 @@ ssh连接由强加密来保护,这对于流量监控和过滤系统是有效的�
 在一个ssh back-tunneling攻击中，攻击者在目标网络(比如AWS)以外建立一个server,一旦攻击者进到目标系统中,他就能够从里面连接到外部的ssh server.大多数的组织都允许outgoing的ssh连接(至少如果他们在公有云上有server的话).这个ssh连接在建立的时候使能了tcp port forwarding:从外部server上的一个port到内部网络中server的一个ssh端口。建立这么一个ssh back-tunnel仅需要在inside中一条命令，并且容易自动化.大多数防火墙对这种情况基本无能为力.
 CryptoAuditor是一个基于network的解决方案,它可以在防火墙处阻止未授权的ssh tunnel.它可以在防火墙处基于policy来解密ssh session，当然需要能够访问到host keys. 它也可以控制文件传输
 
-** for pentest **
+**for pentest**
 
 参考渗透测试内网穿透部分 /doc/coder2hacker/intranet_penetration
 
@@ -1799,25 +1799,24 @@ todo:
 [网络7层协议，4层，5层？理清容易混淆的几个概念](https://blog.csdn.net/cc1949/article/details/79063439)
 [Netty(三) 什么是 TCP 拆、粘包？如何解决？](https://juejin.im/post/5b67902f6fb9a04fc67c1a24)
 
-如何用30分钟快速优化家中Wi-Fi？阿里工程师有绝招 https://yq.aliyun.com/articles/692337?spm=a2c4e.11163080.searchblog.118.32e02ec1I9PHCG
+[如何用30分钟快速优化家中Wi-Fi？阿里工程师有绝招](https://yq.aliyun.com/articles/692337?spm=a2c4e.11163080.searchblog.118.32e02ec1I9PHCG)
 
-化繁为简！开发者尝鲜阿里小程序云平台，实操讲解如何打造智能小车！ https://yq.aliyun.com/articles/700749?spm=a2c4e.11163080.searchblog.48.32e02ec1I9PHCG
-技术宅之---用手机实现“移动网关” https://yq.aliyun.com/articles/702875?spm=a2c4e.11163080.searchblog.32.32e02ec1I9PHCG
+[网络知识梳理--OSI七层网络与TCP/IP五层网络架构及二层/三层网络](https://www.cnblogs.com/kevingrace/p/5909719.html)
 
-网络知识梳理--OSI七层网络与TCP/IP五层网络架构及二层/三层网络 https://www.cnblogs.com/kevingrace/p/5909719.html
-
+[技术发烧友：网络设备虚拟化](https://forum.huawei.com/enterprise/zh/thread/580901126881034240)
 [走近数据中心大二层网络](https://bbs.huaweicloud.com/blogs/219820)
 
 
-https://www.anquanke.com/post/id/87158
-https://www.sdnlab.com/20510.html
+[【安全科普】阿里云“经典网络”真的不安全？](https://www.anquanke.com/post/id/87158)
+[浅谈VPC二三，秒懂秒透](https://www.sdnlab.com/20510.html)
 
 [组播 VLAN](https://support.huawei.com/enterprise/zh/doc/EDOC1100169967/3ed5e570)
-交易系统设计要点 https://zhuanlan.zhihu.com/p/607346470
+[交易系统设计要点](https://zhuanlan.zhihu.com/p/607346470)
 
 [单播、多播、广播、组播、泛播、冲突域、广播域、VLAN概念汇总](https://bbs.huaweicloud.com/blogs/307508)
 
 [从攻击面视角，理解零信任](https://www.freebuf.com/articles/neopoints/337650.html)
 [SDN在云数据中心的应用——架构篇](https://www.sdnlab.com/19236.html)
 [为什么说不要用VLAN、VPC解决东西向隔离问题](https://www.freebuf.com/articles/network/189879.html)
+
 <disqus/>

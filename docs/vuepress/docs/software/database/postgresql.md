@@ -6,16 +6,15 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《postgresql实用基础》
 
-## 1. Get Start
-### 1.1 Baisc Setup
+## 1. Setup
+
+### 1.1 install
 
 | postgresql-client  | libraries and client binaries                    |
 | ------------------ | ------------------------------------------------ |
 | postgresql-server  | core database server                             |
 | postgresql-contrib | additional supplied modules                      |
 | postgresql-devel   | libraries and headers for C language development |
-
-#### 1.1.1 install
 
 method1:
 ```
@@ -44,17 +43,18 @@ yum install ./postgresql12-contrib-12.7-1PGDG.rhel7.x86_64.rpm -y
 yum install ./postgresql12-server-12.7-1PGDG.rhel7.x86_64.rpm -y
 ```
 
+#### folder
+vim /var/lib/pgsql/12/data/postgresql.conf
+vim /var/lib/pgsql/12/data/pg_hba.conf 
 ```
 $ locate bin/postgres
 $ /usr/pgsql-12/bin/postgres -V
 postgres (PostgreSQL) 12.7
 ```
 
+### 1.2 client连接
 
-
-#### 1.1.2 client连接
-
-##### psql
+#### CLI - psql
 ```
 su - postgres
 进入bash，输入
@@ -74,7 +74,63 @@ sudo -u postgres createuser owning_user
 sudo -u postgres createdb -O owning_user dbname
 ```
 
-##### 理解一下posgresql的用户概念
+常用命令：
+
+```
+\l \list
+\c [DATABASE]
+\d
+\d TABLE_NAME
+\du
+
+\dx
+SELECT * FROM pg_extension;
+
+--format output
+\x on
+
+解锁 unlock
+dbname=# select pid from pg_locks l join pg_class t on l.relation = t.oid where t.relname = 'tablename';
+dbname=# SELECT pg_cancel_backend(the id);
+SELECT pg_terminate_backend(3567);
+select * from pg_stat_activity where pid=3567;
+
+\copy (query) to result.csv csv header
+
+```
+#### GUI Client
++ Offical: Pgadmin 4    https://www.pgadmin.org/download/
++ Pgadmin3 LTS by BigSQL (don’t support 11g)
++ DBeaver 
+    **offline install**
+    settings:
+    class name: org.postgresql.Driver
+    template: jdbc:postgresql://{host}:{port}/dbname
+    libraries: add postgres drivers
+    **show all databases**
+    On the connection, right-click -> `Edit connection` -> `Connection settings` -> on the tabbed panel, select `PostgreSQL`, check the box `Show all databases`.
+
+    **How do you view PostgreSQL messages (such as RAISE NOTICE) in DBeaver?**
+    you can use Ctrl+Shif+O or the button Show server output console on the left side of the script window.
+
+#### Drivers 
++ C# 连接 PostgreSQL --- Npgsql 
+
+### 1.3 Utilities
+
++ pg_dump
+```
+pg_dump -s dbName > db_schema_dump.sql
+
+
+# dump users
+pg_dumpall --globals-only  --file=globals.sql
+
+```
+
+### 1.4 Config 
+
+#### 理解一下posgresql的用户概念
 
 the `postgres` PostgreSQL user account already exists and is configured to be accessible via `peer` authentication for unix sockets in `pg_hba.conf`
 
@@ -92,7 +148,7 @@ https://stackoverflow.com/questions/18664074/getting-error-peer-authentication-f
 
 
 
-**开启远程连接：**
+#### 开启远程连接：
 
 https://blog.csdn.net/zhangzeyuaaa/article/details/77941039
 ```
@@ -121,27 +177,12 @@ PGPASSWORD=postgres psql --host IP --port 5432 -U postgres -d DBNAME -c "query;"
 PGPASSWORD=postgres psql --host IP --port 5432 -U postgres -d DBNAME -f file.sql
 ```
 
+## 2. Syntax
 
-##### Client
-+ CLI
-+ Offical: Pgadmin 4    https://www.pgadmin.org/download/
-+ Pgadmin3 LTS by BigSQL (don’t support 11g)
-+ DBeaver 
-    **offline install**
-    settings:
-    class name: org.postgresql.Driver
-    template: jdbc:postgresql://{host}:{port}/dbname
-    libraries: add postgres drivers
-    **show all databases**
-    On the connection, right-click -> `Edit connection` -> `Connection settings` -> on the tabbed panel, select `PostgreSQL`, check the box `Show all databases`.
+Assign null or empty ‘’ to numberic,  to_number(‘’) throw exception, use if else instead
+Bigint default value is NULL not 0
 
-    **How do you view PostgreSQL messages (such as RAISE NOTICE) in DBeaver?**
-    you can use Ctrl+Shif+O or the button Show server output console on the left side of the script window.
-
-C# 连接 PostgreSQL --- Npgsql 
-
-
-### 1.2 Basic concepts
+### 2.1 Basic
 
 https://www.tutorialspoint.com/postgresql/index.htm
 
@@ -157,47 +198,6 @@ postgres=# select * from pg_tablespace;
  1664 | pg_global  |       10 |        |
 (2 rows)
 ```
-
-psql命令
-
-```
-\l \list
-\c [DATABASE]
-\d
-\d TABLE_NAME
-\du
-
-\dx
-SELECT * FROM pg_extension;
-
---format output
-\x on
-
-解锁 unlock
-dbname=# select pid from pg_locks l join pg_class t on l.relation = t.oid where t.relname = 'tablename';
-dbname=# SELECT pg_cancel_backend(the id);
-SELECT pg_terminate_backend(3567);
-select * from pg_stat_activity where pid=3567;
-
-\copy (query) to result.csv csv header
-
-```
-
-### utilities
-```
-pg_dump -s dbName > db_schema_dump.sql
-
-
-# dump users
-pg_dumpall --globals-only  --file=globals.sql
-
-```
-## 2. Syntax
-
-Assign null or empty ‘’ to numberic,  to_number(‘’) throw exception, use if else instead
-Bigint default value is NULL not 0
-
-### 2.1 Basic
 
 #### System
 

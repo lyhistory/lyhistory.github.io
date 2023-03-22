@@ -2487,6 +2487,8 @@ This member will leave the group because consumer poll timeout has expired. This
 Consumer clientId=consumer-1, groupId=TEST-SZL] Member consumer-1-7f40d109-cd66-4554-82a9-376f1922c1b5 sending LeaveGroup request to coordinator x.x.x.x:9092 (id: 2147483647 rack: null)
 
 分析：
+首先报错的意思是程序处理一批kafka消息（max.poll.records 默认500条）的时间超过了max.poll.interval.ms，所以直观的看来就是降低max.poll.records或者提高max.poll.interval.ms，不过我们这里的场景并没有这么简单，因为我们出错的时候还没有开始获取并处理kafka消息，而是第一次poll触发的rebalance的过程中出现的错误；
+
 观察到的现象是，每次我们删除了所有topic，然后重新启动程序的时候（程序设置了auto.create.topics.enable=true），第一次consumer join group后，过了五分钟后就报上面的错误；
 
 该程序的主要逻辑：

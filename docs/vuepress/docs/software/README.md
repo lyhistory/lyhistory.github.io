@@ -86,7 +86,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<h3>网络运维</h3>
 	<ul>
 		<li><a href="/docs/software/network/network">网络基础</a></li>	
-        <li><a href="/docs/software/network/layer5_http_protocol">五层: http协议实用</a></li>	
+        <li><a href="/docs/software/network/layer5_http_protocol">五层: http协议实用</a></li>
+		<li><a href="/docs/software/network/layer5_p2p_protocol">五层: P2P</a></li>
 		<li><a href="/docs/software/network/layer5_dns">五层: DNS</a></li>	
         <li><a href="/docs/software/network/layer4_http_ssl_tls_setup">四层: ssl/tls环境配置(https|wss)</a></li>
 		<li><a href="/docs/software/network/layer3-4_firewall">三四层: 防火墙</a></li>	
