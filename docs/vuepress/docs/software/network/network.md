@@ -536,13 +536,32 @@ DNAT Destination Network Address Translation 目的网络地址转换
 + SNAT
 SNAT Source Network Address Translation 源网络地址转换，其作用是将ip数据包的源地址转换成另外一个地址，可能有人觉得奇怪，好好的为什么要进行ip地址转换啊，为了弄懂这个问题，我们要看一下局域网用户上公网的原理，假设内网主机A（192.168.2.8）要和外网主机B（61.132.62.131）通信，A向B发出IP数据包，如果没有SNAT对A主机进行源地址转换，A与B主机的通讯会不正常中断，因为当路由器将内网的数据包发到公网IP后，公网IP会给你的私网IP回数据包，这时，公网IP根本就无法知道你的私网IP应该如何走了。所以问它上一级路由器，当然这是肯定的，因为从公网上根本就无法看到私网IP，因此你无法给他通信。为了实现数据包的正确发送及返回，网关必须将A的址转换为一个合法的公网地址，同时为了以后B主机能将数据包发送给A，这个合法的公网地址必须是网关的外网地址，如果是其它公网地址的话，B会把数据包发送到其它网关，而不是A主机所在的网关，A将收不到B发过来的数据包，所以内网主机要上公网就必须要有合法的公网地址，而得到这个地址的方法就是让网关进行SNAT(源地址转换），将内网地址转换成公网址(一般是网关的外部地址），所以大家经常会看到为了让内网用户上公网，我们必须在routeros的firewall中设置snat，俗称IP地址欺骗或伪装（masquerade)
 
+NAT对待UDP的实现方式有4种，分别如下：
+
+1.    Full Cone NAT
+
+完全锥形NAT，所有从同一个内网IP和端口号发送过来的请求都会被映射成同一个外网IP和端口号，并且任何一个外网主机都可以通过这个映射的外网IP和端口号向这台内网主机发送包。
+
+2.    Restricted Cone NAT
+
+限制锥形NAT，它也是所有从同一个内网IP和端口号发送过来的请求都会被映射成同一个外网IP和端口号。与完全锥形不同的是，外网主机只能够向先前已经向它发送过数据包的内网主机发送包。
+
+3.    Port Restricted Cone NAT
+
+端口限制锥形NAT，与限制锥形NAT很相似，只不过它包括端口号。也就是说，一台IP地址X和端口P的外网主机想给内网主机发送包，必须是这台内网主机先前已经给这个IP地址X和端口P发送过数据包。
+
+4.    Symmetric NAT
+
+对称NAT，所有从同一个内网IP和端口号发送到一个特定的目的IP和端口号的请求，都会被映射到同一个IP和端口号。如果同一台主机使用相同的源地址和端口号发送包，但是发往不同的目的地，NAT将会使用不同的映射。此外，只有收到数据的外网主机才可以反过来向内网主机发送包。
+
 三种类型：
-+ Static NAT
++ Static NAT 静态NAT 
     Static NAT is of the types of NAT that is used for One-to-One Translation of Ports or IP Addresses. In other words, for example in this NAT type, one Private IP Address is mapped to one Public IP Address
-+ Dynamic NAT
++ Dynamic NAT 动态NAT 
     Dynamic NAT is one of the NAT types that is used with a Public IP Address Pool and works with more than one Public IP Address. Here, multiple Private IP Addresses are mapped to a Pool of Public IP Addresses.And these IP Addresses are given to the Internal users randomly. So, it is difficult to reach any Internal user from outside.
-+ PAT (NAT Overload)
++ 网络地址端口转换NAPT(Port-Level NAT) / PAT (NAT Overload)
     PAT (Port Address Translation) is one of the NAT types that is also known as NAT Overload. Here, many Private IP Addresses are translated to one Public IP Address. The traffic distinguisher in PAT are Port Numbers,  TCP/UDP ports are used in PAT (NAT Overload).
+
 NAT技术实现：
 
 1）基本IP地址替换
@@ -554,9 +573,11 @@ NAT技术实现：
 - 在NAT路由器内部, 有一张自动生成的用于`地址转换的表`
 - 当 `10.0.0.10`第一次向`163.221.120.9` 发送数据时就会生成表中的映射关系
 
-2）NAPT技术
+2）NAPT技术 - Network Address and Port Translation
 
 如果局域网内, 有多个主机都访问同一个`外网服务器`， 那么对于服务器返回的数据中, 目的`IP`都是相同的。 那么`NAT`路由器如何判定将这个数据包转发给哪个局域网的主机? NAPT技术使用IP+Port来解决这个问题。
+
+在NAT网关上会有一张映射表，表上记录了内网向公网哪个IP和端口发起了请求，然后如果内网有主机向公网设备发起了请求，内网主机的请求数据包传输到了NAT网关上，那么NAT网关会修改该数据包的源IP地址和源端口为NAT网关自身的IP地址和任意一个不冲突的自身未使用的端口，并且把这个修改记录到那张映射表上。最后把修改之后的数据包发送到请求的目标主机，等目标主机发回了响应包之后，再根据响应包里面的目的IP地址和目的端口去映射表里面找到该转发给哪个内网主机。这样就实现了内网主机在没有公网IP的情况下，通过NAPT技术借助路由器唯一的一个公网IP来访问公网设备。
 
 ![](/docs/docs_image/software/network/network_nat02.png)
 
@@ -689,11 +710,9 @@ TLS握手发生在TCP握手结束之后，具体参考《publickey_infrastructur
 
 ### 2.5 应用层之proxy代理服务器
 
-前面说过NAT技术和代理服务器技术的区别，现在具体说下代理服务器
+前面说过NAT技术和代理服务器技术的区别，现在具体说下代理服务器的作用：
 
-代理服务器的作用：
-
-- [翻*:)墙: 广域网中的代理。跟vpn是不同的技术](/docs/software/network/vpn)
+- [翻*:)墙: 广域网中的代理。跟vpn是不同的技术](/docs/software/network/vpn&proxy_server)
 - 负载均衡: 局域网中的代理。
 - 端口转发: http/ssh tunnel 隧道技术
 
@@ -708,123 +727,8 @@ TLS握手发生在TCP握手结束之后，具体参考《publickey_infrastructur
 例子：nginx或者tomcat作为Oracle数据库的反向代理，再比如nginx作为监控UIgrafana的反向代理：Grafana-server runs its own service and hosts dashboard on 3000, if bind to domain, to the normal use access domain, default using 80, need a proxy server who use 80 to forward request to grafana-server for example nginx
 https://www.jscape.com/blog/bid/87783/Forward-Proxy-vs-Reverse-Proxy
 
-而**端口转发（Port forwarding）：**
-
-由于NAT的缺点，从外网发起访问内网的主机是不行的，为了解决这个问题，可以在NAT路由器上做端口转发设置，除此之外，还可以借助代理服务器解决这个问题，比如借助ssh的正向反向或动态代理功能
-
-> 是安全壳(SSH) 为网络安全通信使用的一种方法。SSH可以利用端口转发技术来传输其他TCP/IP协议的报文，当使用这种方式时，SSH就为其他服务在客户端和服务器端建立了一条安全的传输管道。端口转发利用本客户机端口映射到服务器端口来工作，SSH可以映射所有的服务器端口到本地端口，但要设置1024以下的端口需要根用户权限。在使用防火墙的网络中，如果设置为允许SSH服务通过(开启了22端口)，而阻断了其他服务，则被阻断的服务仍然可以通过端口转发技术转发数据包
-> https://baike.baidu.com/item/%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91
-
-所以这种端口转发方式中ssh就充当了代理服务器的角色
-
-一般渗透测试中会利用代理模式（正向或者反向）加上端口转发来“绕过”防火墙对目标机器上端口的限制
-
-例子：
-
-https://medium.com/@ryanwendel/forwarding-reverse-shells-through-a-jump-box-using-ssh-7111f1d55e3a
-
-https://www.offensive-security.com/metasploit-unleashed/portfwd/
-
-### 2.6 Tunnel
-
-#### 2.6.1 ICMP Tunnel
-
-Ping Power — ICMP Tunnel https://infosecwriteups.com/ping-power-icmp-tunnel-31e2abb2aaea
-
-#### 2.6.2 http tunnel
-
-定义：
-> HTTP tunneling is used to create a network link between two computers in conditions of restricted network connectivity including firewalls, NATs and ACLs, among other restrictions. The tunnel is created by an intermediary called a proxy server which is usually located in a DMZ.
-> https://en.wikipedia.org/wiki/HTTP_tunnel
-
-系统一般分为DMZ和核心区，位于DMZ的服务器A面向外网，位于核心区的B不可以通过外网直接访问，只能通过A进行流量转发；
-
-http tunnel 一般都是采用 http connect 通过proxy server跟目标server之间建立双向连接
-https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT
-> This mechanism is how a client behind an HTTP proxy can access websites using SSL or TLS (i.e. HTTPS). 
-> Proxy servers may also limit connections by only allowing connections to the default HTTPS port 443, whitelisting hosts, or blocking traffic which doesn't appear to be SSL.
-> https://en.wikipedia.org/wiki/HTTP_tunnel
-
-[HTTP Tunnel使用的几种使用（经典）](https://blog.csdn.net/zhangxinrun/article/details/5942260)
-[http tunnel和入侵检测的理解](https://blog.csdn.net/gx11251143/article/details/104518461)
-
-#### 2.6.3 tcp tunnel
-
-跟http tunnel利用http connect，还需要一个proxy server来建立双向通道并做流量转发的操作；
-tcp tunnel一般不需要通过一个proxy server，而是借助安装在本地或者远程的软件来做“端口转发”，比如利用ssh将两台电脑的端口进行映射；
-
-**ssh tunnel**
-
-https://zhuanlan.zhihu.com/p/57630633
-
-一般又被直接叫做port forwarding端口转发
-forward local port to remote port, 比如在公司连接家里的远程桌面，但是公司的3389端口被屏蔽，可以走ssh转发
-ssh -L <LOCAL PORT>:<REMOTE IP>:<REMOTE PORT> <USERNAME>@<REMOTE IP>
-
-dynamic tunnel:
-ssh -D <LOCAL PORT> <USERNAME>@<REMOTE IP>
-
-reverse tunnel,比如在公司电脑上执行下面语句，然后回到家可以连接公司电脑
-ssh -R <REMOTE PORT>:localhost:<LOCAL PORT> <USERNAME>@<REMOTE IP>
-免费host网站
-ssh -R 80:localhost:3000 serveo.net 
-
-[例子来源](https://www.youtube.com/watch?v=AtuAdk4MwWw)
-
-**ssh tunnel control**
-SSH tunneling is a powerful tool, but it can also be abused. 
-Controlling tunneling is particularly important when moving services to Amazon AWS or other cloud computing services.
-
-ssh连接由强加密来保护,这对于流量监控和过滤系统是有效的，因为traffic是不可解读的.但是这种不可见也存在着很大的风险，比如数据泄露。恶意软件可以利用ssh来隐藏未授权通信，或者从目标网络中漏出偷窃的数据.
-
-在一个ssh back-tunneling攻击中，攻击者在目标网络(比如AWS)以外建立一个server,一旦攻击者进到目标系统中,他就能够从里面连接到外部的ssh server.大多数的组织都允许outgoing的ssh连接(至少如果他们在公有云上有server的话).这个ssh连接在建立的时候使能了tcp port forwarding:从外部server上的一个port到内部网络中server的一个ssh端口。建立这么一个ssh back-tunnel仅需要在inside中一条命令，并且容易自动化.大多数防火墙对这种情况基本无能为力.
-CryptoAuditor是一个基于network的解决方案,它可以在防火墙处阻止未授权的ssh tunnel.它可以在防火墙处基于policy来解密ssh session，当然需要能够访问到host keys. 它也可以控制文件传输
-
-**for pentest**
-
-参考渗透测试内网穿透部分 /doc/coder2hacker/intranet_penetration
-
-[Proxy servers and tunneling](https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling)
-
-
-
-案例：
-
-1.[实战课: 从"NAT端口转发"到"代理服务tunnel"拿shell](https://mp.weixin.qq.com/s?__biz=MzU1NTUyMzYzMg==&mid=2247483910&idx=1&sn=cdfe82e503449f46ad1a5f7f51876a33&chksm=fbd24959cca5c04f7f5cfbbb63e2230a7ba7c6134bc6f5c2241b394c8f9e57808f34bc9f2a8e&token=1983430103&lang=zh_CN#rd)
-
-	+ NAT路由器端口转发
-	+ 代理服务器tunnel `ssh -R443:localhost:443 -R444:localhost:444 -R445:localhost:445 -p8022 -lroot 云主机IP`
-
-2.后渗透 pivot-内网扫描，参考《tools_metasploit》
-
-```
-通过控制的某个主机的meterpreter session来扫描整个内网
-https://redteamnation.com/pivoting/
-
-e.g. the compromised host 192.168.1.22 has access to a private network at 172.17.0.0/24.
-
-方法一：使用proxychain
-假设我们拿到主机192.168.1.22的ssh，我们可以开一个tunnel：
-ssh -D 4444 admin@192.168.1.22
-然后在attacker机器设置proxychains config：
-注释掉proxy_dns，开启 socks4 127.0.0.1 4444
-然后执行
-proxychains nmap -Pn -sT 172.17.0.0/24
-这样nmap就会通过444端口将流量转发到 192.168.1.22 主机上
-
-方法二：使用 meterpreter autoroute
-```
-
-#### 2.6.4 VPN
-
-A VPN tunnel, however, is fully encrypted. The "P in VPN indicates private. VPN tunnels are typically achieved with IPSeC, SSL, PPTP,  TCP Crypt (this is a new protocol), etc.
-
-> A VPN is created by establishing a virtual point-to-point connection through the use of dedicated circuits or with tunneling protocols over existing networks. A VPN available from the public Internet can provide some of the benefits of a wide area network (WAN). From a user perspective, the resources available within the private network can be accessed remotely
-> https://en.wikipedia.org/wiki/Virtual_private_network
-
-##### IPSec
-In computing, Internet Protocol Security (IPsec) is a secure network protocol suite that authenticates and encrypts packets of data to provide secure encrypted communication between two computers over an Internet Protocol network. It is used in virtual private networks (VPNs).
-
+### 2.6 内网穿透 - 隧道技术 Tunnel
+[内网穿透](/docs/software/network/layer3_nat_traversal)
 
 ### 2.7 其他network测试工具
 

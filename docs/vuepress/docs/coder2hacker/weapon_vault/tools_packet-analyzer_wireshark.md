@@ -4,6 +4,8 @@ wireshark + [linux netstat]
 
 How to Decrypt SSL with Wireshark
 
+monitor mode
+
 ## CaptureFilters 
 https://wiki.wireshark.org/CaptureFilters
 
@@ -21,3 +23,9 @@ protocol
 http contains searchText
 
 ip.addr == 192.0.2.1 and not tcp.port in {80 25}
+
+
+```
+not ssh and ip.addr == 1.1.1.1
+```
+

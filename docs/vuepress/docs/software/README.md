@@ -91,6 +91,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/network/layer5_dns">五层: DNS</a></li>	
         <li><a href="/docs/software/network/layer4_http_ssl_tls_setup">四层: ssl/tls环境配置(https|wss)</a></li>
 		<li><a href="/docs/software/network/layer3-4_firewall">三四层: 防火墙</a></li>	
+		<li><a href="/docs/software/network/layer3_nat_traversal">三层: NAT Traversal 内网穿透</a></li>	
 		<li><a href="/docs/software/network/layer3_routing">三层: 路由</a></li>	
 		<li><a href="/docs/software/network/layer3_ipv6_protocol">三层: IPV6</a></li>
 		<li><a href="/docs/software/network/layer2_switch">二层: 交换机</a></li>
