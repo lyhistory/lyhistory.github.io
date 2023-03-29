@@ -244,10 +244,12 @@ https://www.youtube.com/watch?v=i_r3z1jYHAc
 https://www.youtube.com/watch?v=KJKhRLKXr-Q
 
 ### Pie-Top
+![](/docs/docs_image/software/hardware/pi-top.png)
 https://pimylifeup.com/pi-top-review/
 https://3dprint.com/45158/pi-top-version-3/
 pi-top install hands on
 http://makezine.com/2015/11/16/hands-on-with-pi-top-the-raspberry-pi-powered-laptop/
+
 
 ### Ethereum Node
 Build a RespNode http://raspnode.com/diyEthereumGeth.html#homenet
