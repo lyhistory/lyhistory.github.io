@@ -84,6 +84,14 @@ tools for android phone user all you need are here: http://www.makeuseof.com/tag
 virtual keyboard: sudo  apt-get install matchbox
 remote access： https://www.raspberrypi.org/documentation/remote-access/
 
+## Checking Raspberry Pi Revision Number & Board Version
+```
+$ pinout
+$ cat /proc/cpuinfo
+$ cat /proc/device-tree/model
+
+```
+
 ## Connection
 ### Scenario 1 - connect to Mobile via USB only(otg)
 Edit /etc/network/interfaces and append these two lines:
