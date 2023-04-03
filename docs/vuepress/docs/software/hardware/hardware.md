@@ -261,10 +261,36 @@ http://news.eeworld.com.cn/Test_and_measurement/ic514591.html
 对于有单片机、DSP、CPLD等可编程元件，可考虑重新刷一遍程序，排除程序运行异常造成的电路故障。
 
 ## 通信协议
-针脚：SDA SDL RX TX
 
-UART、RS232、RS485、I2C、SPI、CAN
+**硬件接口：**
++ Serial port 串口 即 COM口(communication port)
+  In strict theory, any port using serial communications (almost any modern bus - including USB, which stands for "Universal Serial Bus") is a "serial port".  The term "serial port" simply means that the data is transferred one bit at a time over a single signal path. However, in most cases, when people refer to "the serial port", they actually refer to a port that complies to RS232.
+  串口的硬件实现主要有两种：D型9针插头（DB9）和 4针杜邦头
+  - UART接口：
+    通用异步收发器（UniversalAsynchronous Receiver/Transmitter），UART是串口收发的逻辑电路，这部分可以独立成芯片，也可以作为模块嵌入到其他芯片里，单片机、SOC、PC里都会有UART模块；
+    UART是通用异步收发传输器，它是完成一个特定的功能的硬件，它本身不是协议。它的最基本功能，是串行数据和并行数据之间的转换。计算机中的数据以Byte为基本单位，对一个Byte的存取是并行的，即同时取得/写入8个bit。而串行通信，则需要将这个Byte"打碎"，按照时间顺序来收发以实现串行。它是设备间进行异步通信的关键模块，UART负责处理数据总线和串行口之间的串/并、并/串转换，并规定了帧格式；通信双方只要采用相同的帧格式和波特率，就能在未共享时钟信号的情况下，仅用两根信号线（Rx 和Tx）就可以完成通信过程，因此也称为异步串行通信；
+    在嵌入式里面说的串口，一般是指UART口；
+    针脚：UART有4个pin（VCC、GND、RX、TX），用的是TTL电平，低电平为0（0V），高电平为1（3.3V或以上）。
+  - I2C接口
+    I2C接口包括时钟线（SCL）和数据线（SDA）。这两条线都是漏极开路或者集电极开路结构，使用时需要外加上拉电阻，可以挂载多个设备。每个设备都有自己的地址，主机通过不同地址来选中不同的设备。
+    针脚：SCL/SDA
+  - SPI
+    Serial Peripheral interface，顾名思义就是串行外围设备接口，是Motorola首先在其MC68HCXX系列处理器上定义的。SPI总线是微控制器四线的外部总线（相对于内部总线）。与IIC不同，SPI没有明文标准，只是一种事实标准，对通信操作的实现只作一般的抽象描述，芯片厂商与驱动开发者通过data sheets和application notes沟通实现上的细节。
+  - CAN
+  - USB口：
+    通用串行总线，和串口完全是两个概念。虽然也是串行方式通信，但由于USB的通信时序和信号电平都和串口完全不同（串口通常都是采用RS232标准，而USB不是），因此和串口没有任何关系。USB是高速的通信接口，用于PC连接各种外设，U盘、键鼠、移动硬盘、当然也包括"USB转串口"的模块。（USB转串口模块，就是USB接口的UART模块）
++ 并口
+  并行接口，简称并口。并口采用的是25针D形接头。所谓“并行”，是指8位数据同时通过并行线进行传送，这样数据传送速度大大提高，但并行传送的线路长度受到限制，因为长度增加，干扰就会增加，数据也就容易出错，目前，并行接口主要作为打印机端口等。
 
+
+**digital logic 电平标准/电气协议（逻辑电平的表示方式）：**
++ TTL
+  低电平为0，高电平为1（电平信号）
++ RS232
+  正电平为0，负电平为1（电平信号）
+  RS-232接口连接器使用型号为DB-25的25芯插头座。一些设备与PC机连接的RS-232接口，因为不使用对方的传送控制信号，只需三条接口线，即RXD、TXD、GND，所以采用DB-9的9芯插头座，传输线采用屏蔽双绞线。
++ RS-485、RS-422
+  与RS-232类似，但是采用差分信号逻辑，更适合长距离、高速传输。
 
 ## 常用芯片-模块
 

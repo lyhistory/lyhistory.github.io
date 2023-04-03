@@ -208,7 +208,7 @@ TCP KeepAlive 的基本原理是，隔一段时间给连接对端发送一个探
 以上过程可以通过抓包来数包：
 
 ```
-curl www.baidu.com
+ curl parrot.live
 tcpdump -nn -i eth0 port 80 or arp
 ```
 

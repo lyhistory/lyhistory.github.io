@@ -84,6 +84,50 @@ tools for android phone user all you need are here: http://www.makeuseof.com/tag
 virtual keyboard: sudo  apt-get install matchbox
 remote access： https://www.raspberrypi.org/documentation/remote-access/
 
+## Checking Raspberry Pi Revision Number & Board Version
+```
+$ pinout
+$ cat /proc/cpuinfo
+$ cat /proc/device-tree/model
+
+```
+
+## Connection
+### Scenario 1 - connect to Mobile via USB only(otg)
+Edit /etc/network/interfaces and append these two lines:
+
+allow-hotplug usb0
+
+iface usb0 inet dhcp
+
+on Android, I enable USB tethering 
+
+plug in Pi. 
+
+install ping&net app, find the ip address assigned to the Pi
+
+install ssh client - juicy ssh
+
+### Scenario 2 - connect to laptop via USB only(Gadget Mode)
+Note: this only works on Zero and A boards, not RPi 3, which is B.
+
+SD card mount on your computer:
+
+append to config.txt:
+dtoverlay=dwc2
+
+touch ssh
+
+edit the file called cmdline.txt. Look for rootwait, and add modules-load=dwc2,g_ether immediately after.
+
+Note the formatting of cmdline.txt is very strict. Commands are separated by spaces, and newlines are not allowed.
+
+Now you can eject the SD card, and insert it into the the Pi. Using a USB cable, connect to the Raspberry Pi from your computer.
+
+After the Pi boots up (this will take a while initially), the Pi should appear as a USB Ethernet device, and you can SSH into it using:
+
+ssh pi@raspberrypi.local
+
 ## Troubleshooting
 ### sdcard format and partition
 + a. if your sdcard more than 32G, windows disk manager may not be able to format it correctly, I am not sure abt mac and other os, use sdcard formatter instead
@@ -243,7 +287,7 @@ https://www.raspberrypi.org/forums/viewtopic.php?t=169666
 https://www.youtube.com/watch?v=i_r3z1jYHAc
 https://www.youtube.com/watch?v=KJKhRLKXr-Q
 
-### Pie-Top
+### Pi-Top
 ![](/docs/docs_image/software/hardware/pi-top.png)
 https://pimylifeup.com/pi-top-review/
 https://3dprint.com/45158/pi-top-version-3/
@@ -294,4 +338,5 @@ http://www.multibootpi.com/
 
 How to Make a Raspberry Pi VPN Server https://www.electromaker.io/tutorial/blog/raspberry-pi-vpn-server
 
+[SSH the Pi from computer with a USB cable only](https://raspberrypi.stackexchange.com/questions/55928/ssh-the-pi-from-computer-with-a-usb-cable-only)
 <disqus/>

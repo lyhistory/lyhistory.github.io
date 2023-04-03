@@ -25,10 +25,10 @@ Python代码的执行由Python虚拟机（解释器）来控制。Python在设�
 6.再次重复以上步骤。
 对所有面向I/O的（会调用内建的操作系统C代码的）程序来说，GIL会在这个I/O调用之前被释放，以允许其他线程在这个线程等待I/O的时候运行。如果某线程并未使用很多I/O操作，它会在自己的时间片内一直占用处理器和GIL。也就是说，I/O密集型的Python程序比计算密集型的Python程序更能充分利用多线程的好处。
 
-作者：DarrenChan陈驰
-链接：https://www.zhihu.com/question/23474039/answer/269526476
-
 Python的多线程由于全局线程锁的存在并不能实现真正的并行编程，但是Python中的多进程编程模式是可以实现这个目标的。多进程模式下进行上下文切换的损耗要远远大于线程。进程间无法直接共享数据，需要通过Queue、Pipe或则Manager方式做进程间通信
+
+**MicroPython**
+MicroPython is a version of the Python programming language for microcontrollers. MicroPython lets you use your Python knowledge to write code to interact with electronics components.
 
 ## 1. Setup
 ### 1.1 Env
@@ -403,5 +403,9 @@ https://stackoverflow.com/questions/47044149/unable-to-install-mysqlclient-pytho
 download mysqlclient from http://www.lfd.uci.edu/~gohlke/pythonlibs/#mysql-python
 pip install wheel 
 pip install mysqlclient‑1.4.2‑cp37‑cp37m‑win_amd64.whl
+
+
+https://www.zhihu.com/question/23474039/answer/269526476
+
 
 <disqus/>
