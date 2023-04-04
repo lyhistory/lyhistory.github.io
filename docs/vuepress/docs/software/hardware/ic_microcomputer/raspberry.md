@@ -151,6 +151,13 @@ ifconfig wconfig
 sudo ifdown wlan0
 sudo ifup wlan0
 
+**2.4G working but not 5G**
+set country code
+```
+sudo vi /etc/wpa_supplicant/wpa_supplicant.conf
+country=SG
+....
+```
 https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md
 dns flush: sudo apt-get nscd     sudo /etc/init.d/nscd restart
 http://raspberrypi.stackexchange.com/questions/4275/dns-resolution-failure
