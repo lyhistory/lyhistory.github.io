@@ -33,6 +33,17 @@ For example, you wouldn't write a grocery list for someone to Buy more .\* becau
 正则表达式30分钟入门教程 http://www.jb51.net/tools/zhengze.html
 Essential Guide To Regular Expressions: Tools and Tutorials http://www.smashingmagazine.com/2009/06/01/essential-guide-to-regular-expressions-tools-tutorials-and-resources/
 
+### Basic Regular Expressions
+Normally a backslash turns off the special meaning for a character. A period is matched by a "\." and an asterisk is matched by a "\*". BUt if a backslash is placed before a "<," ">," "{," "}," "(," ")," or before a digit, the backslash turns on a special meaning. This was done because these special functions were added late in the life of regular expressions. Changing the meaning of "{" would have broken old expressions. This is a horrible crime punishable by a year of hard labor writing COBOL programs. Instead, adding a backslash added functionality without breaking old programs. Rather than complain about the unsymmetry, view it as evolution.
+
+### Extended Regular Expressions
+Two programs use the extended regular expressions: egrep and awk. With these extensions, those special characters preceded by a backslash no longer have the special meaning: "\{" , "\}", "\<", "\>", "\(", "\)" as well as the "\digit". 
+You can't use the \{ and \} in the extended regular expressions, but if you could, you might consider the "?" to be the same as "\{0,1\}" and the "+" to be the same as "\{1,\}".
+
+Well, perhaps the "\{...\}" and "\<...\>" could be added to the extended expressions. These are the newest addition to the regular expression family. They could be added, but this might confuse people if those characters are added and the "\(...\)" are not. And there is no way to add that functionality to the extended expressions without changing the current usage. Do you see why? It's quite simple. If "(" has a special meaning, then "\(" must be the ordinary character. This is the opposite of the Basic regular expressions, where "(" is ordinary, and "\(" is special. The usage of the parentheses is incompatable, and any change could break old programs.
+
+If the extended expression used "( ..|...)" as regular characters, and "\(...\|...\)" for specifying alternate patterns, then it is possible to have one set of regular expressions that has full functionality. This is exactly what GNU emacs does, by the way.
+
 
 ### 1.1 False positive 
 we've been writing regular expressions that partially match pieces across all the text. Sometimes this isn't desirable, imagine for example we wanted to match the word "success" in a log file. We certainly don't want that pattern to match a line that says "Error: unsuccessful operation"! That is why it is often best practice to write as specific regular expressions as possible to ensure that we don't get false positives when matching against real world text.
