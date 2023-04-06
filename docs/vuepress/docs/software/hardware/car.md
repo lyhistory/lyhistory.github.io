@@ -14,8 +14,11 @@ https://github.com/f1xpl/openauto
 Arduino + CAN driver MCP2515 + OBD-2 Plug pintout(female) by SAE J1962 standard
 
 ## odb2
+16-pin D-shaped connector
+
 odb socket location:
- above the pedals on the right
++ above the pedals on the right
++ in or near the dashboard close to the steering wheel
 
 
 Why is so important to buy a good adapter? Isn’t it just a simple transmitter?
@@ -69,9 +72,12 @@ QBD66是深圳芯方案自行开发的一款进阶OBD协议芯片。
 ELM327 蓝牙是一款手动， 低成本 品质低，量大的低端OBD蓝牙产品。开发使用者需要熟悉OBD原始指令，及深厚的相关专业经验知识。且ELM327在无线通讯下容易断线，造成开发应用场景受限，行程数据统计丢失不够精确。 QBD66 蓝牙就是高级全自动版本，高性价比，高可靠性。且QBD66自带OBD逻辑，完成了327很多上位机的功能，相比ELM327多了一层封包，更适合开发者定制，大大方便简化开发周期，提供高可靠的硬件固化解决方案。且QDB66固件可以自带OTA升级，可以拓展更多应用。
 https://www.eechina.com/thread-568843-1-1.html
 
-### Android
+### Android client
 + Torque Pro (OBD 2 & Car)
 + (推荐) [开源 AndrOBD](https://github.com/lyhistory/tools_car_AndrOBD)
+  安装方法：
+  - installation via [F-Droid](https://f-droid.org/)
+  - 自行编译apk
   
 ## 测试：基本数据读取 odb2 bluetooth adapter + raspberry pi(usb tethering to android phone)
 notice that the Bluetooth light comes on even though the car is off this is, because the obd2 port has an always-on 12 volt power supply which means that the Bluetooth adapter is always going to be on.

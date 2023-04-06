@@ -16,6 +16,9 @@ TLDR: Too Long; Didn’t Read
 
 https://www.howtogeek.com/435266/what-does-tldr-mean-and-how-do-you-use-it/
 
+IIRC if I recall correctly. 
+
+AIK	As I Know
 
 ----------
 

@@ -47,12 +47,12 @@ On the computer connect your Raspberry Pi Pico using a microUSB cable.
 
 Load Thonny from your application menu, then from the View menu, choose to see files.
 
-## Connect your Raspberry Pi Pico W to a WLAN
+## HelloWorld
 
 web_server.py:
 ```
 
-import network
+import network,rp2
 import socket
 from time import sleep
 from picozero import pico_temp_sensor, pico_led
@@ -64,8 +64,12 @@ password = 'YOUR SECRET PASSWORD'
 
 def connect():
     #Connect to WLAN
+    #SET COUNTRY for 5G
+    rp2.country('SG')
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
+    #set power mode to get WiFi power-saving off(if need)
+    wlan.config(pm = 0xa11140)
     wlan.connect(ssid, password)
     while wlan.isconnected() == False:
         print('Waiting for connection...')
