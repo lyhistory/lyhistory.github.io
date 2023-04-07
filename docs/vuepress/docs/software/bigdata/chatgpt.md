@@ -1709,6 +1709,10 @@ curl https://api.openai.com/v1/embeddings \
 
 ### Engines
 
+## image generation
+DALL·E 2 can create original, realistic images and art from a text description. It can combine concepts, attributes, and styles.
+https://openai.com/product/dall-e-2
+
 ## develop
 
 ```

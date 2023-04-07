@@ -6,9 +6,11 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 ## software
 
- opensource shotcut
-https://shotcut.org/download/
-https://github.com/mltframework/shotcut/releases
++ opensource shotcut
+    https://shotcut.org/download/
+    https://github.com/mltframework/shotcut/releases
++ 剪映 CapCut
++ adobe premiere
 
 ## 分割
 鼠标分割快捷键
@@ -18,11 +20,16 @@ https://github.com/mltframework/shotcut/releases
 用处：
 1.动态打马赛克
 
+## 序列帧
 ## 抽帧
 
-## 画中画 蒙版
+## 画中画-蒙版
 用处：
 1.滚动歌词
+2.时空错位-“延迟拍摄”
+
+## 画中画-混合模式
+视频叠加
 
 ## 效果
 
