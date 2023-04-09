@@ -439,7 +439,10 @@ https://www.sdd-technology.com/blog/obd2-reader-car-diagnostics
 https://github.com/MacFJA/OBD2
 
 
-REF:
+## todo 
+O/D OFF是指OVER DRIVE OFF，一般指自动变速器的超速档关闭；汽车O/D是OVER DRIVE的意思，表示超速。 O/D是OVERDRIVE的意思. 当变速箱齿轮比小于1时,这一档就称之为OVERDRIVE.
+
+## REF:
 
 [DIFFERENCES BETWEEN ELM327 SCANNER FIRMWARE VERSION 1.5 AND 2.1](https://elm327scantool.wordpress.com/2018/11/03/differences-between-elm327-firmware-version-1-5-and-2-1/)
 
