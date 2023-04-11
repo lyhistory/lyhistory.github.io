@@ -136,7 +136,7 @@ In conclusion, I should mention one major difference between these two. The appl
 + 电脑及微型电脑启动过程
   Booting process of a computer : When the computer is turned on it starts execution from the ROM (BIOS) that in turn located the Disk connected to the computer, then the MBR (Master boor record) of the Disk is loaded, the MBR located the disk partition where the OS is installed, then the OS is loaded in the RAM, then the computers completes its booting process.
 + 单片机
-  加电后，先运行芯片内部固有程序（这个程序是用户访问不到也改写不了的），即启动代码。启动代码程序建立完运行环境后，会去读串口状态，就是用户下载程序用到的各个端口，判断用户是否正在使用端口准备下载程序，如果是，就按用户要求，把用户程序下载到指定地址上。
+  加电后，先运行芯片内部固有程序（这个程序是用户访问不到也改写不了的），即启动代码 bootloader。启动代码程序建立完运行环境后，会去读串口状态，就是用户下载程序用到的各个端口，判断用户是否正在使用端口准备下载程序，如果是，就按用户要求，把用户程序下载到指定地址上。
   如果不是，就跳转到已经下载过的用户程序入口，从而把芯片控制权交给用户程序。如果是新的芯片还没有下载过，那么就停留在读取串口状态的循环中。
   启动代码通常都烧写在flash中，它是系统一上电就执行的一段程序，它运行在任何用户C代码之前。上电后，arm处理器处于arm态，运行于管理模式，同时系统所有中断被禁止，PC到地址0处取指令执行。
 
@@ -293,6 +293,12 @@ http://news.eeworld.com.cn/Test_and_measurement/ic514591.html
   与RS-232类似，但是采用差分信号逻辑，更适合长距离、高速传输。
 
 ## 常用芯片-模块
+
+### 数模转换 ADC
+Analog-to-Digital Converter，常称ADC，是指将连续变量的模拟信号转换为离散的数字信号的器件，比如将模温度感器产生的电信号转为控制芯片能处理的数字信号0101，这样ADC就建立了模拟世界的传感器和数字世界的信号处理与数据转换的联系。
+[解释](https://www.seeedstudio.com/blog/2020/06/16/why-do-you-need-an-analog-to-digital-converter-adc-m/)
+
+Arduino 本身已经带有ADC，但是raspberry pi没有，所以连接模拟信号传感器的时候需要跟ADC一起工作
 
 ### 串口ttl转usb
 

@@ -13,16 +13,27 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 ## 1. [快速入门 Setup](https://www.raspberrypi.com/documentation/computers/getting-started.html)
 
-### burn image 烧录镜像
+### format micro sdcard
+
+sandisk extreme plus
 
 Then format Sdcard with [‘SD Card Formatter’](https://www.sdcard.org/downloads/formatter/)
+
+if your sdcard more than 32G, windows disk manager may not be able to format it correctly, I am not sure abt mac and other os, use sdcard formatter instead
+
+### burn image 烧录镜像
 
 + 方法一：使用官方的[Raspberry Pi Imager](https://www.raspberrypi.com/software/)
 
 + 方法二：使用三方软件如 Win32DiskImage ，然后自行下载image
   write image into the sdcard with [‘Win32DiskImage’](https://sourceforge.net/projects/win32diskimager/)
   
-树莓派支持多种镜像，默认是官方的 [Raspberry Pi OS](https://www.raspberrypi.com/documentation/computers/os.html)
+树莓派支持多种镜像：
+
++ 默认是官方的 [Raspberry Pi OS](https://www.raspberrypi.com/documentation/computers/os.html)
++ kali linux
++ (ubuntu mate for raspberry)[https://ubuntu-mate.org/raspberry-pi/]
++ multiple boot with berryboot (predefined os: rasbian/ubuntu mate,core/kali,etc.
 
 ### 如果有显示器:可以连接显示器
 Connect to monitor(change monitor setting) 
@@ -59,6 +70,25 @@ Default login: pi/raspberry
 
 Once login, Enable SSH/VNC/wifi/CAMERA….
 
+#### Extend sdcard to full use
+
++ Method 1
+  "sudo raspi-config" then selecting "Advanced Options" then "Expand Filesystem".
++ Method 2
+  使用fdisk、resize2fs命令扩展
+
+
+Note:
++ if you find there are some unallocated spaces, then your sdcard may has been corrupted due to some improper operations, then you definitely need to delete the partition and repartition it.
++ remember partition it as primary not logic, and better choose FAT32 format
+
+测速：安装之后可以使用 raspbian自带的Raspberry Pi Diagnostic
+
+[高级配置：延长sd卡的寿命](https://domoticproject.com/extending-life-raspberry-pi-sd-card/)
+
+#### Set hostname
+If you are using the raspian distribution from raspberrypi.org, raspberrypi.local is the default hostname. sudo nano /etc/hosts sudo nano /etc/hostname
+
 #### Remote Access 
 + ssh
   Enter sudo raspi-config in a terminal window
@@ -78,8 +108,12 @@ Once login, Enable SSH/VNC/wifi/CAMERA….
 #### Configuration
 [全部配置参考](https://www.raspberrypi.com/documentation/computers/configuration.html)
 
-+ Extend sdcard to full use
-  "sudo raspi-config" then selecting "Advanced Options" then "Expand Filesystem".
+enable bluetooth
+```
+bluetoothctl 
+agent on
+default agent
+```
 
 ### 最佳实践：备份镜像
 sd卡会随时损坏！所以备份很重要！
@@ -88,6 +122,16 @@ Win32DiskImage
 launch the Win32 Disk Imager tool with administrator privileges
 Select the location to save your backup files. ...
 Click on the Read option to start the backup process.
+
+### firmware config
+
+enable/disable the onboard WiFi/bluetooth from the firmware on the Pi3 / Pi4:
+/boot/config.txt:
+dtoverlay=enable-wifi
+dtoverlay=enable-bt
+or
+dtoverlay=disable-wifi
+dtoverlay=disable-bt
 
 ### Handy tools
 tools for raspbery pi:
@@ -174,6 +218,9 @@ https://pimylifeup.com/pi-top-review/
 https://3dprint.com/45158/pi-top-version-3/
 pi-top install hands on
 http://makezine.com/2015/11/16/hands-on-with-pi-top-the-raspberry-pi-powered-laptop/
+run standard raspbian on pi-top
+https://www.raspberrypi.org/forums/viewtopic.php?f=29&t=149151&p=990308
+https://github.com/rricharz/pi-top-install
 
 ### Cooling system
 yes, you need, http://raspberrypi.stackexchange.com/questions/22928/does-the-raspberry-pi-need-a-cooling-system, https://www.zhihu.com/question/20767376
@@ -185,7 +232,25 @@ https://www.youtube.com/watch?v=RggpIEYh9VU
 
 ## 4. Developing
 
-### 4.1. Camera
+### 4.1 Read analog 数模转换
+https://www.raspberrypi.org/forums/viewtopic.php?f=37&t=137207
+https://learn.adafruit.com/reading-a-analog-in-and-controlling-audio-volume-with-the-raspberry-pi/overview
+
+https://www.labno3.com/2021/02/23/raspberry-pi-adc-analog-to-digital-converter-2/
+
+DA转换例子：连接老式 analog 电视（A cathode-ray tube (CRT) TV）
+
+#### Raspberry Pi's GPIO expansion board
+
+通常扩展板都带AD或DA转换
+
++ Gertboard
++ Laika Explorer Board
+
+
+### 4.2 模块 
+
+#### Camera
 
 picamera
 sudo apt-get install python3
@@ -213,12 +278,15 @@ sudo apt-get install feh
 feh -d -S filename ./
 ```
 
-
-### 4.2 Read analog
-https://www.raspberrypi.org/forums/viewtopic.php?f=37&t=137207
-https://learn.adafruit.com/reading-a-analog-in-and-controlling-audio-volume-with-the-raspberry-pi/overview
-
 ## 5. Use Cases
+
+### VPN Server / Anonymously with a DIY Raspberry Pi VPN/TOR Router
+https://medium.com/@rasmurtech/step-by-step-guide-to-configuring-a-raspberry-pi-as-a-tor-router-and-installing-the-tor-browser-dd0df49a9e8a
+
+https://makezine.com/projects/browse-anonymously-with-a-diy-raspberry-pi-vpntor-router/
+How to Make a Raspberry Pi VPN Server https://www.electromaker.io/tutorial/blog/raspberry-pi-vpn-server
+
+### retro gaming emulator
 
 ### 5.1 Auto Watering system
 Arduino, solenoid valve with a power supply, breadboard, electronic water sensor, rain bird sprinkler head, and a relay.
@@ -245,12 +313,12 @@ https://www.youtube.com/watch?v=i_r3z1jYHAc
 https://www.youtube.com/watch?v=KJKhRLKXr-Q
 
 ### Ethereum Node
+http://ethembedded.com/?page_id=171
 Build a RespNode http://raspnode.com/diyEthereumGeth.html#homenet
 中文安装全记录： http://blog.csdn.net/iracer/article/details/51620051
 
 ### 黑客基站 Kali
 run kali on raspberry
-http://www.thesecurityblogger.com/installing-and-troubleshooting-kali-linux-on-raspberry-pi/
 
 ### 树莓派 太阳能板 + nxtcoin pos +移动硬盘
 https://www.nxter.org/how-to-set-up-a-nxt-node-on-a-raspberry-pi-2/
@@ -258,17 +326,16 @@ https://www.nxter.org/how-to-set-up-a-nxt-node-on-a-raspberry-pi-2/
 ### Raspberry Pi Recovery Kit 
 https://doscher.com/work/recovery-kit
 
+### 挖矿
+images for miner: http://cryptomining-blog.com/tag/raspberry-pi-mining/
+http://www.digital-coins.net/wordpress/index.php/2014/12/20/setup-your-raspberry-pi-as-mining-device-controller/
+
 ## Troubleshooting
+
 ### 关于显示器无法显示：
+/boot/config.txt
 都是sdcard上config文件的配置问题，比如我买的pi top，用了pi top的distro就可以显示，而自己烧录的raspbian就无法显示，
 然后我只是文件compare了一下config，改成跟pi top的distro一样就ok了
-
-### sdcard format and partition
-+ a. if your sdcard more than 32G, windows disk manager may not be able to format it correctly, I am not sure abt mac and other os, use sdcard formatter instead
-+ b. if you find there are some unallocated spaces, then your sdcard may has been corrupted due to some improper operations, then you definitely need to delete the partition and repartition it.
-+ c. remember partition it as primary not logic, and better choose FAT32 format
-format tool: https://www.sdcard.org/downloads/formatter_4/eula_windows/index.html
-partition tool: http://www.partition-tool.com/partner/app.htm
 
 ### Network access
 A. wifi connected, no internet access
@@ -357,6 +424,13 @@ https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md
 ip link show
 https://raspberrypi.stackexchange.com/questions/89704/rpi3-model-b-no-wireless-interface-found
 
+
+InRelease' changed its 'Suite' value from 'testing' to 'stable'
+apt-get --allow-releaseinfo-change update
+HOW TO FIX INRELEASE’ CHANGED ITS ‘SUITE’ VALUE FROM ‘STABLE’ TO ‘OLDSTABLE’
+sudo nano /etc/apt/sources.list.d/raspi.list
+deb https://archive.raspberrypi.org/debian/ bullseye main
+
 ### Ubuntu related issue:
 ?#pro01： ubuntu welcome to emergency mode
 Using a VNC client that requests the wrong amount of colors, will crash the application (displaying an “emergency recovery shell” on screen).
@@ -365,38 +439,6 @@ http://raspberrypi.stackexchange.com/questions/37558/how-to-troubleshoot-a-headl
 https://ubuntu-mate.community/t/getting-emergency-mode-screen-on-boot-up-every-time/2626/3
 https://ubuntu-mate.community/t/getting-emergency-mode-screen-on-boot-up-every-time/2626/5
 https://www.raspberrypi.org/forums/viewtopic.php?f=56&t=124149
-
-## todo:
-37 in 1 sensor kit: https://www.modmypi.com/download/37-piece-sensor-description.pdf
-heartbeat/Fingertip measuring heartbeat
-http://forum.arduino.cc/index.php?topic=230713.0
-https://www.raspberrypi.org/forums/viewtopic.php?f=37&t=114615
-tracking
-I2C ADC
-https://www.raspberrypi.org/forums/viewtopic.php?f=93&t=18138
-shift register(sn74hc595n)
-Graphic Display(R61526 16PIN)
-
-Images:
-images for miner: http://cryptomining-blog.com/tag/raspberry-pi-mining/
-http://www.digital-coins.net/wordpress/index.php/2014/12/20/setup-your-raspberry-pi-as-mining-device-controller/
-ubuntu mate for raspberry https://ubuntu-mate.org/raspberry-pi/
-run standard raspbian on pi-top
-https://www.raspberrypi.org/forums/viewtopic.php?f=29&t=149151&p=990308
-https://github.com/rricharz/pi-top-install
-
-multiple boot with berryboot (predefined os: rasbian/ubuntu mate,core/kali,etc.
-http://www.geekfan.net/5244/
-www.howtogeek.com/141325/how-to-multi-boot-your-raspberry-pi-with-berryboot/
-https://www.youtube.com/watch?v=BGCeLct5SUg
-add custom os www.howtogeek.com/141325/how-to-multi-boot-your-raspberry-pi-with-berryboot/
-www.youtube.com/watch?v=GYamNsUXC8M
-https://forums.kali.org/showthread.php?449-Booting-Kali-Linux-with-Berryboot
-http://www.berryterminal.com/doku.php/berryboot
-ethereum version: ethembedded.com/?page_id=171
-http://www.multibootpi.com/
-
-How to Make a Raspberry Pi VPN Server https://www.electromaker.io/tutorial/blog/raspberry-pi-vpn-server
 
 ## ref:
 [SSH the Pi from computer with a USB cable only](https://raspberrypi.stackexchange.com/questions/55928/ssh-the-pi-from-computer-with-a-usb-cable-only)

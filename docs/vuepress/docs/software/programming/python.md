@@ -64,6 +64,9 @@ pip install packagename
 pip show packagename
 ```
 
+path:
+/usr/lib/python3/dist-packages/
+
 ### 1.2 IDE - VSCode(Visual Studio Code)
 ```
 ctrl+shift+P

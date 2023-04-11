@@ -1,0 +1,2 @@
+shift register(sn74hc595n)
+A shift register is a type of digital circuit using a cascade of flip-flops where the output of one flip-flop is connected to the input of the next. They share a single clock signal, which causes the data stored in the system to shift from one location to the next.
