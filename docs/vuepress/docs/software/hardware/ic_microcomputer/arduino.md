@@ -77,5 +77,22 @@ https://github.com/kopanitsa/web3-arduino
 https://github.com/AlphaWallet/Web3E
 https://platformio.org/lib/show/5781/Web3E/examples
 
+## from Ardunino to permanent version on ATMega32/ATMega328
+https://www.youtube.com/watch?v=Sww1mek5rHU
+https://www.instructables.com/Using-Atmega32-with-Arduino-IDE/
+most of the time I have used the Arduino Uno,
+ the Uno is a very inexpensive Arduino especially when you get one of the clones and it's probably the most popular Arduino
+,however there comes a time when you're finished with your project and you may like to make a permanent version of it and when you do you have a number of choices:
++ one of your choices of course is just to use the Uno itself and build it into an enclosure along with the rest of the components or shields that you need to complete your project and that's an excellent choice but naturally that ends up using your Arduino Uno and if you want to do some experimenting you'll need to get another Arduino Uno 
++ second choice is to go and use one of the smaller models of Arduino，
+	- the Arduino Nano
+	the Nano is a great little device that pretty well emulates everything in uno does, it even has two extra analog pins on it and it has a USB connector etc, it can be used in place of an Arduino Uno just fine and as it's much smaller it'll probably fit into a smaller enclosure 
+	- the Arduino Pro Mini
+	the Arduino Pro Mini is even tinier but it lacks the USB port but your project may not even need a USB port 
++ the third choice is to use the actual microcontroller unit that is on the Arduino Uno: ATMega328 
++ 
+## todo
+Arduino as ISP and Arduino Bootloaders https://docs.arduino.cc/built-in-examples/arduino-isp/ArduinoISP
+
 
 <disqus/>
