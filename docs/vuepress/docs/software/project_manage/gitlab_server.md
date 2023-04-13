@@ -1963,6 +1963,16 @@ Indicates whether this runner can pick jobs without tags
 troubleshoot gitlab-runner:
 https://docs.gitlab.com/runner/faq/
 
+### Deployment approvals
+
+Step 1: Create Environment
+
+Step 2: Set protected_environments
+
+Step 3: Create a deployment job in the .gitlab-ci.yml
+
+https://docs.gitlab.com/ee/ci/environments/index.html
+https://docs.gitlab.com/ee/ci/environments/protected_environments.html
 
 ### 案例：Create-react-app
 

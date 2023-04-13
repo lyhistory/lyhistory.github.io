@@ -2526,6 +2526,13 @@ After subscribing to a set of topics, the consumer will automatically join the g
 > The default values for two configurations of the StreamsConfig class were changed to improve the resiliency of Kafka Streams applications. The internal Kafka Streams producer retries default value was changed from 0 to 10. The internal Kafka Streams consumer max.poll.interval.ms default value was changed from 300000 to Integer.MAX_VALUE.
 > The new Java Consumer now supports heartbeating from a background thread. There is a new configuration max.poll.interval.ms which controls the maximum time between poll invocations before the consumer will proactively leave the group (5 minutes by default). The value of the configuration request.timeout.ms (default to 30 seconds) must always be smaller than max.poll.interval.ms(default to 5 minutes), since that is the maximum time that a JoinGroup request can block on the server while the consumer is rebalance. Finally, the default value of session.timeout.ms has been adjusted down to 10 seconds, and the default value of max.poll.records has been changed to 500.
 
+### Kafka 节点挂掉
+[Kafka Broker node JVM crash - kafka.coordinator.transaction.TransactionCoordinator.$anonfun$handleEndTransaction](https://issues.apache.org/jira/browse/KAFKA-7625)
+
+解决方法：
+1. Upgrade the JDK to version 1.8.0_192 or later.
+2. Adjust the garbage collection strategy from G1 to CMS.
+
 ## Reference
 + kafka原理
 
