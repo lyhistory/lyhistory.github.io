@@ -997,6 +997,13 @@ redis-cli latency doctor
 Monitor:
 https://redis.io/commands/MONITOR
 
+### 3.5 删除集群
+
+关闭所有集群上节点后，进入各个节点文件夹，删除以下文件：
+appendonly.aof
+dump.rdb
+nodes-*.conf
+
 ## 4. Sentinel 管理
 
 

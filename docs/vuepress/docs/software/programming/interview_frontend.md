@@ -315,4 +315,7 @@ image sprite https://li-xinyang.gitbooks.io/frontend-notebook/content/chapter1/0
 上面说的是一些基本考虑，你根据需要相应采用，目的就是提高加载速度，减少资源请求次数（请求两次css就要建立两个http链接，不如两个css文件压缩到一个文件，压缩可以去掉空行，空格，降低文件的大小）
 ```
 
+chart example:
+https://github.com/jonchurch/tradingview-js-api-tutorial/tree/master
+
 <disqus/>
