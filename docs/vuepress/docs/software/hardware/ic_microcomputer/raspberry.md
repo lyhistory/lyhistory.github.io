@@ -240,13 +240,11 @@ https://www.labno3.com/2021/02/23/raspberry-pi-adc-analog-to-digital-converter-2
 
 DA转换例子：连接老式 analog 电视（A cathode-ray tube (CRT) TV）
 
-#### Raspberry Pi's GPIO expansion board
-
-通常扩展板都带AD或DA转换
-
-+ Gertboard
-+ Laika Explorer Board
-
++ Option 1: Analog Converter Chip
+  - analogzero
++ Option 2: Raspberry Pi's GPIO expansion board
+  - Gertboard 带AD或DA转换
++ Option 3: 直接连接自带AD/DA的 Arduino
 
 ### 4.2 模块 
 

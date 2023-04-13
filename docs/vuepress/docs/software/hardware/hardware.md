@@ -295,10 +295,18 @@ http://news.eeworld.com.cn/Test_and_measurement/ic514591.html
 ## 常用芯片-模块
 
 ### 数模转换 ADC
-Analog-to-Digital Converter，常称ADC，是指将连续变量的模拟信号转换为离散的数字信号的器件，比如将模温度感器产生的电信号转为控制芯片能处理的数字信号0101，这样ADC就建立了模拟世界的传感器和数字世界的信号处理与数据转换的联系。
+microprocesser 完全是 digital device, can only understand digital signals,
+所以连接一些模拟信号类型的传感器等设备就需要 microcontroller 进行AD转换，
+然后也有很多终端设备需要接受模拟信号，比如老式的CRT TV，所以microcontroller又需要将digital signals模拟成 analog output输出给这些设备；
+
+Analog (Analog Voltage Signal)-to-Digital(Digital Signal) Converter，常称ADC，
+是指将连续变量的模拟信号转换为离散的数字信号的器件，比如将模温度感器产生的电信号转为控制芯片能处理的数字信号0101，这样ADC就建立了模拟世界的传感器和数字世界的信号处理与数据转换的联系。
 [解释](https://www.seeedstudio.com/blog/2020/06/16/why-do-you-need-an-analog-to-digital-converter-adc-m/)
 
-Arduino 本身已经带有ADC，但是raspberry pi没有，所以连接模拟信号传感器的时候需要跟ADC一起工作
+DAC 数模转换
+
+[Arduino 本身已经带有ADC和DAC(PWM)，可以进行 analog的读写和digital的读写](https://www.youtube.com/watch?v=Wd0HJXanhfk)
+但是raspberry pi没有（不能直接读analog，可以模拟写），所以连接模拟信号传感器的时候需要跟ADC一起工作
 
 ### 串口ttl转usb
 
