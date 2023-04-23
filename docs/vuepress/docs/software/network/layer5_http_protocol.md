@@ -4,7 +4,7 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
-http协议
+http protocol http协议
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Connection_management_in_HTTP_1.x
 Short-lived connections
 =>Persistent connections(http 1.1默认）
@@ -58,6 +58,12 @@ client到proxied server是end to end，而client和proxy以及，proxy和proxied
 
 #### header->Link
 [Adding CSS to a Page via HTTP Headers](https://www.impressivewebs.com/adding-css-to-a-page-via-http-headers/)
+
+#### security - CORS
+
+Exceptional Cases:
+Firebase uses a fully-permissive cross-origin resource sharing (CORS) policy, meaning that you can make requests to the Firebase servers from any origin. This is possible because Firebase does not use cookies or traditional sessions to govern which requests are authorized and which are not.
+[What is Firebase's cross-domain policy?](https://stackoverflow.com/questions/19486655/what-is-firebases-cross-domain-policy)
 
 ### methods
 
