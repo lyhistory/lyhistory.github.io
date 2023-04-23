@@ -74,6 +74,56 @@ clip < ~/.ssh/id_rsa.pub
 	或者ssh-keyscan <IP/HOST OF THE GIT SITE> >> ~/.ssh/known_hosts
 ```
 
+#### 一个账号配置多个git站点
+
+Step 1: 创建公私钥
+```
+ssh-keygen -t rsa -b 4096 -C "your-email-address"
+
+cat .ssh/id_rsa_liuyue.pub
+```
+
+Step 2: github/gitlab 配置公钥
+Next, log in to your second GitHub account, click on the drop-down next to the profile picture at the top right, select Settings, and click on SSH and GPG keys.
+
+Step 3: Add the SSH Key to the Agent
+为了使用这些密钥，我们必须在我们机器上的 ssh-agent 上注册它们
+```
+eval `ssh-agent -s`
+ssh-add ~/.ssh/id_rsa_liuyue
+```
+
+Step 4: 让 ssh-agent 为不同的 SSH 主机使用各自的 SSH 密钥
+
+方法一：创建 SSH 配置文件
+```
+touch ~/.ssh/config
+vim config
+
+#Default GitHub 
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_rsa
+Host github.com-liuyue
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_rsa_liuyue
+
+然后重点这里要用自定义的domain: github.com-liuyue 
+git remote set-url origin git@github.com-liuyue:username/repo.git
+```
+
+方法二: ssh-agent 中每次指定一个活跃的 SSH 密钥
+```
+ssh-add -l
+每次手动清空然后加入相应的ssh key
+$ ssh-add -D            //removes all ssh entries from the ssh-agent
+$ ssh-add ~/.ssh/id_rsa_liuyue                 // Adds the relevant ssh key
+```
+Add correct host key in /c/Users/用户名/.ssh/known_hosts to get rid of this message
+rm -rf ~/.ssh/known_hosts
+
 #### Ignore
 
 ```

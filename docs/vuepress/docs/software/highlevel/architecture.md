@@ -62,7 +62,7 @@ https://www.youtube.com/watch?v=EpyPFnjue38
 
 ![](/docs/docs_image/software/architecture/architecture02.png)
 
-#### 3.2.2 CORS - Command-Query Responsibility Segregation
+#### 3.2.2 CQRS - Command-Query Responsibility Segregation
 Principle: responsibility and segregation
 
 https://kalele.io/blog-posts/really-simple-cqrs/

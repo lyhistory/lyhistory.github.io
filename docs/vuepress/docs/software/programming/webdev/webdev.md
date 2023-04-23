@@ -54,15 +54,114 @@ Java:
 Ruby related
 https://bundler.io/v1.3/rationale.html
 
-### 1.2 宿主服务Hosts
+### 1.3相关开发工具/插件/seo工具 
 
+#### 1.3.1 开发辅助工具
+https://codebeautify.org/yaml-validator
+
+Visual studio code
+Ctrl+Shift+V
+Ctrl+K V
+
+https://toolbox.googleapps.com/apps/har_analyzer/
+
+#### 1.3.2 常用插件
+
+**Search provider**
+lunr (default), algolia, google
+https://cse.google.com/all
+
+**Comments**
+disqus
+https://lyhistory.disqus.com/admin/
+https://lyhistory.disqus.com/admin/install/complete
+
+**Webmaster and Analytics**
+https://marketingplatform.google.com
+https://analytics.google.com/analytics/web/#/report-home/a55774263w89029290p92512103
+https://support.google.com/analytics/answer/7532985?hl=en_SG&utm_id=ad
+
+https://search.google.com/search-console
+
+**Webhoster ads**
+https://brave.com/creators/
+
+## 2.Static page generator
+
+### 2.1 Blog 
+#### jekyll
+Learn Jekyll https://learn.cloudcannon.com
+
+Theme: Minimal-mistakes
+https://github.com/mmistakes/minimal-mistakes
+https://github.com/mmistakes/minimal-mistakes/blob/a2620d34f6e49a67f83bdc65163093c81e6c77b9/docs/_docs/02-structure.md
+https://github.com/mmistakes/minimal-mistakes/tree/82e9aee6a8e5351f71ca4226bc6cb2085c9a8671/_layouts
+https://github.com/mmistakes/minimal-mistakes/tree/gh-pages-3.1.6/_includes
+
+Layouts
+https://mmistakes.github.io/minimal-mistakes/docs/layouts/
+
+Google ads
+https://www.google.com/adsense/new/u/0/pub-9742852210287449/home
+https://github.com/mmistakes/minimal-mistakes/issues/404
+
+Comments
+https://mmistakes.github.io/minimal-mistakes/docs/configuration/#comments
+Multi language Jekyll  i18n
+https://github.com/mmistakes/minimal-mistakes/issues/2195
+
+#### hugo
+https://gohugo.io/getting-started/installing
+https://gohugo.io/getting-started/quick-start/
+https://themes.gohugo.io/minimal/
+Markdown Cheatsheet https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+
+git init;
+git submodule add https://github.com/calintat/minimal.git themes/minimal
+$ git submodule init
+$ git submodule update
+git submodule update --remote themes/minimal
+git submodule update --init --recursive
+
+cp themes/minimal/exampleSite/config.toml .
+
+hugo server –d
+hugo server -wDs ~/Code/hugo/docs -d dev
+
+hugo -s D:\sourcecode\ -d D:\publish\
+
+### 2.2 Documentation
+
+#### gitbook
+https://docsify.js.org/#/more-pages
+
+#### Vuepress
+https://vuepress.vuejs.org/
+```
+	npm view vuepress versions/version
+	npm ls vuepress -g
+	npm install vuepress@^1.0
+	npm install @vuepress/plugin-google-analytics
+module.exports = {
+- ga: 'UA-12345678-9'
++ plugins: [
++   [
++     '@vuepress/google-analytics',
++     { ga: 'UA-12345678-9' }
++   ]
++ ]
+}
+```
+https://codecook.de/articles/2021/05/01/vuepress-global-footer/#the-problem
+
+
+## 托管服务Hosts
+
+### 个人主机
 **vps and free hosting:**
-[点击这里去vultr官网领取100美金免费体验](https://www.vultr.com/?ref=8491735-6G)
-https://www.000webhost.com/
-https://firebase.google.com/docs
+[点击这里去vultr官网领取100美金免费体验](https://www.vultr.com/?ref=9359723)
 
-#### 1.2.1 tomcat
-https://www.ionos.com/community/server-cloud-infrastructure/apache/install-and-use-apache-tomcat-on-centos-7/
+**tomcat**
 ```
 sudo yum install tomcat
 sudo yum install tomcat-webapps tomcat-admin-webapps tomcat-docs-webapp tomcat-javadoc
@@ -74,21 +173,110 @@ sudo sytemctl restart tomcat
 sudo systemctl restart tomcat
 ```
 
-#### 1.2.2 Github pages
-https://lyhistory.github.io/
-Understand jekyllrb and github pages
-https://jekyllrb.com/docs/
-https://jekyllrb.com/docs/github-pages/
+### Github pages 
 
-Terminal based portfolio website for CodeNerve https://github.com/CodeNerve/CodeNerve.github.io
-https://medium.com/pan-labs/dynamic-web-apps-on-github-pages-for-free-ffac2b776d45
-
-**Setup:**
-+ Easy way
 https://pages.github.com/
+
+#### user/organization site
+
+每个用户名只能建立 一个；
+默认 master 分支；
+
+Head over to GitHub and create a new public repository named username.github.io, where username is your username (or organization name) on GitHub.
+注意：这里的username必须是github的用户名一样，否则不生效
+
+```
+git clone https://github.com/username/username.github.io
+cd username.github.io
+
+echo "Hello World" > index.html
+git add --all
+
+git commit -m "Initial commit"
+
+git push -u origin main
+```
+Fire up a browser and go to https://username.github.io.
+
+成功标志: settings->Pages看到
+Your site is live at http://username.github.io
+
+[Custom domains](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages)
+
+#### project site
+一个项目只能建立一个；
+默认分支：gh-pages；
+
++ Auto Create
+  - Start from scratch
+  Create an index file
+  Head over to GitHub.com and create a new repository, or go to an existing one.
+  Create new file index.html and type some HTML content into the editor. 
+  commit
+  Repository Settings
+  Click on the Settings tab and scroll down to the GitHub Pages section.
+  Then select the main branch source and click on the Save button.
+  Fire up a browser and go to http://username.github.io/repository.
+  
+  - Choose a theme
+  Head over to GitHub.com and create a new repository, or go to an existing one.
+  Click on the Settings tab.
+  Scroll down to the GitHub Pages section. Press Choose a theme.
+  Choose one of the themes from the carousel at the top.
+  When you're done, click Select theme on the right.
+  Use the editor to add content to your site.
+  Commit
+  Fire up a browser and go to http://username.github.io/repository
++ Manual Create
+  ```
+  $ cd testproject
+  $ git checkout --orphan gh-pages
+  $ git rm -rf .
+  $ git clone https://github.com/plusjade/jekyll-bootstrap
+  $ mv jekyll-bootstrap testproject
+  $ cd testproject
+  $ rm -rf .git
+  $ git init 
+  $ git add .
+  $ git commit -m "initial project page commit"
+  $ git remote add origin git@github.com:username/testproject.git
+  $ git push -u origin gh-pages
+  ```
+#### with jekyllrb
+GitHub Pages are powered by Jekyll behind the scenes, so they’re a great way to host your Jekyll-powered website for free.
+
+[official links](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll)
+
+**RequirementsPermalink**
+```
+ruby -v
+gem -v
+jekyll -v
+```
+
+**Jekyllrb**
+[Jekyllrb quick start](https://jekyllrb.com/docs/)
+```
+gem install jekyll bundler
+jekyll new myblog
+cd myblog
+bundle exec jekyll serve
+bundle exec jekyll serve --livereload
+Browse to http://localhost:4000
+```
+
+**Github Page with Jekyllrb**
+[jekyllrb and github pages](https://jekyllrb.com/docs/github-pages/)
+
+theme
 https://help.github.com/en/articles/adding-a-jekyll-theme-to-your-github-pages-site
 
-+ Advance way
+
+[example site 1](https://lyhistory.github.io/)
+[example site 2](http://bitdriven.tech/)
+[Terminal based portfolio website for CodeNerve](https://github.com/CodeNerve/CodeNerve.github.io)
+
+
 
 step 1. Git fork
 http://www.jekyllnow.com/
@@ -148,110 +336,11 @@ Fixed with powershell,https://williamwang.info/setup-jekyll-on-windows/
 
 ![](/docs/docs_image/software/webdev/webdev02.png)
 
+#### with hugo
+[official links](https://gohugo.io/hosting-and-deployment/hosting-on-github/)
 
-### 1.3相关开发工具/插件/seo工具 
-
-#### 1.3.1 开发辅助工具
-https://codebeautify.org/yaml-validator
-
-Visual studio code
-Ctrl+Shift+V
-Ctrl+K V
-
-https://toolbox.googleapps.com/apps/har_analyzer/
-
-#### 1.3.2 常用插件
-
-**Search provider**
-lunr (default), algolia, google
-https://cse.google.com/all
-
-**Comments**
-disqus
-https://lyhistory.disqus.com/admin/
-https://lyhistory.disqus.com/admin/install/complete
-
-**Webmaster and Analytics**
-https://marketingplatform.google.com
-https://analytics.google.com/analytics/web/#/report-home/a55774263w89029290p92512103
-https://support.google.com/analytics/answer/7532985?hl=en_SG&utm_id=ad
-
-https://search.google.com/search-console
-
-**Webhoster ads**
-https://brave.com/creators/
-
-## 2.Static page generator
-
-### 2.1 Blog 
-**jekyll**
-Learn Jekyll https://learn.cloudcannon.com
-
-Theme: Minimal-mistakes
-https://github.com/mmistakes/minimal-mistakes
-https://github.com/mmistakes/minimal-mistakes/blob/a2620d34f6e49a67f83bdc65163093c81e6c77b9/docs/_docs/02-structure.md
-https://github.com/mmistakes/minimal-mistakes/tree/82e9aee6a8e5351f71ca4226bc6cb2085c9a8671/_layouts
-https://github.com/mmistakes/minimal-mistakes/tree/gh-pages-3.1.6/_includes
-
-Layouts
-https://mmistakes.github.io/minimal-mistakes/docs/layouts/
-
-Google ads
-https://www.google.com/adsense/new/u/0/pub-9742852210287449/home
-https://github.com/mmistakes/minimal-mistakes/issues/404
-
-Comments
-https://mmistakes.github.io/minimal-mistakes/docs/configuration/#comments
-Multi language Jekyll  i18n
-https://github.com/mmistakes/minimal-mistakes/issues/2195
-
-### 2.2 Documentation
-
-**gitbook**
-https://docsify.js.org/#/more-pages
-
-**Vuepress**
-https://vuepress.vuejs.org/
-```
-	npm view vuepress versions/version
-	npm ls vuepress -g
-	npm install vuepress@^1.0
-	npm install @vuepress/plugin-google-analytics
-module.exports = {
-- ga: 'UA-12345678-9'
-+ plugins: [
-+   [
-+     '@vuepress/google-analytics',
-+     { ga: 'UA-12345678-9' }
-+   ]
-+ ]
-}
-```
-https://codecook.de/articles/2021/05/01/vuepress-global-footer/#the-problem
-
-### 3.3 公司站点
-
-Create website with hugo
-https://gohugo.io/getting-started/installing
-https://gohugo.io/getting-started/quick-start/
-https://themes.gohugo.io/minimal/
-Markdown Cheatsheet https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
-
-git init;
-git submodule add https://github.com/calintat/minimal.git themes/minimal
-$ git submodule init
-$ git submodule update
-git submodule update --remote themes/minimal
-git submodule update --init --recursive
-
-cp themes/minimal/exampleSite/config.toml .
-
-hugo server –d
-hugo server -wDs ~/Code/hugo/docs -d dev
-
-hugo -s D:\sourcecode\ -d D:\publish\
-
-
+### 其他
+https://firebase.google.com/docs
 
 ## 3. 站长必备
 

@@ -191,6 +191,8 @@ install ping&net app, find the ip address assigned to the Pi
 
 install ssh client - juicy ssh
 
+[视频演示](https://weixin.qq.com/sph/AOcRXe)
+
 ### Connect to laptop via USB only(Gadget Mode)
 Note: this only works on Zero and A boards, not RPi 3, which is B.
 

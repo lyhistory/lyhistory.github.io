@@ -217,6 +217,9 @@ https://odetocode.com/articles/313.aspx
 + 基于zookeeper的ephemeral sequential node
 
 
+## 例子
+Java Concurrency issues and Thread Synchronization
+https://www.callicoder.com/java-concurrency-issues-and-thread-synchronization/#:~:text=Memory%20inconsistency%20errors%20occur%20when,up%20using%20the%20old%20data.
 
 ----
 
