@@ -121,8 +121,9 @@ ssh-add -l
 $ ssh-add -D            //removes all ssh entries from the ssh-agent
 $ ssh-add ~/.ssh/id_rsa_liuyue                 // Adds the relevant ssh key
 ```
-Add correct host key in /c/Users/用户名/.ssh/known_hosts to get rid of this message
-rm -rf ~/.ssh/known_hosts
+
+?# Add correct host key in /c/Users/用户名/.ssh/known_hosts to get rid of this message
+solve: `rm -rf ~/.ssh/known_hosts`
 
 #### Ignore
 

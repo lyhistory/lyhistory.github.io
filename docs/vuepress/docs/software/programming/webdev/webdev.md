@@ -90,25 +90,49 @@ https://brave.com/creators/
 
 ### 2.1 Blog 
 #### jekyll
-Learn Jekyll https://learn.cloudcannon.com
 
-Theme: Minimal-mistakes
-https://github.com/mmistakes/minimal-mistakes
-https://github.com/mmistakes/minimal-mistakes/blob/a2620d34f6e49a67f83bdc65163093c81e6c77b9/docs/_docs/02-structure.md
-https://github.com/mmistakes/minimal-mistakes/tree/82e9aee6a8e5351f71ca4226bc6cb2085c9a8671/_layouts
-https://github.com/mmistakes/minimal-mistakes/tree/gh-pages-3.1.6/_includes
+**install ruby:**
 
-Layouts
-https://mmistakes.github.io/minimal-mistakes/docs/layouts/
+https://www.ruby-lang.org/en/documentation/installation/
 
-Google ads
-https://www.google.com/adsense/new/u/0/pub-9742852210287449/home
-https://github.com/mmistakes/minimal-mistakes/issues/404
+安装是勾选UTF-8，不然会遇到问题
+```
+ruby -v
+gem -v
 
-Comments
-https://mmistakes.github.io/minimal-mistakes/docs/configuration/#comments
-Multi language Jekyll  i18n
-https://github.com/mmistakes/minimal-mistakes/issues/2195
+```
+
+**install jekyll&bundler:**
+
+https://jekyllrb.com/docs/installation/windows/
+
+1. Download and install a Ruby+Devkit version from [RubyInstaller Downloads](https://rubyinstaller.org/downloads/). Use default options for installation.
+2. Run the `ridk install` step on the last stage of the installation wizard. This is needed for installing gems with native extensions. You can find additional information regarding this in the [RubyInstaller Documentation](https://github.com/oneclick/rubyinstaller2#using-the-installer-on-a-target-system). From the options choose MSYS2 and MINGW development tool chain.
+3. Open a new command prompt window from the start menu, so that changes to the PATH environment variable becomes effective. Install Jekyll and Bundler using 
+   ```
+   gem install jekyll bundler
+   ```
+4. Check if Jekyll has been installed properly: `jekyll -v`
+   
+**Jekyllrb create site**
+
+[Jekyllrb quick start](https://jekyllrb.com/docs/)
+```
+# Creates a Jekyll site in the current directory
+$ jekyll new --skip-bundle .
+# exists and is not empty
+$ jekyll new --skip-bundle . --force
+$ bundle install / bundle install --force
+$ bundle exec jekyll serve
+$ bundle exec jekyll serve --livereload
+Browse to http://localhost:4000
+```
+
+**添加管理插件**
+Add admin dashboard(to manage blogs in local, github doesn’t support this plugin yet)
+Native:: 	https://jekyll.github.io/jekyll-admin/
+ThirdParty:: 	https://github.com/singh1114/theJekyllProject
+
 
 #### hugo
 https://gohugo.io/getting-started/installing
@@ -155,9 +179,9 @@ module.exports = {
 https://codecook.de/articles/2021/05/01/vuepress-global-footer/#the-problem
 
 
-## 托管服务Hosts
+## 3.托管服务Hosts
 
-### 个人主机
+### 3.1 个人主机
 **vps and free hosting:**
 [点击这里去vultr官网领取100美金免费体验](https://www.vultr.com/?ref=9359723)
 
@@ -173,7 +197,7 @@ sudo sytemctl restart tomcat
 sudo systemctl restart tomcat
 ```
 
-### Github pages 
+### 3.2-0 Github pages (static pages)
 
 https://pages.github.com/
 
@@ -252,54 +276,20 @@ CNAME Record	www		lyhistory.github.io.
   $ git remote add origin git@github.com:username/testproject.git
   $ git push -u origin gh-pages
   ```
-#### with jekyllrb
+
+### 3.2-1 Github pages with jekyllrb
 GitHub Pages are powered by Jekyll behind the scenes, so they’re a great way to host your Jekyll-powered website for free.
 
 [official links](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll)
 
+#### 搭建
 [这里有个快速搭建的方式，自行参考](https://github.com/barryclark/jekyll-now#quick-start)，下面我们还是一步步操作
 
-**install ruby:**
+**第一步: [安装 Jekyllrb](#jekyll)**
 
-https://www.ruby-lang.org/en/documentation/installation/
-
-安装是勾选UTF-8，不然会遇到问题
-```
-ruby -v
-gem -v
-
-```
-
-**install jekyll&bundler:**
-
-https://jekyllrb.com/docs/installation/windows/
-
-1. Download and install a Ruby+Devkit version from [RubyInstaller Downloads](https://rubyinstaller.org/downloads/). Use default options for installation.
-2. Run the `ridk install` step on the last stage of the installation wizard. This is needed for installing gems with native extensions. You can find additional information regarding this in the [RubyInstaller Documentation](https://github.com/oneclick/rubyinstaller2#using-the-installer-on-a-target-system). From the options choose MSYS2 and MINGW development tool chain.
-3. Open a new command prompt window from the start menu, so that changes to the PATH environment variable becomes effective. Install Jekyll and Bundler using 
-   ```
-   gem install jekyll bundler
-   ```
-4. Check if Jekyll has been installed properly: `jekyll -v`
-   
-**Jekyllrb create site**
-
-[Jekyllrb quick start](https://jekyllrb.com/docs/)
-```
-# Creates a Jekyll site in the current directory
-$ jekyll new --skip-bundle .
-# exists and is not empty
-$ jekyll new --skip-bundle . --force
-$ bundle install / bundle install --force
-$ bundle exec jekyll serve
-$ bundle exec jekyll serve --livereload
-Browse to http://localhost:4000
-```
-
-**Github Page with Jekyllrb**
 [jekyllrb and github pages](https://jekyllrb.com/docs/github-pages/)
 
-Open the Gemfile that Jekyll created.
+Open the Gemfile that Jekyll created:
 
 Add "#" to the beginning of the line that starts with gem "jekyll" to comment out this line.
 
@@ -315,7 +305,7 @@ bundle install
 
 ```
 
-**配置 _config.yml**
+**第二步：配置 _config.yml**
 
 ```
 domain: my-site.github.io       # if you want to force HTTPS, specify the domain without the http at the start, e.g. example.com
@@ -323,30 +313,11 @@ url: https://my-site.github.io  # the base hostname and protocol for your site, 
 baseurl: /REPOSITORY-NAME/
 ```
 
-
-**To update::**
-
-+ If you followed our setup recommendations and installed Bundler, run `bundle update github-pages` or simply `bundle update` and all your gems will update to the latest versions.
-+ If you don't have Bundler installed, run `gem update github-pages`
-
-```
-bundle info "github-pages"
-bundle info "jekyll-remote-theme"
-```
-
-**Debug locally**
-
-https://help.github.com/en/articles/setting-up-your-github-pages-site-locally-with-jekyll
-
-Add admin dashboard(to manage blogs in local, github doesn’t support this plugin yet)
-Native:: 	https://jekyll.github.io/jekyll-admin/
-ThirdParty:: 	https://github.com/singh1114/theJekyllProject
-
-**Theme**
+**第三步：主题Theme - Minimal-mistakes**
 
 方法一：配置[官方支持的主题](https://pages.github.com/themes/)
 
-[配置步骤参考](https://help.github.com/en/articles/adding-a-jekyll-theme-to-your-github-pages-site)
+[配置步骤参考](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/adding-a-theme-to-your-github-pages-site-using-jekyll)
 
 方法二：remote theme (GitHub Pages compatible)
 https://github.com/mmistakes/minimal-mistakes
@@ -362,7 +333,81 @@ Fetch and update bundled gems by running the following Bundler command: `bundle`
 
 Add remote_theme: "mmistakes/minimal-mistakes@4.24.0" to your _config.yml file. Remove any other theme: or remote_theme: entry.
 
-**例子**
+注意：
+默认会生成 index.md：
+```
+---
+# You don't need to edit this file, it's empty on purpose.
+# Edit theme's home layout instead if you wanna make some changes
+# See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
+layout: home
+---
+```
+以及一篇默认的post 2023-04-23-welcome-to-jekyll.markdown:
+```
+---
+layout: post
+title:  "Welcome to Jekyll!"
+date:   2023-04-23 15:53:59 +0800
+categories: jekyll update
+---
+You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
+
+To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+
+Jekyll also offers powerful support for code snippets:
+
+{% highlight ruby %}
+def print_hi(name)
+  puts "Hi, #{name}"
+end
+print_hi('Tom')
+#=> prints 'Hi, Tom' to STDOUT.
+{% endhighlight %}
+
+Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
+
+```
+
+所以默认首页是 home layout:
+A derivative archive page layout to be used as a simple home page. It is built to show a paginated list of recent posts based off of the pagination settings in _config.yml.
+
+如果要改成splash，可以更改 index.md或者删除index.md 然后在 _pages目录下创建比如 home.md，内容参考：[Splash Page Sample](https://github.com/mmistakes/minimal-mistakes/blob/master/docs/_pages/splash-page.md)
+
+**Minimal-mistakes主题入门：**
+
+[structure](https://github.com/mmistakes/minimal-mistakes/blob/a2620d34f6e49a67f83bdc65163093c81e6c77b9/docs/_docs/02-structure.md)
+
+[_layouts](https://github.com/mmistakes/minimal-mistakes/tree/82e9aee6a8e5351f71ca4226bc6cb2085c9a8671/_layouts), [_includes](https://github.com/mmistakes/minimal-mistakes/tree/gh-pages-3.1.6/_includes), _sass, and /assets/
+
+[Google ads](https://github.com/mmistakes/minimal-mistakes/issues/404)
+
+[Comments](https://mmistakes.github.io/minimal-mistakes/docs/configuration/#comments)
+[Multi language Jekyll  i18n](https://github.com/mmistakes/minimal-mistakes/issues/2195)
+
+#### 开发维护
+**To update::**
+
++ If you followed our setup recommendations and installed Bundler, run `bundle update github-pages` or simply `bundle update` and all your gems will update to the latest versions.
++ If you don't have Bundler installed, run `gem update github-pages`
+
+```
+bundle info "github-pages"
+bundle info "jekyll-remote-theme"
+```
+
+**[Debug locally](https://help.github.com/en/articles/setting-up-your-github-pages-site-locally-with-jekyll)**
+
+**Migration 迁移**
+
+[Import from wordpress](http://import.jekyllrb.com/docs/wordpress/)
+
+
+#### 例子
 
 [example site 1](https://lyhistory.github.io/)
 [example site 2](http://bitdriven.tech/)
@@ -370,35 +415,13 @@ Add remote_theme: "mmistakes/minimal-mistakes@4.24.0" to your _config.yml file. 
 [Github Pages+Firebase=Dynamic Web Apps](https://medium.com/pan-labs/dynamic-web-apps-on-github-pages-for-free-ffac2b776d45)
 
 
-**Migration 迁移**
-
-[Import from wordpress](http://import.jekyllrb.com/docs/wordpress/)
-
-**Troubleshooting**
-
-?# github pags=>setting, yml invalid
-Your site is having problems building: You have an error on line 16 of your _config.yml file
-https://help.github.com/en/articles/page-build-failed-config-file-error
-
-?# failed load  jekyll-include-cache
-Configuration file: D:/workspace/lyhistory.github.io/_config.yml
-  Dependency Error: Yikes! It looks like you don't have jekyll-include-cache or one of its dependencies installed. In order to use Jekyll as currently configured, you'll need to install this gem. The full error message from Ruby is: 'cannot load such file -- jekyll-include-cache' If you run into trouble, you can find helpful resources at https://jekyllrb.com/help/!
-Note: The theme uses the jekyll-include-cache plugin which will need to be installed in your Gemfile and added to the plugins array of _config.yml. Otherwise you'll throw Unknown tag 'include_cached' errors at build. {: .notice--warning}
-https://github.com/mmistakes/minimal-mistakes/blob/2784b3ad431f9e0e9f262d1a06d23f389c93d95c/docs/_docs/03-installation.md
-
-?# Conversion error: Jekyll::Converters::Scss encountered an error while converting 'assets/css/main.scss':
-                	Invalid GBK character "\xE2" on line 54
-Fixed with powershell,https://williamwang.info/setup-jekyll-on-windows/
-
-![](/docs/docs_image/software/webdev/webdev02.png)
-
-#### with hugo
+### 3.2-2 Github pages  with hugo
 [official links](https://gohugo.io/hosting-and-deployment/hosting-on-github/)
 
-### 其他
+### 3.3 Firebase(dynamic apps)
 https://firebase.google.com/docs
 
-## 3. 站长必备
+## 4. 站长必备
 
 站点各种测试工具，ping速度、dns解析速度
 
@@ -417,7 +440,26 @@ https://firebase.google.com/docs
 
 [2](https://blog.cloudflare.com/secure-and-fast-github-pages-with-cloudflare/)
 
-## 4.More to explore
+
+## Troubleshooting
+
+?# github pags=>setting, yml invalid
+Your site is having problems building: You have an error on line 16 of your _config.yml file
+https://help.github.com/en/articles/page-build-failed-config-file-error
+
+?# failed load  jekyll-include-cache
+Configuration file: D:/workspace/lyhistory.github.io/_config.yml
+  Dependency Error: Yikes! It looks like you don't have jekyll-include-cache or one of its dependencies installed. In order to use Jekyll as currently configured, you'll need to install this gem. The full error message from Ruby is: 'cannot load such file -- jekyll-include-cache' If you run into trouble, you can find helpful resources at https://jekyllrb.com/help/!
+Note: The theme uses the jekyll-include-cache plugin which will need to be installed in your Gemfile and added to the plugins array of _config.yml. Otherwise you'll throw Unknown tag 'include_cached' errors at build. {: .notice--warning}
+https://github.com/mmistakes/minimal-mistakes/blob/2784b3ad431f9e0e9f262d1a06d23f389c93d95c/docs/_docs/03-installation.md
+
+?# Conversion error: Jekyll::Converters::Scss encountered an error while converting 'assets/css/main.scss':
+                	Invalid GBK character "\xE2" on line 54
+Fixed with powershell,https://williamwang.info/setup-jekyll-on-windows/
+
+![](/docs/docs_image/software/webdev/webdev02.png)
+
+## to explore
 
 http://archive.is/
 http://archive.org/
@@ -430,5 +472,7 @@ AngularJS - BlurAdmin - https://akveo.github.io/blur-admin/articles/001-getting-
 
 Serverless
 https://www.serverlessops.io/blog/serverless-contact-form-for-static-websites
+
+
 
 <disqus/>

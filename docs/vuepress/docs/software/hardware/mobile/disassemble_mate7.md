@@ -1,3 +1,11 @@
+---
+sidebar: auto
+sidebarDepth: 3
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
+[观看视频讲解](https://weixin.qq.com/sph/AIxNIW)
+
 ## 组成
 
 指纹排线

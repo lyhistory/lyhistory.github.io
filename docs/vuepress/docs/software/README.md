@@ -147,13 +147,15 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<p>-------------------------</p>
 	<h3>硬件开发经验</h3>
 	<ul>
-        <li><a href="/docs/software/hardware/hardware" >硬件基础和IOT介绍</a></li>
-        <li><a href="/docs/software/hardware/mobile/android_rom" >安卓rom相关</a></li>
-        <li><a href="/docs/software/hardware/ic_microcomputer/raspberry" >raspberry树莓派</a></li>
-        <li><a href="/docs/software/hardware/ic_microcomputer/arduino" >arduino</a></li>
-        <li><a href="/docs/software/hardware/ic_microcomputer/dk_nrf52" >nRF52开发入门</a></li>
-        <li><a href="/docs/software/hardware/drone" >drone无人机</a></li>
-		<li><a href="/docs/software/hardware/ic_module/nfc" >NFC</a></li>
+        <li><a href="/docs/software/hardware/hardware">硬件基础和IOT介绍</a></li>
+        <li><a href="/docs/software/hardware/mobile/android_rom">安卓rom相关</a></li>
+		<li><a href="/docs/software/hardware/mobile/disassemble_mate7.md">安卓手机拆解之华为mate7</a></li>
+		<li><a href="/docs/software/hardware/vehicle/car.md">汽车控制器</a></li>
+        <li><a href="/docs/software/hardware/ic_microcomputer/raspberry">raspberry树莓派</a></li>
+        <li><a href="/docs/software/hardware/ic_microcomputer/arduino">arduino</a></li>
+        <li><a href="/docs/software/hardware/ic_microcomputer/dk_nrf52">nRF52开发入门</a></li>
+        <li><a href="/docs/software/hardware/drone">drone无人机</a></li>
+		<li><a href="/docs/software/hardware/ic_module/nfc">NFC</a></li>
     </ul>
 	<p>-------------------------</p>
 	<h3>MISC 附录</h3>

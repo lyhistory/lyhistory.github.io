@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 3
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 https://github.com/f1xpl/openauto
 
 DTC: Diagnostic Trouble Codes 故障诊断码
