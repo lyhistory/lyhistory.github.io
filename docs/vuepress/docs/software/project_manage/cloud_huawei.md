@@ -141,3 +141,10 @@ https://www.huaweicloud.com/product/hss.html
 云防火墙 CFW
 
 https://github.com/huaweicloudDocs
+
+
+## Troubleshooting
+
+?# ECS减配后之前配置的静态IP失效
+减配后，虚拟的ECS下面的物理机器肯定会变化，可能引起虚拟mac地址发生变化？从而导致绑定的ip跟mac不再匹配，
+解决办法:使用华为云的dhcp自动配置
