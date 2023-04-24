@@ -1967,6 +1967,10 @@ https://docs.gitlab.com/runner/faq/
 
 Step 1: Create Environment
 
++ static environment
+  Deployments > Environments
++ dynamic environment
+
 Step 2: Set protected_environments
 
 Step 3: Create a deployment job in the .gitlab-ci.yml
