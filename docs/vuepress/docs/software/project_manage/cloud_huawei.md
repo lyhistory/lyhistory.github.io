@@ -133,7 +133,9 @@ https://www.huaweicloud.com/product/hss.html
 
 [华为云零信任能力成熟度模型白皮书](https://res-static.hc-cdn.cn/cloudbu-site/china/zh-cn/TrustCenter/WithePaper/HUAWEICLOUD_ZTCMM.pdf)
 
-安全组
+网络ACL对子网进行防护，子网下的资源都受网络ACL保护。
+
+安全组对弹性云服务器进行防护。
 
 [Cloud Certificate Manager，CCM](https://www.huaweicloud.com/intl/zh-cn/product/scm.html?agencyId=5e86556c08824ce6802d7aaf127f33a7&region=ap-southeast-3)
 

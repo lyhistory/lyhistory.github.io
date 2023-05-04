@@ -78,7 +78,31 @@ https://mp.weixin.qq.com/s/Dep37CyOd0Szr_fzjQFOkA
 理解Windows中的路由表和默认网关
 https://developer.aliyun.com/article/447528
 
-**Example: VPN 改变路由**
+### 路由类型
++ 主机路由
+主机路由是路由选择表中指向单个IP地址或主机名的路由记录。主机路由的Flags字段为H。例如，在下面的示例中，本地主机通过IP地址192.168.1.1的路由器到达IP地址为 172.0.0.5 的主机。
+```
+Destination    Gateway        Genmask             Flags  Metric    Ref  Use  Iface
+-----------    ------         -------             -----  -----     ---  ---  -----      
+172.0.0.5      192.168.1.1    255.255.255.255     UH     0         0    0    eth0
+```
++ 网络路由
+网络路由是代表主机可以到达的网络。网络路由的Flags字段为N。例如，在下面的示例中，本地主机将发送到网络 128.1.1.0 的数据包转发到IP地址为192.168.1.1的路由器。
+
+```
+Destination    Gateway        Genmask             Flags  Metric    Ref  Use  Iface
+-----------    ------         -------             -----  -----     ---  ---  -----      
+128.1.1.0      192.168.1.1    255.255.255.255     UN     0         0    0    eth0
+```
+
++ 默认路由
+当主机不能在路由表中查找到目标主机的IP地址或网络路由时，数据包就被发送到默认路由（默认网关 default 0.0.0.0）上。默认路由的Flags字段为G。例如，在下面的示例中，默认路由是IP地址为192.168.1.1的路由器
+```
+Destination    Gateway        Genmask             Flags  Metric    Ref  Use  Iface
+-----------    ------         -------             -----  -----     ---  ---  -----      
+default        192.168.1.1    255.255.255.255     UG     0         0    0    eth0
+```
+### **Example: VPN 改变路由**
 ```
 ===========================================================================
 
@@ -139,10 +163,79 @@ Private leased line (also known as MPLS) provides a dedicated connection that of
 
 [Advice for getting my own ASN](https://www.reddit.com/r/ipv6/comments/yoesvg/advice_for_getting_my_own_asn/)
 
-## 问题
-路由环路
+## Troubleshooting
+
+### Asymmetric Routing 非对称路由
+What is Asymmetric Routing?
+In Asymmetric routing, a packet traverses from a source to a destination in one path and takes a different path when it returns to the source. This is commonly seen in Layer-3 routed networks.
+
+Issues to Consider with Asymmetric Routing
+Asymmetric routing is not a problem by itself, but will cause problems when Network Address Translation (NAT) or firewalls are used in the routed path. For example, in firewalls, state information is built when the packets flow from a higher security domain to a lower security domain. The firewall will be an exit point from one security domain to the other. If the return path passes through another firewall, the packet will not be allowed to traverse the firewall from the lower to higher security domain because the firewall in the return path will not have any state information. The state information exists in the first firewall.
+
+[Finding & Fixing Asymmetric Routing Issues](https://www.auvik.com/franklyit/blog/asymmetric-routing-issue/)
+
+
+#### 双网卡路由问题
+
+为什么需要双网卡，场景：
++ 1. 降低成本，缩减虚拟机，一台虚拟机上跑两个应用，程序代码中做了 IP 地址限制，所以需要在一台虚拟机上配置两个内网 IP 地址
++ 2. 隔离业务（程序运行）网和管理（运维）网，以免运维的时候影响业务网的流量带宽，并且业务网内有安全组设置，而管理网则是通过跳板机
+
+一般云上的虚拟机默认是给主网卡一个路由表，然后扩展网卡需要手动创建路由，如果不创建则会出现下面的问题：
+
+虚拟机上有两个内网 IP 地址分别是：172.16.173.158/24 和 172.16.174.31/24 ，和一条去往 172.16.173.1 的默认路由
+```
+[root@XXX ~]# ip add | grep 172
+inet 172.16.173.158/24 brd 172.16.173.255 scope global noprefixroute dynamic eth0
+inet 172.16.174.31/24 brd 172.16.174.255 scope global noprefixroute dynamic eth1
+[root@XXX ~]# 
+[root@XXX ~]# ip route
+default via 172.16.173.1 dev eth0 proto dhcp metric 100 
+169.254.169.254 via 172.16.173.254 dev eth0 proto dhcp metric 100 
+172.16.173.0/24 dev eth0 proto kernel scope link src 172.16.173.158 metric 100 
+172.16.174.0/24 dev eth1 proto kernel scope link src 172.16.174.31 metric 101 
+[root@XXX ~]#
+```
+假设现在有一台服务器 A ，想去访问 172.16.174.31 上的应用（ A 发起一个目的 IP 为 172.16.174.31 的 TCP 连接）。
+
+那么 172.16.174.31 在往回发送数据包时，数据包会通过默认路由从 eth0 网卡发送给 172.16.173.1（ eth0 网卡上配置的 IP 地址是 172.16.173.158 ），这也就意味着在回包的时候不是 172.16.174.31 回的，而是 172.16.173.158 回的（即 IP 数据包的源 IP 地址是 172.16.173.158 ）。
+
+对于服务器 A 来说，A 是要跟 172.16.174.31 建立 TCP 连接，结果却收到来自 172.16.173.158 的回复，那么这个 TCP 连接自然是建立不起来的。如何解决这个问题呢？针对不同的网卡使用不同的路由表进行路由（即根据源 IP 地址进行路由）即可：
+
+```
+[root@XXX ~]# echo 1 > /proc/sys/net/ipv4/ip_forward    # 开启 IP 路由转发功能
+[root@XXX ~]# ip rule add from 172.16.173.158 table 10  # 针对不同的网卡（或 IP 地址）配置多个路由表
+[root@XXX ~]# ip rule add from 172.16.174.31 table 20
+
+[root@XXX ~]# ip route add default via 172.16.173.1 table 10  # 在不同的路由表中配置默认路由
+[root@XXX ~]# ip route add default via 172.16.174.1 table 20
+[root@XXX ~]# ip route flush cache  # 刷新
+```
+虚拟机重启后上述配置就失效了。如果希望重启后还能生效，可以将上述命令加 -p 或者添加到 /etc/rc.local 。
+
+```
+[root@XXX ~]# ip route list table 10
+default via 172.16.173.1 dev eth0 
+[root@XXX ~]# ip route list table 20
+default via 172.16.174.1 dev eth1 
+[root@XXX ~]#
+```
+
+[双网卡设备因路由配置不规范导致通信异常](https://support.huawei.com/enterprise/zh/knowledge/EKB1000028248)
+
+### 路由环路
 
 在维护路由表信息的时候，如果在拓扑发生改变后，网络收敛缓慢产生了不协调或者矛盾的路由选择条目，就会发生路由环路的问题，这种条件下，路由器对无法到达的网络路由不予理睬，导致用户的数据包不停在网络上循环发送，最终造成网络资源的严重浪费。
+
+### 路由黑洞 vs 黑洞路由
+
+> 路由黑洞：
+> 路由黑洞一般是在网络边界做汇总回程路由的时候产生的一种不太愿意出现的现象，就是汇总的时候有时会有一些网段并不在内网中存在，但是又包含在汇总后的网段中，如果在这个汇总的边界设备上同时还配置了缺省路由，就可能出现一些问题。这时，如果有数据包发向那些不在内网出现的网段（但是又包含在汇总网段）所在的路由器，根据最长匹配原则，并没有找到对应的路由，只能根据默认路由又回到原来的路由器，这就形成了环路，直到TTL值超时，丢弃。
+
+> 黑洞路由：
+> 一条路由无论是静态还是动态，都需要关联到一个出接口，在众多的出接口中，有一种接口非常特殊，即Null（无效）接口，这种类型的接口只有一个编号0，类似（交换机、路由器）的出接口Interface g或e 0/0/0; Null0是系统保留的逻辑接口，当转发网络设备在转发某些数据包时，如果使用出接口为Null0的路由，那么这些报文会被直接丢弃，就像直接丢进一个黑洞里，因此出接口为Null0的路由被称为黑洞路由。
+
+> https://www.cnblogs.com/ggc-gyx/p/16745273.html
 
 
 什么是云路由？
