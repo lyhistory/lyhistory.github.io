@@ -260,6 +260,8 @@ http://news.eeworld.com.cn/Test_and_measurement/ic514591.html
 6、刷程序
 对于有单片机、DSP、CPLD等可编程元件，可考虑重新刷一遍程序，排除程序运行异常造成的电路故障。
 
+[Prototype PCB online](https://www.pcbway.com/orderonline.aspx)
+
 ## 通信协议
 
 **硬件接口：**
@@ -310,13 +312,18 @@ DAC 数模转换
 
 ### 串口ttl转usb
 
+convert from uart to USB
+
+cp210X  ch9102
 TTL - Transistor-Transistor Logic,晶体管晶体管逻辑电路
 
-从稳定性来看，ft3232 > cp2102 > ch340
+从稳定性来看，ft3232 > cp210X(cp2102) > ch340(ch340K)
 
++ ch340
 + cp2102
   [CP210x USB to UART Bridge VCP Drivers](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads)
-+ ch340
+
++ ch9102
   
 windows驱动，device manager=》Ports(COM&LPT)
 
@@ -326,6 +333,8 @@ RC522和PN532的区别
 协议支持的类型PN比RC系列更多，PN支持NFC协议，RC主要是ISO14443A/B
 
 ## 常用芯片-单片机
+
+[RP2040 vs STM32 vs ESP32 vs ESP8266](https://socialcompare.com/en/comparison/rp2040-vs-stm32-vs-esp32-vs-esp8266)
 
 Common tips 
 1.install correct drive
@@ -356,27 +365,14 @@ http://www.guancha.cn/Industry/2015_12_09_344069.shtml
 Tools
 http://fritzing.org
 
-### 2.1 NodeMCU
-official site: http://www.nodemcu.com
-forum: http://bbs.nodemcu.com/
-source code: https://github.com/nodemcu
- 
-Setup:
-download: http://yunpan.cn/c3qQbdCTK7dtb  访问密码 ef05
-win7 users may need cp2102 usb to uart bridge controller driver,
-CP210x USB to UART Bridge VCP Drivers https://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx
+[NodeMcu vs Esp32 vs esp8266](https://forum.arduino.cc/t/nodemcu-vs-esp32-vs-esp8266/592054)
 
-NodeMCU Amica
-Driver: https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers
-Sample:
-WebServer
-https://www.teachmemicro.com/simple-nodemcu-web-server/
-MessageQueue-PubSub
-https://www.losant.com/blog/getting-started-with-platformio-esp8266-nodemcu
-https://github.com/Losant/losant-mqtt-arduino/blob/master/examples/esp8266/esp8266.ino
+### Espressif ESP*** Based Development Board
 
+[what's wrrom wrover...](https://electronics.stackexchange.com/questions/551150/what-does-wroom-mean)
+[wroom mini wrover pico](https://docs.espressif.com/projects/esp-at/en/release-v2.2.0.0_esp32c3/Compile_and_Develop/How_to_understand_the_differences_of_each_type_of_module.html)
 
-### 2.2 ESP*** Based Development Board
+品牌 lolin lilygo
 
 Esp32 vs esp8266
 https://makeradvisor.com/esp32-vs-esp8266/
@@ -402,6 +398,34 @@ ESP8266真会是Arduino Killer么？ https://blog.csdn.net/eezata/article/detail
 https://esp32.com/viewtopic.php?t=86
 Arduino for esp32&esp8266开发环境搭建 https://www.jianshu.com/p/8088d461fd11
 
++ ESP32-S2 is a highly integrated, low-power, single-core Wi-Fi microcontroller designed to be secure and cost-effective, with a high performance and a rich set of IO capabilities.
++ ESP32-S3 is a dual-core XTensa LX7 MCU, capable of running at 240 MHz. Apart from its 512 KB of internal SRAM, it also comes with integrated 2.4 GHz, 802.11 b/g/n WiFi and Bluetooth 5 (LE) connectivity that provides long-range support. It has 45 programmable GPIOs and supports a rich set of peripherals. ESP32-S3 supports larger, high-speed octal SPI flash, and PSRAM with configurable data and instruction cache.
++ ESP32-C3 is a cost-effective RISC-V MCU with Wi-Fi and Bluetooth 5 (LE) connectivity for secure IoT applications.
+
+#### NodeMCU
+NodeMCU is an open source Lua based firmware for the ESP32 and ESP8266 WiFi SOC from Espressif and uses an on-module flash-based SPIFFS file system. NodeMCU is implemented in C and is layered on the Espressif ESP-IDF.
+
+official site: http://www.nodemcu.com
+forum: http://bbs.nodemcu.com/
+source code: https://github.com/nodemcu
+ 
+Setup:
+download: http://yunpan.cn/c3qQbdCTK7dtb  访问密码 ef05
+win7 users may need cp2102 usb to uart bridge controller driver,
+CP210x USB to UART Bridge VCP Drivers https://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx
+
+NodeMCU Amica
+Driver: https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers
+Sample:
+WebServer
+https://www.teachmemicro.com/simple-nodemcu-web-server/
+MessageQueue-PubSub
+https://www.losant.com/blog/getting-started-with-platformio-esp8266-nodemcu
+https://github.com/Losant/losant-mqtt-arduino/blob/master/examples/esp8266/esp8266.ino
+
+nodemcu是基于8266，nodemcu32是基于 esp32?
+
+### Raspberry Pi RP2040
 
 ## 3. 简单案例
 
