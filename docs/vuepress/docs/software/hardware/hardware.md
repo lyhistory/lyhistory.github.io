@@ -260,7 +260,23 @@ http://news.eeworld.com.cn/Test_and_measurement/ic514591.html
 6、刷程序
 对于有单片机、DSP、CPLD等可编程元件，可考虑重新刷一遍程序，排除程序运行异常造成的电路故障。
 
+
+
+### 工具
++ Fritzing
++ kicad
+
+#### pcb
+
+PCB Gerber https://www.proto-electronics.com/blog/gerber-files-what-are-they
+
 [Prototype PCB online](https://www.pcbway.com/orderonline.aspx)
+
+jlcpcb.com
+
+#### iot apps
+
+blynk.io
 
 ## 通信协议
 
@@ -367,6 +383,14 @@ http://fritzing.org
 
 [NodeMcu vs Esp32 vs esp8266](https://forum.arduino.cc/t/nodemcu-vs-esp32-vs-esp8266/592054)
 
+"NodeMcu" is the name of a firmware originally for the ESP8266 microcontroller, with support for the ESP32 microcontroller added more recently, that allows you to program these microcontrollers using the Lua programming language.
+
+In the early days of the hobbyist community's adoption of the ESP8266, ESP8266 development boards were marketed with the name NodeMcu and the term "NodeMcu" started to be associated more with the hardware than the firmware. It is common for people with no interest in the Lua programming language to buy "NodeMcu" boards and program them with the Arduino IDE, which erases the NodeMcu firmware from the board. To make things more confusing, multiple companies marketed boards with the name "NodeMcu", but with small hardware differences. Over time, the NodeMcu boards became less popular in the Arduino world because the similarly priced WeMos D1 Mini came out with the same functionality, but in a smaller form factor. Now, the "NodeMcu" name is being used to market ESP32 boards as well.
+
+ESP32 is the name of a microcontroller made by Espressif. You will find this microcontroller on a variety of development boards, in a variety of forms. You can also purchase the ESP32 module, without the support components provided by the development boards.
+
+ESP8266 is the name of a microcontroller made by Espressif. You will find this microcontroller on a variety of development boards, in a variety of forms. You can also purchase the ESP8266 module, without the support components provided by the development boards.
+
 ### Espressif ESP*** Based Development Board
 
 [what's wrrom wrover...](https://electronics.stackexchange.com/questions/551150/what-does-wroom-mean)
@@ -426,6 +450,12 @@ https://github.com/Losant/losant-mqtt-arduino/blob/master/examples/esp8266/esp82
 nodemcu是基于8266，nodemcu32是基于 esp32?
 
 ### Raspberry Pi RP2040
+
+
+### 51单片机和STM32单片机的区别
+　　51单片机是对所有兼容Intel8031指令系统的单片机的统称，这一系列的单片机的始祖是Intel的8031单片机，后来随着flash ROM技术的发展，8031单片机取得了长足的进展成为了应用最广泛的8bit单片机之一，他的代表型号就是ATMEL公司的AT89系列。
+
+　　STM32单片机则是ST（意法半导体）公司使用arm公司的cortex-M3为核心生产的32bit系列的单片机，他的内部资源（寄存器和外设功能）较8051、AVR和PIC都要多的多，基本上接近于计算机的CPU了，适用于手机、路由器等等。
 
 ## 3. 简单案例
 

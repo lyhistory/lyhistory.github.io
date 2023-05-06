@@ -1,0 +1,34 @@
+Basically an electric motor is a mechanical device that switches electric energy into mechanical energy by passing an electric current through a wire loop contained within a magnetic field. 
+
+## 电机分类
+
+　　1.按工作电源种类划分：可分为直流电机和交流电机。
+
+　　1)直流电动机按结构及工作原理可划分：无刷直流电动机和有刷直流电动机。
+
+　　有刷直流电动机可划分：永磁直流电动机和电磁直流电动机。
+
+　　电磁直流电动机划分：串励直流电动机、并励直流电动机、他励直流电动机和复励直流电动机。
+
+　　永磁直流电动机划分：稀土永磁直流电动机、铁氧体永磁直流电动机和铝镍钴永磁直流电动机。
+
+　　2)其中交流电机还可划分：单相电机和三相电机。
+
+　　2.按结构和工作原理可划分：可分为直流电动机、异步电动机、同步电动机。
+
+　　1)同步电机可划分：永磁同步电动机、磁阻同步电动机和磁滞同步电动机。
+
+　　2)异步电机可划分：感应电动机和交流换向器电动机。
+
+　　感应电动机可划分：三相异步电动机、单相异步电动机和罩极异步电动机等。
+
+　　交流换向器电动机可划分：单相串励电动机、交直流两用电动机和推斥电动机。
+
+　　3.按起动与运行方式可划分：电容起动式单相异步电动机、电容运转式单相异步电动机、电容起动运转式单相异步电动机和分相式单相异步电动机。
+
+## 步进电机
+
+## 舵机
+
+## Solenoid Lock
+ A solenoid, universally used in all types of motors from power door locks to starters and is simply a round coil of wire that's been insulated and used to create a magnetic field in the atmosphere of this current.

@@ -7,6 +7,10 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 [回目录](/docs/software)  《arduino》
 
 ## 1. Basics
+Arduino Leonardo vs Uno
+Uno is a suitable platform for early learners. It is used for multiple purposes which can also be used as a controller and directly powered from the USB battery or through an AC to DC adapter. It can be efficiently used for smaller projects. But Arduino Leonardo released a few years ago which gained more attention when compared to uno. The Arduino Leonardo is an ATmega 32U4 microcontroller with an inbuilt USB and a crystal oscillator.
+https://www.educba.com/arduino-leonardo-vs-uno/
+
 ARDUINO UNO PINOUT针脚图
 https://www.circuito.io/blog/arduino-uno-pinout/
 
