@@ -25,3 +25,6 @@ https://seller.tiktokglobalshop.com/university/course?learning_id=10000348&conte
 
 运营：
 https://seller.tiktokglobalshop.com/university/course?learning_id=10000350&content_id=35654&identity=1
+
+? https://ustkshop.com/affiliate-program/sign-up
+? bucky drop

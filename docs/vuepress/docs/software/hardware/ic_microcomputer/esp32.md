@@ -29,3 +29,27 @@ https://www.hackster.io/robocircuits/iot-door-lock-project-0601f5
 ## troubleshooting
 
 ?# class WiFiClientSecure' has no member named 'setInsecure'
+
+```
+[env:esp32dev]
+platform = espressif32
+board = esp32dev
+framework = arduino
+monitor_speed = 115200
+board_build.partitions = no_ota.csv
+lib_deps = h2zero/NimBLE-Arduino@^1.3.1
+	   AugustESP32
+```
+=> upgrade to latest
+```
+[env:esp32dev]
+platform = https://github.com/platformio/platform-espressif32.git
+board = esp32dev
+framework = arduino
+platform_packages =
+    framework-arduinoespressif32 @ https://github.com/espressif/arduino-esp32#master
+monitor_speed = 115200
+board_build.partitions = no_ota.csv
+lib_deps = h2zero/NimBLE-Arduino@^1.3.1
+    AugustESP32
+```
