@@ -23,3 +23,8 @@ boost
 https://www.bilibili.com/video/BV1G34y1d7m4/?spm_id_from=autoNext&vd_source=3c7db6c464ce22629be3830e049bb553
 
 ## 太阳能和稳压模块
+
+## 可调电源
+产品/diy模块
+实验
+修手机/电脑

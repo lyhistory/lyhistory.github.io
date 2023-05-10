@@ -1,3 +1,15 @@
+
+tiktok 
+
+TikTok Shopping和TikTok Shop
+
+## tiktok
+满18岁
+
+
+creator account VS business account
+
+## tiktok shop
 TikTok Shop首公里揽收覆盖范围
 https://bytedance.feishu.cn/sheets/shtcnQjLTkniJP7ibAx0V1BGQOd
 

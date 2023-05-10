@@ -336,6 +336,7 @@ TTL - Transistor-Transistor Logic,晶体管晶体管逻辑电路
 从稳定性来看，ft3232 > cp210X(cp2102) > ch340(ch340K)
 
 + ch340
+  [USB转串口芯片 CH340](https://www.wch.cn/products/CH340.html?from=list)
 + cp2102
   [CP210x USB to UART Bridge VCP Drivers](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads)
 
