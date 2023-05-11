@@ -31,6 +31,14 @@ Linux-PAM (short for Pluggable Authentication Modules which evolved from the Uni
 /etc/cron.allow 
 ```
 
+?# PAM ERROR (Authentication token is no longer valid; new one required)
+solution: Allow cronjobs to run by pam even if user password is expired
+```
+# Add to below line at top of account section in /etc/pam.d/system-auth (if CentOS/RHEL 7, use file password-auth)
+account required pam_access.so
+account [success=1 default=ignore] pam_succeed_if.so service in crond quiet use_uid
+```
+
 ## example
 
 ### troubleshoot passwordless ssh login
