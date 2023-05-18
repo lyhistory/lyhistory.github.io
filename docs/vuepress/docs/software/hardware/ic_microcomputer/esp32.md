@@ -4,16 +4,34 @@
 [install](https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html?highlight=update#how-to-update-to-the-latest-code)
 
 ## ESP32 Products
-### ESP32-C3-DevKitM-1
+### ESP32-C3-DevKitM-1 (ESP32-C3-MINI-1)
+ESP32-C3-DevKitM-1 is an entry-level development board based on ESP32-C3-MINI-1, a module named for its small size. This board integrates complete Wi-Fi and Bluetooth LE functions.
+
 [EN-pinout](https://docs.espressif.com/projects/esp-idf/en/v5.0/esp32c3/hw-reference/esp32c3/user-guide-devkitm-1.html)
 
 [中文-管脚](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32c3/hw-reference/esp32c3/user-guide-devkitm-1.html?highlight=esp32%20c3%20devkitm%201%20v1%20pinout)
 
-### ESP32-C3-DevKitC-02
+### ESP32-C3-DevKitC-02 (ESP32-C3-WROOM-02)
+ESP32-C3-DevKitC-02 is an entry-level development board based on ESP32-C3-WROOM-02, a general-purpose module with 4 MB SPI flash. This board integrates complete Wi-Fi and Bluetooth LE functions.
+
 [pinout](https://docs.espressif.com/projects/esp-idf/en/v5.0/esp32c3/hw-reference/esp32c3/user-guide-devkitc-02.html?highlight=esp32%20c3%20wroom)
 
 ESP32 With Integrated OLED (WEMOS/Lolin)
 https://www.instructables.com/ESP32-With-Integrated-OLED-WEMOSLolin-Getting-Star/
+
+
+## Power Options
+To power your ESP32 dev kit, you have three options:
+
++ Via the USB port.
++ Using unregulated voltage between 5V and 12V, connected to the 5V and GND pins. This voltage is regulated on-board.
++ Using regulated 3.3V voltage, connected to the 3.3V and GND pins. Be very careful with that: do not exceed the 3.3V limit, or your ESP32 module will be damaged.
+
+Attention: be very, very careful to only use one of those options at the same time.
+
+For example, do not power your ESP32 dev kit via the 5V pin using a 10V input while at the same time you have the module connected to your computer via USB. This will surely damage your module, and perhaps even your computer.
+
+With this, you should have a good understanding of what the ESP32 is, and you must be eager to get hands-on with it. I totally understand :-). Let’s proceed with the next lesson, where I’ll show you how to set up the ESP32-Arduino Core on the Arduino IDE.
 
 ## esp32 12v solenoid lock 
 

@@ -263,16 +263,25 @@ http://news.eeworld.com.cn/Test_and_measurement/ic514591.html
 
 
 ### 工具
+
+#### 做图
 + Fritzing
 + kicad
 
-#### pcb
+#### Prototype
 
-PCB Gerber https://www.proto-electronics.com/blog/gerber-files-what-are-they
-
-[Prototype PCB online](https://www.pcbway.com/orderonline.aspx)
-
-jlcpcb.com
++ 初级: 电路积木 中小学电学实验箱
+  接线柱。配合U形导线，快速搭建电路
++ 初级: 电路实验箱
+  接线柱:香蕉头，和电路积木类似，直接插入就能完成电路连接
++ 中级:面包板+导线组合
+  专用的导线或用杜邦线
++ 高级:万用板/洞洞板
+  学校和工厂更常用，需要焊接，可靠性比面包板高很多
++ 高级：PCB打样
+  PCB Gerber https://www.proto-electronics.com/blog/gerber-files-what-are-they
+  [Prototype PCB online](https://www.pcbway.com/orderonline.aspx)
+  jlcpcb.com
 
 #### iot apps
 

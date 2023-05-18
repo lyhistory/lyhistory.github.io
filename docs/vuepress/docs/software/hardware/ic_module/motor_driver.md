@@ -1,3 +1,4 @@
+
 Basically an electric motor is a mechanical device that switches electric energy into mechanical energy by passing an electric current through a wire loop contained within a magnetic field. 
 
 ## 电机分类
@@ -26,7 +27,7 @@ Basically an electric motor is a mechanical device that switches electric energy
 
 　　3.按起动与运行方式可划分：电容起动式单相异步电动机、电容运转式单相异步电动机、电容起动运转式单相异步电动机和分相式单相异步电动机。
 
-## 步进电机
+### 步进电机
 
 步进电机上的“A+A-B+B-”就是电机的驱动线，“A+”、“ A-”代表一相，“B+”、“B-”代表另一相。
 
@@ -36,7 +37,31 @@ A相与B相是不通的，用万用表很容易区分出来，至于各相的+-�
 
 步进驱动器A+A-B+B-控制步进电机运行。两相四线电机一般采用可逆驱动，所以线圈有正负。
 
-## 舵机
+### 伺服电机
 
-## Solenoid Lock
+### 舵机
+
+### Solenoid Lock
  A solenoid, universally used in all types of motors from power door locks to starters and is simply a round coil of wire that's been insulated and used to create a magnetic field in the atmosphere of this current.
+
+## motor drive
+
++ L9110
++ L293D
++ L298
+  - L298P 
+  - L298N motor driver
+
+## 原理
+PWM, or pulse width modulation is a technique which allows us to adjust the average value of the voltage that’s going to the electronic device by turning on and off the power at a fast rate. The average voltage depends on the duty cycle, or the amount of time the signal is ON versus the amount of time the signal is OFF in a single period of time.
+https://howtomechatronics.com/tutorials/arduino/arduino-dc-motor-control-tutorial-l298n-pwm-h-bridge/
+
+
+##
+Arduino智能小车
+https://www.hackster.io/goldscrew/arduino-obstacle-avoiding-robot-car-2wd-with-aa-battery-514b3c
+https://www.codemahal.com/2wd-robotic-car-arduino
+https://www.instructables.com/OSOYOO-2WD-Robot-Car-Starter-Kit/
+
+树莓派 智能小车
+[化繁为简！开发者尝鲜阿里小程序云平台，实操讲解如何打造智能小车！](https://yq.aliyun.com/articles/700749?spm=a2c4e.11163080.searchblog.48.32e02ec1I9PHCG)
