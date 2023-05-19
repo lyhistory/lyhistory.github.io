@@ -47,6 +47,103 @@ VPN的全名是virtual private network，缩写：VPN，是常用于连接中、
 
 ### 1.2 自行搭建(不推荐小白)
 
+#### 1.2.1 理论
+
+VPN虚拟专用网络发展至今已经不在是一个单纯的经过加密的访问隧道了，它已经融合了访问控制、传输管理、加密、路由选择、可用性管理等多种功能
+
+VPN (Virtual Private Network) is no longer a simple encrypted access tunnel, it integrates multiple functions such as access control, transmission management, encryption, route selection, and availability management
+
+###### PPTP
+点对点隧道协议 (PPTP) 是由包括微软和3Com等公司组成的PPTP论坛开发的一种点对点隧道协，基于拨号使用的PPP协议使用PAP或CHAP之类的加密算法，或者使用 Microsoft的点对点加密算法MPPE。其通过跨越基于 TCP/IP 的数据网络创建 VPN 实现了从远程客户端到专用企业服务器之间数据的安全传输。PPTP 支持通过公共网络(例如 Internet)建立按需的、多协议的、虚拟专用网络。PPTP 允许加密 IP 通讯，然后在要跨越公司 IP 网络或公共 IP 网络(如 Internet)发送的 IP 头中对其进行封装。
+
+The Point-to-Point Tunneling Protocol (PPTP) is a Point-to-Point Tunneling Protocol developed by PPTP forums consisting of companies such as Microsoft and 3com, the PPP protocol used for dialing uses encryption algorithms such as PAP or chap, or Microsoft's point-to-point encryption algorithm MPPE. It creates a VPN over a TCP/IP-based data network to implement secure data transmission from a remote client to a dedicated Enterprise Server. PPTP supports creating on-demand, multi-protocol, and virtual private networks through public networks (such as the Internet. PPTP allows encrypted IP communication.
+
+  PPTP is mainly used for users who often go out for mobile or home office work
+
+###### L2TP
+L2TP第 2 层隧道协议 (L2TP) 是IETF基于L2F (Cisco的第二层转发协议)开发的PPTP的后续版本。是一种工业标准 Internet 隧道协议，其可以为跨越面向数据包的媒体发送点到点协议 (PPP) 框架提供封装。PPTP和L2TP都使用PPP协议对数据进行封装，然后添加附加包头用于数据在互联网络上的传输。PPTP只能在两端点间建立单一隧道。 L2TP支持在两端点间使用多隧道，用户可以针对不同的服务质量创建不同的隧道。L2TP可以提供隧道验证，而PPTP则不支持隧道验证。但是当L2TP 或PPTP与IPSEC共同使用时，可以由IPSEC提供隧道验证，不需要在第2层协议上验证隧道使用L2TP。 PPTP要求互联网络为IP网络。L2TP只要求隧道媒介提供面向数据包的点对点的连接，L2TP可以在IP(使用UDP)，桢中继永久虚拟电路 (PVCs),X.25虚拟电路(VCs)或ATM VCs网络上使用。
+
+Layer 2 Tunneling Protocol (L2TP) is a later version of PPTP developed by IETF Based on l2f (Cisco's L2 forwarding protocol. It is an industrial standard Internet tunnel protocol that provides encapsulation for a Point-to-Point Protocol (PPP) framework that spans data packets. Both PPTP and L2TP use the PPP protocol to encapsulate data, and then add additional headers for data transmission over the Internet. PPTP can only establish a single tunnel between two points. L2TP supports multiple tunnels between two points. Users can create different tunnels for different service quality. L2TP can provide tunnel verification, while PPTP does not. However, when both L2TP or PPTP and IPSec are used together, IPSec can provide tunneling verification, without the need to verify that the tunneling uses L2TP on the layer-3 protocol.
+PPTP requires the Internet to be an IP network. L2TP only requires the tunneling media to provide packet-oriented point-to-point connections. L2TP can relay permanent virtual circuits (PVCs), X.25 virtual circuits (VCS) at IP addresses (using UDP) or use it on an ATM VCs network.
+
+###### IPSec
+IPSec 隧道模式隧道是封装、路由与解封装的整个 过程。隧道将原始数据包隐藏(或封装)在新的数据包内部。该新的数据包可能会有新的寻址与路由信息，从而使其能够通 过网络传输。隧道与数据保密性结合使用时，在网络上窃听通讯的人将无法获取原始数据包数据(以及原始的源和目标)。封装的数据包到达目的地后，会删除封 装，原始数据包头用于将数据包路由到最终目的地。
+
+隧道本身是封装数据经过的逻辑数据路径，对原始的源和目的端，隧道是不可见的，而只能看到网络路径中的点对点连接。连接双方并不关心隧道起点和终点之间的任何路由器、交换机、代理服务器或其他安全网关。将隧道和数据保密性结合使用时，可用于提供VPN。
+
+封装的数据包在网络中的隧道内部传输。在此示例中，该网络是 Internet。网关可以是外部 Internet 与专用网络间的周界网关。周界网关可以是路由器、防火墙、代理服务器或其他安全网关。另外，在专用网络内部可使用两个网关来保护网络中不信任的通讯。
+
+当以隧道模式使用 IPSec 时，其只为 IP 通讯提供封装。使用 IPSec 隧道模式主要是为了与其他不支持 IPSec 上的 L2TP 或 PPTP VPN 隧道技术的路由器、网关或终端系统之间的相互操作。
+
+The IPSec tunneling mode is the whole process of encapsulation, routing, and unencapsulation. The tunnel hides (or encapsulates) the original data packet inside the new data packet. The new data packet may have new addressing and routing information so that it can be transmitted over the network. When the tunnel is used in combination with data confidentiality, the person who listens to the communication on the network will not be able to obtain the original data packet (as well as the original source and target ). After the encapsulated data packet arrives at the destination, the encapsulation is deleted. The original data packet header is used to route the data packet to the destination.
+
+A tunnel is a logical data path that encapsulates data. It is invisible to the source and destination, but only to point-to-point connections in the network path. Both parties do not care about any vrouters, switches, proxies, or other security gateways between the start and end points of the tunnel. A VPN can be used to provide a VPN when a tunnel is used in combination with data confidentiality.
+
+The encapsulated data packet is transmitted within the tunnel of the network. In this example, the network is internet. A gateway can be a perimeter gateway between an external internet and a private network. Perimeter gateways can be routers, firewalls, proxy servers, or other security gateways. In addition, two gateways can be used inside a private network to protect untrusted communication in the network.
+
+When using IPSec in tunneling mode, it only provides encapsulation for IP communication. The IPSec tunneling mode is used to interact with other routers, gateways, or terminal systems that do not support the L2TP or pptp vpn tunneling technology on IPSec.
+
+###### SSL VPN
+SSL VPN是一种基于SSL的VPN远程访问技术。 SSL VPN 允许用户从互联网的任何位置启动 Web 浏览器以建立远程访问 VPN 连接
+![](./sslvpn.png)
+如图所示，FW作为企业的出口网关，接入Internet。 为远程用户提供SSL VPN接入服务。 远程用户可以随时随地使用笔记本电脑、Pad、智能手机等移动设备通过FW访问内网资源。
+
+SSL VPNSSL VPN, SSL协议提供了数据私密性、端点验证、信息完整性等特性。SSL协议由许多子协议组成，其中两个主要的子协议是握手协议和记录协议。握手协议允许服务器 和客户端在应用协议传输第一个数据字节以前，彼此确认，协商一种加密算法和密码钥匙。在数据传输期间，记录协议利用握手协议生成的密钥加密和解密后来交换的数据。
+
+SSL独立于应用，因此任何一个应用程序都可以享受它的安全性而不必理会执行细节。SSL置身于网络结构体系的 传输层和应用层之间。此外，SSL本身就被几乎所有的Web浏览器支持。这意味着客户端不需要为了支持SSL连接安装额外的软件。这两个特征就是SSL能 应用于VPN的关键点。
+
+The SSL protocol provides features such as data privacy, endpoint verification, and information integrity. The SSL protocol consists of many sub-protocols, two of which are handshake protocol and record protocol. The handshake protocol allows the server and client to confirm each other before the application protocol transmits the First Data byte and negotiate an encryption algorithm and password key. During data transmission, the record protocol uses the key generated by the handshake protocol to encrypt and decrypt the data to be exchanged.
+
+SSL is independent from the application, so any application can enjoy its security without worrying about the execution details. SSL is placed between the transport layer and the application layer of the network architecture. In addition, SSL is supported by almost all web browsers. This means that the client does not need to install additional software to support SSL connections. These two features are the key points that SSL can be applied to VPN.
+
+  
+虽然很多人提到sslvpn都说是browser based，但是实际并非如此，简单的当然可以是基于浏览器的，但是也仅仅只能访问基于浏览器的服务，如果需要全链路的访问比如公司网络（邮件服务器 办公软件等等）还需要安装客户端分配ip，两者区别：
+
+**基于浏览器的 SSL Portal VPN / Clientless ssl vpn：**
+
+特点：
+
+  Requires web browser only to access resources.
+  
+  Need to install plugins to access some plugins.
+  
+  virtual interface is not created on computer/laptop.
+  
+  No IP address is assigned to the computer /laptop.
+
+例子：
+- sangfor ssl vpn
+
+工作原理：
+
+step 1: Initial handshake: The user points their browser at their company’s SSL VPN gateway server to begin a quick handshake process.
+
+step 2: Server authentication: The server sends a certificate that the browser authenticates with a trusted certificate authority.
+
+step 3: Negotiate encryption: Once authenticated, the server and browser negotiate the encryption algorithm they will use.
+
+step 4: Key exchange: the server and browser exchange either a shared secret or public keys to establish the encrypted tunnel.
+
+step 5: Once a secure, encrypted tunnel connects the user’s browser to the SSL VPN gateway server, things run a little differently from public websites. The gateway server presents the user with a login page that is integrated with the company’s authentication and authorization systems. Successfully logged in, the remote user has access to protected company resources, and the data has full E2EE protection.
+
+**基于客户端的 SSL Tunnel VPN / Client based ssl vpn:**
+
+特点：
+
+  Need to install application to access resources.
+  
+  Supports all applications (Full Tunnel Mode)
+
+  Virtual network interface is created on client computer/laptop.
+
+  Vpn gateway assigns new IP address to the client computer/laptop.
+
+例子：
+
+- OpenVPN
+- checkpoint VPN
+
+#### 1.2.2 搭建步骤
 [OpenVPN](/docs/software/network/vpn_openvpn)
 
 ## 2. Proxy server代理上网

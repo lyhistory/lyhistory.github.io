@@ -569,6 +569,11 @@ Build a Java app with Maven https://jenkins.io/doc/tutorials/build-a-java-app-wi
 - Never declare the POM importing a POM as the parent (or grandparent, etc) of the target POM. There is no way to resolve the circularity and  an exception will be thrown.
 - When referring to artifacts whose POMs have transitive dependencies, the project needs to specify versions of those artifacts as managed  dependencies. Not doing so results in a build failure since the artifact may not have a version specified. (This should be considered a best  practice in any case as it keeps the versions of artifacts from changing from one build to the next).
 
+##### maven profiles VS spring profiles
+
+Maven profiles would provide a build-time solution, while SpringFramework profiles would provide a runtime alternative. I think this is the first question one may ask himself: if he wants to have a single package that can be deployed in different environments, or if he wants the build tool to provide different packages according to the destination environment.
+
+
 ##### Dependency mediation/Transitive Dependencies
 
 ```

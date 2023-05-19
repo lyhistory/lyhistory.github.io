@@ -122,11 +122,17 @@ ssh-keygen -R ip/hostname
 ```
 多行变成一行，逗号隔开（去掉最后一个逗号）
 tr '\n' ',' < input.txt | sed 's/,$/\n/'
+
+
+cut -f 1 -d: /etc/passwd | xargs -n 1 -I {} bash -c " echo -e '\n{}' ; chage -l {}"
 ```
 
 ## File Operation
 
 ### vim
+
+replace:
+%s:/A/B/g
 
 ```
 

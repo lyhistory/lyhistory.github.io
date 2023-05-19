@@ -30,6 +30,9 @@ $ git credential-osxkeychain erase
 
 for windows:
 git config --global credential.helper wincred
+or
+Edit the git entry under Windows Credentials
+
 for ubuntu:
 git config credential.helper 'store [options]'
 

@@ -45,3 +45,5 @@ ocr optical character recognition
 https://tesseract.projectnaptha.com/
  
 command palette 命令输入框
+
+FQDN: A fully qualified domain name (FQDN) is the complete address of an internet host or computer. It provides its exact location within the domain name system (DNS) by specifying the hostname, domain name and top-level domain (TLD).
