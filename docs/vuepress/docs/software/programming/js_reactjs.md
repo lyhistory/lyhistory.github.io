@@ -1614,7 +1614,692 @@ const MyComponent = lazy(() => import("./MyComponent.js"));
 
 https://mp.weixin.qq.com/s/EvOkI-g3VCzzzuh0Cc4AkA
 
-## 3. Troubleshooting
+
+## 4.2 开发
+
+### 4.2.1 toolchain
+**根据具体需求（放在服务端的静态页面或者动态渲染页面）有以下几种toolchain可以利用：**
+
++ If you’re learning React or creating a new single-page app, use Create React App.
++ If you’re building a server-rendered website with Node.js, try [Next.js](https://nextjs.org/learn/basics/getting-started).
++ If you’re building a static content-oriented website, try [Gatsby](https://www.gatsbyjs.org/docs/)
++ If you’re building a component library or integrating with an existing codebase, try More Flexible Toolchains:
+	- Neutrino combines the power of webpack with the simplicity of presets, and includes a preset for React apps and React components.
+	- Parcel is a fast, zero configuration web application bundler that works with React.
+	- Razzle is a server-rendering framework that doesn’t require any configuration, but offers more flexibility than Next.js.
++ 自定义toolchain Creating a Toolchain from Scratch， A JavaScript build toolchain typically consists of:
+	- A package manager, such as Yarn or npm. It lets you take advantage of a vast ecosystem of third-party packages, and easily install or update them.
+	- A bundler, such as webpack or Parcel. It lets you write modular code and bundle it together into small packages to optimize load time.
+	- A compiler such as Babel. It lets you write modern JavaScript code that still works in older browsers.
+	- 参考 https://blog.usejournal.com/creating-a-react-app-from-scratch-f3c693b84658
+
+### 4.2.2 create-react-app(highly recommend)	
+
+**下面我们就采用第一种方式创建一个single-page app**
+
+[完整文档](https://create-react-app.dev/docs/documentation-intro)
+
+参考 https://code.visualstudio.com/docs/nodejs/reactjs-tutorial
+
+使用reactjs生成器create-react-app generator有两种方法：
+
+其一：直接用npx生成项目 ```npx create-react-app hello-react```
+
+其二:安装到node module path
+```
+npm install -g create-react-app
+```
+
+然后可以生成项目
+```
+create-react-app hello-react
+
+结果(package.json中的script定义)：
+Success! Created hello-react at C:\Workspace\Repository\TestReact\hello-react
+Inside that directory, you can run several commands:
+
+  npm start
+    Starts the development server.
+
+  npm run build
+    Bundles the app into static files for production.
+
+  npm test
+    Starts the test runner.
+
+  npm run eject
+    Removes this tool and copies build dependencies, configuration files
+    and scripts into the app directory. If you do this, you can’t go back!
+
+We suggest that you begin by typing:
+
+  cd hello-react
+  npm start
+
+Happy hacking!
+
+```
+
+```
+cd my-app
+code .
+```
+
+**debug react**
+
+new react dev tool
+https://react-devtools-tutorial.now.sh/
+
+go to vscode extension: install "debugger for chrome"
+&
+https://www.npmjs.com/package/@welldone-software/why-did-you-render
+
+then go to run&debug:
+click "create a launch.json file", select environment "chrome"，默认端口3000:
+```
+	{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome against localhost",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}"
+        }
+    ]
+}
+```
+
+make sure "npm start" first, then F5 or click the debug button
+
+Chrome React Devtools extension
+
+**Linting**
+
+frist install eslint module:
+```
+npm install -g eslint
+```
+then in vscode extension install "eslint"
+
+ctrl+shift+P : create eslint config:
+```
+结果：
+PS C:\Workspace\Repository\TestReact\hello-react> node_modules\.bin\eslint.cmd --init
+? How would you like to use ESLint? To check syntax and find problems
+? What type of modules does your project use? JavaScript modules (import/export)
+? Which framework does your project use? React
+? Does your project use TypeScript? No
+? Where does your code run? Browser
+? What format do you want your config file to be in? JSON
+```
+
+
+**打包部署**
+```
+npm run build
+结果：
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  npm install -g serve
+  serve -s build
+
+Find out more about deployment here:
+
+  bit.ly/CRA-deploy
+```
+
+**more: dependencies/import/router/typescript:**
+https://create-react-app.dev/docs
+
+React.js and Spring Data REST
+https://spring.io/guides/tutorials/react-and-spring-data-rest/
+
+```
+自定义环境变量
+There is also a built-in environment variable called NODE_ENV. You can read it from process.env.NODE_ENV. When you run npm start, it is always equal to 'development', when you run npm test it is always equal to 'test', and when you run npm run build to make a production bundle, it is always equal to 'production'. You cannot override NODE_ENV manually. This prevents developers from accidentally deploying a slow development build to production.
+https://create-react-app.dev/docs/adding-custom-environment-variables/
+
+Windows (cmd.exe)#
+set "REACT_APP_NODE_ENV=uat" && npm run start
+Linux, macOS (Bash)#
+export REACT_APP_NODE_ENV=uat && npm run start
+
+package.json:
+  "scripts": {
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js",
+
+    "startDevOnWinCmd": "set \"REACT_APP_NODE_ENV=dev\" && node scripts/start.js",
+    "startDevOnLinux": "export REACT_APP_NODE_ENV=dev && node scripts/start.js",
+
+    "buildQaOnWinCmd": "set \"REACT_APP_NODE_ENV=qa\" && node scripts/build.js",
+    "buildQaOnLinux": "export REACT_APP_NODE_ENV=qa && node scripts/build.js",
+
+usage:
+​```
+npm run start #default for dev/development start
+npm run build #default for prod/produciton build
+npm run startDevOnWinCmd #example for dev start
+npm run buildQaOnWinCmd  #example for qa build
+​```
+```
+
+
+
+### 4.2.3 webpack
+
+https://webpack.js.org/concepts/
+
+[Tutorial: How to set up React, webpack, and Babel from scratch (2020)](https://www.valentinog.com/blog/babel/)
+
+**step 1: setting up the project**
+```
+mkdir webpack-react-tutorial && cd $_
+mkdir -p src
+npm init -y
+```
+
+**step 2: setting up webpack**
+
+webpack will ingest raw React components for producing JavaScript code that (almost) every browser can understand.
+```
+npm i webpack webpack-cli --save-dev
+```
+package.json
+```
+  "name": "webpack-react-tutorial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  
+"scripts": {
+  "build": "webpack --mode production"
+}
+```
+At this point there is no need to define a configuration file for webpack. Older webpack versions would automatically look for a configuration file. Since version 4 that is no longer the case.
+
+**step 3: setting up Babel for transpiling our code**
+```
+npm i @babel/core babel-loader @babel/preset-env @babel/preset-react --save-dev
+```
+.babelrc
+```
+{
+  "presets": ["@babel/preset-env", "@babel/preset-react"]
+}
+```
+
+webpack.config.js
+```
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader"
+        }
+      }
+    ]
+  }
+};
+```
+The configuration is quite minimal. For every file with a js or jsx extension Webpack pipes the code through babel-loader. With this in place we're ready to write a React.
+
+**step 4: writing React components**
+
+pull in react
+```
+npm i react react-dom
+mkdir -p src/js/components/
+```
+
+src/js/components/Form.js:
+```
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+
+class Form extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      value: ""
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    const { value } = event.target;
+    this.setState(() => {
+      return {
+        value
+      };
+    });
+  }
+
+  render() {
+    return (
+      <form>
+        <input
+          type="text"
+          value={this.state.value}
+          onChange={this.handleChange}
+        />
+      </form>
+    );
+  }
+}
+
+export default Form;
+
+const wrapper = document.getElementById("container");
+wrapper ? ReactDOM.render(<Form />, wrapper) : false;
+```
+
+src/index.js:
+```
+import Form from "./js/components/Form";
+```
+
+npm run build
+
+**step 5:the HTML webpack plugin**
+
+To display our React form we must tell webpack to produce an HTML page. The resulting bundle will be placed inside a \<script\> tag.
+
+webpack needs two additional components for processing HTML: html-webpack-plugin and html-loader
+
+```
+npm i html-webpack-plugin html-loader --save-dev
+```
+
+Then update webpack.config.js:
+```
+const HtmlWebPackPlugin = require("html-webpack-plugin");
+
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader"
+        }
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "html-loader"
+          }
+        ]
+      }
+    ]
+  },
+  plugins: [
+    new HtmlWebPackPlugin({
+      template: "./src/index.html",
+      filename: "./index.html"
+    })
+  ]
+};
+```
+src/index.html:
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>How to set up React, Webpack, and Babel</title>
+</head>
+<body>
+<div id="container"></div>
+</body>
+</html>
+```
+
+npm run build
+
+result published to ./dist
+
+**step 6: Configuring the webpack dev server**
+
+You don't want to type npm run build every time you change a file.
+Once configured webpack will launch your application inside a browser. Also, every time you save a file after a modification webpack dev server will refresh the browser's window.
+
+```
+npm i webpack-dev-server --save-dev
+```
+package.json
+```
+"start": "webpack-dev-server --open --mode development",
+```
+
+### 4.2.4 mobx
+
+**concepts**
+
+https://mobx.js.org/README.html
+https://cn.mobx.js.org/
+https://mobx.js.org/getting-started.html
+
++ Use the @observable decorator or observable(object or array) functions to make objects trackable for MobX.
++ The @computed decorator can be used to create functions that can automatically derive their value from the state.
++ Use autorun to automatically run functions that depend on some observable state. This is useful for logging, making network requests, etc.
++ reactions
+	will not fire initially, only on change
++ transactions
++ actions
+	
+  ```
+  strict mode: only allow data modified in actions
+  "never" (default): State can be modified from anywhere
+  "observed": All state that is observed somewhere needs to be changed through actions. This is the recommended strictness mode in non-trivial applications.
+  "always": State always needs be updated (which in practice also includes creation) in actions.
+  import { configure } from "mobx"
+  // don't allow state modifications outside actions
+  configure({ enforceActions: "always" })
+  
+  ```
+
+**actions VS flow(function * (fn)**
+
+通过我发现的一个“bug”来理解下单线程非阻塞的JS模型在mobx flow中的运用，flow会根据异步请求将代码段切分成多块，每块都是一个action，也就是每块如果有状态变化都会触发render：
+
+https://github.com/mobxjs/mobx/issues/2715
+
+https://mobx.js.org/actions.html#using-flow-instead-of-async--await-
+
+```react
+class testStore {
+  @observable tableData = []
+  @observable requestComplete = false
+  @action //这里的action是没用的，因为下面用了flow！You don't need action when using flow... the point of flow is to automatically insert actions in between time-separated blocks of code - that is - in between individual awaits - which are replaced by yields (which allows us to insert these actions).
+  retrieveTableData = (flow(function * () {
+    try {
+      console.log('Mark 1')
+      this.requestComplete = false
+      console.log('Mark 2')
+      const tempTableData = yield axios.post('someEndpoints','someParam') //以此分割成两块action，代码运行到此处，因为这里是等待异步请求，而js是非阻塞的单线程，所以就会跑去做其他事情，即如果之前观测数据requestComplete是true，这里改成了false，此时js就刚好腾出手来去触发render！
+      console.log('Mark 3')
+      if (Array.isArray(tempTableData)) {
+        this.tableData = doSthTo(tempTableData)
+        console.log('Mark 4')  
+      }
+      this.requestComplete = true
+      console.log('Mark 5')
+    } catch (error) {
+	  console.log('Mark -1')
+      this.requestComplete = true
+    }
+  }))
+}
+
+@inject('testStore')
+@observer
+class testTable extends Component {
+    componentDidMount () {
+    const { testStore } = this.props
+    testStore.retrieveTableData()
+  }
+  render () {
+    console.log('Mark render...')
+    return <Sth>
+  }
+```
+
+
+
+#关于runInAction，在strict模式下，所有的setState操作都必须在action方法中，比如：
+	loadWeather = city => {
+	  fetch(
+	    `https://abnormal-weather-api.herokuapp.com/cities/search?city=${city}`
+	  )
+	    .then(response => response.json())
+	    .then(data => {
+	      this.setWeatherData(data);   //   <==== here
+	    });
+	};
+	
+
+	@action
+	setWeatherData = data => {
+	  this.weatherData = data;   
+	};
+	
+	可以看到这种写法为了设置weatherData还需要写一个action方法，可以通过runInAction简写成
+	loadWeatherRunInThen = city => {
+	  fetch(`https://abnormal-weather-api.herokuapp.com/cities/search?city=${city}`)
+	    .then(response => response.json())
+	    .then(data => {
+	      runInAction(() => {
+	        this.weatherData = data;         // <====== We dont have to define an action
+	      });
+	    });
+	};
+	```
+	@action @action.bound https://stackoverflow.com/questions/48639891/difference-between-mobxs-action-bound-and-arrow-functions-on-class-functions
+
++ Use the @observer decorator from the mobx-react package to make your React components truly reactive. They will update automatically and efficiently. Even when used in large complex applications with large amounts of data.
+
+  
+
+mobx vs  redux:
+https://blog.logrocket.com/redux-vs-mobx/
+https://redux.js.org/introduction/getting-started
+
+这个视频深入讲解了mobx的特性，如何转换现有js为mobx版本，并且对比react和加了mobx后的性能，调试技巧：
+https://www.youtube.com/watch?v=XGwuM_u7UeQ
+
+mobx-ract Provider Injection基本原理：hooks
+https://reactjs.org/docs/hooks-overview.html
+
+**create-react-app + mobx**
+
+[Introduction to MobX and React](https://www.youtube.com/watch?v=Dp75-DnGFrU)
+
+```
+npx create-react-app hello-mobx
+
+//This moves files around and makes your app’s configuration accessible.
+npm run eject
+
+```
+eject result:
+```
+? Are you sure you want to eject? This action is permanent. Yes
+Ejecting...
+
+Copying files into C:\Workspace\Repository\learn_coding\frontend\hello-mobx
+  Adding \config\env.js to the project
+  Adding \config\getHttpsConfig.js to the project
+  Adding \config\modules.js to the project
+  Adding \config\paths.js to the project
+  Adding \config\pnpTs.js to the project
+  Adding \config\webpack.config.js to the project
+  Adding \config\webpackDevServer.config.js to the project
+  Adding \config\jest\cssTransform.js to the project
+  Adding \config\jest\fileTransform.js to the project
+  Adding \scripts\build.js to the project
+  Adding \scripts\start.js to the project
+  Adding \scripts\test.js to the project
+
+Updating the dependencies
+  Removing react-scripts from dependencies
+  Adding @babel/core to dependencies
+  Adding @svgr/webpack to dependencies
+  Adding @typescript-eslint/eslint-plugin to dependencies
+  Adding @typescript-eslint/parser to dependencies
+  Adding babel-eslint to dependencies
+  Adding babel-jest to dependencies
+  Adding babel-loader to dependencies
+  Adding babel-plugin-named-asset-import to dependencies
+  Adding babel-preset-react-app to dependencies
+  Adding camelcase to dependencies
+  Adding case-sensitive-paths-webpack-plugin to dependencies
+  Adding css-loader to dependencies
+  Adding dotenv to dependencies
+  Adding dotenv-expand to dependencies
+  Adding eslint to dependencies
+  Adding eslint-config-react-app to dependencies
+  Adding eslint-loader to dependencies
+  Adding eslint-plugin-flowtype to dependencies
+  Adding eslint-plugin-import to dependencies
+  Adding eslint-plugin-jsx-a11y to dependencies
+  Adding eslint-plugin-react to dependencies
+  Adding eslint-plugin-react-hooks to dependencies
+  Adding file-loader to dependencies
+  Adding fs-extra to dependencies
+  Adding html-webpack-plugin to dependencies
+  Adding identity-obj-proxy to dependencies
+  Adding jest to dependencies
+  Adding jest-environment-jsdom-fourteen to dependencies
+  Adding jest-resolve to dependencies
+  Adding jest-watch-typeahead to dependencies
+  Adding mini-css-extract-plugin to dependencies
+  Adding optimize-css-assets-webpack-plugin to dependencies
+  Adding pnp-webpack-plugin to dependencies
+  Adding postcss-flexbugs-fixes to dependencies
+  Adding postcss-loader to dependencies
+  Adding postcss-normalize to dependencies
+  Adding postcss-preset-env to dependencies
+  Adding postcss-safe-parser to dependencies
+  Adding react-app-polyfill to dependencies
+  Adding react-dev-utils to dependencies
+  Adding resolve to dependencies
+  Adding resolve-url-loader to dependencies
+  Adding sass-loader to dependencies
+  Adding semver to dependencies
+  Adding style-loader to dependencies
+  Adding terser-webpack-plugin to dependencies
+  Adding ts-pnp to dependencies
+  Adding url-loader to dependencies
+  Adding webpack to dependencies
+  Adding webpack-dev-server to dependencies
+  Adding webpack-manifest-plugin to dependencies
+  Adding workbox-webpack-plugin to dependencies
+
+Updating the scripts
+  Replacing "react-scripts start" with "node scripts/start.js"
+  Replacing "react-scripts build" with "node scripts/build.js"
+  Replacing "react-scripts test" with "node scripts/test.js"
+
+Configuring package.json
+  Adding Jest configuration
+  Adding Babel preset
+
+Running npm install...
+audited 931631 packages in 24.439s
+
+59 packages are looking for funding
+  run `npm fund` for details
+
+found 1 low severity vulnerability
+  run `npm audit fix` to fix them, or `npm audit` for details
+Ejected successfully!
+```
+
+```
+npm install mobx --save
+npm install mobx-react --save
+```
+
+由于create-react-app默认是不支持mobx的decorator的，为了enable decorator，需要这么做：
+https://mobx.js.org/best/decorators.html
+
+**Method 1 Babel 6: using babel-preset-mobx**
+
+npm install --save-dev babel-preset-mobx
+package.json OR .babelrc:
+```
+{
+    "presets": ["mobx"]
+}
+```
+实际上我在Babel 7也测试成功，
+
+**Method 2 Babel 6: manually enabling decorators**
+
+npm i --save-dev babel-plugin-transform-decorators-legacy
+```
+{
+    "presets": ["es2015", "stage-1"],
+    "plugins": ["transform-decorators-legacy"]
+}
+```
+未测试
+
+**Method 3 Babel 7**
+
+```
+npm install --save-dev @babel/plugin-proposal-decorators
+npm install --save-dev @babel/plugin-proposal-class-properties
+```
+
+package.json:
+```
+"babel": {
+  "plugins":[
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy":true
+      }
+    ],
+    [
+      "@babel/plugin-proposal-class-properties",
+      {
+        "loose":true
+      }
+    ]
+  ],
+  "presets":[
+    "react-app"
+  ]
+}
+```
+
+### Storybook
+
+导读：https://www.youtube.com/watch?v=va-JzrmaiUM
+
+创建demo项目:
+```
+npx create-react-app hello-storybook
+npx storybook
+```
+运行和发布:
+```
+npm run storybook
+npm run builds
+```
+
+## Troubleshooting
+
+?# resolve version by npm-force-resolutions
+e.g. Can't resolve './locale' in 'node_modules\moment\src\lib\locale'
+```
+npm install --save-dev npm-force-resolutions
+package.json:
+	"resolutions": {
+	"moment": "2.24.0"
+	}
+	"scripts":{
+	"preinstall": "npx npm-force-resolutions"
+	....
+	}
+npm install
+```
+
+mobx debug tools: google extension "MobX Developer Tools"
 
 **?# Attempted import error: '' is not exported from**
 
@@ -1779,5 +2464,13 @@ onXXClick = (controlData) => {
 	aStore.bStore.bAnotherStore.displayDetailsModal(controlData)
 }              
 ```
+
+
+reactjs learn roadmap:
+https://www.freecodecamp.org/news/learning-react-roadmap-from-scratch-to-advanced-bff7735531b6/
+
+react-indepth:
+https://legacy.gitbook.com/book/developmentarc/react-indepth/details
+
 
 <disqus/>

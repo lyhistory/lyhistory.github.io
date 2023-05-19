@@ -4,7 +4,17 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
+**基本语法:**
 
+模块系统 Modules
+
+事件 Event
+
+函数 function
+
+路由 route
+
+全局对象 Global Object
 
 event loop
 
@@ -213,5 +223,14 @@ http://ubuntuhowtoo.blogspot.com/2019/05/linux-nodejs-phantomjs-error-loading.ht
 
 open `/etc/ssl/openssl.cnf` and comment out the line under `[default_conf]` (it is at the end of the config file):
 `#ssl_conf = ssl_sect`
+
+
+
+http://www.w3cschool.cc/nodejs
+http://www.nodejs.org/
+http://www.nodebeginner.org/index-zh-cn.html
+https://channel9.msdn.com/Series/Building-Apps-with-Node-js?WT.mc_id=12833-DEV-sitepoint-othercontent
+
+https://www.tutorialsteacher.com/nodejs/nodejs-tutorials
 
 <disqus/>

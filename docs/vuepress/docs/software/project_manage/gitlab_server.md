@@ -1965,13 +1965,17 @@ https://docs.gitlab.com/runner/faq/
 
 ### Deployment approvals
 
+[Tech Evaluation](https://gitlab.com/gitlab-org/gitlab/-/issues/344233)
+
 Step 1: Create Environment
 
 + static environment
   Deployments > Environments
 + dynamic environment
 
-Step 2: Set protected_environments
+Step 2: Set protected_environments:
+
+Allowed to Deploy, Approvers
 
 Step 3: Create a deployment job in the .gitlab-ci.yml
 

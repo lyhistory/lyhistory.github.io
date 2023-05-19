@@ -78,7 +78,30 @@ https://mp.weixin.qq.com/s/Dep37CyOd0Szr_fzjQFOkA
 理解Windows中的路由表和默认网关
 https://developer.aliyun.com/article/447528
 
-### 路由类型
+### 工具
+
+route VS ip route:
+
+route is a fairly simple tool, perfect for creating static routes. It's still present in many distributions for compatibility. ip route is much more powerful, it has much more functionality, and can create more specialized rules.
+
+```
+ip route add default via 子网网关 dev 网卡名称 table 路由表名称
+
+ip route add 子网网段 dev 网卡名称 table 路由表名称
+
+ip rule add from 网卡地址 table 路由表名称
+
+EXAMPLE:
+
+ip route add default via 10.0.0.1 dev eth0 table 10
+
+ip route add 10.0.0.0/24 dev eth0 table 10
+
+ip rule add from 10.0.0.115 table 10
+
+```
+
+### 路由类型分类一：
 + 主机路由
 主机路由是路由选择表中指向单个IP地址或主机名的路由记录。主机路由的Flags字段为H。例如，在下面的示例中，本地主机通过IP地址192.168.1.1的路由器到达IP地址为 172.0.0.5 的主机。
 ```
@@ -102,6 +125,15 @@ Destination    Gateway        Genmask             Flags  Metric    Ref  Use  Ifa
 -----------    ------         -------             -----  -----     ---  ---  -----      
 default        192.168.1.1    255.255.255.255     UG     0         0    0    eth0
 ```
+### 路由类型分类二
+
++ destination based routing
+
++ source based routing
+     Scenario:
+     [How do I create routing table so packet are returned via the interface where the packet coming from ie : "if packet coming to eth0, it should come out from eth0 using eth0 gateway. If packet is coming from eth1, then the outgoing response also coming out from eth1 using eth1 gateway"](https://serverfault.com/questions/226114/linux-2-network-card-routing-depending-on-the-interface-used)
+     [A simple introduction (with a nice easy example) to source based routing](http://wiki.wlug.org.nz/SourceBasedRouting)
+
 ### **Example: VPN 改变路由**
 ```
 ===========================================================================
@@ -183,6 +215,10 @@ Asymmetric routing is not a problem by itself, but will cause problems when Netw
 
 一般云上的虚拟机默认是给主网卡一个路由表，然后扩展网卡需要手动创建路由，如果不创建则会出现下面的问题：
 
+[如何配置多网卡弹性云服务器的策略路由？](https://support.huaweicloud.com/intl/zh-cn/vpc_faq/vpc_faq_0079.html?utm_campaign=ua&utm_content=ecs&utm_term=detail_nics#section2)
+[为多网卡Linux云服务器配置策略路由 (IPv4/IPv6)](https://support.huaweicloud.com/intl/zh-cn/bestpractice-vpc/bestpractice_0020.html)
+
+例子：
 虚拟机上有两个内网 IP 地址分别是：172.16.173.158/24 和 172.16.174.31/24 ，和一条去往 172.16.173.1 的默认路由
 ```
 [root@XXX ~]# ip add | grep 172
