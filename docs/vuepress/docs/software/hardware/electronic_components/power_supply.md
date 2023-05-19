@@ -1,4 +1,4 @@
-## 分类
+## 电源分类
 + 蓄电池
   包括干电池、铅酸电池、锂电池
 + 开关电源
@@ -22,4 +22,26 @@ boost
 
 https://www.bilibili.com/video/BV1G34y1d7m4/?spm_id_from=autoNext&vd_source=3c7db6c464ce22629be3830e049bb553
 
-## 太阳能和稳压模块
+## UNREGULATED POWER SUPPLY 太阳能和稳压模块
+
+稳压器或电压调节器（英语：voltage stabilizer或voltage regulator
+
+## 充电宝
+
+[充电宝原理是什么?为何它能控制5v输出,1A电流呢?](https://www.zhihu.com/question/338889605)
+
+## 电源适配器
+[同样标称电压的电源，输出电流不同，能不能用在同一台笔记本上。基本的原则是大标称电流的电源可以代替小标称电流的电源](http://www.juda.cn/news/140594.html)
+
+## benchtop supply 可调电源
+产品/diy模块
+实验
+修手机/电脑
+
+面包板+香蕉插头 banana plugs/Banana Jacks
+
+## MH Breadboard Power Supply Module 面包板电源模块
+https://shequ.stmicroelectronics.cn/thread-626548-1-1.html
+
+## 锂电池扩展板 18650 Battery Shields 
+https://www.google.com/search?q=esp32+8650+Lithium+Battery+Shield&oq=esp32+8650+Lithium+Battery+Shield&aqs=chrome..69i57.4848j0j4&sourceid=chrome&ie=UTF-8#fpstate=ive&vld=cid:6e93affb,vid:m7LqbMuVaj4

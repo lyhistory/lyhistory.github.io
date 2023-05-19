@@ -44,6 +44,7 @@ lib_deps =
   # Using a library name
   M5StickC
 
+upload_port=COM8
 ```
 ![](/docs/docs_image/software/hardware/arduino02.png) 
 

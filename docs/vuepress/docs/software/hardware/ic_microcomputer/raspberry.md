@@ -304,8 +304,7 @@ http://nuke666.cn/2018/04/14/auto-water-flowers/
 
 https://www.raspberrypi.org/forums/viewtopic.php?t=169666
 
-### 5.2 智能小车
-[化繁为简！开发者尝鲜阿里小程序云平台，实操讲解如何打造智能小车！](https://yq.aliyun.com/articles/700749?spm=a2c4e.11163080.searchblog.48.32e02ec1I9PHCG)
+
 
 ### Cluster
 

@@ -141,8 +141,11 @@ VirtualBox: two network interfaces (NAT and host-only ones) https://unix.stackex
 Images 
 https://developer.microsoft.com/en-us/microsoft-edge/tools/vms
 
+## 虚拟机 宿主机 VPN
+[宿主机利用在虚拟机中建立的VPN加密隧道连接内网](https://www.freebuf.com/sectool/234695.html)
+[虚拟机共享主机VPN连接](https://zhuanlan.zhihu.com/p/380614384)
 
-## 3 troubleshooting 
+## Troubleshooting 
 
 ### bridged mode not assign ip address and route
 + 方法一： dhclient eth0 
@@ -242,7 +245,8 @@ Apr  1 03:09:49 kali NetworkManager[431]: <info>  [1554102589.3036] manager: Net
   or
   sudo /etc/init.d/networking restart
   
-  如果还是无法上网（上面172.17.5.36是某ISP提供的，貌似虚拟机无法用）：
+  如果还是无法上网则增加DNS配置：
+  不推荐下面的做法（重启后失效）
   /etc/resolv.conf
   nameserver 8.8.8.8
   

@@ -120,6 +120,9 @@ Announcing The ERC-20 Transporter — Now Anyone Can Send ERC-20 Tokens Without 
 https://hackernoon.com/announcing-the-erc-20-transporter-now-anyone-can-send-erc-20-tokens-without-holding-eth-1c1aae361e89
 https://github.com/bokkypoobah/BokkyPooBahsTokenTeleportationServiceSmartContract
 
+### Example: WETH
+
+All of decentralized finance (DeFi) is built upon smart contracts, which can be thought of as decentralized programs. Those smart contracts are designed to handle ERC-20 tokens. ERC-20 is a token standard, a kind of blueprint that is universally recognized not only on the Ethereum blockchain, but many other compatible blockchains such as Avalanche and Polygon. The ERC-20 standard allows the efficient building of software, for example getting rid of custom code that would be needed to handle each new token. Since ETH is the Ethereum native currency, and because it preceded the development of the ERC-20 standard, it isn’t ERC-20 compatible. This means custom software would have to be written on every DeFi decentralized application (DApp) in order to accept ETH. Instead, a smart contract was written that envelopes ETH in an ERC-20 wrapper so that any DApp with ERC-20 support can effectively support ETH.
 
 ## 2. Fungible token: ERC223
 
