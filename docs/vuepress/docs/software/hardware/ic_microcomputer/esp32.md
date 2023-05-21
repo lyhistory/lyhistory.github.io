@@ -1,7 +1,27 @@
 [](https://github.com/DFRobot/SportsButtonESP32C3)
 
 ## Setup
+
+### Arduino IDE
+Installing ESP32 Add-on in Arduino IDE
+To add ESP32 Board in your Arduino IDE, follow these instructions :
+
+1. Open your Arduino IDE, go to File>Preferences
+
+2. Put https://dl.espressif.com/dl/package_esp32_index.json into the “Additional Board Manager URLs” field as shown in the figure below. Then, click the “OK” button
+   
+Note: if you already have another boards (i.e ESP8266 boards URL), you can separate the URLs with a comma like this:
+
+https://dl.espressif.com/dl/package_esp32_index.json, http://arduino.esp8266.com/stable/package_esp8266com_index.json
+
+3. Then go to the Boards Manager. Go to Tools > Board > Boards Manager
+4. Go to the search bar and type ESP32 then install ESP32 by Espressif Systems
+5. 
 [install](https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html?highlight=update#how-to-update-to-the-latest-code)
+
+### ESP-IDF
+https://www.electronics-lab.com/deep-dive-on-controlling-led-with-esp32-c3-devkitm-1-development-board-using-esp-idf/
+
 
 ## ESP32 Products
 ### ESP32-C3-DevKitM-1 (ESP32-C3-MINI-1)
@@ -32,6 +52,15 @@ Attention: be very, very careful to only use one of those options at the same ti
 For example, do not power your ESP32 dev kit via the 5V pin using a 10V input while at the same time you have the module connected to your computer via USB. This will surely damage your module, and perhaps even your computer.
 
 With this, you should have a good understanding of what the ESP32 is, and you must be eager to get hands-on with it. I totally understand :-). Let’s proceed with the next lesson, where I’ll show you how to set up the ESP32-Arduino Core on the Arduino IDE.
+
+## Example
+
+###  “addressable” RGB LED,
+
+ESP32-C3 Blink Test with Arduino IDE and DumbDisplay
+https://www.youtube.com/watch?v=BAnvHOs5Fks
+
+Guide for WS2812B Addressable RGB LED Strip with Arduino https://randomnerdtutorials.com/guide-for-ws2812b-addressable-rgb-led-strip-with-arduino/
 
 ## esp32 12v solenoid lock 
 

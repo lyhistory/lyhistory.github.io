@@ -43,5 +43,14 @@ https://www.bilibili.com/video/BV1G34y1d7m4/?spm_id_from=autoNext&vd_source=3c7d
 ## MH Breadboard Power Supply Module 面包板电源模块
 https://shequ.stmicroelectronics.cn/thread-626548-1-1.html
 
+![](/docs/docs_image/software/hardware/modules/breadboard_power_supply_module_mb102_pinout.jpg)
+
++ DC Input jack & USB Input jack: The DC power port and USB-A connector are provided to the module to power it up.
++ Power Switch & LED: A switch is embedded to provide extra control along with an LED to indicate the energizing of the module.
++ Left/Right rail jumper (voltage selection): The mb102 breadboard supply module is capable of giving out 3.3 volts or 5 volts to breadboard rails. They can be operated individually.
++ Berg Headers/Output Headers: The berg headers can be used to output power to other devices as well.
+
+https://microcontrollerslab.com/mb102-breadboard-power-supply-module-pinout-and-how-to-use-it/
+
 ## 锂电池扩展板 18650 Battery Shields 
 https://www.google.com/search?q=esp32+8650+Lithium+Battery+Shield&oq=esp32+8650+Lithium+Battery+Shield&aqs=chrome..69i57.4848j0j4&sourceid=chrome&ie=UTF-8#fpstate=ive&vld=cid:6e93affb,vid:m7LqbMuVaj4

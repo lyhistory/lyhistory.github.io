@@ -85,7 +85,9 @@ When using IPSec in tunneling mode, it only provides encapsulation for IP commun
 
 ###### SSL VPN
 SSL VPN是一种基于SSL的VPN远程访问技术。 SSL VPN 允许用户从互联网的任何位置启动 Web 浏览器以建立远程访问 VPN 连接
-![](./sslvpn.png)
+
+![sslvpn](/docs/docs_image/software/network/sslvpn.png)
+
 如图所示，FW作为企业的出口网关，接入Internet。 为远程用户提供SSL VPN接入服务。 远程用户可以随时随地使用笔记本电脑、Pad、智能手机等移动设备通过FW访问内网资源。
 
 SSL VPNSSL VPN, SSL协议提供了数据私密性、端点验证、信息完整性等特性。SSL协议由许多子协议组成，其中两个主要的子协议是握手协议和记录协议。握手协议允许服务器 和客户端在应用协议传输第一个数据字节以前，彼此确认，协商一种加密算法和密码钥匙。在数据传输期间，记录协议利用握手协议生成的密钥加密和解密后来交换的数据。

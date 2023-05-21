@@ -1,0 +1,1 @@
+The Best way to Solder? Hot Plate to the rescue! (DIY or Buy) https://www.youtube.com/watch?v=QarizoUnRfk
