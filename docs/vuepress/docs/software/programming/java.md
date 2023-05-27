@@ -1430,8 +1430,41 @@ https://www.cnblogs.com/sylvia-liu/articles/4685130.html
 
 #### 4.2.5 nexus maven-repositories
 
-https://www.baeldung.com/maven-deploy-nexus
+##### Nexus server setup
 
+[Nexus Installing and Running](https://help.sonatype.com/repomanager2/installing-and-running)
+
+Repositories => Create Repository:
+
+1. Maven public repo
+Repository ID: maven-central
+Repository Name: maven-central
+Provider: Maven2
+Version Policy: Release
+Type: Proxy
+URL:http://xxxxx/repository/maven-central (xxxxx is your nexus repo ip:port or customized domainname)
+Remote Storage(Location of the remote repository being proxied, e.g. https://repo1.maven.org/maven2/): https://repo1.maven.org/maven2/
+
+2. Custom snapshot repo
+Repository ID: maven-snapshots
+Repository Name: maven-snapshots
+Version Policy: Snapshot
+Type: hosted
+URL:http://xxxxx/repository/maven-snapshots (xxxxx is your nexus repo ip:port or customized domainname)
+
+3. Custom release repo
+Repository ID: maven-snapshots
+Repository Name: maven-snapshots
+Version Policy: Snapshot
+Type: hosted
+URL:http://xxxxx/repository/maven-releases (xxxxx is your nexus repo ip:port or customized domainname)
+
+
+##### Maven Project config
+https://www.baeldung.com/maven-deploy-nexus
+https://www.baeldung.com/maven-snapshot-release-repository
+
+###### deploy to "Custom snapshot/release repo"- mvn deploy
 ```
   <!-- Publish the versioned releases here -->
  <!-- 配置远程发布到私服,mvn deploy -->
@@ -1447,22 +1480,167 @@ https://www.baeldung.com/maven-deploy-nexus
             <url>http://XXXXX/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
+```
 
+ci_settings.xml:
+```
+<settings>
+  <servers>
+    <server>
+        <id>nexus-snapshots</id>
+        <username>deployment</username>
+        <password>the_pass_for_the_deployment_user</password>
+    </server>
+  </servers>
+</settings>
+```
+
+**SNAPSHOT:**
+The snapshot repository is a repository used for incremental, unreleased artifact versions.
+
+A snapshot version is a version that has not yet been released. The general idea is to have a snapshot version before the released version. It allows us to deploy the same transient version incrementally, without requiring projects to upgrade the artifact version they're consuming. Those projects can use the same version to get an updated snapshot version.
+
+For instance, before releasing version 1.0.0, we can have its snapshot version. The snapshot version has a SNAPSHOT suffix after the version (for example, 1.0.0-SNAPSHOT).
+```
+<groupId>com.baeldung</groupId>
+<artifactId>maven-snapshot-repository</artifactId>
+<version>1.0.0-SNAPSHOT</version>
+```
+After the deployment, the actual artifact version will contain a timestamp value instead of the SNAPSHOT value. For instance, when we deploy 1.0.0-SNAPSHOT, the actual value will contain the current timestamp and the build number (for example, 1.0.0-20220709.063105-3).
+
+The timestamp value is calculated during the artifact deployment. Maven generates the checksum and uploads the artifact’s files with the same timestamp.
+
+The maven-metadata.xml file holds precise information about the snapshot version and its link to the latest timestamp value:
+```
+<metadata modelVersion="1.1.0">
+    <groupId>com.baeldung</groupId>
+    <artifactId>maven-snapshot-repository</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <versioning>
+        <snapshot>
+            <timestamp>20220709.063105</timestamp>
+            <buildNumber>3</buildNumber>
+        </snapshot>
+        <lastUpdated>20220709063105</lastUpdated>
+        <snapshotVersions>
+            <snapshotVersion>
+                <extension>jar</extension>
+                <value>1.0.0-20220709.063105-3</value>
+                <updated>20220709063105</updated>
+            </snapshotVersion>
+            <snapshotVersion>
+                <extension>pom</extension>
+                <value>1.0.0-20220709.063105-3</value>
+                <updated>20220709063105</updated>
+            </snapshotVersion>
+        </snapshotVersions>
+    </versioning>
+</metadata>
+```
+Every time we deploy the project under the same snapshot version, Maven will generate the version containing the new timestamp value and the new build number.
+
+**RELEASE:**
+
+Once we remove the word SNAPSHOT from the project version, the release repository will be chosen automatically instead of the snapshot repository during the deployment.
+
+Furthermore, if we want to redeploy the artifact under the same version, we may get an error: “Repository does not allow updating assets”. Once we deploy the released artifact version, we cannot change its content. Therefore, to resolve the problem, we’d need to simply release the next version.
+
+```
+<groupId>com.baeldung</groupId>
+<artifactId>maven-release-repository</artifactId>
+<version>1.0.0</version>
+```
+
+**Note:**
+1. 发布 SNAPSHOT 版本， 使用 mvn deploy -e -s ci_settings.xml
+2. 发布 RELEASE 版本， 可以使用 mvn deploy -e -s ci_settings.xml 
+  或者 
+  `mvn release:prepare -e -DreleaseVersion=0.0.1-SNAPSHOT  -DdevelopmentVersion=0.0.1-SNAPSHOT -Dtag="20230523-0.0.1-SNAPSHOT" -DscmDevelopmentCommitComment="prepare for next development iteration 0.0.1-SNAPSHOT"`
+  `mvn release:perform -e -Darguments="-Dmaven.javadoc.skip=true -Dmaven.test.skip=true" -s ci_settings.xml`
+
+
+###### download from "proxied maven-central and hosted snapshot/release"- mvn install
+```
 <!-- download artifacts from this repo -->    
 <repositories>
-        <repository>
-            <id>nexus</id>
-            <url>http://xxxxx/repository/maven-snapshots/</url>
-        </repository>
-        <repository>
-            <id>aliyun-repo</id>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-        </repository>
         <repository>
             <id>maven-repo</id>
             <url>http://xxxxx/repository/maven-central/</url>
         </repository>
+        <repository>
+            <id>nexus-snapshot</id>
+            <url>http://xxxxx/repository/maven-snapshots/</url>
+            <snapshots>
+              <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>nexus-release</id>
+            <url>http://xxxxx/repository/maven-releases/</url>
+        </repository>
     </repositories>
+```
+
+**SNAPSHOT:**
+
+Before downloading the snapshot artifact, Maven downloads its associated maven-metadata.xml file. That way, Maven can check if there's a newer version, based on the timestamp value and build number.
+
+The retrieval of such an artifact can still use the SNAPSHOT version.
+
+Snapshot versions are not enabled by default. We need to enable them manually:
+
+```
+<snapshots>
+    <enabled>true</enabled>
+</snapshots>
+```
+By enabling snapshots, we can define how often we'd like to check for a newer version of the SNAPSHOT artifacts. However, the default update policy is set to once per day. We can override this behavior by setting a different update policy:
+```
+<snapshots>
+    <enabled>true</enabled>
+    <updatePolicy>always</updatePolicy>
+</snapshots>
+```
+There are four different values we can place inside the updatePolicy element:
+
+always — check for a newer version every time
+daily (default value) — check for a newer version once a day
+interval:mm — check for a newer version based on an interval set in minutes
+never — never try to get a newer version (compared to the one we already have locally)
+Additionally, instead of defining the updatePolicy, we can force an update of all snapshot artifacts by passing the -U argument in the command:
+```
+mvn install -U
+```
+Furthermore, the dependency will not be re-downloaded if it has already been downloaded and the checksum is the same as the one we already have in our local repository.
+Next, we can add a snapshot version of an artifact to our project:
+```
+<dependencies>
+    <dependency>
+        <groupId>com.baeldung</groupId>
+        <artifactId>maven-snapshot-repository</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+</dependencies>
+```
+Using a snapshot version during the development phase can prevent having multiple versions of the artifact. We can use the same SNAPSHOT version whose build will contain the snapshot of our code at a given time.
+
+**RELEASE:**
+
+Maven defaults to looking for components from the Maven Central Repository. This repository uses a release version policy by default.
+
+Release repositories will only resolve released artifacts. In other words, it should contain only published artifact versions whose content should not change in the future.
+
+```
+<dependencies>
+    <dependency>
+        <groupId>com.baeldung</groupId>
+        <artifactId>maven-release-repository</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+</dependencies>
 ```
 
 ## 5. JAVA Virtual Machine JVM

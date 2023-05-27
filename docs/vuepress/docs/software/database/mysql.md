@@ -2120,5 +2120,9 @@ show databases 可以看到该db比如 TEST_DB，但是 use TEST_DB提示错误�
 
 https://stackoverflow.com/questions/19678769/error-1049-42000-unknown-database-mydatabasename
 
+### Variables 不是所见即所得
+比如：
+错误：`Update mysql.user set password_lifetime=90 where user='root';`
+正确：`ALTER USER ' root'@'localhost' PASSWORD EXPIRE INTERVAL 90 DAY;`
 
 <disqus/>
