@@ -6,8 +6,31 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《硬件基础与物联网IOT》
 
+_WARNING_
+
+**Safety first! Safety first!**
+
+Please be careful when working with high voltage. Seriously, it may shock you or even take your life. If you’re NOT 100% sure what you are doing, do yourself a favor and don’t touch anything. Ask someone who knows!
 
 ## 集成电路基础
+
+In the early 1970s, two American companies, Intel and Texas Instruments, introduced microprocessors and microcontrollers to the world. These companies envisioned a future dominated by single-chip integrated computers.
+
+the microcontroller system accepts at least one input, performs some action on that input, and prodces one or more outputs. The inputs and outputs of a microcontroller system are voltages that we can use to determine the state of external devices. The microcontroller reads the voltages from an input device and uses this information to decide on the correct voltage to output.
+
+A microcontroller system is embedded in an integrated circuit (IC). A typical microcontroller includes a processor, program memory, RAM, input/output pins, and more on a single chip.
+
+Microcontrollers can be used to control a wide variety of electronic devices. They are perfect for applications requiring multiple repetitive operations or high-speed computations. Here’s a list of some devices that a microcontroller could be used to control:
++ Computers
++ Computer peripherals
++ Telephone systems
++ Home appliances
++ Industrial equipment
++ Security systems
++ Sensors and sensor arrays
+
+![https://www.circuitbasics.com/introduction-to-microcontrolleres/](/docs/docs_image/software/hardware/microcontroller_overview.png)
+
 ### 基本概念
 + 印刷电路板 PCB-Printed Circuit Board
   是芯片IC的载体
@@ -44,7 +67,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
   CPU逐渐发展出来三个分枝：
   一个是DSP（Digital Signal Processing／Processor，数字信号处理），
   另外两个是MCU（Micro Control Unit，微控制器单元）和MPU（Micro Processor Unit，微处理器单元）。
-  Two basic processing platforms for implementing embedded systems:
+  开发板DEVELOPMENT BOARD -- Two basic processing platforms for implementing embedded systems:
   - **MCU-Microcontroller Unit - Arduinos**
   These devices have varying amounts of integrated Flash (<= 2MB) and RAM (<= 1MB), and are designed to run bare-metal code or a real-time operating system (RTOS), like FreeRTOS. 
   An example of an MCU based system is most Arduinos(ATmega328 8-bit Microcontroller)
@@ -266,7 +289,26 @@ http://news.eeworld.com.cn/Test_and_measurement/ic514591.html
 
 #### 做图
 + Fritzing
+  - custom parts: 
+    https://fritzing.org/learning/tutorials/creating-custom-parts
+    https://www.youtube.com/watch?v=0RDrw8WvYNQ
 + kicad
+  https://forum.kicad.info/t/reproducing-a-pcb-from-scanned-image-bmp-jpg-etc/12106
++ online tool
+  - https://www.circuito.io/app
+  - https://www.circuit-diagram.org/editor/
++ https://qucs.sourceforge.net/
+
+
+PCD打板：
++ 立创eda
++ Altium Designer 
+
+
+牛逼，自己设计芯片：
+
+https://xie.infoq.cn/article/30387388381a0d915b2494f91
+https://bbs.hassbian.com/thread-11256-1-1.html
 
 #### Prototype
 
@@ -286,6 +328,9 @@ http://news.eeworld.com.cn/Test_and_measurement/ic514591.html
 #### iot apps
 
 blynk.io
+
+#### 工作室 ELECTRONICS WORK BENCH
+https://www.circuitbasics.com/how-to-build-an-electronics-work-bench/
 
 ## 通信协议
 
@@ -318,6 +363,9 @@ blynk.io
   RS-232接口连接器使用型号为DB-25的25芯插头座。一些设备与PC机连接的RS-232接口，因为不使用对方的传送控制信号，只需三条接口线，即RXD、TXD、GND，所以采用DB-9的9芯插头座，传输线采用屏蔽双绞线。
 + RS-485、RS-422
   与RS-232类似，但是采用差分信号逻辑，更适合长距离、高速传输。
+
+
+Hard resetting via RTS pin https://electronicsinnovation.com/hard-resetting-via-rts-pin-fixed-explained/
 
 ## 常用芯片-模块
 

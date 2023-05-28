@@ -145,6 +145,8 @@ https://developer.microsoft.com/en-us/microsoft-edge/tools/vms
 [宿主机利用在虚拟机中建立的VPN加密隧道连接内网](https://www.freebuf.com/sectool/234695.html)
 [虚拟机共享主机VPN连接](https://zhuanlan.zhihu.com/p/380614384)
 
+https://askubuntu.com/questions/419327/how-can-i-make-virtualbox-guests-share-the-hosts-vpn-connection
+
 ## Troubleshooting 
 
 ### bridged mode not assign ip address and route

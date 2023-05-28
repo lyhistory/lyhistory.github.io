@@ -50,6 +50,9 @@ https://shequ.stmicroelectronics.cn/thread-626548-1-1.html
 + Left/Right rail jumper (voltage selection): The mb102 breadboard supply module is capable of giving out 3.3 volts or 5 volts to breadboard rails. They can be operated individually.
 + Berg Headers/Output Headers: The berg headers can be used to output power to other devices as well.
 
+面包版电源模块支持直流电压（6~12V）和USB供电两种模式提供输入电压。输出电压通过跳线帽可选择3.3V和5V不同的输出电压。其中可以利用充电宝给USB供电，因此，利用该模块可以作为单片机、电子积木、智能小车等的电源扩展，从而脱离电脑使用。
+跳线帽能够提供连接两个引脚的作用，从而改变电路结构。面包版电源模块提供了3.3V和5V、OFF三种电压模式，其中将3.3V一端的两个引脚连接跳线帽则提供3.3V的电压，若将5        V一段的两个引脚连接跳线帽，则提供5V的电压，反之则为OFF模式，不提供电源。
+
 https://microcontrollerslab.com/mb102-breadboard-power-supply-module-pinout-and-how-to-use-it/
 
 ## 锂电池扩展板 18650 Battery Shields 

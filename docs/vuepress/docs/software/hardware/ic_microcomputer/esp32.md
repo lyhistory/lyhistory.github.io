@@ -62,6 +62,10 @@ https://www.youtube.com/watch?v=BAnvHOs5Fks
 
 Guide for WS2812B Addressable RGB LED Strip with Arduino https://randomnerdtutorials.com/guide-for-ws2812b-addressable-rgb-led-strip-with-arduino/
 
+https://www.electronics-lab.com/deep-dive-on-controlling-led-with-esp32-c3-devkitm-1-development-board-using-esp-idf/
+
+https://espressif-docs.readthedocs-hosted.com/projects/arduino-esp32/en/latest/api/ledc.html
+
 ## esp32 12v solenoid lock 
 
 清单：
@@ -78,6 +82,8 @@ https://esp32io.com/tutorials/esp32-solenoid-lock
 
 
 https://creativepradeepthehomeofelectronics.blogspot.com/2021/07/smart-wifi-controlled-door-lock-system.html
+
+https://esp32io.com/tutorials/esp32-door-lock-system-using-password
 
 https://www.hackster.io/robocircuits/iot-door-lock-project-0601f5
 
@@ -255,6 +261,20 @@ void loop()
 }
 ```
 
+## ESP32 Mini Smart Farm 
+https://www.elec-cafe.com/esp32-mini-smart-farm-micropython/
+
+## ESP32 遥控器
+https://www.youtube.com/watch?v=SVlm7QU5Nkk
+https://www.seeedstudio.com/blog/2023/04/13/ble-wifi-remote-using-seeed-studio-xiao-esp32c3/
+
+https://www.e-tinkers.com/2019/11/build-an-esp32-web-server-and-ir-remote/
+
+https://oshwhub.com/satun/c3mini-yao-kong-qi_copy
+https://www.youtube.com/watch?v=SVlm7QU5Nkk
+https://www.hackster.io/techstudycell/esp32-bluetooth-home-automation-with-ir-remote-control-relay-10d4e8?f=1
+https://www.youtube.com/watch?v=dODmsoAu0D4
+
 ## troubleshooting
 
 ?# class WiFiClientSecure' has no member named 'setInsecure'
@@ -283,3 +303,5 @@ board_build.partitions = no_ota.csv
 lib_deps = h2zero/NimBLE-Arduino@^1.3.1
     AugustESP32
 ```
+
+

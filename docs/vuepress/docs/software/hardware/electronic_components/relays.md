@@ -11,17 +11,19 @@ You can connect an LED directly to ESP32 but you cannot connect a high voltage d
     Controlling LED: LED can works with 3.3v or lower ⇒ can connect LED directly to ESP32's pin.
     Controlling the electric lamp: the electric lamp works with high voltage (e.g. 12V)⇒ CANNOT connect the electric lamp directly to ESP32's pin. It needs to use a relay between ESP32's pin and the electric lamp. If not, ESP32 will be burned.
     
-_WARNING_
-
-Safety first! Safety first!
-
-Please be careful when working with high voltage. Seriously, it may shock you or even take your life. If you’re NOT 100% sure what you are doing, do yourself a favor and don’t touch anything. Ask someone who knows!
     
 Some relays can work with both DC and AC voltage, we extremely recommend you NOT to use AC voltage. Use a DC device (≤24V) only.
 
-## How Relay Works
+## pinout
+
+![SRD-05VDC-SL-C PINOUT](![](/docs/docs_image/software/hardware/components/srd_05vdc_sl_c_pinout.png)
 
 ![esp32 Relay Pinout](https://esp32io.com/images/tutorial/esp32-relay-pinout.jpg)
+
+## How Relay Works (esp32 relay)
+
+![https://www.electronicshub.org/what-is-relay-and-how-it-works/](/docs/docs_image/software/hardware/components/how_relay_work.gif)
+
 
 [SONGLE SRD-05VDC-SL-C PINOUT](https://www.circuitbasics.com/wp-content/uploads/2015/11/5V-Relay-Pinout1.png)
 
