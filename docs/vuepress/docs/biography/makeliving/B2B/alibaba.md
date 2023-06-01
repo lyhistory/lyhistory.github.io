@@ -7,3 +7,9 @@
 默认关键词推广计划
 类型：关键词推广
 搜索/推荐
+
+https://www.yuque.com/chaike/yingxiao/ye1b59?spm=a27bb.create_campaign_v3.root.25.1b3a3e5f7waRWc
+https://service.alibaba.com/page/knowledge?pageId=127&category=1000084014&knowledge=1060251201&language=zh
+
+RTS
+https://rulechannel.alibaba.com/icbu?type=detail&ruleId=11004538&cId=131#/rule/detail?cId=131&ruleId=11004538
