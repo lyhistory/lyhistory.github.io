@@ -319,6 +319,20 @@ replica-read-only yes
 
   https://github.com/redis/redis/issues/3021
 
+### 1.6 commands
+
+```
+redis-cli -c -h <HOSTIP> -p <PORT>
+
+AUTH 'password'
+KEYS 
+GET <KEY>
+SET <KEY> <VALUE>
+HGET key field
+HSET myhash field1 "foo"
+
+ACL LIST
+```
 ## 2. 理论基础 Theory
 
 学习redis源码过程笔记、问题记录，通过代码阅读熟悉分布式NOSQL数据库redis cluster集群功能、主从复制，节点扩容、槽位迁移、failover故障切换、一致性选举完整分析，对理解redis源码很有帮助  https://github.com/daniel416/Reading-and-comprehense-redis/
