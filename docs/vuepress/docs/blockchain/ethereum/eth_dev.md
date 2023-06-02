@@ -42,10 +42,13 @@ ENS 域名终极指南 https://medium.com/@eric.conner/the-ultimate-guide-to-ens
 
 ## 2. 开发基础-连接节点 RPC to Eth node
 
+https://ethereum.org/en/developers/local-environment/
+
 Web3 provides a facade and interface for interacting easily with the Ethereum blockchain and Ethereum server nodes. In other words, Web3 facilitates intercommunication between clients and the Ethereum Blockchain by way of JSON-RPC.
 
 Web3j is the java port of web3 and web3js is the js port of web3.
 
+Ganache
 
 ### 2.1 Develop with Web3JS
 
