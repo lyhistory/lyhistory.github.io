@@ -155,6 +155,9 @@ VPNs do this to avoid messing w/ existing routes. They don’t need to delete an
 
 [Understanding Routing Table with OpenVPN](https://superuser.com/questions/851462/understanding-routing-table-with-openvpn)
 
+### 路由收敛 Routing Convergence
+https://network-insight.net/2014/08/25/routing-convergence/
+
 ## Protocols
 OSPF and RIP are Interior Gateway Protocols (IGP) and distribute routing information within an autonomous system, 
 Therefore, both are confined to a single domain for routing (intra-domain). whereas BGP is a Exterior Gateway Protocol, primarily designed to be used to route between routing domains (inter-domain).
@@ -176,6 +179,8 @@ Open Shortest Path First (OSPF) is a link-state routing protocol that was develo
 ### 外部网关协议 Exterior Gateway Protocol，EGP
 
 通常就是指BGP，它运行在AS与AS之间，解决的是AS之间的选路问题。BGP的主要作用是控制路由条目的传播和选择最优路由。
+
+https://support.huawei.com/enterprise/zh/doc/EDOC1000089018/c3e1df01
 
 在BGP术语中，全球互联网是由成千上万相关联的自治系统(AS)组成，其中每一个AS代表每一个特定运营商提供的一个网络管理域（据说，美国前总统乔治.布什都有自己的 AS 编号）
 
