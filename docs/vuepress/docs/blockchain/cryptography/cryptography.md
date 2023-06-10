@@ -733,6 +733,8 @@ Example 9.2. A slight generalization of the circle equation is to introduce coef
 
 #### Definition of Elliptic Curves
 
+https://www.cs.uaf.edu/2015/spring/cs463/lecture/02_20_ECC.html
+
 From the two examples above, we conclude that we can form certain types of curves from polynomial equations. By “curves”, we mean the set of points (x,y) which are solutions of the equations. For example, the point (x = r,y = 0) fulfills the equation of a circle and is, thus, in the set. The point (x = r/2,y = r/2) is not a solution to the polynomial x<sup>2</sup>+y<sup>2</sup> = r<sup>2</sup> and is, thus, not a set member. An elliptic curve is a special type of polynomial equation. For cryptographic use, we need to consider the curve not over the real numbers but over a finite field. The most popular choice is prime fields GF(p) , where all arithmetic is performed modulo a prime p.
 
 Definition 9.1.1 Elliptic Curve
@@ -740,13 +742,17 @@ The elliptic curve over Zp, p > 3, is the set of all pairs (x,y) ∈ Zp which fu
 together with an imaginary point of infinity O, where a,b ∈ Zp
 and the condition 4 · a<sup>3</sup>+27 · b<sup>2</sup> <> 0 mod p.
 
-The definition of elliptic curve requires that the curve is nonsingular. Geometrically speaking, this means that the plot has no self-intersections or vertices, which is achieved if the discriminant of the curve −16(4a<sup>3</sup>+27b<sup>2</sup>) is nonzero.
+The definition of elliptic curve requires that the curve is nonsingular非奇异. Geometrically speaking, this means that the plot has no self-intersections or vertices, which is achieved if the discriminant of the curve −16(4a<sup>3</sup>+27b<sup>2</sup>) is nonzero.
+
+证明: https://people.reed.edu/~jerry/131/ec.pdf
 
 For cryptographic use we are interested in studying the curve over a prime field as in the definition. However, if we plot such an elliptic curve over Zp, we do not get anything remotely resembling a curve. However, nothing prevents us from taking an elliptic curve equation and plotting it over the set of real numbers.
 
 Example: y2 = x3 −3x+3 over R
 
 https://www.desmos.com/calculator/ialhd71we3
+
+https://graui.de/code/elliptic2/
 
 We notice several things from this elliptic curve plot.First, the elliptic curve
 is symmetric with respect to the x-axis. This follows directly from the fact that for
