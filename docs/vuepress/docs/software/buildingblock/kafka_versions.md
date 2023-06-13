@@ -81,6 +81,11 @@ Kafka 2.7.0 includes a number of significant new features. Here is a summary of 
 ### Incremental rebalance
 https://cwiki.apache.org/confluence/display/KAFKA/KIP-429%3A+Kafka+Consumer+Incremental+Rebalance+Protocol
 
+explained:
+https://www.confluent.io/blog/incremental-cooperative-rebalancing-in-kafka/
+
+stop-the-world rebalancing => 
+
 ### Upgrade Zookeeper
 
 ### Significant performance improvements, especially when the broker has large numbers of partitions
