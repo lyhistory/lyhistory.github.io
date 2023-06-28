@@ -197,6 +197,8 @@ TCP面向连接，三次握手的本质就是，双方（客户端和服务端�
 
 结束是需要四次分手，也是因为双方都开辟了资源，所以双方不可以随意销毁资源，结束的方式是，客户端发送FIN给服务端，服务端收到后ACK，可能此时服务端还有东西要处理（假设是保存session），做完后服务端同样发起FIN，客户端ACK，所以总共是四次，
 
+![https://wiki.wireshark.org/TCP-4-times-close.md](https://wiki.wireshark.org/uploads/__moin_import__/attachments/TCP-4-times-close/TCP-close-diagram.png)
+
 实际上在长时间无数据交互的时间段内，交互双方都有可能出现掉电、死机、异常重启等各种意外，当这些意外发生之后，这些 TCP 连接并未来得及正常释放，在软件层面上，连接的另一方并不知道对端的情况，它会一直维护这个连接，长时间的积累会导致非常多的半打开连接，造成端系统资源的消耗和浪费，为了解决这个问题，在传输层可以利用 TCP 的 KeepAlive 机制实现来实现。主流的操作系统基本都在内核里支持了这个特性（TCP协议本身并不约束使用keepalive，内核支持是允许应用层通过实现设置开启或关闭该特性，比如HTTP header keepalive或者其他的如quickfixj的socketkeepalive等）。
 
 TCP KeepAlive 的基本原理是，隔一段时间给连接对端发送一个探测包，如果收到对方回应的 ACK，则认为连接还是存活的，在超过一定重试次数之后还是没有收到对方的回应，则丢弃该 TCP 连接。

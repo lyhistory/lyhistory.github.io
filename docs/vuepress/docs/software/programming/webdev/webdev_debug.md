@@ -1202,7 +1202,7 @@ yum -y install gcc
 yum -y install gcc-c++
 ```
 
-### ClientAbortException
+### ClientAbortException - Broken pipe
 前端=》nginx=》后端服务
 ```
 后端异常：
@@ -1216,6 +1216,56 @@ nginx日志：
 可以看到pattern是一直有两个同一个时间的日志，一个是 499 一个是200，499代表client端也就是浏览器关闭了请求，而服务端还在往buffer写返回，所以抛错
 ```
 经调查发现前端页面渲染的两个组件内部有重复的api调用
+
+### ClientAbortException - Connection reset by peer
+
+frontend=>nginx=>java program
+
+这个是java program的报错，所以peer不是nginx就是frontend(browser);
+
+发现nginx里面有很多同一秒内的相同请求，并且都是200，只是size不太一样，好像出问题的size少了一些，大概推测是java program返回了200 ok，然后写response的时候client断了，所以没有写完；
+
+有人问我，会不会是突然用户关闭了tab或者浏览器呢，我的回答是浏览器没那么弱鸡：
+> modern browser should follow the standard http tcp protocol: 3 way handshake to establish connection and 4 way handshake to close the connection, 
+> when user try to shutdown browser, it's the browser's responsibility to properly close the connections in the standard way, otherwise will cause the website servers lots of broken connections which is abnormal and irresponsible behavior
+> so most of the time the developers no need to worry about how browsers handle the connections when users close the tabs or switch between pages, but how the web pages  behave themselves is the developers responsibility to handle
+如果我说错了请纠正我
+
+https://blog.csdn.net/qq_28204635/article/details/124060991
+
+所以问题还是出在nginx里面日志发现的同一秒的重复请求，正常测试会发现，极短时间内重复请求，浏览器一般都会cancel掉前一次的请求，但是是不是偶尔浏览器处理的慢一点就导致请求已经在response的时候才中断；
+
+最后确实发现前端代码的问题，在切换内部菜单的时候，不可见的页面A并没有被销毁，A页面上的一个定时poll一直在跑，然后其他页面又可以增加页面A作为子页面，这种情况下，不可见的A和增加的子页面A同时在跑两个定时的poll请求
+
+#### 延伸：前面是服务端报错，还有客户端报错的场景 client side reset by peer
+HTTP 1.1 introduced the concept of persistent connections, enabling a client to reuse the same connection for multiple requests to a server. Instead of closing the connection immediately after receiving a response, the connection remains open, allowing subsequent requests to benefit from reduced latency and improved performance. This persistence is achieved by keeping the TCP connection alive.
+
+Connection Closure and Non-Idempotent Requests:
+In certain scenarios, a server may close the persistent connection unexpectedly, resulting in errors for the client. It is important to understand that non-idempotent requests, such as POST and PATCH, should not be retried when the connection is closed.
+
+Idempotent requests are those that produce the same outcome regardless of how many times they are repeated. On the other hand, non-idempotent requests have the potential to cause side effects on the server with each execution. POST, for example, is commonly used to create new records, and multiple executions would result in the creation of multiple records.
+
+Handling Connection Closure:
+When a connection is closed, the client cannot be certain whether the request was successfully executed by the server. Hence, according to RFC 7230, which defines the HTTP 1.1 protocol, it is considered unsafe for the client to automatically retry non-idempotent requests such as POST. The client should instead treat the connection closure as a definitive response from the server and proceed accordingly.
+
+A request method is considered "idempotent" if the intended effect on the server of multiple identical requests with that method is the same as the effect for a single request RFC 7230 4.2.2
+
+Automatic retrying of non-idempotent requests could lead to unintended consequences, such as duplicate records being created on the server. Since the client cannot be certain whether the original request was processed by the server before the connection was closed, retrying the request would violate the idempotent nature of the operation.
+
+My solution:
+
+Disable persistent connection on the client side
+Reduce connection timeout on the client side to be less than server’s
+
+https://dev.to/thanhphuchuynh/understanding-connection-reset-by-peer-in-golang-a-troubleshooting-guide-41pf
+
+#### 延伸2：fix server: reset by peer
+跟浏览器类似，这个也是 fix client的问题，
+
+fix client=>ipsec=>huawei elb load balancer=>fix server
+
+刚好huawei elb有个连接监控图，其中并发连接数（concurrency connections）显示发生问题前后连接数最低为2，发生问题的几秒后连接数增长到3并迅速回到2，说明是有一个 fix client可能突然crash并restart了，造成之前的连接处于 half close状态，加上重连，所以瞬间出现3个连接，然后服务器端关闭了这个连接，所以回到两个连接的状态；
+
 
 ### 请求大量数据时返回截断中断 net::ERR_INCOMPLETE_CHUNKED_ENCODING 
 
@@ -1427,5 +1477,7 @@ drwx------. 12 nobody root   96 Oct 21 15:08 proxy_temp
 修复：chmod a+rx nginx
 
 ```
+
+
 
 <disqus/>

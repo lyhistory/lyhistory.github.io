@@ -62,6 +62,9 @@ react不是必须使用JSX。你可以使用普通的JS。然而，我们建议�
 
 jsx是类似于html但是不完全相同，但是还是有不同的地方
 
+### reactjs hooks vs class
+https://www.bitovi.com/blog/react-hooks-vs-classes-the-ultimate-comparison
+
 ### 1.7 ReactJS
 
 #### 1.7.1 Elements
@@ -2101,6 +2104,12 @@ https://www.youtube.com/watch?v=XGwuM_u7UeQ
 
 mobx-ract Provider Injection基本原理：hooks
 https://reactjs.org/docs/hooks-overview.html
+
+Mobx React `autorun` called more times on every change
+https://stackoverflow.com/questions/72755792/mobx-react-autorun-called-more-times-on-every-change
+
+Why when watching an array the autorun will run two times?
+https://github.com/mobxjs/mobx/discussions/3169
 
 **create-react-app + mobx**
 
