@@ -268,6 +268,8 @@ git log --graph --oneline --decorate --all
 //对比branch
 git log --graph --oneline currentbranch otherbranch
 
+git log --graph --oneline --decorate currentbranch otherbranch `git merge-base currentbranch otherbranch`^!
+
 //Particular File Change History：
 git log -p -- src/pages/basic/table/table/SeperateTable.jsx
 git log --follow -p -- test/src/main/java/test.java

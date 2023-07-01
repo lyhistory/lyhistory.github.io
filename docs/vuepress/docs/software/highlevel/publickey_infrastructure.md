@@ -481,6 +481,13 @@ openssl req -new -x509 -key private-key-pkcs8.pem -outform PEM -out server.pem -
 ```
 ![](/docs/docs_image/software/cryptography/pki08.png)
 
+
+## Troubleshooting
+
+?# certificate verification failed, e.g. CRL, CA or signature check failed
+
+provide 'top' certificate, 即使用上一级CA证书
+
 ---
 
 Genrally speaking:
