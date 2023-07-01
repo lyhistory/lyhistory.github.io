@@ -129,7 +129,7 @@ hi,
 sorry a little bit busy yesterday, today I just got time go through the info you mentioned, and still got some questions need your clarification.
 
 below is the step I finalized from my current understanding, 
-![](./05_7.png)
+![](/docs/docs_image/blockchain/draft/05_7.png)
 so the purpose of the tool is to generate proof of trust address:
 
 question 1: where to use digest value of Tokenscript, is it to get the s = keccak(digest value of the tokenscript file)
