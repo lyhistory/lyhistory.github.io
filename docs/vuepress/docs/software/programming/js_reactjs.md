@@ -2283,6 +2283,8 @@ npm run builds
 ```
 
 ## Troubleshooting
+?# uncaught TypeError: Cannot read property 'setState' of undefined
+https://stackoverflow.com/questions/32317154/react-uncaught-typeerror-cannot-read-property-setstate-of-undefined
 
 ?# resolve version by npm-force-resolutions
 e.g. Can't resolve './locale' in 'node_modules\moment\src\lib\locale'

@@ -394,6 +394,249 @@ rules: {
 
 ```
 
+## js开发
+
+create Components without any frontend tooling (no React, Babel, Webpack, etc) https://discuss.streamlit.io/t/code-snippet-create-components-without-any-frontend-tooling-no-react-babel-webpack-etc/13064
+
+### webpack
+
+https://wangtunan.github.io/blog/webpack/webpack/loader.html#%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E5%8F%8A%E4%BD%BF%E7%94%A8%E8%87%AA%E5%B7%B1%E7%9A%84loader
+
+Webpack has some main concepts which we need to understand clearly before digging in its practical implementation. Let’s examine them one by one:
+
++ Entry: the entry point is the module that webpack uses to start building its internal dependency graph. From there, it determines which other modules and libraries that entry point depends on (directly and indirectly) and includes them in the graph until no dependency is left. By default, the entry property is set to ./src/index.js, but we can specify a different module (or even multiple modules) in the webpack configuration file.
++ Output: the output property instructs webpack where to emit the bundle(s) and what name to use for the file(s). The default value for this property is ./dist/main.js for the main bundle and ./dist for other generated files — such as images, for example. Of course, we can specify different values in the configuration depending on our needs.
++ Loaders: by default, webpack only understands JavaScript and JSON files. To process other types of files and convert them into valid modules, webpack uses loaders. Loaders transform the source code of non-JavaScript modules, allowing us to preprocess those files before they’re added to the dependency graph. For example, a loader can transform files from a CoffeeScript language to JavaScript or inline images to data URLs. With loaders we can even import CSS files directly from our JavaScript modules.
++ Plugins: plugins are used for any other task that loaders can’t do. They provide us with a wide range of solutions about asset management, bundle minimization and optimization, and so on.
++ Mode: typically, when we develop our application we work with two types of source code — one for the development build and one for the production build. Webpack allows us to set which one we want to be produced by changing the mode parameter to development, production or none. This allows webpack to use built-in optimizations corresponding to each environment. The default value is production. The none mode means that no default optimization options will be used. To learn more about the options webpack uses in development and production mode
+  
+https://www.sitepoint.com/webpack-beginner-guide/
+
+```
+mkdir learn-webpack
+cd learn-webpack
+npm init -y
+
+npm install webpack webpack-cli --save-dev
+
+vim package.json:
+
+"scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "dev": "webpack --mode development",
+  "build": "webpack --mode production"
+},
+
+mkdir -p src
+
+vim index.js:
+
+console.log("Hello, Webpack!");
+
+npm run dev (what webpack does when we run the dev task is to get the source code from index.js file and bundle the final code in a main.js file.)
+
+But to verify that we get the correct output, we need to display the result in the browser. To do that, let’s create an index.html file in the dist directory:
+
+<!doctype html>
+<html>
+  <head>
+    <title>Getting Started With Webpack</title>
+  </head>
+  <body>
+    <script src="main.js"></script>
+  </body>
+</html>
+
+ But writing our index.html file manually can be problematic in some cases. For example, if we change the name of our entry point, the generated bundle will be renamed, but our index.html file will still reference the old name. So, we’ll need to update our HTML file manually every time we rename an entry point or add new one. Fortunately, we can easily fix that with the html-webpack-plugin. Let’s install it now:
+
+npm install html-webpack-plugin --save-dev
+
+At this point, to activate the plugin, we need to create a webpack.config.js file in the root directory with the following content:
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+
+module.exports = {
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: "Webpack Output",
+    }),
+  ],
+};
+
+run 
+npm run dev
+again
+will update dist/index.html or create a one if not exists
+
+Let’s now expand our project and specify custom names for the entry and output properties. In webpack.config.js we add the following before the plugins property:
+
+entry: {
+  main: path.resolve(__dirname, './src/app.js'),
+},
+output: {
+  filename: '[name].bundle.js',
+  path: path.resolve(__dirname, 'deploy')
+},
+
+Here, we change the entry file to app.js and the output folder to deploy. We also tweak the name of the generated bundle file slightly. Now it will start with the name of the entry (“main”) followed by the word “bundle” and the .js file extension.
+
+Next, we rename index.js to app.js
+
+we’ll create an src/component.js file:
+
+export default (text = "Hello, Webpack!") => {
+  const element = document.createElement("h1");
+
+  element.innerHTML = text;
+
+  return element;
+};
+
+update app.js:
+import component from './component';
+
+document.body.appendChild(component());
+
+
+npm run dev
+
+
+Transpiling Modern JavaScript to ES5
+
+we’ll discover how ES6 can be transpiled to ES5-compliant code that works in all browsers. Let’s start by running the following command:
+
+npm run dev -- --devtool inline-source-map
+
+Here, I run webpack with devtool option set to inline-source-map in order to render the code more readable. This way I can demonstrate the code transpilation from ES6 to ES5 more clearly.
+
+Next, let’s open main.bundle.js:
+
+As you can see, the modern ES6 features (the arrow function and the const declaration) from component.js module are not transformed to ES5-compliant code by default. To make our code work in older browsers, we must add the Babel loader:
+
+npm install babel-loader @babel/core @babel/preset-env --save-dev
+
+Then, in webpack.config.js add module after the output property:
+module: {
+  rules: [
+    {
+      test: /\.js$/,
+      exclude: /node_modules/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-env']
+        }
+      }
+    },
+  ]
+},
+
+When we define rules for a webpack loader, there are usually three main properties we need to define:
+
+test, which describes what kind of files should be transformed.
+exclude, which defines the files that shouldn’t be processed from the loader(s), if we have such.
+use, which tells which loader(s) should be used against the matched modules. Here, we can also set the loader options, as we’ve just done with the presets option.
+
+Run the following command again:
+npm run dev -- --devtool inline-source-map
+
+This time, the code in main.bundle.js is compiled
+
+Now we can use the modern JS features, and webpack will transform our code so it can be executed by older browsers.
+
+
+Working with Styles
+
+npm install css-loader style-loader --save-dev
+
+css-loader parses the CSS into JavaScript and resolves any dependencies
+style-loader outputs our CSS into a <style> tag in the HTML document.
+
+webpack.config.js
+
+module: {
+  rules: [
+    ...
+    { 
+      test: /\.css$/, 
+      use: ["style-loader", "css-loader"] 
+    },
+  ]
+},
+
+create a file src/style.css:
+h1 {
+  color: red;
+}
+
+import it into app.js:
+import './style.css';
+
+Asset Management
+Most often your project will contain assets such as images, fonts, and so on. In webpack 4, to work with assets, we had to install one or more of the following loaders: file-loader, raw-loader, and url-loader. In webpack 5, as we saw earlier, this is not needed anymore, because the new version comes with the built-in asset modules.
+
+webpack.config.js:
+module: {
+  rules: [
+    ...
+    { 
+      test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
+      type: 'asset/resource',
+    },
+  ]
+},
+
+to test the loader we’ll create an image-component.js file, in the src directory, with the following content:
+
+import image from "./image.png";
+
+const img = document.createElement("img");
+img.src = image;
+document.body.appendChild(img);
+
+app.js:
+import './image-component';
+
+
+Configuring the webpack dev server
+
+You don't want to type npm run build every time you change a file.
+Once configured webpack will launch your application inside a browser. Also, every time you save a file after a modification webpack dev server will refresh the browser's window.
+
+npm i webpack-dev-server --save-dev
+
+package.json
+
+"start": "webpack-dev-server --open --mode development",
+
+
+webpack.config.js
+ adding the following property after the output:
+devServer: {
+  contentBase: './deploy',
+  open: true
+},
+
+
+Clean Up the Output
+As our project progresses, the deploy folder might become quite cluttered. On every build, webpack will generate the bundles and put them in the deploy folder, but it doesn’t keep track of which files are actually in use by your project. So it’s a good practice to clean the deploy folder before each build, so that only the files in use will be generated. To do this, we need to install and configure the clean-webpack-plugin:
+
+npm install clean-webpack-plugin --save-dev
+
+In webpack.config.js:
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+
+...
+
+plugins: [
+  ...
+  new CleanWebpackPlugin()
+],
+
+```
+
+https://zhuanlan.zhihu.com/p/47390957
+
 ## 3.nodejs开发
 
 后端框架，虽然是用JavaScript，但是是后端代码，当然一般不直接用JavaScript，而是用超类typescript，可以更好的管理大项目架构，需要编译成JavaScript；

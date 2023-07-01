@@ -25,6 +25,8 @@ mysqlshow -uroot -pP@ssw0rd -i DBNAME;
 
 ### 1.1 Install on centos
 
+[Installing MySQL on Linux Using RPM Packages from Oracle](https://dev.mysql.com/doc/mysql-installation-excerpt/8.0/en/linux-installation-rpm.html)
+
 **Method 1: Using rpm**
 
 **Method 2: Using tar**
