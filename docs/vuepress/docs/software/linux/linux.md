@@ -557,6 +557,7 @@ apt list --installed | grep "PKG"
 
 ### yum
 
+#### Basics
 ```
 更新repo：yum clean all / yum repolist / yum check-update 
 yum provides package-name / rpm -q --provides openssl
@@ -609,6 +610,9 @@ DNF, or Dandified Yum, which is the next major version of the Yum  package manag
 
 https://www.rootusers.com/how-to-install-dnf-package-manager-in-centosrhel/
 
+#### offical repo
+
++ Remi's RPM repository https://rpms.remirepo.net
 
 ## 服务管理 service/systemctl 
 

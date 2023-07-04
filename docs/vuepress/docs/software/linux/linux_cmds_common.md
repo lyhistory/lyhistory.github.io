@@ -85,7 +85,7 @@ sudo passwd USERNAME
 sudo usermod -aG sudo username
 su - username
 exit;
-sudo useradd xiaofeng -s /bin/bash -m
+sudo useradd test -s /bin/bash -m
 usermod -aG docker peter
 
 

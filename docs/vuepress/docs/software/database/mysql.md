@@ -40,7 +40,7 @@ tar -xvf mysql-5.7.26-1.el7.x86_64.rpm-bundle.tar
 •	mysql-community-server-5.7.32-1.el7.x86_64.rpm
 
 
-yum install mysql-community-{server,client,common,libs}-* mysql-5.*­
+yum localinstall mysql-community-{server,client,common,libs}-* mysql-5.*­
 
 ?#Install error
 https://princetonits.com/centos7-mysql-install-fails-due-conflict-libmysqlclient/
