@@ -136,6 +136,8 @@ replace:
 
 ```
 
+for readonly file:
+:w !sudo tee %
 
 ```
 
