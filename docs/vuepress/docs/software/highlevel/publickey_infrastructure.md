@@ -283,6 +283,11 @@ https://www.youtube.com/watch?v=iQsKdtjwtYI
 
 例子：nginx https配置 参考《buildingblock/nginx.md》
 
+private key:
++ ASN.1 syntax for that DER-encoded string
+	https://crypto.stackexchange.com/questions/21102/what-is-the-ssl-private-key-file-format
++ ppk PPK files are PuTTY Private Key Files developed by Putty
+
 #### 3.2.1 交互工具：Openssl keytool
 
 openssl是常用的一个开源安全通信library，这里指其开源的toolkit
