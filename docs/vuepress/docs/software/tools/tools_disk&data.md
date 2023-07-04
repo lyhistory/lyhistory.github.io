@@ -67,5 +67,8 @@ https://zhuanlan.zhihu.com/p/32304270
 ## TrueNAS
 TrueNAS（12.0 版前称为 FreeNAS）是一套基于 FreeBSD 操作系统核心的开放源代码的网络存储设备（英语：NAS）服务器系统，支持众多服务，用户访问权限管理，提供网页设置接口。FreeNAS 当前版本整个系统总共需 2GB 以上 USB 驱动器进行安装，并支持 USB 存储设备、LiveCD、CF 卡（转接成 IDE 设备）及硬盘等引导方式。目前有 LiveCD、镜像档、VMware 磁盘映像档三种发行方式。
 
+## File Server
+Caddy file server
+
 ## troubleshooting
 WD External Hard Drive Not Recognized But the Light is On https://www.easeus.com/storage-media-recovery/wd-external-hard-drive-not-recognized-working-with-light-on.html#:~:text=Change%20the%20USB%20Port%2FCable%20to%20Detect%20WD%20External%20Hard,shows%20up%20on%20the%20PC.

@@ -75,6 +75,41 @@ The most common form of HTTP tunneling is the standardized HTTP CONNECT method. 
 This mechanism is how a client behind an HTTP proxy can access websites using SSL or TLS (i.e. HTTPS). Proxy servers may also limit connections by only allowing connections to the default HTTPS port 443, whitelisting hosts, or blocking traffic which doesn't appear to be SSL.
 
 
+### clients
+
+jQuery.get is a wrapper for jQuery.ajax, which is a wrapper to XMLHttpRequest.
+XMLHttpRequest and Fetch API (experimental at this time) are the only in DOM, so should be the fastest.
+
++ XMLHttpRequest 
+  is the raw browser object that jQuery wraps into a more usable and simplified form and cross browser consistent functionality.
+
++ fetch
+  fetch() allows you to make network requests similar to XMLHttpRequest (XHR). The main difference is that the Fetch API uses Promises, which enables a simpler and cleaner API, avoiding callback hell and having to remember the complex API of XMLHttpRequest.
+  ```
+  fetch('./api/some.json')
+    .then(
+    function(response) {
+        if (response.status !== 200) {
+        console.log('Looks like there was a problem. Status Code: ' +
+            response.status);
+        return;
+        }
+
+        // Examine the text in the response
+        response.json().then(function(data) {
+        console.log(data);
+        });
+    }
+    )
+    .catch(function(err) {
+    console.log('Fetch Error :-S', err);
+    });
+  ```
++ jQuery.ajax 
+  is a general Ajax requester in jQuery that can do any type and content requests.
+
++ jQuery.get and jQuery.post 
+  on the other hand can only issue GET and POST requests. If you don't know what these are, you should check HTTP protocol and learn a little. Internally these two functions use jQuery.ajax but they use particular settings that you don't have to set yourself thus simplifying GET or POST request compared to using jQuery.ajax. GET and POST being the most used HTTP methods anyway (compared to DELETE, PUT, HEAD or even other seldom used exotics).
 
 ## websocket
 
