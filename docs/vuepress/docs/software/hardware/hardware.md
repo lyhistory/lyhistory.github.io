@@ -71,6 +71,7 @@ Microcontrollers can be used to control a wide variety of electronic devices. Th
   - **MCU-Microcontroller Unit - Arduinos**
   These devices have varying amounts of integrated Flash (<= 2MB) and RAM (<= 1MB), and are designed to run bare-metal code or a real-time operating system (RTOS), like FreeRTOS. 
   An example of an MCU based system is most Arduinos(ATmega328 8-bit Microcontroller)
+  [新款MCU EFM32和EFM8功能升级，加速物联网产品原型设计](https://mp.weixin.qq.com/s/RxxcLqkLR-LlBZBOQ69lFQ)
   - **MPU- microprocessor unit - Raspberry PI**
   The second is the Linux-capable Microprocessor Unit (MPU). An MPU typically does not have embedded Flash and RAM — at least on the same die. 
   an example of an MPU based system is the Raspberry PI(RP2040). 

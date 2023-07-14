@@ -109,5 +109,5 @@ userCreditService.increase();
 		最原始redis计数器，更好的办法是使用sentinel
 
 
-
+[我被微服务坑掉了CTO职位](https://mp.weixin.qq.com/s/KLvRSYcksglZ7cBus4V7XA)
 <disqus/>

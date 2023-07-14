@@ -1592,6 +1592,12 @@ class LettuceConnectionConfiguration extends RedisConnectionConfiguration {
     。。。。。。。。。。。。。
 ```
 
+## performance
+
+7min到40s：SpringBoot启动优化实践
+https://juejin.cn/post/7181342523728592955
+
+refer:
 具体解析可以参考 https://www.javatt.com/p/19819
 
 <disqus/>

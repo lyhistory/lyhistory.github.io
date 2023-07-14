@@ -4,6 +4,7 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
+
 ## Basic 
 
 ### 系统参数：	
@@ -303,3 +304,10 @@ history -d $((HISTCMD-1)) && history -d [line entry number]
 ssh rsh 
 
 https://blog.csdn.net/jiangyu1013/article/details/79721053
+
+
+Linux 安全运维必备 150 个命令汇总
+https://zhuanlan.zhihu.com/p/546399931
+
+Linux 最常用命令：能解决 95% 以上的问题
+https://mp.weixin.qq.com/s/jL-yDpKAI9Jiq8Qmi11kYg

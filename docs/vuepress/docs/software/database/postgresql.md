@@ -1387,4 +1387,7 @@ https://serverfault.com/questions/110154/whats-the-default-superuser-username-pa
 
 https://serverfault.com/questions/110154/whats-the-default-superuser-username-password-for-postgres-after-a-new-install
 
+10个使用POSTGRESQL 需要避免的错误
+https://mp.weixin.qq.com/s/DD27oiNL7_qNzgHN6S0XJw
+
 <disqus/>

@@ -180,3 +180,7 @@ SPI方式
 
 https://github-9233.github.io/2020/02/22/hack-miband4-nfc/
 https://f002.backblazeb2.com/file/sec-news-backup/files/writeup/www.91ri.org/_16081_html/index.html
+
+
+一步步教你制作移动式银行卡信息读取器
+https://mp.weixin.qq.com/s/X50jY0LifpEqFczptIrvHA

@@ -41,6 +41,7 @@ https://www.instructables.com/ESP32-With-Integrated-OLED-WEMOSLolin-Getting-Star
 
 
 ## Power Options
+[如何给ESP32供电](https://mp.weixin.qq.com/s/JOmDmY3TJXq7wD9f76UtPw)
 To power your ESP32 dev kit, you have three options:
 
 + Via the USB port.
