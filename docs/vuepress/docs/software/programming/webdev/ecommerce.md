@@ -205,7 +205,7 @@ cloudflare管理页面=>SSL/TLS=>Origin Server 点击生成证书；
    
    然后[访问该页面](https://developers.cloudflare.com/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/),可以找到下载client证书链接:
    [download authenticated_origin_pull_ca.pem](https://developers.cloudflare.com/ssl/static/authenticated_origin_pull_ca.pem)
-   将证书 authenticated_origin_pull_ca.pem 的内容写入到服务器的 /etc/ssl/cloudflare_client.crt 中
+   将证书 authenticated_origin_pull_ca.pem 的内容写入到服务器的 /etc/ssl/cloudflare_client.pem 中
 
 
 ```
@@ -223,10 +223,10 @@ server {
     listen 443 ssl http2;
     server_name www.example.com;
 
-    ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/example.com/chain.pem;
-    include snippets/ssl.conf;
+    ssl_certificate /etc/ssl/cloudflare_cert.pem;
+    ssl_certificate_key /etc/ssl/cloudflare_key.pem;
+    ssl_client_certificate /etc/nginx/certs/cloudflare_client.pem;
+    ssl_verify_client on;
 
     return 301 https://example.com$request_uri;
 }
@@ -239,12 +239,10 @@ server {
     index index.php;
 
     # SSL parameters
-    ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/example.com/chain.pem;
-    include snippets/ssl.conf;
-    include snippets/letsencrypt.conf;
-
+    ssl_certificate /etc/ssl/cloudflare_cert.pem;
+    ssl_certificate_key /etc/ssl/cloudflare_key.pem;
+    ssl_client_certificate /etc/nginx/certs/cloudflare_client.pem;
+    ssl_verify_client on;
     # log files
     access_log /var/log/nginx/example.com.access.log;
     error_log /var/log/nginx/example.com.error.log;
@@ -281,11 +279,42 @@ server {
 ```
 
 ## woocommerce
-   https://woocommerce.com/posts/woocommerce-pricing/
 
-   https://woocommerce.com/storefront/
+### theme
+https://woocommerce.com/posts/woocommerce-pricing/
 
-## Set up wp-config.php
+offical theme: [storefront](https://woocommerce.com/storefront/)
+
+http://xxxx/wp-admin/theme-install.php?theme=storefront
+
+### plugins
+根据提示：install plugin woocommerce 
+install jetpack and connects
+
++ Woocommerce
++ Downtime Monitoring
++ Related Posts
++ Creative Mail
++ Site Accelerator
+
+### checkout flow
+Optimizing the checkout flow
+https://woocommerce.com/blog/payments/?utm_source=inbox_note&utm_medium=product&utm_campaign=optimizing-the-checkout-flow
+https://woocommerce.com/posts/optimize-woocommerce-checkout-to-improve-conversions-more-revenue/
+
+WooCommerce > Settings > Accounts and Privacy =》guest checkout
+#### tax
+WooCommerce Tax
+Avalara https://www.avalara.com/us/en/signin.html
+
+#### payment
+https://www.payoneer.com/solutions/checkout/woocommerce-integration/?utm_source=Woo+plugin&utm_medium=referral&utm_campaign=WooCommerce+config+page#form-modal-trigger
+
+## Set up 
+
+### Enabling Pretty Permalinks in WordPress
+
+### wp-config.php
 You can either create and edit the wp-config.php file yourself, or you can skip this step and let WordPress try to do this itself when you run the installation script (step 5). (you’ll still need to tell WordPress your database information).
 
 (For more extensive details, and step by step instructions for creating the configuration file and your secret key for password security, please see [Editing wp-config.php](https://developer.wordpress.org/advanced-administration/wordpress/wp-config/)).

@@ -403,7 +403,7 @@ Cloudflare 提供几种模式 Encryption modes：
   - Issued by a [publicly trusted certificate authority ](https://github.com/cloudflare/cfssl_trust)
   - or [Cloudflare’s Origin CA, The “Cloudflare Origin Certificate” is a certificate that is only trusted by Cloudflare, not by browsers.](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca/)
 
-### 配置例子：client-cloudflare-server, full strict模式并开启authenticated origin pulls
+### 配置例子：client->cloudflare->server, full strict模式并开启authenticated origin pulls
 
 1. Cloudflare’s Origin CA生成：
 cloudflare管理页面=>SSL/TLS=>Origin Server点击生成证书；
@@ -430,7 +430,7 @@ cloudflare管理页面=>SSL/TLS=>Origin Server点击生成证书；
 
       ssl_certificate /etc/ssl/cert.pem;
       ssl_certificate_key /etc/ssl/key.pem;
-      ssl_client_certificate /etc/ssl/cloudflare.crt;
+      ssl_client_certificate /etc/ssl/cloudflare_client.crt;
       ssl_verify_client on;
       ssl_session_timeout 1d;
       ssl_session_cache shared:MozSSL:10m;  # about 40000 sessions
