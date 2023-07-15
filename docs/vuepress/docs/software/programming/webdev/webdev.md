@@ -418,8 +418,12 @@ bundle info "jekyll-remote-theme"
 ### 3.2-2 Github pages  with hugo
 [official links](https://gohugo.io/hosting-and-deployment/hosting-on-github/)
 
-### 3.3 Firebase(dynamic apps)
+### 3.3-1 google sites
+sites.google.com
+
+### 3.3-1 google Firebase(dynamic apps)
 https://firebase.google.com/docs
+
 
 ## 4. 站长必备
 

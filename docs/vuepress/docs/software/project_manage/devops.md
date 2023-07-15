@@ -21,3 +21,7 @@ gitlab cicd
 [宝塔 www.bt.cn](https://www.bt.cn/btcode.html)
 
 Chef Vs Puppet Vs Ansible
+
+
+云原生时代下，本地代码debug的思考
+https://zhuanlan.zhihu.com/p/619923419?utm_campaign=shareopn&utm_medium=social&utm_oi=597185020683751424&utm_psn=1627379881876185088&utm_source=wechat_session&s_r=0

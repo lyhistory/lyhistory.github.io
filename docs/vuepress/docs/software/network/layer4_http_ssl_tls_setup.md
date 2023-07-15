@@ -2244,6 +2244,8 @@ https://stackoverflow.com/questions/29157861/java-certificateexception-no-subjec
 
 ### 一些有意思的问题
 
+[Netty SSL性能调优](https://developer.aliyun.com/article/574642)
+OPENSSL 知多少？ https://mp.weixin.qq.com/s/QW-uO4OzSRtSkpI4LjGUQw
 用jmeter通过ssl验证访问https https://cloud.tencent.com/developer/article/1199237?from=15425
 解决 HTTPS 证书失效菜刀连不上 https://cloud.tencent.com/developer/article/1399952?from=15425
 How can I disable a TLS cipher for only some protocols using JVM Config? https://stackoverflow.com/questions/52779312/java-how-can-i-disable-a-tls-cipher-for-only-some-protocols-using-jvm-config?rq=1

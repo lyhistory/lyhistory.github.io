@@ -22,3 +22,6 @@ nc -l -p 9999
 ```
 上传中国菜刀
 
+
+Redis攻击方法总结
+https://mp.weixin.qq.com/s/qH14yE_7Iryr4uzYS2nUBw

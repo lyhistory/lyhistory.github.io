@@ -14,6 +14,8 @@ OMS 1+1 protection
 
 光纤 fiber optic
 
+双绞线 差模
+
 dark fiber https://www.fiberlight.com/blog/what-is-dark-fiber-4-advantages-of-switching-to-the-dark-side/
 
 + 单模

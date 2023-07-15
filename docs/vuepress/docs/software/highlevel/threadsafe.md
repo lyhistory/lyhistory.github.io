@@ -239,4 +239,8 @@ Thread Safety In C# [www.c-sharpcorner.com/UploadFile/1c8574/thread-safety369/](
 
 System.timer Thread.timer
 
+腾讯面试官：如何停止一个正在运行的线程？
+https://mp.weixin.qq.com/s/9xjGYbcNwl1aQY5GNOx58g
+
+
 <disqus/>

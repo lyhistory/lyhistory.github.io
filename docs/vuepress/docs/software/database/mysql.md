@@ -102,6 +102,8 @@ mysqladmin
 
 mysqlbinlog:
 
+[mysqlbinlog命令详解](https://zhuanlan.zhihu.com/p/66501464)
+
 --verbose
 --base64-output=DECODE-ROWS
 

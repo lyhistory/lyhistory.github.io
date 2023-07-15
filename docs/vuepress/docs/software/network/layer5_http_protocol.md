@@ -382,5 +382,7 @@ http proxy转socks proxy: https://github.com/Equim-chan/h2s
 
 记录一次面试中的HTTP请求相关问题 https://www.cnblogs.com/daisygogogo/p/10741597.html
 
+HTTP/3: Everything you need to know about the next-generation web protocol
+https://portswigger.net/daily-swig/http-3-everything-you-need-to-know-about-the-next-generation-web-protocol
 
 <disqus/>

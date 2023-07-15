@@ -275,6 +275,11 @@ Fiddler+burpsuite
 **当然上面只是初步的抓包入门，实际情况会更复杂，比如很多app或网站程序都会利用各种策略和协议来阻止抓包，所以经常会遇到抓不到包的情况，进阶内容参照知识星球内的分享（知识号: coder2hacker）**
 
 
+突破 SSL PIN: TrustMeAlready 
+
+[最全Android 11 微信小程序抓包教程](https://mp.weixin.qq.com/s/DPUfK64J6SndX05wGM2Zng)
+
+[App逆向之干掉vpn检测抓包](https://mp.weixin.qq.com/s/x3_zoPxLw7pcaFS1if11vA)
 
 ref:
 [大型企业网络架构](https://blog.csdn.net/qq_36119192/article/details/84427267)
