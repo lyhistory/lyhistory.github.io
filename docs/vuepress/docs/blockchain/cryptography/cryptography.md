@@ -581,6 +581,8 @@ sr0+tr1=1
 
 ### RSA
 
+RSA专题——模数分解 https://mp.weixin.qq.com/s/sNEyaJ6qioIMdsJxZ3Hccw
+
 refer to draw.io <<cryptography-encryption>> https://app.diagrams.net/#G1l7hGpTWy3dLPROAwXYOAuClDMiugzqNL
 
 Mathematical Attacks
@@ -688,6 +690,8 @@ Definition 8.4.1 Generalized Diffie–Hellman Problem (DHP)
 Given is a finite cyclic group G of order n, a primitive element α ∈ G and two elements A = α<sup>a</sup> and B = α<sup>b</sup> in G. The Diffie–Hellman problem is to find the group element α<sup>ab</sup>.
 
 #### The Elgamal Encryption Scheme
+
+密码学｜6.4.2 椭圆Elgamal公钥密码系统 https://mp.weixin.qq.com/s/EjhPlck9-7MzIZvstriaOg
 
 The protocol consists of two phases, the classical DHKE which is followed by the message encryption and decryption.
 Bob computes his private key d and public key β . This key pair does not change, i.e., it can be used for encrypting many messages. Alice, however, has to generate a new public–private key pair for the encryption of every message. Her private key

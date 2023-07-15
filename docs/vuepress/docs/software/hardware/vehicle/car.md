@@ -58,6 +58,9 @@ Difference Between Engine and Transmission- The basic difference between an engi
 A transmission control unit (TCU), also known as a transmission control module (TCM), or a gearbox control unit (GCU), is a type of automotive ECU that is used to control electronic automatic transmissions. Similar systems are used in conjunction with various semi-automatic transmissions, purely for clutch automation and actuation. A TCU in a modern automatic transmission generally uses sensors from the vehicle, as well as data provided by the engine control unit (ECU), to calculate how and when to change gears in the vehicle for optimum performance, fuel economy and shift quality.
 
 ### 通信：CAN BUS 控制器局域网总线技术（Controller Area Network-BUS）
+
+[一文入门CAN协议](https://mp.weixin.qq.com/s/vD4xY0c-wU8bV6Sg52s8fg)
+
 A Controller Area Network (CAN bus) is a vehicle bus standard designed to allow microcontrollers and devices to communicate with each other's applications without a host computer. It is a message-based protocol, designed originally for multiplex electrical wiring within automobiles to save on copper, but it can also be used in many other contexts. For each device, the data in a frame is transmitted serially but in such a way that if more than one device transmits at the same time, the highest priority device can continue while the others back off. Frames are received by all devices, including by the transmitting device.
 
 The CAN bus is one of five protocols used in the on-board diagnostics (OBD)-II vehicle diagnostics standard:

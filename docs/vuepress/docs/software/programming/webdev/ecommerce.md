@@ -310,6 +310,10 @@ Avalara https://www.avalara.com/us/en/signin.html
 #### payment
 https://www.payoneer.com/solutions/checkout/woocommerce-integration/?utm_source=Woo+plugin&utm_medium=referral&utm_campaign=WooCommerce+config+page#form-modal-trigger
 
+## 询盘 WpForms
+
+https://mp.weixin.qq.com/s/S6AebX9m7yvJ0uFbICVJTg
+
 ## Set up 
 
 ### Enabling Pretty Permalinks in WordPress

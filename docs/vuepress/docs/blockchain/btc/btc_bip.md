@@ -122,3 +122,6 @@ https://www.youtube.com/watch?v=mWrILLg3Ueo
 https://www.youtube.com/channel/UCtE0hm1_QuVUijoPaKfy0Eg
 
 
+## ORC20
+https://mp.weixin.qq.com/s/LzKJQSriFjV3B7Dh3pjatg
+https://docs.orc20.org/

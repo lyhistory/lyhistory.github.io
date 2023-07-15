@@ -221,3 +221,6 @@ The Type= directive can be one of the following:
 ntpd is preferred over ntpdate:
 
 NTPDATE corrects the system time instantaneously, which can cause problems with some software (e.g. destroying a session which now appears old). NTPD intentionally corrects the system time slowly, avoiding that problem. You can add the -g switch when starting NTPD to allow NTPD to make the first time update a big one which is more or less equivalent to running ntpdate once before starting NTPD, which at one time was recommended practice.
+
+
+Linux内核架构和工作原理 https://mp.weixin.qq.com/s/Vrl_pUTRY0bLUN0fQYynDQ

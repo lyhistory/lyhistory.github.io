@@ -1759,4 +1759,5 @@ todo:
 [SDN在云数据中心的应用——架构篇](https://www.sdnlab.com/19236.html)
 [为什么说不要用VLAN、VPC解决东西向隔离问题](https://www.freebuf.com/articles/network/189879.html)
 
+[中国家庭宽带申请公网 IP](https://mp.weixin.qq.com/s/Rva7GUg81qiKp_X7A7t1Ug)
 <disqus/>

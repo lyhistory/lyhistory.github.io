@@ -164,6 +164,10 @@ In conclusion, I should mention one major difference between these two. The appl
   如果不是，就跳转到已经下载过的用户程序入口，从而把芯片控制权交给用户程序。如果是新的芯片还没有下载过，那么就停留在读取串口状态的循环中。
   启动代码通常都烧写在flash中，它是系统一上电就执行的一段程序，它运行在任何用户C代码之前。上电后，arm处理器处于arm态，运行于管理模式，同时系统所有中断被禁止，PC到地址0处取指令执行。
 
+  [深入理解MCU启动原理](https://mp.weixin.qq.com/s/3xctPZyhN7GpEsixkvgAjg)
+
+[四种Bootloader程序安全机制设计](https://mp.weixin.qq.com/s/-IC4SCvhGWPTX01Ei9VTyw)
+
 #### 编程区别
 
 Microcontroller 不能运行操作系统,所以需要烧录程序到 flash memory 或 ROM；
