@@ -75,6 +75,9 @@ https://zhuanlan.zhihu.com/p/412692348
 ## 开发客户
 https://mp.weixin.qq.com/s/Aq_72eCgCb8EC743506_Pw
 
+
+
+
 ## 直播
 无人直播实操教程，如何搭建属于自己的无人直播间，价值过W的技术免费奉上
 https://mp.weixin.qq.com/s/Fs1SZq60wYOsl36__kdPhQ
@@ -85,6 +88,16 @@ https://mp.weixin.qq.com/s/BXr34o4xO9Jh0VQSCVgO_A
 
 
 ## 独立站
+
+独立站的常见类型
+https://mp.weixin.qq.com/s/Vnb0e2HsEP8l6vxvso9OZg
+
+未来独立站
+https://mp.weixin.qq.com/s/gDgTXJ1D7nHpX5MN44AY5g
+
+页面布局精华
+https://mp.weixin.qq.com/s/Z2qjnGxQfJEoCMKB1zddnQ
+
 注册了一个 DA 为 10 的高价值域名
 https://mp.weixin.qq.com/s/qs7kBG_WJRReMWutEzCn-Q
 
@@ -99,6 +112,9 @@ https://www.awyerwu.com/10480.html
 https://mp.weixin.qq.com/s/RioiEs3xym9ExUrke9U6jg
 https://mp.weixin.qq.com/s/TpoS7unEY1YYf0d5EHed5A
 https://mp.weixin.qq.com/s/3GW_psgJX0KmbnW85kws9A
+
+谷歌SEO：5个小技巧助你更快获得流量！
+https://mp.weixin.qq.com/s/rmFFy5-f1arsRpER7SxytA
 
 SERP 工具： 
 https://ahrefs.com/serp-checker
@@ -200,3 +216,113 @@ Traffic Driving Type Keywords:
 
 
 AI可实现人工智能选品、图文和视频广告素材制作/广告语智能输出、广告智能投放、智能客服回复等功
+
+## 进销存系统
+https://gitee.com/Loongdom/DBErp
+
+## 工具
+
+ Ai智能找客户地址 http://t.smartsousou.com/w/E38E9D
+  贸易情报地址：https://hg.smtso.com/?i=E38E9D
+
+领英营销工具地址：http://www.topeasysoft.com/r?i=E38E9D
+
+通过whatsapp助手采集社媒平台的个人号码找群组
+
+https://mp.weixin.qq.com/s/Uk_z70J8DVwUHG-JjsxsEA
+
+快递查询 17track 
+
+选品和竞品分析 Commerce Inspector shopgram.io
+
+各国日历&节假日查询
+https://www.timeanddate.com/calendar/
+
+邮件签名美化
+
+https://www.hubspot.com/email-signature-generator#sig-generator-anchor
+
+汇率转换查询
+
+https://themoneyconverter.com/
+
+邮箱地址验证
+
+https://www.verifyemailaddress.org/
+
+检测邮件是否为竞争对手所发
+
+https://whatismyipaddress.com/trace-email
+
+汇率查询
+
+https://www.boc.cn/sourcedb/whpj/
+
+产地证真伪查询
+
+http://origin.customs.gov.cn/
+
+
+进出口税率查询
+
+http://wmsw.mofcom.gov.cn/wmsw/
+
+海关编码查询
+
+http://wmsw.mofcom.gov.cn/wmsw/toolBox/codeContrast
+
+平时查关税要注意，海关编码前6位通常是一致的，后面4位不同，所以在查询进口关税时，要使用目标国家海关的编码，可能与我国的出口报关编码不同。
+
+各国商品反倾销查询
+
+http://cacs.mofcom.gov.cn/cacscms/view/searchList
+
+国际区号查询
+
+https://www.dragon-guide.net/hangye/guojidianhua.htm
+
+出口退税率查询
+
+http://hd.chinatax.gov.cn/nszx/InitChukou.html
+
+通关状态查询
+
+http://www.customs.gov.cn/customs/302427/302442/tgzt/index.html
+
+英文缩写查询
+
+https://www.acronymfinder.com/
+
+ 海运价格走势查询
+
+fbx.freightos.com
+
+国际快递查询
+
+https://www.track-trace.com/
+
+船舶实时追踪定位
+
+https://www.marinetraffic.com/en/ais/home/centerx:-12.0/centery:25.0/zoom:4
+
+出口技术指南
+
+商wu部quan威出品，帮助企业进尽快了解和掌握市场的标准，技术法规，认证检测等市场准入要求。
+
+http://www.mofcom.gov.cn/article/ckzn/index.shtml
+
+在线检查语法错误
+
+https://app.grammarly.com/
+
+空运提单查询
+
+https://www.track-trace.com/aircargo
+
+## 学习
+
+简单分享一波外贸减压产品
+https://mp.weixin.qq.com/s/YELfRWzHjGzn9o7he-OUAg
+
+分享一波针对“脚”的外贸独立站
+https://mp.weixin.qq.com/s/vKO1E1fcvwhxV5-e5_s-Uw

@@ -10,3 +10,6 @@ https://mp.weixin.qq.com/s/J-52wA2KpFbqAxHf-Idyjg
 
 我一个普通程序员，光靠GitHub打赏就年入70万
 https://mp.weixin.qq.com/s/xiVpEJUaW0_NXH0GYkzJPQ
+
+如何做一个每日躺赚小工具？
+https://mp.weixin.qq.com/s/Uk_z70J8DVwUHG-JjsxsEA

@@ -1,9 +1,28 @@
-
 ---
 sidebar: auto
 sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
+
+## 系统启动过程
+
+1. 内核的引导
+
+2. 运行 init
+
++ SysV: init, CentOS 5之前, 配置文件：/etc/inittab。
+
++ Upstart: init,CentOS 6, 配置文件：/etc/inittab, /etc/init/*.conf。
+
++ Systemd： systemd, CentOS 7,配置文件：/usr/lib/systemd/system、 /etc/systemd/system
+
+3. 系统初始化
+
+4. 建立终端 
+
+5. 用户登录系统
+
+[Linux 系统启动过程](https://mp.weixin.qq.com/s/CUS_CPyxOrItMrcblOWh9g)
 
 ## 系统参数
 
@@ -24,16 +43,117 @@ uname -a
 ```
 linux show architecture `uname -m`
 
-## cpu/memory
+## cpu
+
+概念:
++ 处理器
++ 核
++ 硬件线程
++ CPU内存缓存
++ 时钟频率
++ 每指令周期数CPI和每周期指令数IPC
++ CPU指令
++ 使用率
++ 用户时间／内核时间
++ 调度器
++ 运行队列
++ 抢占
++ 多进程
++ 多线程
++ 字长
 
 ```
 cat /proc/cpuinfo
+```
+
+针对应用程序，我们通常关注的是内核CPU调度器功能和性能。
+
+线程的状态分析主要是分析线程的时间用在什么地方，而线程状态的分类一般分为：
+
+a. on-CPU：执行中，执行中的时间通常又分为用户态时间user和系统态时间sys。
+b. off-CPU：等待下一轮上CPU，或者等待I/O、锁、换页等等，其状态可以细分为可执行、匿名换页、睡眠、锁、空闲等状态。
+
+分析工具:
++ uptime,vmstat,mpstat,top,pidstat只能查询到cpu及负载的的使用情况。
+
++ perf可以跟着到进程内部具体函数耗时情况，并且可以指定内核函数进行统计，指哪打哪。
+
+```
+//查看系统cpu使用情况
+top
+
+//查看所有cpu核信息
+mpstat -P ALL 1
+
+//查看cpu使用情况以及平均负载
+vmstat 1
+
+//进程cpu的统计信息
+pidstat -u 1 -p pid
+
+//跟踪进程内部函数级cpu使用情况
+perf top -p pid -e cpu-clock
+
+//统计系统调用耗时情况
+strace -c -p pid
+
+//跟踪指定的系统操作例如epoll_wait
+strace -T -e epoll_wait -p pid
+
+//查看内核日志信息
+dmesg
+```
+
+
+## 内存
+
++ 主存
++ 虚拟内存
++ 常驻内存
++ 地址空间
++ OOM
++ 页缓存
++ 缺页
++ 换页
++ 交换空间
++ 交换
++ 用户分配器libc、glibc、libmalloc和mtmalloc
++ LINUX内核级SLUB分配器
+
+分析工具:
+
+free,vmstat,top,pidstat,pmap只能统计内存信息以及进程的内存使用情况。
+
+valgrind可以分析内存泄漏问题。
+
+dtrace动态跟踪。需要对内核函数有很深入的了解，通过D语言编写脚本完成跟踪。
+
+```
+//查看系统内存使用情况
+free -m
+
+//虚拟内存统计信息
+vmstat 1
+
+//查看系统内存情况
+top
+
+//1s采集周期，获取内存的统计信息
+pidstat -p pid -r 1
+
+//查看进程的内存映像信息
+pmap -d pid
+
+//检测程序内存问题
+valgrind --tool=memcheck --leak-check=full --log-file=./log.txt  ./程序名
+
+```
+
+```
 cat /proc/meminfo
 ```
 
 top shift+E 切换 bytes Mb Gb
-
-### 内存
 
 ![](/docs/docs_image/software/linux/linux_memory.png)
 ![](/docs/docs_image/software/linux/linux_memory01.png)
@@ -50,7 +170,7 @@ GiB Swap:     20.0 total,     20.0 free,      0.0 used.     48.1 avail Mem
 
 https://serverfault.com/questions/85470/meaning-of-the-buffers-cache-line-in-the-output-of-free
 
-#### GiB Mem total = free+used+buff/cache
+### GiB Mem total = free+used+buff/cache
 
 + total (Mem): 
 Your total (physical) RAM (excluding a small bit that the kernel permanently reserves for itself at startup);
@@ -70,7 +190,7 @@ sum of buffers and cache:
 + available (Mem): 
 this is an estimate of how much memory is available for starting new applications, without swapping. It includes most of memory counted in the cache field (since the page cache can be dropped to start new applications), but it does not count swap (since it is generally preferable not to use slow swap space).
 
-#### SWAP
+### SWAP
 
 + total (Swap): 
 this is the total amount of disk space reserved for swap (SwapTotal in proc/meminfo). You can check by checking that this matches with the output of swapon -s.
@@ -79,7 +199,7 @@ the amount of swap disk space that is currently being used. Again, you can check
 + free (Swap): 
 the amount of swap disk space that is currently not being used (SwapFree in /proc/meminfo). It is equal to total (Swap) - used (Swap)
 
-#### virt RES SHR
+### virt RES SHR
 
 + %MEM: 
 shows the percentage use of the total physical memory by a process
@@ -105,15 +225,105 @@ https://mp.weixin.qq.com/s/-WG0kjK_YQxrXuPi-OebsQ
 https://wallenotes.github.io/2018/01/04/Linux/%E5%86%85%E5%AD%98/memory-standard-segment-layout/
 https://www.orchome.com/298
 
-### cpu
+## 磁盘IO
 
++ 文件系统
++ VFS
++ 文件系统缓存
++ 页缓存page cache
++ 缓冲区高速缓存buffer cache
++ 目录缓存
++ inode
++ inode缓存
++ noop调用策略
 
-## 文件描述符 fd
+分析工具：
+```
+//查看系统io信息
+iotop
+
+//统计io详细信息
+iostat -d -x -k 1 10
+
+//查看进程级io的信息
+pidstat -d 1 -p  pid
+
+//查看系统IO的请求，比如可以在发现系统IO异常时，可以使用该命令进行调查，就能指定到底是什么原因导致的IO异常
+perf record -e block:block_rq_issue -ag
+^C
+perf report
+```
+
+### 文件描述符 fd
 
 cd /proc/pid/fd
 
+## 网络
 
-## init system: systemd
+网络的监测是所有 Linux 子系统里面最复杂的，有太多的因素在里面，比如：延迟、阻塞、冲突、丢包等，更糟的是与 Linux 主机相连的路由器、交换机、无线信号都会影响到整体网络并且很难判断是因为 Linux 网络子系统的问题还是别的设备的问题，增加了监测和判断的复杂度。现在我们使用的所有网卡都称为自适应网卡，意思是说能根据网络上的不同网络设备导致的不同网络速度和工作模式进行自动调整。
+
+分析工具：
+
+```
+//显示网络统计信息
+netstat -s
+
+//显示当前UDP连接状况
+netstat -nu
+
+//显示UDP端口号的使用情况
+netstat -apu
+
+//统计机器中网络连接各个状态个数
+netstat -a | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
+
+//显示TCP连接
+ss -t -a
+
+//显示sockets摘要信息
+ss -s
+
+//显示所有udp sockets
+ss -u -a
+
+//tcp,etcp状态
+sar -n TCP,ETCP 1
+
+//查看网络IO
+sar -n DEV 1
+
+//抓包以包为单位进行输出
+tcpdump -i eth1 host 192.168.1.1 and port 80 
+
+//抓包以流为单位显示数据内容
+tcpflow -cp host 192.168.1.1
+```
+
+## 辅助工具 
+
+火焰图（Flame Graph是 Bredan Gregg 创建的一种性能分析图表。
+
+火焰图主要是用来展示 CPU的调用栈。
+
+```
+//安装systemtap，默认系统已安装
+yum install systemtap systemtap-runtime
+
+//内核调试库必须跟内核版本对应，例如：uname -r 2.6.18-308.el5
+kernel-debuginfo-2.6.18-308.el5.x86_64.rpm
+kernel-devel-2.6.18-308.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-308.el5.x86_64.rpm
+
+//安装内核调试库
+debuginfo-install --enablerepo=debuginfo search kernel
+debuginfo-install --enablerepo=debuginfo  search glibc
+
+//安装
+git clone https://github.com/lidaohang/quick_location.git
+cd quick_location
+```
+
+## Appendix: init system: systemd
 
 This powerful suite of software can manage many aspects of your server, from services to mounted devices and system states.
 
@@ -216,7 +426,9 @@ The Type= directive can be one of the following:
 
 #### The [Slice] Section
 
-## Clock drift
+## 案例分析
+
+### Clock drift
 
 ntpd is preferred over ntpdate:
 
@@ -224,3 +436,5 @@ NTPDATE corrects the system time instantaneously, which can cause problems with 
 
 
 Linux内核架构和工作原理 https://mp.weixin.qq.com/s/Vrl_pUTRY0bLUN0fQYynDQ
+
+Linux 问题故障定位 https://mp.weixin.qq.com/s/j1Hx199SWasofY_br0Mktg

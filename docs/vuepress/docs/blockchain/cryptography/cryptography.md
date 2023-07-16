@@ -583,6 +583,8 @@ sr0+tr1=1
 
 RSA专题——模数分解 https://mp.weixin.qq.com/s/sNEyaJ6qioIMdsJxZ3Hccw
 
+RSA专题——参数误用 https://mp.weixin.qq.com/s/oicoXceIeqOWEvcJECbkWg
+
 refer to draw.io <<cryptography-encryption>> https://app.diagrams.net/#G1l7hGpTWy3dLPROAwXYOAuClDMiugzqNL
 
 Mathematical Attacks

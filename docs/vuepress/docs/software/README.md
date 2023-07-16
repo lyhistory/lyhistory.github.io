@@ -99,14 +99,15 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/network/layer1_fiber_optic">一层: 光纤光电</a></li>
 		<li><a href="/docs/software/network/layer_x">X层: 工作在各层</a></li>
 		<li><a href="/docs/software/network/network_virtualbox_mode">基于virtualbox构建网络环境</a></li>
-        <li><a href="/docs/software/linux/vm_env">开发测试环境-虚拟机和容器</a></li>
+        <li><a href="/docs/software/network/vm_env">开发测试环境-虚拟机和容器</a></li>
+		<!--<li><a href="/docs/software/network/container_docker">docker</a></li>-->
+		<!--<li><a href="/docs/software/network/container_kubernetes">kubernetes</a></li>-->
 		<li><a href="/docs/software/network/vpn&proxy_server">vpn梯子基础</a></li>
 		<li><a href="/docs/software/network/vpn_openvpn">OpenVPNS</a></li>
 		<li><a href="/docs/software/network/proxy_v2ray">V2ray搭梯子</a></li>
 		<li><a href="/docs/software/network/proxy_shadowsockr">shadowsocketR搭梯子</a></li>
         <li><a href="/docs/software/network/proxy_trojan">trojan搭梯子</a></li>	
 		<li><a href="/docs/software/network/network2github">Github系列网络事件记录</a></li>	
-		<!--<li><a href="/docs/software/linux/docker">docker</a></li>-->
         <li><a href="/docs/software/linux/linux">linux基础</a></li>
         <li><a href="/docs/software/linux/linux_cmds_common">linux常用命令</a></li>
         <li><a href="/docs/software/linux/linux_cmds_special">linux特殊命令</a></li>

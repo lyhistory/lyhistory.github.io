@@ -2776,4 +2776,7 @@ SendKafkaMsg_SaveMemory()不能跟SendKafkaMsg_SaveOffset()为一个事务一起
 
 ![](/docs/docs_image/software/buildingblock/kafka/kafka25.png)
 
+
+https://www.jianshu.com/p/d3e963ff8b70
+
 <disqus/>

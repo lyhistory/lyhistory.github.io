@@ -100,6 +100,14 @@ set -x 可以显示shell在执行什么程序
 
 ## 用户身份和权限
 
++ sudo 是一种常见的提权方式，它可以让普通用户暂时获得管理员权限。具体来说，用户通过 sudo 命令运行某个命令时，系统将询问用户密码，并验证其是否有权限执行该命令。如果验证通过，则该命令将以管理员身份运行。下面是一个 sudo 的示例
+
++ su 命令（即 "superuser"）则是另外一种提权方式，它允许用户将自己切换到 root 用户账户并获取 root 权限。这比 sudo 命令提供的管理员特权更高级。通常情况下，建议尽可能少使用 su 命令，以避免出现安全问题
+
++ SUID（Set User ID on Execution）是一种能够直接为二进制可执行文件设置权限的机制。通过它，用户可以在运行某个程序时暂时获取其所有者的权限。在SUID技术中，如果文件属于 root 用户且相应的 SUID 位被设置了，则用户将在运行该程序时以 root 身份运行
+
++ SGID 类似SUID，SGID（Set Group ID on Execution）也是一种控制二进制可执行文件权限的方式。通过它，用户可以在运行某些程序时暂时获取文件所在组的身份和权限。当你要涉及到多个用户同步操作同一文件、同一组时，SGID 是非常有用的方式
+
 su – The difference between the su and the hyphenated su – commands is the su command without arguments keeps almost all environment variables belonging to the original user. Contrary to this, the hyphenated su – command clears most environment variables.
 
 ```

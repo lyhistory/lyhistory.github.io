@@ -292,6 +292,11 @@ http://news.eeworld.com.cn/Test_and_measurement/ic514591.html
 
 ### 工具
 
+#### 仿真
+
+https://wokwi.com
+https://mp.weixin.qq.com/s/p4YQnxKWCcFlrLxXrPqMmw
+
 #### 做图
 + Fritzing
   - custom parts: 
@@ -520,11 +525,16 @@ nodemcu是基于8266，nodemcu32是基于 esp32?
 
 　　STM32单片机则是ST（意法半导体）公司使用arm公司的cortex-M3为核心生产的32bit系列的单片机，他的内部资源（寄存器和外设功能）较8051、AVR和PIC都要多的多，基本上接近于计算机的CPU了，适用于手机、路由器等等。
 
-## 3. 简单案例
+## 框架
+
+单片机编程为啥要有框架？
+https://mp.weixin.qq.com/s/8UTXyJpNqNmDWRzORihO2g
+
+## 简单案例
 
 ![自动浇花](/docs/docs_image/software/hardware/basic/04_autowatering.png) 
 
-## 4. IOT
+## 物联网 IOT
 what?
 The Internet of Things - IOT is the network of physical objects - devices, vehicles, buildings and other items embedded with electronics, software, sensors, and network connectivity - that enables these objects to collect and exchange data.
 A global infrastructure for the information society, enabling advanced services by interconnecting(physical and virtual) things based on existing and evolving interoperable information and communication technologies.
@@ -676,5 +686,10 @@ automated dinosaur game bot https://www.reddit.com/r/arduino/comments/c5o4kf/i_m
 	LDR sensor 光敏电阻
 
 [	](https://c.51diantang.com/)
+
+https://mp.weixin.qq.com/s/fsCQdJOYUs0BcjfSUmvJvg
+
+为了实现上网自由，我做了一个多功能串口服务器
+https://mp.weixin.qq.com/s/_5b4g5MvrqcCJaA6NyeB8A
 
 <disqus/>

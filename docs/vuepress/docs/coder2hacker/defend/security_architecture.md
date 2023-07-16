@@ -89,3 +89,6 @@ DDoS攻击打的是网站的服务器，而CC攻击是针对网站的页面攻�
 
 DDOS attack DNS
 A DNS flood is a type of distributed denial-of-service attack (DDoS) where an attacker floods a particular domain's DNS servers in an attempt to disrupt DNS resolution for that domain.
+
+
+[网络安全拓扑图推荐](https://mp.weixin.qq.com/s/k5MdU4wOSRTfe70TVX7cIg)

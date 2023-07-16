@@ -48,3 +48,14 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 ## 片头 片尾 opening ending maker
 https://panzoid.com/
+
+## 高级
+
+### 短视频制作技巧：虚拟人物解说+ 动画字幕+ 背景视频
+https://mp.weixin.qq.com/s/WvSXb-dQ2dFaEAKqXis_9w
+
+虚拟人物解说： synthesys.io AI视频平台
+
+动画字幕： invideo.io 视频制作平台 Create new – text to video， 勾选 Auto suggest Images/Videos
+
+Camtasia 视频剪辑录屏

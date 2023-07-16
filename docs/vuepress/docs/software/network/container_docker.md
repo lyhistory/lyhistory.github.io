@@ -25,3 +25,6 @@ https://docs.docker.com/engine/install/binaries/
 https://noknow.info/it/os/install_xz_utils_from_source
 
 https://tukaani.org/xz/
+
+
+Docker里面有 null、host 和 bridge 三种网络模式
