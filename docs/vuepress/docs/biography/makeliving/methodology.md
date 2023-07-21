@@ -65,12 +65,27 @@ https://zhuanlan.zhihu.com/p/412692348
 
 ## 流量变现过程
 
+https://www.zhihu.com/question/475467288
+https://www.zhihu.com/question/35840934
+
 ### 流量获取：
 搜索引擎优化(SEO)、搜索引擎营销(SEM)、社交媒体营销、电子邮件营销
 
 转化率 加购率
 
 在外贸独立站出口中，您需要与客户、供应商、物流公司、海关机构等各方面建立良好的合作关系。优秀的人际关系能力可以帮助您解决冲突、达成共识、建立信任，并提升您与其他人的合作效果。
+
+有效流量 无效流量
+
+### 点击率 
+页面排名
+
+### 反馈率 / 消费者决策 / 询盘
+优化下单决策点
+视觉
+产品垂直
+人群垂直
+价值垂直
 
 ## 开发客户
 https://mp.weixin.qq.com/s/Aq_72eCgCb8EC743506_Pw
@@ -222,6 +237,18 @@ https://gitee.com/Loongdom/DBErp
 
 ## 工具
 
+### 跨境
+跨境魔方 https://upkuajing.com
+
+AliPrice卖家助手 以图找货神器
+图片助手 ImageAssitant IA
+Keywords everywhere 关键词研究
+ubersuggest https://neilpatel.com/ubersuggest/
+瞬悉 k1 k2 k3 https://www.i-shunxi.com/
+
+### common
+logo制作： https://www.uugai.com/
+
  Ai智能找客户地址 http://t.smartsousou.com/w/E38E9D
   贸易情报地址：https://hg.smtso.com/?i=E38E9D
 
@@ -319,6 +346,8 @@ https://app.grammarly.com/
 
 https://www.track-trace.com/aircargo
 
+自动化工具 coldiq.com
+
 ## 学习
 
 简单分享一波外贸减压产品
@@ -326,3 +355,8 @@ https://mp.weixin.qq.com/s/YELfRWzHjGzn9o7he-OUAg
 
 分享一波针对“脚”的外贸独立站
 https://mp.weixin.qq.com/s/vKO1E1fcvwhxV5-e5_s-Uw
+
+https://firebox.com/
+
+https://www.uncommongoods.com/
+https://www.thisiswhyimbroke.com/

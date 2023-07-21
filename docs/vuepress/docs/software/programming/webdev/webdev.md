@@ -163,6 +163,7 @@ https://docsify.js.org/#/more-pages
 https://vuepress.vuejs.org/
 ```
 	npm view vuepress versions/version
+  npm info vuepress version
 	npm ls vuepress -g
 	npm install vuepress@^1.0
 	npm install @vuepress/plugin-google-analytics

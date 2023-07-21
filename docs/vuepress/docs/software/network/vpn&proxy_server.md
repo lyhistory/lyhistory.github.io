@@ -42,7 +42,11 @@ VPN的全名是virtual private network，缩写：VPN，是常用于连接中、
   + [ExpressVPN 镜像2](https://upghsbc.com/refer-a-friend/30-days-free?referrer_id=68966376&utm_campaign=referrals&utm_medium=copy_link&utm_source=referral_dashboard)
   + [ExpressVPN 镜像3](https://www.expressrefer.com/refer-a-friend/30-days-free?referrer_id=68966376&utm_campaign=referrals&utm_medium=copy_link&utm_source=referral_dashboard)
   
-
++ Cloudflare WARP
+  简而言之，你可以试试，免费不限流量：Preferences=>Account=>Login with Cloudflare Zero Trust，当然免费的你就不要奢望多么稳定了
+  https://1.1.1.1/
+  When you use WARP, your DNS queries are protected from snoopers using Cloudflare’s 1.1.1.1 DNS service. A layer of encryption is also added to secure your traffic from prying eyes on the internet. However, unlike traditional VPNs, WARP does not mask your IP address, which means you can’t use it to improve your privacy or stream geo-restricted content.
+  WARP secures your data with encryption to keep your personal information safe, but it doesn’t provide any extra security. For instance, it doesn’t offer any form of anonymity protection. There’s no new IP address allocated to you, which means your traffic is not disguised from your ISP and other third parties – they can trace it back to you! 
 + 还有开源的[protonvpn](https://protonvpn.com) (暂未尝试)
 
 ### 1.2 自行搭建(不推荐小白)

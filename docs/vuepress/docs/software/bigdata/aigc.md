@@ -4,10 +4,65 @@ chatgpt
 ## chatgpt app
 https://github.com/Yidadaa/ChatGPT-Next-Web
 
+## prompt
+https://prompthero.com/
+https://flowgpt.com/
+https://github.com/trigaten/Learn_Prompting
+
+```
+我想着AI生成图片工具DALL-E中，制作一张内容为:「XXXXXXX」，请提供给我可以给AI生成图片的英文指令，另外注明要使用「专业摄影风格」。”
+```
 ## 自动化
 
 Drag & drop UI to build your customized LLM flow https://github.com/FlowiseAI/Flowise
 
+## 应用
+
+### PPT
+MotionGo是必优科技(原口袋动画团队)全新升级的一款PPT动画插件,兼容WPS和office软件,轻量级产品,让PPT动效表达更专业。
+https://motion.yoo-ai.com/?viaurl=ainavpro.com
+
+### Stable Diffusion model
+
+ControlNet is a Stable Diffusion model that lets you copy compositions or human poses from a reference image. 
+
+https://www.youtube.com/watch?v=mmZSOBSg2E4
+Controlnet Github: https://github.com/Mikubill/sd-webui-controlnet
+Controlnet Models Download: https://huggingface.co/lllyasviel/ControlNet-v1-1/tree/main
+Segmentation Color Sheet: https://docs.google.com/spreadsheets/d/1se8YEtb2detS7OuPE86fXGyD269pMycAWe2mtKUj2W8/
+
+https://clipdrop.co/stable-doodle
+
+Ai 绘图：模特生成与换装 https://www.douyin.com/video/7220447504221965627
+
+抠图：https://www.remove.bg/
+
+Toonme - Cartoon
+
+DragGAN
+
+https://magicstudio.com/magiceraser/ Remove unwanted things in seconds
+
+图片修复 https://pixfix.com/
+
+AI商品图片：https://design.meitu.com/product-shoot/?from=home_icon
+
+
+tryondiffusion https://tryondiffusion.github.io/
+
+### 2D => 3D
+https://convert.leiapix.com/
+
+
+### AI视频
+
+text to video https://runwayml.com/
+
+虚拟现实 https://github.com/princeton-vl/infinigen
+
+https://runwayml.com/
+
+https://wonderdynamics.com/
 
 ## other
 https://creatorkit.com/
@@ -21,6 +76,7 @@ https://mp.weixin.qq.com/s/iY4sG9TFC0kOi7xTdJttTw
 
 
 一名大四学生如何用ChatGPT月入6.4万美元 https://mp.weixin.qq.com/s/Tig_bNbnclZGmtK4uvMkbg
+
 Chatbase.co
 
 Segment Anything Model (SAM)

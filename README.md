@@ -21,6 +21,8 @@ dns resolver: cloudflare.com
 - jekyll
 - Minimal-mistakes
 
+_config.yml: https://github.com/mmistakes/minimal-mistakes/blob/master/_config.yml
+
 ## docs: lyhistory.com/docs
 
 - vuepress

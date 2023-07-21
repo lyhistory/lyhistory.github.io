@@ -25,3 +25,23 @@ https://mp.weixin.qq.com/s/l-gApN3UQsv24PLpH1DXmA
 + 佣金（Commission）：会员因产生转化而获得的收入。它也被称为推荐费、发现者费用或赏金。
 + 网络跟踪器（Cookies）：存储在潜在客户的网络浏览器中以识别特定访问的信息。通过联属网络营销，cookie 用于跟踪联属网络链接点击和潜在转化。
 + 链接隐藏（Link Cloaking）：使用比商家提供的更简洁的 URL 隐藏附属链接。链接隐藏可用于更好地管理链接并跟踪点击和转化。 联盟营销的优势及盈利形式
+
+
+TikTok Ads 结合必须正确使用的特定序列，以推广两种类型的附属产品。
+
+1 – Paid On action Offers
+
+2 – Clickbank Affiliate Offers
+
+如果您知道如何正确操作，那么两者在 TikTok 上的表现都非常出色。
+
+Paid On Action 是一种大多数人都不知道的附属模式，但它允许我们与大公司合作，每次有人填写表格时可以获得 10 至 45 美元的报酬，而且没有人需要为我们购买任何东西，有薪酬的。
+
+然后我们有 Clickbank，我相信你以前听说过，我们可以在那里推广大众市场类型的报价并获得佣金。
+
+
+EMU 联盟经理 IM洗白
+
+EMU应该是Emulate（模仿）的简写，意思就是我们通过各种方法模拟真实的用户操作来实现获利。
+https://zhuanlan.zhihu.com/p/497699947
+https://zhuanlan.zhihu.com/p/353401107

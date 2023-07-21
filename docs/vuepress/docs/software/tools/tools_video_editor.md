@@ -54,7 +54,12 @@ https://panzoid.com/
 ### 短视频制作技巧：虚拟人物解说+ 动画字幕+ 背景视频
 https://mp.weixin.qq.com/s/WvSXb-dQ2dFaEAKqXis_9w
 
-虚拟人物解说： synthesys.io AI视频平台
+语音合成助手：
++ https://cloud.google.com/text-to-speech?hl=zh-cn
++ 微软语音合成工具 https://github.com/Baiyuetribe/paper2gui/blob/main/Text2Speech/microsoft_tts.md
+
+
+虚拟人物解说： heygen / 智影 / synthesys.io AI视频平台
 
 动画字幕： invideo.io 视频制作平台 Create new – text to video， 勾选 Auto suggest Images/Videos
 

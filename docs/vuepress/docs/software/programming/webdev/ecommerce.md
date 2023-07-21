@@ -287,6 +287,19 @@ offical theme: [storefront](https://woocommerce.com/storefront/)
 
 http://xxxx/wp-admin/theme-install.php?theme=storefront
 
+#### woocommerce-customizer
+https://woocommerce.com/document/woocommerce-customizer/
+Appearance > Customize -> In the Customize menu, select WooCommerce:
+
+Under WooCommerce are five options:
+
+Store Notice
+Product Catalog
+Product Page
+Product Images
+Checkout
+
+
 ### plugins
 根据提示：install plugin woocommerce 
 install jetpack and connects
@@ -310,9 +323,23 @@ Avalara https://www.avalara.com/us/en/signin.html
 #### payment
 https://www.payoneer.com/solutions/checkout/woocommerce-integration/?utm_source=Woo+plugin&utm_medium=referral&utm_campaign=WooCommerce+config+page#form-modal-trigger
 
+结汇公司
+
+### shipping
+货代公司 帮忙报税
+Flat Rate Shipping
+https://woocommerce.com/document/flat-rate-shipping/
+https://woocommerce.com/document/woocommerce-shipping-and-tax/woocommerce-shipping/
+
 ## 询盘 WpForms
 
 https://mp.weixin.qq.com/s/S6AebX9m7yvJ0uFbICVJTg
+
+## SEO 
+
+### google analytics
+
+### Rank Math SEO
 
 ## Set up 
 
@@ -322,3 +349,9 @@ https://mp.weixin.qq.com/s/S6AebX9m7yvJ0uFbICVJTg
 You can either create and edit the wp-config.php file yourself, or you can skip this step and let WordPress try to do this itself when you run the installation script (step 5). (you’ll still need to tell WordPress your database information).
 
 (For more extensive details, and step by step instructions for creating the configuration file and your secret key for password security, please see [Editing wp-config.php](https://developer.wordpress.org/advanced-administration/wordpress/wp-config/)).
+
+## Troubleshooting
+
+?# Could not retrieve order. 
+
+changed the Paypal button styles from the default yellow to the white and it seems to have worked!

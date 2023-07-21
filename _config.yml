@@ -125,9 +125,9 @@ google:
   search_engine_id       : 016202475545879656962:ot3scpbjy9y
   instant_search         : true 
 # Analytics
-analytics:
-  provider               : google 
+#analytics:
+ # provider               : google 
   # false (default), "google", "google-universal", "custom"
-  google:
-    tracking_id          : UA-55774263-1
-    anonymize_ip         : false
+  #google:
+   # tracking_id          : G-R71X3FJM9B
+    #anonymize_ip         : false
