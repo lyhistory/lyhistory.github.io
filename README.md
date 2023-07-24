@@ -21,7 +21,9 @@ dns resolver: cloudflare.com
 - jekyll
 - Minimal-mistakes
 
-_config.yml: https://github.com/mmistakes/minimal-mistakes/blob/master/_config.yml
+_config.yml: 
+	https://mmistakes.github.io/minimal-mistakes/docs/configuration/
+	https://github.com/mmistakes/minimal-mistakes/blob/master/_config.yml
 
 ## docs: lyhistory.com/docs
 

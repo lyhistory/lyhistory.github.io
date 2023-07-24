@@ -81,6 +81,8 @@ include:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+head_scripts:
+  - /assets/js/custom_gtm.js
 footer:
   links:
     - label: "AlphaWallet"
@@ -98,7 +100,10 @@ footer:
     - label: "Sea Shepherd"
       icon: "fas fa-fw fa-leaf"
       url: https://seashepherd.org/
-    
+    - label: "Privacy Policy"
+      icon: "fas fa-fw fa-dragon"
+      url: https://lyhistory.com/privacy-policy
+      
 defaults:
   # _posts
   - scope:

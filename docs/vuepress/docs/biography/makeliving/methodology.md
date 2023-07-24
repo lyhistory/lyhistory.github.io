@@ -3,10 +3,11 @@ Consumer-to-manufacturer (C2M)
 MCN全称为Multi-Channel Network，主要依托电商、社交、视频等平台，整合内容创作者资源（如网红、UP主、大V等），进行持续内容生产、输出并实现商业变现。MCN机构具体业务主要为网红签约、孵化、内容创作、社区运营、内容分发、平台对接等。
 https://zhuanlan.zhihu.com/p/412692348
 
-## 闭环自动化系统
+## 概论
+
+### 公域私域联动-闭环自动化系统
 
 做任何项目之前，一定遵循四部曲：战略——组织——流程——迭代。
-
 
 
 战略解决头部统筹问题；
@@ -22,29 +23,19 @@ https://zhuanlan.zhihu.com/p/412692348
 
 设计一套自动化赚钱系统：前端引流获客——中端知识付费——后端保险超市。
 
-
-
 最终形成产品体系如下：
-
-
 
 引流产品：保险资料包，一对一保险咨询/测试方案等
 
-
-
 爆款产品：实用保险课堂
-
-
 
 后端产品：保险超市产品
 
 小结保险成交系统路径设计：
 
-
-
 微信好友——付费加入保险课堂——1V1私人保险咨询——匹配保险方案——续保/增购/转介绍/增员。
 
-## IP打造过程
+### IP打造过程
 
 1.变现路径
 
@@ -63,44 +54,13 @@ https://zhuanlan.zhihu.com/p/412692348
 
 所以，现在很多大的博主都把流量导入私域，用个人微信+企业微信+社群+公众号的综合私域布局，和用户更好地互动，也大幅提高了成交率和复购率。
 
-## 流量变现过程
-
-https://www.zhihu.com/question/475467288
-https://www.zhihu.com/question/35840934
-
-### 流量获取：
-搜索引擎优化(SEO)、搜索引擎营销(SEM)、社交媒体营销、电子邮件营销
-
-转化率 加购率
-
-在外贸独立站出口中，您需要与客户、供应商、物流公司、海关机构等各方面建立良好的合作关系。优秀的人际关系能力可以帮助您解决冲突、达成共识、建立信任，并提升您与其他人的合作效果。
-
-有效流量 无效流量
-
-### 点击率 
-页面排名
-
-### 反馈率 / 消费者决策 / 询盘
-优化下单决策点
-视觉
-产品垂直
-人群垂直
-价值垂直
-
-## 开发客户
-https://mp.weixin.qq.com/s/Aq_72eCgCb8EC743506_Pw
-
-
-
-
-## 直播
+#### 直播
 无人直播实操教程，如何搭建属于自己的无人直播间，价值过W的技术免费奉上
 https://mp.weixin.qq.com/s/Fs1SZq60wYOsl36__kdPhQ
 
-## 书单号
+#### 书单号
 ChatGPT变现实操教程，照着做就能月入过万，不是标题党
 https://mp.weixin.qq.com/s/BXr34o4xO9Jh0VQSCVgO_A
-
 
 ## 独立站
 
@@ -119,10 +79,35 @@ https://mp.weixin.qq.com/s/qs7kBG_WJRReMWutEzCn-Q
 聊聊独立站的未来、流量渠道和收款
 https://www.awyerwu.com/10480.html
 
-## 流量密码
+简单分享一波外贸减压产品
+https://mp.weixin.qq.com/s/YELfRWzHjGzn9o7he-OUAg
+
+分享一波针对“脚”的外贸独立站
+https://mp.weixin.qq.com/s/vKO1E1fcvwhxV5-e5_s-Uw
+
+https://firebox.com/
+
+https://www.uncommongoods.com/
+https://www.thisiswhyimbroke.com/
+
+## 流量漏斗
+
+https://www.zhihu.com/question/475467288
+https://www.zhihu.com/question/35840934
+
+### 流量获取：
+搜索引擎优化(SEO)、搜索引擎营销(SEM)、社交媒体营销、电子邮件营销
+
+转化率 加购率
+
+在外贸独立站出口中，您需要与客户、供应商、物流公司、海关机构等各方面建立良好的合作关系。优秀的人际关系能力可以帮助您解决冲突、达成共识、建立信任，并提升您与其他人的合作效果。
+
+有效流量 无效流量
+
+流量密码
 我用这个方法1个月赚了10万 https://mp.weixin.qq.com/s/zbRKjNVbX67UA3dBtJxrBQ
 
-## seo
+#### seo
 搭建外贸独立站不再是终点，SEO才是带来订单的王道！
 https://mp.weixin.qq.com/s/RioiEs3xym9ExUrke9U6jg
 https://mp.weixin.qq.com/s/TpoS7unEY1YYf0d5EHed5A
@@ -226,16 +211,29 @@ Traffic Driving Type Keywords:
 
 - [Product] + for free
 
-## AI+电商：
+#### 开发客户
+https://mp.weixin.qq.com/s/Aq_72eCgCb8EC743506_Pw
 
+### 点击率 
+页面排名
 
+### 反馈率 / 消费者决策 / 询盘
+优化下单决策点
+视觉
+产品垂直
+人群垂直
+价值垂直
+
+## 客户背景调查
++ 外贸公社 tradesparq 公司规模实力 外贸数据
++ similar web 网站流量情况
++ web archive 了解产品线
++ facebook twitter 了解动态
+## 工具
+
+AI+电商：
 
 AI可实现人工智能选品、图文和视频广告素材制作/广告语智能输出、广告智能投放、智能客服回复等功
-
-## 进销存系统
-https://gitee.com/Loongdom/DBErp
-
-## 工具
 
 ### 跨境
 跨境魔方 https://upkuajing.com
@@ -348,15 +346,7 @@ https://www.track-trace.com/aircargo
 
 自动化工具 coldiq.com
 
-## 学习
 
-简单分享一波外贸减压产品
-https://mp.weixin.qq.com/s/YELfRWzHjGzn9o7he-OUAg
-
-分享一波针对“脚”的外贸独立站
-https://mp.weixin.qq.com/s/vKO1E1fcvwhxV5-e5_s-Uw
-
-https://firebox.com/
-
-https://www.uncommongoods.com/
-https://www.thisiswhyimbroke.com/
+## 规模化 - 复制 矩阵
+### 进销存系统
+https://gitee.com/Loongdom/DBErp

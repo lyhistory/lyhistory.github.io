@@ -60,6 +60,7 @@ text to video https://runwayml.com/
 
 虚拟现实 https://github.com/princeton-vl/infinigen
 
+pika labs
 https://runwayml.com/
 
 https://wonderdynamics.com/
