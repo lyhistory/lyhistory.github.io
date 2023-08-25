@@ -76,6 +76,17 @@ Kafka 2.7.0 includes a number of significant new features. Here is a summary of 
 + Add RocksDB Memory Consumption to RocksDB Metrics
 + Add Sliding-Window support for Aggregations
 
+```
+public class PolyProducer<K, V> implements Producer<K, V> {
+
+    @Override
+    public void sendOffsetsToTransaction(Map<TopicPartition, OffsetAndMetadata> offsets,
+            ConsumerGroupMetadata groupMetadata) throws ProducerFencedException {
+        // TODO Auto-generated method stub
+        
+    }
+    
+```
 ## Features
 
 ### Incremental rebalance

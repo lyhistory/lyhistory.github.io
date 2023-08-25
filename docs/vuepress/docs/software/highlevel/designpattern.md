@@ -12,6 +12,19 @@ When we say OO design and design pattern, we must mention 'GOF book',as introduc
 The name of the book ("Design Patterns: Elements of Reusable Object-Oriented Software") is too long for e-mail, so "book by the gang of four" became a shorthand name for it. After all, it isn't the ONLY book on patterns. That got shortened to "GOF book", which is pretty cryptic the first time you hear it.
 
 ## 1.Principle
+
+**高内聚、松耦合**
+是一个非常重要的设计思想，能够有效地提高代码的可读性和可维护性，缩小功能改动导致的代码改动范围。它可以用来指导不同粒度代码的设计与开发，比如：
+- 系统、
+- 模块、
+- 类，
+- 甚至是函数，
+也可以应用到不同的开发场景中，比如：
+- 微服务、
+- 框架、
+- 组件、
+- 类库等。
+
 **Single Responsibility Principle**
 Motivation
 In this context a responsibility is considered to be one reason to change. This principle states that if we have 2 reasons to change for a class, we have to split the functionality in two classes. Each class will handle only one responsibility and on future if we need to make one change we are going to make it in the class which handle it. When we need to make a change in a class having more responsibilities the change might affect the other functionality of the classes.

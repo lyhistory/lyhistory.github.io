@@ -1,10 +1,11 @@
 
+
+
 ## 磁盘知识
 
 Network-attached storage (NAS) is dedicated file storage that enables multiple users and heterogeneous client devices to retrieve data from centralized disk capacity. Users on a local area network (LAN) access the shared storage via a standard Ethernet connection.
 
 NAS（Network Attached Storage：网络附属存储）按字面简单说就是连接在网络上，具备资料存储功能的装置，因此也称为“网络存储器”。它是一种专用数据存储服务器。它以数据为中心，将存储设备与服务器彻底分离，集中管理数据，从而释放带宽、提高性能、降低总拥有成本、保护投资。其成本远远低于使用服务器存储，而效率却远远高于后者。目前国际著名的NAS企业有Netapp、EMC、OUO等。
-
 
 SSD HDD
 
@@ -46,13 +47,24 @@ https://post.smzdm.com/p/a90xmo3o/
 
 清零盘(不要买,不清楚具体状态)
 
-+ 硬盘盒
-+ 磁盘阵列柜 raid
-  - 单盘模式
-  - 互备模式
-+ 个人云产品 - 联想个人云
-  
-## 工具
+
+### 磁盘阵列柜 raid
+
+raid0
+
+raid1
+
+群晖SHR Synology Hybrid RAID
+
+## 硬件产品
+
+个人云产品 - 联想个人云
+
+西数
+
+群晖 synology
+
+## 硬件工具
 TestDisk
 https://www.cgsecurity.org/wiki/TestDisk
 
@@ -64,10 +76,11 @@ How to Fix the “File or Directory is Corrupted and Unreadable” Error on a Wi
 
 https://zhuanlan.zhihu.com/p/32304270
 
-## TrueNAS
+## 软件系统
+### TrueNAS
 TrueNAS（12.0 版前称为 FreeNAS）是一套基于 FreeBSD 操作系统核心的开放源代码的网络存储设备（英语：NAS）服务器系统，支持众多服务，用户访问权限管理，提供网页设置接口。FreeNAS 当前版本整个系统总共需 2GB 以上 USB 驱动器进行安装，并支持 USB 存储设备、LiveCD、CF 卡（转接成 IDE 设备）及硬盘等引导方式。目前有 LiveCD、镜像档、VMware 磁盘映像档三种发行方式。
 
-## File Server
+### File Server
 Caddy file server
 
 ## troubleshooting
