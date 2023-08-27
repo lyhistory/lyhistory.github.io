@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[31],{457:function(t,n,e){"use strict";e.r(n);var s=e(65),l=Object(s.a)({},(function(){var t=this.$createElement,n=this._self._c||t;return n("ContentSlotsDistributor",{attrs:{"slot-key":this.$parent.slotKey}},[n("p",[this._v("木心\n佛教典籍\n南怀瑾\n西藏生死书\n特斯拉著作\n霍金")])])}),[],!1,null,null,null);n.default=l.exports}}]);
