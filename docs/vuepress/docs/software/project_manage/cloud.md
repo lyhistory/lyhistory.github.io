@@ -54,6 +54,8 @@ TLS:
 
 
 ## VPN (IPSEC vs MPLS)
+MPLS 延迟低，适合交易所对于延迟敏感的系统
+
 ### IPSEC
 Traditionally, the biggest obstacle standing in the way of more widespread adoption of cloud services has been security. While many organizations focus on whether a cloud service provider is capable of keeping data secure, the connection between the organization and the cloud is at least as critical to security. An unsecured Internet connection is a major weakness that can be easily infiltrated.
 A virtual private network (VPN) is viewed as the solution to this problem because it provides a secure pipeline to the cloud. There are two main types of VPNs. An IPSec VPN uses encryption protocols to securely transport data packets via the public Internet. 

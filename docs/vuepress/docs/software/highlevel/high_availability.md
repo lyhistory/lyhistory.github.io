@@ -4,7 +4,7 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
-首先什么是HA，
+## 首先什么是HA，
 
 最严格的ha就是主主（双活或多活），都负责读写，对于数据库来说，写操作需要通知到所有节点，这种一般是利用共识算法来达成一致性，区块链是极限的HA，参考我的文章《distributed_system》；
 
@@ -20,16 +20,16 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 
 
+## load balance VS HA
 
+高可用不一定是负载均衡的，比如主备模式，只有主在干活；
 
-load balance强调traffic load balance，一台机器挂掉不影响服务，但是数据可能会丢失；
-
-Disaster Recovery强调的是在发生重大灾难事件时，至少大部分的数据还在，并不强调立刻恢复或者自动切换；
+load balance强调traffic load balance，或者work load balance，是否高可用呢，这就要看是不是简单的分流还是智能分流，比如123交给A做，456交给B做，那A挂了之后，如果是简单的分流，那123就不会智能的重新分配给B，A上的数据就会丢失，如果是智能分流，A挂了之后，B会接管则数据就不容易丢失（也不能保证不丢失，要具体看），比如kafka集群就是高可用的负载均衡；
+换言之，具体要看集群或多节点的一致性算法，如果没有一致性算法保证就只能是普通的分流，如果有就是所谓的高可用；
 
 high availability强调consistency，但是failover时数据也可能会因为不同的策略丢失掉某个时间窗口的数据；
 
-当然实际的产品其实都会考虑到，具体要看集群或多节点的一致性算法，如果没有一致性算法保证就只能是普通的分流，如果有就是所谓的高可用；
-
+Disaster Recovery强调的是在发生重大灾难事件时，至少大部分的数据还在，并不强调立刻恢复或者自动切换；
 
 
 案例：

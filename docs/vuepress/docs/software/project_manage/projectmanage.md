@@ -12,3 +12,5 @@ processmaker
 **IT LAW
 http://www.the-future-of-ideas.com/
 http://codev2.cc/
+
+[netbox](https://docs.netbox.dev/en/stable/)

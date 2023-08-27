@@ -6,6 +6,13 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《Monitor》
 
+Options:
+
+grafna
+prometheus
+zabbix
+netbox
+
 ## 1.Basics
 
 ### 1.1 Visualization

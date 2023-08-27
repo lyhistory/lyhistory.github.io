@@ -110,4 +110,8 @@ userCreditService.increase();
 
 
 [我被微服务坑掉了CTO职位](https://mp.weixin.qq.com/s/KLvRSYcksglZ7cBus4V7XA)
+
+微服务的误读与误解
+https://cloud.tencent.com/developer/article/1139783?areaSource=106002.19
+
 <disqus/>
