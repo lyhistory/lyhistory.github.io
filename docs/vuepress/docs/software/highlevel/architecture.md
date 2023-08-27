@@ -10,6 +10,14 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 也谈过[微服务框架](/docs/software/highlevel/microservice)和[spring cloud微服务框架](/docs/software/java_spring),
 前面说了很多“系统system”、“框架Framework”，现在来站的更高一层谈谈“架构architecture”
 
+谈到架构默认就是 OOA - object-oriented architecture 
+
+面向过程是算法模型，面向对象是交互模型。
+面向对象的封装，继承，多态是在架构起到很大作用，按对象和类形成多种设计模式。这是架构的核心。
+
+面向切面 AOP(Aspect-Oriented Programming) complements OOP by enabling modularity of cross-cutting concerns. The Key unit of Modularity(breaking of code into different modules) in Aspect-Oriented Programming is Aspect. one of the major advantages of AOP is that it allows developers to concentrate on business logic. It is more convenient to use because changes need to be done in only one place.
+Note: Cross cutting concerns are one of the concerns in any application such as logging, security, caching, etc. They are present in one part of the program but they may affect other parts of the program too.
+AOP is used along with Oop as it also works around classes and objects, etc. We can also say that Oop is a basic term for AOP. Different Frameworks used in Aop are AspectJ, JBoss, and Spring. AOP makes the program loosely coupled. AOP separates business logic from cross-cutting concerns. 
 ## 1. Terminology
 
 **architecture VS framework**
@@ -210,7 +218,7 @@ Don’t Do Role-Based Authorization Checks; Do Activity-Based Checks
 
 Customer Relationship Management (CRM)
 
-Cross Cutting Layer - IOC ???:
+Cross Cutting Layer - AOP
 
 AutoFac/Unity
 Resolver Container ILifetimescope
