@@ -168,7 +168,10 @@ get bytecode of contract at certain address https://www.reddit.com/r/ethdev/comm
 
 Ecrecover
 	ecrecover(bytes32 hash, uint8 v, bytes32 r, bytes32 s) returns (address)
-Sample: https://github.com/davidmichaelakers/ecrecover
+	Sample: https://github.com/davidmichaelakers/ecrecover
+	ECRecoverFromPersonalMessage
+原理参考 DSA: ![](/docs/docs_image/blockchain/draft/05_5.png)
+
 Keccak256   https://github.com/status-im/nim-keccak-tiny/issues/1
 https://emn178.github.io/online-tools/keccak_256.html
 
