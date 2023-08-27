@@ -408,6 +408,9 @@ git push upstream master
 #### auto sync from upstream/origin
 https://stackoverflow.com/questions/23793062/can-forks-be-synced-automatically-in-github
 
+#### pull request
+https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork
+
 ### 2.3 About workflow - wrap up all the previous knowledge
 
 shelve changes / git stack https://www.youtube.com/watch?v=Zb8k8q8n8Ao

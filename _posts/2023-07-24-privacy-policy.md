@@ -890,4 +890,3 @@ Singapore
 
 Based on the applicable laws of your country, you may have the right to request access to the personal information we collect from you, change that information, or delete it. To request to review, update, or delete your personal information, please fill out and submit a [data subject access request](https://app.termly.io/notify/5e5b2168-8c87-491c-adc7-2d66727a981e).
 
-ul { list-style-type: square; } ul > li > ul { list-style-type: circle; } ul > li > ul > li > ul { list-style-type: square; } ol li { font-family: Arial ; }

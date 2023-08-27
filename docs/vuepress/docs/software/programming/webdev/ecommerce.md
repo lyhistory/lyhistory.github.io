@@ -1,11 +1,13 @@
-## VM
+## 1.Prepare VM
 
 ```
 useradd -G wheel ecommerce -d /home/ecommerce
 passwd ecommerce
 ```
 
-## Mysql server
+## 2. Install Mysql
+
+### Mysql Server
 
 ```
 $> tar -xvf  mysql-5.7.41-1.el7.x86_64.rpm-bundle.tar
@@ -19,7 +21,7 @@ mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'New Password';
 For other tools such as Plesk, cPanel, refer the article Creating Database for WordPress.
 https://developer.wordpress.org/advanced-administration/before-install/creating-database/
 
-#### Using the MySQL Client
+### Create db Using the MySQL Client
 
 ```
 $ mysql -uroot -p<New password>
@@ -43,7 +45,7 @@ mysql> EXIT
 Bye  
 ```
 
-#### Using phpMyAdmin
+### Create db Using phpMyAdmin
 
 phpMyAdmin Users Tab
 
@@ -58,9 +60,9 @@ phpMyAdmin Users Tab
 9.The page will refresh with privileges for that database. Click Check All to select all privileges, and click Go.
 10.On the resulting page, make note of the host name listed after Server: at the top of the page. (This will usually be localhost.)
 
-## wordpress
+## 3. Setup Wordpress
 
-### php
+### 3.1 Install PHP
 ```
 sudo yum install epel-release yum-utils
 sudo yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
@@ -88,7 +90,7 @@ sudo chown -R root:nginx /var/lib/php
 sudo systemctl enable php-fpm
 sudo systemctl start php-fpm
 ```
-### nginx
+### 3.2 nginx
 ```
 sudo yum install yum-utils
 
@@ -120,7 +122,7 @@ HTTP/1.1 200 OK
 Server: nginx/1.23.4
 ```
 
-### Download and Extract
+### 3.3 Download and Extract
 Download and unzip the WordPress package from wordpress.org/download/.
 
 If you will be uploading WordPress to a remote web server, download the WordPress package to your computer with a web browser and unzip the package.
@@ -183,14 +185,18 @@ sudo chown -R nginx: example
 #find . -type f -exec chmod 644 {} \;  # Change file permissions rw-r--r--
 ```
 
-## install wordpress
+### 3.4 install wordpress
 
 Run the Install Script
 
 http://example.com/wp-admin/install.php
 
 
-## ssl
+You can either create and edit the wp-config.php file yourself, or you can skip this step and let WordPress try to do this itself when you run the installation script (step 5). (you’ll still need to tell WordPress your database information).
+
+(For more extensive details, and step by step instructions for creating the configuration file and your secret key for password security, please see [Editing wp-config.php](https://developer.wordpress.org/advanced-administration/wordpress/wp-config/)).
+
+## 4. Setup SSL
 1. Cloudflare’s Origin CA生成：
 cloudflare管理页面=>SSL/TLS=>Origin Server 点击生成证书；
 保存证书至 /etc/ssl/cloudflare_cert.pem, 保存key至 /etc/ssl/cloudflare_key.pem
@@ -278,16 +284,16 @@ server {
 }
 ```
 
-## woocommerce
+## 5. Install Woocommerce
 
-### theme
+### 5.1 Choose theme-Storefront
 https://woocommerce.com/posts/woocommerce-pricing/
 
 offical theme: [storefront](https://woocommerce.com/storefront/)
 
 http://xxxx/wp-admin/theme-install.php?theme=storefront
 
-#### woocommerce-customizer
+### 5.2 woocommerce-customizer
 https://woocommerce.com/document/woocommerce-customizer/
 Appearance > Customize -> In the Customize menu, select WooCommerce:
 
@@ -300,7 +306,7 @@ Product Images
 Checkout
 
 
-### plugins
+### 5.3 plugins
 根据提示：install plugin woocommerce 
 install jetpack and connects
 
@@ -310,45 +316,82 @@ install jetpack and connects
 + Creative Mail
 + Site Accelerator
 
-### checkout flow
-Optimizing the checkout flow
-https://woocommerce.com/blog/payments/?utm_source=inbox_note&utm_medium=product&utm_campaign=optimizing-the-checkout-flow
-https://woocommerce.com/posts/optimize-woocommerce-checkout-to-improve-conversions-more-revenue/
+### 5.4 Operations
 
-WooCommerce > Settings > Accounts and Privacy =》guest checkout
+#### Apperance
+ 
++ Enabling Pretty Permalinks in WordPress
+
++ Product Categories, Tags and Attributes
+  https://woocommerce.com/document/managing-product-taxonomies/
+
++ Variation Swatches for WooCommerce
+  https://cartflows.com/docs/variation-swatches-for-woocommerce-plugin/
+  https://wordpress.org/support/topic/color-variation-not-show-homepage/
+
++ Products Filter
+  https://woocommerce.com/document/product-filters/
+  Override templates in a theme
+  To change element templates in in theme, you need to create a woocommerce-product-filter folder inside the theme folder. All templates can be found in the folder plugins/woocommerce-product-filter/templates/. Copy the template file to the woocommerce-product-filter folder inside the theme and make changes according to your needs.
+
+
 #### tax
 WooCommerce Tax
 Avalara https://www.avalara.com/us/en/signin.html
 
 #### payment
++ paypal
++ payoneer
++ https://www.xtransfer.cn/
+  
 https://www.payoneer.com/solutions/checkout/woocommerce-integration/?utm_source=Woo+plugin&utm_medium=referral&utm_campaign=WooCommerce+config+page#form-modal-trigger
 
 结汇公司
 
-### shipping
+#### shipping
+
++ 燕文物流 yw56
+  
 货代公司 帮忙报税
 Flat Rate Shipping
 https://woocommerce.com/document/flat-rate-shipping/
 https://woocommerce.com/document/woocommerce-shipping-and-tax/woocommerce-shipping/
 
-## 询盘 WpForms
+#### checkout flow
+Optimizing the checkout flow
+https://woocommerce.com/blog/payments/?utm_source=inbox_note&utm_medium=product&utm_campaign=optimizing-the-checkout-flow
+https://woocommerce.com/posts/optimize-woocommerce-checkout-to-improve-conversions-more-revenue/
+
+WooCommerce > Settings > Accounts and Privacy =》guest checkout
+
+
+#### 询盘 WpForms
 
 https://mp.weixin.qq.com/s/S6AebX9m7yvJ0uFbICVJTg
 
-## SEO 
+## 6. SEO 
 
 ### google analytics
 
 ### Rank Math SEO
 
-## Set up 
 
-### Enabling Pretty Permalinks in WordPress
+## 7. Advance: Programming Codes
 
-### wp-config.php
-You can either create and edit the wp-config.php file yourself, or you can skip this step and let WordPress try to do this itself when you run the installation script (step 5). (you’ll still need to tell WordPress your database information).
+ ./wp-content/themes/storefront/functions.php
+ 
+How to and where to add the custom PHP code.
++ The simple way to add the custom PHP code on your website is by using the code snippets plugins. These types of plugin provide great flexibility to non-techie users to add any Custom Code on their website more effectively. 
++ But If you want to add the custom PHP code without using any extra plugin then we suggest to add it by creating a child theme. 
+Once the Child Theme is created then it will have the functions.php file and where you have to add your custom PHP code.
+Apperance=>Theme File Editor=>functions.php
 
-(For more extensive details, and step by step instructions for creating the configuration file and your secret key for password security, please see [Editing wp-config.php](https://developer.wordpress.org/advanced-administration/wordpress/wp-config/)).
+
+Woocommerce Product Page: how to change position of 'short description', 'price' and 'variation description'
+https://stackoverflow.com/questions/60115437/woocommerce-product-page-how-to-change-position-of-short-description-price
+
+Storefront Filters example: Change the number of products displayed per page
+https://woocommerce.com/document/storefront-filters-example-change-number-products-displayed-per-page/
 
 ## Troubleshooting
 

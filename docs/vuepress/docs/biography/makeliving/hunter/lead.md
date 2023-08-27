@@ -1,3 +1,97 @@
+
+https://www.affplus.com/
+## keywords
+
+In digital advertising, pixels — also known as marketing pixels, tracking pixels, web beacons, and web bugs — are snippets of code (HTML or JavaScript) or tiny invisible images (measuring 1×1 pixel) that are placed on web pages, usually in the footer, and are used to gather information about website visitors and track their activity.
+
+
+season pixel: So essentially what seasoning your pixel means is that you are going to get those events that the data collected on that pixel first before you go and optimise for conversions
+
+## Core Components
+
+### High Converting Offers
+TikTok Ads 结合必须正确使用的特定序列，以推广两种类型的附属产品。
+
+1 – Paid On action Offers
++ pay per sale
++ pay on form submit
++ pay on call
++ pay on download app
+
+2 – Clickbank Affiliate Offers
++ VSL offer
+
+如果您知道如何正确操作，那么两者在 TikTok 上的表现都非常出色。
+
+Paid On Action 是一种大多数人都不知道的附属模式，但它允许我们与大公司合作，每次有人填写表格时可以获得 10 至 45 美元的报酬，而且没有人需要为我们购买任何东西，有薪酬的。
+
+然后我们有 Clickbank，我相信你以前听说过，我们可以在那里推广大众市场类型的报价并获得佣金。
+
+pipiads
+
+### Ad Creative Process - High CTR AD
+the process of creating a good ad that turns clicks into profits.
+
++ Angles
++ Hooks
++ Copy/Script
++ UGC-User Generated Content Creators
++ Call to Action
++ Tiktok Trending Content
++ Variations
+
+### Understanding The Tiktok Ad Platform
+The actual admin side of the Ad account and platform
++ Navigating the Platform
++ Setting up your Ad account
++ Business Manager
++ Basic Technical Stuff
++ Pixel setup and installation
+
+### Media Buying Strategy
+How to launch your first campaign and run the ads to make a profit
++ Campaign Structure
++ Budget/Daily Budget
++ Bidding Types
++ Understanding The Algorithym
++ Campaign Objectives
++ Pixel Events
++ Scaling
+
+## Power play
+
+### Swipe deploy profit repeat
+finding proven affiliate campaigns to swipe
+
++ Manual Spying
+  snaptik.app
++ Creative Center
++ Pipi Ads
+### Imitate and innovate
+use the ads we found, then create our own based on whats already working
+
+### Combining the above for your best chance of success - Hybrid Power play
+
+take the ads you found, then come up with your own totally new angle/ad to test aainst the others
+
+## networks
+
+### POA
+
++ Smartfinancial - Car insurance
++ A4D - rnge of POA offers
++ MarketCall - pay per call offers
+
+### Clickbank
+www.clickbank.com
+
+### eCom CPA
++ M4trix.network
++ Giddyup.io
++ Jumbleberry
+
+
+## todo
 15分钟了解国外LEAD （国外广告联盟）如何轻松月入十万+？
 https://mp.weixin.qq.com/s/hxJAlYp8Qc7YrHLOBC08Yg
 
@@ -26,18 +120,6 @@ https://mp.weixin.qq.com/s/l-gApN3UQsv24PLpH1DXmA
 + 网络跟踪器（Cookies）：存储在潜在客户的网络浏览器中以识别特定访问的信息。通过联属网络营销，cookie 用于跟踪联属网络链接点击和潜在转化。
 + 链接隐藏（Link Cloaking）：使用比商家提供的更简洁的 URL 隐藏附属链接。链接隐藏可用于更好地管理链接并跟踪点击和转化。 联盟营销的优势及盈利形式
 
-
-TikTok Ads 结合必须正确使用的特定序列，以推广两种类型的附属产品。
-
-1 – Paid On action Offers
-
-2 – Clickbank Affiliate Offers
-
-如果您知道如何正确操作，那么两者在 TikTok 上的表现都非常出色。
-
-Paid On Action 是一种大多数人都不知道的附属模式，但它允许我们与大公司合作，每次有人填写表格时可以获得 10 至 45 美元的报酬，而且没有人需要为我们购买任何东西，有薪酬的。
-
-然后我们有 Clickbank，我相信你以前听说过，我们可以在那里推广大众市场类型的报价并获得佣金。
 
 
 EMU 联盟经理 IM洗白

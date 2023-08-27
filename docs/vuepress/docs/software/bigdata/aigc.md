@@ -18,6 +18,8 @@ Drag & drop UI to build your customized LLM flow https://github.com/FlowiseAI/Fl
 
 ## 应用
 
+### 文字转语音
+google bart
 ### PPT
 MotionGo是必优科技(原口袋动画团队)全新升级的一款PPT动画插件,兼容WPS和office软件,轻量级产品,让PPT动效表达更专业。
 https://motion.yoo-ai.com/?viaurl=ainavpro.com
