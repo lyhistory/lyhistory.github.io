@@ -6,6 +6,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《concurrency并发》
 
+## concurrency并发 VS Parallelism并行
 首先要明确个词的意思，首先引用：
 > Concurrency means multiple tasks which start, run, and complete in overlapping time periods, in no specific order. Parallelism is when multiple tasks OR several part of a unique task literally run at the same time, e.g. on a multi-core processor. Remember that Concurrency and parallelism are NOT the same thing.
 > https://howtodoinjava.com/java/multi-threading/concurrency-vs-parallelism/
@@ -35,7 +36,7 @@ concurrent control或者并发控制是关乎系统的consistency一致性，
 这个可以看我的zookeeper讲解，再比如kafka提供了exactly once的语义，意思是不会重复或丢失消息，但是也是取决于client的实现，实际项目中因为会涉及到跟其他产品比如数据库交互，
 其实从业务角度或者项目角度是难以实现exactly once的，所以要分清产品本身（server端和client端）能做到什么，以及结合到实际项目中又是会如何；
 
-另外关于并发的一个误区：handle并发并不一定需要多线程，比如nodejs，redis都是单线程处理的，原理就算通过event loop，再比如Disruptor框架
+另外关于并发的一个误区：handle并发并不一定需要多线程，比如nodejs，redis都是单线程处理的，原理就算通过event loop，再比如[Disruptor框架](/software/buildingblock/disruptor.md)是通过ringbuffer
 
 ## 1. 数据库Database Isolation
  
@@ -112,7 +113,7 @@ java sdk默认提供了非线程安全的队列和线程安全的队列，实际
 加锁的队列： ArrayBlockingQueue，LinkedBlockingQueue，但是有锁就有阻塞，所以性能会比较低
 
 但是，
-要处理高并发，肯定要考虑性能，有没有性能高即无锁non-blocking并且有界的队列呢，LMAX开发的Disruptor就是这么一个无锁高性能有界循环队列，
+**要处理高并发，肯定要考虑性能，有没有性能高即无锁non-blocking并且有界的队列呢，LMAX开发的Disruptor就是这么一个无锁高性能有界循环队列，**
 
 “It ensures that any data is owned by only one thread for write access, therefore reducing write contention compared to other structures.”
 

@@ -10,6 +10,9 @@ https://lmax-exchange.github.io/disruptor/
 http://lmax-exchange.github.io/disruptor/files/Disruptor-1.0.pdf
 https://github.com/LMAX-Exchange/disruptor/wiki/Getting-Started
 
+## 
+https://www.youtube.com/watch?v=DCdGlxBbKU4
+
 ## key concepts
 
 + Ring Buffer

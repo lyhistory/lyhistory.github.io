@@ -22,8 +22,10 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 ## load balance VS HA
 
-高可用不一定是负载均衡的，比如主备模式，只有主在干活；
-
+高可用不一定是负载均衡的，比如主备模式，只有主在干活，多活模式也是要具体看：
++ 例1 [redis](/software/buildingblock/redis.md)高可用，但是每次failover之后都不会平均分布，节点恢复后也不会重新均衡分配，最终可能会让主节点都在一台机器上，从而负载不均衡，即使不发生failover正常使用也很容易产生数据倾斜；
++ 例2 [kafka](/software/buildingblock/kafka.md)高可用同时也是负载均衡的，failover之后其他节点会 takeover，节点恢复之后会重新拿回之前分配给自己的topic partition;
+  
 load balance强调traffic load balance，或者work load balance，是否高可用呢，这就要看是不是简单的分流还是智能分流，比如123交给A做，456交给B做，那A挂了之后，如果是简单的分流，那123就不会智能的重新分配给B，A上的数据就会丢失，如果是智能分流，A挂了之后，B会接管则数据就不容易丢失（也不能保证不丢失，要具体看），比如kafka集群就是高可用的负载均衡；
 换言之，具体要看集群或多节点的一致性算法，如果没有一致性算法保证就只能是普通的分流，如果有就是所谓的高可用；
 
