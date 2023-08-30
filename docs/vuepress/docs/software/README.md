@@ -12,6 +12,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<h3>架构经验</h3>
 	<ul>
 		<li><a href="/docs/software/highlevel/architecture">架构解读</a></li>
+		<li><a href="/docs/software/highlevel/os">操作系统</a></li>
 		<li><a href="/docs/software/highlevel/designpattern">设计模式</a></li>
 		<li><a href="/docs/software/highlevel/distrubuted_system">分布式系统开发</a></li>	
 		<li><a href="/docs/software/highlevel/microservice">微服务</a></li>	

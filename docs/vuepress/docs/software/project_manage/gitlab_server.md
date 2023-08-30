@@ -3519,6 +3519,19 @@ chown git:root /var/log/gitlab/gitlab-shell/gitlab-shell.log
 
 就也可以找到https://docs.gitlab.com/ee/administration/gitaly/ 上面的答案
 
+### troubleshooting ldap
+```
+sudo gitlab-rake gitlab:ldap:check
+
+By default, the task returns a sample of 100 LDAP users. Change this limit by passing a number to the check task:
+
+sudo gitlab-rake gitlab:ldap:check[50]
+
+sudo gitlab-rake gitlab:ldap:group_sync
+
+```
+https://docs.gitlab.com/ee/administration/auth/ldap/ldap-troubleshooting.html
+
 ## Appendix
 
 防火墙状态：

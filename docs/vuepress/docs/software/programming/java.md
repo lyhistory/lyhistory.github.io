@@ -150,6 +150,57 @@ https://stackoverflow.com/questions/40480/is-java-pass-by-reference-or-pass-by-v
 JAVA版本：J2SE vs J2ME vs J2EE
 https://www.geeksforgeeks.org/j2se-vs-j2me-vs-j2ee-whats-the-difference/
 
+### 内部类 外部类
+
+在java内部类里，我们是能直接访问外部类的变量的。如下面例子所述：
+```
+public class OutterClass{
+  private String outterStr;
+
+  class InnerClass{
+    public void innerMethod(){
+      System.out.printf(outterStr);
+    }
+  }
+}
+```
+外部类OutterClass 的属性能够被InnerClass直接使用，从java语法上说，InnerClass在OutterClass的类里，outterStr这个外部类属性对InnerClass是可见的，所以InnerClass内部类能够被OutterClass直接使用，是没问题的。但是在虚拟机编译成字节码的时候，OutterClass这个外部类和InnerClass这个内部类是分别被编译成两个字节码文件的。也就是单从编译后的文件来看，OutterClass和InnerClass是两个独立的类，那么InnerClass是如何直接访问OutterClass属性的？如果直接访问，岂不是破坏了权限控制的原则？
+
+答案就在于虚拟机在生成InnerClass字节码和OutterClass字节码文件的时候做了一点手脚。
+
+将InnerClass字节码文件进行反编译之后，它的java代码不再是我们之前看到的那样,而是类似于:
+```
+class InnerClass{
+  private OutterClass outterClass;
+  InnerClass(OutterClass outterClass){
+    this.outterClass = outterClass;
+  }
+}
+```
+也就是说，虚拟机会在InnerClass的构造函数中在增加一个外部类对象的参数，将这个对象赋值给自己的成员变量。接下来InnerClass如何访问外部类的对象呢？答案在于OutterClass反编译后的文件。
+```
+public class OutterClass{
+  private String outterStr;
+  public String getOutterStr$1(){
+    return outterStr;
+  }
+}
+```
+也就是说虚拟机专门在OutterClass这个类里增加一个outterStr成员的方法，以方便InnerClass去获取这个变量。也就是说，InnerClass类变成了如下面貌：
+```
+class InnerClass{
+  private OutterClass outterClass;
+  InnerClass(OutterClass outterClass){
+    this.outterClass = outterClass;
+  }
+  public void innerMethod(){
+    System.out.printf(outterClass.getOutterStr$1());
+  }
+}
+```
+于是即便是两个独立的字节码文件，InnerClass访问OutterClass的成员也变得顺理成章了。
+由此我们也可以从中感受到虚拟机开发人员设计的巧妙，既不违反顶层语言的语法规则，又不违反自己中间代码的原则。 
+
 ### [POJO VS Java Beans](https://www.tutorialspoint.com/pojo-vs-java-beans)**
 POJO: Plain-Old-Java-Object
 Java Beans: The only difference between both the classes is Java make java beans objects serialized so that the state of a bean class could be preserved in case required.

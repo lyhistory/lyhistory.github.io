@@ -4,16 +4,77 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
+## What's
+
+Disruptor 是 LMAX开发的开源 Java library，是用来处理海量 transactions 并且低延迟（没有复杂的并发代码）的并发编程框架，其性能优化的思路是通过一种特殊的软件设计来充分发挥底层硬件的效率。 
+
 single thread queue - LMAX DisruptorHigh Performance Inter-Thread Messaging Library 
 https://lmax-exchange.github.io/disruptor/
 
 http://lmax-exchange.github.io/disruptor/files/Disruptor-1.0.pdf
 https://github.com/LMAX-Exchange/disruptor/wiki/Getting-Started
 
-## 
-https://www.youtube.com/watch?v=DCdGlxBbKU4
 
-## key concepts
+## Mechanical Sympathy
+
+This is all about understanding how the underlying hardware operates and programming in a way that best works with that hardware.
+
+For example, let's see how CPU and memory organization can impact software performance. The CPU has several layers of cache between it and main memory. When the CPU is performing an operation, it first looks in L1 for the data, then L2, then L3, and finally, the main memory. The further it has to go, the longer the operation will take.
+
+If the same operation is performed on a piece of data multiple times (for example, a loop counter), it makes sense to load that data into a place very close to the CPU.
+
+| Latency from CPU to |  CPU cycles   |      Time       |
+|---------------------|---------------|-----------------|
+|     Main memory     |   Multiple    |    ~60-80 ns    |
+|      L3 cache       | ~40-45 cycles |     ~15 ns      |
+|      L2 cache       |  ~10 cycles   |      ~3 ns      |
+|      L1 cache       |  ~3-4 cycles  |      ~1 ns      |
+|      Register       |    1 cycle    | Very very quick |
+
+1. Distilling a Model
+2. Understand the Safety Features
+3. Importance of Testing
+4. Let Data drive Decisions
+5. Mechanical Sympathy in Action
+
+
+
+A model is a representation of the domain in a given context.
+
+Map != Territory
+Model != Domain
+Software != Real World
+
+Distil the essence of what represents the domain
+
+Testing is about gaining experimental evidence to prove the model
+
+Apply telemetry and perform real-time monitoring on the data
+
+Telemetry not only informs the design it also allows for the tuning of a system in production
+
+https://www.infoq.com/presentations/mechanical-sympathy/#downloadPdf/
+
+## Why
+
+并发一定要多线程吗？多线程一定性能好（吞吐transaction per sec、延时 latency）吗？单线程一定不好吗？
+开发者了解瓶颈在哪吗？
+开发者对如何利用硬件（os架构）了解吗？
+
+### Why Not Queues（普通的queue）
+
+1. contention - solved by 'block' but switch to kernel invalid the cache（竞争导致锁升级会陷入内核态）
+Queue implementations tend to have write contention on the head, tail, and size variables. (Queues are typically always close to full or close to empty due to the differences in pace between consumers and producers. They very rarely operate in a balanced middle ground where the rate of production and consumption is evenly matched.)
+
+To deal with the write contention, a queue often uses locks（比如java的线程安全的blockingqueue）, which can cause a context switch to the kernel. When this happens the processor involved is likely to lose the data in its caches.
+
+To get the best caching behavior, the design should have only one core writing to any memory location (multiple readers are fine, as processors often use special high-speed links between their caches). Queues fail the one-writer principle.
+
+2. cache line false sharing issue
+If two separate threads are writing to two different values, each core invalidates the cache line of the other (data is transferred between main memory and cache in blocks of fixed size, called cache lines). That is a write-contention between the two threads even though they're writing to two different variables. This is called false sharing, because every time the head is accessed, the tail gets accessed too, and vice versa.
+
+## How Disruptor Work
+### key concepts
 
 + Ring Buffer
 
@@ -58,5 +119,8 @@ https://emacsist.github.io/2019/10/12/disruptor%E5%AD%A6%E4%B9%A0/
 javadoc
 
 https://javadoc.io/doc/com.lmax/disruptor/latest/index.html
+
+
+https://www.youtube.com/watch?v=DCdGlxBbKU4
 
 <disqus/>

@@ -1,1 +1,50 @@
-https://www.baeldung.com/java-false-sharing-contended
+
++ CPU Processor
+  - register
+  - program counter
++ Cache
+  SRAM Static RAM
++ RAM:Main Memory
+  RAM is also known as the main memory of the computer because the CPU of the computer can access all memory cells of the RAM directly. In modern computer, RAM is made up of semiconductor materials and found in the form of ICs.
+  DRAM - Dynamic random access memory is a type of semiconductor memory that is typically used for the data or program code needed by a computer processor to function. DRAM is a common type of random access memory (RAM) that is used in personal computers (PCs), workstations and servers.
++ ROM:
+  it is used to store those parts of computer instructions and programs that do not required to be changed like BIOS. Therefore, ROM is used to make computer firmware. Generally, data is stored in the RAM during the process of manufacturing. ROM is also a type of semiconductor memory and built in the form of ICs.
+
+  ROM stores the data permanently, thus it is a non-volatile memory which means it holds the data even when the computer is switched off. The CPU of the computer can only read data from the memory cells of ROM, but cannot change.
++ Hard Disk
+
+Processors 和 main memory 之间存在 different levels of caching: store buffer L1 L2 L3 
+
+A memory buffer register (MBR) or memory data register (MDR) is the register in a computer's CPU that stores the data being transferred to and from the immediate access storage. It contains a copy of the value in the memory location specified by the memory address register. It acts as a buffer, allowing the processor and memory units to act independently without being affected by minor differences in operation. A data item will be copied to the MBR ready for use at the next clock cycle, when it can be either used by the processor for reading or writing, or stored in main memory after being written.
+
+This register holds the contents of the memory which are to be transferred from memory to other components or vice versa. A word to be stored must be transferred to the MBR, from where it goes to the specific memory location, and the arithmetic data to be processed in the ALU first goes to MBR and then to accumulated register, and then it is processed in the ALU.
+
+The MDR is a two-way register. When data is fetched from memory and placed into the MDR, it is written to go in one direction. When there is a write instruction, the data to be written is placed into the MDR from another CPU register, which then puts the data into memory.
+
+The memory data register is half of a minimal interface between a microprogram and computer storage; the other half is a memory address register (MAR).
+
+
+指令寄存器和程序计数器
+
+https://www.baeldung.com/cs/registers-and-ram
+
+## false sharing
+sometimes false sharing can turn multithreading against us.
+
+most modern processors not only cache the requested value but also cache a few more nearby values. This optimization is based on the idea of spatial locality and can significantly improve the overall performance of applications. Simply put, processor caches are working in terms of cache lines, instead of single cacheable values.
+
+When multiple processors are operating on the same or nearby memory locations, they may end up sharing the same cache line. In such situations, it's essential to keep those overlapping caches in different cores consistent with each other. The act of maintaining such consistency is called cache coherency.
+
+There are quite a few protocols to maintain the cache coherency between CPU cores. In this article, we're going to talk about the MESI protocol.
+
+In the MESI protocol, each cache line can be in one of these four distinct states: 
+- Modified, 
+- Exclusive, 
+- Shared, or 
+- Invalid. 
+
+todo 翻译 https://www.baeldung.com/java-false-sharing-contended
+
+### example: LongAdder.java
+[LongAdder.java](https://github.com/openjdk/jdk/blob/master/src/java.base/share/classes/java/util/concurrent/atomic/LongAdder.java)
+[Striped64.java](https://github.com/openjdk/jdk/blob/master/src/java.base/share/classes/java/util/concurrent/atomic/Striped64.java)

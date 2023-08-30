@@ -24,7 +24,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 
 
-## 1.线程安全：多线程与单线程
+## 线程安全概述
 
 ![](/docs/docs_image/software/threadsafe/threadsafe00.png)
 
@@ -66,15 +66,28 @@ webscoket的连接等；
 
 **如何保证多线程在竞争资源时的安全？**
 
-1）多线程编程安全最“简单”的方式就是加锁；
-	锁升级：偏向锁（不加锁，记录threadid）、自旋锁（占用cpu，死循环等待）、重量级锁（内核态，操作系统级别）
+1）多线程编程安全最“简单”的方式就是加锁（悲观锁）；
+锁升级：偏向锁（不加锁，记录threadid）、自旋锁（占用cpu，死循环等待）、重量级锁（内核态，操作系统级别）
+Java 中实现悲观锁的方式主要有以下两种：
++ synchronized 关键字：Java 中最常见的实现悲观锁的方式就是使用 synchronized 关键字。当一个线程进入代码块时，其他线程会被阻塞，直到当前线程执行完毕。
+
++ Lock 接口：Java 5 提供了 Lock 接口来替代 synchronized 关键字。Lock 接口中定义了 lock() 和 unlock() 方法，用来上锁和解锁。与 synchronized 不同的是，Lock 接口支持公平锁和非公平锁两种方式，并且可以在特定时间内尝试获取锁。
+
+悲观锁的优点是可以保证数据操作的一致性，避免并发冲突。但是它会导致系统资源利用不充分、效率低下，因为所有其他线程只有等待当前线程释放锁之后才能执行。
 
 2）另一种方式自然是“不加锁”，网上经常混淆各种概念，总结一下无锁基本两种思路：
 
 + 引入一个有界或无界队列来排队，实际上队列也分为有锁和无锁的，具体可以看我前面写的[并发控制concurrent](/docs/software/highlevel/concurrent)，
-所以相当于把多线程的水龙头对接到一个队列上，把对共享资源的访问通过排队的方式隔离开，至于队列本身的实现同样可以参考我写的并发控制一章，所以多线程安全问题转换成了如何排队的问题；
+	所以相当于把多线程的水龙头对接到一个队列上，把对共享资源的访问通过排队的方式隔离开，至于队列本身的实现同样可以参考我写的并发控制一章，所以多线程安全问题转换成了如何排队的问题；
 
-+ 乐观锁方式比如CAS Atomic https://blog.csdn.net/javazejian/article/details/72772470
++ 乐观锁方式
+	- 版本号机制：数据库中记录每条数据更新的版本号，在更新某条数据时，先取出当前的版本号，然后将新的版本号加 1，并且与原版本号进行比较。如果两个版本号相同，则说明数据未被其他线程修改，可以执行更新操作；如果不同，则表示有其他线程已经修改过该数据，需要重新获取最新版本号再试一次。
+
+	- 时间戳机制：数据库中记录每条数据修改的时间戳。当有线程要更新数据时，它会通过比较自己持有的时间戳和数据库中的时间戳来判断该数据是否被其他线程修改过。如果时间戳相同，则更新成功；如果不同，则需要重新获取最新时间戳并重试。
+	
+	乐观锁的优点是能够充分利用系统资源，提高并发性。但是，由于多个线程可以同时对同一数据进行操作，因此会导致版本号（或时间戳）频繁变化，需要额外的开销用于维护版本号。
+	本质就是基于CAS实现的，
+	[java中常见的就是基于CAS AtomicInteger或AtomicReference（注意：1.AtomicInteger本身是自旋锁 2.AtomicInteger在多核的情况下依然会有锁LOCK_IF_MP） ](#cas-compare-and-swap-自旋锁java-atomicinteger-为例)
 
 
 **关于线程安全问题，还有两个不可忽视的重要问题，比如高并发下引起的jmm内存溢出，以及jvm优化的指令重排问题instruction reordering**
@@ -92,54 +105,9 @@ b)存在数据依赖关系的不允许重排序
 任何一个环节都可能有问题，数据库层面已经帮我们做好了一定程度的处理，参考我在[并发一文中提到的数据库隔离水平](/docs/software/highlevel/concurrent)，但是应用层还需要我们自己做好处理，另外过高的并发还可能引起内存溢出、指令重排，
 这个又涉及到底层比如JVM级别的优化处理；
 
-## 2.深入解读
-
-### 2.1 锁升级
-
-我们现在以java的上下文来探讨锁机制，
-
-想想多线程竞争资源的本质，想安全的使用竞争资源就需要一种“锁”机制，注意，有人可能会说不是说不用锁也可以么，java的上下文中，“无锁”也是一种“锁”，java锁的本质就是在对象头的标志位更改；
-
-然后再抽象的说，多线程竞争资源做到安全获取锁，本质就是通过锁这种机制获取对资源的临时占有，关键问题是在jvm中就完成，还是要下到内核中去完成，在jvm中完成就是相对轻量级的锁，如果需要操作系统介入，交给内核去处理就是相对重量级的锁，由于jvm用户态的线程跟内核态的线程是有一一对应关系的，所以再换句话说，线程的切换是在用户态就完成，还是要到内核态去切换
-
-synchronized锁升级和jol https://www.cnblogs.com/katsu2017/p/12610002.html
-
-synchronized锁升级优化 https://zhuanlan.zhihu.com/p/92808298
-
-https://zhuanlan.zhihu.com/p/61892830
-jvm用户态的线程和内核的线程的对应关系；
-
-JDK1.2之前，绿色线程——用户线程。JDK1.2——基于操作系统原生线程模型来实现。Sun JDK,它的Windows版本和Linux版本都使用一对一的线程模型实现，一条Java线程就映射到一条轻量级进程之中。
-Solaris同时支持一对一和多对多。
-
-重量级是指需要内核态的参与（操作系统、内核、系统总线、南北桥）；
-
-jdk1.6之前 synchronize是重量级，之后实现上变成了是轻量级
-
-所谓的锁升级，各种级别的锁，实际判断或者改变的是实例的头部header
-
-无锁态
-
-偏向锁
-
-自旋锁（说白了就是死循环等待，一般是依赖于CAS实现，CAS是通过cpu原语LOCK_IF_MP锁定整个消息总线的方式保证原子性，所以可见整个过程没有真正的锁，是通过CAS底层原子性来实现的“锁机制”）
-消耗内存
-等待时间长；
-等待线程多；
-
-特别的对于CAS实现来说，如果大量写不适合；
-
-升级到重量级
 
 
-
-自旋锁举例：实现CAS算法的乐观锁
-
-Java中CAS底层实现原理分析cpu的原语**LOCK_IF_MP** https://my.oschina.net/u/4339514/blog/4181506/print
-
-
-
-### 2.2 内存模型与竞争资源
+## 内存模型与竞争资源
 
 ![](/docs/docs_image/software/threadsafe/threadsafe01.png)
 
@@ -157,8 +125,203 @@ JMM即java内存模型规范是个抽象概念，本质上跟上面所描述的c
 
 高并发下JMM的指令重排(volatile可以禁用指令重排)
 
+## 锁机制解读
 
-### 2.3 静态static与单例singleton的线程安全
+### CAS-compare and swap 自旋锁(java AtomicInteger 为例)
+
+还是以 i++ 为例
+
+```
+public class AtomicIntegerTest {
+    private static int count = 0;
+
+    public static void increment() {
+        count++;
+    }
+
+    public static void main(String[] args) {
+        IntStream.range(0, 100)
+                .forEach(i->
+                        new Thread(()->IntStream.range(0, 1000)
+                                .forEach(j->increment())).start());
+
+        // 这里使用2或者1看自己的机器
+        // 我这里是用run跑大于2才会退出循环
+        // 但是用debug跑大于1就会退出循环了
+        while (Thread.activeCount() > 1) {
+            // 让出CPU
+            Thread.yield();
+        }
+
+        System.out.println(count);
+    }
+}
+
+这里起了100个线程，每个线程对count自增1000次，你会发现每次运行的结果都不一样，但它们有个共同点就是都不到100000次，所以直接使用int是有问题的。
+
+public class AtomicIntegerTest {
+    private static AtomicInteger count = new AtomicInteger(0);
+
+    public static void increment() {
+        count.incrementAndGet();
+    }
+
+    public static void main(String[] args) {
+        IntStream.range(0, 100)
+                .forEach(i->
+                        new Thread(()->IntStream.range(0, 1000)
+                                .forEach(j->increment())).start());
+
+        // 这里使用2或者1看自己的机器
+        // 我这里是用run跑大于2才会退出循环
+        // 但是用debug跑大于1就会退出循环了
+        while (Thread.activeCount() > 1) {
+            // 让出CPU
+            Thread.yield();
+        }
+
+        System.out.println(count);
+    }
+}
+这里总是会打印出100000。
+```
+todo 整理：https://xie.infoq.cn/article/79fd68d510b0a52324d6ca7e1 + https://xie.infoq.cn/article/5b2731c61bd4e7966c898314d + https://my.oschina.net/u/4339514/blog/4181506/print
+
+https://blog.csdn.net/fengyuyeguirenenen/article/details/123646048
+
+https://juejin.cn/post/7075293889271169060#heading-10
+
+多核仍然要lock - Java中CAS底层实现原理分析cpu的原语**LOCK_IF_MP**
+
+自旋锁举例：实现CAS算法的乐观锁
+```
+/**
+ * 题目：实现一个自旋锁
+ * 自旋锁好处：循环比较获取没有类似wait的阻塞。
+ *
+ * 通过CAS操作完成自旋锁，A线程先进来调用myLock方法自己持有锁5秒钟，B随后进来后发现
+ * 当前有线程持有锁，不是null，所以只能通过自旋等待，直到A释放锁后B随后抢到。
+ */
+public class SpinLockDemo
+{
+    AtomicReference<Thread> atomicReference = new AtomicReference<>();
+
+    public void myLock()
+    {
+        Thread thread = Thread.currentThread();
+        System.out.println(Thread.currentThread().getName()+"\t come in");
+        while(!atomicReference.compareAndSet(null,thread))
+        {
+
+        }
+    }
+
+    public void myUnLock()
+    {
+        Thread thread = Thread.currentThread();
+        atomicReference.compareAndSet(thread,null);
+        System.out.println(Thread.currentThread().getName()+"\t myUnLock over");
+    }
+
+    public static void main(String[] args)
+    {
+        SpinLockDemo spinLockDemo = new SpinLockDemo();
+
+        new Thread(() -> {
+            spinLockDemo.myLock();
+            try { TimeUnit.SECONDS.sleep( 5 ); } catch (InterruptedException e) { e.printStackTrace(); }
+            spinLockDemo.myUnLock();
+        },"A").start();
+
+        //暂停一会儿线程，保证A线程先于B线程启动并完成
+        try { TimeUnit.SECONDS.sleep( 1 ); } catch (InterruptedException e) { e.printStackTrace(); }
+
+        new Thread(() -> {
+            spinLockDemo.myLock();
+            spinLockDemo.myUnLock();
+        },"B").start();
+
+    }
+}
+
+```
+
+CAS虽然很高效的解决了原子操作问题，但是CAS仍然存在三大问题。
++ 循环时间长开销很大。
++ 只能保证一个共享变量的原子操作。
++ ABA问题。
+
+https://cloud.tencent.com/developer/article/1614763
+
+https://blog.csdn.net/javazejian/article/details/72772470
+
+### 锁升级（状态变化）
+
+Synchronized 使用的是用户态的CAS 而futex的 CAS是内核态 
+
+Mutual exclusion (mutex) algorithms are used to prevent processes simultaneously using a common resource. A fast user-space mutex (futex) is a tool that allows a user-space thread to claim a mutex without requiring a context switch to kernel space, provided the mutex is not already held by another thread.
+
+#### linux 锁 - futex
+
+futex不是个完整的锁，他是“支持实现userspace的锁的building block“。也就是说，如果你想实现一个mutex，但不想把整个mutex都弄到内核里面去，可以通过futex来实现。但futex本身主要就是俩系统调用futex_wait和futex_wake.
+
+https://www.zhihu.com/question/393124801/answer/1210081499
+
+
+#### C++ 锁 - mutex
+
+https://zhuanlan.zhihu.com/p/345530854
+https://www.geeksforgeeks.org/mutex-lock-for-linux-thread-synchronization/
+
+#### java锁 - synchronized/lock()
+
+https://tech.meituan.com/2018/11/15/java-lock.html
+
+|          锁/类型          | 公平/非公平锁 | 可重入/不可重入锁 |   共享/独享锁    | 乐观/悲观锁 |
+|------------------------|---------|-----------|-------------|--------|
+|      synchronized      |  非公平锁   |   可重入锁    |     独享锁     |  悲观锁   |
+|     ReentrantLock      |   都支持   |   可重入锁    |     独享锁     |  悲观锁   |
+| ReentrantReadWriteLock |   都支持   |   可重入锁    | 读锁-共享，写锁-独享 |  悲观锁   |
+
+
+https://cloud.tencent.com/developer/article/1082708
+
+想想多线程竞争资源的本质，想安全的使用竞争资源就需要一种“锁”机制，注意，有人可能会说不是说不用锁也可以么，java的上下文中，“无锁”也是一种“锁”，java锁的本质就是在对象头的标志位更改；
+
+然后再抽象的说，多线程竞争资源做到安全获取锁，本质就是通过锁这种机制获取对资源的临时占有，关键问题是在jvm中就完成，还是要下到内核中去完成，在jvm中完成就是相对轻量级的锁，如果需要操作系统介入，交给内核去处理就是相对重量级的锁，由于jvm用户态的线程跟内核态的线程是有一一对应关系的，所以再换句话说，线程的切换是在用户态就完成，还是要到内核态去切换
+
+synchronized锁升级和jol https://www.cnblogs.com/katsu2017/p/12610002.html
+
+synchronized锁升级优化 https://zhuanlan.zhihu.com/p/92808298
+
+https://zhuanlan.zhihu.com/p/61892830
+jvm用户态的线程和内核的线程的对应关系；
+
+JDK1.2之前，绿色线程——用户线程。JDK1.2——基于操作系统原生线程模型来实现。Sun JDK,它的Windows版本和Linux版本都使用一对一的线程模型实现，一条Java线程就映射到一条轻量级进程之中。
+Solaris同时支持一对一和多对多。
+
+重量级是指需要内核态的参与（操作系统、内核、系统总线、南北桥）；
+
+JDK 1.6之前，synchronized 还是一个重量级锁，是一个效率比较低下的锁。但是在JDK 1.6后，JVM为了提高锁的获取与释放效率对synchronized 进行了优化，引入了偏向锁和轻量级锁 ，从此以后锁的状态就有了四种：无锁、偏向锁、轻量级锁、重量级锁。并且四种状态会随着竞争的情况逐渐升级，而且是不可逆的过程，即不可降级，这四种锁的级别由低到高依次是：无锁、偏向锁，轻量级锁，重量级锁。
+
+无锁态
+
+偏向锁
+
+自旋锁（说白了就是死循环等待，一般是依赖于CAS实现，CAS是通过cpu原语LOCK_IF_MP锁定整个消息总线的方式保证原子性，所以可见整个过程没有真正的锁，是通过CAS底层原子性来实现的“锁机制”）
+消耗内存
+等待时间长；
+等待线程多；
+
+特别的对于CAS实现来说，如果大量写不适合；
+
+升级到重量级
+
+
+例子：blockingqueue https://www.cnblogs.com/WangHaiMing/p/8798709.html
+
+## 编程考虑
+### 静态static与单例singleton的线程安全
 
 关于static及singleton：
 	Singleton可以是static的，static是vm级别的静态变量，singleton可以是application级别的单例，如果是vm级别的，需要考虑application之间的冲突,如果是standalone程序，则可以使用vm static，引用一段shiro关于SecurityManager的注释：
@@ -195,7 +358,7 @@ init(write at application start) and used(read) from everywhere, 比如Concurren
 	http://hectorcorrea.com/blog/log4net-thread-safe-but-not-process-safe/17
 
 
-#### Use it in thread-safe way
+### Use it in thread-safe way
 System.timer
 It will Continue Executing on different thread
 So set autoreset=false
@@ -206,18 +369,7 @@ Refer:
 https://odetocode.com/articles/313.aspx
 
 
-
-## 3.拓展：进程安全
-
-对于分布式系统来说，同样存在着访问竞争资源的问题，比如最基本的是竞争称为leader，这个一般就需要采用一种“分布式锁”来进行资源保护，
-
-分布式锁的常见实现方式：
-+ 基于数据库 select for update
-+ 基于redis
-+ 基于zookeeper的ephemeral sequential node
-
-
-## 例子
+todo:
 Java Concurrency issues and Thread Synchronization
 https://www.callicoder.com/java-concurrency-issues-and-thread-synchronization/#:~:text=Memory%20inconsistency%20errors%20occur%20when,up%20using%20the%20old%20data.
 
@@ -241,6 +393,15 @@ System.timer Thread.timer
 
 腾讯面试官：如何停止一个正在运行的线程？
 https://mp.weixin.qq.com/s/9xjGYbcNwl1aQY5GNOx58g
+
+## 进程安全 - 分布式锁
+
+对于分布式系统来说，同样存在着访问竞争资源的问题，比如最基本的是竞争称为leader，这个一般就需要采用一种“分布式锁”来进行资源保护，
+
+分布式锁的常见实现方式：
++ 基于数据库 select for update
++ 基于redis
++ 基于zookeeper的ephemeral sequential node
 
 
 <disqus/>
