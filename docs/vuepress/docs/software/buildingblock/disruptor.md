@@ -57,13 +57,14 @@ https://www.infoq.com/presentations/mechanical-sympathy/#downloadPdf/
 
 ## Why
 
+### multithread?
 并发一定要多线程吗？多线程一定性能好（吞吐transaction per sec、延时 latency）吗？单线程一定不好吗？
 开发者了解瓶颈在哪吗？
 开发者对如何利用硬件（os架构）了解吗？
 
 ### Why Not Queues（普通的queue）
 
-1. contention - solved by 'block' but switch to kernel invalid the cache（竞争导致锁升级会陷入内核态）
+1. contention(write->enqueue,read[actually also write]->dequeue) - solved by 'block' but will switch to kernel invalid the cache（竞争导致锁升级会陷入内核态）
 Queue implementations tend to have write contention on the head, tail, and size variables. (Queues are typically always close to full or close to empty due to the differences in pace between consumers and producers. They very rarely operate in a balanced middle ground where the rate of production and consumption is evenly matched.)
 
 To deal with the write contention, a queue often uses locks（比如java的线程安全的blockingqueue）, which can cause a context switch to the kernel. When this happens the processor involved is likely to lose the data in its caches.
@@ -74,6 +75,15 @@ To get the best caching behavior, the design should have only one core writing t
 If two separate threads are writing to two different values, each core invalidates the cache line of the other (data is transferred between main memory and cache in blocks of fixed size, called cache lines). That is a write-contention between the two threads even though they're writing to two different variables. This is called false sharing, because every time the head is accessed, the tail gets accessed too, and vice versa.
 
 ## How Disruptor Work
+
+![Figure 1](./disruptor.png)
+
+Disruptor has an array based circular data structure (ring buffer). It is an array that has a pointer to next available slot. It is filled with pre-allocated transfer objects. Producers and consumers perform writing and reading of data to the ring without locking or contention.
+
+In a Disruptor, all events are published to all consumers (multicast), for parallel consumption through separate downstream queues. Due to parallel processing by consumers, it is necessary to coordinate dependencies between the consumers (dependency graph).
+
+Producers and consumers have a sequence counter to indicate which slot in the buffer it is currently working on. Each producer/consumer can write its own sequence counter but can read other's sequence counters. The producers and consumers read the counters to ensure the slot it wants to write in is available without any locks.
+
 ### key concepts
 
 + Ring Buffer
@@ -112,6 +122,315 @@ If two separate threads are writing to two different values, each core invalidat
 
 它是用户定义的代码, 调用 `Disruptor` 将事件进队. 这个概念并没有特定的代码表示.
 
+### solve contention & false sharing issue 解决上面的问题
+#### 1. solve contention issue
+
+无锁那基本就是 CAS - compare and swap
+
+Lock Free:
+
+All memory visibility and correctness guarantees are implemented using memory barriers and/or compare-and-swap operations.
+
+There is only one use-case where an actual lock is required and that is within the BlockingWaitStrategy.
+
+This is done solely for the purpose of using a condition so that a consuming thread can be parked while waiting for new events to arrive. Many low-latency systems will use a busy-wait to avoid the jitter that can be incurred by using a condition; however, in number of system busy-wait operations can lead to significant degradation in performance, especially where the CPU resources are heavily constrained, e.g. web servers in virtualised-environments.
+
+
++ Single vs. Multiple Producers
+    One of the best ways to improve performance in concurrent systems is to adhere to the [Single Writer Principle](https://mechanical-sympathy.blogspot.com/2011/09/single-writer-principle.html), this applies to the Disruptor. If you are in the situation where there will only ever be a single thread producing events into the Disruptor, then you can take advantage of this to gain additional performance.
+
+    如果想避免contention，使用Disruptor的时候需要指定SingleProducer模式，
+    只有一个producer写入ringbuffer，producer和consumer各自维护自己的sequence数值，通过SequenceBarrier来保证Producer不会比consumer更快（保证还没有被消费的数据不会被覆盖）
++ Alternative Wait Strategies
+
+    The default WaitStrategy used by the Disruptor is the BlockingWaitStrategy. Internally the BlockingWaitStrategy uses a typical lock and condition variable to handle thread wake-up. The BlockingWaitStrategy is the slowest of the available wait strategies, but is the most conservative with the respect to CPU usage and will give the most consistent behaviour across the widest variety of deployment options.
+
+    - SleepingWaitStrategy →
+    Like the BlockingWaitStrategy the SleepingWaitStrategy it attempts to be conservative with CPU usage by using a simple busy wait loop. The difference is that the SleepingWaitStrategy uses a call to LockSupport.parkNanos(1) in the middle of the loop. On a typical Linux system this will pause the thread for around 60µs.
+
+    This has the benefits that the producing thread does not need to take any action other increment the appropriate counter and that it does not require the cost of signalling a condition variable. However, the mean latency of moving the event between the producer and consumer threads will be higher.
+
+    It works best in situations where low latency is not required, but a low impact on the producing thread is desired. A common use case is for asynchronous logging.
+
+    - YieldingWaitStrategy →
+
+    The YieldingWaitStrategy is one of two WaitStrategys that can be use in low-latency systems. It is designed for cases where there is the option to burn CPU cycles with the goal of improving latency.
+
+    The YieldingWaitStrategy will busy spin, waiting for the sequence to increment to the appropriate value. Inside the body of the loop Thread#yield() will be called allowing other queued threads to run.
+
+    This is the recommended wait strategy when you need very high performance, and the number of EventHandler threads is lower than the total number of logical cores, e.g. you have hyper-threading enabled.
+
+    - BusySpinWaitStrategy →
+
+    The BusySpinWaitStrategy is the highest performing WaitStrategy. Like the YieldingWaitStrategy, it can be used in low-latency systems, but puts the highest constraints on the deployment environment.
+
+    This wait strategy should only be used if the number of EventHandler threads is lower than the number of physical cores on the box, e.g. hyper-threading should be disabled.
+
+#### 2. solve cache line false sharing issue by padding
+
+```
+class LhsPadding
+{
+    protected long p1, p2, p3, p4, p5, p6, p7;
+}
+
+class Value extends LhsPadding
+{
+    protected volatile long value;
+}
+
+class RhsPadding extends Value
+{
+    protected long p9, p10, p11, p12, p13, p14, p15;
+}
+```
+
+#### 3. More performance improvement: Event Pre-allocation
+One of the goals of the Disruptor is to enable use within a low latency environment. Within low-latency systems it is necessary to reduce or remove memory allocations. In Java-based system the purpose is to reduce the number stalls due to garbage collection [1].
+
+To support this the user is able to preallocate the storage required for the events within the Disruptor. During construction and EventFactory is supplied by the user and will be called for each entry in the Disruptor’s Ring Buffer. When publishing new data to the Disruptor the API will allow the user to get hold of the constructed object so that they can call methods or update fields on that store object. The Disruptor provides guarantees that these operations will be concurrency-safe as long as they are implemented correctly.
+
+#### 4. Multicast Events & Consumer Dependency Graph
+
+This is the biggest behavioural difference between queues and the Disruptor.
+
+When you have multiple consumers listening on the same Disruptor, it publishes all events to all consumers. In contrast, a queue will only send a single event to a single consumer. You can use this behaviour of the Disruptor when you need to independent multiple parallel operations on the same data.
+Example use-case:
+The canonical example from LMAX is where we have three operations: - journalling (writing the input data to a persistent journal file); - replication (sending the input data to another machine to ensure that there is a remote copy of the data); - and business logic (the real processing work).
+
+To support real world applications of the parallel processing behaviour it was necessary to support co-ordination between the consumers. Referring back to the example described above, it is necessary to prevent the business logic consumer from making progress until the journalling and replication consumers have completed their tasks. We call this concept “gating” (or, more correctly, the feature is a form of “gating”).
+
+“Gating” happens in two places:
+
++ Firstly we need to ensure that the producers do not overrun consumers. This is handled by adding the relevant consumers to the Disruptor by calling RingBuffer.addGatingConsumers(). 就是说Producer和consumer各自维护自己的sequence number，然后让consumer可以读取Producer的sequence number，比如Producer生产到producer.seq=10，consumer现在读取到consumer.seq=4，然后consumer就知道自己可以继续读取[5,6,7,8,9,10]
+
++ Secondly, the case referred to previously is implemented by constructing a SequenceBarrier containing Sequences from the components that must complete their processing first.
+
+Referring to [Figure 1] there are 3 consumers listening for Events from the Ring Buffer. There is a dependency graph in this example.
+
+The ApplicationConsumer depends on the JournalConsumer and ReplicationConsumer. This means that the JournalConsumer and ReplicationConsumer can run freely in parallel with each other. The dependency relationship can be seen by the connection from the ApplicationConsumer's SequenceBarrier to the Sequences of the JournalConsumer and ReplicationConsumer.
+
+It is also worth noting the relationship that the Sequencer has with the downstream consumers. One of its roles is to ensure that publication does not wrap the Ring Buffer. To do this none of the downstream consumer may have a Sequence that is lower than the Ring Buffer’s Sequence less the size of the Ring Buffer.
+
+However, by using the graph of dependencies an interesting optimisation can be made. Because the ApplicationConsumer's Sequence is guaranteed to be less than or equal to that of the JournalConsumer and ReplicationConsumer (that is what that dependency relationship ensures) the Sequencer need only look at the Sequence of the ApplicationConsumer. In a more general sense the Sequencer only needs to be aware of the Sequences of the consumers that are the leaf nodes in the dependency tree.
+
+### 注意:Disruptor 默认是MultiProducer+BlockingWaitStrategy也就是加锁的策略
+
+```
+this.disruptor = new Disruptor<>(KafkaEventWrapper::new, 1 << queueSizeBits, new NamedThreadFactory(threadPrefix));
+
+public Disruptor(final EventFactory<T> eventFactory, final int ringBufferSize, final ThreadFactory threadFactory)
+    {
+        this(RingBuffer.createMultiProducer(eventFactory, ringBufferSize), new BasicExecutor(threadFactory));
+    }
+public static <E> RingBuffer<E> createMultiProducer(EventFactory<E> factory, int bufferSize)
+    {
+        return createMultiProducer(factory, bufferSize, new BlockingWaitStrategy());
+    }
+/**
+ * Blocking strategy that uses a lock and condition variable for {@link EventProcessor}s waiting on a barrier.
+ * <p>
+ * This strategy can be used when throughput and low-latency are not as important as CPU resource.
+ */
+public final class BlockingWaitStrategy implements WaitStrategy
+{
+    private final Lock lock = new ReentrantLock();
+    private final Condition processorNotifyCondition = lock.newCondition();
+
+    @Override
+    public long waitFor(long sequence, Sequence cursorSequence, Sequence dependentSequence, SequenceBarrier barrier)
+        throws AlertException, InterruptedException
+    {
+        long availableSequence;
+        if (cursorSequence.get() < sequence)
+        {
+            lock.lock();
+            try
+            {
+                while (cursorSequence.get() < sequence)
+                {
+                    barrier.checkAlert();
+                    processorNotifyCondition.await();
+                }
+            }
+            finally
+            {
+                lock.unlock();
+            }
+        }
+
+        while ((availableSequence = dependentSequence.get()) < sequence)
+        {
+            barrier.checkAlert();
+            ThreadHints.onSpinWait();
+        }
+
+        return availableSequence;
+    }
+
+    @Override
+    public void signalAllWhenBlocking()
+    {
+        lock.lock();
+        try
+        {
+            processorNotifyCondition.signalAll();
+        }
+        finally
+        {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public String toString()
+    {
+        return "BlockingWaitStrategy{" +
+            "processorNotifyCondition=" + processorNotifyCondition +
+            '}';
+    }
+}
+public static <E> RingBuffer<E> createMultiProducer(
+        EventFactory<E> factory,
+        int bufferSize,
+        WaitStrategy waitStrategy)
+    {
+        MultiProducerSequencer sequencer = new MultiProducerSequencer(bufferSize, waitStrategy);
+
+        return new RingBuffer<E>(factory, sequencer);
+    }
+public final class MultiProducerSequencer extends AbstractSequencer
+{
+
+}
+public abstract class AbstractSequencer implements Sequencer
+{
+@Override
+    public SequenceBarrier newBarrier(Sequence... sequencesToTrack)
+    {
+        return new ProcessingSequenceBarrier(this, waitStrategy, cursor, sequencesToTrack);
+    }
+}
+final class ProcessingSequenceBarrier implements SequenceBarrier
+{
+    @Override
+    public long waitFor(final long sequence)
+        throws AlertException, InterruptedException, TimeoutException
+    {
+        checkAlert();
+
+        long availableSequence = waitStrategy.waitFor(sequence, cursorSequence, dependentSequence, this);
+
+        if (availableSequence < sequence)
+        {
+            return availableSequence;
+        }
+
+        return sequencer.getHighestPublishedSequence(sequence, availableSequence);
+    }
+}
+public final class RingBuffer<E> extends RingBufferFields<E> implements Cursored, EventSequencer<E>, EventSink<E>
+{
+RingBuffer(
+        EventFactory<E> eventFactory,
+        Sequencer sequencer)
+    {
+        super(eventFactory, sequencer);
+    }
+｝
+@SuppressWarnings("varargs")
+    @SafeVarargs
+    public final EventHandlerGroup<T> handleEventsWith(final EventHandler<? super T>... handlers)
+    {
+        return createEventProcessors(new Sequence[0], handlers);
+    }
+EventHandlerGroup<T> createEventProcessors(
+        final Sequence[] barrierSequences,
+        final EventHandler<? super T>[] eventHandlers)
+    {
+        checkNotStarted();
+
+        final Sequence[] processorSequences = new Sequence[eventHandlers.length];
+        final SequenceBarrier barrier = ringBuffer.newBarrier(barrierSequences);
+
+        for (int i = 0, eventHandlersLength = eventHandlers.length; i < eventHandlersLength; i++)
+        {
+            final EventHandler<? super T> eventHandler = eventHandlers[i];
+
+            final BatchEventProcessor<T> batchEventProcessor =
+                new BatchEventProcessor<>(ringBuffer, barrier, eventHandler);
+
+            if (exceptionHandler != null)
+            {
+                batchEventProcessor.setExceptionHandler(exceptionHandler);
+            }
+
+            consumerRepository.add(batchEventProcessor, eventHandler, barrier);
+            processorSequences[i] = batchEventProcessor.getSequence();
+        }
+
+        updateGatingSequencesForNextInChain(barrierSequences, processorSequences);
+
+        return new EventHandlerGroup<>(this, consumerRepository, processorSequences);
+    }
+
+private void processEvents()
+    {
+        T event = null;
+        long nextSequence = sequence.get() + 1L;
+
+        while (true)
+        {
+            try
+            {
+                final long availableSequence = sequenceBarrier.waitFor(nextSequence);
+                if (batchStartAware != null)
+                {
+                    batchStartAware.onBatchStart(availableSequence - nextSequence + 1);
+                }
+
+                while (nextSequence <= availableSequence)
+                {
+                    event = dataProvider.get(nextSequence);
+                    eventHandler.onEvent(event, nextSequence, nextSequence == availableSequence);
+                    nextSequence++;
+                }
+
+                sequence.set(availableSequence);
+            }
+            catch (final TimeoutException e)
+            {
+                notifyTimeout(sequence.get());
+            }
+            catch (final AlertException ex)
+            {
+                if (running.get() != RUNNING)
+                {
+                    break;
+                }
+            }
+            catch (final Throwable ex)
+            {
+                exceptionHandler.handleEventException(ex, nextSequence, event);
+                sequence.set(nextSequence);
+                nextSequence++;
+            }
+        }
+    }
+
+/**
+ * <p>Concurrent sequence class used for tracking the progress of
+ * the ring buffer and event processors.  Support a number
+ * of concurrent operations including CAS and order writes.
+ *
+ * <p>Also attempts to be more efficient with regards to false
+ * sharing by adding padding around the volatile field.
+ */
+public class Sequence extends RhsPadding
+{
+
+```
+## todo
 https://emacsist.github.io/2019/10/12/disruptor%E5%AD%A6%E4%B9%A0/
 
 
