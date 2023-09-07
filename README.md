@@ -55,4 +55,6 @@ finally publish to: ..\docs\
 
 --update:
 npm install vuepress@latest
+
+.vuepress/components/*.vue
 ```

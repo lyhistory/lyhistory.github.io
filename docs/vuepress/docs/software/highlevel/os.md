@@ -48,3 +48,10 @@ todo 翻译 https://www.baeldung.com/java-false-sharing-contended
 ### example: LongAdder.java
 [LongAdder.java](https://github.com/openjdk/jdk/blob/master/src/java.base/share/classes/java/util/concurrent/atomic/LongAdder.java)
 [Striped64.java](https://github.com/openjdk/jdk/blob/master/src/java.base/share/classes/java/util/concurrent/atomic/Striped64.java)
+
+https://acehjm.github.io/2020/01/08/Striped64%E5%AD%A6%E4%B9%A0/
+https://zhuanlan.zhihu.com/p/65520633
+https://juejin.cn/post/6844904031169593357
+https://www.jianshu.com/p/30d328e9353b
+https://juejin.cn/post/6914932805533171720
+

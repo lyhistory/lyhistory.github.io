@@ -123,12 +123,17 @@ and then put on the back cover
 ## 注意事项
 1.如果是换屏幕总成，在拆机之前先连接屏幕排线测试一下新屏幕是否正常
 2.下巴盖子、振动器、听筒、摄像头、扬声器、电池、侧边开关机键需要用吹风机加热再拆
+soften the glue with hair dryer for the vibration motor/earpiece/buzzer/battery/the buttons cable
 3.拆主板的时候注意振动器的胶可能很紧，然后还要注意开关机键排线要打开
 4.安装底部尾插时注意里面一侧先要对齐扣好再按下去，否则会没有声音
 5.螺丝有长短，不要拧错，不要拧太紧，否则压破屏幕或者产生黑点
+two types of bolts, don't use the wrong one, don't screw too tight
 6.听筒不要装反
+mind the earpiece direction
 7.注意电池是否有破皮漏液鼓包，如果有就要换新，用圆筒滚一下滚平，刮平胶水
+replace the battery in case of leaking
 8.白色天线要顺着卡槽走，不然后盖会压住
+please put the coaxial cable inside the edge slots otherwise the back cover mahy break it
 9.装后盖时不要捏屏幕中间，捏边上即可
 10.先断开电源排线再操作，可以避免造成短路
 11.不要损伤元器件

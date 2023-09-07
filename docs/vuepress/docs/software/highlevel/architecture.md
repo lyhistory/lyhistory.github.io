@@ -9,16 +9,17 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 ## Where are we?
 
 以java开发举例:
-+ 第一层 开源的openjdk或收费的jdk 包含jvm java security math等基础包
-+ 第二层 牛逼的公司或个人基于java开发的类库中间件客户端框架等等，甚至有如spring cloud一条龙全家桶
-+ 第三层 架构师基于选择的技术栈设计的特定业务运行的底层框架或者引擎或者核心代码，比如基于kafka client构建的消息队列处理引擎
-+ 第四层 普通开发者基于核心引擎框架开发业务代码
++ 第一层 操作系统
++ 第二层 开源的openjdk或收费的jdk 包含jvm java security math等基础包
++ 第三层 牛逼的公司或个人基于java开发的类库中间件客户端框架等等，甚至有如spring cloud一条龙全家桶
++ 第四层 架构师基于选择的技术栈设计的特定业务运行的底层框架或者引擎或者核心代码，比如基于kafka client构建的消息队列处理引擎
++ 第五层 普通开发者基于核心引擎框架开发业务代码
 
 理想情况下大家各司其职，上一层通过文档理解下一层的思想，但是实际很骨感：
-+ 第一层 我遇到过openjdk security padding的错误，造成无法tls握手成功
-+ 第二层 比如kafka的文档很完善，不过有时候也需要稍微扒一下源码加深理解，另外比如Disruptor如果不看源码我还以为默认就是single writer mode，结果默认是multiple producers+lock strategy；如果想要深刻理解某些中间件的设计思想比如Disruptor，就需要对第一层用户态的jvm以及更下一层的os操作系统有深刻理解；
-+ 第三层 架构师如果对第二层理解错误或者不全面会造成写的核心代码出现漏洞
-+ 第四层 普通开发者日常基本是copy paste的工作模式，如果出现架构师的核心代码缺乏文档或者缺乏示范用例，普通开发者甚至是高级开发者会用错误的方式绕过架构师的设计造成核心代码失效或者业务代码工作但是功能在异常情况下有问题
++ 第二层 我遇到过openjdk security padding的错误，造成无法tls握手成功
++ 第三层 比如kafka的文档很完善，不过有时候也需要稍微扒一下源码加深理解，另外比如Disruptor如果不看源码我还以为默认就是single writer mode，结果默认是multiple producers+lock strategy；如果想要深刻理解某些中间件的设计思想比如Disruptor，就需要对第一层用户态的jvm以及更下一层的os操作系统有深刻理解；
++ 第四层 架构师如果对第二层理解错误或者不全面会造成写的核心代码出现漏洞
++ 第五层 普通开发者日常基本是copy paste的工作模式，如果出现架构师的核心代码缺乏文档或者缺乏示范用例，普通开发者甚至是高级开发者会用错误的方式绕过架构师的设计造成核心代码失效或者业务代码工作但是功能在异常情况下有问题
 
 我们谈过[分布式系统](/docs/software/highlevel/distrubuted_system)，谈过[并发和并行](/docs/software/highlevel/concurrent)，
 也谈过[微服务框架](/docs/software/highlevel/microservice)和[spring cloud微服务框架](/docs/software/java_spring),
