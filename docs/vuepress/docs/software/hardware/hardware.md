@@ -36,6 +36,13 @@ Microcontrollers can be used to control a wide variety of electronic devices. Th
   半导体在最原始的时候是一种材料，比如硅。后来使用这些半导体材料制作了集成电路，又将集成电路封装成芯片。但是半导体这个名字一直保留着，所以我们通常把这些统统以半导体这三个字代替。
   半导体（材料）=》芯片（组成）+其他电子元器件=》集成电路
   二极管和晶闸管 transistor是半导体器件，电阻电容不是
+  [Is transistor the only electronic component on a CPU?](https://electronics.stackexchange.com/questions/219527/is-transistor-the-only-electronic-component-on-a-cpu)
+  The processors (C.P.U) only contains transistors.
+  But it doesn't means they only made up of only transistors, but they are made up of transistors, diodes, capacitors, resistors and etc..
+  Here transistor also plays a role of resistor, capacitor, diodes and etc…
+  That's why we need only transistors.
+  Processor are made up of millions or billions transistors ( transistors also plays a role of resistors , capacitors, diode and etc..) for switching so that it can process the input and give desired output.
+  Some electrical properties also added to the processor by photolithography Technique.
 + 印刷电路板 PCB-Printed Circuit Board
   是芯片IC的载体
 + 电子元器件 Electronic Components
@@ -68,6 +75,7 @@ Microcontrollers can be used to control a wide variety of electronic devices. Th
   单片机是一种芯片IC；
 + CPU MCU MPU
   中央处理器（CPU）是电脑中的核心配件，其功能主要是解释计算机指令以及处理计算机软件中的数据。中央处理器主要包括两个部分，即控制器、运算器，其中还包括高速缓冲存储器及实现它们之间联系的数据、控制的总线。处理器架构设计的迭代更新以及集成电路工艺的不断提升促使CPU不断发展完善，从最初专用于数学计算到广泛应用于通用计算，从4位到8位、16位、32位处理器，最后到64位处理器，从各厂商互不兼容到不同指令集架构规范的出现，CPU 自诞生以来一直在飞速发展。
+  In the earlier days, a processor (or central processing unit: CPU) consisted of a number of IC chips, though the advancements in chip scaling technologies soon enabled all necessary components to be packed onto a single semiconductor chip, leading to the birth of the microprocessor.
   CPU逐渐发展出来三个分枝：
   一个是DSP（Digital Signal Processing／Processor，数字信号处理），
   另外两个是MCU（Micro Control Unit，微控制器单元）和MPU（Micro Processor Unit，微处理器单元）。

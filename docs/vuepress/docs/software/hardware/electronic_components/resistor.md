@@ -1,0 +1,2 @@
+制作材料：非半导体材料
+resistors are passive electronic components that are used to reduce current flow and control voltage levels in electronic circuits. They are typically made of materials such as carbon, metal or metal oxide.

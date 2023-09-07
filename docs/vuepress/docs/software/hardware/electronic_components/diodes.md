@@ -1,4 +1,4 @@
-
+制作材料：半导体
 ## diodes
 
 https://www.youtube.com/watch?v=Fwj_d3uO5g8
