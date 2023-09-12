@@ -16,11 +16,11 @@ https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsu
 4. 当该consumer group的GroupCoordinator挂掉时，也就是这个broker挂掉后，其他borkers（保存有`__consumer_offsets-10`的replica的节点）会选一个broker如broker id=1作为新的`__consumer_offsets-10`的leader，然后该broker会load 本机保存的`__consumer_offsets-10`replica到内存中，完成后，cient端就会discover该broker作为新的GroupCoordinator
 5. 当broker id=3恢复正常后，会抢回broker id=1之前接管的`__consumer_offsets-10`，重新作为该topic的leader，然后client端就重新discover broker id=3作为group coordinator，这种抢回的方式可以保证kafka节点任务均衡（注意，broker id=3恢复之后，通过kafka-topics.sh --list 查看，`__consumer_offsets-10`的leader仍然会是broker id 1，需要等到再接收一条新的kafka消息后，leader才会切换成broker id 3，外部topic也是如此，`__transaction_state`也是类似，可能是生产一条消息时更新）
 
-## 关键API及源码解读
+## 1.关键API及源码解读
 
 keyword: heartbeat，rebalance
 
-##### consumer groups
+### consumer groups
 
 Don't Use Apache Kafka Consumer Groups the Wrong Way! https://dzone.com/articles/dont-use-apache-kafka-consumer-groups-the-wrong-wa
 1)	Having consumers as part of the same consumer group means providing the“competing consumers” pattern with whom the messages from topic partitions are spread across the members of the group.
@@ -30,9 +30,9 @@ https://dzone.com/articles/dont-use-apache-kafka-consumer-groups-the-wrong-wa
 线程安全：You can’t have multiple consumers that belong to the same group in one thread and you can’t have multiple threads safely use the same consumer. One consumer per thread is the rule. To run multiple consumers in the same group in one application, you will need to run each in its own thread. It is useful to wrap the consumer logic in its own object and then use Java’s ExecutorService to start multiple threads each with its own consumer. The Confluent blog has a tutorial that shows how to do just that.
 
 
-##### 关键API
+### 关键API
 
-###### POLL
+#### POLL
 
 ```
 public ConsumerRecords<K,V> poll(long timeout)
@@ -118,7 +118,7 @@ https://cwiki.apache.org/confluence/display/KAFKA/KIP-568%3A+Explicit+rebalance+
 
 TIMEOUTS IN KAFKA CLIENTS AND KAFKA STREAMS http://javierholguera.com/2018/01/01/timeouts-in-kafka-clients-and-kafka-streams/
 
-###### ConsumerRebalanceListener 
+#### ConsumerRebalanceListener 
 
 onPartitionsRevoked && onPartitionsAssigned
 
@@ -126,7 +126,11 @@ onPartitionsRevoked && onPartitionsAssigned
 
 发生rebalance时，kafka会保证所有之前的consumer无法继续消费消息（连heartbeat都停止了，提示消息 Attempt to heartbeat failed since group is rebalancing），然后会先通过 onPartitionsRevoked 回调所有的consumer，待所有consumer的onPartitionsRevoked完成之后，才会继续回调onPartitionsAssigned（笔者测试到一种情况，就是consumergroup有服务A和B，A因为网络问题，导致kafka集群决定将所有partition分配给B，所以kafka集群发送revoke给A和B，因为A有网络问题，B就没有等待A完成revoke，直接启动了，而过了两分钟，A才收到kafka集群的消息，后面exactly once笔者给出了场景图示）
 
-## 场景分析 consume-transform-produce pattern
+## 2. 场景分析 consume-transform-produce pattern
+
+nothing to guarantee/at-most-once => at-least-once => exactly-once
+
+https://kafka.apache.org/documentation/#design
 
 具体场景是：
 
@@ -136,7 +140,7 @@ onPartitionsRevoked && onPartitionsAssigned
 
 对上游和下游都实现 atomic-read-process-write
 
-### 1. 上游(consume topic 1) -依赖internal offset
+### 2.1 上游(consume topic 1) -依赖internal offset
 先来看比较简单的场景就是只有 consumer topic
 
 直接poll，不通过 seek来设置位置，自动使用interal offset来定位其最后一次消费的位置，注意下面的两个使用方法 at-least-once 至少一次当然可能会重复消费，**但是也可能丢失信息**
@@ -231,7 +235,7 @@ In this example we will consume a batch of records and batch them up in memory. 
 Note: The committed offset should always be the offset of the next message that your application will read. Thus, when calling commitSync(offsets) you should add one to the offset of the last message processed. 
 ```
 
-### 2. 上游(consume topic 1-transform-produce to topic 2) - 手动提交 exactly-once
+### 2.2 上游(consume topic 1-transform-produce to topic 2) - 手动提交 exactly-once
 
 接着看上游比较完整的 consumer-transform-produce 场景
 
@@ -370,7 +374,7 @@ endOffsets（返回the offset of the upcoming message, i.e. the offset of the la
   恢复的时候，先 找到T-ZengLiang最后一个消息 ，获取到quanliang offset=0&&end offset=1001，然后通过quanliang offset=0去seek(T-QuanLiang, 0) 拿到 start offset=1000和当时的内存数据，从而恢复内存数据，然后从1000开始(1000,1001],只需要重新计算下1001这条数据更新下内存即可，从1002开始往后都是新的消息
 
 
-### 3. 上游(produce to topic 2)->下游(consume topic 2) - isolation.level
+### 2.3 上游(produce to topic 2)->下游(consume topic 2) - isolation.level
 
 **we can indicate with \*isolation.level\* that we should wait to read transactional messages until the associated transaction has been committed**:
 

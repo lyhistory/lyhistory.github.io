@@ -8,7 +8,7 @@ Since the 0.11.0.0 release, Kafka has added support to allow its producers to se
 
 https://kafka.apache.org/23/javadoc/index.html?org/apache/kafka/clients/producer/KafkaProducer.html
 
-## 关键配置
+## 1. 关键配置
 
 ### Producer Client
 + enable.idempotence
@@ -93,7 +93,7 @@ https://kafka.apache.org/23/javadoc/index.html?org/apache/kafka/clients/producer
     The loading buffer size for the transaction stat topic.
     Default: 5242880 bytes.
 
-## 客户端关键API及源码解读
+## 2. 客户端关键API及源码解读
 
 + **transaction coordinator**
     The first part of the design is to enable producers to send a group of messages as a single transaction that either succeeds or fails atomically. In order to achieve this, we introduce a new server-side module called transaction coordinator, to manage transactions of messages sent by producers, and commit / abort the appends of these messages as a whole. 
@@ -1373,7 +1373,7 @@ https://stackoverflow.com/questions/55192852/transactional-producer-vs-just-idem
 
 How does this feature work? Under the  covers, it works in a way similar to TCP: each batch of messages sent to Kafka will contain a sequence number that the broker will use to dedupe any duplicate send. Unlike TCP, though—which provides guarantees only  within a transient in-memory connection—this sequence number is  persisted to the replicated log, so even if the leader fails, any broker that takes over will also know if a resend is a duplicate. The overhead of this mechanism is quite low: it’s just a few extra numeric fields  with each batch of messages. As you will see later in this article, this feature adds negligible performance overhead over the non-idempotent  producer.
 
-## brokers 服务端
+## 3. brokers 服务端
 
 ### Transaction Coordinator
 
@@ -1501,7 +1501,7 @@ As mentioned in the summary, many Kafka streaming applications need to both cons
 In order to support this scenario, we need to make the consumer coordinator transaction-aware. More specifically, we need a new API which allows the producer to send offset commits as part of a transaction. For this we introduce the TxnOffsetCommitRequest API.
 
 
-## Troubleshooting
+## 4. Troubleshooting
 
 ### ERROR CODES
 + InvalidProducerEpoch: 
@@ -2420,8 +2420,9 @@ transaction.max.timeout.ms
 [未来的改进：KIP-691: Enhance Transactional Producer Exception Handling](https://cwiki.apache.org/confluence/display/KAFKA/KIP-691%3A+Enhance+Transactional+Producer+Exception+Handling)
 
 #### 后记
-看到[这里](https://stackoverflow.com/questions/56460688/kafka-ignoring-transaction-timeout-ms-for-producer)有人说设置transaction.timeout.ms不生效，不过他的问题是将timeout设置为比默认1分钟还要小的时间，然后brokers默认好像是每间隔分钟去检查一次是否timeout，所以设置transaction.timeout.ms小于1分钟是没有作用的，他的情况实际上是需要用另一个配置解决transaction.abort.timed.out.transaction.cleanup.interval.ms
------------------------------------------------------------------------
+看到 [这里](https://stackoverflow.com/questions/56460688/kafka-ignoring-transaction-timeout-ms-for-producer)有人说设置transaction.timeout.ms不生效，不过他的问题是将timeout设置为比默认1分钟还要小的时间，然后brokers默认好像是每间隔分钟去检查一次是否timeout，所以设置transaction.timeout.ms小于1分钟是没有作用的，他的情况实际上是需要用另一个配置解决transaction.abort.timed.out.transaction.cleanup.interval.ms
+
+---
 REFER:
 https://www.cnblogs.com/luozhiyun/p/12079527.html
 https://docs.spring.io/spring-kafka/reference/#transactional-id

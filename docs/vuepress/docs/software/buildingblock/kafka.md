@@ -14,25 +14,61 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 ## 1. Basic concepts
 
-+ zookeeper：kafka 通过 zookeeper 来存储集群的 meta 信息。
++ zookeeper：
+  kafka 通过 zookeeper 来存储集群的 meta 信息。
 
-+ broker：kafka 集群中包含的服务器。Each server acts as a leader for some of its partitions and a follower for others so load is well balanced within the cluster. 
++ broker：
+  kafka 集群中包含的服务器。Each server acts as a leader for some of its partitions and a follower for others so load is well balanced within the cluster. 
 
   Kafka service = kafka broker, kafka cluster=multiple instances of kafka broker
 
-+ controller：kafka 集群中的其中一个服务器，用来进行 leader election 以及 各种 failover。
++ controller：
+  kafka 集群中的其中一个服务器，用来进行 leader election 以及 各种 failover。
 
-+ producer：消息生产者，发布消息到 kafka 集群的终端或服务。
++ producer：
+  消息生产者，发布消息到 kafka 集群的终端或服务。
 
-+ consumer：从 kafka 集群中消费消息的终端或服务。
++ consumer：
+  从 kafka 集群中消费消息的终端或服务。
 
-+ Consumer group：high-level consumer API 中，每个 consumer 都属于一个 consumer group，每条消息只能被 consumer group 中的一个 Consumer 消费，但可以被多个 consumer group 消费。
++ Topics & logs (Logical concept)：
+  每条发布到 kafka 集群的消息属于的类别，即 kafka 是面向 topic 的。
+  - LEO:: log end offset	offset+1
+  - ISR:: in-sync replicas
+  - internal topic:
+    __consumer_offsets
+    ```
+    key:   <consumer_group>,<topic>,<partition>
+    value: <offset>,<partition_leader_epoch>,<metadata>,<timestamp>
+    ```
 
-  + group coordinator: is nothing but one of the brokers which receives heartbeats (or polling for messages) from all consumers of a consumer group. Every consumer group has a group coordinator. If a consumer stops sending heartbeats, the coordinator will trigger a rebalance.
-  + consumer coordinator: each kafkaconsumer instance has a private member of consumer coordinator
-  + consumer group leader:  is one of the consumer in a consumer group. 
++ Partition (Physical concept): 
+  是物理上的概念，每个 topic 包含一个或多个 partition。kafka 分配的单位是 partition。
 
-  + subscribe mode VS assign mode
+  Ordering (global order == one partition only)
+  	
+  Each partition is a totally ordered log, but there is no global ordering between partitions (other than perhaps some wall-clock time you might include in your messages). The assignment of the messages to a particular partition is controllable by the writer, with most users choosing to partition by some kind of key (e.g. user id). Partitioning allows log appends to occur without co-ordination between shards and allows the throughput of the system to scale linearly with the Kafka cluster size.
+
++ replica：partition 的副本，保障 partition 的高可用。
+
+  **high watermark**: indicated the offset of messages that are fully  replicated, while the end-of-log offset might be larger if there are  newly appended records to the leader partition which are not replicated  yet.
+
++ leader：replica 中的一个角色， producer 和 consumer 只跟 leader 交互。
+
+  Leader = topic leader = leader of replicas
+
++ follower：replica 中的一个角色，从 leader 中复制数据。
+
++ Consumer group：
+  high-level consumer API 中，每个 consumer 都属于一个 consumer group，每条消息只能被 consumer group 中的一个 Consumer 消费，但可以被多个 consumer group 消费。
+  - consumer group leader:  
+    is one of the consumer in a consumer group. 
+  - consumer coordinator(client side): 
+    each kafkaconsumer instance has a private member of consumer coordinator
+  - group coordinator(server side): 
+    is nothing but one of the brokers which receives heartbeats (or polling for messages) from all consumers of a consumer group. Every consumer group has a group coordinator. If a consumer stops sending heartbeats, the coordinator will trigger a rebalance.
+  
++ subscribe mode VS assign mode
 
     先来看一段话
 
@@ -60,40 +96,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
     就是kafka自动维护的__consumer_offset是按照[consumer-group, topic, partition]来的[但是这里已经置为false了，所以应该没有问题，如果是true就有问题了，多个consumer读写同一个[consumer-group, topic, partition]就会有冲突]
 
-    而如果是使用subscribe mode，就会自动进行rebalance，如果同一个consumer group中的instance多于partition，那么没有问题，大不了consumer就idle或standby而已
+    而如果是使用subscribe mode，就会自动进行rebalance，如果同一个consumer group中的instance多于partition，那么没有问题，大不了consumer就idle或standby而已 
 
-  
-
-+ Topics & logs (Logical concept)：每条发布到 kafka 集群的消息属于的类别，即 kafka 是面向 topic 的。
-
-   + LEO:: log end offset	offset+1
-   + ISR:: in-sync replicas
-
-   + internal topic:
-
-     + __consumer_offsets
-
-       ```
-       key:   <consumer_group>,<topic>,<partition>
-       value: <offset>,<partition_leader_epoch>,<metadata>,<timestamp>
-       ```
-
-+ Partition (Physical concept): 是物理上的概念，每个 topic 包含一个或多个 partition。kafka 分配的单位是 partition。
-
-  Ordering (global order == one partition only)
-  	
-  Each partition is a totally ordered log, but there is no global ordering between partitions (other than perhaps some wall-clock time you might include in your messages). The assignment of the messages to a particular partition is controllable by the writer, with most users choosing to partition by some kind of key (e.g. user id). Partitioning allows log appends to occur without co-ordination between shards and allows the throughput of the system to scale linearly with the Kafka cluster size.
-
-+ replica：partition 的副本，保障 partition 的高可用。
-
-  **high watermark**: indicated the offset of messages that are fully  replicated, while the end-of-log offset might be larger if there are  newly appended records to the leader partition which are not replicated  yet.
-
-+ leader：replica 中的一个角色， producer 和 consumer 只跟 leader 交互。
-
-  Leader = topic leader = leader of replicas
-
-+ follower：replica 中的一个角色，从 leader 中复制数据。
-  	
 
 Overview:
 
@@ -105,6 +109,7 @@ Overview:
 
 ![](/docs/docs_image/software/buildingblock/kafka/kafka22.png)
 
+zookeeper 存储结构
 ![](/docs/docs_image/software/buildingblock/kafka/kafka_zookeeper_nodes.png)
 
 ![](/docs/docs_image/software/buildingblock/kafka/kafka_zookeeper_nodes2.png)
@@ -115,11 +120,12 @@ Overview:
 
 
 
-## 2. 安装使用
+## 2. Quick Start 安装配置
 
-### 2.1 安装 install
+Quick start
+https://kafka.apache.org/quickstart 
 
-#### 安装kafka
+### 2.1 安装 install kafka
 
 ```shell
 ------------------------------------------------------------------------
@@ -296,10 +302,19 @@ sudo gpasswd -d kafka wheel
 sudo passwd kafka -l (对应unlock：sudo passwd kafka -u)
 sudo su - kafka
 
-
 ```
 
-#### 使用external zookeeper
+
+
+### 2.2 Config
+
+https://kafka.apache.org/26/documentation/
+
+https://docs.confluent.io/platform/current/installation/configuration
+
+#### 2.2.1 Server Config
+
+##### 配置 external zookeeper
 
 ```
 kafka配置：
@@ -337,26 +352,266 @@ server.2=1.1.1.2:2888:3888
 server.3=1.1.1.3:2888:3888                               
 SERVER_JVMFLAGS=-Xmx1024m'                                     
 ```
+##### listener
+
+关于host
+
+[Kafka Listeners – Explained](https://www.confluent.io/blog/kafka-listeners-explained/)
+
+测试 listener工具：
++ kafkacat:
+
+  https://github.com/edenhill/kafkacat
+
+  https://docs.confluent.io/platform/current/app-development/kafkacat-usage.html
+
+  ```
+  kafkacat -b kafka0:9092 -L
+  ```
+
++ python scripts
+
+  https://github.com/lyhistory/kafka-listeners/blob/master/python/python_kafka_test_client.py
+
+  https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/
+
++ nc
+
+  ```
+   nc -vz 1.1.1.1 9092
+  ```
+
+##### retention / delete
+
+log.retention.check.interval.ms:default 5 minutes. So the broker log-segments are checked every 5 minutes to see if they can be deleted according to the retention policies.
+
+topic1 configuration had retention policy set (retention.ms=60000), so if there was at least one existing message in an active segment of topic1, that segment would get closed and deleted if it was idle for long enough. Since log.retention.check.interval.ms is broker configuration, it's not affected by changes on the topic. Also retention.ms has to pass after the last message is produced to the segment. So after the last message is produced to that segment, segment will be deleted in not less than retention.ms milliseconds and not more than retention.ms+log.retention.check.interval.ms.
+
+So the "segment of just 35 bytes, which contained just one message, was deleted after the minute (maybe a little more)" happened because retention check by chance happened almost immediately after the message was produced to that segment. Broker then had just to wait 60 seconds to be sure no new message will be produced to that segment (in which case deletion would't happen) and since there was none, it deleted the segment
+
+https://stackoverflow.com/questions/41048041/kafka-deletes-segments-even-before-segment-size-is-reached
+
+##### 复制因子 replica factor 详解
+
+很重要，对于普通的topic replica factor来说，replica多一些没有问题，但是对internal topic要特别注意，尤其是对于 __transaction_state来说，如果min.isr设置跟replication.factor设置一样，那么任何一个kafka节点down掉，都会造成无法写入kafka（transactional producer写入会报错 NotEnoughReplicasException）
+
+https://stackoverflow.com/questions/47483016/recommended-settings-for-kafka-internal-topics-after-upgrade-to-1-0
+
+```
+############################# Internal Topic Settings  #############################
+# The replication factor for the group metadata internal topics "__consumer_offsets" and "__transaction_state"                                                                        
+# For anything other than development testing, a value greater than 1 is recommended for to ensure availability such as 3.                                                            
+offsets.topic.replication.factor=3
+transaction.state.log.replication.factor=3
+transaction.state.log.min.isr=2
+```
+
+说明：
++ min.insync.replicas（default value=1）
+  https://accu.org/journals/overload/28/159/kozlovski/
+  同时控制external topic 以及internal topic` __consumer_offsets`和`__transaction_state`，
+
++ transaction.state.\*只控制`__transaction_state`（transaction.state.log.min.isr overriden min.insync.replicas），
+
++ offsets.topic.replication.factor控制offsets topic也就是`__consumer_offsets`，必须跟broker个数一致(小于等于，默认值为3，如果是两个节点就不行了，所以不要轻易使用默认值），否则无法启动
+
++ default.replication.factor控制external topic（有时候称为automatically created topics，手动或自动创建auto.create.topics.enable默认是true）
+
+场景：
++ if living/avaliable brokers < default.replication.factor
+  无法创建topic，报错：InvalidReplicationFactorException
+
++ if offsets.topic.replication.factor > brokers数量，~~kafka client无法启动（无法Discover group coordinator）~~应该是kafka sever无法正常创建internal topic consumer_offset, kafka server报错：
+  ```
+  ERROR [KafkaApi-0] Number of alive brokers '2' does not meet the required replication factor '3' for the offsets topic (configured via 'offsets.topic.replication.factor'). This error can be ignored if the cluster is starting up and not all brokers are up yet. (kafka.server.KafkaApis)
+  ```
+
++ if 挂掉的节点==default.replication.factor，比如：
+  default.replication.factor=1 则代表external topic没有replication，这样挂掉任何一个节点client都会报错：
+
+  ```
+  2021-06-08 17:06:01.892 ^[[33m WARN^[[m ^[[35m23610GG^[[m [TEST-MANAGER] ^[[36mk.c.NetworkClient$DefaultMetadataUpdater^[[m : [Consumer clientId=consumer-1, groupId=TEST-SZL] 1 partitions have leader brokers without a matching listener, including [T-TEST-1]
+  ```
+
++ if (live isr 活着的节点中并且是isr的节点数) < transaction.state.log.min.isr:
+
+  ```
+  [2021-06-09 09:31:14,285] ERROR [ReplicaManager broker=0] Error processing append operation on partition __transaction_state-28 (kafka.server.ReplicaManager)
+  org.apache.kafka.common.errors.NotEnoughReplicasException: The size of the current ISR Set(0) is insufficient to satisfy the min.isr requirement of 2 for partition __transaction_state-28
+  ```
+
+  注意如果不停掉kafka producer程序，上述日志会快速的在kafka/logs/server.log 中刷入，潜在可能会造成磁盘问题
+
++ if living/avaliable brokers <min.insync.replicas && producer.properties.acks=all：
+  producer报错 NotEnoughReplicasException
+
++ if (live isr 活着的节点中并且是isr的节点数) <min.insync.replicas of` __consumer_offsets`:
+
+  kafka consumer client discover group之后无法join group，在revoke之后，rejoining group停顿几分钟后狂刷日志：
+
+  ```
+  2021-06-09 10:17:23.076 ^[[32m INFO^[[m ^[[35m26210GG^[[m [TEST-MANAGER] ^[[36mo.a.k.c.c.i.AbstractCoordinator^[[m : [Consumer clientId=consumer-1, groupId=TEST-REALTIME-SZL] Group
+  coordinator XXXX:9092 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery                                                                        
+  2021-06-09 10:17:23.186 ^[[32m INFO^[[m ^[[35m26210GG^[[m [TEST-MANAGER] ^[[36mordinator$FindCoordinatorResponseHandler^[[m : [Consumer clientId=consumer-1, groupId=TEST-REALTIME-SZL] Discovered group coordinator XXXX:9092 (id: 2147483647 rack: null)
+  2021-06-09 10:17:23.187 ^[[32m INFO^[[m ^[[35m26210GG^[[m [TEST-MANAGER] ^[[36mo.a.k.c.c.i.AbstractCoordinator^[[m : [Consumer clientId=consumer-1, groupId=TEST-REALTIME-SZL] Group
+  coordinator XXXX8:9092 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery                                                                        
+  2021-06-09 10:17:23.288 ^[[32m INFO^[[m ^[[35m26210GG^[[m [TEST-MANAGER] ^[[36mordinator$FindCoordinatorResponseHandler^[[m : [Consumer clientId=consumer-1, groupId=TEST-REALTIME-SZL] Discovered group coordinator XXXX:9092 (id: 2147483647 rack: null)
+  2021-06-09 10:17:23.289 ^[[32m INFO^[[m ^[[35m26210GG^[[m [TEST-MANAGER] ^[[36mo.a.k.c.c.i.AbstractCoordinator^[[m : [Consumer clientId=consumer-1, groupId=TEST-REALTIME-SZL] (Re-)joining group
+  ```
+
+  同时kafka server端狂刷日志：
+
+  ```
+  [2021-06-09 10:18:43,146] INFO [GroupCoordinator 0]: Preparing to rebalance group TEST-REALTIME-SZL in state PreparingRebalance with old generation 393 (__consumer_offsets-49) (reaso
+  n: error when storing group assignment during SyncGroup (member: consumer-1-0c90d042-0326-4cf2-a870-bb2ae055d140)) (kafka.coordinator.group.GroupCoordinator)                          
+  [2021-06-09 10:18:43,349] INFO [GroupCoordinator 0]: Stabilized group TEST-REALTIME-SZL generation 394 (__consumer_offsets-49) (kafka.coordinator.group.GroupCoordinator)             
+  [2021-06-09 10:18:43,349] INFO [GroupCoordinator 0]: Assignment received from leader for group TEST-REALTIME-SZL for generation 394 (kafka.coordinator.group.GroupCoordinator)        
+  [2021-06-09 10:18:43,349] ERROR [ReplicaManager broker=0] Error processing append operation on partition __consumer_offsets-49 (kafka.server.ReplicaManager)                           
+  org.apache.kafka.common.errors.NotEnoughReplicasException: The size of the current ISR Set(0) is insufficient to satisfy the min.isr requirement of 2 for partition __consumer_offsets-
+  49  
+  ```
+
+  服务端borker节点上topic 正常状态（每个topic的partition的leader和replica状态）应该是：
+  ```
+  [2022-03-16 15:55:15,899] TRACE [Controller id=0] Leader imbalance ratio for broker 2 is 0.0 (kafka.controller.KafkaController)
+  [2022-03-16 15:55:15,899] DEBUG [Controller id=0] Topics not in preferred replica for broker 1 Map() (kafka.controller.KafkaController)
+  [2022-03-16 15:55:15,899] TRACE [Controller id=0] Leader imbalance ratio for broker 1 is 0.0 (kafka.controller.KafkaController)
+  [2022-03-16 15:55:15,899] DEBUG [Controller id=0] Topics not in preferred replica for broker 0 Map() (kafka.controller.KafkaController)
+  [2022-03-16 15:55:15,899] TRACE [Controller id=0] Leader imbalance ratio for broker 0 is 0.0 (kafka.controller.KafkaController)
+  ```
+  但此时是非正常状态：
+  ```
+  failed to complete preferred replica leader election 
+
+  [2022-03-16 10:58:02,837] ERROR [Controller id=1] Error completing preferred replica leader election for partition T-TRADE-1 (kafka.controller.KafkaController)
+  kafka.common.StateChangeFailedException: Failed to elect leader for partition T-TRADE-1 under strategy PreferredReplicaPartitionLeaderElectionStrategy
+          at kafka.controller.PartitionStateMachine.$anonfun$doElectLeaderForPartitions$9(PartitionStateMachine.scala:390)
+          at scala.collection.mutable.ResizableArray.foreach(ResizableArray.scala:62)
+          at scala.collection.mutable.ResizableArray.foreach$(ResizableArray.scala:55)
+          at scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:49)
+          at kafka.controller.PartitionStateMachine.doElectLeaderForPartitions(PartitionStateMachine.scala:388)
+          at kafka.controller.PartitionStateMachine.electLeaderForPartitions(PartitionStateMachine.scala:315)
+          at kafka.controller.PartitionStateMachine.doHandleStateChanges(PartitionStateMachine.scala:225)
+          at kafka.controller.PartitionStateMachine.handleStateChanges(PartitionStateMachine.scala:141)
+          at kafka.controller.KafkaController.kafka$controller$KafkaController$$onPreferredReplicaElection(KafkaController.scala:649)
+          at kafka.controller.KafkaController.$anonfun$checkAndTriggerAutoLeaderRebalance$6(KafkaController.scala:1008)
+          at scala.collection.immutable.Map$Map3.foreach(Map.scala:195)
+          at kafka.controller.KafkaController.kafka$controller$KafkaController$$checkAndTriggerAutoLeaderRebalance(KafkaController.scala:989)
+          at kafka.controller.KafkaController$AutoPreferredReplicaLeaderElection$.process(KafkaController.scala:1020)
+          at kafka.controller.ControllerEventManager$ControllerEventThread.$anonfun$doWork$1(ControllerEventManager.scala:94)
+          at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+          at kafka.metrics.KafkaTimer.time(KafkaTimer.scala:31)
+          at kafka.controller.ControllerEventManager$ControllerEventThread.doWork(ControllerEventManager.scala:94)
+          at kafka.utils.ShutdownableThread.run(ShutdownableThread.scala:82)
+  [2022-03-16 10:58:02,837] WARN [Controller id=1] Partition T-TEST-SNP-2 failed to complete preferred replica leader election to 2. Leader is still 0 (kafka.controller.KafkaController)
+  [2022-03-16 10:58:02,837] WARN [Controller id=1] Partition T-TEST-0 failed to complete preferred replica leader election to 2. Leader is still 0 (kafka.controller.KafkaController)
+  [2022-03-16 10:58:02,838] INFO [Controller id=1] Partition T-TEST2-SNP-2 completed preferred replica leader election. New leader is 2 (kafka.controller.KafkaController)
+  [2022-03-16 10:58:02,838] WARN [Controller id=1] Partition T-TEST2-1 failed to complete preferred replica leader election to 2. Leader is still 0 (kafka.controller.KafkaController)
+  ```
+
++ 丢数据：min.insync.replicas=2 && unclean.leader.election.enable=true (It is default value)
+  https://stackoverflow.com/questions/57277370/min-insync-replicas-vs-unclean-leader-election
+
+##### 跟broker交互关键配置
+
+acks=all
+
+if the producer receives an  acknowledgement (ack) from the Kafka broker and acks=all, it means that  the message has been written exactly once to the Kafka topic
+
+When a producer sets acks to "all" (or "-1"), min.insync.replicas specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful. If this minimum cannot be met, then the producer will raise an exception (either NotEnoughReplicas or NotEnoughReplicasAfterAppend).
+When used together, min.insync.replicas and acks allow you to enforce greater durability guarantees. A typical scenario would be to create a topic with a replication factor of 3, set min.insync.replicas to 2, and produce with acks of "all". This will ensure that the producer raises an exception if a majority of replicas do not receive a write.
+
+##### 通用配置
+
+```
+############################# Server Basics #############################
+# The id of the broker. This must be set to a unique integer for each broker.
+broker.id=0
+
+############################# Socket Server Settings #############################
+port=9092
+host.name=X.X.X.48
+advertised.host.name=X.X.X.48
+advertised.port=9092
+listeners = PLAINTEXT://your.host.name:9092
+#advertised.listeners=PLAINTEXT://your.host.name:9092 //This is the metadata that’s passed back to clients.
+listener.security.protocol.map=PLAINTEXT:PLAINTEXT,SSL:SSL,SASL_PLAINTEXT:SASL_PLAINTEXT,SASL_SSL:SASL_SSL
+#Kafka brokers communicate between themselves, usually on the internal network (e.g., Docker network, AWS VPC, etc.). To define which listener to use, specify：
+inter.broker.listener.name //https://cwiki.apache.org/confluence/display/KAFKA/KIP-103%3A+Separation+of+Internal+and+External+traffic
+
+You need to set advertised.listeners (or KAFKA_ADVERTISED_LISTENERS if you’re using Docker images) to the external address (host/IP) so that clients can correctly connect to it. Otherwise, they’ll try to connect to the internal host address—and if that’s not reachable, then problems ensue.
+
+https://stackoverflow.com/questions/42998859/kafka-server-configuration-listeners-vs-advertised-listeners
+https://cwiki.apache.org/confluence/display/KAFKA/KIP-103%3A+Separation+of+Internal+and+External+traffic
+https://cwiki.apache.org/confluence/display/KAFKA/KIP-291%3A+Separating+controller+connections+and+requests+from+the+data+plane
+
+############################# Group Coordinator Settings #############################
+# The following configuration specifies the time, in milliseconds, that the GroupCoordinator will delay the initial consumer rebalance.
+# The rebalance will be further delayed by the value of group.initial.rebalance.delay.ms as new members join the group, up to a maximum of max.poll.interval.ms.
+# The default value for this is 3 seconds.
+# We override this to 0 here as it makes for a better out-of-the-box experience for development and testing.
+# However, in production environments the default value of 3 seconds is more suitable as this will help to avoid unnecessary, and potentially expensive, rebalances during application startup.
+group.initial.rebalance.delay.ms=0
+
+还看到配置 scheduled.rebalance.max.delay.ms，
+https://medium.com/streamthoughts/apache-kafka-rebalance-protocol-or-the-magic-behind-your-streams-applications-e94baf68e4f2
+但是这好像是confluence提供的产品，并不是kafka默认的
+
+############################# Log Retention Policy #############################
+# The minimum age of a log file to be eligible for deletion due to age
+log.retention.hours=336
+# The maximum size of a log segment file. When this size is reached a new log segment will be created.
+#log.segment.bytes=1073741824
+log.segment.bytes=2147483647
+https://stackoverflow.com/questions/65507232/kafka-log-segment-bytes-vs-log-retention-hours
+
+```
+
+#### 2.2.2 Client Config
+
+```
+--- auto.create.topics.enable
+
+Enable auto creation of topic on the server
+Type:	boolean
+Default:	true
+Valid Values:	
+Importance:	high
+Update Mode:	read-only
+
+--- request.timeout.ms
+The configuration controls the maximum amount of time the client will wait for the response of a request. If the response is not received before the timeout elapses the client will resend the request if necessary or fail the request if retries are exhausted.
+
+Type:	int
+Default:	30000 (30 seconds)
+
+--- scheduled.rebalance.max.delay.ms
+The maximum delay that is scheduled in order to wait for the return of one or more departed workers before rebalancing and reassigning their connectors and tasks to the group. During this period the connectors and tasks of the departed workers remain unassigned
+
+Type:	int
+Default:	300000 (5 minutes)
+
+--- session.timeout.ms
+ After every rebalance, all members of the current generation begin sending periodic heartbeats to the group coordinator. As long as the coordinator continues receiving heartbeats, it assumes that members are healthy. On every received heartbeat, the coordinator starts (or resets) a timer. If no heartbeat is received when the timer expires, the coordinator marks the member dead and signals the rest of the group that they should rejoin so that partitions can be reassigned. The duration of the timer is known as the session timeout and is configured on the client with the setting session.timeout.ms. 
+  The only problem with this is that a spurious rebalance might be triggered if the consumer takes longer than the session timeout to process messages. You should therefore set the session timeout large enough to make this unlikely. The default is 30 seconds, but it’s not unreasonable to set it as high as several minutes. The only downside of a larger session timeout is that it will take longer for the coordinator to detect genuine consumer crashes.
+```
+
+“The message is 1626232 bytes when serialized which is larger than the maximum request size you have configured with the max.request.size configuration.”
+
+producer.properties.max.request.size=838860800 800M
+
+### 2.3 GUI & Commands
+
++ GUI：
+  - KafkaEsque  https://kafka.esque.at
+  - https://github.com/airbnb/kafkat
+
++ 命令：<Path-to-kafka>/bin/*.sh
+  - 单机命令 --broker-list
+  - 集群命令 --bootstrap-server
 
 
-
-### 2.2 使用 Usage
-
-GUI：
-
-+ KafkaEsque  https://kafka.esque.at
-
-+ https://github.com/airbnb/kafkat
-
-
-单机命令 --broker-list
-集群命令 --bootstrap-server
-
-
-#### 2.2.1 单机 Local 调试
-
-Quick start
-https://kafka.apache.org/quickstart 
+#### 2.3.1 单机本地调试 Local
 
 ```
 Start zookeeper
@@ -400,9 +655,7 @@ kafka-reassign-partitions --zookeeper hostname:port  --reassignment-json-file re
 kafka-reassign-partitions --zookeeper hostname:port --reassignment-json-file reassignment configuration.json  --bootstrap-server hostname:port --verify
 ```
 
-
-
-##### Producer 
+##### Produce 
 
 ```
 bin/kafka-console-producer.sh --broker-list localhost:9092 --topic my-replicated-topic
@@ -411,7 +664,7 @@ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic my-replicated
 bin/kafka-verifiable-producer.sh --topic consumer-tutorial --max-messages 200000 --broker-list localhost:9092
 ```
 
-##### Consumer 
+##### Consume
 
 ```
 bin/kafka-topics.sh --list --zookeeper localhost:2181
@@ -478,7 +731,7 @@ popd &>/dev/null
 
 ```
 
-#### 2.2.2  虚拟机远程调试 Remote 
+#### 2.3.2 虚拟机远程调试 Remote 
 
 **VM Host only mode**
 
@@ -518,7 +771,7 @@ May be need to do something like:
 https://forums.virtualbox.org/viewtopic.php?f=1&t=29990
 https://github.com/trivago/gollum/issues/93
 
-Telnet 127.0.0.1/guesthost 9092 WORKS, but it doesn’t mean can reach to the guest machine, simply because of port forwarding opened 9092 port on host
+Telnet 127.0.0.1/guesthost 9092 WORKS, but it doesn’t mean it can reach to the guest machine, simply because of port forwarding opened 9092 port on host
 
 ![](/docs/docs_image/software/buildingblock/kafka/kafka03.png)
 
@@ -527,45 +780,13 @@ vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
 
 ![](/docs/docs_image/software/buildingblock/kafka/kafka04.png)
 
-#### 2.2.3 集成开发 springboot
-
-##### spring-kafka
-
-https://www.baeldung.com/spring-kafka
-
-org.springframework.kafka包含：
-
-+ spring-context
-+ spring-messaging
-+ spring-tx
-+ spring-retry
-+ kafka-clients
-
-##### apache-kafka
-
-org.apache.kafka.kafka-client 
-
-https://docs.confluent.io/clients-kafka-java/current/overview.html
-
-https://www.baeldung.com/kafka-exactly-once
-
-https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html
-
-https://dzone.com/articles/kafka-producer-and-consumer-example
-
-默认配置：
-
-https://kafka.apache.org/documentation.html#configuration
-https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/ConsumerConfig.html
 
 
-
-
-### 2.3 管理维护 Maintain
+## 3. 管理维护 Maintain
 
 https://kafka.apache.org/documentation/#operations
 
-#### 2.3.1 节点状态
+### 3.1 节点状态
 
 ```
 ------------------------------------------
@@ -582,27 +803,141 @@ https://kafka.apache.org/documentation/#operations
 #get /brokers/ids/0 #Gives more detailed information of the broker id '0'
 ```
 
-#### 2.3.2 House keeping
+### 3.2 Backup (point-in-time snapshot) & Restore
 
-##### kafka offset not increase by 1
+为什么需要备份？
 
-https://stackoverflow.com/questions/54636524/kafka-streams-does-not-increment-offset-by-1-when-producing-to-topic
+https://medium.com/@anatolyz/introducing-kafka-backup-9dc0677ea7ee
 
-https://issues.apache.org/jira/browse/KAFKA-6607
+> Replication handles many error cases but by far not all. What about the case that  there is a bug in Kafka that deletes old data? What about a  misconfiguration of the topic (are you sure, that your value of  retention.ms is a millisecond value?)? What about an admin that  accidentally deleted the whole Prod Cluster because they thought they  were on dev? What about security breaches? If an attacker gets access to your Kafka Management interface, they can do whatever they like.
+>
+> Of course, this does not matter too much if you are using Kafka to  distribute click-streams data for your analytics department and it is  tolerable to loose some data. But if you use Kafka as your “central  nervous system” for your company and you store your core business data  in Kafka you better think about a cold storage backup for your Kafka  Cluster.
+>
+> 
 
-[http://trumandu.github.io/2019/04/13/%E5%A6%82%E4%BD%95%E7%9B%91%E6%8E%A7kafka%E6%B6%88%E8%B4%B9Lag%E6%83%85%E5%86%B5/](http://trumandu.github.io/2019/04/13/如何监控kafka消费Lag情况/)
+#### 停机备份
 
-https://stackoverflow.com/questions/54544074/how-to-make-restart-able-producer
+https://www.digitalocean.com/community/tutorials/how-to-back-up-import-and-migrate-your-apache-kafka-data-on-ubuntu-18-04
 
- https://github.com/confluentinc/confluent-kafka-go/issues/195
+```
+单机版例子，集群类似，只是需要停掉所有的zookeeper和kafka，然后备份其中一台机器的zookeeper和kafka，然后在所有机器上恢复
 
-##### clean up 
+sudo -iu kafka
 
-__consumer_offsets https://stackoverflow.com/questions/41429053/how-to-change-consumer-offsets-cleanup-plicy-to-delete-from-compact
+~/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic BackupTopic
 
-##### partition
+echo "Test Message 1" | ~/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic BackupTopic > /dev/null
 
-1 partition 2 replica, where is the replica?? On the same parition but different segment??
+~/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic BackupTopic --from-beginning
+
+-----------------------------------------------------------------------------------
+--- Backing Up the ZooKeeper State Data
+-----------------------------------------------------------------------------------
+kafka内置zookeeper：
+ZooKeeper stores its data in the directory specified by the dataDir field in the /kafka/config/zookeeper.properties:
+dataDir=/tmp/zookeeper
+使用外置zookeeper：
+/zookeeper/conf/zoo.cfg
+dataDir=/opt/zookeeper-3.4.8/zkdata
+dataLogDir=/opt/zookeeper-3.4.8/logs
+
+compressed archive files are a better option over regular archive files to save disk space:
+tar -czf /opt/kafka_backup/zookeeper-backup.tar.gz /opt/zookeeper-3.4.8/zkdata/*
+忽略错误 tar: Removing leading `/' from member names
+
+-----------------------------------------------------------------------------------
+--- Backing Up the Kafka Topics and Messages
+-----------------------------------------------------------------------------------
+Kafka stores topics, messages, and internal files in the directory that the log.dirs field specifies 
+/kafka/config/server.properties:
+log.dirs=/opt/kafka_2.12-2.2.0/kafka-logs
+
+stop the Kafka service so that the data in the log.dirs directory is in a consistent state when creating the archive with tar
+
+sudo systemctl stop kafka (前面安装时移除了kafka的sudo权限，需要使用其他有sudo权限的非root用户执行)
+sudo -iu kafka
+
+tar -czf /opt/kafka_backup/kafka-backup.tar.gz /opt/kafka_2.12-2.2.0/kafka-logs/*
+
+sudo systemctl start kafka （同样切换其他用户）
+sudo -iu kafka
+
+-----------------------------------------------------------------------------------
+--- Restoring the ZooKeeper Data & Kafka Data
+-----------------------------------------------------------------------------------
+You need to stop the Kafka and ZooKeeper services as a precaution against the data directories receiving invalid data during the restoration process.
+
+sudo systemctl stop kafka
+sudo systemctl stop zookeeper
+sudo -iu kafka
+
+rm -r /opt/zookeeper-3.4.8/zkdata/*
+tar -C /opt/zookeeper-3.4.8/zkdata -xzf /opt/kafka_backup/zookeeper-backup.tar.gz --strip-components 2
+（specify the --strip 2 flag to make tar extract the archive’s contents in /tmp/zookeeper/ itself and not in another directory (such as /tmp/zookeeper/tmp/zookeeper/) inside of it.）
+
+rm -r /opt/kafka_2.12-2.2.0/kafka-logs/*
+tar -C /opt/kafka_2.12-2.2.0/kafka-logs -xzf /opt/kafka_backup/kafka-backup.tar.gz --strip-components 2
+sudo systemctl start kafka
+sudo systemctl start zookeeper
+sudo -iu kafka
+
+-----------------------------------------------------------------------------------
+--- Verifying the Restoration
+-----------------------------------------------------------------------------------
+~/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic BackupTopic --from-beginning
+
+```
+
+https://stackoverflow.com/questions/47791039/backup-restore-kafka-and-zookeeper/48337651
+
+#### 在线备份
+
+> Still no. You’re dealing with a distributed system. It’s not magic. Any  attempt to trigger a snapshot ‘simultaneously’ across multiple  hosts/disks is going to be subject to some small level of timing  difference whether those are VMs managed by you in the Cloud or  containers in K8s with persistent disks managed by the Cloud provider.  It’d probably work in small scale tests, but break under significant  production load.
+
+https://www.reddit.com/r/apachekafka/comments/jb400p/kafka_backup_and_recovery/g8vkju7/
+
+https://www.reddit.com/r/apachekafka/comments/g73nk9/how_to_take_full_backupsnapshot_of_kafka/
+
+解决方案：
+
+Support point-in-time backups :
+
+提出需求：https://github.com/itadventurer/kafka-backup/issues/52
+
+解决方案：
+
+1）当前版本在一定场景下可以使用：
+
+- Let Kafka Backup running in the background
+- Kafka Backup writes data continuously in the background to the file system
+- `kill -9` Kafka Backup as soon as it is "finished", i.e.  it finished writing your data. This should be promptly after you  finished producing data
+- move the data of Kafka Backup to your new destination.
+
+```
+需要用到kafka自带的connect-standalone.sh 所以要配置环境变量
+export PATH=$PATH:~/kafka/bin
+
+
+backup：
+sudo env "PATH=$PATH" backup-standalone.sh --bootstrap-server localhost:9092 --target-dir /path/to/backup/dir --topics 'topic1,topic2'
+
+~/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic topic1
+
+~/kafka/bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic 'topic.*'
+
+restore：
+restore-standalone.sh --bootstrap-server localhost:9092 --target-dir /path/to/backup/dir --topics 'topic1,topic2'
+
+~/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic BackupTopic --from-beginning
+```
+
+2）新增的支持 https://github.com/itadventurer/kafka-backup/pull/99 但是没有发布
+
+https://www.confluent.io/blog/3-ways-prepare-disaster-recovery-multi-datacenter-apache-kafka-deployments/
+
+### 3.3 re-partition?
+
+注意：改变partition数量不会重新动态分配/迁移现有数据
 
 Alter:
 	bin/kafka-topics.sh --bootstrap-server broker_host:port --alter --topic my_topic_name \
@@ -613,7 +948,7 @@ https://cloud.tencent.com/developer/article/1349448
 
 Be aware that one use case for partitions is to semantically partition data, and adding partitions doesn't change the partitioning of existing data so this may disturb consumers if they rely on that partition. That is if data is partitioned by hash(key) % number_of_partitions then this partitioning will potentially be shuffled by adding partitions but Kafka will not attempt to automatically redistribute data in any way.
 
-#### 2.3.3 工具/日志排查
+### 3.4 工具/日志排查
 
 https://kafka.apache.org/documentation/#monitoring
 
@@ -925,606 +1260,18 @@ echo "exclude.internal.topics=false" > consumer.config
 ./bin/kafka-console-consumer.sh --consumer.config consumer.config --formatter "kafka.coordinator.transaction.TransactionLog\$TransactionLogMessageFormatter" --bootstrap-server x.x.x.x:9092,X.X.X.46:9092,X.X.X.47:9092 --topic __transaction_state --from-beginning
 ```
 
+### 3.5 Performance metric monitoring
+[Benchmarking Apache Kafka: 2 Million Writes Per Second (On Three Cheap Machines)](https://engineering.linkedin.com/kafka/benchmarking-apache-kafka-2-million-writes-second-three-cheap-machines)
 
+[Apache Kafka® Performance](https://developer.confluent.io/learn/kafka-performance/)
 
-#### 2.3.4 Backup (point-in-time snapshot) & Restore
+[Monitoring Kafka performance metrics](https://www.datadoghq.com/blog/monitoring-kafka-performance-metrics/)
 
-为什么需要备份？
+[scripting approach to run performance tests](https://github.com/gkoenig/kafka-benchmarking)
 
-https://medium.com/@anatolyz/introducing-kafka-backup-9dc0677ea7ee
+## 4. Exactly-Once 一致性语义
 
-> Replication handles many error cases but by far not all. What about the case that  there is a bug in Kafka that deletes old data? What about a  misconfiguration of the topic (are you sure, that your value of  retention.ms is a millisecond value?)? What about an admin that  accidentally deleted the whole Prod Cluster because they thought they  were on dev? What about security breaches? If an attacker gets access to your Kafka Management interface, they can do whatever they like.
->
-> Of course, this does not matter too much if you are using Kafka to  distribute click-streams data for your analytics department and it is  tolerable to loose some data. But if you use Kafka as your “central  nervous system” for your company and you store your core business data  in Kafka you better think about a cold storage backup for your Kafka  Cluster.
->
-> 
-
-##### 停机备份
-
-https://www.digitalocean.com/community/tutorials/how-to-back-up-import-and-migrate-your-apache-kafka-data-on-ubuntu-18-04
-
-```
-单机版例子，集群类似，只是需要停掉所有的zookeeper和kafka，然后备份其中一台机器的zookeeper和kafka，然后在所有机器上恢复
-
-sudo -iu kafka
-
-~/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic BackupTopic
-
-echo "Test Message 1" | ~/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic BackupTopic > /dev/null
-
-~/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic BackupTopic --from-beginning
-
------------------------------------------------------------------------------------
---- Backing Up the ZooKeeper State Data
------------------------------------------------------------------------------------
-kafka内置zookeeper：
-ZooKeeper stores its data in the directory specified by the dataDir field in the /kafka/config/zookeeper.properties:
-dataDir=/tmp/zookeeper
-使用外置zookeeper：
-/zookeeper/conf/zoo.cfg
-dataDir=/opt/zookeeper-3.4.8/zkdata
-dataLogDir=/opt/zookeeper-3.4.8/logs
-
-compressed archive files are a better option over regular archive files to save disk space:
-tar -czf /opt/kafka_backup/zookeeper-backup.tar.gz /opt/zookeeper-3.4.8/zkdata/*
-忽略错误 tar: Removing leading `/' from member names
-
------------------------------------------------------------------------------------
---- Backing Up the Kafka Topics and Messages
------------------------------------------------------------------------------------
-Kafka stores topics, messages, and internal files in the directory that the log.dirs field specifies 
-/kafka/config/server.properties:
-log.dirs=/opt/kafka_2.12-2.2.0/kafka-logs
-
-stop the Kafka service so that the data in the log.dirs directory is in a consistent state when creating the archive with tar
-
-sudo systemctl stop kafka (前面安装时移除了kafka的sudo权限，需要使用其他有sudo权限的非root用户执行)
-sudo -iu kafka
-
-tar -czf /opt/kafka_backup/kafka-backup.tar.gz /opt/kafka_2.12-2.2.0/kafka-logs/*
-
-sudo systemctl start kafka （同样切换其他用户）
-sudo -iu kafka
-
------------------------------------------------------------------------------------
---- Restoring the ZooKeeper Data & Kafka Data
------------------------------------------------------------------------------------
-You need to stop the Kafka and ZooKeeper services as a precaution against the data directories receiving invalid data during the restoration process.
-
-sudo systemctl stop kafka
-sudo systemctl stop zookeeper
-sudo -iu kafka
-
-rm -r /opt/zookeeper-3.4.8/zkdata/*
-tar -C /opt/zookeeper-3.4.8/zkdata -xzf /opt/kafka_backup/zookeeper-backup.tar.gz --strip-components 2
-（specify the --strip 2 flag to make tar extract the archive’s contents in /tmp/zookeeper/ itself and not in another directory (such as /tmp/zookeeper/tmp/zookeeper/) inside of it.）
-
-rm -r /opt/kafka_2.12-2.2.0/kafka-logs/*
-tar -C /opt/kafka_2.12-2.2.0/kafka-logs -xzf /opt/kafka_backup/kafka-backup.tar.gz --strip-components 2
-sudo systemctl start kafka
-sudo systemctl start zookeeper
-sudo -iu kafka
-
------------------------------------------------------------------------------------
---- Verifying the Restoration
------------------------------------------------------------------------------------
-~/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic BackupTopic --from-beginning
-
-```
-
-https://stackoverflow.com/questions/47791039/backup-restore-kafka-and-zookeeper/48337651
-
-##### 在线备份
-
-> Still no. You’re dealing with a distributed system. It’s not magic. Any  attempt to trigger a snapshot ‘simultaneously’ across multiple  hosts/disks is going to be subject to some small level of timing  difference whether those are VMs managed by you in the Cloud or  containers in K8s with persistent disks managed by the Cloud provider.  It’d probably work in small scale tests, but break under significant  production load.
-
-https://www.reddit.com/r/apachekafka/comments/jb400p/kafka_backup_and_recovery/g8vkju7/
-
-https://www.reddit.com/r/apachekafka/comments/g73nk9/how_to_take_full_backupsnapshot_of_kafka/
-
-解决方案：
-
-Support point-in-time backups :
-
-提出需求：https://github.com/itadventurer/kafka-backup/issues/52
-
-解决方案：
-
-1）当前版本在一定场景下可以使用：
-
-- Let Kafka Backup running in the background
-- Kafka Backup writes data continuously in the background to the file system
-- `kill -9` Kafka Backup as soon as it is "finished", i.e.  it finished writing your data. This should be promptly after you  finished producing data
-- move the data of Kafka Backup to your new destination.
-
-```
-需要用到kafka自带的connect-standalone.sh 所以要配置环境变量
-export PATH=$PATH:~/kafka/bin
-
-
-backup：
-sudo env "PATH=$PATH" backup-standalone.sh --bootstrap-server localhost:9092 --target-dir /path/to/backup/dir --topics 'topic1,topic2'
-
-~/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic topic1
-
-~/kafka/bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic 'topic.*'
-
-restore：
-restore-standalone.sh --bootstrap-server localhost:9092 --target-dir /path/to/backup/dir --topics 'topic1,topic2'
-
-~/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic BackupTopic --from-beginning
-```
-
-2）新增的支持 https://github.com/itadventurer/kafka-backup/pull/99 但是没有发布
-
-
-
-https://www.confluent.io/blog/3-ways-prepare-disaster-recovery-multi-datacenter-apache-kafka-deployments/
-
-## 3.Kafka stream
-《Kafka Stream》调研：一种轻量级流计算模式 https://yq.aliyun.com/articles/58382
-Kafka Streams - Not Looking at Facebook https://timothyrenner.github.io/engineering/2016/08/11/kafka-streams-not-looking-at-facebook.html
-https://cloud.tencent.com/developer/ask/203192
-https://www.codota.com/code/java/methods/org.apache.kafka.streams.kstream.KStream/groupBy
-http://www.jasongj.com/kafka/kafka_stream/
-
-### 3.1 Architecture 
-https://kafka.apache.org/22/documentation/streams/architecture
-
-**Stream Partitions and Tasks**
-
-![](/docs/docs_image/software/buildingblock/kafka/kafka05.png)
-
-Task(consumer, run topology over one or more partition), Thread can run one or multiple Task, Instance ID is consumer group ID,multiple instance with same group ID belong to one consumer group, 
-4 partition, 1 instance will start 4 task, (thread quantity is defined by code), now start a new instance, join the consumer group, relocate 4 partition, each instance got 2 partition, so each instance run 2 task
-Kafka Stream的并行模型中，最小粒度为Task，而每个Task包含一个特定子Topology的所有Processor。因此每个Task所执行的代码完全一样，唯一的不同在于所处理的数据集互补。这一点跟Storm的Topology完全不一样。Storm的Topology的每一个Task只包含一个Spout或Bolt的实例。因此Storm的一个Topology内的不同Task之间需要通过网络通信传递数据，而Kafka Stream的Task包含了完整的子Topology，所以Task之间不需要传递数据，也就不需要网络通信。这一点降低了系统复杂度，也提高了处理效率。
-
-如果某个Stream的输入Topic有多个(比如2个Topic，1个Partition数为4，另一个Partition数为3)，则总的Task数等于Partition数最多的那个Topic的Partition数（max(4,3)=4）。这是因为Kafka Stream使用了Consumer的Rebalance机制，每个Partition对应一个Task。
-Kafka Stream可被嵌入任意Java应用（理论上基于JVM的应用都可以）中，下图展示了在同一台机器的不同进程中同时启动同一Kafka Stream应用时的并行模型。注意，这里要保证两个进程的StreamsConfig.APPLICATION_ID_CONFIG完全一样。因为Kafka Stream将APPLICATION_ID_CONFI作为隐式启动的Consumer的Group ID。只有保证APPLICATION_ID_CONFI相同，才能保证这两个进程的Consumer属于同一个Group，从而可以通过Consumer Rebalance机制拿到互补的数据集。
-https://yq.aliyun.com/articles/222900?spm=5176.10695662.1996646101.searchclickresult.13d4446d1xNbRq
-
-
-图二:上图中的Consumer和Producer并不需要开发者在应用中显示实例化，而是由Kafka Stream根据参数隐式实例化和管理，从而降低了使用门槛。开发者只需要专注于开发核心业务逻辑，也即上图中Task内的部分。
-
-图三: 两图都是同一个机器，都只有一个instance,都是4个task，分别运行在一个thread和2个thread
-
-图四:左图一台机器，两个instance，4个task分别属于两个instance；而右图是部署两台机器上
-
-**Threading Model**
-
-Kafka Streams work allocation https://medium.com/@andy.bryant/kafka-streams-work-allocation-4f31c24753cc
-
-https://www.slideshare.net/ConfluentInc/robust-operations-of-kafka-streams
-
-![](/docs/docs_image/software/buildingblock/kafka/kafka06.png)
-
-**Local State Stores**
-
-**Fault Tolerance**
-
-![](/docs/docs_image/software/buildingblock/kafka/kafka07.png)
-
-### 3.2 Concepts 
-https://kafka.apache.org/22/documentation/streams/core-concepts
-Task ⇔ 一个consumer可以包含多个task，consumer本身是隐式管理
-Task vs thread
-https://stackoverflow.com/questions/48106568/kafka-streams-thread-number
-
-Kstream ktable
-
-https://www.slideshare.net/vitojeng/streaming-process-with-kafka-connect-and-kafka-streams-80721215
-**Stream Processing Topology**
-	Kafka Streams DSL 
-	Processor API 
-**Time**
-	Event time
-	Processing time
-	Ingestion time
-	Stream time, wall-clock time
-**Aggregation**
-
-**Windowing**
-Late arriving records
-**Duality of Stream and table**
-
-**States**
-
-**Processing guarantees**
-
- Lambda Architecture http://lambda-architecture.net/
-
-**Out-of-order handling**
-For stateless operations, out-of-order data will not impact processing logic since only one record is considered at a time, without looking into the history of past processed records; for stateful operations such as aggregations and joins, however, out-of-order data could cause the processing logic to be incorrect.
-
-Physical order = offset order
-Logical order = timestamp order
-https://dl.acm.org/citation.cfm?id=3242155
-
-Since timestamps, in contrast tooffsets, are not necessarily unique, we use the record offsetas “tie breaker” [15] to derive a logical order that isstrictandtotalover all records.
-In theKafka Streams DSL, there are two first-class abstractions:aKStreamand aKTable. AKStreamis an abstraction ofa record stream, while a KTable is an abstraction of both a table changelog stream and its corresponding materializedtables in the Dual Streaming Model. In addition, users of theDSL can query a KTable’s materialized state in real-time.
-Whenever a record is received from the source Kafka topics,it will be processed immediately by traversing through allthe connected operators specified in the Kafka Streams DSL until it has been materialized to some result KTable, or writ-ten back to a sink Kafka topic. During the processing, therecord’s timestamp will be maintained/updated according toeach operator’s semantics as defined in Section 4
-Handling out-of-order records injoins requires several strategies. For stream-table joins, out-of-order records do not require special handling. However,out-of-order table updates could yield incorrect join results, ifnot treated properly. Assume that the table update in Figure 6from⟨A,a,2⟩to⟨A,a′,5⟩is delayed. Stream record⟨A,α′,6⟩would join with the first table version and incorrectly emit⟨A,α′▷◁a,6⟩. To handle this case, it is required to buffer record stream input record in the stream-table join operatorand re-trigger the join computation for late table updates.Thus, if a late table update occurs, corresponding updaterecords are sent downstream to “overwrite” previously emit-ted join records. Note, that the result of stream-table joinsis not a record stream but a regular data stream because itmight contain update records.
-
-Record stream , normal data stream
-Time window , session window
-
-https://kafka.apache.org/22/documentation/streams/developer-guide/
-
-![](/docs/docs_image/software/buildingblock/kafka/kafka08.png)
-
-### 3.3 Basic usage
-
-![](/docs/docs_image/software/buildingblock/kafka/kafka09.png)
-
-![](/docs/docs_image/software/buildingblock/kafka/kafka10.png)
-
-```
-mvn clean package
-mvn exec:java -Dexec.mainClass=myapps.WordCount
-bin/kafka-topics.sh --create \
-    --bootstrap-server localhost:9092 \
-    --replication-factor 1 \
-    --partitions 1 \
-    --topic streams-plaintext-input
-bin/kafka-topics.sh --create \
-    --bootstrap-server localhost:9092 \
-    --replication-factor 1 \
-    --partitions 1 \
-    --topic streams-wordcount-output \
-    --config cleanup.policy=compact
-bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe
-bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic my_topic_name
-
-bin/kafka-run-class.sh myapps.WordCount
-/home/test/workspace/kafka/kafka_2.12-2.2.0/bin/kafka-run-class.sh myapps.WordCount
-mvn exec:java -Dexec.mainClass=myapps.WordCount
-
-bin/kafka-run-class.sh org.apache.kafka.streams.examples.wordcount.WordCountDemo
-
-bin/kafka-console-producer.sh --broker-list localhost:9092 --topic streams-plaintext-input
-bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 \
-    --topic streams-wordcount-output \
-    --from-beginning \
-    --formatter kafka.tools.DefaultMessageFormatter \
-    --property print.key=true \
-    --property print.value=true \
-    --property key.deserializer=org.apache.kafka.common.serialization.StringDeserializer \
-    --property value.deserializer=org.apache.kafka.common.serialization.LongDeserializer
-
-```
-
-https://kafka.apache.org/22/documentation/streams/tutorial
-https://github.com/apache/kafka/tree/2.2/streams/examples
-
-https://www.draw.io/#G13TFIxfbM3VN9R5Pg7nFwNguUUNUXKChO
-
-?# Windowed
-
-``` 
-bin/kafka-topics.sh --create \
-    --bootstrap-server localhost:9092 \
-    --replication-factor 1 \
-    --partitions 1 \
-    --topic streams-plaintext-input
-bin/kafka-topics.sh --create \
-    --bootstrap-server localhost:9092 \
-    --replication-factor 1 \
-    --partitions 1 \
-    --topic streams-windowed-wordcount-output \
-    --config cleanup.policy=compact
-bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 \
-    --topic streams-windowed-wordcount-output \
-    --from-beginning \
-    --formatter kafka.tools.DefaultMessageFormatter \
-    --property print.key=true \
-    --property print.value=true \
-    --property key.deserializer=org.apache.kafka.common.serialization.StringDeserializer \
-    --property value.deserializer=org.apache.kafka.common.serialization.LongDeserializer
-```
-
-### 3.4 kafka stream VS storm (wordcount)
-
-Kafka wordcount是stateful operation，因为每个task/consumer完全独立跑完整的topology，每个consumer处理某一个partition，所以要借助data store来存储ktable“中间”状态，data store也是多个consumer/task“协作”的结果
-而storm wordcount是stateless operation，因为一个topology是分成sprout，bolt，每个sprout/bolt会开启一个或多个task，这些task在work process中执行，这些work process可能位于不同的机器，所以第一步是split bolt，然后将这些单词进行partition发送至相应的tasks，比如the这个单词会一直发送到某个特定的task进行count，所以对于最后一步count是很简单的，不需要reduce操作，每个count task都只统计相应的单词，互相之间没有重叠，不像kafka那样因为partition比较早，所以不同的parttion之间是有重叠的单词的，所以必须借助一个第三者存储来统计
-
-### 3.5 Advance
-
-Ktables vs global ktables
-Kafka has several features for reducing the need to move data on startup 
-
-- Standby Replicas 
-- Disk Checkpoints
-- Compacted topics
-  Command and Query Responsibility Segregation (CQRS) pattern [with event sourcing]
-
-![](/docs/docs_image/software/buildingblock/kafka/kafka12.png)
-
-Using an event-streaming approach, we can materialize the data locally via the Kafka Streams API. We define a query for the data in our grid: “select * from orders, payments, customers where…” and Kafka Streams executes it, stores it locally, keeps it up to date. This ensures highly available should the worst happen and your service fails unexpectedly (this approach is discussed in more detail here).
-To combat the challenges of being stateful, Kafka ships with a range of features to make the storage, movement, and retention of state practical: notably standby replicas and disk checkpointsto mitigate the need for complete rebuilds, and compacted topics to reduce the size of datasets that need to be moved.
-
-
-
-State store, global or local?
-Ktable, globalktable
-
-Kafka Stream有一些关键东西没有解决，例如在join场景中，需要保证来源2个Topic数据Shard个数必须是一定的，因为本身做不到MapJoin等技术
-
-
-
-
-## 4.Indepth 
-nothing to guarantee/at-most-once => at-least-once => exactly-once
-
-https://kafka.apache.org/documentation/#design
-
-### 4.0 Config
-
-https://kafka.apache.org/26/documentation/
-
-https://docs.confluent.io/platform/current/installation/configuration
-
-#### Server Config
-
-##### 复制因子 replica factor 详解
-
-min.insync.replicas（default value=1）
-https://accu.org/journals/overload/28/159/kozlovski/
-同时控制external topic 以及internal topic` __consumer_offsets`和`__transaction_state`，
-transaction.state.\*只控制`__transaction_state`（transaction.state.log.min.isr overriden min.insync.replicas），
-offsets.topic.replication.factor控制offsets topic也就是`__consumer_offsets`，必须跟broker个数一致(小于等于，默认值为3，如果是两个节点就不行了，所以不要轻易使用默认值），否则无法启动
-default.replication.factor控制external topic（有时候称为automatically created topics，手动或自动创建auto.create.topics.enable默认是true）
-
-
-+ if living/avaliable brokers < default.replication.factor
-无法创建topic，报错：InvalidReplicationFactorException
-
-+ if offsets.topic.replication.factor > brokers数量，~~kafka client无法启动（无法Discover group coordinator）~~应该是kafka sever无法正常创建internal topic consumer_offset, kafka server报错：
-
-```
-ERROR [KafkaApi-0] Number of alive brokers '2' does not meet the required replication factor '3' for the offsets topic (configured via 'offsets.topic.replication.factor'). This error can be ignored if the cluster is starting up and not all brokers are up yet. (kafka.server.KafkaApis)
-```
-
-
-
-+ if 挂掉的节点==default.replication.factor，比如：
-
-default.replication.factor=1 则代表external topic没有replication，这样挂掉任何一个节点client都会报错：
-
-```
-2021-06-08 17:06:01.892 ^[[33m WARN^[[m ^[[35m23610GG^[[m [TEST-MANAGER] ^[[36mk.c.NetworkClient$DefaultMetadataUpdater^[[m : [Consumer clientId=consumer-1, groupId=TEST-SZL] 1 partitions have leader brokers without a matching listener, including [T-TEST-1]
-```
-
- 
-
-+ if (live isr 活着的节点中并且是isr的节点数) < transaction.state.log.min.isr:
-
-```
-[2021-06-09 09:31:14,285] ERROR [ReplicaManager broker=0] Error processing append operation on partition __transaction_state-28 (kafka.server.ReplicaManager)
-org.apache.kafka.common.errors.NotEnoughReplicasException: The size of the current ISR Set(0) is insufficient to satisfy the min.isr requirement of 2 for partition __transaction_state-28
-```
-
-注意如果不停掉kafka producer程序，上述日志会快速的在kafka/logs/server.log 中刷入，潜在可能会造成磁盘问题
-
-+ if living/avaliable brokers <min.insync.replicas && producer.properties.acks=all：
-producer报错 NotEnoughReplicasException
-
-+ if (live isr 活着的节点中并且是isr的节点数) <min.insync.replicas of` __consumer_offsets`:
-
-kafka consumer client discover group之后无法join group，在revoke之后，rejoining group停顿几分钟后狂刷日志：
-
-```
-2021-06-09 10:17:23.076 ^[[32m INFO^[[m ^[[35m26210GG^[[m [TEST-MANAGER] ^[[36mo.a.k.c.c.i.AbstractCoordinator^[[m : [Consumer clientId=consumer-1, groupId=TEST-REALTIME-SZL] Group
-coordinator XXXX:9092 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery                                                                        
-2021-06-09 10:17:23.186 ^[[32m INFO^[[m ^[[35m26210GG^[[m [TEST-MANAGER] ^[[36mordinator$FindCoordinatorResponseHandler^[[m : [Consumer clientId=consumer-1, groupId=TEST-REALTIME-SZL] Discovered group coordinator XXXX:9092 (id: 2147483647 rack: null)
-2021-06-09 10:17:23.187 ^[[32m INFO^[[m ^[[35m26210GG^[[m [TEST-MANAGER] ^[[36mo.a.k.c.c.i.AbstractCoordinator^[[m : [Consumer clientId=consumer-1, groupId=TEST-REALTIME-SZL] Group
-coordinator XXXX8:9092 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery                                                                        
-2021-06-09 10:17:23.288 ^[[32m INFO^[[m ^[[35m26210GG^[[m [TEST-MANAGER] ^[[36mordinator$FindCoordinatorResponseHandler^[[m : [Consumer clientId=consumer-1, groupId=TEST-REALTIME-SZL] Discovered group coordinator XXXX:9092 (id: 2147483647 rack: null)
-2021-06-09 10:17:23.289 ^[[32m INFO^[[m ^[[35m26210GG^[[m [TEST-MANAGER] ^[[36mo.a.k.c.c.i.AbstractCoordinator^[[m : [Consumer clientId=consumer-1, groupId=TEST-REALTIME-SZL] (Re-)joining group
-```
-
-
-
-kafka server端狂刷日志：
-
-```
-[2021-06-09 10:18:43,146] INFO [GroupCoordinator 0]: Preparing to rebalance group TEST-REALTIME-SZL in state PreparingRebalance with old generation 393 (__consumer_offsets-49) (reaso
-n: error when storing group assignment during SyncGroup (member: consumer-1-0c90d042-0326-4cf2-a870-bb2ae055d140)) (kafka.coordinator.group.GroupCoordinator)                          
-[2021-06-09 10:18:43,349] INFO [GroupCoordinator 0]: Stabilized group TEST-REALTIME-SZL generation 394 (__consumer_offsets-49) (kafka.coordinator.group.GroupCoordinator)             
-[2021-06-09 10:18:43,349] INFO [GroupCoordinator 0]: Assignment received from leader for group TEST-REALTIME-SZL for generation 394 (kafka.coordinator.group.GroupCoordinator)        
-[2021-06-09 10:18:43,349] ERROR [ReplicaManager broker=0] Error processing append operation on partition __consumer_offsets-49 (kafka.server.ReplicaManager)                           
-org.apache.kafka.common.errors.NotEnoughReplicasException: The size of the current ISR Set(0) is insufficient to satisfy the min.isr requirement of 2 for partition __consumer_offsets-
-49  
-```
-
-服务端borker节点上topic 正常状态（每个topic的partition的leader和replica状态）
-```
-[2022-03-16 15:55:15,899] TRACE [Controller id=0] Leader imbalance ratio for broker 2 is 0.0 (kafka.controller.KafkaController)
-[2022-03-16 15:55:15,899] DEBUG [Controller id=0] Topics not in preferred replica for broker 1 Map() (kafka.controller.KafkaController)
-[2022-03-16 15:55:15,899] TRACE [Controller id=0] Leader imbalance ratio for broker 1 is 0.0 (kafka.controller.KafkaController)
-[2022-03-16 15:55:15,899] DEBUG [Controller id=0] Topics not in preferred replica for broker 0 Map() (kafka.controller.KafkaController)
-[2022-03-16 15:55:15,899] TRACE [Controller id=0] Leader imbalance ratio for broker 0 is 0.0 (kafka.controller.KafkaController)
-```
-非正常状态
-```
-failed to complete preferred replica leader election 
-
-[2022-03-16 10:58:02,837] ERROR [Controller id=1] Error completing preferred replica leader election for partition T-TRADE-1 (kafka.controller.KafkaController)
-kafka.common.StateChangeFailedException: Failed to elect leader for partition T-TRADE-1 under strategy PreferredReplicaPartitionLeaderElectionStrategy
-        at kafka.controller.PartitionStateMachine.$anonfun$doElectLeaderForPartitions$9(PartitionStateMachine.scala:390)
-        at scala.collection.mutable.ResizableArray.foreach(ResizableArray.scala:62)
-        at scala.collection.mutable.ResizableArray.foreach$(ResizableArray.scala:55)
-        at scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:49)
-        at kafka.controller.PartitionStateMachine.doElectLeaderForPartitions(PartitionStateMachine.scala:388)
-        at kafka.controller.PartitionStateMachine.electLeaderForPartitions(PartitionStateMachine.scala:315)
-        at kafka.controller.PartitionStateMachine.doHandleStateChanges(PartitionStateMachine.scala:225)
-        at kafka.controller.PartitionStateMachine.handleStateChanges(PartitionStateMachine.scala:141)
-        at kafka.controller.KafkaController.kafka$controller$KafkaController$$onPreferredReplicaElection(KafkaController.scala:649)
-        at kafka.controller.KafkaController.$anonfun$checkAndTriggerAutoLeaderRebalance$6(KafkaController.scala:1008)
-        at scala.collection.immutable.Map$Map3.foreach(Map.scala:195)
-        at kafka.controller.KafkaController.kafka$controller$KafkaController$$checkAndTriggerAutoLeaderRebalance(KafkaController.scala:989)
-        at kafka.controller.KafkaController$AutoPreferredReplicaLeaderElection$.process(KafkaController.scala:1020)
-        at kafka.controller.ControllerEventManager$ControllerEventThread.$anonfun$doWork$1(ControllerEventManager.scala:94)
-        at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
-        at kafka.metrics.KafkaTimer.time(KafkaTimer.scala:31)
-        at kafka.controller.ControllerEventManager$ControllerEventThread.doWork(ControllerEventManager.scala:94)
-        at kafka.utils.ShutdownableThread.run(ShutdownableThread.scala:82)
-[2022-03-16 10:58:02,837] WARN [Controller id=1] Partition T-TEST-SNP-2 failed to complete preferred replica leader election to 2. Leader is still 0 (kafka.controller.KafkaController)
-[2022-03-16 10:58:02,837] WARN [Controller id=1] Partition T-TEST-0 failed to complete preferred replica leader election to 2. Leader is still 0 (kafka.controller.KafkaController)
-[2022-03-16 10:58:02,838] INFO [Controller id=1] Partition T-TEST2-SNP-2 completed preferred replica leader election. New leader is 2 (kafka.controller.KafkaController)
-[2022-03-16 10:58:02,838] WARN [Controller id=1] Partition T-TEST2-1 failed to complete preferred replica leader election to 2. Leader is still 0 (kafka.controller.KafkaController)
-```
-
-+ 丢数据：min.insync.replicas=2 && unclean.leader.election.enable=true (It is default value)
-https://stackoverflow.com/questions/57277370/min-insync-replicas-vs-unclean-leader-election
-
-##### 通用配置
-
-```
-############################# Server Basics #############################
-# The id of the broker. This must be set to a unique integer for each broker.
-broker.id=0
-
-############################# Socket Server Settings #############################
-port=9092
-host.name=X.X.X.48
-advertised.host.name=X.X.X.48
-advertised.port=9092
-listeners = PLAINTEXT://your.host.name:9092
-#advertised.listeners=PLAINTEXT://your.host.name:9092 //This is the metadata that’s passed back to clients.
-listener.security.protocol.map=PLAINTEXT:PLAINTEXT,SSL:SSL,SASL_PLAINTEXT:SASL_PLAINTEXT,SASL_SSL:SASL_SSL
-#Kafka brokers communicate between themselves, usually on the internal network (e.g., Docker network, AWS VPC, etc.). To define which listener to use, specify：
-inter.broker.listener.name //https://cwiki.apache.org/confluence/display/KAFKA/KIP-103%3A+Separation+of+Internal+and+External+traffic
-
-You need to set advertised.listeners (or KAFKA_ADVERTISED_LISTENERS if you’re using Docker images) to the external address (host/IP) so that clients can correctly connect to it. Otherwise, they’ll try to connect to the internal host address—and if that’s not reachable, then problems ensue.
-
-https://stackoverflow.com/questions/42998859/kafka-server-configuration-listeners-vs-advertised-listeners
-https://cwiki.apache.org/confluence/display/KAFKA/KIP-103%3A+Separation+of+Internal+and+External+traffic
-https://cwiki.apache.org/confluence/display/KAFKA/KIP-291%3A+Separating+controller+connections+and+requests+from+the+data+plane
-
-############################# Group Coordinator Settings #############################
-# The following configuration specifies the time, in milliseconds, that the GroupCoordinator will delay the initial consumer rebalance.
-# The rebalance will be further delayed by the value of group.initial.rebalance.delay.ms as new members join the group, up to a maximum of max.poll.interval.ms.
-# The default value for this is 3 seconds.
-# We override this to 0 here as it makes for a better out-of-the-box experience for development and testing.
-# However, in production environments the default value of 3 seconds is more suitable as this will help to avoid unnecessary, and potentially expensive, rebalances during application startup.
-group.initial.rebalance.delay.ms=0
-
-还看到配置 scheduled.rebalance.max.delay.ms，
-https://medium.com/streamthoughts/apache-kafka-rebalance-protocol-or-the-magic-behind-your-streams-applications-e94baf68e4f2
-但是这好像是confluence提供的产品，并不是kafka默认的
-
-############################# Log Retention Policy #############################
-# The minimum age of a log file to be eligible for deletion due to age
-log.retention.hours=336
-# The maximum size of a log segment file. When this size is reached a new log segment will be created.
-#log.segment.bytes=1073741824
-log.segment.bytes=2147483647
-https://stackoverflow.com/questions/65507232/kafka-log-segment-bytes-vs-log-retention-hours
-
-```
-
-
-
-##### 测试 listener工具：
-
-关于host
-
-[Kafka Listeners – Explained](https://www.confluent.io/blog/kafka-listeners-explained/)
-
-+ kafkacat:
-
-  https://github.com/edenhill/kafkacat
-
-  https://docs.confluent.io/platform/current/app-development/kafkacat-usage.html
-
-  ```
-  kafkacat -b kafka0:9092 -L
-  ```
-
-+ python scripts
-
-  https://github.com/lyhistory/kafka-listeners/blob/master/python/python_kafka_test_client.py
-
-  https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/
-
-+ nc
-
-  ```
-   nc -vz 1.1.1.1 9092
-  ```
-
-
-##### replica factor
-
-很重要，对于普通的topic replica factor来说，replica多一些没有问题，但是对internal topic要特别注意，尤其是对于 __transaction_state来说，如果min.isr设置跟replication.factor设置一样，那么任何一个kafka节点down掉，都会造成无法写入kafka（transactional producer写入会报错 NotEnoughReplicasException）
-
-https://stackoverflow.com/questions/47483016/recommended-settings-for-kafka-internal-topics-after-upgrade-to-1-0
-
-```
-############################# Internal Topic Settings  #############################
-# The replication factor for the group metadata internal topics "__consumer_offsets" and "__transaction_state"                                                                        
-# For anything other than development testing, a value greater than 1 is recommended for to ensure availability such as 3.                                                            
-offsets.topic.replication.factor=3
-transaction.state.log.replication.factor=3
-transaction.state.log.min.isr=2
-```
-
-
-
-#### Client Config
-
-```
---- auto.create.topics.enable
-
-Enable auto creation of topic on the server
-Type:	boolean
-Default:	true
-Valid Values:	
-Importance:	high
-Update Mode:	read-only
-
---- request.timeout.ms
-The configuration controls the maximum amount of time the client will wait for the response of a request. If the response is not received before the timeout elapses the client will resend the request if necessary or fail the request if retries are exhausted.
-
-Type:	int
-Default:	30000 (30 seconds)
-
---- scheduled.rebalance.max.delay.ms
-The maximum delay that is scheduled in order to wait for the return of one or more departed workers before rebalancing and reassigning their connectors and tasks to the group. During this period the connectors and tasks of the departed workers remain unassigned
-
-Type:	int
-Default:	300000 (5 minutes)
-
---- session.timeout.ms
- After every rebalance, all members of the current generation begin sending periodic heartbeats to the group coordinator. As long as the coordinator continues receiving heartbeats, it assumes that members are healthy. On every received heartbeat, the coordinator starts (or resets) a timer. If no heartbeat is received when the timer expires, the coordinator marks the member dead and signals the rest of the group that they should rejoin so that partitions can be reassigned. The duration of the timer is known as the session timeout and is configured on the client with the setting session.timeout.ms. 
-  The only problem with this is that a spurious rebalance might be triggered if the consumer takes longer than the session timeout to process messages. You should therefore set the session timeout large enough to make this unlikely. The default is 30 seconds, but it’s not unreasonable to set it as high as several minutes. The only downside of a larger session timeout is that it will take longer for the coordinator to detect genuine consumer crashes.
-```
-
-“The message is 1626232 bytes when serialized which is larger than the maximum request size you have configured with the max.request.size configuration.”
-
-producer.properties.max.request.size=838860800 800M
-
-### 4.1 Consumer Indepth
-
-跳转至 [深入Kafka Consumer消费者解析](/docs/software/buildingblock/kafka_consumer)
-
-### 4.2 Producer Indepth
-
-跳转至 [深入Kafka Producer生产者解析](/docs/software/buildingblock/kafka_producer)
-
-#### 跟broker交互关键配置
-
-acks=all
-
-if the producer receives an  acknowledgement (ack) from the Kafka broker and acks=all, it means that  the message has been written exactly once to the Kafka topic
-
-When a producer sets acks to "all" (or "-1"), min.insync.replicas specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful. If this minimum cannot be met, then the producer will raise an exception (either NotEnoughReplicas or NotEnoughReplicasAfterAppend).
-When used together, min.insync.replicas and acks allow you to enforce greater durability guarantees. A typical scenario would be to create a topic with a replication factor of 3, set min.insync.replicas to 2, and produce with acks of "all". This will ensure that the producer raises an exception if a majority of replicas do not receive a write.
-
-
-### 4.3 Exactly-Once
-
-#### 4.3.1 Exactly-Once-Message-Processing
+### 4.1 Exactly-Once-Message-Processing
 
 > there are only two hard problems in distributed systems: 
 >
@@ -1556,12 +1303,9 @@ KIP-129: Streams Exactly-Once Semantics https://cwiki.apache.org/confluence/disp
   consumer根据kafka broker的rebalance来为每个partition创建producer，事务型 producer通过initTransaction操作来fence zombie（仍然是依靠kafka broker），从而屏蔽掉其他过时的producer（rebalance过程中被收回了partition的consumer之前所创建的producer）消费消息的可能性，然后consumer可以放心的restore
 
 
-
 The first generation of stream  processing applications could tolerate inaccurate processing. For  instance, applications which consumed a stream of web page impressions  and produced aggregate counts of views per web page could tolerate some  error in the counts. 
 
 However, the demand for stream  processing applications with stronger semantics has grown along with the popularity of these applications. For instance, some financial  institutions use stream processing applications to process debits and  credits on user accounts. In these situations, there is no tolerance for errors in processing: we need every message to be processed exactly  once, without exception.
-
-
 
 从某个Topic的某个Partition的数据流看 atomic read-process-write pattern（对于使用kafka stream 的应用来说就是 consume-transform-produce）：
 
@@ -1630,8 +1374,11 @@ Thus since an offset commit is just  another write to a Kafka topic, and since a
 
 ![](/docs/docs_image/software/buildingblock/kafka/kafka_exactly_once02.png)
 
+详细解读参考：
++ Consumer Indepth 跳转至 [深入Kafka Consumer消费者解析](/docs/software/buildingblock/kafka_consumer)
++ Producer Indepth 跳转至 [深入Kafka Producer生产者解析](/docs/software/buildingblock/kafka_producer)
 
-#### 4.3.2 Exactly-Once-Stream-Processsing
+### 4.2 Exactly-Once-Stream-Processsing
 
 or stream processing applications built  using Kafka’s Streams API, we leverage the fact that the source of truth for the state store and the input offsets are Kafka topics. Hence we  can transparently fold this data into transactions that atomically write to multiple partitions, and thus provide the exactly-once guarantee for streams across the read-process-write operations.
 
@@ -1640,18 +1387,45 @@ processing.guarantee=exactly_once
 
 Note that exactly-once semantics is guaranteed within the scope of Kafka Streams’ internal processing only; for example, if the event streaming app written in Streams makes an RPC call to update some remote stores, or if it uses a customized client to directly read or write to a Kafka topic, the resulting side effects would not be guaranteed exactly once. 
 ```
+详细解读参考：
+[深入Kafka Stream](/docs/software/buildingblock/kafka_stream)
 
-### 4.4 Diving into Kafka
+## 5. 集成开发
 
-前面4.1 4.2 4.3 主要是将kafka当做黑盒，然后通过kafka开放的API来达到跟kafka交互的exactly-once，
+### apache-kafka
 
-但是kafka本身的很多细节也会影响到使用性能甚至是可用性，所以还需要深入kafka，了解比如：
+org.apache.kafka.kafka-client 
 
-副本 replication 等细节
+https://docs.confluent.io/clients-kafka-java/current/overview.html
 
-https://www.cnblogs.com/luozhiyun/p/12079527.html
+https://www.baeldung.com/kafka-exactly-once
 
-#### leader epoch & high watermark
+https://kafka.apache.org/20/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html
+
+https://dzone.com/articles/kafka-producer-and-consumer-example
+
+默认配置：
+
+https://kafka.apache.org/documentation.html#configuration
+https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/ConsumerConfig.html
+
+### springboot spring-kafka
+
+https://www.baeldung.com/spring-kafka
+
+org.springframework.kafka包含：
+
++ spring-context
++ spring-messaging
++ spring-tx
++ spring-retry
++ kafka-clients
+
+## 6. Diving into Kafka 设计内幕
+
+理想情况下，我们使用类似kafka这样成熟的产品，一般只需要将kafka当做黑盒，然后通过kafka开放的API来达到跟kafka交互的exactly-once，但实际上为了更好的理解或者有时候kafka本身的很多细节也会影响到使用性能甚至是可用性，我们常常还是要打开黑盒，进入其代码内部或者阅读其代码设计文档
+
+### leader epoch & high watermark
 
 Kafka is a highly available, persistent, durable system where every message written to a partition is persisted  and replicated some number of times (we will call it *n*). As a result, Kafka can tolerate *n-1* broker failures, meaning that a partition is available as long as there is at least one broker available. Kafka’s replication protocol  guarantees that once a message has been written successfully to the  leader replica, it will be replicated to all available replicas. 
 
@@ -1665,7 +1439,11 @@ High watermark
 If you want to improve the reliability of the data, set the request.required.acks = -1, but also min.insync.replicas this parameter (which can be set in the broker or topic level) to achieve maximum effectiveness. 
 https://medium.com/@mukeshkumar_46704/in-depth-kafka-message-queue-principles-of-high-reliability-42e464e66172
 
-#### Consumer coordinator & Group coordinator & Rebalance
+### 副本 replication 等细节
+
+https://www.cnblogs.com/luozhiyun/p/12079527.html
+
+### Consumer coordinator & Group coordinator & Rebalance
 
 https://matt33.com/2017/10/22/consumer-join-group/
 
@@ -1691,7 +1469,7 @@ https://www.zhenchao.org/2019/06/25/kafka/kafka-group-coordinator/
 
 在 kafka-0.10 版本，Kafka 在**服务端引入了组协调器(GroupCoordinator)**，每个 Kafka Server 启动时都会创建一个 GroupCoordinator 实例，**用于管理部分消费者组和该消费者组下的每个消费者的消费偏移量**。同时**在客户端引入了消费者协调器(ConsumerCoordinator)**，实例化一个消费者就会实例化一个 ConsumerCoordinator 对象，ConsumerCoordinator **负责同一个消费者组下各消费者与服务端的 GroupCoordinator 进行通信**。
 
-##### 客户端-消费者协调器(ConsumerCoordinator)
+#### 客户端-消费者协调器(ConsumerCoordinator)
 
 To control this assignment, users can either write an implementation of the [`PartitionAssignor`](https://github.com/apache/kafka/blob/2.2/clients/src/main/java/org/apache/kafka/clients/consumer/internals/PartitionAssignor.java) interface or use one of the three provided implementations (configured through the `partition.assignment.strategy` config):
 
@@ -1751,7 +1529,7 @@ ConsumerCoordinator 实现上述功能的组件是 ConsumerCoordinator 类的私
 
 ![](/docs/docs_image/software/buildingblock/kafka/kafka_consumercoordinator.png)
 
-##### 服务端-组协调器(GroupCoordinator)
+#### 服务端-组协调器(GroupCoordinator)
 
 ```
 class GroupCoordinator(
@@ -1820,7 +1598,7 @@ GroupCoordinator 依赖的组件及其作用：
 - DelayedJoin：延迟操作类，用于监视处理所有消费组成员与组协调器之间的心跳超时
 - GroupConfig：定义了组成员与组协调器之间session超时时间配置
 
-##### 消费者协调器和组协调器的交互 -(核心 rebalance)
+#### 消费者协调器和组协调器的交互 -(核心 rebalance)
 
 https://chrzaszcz.dev/2019/06/kafka-rebalancing/
 
@@ -1891,11 +1669,11 @@ https://www.slideshare.net/ConfluentInc/the-silver-bullet-for-endless-rebalancin
 
 
 
-#### kafka idempotent 原理
+### kafka idempotent 原理
 
 http://matt33.com/2018/10/24/kafka-idempotent/
 
-#### kafka Transaction 原理 Transaction Coordinator and Transaction Log
+### kafka Transaction 原理 Transaction Coordinator and Transaction Log
 
 https://cwiki.apache.org/confluence/display/KAFKA/KIP-98+-+Exactly+Once+Delivery+and+Transactional+Messaging
 
@@ -1981,18 +1759,18 @@ Further, the consumer does not need  to any buffering to wait for transactions t
 
 之前一直困惑于这个 -1 -1，不过因为这三条log全部是org.apache.kafka的，所以刚开始抱着完全信任kafka的想法就先放一边了，后来忍不住大概debug进去瞅了下，确认是kafka正常的设计，第一条log直接就能debug到，step into initTransactions很容易看到，所以意思是默认就会先初始化一个-1 -1，我估计是先给个负值的epoch，等到完全注册好才给后面那个正数的epoch，是合理的，不然还没有注册好事务型的producer，直接给一个合法的epoch，会影响到现在正常工作的其他producer（比如万一因为问题这个新的producer初始化失败也不会影响到/zombie fence使用相同Transaction.id的其他producer）
 
-#### NIO Selector
+### NIO Selector
 
 https://stackoverflow.com/questions/46185430/kafka-source-understanding-the-semantics-of-selector-poll
 
-#### Log Compaction 
+### Log Compaction 
 https://kafka.apache.org/22/documentation/#compaction
 Kafka技术内幕-日志压缩 https://segmentfault.com/a/1190000005312891
 
 Note however that there cannot be more consumer instances(task) in a consumer group than partitions. 
 https://cwiki.apache.org/confluence/display/KAFKA/KIP-28+-+Add+a+processor+client
 
-#### Kafka Fetch Session剖析
+### Kafka Fetch Session剖析
 https://stackoverflow.com/questions/54823733/kafka-invalid-fetch-session-epoch
 https://www.cnblogs.com/smartloli/p/14352489.html
 
@@ -2006,18 +1784,8 @@ Client通知Broker，分区的maxBytes，fetchOffset，LogStartOffset改变了�
 Broker通知Client分区的HighWaterMark或者brokerLogStartOffset改变了；
 分区有新的数据
 
-#### retention / delete
 
-log.retention.check.interval.ms:default 5 minutes. So the broker log-segments are checked every 5 minutes to see if they can be deleted according to the retention policies.
-
-topic1 configuration had retention policy set (retention.ms=60000), so if there was at least one existing message in an active segment of topic1, that segment would get closed and deleted if it was idle for long enough. Since log.retention.check.interval.ms is broker configuration, it's not affected by changes on the topic. Also retention.ms has to pass after the last message is produced to the segment. So after the last message is produced to that segment, segment will be deleted in not less than retention.ms milliseconds and not more than retention.ms+log.retention.check.interval.ms.
-
-So the "segment of just 35 bytes, which contained just one message, was deleted after the minute (maybe a little more)" happened because retention check by chance happened almost immediately after the message was produced to that segment. Broker then had just to wait 60 seconds to be sure no new message will be produced to that segment (in which case deletion would't happen) and since there was none, it deleted the segment
-
-https://stackoverflow.com/questions/41048041/kafka-deletes-segments-even-before-segment-size-is-reached
-
-
-### 4.5 Nodes expansion
+### Nodes expansion
 
 https://kafka.apache.org/documentation/#basic_ops_cluster_expansion
 
@@ -2027,17 +1795,23 @@ https://kafka.apache.org/documentation/#basic_ops_cluster_expansion
 
 replica factor=2，启动3个node，那么就出现比如 `__consumer_offsets_49`的replica分布在node 1和2上，所以min.isr=1的情况下只支持node1和2只能挂掉一个，同理其他的分布在node1和node3，node2和node3上，所以总的来说，只能挂掉3个节点的一个，假设挂掉两个node1和2，node3上有replica的topic没问题，但是`__consumer_offsets_49`显然就挂了
 
+### kafka offset not increase by 1?
 
-## Performance metric monitoring
-[Benchmarking Apache Kafka: 2 Million Writes Per Second (On Three Cheap Machines)](https://engineering.linkedin.com/kafka/benchmarking-apache-kafka-2-million-writes-second-three-cheap-machines)
+https://stackoverflow.com/questions/54636524/kafka-streams-does-not-increment-offset-by-1-when-producing-to-topic
 
-[Apache Kafka® Performance](https://developer.confluent.io/learn/kafka-performance/)
+https://issues.apache.org/jira/browse/KAFKA-6607
 
-[Monitoring Kafka performance metrics](https://www.datadoghq.com/blog/monitoring-kafka-performance-metrics/)
+[http://trumandu.github.io/2019/04/13/%E5%A6%82%E4%BD%95%E7%9B%91%E6%8E%A7kafka%E6%B6%88%E8%B4%B9Lag%E6%83%85%E5%86%B5/](http://trumandu.github.io/2019/04/13/如何监控kafka消费Lag情况/)
 
-[scripting approach to run performance tests](https://github.com/gkoenig/kafka-benchmarking)
+https://stackoverflow.com/questions/54544074/how-to-make-restart-able-producer
 
-## 5. Troubleshooting
+ https://github.com/confluentinc/confluent-kafka-go/issues/195
+
+### clean up 
+
+__consumer_offsets https://stackoverflow.com/questions/41429053/how-to-change-consumer-offsets-cleanup-plicy-to-delete-from-compact
+
+## 7. Troubleshooting 踩过的坑
 
 ### Caused by: org.apache.kafka.common.errors.InvalidReplicationFactorException: Replication factor is below 1 or larger than the number of available brokers.
 配置
@@ -2533,7 +2307,9 @@ After subscribing to a set of topics, the consumer will automatically join the g
 1. Upgrade the JDK to version 1.8.0_192 or later.
 2. Adjust the garbage collection strategy from G1 to CMS.
 
-## Reference
+
+## Appendix
+### Reference
 + kafka原理
 
   + kafka架构/工作方式
@@ -2653,11 +2429,9 @@ https://docs.microsoft.com/en-us/azure/architecture/patterns/materialized-view
 
 https://cwiki.apache.org/confluence/display/KAFKA/A+Guide+To+The+Kafka+Protocol
 
-## Presentaion
+### Presentaion 《Introduction to kafka》
 
 ---
-
-《Introduction to kafka》
 
 1.Basic Concepts
 	What’s Kafka
@@ -2776,7 +2550,5 @@ SendKafkaMsg_SaveMemory()不能跟SendKafkaMsg_SaveOffset()为一个事务一起
 
 ![](/docs/docs_image/software/buildingblock/kafka/kafka25.png)
 
-
-https://www.jianshu.com/p/d3e963ff8b70
 
 <disqus/>
