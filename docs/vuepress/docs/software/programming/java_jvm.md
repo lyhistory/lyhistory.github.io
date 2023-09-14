@@ -360,6 +360,8 @@ https://www.cnblogs.com/duanxz/p/5487576.html
 查内存占用，jhat追查内存泄露
 https://programs.wiki/wiki/performance-test-and-analysis-tools-jps-jstack-jmap-jhat-jstat-hprof-use-details.html
 
+jmap $JAVA_HOME/bin/java core.xxxxx
+
 jmap -J-d64
 ```
 jmap -heap 

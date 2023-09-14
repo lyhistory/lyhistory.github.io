@@ -1,11 +1,10 @@
 
-https://www.affplus.com/
+
 ## keywords
++ pixels
+  In digital advertising, pixels — also known as marketing pixels, tracking pixels, web beacons, and web bugs — are snippets of code (HTML or JavaScript) or tiny invisible images (measuring 1×1 pixel) that are placed on web pages, usually in the footer, and are used to gather information about website visitors and track their activity.
 
-In digital advertising, pixels — also known as marketing pixels, tracking pixels, web beacons, and web bugs — are snippets of code (HTML or JavaScript) or tiny invisible images (measuring 1×1 pixel) that are placed on web pages, usually in the footer, and are used to gather information about website visitors and track their activity.
-
-
-season pixel: So essentially what seasoning your pixel means is that you are going to get those events that the data collected on that pixel first before you go and optimise for conversions
+  season pixel: So essentially what seasoning your pixel means is that you are going to get those events that the data collected on that pixel first before you go and optimise for conversions
 
 ## Core Components
 
@@ -127,3 +126,5 @@ EMU 联盟经理 IM洗白
 EMU应该是Emulate（模仿）的简写，意思就是我们通过各种方法模拟真实的用户操作来实现获利。
 https://zhuanlan.zhihu.com/p/497699947
 https://zhuanlan.zhihu.com/p/353401107
+
+https://www.affplus.com/
