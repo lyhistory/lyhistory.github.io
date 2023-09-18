@@ -7,7 +7,13 @@ Network-attached storage (NAS) is dedicated file storage that enables multiple u
 
 NAS（Network Attached Storage：网络附属存储）按字面简单说就是连接在网络上，具备资料存储功能的装置，因此也称为“网络存储器”。它是一种专用数据存储服务器。它以数据为中心，将存储设备与服务器彻底分离，集中管理数据，从而释放带宽、提高性能、降低总拥有成本、保护投资。其成本远远低于使用服务器存储，而效率却远远高于后者。目前国际著名的NAS企业有Netapp、EMC、OUO等。
 
-SSD HDD
+SSD 固态硬盘
+
+HDD 普通硬盘（机械硬盘）
+
+长期存储数据还是选择机械硬盘比较好
+
+Q: Does the Windows 10 "fast startup" feature decrease the lifespan of your HDD or SSD? It has very little difference on the life of either an HDD or an SSD. As others have said, writing to SSDs will gradually reduce the life of the drive.
 
 A redundant array of independent disks, or RAID, is a group of two or multiple hard drives. It offers improved data security, read-write speed performance, and fault tolerance. On the other hand, a hard drive is an individual storage media drive used to store and manage digital data.
 

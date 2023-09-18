@@ -51,6 +51,31 @@ https://panzoid.com/
 
 ## 高级
 
+### 文案 =》视频
+#### 第一步：chatgpt文案
+
+#### 路径 1：第二步 直接用视频剪辑软件如剪映的一键文字AI图文成片生成视频功能
+
+#### 路径 2： 第二步：转语音
+配音鹅小程序，微软语音合成助手 或者等第四步或第五步生成
+
+#### 路径 2：第三步：生成静态虚拟人物图片
+Midjourney / STABLE DIFFUTION / 百度文心一格
+
+#### 路径 2：第四步：视频生成
+DID CT8-CrazyTalk HeyGen Lumen5 、Animaker
+
+#### 路径 2：第五步：视频剪辑
+去水印 换音频 加字幕
+
+### 图片=》视频
+
+#### 第一步 Midjourney Zoom Out功能生成有序图片
+https://mp.weixin.qq.com/s/JnIRcAfZffIlCGYcy8njwQ
+#### 路径1： 第二步 将生成的一组有趣的序列图像导入剪映，然后进行转场、增加背景音乐等等操作
+#### 路径2：第二步 在Runway中生成视频
+在主页左侧的功能栏中找到Generate videos，点击进去，选择Frame Interpolation 导入
+
 ### 短视频制作技巧：虚拟人物解说+ 动画字幕+ 背景视频
 https://mp.weixin.qq.com/s/WvSXb-dQ2dFaEAKqXis_9w
 

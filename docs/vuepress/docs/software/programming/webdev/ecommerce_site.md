@@ -398,3 +398,5 @@ https://woocommerce.com/document/storefront-filters-example-change-number-produc
 ?# Could not retrieve order. 
 
 changed the Paypal button styles from the default yellow to the white and it seems to have worked!
+
+WordPress外贸建站网页排版注意事项 https://mp.weixin.qq.com/s/6KUDUhAcT3YwIGNrO-1j3Q

@@ -50,6 +50,11 @@ Web3j is the java port of web3 and web3js is the js port of web3.
 
 Ganache
 
+### 2.0 json rpc
+https://ethereum.org/en/developers/docs/apis/json-rpc
+
+https://docs.avax.network/reference/avalanchego/c-chain/api
+
 ### 2.1 Develop with Web3JS
 
 **Truffle**

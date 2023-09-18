@@ -268,11 +268,7 @@ Merkle in time
 Bitmap , bloom filter
 
 
-黑客的黄金时代：区块链还有很长的路要走 https://zhuanlan.zhihu.com/p/34338934
-公钥真是公开的吗？ https://alphawallet.com/公钥真是公开的吗？/
-DXC 区块链架构师 张韡武 - 彪悍的区块链来了
-https://myslide.cn/slides/4665#
-解决集成需求才是未来区块链业务的重点 https://zhuanlan.zhihu.com/p/36113034
+
 聊聊数字签名(Digital Signature) https://alphawallet.com/%E8%81%8A%E8%81%8A%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8Ddigital-signature/
 
 

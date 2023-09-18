@@ -540,10 +540,19 @@ nodemcu是基于8266，nodemcu32是基于 esp32?
 
 　　STM32单片机则是ST（意法半导体）公司使用arm公司的cortex-M3为核心生产的32bit系列的单片机，他的内部资源（寄存器和外设功能）较8051、AVR和PIC都要多的多，基本上接近于计算机的CPU了，适用于手机、路由器等等。
 
+## 云平台
+
+Arduino IoT Cloud、Blynk
+
 ## 框架
 
 单片机编程为啥要有框架？
 https://mp.weixin.qq.com/s/8UTXyJpNqNmDWRzORihO2g
+
+FastBee开源物联网平台:
+演示地址：https://iot.fastbee.cn/
+账号密码：fastbee/123456
+获取源码: https://github.com/kerwincui/FastBee
 
 ## 简单案例
 
