@@ -258,6 +258,8 @@ DNS是域名转IP;NAT 是(外网)IP 转(内网)IP; ARP 是IP 转MAC
 
 [40年前的协议战争，对区块链有什么启示？](https://mp.weixin.qq.com/s?__biz=MzI5Mjg1Mjk1OQ==&mid=2247483735&idx=1&sn=0f8fb9ea380c7fc6af00bd514d5927f2&chksm=ec7a44e7db0dcdf1e395793cd20c096e0b506004046f736b2501df363e52cc52d9589cd3c40e&scene=0&xtrack=1)
 
+[十年码农内功：网络发包详细过程(一)](https://mp.weixin.qq.com/s/TtgySmaMG1580SU6O06nXA)
+
 ### 1.1 Layer 1: The physical layer 物理层
 设备：
 + 网桥：把两个不同物理层，不同MAC子层，不同速率的局域网连接在一起

@@ -48,7 +48,7 @@ VPN的全名是virtual private network，缩写：VPN，是常用于连接中、
   When you use WARP, your DNS queries are protected from snoopers using Cloudflare’s 1.1.1.1 DNS service. A layer of encryption is also added to secure your traffic from prying eyes on the internet. However, unlike traditional VPNs, WARP does not mask your IP address, which means you can’t use it to improve your privacy or stream geo-restricted content.
   WARP secures your data with encryption to keep your personal information safe, but it doesn’t provide any extra security. For instance, it doesn’t offer any form of anonymity protection. There’s no new IP address allocated to you, which means your traffic is not disguised from your ISP and other third parties – they can trace it back to you! 
 + 还有开源的[protonvpn](https://protonvpn.com) (暂未尝试)
-
++ [未来VPN?去中心化VPN](https://www.orchid.com/)
 ### 1.2 自行搭建(不推荐小白)
 
 #### 1.2.1 理论
@@ -71,6 +71,7 @@ Layer 2 Tunneling Protocol (L2TP) is a later version of PPTP developed by IETF B
 PPTP requires the Internet to be an IP network. L2TP only requires the tunneling media to provide packet-oriented point-to-point connections. L2TP can relay permanent virtual circuits (PVCs), X.25 virtual circuits (VCS) at IP addresses (using UDP) or use it on an ATM VCs network.
 
 ###### IPSec
+[开始“熟悉又陌生”的IPSec奇妙之旅](https://mp.weixin.qq.com/s/VwjKEX0EUvWz00yaDUvAhw)
 IPSec 隧道模式隧道是封装、路由与解封装的整个 过程。隧道将原始数据包隐藏(或封装)在新的数据包内部。该新的数据包可能会有新的寻址与路由信息，从而使其能够通 过网络传输。隧道与数据保密性结合使用时，在网络上窃听通讯的人将无法获取原始数据包数据(以及原始的源和目标)。封装的数据包到达目的地后，会删除封 装，原始数据包头用于将数据包路由到最终目的地。
 
 隧道本身是封装数据经过的逻辑数据路径，对原始的源和目的端，隧道是不可见的，而只能看到网络路径中的点对点连接。连接双方并不关心隧道起点和终点之间的任何路由器、交换机、代理服务器或其他安全网关。将隧道和数据保密性结合使用时，可用于提供VPN。

@@ -349,6 +349,9 @@ Tip for estimateGaussian(): Compute the mean using "mean()". You can compute sig
 cofiCostFunc() tutorial
 
 
+## 案例
+[Shopee 多语言商品知识图谱技术构建方法和应用](https://www.51cto.com/article/758984.html)
+
 --
 
 ref:

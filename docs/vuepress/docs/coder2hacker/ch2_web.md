@@ -182,7 +182,7 @@ Fiddler只适用于windows平台，burpsuite是java写的跨平台，Fiddler和b
 
 下面来具体分类说下：
 
-+ TCPDUMP:
+#### TCPDUMP:
 
   最原始的方式是采用系统提供的基本工具比如linux的tcpdump嗅探监听，它是一个没有UI的cli形式的命令行工具，开启混杂模式，可以抓取任何经过本机任何一个网卡的数据包，windows上也有类似的windump；
 
@@ -200,7 +200,7 @@ https://medium.com/@faridhashmi733/fix-burp-suite-ssl-secure-connection-failed-8
 ![burpsuite https](/docs/docs_image/coder2hacker/ch2web/web02.png)
 
 
-+ fiddler
+#### fiddler
 
 本机+可设置代理的软件（浏览器，百度网盘等允许设置代理的软件）：
 	Filters->breakpoints
@@ -259,8 +259,10 @@ Fiddler+burpsuite
 	Fiddler gateway 转发给burpsuite
 
 
-
-+ wireshark 
+#### Frida工具（也可使用Xposed）进行Hook 
+使用Charles、Fiddle等抓包工具对淘系App进行抓包时，你会发现总是抓不到包，出现请求不走Charles代理的情况。这是因为淘系app底层网络通信的协议并不是普通的http协议，而是自己实现的一套私有协议Spdy。
+[解决淘宝、闲鱼等淘系App无法抓包问题](https://hyb.life/archives/85)
+#### wireshark 
 
   终极杀器wireshark,可以设置监听某些网卡的流量,怎么监听某个特定应用程序的流量呢? 很简单通过过滤条件:
 
