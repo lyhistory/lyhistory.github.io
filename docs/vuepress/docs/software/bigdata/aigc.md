@@ -26,6 +26,8 @@ https://prompthero.com/
 https://flowgpt.com/
 https://github.com/trigaten/Learn_Prompting
 
+https://udify.app/completion/SiKtiPJ9gHUrHUPy
+
 ```
 我想着AI生成图片工具DALL-E中，制作一张内容为:「XXXXXXX」，请提供给我可以给AI生成图片的英文指令，另外注明要使用「专业摄影风格」。”
 ```
@@ -35,7 +37,16 @@ https://github.com/lyhistory/learn_aigc_CipherChat
 
 Drag & drop UI to build your customized LLM flow https://github.com/FlowiseAI/Flowise
 
+[自动化视频制作工具ShortGPT](https://github.com/lyhistory/tools_aigc_ShortGPT)
+https://mp.weixin.qq.com/s/tdgld7kH4GFhgtjOK1LQ7w
+
 ## 应用
+
+### AI 写程序
+OpenAI's Code Interpreter 
+open-interpreter https://github.com/lyhistory/tools_aigc_open-interpreter
+### 标题/文案
+ https://duozhongcao.com/
 
 ### 文字转语音
 google bart

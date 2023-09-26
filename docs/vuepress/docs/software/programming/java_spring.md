@@ -276,7 +276,7 @@ Thymeleaf https://www.baeldung.com/thymeleaf-in-spring-mvc
 
 ## 4. Spring Cloud 
 
-spring cloud定义了接口标准，然后各家各组件做了不同实现；
+[spring cloud定义了接口标准，然后各家各组件做了不同实现；](https://mp.weixin.qq.com/s/bIcnzhOM-ZEGjoFg7u4i4Q)
 
 ### 从总体上看：
 

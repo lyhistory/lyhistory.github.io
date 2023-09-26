@@ -96,6 +96,9 @@ https://www.thisiswhyimbroke.com/
 https://www.rumpl.com/
 https://www.renogy.com/
 
+新奇特选品：
+odditymall.com
+
 ## 流量漏斗
 
 https://www.zhihu.com/question/475467288
