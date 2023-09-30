@@ -33,6 +33,10 @@ https://udify.app/completion/SiKtiPJ9gHUrHUPy
 ```
 越狱:
 https://github.com/lyhistory/learn_aigc_CipherChat
+
+## model 模型库
+https://huggingface.co/
+
 ## 自动化
 
 Drag & drop UI to build your customized LLM flow https://github.com/FlowiseAI/Flowise

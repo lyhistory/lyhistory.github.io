@@ -6,6 +6,9 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/blockchain)  《以太坊：深度解析》
 
+How does EIP become ERC?
+Ethereum Request for Comment (ERC) is one type of EIP that sets application-level standards such as contract and token standards. An EIP can only become an ERC once the on-chain governance authorizes the change.
+
 Difficulty bomb	Uncle block
 https://ethereum.stackexchange.com/questions/56338/block-time-and-confirmation-time
 

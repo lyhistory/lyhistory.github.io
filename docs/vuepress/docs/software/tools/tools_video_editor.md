@@ -70,6 +70,14 @@ DID CT8-CrazyTalk HeyGen Lumen5 、Animaker
 #### 路径 2：第五步：视频剪辑
 去水印 换音频 加字幕
 
+### 文案=》动画视频
+#### 第一步 文案
+https://gravitywrite.com/
+#### 路径1：第二步 
+https://new.express.adobe.com/tools/animate-from-audio
+#### 路径2：第二步
+https://www.steve.ai/
+
 ### 图片=》视频
 
 #### 第一步 Midjourney Zoom Out功能生成有序图片
