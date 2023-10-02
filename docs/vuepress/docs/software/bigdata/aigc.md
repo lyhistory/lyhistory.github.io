@@ -107,6 +107,9 @@ https://wonderdynamics.com/
 ## GPT+Eyes
 https://www.youtube.com/watch?v=w-wxguIs-0I
 
+## GPT GAMES World
+虚拟世界的人 Generative Agents: Interactive Simulacra of Human Behavior https://github.com/joonspk-research/generative_agents
+
 ## other
 https://creatorkit.com/
 OpenDAN Open-source Private AI OS https://www.opendan.ai/

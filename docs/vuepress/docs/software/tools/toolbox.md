@@ -82,12 +82,6 @@ https://jagt.github.io/clumsy/manual.html
  
 局域网文件传输-飞鸽传书 http://www.ipmsg.org.cn/
 
-下载网页
-HTTrack Website Copier   http://www.httrack.com/
- Web2book    http://download.cnet.com/Web2book/3000-2648_4-10649163.html
- WinWGet http://www.cybershade.us/winwget/
-refer: How to Save Web Pages and Blogs for Offline Reading
-http://www.labnol.org/internet/save-webpages-for-offline-reading/6352/
 
  
 Screen recorder
@@ -110,3 +104,15 @@ https://www.quora.com/Which-is-the-best-free-editing-software-for-dubbing
 	https://www.zhihu.com/question/23568140
 
 
+## 下载
+下载网页
+HTTrack Website Copier   http://www.httrack.com/
+ Web2book    http://download.cnet.com/Web2book/3000-2648_4-10649163.html
+ WinWGet http://www.cybershade.us/winwget/
+refer: How to Save Web Pages and Blogs for Offline Reading
+http://www.labnol.org/internet/save-webpages-for-offline-reading/6352/
+
+[Motrix是一款免费开源的全能下载工具](https://motrix.app/)
+
+## 健康工具
+护眼 f.lux

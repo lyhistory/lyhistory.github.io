@@ -127,6 +127,10 @@ https://mp.weixin.qq.com/s/3GW_psgJX0KmbnW85kws9A
 谷歌SEO：5个小技巧助你更快获得流量！
 https://mp.weixin.qq.com/s/rmFFy5-f1arsRpER7SxytA
 
+SEO 工具：
+keyword everywhere
+https://keywordeverywhere.com/
+
 SERP 工具： 
 https://ahrefs.com/serp-checker
 https://mp.weixin.qq.com/s/l5xgiRM4GODQHDSQwtrJSw
@@ -300,6 +304,15 @@ https://www.manta.com/
 ### 辅助工具
 google voice
 https://mp.weixin.qq.com/s/UFrn_D4lyDfXzsICptfDMA
+
+### 获取邮箱
+https://snov.io/
+
+### 海关数据
+https://www.volza.com/
+
+### 本地语言翻译
+https://www.deepl.com/translator
 
 ### AI+电商：
 
