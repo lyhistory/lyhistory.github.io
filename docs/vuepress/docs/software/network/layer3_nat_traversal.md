@@ -227,6 +227,23 @@ Generally VPNs use TCP or UDP protocols to communicate, VPN protocols themselves
 | [Frp](https://github.com/fatedier/frp) | YES | YES/UDP | YES | 需要 | 三种方式选其一 |
 | smarGate | YES | YES/TCP | YES | 不需要 | 同时支持，P2P优先 |
 
+其他工具：
++ nps是一款轻量级、高性能、功能强大的内网穿透代理服务器。目前支持tcp、udp流量转发，可支持任何tcp、udp上层协议（访问内网网站、本地支付接口调试、ssh访问、远程桌面，内网dns解析等等……），此外还支持内网http代理、内网socks5代理、p2p等，并带有功能强大的web管理端。
+  https://github.com/ehang-io/nps/releases
++ EW 是一套便携式的网络穿透工具，具有 SOCKS v5服务架设和端口转发两大核心功能，可在复杂网络环境下完成网络穿透。但是，现在工具已经不更新了。。。
++ Serveo
+  官网地址：https://serveo.net/ ↗
+
+    优点：
+
+    Serveo 是一个免费的 SSH 服务，允许你远程访问你的设备。
+
+    它不需要客户端和服务器之间安装任何软件，只需一个简单的 SSH 命令就可以启动。
+
+    它支持 HTTP，HTTPS 和 TCP 穿透，可以满足你的不同需求。
+
+    它可以保存你的连接记录，你可以随时查看之前的请求信息。
++ 
 #### （反向）代理穿透
 说白了，就是通过公网的服务器转发，本质跟nginx反向代理web服务或者负载均衡器的角色一样，把内网中的服务挡在身后，自己向外网开放端口，
 

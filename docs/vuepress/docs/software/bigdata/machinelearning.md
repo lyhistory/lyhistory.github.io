@@ -349,6 +349,9 @@ Tip for estimateGaussian(): Compute the mean using "mean()". You can compute sig
 cofiCostFunc() tutorial
 
 
+## 案例
+[Shopee 多语言商品知识图谱技术构建方法和应用](https://www.51cto.com/article/758984.html)
+
 --
 
 ref:
@@ -363,5 +366,10 @@ Coursera上机器学习课程（公开课）汇总推荐
 http://blog.coursegraph.com/tag/机器学习
 斯坦福机器学习笔记 https://legacy.gitbook.com/book/yoyoyohamapi/mit-ml/details
 http://openclassroom.stanford.edu/MainFolder/DocumentPage.php?course=MachineLearning&doc=exercises/ex7/ex7.html
+
+CNN:
+一图胜千言：没有数学推导，5分钟理解CNN(卷积神经网络)的实现过程 
+https://mp.weixin.qq.com/s/AjnS2ljdtfAkQ9PGHYbOZQ
+https://medium.com/impactai/cnns-from-different-viewpoints-fab7f52d159c
 
 <disqus/>

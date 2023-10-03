@@ -82,6 +82,9 @@ https://www.awyerwu.com/10480.html
 简单分享一波外贸减压产品
 https://mp.weixin.qq.com/s/YELfRWzHjGzn9o7he-OUAg
 
+分享一波手机壳的外贸独立站
+https://mp.weixin.qq.com/s/exjVdZj4Qc4DFDcRSQAIjg
+
 分享一波针对“脚”的外贸独立站
 https://mp.weixin.qq.com/s/vKO1E1fcvwhxV5-e5_s-Uw
 
@@ -90,13 +93,19 @@ https://firebox.com/
 https://www.uncommongoods.com/
 https://www.thisiswhyimbroke.com/
 
+https://www.rumpl.com/
+https://www.renogy.com/
+
+新奇特选品：
+odditymall.com
+
 ## 流量漏斗
 
 https://www.zhihu.com/question/475467288
 https://www.zhihu.com/question/35840934
 
 ### 流量获取：
-搜索引擎优化(SEO)、搜索引擎营销(SEM)、社交媒体营销、电子邮件营销
+搜索引擎优化(SEO)、搜索引擎营销(SEM)、社交媒体营销、电子邮件营销EDM
 
 转化率 加购率
 
@@ -108,6 +117,8 @@ https://www.zhihu.com/question/35840934
 我用这个方法1个月赚了10万 https://mp.weixin.qq.com/s/zbRKjNVbX67UA3dBtJxrBQ
 
 #### seo
+
+[以时间戳Timestamp在线工具网站为例，手把手教你做一个工具网站的详细步骤](https://mp.weixin.qq.com/s?__biz=MjM5OTIzMzYyMA==&mid=2650079501&idx=1&sn=84b905dfcf0423bce6fffad25205c53b&chksm=bf3f30368848b920e1e40dfebb7d061b417378733f43096087b5727ef6c36cfc716a48745817)
 搭建外贸独立站不再是终点，SEO才是带来订单的王道！
 https://mp.weixin.qq.com/s/RioiEs3xym9ExUrke9U6jg
 https://mp.weixin.qq.com/s/TpoS7unEY1YYf0d5EHed5A
@@ -211,8 +222,55 @@ Traffic Driving Type Keywords:
 
 - [Product] + for free
 
+#### 私域流量
+Facebook公共主页
+Youtube
+Quora
+Reddit
+
+您可以通过以下步骤在谷歌搜索引擎上找到与自己行业相关的论坛或博客：
+
+打开谷歌搜索引擎。
+
+在搜索框中输入您行业的关键词，例如“medical supplies blog”等。
+
+在搜索结果页面的顶部，选择“搜索工具”。
+
+在下拉菜单中选择“时间”并选择最近的时间范围，以便找到最新的论坛和博客。
 #### 开发客户
 https://mp.weixin.qq.com/s/Aq_72eCgCb8EC743506_Pw
+
+平台：
+https://www.thomasnet.com/
+https://www.dnb.com/
+https://www.zoominfo.com/
+https://business.linkedin.com/
+https://clutch.co/
+https://www.capterra.com/
+https://www.g2.com/
+https://www.softwareadvice.com/
+https://www.f6s.com/
+https://www.trustpilot.com/
+https://www.crunchbase.com/
+https://www.kompass.com/
+https://www.yelp.com/
+https://www.globalsources.com/
+https://curata.com/
+https://www.mfg.com/
+Hong Kong Trade Development Council (HKTD) Sourcing
+
+https://sourcing.hktdc.com/
+https://www.indiamart.com/
+https://www.cantonfair.org.cn/
+https://www.mapquest.com/
+https://www.local.com/
+https://www.yellowbook.com
+https://www.officialusa.com/
+https://www.tradekey.com/
+https://www.taiwantrade.com/
+https://www.tradeindia.com/
+https://www.manta.com/
+
 
 ### 点击率 
 页面排名
@@ -224,6 +282,14 @@ https://mp.weixin.qq.com/s/Aq_72eCgCb8EC743506_Pw
 人群垂直
 价值垂直
 
+### 补单/虚假订单
+
+补单就是补销量、补好评，说白了就是补店铺的综合数据
+
+### 投放广告
+
+谷歌系广告自动化进程分享 https://mp.weixin.qq.com/s/_bukUIWt-YdHQpigVLwRPQ
+
 ## 客户背景调查
 + 外贸公社 tradesparq 公司规模实力 外贸数据
 + similar web 网站流量情况
@@ -231,9 +297,15 @@ https://mp.weixin.qq.com/s/Aq_72eCgCb8EC743506_Pw
 + facebook twitter 了解动态
 ## 工具
 
-AI+电商：
+### 辅助工具
+google voice
+https://mp.weixin.qq.com/s/UFrn_D4lyDfXzsICptfDMA
+
+### AI+电商：
 
 AI可实现人工智能选品、图文和视频广告素材制作/广告语智能输出、广告智能投放、智能客服回复等功
+
+https://www.mogic.ai/
 
 ### 跨境
 跨境魔方 https://upkuajing.com

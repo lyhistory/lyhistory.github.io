@@ -134,11 +134,11 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<p>-------------------------</p>
 	<h3>项目管理</h3>
 	<ul>
+		<li><a href="/docs/software/project_manage/business_management">管理系统</a></li>
 		<li><a href="/docs/software/project_manage/cloud">云服务cloud</a></li>
 		<li><a href="/docs/software/project_manage/cloud_google">google cloud</a></li>
 		<li><a href="/docs/software/project_manage/cloud_aws">aws cloud</a></li>
 		<li><a href="/docs/software/project_manage/cloud_huawei">huawei cloud</a></li>
-		<li><a href="/docs/software/project_manage/projectmanage">Project Manage</a></li>
 		<li><a href="/docs/software/project_manage/git">GIT</a></li>
 		<li><a href="/docs/software/project_manage/gitlab_server">GitLab server</a></li>
 		<li><a href="/docs/software/project_manage/monitor">实时监控</a></li>

@@ -2,17 +2,41 @@ Keywords: Software, tools
 人和动物的区别是对工具的使用，
 大师和原始人的区别是对科技工具的使用
 
-For Server
-https://mremoteng.org/download
-For Windows
+## Graphic
+
+Graphviz is open source graph visualization software. Graph visualization is a way of representing structural information as diagrams of abstract graphs and networks. It has important applications in networking, bioinformatics, software engineering, database and web design, machine learning, and in visual interfaces for other technical domains.
+
+https://graphviz.org/
+
+
+Snipaste 提供强大易用的截图、贴图以及图片标注功能，其中我觉得区别于其他截图工具的功能就是贴图，它可以把截下的图置顶贴在屏幕上的任意位置，对于多次截图，数据核对等场景都很方便。
+
+## 视频编辑
+[Refer to tools_video_editor](/software/tools/tools_video_editor.md)
+
+## 工作流
+[Refer to tools_workflow](/software/tools/tools_workflow.md)
+
+## OS
+
+### 系统安装
+[Refer to tools_os_install](/software/tools/tools_os_install.md)
+
+### 磁盘
+[Refer to tools_disk&data](/software/tools/tools_disk%26data.md)
+
+Spacesniffer
+这是一个磁盘可视化的工具，能让我们非常方便地看到磁盘的使用情况，而且，是树状图的可视化形式！（数据分析师最喜欢了~）
+
+### For Windows
 - Sysinternals
 https://technet.microsoft.com/en-us/bb545027
 erverything https://voidtools.com/
 
-Easy BCD 修复引导分区
-老毛桃扩展C盘分区
+## For Server
+https://mremoteng.org/download
 
-For dotNet
+## For dotNet
 nGrinder Web压力测试
 OllyDbg 动态追踪工具
 WebKit .NET

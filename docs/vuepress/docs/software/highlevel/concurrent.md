@@ -113,22 +113,30 @@ java sdk默认提供了非线程安全的队列和线程安全的队列，实际
 加锁的队列： ArrayBlockingQueue，LinkedBlockingQueue，但是有锁就有阻塞，所以性能会比较低
 
 但是，
+### 多线程不代表高性能！
+多线程有读写问题，需要加锁，则触发内核态，从而降低性能
+
 **要处理高并发，肯定要考虑性能，有没有性能高即无锁non-blocking并且有界的队列呢，LMAX开发的Disruptor就是这么一个无锁高性能有界循环队列，**
 
 “It ensures that any data is owned by only one thread for write access, therefore reducing write contention compared to other structures.”
 
 现在Disruptor已经成为很多交易所的基础框架一部分，[性能对比参考](https://github.com/LMAX-Exchange/disruptor/wiki/Performance-Results)
+[你应该知道的高性能无锁队列Disruptor](https://juejin.im/post/5b5f10d65188251ad06b78e3)
 可以看到越来越多的框架集成了disruptor队列，比如log4j，storm，solr
 https://mvnrepository.com/artifact/com.lmax/disruptor/3.2.1/usages
 https://mvnrepository.com/artifact/com.lmax/disruptor/3.4.0/usages
 
-虽然Disruptor的ring buffer队列可以处理高并发，但是有时候系统对消息队列有更高的要求，比如可以pub sub，可以存储当做db，如果下游挂掉可以重新恢复到之前的位置重跑等等，
+NOTES:
+虽然Disruptor的ring buffer队列可以处理高并发，但是有时候业务上对消息队列有更复杂的要求，比如可以pub sub，可以存储当做db，如果下游挂掉可以重新恢复到之前的位置重跑等等，
 所以我们有kafka消息队列，
 kafka消息队列底层的基于sequential consistency的zab协议一定程度上保证了可以实现‘exactly-once’的语义：
 消息生产者producer可以保证幂等性（kafka系统内的重发不会造成下游收到多条重复数据，当然也不会丢失），
 消息消费者consumer可以通过自主管理offset和使用事务提交offset以及下游写入kafka的消息，可以保证不重复消费也不会丢失；
 
-### 3.系统和框架层面的并发限制
+### IO的高并发发展
+参考 [BIO/NIO/多路复用/NETTY](/software/buildingblock/nio_epoll.md)
+[100万级连接，爱奇艺WebSocket网关如何架构](https://mp.weixin.qq.com/s/H3HPpW2w88v0tDCbQIh7CA)
+## 3.系统和框架层面的并发限制
 
 比如linux句柄数 执行ulimit –n检查文件句柄数为1024，将该数值改为10240
 /etc/security/limits.con
@@ -141,6 +149,7 @@ CopyRight 刘跃 LYHISTORY.COM
 
 ref:
 
-[你应该知道的高性能无锁队列Disruptor](https://juejin.im/post/5b5f10d65188251ad06b78e3)
+
+
 
 <disqus/>

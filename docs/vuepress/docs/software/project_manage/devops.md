@@ -5,6 +5,13 @@ CI/CD is a DevOps tactic and the core practice, which makes use of the right aut
 delveopers commit their code to a shared repository on a daily basis;
 each commit triggers an automated workflow on a CI server that can notify the devlopers of any issues intergrating their changes when a repo evolves in small steps like this prevents what's known as merge to
 
+## for the whole team
+运维安全管控/isolation control
+
+堡垒机 jump host
+
+开源项目地址：https://github.com/jumpserver/jumpserver
+开源项目组织：JumpServer
 
 ## for the project development team
 

@@ -540,6 +540,13 @@ nodemcu是基于8266，nodemcu32是基于 esp32?
 
 　　STM32单片机则是ST（意法半导体）公司使用arm公司的cortex-M3为核心生产的32bit系列的单片机，他的内部资源（寄存器和外设功能）较8051、AVR和PIC都要多的多，基本上接近于计算机的CPU了，适用于手机、路由器等等。
 
+## 操作系统
++ FreeRTOS 
+  is a real-time operating system kernel for embedded devices that has been ported to 35 microcontroller platforms. 
++ Home Assistant Operating System
+  Home Assistant Operating System uses Docker as Container engine. It by default deploys the Home Assistant Supervisor as a container. Home Assistant Supervisor in turn uses the Docker container engine to control Home Assistant Core and Add-Ons in separate containers. Home Assistant Operating System is not based on a regular Linux distribution like Ubuntu. It is built using Buildroot and it is optimized to run Home Assistant. It targets single board compute (SBC) devices like the Raspberry Pi or ODROID but also supports x86-64 systems with UEFI.
+  https://github.com/home-assistant/operating-system
+  [微信公众号](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MjM5MzUxODIwOQ==&action=getalbum&album_id=2174534931270385664&scene=173&from_msgid=2650170796&from_itemidx=1&count=3&nolastread=1#wechat_redirect)
 ## 云平台
 
 Arduino IoT Cloud、Blynk

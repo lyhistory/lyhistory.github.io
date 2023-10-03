@@ -73,6 +73,11 @@ InfluxDB is maintained by a single commercial company following the open-core mo
 **Prometheus vs. OpenTSDB**
 OpenTSDB is a distributed time series database based on Hadoop and HBase.
 
+### 1.3 Prometheus VS Zabbix
+Zabbix 和 Prometheus 都是流行的开源监控工具，它们各自具有独特的优势。Zabbix 主要用于网络和系统监控，而 Prometheus 则专注于开源的分布式时间序列数据库。在某些场景下，将这两个工具整合在一起可以更好地发挥它们的优势，提高监控的灵活性和效率。
+[Zabbix 和 Prometheus 到底怎么选？](https://mp.weixin.qq.com/s/ENNNTj1WfIXaiIDdl7lLsw)
+[Zabbix 整合 Prometheus](https://mp.weixin.qq.com/s/oSCopDHa8RtGSGbc4auTUw)
+
 ## 2. Details
 
 ### 2.1 Prometheus

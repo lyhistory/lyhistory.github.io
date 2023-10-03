@@ -47,3 +47,5 @@ https://www.namebase.io/blog/tutorial-2-how-to-mine-hns/
 
 sia app store 这个&[/search/%2320540]#20540 ;得关注下：https://blog.sia.tech/30-days-to-50-skynet-apps-bootstrapping-a-new-platform-d1d7537ca1a6
 这个&[/search/%2320540]#20540 ;得研究下 https://augur.substack.com/p/how-one-trader-turned-400-into-400k
+
+“80后”华商夫妇在美国做跨境物流：“还在摸索” https://mp.weixin.qq.com/s/1dTJjVK7MWYWxQODprcNxA

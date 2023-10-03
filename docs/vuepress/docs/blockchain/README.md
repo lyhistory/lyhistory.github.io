@@ -49,6 +49,10 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/blockchain/blockchain_as_new_architecture" >译文：为什么区块链是更好的应用服务器或者数据库架构</a></li>
 		<li>more to do....</li>
 	</ul>
+	<h3>Web3</h3>
+	<ul>
+		<li><a href="/docs/blockchain/web3/web3_security_approval" >web3安全：额度授权</a></li>
+	</ul>
 </div>
 
 
