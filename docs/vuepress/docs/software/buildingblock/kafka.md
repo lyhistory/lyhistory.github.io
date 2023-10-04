@@ -569,8 +569,7 @@ https://stackoverflow.com/questions/65507232/kafka-log-segment-bytes-vs-log-rete
 
 #### 2.2.2 Client Config
 
-```
---- auto.create.topics.enable
+##### auto.create.topics.enable
 
 Enable auto creation of topic on the server
 Type:	boolean
@@ -579,26 +578,67 @@ Valid Values:
 Importance:	high
 Update Mode:	read-only
 
---- request.timeout.ms
+##### request.timeout.ms & retries
+request.timeout.ms:
 The configuration controls the maximum amount of time the client will wait for the response of a request. If the response is not received before the timeout elapses the client will resend the request if necessary or fail the request if retries are exhausted.
 
 Type:	int
 Default:	30000 (30 seconds)
 
---- scheduled.rebalance.max.delay.ms
+retries:
+Setting a value greater than zero will cause the client to resend any request that fails with a potentially transient error. It is recommended to set the value to either zero or `MAX_VALUE` and use corresponding timeout parameters to control how long a client should retry a request.
+
+Type:	int
+Default:	0
+Valid Values:	[0,...,2147483647]
+Importance:	low
+
+##### max.poll.interval.ms vs session.timeout.ms
+max.poll.interval.ms:
+The maximum delay between invocations of poll() when using consumer group management. This places an upper bound on the amount of time that the consumer can be idle before fetching more records. If poll() is not called before expiration of this timeout, then the consumer is considered failed and the group will rebalance in order to reassign the partitions to another member. For consumers using a non-null group.instance.id which reach this timeout, partitions will not be immediately reassigned. Instead, the consumer will stop sending heartbeats and partitions will be reassigned after expiration of session.timeout.ms. This mirrors the behavior of a static consumer which has shutdown.
+
+Type:	int
+Default:	300000 (5 minutes)
+Valid Values:	[1,...]
+Importance:	medium
+
+session.timeout.ms:
+The timeout used to detect client failures when using Kafka's group management facility. The client sends periodic heartbeats to indicate its liveness to the broker. If no heartbeats are received by the broker before the expiration of this session timeout, then the broker will remove this client from the group and initiate a rebalance. Note that the value must be in the allowable range as configured in the broker configuration by group.min.session.timeout.ms and group.max.session.timeout.ms.
+
+Type:	int
+Default:	45000 (45 seconds)
+Valid Values:	
+Importance:	high
+
+> Before KIP-62, there is only session.timeout.ms (ie, Kafka 0.10.0 and earlier). max.poll.interval.ms is introduced via KIP-62 (part of Kafka 0.10.1).
+> KIP-62, decouples heartbeats from calls to poll() via a background heartbeat thread, allowing for a longer processing time (ie, time between two consecutive poll()) than heartbeat interval.
+> Assume processing a message takes 1 minute. If heartbeat and poll are coupled (ie, before KIP-62), you will need to set session.timeout.ms larger than 1 minute to prevent consumer to time out. However, if a consumer dies, it also takes longer than 1 minute to detect the failed consumer.
+> KIP-62 decouples polling and heartbeat allowing to send heartbeats between two consecutive polls. Now you have two threads running, the heartbeat thread and the processing thread and thus, KIP-62 introduced a timeout for each. session.timeout.ms is for the heartbeat thread while max.poll.interval.ms is for the processing thread.
+> Assume, you set session.timeout.ms=30000, thus, the consumer heartbeat thread must sent a heartbeat to the broker before this time expires. On the other hand, if processing of a single message takes 1 minutes, you can set max.poll.interval.ms larger than one minute to give the processing thread more time to process a message.
+> If the processing thread dies, it takes max.poll.interval.ms to detect this. However, if the whole consumer dies (and a dying processing thread most likely crashes the whole consumer including the heartbeat thread), it takes only session.timeout.ms to detect it.
+> The idea is, to allow for a quick detection of a failing consumer even if processing itself takes quite long.
+> https://stackoverflow.com/questions/39730126/difference-between-session-timeout-ms-and-max-poll-interval-ms-for-kafka-0-10
+
+##### scheduled.rebalance.max.delay.ms
 The maximum delay that is scheduled in order to wait for the return of one or more departed workers before rebalancing and reassigning their connectors and tasks to the group. During this period the connectors and tasks of the departed workers remain unassigned
 
 Type:	int
 Default:	300000 (5 minutes)
 
---- session.timeout.ms
+##### session.timeout.ms
  After every rebalance, all members of the current generation begin sending periodic heartbeats to the group coordinator. As long as the coordinator continues receiving heartbeats, it assumes that members are healthy. On every received heartbeat, the coordinator starts (or resets) a timer. If no heartbeat is received when the timer expires, the coordinator marks the member dead and signals the rest of the group that they should rejoin so that partitions can be reassigned. The duration of the timer is known as the session timeout and is configured on the client with the setting session.timeout.ms. 
   The only problem with this is that a spurious rebalance might be triggered if the consumer takes longer than the session timeout to process messages. You should therefore set the session timeout large enough to make this unlikely. The default is 30 seconds, but it’s not unreasonable to set it as high as several minutes. The only downside of a larger session timeout is that it will take longer for the coordinator to detect genuine consumer crashes.
-```
 
+##### producer.properties.max.request.size
 “The message is 1626232 bytes when serialized which is larger than the maximum request size you have configured with the max.request.size configuration.”
 
 producer.properties.max.request.size=838860800 800M
+
+##### metadata.max.age.ms
+不是订阅某个topic 而是订阅某种pattern
+repeat subscribe()
+[Kafka pattern subscription. Rebalancing is not being triggered on new topic](https://stackoverflow.com/questions/38754865/kafka-pattern-subscription-rebalancing-is-not-being-triggered-on-new-topic/66758840#66758840)
+
 
 ### 2.3 GUI & Commands
 

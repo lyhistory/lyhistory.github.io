@@ -18,9 +18,13 @@ New->Factory->容器
 
 IoC容器是大管家，你只需要告诉它需要某个bean，它就把对应的实例（instance）扔给你，至于这个bean是否依赖其他组件，怎样完成它的初始化，根本就不需要你关心。
 
-bean是什么？
+bean是什么？(Spring bean)
 > The objects that form the backbone of your application and that are managed by the Spring IoC container are called beans. A bean is an object that is instantiated, assembled, and otherwise managed by a Spring IoC container. 
 > https://www.tutorialspoint.com/spring/spring_bean_definition.htm
+
+Spring Bean VS Java Bean:
+
+Java Beans are simple Java classes that encapsulate objects, while Spring Beans are managed by the Spring Framework and are used for dependency injection and lifecycle management.
 
 IoC容器想要管理各个业务对象以及它们之间的依赖关系，需要通过某种途径来记录和管理这些信息。 
 BeanDefinition对象就承担了这个责任：容器中的每一个bean都会有一个对应的BeanDefinition实例，该实例负责保存bean对象的所有必要信息，包括bean对象的class类型、是否是抽象类、构造方法和参数、其它属性等等。

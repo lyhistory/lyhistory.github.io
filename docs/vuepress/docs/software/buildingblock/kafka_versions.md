@@ -103,6 +103,15 @@ stop-the-world rebalancing =>
 
 ### Configurable TCP connection timeout and improve the initial metadata fetch
 
+https://issues.apache.org/jira/browse/KAFKA-9893
+
 ### Enforce broker-wide and per-listener connection creation rate (KIP-612, part 1)
 
 ### Throttle Create Topic, Create Partition and Delete Topic Operations
+
+
+---
+
+Expose Consumer Group Metadata for Transactional Producer
+https://issues.apache.org/jira/browse/KAFKA-9383
+https://github.com/apache/kafka/pull/7906
