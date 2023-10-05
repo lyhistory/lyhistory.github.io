@@ -1,5 +1,7 @@
 
-chatgpt
+LLM:
++ chatgpt
++ claude 
 
 ## 本地部署 FastGPT
 
@@ -50,8 +52,8 @@ https://mp.weixin.qq.com/s/tdgld7kH4GFhgtjOK1LQ7w
 OpenAI's Code Interpreter 
 open-interpreter https://github.com/lyhistory/tools_aigc_open-interpreter
 ### 标题/文案
- https://duozhongcao.com/
-
+https://duozhongcao.com/
+https://www.jasper.ai/
 ### 文字转语音
 google bart
 open-source text-to-speech+ model.
@@ -89,9 +91,9 @@ AI商品图片：https://design.meitu.com/product-shoot/?from=home_icon
 
 tryondiffusion https://tryondiffusion.github.io/
 
-### 2D => 3D
+### 2D => 3D, 3D建模
 https://convert.leiapix.com/
-
+https://lumalabs.ai/interactive-scenes
 
 ### AI视频
 
