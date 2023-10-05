@@ -1,12 +1,16 @@
 
 + CPU Processor
   - register
+     寄存器是CPU内部的元件，寄存器拥有非常高的读写速度，所以在寄存器之间的数据传送非常快。它们可用来暂存指令、数据和位址。在中央处理器的控制部件中，包含的寄存器有指令寄存器(IR)和程序计数器(PC)。
   - program counter
-+ Cache
-  SRAM Static RAM
+  - Cache 高速缓存
+    由于CPU的速度远高于主内存，CPU直接从内存中存取数据要等待一定时间周期，Cache中保存着CPU刚用过或循环使用的一部分数据，当CPU再次使用该部分数据时可从Cache中直接调用,这样就减少了CPU的等待时间,提高了系统的效率。Cache又分为一级Cache(L1 Cache)和二级Cache(L2 Cache)，L1 Cache集成在CPU内部，L2 Cache早期一般是焊在主板上,现在也都集成在CPU内部，常见的容量有256KB或512KB L2 Cache。
+  
 + RAM:Main Memory
   RAM is also known as the main memory of the computer because the CPU of the computer can access all memory cells of the RAM directly. In modern computer, RAM is made up of semiconductor materials and found in the form of ICs.
-  DRAM - Dynamic random access memory is a type of semiconductor memory that is typically used for the data or program code needed by a computer processor to function. DRAM is a common type of random access memory (RAM) that is used in personal computers (PCs), workstations and servers.
+  - SRAM Static RAM
+  - DRAM - 
+    Dynamic random access memory is a type of semiconductor memory that is typically used for the data or program code needed by a computer processor to function. DRAM is a common type of random access memory (RAM) that is used in personal computers (PCs), workstations and servers.
 + ROM:
   it is used to store those parts of computer instructions and programs that do not required to be changed like BIOS. Therefore, ROM is used to make computer firmware. Generally, data is stored in the RAM during the process of manufacturing. ROM is also a type of semiconductor memory and built in the form of ICs.
 
