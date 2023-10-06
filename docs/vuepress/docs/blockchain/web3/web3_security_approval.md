@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 web互联网时代打造了信息高速公路，逐渐接管各个行业，成为我们日常生活无法离开的虚拟世界，然而传统互联网却没有创建好价值传输的高速公路，相反是被各个巨头在各自领域垄断流量，在价值创造者和终端消费者之间筑起高墙，web3正在带着我们即将冲破枷锁，夺回属于我们的数据权利。
 
 但是目前还早，早期的极客和小白们涌入web3的丛林世界，却没有带好装备，在FOMO以及撸羊毛的情绪带动下，大家热情的参与空投airdrop和铸造mint，殊不知这里有个巨大的风险，一不小心就被黑客无情的收割，这篇文章就是给大家提供装备，避免不必要的损失。
@@ -8,7 +14,7 @@ Driven by the FOMO mode, a lot of people participate in airdrops or delegates wi
 
 ## 防御准备：三个钱包 Three Wallets For Success & Safety
 
-也许你见过一些漂亮的流程图表建议使用 5到7 个以上的钱包， 实际上我们认为三个钱包是足够合理的。
+也许你见过一些漂亮的流程图表建议使用 5到7 个以上的钱包， 实际上三个钱包是足够合理的。
 
 You'll see some beautiful flow charts and infographics that suggest 5 or even 7+ wallets. However, we think the risks mitigated with these models are too few to justify their cognitive expense. You're more likely to get confused and have “transaction anxiety” than feel any safer with 7 wallets! So let's keep it simple, where should we start? I should start off by saying that all of these wallet addresses can, and probably should, be from the same hardware wallet. 
 
@@ -19,10 +25,11 @@ You'll see some beautiful flow charts and infographics that suggest 5 or even 7+
   This is a wallet address where you go to “untrusted sites” with. Got a new degen mint coming up? Use the Mint Wallet. A friend suggest you mint a new project? Use the Mint Wallet. So what is it? A wallet that you only use on untrusted sites that keeps a very low amount of money in it, and nothing valuable. The second the assets in the minting wallet become valuable, you then send it to one of the other two wallet types (described below) for selling or safe keeping!
   
   The idea here is that you have low-trust operations being done from the wallet with the least amount of assets to lose. You can be a little bit more reckless with a wallet that only has 0.1ETH in it, than a wallet that has everything you own!
-+ 出售钱包地址
+
++ 出售钱包/书签钱包地址
   这个钱包用来访问一些“主流”网站如： Opensea、Looksrare、x2y2、Foundation 或您信任的任何其他已经存在很长时间的网站，通常我们会将这些网站放到书签bookmark中，所以也可以将这个钱包称为“书签钱包”，换言之，这个钱包你平时就只访问书签中保存的网站。
 
-  The Sell Wallet Address
+  The Sell Wallet/Bookmark Address
   Sites that are tried and true, like Opensea, Looksrare, x2y2, Foundation, or any other sites that have been around a long time that you trust, are usually where this wallet sticks to. I like to refer to this wallet as the “Bookmarks wallet”, as all the sites that you go to with this, should be bookmarked!
   
   In This wallet you should:
@@ -200,7 +207,7 @@ Warm is deployed on a Proxy contract, which means that it can be upgraded or cha
 ## 第三层危险：签名的误解 signature misconception
 如果说前面讲的approval仍然会让大部分人有所警觉，是因为approval毕竟会发起一个交易，用户自然会冷静的想一想，而下面这种签名的方式则是非常危险的，因为签名的时候不会发生交易，用户误以为没什么！(因为骗子并不知道你的钱包中有哪些有价值的代币，所以骗子们会首先尝试让你警惕最低点签名的方式，如果不行就再采用前面的approval方式)
 
-这是因为人们对签名存在很多误解，接下来我来介绍四种类型的消息签名，以帮助用户了解与在以太坊或其他 EVM 兼容区块链上签署消息（有时也称为无气体签名）相关的风险。
+这是因为人们对签名存在很多误解，接下来我来介绍四种类型的消息签名，以帮助用户了解与在以太坊或其他 EVM 兼容区块链上签署消息（有时也称为免费签名）相关的风险。
 There are a lot of misconceptions about signatures. In this article I want to go over four types of message signatures to help users understand the risks associated with signing messages (also sometimes referred to as gasless signatures) on Ethereum or other EVM compatible blockchains.
 
 签名的四种类型
@@ -290,5 +297,7 @@ Refers:
 [Wallet delegations explained](https://boringsecurity.com/articles/wallet-delegations-explained)
 
 [The Seal of Approval: Know What You’re Consenting To With Permissions and Approvals in MetaMask](https://consensys.io/blog/the-seal-of-approval-know-what-youre-consenting-to-with-permissions-and-approvals-in-metamask)
+
+[Need help on how EIP 712 works and where are signatures stored](https://ethereum.stackexchange.com/questions/135761/need-help-on-how-eip-712-works-and-where-are-signatures-stored/155075#155075)
 
 <disqus/>

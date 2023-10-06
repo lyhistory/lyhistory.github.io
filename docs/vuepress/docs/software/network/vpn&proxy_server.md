@@ -15,6 +15,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 + Proxy server代理上网
 
 + 推荐小白直接使用下面的现成产品即可；
+  - [代理服务器产品](#21-现成产品---力荐just-my-socks推荐小白)
+  - [VPN产品](#11-现成产品推荐小白使用)
 + 对于有基本知识或勇于尝试的同学们可以选择下面的自建方式；
 + 对于公司团队，可以两者都搞：购买现成产品+自建，互为备用；
 
@@ -155,15 +157,19 @@ step 5: Once a secure, encrypted tunnel connects the user’s browser to the SSL
 
 ## 2. Proxy server代理上网
 
-### 2.1 现成产品 - 力荐！Just My Socks（推荐小白)
+### 2.1 现成产品
 
-justmysocks 是搬瓦工官方提供的优质 V2Ray / V2Fly 服务和 Shadowsocks 服务，质量最好的 CN2 GIA 线路，月付仅 $5.88 起，更有高达 5G 带宽的 CN2 GIA 线路可选！被墙自动换 IP，无须担心 IP 被墙
++ [（小白最友好，尤其推荐电商使用，只需要下载客户端充值之后即可点击客户端里的指纹浏览器无障碍访问）Piaproxy代理服务，前往官方站点](https://account.piaproxy.com/register?invitation_code=6GOJQ5ZE)
+  Piaproxy代理服务是一家住宅代理提供商，提供独特的服务。该服务已获得来自全球 190 多个国家/地区的 IP，使其成为位置支持方面最好的服务之一：
+  支持支付宝等支付方式；
+  可以切换成繁体中文使用；
+  使用更加简单，可以直接使用指纹浏览器；
+  
++ justmysocks 是搬瓦工官方提供的优质 V2Ray / V2Fly 服务和 Shadowsocks 服务，质量最好的 CN2 GIA 线路，月付仅 $5.88 起，更有高达 5G 带宽的 CN2 GIA 线路可选！被墙自动换 IP，无须担心 IP 被墙，justmysocks 不同于那些国人的机场，justmysocks 是搬瓦工官方背书的，数据安全是绝对靠谱放心的。
 
-justmysocks 不同于那些国人的机场，justmysocks 是搬瓦工官方背书的，数据安全是绝对靠谱放心的。
-
-+ [Just My Socks 官网镜像1](https://justmysocks5.net/members/aff.php?aff=25045)
-+ [Just My Socks 官网镜像2](https://justmysocks3.net/members/aff.php?aff=25045)
-+ [Just My Socks 官网 (已被墙)](https://justmysocks.net/members/aff.php?aff=25045)
+  - [Just My Socks 官网镜像1](https://justmysocks5.net/members/aff.php?aff=25045)
+  - [Just My Socks 官网镜像2](https://justmysocks3.net/members/aff.php?aff=25045)
+  - [Just My Socks 官网 (已被墙)](https://justmysocks.net/members/aff.php?aff=25045)
 
 ### 2.2 自行搭建(不推荐小白)
 
