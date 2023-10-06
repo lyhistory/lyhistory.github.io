@@ -7,7 +7,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 圣杯与银弹 · 没用的设计模式
 https://draveness.me/holy-grail-design-pattern/
 
-Procedural Programming, Functional Programming, OO and AO Programming, we have so many programming methodology, what we discuss here is all based on OO Programming.
+Procedural Programming, Functional Programming, OO(Object Oriented) and AO(Aspect Oriented) Programming, we have so many programming methodology, what we discuss here is all based on OO Programming.
 When we say OO design and design pattern, we must mention 'GOF book',as introduced in wiki:
 The name of the book ("Design Patterns: Elements of Reusable Object-Oriented Software") is too long for e-mail, so "book by the gang of four" became a shorthand name for it. After all, it isn't the ONLY book on patterns. That got shortened to "GOF book", which is pretty cryptic the first time you hear it.
 
@@ -161,15 +161,18 @@ Storing incremental changes in memento is feasible if mementos are restored in a
 http://www.cnblogs.com/significantfrank/archive/2012/10/31/4875836.html
 
 ### 3.2 Structural
+**Adapter** - It provides us for two incompatible classes to work together by wrapping an interface around one of the existing classes.
 
-**Bridge:** Client Abstraction RefinedAbstraction Implementor ConcreteImplementor
+**Bridge:**  - It decouples an abstraction so that two classes can vary independently.
+Client Abstraction RefinedAbstraction Implementor ConcreteImplementor
 problem:
 avoid permanent binding between an abstraction and an implementation, vary or replace the implementation without changing the client code.
 Intent:
 separate a class's interface from its implementation / decouple abstraction from implementation so that the two can vary independently.
 place abstraction and implementation into separate hierarchies.
 
-**Composite:**Client Component Composite(keep components collection, addComponent()/removeComponent())
+**Composite:**  - It wraps a group of objects into a single object.
+Client Component Composite(keep components collection, addComponent()/removeComponent())
 problem:
 represent complex objects that comprises other simple objects,
 clients should be able to treat complex objects in the same way as other simple objects.
@@ -177,7 +180,7 @@ Intent:
 compose object into tree structures to represent part-whole hierarchies.
 composite lets clients treat individual objects and compositions of objects uniformly.
 
-**Decorator:**
+**Decorator:** - It extends the object behavior dynamically at the run time.
 problem:
 add responsibility(states or operations, can be withdrawn) to individual objects dynamically and transparently when extension by sub-classing is not possible.
 Intent:
@@ -243,6 +246,95 @@ Cost: 1.7; Ingredients: Coffee, Milk, Sprinkles
 
 ```
 
+Facade - It offers a simple interface to more complex underlying objects.
+
+Flyweight - It decreases the cost of complex object model.
+
+#### Proxy 
+- It reduces the cost, reduce complexity, and provide the placeholder interface to an underlying object to control access.
+
+https://www.geeksforgeeks.org/proxy-design-pattern/
+
+EXAMPLE: [Java Proxy和CGLIB动态代理原理](https://www.cnblogs.com/carpenterlee/p/8241042.html)
+```
+// 接口
+interface Hello{
+	String sayHello(String str);
+}
+// 实现
+class HelloImp implements Hello{
+	@Override
+	public String sayHello(String str) {
+		return "HelloImp: " + str;
+	}
+}
+```
++ implement interface - static proxy
+    ```
+    // 静态代理方式
+    class StaticProxiedHello implements Hello{
+        ...
+        private Hello hello = new HelloImp();
+        @Override
+        public String sayHello(String str) {
+            logger.info("You said: " + str);
+            return hello.sayHello(str);
+        }
+    }
+    ```
++ implement interface - dynamic proxy 
+
+    ```
+    // Java Proxy
+    // 1. 首先实现一个InvocationHandler，方法调用会被转发到该类的invoke()方法。
+    class LogInvocationHandler implements InvocationHandler{
+        ...
+        private Hello hello;
+        public LogInvocationHandler(Hello hello) {
+            this.hello = hello;
+        }
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            if("sayHello".equals(method.getName())) {
+                logger.info("You said: " + Arrays.toString(args));
+            }
+            return method.invoke(hello, args);
+        }
+    }
+    // 2. 然后在需要使用Hello的时候，通过JDK动态代理获取Hello的代理对象。
+    Hello hello = (Hello)Proxy.newProxyInstance(
+        getClass().getClassLoader(), // 1. 类加载器
+        new Class<?>[] {Hello.class}, // 2. 代理需要实现的接口，可以有多个
+        new LogInvocationHandler(new HelloImp()));// 3. 方法调用的实际处理者
+    System.out.println(hello.sayHello("I love you!"));
+    ```
++ extend class - CGLIB proxy
+    CGLIB(Code Generation Library)是一个基于ASM的字节码生成库，它允许我们在运行时对字节码进行修改和动态生成。CGLIB通过继承方式实现代理。
+    ```
+    public class HelloConcrete {
+        public String sayHello(String str) {
+            return "HelloConcrete: " + str;
+        }
+    }
+
+    // CGLIB动态代理
+    // 1. 首先实现一个MethodInterceptor，方法调用会被转发到该类的intercept()方法。
+    class MyMethodInterceptor implements MethodInterceptor{
+    ...
+        @Override
+        public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
+            logger.info("You said: " + Arrays.toString(args));
+            return proxy.invokeSuper(obj, args);
+        }
+    }
+    // 2. 然后在需要使用HelloConcrete的时候，通过CGLIB动态代理获取代理对象。
+    Enhancer enhancer = new Enhancer();
+    enhancer.setSuperclass(HelloConcrete.class);
+    enhancer.setCallback(new MyMethodInterceptor());
+
+    HelloConcrete hello = (HelloConcrete)enhancer.create();
+    System.out.println(hello.sayHello("I love you!"));
+    ```
 ### 3.3 creation
 
 **Factory Method:** product concreteProduct creator concreteCreator,

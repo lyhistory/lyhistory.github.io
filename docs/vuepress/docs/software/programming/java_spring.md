@@ -81,33 +81,7 @@ https://www.baeldung.com/spring-bean-names
 https://www.baeldung.com/spring-autowire
 
 ### Spring AOP
-
-AOP是aspect oriented programing的简称，意为面向切面编程。 spring aop使用了动态代理技术在运行期织入增强的代码，使用了两种代理机制，一种是基于jdk的动态代理，另一种是基于CGLib的动态代理。
-详细请看深入理解代理模式设计模式：代理模式
-
-AOP is used along with spring Ioc to provide a very capable middleware solution.
-
-Note: Cross cutting concerns are one of the concerns in any application such as logging, security, caching, etc. They are present in one part of the program but they may affect other parts of the program too.
-
-AOP API: MethodInterceptor
-
-https://www.baeldung.com/spring-aop
-
-managed components & proxy(jdk proxy&cglib)
-
-> Whenever you declare a bean in XML or use @Component, @Service, or @Repository on a class targeted by Spring’s annotation component scanning (which is enabled by default for Spring Boot), that class is instantiated and managed as a singleton bean by the Spring framework.
-> However, Spring doesn’t actually provide a literal reference to the original bean when it’s injected—it wraps the bean in a proxy class to give Spring a chance to weave in AOP code if needed.
-https://docs.spring.io/spring/docs/2.5.x/reference/aop.html
-
-https://www.credera.com/blog/technology-insights/open-source-technology-insights/aspect-oriented-programming-in-spring-boot-part-2-spring-jdk-proxies-vs-cglib-vs-aspectj/
-
-通过aop拦截mybatis接口dao
-https://blog.csdn.net/zkn_CS_DN_2013/article/details/52798447
-Spring / MyBatis——插件机制（AOP）
-https://blog.csdn.net/qq_22078107/article/details/85781594
-https://blog.csdn.net/u012525096/article/details/82389240
-
- 
+[refer to aop-spring aop](/software/programming/aop.md#spring-aop)
 
 ### 代理
 动态代理 静态代理
@@ -125,7 +99,8 @@ public class Application {
     }
 ```
 
----
+## Spring MVC
+[spring mvc 处理流程源码解析](https://blog.csdn.net/u013905744/article/details/110263867)
 
 ## 3.SpringBoot Framework
 

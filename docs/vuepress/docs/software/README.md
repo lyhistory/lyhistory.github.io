@@ -14,6 +14,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/highlevel/architecture">架构解读</a></li>
 		<li><a href="/docs/software/highlevel/os">操作系统</a></li>
 		<li><a href="/docs/software/highlevel/designpattern">设计模式</a></li>
+		<li><a href="/docs/software/programming/aop">AOP 面向切面编程</a></li>
 		<li><a href="/docs/software/highlevel/distrubuted_system">分布式系统开发</a></li>	
 		<li><a href="/docs/software/highlevel/microservice">微服务</a></li>	
 		<li><a href="/docs/software/highlevel/concurrent">并发控制</a></li>
