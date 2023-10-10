@@ -105,7 +105,7 @@ select * from pg_stat_activity where pid=3567;
     **offline install**
     settings:
     class name: org.postgresql.Driver
-    template: jdbc:postgresql://{host}:{port}/dbname
+    template: jdbc:postgresql://{host}:{port}/{database}
     libraries: add postgres drivers
     **show all databases**
     On the connection, right-click -> `Edit connection` -> `Connection settings` -> on the tabbed panel, select `PostgreSQL`, check the box `Show all databases`.

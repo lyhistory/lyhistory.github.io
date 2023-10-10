@@ -6,6 +6,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《玩转mybatis》
 
+ORM - Object–relational mapping BY Mybatis
+
 三种方式教你玩转mybatis的各种姿势，再也不怕各种config注解错误！
 
 首先还是引用官方mybatis有什么好处吧：
