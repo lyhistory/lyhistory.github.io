@@ -36,7 +36,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
   - LEO:: log end offset	offset+1
   - ISR:: in-sync replicas
   - internal topic:
-    __consumer_offsets
+    __consumer_offsets __transaction_offsets__
     ```
     key:   <consumer_group>,<topic>,<partition>
     value: <offset>,<partition_leader_epoch>,<metadata>,<timestamp>
@@ -382,6 +382,19 @@ SERVER_JVMFLAGS=-Xmx1024m'
   ```
 
 ##### retention / delete
+
+log.retention.ms:
+log.retention.ms parameter (default to 1 week). If set to -1, no time limit is applied.
+
+log.retention.bytes:
+Its default value is -1, which allows for infinite retention. This means that if you have a topic with 8 partitions, and log.retention.bytes is set to 1 GB, the amount of data retained for the topic will be 8 GB at most. If you have specified both log.retention.bytes and log.retention.ms, messages may be removed when either criterion is met.
+
+log.segment.bytes and log.segment.ms:
+As messages are produced to the Kafka broker, they are appended to the current log segment for the partition. Once the log segment has reached the size specified by the log.segment.bytes parameter (default 1 GB), the log segment is closed and a new one is opened. Only once a log segment has been closed, it can be considered for expiration (by log.retention.ms or log.retention.bytes).
+
+Another way to control when log segments are closed is by using the log.segment.ms parameter, which specifies the amount of time after which a log segment should be closed. Kafka will close a log segment either when the size limit is reached or when the time limit is reached, whichever comes first.
+
+A smaller log-segment size means that files must be closed and allocated more often, which reduces the overall efficiency of disk writes. Adjusting the size of the log segment can be important if topics have a low produce rate. For example, if a topic receives only 100 megabytes per day of messages, and log.segment.bytes is set to the default, it will take 10 days to fill one segment. As messages cannot be expired until the log segment is closed, if log.retention.ms is set to 1 week, they will actually be up to 17 days of messages retained until the closed segment expires. This is because once the log segment is closed with the current 10 days of messages, that log segment must be retained 7 days before it expires based on the time policy.
 
 log.retention.check.interval.ms:default 5 minutes. So the broker log-segments are checked every 5 minutes to see if they can be deleted according to the retention policies.
 
