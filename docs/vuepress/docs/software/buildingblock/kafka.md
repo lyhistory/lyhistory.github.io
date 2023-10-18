@@ -1324,7 +1324,6 @@ echo "exclude.internal.topics=false" > consumer.config
 ### 4.1 Exactly-Once-Message-Processing
 
 > there are only two hard problems in distributed systems: 
->
 > 1. Guaranteed order of messages 
 > 2. Exactly-once delivery
 
