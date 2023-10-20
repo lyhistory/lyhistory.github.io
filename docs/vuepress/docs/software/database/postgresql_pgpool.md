@@ -1183,3 +1183,5 @@ dos2unix recovery_1st_stage
 ### Failover failed
 vm1 master vm2&vm3 是slave
 杀掉vm1的postgres，vm2成为master，但是vm3也down掉（但是5432仍然在监听，systemctl status是dead状态）
+
+https://stackoverflow.com/questions/72259918/pgpool-failover

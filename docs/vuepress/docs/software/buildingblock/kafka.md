@@ -36,7 +36,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
   - LEO:: log end offset	offset+1
   - ISR:: in-sync replicas
   - internal topic:
-    __consumer_offsets
+    __consumer_offsets __transaction_offsets__
     ```
     key:   <consumer_group>,<topic>,<partition>
     value: <offset>,<partition_leader_epoch>,<metadata>,<timestamp>
@@ -53,7 +53,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
   **high watermark**: indicated the offset of messages that are fully  replicated, while the end-of-log offset might be larger if there are  newly appended records to the leader partition which are not replicated  yet.
 
-+ leader：replica 中的一个角色， producer 和 consumer 只跟 leader 交互。
++ leader：replica 中的一个角色， producer 和 consumer 只跟 leader 交互。(In Kafka 2.3 and older, you can only consume from the leader -- this is by design. Replication is for fault-tolerance only.Since Kafka 2.4, it is possible to configure consumers to read from the closest replica. This may help improve latency, and also decrease network costs if using the cloud.)
 
   Leader = topic leader = leader of replicas
 
@@ -383,6 +383,19 @@ SERVER_JVMFLAGS=-Xmx1024m'
 
 ##### retention / delete
 
+log.retention.ms:
+log.retention.ms parameter (default to 1 week). If set to -1, no time limit is applied.
+
+log.retention.bytes:
+Its default value is -1, which allows for infinite retention. This means that if you have a topic with 8 partitions, and log.retention.bytes is set to 1 GB, the amount of data retained for the topic will be 8 GB at most. If you have specified both log.retention.bytes and log.retention.ms, messages may be removed when either criterion is met.
+
+log.segment.bytes and log.segment.ms:
+As messages are produced to the Kafka broker, they are appended to the current log segment for the partition. Once the log segment has reached the size specified by the log.segment.bytes parameter (default 1 GB), the log segment is closed and a new one is opened. Only once a log segment has been closed, it can be considered for expiration (by log.retention.ms or log.retention.bytes).
+
+Another way to control when log segments are closed is by using the log.segment.ms parameter, which specifies the amount of time after which a log segment should be closed. Kafka will close a log segment either when the size limit is reached or when the time limit is reached, whichever comes first.
+
+A smaller log-segment size means that files must be closed and allocated more often, which reduces the overall efficiency of disk writes. Adjusting the size of the log segment can be important if topics have a low produce rate. For example, if a topic receives only 100 megabytes per day of messages, and log.segment.bytes is set to the default, it will take 10 days to fill one segment. As messages cannot be expired until the log segment is closed, if log.retention.ms is set to 1 week, they will actually be up to 17 days of messages retained until the closed segment expires. This is because once the log segment is closed with the current 10 days of messages, that log segment must be retained 7 days before it expires based on the time policy.
+
 log.retention.check.interval.ms:default 5 minutes. So the broker log-segments are checked every 5 minutes to see if they can be deleted according to the retention policies.
 
 topic1 configuration had retention policy set (retention.ms=60000), so if there was at least one existing message in an active segment of topic1, that segment would get closed and deleted if it was idle for long enough. Since log.retention.check.interval.ms is broker configuration, it's not affected by changes on the topic. Also retention.ms has to pass after the last message is produced to the segment. So after the last message is produced to that segment, segment will be deleted in not less than retention.ms milliseconds and not more than retention.ms+log.retention.check.interval.ms.
@@ -426,8 +439,8 @@ transaction.state.log.min.isr=2
   ERROR [KafkaApi-0] Number of alive brokers '2' does not meet the required replication factor '3' for the offsets topic (configured via 'offsets.topic.replication.factor'). This error can be ignored if the cluster is starting up and not all brokers are up yet. (kafka.server.KafkaApis)
   ```
 
-+ if 挂掉的节点==default.replication.factor，比如：
-  default.replication.factor=1 则代表external topic没有replication，这样挂掉任何一个节点client都会报错：
++ if default.replication.factor==节点数，比如：
+  default.replication.factor=3 这样挂掉任何一个节点client都会报错：
 
   ```
   2021-06-08 17:06:01.892 ^[[33m WARN^[[m ^[[35m23610GG^[[m [TEST-MANAGER] ^[[36mk.c.NetworkClient$DefaultMetadataUpdater^[[m : [Consumer clientId=consumer-1, groupId=TEST-SZL] 1 partitions have leader brokers without a matching listener, including [T-TEST-1]
@@ -509,17 +522,8 @@ transaction.state.log.min.isr=2
   [2022-03-16 10:58:02,838] WARN [Controller id=1] Partition T-TEST2-1 failed to complete preferred replica leader election to 2. Leader is still 0 (kafka.controller.KafkaController)
   ```
 
-+ 丢数据：min.insync.replicas=2 && unclean.leader.election.enable=true (It is default value)
++ 丢数据：min.insync.replicas=2 && unclean.leader.election.enable=true (It is default false)
   https://stackoverflow.com/questions/57277370/min-insync-replicas-vs-unclean-leader-election
-
-##### 跟broker交互关键配置
-
-acks=all
-
-if the producer receives an  acknowledgement (ack) from the Kafka broker and acks=all, it means that  the message has been written exactly once to the Kafka topic
-
-When a producer sets acks to "all" (or "-1"), min.insync.replicas specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful. If this minimum cannot be met, then the producer will raise an exception (either NotEnoughReplicas or NotEnoughReplicasAfterAppend).
-When used together, min.insync.replicas and acks allow you to enforce greater durability guarantees. A typical scenario would be to create a topic with a replication factor of 3, set min.insync.replicas to 2, and produce with acks of "all". This will ensure that the producer raises an exception if a majority of replicas do not receive a write.
 
 ##### 通用配置
 
@@ -639,6 +643,12 @@ producer.properties.max.request.size=838860800 800M
 repeat subscribe()
 [Kafka pattern subscription. Rebalancing is not being triggered on new topic](https://stackoverflow.com/questions/38754865/kafka-pattern-subscription-rebalancing-is-not-being-triggered-on-new-topic/66758840#66758840)
 
+##### acks=all
+
+if the producer receives an  acknowledgement (ack) from the Kafka broker and acks=all, it means that  the message has been written exactly once to the Kafka topic
+
+When a producer sets acks to "all" (or "-1"), min.insync.replicas specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful. If this minimum cannot be met, then the producer will raise an exception (either NotEnoughReplicas or NotEnoughReplicasAfterAppend).
+When used together, min.insync.replicas and acks allow you to enforce greater durability guarantees. A typical scenario would be to create a topic with a replication factor of 3, set min.insync.replicas to 2, and produce with acks of "all". This will ensure that the producer raises an exception if a majority of replicas do not receive a write.
 
 ### 2.3 GUI & Commands
 
@@ -1314,7 +1324,6 @@ echo "exclude.internal.topics=false" > consumer.config
 ### 4.1 Exactly-Once-Message-Processing
 
 > there are only two hard problems in distributed systems: 
->
 > 1. Guaranteed order of messages 
 > 2. Exactly-once delivery
 
@@ -2247,7 +2256,7 @@ test kafka client
 		停掉 kafka client大概是在：
 		2022-03-16 17:13:51.918 ^[[32m INFO^[[m ^[[35m30256GG^[[m [QFJ Timer] ^[[36mc.q.c.f.f.s.AbstractApplication^[[m : fix server toAdmin: [8=FIX.4.4|9=60|35=0|34=683|49=EXEC|52=20220316-09:13:51.918|56=EXCHANGE_FS|10=167|]
 		然后很快启动了 kafka client：
-		2022-03-16 17:14:17.944 ^[[32m INFO^[[m ^[[35m370GG^[[m [main] ^[[36mo.s.b.StartupInfoLogger^[[m : Starting TradeFrontMain v1.1.0-SNAPSHOT using Java 1.8.0_40 on XXXX with PID 370 (/lyhistory/kafka client.jar started by clear in /lyhistory)
+		2022-03-16 17:14:17.944 ^[[32m INFO^[[m ^[[35m370GG^[[m [main] ^[[36mo.s.b.StartupInfoLogger^[[m : Starting TradeFrontMain v1.1.0-SNAPSHOT using Java 1.8.0_40 on XXXX with PID 370 (/lyhistory/kafka client.jar started by xxx in /lyhistory)
 		2022-03-16 17:14:17.955 ^[[32mDEBUG^[[m ^[[35m370GG^[[m [main] ^[[36mo.s.b.StartupInfoLogger^[[m : Running with Spring Boot v2.4.5, Spring v5.3.6
 		2022-03-16 17:14:17.956 ^[[32m INFO^[[m ^[[35m370GG^[[m [main] ^[[36mo.s.b.SpringApplication^[[m : The following profiles are active: dev
 		2022-03-16 17:14:19.821 ^[[32m INFO^[[m ^[[35m370GG^[[m [main] ^[[36mo.s.b.w.e.t.TomcatWebServer^[[m : Tomcat initialized with port(s): 10102 (http)
@@ -2565,7 +2574,7 @@ Automatically commit when receive the record by calling poll()[Let's say, you ca
 When the rebalance happen, for the example when a consumer crashed, the other consumer will take over the partition and continue from last committed offset, but hold on, what about the context, I mean the states stored in the memory, how do we recover the states.
 So what we can do is that we reprocessing the partition from the beginning, but the problem is message processing is time consuming, and when the partition grows fast, there are too many messages, reprocessing the partition may take a long time.
 So what we can improve is that we add a checkpoint to take snapshot of the memory state, we call it checkpoint, so when rebalance happens, we can recover from the latest checkpoint instead of beginning, so this will improve the performance, save time for recovery.
-By design, the new clearing system process records from kafka one by one in sequence, during the data processing, the consumer generated many in memory results, for example currentPosition for each positionAccount, we want to have snapshot of the result from time to time, so in the case of recovery, the consumer can recover from snapshot, save a lot computing power to re-calculate the result.
+By design, the new xxx system process records from kafka one by one in sequence, during the data processing, the consumer generated many in memory results, for example currentPosition for each positionAccount, we want to have snapshot of the result from time to time, so in the case of recovery, the consumer can recover from snapshot, save a lot computing power to re-calculate the result.
 By the way, Kafka do support stateful operation with kafka stream state store, but that’s mainly for aggregation operation, so in our framework we didn’t take advantage of it
 
 

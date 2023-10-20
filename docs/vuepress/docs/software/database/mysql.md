@@ -128,6 +128,13 @@ Export without data https://github.com/dbeaver/dbeaver/issues/2176
 
 mysql workbench
 
++ DBeaver 
+    **offline install**
+    settings:
+    class name: com.mysql.cj.jdbc.Driver
+    template: jdbc:mysql://{host}:{port}/{database}
+    libraries: [add postgres drivers](https://dev.mysql.com/downloads/connector/j/)
+
 ## 2. DB Management
 
 ### 2.1 mysql-cli

@@ -6,6 +6,20 @@ Note: Cross cutting concerns are one of the concerns in any application such as 
 
 ## 概念对比
 
+通知（Advice）包含了需要用于多个应用对象的横切行为，完全听不懂，没关系，通俗一点说就是定义了“什么时候”和“做什么”。It’s the behavior that addresses system-wide concerns (logging, security checks, etc…). This behavior is represented by a method to be executed at a JoinPoint. This behavior can be executed Before, After, or Around the JoinPoint according to the Advice type as we will see later.
+
+interceptor == Advice
+
+连接点（Join Point）是程序执行过程中能够应用通知的所有点。a JoinPoint is a point in the execution flow of a method where an Aspect (new behavior) can be plugged in.
+
+切点（Poincut）是定义了在“什么地方”进行切入，哪些连接点会得到通知。显然，切点一定是连接点。A Pointcut is an expression that defines at what JoinPoints a given Advice should be applied.
+
+切面（Aspect）是通知和切点的结合。通知和切点共同定义了切面的全部内容——是什么，何时，何地完成功能。Aspect is a class in which we define Pointcuts and Advices.
+
+引入（Introduction）允许我们向现有的类中添加新方法或者属性。
+
+织入（Weaving）是把切面应用到目标对象并创建新的代理对象的过程，分为编译期织入、类加载期织入和运行期织入。
+
 ### java aop(aspectj) VS spring aop
 
 [Comparing Spring AOP and AspectJ](https://www.baeldung.com/spring-aop-vs-aspectj)
@@ -86,6 +100,158 @@ Load-time weaving (LTW) weaves just in time as the classes are loaded by the VM,
 ### 原理
 [Different Types of AspectJ Weaving](https://dzone.com/articles/different-types-of-aspectj-weaving)
 
+#### Compile-time Weaving
+![](./ctw.png)
+The weaving process in compile-time weaving happens (obviously) at compile time. As you can see from the diagram above, the left-hand side describes our source codes which are java files, java classes with @Aspect annotation, and the last one are traditional aspect classes. They are then compiled by ajc (AspectJ Compiler) to be woven into a compiled class called woven system. To give more perspective on this, take a look at several code snippets below.
+```
+Target class to be woven:
+@Component
+public class Target {
+  public void greet(String name) {
+    System.out.println("[Actual] Hi " + name + " from target!");
+  }
+}
+
+Before Advice:
+@Aspect
+@Component
+public class GdnBeforeAspect {
+  @Before("execution(* greet(..))")
+  public void beforeGreet(final JoinPoint joinPoint) {
+    doBefore(joinPoint);
+  }
+  private void doBefore(final JoinPoint joinPoint) {
+    System.out.println("[ASPECTJ BEFORE]");
+    System.out.println("Target class' name: " + joinPoint.getTarget().getClass());
+    System.out.println("Target method's name: " + joinPoint.getSignature().getName());
+    System.out.println("Target method's arguments: " + Arrays.toString(joinPoint.getArgs()));
+    System.out.println("[ASPECTJ BEFORE]");
+  }
+}
+Those 2 code snippets are just regular steps to do if we want to do AOP. The 2 snippets above mean that we want to advise the greet() method (which resides inside Target class) with before advice. Nothing fancy happens in the aspect, it’ll just print some information about the method invocation.
+
+Now, this is where something is getting interesting. Let’s define a plugin inside our pom.xml.
+AspectJ Maven Plugin:
+<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+                <version>1.11</version>
+                <configuration>
+                    <complianceLevel>1.8</complianceLevel>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <showWeaveInfo>true</showWeaveInfo>
+                    <verbose>true</verbose>
+                    <Xlint>ignore</Xlint>
+                    <encoding>UTF-8 </encoding>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <!-- use this goal to weave all your main classes -->
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+The AspectJ Maven plugin stated above will weave the aspects when we execute mvn clean compile. Now, let’s try to do just that and see what happens.
+If you see inside the target directory (which consists of every compiled class) and open Target.class, you’ll see this.
+
+Target class woven using CTW (Compile-time Weaving):
+@Component
+public class Target {
+  public Target() {
+  }
+  public void greet(String name) {
+    JoinPoint var2 = Factory.makeJP(ajc$tjp_0, this, this, name);
+    GdnBeforeAspect.aspectOf().beforeGreet(var2);
+    System.out.println("[Actual] Hi " + name + " from target!");
+  }
+  static {
+    ajc$preClinit();
+  }
+}
+You see that on lines 7–8, the compiler inserts additional functionality which calls the aspect we defined before. This way, the before advice will be executed before the actual process done by the target. Now you know how CTW works internally.
+
+```
+#### Post-compile (binary) weaving
+![](./pctw.png)
+
+Basically, binary weaving is similar to CTW (Compile-time Weaving), the weaving process is also done on compile-time. The difference is that with Binary Weaving, we’re able to weave aspects into 3rd party library’s source code. Let’s take a look at the code snippets below.
+
+```
+Add the new library as dependency to our main project’s pom.xml:
+<dependency>
+            <groupId>com.axell</groupId>
+            <artifactId>aspectj-aop-lib</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+Advising greetFromLib() method which exists inside our 3rd party library added previously:
+
+@Aspect
+@Component
+public class GdnBeforeAspect {
+  @Before("execution(* greetFromLib(..))")
+  public void beforeGreetLib(final JoinPoint joinPoint) {
+    doBefore(joinPoint);
+  }
+
+  private void doBefore(final JoinPoint joinPoint) {
+    System.out.println("[ASPECTJ BEFORE]");
+    System.out.println("Target class' name: " + joinPoint.getTarget().getClass());
+    System.out.println("Target method's name: " + joinPoint.getSignature().getName());
+    System.out.println("Target method's arguments: " + Arrays.toString(joinPoint.getArgs()));
+    System.out.println("[ASPECTJ BEFORE]");
+  }
+}
+At this point, we know that greetFromLib() exists inside our 3rd party library, which means in form of .jar file instead of our own written source codes. We need to do several modifications to our AspectJ Maven plugin to accommodate this.
+
+Adding our third-party lib into weave dependency to be woven:
+<plugin>
+...
+                <configuration>
+                    ...
+                    <weaveDependencies>
+                        <weaveDependency>
+                            <groupId>com.axell</groupId>
+                            <artifactId>aspectj-aop-lib</artifactId>
+                        </weaveDependency>
+                    </weaveDependencies>
+                </configuration>
+...
+</plugin>
+Now that we’ve added necessary information to our AspectJ maven plugin, we simply just have to execute mvn clean compile again, and let’s see what changes inside our target directory.
+
+TargetLib class woven using Binary Weaving:
+public class TargetLib {
+  public TargetLib() {
+  }
+  public void greetFromLib(final String name) {
+    JoinPoint var2 = Factory.makeJP(ajc$tjp_0, this, this, name);
+    GdnBeforeAspect.aspectOf().beforeGreetLib(var2);
+    System.out.println("[ACTUAL] Hi " + name + " from target lib!");
+  }
+  static {
+    ajc$preClinit();
+  }
+}
+Similar to what we’ve observed from CTW, the TargetLib class (in which the source code exists on 3rd party library, we don’t host the source code in our main project) got woven by Binary Weaving by using a similar mechanism.
+```
+#### Load-time weaving
+![](./ltw.png)
+
+Load-time weaving happens when the classes are about to be loaded into JVM. This means that after compilation, nothing will be added into our compiled classes (unlike CTW and Binary Weaving).
++ Deploy an application.
++ VM initializes the weaving agent.
++ The weaving agent loads all aop.xml files (Yes, we can define multiple aop.xml files and everything gets loaded).
++ Weaving agent loads listed aspects in aop.xml files.
++ The system starts normal execution.
++ VM loads classes during execution (as usual).
++ The VM notifies the weaving agent whenever it loads a class.
++ The weaving agent (after being notified), inspects the to-be-loaded class to determine if any of the aspects need to be woven to the to-be-loaded class.
++ If so, the weaving agent will weave the class and the aspect.
++ The woven byte code will be loaded to VM and used.
+
 
 ### 用法
 
@@ -96,9 +262,13 @@ https://stackoverflow.com/questions/49159666/how-to-intercept-each-method-call-w
 
 https://blog.csdn.net/gavin_john/article/details/80252414
 
-## Spring AOP
+## Spring(Boot) AOP
 
 ### 原理
+
+Spring AOP uses either JDK dynamic proxies or CGLIB to create the proxy for a given target object. JDK dynamic proxies are built into the JDK, whereas CGLIB is a common open-source class definition library (repackaged into spring-core).
+
+If the target object to be proxied implements at least one interface, a JDK dynamic proxy is used. All of the interfaces implemented by the target type are proxied. If the target object does not implement any interfaces, a CGLIB proxy is created.
 
 利用[动态代理](/software/highlevel/designpattern.md#proxy)也能实现AOP(spring aop vs aspectj)：动态代理提供了一种方式，能够将分散的方法调用转发到一个统一的处理函数处理。AOP的实现需要能够提供这样一种机制，即在执行函数前和执行函数后都能执行自己定义的钩子。那么，首先使用动态代理让代理类忠实的代理被代理类，然后处理函数中插入我们的自定义的钩子。之后让代理类替换被代理类需要使用的场景，这样，相当于对该类的所有方法定义了一个切面。
 
@@ -132,6 +302,12 @@ https://www.credera.com/blog/technology-insights/open-source-technology-insights
 https://www.baeldung.com/spring-aop
 
 #### Springboot AOP starter
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-aop</artifactId>
+</dependency>
+```
 AOP in Spring, if you have an interface, use the JDK dynamic proxy, no interface, use Cglib dynamic proxy.
 Spring Boot AOP, before 2.0 and Spring the same; 2.0 after the preferred Cglib dynamic proxy, if users want to use JDK dynamic proxy, you need to manually configure their own.
 - https://www.springcloud.io/post/2022-01/springboot-aop/#gsc.tab=0
@@ -200,12 +376,17 @@ public class LogAspect {
 
 ```
 
-### [记一次Spring的aop代理Mybatis的DAO所遇到的问题](https://www.cnblogs.com/study-everyday/p/7429298.html)
+https://stackoverflow.com/questions/38494974/use-spring-aop-and-get-respective-class-name-in-log-file
 
-
+### MyBatis Plugin插件开发
 Spring / MyBatis——插件机制（AOP）
 https://blog.csdn.net/qq_22078107/article/details/85781594
 https://blog.csdn.net/u012525096/article/details/82389240
+
+[记一次Spring的aop代理Mybatis的DAO所遇到的问题](https://www.cnblogs.com/study-everyday/p/7429298.html)
+
+
+
 
 
 ---
