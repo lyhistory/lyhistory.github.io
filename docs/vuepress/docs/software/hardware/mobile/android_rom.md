@@ -670,5 +670,9 @@ adb shell getprop | ack name
 
 ## more 
 
+三件套：
+google service framework
+google play service
+google play store
 
 <disqus/>
