@@ -3,6 +3,26 @@ Consumer-to-manufacturer (C2M)
 MCN全称为Multi-Channel Network，主要依托电商、社交、视频等平台，整合内容创作者资源（如网红、UP主、大V等），进行持续内容生产、输出并实现商业变现。MCN机构具体业务主要为网红签约、孵化、内容创作、社区运营、内容分发、平台对接等。
 https://zhuanlan.zhihu.com/p/412692348
 
+单品
+
+GMW
+
+GMV Gross Merchandise Volume 成交总额
+
+Milk Run 上门取件
+
+Word first 万里汇
+
+PQI Product Quality Indicator 商品质量指数
+
+PV Page View 页面浏览量/点击量
+
+UV Unique Visitor 访问人数
+
+IPV Item Page View 搜索浏览量
+
+IPV-UV 浏览过商品详情的独立访问者
+
 ## 概论
 
 ### 公域私域联动-闭环自动化系统
@@ -99,10 +119,49 @@ https://www.renogy.com/
 新奇特选品：
 odditymall.com
 
-## 流量漏斗
+## 流量漏斗 funnel
 
 https://www.zhihu.com/question/475467288
 https://www.zhihu.com/question/35840934
+
+### 关键词方法
+
+#### 精准匹配买家搜索
+
++ 大词/核心词
+    类目词：shoes，keys，phone，shirt
++ 衍生词
+    修饰大词，切中痛点：商品属性（颜色功能）、使用场景、卖点：free shipping，notebook promotions，school shoes
++ 长尾词
+    多个词组成，商品属性、搜索栏推荐词：Lenovo ThinkPad X1 Carbon Ultrabook
+
+标题结构
++ 品牌
+店铺名/品牌名+（修饰词）产品名字（修饰词）+型号/尺寸（修饰词）
++ 无品牌
+产品名+核心卖点+适用场景（型号/尺寸）
+
+方法：
+1. 罗列基础关键词
+
+| 规格 | 材质 | 功能 | 受众 | 风格 | 卖点 |
+|---|---|---|---|---|---|
+| 颜色、图案、尺寸 | Cotton | Loose | women | Formal/Office/Maxi | Ready stock/Holiday Sale/2022 new |
+
+
+2. 找热词
+
++ 搜索引擎的相关搜索
++ trends.google.com
++ Shopee 推荐搜索词
++ 查看热销商品的关键词
+
+3. 追踪关键词库
+
+| 关键词 | 搜索指标 | 商品页面访问量 | 加购人数 | 加购率 | 下单人数 | 转化率 |
+|---|---|---|---|---|---|---|
+
+#### 付费购买关键词广告
 
 ### 流量获取：
 搜索引擎优化(SEO)、搜索引擎营销(SEM)、社交媒体营销、电子邮件营销EDM
@@ -308,8 +367,10 @@ https://www.manta.com/
 + similar web 网站流量情况
 + web archive 了解产品线
 + facebook twitter 了解动态
+
 ## 工具
 
+https://github.com/yufish/tools/blob/master/README.md
 ### 辅助工具
 google voice
 https://mp.weixin.qq.com/s/UFrn_D4lyDfXzsICptfDMA

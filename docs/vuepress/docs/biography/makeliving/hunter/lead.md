@@ -1,32 +1,118 @@
+Affiliate Marketing
+联盟 营销
+
++ 联盟
+  广告联盟，很多品牌方广告主都会把自己的产品或者优惠体系给到广告联盟，让其帮忙找到推广者。广告联盟不局限于国内，国外，一级，二级联盟都可以成为联盟。
+
+  角色:
+  - 品牌商/广告主
+    也就是拥有产品或者服务需要销售的公司。品牌商需按照联盟营销的实际效果（如销售额、引导数、点击数等）向联盟会员支付合理的广告费用。
+  - 联盟主
+    搭建的一个SAAS联盟系统,主要是伺候广告商的 整合OFFER方，发放给联盟AM，由联盟AM来开展下游用户进行完成OFFER，同时包括给广告商开户、联盟AM开户、结算等总权限功能）
+  - 联盟经理（常遇到K号、扣量、不结算大多都是联盟经理搞的)
+  
+  平台:
+  联盟平台 也就是通常所说的联盟营销平台或者广告联盟，他们实际上是广告主的代理，负责站在广告主的角度，监督和管理联盟项目的每日运行和策略制定，包括合作伙伴关系、联盟客招募、推广指导和广告活动优化。
+  - 国内联盟：多麦，淘宝联盟，京东联盟等
+  - 国外联盟：又分为一级联盟，二级联盟（返利网），其中一级二级联盟又分为综合性质的联盟（啥广告主都有），CPA联盟，CPS联盟。例如常见的：CJ；Shareasale；impact；Awin; Commission Junction、ShareASale等
+
++ 营销
+  营销是指，你从联盟里面的品牌方广告主的任务，通过你的个人渠道，完成广告主的任务，你可以获得广告主提供的任务佣金。
+  这里的任务我们统称为offer，就是指广告主的需求，可能是销售需求（CPS），安装需求（CPL），注册需求（CPA)，信息获取需求等
+
+  角色:
+  - 联盟客 也就是联盟营销人员，他们通过联盟营销平台选择合适的品牌商并通过播放品牌商广告赚取佣金，轻松地将把网站访问量变成收益。
+  - 营销者（这种是通过一些海外平台进行投放广告来进行转化用户来完成OFFER）
+  - EMU玩家（这种是大家市面上常见的包括联盟教学的方式，说白了就是做假量）
+  - 消费者 就是广告主和联盟客所希望营销的特定用户群体，他们最终会产生消费行为、或者提交联系方式、订阅公司邮件、试用某项服务、成为一个新客户，等等。
+  
+  做法:
+  - EMU：通过作弊，机器，伪装的方式去完成offer，例如广告主的需求是网页注册的任务，此时你可以通过EMU完成，那就是你自己用很多个邮箱或者身份去冒充客户进行批量完成，从而获得广告主的佣金。
+  衍生：EMU 刷料
+  - Adsense：通过自由媒体渠道投放广告的方式其完成offer，例如广告主的需求是销售产品的任务，你自己运营一个对标行业的博客或者油管账号，你可以将该offer放入你的博客或者油管账号中进行广告投放，通过你的自由流量进入到广告主的网站购买从而完成offer，获得佣金。
+  衍生：Adsense套利
+  - Media buy：通过购买流量的方式去完成offer，例如广告主的需求是销售产品的任务，此时你可以通过谷歌Ads去上架该任务的广告，通过获取广告流量，来完成销售的转化从而获取佣金。
+  衍生：Media buy BB - Brand Bid https://mp.weixin.qq.com/s?__biz=Mzk0OTMwOTI0OQ==&mid=2247485002&idx=1&sn=61798eee50a40a03de4c8c8f6a11eef3&chksm=c35b1c64f42c9572028db53689619c637c29e5d0b334d370625faf9d5bc31b3399cdb0f1dd0e&scene=21#wechat_redirect
 
 
 ## keywords
+
++ 附属链接（Affiliate Link）：也称为跟踪链接。这是一个独特的 URL，用于跟踪来自联属会员的点击和转化。
++ 转换（Conversion）：由商家定义的被视为支付给关联公司的事件。它可以是商家定义的任何内容，但通常是潜在客户或商家产品的购买。
++ 网络营销联盟（Affiliate Network）：商家和附属公司之间的可选中间人，有助于促进商业活动。
++ 联盟经理（Affiliate Manager）：与附属公司合作的人，作为与商家的中间人。他们的目标是最大化联盟计划的性能。
++ 联盟计划（Affiliate Program）：商家向附属公司支付佣金的一种安排。
++ 优惠（Offer）：产品的特定促销。
++ 点击率CTR(Click-through Rate)：— 每网页展示次数的附属链接点击百分比。
++ 转化率CR(Conversion Rate)：转化的点击百分比。
++ 每次操作成本 CPA（Cost per Action）：一种佣金模式，商家仅向关联公司支付转化费用。 每次点击成本 CPC（Cost per Click）：一种佣金模式，商家仅向关联公司支付点击费用。它通常与广告横幅一起使用，而不是联属网络营销。
++ URL追踪（Postback URL）：— 用于服务器端转化跟踪的 URL；也称为服务器到服务器跟踪。
++ 像素（Pixel）：跟踪网页查看事件发生时的隐藏图像。在联属网络营销的背景下，像素会跟踪转换发生的时间。今天，像素通常是嵌入在网页上的 JavaScript 代码片段，而不是图像。
++ 短链（SubID）：作为会员链接的一部分嵌入的文本字符串，由会员定义并用于跟踪会员的转化。
++ 创意（Creative）：联属会员用来宣传商家产品的广告横幅图像或文字。 文案（Copy）：有助于推销商家产品的书面文字。
++ 登陆页面（Landing Page）：会员通过会员链接将流量引至的商家网页。
++ 广告拦截（Ad Blocker）：可以阻止跟踪联属网络营销点击和转化的网络浏览器技术。此外，它还可以防止广告横幅的显示。
++ 归因（Attribution）：正确识别哪些附属公司正在产生转化的过程。
++ 拒付（Charge Back）：导致会员佣金被没收的无效转换。
++ 佣金（Commission）：会员因产生转化而获得的收入。它也被称为推荐费、发现者费用或赏金。
++ 网络跟踪器（Cookies）：存储在潜在客户的网络浏览器中以识别特定访问的信息。通过联属网络营销，cookie 用于跟踪联属网络链接点击和潜在转化。
++ 链接隐藏（Link Cloaking）：使用比商家提供的更简洁的 URL 隐藏附属链接。链接隐藏可用于更好地管理链接并跟踪点击和转化。 联盟营销的优势及盈利形式
+
+
++ CPL: cost per lead. 
++ CPA or CPS: cost per action, cost per acquisition, or cost per sale
++ Cost per lead (CPL) 
++ Cost per registration（CPR）
++ Cost per install(CPI) 
+
+过去，只有在消费者成功下单购买后，促成最终点击（last click）的营销伙伴才能获得佣金。现在，广告主了解到，不同的营销伙伴在消费者购买路径中都能产生一定的影响，从而定义了不同的归因方式。因此，除了促成最终点击，营销伙伴还能通过其他的行为获得佣金，包括：
+- First click to site 促使消费者首次点击网站
+- Conversion path participation 参与了消费者转化路径
+- Monthly performance thresholds 完成月度绩效指标
+- Customer status 保证用户状态或行为符合指定要求
+- Promo code 促使消费者使用指定折扣码
+- Certain SKUs 促使消费者购买某些指定商品
+支付机制的灵活性和多样性有利于提高各类营销伙伴的积极性，优化联盟营销项目，更好地促进目标消费者转化。
+
 + pixels
   In digital advertising, pixels — also known as marketing pixels, tracking pixels, web beacons, and web bugs — are snippets of code (HTML or JavaScript) or tiny invisible images (measuring 1×1 pixel) that are placed on web pages, usually in the footer, and are used to gather information about website visitors and track their activity.
 
   season pixel: So essentially what seasoning your pixel means is that you are going to get those events that the data collected on that pixel first before you go and optimise for conversions
 
-CPL: cost per lead. CPA or CPS: cost per action, cost per acquisition, or cost per sale
++ SOI Single Opt-In
 
-## 工具
-首先要有一个国外的身份，选择美国人的身份信息 附带你的网站信息下边
-或者通过「haoweichi」随机生成美国人信息复制即可
++ VSL A video sales letter (VSL) is a video that pitches a product or service to potential customers. 
 
-指纹浏览器
+## 选择联盟平台 affiliate
+如何选择最优质的联盟平台，这也是大家最想知道了，所有联盟主总是一种高高在上的感觉，他们对你甚至爱答不理的，所以我们选择联盟平台最好不要选择头部的那些联盟平台。
 
-## Core Components
+他们本身在市场占有率就非常高，对于我们这种散户要求特别苛刻。
+
+有的联盟主审核甚至还需要语音电话，这怎么可能！我除了26个英文字母会念，所以我们要找的是那种在门户网上排名一般的中小型联盟主，他们需要更多的”打手“来赚取他们的中介费。
+
+广告商自己的联盟，就是广告商自己开发的联盟，这种联盟一般只有一个任务，只推广广告商自己的产品，而且关键在于，这种他们自己的联盟，基本上是没有作弊检测机制的，也就是说广告商没办法评判业绩是否存在作弊，只能根据业绩来给推广者提成。
+
+这种联盟对我们EMUER来说，是非常好的，不用担心被判作弊而被K号，安心做好数据，基本下款就没毛病了。
+
+联盟经理的方式：拿到职位→开展EMU→联盟住结算给你→EMU完成起付金额→你结算给EMU→你赚差价！
+
+CJ Affiliate
+https://mp.weixin.qq.com/s?__biz=Mzg5NjIzNDA1NQ==&mid=2247484792&idx=1&sn=b3cadec3d4a04c191e27e31551787592&chksm=c0056250f772eb46c67e1f66d7660eb44c03e665602f09cbcfe4ce14969f20beb612634e06d6&cur_album_id=2803612459847680002&scene=190#rd
+
+
+## MediaBuy - Tiktok
 
 ### High Converting Offers
 TikTok Ads 结合必须正确使用的特定序列，以推广两种类型的附属产品。
 
 1 – Paid On action Offers
-+ pay per sale
-+ pay on form submit
-+ pay on call
-+ pay on download app
+  + pay per sale
+  + pay on form submit
+  + pay on call
+  + pay on download app
 
 2 – Clickbank Affiliate Offers
-+ VSL offer
+  + VSL offer
 
 如果您知道如何正确操作，那么两者在 TikTok 上的表现都非常出色。
 
@@ -65,55 +151,44 @@ How to launch your first campaign and run the ads to make a profit
 + Pixel Events
 + Scaling
 
-## Power play
+### Power play
 
-### Swipe deploy profit repeat
+#### Swipe deploy profit repeat
 finding proven affiliate campaigns to swipe
 
 + Manual Spying
   snaptik.app
 + Creative Center
 + Pipi Ads
-### Imitate and innovate
+####### Imitate and innovate
 use the ads we found, then create our own based on whats already working
 
-### Combining the above for your best chance of success - Hybrid Power play
+#### Combining the above for your best chance of success - Hybrid Power play
 
 take the ads you found, then come up with your own totally new angle/ad to test aainst the others
 
-## networks
+### 步骤
 
-### POA
+#### 1. Ad Account Setup
 
-+ Smartfinancial - Car insurance
-+ A4D - rnge of POA offers
-+ MarketCall - pay per call offers
+#### 2. Apply for Offers
+Paid on Action / Lead Gen - Car Insurance
 
-### Clickbank
-www.clickbank.com
+https://publishers.smartfinancial.com/
+hearing from: Jani/Gennet
 
-### eCom CPA
-+ M4trix.network
-+ Giddyup.io
-+ Jumbleberry
+Choose 'Power Play'
 
-## 结算
-Wise.com，它创建于 2011 年，总部在英国，原名叫TransferWise。是一个提供国际汇款和转账服务的平台，支持超过 50 个国家和 40 多个币种的国际转账和汇款，并提供多个国际的支票账户。
-除了国际汇款，Wise 还支持开通多个国家本地银行的虚拟银行账户（提供 Account number，Routing number 和 SWIFT code），还有支持全球使用、实时汇率结算的 MasterCard等。
-Wise是一个合法合规的，遵守中国大陆法律的企业，是一个正规的汇款金融公司。Wise和中国银联、以及支付宝签订了合作协议，所以应该是可以放心使用！
+Campaign Prep/Setup
+First batch of Ad Creatives For Power Play 3 - ready to launch within 7 days or less
 
-支付验证：
-通过美国银行Passbook直接转账入金。
+First campaign launch / test/ optimise / profit
 
-通过开通华美银行Velo账户入金。相关教程可以互联网上寻找。
+Get into Profit Zone - cut losers, continue and Scale Winners/ Daily Workflow to Maintain Profit/ Prep for New Test
 
-开通德国N26银行入金。
+Maintaining your profitable campaign / Beat the control / Scaling methodology
 
-瑞士瑞讯银行入金。
 
-最新最简单的BKBPAY贝卡帮平台充值入金。
-
-等等各种国外银行和国外信用卡、借记卡
 
 ## 实战
 ### tiktok
@@ -168,6 +243,25 @@ https://mp.weixin.qq.com/s/cHTBSpiOzPy2poe563v_4Q
 需要注意的是Quora 是不能直接加联盟链接的，最好链接到自己的网站或者 Landing page，
 
 可以推广 Clickbank、digitalstore24、CJ等各种联盟的offer和产品
+
+## 结算
+Wise.com，它创建于 2011 年，总部在英国，原名叫TransferWise。是一个提供国际汇款和转账服务的平台，支持超过 50 个国家和 40 多个币种的国际转账和汇款，并提供多个国际的支票账户。
+除了国际汇款，Wise 还支持开通多个国家本地银行的虚拟银行账户（提供 Account number，Routing number 和 SWIFT code），还有支持全球使用、实时汇率结算的 MasterCard等。
+Wise是一个合法合规的，遵守中国大陆法律的企业，是一个正规的汇款金融公司。Wise和中国银联、以及支付宝签订了合作协议，所以应该是可以放心使用！
+
+支付验证：
+通过美国银行Passbook直接转账入金。
+
+通过开通华美银行Velo账户入金。相关教程可以互联网上寻找。
+
+开通德国N26银行入金。
+
+瑞士瑞讯银行入金。
+
+最新最简单的BKBPAY贝卡帮平台充值入金。
+
+等等各种国外银行和国外信用卡、借记卡
+
 ## todo
 15分钟了解国外LEAD （国外广告联盟）如何轻松月入十万+？
 https://mp.weixin.qq.com/s/hxJAlYp8Qc7YrHLOBC08Yg
@@ -175,27 +269,20 @@ https://mp.weixin.qq.com/s/hxJAlYp8Qc7YrHLOBC08Yg
 AdsEmpire
 https://mp.weixin.qq.com/s/l-gApN3UQsv24PLpH1DXmA
 
+### POA
 
-+ 附属链接（Affiliate Link）：也称为跟踪链接。这是一个独特的 URL，用于跟踪来自联属会员的点击和转化。
-+ 转换（Conversion）：由商家定义的被视为支付给关联公司的事件。它可以是商家定义的任何内容，但通常是潜在客户或商家产品的购买。
-+ 网络营销联盟（Affiliate Network）：商家和附属公司之间的可选中间人，有助于促进商业活动。
-+ 联盟经理（Affiliate Manager）：与附属公司合作的人，作为与商家的中间人。他们的目标是最大化联盟计划的性能。
-+ 联盟计划（Affiliate Program）：商家向附属公司支付佣金的一种安排。
-+ 优惠（Offer）：产品的特定促销。
-+ 点击率CTR(Click-through Rate)：— 每网页展示次数的附属链接点击百分比。
-+ 转化率CR(Conversion Rate)：转化的点击百分比。
-+ 每次操作成本 CPA（Cost per Action）：一种佣金模式，商家仅向关联公司支付转化费用。 每次点击成本 CPC（Cost per Click）：一种佣金模式，商家仅向关联公司支付点击费用。它通常与广告横幅一起使用，而不是联属网络营销。
-+ URL追踪（Postback URL）：— 用于服务器端转化跟踪的 URL；也称为服务器到服务器跟踪。
-+ 像素（Pixel）：跟踪网页查看事件发生时的隐藏图像。在联属网络营销的背景下，像素会跟踪转换发生的时间。今天，像素通常是嵌入在网页上的 JavaScript 代码片段，而不是图像。
-+ 短链（SubID）：作为会员链接的一部分嵌入的文本字符串，由会员定义并用于跟踪会员的转化。
-+ 创意（Creative）：联属会员用来宣传商家产品的广告横幅图像或文字。 文案（Copy）：有助于推销商家产品的书面文字。
-+ 登陆页面（Landing Page）：会员通过会员链接将流量引至的商家网页。
-+ 广告拦截（Ad Blocker）：可以阻止跟踪联属网络营销点击和转化的网络浏览器技术。此外，它还可以防止广告横幅的显示。
-+ 归因（Attribution）：正确识别哪些附属公司正在产生转化的过程。
-+ 拒付（Charge Back）：导致会员佣金被没收的无效转换。
-+ 佣金（Commission）：会员因产生转化而获得的收入。它也被称为推荐费、发现者费用或赏金。
-+ 网络跟踪器（Cookies）：存储在潜在客户的网络浏览器中以识别特定访问的信息。通过联属网络营销，cookie 用于跟踪联属网络链接点击和潜在转化。
-+ 链接隐藏（Link Cloaking）：使用比商家提供的更简洁的 URL 隐藏附属链接。链接隐藏可用于更好地管理链接并跟踪点击和转化。 联盟营销的优势及盈利形式
++ Smartfinancial - Car insurance
++ A4D - rnge of POA offers
++ MarketCall - pay per call offers
+
+### Clickbank
+www.clickbank.com
+
+### eCom CPA
++ M4trix.network
++ Giddyup.io
++ Jumbleberry
+
 
 
 

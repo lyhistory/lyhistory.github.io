@@ -76,7 +76,7 @@ If two separate threads are writing to two different values, each core invalidat
 
 ## How Disruptor Work
 
-![Figure 1](./disruptor.png)
+![Figure 1](/docs/docs_image/software/buildingblock/disruptor.png)
 
 Disruptor has an array based circular data structure (ring buffer). It is an array that has a pointer to next available slot. It is filled with pre-allocated transfer objects. Producers and consumers perform writing and reading of data to the ring without locking or contention.
 
