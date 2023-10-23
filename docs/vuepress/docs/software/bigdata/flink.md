@@ -8,7 +8,7 @@ https://flink.apache.org/
 
 ![](https://flink.apache.org/img/flink-home-graphic.png)
 
-## Intro
+## 1. Intro
 ### Architecture
 
 Flink is a distributed system and requires effective allocation and management of compute resources in order to execute streaming applications. It integrates with all common cluster resource managers such as Hadoop YARN and Kubernetes, but can also be set up to run as a standalone cluster or even as a library.
@@ -180,13 +180,13 @@ In addition to its event-time mode, Flink also supports processing-time semantic
   + **Transformation**
     A Transformation is applied on one or more data streams or data sets and results in one or more output data streams or data sets. A transformation might change a data stream or data set on a per-record basis, but might also only change its partitioning or perform an aggregation. While Operators and Functions are the “physical” parts of Flink’s API, Transformations are only an API concept. Specifically, most transformations are implemented by certain Operators.
 
-## install&deployment
-### local Standalone
+## 2. Mode: Local Standalone 
 https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/deployment/resource-providers/standalone/overview/
 https://nightlies.apache.org/flink/flink-docs-release-1.15//docs/try-flink/local_installation/
 https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/try-flink/flink-operations-playground/
 https://nightlies.apache.org/flink/flink-docs-release-1.14//docs/try-flink/local_installation/
 
+### Insall
 ```
 $ java -version
 $ tar -xzf flink-*.tgz
@@ -296,7 +296,7 @@ public class WordCount
 }
 
 ```
-
+### Log Analysis
 #### Job Manager Log
 vim log/flink-root-standalonesession-0-vm01.log 
 
@@ -344,9 +344,9 @@ vim log/flink-root-standalonesession-0-vm01.log
 2022-05-27 16:13:00,512 INFO  org.apache.flink.runtime.jobmaster.JobMaster                 [] - JobManager successfully registered at ResourceManager, leader id: 00000000000000000000000000000000.
 2022-05-27 16:13:00,514 INFO  org.apache.flink.runtime.resourcemanager.slotmanager.DeclarativeSlotManager [] - Received resource requirements from job f69c1ca4892ecbc08d4247ded254f467: [ResourceRequirement{resourceProfile=ResourceProfile{UNKNOWN}, numberOfRequiredSlots=1}]
 2022-05-27 16:13:00,636 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph       [] - Source: Collection Source -> Flat Map (1/1) (c83c41ff9f43c36e7a6aea483e073ec1) switched from SCHEDULED to DEPLOYING.
-2022-05-27 16:13:00,637 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph       [] - Deploying Source: Collection Source -> Flat Map (1/1) (attempt #0) with attempt id c83c41ff9f43c36e7a6aea483e073ec1 to 10.136.100.48:35016-a4d337 @ sgkc2-devclr-v08 (dataPort=59281) with allocation id 3b41f2b6c9f47bf531ac47e91afde9fb
+2022-05-27 16:13:00,637 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph       [] - Deploying Source: Collection Source -> Flat Map (1/1) (attempt #0) with attempt id c83c41ff9f43c36e7a6aea483e073ec1 to 10.136.100.48:35016-a4d337 @ vm-v08 (dataPort=59281) with allocation id 3b41f2b6c9f47bf531ac47e91afde9fb
 2022-05-27 16:13:00,646 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph       [] - Keyed Aggregation -> Sink: Print to Std. Out (1/1) (a602bd7b23ece40a69422f7b36701083) switched from SCHEDULED to DEPLOYING.
-2022-05-27 16:13:00,646 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph       [] - Deploying Keyed Aggregation -> Sink: Print to Std. Out (1/1) (attempt #0) with attempt id a602bd7b23ece40a69422f7b36701083 to 10.136.100.48:35016-a4d337 @ sgkc2-devclr-v08 (dataPort=59281) with allocation id 3b41f2b6c9f47bf531ac47e91afde9fb
+2022-05-27 16:13:00,646 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph       [] - Deploying Keyed Aggregation -> Sink: Print to Std. Out (1/1) (attempt #0) with attempt id a602bd7b23ece40a69422f7b36701083 to 10.136.100.48:35016-a4d337 @ vm-v08 (dataPort=59281) with allocation id 3b41f2b6c9f47bf531ac47e91afde9fb
 2022-05-27 16:13:00,905 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph       [] - Keyed Aggregation -> Sink: Print to Std. Out (1/1) (a602bd7b23ece40a69422f7b36701083) switched from DEPLOYING to INITIALIZING.
 2022-05-27 16:13:00,908 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph       [] - Source: Collection Source -> Flat Map (1/1) (c83c41ff9f43c36e7a6aea483e073ec1) switched from DEPLOYING to INITIALIZING.
 2022-05-27 16:13:01,166 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph       [] - Source: Collection Source -> Flat Map (1/1) (c83c41ff9f43c36e7a6aea483e073ec1) switched from INITIALIZING to RUNNING.
@@ -472,12 +472,368 @@ vim log/flink-root-client-vm01.log
 2022-05-27 16:13:03,555 INFO  org.apache.flink.configuration.Configuration                 [] - Config uses fallback configuration key 'jobmanager.rpc.address' instead of key 'rest.address'
 ```
 
-### production
+## 3. Mode: Production cluster deployment
 https://nightlies.apache.org/flink/flink-docs-master/docs/deployment/overview/
 hdfs
 
 https://flink.apache.org/training.html
 
+### Install with Hadoop
+
+#### Hadoop
+HOME: /home/hadoop
+
+download hadoop:
+
+https://downloads.apache.org/hadoop/common/hadoop-3.3.0/hadoop-3.3.0.tar.gz
+
+```
+target:
+10.1.1.1: JournalNode, NameNode (active), DataNode, ZKFailoverController
+10.1.1.2: JournalNode, NameNode (standby), DataNode, ZKFailoverController
+10.1.1.3: JournalNode, NameNode (standby), DataNode, ZKFailoverController
+
+
+ON MAIN VM:
+useradd -m -d /home/hadoop hadoop
+passwd hadoop
+
+chmod 755 /home/hadoop
+
+tar -zxvf /tmp/hadoop-3.3.0.tar.gz 
+ln -s hadoop-3.3.0 hadoop-current
+ssh-keygen
+
+ssh-copy-id hadoop@vm-v01
+ssh-copy-id hadoop@vm-v02
+ssh-copy-id hadoop@vm-v03
+
+cd hadoop-current/etc/hadoop/
+cp -p hadoop-env.sh hadoop-env.sh_factory
+vi hadoop-env.sh
+	export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.332.b09-1.el7_9.x86_64/jre
+chmod u+x hadoop-env.sh
+
+cp hdfs-site.xml hdfs-site.xml_factory
+vim hdfs-site.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+            Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+    http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+  <property>
+    <name>dfs.permissions.enabled</name>
+   <value>false</value>
+  </property>
+  <property>
+    <name>dfs.namenode.datanode.registration.ip-hostname-check</name>
+   <value>false</value>
+  </property>
+  <property>
+    <name>dfs.nameservices</name>
+    <value>test</value>
+  </property>
+  <property>
+    <name>dfs.ha.namenodes.test</name>
+    <value>nn1,nn2,nn3</value>
+  </property>
+  <property>
+    <name>dfs.namenode.rpc-address.test.nn1</name>
+    <value>10.1.1.1:13101</value>
+  </property>
+  <property>
+    <name>dfs.namenode.rpc-address.test.nn2</name>
+    <value>10.1.1.2:13101</value>
+  </property>
+  <property>
+    <name>dfs.namenode.rpc-address.test.nn3</name>
+    <value>10.1.1.3:13101</value>
+  </property>
+  <property>
+    <name>dfs.namenode.http-address.test.nn1</name>
+    <value>10.1.1.1:13102</value>
+  </property>
+  <property>
+    <name>dfs.namenode.http-address.test.nn2</name>
+    <value>10.1.1.2:13102</value>
+  </property>
+  <property>
+    <name>dfs.namenode.http-address.test.nn3</name>
+    <value>10.1.1.3:13102</value>
+  </property>
+  <property>
+    <name>dfs.namenode.shared.edits.dir</name>
+    <value>qjournal://10.1.1.1:13106;10.1.1.2:13106;10.1.1.3:13106/test</value>
+  </property>
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>file:///home/hadoop/hadoop-current/data/dfs/name</value>
+  </property>
+  <property>
+    <name>dfs.datanode.data.dir</name>
+    <value>file:///home/hadoop/hadoop-current/data/dfs/data</value>
+  </property>
+  <property>
+    <name>dfs.datanode.address</name>
+    <value>0.0.0.0:13103</value>
+  </property>
+  <property>
+    <name>dfs.datanode.http.address</name>
+    <value>0.0.0.0:13104</value>
+  </property>
+  <property>
+    <name>dfs.datanode.ipc.address</name>
+    <value>0.0.0.0:13105</value>
+  </property>
+  <property>
+    <name>dfs.journalnode.edits.dir</name>
+    <value>/home/hadoop/hadoop-current/data/dfs/journal</value>
+  </property>
+  <property>
+    <name>dfs.journalnode.rpc-address</name>
+    <value>0.0.0.0:13106</value>
+  </property>
+  <property>
+    <name>dfs.journalnode.http-address</name>
+    <value>0.0.0.0:13107</value>
+  </property>
+  <property>
+    <name>dfs.ha.automatic-failover.enabled</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>dfs.client.failover.proxy.provider.test</name>
+    <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+  </property>
+  <property>
+    <name>dfs.ha.fencing.methods</name>
+    <value>sshfence</value>
+  </property>
+  <property>
+    <name>dfs.ha.fencing.ssh.private-key-files</name>
+    <value>/home/hadoop/.ssh/id_rsa</value>
+  </property>
+  <property>
+    <name>ha.zookeeper.quorum</name>
+    <value>10.1.1.1:12006,10.1.1.2:12006,10.1.1.3:12006</value>
+  </property>
+</configuration>
+
+
+cp core-site.xml core-site.xml_factory
+vim core-site.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+  <property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://test</value>
+  </property>
+</configuration>
+
+
+cp workers workers_factory
+vim workers
+10.1.1.1
+10.1.1.2
+10.1.1.3
+
+
+cd ~/hadoop-current
+#In all hosts, start the JournalNode.
+./bin/hdfs --daemon start journalnode
+tail -f logs/hadoop-hadoop-journalnode-vm-v01.log 
+
+# If this is the host for active NameNode (only execute in one host)
+# Format (initialize metadata) the NameNode.
+# Caution: pls wait for all journalnode fully started first otherwise will get connection refused error
+./bin/hdfs namenode -format
+# If above commend executed successfully, it will gracefully quit.
+
+# Start the NameNode (the first NameNode started will be the active NameNode).
+./bin/hdfs --daemon start namenode
+
+# If this is the host for standby NameNode (only execute in hosts other than active namenode)
+# Copy metadata from formatted NameNode to this NameNode.
+./bin/hdfs namenode -bootstrapStandby
+# Start the NameNode (the NameNodes started later will be standby NameNodes).
+./bin/hdfs --daemon start namenode
+
+#In all hosts, start the DataNode.
+./bin/hdfs --daemon start datanode
+#Initialize Zookeeper state (execute the following command in only one of the hosts).
+./bin/hdfs zkfc -formatZK
+#In all hosts, start the ZKFailoverController.
+./bin/hdfs --daemon start zkfc
+
+tail -f logs/hadoop-hadoop-journalnode-vm-v01.log 
+
+// check
+./bin/hdfs getconf -namenodes
+./bin/hdfs getconf -secondaryNameNodes
+
+
+//clearn up and Restart
+ps -lef|grep "hadoop"
+kill -9 31156
+
+cd hadoop-current/
+./sbin/stop-dfs.sh
+ps -lef|grep "hadoop"
+
+rm -r ~/hadoop-current/data/ ~/hadoop-current/logs/
+
+#In Zookeeper, delete the directory storing HDFS HA information.
+./bin/zkCli.sh -server localhost:12006
+[zk: localhost:2181(CONNECTED) 0] rmr /hadoop-ha
+
+then repeat previous boot up process
+
+```
+#### Flink
+
+HOME: /home/flink
+
+download: https://downloads.apache.org/flink/flink-1.11.2/flink-1.11.2-bin-scala_2.11.tgz
+
+```
+Target Setup
+10.1.1.1: active JobManager, TaskManager
+10.1.1.2: standby JobManager, TaskManager
+10.1.1.3: standby JobManager, TaskManager
+
+useradd -m -d /home/flink flink
+passwd flink
+
+su - flink
+
+tar zxvf /tmp/flink-1.11.2-bin-scala_2.11.tgz 
+ln -s flink-1.11.2 flink-current
+
+chmod -R 755 /home/hadoop
+
+ssh-keygen
+ssh-copy-id flink@10.1.1.1
+ssh-copy-id flink@10.1.1.2
+ssh-copy-id flink@10.1.1.3
+
+vi .bash_profile 
+    PATH=$PATH:$HOME/.local/bin:$HOME/bin
+
+    export PATH
+    export HADOOP_HOME=/home/hadoop/hadoop-current
+    export HADOOP_CLASSPATH=$(/home/hadoop/hadoop-current/bin/hadoop classpath)
+
+
+cd ~/flink-current/conf/
+cp flink-conf.yaml flink-conf.yaml.bak
+vi flink-conf.yaml
+
+env.hadoop.conf.dir: /home/hadoop/hadoop-current/etc/hadoop
+env.log.dir: /home/flink/flink-current/log
+
+
+io.tmp.dirs: /home/flink/flink-current/iotmp
+
+parallelism.default: 1
+
+rest.port: 13001
+
+# Enable uploading JAR files via web UI.
+web.submit.enable: true
+web.upload.dir: /home/flink/flink-current/upload
+
+high-availability: zookeeper
+high-availability.zookeeper.quorum: 10.1.1.1:12006,10.1.1.2:12006,10.1.1.3:12006
+high-availability.zookeeper.path.root: /flink
+high-availability.storageDir: hdfs://vm-v01:13101/flink/ha/
+high-availability.cluster-id: /default_ns
+high-availability.jobmanager.port: 13002
+
+jobmanager.memory.process.size: 16384m
+#jobmanager.heap.size: 4096m
+jobmanager.execution.failover-strategy: region
+
+# JobManager blob server port used for data transfer.
+blob.server.port: 13003
+
+taskmanager.memory.process.size: 16384m
+#taskmanager.memory.flink.size: 8192m
+taskmanager.memory.jvm-metaspace.size: 4096m
+taskmanager.numberOfTaskSlots: 8
+taskmanager.data.port: 13004
+taskmanager.rpc.port: 13005
+
+restart-strategy: failure-rate
+restart-strategy.failure-rate.max-failures-per-interval: 10
+restart-strategy.failure-rate.failure-rate-interval: 300s
+restart-strategy.failure-rate.delay: 15s
+
+# JobManager and TaskManager expose /metrics REST API for Prometheus to scrape.
+metrics.reporters: prom
+metrics.reporter.prom.class: org.apache.flink.metrics.prometheus.PrometheusReporter
+metrics.reporter.prom.port: 13006-13007
+
+vim masters
+10.1.1.1:50001
+10.1.1.2:50001
+10.1.1.3:50001
+
+vim slaves 
+10.1.1.1
+10.1.1.2
+10.1.1.3
+
+cd ~/flink-current
+mkdir upload
+mkdir iotmp
+./bin/start-cluster.sh (start only one host)
+./bin/stop-cluster.sh
+
+./flink-current/bin/flink -v
+
+#clean up & restart
+
+./bin/stop-cluster.sh
+rm -r ~/flink-current/log/* ~/flink-current/iotmp/* ~/flink-current/upload/*
+#In HDFS, delete the directory storing Flink HA information (according to flink-conf.yaml high-availability.storageDir).
+./bin/hdfs dfs -rm -r /flink/ha
+
+#In Zookeeper, delete the znode storing Flink HA information (according to flink-conf.yaml high-availability.zookeeper.path.root and high-availability.cluster-id).
+./bin/zkCli.sh -server localhost:12006
+[zk: localhost:2181(CONNECTED) 0] rmr /flink/default_ns
+```
+### Log Analysis
 #### Job Manager Log
 vim log/flink-root-standalonesession-0-vm01.log 
 ```
@@ -496,7 +852,15 @@ vim flink-root-taskexecutor-0-vm01.log
 ### Failover&Recoery
 https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/try-flink/flink-operations-playground/
 
-## API&Libs
+## 4. Config
+
++ web.upload.dir
+
+JAR files are renamed when they are uploaded and stored in a directory that can be configured with the web.upload.dir configuration key.
+
+If the web.upload.dir parameter is not set, the JAR files are stored in a dynamically generated directory under the jobmanager.web.tmpdir (default is System.getProperty("java.io.tmpdir")).
+
+## 5. API&Libs
 ### Layered APIs
 ![](https://nightlies.apache.org/flink/flink-docs-release-1.15/fig/levels_of_abstraction.svg)
 #### Stateful Event-Driven Applications - ProcessFunctions(events,state,time)
@@ -616,7 +980,7 @@ The DataSet API is Flink’s core API for batch processing applications. The pri
 #### Gelly: 
 Gelly is a library for scalable graph processing and analysis. Gelly is implemented on top of and integrated with the DataSet API. Hence, it benefits from its scalable and robust operators. Gelly features built-in algorithms, such as label propagation, triangle enumeration, and page rank, but provides also a Graph API that eases the implementation of custom graph algorithms.
 
-## Operations
+## 6. Operations
 
 ### Run Your Applications Non-Stop 24/7
 Machine and process failures are ubiquitous in distributed systems. A distributed stream processors like Flink must recover from failures in order to be able to run streaming applications 24/7. Obviously, this does not only mean to restart an application after a failure but also to ensure that its internal state remains consistent, such that the application can continue processing as if the failure had never happened.
@@ -665,10 +1029,30 @@ Flink integrates nicely with many common logging and monitoring services and pro
 
 ## Troubleshooting
 
+### flink启动后无法正常关闭
+```
+$ ./stop-cluster.sh 
+No taskexecutor daemon to stop on host xxx.
+No standalonesession daemon to stop on host xxx.
+```
+flink的进程默认存储在/tmp目录下，该目录为临时目录，会被系统清理，当存储在/tmp下的进程被清理后，执行stop-cluster.sh就无法找到对应的进程并进行停止了。
+
+修改flink bin目录下的config.sh文件。
+DEFAULT_ENV_PID_DIR="/tmp"，将tmp修改为指定的不会被清理的目录即可。
+jps 查询进程
+kill xxxx
+
 ### flink task manager not starting
 
 1.检查每个节点的日志，看是否是因为host或端口连不上，然后检查相应端口是否正常监听以及防火墙配置
 2.flink已经rename slave=》workers，注意文件改动
+
+
+flink自定义函数加线程锁 https://juejin.cn/s/flink%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0%E5%8A%A0%E7%BA%BF%E7%A8%8B%E9%94%81
+
+
+使用Flink前必知的10个『陷阱』
+https://dbaplus.cn/news-73-3769-1.html
 
 <disqus/>
 
