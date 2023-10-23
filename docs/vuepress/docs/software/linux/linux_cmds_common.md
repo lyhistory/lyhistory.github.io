@@ -237,6 +237,12 @@ df -h
 du -sh ./*
 ```
 
+## xargs
+
+```
+ls | grep -xv "except this file.txt" | xargs rm -rf
+```
+
 ## crontab
 
 `/etc/crontab`是系统级别的crontab，系统的设置

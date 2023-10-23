@@ -55,6 +55,10 @@ source ~/.bash_profile
 ```
 
 
+```
+yum list java*devel*
+sudo yum install java-<version>-openjdk-devel.x86_64
+```
 
 ### $JAVA_HOME
 

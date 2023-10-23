@@ -1026,6 +1026,13 @@ Flink integrates nicely with many common logging and monitoring services and pro
 + Metrics: Flink features a sophisticated metrics system to collect and report system and user-defined metrics. Metrics can be exported to several reporters, including JMX, Ganglia, Graphite, Prometheus, StatsD, Datadog, and Slf4j.
 + REST API: Flink exposes a REST API to submit a new application, take a savepoint of a running application, or cancel an application. The REST API also exposes meta data and collected metrics of running or completed applications.
 
+## 7. Integration
+
+https://nightlies.apache.org/flink/flink-docs-release-1.17/docs/ops/rest_api/
+
+dashboard: localhost:8081
+
+jars: localhost:8081/jars
 
 ## Troubleshooting
 

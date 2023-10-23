@@ -137,6 +137,117 @@ vim /etc/profile.d/nodejs.sh:
 export PATH=/opt/node-v12.16.2-linux-s390x/bin:$PATH
 ```
 
+## PM2
+
+PM2 is a production process manager for Node.js applications with a built-in load balancer. It allows you to keep applications alive forever, to reload them without downtime and to facilitate common system admin tasks.
+
+https://pm2.keymetrics.io/docs/usage/application-declaration/
+
+### install
+
+**online:**
+
+npm install pm2 -g
+
+**offline:**
+
+Download pm2 package here: https://github.com/Unitech/pm2/releases (current used in production v4.4)
+
+if install on offline vm, need to run 'npm install ' inside the pm2 folder first on a online machine to generate the node_modules, and then upload to the offline vm
+
+```
+Check npm install path:
+npm config get prefix
+
+copy the pm2 package to node_module path, unzip and create soft link:
+cp -p pm2.tar.gz /usr/local/lib/nodejs/node-v16.15.0-linux-x64/lib/node_modules/
+cd /usr/local/lib/nodejs/node-v16.15.0-linux-x64/lib/node_modules/ 
+tar -xzvf pm2.tar.gz
+ln -s /usr/local/lib/nodejs/node-v16.15.0-linux-x64/lib/node_modules/pm2/bin/pm2 /usr/bin/pm2
+
+Test if pm2 installed successfully:
+su - express
+pm2 -v
+## if use root to execute pm2 -v, there will be a pm2 process running under root
+```
+
+**Updating PM2**
+```
+# Install latest PM2 version
+$ npm install pm2@latest -g
+# Save process list, exit old PM2 & restore all processes
+$ pm2 update
+```
+
+### run app
+```
+normal mode:
+pm2 start app.js
+
+cluster mode that will leverage all CPUs available:
+$ pm2 start api.js -i <processes> //<processes> can be 'max', -1 (all cpu minus 1) or a specified number of instances to start.
+
+pm2 startOrGracefulReload ecosystem.config.js --env test --update-env
+
+pm2 ls
+
+$ pm2 stop     <app_name|namespace|id|'all'|json_conf>
+$ pm2 restart  <app_name|namespace|id|'all'|json_conf>
+$ pm2 delete   <app_name|namespace|id|'all'|json_conf>
+
+Hot Reload allows to update an application without any downtime:
+
+$ pm2 reload all
+
+To have more details on a specific application:
+
+$ pm2 describe <id|app_name>
+
+To monitor logs, custom metrics, application information:
+$ pm2 monit
+
+PM2 allows to monitor your host/server vitals with a monitoring speedbar.
+
+To enable host monitoring:
+
+$ pm2 set pm2:sysmonit true
+$ pm2 update
+
+To consult logs just type the command:
+
+$ pm2 logs
+
+Standard, Raw, JSON and formated output are available.
+
+Examples:
+
+$ pm2 logs APP-NAME       # Display APP-NAME logs
+$ pm2 logs --json         # JSON output
+$ pm2 logs --format       # Formated output
+
+$ pm2 flush               # Flush all logs
+$ pm2 reloadLogs          # Reload all logs
+To enable log rotation install the following module
+
+$ pm2 install pm2-logrotate
+
+Startup Scripts Generation
+PM2 can generate and configure a Startup Script to keep PM2 and your processes alive at every server restart.
+
+Init Systems Supported: systemd, upstart, launchd, rc.d
+
+# Generate Startup Script
+$ pm2 startup
+
+# Freeze your process list across server restart
+$ pm2 save
+
+# Remove Startup Script
+$ pm2 unstartup
+
+```
+
+[Discover the monitoring dashboard for PM2](https://app.pm2.io/)
 ## troubleshooting
 
 ### install phantomjs
