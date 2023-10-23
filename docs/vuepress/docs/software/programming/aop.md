@@ -101,7 +101,7 @@ Load-time weaving (LTW) weaves just in time as the classes are loaded by the VM,
 [Different Types of AspectJ Weaving](https://dzone.com/articles/different-types-of-aspectj-weaving)
 
 #### Compile-time Weaving
-![](./ctw.png)
+![](/docs/docs_image/software/programming/ctw.png)
 The weaving process in compile-time weaving happens (obviously) at compile time. As you can see from the diagram above, the left-hand side describes our source codes which are java files, java classes with @Aspect annotation, and the last one are traditional aspect classes. They are then compiled by ajc (AspectJ Compiler) to be woven into a compiled class called woven system. To give more perspective on this, take a look at several code snippets below.
 ```
 Target class to be woven:
@@ -175,7 +175,7 @@ You see that on lines 7–8, the compiler inserts additional functionality which
 
 ```
 #### Post-compile (binary) weaving
-![](./pctw.png)
+![](/docs/docs_image/software/programming/pctw.png)
 
 Basically, binary weaving is similar to CTW (Compile-time Weaving), the weaving process is also done on compile-time. The difference is that with Binary Weaving, we’re able to weave aspects into 3rd party library’s source code. Let’s take a look at the code snippets below.
 
@@ -238,7 +238,7 @@ public class TargetLib {
 Similar to what we’ve observed from CTW, the TargetLib class (in which the source code exists on 3rd party library, we don’t host the source code in our main project) got woven by Binary Weaving by using a similar mechanism.
 ```
 #### Load-time weaving
-![](./ltw.png)
+![](/docs/docs_image/software/programming/ltw.png)
 
 Load-time weaving happens when the classes are about to be loaded into JVM. This means that after compilation, nothing will be added into our compiled classes (unlike CTW and Binary Weaving).
 + Deploy an application.
