@@ -2294,6 +2294,8 @@ consumer.seek(topicPartition, snpoffset);
 和前面情况类似，经过实际测试，发现这个10s的设置，指定的offset有时候能返回正确的message，有时候返回empty record！，
 然后改成 30000 即5分钟则没有问题
 
+[kafka consumer.seek 之后立即 poll 可能拉不到消息 ](https://www.cnblogs.com/duanguyuan/p/15906363.html)
+
 #### 造成kafka client端程序读取 metadata 超过默认 1分钟 抛错
 
 public java.util.List<PartitionInfo> partitionsFor(java.lang.String topic)

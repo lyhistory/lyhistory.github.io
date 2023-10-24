@@ -10,6 +10,55 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 keyword: heartbeat，rebalance
 
+### offsets
+
+![](/docs/docs_image/software/buildingblock/kafka/kafka_consumer_position.png)
+
+图中last committed log是指consumer消费完之后，自动提交的offset（"then each **later rebalance** will reset the position to the last committed offset"）
+
+ high waterMark和log end offset是上游producer发布的消息offset，其中high watermark是代表全部replicate结束+1，所以consumer最多能读取到high watermark位置-1，
+
++ HWM high watermark 
+  the offset of the last successfully replicated message plus one)
++ LEO Log End Offset
+  当前日志文件中下一条待写入消息的offset。分区ISR集合中的每个副本都会维护自身的LEO，而ISR集合中最小的LEO即为分区的HWM。
+  这个offset未必在硬盘中，可能目前只在内存中还没有被flush到硬盘。
+
++ LWM Low Watermark的
+  代表AR集合(分区中的所有副本统称为 Assigned Replicas)中最小的logStartOffset值。
+  一般情况下，日志文件的起始偏移量 logStartOffset 等于第一个日志分段的 baseOffset，但这并不是绝对的，旧日志的清理和消息删除都有可能促使LW的增长。
+
++ LSO Last Stable Offset，
+  它与kafka 事务Transactional produer有关。对于未完成的事务而言，LSO的值等于事务中的第一条消息所在的位置（firstUnstableOffset）；对于已经完成的事务而言，它的值等同于HWM相同。
+
+  Kafka的一个消费端的参数——isolation.level，这个参数用来配置消费者的事务隔离级别。字符串类型，有效值为“read_uncommitted”和 “read_committed”，表示消费者所消费到的位置，如果设置为“read_committed”，那么消费者就会忽略事务未提交的消息，即只能消费到 LSO(LastStableOffset)的位置，默认情况下为 “read_uncommitted”，即可以消费到 HWM(High Watermark)处的位置。注意：follower副本的事务隔离级别也为“read_uncommitted”，并且不可修改。
+
+  这个LSO还会影响Kafka消费滞后量（也就是Kafka Lag，很多时候也会被称之为消息堆积量）的计算：
+
+  a) 如果没有事务 Lag=HWM – ConsumerOffset:
+  ![](/docs/docs_image/software/buildingblock/kafka/kafka_offsets-2.png)
+
+  b) 如果为消息引入了事务:
+  - 如果消费者客户端的 isolation.level 参数配置为“read_uncommitted”(默认)，那么 Lag的计算方式不受影响 Lag=HWM – ConsumerOffset
+  - 如果这个参数配置为“read_committed”，那么 Lag = LSO – ConsumerOffset :
+    i) 对未完成的事务而言，LSO 的值等于事务中第一条消息的位置 firstUnstableOffset
+    ![](/docs/docs_image/software/buildingblock/kafka/kafka_offsets-3.png)
+    ii) 对已完成的事务而言，它的值同 HWM 相同
+    ![](/docs/docs_image/software/buildingblock/kafka/kafka_offsets-4.png)
+
+查看：
+```
+./kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list xxxx --time -1 --topic xxx
+```
+
+**why offsets increment by 2 instead of 1?**
+对于 Transactional producer来说，除了写入msg之外，还会写入 abort/commit marker
+[Finally writes the COMMITTED (or ABORTED) message to transaction log](/software/buildingblock/kafka_producer.md#### Fence机制实例)
+大家的吐槽：
+[For this reason, I realize that latest_available_offset is a misleading name. The function should probably return an offset one less than what it currently returns.](https://github.com/Parsely/pykafka/issues/494)
+[If you use transactions, each commit (or abort) of a transaction writes a commit (or abort) marker into the topic -- those transactional markers also "consume" one offset](https://stackoverflow.com/questions/54636524/kafka-streams-does-not-increment-offset-by-1-when-producing-to-topic)
+[Each time you commit or abort a transaction, a commit/abort marker is written into the corresponding partitions and requires one offset in the log.](https://groups.google.com/g/confluent-platform/c/IQKd3BKgvYw)
+
 ### Consumer groups
 
 #### 选择模式：
@@ -183,11 +232,28 @@ boolean updateAssignmentMetadataIfNeeded(final Timer timer) {
 
 Kafka maintains a numerical offset for each record in a partition. This offset acts as a unique identifier of a record within that partition, and also denotes the position of the consumer in the partition. For example, a consumer which is at position 5 has consumed records with offsets 0 through 4 and will next receive the record with offset 5. There are actually two notions of position relevant to the user of the consumer:
 
-+ The position of the consumer gives the offset of the next record that will be given out. It will be one larger than the highest offset the consumer has seen in that partition. It automatically advances every time the consumer receives messages in a call to poll(Duration).
++ The position of the consumer gives **the offset of the next record** that will be given out. It will be one larger than the highest offset the consumer has seen in that partition. It automatically advances every time the consumer receives messages in a call to poll(Duration).
+  example:
+  当前位置 LSO=HW=10, poll将会给出下一条可用的消息比如11；
+  所以如果想要拿到 message of lastoffset 怎么做呢，[seek(endOffsets()-2) then poll 参考](#endoffsets)
+
 
 + The committed position is the last offset that has been stored securely. Should the process fail and restart, this is the offset that the consumer will recover to. The consumer can either automatically commit offsets periodically; or it can choose to control this committed position manually by calling one of the commit APIs (e.g. commitSync and commitAsync).
 
 This distinction gives the consumer control over when a record is considered consumed. 
+
+#### endoffsets
+
+* Get the end offsets for the given partitions. In the default {@code read_uncommitted} isolation level, the end
+  * offset is the high watermark (that is, the offset of the last successfully replicated message plus one). For
+  * {@code read_committed} consumers, the end offset is the last stable offset (LSO), which is the minimum of
+  * the high watermark and the smallest offset of any open transaction. Finally, if the partition has never been
+  * written to, the end offset is 0.
+
+how to get the msg of lastoffset?
+
+solution: seek(endOffsets()-n) then poll
+对于普通的消息n=1，但是涉及到事务 transactional msg n=2
 
 #### ConsumerRebalanceListener 
 
@@ -245,12 +311,6 @@ Setting `enable.auto.commit` **means that offsets are committed automatically wi
              System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
      }
 ```
-
-![](/docs/docs_image/software/buildingblock/kafka/kafka_consumer_position.png)
-
-图中 high waterMark和log end offset是上游producer发布的消息offset，其中high watermark是代表全部replicate结束，所以consumer最多能读取到high watermark位置，last committed log是指consumer消费完之后，自动提交的offset（此时重启后的位置，前文提到的："then each **later rebalance** will reset the position to the last committed offset"）
-
-PS: Transactional produer相关关键offset - last stable offset (LSO)
 
 When a partition gets reassigned to another consumer in the group, the initial position is set to the last committed offset. If the consumer in the example above suddenly crashed, then the group member taking over the partition would begin consumption from offset 1. In that case, it would have to reprocess the messages up to the crashed consumer’s position of 6.
 
