@@ -52,11 +52,17 @@ keyword: heartbeat，rebalance
 ```
 
 **why offsets increment by 2 instead of 1?**
+
 对于 Transactional producer来说，除了写入msg之外，还会写入 abort/commit marker
-[Finally writes the COMMITTED (or ABORTED) message to transaction log](/software/buildingblock/kafka_producer.md#### Fence机制实例)
+
+[Finally writes the COMMITTED (or ABORTED) message to transaction log](/software/buildingblock/kafka_producer.md#53-writing-the-final-commit-or-abort-message)
+
 大家的吐槽：
+
 [For this reason, I realize that latest_available_offset is a misleading name. The function should probably return an offset one less than what it currently returns.](https://github.com/Parsely/pykafka/issues/494)
+
 [If you use transactions, each commit (or abort) of a transaction writes a commit (or abort) marker into the topic -- those transactional markers also "consume" one offset](https://stackoverflow.com/questions/54636524/kafka-streams-does-not-increment-offset-by-1-when-producing-to-topic)
+
 [Each time you commit or abort a transaction, a commit/abort marker is written into the corresponding partitions and requires one offset in the log.](https://groups.google.com/g/confluent-platform/c/IQKd3BKgvYw)
 
 ### Consumer groups
