@@ -6,11 +6,11 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [Apache KafkaConsumer](https://kafka.apache.org/23/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html)
 
-## 1.关键API及源码解读
+## 1.关键概念
 
 keyword: heartbeat，rebalance
 
-### offsets
+### Offsets
 
 ![](/docs/docs_image/software/buildingblock/kafka/kafka_offsets-1.png)
 
@@ -65,7 +65,7 @@ keyword: heartbeat，rebalance
 
 [Each time you commit or abort a transaction, a commit/abort marker is written into the corresponding partitions and requires one offset in the log.](https://groups.google.com/g/confluent-platform/c/IQKd3BKgvYw)
 
-### Consumer groups
+### Consumer Groups
 
 #### 选择模式：
 
@@ -160,9 +160,16 @@ public static void main(String[] args) {
 4. 当该consumer group的GroupCoordinator挂掉时，也就是这个broker挂掉后，其他borkers（保存有`__consumer_offsets-10`的replica的节点）会选一个broker如broker id=1作为新的`__consumer_offsets-10`的leader，然后该broker会load 本机保存的`__consumer_offsets-10`replica到内存中，完成后，Client端就会discover该broker作为新的GroupCoordinator
 5. 当broker id=3恢复正常后，会抢回broker id=1之前接管的`__consumer_offsets-10`，重新作为该topic的leader，然后client端就重新discover broker id=3作为group coordinator，这种抢回的方式可以保证kafka节点任务均衡（注意，broker id=3恢复之后，通过kafka-topics.sh --list 查看，`__consumer_offsets-10`的leader仍然会是broker id 1，需要等到再接收一条新的kafka消息后，leader才会切换成broker id 3，外部topic也是如此，`__transaction_state`也是类似，可能是生产一条消息时更新）
 
-### 关键API
+## 2.关键配置
 
-#### POLL
+### Consumer Client
+to do
+### Broker
+to do
+
+## 3.客户端关键API及源码解读
+
+### poll
 [public ConsumerRecords<K,V> poll(long timeoutMs)](https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#poll-long-)
 
 The poll API returns fetched records based on the current position. 
@@ -246,7 +253,7 @@ Kafka maintains a numerical offset for each record in a partition. This offset a
 
 This distinction gives the consumer control over when a record is considered consumed. 
 
-#### endoffsets
+### endoffsets
 
 * Get the end offsets for the given partitions. In the default {@code read_uncommitted} isolation level, the end
   * offset is the high watermark (that is, the offset of the last successfully replicated message plus one). For
@@ -258,7 +265,7 @@ This distinction gives the consumer control over when a record is considered con
 
 Solution: seek(endOffsets()-n) then poll, 对于普通的消息n=1，但是涉及到事务 transactional msg n=2
 
-#### ConsumerRebalanceListener 
+### ConsumerRebalanceListener 
 
 onPartitionsRevoked && onPartitionsAssigned
 
@@ -270,7 +277,7 @@ onPartitionsRevoked && onPartitionsAssigned
 
 **>=kafka2.4 Incremental rebalance**
 
-## 2. Exactly-Once 场景分析
+## 4. Exactly-Once 场景分析
 
 **理解角度：**
 
@@ -291,10 +298,10 @@ onPartitionsRevoked && onPartitionsAssigned
 
 对上游和下游都实现 atomic-read-process-write
 
-### 2.1 上游(consume topic 1) -依赖consumer internal offset
+### 4.1 上游(consume topic 1) -依赖consumer internal offset
 先来看比较简单的场景就是只有 consumer topic，不通过 seek来设置位置直接poll，自动使用interal offset来定位其最后一次消费的位置，注意下面的两个使用方法 at-least-once 至少一次当然可能会重复消费，**但是也可能丢失信息**
 
-#### 2.1.1 自动提交offset，at-least-once
+#### 4.1.1 自动提交offset，at-least-once
 
 Setting `enable.auto.commit` **means that offsets are committed automatically with a frequency controlled by** the config `auto.commit.interval.ms`. 
 
@@ -319,7 +326,7 @@ When a partition gets reassigned to another consumer in the group, the initial p
 
 The diagram also shows two other significant positions in the log. The log end offset is the offset of the last message written to the log. The high watermark is the offset of the last message that was successfully copied to all of the log’s replicas. From the perspective of the consumer, the main thing to know is that you can only read up to the high watermark. This prevents the consumer from reading unreplicated data which could later be lost.
 
-#### 2.1.2 手动提交offset，at-least-once
+#### 4.1.2 手动提交offset，at-least-once
 
 Instead of relying on the consumer to periodically commit consumed  offsets, users can also control when records should be considered as consumed and hence commit their offsets. This is useful when the consumption of the messages is coupled with some processing logic and hence a message should not be considered as consumed until it is completed processing.  
 
@@ -376,19 +383,19 @@ The above example uses [`commitSync`](https://kafka.apache.org/10/javadoc/org/ap
 Note: The committed offset should always be the offset of the next message that your application will read. Thus, when calling commitSync(offsets) you should add one to the offset of the last message processed. 
 ```
 
-### 2.2 上游(consume topic 1-transform-produce to topic 2) - 手动提交/producer提交 at-most-once
+### 4.2 上游(consume topic 1-transform-produce to topic 2) - 手动提交/producer提交 at-most-once
 
 **idempotent producer:**
 
 Prior to 0.11.0.0, if a producer failed to receive a response indicating that a message was committed, it had little choice but to resend the message. This provides at-least-once delivery semantics since the message may be written to the log again during resending if the original request had in fact succeeded. Since 0.11.0.0, the Kafka producer also supports an idempotent delivery option which guarantees that resending will not result in duplicate entries in the log. To achieve this, the broker assigns each producer an ID and deduplicates messages using a sequence number that is sent by the producer along with every message. 
 
-### 2.3 上游(consume topic 1-transform-produce to topic 2) - 手动提交/producer提交 exactly-once
+### 4.3 上游(consume topic 1-transform-produce to topic 2) - 手动提交/producer提交 exactly-once
 
 Also beginning with 0.11.0.0, the producer supports the ability to send messages to multiple topic partitions using transaction-like semantics: i.e. either all messages are successfully written or none of them are. The main use case for this is exactly-once processing between Kafka topics
 
 接着看上游比较完整的 consumer-transform-produce 场景
 
-#### 2.3.1 依赖 interal offset,exactly-once
+#### 4.3.1 依赖 interal offset,exactly-once
 
 **重点：**
 [前面的"上游(consume topic 1) -依赖internal offset"](#1-上游consume-topic-1--依赖internal-offset) 是依赖 consumer提交offset，而对于atomic-read-process-write需要Producer提交offset，[Producer#sendOffsetsToTransaction](https://stackoverflow.com/questions/45195010/meaning-of-sendoffsetstotransaction-in-kafka-0-11)
@@ -484,7 +491,7 @@ while (true) {
 }
 ```
 
-#### 2.3.2 不依赖interal offset，自己维护offset exactly-once
+#### 4.3.2 不依赖interal offset，自己维护offset exactly-once
 
 The consumer application need not use Kafka's built-in offset storage, it can store offsets in a store of its own choosing, example usage:
 
@@ -526,7 +533,7 @@ endOffsets（返回the offset of the upcoming message, i.e. the offset of the la
   恢复的时候，先 找到T-ZengLiang最后一个消息 ，获取到quanliang offset=0&&end offset=1001，然后通过quanliang offset=0去seek(T-QuanLiang, 0) 拿到 start offset=1000和当时的内存数据，从而恢复内存数据，然后从1000开始(1000,1001],只需要重新计算下1001这条数据更新下内存即可，从1002开始往后都是新的消息
 
 
-### 2.4 上游(produce to topic 2)->下游(consume topic 2) - isolation.level
+### 4.4 上游(produce to topic 2)->下游(consume topic 2) - isolation.level
 
 **we can indicate with \*isolation.level\* that we should wait to read transactional messages until the associated transaction has been committed**:
 
@@ -537,6 +544,9 @@ consumerProps.put("isolation.level", "read_committed");
 在消费端有一个参数isolation.level，设置为“read_committed”，表示消费端应用不可以看到尚未提交的事务内的消息。如果生产者开启事务并向某个分区值发送3条消息 msg1、msg2 和 msg3，在执行 commitTransaction() 或 abortTransaction()  方法前，设置为“read_committed”的消费端应用是消费不到这些消息的，不过在 KafkaConsumer  内部会缓存这些消息，直到生产者执行 commitTransaction() 方法之后它才能将这些消息推送给消费端应用。反之，如果生产者执行了  abortTransaction() 方法，那么 KafkaConsumer 会将这些缓存的消息丢弃而不推送给消费端应用。
 
 [kafka isolation level implications](https://stackoverflow.com/questions/56047968/kafka-isolation-level-implications)
+
+## Troubleshooting
+todo
 
 ---
 [KIP-568: Explicit rebalance triggering on the Consumer](https://cwiki.apache.org/confluence/display/KAFKA/KIP-568%3A+Explicit+rebalance+triggering+on+the+Consumer)
