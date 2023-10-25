@@ -2433,4 +2433,6 @@ https://www.cnblogs.com/luozhiyun/p/12079527.html
 https://docs.spring.io/spring-kafka/reference/#transactional-id
 https://www.confluent.io/blog/transactions-apache-kafka/
 
+https://cwiki.apache.org/confluence/display/KAFKA/KIP-98+-+Exactly+Once+Delivery+and+Transactional+Messaging
+https://docs.google.com/document/d/11Jqy_GjUGtdXJK94XGsEIK7CP1SnQGdp2eF0wSw9ra8/
 <disqus/>

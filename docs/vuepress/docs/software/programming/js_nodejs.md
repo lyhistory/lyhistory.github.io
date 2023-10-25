@@ -180,14 +180,14 @@ $ pm2 update
 ```
 
 ### run app
+
+#### Basic
 ```
-normal mode:
+// normal mode:
 pm2 start app.js
 
-cluster mode that will leverage all CPUs available:
+// cluster mode that will leverage all CPUs available:
 $ pm2 start api.js -i <processes> //<processes> can be 'max', -1 (all cpu minus 1) or a specified number of instances to start.
-
-pm2 startOrGracefulReload ecosystem.config.js --env test --update-env
 
 pm2 ls
 
@@ -203,6 +203,92 @@ To have more details on a specific application:
 
 $ pm2 describe <id|app_name>
 
+Startup Scripts Generation
+PM2 can generate and configure a Startup Script to keep PM2 and your processes alive at every server restart.
+
+Init Systems Supported: systemd, upstart, launchd, rc.d
+
+# Generate Startup Script
+$ pm2 startup
+
+# Freeze your process list across server restart
+$ pm2 save
+
+# Remove Startup Script
+$ pm2 unstartup
+
+```
+#### Config
+```
+When managing multiple applications with PM2, use a JS configuration file to organize them.
+
+Generate configuration
+To generate a sample configuration file you can type this command:
+
+$ pm2 init simple
+This will generate a sample ecosystem.config.js:
+
+module.exports = {
+  apps : [{
+    name   : "app1",
+    script : "./app.js"
+  }]
+}
+If you are creating your own configuration file, make sure it ends with .config.js so PM2 is able to recognize it as a configuration file.
+
+Acting on Configuration File
+Seamlessly than acting on an app you can start/stop/restart/delete all apps contained in a configuration file:
+
+# Start all applications
+pm2 start ecosystem.config.js
+
+pm2 startOrGracefulReload ecosystem.config.js --env test --update-env
+
+# Stop all
+pm2 stop ecosystem.config.js
+
+# Restart all
+pm2 restart ecosystem.config.js
+
+# Reload all
+pm2 reload ecosystem.config.js
+
+# Delete all
+pm2 delete ecosystem.config.js
+Act on a specific process
+You can also act on a particular application by using its name and the option --only <app_name>:
+
+pm2 start   ecosystem.config.js --only api-app
+Note: the --only option works for start/restart/stop/delete as well
+
+You can even specify multiple apps to be acted on by specifying each app name separated by a comma:
+
+pm2 start ecosystem.config.js --only "api-app,worker-app"
+Switching environments
+You can specify different environment variable set via the env_* option.
+
+Example:
+
+module.exports = {
+  apps : [{
+    name   : "app1",
+    script : "./app.js",
+    env_production: {
+       NODE_ENV: "production"
+    },
+    env_development: {
+       NODE_ENV: "development"
+    }
+  }]
+}
+Now to switch between variables in different environment, specify the --env [env name] option:
+
+pm2 start process.json --env production
+pm2 restart process.json --env development
+```
+
+#### Monitor
+```
 To monitor logs, custom metrics, application information:
 $ pm2 monit
 
@@ -230,24 +316,10 @@ $ pm2 reloadLogs          # Reload all logs
 To enable log rotation install the following module
 
 $ pm2 install pm2-logrotate
-
-Startup Scripts Generation
-PM2 can generate and configure a Startup Script to keep PM2 and your processes alive at every server restart.
-
-Init Systems Supported: systemd, upstart, launchd, rc.d
-
-# Generate Startup Script
-$ pm2 startup
-
-# Freeze your process list across server restart
-$ pm2 save
-
-# Remove Startup Script
-$ pm2 unstartup
-
 ```
 
 [Discover the monitoring dashboard for PM2](https://app.pm2.io/)
+
 ## troubleshooting
 
 ### install phantomjs

@@ -51,6 +51,12 @@ When Mozilla’s built-in logging capabilities aren’t good enough, and you nee
 
 
 ## Troubleshooting
+### Waf issues
+表现：公司内部访问公司网站随机被屏蔽
+
+原因：waf设置了频率过快会被屏蔽，但是问题是公司网站在云上，而公司的公网IP只有一个，所以所有人的访问被看作是同一个人的攻击
+
+解决：IP白名单
 
 ### Performance issue
 #### website calling another api server

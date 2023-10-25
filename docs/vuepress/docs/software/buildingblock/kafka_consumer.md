@@ -233,12 +233,10 @@ boolean updateAssignmentMetadataIfNeeded(final Timer timer) {
 Kafka maintains a numerical offset for each record in a partition. This offset acts as a unique identifier of a record within that partition, and also denotes the position of the consumer in the partition. For example, a consumer which is at position 5 has consumed records with offsets 0 through 4 and will next receive the record with offset 5. There are actually two notions of position relevant to the user of the consumer:
 
 + The position of the consumer gives **the offset of the next record** that will be given out. It will be one larger than the highest offset the consumer has seen in that partition. It automatically advances every time the consumer receives messages in a call to poll(Duration).
-  example:
-  当前位置 LSO=HW=10, poll将会给出下一条可用的消息比如11；
-  所以如果想要拿到 message of lastoffset 怎么做呢，[seek(endOffsets()-2) then poll 参考](#endoffsets)
-
+  The position of the consumer == consumed position == current position
 
 + The committed position is the last offset that has been stored securely. Should the process fail and restart, this is the offset that the consumer will recover to. The consumer can either automatically commit offsets periodically; or it can choose to control this committed position manually by calling one of the commit APIs (e.g. commitSync and commitAsync).
+  The committed position == last committed offset
 
 This distinction gives the consumer control over when a record is considered consumed. 
 
@@ -250,10 +248,9 @@ This distinction gives the consumer control over when a record is considered con
   * the high watermark and the smallest offset of any open transaction. Finally, if the partition has never been
   * written to, the end offset is 0.
 
-how to get the msg of lastoffset?
+**How to get the msg of lastoffset?**
 
-solution: seek(endOffsets()-n) then poll
-对于普通的消息n=1，但是涉及到事务 transactional msg n=2
+Solution: seek(endOffsets()-n) then poll, 对于普通的消息n=1，但是涉及到事务 transactional msg n=2
 
 #### ConsumerRebalanceListener 
 
