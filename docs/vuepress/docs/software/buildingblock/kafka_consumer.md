@@ -12,7 +12,7 @@ keyword: heartbeat，rebalance
 
 ### offsets
 
-![](/docs/docs_image/software/buildingblock/kafka/kafka_consumer_position.png)
+![](/docs/docs_image/software/buildingblock/kafka/kafka_offsets-1.png)
 
 图中last committed log是指consumer消费完之后，自动提交的offset（"then each **later rebalance** will reset the position to the last committed offset"）
 
