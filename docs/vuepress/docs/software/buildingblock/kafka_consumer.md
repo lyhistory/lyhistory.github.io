@@ -45,6 +45,7 @@ keyword: heartbeat，rebalance
     ![](/docs/docs_image/software/buildingblock/kafka/kafka_offsets-3.png)
     ii) 对已完成的事务而言，它的值同 HWM 相同
     ![](/docs/docs_image/software/buildingblock/kafka/kafka_offsets-4.png)
+    注意，图中的ControlBatch即[Control message](/software/buildingblock/kafka_producer.md#2-客户端关键api及源码解读)
 
 查看：
 ```
@@ -55,7 +56,7 @@ keyword: heartbeat，rebalance
 
 对于 Transactional producer来说，除了写入msg之外，还会写入 abort/commit marker
 
-[Finally writes the COMMITTED (or ABORTED) message to transaction log](/software/buildingblock/kafka_producer.md#53-writing-the-final-commit-or-abort-message)
+[Finally writes the COMMITTED (or ABORTED) message to transaction log](/software/buildingblock/kafka_producer.md#_5-2-writetxnmarkerrequest)
 
 大家的吐槽：
 
