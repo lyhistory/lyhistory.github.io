@@ -89,6 +89,10 @@ Hoodies&Sweatshirts
 
 corset  束腹 紧身褡 紧身外套
 
+capris 紧身裤
+
+yoga
+
 textile 纺织物
 
 ## 织造方式
