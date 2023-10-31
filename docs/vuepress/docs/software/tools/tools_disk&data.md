@@ -82,11 +82,14 @@ https://post.smzdm.com/p/a90xmo3o/
 群晖 synology
 
 ## 硬件工具
+### 测试
+crystal disk info
+https://crystalmark.info/en/software/crystaldiskinfo/
+### 恢复
 TestDisk
 https://www.cgsecurity.org/wiki/TestDisk
 
-crystal disk info
-https://crystalmark.info/en/software/crystaldiskinfo/
+https://recoverit.wondershare.com/free-data-recovery/open-source-data-recovery-software.html
 
 
 How to Fix the “File or Directory is Corrupted and Unreadable” Error on a Windows 10 Computer https://www.makeuseof.com/windows-10-fix-the-file-or-directory-is-corrupted-and-unreadable-error/

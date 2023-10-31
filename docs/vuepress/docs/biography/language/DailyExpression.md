@@ -73,6 +73,10 @@ Of course, I make the assumption that the speaker is also a native speaker. Non-
 No worries 
 is an expression seen in Australian English, British English and New Zealand English meaning "do not worry about that", "that's all right", or "sure thing". It is similar to the English no problem.
 ## Think in English
+
+"I would do it" and "I would have done it"?
+https://www.quora.com/What-is-the-difference-between-I-would-do-it-and-I-would-have-done-it-Why
+
 How are you? Good or well
 https://www.businessinsider.com/how-are-you-im-good-is-acceptable-reply-2014-2/?IR=T
 
