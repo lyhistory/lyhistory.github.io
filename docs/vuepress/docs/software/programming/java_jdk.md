@@ -21,6 +21,10 @@ https://stackoverflow.com/questions/19655184/no-compiler-is-provided-in-this-env
 
 openjdk source: https://github.com/openjdk/jdk/tree/jdk8-b25
 
+openjdk release(注意，有些低版本的updates比高版本还要新):
+https://openjdk.org/projects/jdk/
+https://github.com/adoptium/temurin8-binaries/releases/
+
 ## jdk install
 
 推荐安装方式：
@@ -131,6 +135,12 @@ rpm -e jre1.8-1.8.0_221-fcs
 
 
 ## jdk troubleshooting
+
+### security
+
+[Diagnosing TLS, SSL, and HTTPS](https://blogs.oracle.com/java/post/diagnosing-tls-ssl-and-https)
+
+[更多内容参考另一篇文章](/software/network/layer4_http_ssl_tls_setup.md)
 
 ### 验证码无法显示
 

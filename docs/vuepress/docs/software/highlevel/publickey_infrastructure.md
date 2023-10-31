@@ -369,6 +369,37 @@ Manage keys, certificates and keystores https://www.ibm.com/support/knowledgecen
 
 https://github.com/ethereum/go-ethereum/wiki/Mobile:-Account-management
 
+#### 3.2.3 Example:
+
+How to retrieve certificate from remote server and import to truststore
+
+Method 1：
+```
+keytool -printcert -sslserver host[:port] -rfc >tempfile
+
+keytool -import [-noprompt] -alias nm -keystore file [-storepass pw] [-storetype ty] <tempfile 
+
+```
+
+Method 2：
+```
+Step 1 Option 1:
+>openssl
+OpenSSL> version
+OpenSSL 0.9.8k 25 Mar 2009
+
+>where openssl
+C:\strawberry\c\bin\openssl.exe
+
+openssl s_client -showcerts -connect <hostname>:<tls_port> 
+
+Step 1 Option 2:
+Firefox: Add Exception -> Get Certificat -> View -> Details -> Export...
+ 
+Step 2:
+keytool -importcert -file <certificate_location> -keystore <keystore_name> -alias "<alias_name>"​
+```
+
 ## 4. Use case
 Encryption and decryption, digital signature, and key exchange are the three primary functions of a PKI.
 
@@ -489,9 +520,11 @@ openssl req -new -x509 -key private-key-pkcs8.pem -outform PEM -out server.pem -
 
 ## Troubleshooting
 
-?# certificate verification failed, e.g. CRL, CA or signature check failed
+### certificate verification failed, e.g. CRL, CA or signature check failed
 
 provide 'top' certificate, 即使用上一级CA证书
+
+### [更多内容参考另一篇文章](/software/network/layer4_http_ssl_tls_setup.md#troubleshooting)
 
 ---
 

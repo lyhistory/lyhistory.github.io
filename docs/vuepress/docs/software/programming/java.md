@@ -1694,6 +1694,50 @@ Release repositories will only resolve released artifacts. In other words, it sh
 </dependencies>
 ```
 
+#### 4.2.6 toolchain
+
+apache-maven-3.6.1\bin\..\conf\settings.xml
+.m2\settings.xml
+apache-maven-3.6.1\bin\..\conf\toolchains.xml
+.m2\toolchains.xml
+```
+>mvn -X clean install
+Apache Maven 3.6.1 (d66c9c0b3152b2e69ee9bac180bb8fcc8e6af555; 2019-04-05T03:00:29+08:00)
+Maven home: C:\Dev\apache-maven-3.6.1\bin\..
+Java version: 1.8.0_42, vendor: Oracle Corporation, runtime: C:\Program Files\Java\openjdk-8u42-b03-windows-i586-14_jul_2022\java-se-8u42-ri\jre
+Default locale: en_SG, platform encoding: Cp1252
+OS name: "windows 8.1", version: "6.3", arch: "x86", family: "windows"
+[DEBUG] Created new class realm maven.api
+[DEBUG] Importing foreign packages into class realm maven.api
+[DEBUG]   Imported: javax.annotation.* < plexus.core
+[DEBUG]   Imported: javax.annotation.security.* < plexus.core
+[DEBUG]   Imported: javax.enterprise.inject.* < plexus.core
+[DEBUG]   Imported: javax.enterprise.util.* < plexus.core
+[DEBUG]   Imported: javax.inject.* < plexus.core
+[DEBUG]   Imported: org.apache.maven.* < plexus.core
+[DEBUG]   Imported: org.apache.maven.artifact < plexus.core
+[DEBUG]   Imported: org.apache.maven.classrealm < plexus.core
+.........................................................................
+[DEBUG] Populating class realm maven.api
+[INFO] Error stacktraces are turned on.
+[DEBUG] Message scheme: color
+[DEBUG] Message styles: debug info warning error success failure strong mojo project
+[DEBUG] Reading global settings from C:\Dev\apache-maven-3.6.1\bin\..\conf\settings.xml
+[DEBUG] Reading user settings from C:\Users\yue.liu\.m2\settings.xml
+[DEBUG] Reading global toolchains from C:\Dev\apache-maven-3.6.1\bin\..\conf\toolchains.xml
+[DEBUG] Reading user toolchains from C:\Users\yue.liu\.m2\toolchains.xml
+[DEBUG] Using local repository at C:\Users\yue.liu\.m2\repository
+[DEBUG] Using manager EnhancedLocalRepositoryManager with priority 10.0 for C:\Users\yue.liu\.m2\repository
+[INFO] Scanning for projects...
+[DEBUG] Extension realms for project ngs.apex.com:ngs-kafka-redis:jar:1.0-SNAPSHOT: (none)
+[DEBUG] Looking up lifecycle mappings for packaging jar from ClassRealm[plexus.core, parent: null]
+[DEBUG] === REACTOR BUILD PLAN ================================================
+[DEBUG] Project: XXXXX
+[DEBUG] Tasks:   [clean, install]
+[DEBUG] Style:   Regular
+
+```
+
 ## 5. JAVA Virtual Machine JVM
 [refer to java_jvm](/software/programming/java_jvm.md)
 

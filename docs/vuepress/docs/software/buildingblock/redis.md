@@ -322,16 +322,79 @@ replica-read-only yes
 ### 1.6 commands
 
 ```
-redis-cli -c -h <HOSTIP> -p <PORT>
+$ redis-cli -c -h <HOSTIP> -p <PORT>
 
-AUTH 'password'
-KEYS 
-GET <KEY>
-SET <KEY> <VALUE>
-HGET key field
-HSET myhash field1 "foo"
+redis> AUTH 'password'
+redis> ACL LIST
 
-ACL LIST
+redis> KEYS 
+redis> KEYS "<PATTEN>"
+
+$ redis-cli KEYS "<PATTEN>" | xargs redis-cli DEL
+
+//字符串(string)
+redis> GET <KEY>
+redis> SET <KEY> <VALUE>
+
+//哈希(Hash) HSET KEY_NAME FIELD VALUE 
+redis 127.0.0.1:6379> HSET myhash field1 "foo"
+OK
+redis 127.0.0.1:6379> HGET myhash field1
+"foo"
+
+redis 127.0.0.1:6379> HSET website google "www.g.cn"       # 设置一个新域
+(integer) 1
+
+redis 127.0.0.1:6379>HSET website google "www.google.com" # 覆盖一个旧域
+(integer) 0
+
+//列表(List) LRANGE KEY_NAME START END
+redis> RPUSH mylist "one"
+(integer) 1
+redis> RPUSH mylist "two"
+(integer) 2
+redis> RPUSH mylist "three"
+(integer) 3
+redis> LRANGE mylist 0 0
+1) "one"
+redis> LRANGE mylist -3 2
+1) "one"
+2) "two"
+3) "three"
+redis> LRANGE mylist -100 100
+1) "one"
+2) "two"
+3) "three"
+redis> LRANGE mylist 5 10
+(empty list or set)
+redis> 
+
+//无序集合(Set) SADD key member [member ...]
+redis 127.0.0.1:6379> SADD runoobkey redis
+(integer) 1
+redis 127.0.0.1:6379> SADD runoobkey mongodb
+(integer) 1
+redis 127.0.0.1:6379> SADD runoobkey mysql
+(integer) 1
+redis 127.0.0.1:6379> SADD runoobkey mysql
+(integer) 0
+redis 127.0.0.1:6379> SMEMBERS runoobkey
+
+1) "mysql"
+2) "mongodb"
+3) "redis"
+
+//有序集合(sorted set) ZADD KEY_NAME SCORE1 VALUE1.. SCOREN VALUEN
+redis> ZADD myzset 1 "one"
+(integer) 1
+redis> ZADD myzset 1 "uno"
+(integer) 1
+redis> ZADD myzset 2 "two" 3 "three"
+(integer) 2
+redis> ZRANGE myzset 0 -1 WITHSCORES
+
+ZRANGEBYSCORE myzset -inf 1
+
 ```
 ## 2. 理论基础 Theory
 

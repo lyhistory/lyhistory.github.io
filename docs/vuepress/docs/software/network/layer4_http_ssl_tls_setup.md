@@ -2237,6 +2237,351 @@ git log -S"ECDH"
 git log -S"EC curve"
 ```
 
+### 跟上一个问题本质一样：Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty
+maven 报错：
+[ERROR] Plugin org.apache.maven.plugins:maven-clean-plugin:2.5 or one of its dependencies could not be resolved: Failed to read artifact descriptor for org.apache.maven.plugins:maven-clean-plugin:jar:2.5: Could not transfer artifact org.apache.maven.plugins:maven-clean-plugin:pom:2.5 from/to central (https://repo.maven.apache.org/maven2): java.lang.RuntimeException: Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty
+
+刚开始怀疑是ca找不到，所以指定了path：
+
+`mvn clean install -Djavax.net.ssl.trustStore="%JAVA_HOME%/jre/lib/security/cacerts"`
+
+一样报错
+
+执行：
+`keytool -printcert -sslserver https://repo.maven.apache.org/maven2 `
+
+报错：keytool error: java.lang.Exception: No certificate from the SSL server
+
+然后就以为仅仅是没有安装好cert(后来发现上面命令写错，应该是 `keytool -printcert -sslserver repo.maven.apache.org:443/maven2`)，所以用openssl下载
+
+`openssl s_client -showcerts -connect https://repo.maven.apache.org/maven2`
+报错：getservbyname failure，原来是命令写错了，不能用url，因为
+> As SSL is an TCP-level protocol rather than HTTP, strip the protocol and path from the -connect to make that command work:
+改正：
+`openssl s_client -showcerts -connect repo.maven.apache.org:443/maven2`
+继续报错：
+Loading 'screen' into random state - done
+CONNECTED(000003B8)
+36464:error:1407742E:SSL routines:SSL23_GET_SERVER_HELLO:tlsv1 alert protocol version:.\ssl\s23_clnt.c:596:
+
+看到tlsv1，很陈旧了，怪不得不行
+> Java releases < JDK 8
+> As noted in this blog post by Oracle, TLSv1 was used by default for JDK releases prior to JDK 8. JDK 8 changed this behavior and defaults to TLSv1.2. Any client (ex. JGit is one such popular client) that runs on older versions of the JDK is affected. This can be addressed by updating to JDK >= 8 or explicitly opting in to TLSv1.2 in JDK 7 (look at the https.protocols JSSE tuning parameter). Unfortunately, versions of the JDK <= 6 do not support TLSv1.2. We advise users of JDK <= 6 to upgrade to a newer version of the JDK.
+
+maven或者maven作为java工具使用的jdk到底是什么tls版本呢，这才想起可以用debug模式嘛！
+```
+>mvn clean -Djavax.net.debug=ssl:handshake:verbose
+[INFO] Scanning for projects...
+[INFO]
+[INFO] --------------------< ngs.apex.com:ngs-kafka-redis >--------------------
+[INFO] Building ngs-kafka-redis 1.0-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+keyStore is :
+keyStore type is : jks
+keyStore provider is :
+init keystore
+init keymanager of type SunX509
+trustStore is: C:\Program Files\Java\openjdk-8u42-b03-windows-i586-14_jul_2022\java-se-8u42-ri\jre\lib\security\cacerts
+trustStore type is : jks
+trustStore provider is :
+init truststore
+trigger seeding of SecureRandom
+done seeding SecureRandom
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-clean-plugin/2.5/maven-clean-plugin-2.5.pom
+Ignoring unavailable cipher suite: TLS_DHE_DSS_WITH_AES_256_GCM_SHA384
+...........................
+Ignoring unavailable cipher suite: TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+Allow unsafe renegotiation: false
+Allow legacy hello messages: true
+Is initial handshake: true
+Is secure renegotiation: false
+Ignoring unsupported cipher suite: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256 for TLSv1
+...........................
+Ignoring unsupported cipher suite: TLS_DHE_DSS_WITH_AES_128_CBC_SHA256 for TLSv1.1
+%% No cached client session
+*** ClientHello, TLSv1.2
+RandomCookie:  GMT: 1698637036 bytes = { 209, 36, 180, 104, 123, 125, 185, 208, 135, 243, 5, 246, 5, 4, 149, 203, 38, 227, 243, 114, 209, 160, 154, 44, 98, 64, 216, 237 }
+Session ID:  {}
+Cipher Suites: [TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_DSS_WITH_AES_128_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_ECDSA_WITH_RC4_128_SHA, TLS_ECDHE_RSA_WITH_RC4_128_SHA, SSL_RSA_WITH_RC4_128_SHA, TLS_ECDH_ECDSA_WITH_RC4_128_SHA, TLS_ECDH_RSA_WITH_RC4_128_SHA, SSL_RSA_WITH_RC4_128_MD5, TLS_EMPTY_RENEGOTIATION_INFO_SCSV]
+Compression Methods:  { 0 }
+Extension elliptic_curves, curve names: {secp256r1, sect163k1, sect163r2, secp192r1, secp224r1, sect233k1, sect233r1, sect283k1, sect283r1, secp384r1, sect409k1, sect409r1, secp521r1, sect571k1, sect571r1, secp160k1, secp160r1, secp160r2, sect163r1, secp192k1, sect193r1, sect193r2, secp224k1, sect239k1, secp256k1}
+Extension ec_point_formats, formats: [uncompressed]
+Extension signature_algorithms, signature_algorithms: SHA512withECDSA, SHA512withRSA, SHA384withECDSA, SHA384withRSA, SHA256withECDSA, SHA256withRSA, SHA224withECDSA, SHA224withRSA, SHA1withECDSA, SHA1withRSA, SHA1withDSA, MD5withRSA
+Extension server_name, server_name: [type=host_name (0), value=repo.maven.apache.org]
+***
+main, WRITE: TLSv1.2 Handshake, length = 237
+main, READ: TLSv1.2 Handshake, length = 91
+*** ServerHello, TLSv1.2
+RandomCookie:  GMT: 1698637036 bytes = { 11, 26, 138, 205, 219, 12, 47, 76, 81, 250, 116, 198, 4, 121, 217, 252, 16, 77, 103, 11, 173, 27, 249, 11, 188, 241, 110, 114 }
+Session ID:  {243, 233, 42, 175, 111, 215, 73, 173, 200, 132, 149, 173, 131, 151, 65, 120, 8, 240, 32, 245, 220, 99, 53, 59, 216, 248, 138, 37, 220, 224, 226, 29}
+Cipher Suite: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+Compression Method: 0
+Extension server_name, server_name:
+Extension renegotiation_info, renegotiated_connection: <empty>
+Extension ec_point_formats, formats: [uncompressed]
+***
+%% Initialized:  [Session-1, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256]
+** TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+main, READ: TLSv1.2 Handshake, length = 2831
+*** Certificate chain
+chain [0] = [
+[
+  Version: V3
+  Subject: CN=repo.maven.apache.org
+  Signature Algorithm: SHA256withRSA, OID = 1.2.840.113549.1.1.11
+
+  Key:  Sun RSA public key, 2048 bits
+  params: null
+  modulus: 28795882934893170709623103651489185786975131948609576963107688434511348310799802656845161034643210777058995329074431904764998037079985935160874251932529088221962175039191746870936504441381816177009381056896033366380084462000778878049779150489872742696438528007493098911402774939286666937972636658579084418254399343610870831413603481932550983328398869983159007061407084769194187816409958865599623151601605308929809745759759171345763173435175230826903492910465231908482466346877446616723920841555903920739078053322860422933292965497520565842570224994296029712905922877471944410263027535162063433759545525713408812439991
+  public exponent: 65537
+  Validity: [From: Thu Mar 16 01:45:12 SGT 2023,
+               To: Tue Apr 16 01:45:11 SGT 2024]
+  Issuer: CN=GlobalSign Atlas R3 DV TLS CA 2023 Q1, O=GlobalSign nv-sa, C=BE
+  SerialNumber: [    01035f98 55d9b4b4 33feec3b 9fd3dc3b]
+
+Certificate Extensions: 10
+[1]: ObjectId: 1.3.6.1.4.1.11129.2.4.2 Criticality=false
+Extension unknown: DER encoded OCTET string =
+0000: 04 82 01 6C 04 82 01 68   01 66 00 75 00 76 FF 88  ...l...h.f.u.v..
+0010: 3F 0A B6 FB 95 51 C2 61   CC F5 87 BA 34 B4 A4 CD  ?....Q.a....4...
+0020: BB 29 DC 68 42 0A 9F E6   67 4C 5A 3A 74 00 00 01  .).hB...gLZ:t...
+0030: 86 E6 60 3F 62 00 00 04   03 00 46 30 44 02 20 37  ..`?b.....F0D. 7
+0040: 23 0A 06 44 D3 43 E8 1A   8B 51 8E DB DB 79 EA 42  #..D.C...Q...y.B
+0050: ED 01 D4 3E 55 B5 13 EA   4A C1 0D A2 7A 2D 95 02  ...>U...J...z-..
+0060: 20 26 7B 0D 1C A8 AE 90   F9 F6 31 15 68 85 3D C9   &........1.h.=.
+0070: CE EB 50 06 F0 5E 02 B3   84 7C 60 9A D8 D6 8A 53  ..P..^....`....S
+0080: 26 00 76 00 3B 53 77 75   3E 2D B9 80 4E 8B 30 5B  &.v.;Swu>-..N.0[
+0090: 06 FE 40 3B 67 D8 4F C3   F4 C7 BD 00 0D 2D 72 6F  ..@;g.O......-ro
+00A0: E1 FA D4 17 00 00 01 86   E6 60 3F 88 00 00 04 03  .........`?.....
+00B0: 00 47 30 45 02 21 00 C8   5A BE DF A4 5F 1A 20 36  .G0E.!..Z..._. 6
+00C0: 72 99 5A C8 55 7C 68 82   B5 C1 26 11 20 C1 CE 66  r.Z.U.h...&. ..f
+00D0: D6 EC F7 30 73 D8 0E 02   20 35 95 17 8A DE F9 37  ...0s... 5.....7
+00E0: 20 54 57 A4 13 3B EA 4A   F7 3F 0B C3 E7 B1 0F 95   TW..;.J.?......
+00F0: B2 70 61 42 D5 9B 35 C9   1B 00 75 00 DA B6 BF 6B  .paB..5...u....k
+0100: 3F B5 B6 22 9F 9B C2 BB   5C 6B E8 70 91 71 6C BB  ?.."....\k.p.ql.
+0110: 51 84 85 34 BD A4 3D 30   48 D7 FB AB 00 00 01 86  Q..4..=0H.......
+0120: E6 60 3F D0 00 00 04 03   00 46 30 44 02 20 58 4D  .`?......F0D. XM
+0130: FA 1B 6A 97 8E FA CA CE   13 8B 74 B8 28 AA 24 7F  ..j.......t.(.$.
+0140: 6B B3 E1 F4 6B 1C B2 27   8A A3 F3 05 45 68 02 20  k...k..'....Eh.
+0150: 05 B7 90 28 E1 7D FF CF   43 59 10 64 E6 14 64 CD  ...(....CY.d..d.
+0160: 03 2D E4 2F 2C 76 24 78   19 07 D7 B2 03 40 E1 57  .-./,v$x.....@.W
+
+
+[2]: ObjectId: 1.3.6.1.5.5.7.1.1 Criticality=false
+AuthorityInfoAccess [
+  [
+   accessMethod: ocsp
+   accessLocation: URIName: http://ocsp.globalsign.com/ca/gsatlasr3dvtlsca2023q1
+,
+   accessMethod: caIssuers
+   accessLocation: URIName: http://secure.globalsign.com/cacert/gsatlasr3dvtlsca2023q1.crt
+]
+]
+
+[3]: ObjectId: 2.5.29.35 Criticality=false
+AuthorityKeyIdentifier [
+KeyIdentifier [
+0000: 4A EE A2 47 63 43 3B 3E   78 F3 B4 61 83 72 88 7A  J..GcC;>x..a.r.z
+0010: 9D E4 BD B7                                        ....
+]
+]
+
+[4]: ObjectId: 2.5.29.19 Criticality=true
+BasicConstraints:[
+  CA:false
+  PathLen: undefined
+]
+
+[5]: ObjectId: 2.5.29.31 Criticality=false
+CRLDistributionPoints [
+  [DistributionPoint:
+     [URIName: http://crl.globalsign.com/ca/gsatlasr3dvtlsca2023q1.crl]
+]]
+
+[6]: ObjectId: 2.5.29.32 Criticality=false
+CertificatePolicies [
+  [CertificatePolicyId: [2.23.140.1.2.1]
+[]  ]
+  [CertificatePolicyId: [1.3.6.1.4.1.4146.10.1.3]
+[PolicyQualifierInfo: [
+  qualifierID: 1.3.6.1.5.5.7.2.1
+  qualifier: 0000: 16 26 68 74 74 70 73 3A   2F 2F 77 77 77 2E 67 6C  .&https://www.gl
+0010: 6F 62 61 6C 73 69 67 6E   2E 63 6F 6D 2F 72 65 70  obalsign.com/rep
+0020: 6F 73 69 74 6F 72 79 2F                            ository/
+
+]]  ]
+]
+
+[7]: ObjectId: 2.5.29.37 Criticality=false
+ExtendedKeyUsages [
+  serverAuth
+  clientAuth
+]
+
+[8]: ObjectId: 2.5.29.15 Criticality=true
+KeyUsage [
+  DigitalSignature
+  Key_Encipherment
+]
+
+[9]: ObjectId: 2.5.29.17 Criticality=false
+SubjectAlternativeName [
+  DNSName: repo.maven.apache.org
+]
+
+[10]: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: A2 41 82 30 FD 20 1E AD   6E C5 F5 60 C5 49 DA 6B  .A.0. ..n..`.I.k
+0010: 65 F1 03 E7                                        e...
+]
+]
+
+]
+  Algorithm: [SHA256withRSA]
+  Signature:
+0000: 04 25 62 42 2D 7D D5 DD   6F 15 12 7F B0 6E 56 9A  .%bB-...o....nV.
+0010: 17 9E 75 E7 E9 19 69 BC   42 69 09 36 10 B4 BA DB  ..u...i.Bi.6....
+0020: EE A3 4B 70 FB 45 69 05   9C BB CB D4 48 87 BB D0  ..Kp.Ei.....H...
+0030: 45 B4 36 F9 66 EC C6 D8   72 16 CA 6A 10 99 18 3C  E.6.f...r..j...<
+0040: EC 68 53 C3 55 DC C7 1C   AF 35 8E D0 FB AF 3E 4E  .hS.U....5....>N
+0050: EB A8 22 68 84 7B D9 29   E6 DB 3A E1 2F E4 FC 7B  .."h...)..:./...
+0060: A1 DB AC C1 B3 1C 4D 18   2D FA A4 21 F4 FB 46 4B  ......M.-..!..FK
+0070: D0 1F 5E F9 B9 C5 C6 9E   57 9B 18 C9 CF B5 47 04  ..^.....W.....G.
+0080: 57 89 0B 7D 7C C3 D7 B3   D7 FF F2 DF F8 D2 93 CB  W...............
+0090: 68 EC FE D3 91 AF C6 4C   D3 5C 44 D2 14 2F 41 C7  h......L.\D../A.
+00A0: F6 26 C8 CA FE F2 03 10   D6 82 98 86 27 92 C8 8D  .&..........'...
+00B0: 47 FC 15 88 26 91 E1 E9   05 6B E5 BE A3 1B A5 45  G...&....k.....E
+00C0: FE 89 44 B0 FF 72 9A 8A   16 29 E4 6C 3B 58 A2 B6  ..D..r...).l;X..
+00D0: BD 52 E3 5C A2 F0 B7 88   46 4C 13 43 79 E3 20 FF  .R.\....FL.Cy. .
+00E0: 30 4F A4 21 65 86 BC AE   55 48 EC 49 C9 7C BC 0F  0O.!e...UH.I....
+00F0: CF A5 51 89 61 CE 3B 77   2D 12 AB EE 53 E2 24 D0  ..Q.a.;w-...S.$.
+
+]
+chain [1] = [
+[
+  Version: V3
+  Subject: CN=GlobalSign Atlas R3 DV TLS CA 2023 Q1, O=GlobalSign nv-sa, C=BE
+  Signature Algorithm: SHA256withRSA, OID = 1.2.840.113549.1.1.11
+
+  Key:  Sun RSA public key, 2048 bits
+  params: null
+  modulus: 22941182395348209119228249726660887858982599495232930369943940778119370598005314768543184682686715394486071593426418166888450349001350102649337188343001416419398052557334306738847492388373635574320259007569262959914518081798822155847737418641363799800748857854899290714685301338337310532066938363767866421215369791882818989684086341799298031628895579924634179196014833310804027217895253579752528603133597659946455003267832674856984788115576493236293338336856286111413325485730798313857421555414130349520016887608182648469835491249743188502481439641920200126892980772957171158548827169732281195247623293620193847883027
+  public exponent: 65537
+  Validity: [From: Wed Oct 12 11:48:28 SGT 2022,
+               To: Sat Oct 12 08:00:00 SGT 2024]
+  Issuer: CN=GlobalSign, O=GlobalSign, OU=GlobalSign Root CA - R3
+  SerialNumber: [    7d4d424a 0bd1ed1a 3512a8e2 4955356c]
+
+Certificate Extensions: 8
+[1]: ObjectId: 1.3.6.1.5.5.7.1.1 Criticality=false
+AuthorityInfoAccess [
+  [
+   accessMethod: ocsp
+   accessLocation: URIName: http://ocsp2.globalsign.com/rootr3
+,
+   accessMethod: caIssuers
+   accessLocation: URIName: http://secure.globalsign.com/cacert/root-r3.crt
+]
+]
+
+[2]: ObjectId: 2.5.29.35 Criticality=false
+AuthorityKeyIdentifier [
+KeyIdentifier [
+0000: 8F F0 4B 7F A8 2E 45 24   AE 4D 50 FA 63 9A 8B DE  ..K...E$.MP.c...
+0010: E2 DD 1B BC                                        ....
+]
+]
+
+[3]: ObjectId: 2.5.29.19 Criticality=true
+BasicConstraints:[
+  CA:true
+  PathLen:0
+]
+
+[4]: ObjectId: 2.5.29.31 Criticality=false
+CRLDistributionPoints [
+  [DistributionPoint:
+     [URIName: http://crl.globalsign.com/root-r3.crl]
+]]
+
+[5]: ObjectId: 2.5.29.32 Criticality=false
+CertificatePolicies [
+  [CertificatePolicyId: [2.23.140.1.2.1]
+[]  ]
+  [CertificatePolicyId: [1.3.6.1.4.1.4146.10.1.3]
+[]  ]
+]
+
+[6]: ObjectId: 2.5.29.37 Criticality=false
+ExtendedKeyUsages [
+  serverAuth
+  clientAuth
+]
+
+[7]: ObjectId: 2.5.29.15 Criticality=true
+KeyUsage [
+  DigitalSignature
+  Key_CertSign
+  Crl_Sign
+]
+
+[8]: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: 4A EE A2 47 63 43 3B 3E   78 F3 B4 61 83 72 88 7A  J..GcC;>x..a.r.z
+0010: 9D E4 BD B7                                        ....
+]
+]
+
+]
+  Algorithm: [SHA256withRSA]
+  Signature:
+0000: 8A D1 05 04 09 3F 63 E0   66 75 4F 73 B0 58 FF E5  .....?c.fuOs.X..
+0010: D1 EB 74 C8 D4 EE DB 3B   51 9F 2F 01 D5 20 F8 85  ..t....;Q./.. ..
+0020: 5F 43 9F BC F7 16 D5 C3   44 39 F2 A0 0B 2F D8 34  _C......D9.../.4
+0030: CD E5 E5 E0 C2 B3 0A DA   7D 10 65 BC 83 91 B2 54  ..........e....T
+0040: 6B 10 06 7E 3A 4D 1C 78   09 FD 8A 3C BB E2 6C A6  k...:M.x...<..l.
+0050: D0 C3 46 E7 48 6B 12 36   C4 E8 28 19 15 58 92 1D  ..F.Hk.6..(..X..
+0060: 17 37 31 38 E7 CD F4 71   80 B0 8E 7A 9E 1E 83 0F  .718...q...z....
+0070: 7C 27 F4 DE D8 61 86 6F   2A C4 39 46 A4 FF 25 31  .'...a.o*.9F..%1
+0080: B2 80 24 81 02 2C C1 03   62 9E 13 19 93 60 39 A2  ..$..,..b....`9.
+0090: 98 E7 14 01 BF 75 86 4C   61 04 95 AC B6 2B E4 53  .....u.La....+.S
+00A0: 6D B5 B4 21 8E 6D D6 81   46 1B 50 F5 BC 3C 27 77  m..!.m..F.P..<'w
+00B0: 98 D5 93 DA F9 19 09 66   55 2C A6 DF 02 21 11 B3  .......fU,...!..
+00C0: D7 95 E7 06 2C DA F4 0E   E0 43 24 A3 1B 88 97 FB  ....,....C$.....
+00D0: FF FD 3B 8F 61 A3 6E 24   33 93 37 AD 06 82 D0 02  ..;.a.n$3.7.....
+00E0: 0A 45 80 3A 42 00 91 C6   A0 B1 5C BE B1 1E 80 AF  .E.:B.....\.....
+00F0: F5 6D CC D9 6C 8C 2D C7   39 7B 6D 3B AC B9 96 1A  .m..l.-.9.m;....
+
+]
+***
+main, handling exception: java.lang.RuntimeException: Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty
+%% Invalidated:  [Session-1, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256]
+main, SEND TLSv1.2 ALERT:  fatal, description = internal_error
+main, WRITE: TLSv1.2 Alert, length = 2
+main, called closeSocket()
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  3.273 s
+[INFO] Finished at: 2023-10-30T11:41:33+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Plugin org.apache.maven.plugins:maven-clean-plugin:2.5 or one of its dependencies could not be resolved: Failed to read artifact descriptor for org.apache.maven.plugins:maven-clean-plugin:jar:2.5: Could not transfer artifact org.apache.maven.plugins:maven-clean-plugin:pom:2.5 from/to central (https://repo.maven.apache.org/maven2): java.lang.RuntimeException: Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/PluginResolutionException
+```
+[这不就是跟前面一样的问题了](#openjdk8-update)，果断升级openjdk
+
+#### 根源
+> I manage manually my jdk and was getting this error with openjdk-8. I replaced the cacerts with the one of the openjdk-11 and it worked just fine. If you try this, make sure to backup your cacerts first.
+
+另一种方法绕过：
+mvn clean -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true
 
 ### CertificateException: No subject alternative names present
 When the server certificate is having Subject Alternative Names (SAN), the requesting home name must match with one of the SANs. If the server’s SSL certificate does not have SANs, then the requesting home name must match with the Common Name (CN) of the certificate.

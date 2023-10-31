@@ -1032,7 +1032,13 @@ https://nightlies.apache.org/flink/flink-docs-release-1.17/docs/ops/rest_api/
 
 dashboard: localhost:8081
 
-jars: localhost:8081/jars
+jars: 
+
+http://localhost:8081/jars
+
+http://localhost:8081/v1/config
+http://localhost:8081/v1/jobmanager/config
+http://localhost:8081/v1/jobmanager/logs
 
 ## Troubleshooting
 
