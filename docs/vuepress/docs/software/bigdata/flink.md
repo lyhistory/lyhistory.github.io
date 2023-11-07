@@ -13,10 +13,11 @@ https://flink.apache.org/
 
 Flink is a distributed system and requires effective allocation and management of compute resources in order to execute streaming applications. It integrates with all common cluster resource managers such as Hadoop YARN and Kubernetes, but can also be set up to run as a standalone cluster or even as a library.
 
-https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/concepts/flink-architecture/
 ![](https://nightlies.apache.org/flink/flink-docs-release-1.15/fig/processes.svg)
 
 The Client is not part of the runtime and program execution, but is used to prepare and send a dataflow to the JobManager. After that, the client can disconnect (detached mode), or stay connected to receive progress reports (attached mode). The client runs either as part of the Java/Scala program that triggers the execution, or in the command line process ./bin/flink run ....
+
+- [Flink Architecture](https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/concepts/flink-architecture/)
 
 #### JobManager
 The JobManager has a number of responsibilities related to coordinating the distributed execution of Flink Applications: it decides when to schedule the next task (or set of tasks), reacts to finished tasks or execution failures, coordinates checkpoints, and coordinates recovery on failures, among others. This process consists of three different components:
@@ -31,45 +32,109 @@ provides a REST interface to submit Flink applications for execution and starts 
 is responsible for managing the execution of a single JobGraph. Multiple jobs can run simultaneously in a Flink cluster, each having its own JobMaster.
 
 #### TaskManagers 
-(also called workers) execute the tasks of a dataflow, and buffer and exchange the data streams.
 
-There must always be at least one TaskManager. The smallest unit of resource scheduling in a TaskManager is a task slot. The number of task slots in a TaskManager indicates the number of concurrent processing tasks. Note that multiple operators may execute in a task slot
+一个程序Process可以运行在多个TM上，一个TM有多个TS（多少代表并行度），一个TS有多个Thread
 
-Each worker (TaskManager) is a JVM process, and may execute one or more subtasks in separate threads. To control how many tasks a TaskManager accepts, it has so called task slots (at least one).
++ **Flink Job**
+  A Flink Job is the runtime representation of a logical graph (also often called dataflow graph) that is created and submitted by calling execute() in a Flink Application.
+  一个Job代表一个可以独立提交给Flink执行的作业，我们向JobManager提交任务的时候就是以Job为单位的，只不过一份代码里可以包含多个Job（每个Job对应一个类的main函数）
+  Example:
+  ![](/docs/docs_image/software/bigdata/flink_wordcount.png)
 
-> One Slot is not one thread. One slot can have multiple threads. A Task can have multiple parallel instances which are called Sub-tasks. Each sub-task is ran in a separate thread. Multiple sub-tasks from different tasks can come together and share a slot. This group of sub-tasks is called a slot-sharing group. Please note that two sub-tasks of the same task (parallel instances of the same task) can not share a slot together.
-> https://stackoverflow.com/questions/61791811/how-to-understand-slot-and-task-in-apache-flink
++ **JobGraph / Logical Graph**
+  A logical graph is a directed graph where the nodes are Operators and the edges define input/output-relationships of the operators and correspond to data streams or data sets. A logical graph is created by submitting jobs from a Flink Application.
+  Logical graphs are also often referred to as dataflow graphs. 
 
-Each task slot represents a fixed subset of resources of the TaskManager. A TaskManager with three slots, for example, will dedicate 1/3 of its managed memory to each slot. Slotting the resources means that a subtask will not compete with subtasks from other jobs for managed memory, but instead has a certain amount of reserved managed memory. Note that no CPU isolation happens here; currently slots only separate the managed memory of tasks.
++ **ExecutionGraph/Physical Graph**
+  A physical graph is the result of translating a Logical Graph for execution in a distributed runtime. The nodes are Tasks and the edges indicate input/output-relationships or partitions of data streams or data sets.
 
-By adjusting the number of task slots, users can define how subtasks are isolated from each other. Having one slot per TaskManager means that each task group runs in a separate JVM (which can be started in a separate container, for example). Having multiple slots means more subtasks share the same JVM. Tasks in the same JVM share TCP connections (via multiplexing) and heartbeat messages. They may also share data sets and data structures, thus reducing the per-task overhead.
++ **TM: Task Manager** 
+  - is a JVM process, (also called workers) execute the tasks of a dataflow, and buffer and exchange the data streams. There must always be at least one TaskManager. Each worker (TaskManager) is a JVM process, and may execute one or more subtasks in separate threads. To control how many tasks a TaskManager accepts, it has so called task slots (at least one).
++ **TS: Task Slot** 
+  - each TS represents a fixed subset of resources of the TaskManager (No CPU isolation happens between the slots, just the managed memory is divided.)
+  The smallest unit of resource scheduling in a TaskManager is a task slot. The number of task slots in a TaskManager indicates the number of concurrent processing tasks. Note that multiple operators may execute in a task slot
 
-By default, Flink allows subtasks to share slots even if they are subtasks of different tasks, so long as they are from the same job. The result is that one slot may hold an entire pipeline of the job. Allowing this slot sharing has two main benefits:
+  > One Slot is not one thread. One slot can have multiple threads. A Task can have multiple parallel instances which are called Sub-tasks. Each sub-task is ran in a separate thread. Multiple sub-tasks from different tasks can come together and share a slot. This group of sub-tasks is called a slot-sharing group. Please note that two sub-tasks of the same task (parallel instances of the same task) can not share a slot together.
+  > https://stackoverflow.com/questions/61791811/how-to-understand-slot-and-task-in-apache-flink
 
-![](/docs/docs_image/software/bigdata/flink_wordcount.png)
+  Each task slot represents a fixed subset of resources of the TaskManager. A TaskManager with three slots, for example, will dedicate 1/3 of its managed memory to each slot. Slotting the resources means that a subtask will not compete with subtasks from other jobs for managed memory, but instead has a certain amount of reserved managed memory. Note that no CPU isolation happens here; currently slots only separate the managed memory of tasks.
 
-##### parallelism
-https://nightlies.apache.org/flink/flink-docs-master/docs/dev/datastream/execution/parallel/
+  By adjusting the number of task slots, users can define how subtasks are isolated from each other. Having one slot per TaskManager means that each task group runs in a separate JVM (which can be started in a separate container, for example). Having multiple slots means more subtasks share the same JVM. Tasks in the same JVM share TCP connections (via multiplexing) and heartbeat messages. They may also share data sets and data structures, thus reducing the per-task overhead.
 
-+ A Flink cluster needs exactly as many task slots as the highest parallelism used in the job. No need to calculate how many tasks (with varying parallelism) a program contains in total.
++ **Task** 
+  - Node of a Physical Graph. A task is the basic unit of work, which is executed by Flink’s runtime. Tasks encapsulate exactly one parallel instance of an Operator or Operator Chain.
+  For distributed execution, Flink chains operator subtasks together into tasks. 
+  
+  Task是逻辑概念，一个Operator就代表一个Task（多个Operator被chain之后产生的新Operator算一个Operator）, 真正运行的时候，Task会按照并行度分成多个Subtask，Subtask是执行/调度的基本单元,每个Subtask需要一个线程（Thread）来执行。
 
-+ It is easier to get better resource utilization. Without slot sharing, the non-intensive source/map() subtasks would block as many resources as the resource intensive window subtasks. With slot sharing, increasing the base parallelism in our example from two to six yields full utilization of the slotted resources, while making sure that the heavy subtasks are fairly distributed among the TaskManagers.
+  A Sub-Task is a Task responsible for processing a partition of the data stream. The term “Sub-Task” emphasizes that there are multiple parallel Tasks for the same Operator or Operator Chain. Each subtask is executed by one thread.
 
-example:
+  Note:
+  TaskSlot = Thread only (!) if slot sharing is disabled. It is an optimization that is on by default and in most cases, you would want to keep it that way. It is more precise to say that an Operator Chain = a Thread.
+  Chaining operators together into tasks is a useful optimization: it reduces the overhead of thread-to-thread handover and buffering, and increases overall throughput while decreasing latency. 
 
-If run with parallelism of two in a cluster with 2 task managers, each offering 3 slots, the scheduler will use 5 task slots, like this:
+  By default, Flink allows subtasks to share slots even if they are subtasks of different tasks, so long as they are from the same job. The result is that one slot may hold an entire pipeline of the job. Allowing this slot sharing has two main benefits:
 
-![](/docs/docs_image/software/bigdata/flink_taskslot_example1.png)
+  - **parallelism**
+    [Operator Level / Execution Environment Level / Client Level / System Level](https://nightlies.apache.org/flink/flink-docs-master/docs/dev/datastream/execution/parallel/)
 
-However, if the base parallelism is increased to six, then the scheduler will do this (note that the sink remains at a parallelism of one in this example):
+    + A Flink cluster needs exactly as many task slots as the highest parallelism used in the job. No need to calculate how many tasks (with varying parallelism) a program contains in total.
 
-![](/docs/docs_image/software/bigdata/flink_taskslot_example2.png)
+    + It is easier to get better resource utilization. Without slot sharing, the non-intensive source/map() subtasks would block as many resources as the resource intensive window subtasks. With slot sharing, increasing the base parallelism in our example from two to six yields full utilization of the slotted resources, while making sure that the heavy subtasks are fairly distributed among the TaskManagers.
 
-##### Operator Chaining
+    example:
 
-![](/docs/docs_image/software/bigdata/flink_taskslot_example3.png)
-http://wuchong.me/blog/2016/05/09/flink-internals-understanding-execution-resources/
-https://stackoverflow.com/questions/62664972/what-happens-if-total-parallel-instances-of-operators-are-higher-than-the-parall
+    If run with parallelism of two in a cluster with 2 task managers, each offering 3 slots, the scheduler will use 5 task slots, like this:
+
+    ![](/docs/docs_image/software/bigdata/flink_taskslot_example1.png)
+
+    However, if the base parallelism is increased to six, then the scheduler will do this (note that the sink remains at a parallelism of one in this example):
+
+    ![](/docs/docs_image/software/bigdata/flink_taskslot_example2.png)
+
+  - **operator chaining**
+    An Operator Chain consists of two or more consecutive Operators without any repartitioning in between. Operators within the same Operator Chain forward records to each other directly without going through serialization or Flink’s network stack.
+    The sample dataflow in the figure below is executed with five subtasks, and hence with five parallel threads:
+    ![](/docs/docs_image/software/bigdata/flink_operator_chaining.png)
+
+    ![](/docs/docs_image/software/bigdata/flink_taskslot_example3.png)
+
+    http://wuchong.me/blog/2016/05/09/flink-internals-understanding-execution-resources/
+    https://stackoverflow.com/questions/62664972/what-happens-if-total-parallel-instances-of-operators-are-higher-than-the-parall
+
+#### Example
+
+![](/docs/docs_image/software/bigdata/flink_graphs.png)
+
+StreamGraph：根据用户通过 Stream API 编写的代码生成的最初的图。
+1）StreamNode：用来代表 operator 的类，并具有所有相关的属性，如并发度、入边和出边等。
+2）StreamEdge：表示连接两个StreamNode的边。
+JobGraph：StreamGraph经过优化后生成了 JobGraph，提交给JobManager 的数据结构。
+JobVertex：经过优化后符合条件的多个StreamNode可能会chain在一起生成一个JobVertex，即一个JobVertex包含一个或多个operator，JobVertex的输入是JobEdge，输出是IntermediateDataSet。
+ntermediateDataSet：表示JobVertex的输出，即经过operator处理产生的数据集。producer是JobVertex，consumer是JobEdge。
+JobEdge：代表了job graph中的一条数据传输通道。source 是 IntermediateDataSet，target 是 JobVertex。即数据通过JobEdge由IntermediateDataSet传递给目标JobVertex。
+ExecutionGraph：JobManager 根据 JobGraph 生成ExecutionGraph。ExecutionGraph是JobGraph的并行化版本，是调度层最核心的数据结构。
+ExecutionJobVertex：和JobGraph中的JobVertex一一对应。每一个ExecutionJobVertex都有和并发度一样多的 ExecutionVertex。
+ExecutionVertex：表示ExecutionJobVertex的其中一个并发子任务，输入是ExecutionEdge，输出是IntermediateResultPartition。
+IntermediateResult：和JobGraph中的IntermediateDataSet一一对应。一个IntermediateResult包含多个IntermediateResultPartition，其个数等于该operator的并发度
+IntermediateResultPartition：表示ExecutionVertex的一个输出分区，producer是ExecutionVertex，consumer是若干个ExecutionEdge。
+ExecutionEdge：表示ExecutionVertex的输入，source是IntermediateResultPartition，target是ExecutionVertex。source和target都只能是一个。
+Execution：是执行一个 ExecutionVertex 的一次尝试。当发生故障或者数据需要重算的情况下 ExecutionVertex 可能会有多个 ExecutionAttemptID。一个 Execution 通过 ExecutionAttemptID 来唯一标识。JM和TM之间关于 task 的部署和 task status 的更新都是通过 ExecutionAttemptID 来确定消息接受者。
+物理执行图：JobManager 根据 ExecutionGraph 对 Job 进行调度后，在各个TaskManager 上部署 Task 后形成的“图”，并不是一个具体的数据结构。
+Task：Execution被调度后在分配的 TaskManager 中启动对应的 Task。Task 包裹了具有用户执行逻辑的 operator。
+ResultPartition：代表由一个Task的生成的数据，和ExecutionGraph中的IntermediateResultPartition一一对应。
+ResultSubpartition：是ResultPartition的一个子分区。每个ResultPartition包含多个ResultSubpartition，其数目要由下游消费 Task 数和 DistributionPattern 来决定。
+InputGate：代表Task的输入封装，和JobGraph中JobEdge一一对应。每个InputGate消费了一个或多个的ResultPartition。
+InputChannel：每个InputGate会包含一个以上的InputChannel，和ExecutionGraph中的ExecutionEdge一一对应，也和ResultSubpartition一对一地相连，即一个InputChannel接收一个ResultSubpartition的输出。
+
+
+![](/docs/docs_image/software/bigdata/flink_jobgraph.png)
+
+图中每个圆代表一个Operator（算子），每个虚线圆角框代表一个Task，每个虚线直角框代表一个Subtask，其中的p表示算子的并行度。
+最上面是StreamGraph，在没有经过任何优化时，可以看到包含4个Operator/Task：Task A1、Task A2、Task B、Task C。
+StreamGraph经过Chain优化（后面讲）之后，Task A1和Task A2两个Task合并成了一个新的Task A（可以认为合并产生了一个新的Operator），得到了中间的JobGraph。
+然后以并行度为2（需要2个Slot）执行的时候，Task A产生了2个Subtask，分别占用了Thread #1和Thread #2两个线程；Task B产生了2个Subtask，分别占用了Thread #3和Thread #4两个线程；Task C产生了1个Subtask，占用了Thread #5。
+
 
 ### Key Concepts
 #### Streams
@@ -78,10 +143,10 @@ Obviously, streams are a fundamental aspect of stream processing. However, strea
 **Bounded and unbounded streams:** 
 Streams can be unbounded or bounded, i.e., fixed-sized data sets. Flink has sophisticated features to process unbounded streams, but also dedicated operators to efficiently process bounded streams.
     
-    + Unbounded streams 
++ Unbounded streams 
     have a start but no defined end. They do not terminate and provide data as it is generated. Unbounded streams must be continuously processed, i.e., events must be promptly handled after they have been ingested. It is not possible to wait for all input data to arrive because the input is unbounded and will not be complete at any point in time. Processing unbounded data often requires that events are ingested in a specific order, such as the order in which events occurred, to be able to reason about result completeness.
 
-    + Bounded streams 
++ Bounded streams 
     have a defined start and end. Bounded streams can be processed by ingesting all data before performing any computations. Ordered ingestion is not required to process bounded streams because a bounded data set can always be sorted. Processing of bounded streams is also known as batch processing.
 
 **Real-time and recorded streams:** 
@@ -112,73 +177,60 @@ When processing streams in event-time mode with watermarks, it can happen that a
 + Processing-time Mode: 
 In addition to its event-time mode, Flink also supports processing-time semantics which performs computations as triggered by the wall-clock time of the processing machine. The processing-time mode can be suitable for certain applications with strict low-latency requirements that can tolerate approximate results.
 
-#### Terms
+#### Other Terms
 
 + Cluster
-  + **Flink Cluster**
+  - **Flink Cluster**
     A distributed system consisting of (typically) one JobManager and one or more Flink TaskManager processes.
-  + **Flink Application Cluster**
+  - **Flink Application Cluster**
     A Flink Application Cluster is a dedicated Flink Cluster that only executes Flink Jobs from one Flink Application. The lifetime of the Flink Cluster is bound to the lifetime of the Flink Application.
-  + **Flink Job Cluster**
+  - **Flink Job Cluster**
     A Flink Job Cluster is a dedicated Flink Cluster that only executes a single Flink Job. The lifetime of the Flink Cluster is bound to the lifetime of the Flink Job. This deployment mode has been deprecated since Flink 1.15.
-  + **Flink Session Cluster**
+  - **Flink Session Cluster**
     A long-running Flink Cluster which accepts multiple Flink Jobs for execution. The lifetime of this Flink Cluster is not bound to the lifetime of any Flink Job. Formerly, a Flink Session Cluster was also known as a Flink Cluster in session mode. Compare to Flink Application Cluster.
 
 + Manager
-  + **Flink TaskManager**
+  - **Flink TaskManager**
     TaskManagers are the worker processes of a Flink Cluster. Tasks are scheduled to TaskManagers for execution. They communicate with each other to exchange data between subsequent Tasks.
-  + **Flink JobManager**
-  The JobManager is the orchestrator of a Flink Cluster. It contains three distinct components: 
+  - **Flink JobManager**
+    The JobManager is the orchestrator of a Flink Cluster. It contains three distinct components: 
     + **Flink Resource Manager**, 
     + **Flink Dispatcher** 
     + and one  **Flink JobMaster** per running Flink Job.
       JobMasters are one of the components running in the JobManager. A JobMaster is responsible for supervising the execution of the Tasks of a single job.
-
-+ Term    
-  + **Flink Application**
-    A Flink application is a Java Application that submits one or multiple Flink Jobs from the main() method (or by some other means). Submitting jobs is usually done by calling execute() on an execution environment.
-    The jobs of an application can either be submitted to a long running Flink Session Cluster, to a dedicated Flink Application Cluster, or to a Flink Job Cluster.
-  + **Flink Job**
-    A Flink Job is the runtime representation of a logical graph (also often called dataflow graph) that is created and submitted by calling execute() in a Flink Application.
-  + **JobGraph / Logical Graph**
-    A logical graph is a directed graph where the nodes are Operators and the edges define input/output-relationships of the operators and correspond to data streams or data sets. A logical graph is created by submitting jobs from a Flink Application.
-    Logical graphs are also often referred to as dataflow graphs. 
-    + **Operator Chain**
-      An Operator Chain consists of two or more consecutive Operators without any repartitioning in between. Operators within the same Operator Chain forward records to each other directly without going through serialization or Flink’s network stack.
-  + **ExecutionGraph/Physical Graph**
-    A physical graph is the result of translating a Logical Graph for execution in a distributed runtime. The nodes are Tasks and the edges indicate input/output-relationships or partitions of data streams or data sets.
-    + **Task**
-      Node of a Physical Graph. A task is the basic unit of work, which is executed by Flink’s runtime. Tasks encapsulate exactly one parallel instance of an Operator or Operator Chain.
-    + **Sub-Task**
-      A Sub-Task is a Task responsible for processing a partition of the data stream. The term “Sub-Task” emphasizes that there are multiple parallel Tasks for the same Operator or Operator Chain.
-  + **Record**
-    Records are the constituent elements of a data set or data stream. Operators and Functions receive records as input and emit records as output.
-  + **Event**
-    An event is a statement about a change of the state of the domain modelled by the application. Events can be input and/or output of a stream or batch processing application. Events are special types of records.
-  + **Instance**
-    The term instance is used to describe a specific instance of a specific type (usually Operator or Function) during runtime. As Apache Flink is mostly written in Java, this corresponds to the definition of Instance or Object in Java. In the context of Apache Flink, the term parallel instance is also frequently used to emphasize that multiple instances of the same Operator or Function type are running in parallel.
-      + **Operator**
-        Node of a Logical Graph. An Operator performs a certain operation, which is usually executed by a Function. Sources and Sinks are special Operators for data ingestion and data egress.
-        https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/dev/datastream/operators/overview/
-      + **Function**
-        Functions are implemented by the user and encapsulate the application logic of a Flink program. Most Functions are wrapped by a corresponding Operator.
-        https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/dev/datastream/user_defined_functions/
-  + **JobResultStore**
-    The JobResultStore is a Flink component that persists the results of globally terminated (i.e. finished, cancelled or failed) jobs to a filesystem, allowing the results to outlive a finished job. These results are then used by Flink to determine whether jobs should be subject to recovery in highly-available clusters.
-  + **Managed State**
-    Managed State describes application state which has been registered with the framework. For Managed State, Apache Flink will take care about persistence and rescaling among other things.
-  + **Checkpoint Storage**
-    The location where the State Backend will store its snapshot during a checkpoint (Java Heap of JobManager or Filesystem). 
-  + **Partition**
-    A partition is an independent subset of the overall data stream or data set. A data stream or data set is divided into partitions by assigning each record to one or more partitions. Partitions of data streams or data sets are consumed by Tasks during runtime. A transformation which changes the way a data stream or data set is partitioned is often called repartitioning.
-  + **(Runtime) Execution Mode**
-    DataStream API programs can be executed in one of two execution modes: BATCH or STREAMING. See Execution Mode for more details.
-  + **State Backend**
-    For stream processing programs, the State Backend of a Flink Job determines how its state is stored on each TaskManager (Java Heap of TaskManager or (embedded) RocksDB).
-  + **Table Program**
-    A generic term for pipelines declared with Flink’s relational APIs (Table API or SQL).
-  + **Transformation**
-    A Transformation is applied on one or more data streams or data sets and results in one or more output data streams or data sets. A transformation might change a data stream or data set on a per-record basis, but might also only change its partitioning or perform an aggregation. While Operators and Functions are the “physical” parts of Flink’s API, Transformations are only an API concept. Specifically, most transformations are implemented by certain Operators.
+   
++ **Flink Application**
+  A Flink application is a Java Application that submits one or multiple Flink Jobs from the main() method (or by some other means). Submitting jobs is usually done by calling execute() on an execution environment.
+  The jobs of an application can either be submitted to a long running Flink Session Cluster, to a dedicated Flink Application Cluster, or to a Flink Job Cluster.
+  
++ **Record**
+  Records are the constituent elements of a data set or data stream. Operators and Functions receive records as input and emit records as output.
++ **Event**
+  An event is a statement about a change of the state of the domain modelled by the application. Events can be input and/or output of a stream or batch processing application. Events are special types of records.
++ **Instance**
+  The term instance is used to describe a specific instance of a specific type (usually Operator or Function) during runtime. As Apache Flink is mostly written in Java, this corresponds to the definition of Instance or Object in Java. In the context of Apache Flink, the term parallel instance is also frequently used to emphasize that multiple instances of the same Operator or Function type are running in parallel.
+    + **Operator**
+      Node of a Logical Graph. An Operator performs a certain operation, which is usually executed by a Function. Sources and Sinks are special Operators for data ingestion and data egress.
+      https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/dev/datastream/operators/overview/
+    + **Function**
+      Functions are implemented by the user and encapsulate the application logic of a Flink program. Most Functions are wrapped by a corresponding Operator.
+      https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/dev/datastream/user_defined_functions/
++ **JobResultStore**
+  The JobResultStore is a Flink component that persists the results of globally terminated (i.e. finished, cancelled or failed) jobs to a filesystem, allowing the results to outlive a finished job. These results are then used by Flink to determine whether jobs should be subject to recovery in highly-available clusters.
++ **Managed State**
+  Managed State describes application state which has been registered with the framework. For Managed State, Apache Flink will take care about persistence and rescaling among other things.
++ **Checkpoint Storage**
+  The location where the State Backend will store its snapshot during a checkpoint (Java Heap of JobManager or Filesystem). 
++ **Partition**
+  A partition is an independent subset of the overall data stream or data set. A data stream or data set is divided into partitions by assigning each record to one or more partitions. Partitions of data streams or data sets are consumed by Tasks during runtime. A transformation which changes the way a data stream or data set is partitioned is often called repartitioning.
++ **(Runtime) Execution Mode**
+  DataStream API programs can be executed in one of two execution modes: BATCH or STREAMING. See Execution Mode for more details.
++ **State Backend**
+  For stream processing programs, the State Backend of a Flink Job determines how its state is stored on each TaskManager (Java Heap of TaskManager or (embedded) RocksDB).
++ **Table Program**
+  A generic term for pipelines declared with Flink’s relational APIs (Table API or SQL).
++ **Transformation**
+  A Transformation is applied on one or more data streams or data sets and results in one or more output data streams or data sets. A transformation might change a data stream or data set on a per-record basis, but might also only change its partitioning or perform an aggregation. While Operators and Functions are the “physical” parts of Flink’s API, Transformations are only an API concept. Specifically, most transformations are implemented by certain Operators.
 
 ## 2. Mode: Local Standalone 
 https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/deployment/resource-providers/standalone/overview/
@@ -1028,7 +1080,7 @@ Flink integrates nicely with many common logging and monitoring services and pro
 
 ## 7. Integration
 
-https://nightlies.apache.org/flink/flink-docs-release-1.17/docs/ops/rest_api/
+[Rest API](https://nightlies.apache.org/flink/flink-docs-release-1.17/docs/ops/rest_api/)
 
 dashboard: localhost:8081
 
