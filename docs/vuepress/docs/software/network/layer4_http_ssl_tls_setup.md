@@ -2578,10 +2578,15 @@ main, called closeSocket()
 [这不就是跟前面一样的问题了](#openjdk8-update)，果断升级openjdk
 
 #### 根源
+lib/security/cacerts内某个root证书过期
+
 > I manage manually my jdk and was getting this error with openjdk-8. I replaced the cacerts with the one of the openjdk-11 and it worked just fine. If you try this, make sure to backup your cacerts first.
 
 另一种方法绕过：
 mvn clean -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true
+
+### outdated TLS1.0 - win10 打不开应用商店 Microsoft store
+用“win + R”打开运行， 输入 inetcpl.cpl 打开Internet属性（或从IE浏览器设置打开），点击高级选项， 找到并勾选 TLS 1.2，取消勾选TLS 1.0
 
 ### CertificateException: No subject alternative names present
 When the server certificate is having Subject Alternative Names (SAN), the requesting home name must match with one of the SANs. If the server’s SSL certificate does not have SANs, then the requesting home name must match with the Common Name (CN) of the certificate.

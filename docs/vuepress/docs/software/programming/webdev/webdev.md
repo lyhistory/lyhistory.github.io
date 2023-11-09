@@ -237,6 +237,7 @@ CNAME Record	www		lyhistory.github.io.
 ```
 [When using an apex domain, we recommend configuring your GitHub Pages site to host content at both the apex domain and that domain's www subdomain variant.](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages)
 
+![](/docs/docs_image/software/webdev/webdev01.png)
 
 #### project site
 一个项目只能建立一个；

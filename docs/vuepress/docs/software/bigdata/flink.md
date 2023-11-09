@@ -48,7 +48,7 @@ is responsible for managing the execution of a single JobGraph. Multiple jobs ca
   A Flink Job is the runtime representation of a logical graph (also often called dataflow graph) that is created and submitted by calling execute() in a Flink Application.
   一个Job代表一个可以独立提交给Flink执行的作业，我们向JobManager提交任务的时候就是以Job为单位的，只不过一份代码里可以包含多个Job（每个Job对应一个类的main函数）
   Example:
-  ![](/docs/docs_image/software/bigdata/flink_wordcount.png)
+  ![](/docs/docs_image/software/bigdata/flink/flink_wordcount.png)
 
 + **JobGraph / Logical Graph**
   A logical graph is a directed graph where the nodes are Operators and the edges define input/output-relationships of the operators and correspond to data streams or data sets. A logical graph is created by submitting jobs from a Flink Application.
@@ -95,25 +95,25 @@ is responsible for managing the execution of a single JobGraph. Multiple jobs ca
 
     If run with parallelism of two in a cluster with 2 task managers, each offering 3 slots, the scheduler will use 5 task slots, like this:
 
-    ![](/docs/docs_image/software/bigdata/flink_taskslot_example1.png)
+    ![](/docs/docs_image/software/bigdata/flink/flink_taskslot_example1.png)
 
     However, if the base parallelism is increased to six, then the scheduler will do this (note that the sink remains at a parallelism of one in this example):
 
-    ![](/docs/docs_image/software/bigdata/flink_taskslot_example2.png)
+    ![](/docs/docs_image/software/bigdata/flink/flink_taskslot_example2.png)
 
   - **operator chaining**
     An Operator Chain consists of two or more consecutive Operators without any repartitioning in between. Operators within the same Operator Chain forward records to each other directly without going through serialization or Flink’s network stack.
     The sample dataflow in the figure below is executed with five subtasks, and hence with five parallel threads:
-    ![](/docs/docs_image/software/bigdata/flink_operator_chaining.png)
+    ![](/docs/docs_image/software/bigdata/flink/flink_operator_chaining.png)
 
-    ![](/docs/docs_image/software/bigdata/flink_taskslot_example3.png)
+    ![](/docs/docs_image/software/bigdata/flink/flink_operator_chaining2.png)
 
     http://wuchong.me/blog/2016/05/09/flink-internals-understanding-execution-resources/
     https://stackoverflow.com/questions/62664972/what-happens-if-total-parallel-instances-of-operators-are-higher-than-the-parall
 
 #### StreamGraph/JobGraph/ExecutionGraph
 
-![](/docs/docs_image/software/bigdata/flink_graphs.png)
+![](/docs/docs_image/software/bigdata/flink/flink_graphs1.png)
 
 + StreamGraph：根据用户通过 Stream API 编写的代码生成的最初的图。
   - StreamNode：用来代表 operator 的类，并具有所有相关的属性，如并发度、入边和出边等。
@@ -140,7 +140,7 @@ is responsible for managing the execution of a single JobGraph. Multiple jobs ca
   - InputChannel：每个InputGate会包含一个以上的InputChannel，和ExecutionGraph中的ExecutionEdge一一对应，也和ResultSubpartition一对一地相连，即一个InputChannel接收一个ResultSubpartition的输出。
 
 
-![](/docs/docs_image/software/bigdata/flink_jobgraph.png)
+![](/docs/docs_image/software/bigdata/flink/flink_graphs2.png)
 
 图中每个圆代表一个Operator（算子），每个虚线圆角框代表一个Task，每个虚线直角框代表一个Subtask，其中的p表示算子的并行度。
 最上面是StreamGraph，在没有经过任何优化时，可以看到包含4个Operator/Task：Task A1、Task A2、Task B、Task C。
