@@ -19,7 +19,10 @@ The Client is not part of the runtime and program execution, but is used to prep
 
 - [Flink Architecture](https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/concepts/flink-architecture/)
 
+Flink 集群是由 JobManager（JM）、TaskManager（TM）两大组件组成的，每个 JM/TM 都是运行在一个独立的 JVM 进程中。JM 相当于 Master，是集群的管理节点，TM 相当于 Worker，是集群的工作节点，每个 TM 最少持有 1 个 Slot，Slot 是 Flink 执行 Job 时的最小资源分配单位，在 Slot 中运行着具体的 Task 任务。
+
 #### JobManager
+
 The JobManager has a number of responsibilities related to coordinating the distributed execution of Flink Applications: it decides when to schedule the next task (or set of tasks), reacts to finished tasks or execution failures, coordinates checkpoints, and coordinates recovery on failures, among others. This process consists of three different components:
 
 ##### ResourceManager
@@ -33,7 +36,13 @@ is responsible for managing the execution of a single JobGraph. Multiple jobs ca
 
 #### TaskManagers 
 
-一个程序Process可以运行在多个TM上，一个TM有多个TS（多少代表并行度），一个TS有多个Thread
+一个程序Process可以运行在多个TM上，一个TM有多个TS（TS的总和代表支持的最高并行度），一个TS中可以运行多个sub task（task实例），每个subtask都对应一个Thread
+
+对 TM 而言：它占用着一定数量的 CPU 和 Memory 资源，具体可通过 taskmanager.numberOfTaskSlots, taskmanager.heap.size 来配置，实际上 taskmanager.numberOfTaskSlots 只是指定 TM 的 Slot 数量，并不能隔离指定数量的 CPU 给 TM 使用。在不考虑 Slot Sharing的情况下，一个 Slot 内运行着一个 SubTask（Task 实现 Runable，SubTask 是一个执行 Task 的具体实例），所以官方建议 taskmanager.numberOfTaskSlots 配置的 Slot 数量和 CPU 相等或成比例。
+
+当然，我们可以借助 Yarn 等调度系统，用 Flink On Yarn 的模式来为 Yarn Container 分配指定数量的 CPU 资源，以达到较严格的 CPU 隔离（Yarn 采用 Cgroup 做基于时间片的资源调度，每个 Container 内运行着一个 JM/TM 实例）。而 taskmanager.heap.size 用来配置 TM 的 Memory，如果一个 TM 有 N 个 Slot，则每个 Slot 分配到的 Memory 大小为整个 TM Memory 的 1/N，同一个 TM 内的 Slots 只有 Memory 隔离，CPU 是共享的。
+
+对 Job 而言：一个 Job 所需的 Slot 数量大于等于 Operator 配置的最大 Parallelism 数，在保持所有 Operator 的 slotSharingGroup 一致的前提下 Job 所需的 Slot 数量与 Job 中 Operator 配置的最大 Parallelism 相等。
 
 + **Flink Job**
   A Flink Job is the runtime representation of a logical graph (also often called dataflow graph) that is created and submitted by calling execute() in a Flink Application.
