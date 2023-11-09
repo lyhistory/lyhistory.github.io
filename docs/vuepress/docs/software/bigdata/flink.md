@@ -9,7 +9,7 @@ https://flink.apache.org/
 ![](https://flink.apache.org/img/flink-home-graphic.png)
 
 ## 1. Intro
-### Architecture
+### 1.1 Architecture
 
 Flink is a distributed system and requires effective allocation and management of compute resources in order to execute streaming applications. It integrates with all common cluster resource managers such as Hadoop YARN and Kubernetes, but can also be set up to run as a standalone cluster or even as a library.
 
@@ -21,7 +21,7 @@ The Client is not part of the runtime and program execution, but is used to prep
 
 Flink 集群是由 JobManager（JM）、TaskManager（TM）两大组件组成的，每个 JM/TM 都是运行在一个独立的 JVM 进程中。JM 相当于 Master，是集群的管理节点，TM 相当于 Worker，是集群的工作节点，每个 TM 最少持有 1 个 Slot，Slot 是 Flink 执行 Job 时的最小资源分配单位，在 Slot 中运行着具体的 Task 任务。
 
-#### JobManager
+#### 1.1.1 JobManager
 
 The JobManager has a number of responsibilities related to coordinating the distributed execution of Flink Applications: it decides when to schedule the next task (or set of tasks), reacts to finished tasks or execution failures, coordinates checkpoints, and coordinates recovery on failures, among others. This process consists of three different components:
 
@@ -34,15 +34,7 @@ provides a REST interface to submit Flink applications for execution and starts 
 ##### JobMaster
 is responsible for managing the execution of a single JobGraph. Multiple jobs can run simultaneously in a Flink cluster, each having its own JobMaster.
 
-#### TaskManagers 
-
-一个程序Process可以运行在多个TM上，一个TM有多个TS（TS的总和代表支持的最高并行度），一个TS中可以运行多个sub task（task实例），每个subtask都对应一个Thread
-
-对 TM 而言：它占用着一定数量的 CPU 和 Memory 资源，具体可通过 taskmanager.numberOfTaskSlots, taskmanager.heap.size 来配置，实际上 taskmanager.numberOfTaskSlots 只是指定 TM 的 Slot 数量，并不能隔离指定数量的 CPU 给 TM 使用。在不考虑 Slot Sharing的情况下，一个 Slot 内运行着一个 SubTask（Task 实现 Runable，SubTask 是一个执行 Task 的具体实例），所以官方建议 taskmanager.numberOfTaskSlots 配置的 Slot 数量和 CPU 相等或成比例。
-
-当然，我们可以借助 Yarn 等调度系统，用 Flink On Yarn 的模式来为 Yarn Container 分配指定数量的 CPU 资源，以达到较严格的 CPU 隔离（Yarn 采用 Cgroup 做基于时间片的资源调度，每个 Container 内运行着一个 JM/TM 实例）。而 taskmanager.heap.size 用来配置 TM 的 Memory，如果一个 TM 有 N 个 Slot，则每个 Slot 分配到的 Memory 大小为整个 TM Memory 的 1/N，同一个 TM 内的 Slots 只有 Memory 隔离，CPU 是共享的。
-
-对 Job 而言：一个 Job 所需的 Slot 数量大于等于 Operator 配置的最大 Parallelism 数，在保持所有 Operator 的 slotSharingGroup 一致的前提下 Job 所需的 Slot 数量与 Job 中 Operator 配置的最大 Parallelism 相等。
+#### 1.1.2 TaskManagers 
 
 + **Flink Job**
   A Flink Job is the runtime representation of a logical graph (also often called dataflow graph) that is created and submitted by calling execute() in a Flink Application.
@@ -77,6 +69,17 @@ is responsible for managing the execution of a single JobGraph. Multiple jobs ca
   Task是逻辑概念，一个Operator就代表一个Task（多个Operator被chain之后产生的新Operator算一个Operator）, 真正运行的时候，Task会按照并行度分成多个Subtask，Subtask是执行/调度的基本单元,每个Subtask需要一个线程（Thread）来执行。
 
   A Sub-Task is a Task responsible for processing a partition of the data stream. The term “Sub-Task” emphasizes that there are multiple parallel Tasks for the same Operator or Operator Chain. Each subtask is executed by one thread.
+  ![](/docs/docs_image/software/bigdata/flink/flink_operator_chaining.png)
+
+  A task is an abstraction representing a chain of operators that could be executed in a single thread. Something like a keyBy (which causes a network shuffle to partition the stream by some key) or a change in the parallelism of the pipeline will break the chaining and force operators into separate tasks. In the diagram above, the application has three tasks.
+
+  A subtask is one parallel slice of a task. This is the schedulable, runable unit of execution. In the diagram above, the application is to be run with a parallelism of two for the source/map and keyBy/Window/apply tasks, and a parallelism of one for the sink -- resulting in a total of 5 subtasks.
+
+  A job is a running instance of an application. Clients submit jobs to the jobmanager, which slices them into subtasks and schedules those subtasks for execution by the taskmanagers.
+
+  Update:
+
+  The community decided to re-align the definitions of task and sub-task to match how these terms are used in the code -- which means that task and sub-task now mean the same thing: exactly one parallel instance of an operator or operator chain. -- https://stackoverflow.com/questions/53610342/difference-between-job-task-and-subtask-in-flink
 
   Note:
   TaskSlot = Thread only (!) if slot sharing is disabled. It is an optimization that is on by default and in most cases, you would want to keep it that way. It is more precise to say that an Operator Chain = a Thread.
@@ -111,7 +114,16 @@ is responsible for managing the execution of a single JobGraph. Multiple jobs ca
     http://wuchong.me/blog/2016/05/09/flink-internals-understanding-execution-resources/
     https://stackoverflow.com/questions/62664972/what-happens-if-total-parallel-instances-of-operators-are-higher-than-the-parall
 
-#### StreamGraph/JobGraph/ExecutionGraph
+总结：
+一个程序Process可以运行在多个TM上，一个TM有多个TS（TS的总和代表支持的最高并行度），一个TS中可以运行多个sub task（task实例），每个subtask都对应一个Thread
+
+对 TM 而言：它占用着一定数量的 CPU 和 Memory 资源，具体可通过 taskmanager.numberOfTaskSlots, taskmanager.heap.size 来配置，实际上 taskmanager.numberOfTaskSlots 只是指定 TM 的 Slot 数量，并不能隔离指定数量的 CPU 给 TM 使用。在不考虑 Slot Sharing的情况下，一个 Slot 内运行着一个 SubTask（Task 实现 Runable，SubTask 是一个执行 Task 的具体实例），所以官方建议 taskmanager.numberOfTaskSlots 配置的 Slot 数量和 CPU 相等或成比例。
+
+当然，我们可以借助 Yarn 等调度系统，用 Flink On Yarn 的模式来为 Yarn Container 分配指定数量的 CPU 资源，以达到较严格的 CPU 隔离（Yarn 采用 Cgroup 做基于时间片的资源调度，每个 Container 内运行着一个 JM/TM 实例）。而 taskmanager.heap.size 用来配置 TM 的 Memory，如果一个 TM 有 N 个 Slot，则每个 Slot 分配到的 Memory 大小为整个 TM Memory 的 1/N，同一个 TM 内的 Slots 只有 Memory 隔离，CPU 是共享的。
+
+对 Job 而言：一个 Job 所需的 Slot 数量大于等于 Operator 配置的最大 Parallelism 数，在保持所有 Operator 的 slotSharingGroup 一致的前提下 Job 所需的 Slot 数量与 Job 中 Operator 配置的最大 Parallelism 相等。
+
+#### 1.1.3 StreamGraph/JobGraph/ExecutionGraph
 
 ![](/docs/docs_image/software/bigdata/flink/flink_graphs1.png)
 
@@ -144,11 +156,13 @@ is responsible for managing the execution of a single JobGraph. Multiple jobs ca
 
 图中每个圆代表一个Operator（算子），每个虚线圆角框代表一个Task，每个虚线直角框代表一个Subtask，其中的p表示算子的并行度。
 最上面是StreamGraph，在没有经过任何优化时，可以看到包含4个Operator/Task：Task A1、Task A2、Task B、Task C。
+
 StreamGraph经过Chain优化（后面讲）之后，Task A1和Task A2两个Task合并成了一个新的Task A（可以认为合并产生了一个新的Operator），得到了中间的JobGraph。
+
 然后以并行度为2（需要2个Slot）执行的时候，Task A产生了2个Subtask，分别占用了Thread #1和Thread #2两个线程；Task B产生了2个Subtask，分别占用了Thread #3和Thread #4两个线程；Task C产生了1个Subtask，占用了Thread #5。
 
 
-### Key Concepts
+### 1.2 Key Concepts
 #### Streams
 Obviously, streams are a fundamental aspect of stream processing. However, streams can have different characteristics that affect how a stream can and should be processed. Flink is a versatile processing framework that can handle any kind of stream.
 
@@ -169,25 +183,25 @@ Every non-trivial streaming application is stateful, i.e., only applications tha
 Application state is a first-class citizen in Flink. You can see that by looking at all the features that Flink provides in the context of state handling.
 
 + Multiple State Primitives: 
-Flink provides state primitives for different data structures, such as atomic values, lists, or maps. Developers can choose the state primitive that is most efficient based on the access pattern of the function.
+  Flink provides state primitives for different data structures, such as atomic values, lists, or maps. Developers can choose the state primitive that is most efficient based on the access pattern of the function.
 + Pluggable State Backends: 
-Application state is managed in and checkpointed by a pluggable state backend. Flink features different state backends that store state in memory or in RocksDB, an efficient embedded on-disk data store. Custom state backends can be plugged in as well.
+  Application state is managed in and checkpointed by a pluggable state backend. Flink features different state backends that store state in memory or in RocksDB, an efficient embedded on-disk data store. Custom state backends can be plugged in as well.
 + Exactly-once state consistency: 
-Flink’s checkpointing and recovery algorithms guarantee the consistency of application state in case of a failure. Hence, failures are transparently handled and do not affect the correctness of an application.
+  Flink’s checkpointing and recovery algorithms guarantee the consistency of application state in case of a failure. Hence, failures are transparently handled and do not affect the correctness of an application.
 + Very Large State: 
-Flink is able to maintain application state of several terabytes in size due to its asynchronous and incremental checkpoint algorithm.
+  Flink is able to maintain application state of several terabytes in size due to its asynchronous and incremental checkpoint algorithm.
 + Scalable Applications: 
-Flink supports scaling of stateful applications by redistributing the state to more or fewer workers.
+  Flink supports scaling of stateful applications by redistributing the state to more or fewer workers.
 
 #### Time
 + Event-time Mode: 
-Applications that process streams with event-time semantics compute results based on timestamps of the events. Thereby, event-time processing allows for accurate and consistent results regardless whether recorded or real-time events are processed.
+  Applications that process streams with event-time semantics compute results based on timestamps of the events. Thereby, event-time processing allows for accurate and consistent results regardless whether recorded or real-time events are processed.
 + Watermark Support: 
-Flink employs watermarks to reason about time in event-time applications. Watermarks are also a flexible mechanism to trade-off the latency and completeness of results.
+  Flink employs watermarks to reason about time in event-time applications. Watermarks are also a flexible mechanism to trade-off the latency and completeness of results.
 + Late Data Handling: 
-When processing streams in event-time mode with watermarks, it can happen that a computation has been completed before all associated events have arrived. Such events are called late events. Flink features multiple options to handle late events, such as rerouting them via side outputs and updating previously completed results.
+  When processing streams in event-time mode with watermarks, it can happen that a computation has been completed before all associated events have arrived. Such events are called late events. Flink features multiple options to handle late events, such as rerouting them via side outputs and updating previously completed results.
 + Processing-time Mode: 
-In addition to its event-time mode, Flink also supports processing-time semantics which performs computations as triggered by the wall-clock time of the processing machine. The processing-time mode can be suitable for certain applications with strict low-latency requirements that can tolerate approximate results.
+  In addition to its event-time mode, Flink also supports processing-time semantics which performs computations as triggered by the wall-clock time of the processing machine. The processing-time mode can be suitable for certain applications with strict low-latency requirements that can tolerate approximate results.
 
 #### Other Terms
 
@@ -244,13 +258,18 @@ In addition to its event-time mode, Flink also supports processing-time semantic
 + **Transformation**
   A Transformation is applied on one or more data streams or data sets and results in one or more output data streams or data sets. A transformation might change a data stream or data set on a per-record basis, but might also only change its partitioning or perform an aggregation. While Operators and Functions are the “physical” parts of Flink’s API, Transformations are only an API concept. Specifically, most transformations are implemented by certain Operators.
 
-## 2. Mode: Local Standalone 
+## 2. Deployment
+[Deployment Modes](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/deployment/overview/)
+
+### 2.1 Mode: Local Standalone 
+
+[Deployment/Standalone](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/deployment/resource-providers/standalone/overview/)
 https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/deployment/resource-providers/standalone/overview/
-https://nightlies.apache.org/flink/flink-docs-release-1.15//docs/try-flink/local_installation/
+
 https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/try-flink/flink-operations-playground/
 https://nightlies.apache.org/flink/flink-docs-release-1.14//docs/try-flink/local_installation/
 
-### Insall
+#### Insall
 ```
 $ java -version
 $ tar -xzf flink-*.tgz
@@ -360,11 +379,11 @@ public class WordCount
 }
 
 ```
-### Log Analysis
-#### Job Manager Log
+#### Log Analysis
+##### Job Manager Log
 vim log/flink-root-standalonesession-0-vm01.log 
 
-##### 启动
+###### 启动
 ```
 2022-05-26 14:14:26,762 INFO  org.apache.flink.runtime.dispatcher.DispatcherRestEndpoint   [] - Rest endpoint listening at localhost:8081
 2022-05-26 14:14:26,763 INFO  org.apache.flink.runtime.dispatcher.DispatcherRestEndpoint   [] - http://localhost:8081 was granted leadership with leaderSessionID=00000000-0000-0000-0000-000000000000
@@ -381,7 +400,7 @@ vim log/flink-root-standalonesession-0-vm01.log
 2022-05-26 14:14:27,927 INFO  org.apache.flink.runtime.resourcemanager.StandaloneResourceManager [] - Registering TaskManager with ResourceID 10.136.100.48:35016-a4d337 (akka.tcp://flink@10.136.100.48:35016/user/rpc/taskmanager_0) at ResourceManager
 ```
 
-##### 接收job，create->running/schedule->deploy
+###### 接收job，create->running/schedule->deploy
 ```
 2022-05-27 16:13:00,098 INFO  org.apache.flink.runtime.dispatcher.StandaloneDispatcher     [] - Received JobGraph submission 'Streaming WordCount' (f69c1ca4892ecbc08d4247ded254f467).
 2022-05-27 16:13:00,100 INFO  org.apache.flink.runtime.dispatcher.StandaloneDispatcher     [] - Submitting job 'Streaming WordCount' (f69c1ca4892ecbc08d4247ded254f467).
@@ -427,9 +446,9 @@ vim log/flink-root-standalonesession-0-vm01.log
 2022-05-27 16:13:01,328 INFO  org.apache.flink.runtime.jobmaster.JobMaster                 [] - Close ResourceManager connection 4a2508526d0621625a55daa90f37e499: Stopping JobMaster for job 'Streaming WordCount' (f69c1ca4892ecbc08d4247ded254f467).
 2022-05-27 16:13:01,330 INFO  org.apache.flink.runtime.resourcemanager.StandaloneResourceManager [] - Disconnect job manager 00000000000000000000000000000000@akka.tcp://flink@localhost:6123/user/rpc/jobmanager_2 for job f69c1ca4892ecbc08d4247ded254f467 from the resource manager.
 ```
-#### Task Manager Log
+##### Task Manager Log
 vim flink-root-taskexecutor-0-vm01.log
-##### 启动
+###### 启动
 ```
 INFO  [] - Final TaskExecutor Memory configuration:
 INFO  [] -   Total Process Memory:          1.688gb (1811939328 bytes)
@@ -465,7 +484,7 @@ INFO  [] -     JVM Overhead:                192.000mb (201326592 bytes)
 2022-05-26 14:14:27,812 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Resolved ResourceManager address, beginning registration
 2022-05-26 14:14:27,950 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Successful registration at resource manager akka.tcp://flink@localhost:6123/user/rpc/resourcemanager_* under registration id 82d6263f9d0c12c01c047caa988f2d1a.
 ```
-##### 接收task,具体执行
+###### 接收task,具体执行
 ```
 2022-05-27 16:13:00,529 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Receive slot request 3b41f2b6c9f47bf531ac47e91afde9fb for job f69c1ca4892ecbc08d4247ded254f467 from resource manager with leader id 00000000000000000000000000000000.
 2022-05-27 16:13:00,548 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Allocated slot for 3b41f2b6c9f47bf531ac47e91afde9fb.
@@ -508,7 +527,8 @@ INFO  [] -     JVM Overhead:                192.000mb (201326592 bytes)
 2022-05-27 16:13:01,342 INFO  org.apache.flink.runtime.taskexecutor.DefaultJobLeaderService [] - Remove job f69c1ca4892ecbc08d4247ded254f467 from job leader monitoring.
 2022-05-27 16:13:01,343 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Close JobManager connection for job f69c1ca4892ecbc08d4247ded254f467.
 ```
-##### 具体执行输出
+
+###### 具体执行输出
 vim log/flink-root-taskexecutor-0-vm01.out
 ```
 (to,1)
@@ -521,7 +541,7 @@ vim log/flink-root-taskexecutor-0-vm01.out
 (is,1)
 (the,1)
 ```
-#### Client Log
+##### Client Log
 vim log/flink-root-client-vm01.log
 ```
 2022-05-27 16:12:57,601 INFO  org.apache.flink.client.cli.CliFrontend                      [] -  Program Arguments:
@@ -536,15 +556,15 @@ vim log/flink-root-client-vm01.log
 2022-05-27 16:13:03,555 INFO  org.apache.flink.configuration.Configuration                 [] - Config uses fallback configuration key 'jobmanager.rpc.address' instead of key 'rest.address'
 ```
 
-## 3. Mode: Production cluster deployment
+### 2.2 Mode: Production cluster deployment
 https://nightlies.apache.org/flink/flink-docs-master/docs/deployment/overview/
 hdfs
 
 https://flink.apache.org/training.html
 
-### Install with Hadoop
+#### Install with Hadoop
 
-#### Hadoop
+##### Hadoop
 HOME: /home/hadoop
 
 download hadoop:
@@ -784,7 +804,7 @@ rm -r ~/hadoop-current/data/ ~/hadoop-current/logs/
 then repeat previous boot up process
 
 ```
-#### Flink
+##### Flink
 
 HOME: /home/flink
 
@@ -897,14 +917,14 @@ rm -r ~/flink-current/log/* ~/flink-current/iotmp/* ~/flink-current/upload/*
 ./bin/zkCli.sh -server localhost:12006
 [zk: localhost:2181(CONNECTED) 0] rmr /flink/default_ns
 ```
-### Log Analysis
-#### Job Manager Log
+#### Log Analysis
+##### Job Manager Log
 vim log/flink-root-standalonesession-0-vm01.log 
 ```
 
 ```
 
-#### Task Manager Log
+##### Task Manager Log
 vim flink-root-taskexecutor-0-vm01.log
 
 ```
@@ -913,7 +933,7 @@ vim flink-root-taskexecutor-0-vm01.log
 2022-05-26 19:05:08,474 INFO  org.apache.flink.runtime.net.ConnectionUtils                  - Retrieved new target address /X.X.X.3:13002.
 ```
 
-### Failover&Recoery
+#### Failover&Recoery
 https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/try-flink/flink-operations-playground/
 
 ## 4. Config
@@ -1131,5 +1151,9 @@ flink自定义函数加线程锁 https://juejin.cn/s/flink%E8%87%AA%E5%AE%9A%E4%
 使用Flink前必知的10个『陷阱』
 https://dbaplus.cn/news-73-3769-1.html
 
+---
+Refer:
+
+[Flink Slot 详解与 Job Execution Graph 优化](https://www.infoq.cn/article/ZmL7TCcEchvANY-9jG1H)
 <disqus/>
 
