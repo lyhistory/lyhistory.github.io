@@ -1,3 +1,9 @@
+## Kafka Client Compatibility
+
+https://spring.io/projects/spring-kafka
+org.springframework.kafka org.apache.kafka
+https://www.cnblogs.com/wangb0402/p/6187796.html
+
 ## Versions
 
 ### 2.3.0

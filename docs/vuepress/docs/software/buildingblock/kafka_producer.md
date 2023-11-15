@@ -13,36 +13,36 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 ## 1. 关键配置
 
-### Producer Client
+### Producer Client Config
 [KafkaProducer](https://kafka.apache.org/23/javadoc/index.html?org/apache/kafka/clients/producer/KafkaProducer.html)
 
-+ enable.idempotence
+#### enable.idempotence
     Whether or not idempotence is enabled (false by default). If disabled, the producer will not set the PID field in produce requests and the current producer delivery semantics will be in effect. Note that idempotence must be enabled in order to use transactions.
 
     When idempotence is enabled, we enforce that acks=all, retries > 1, and max.inflight.requests.per.connection=1. Without these values for these configurations, we cannot guarantee idempotence. If these settings are not explicitly overridden by the application, the producer will set acks=all, retries=Integer.MAX_VALUE, and max.inflight.requests.per.connection=1 when idempotence is enabled.
 
-+ transactional.id
+#### transactional.id
 
     For instance, in a distributed stream processing application, suppose topic-partition tp0 was originally processed by transactional.id T0. If, at some point later, it could be mapped to another producer with transactional.id T1, there would be no fencing between T0 and T1. So it is possible for messages from tp0 to be reprocessed, violating the exactly once processing guarantee.
 
     Practically, one would either have to store the mapping between input partitions and transactional.ids in an external store（存储每个partition和这个transactional.id的map）, or have some static encoding of it（设置为静态的变量，比如the transactionId Prefix appended with <group.id>.<topic>.<partition>.The drawback is that it will require separate transactional producer for each partition）.
 
     Note that enable.idempotence must be enabled if a TransactionalId is configured.
-+ delivery.timeout.ms
+#### delivery.timeout.ms
     An upper bound on the time to report success or failure after a call to send() returns. This limits the total time that a record will be delayed prior to sending, the time to await acknowledgement from the broker (if expected), and the time allowed for retriable send failures. The producer may report failure to send a record earlier than this config if either an unrecoverable error is encountered, the retries have been exhausted, or the record is added to a batch which reached an earlier delivery expiration deadline. The value of this config should be greater than or equal to the sum of request.timeout.ms and linger.ms.
 
     Type:	int
     Default:	120000 (2 minutes)
     Valid Values:	[0,...]
     Importance:	medium
-+ producer.id.expiration.ms
+#### producer.id.expiration.ms
     The time in ms that a topic partition leader will wait before expiring producer IDs. Producer IDs will not expire while a transaction associated to them is still ongoing. Note that producer IDs may expire sooner if the last write from the producer ID is deleted due to the topic's retention settings. Setting this value the same or higher than delivery.timeout.ms can help prevent expiration during retries and protect against message duplication, but the default should be reasonable for most use cases.
     Type:	int
     Default:	86400000 (1 day)
     Valid Values:	[1,...]
     Importance:	low
     Update Mode:	cluster-wide
-+ transactional.id.expiration.ms
+#### transactional.id.expiration.ms
     The time in ms that the transaction coordinator will wait without receiving any transaction status updates for the current transaction before expiring its transactional id. Transactional IDs will not expire while a the transaction is still ongoing.
 
     Type:	int
@@ -55,7 +55,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
     This means that if your producer sends messages slower than once a week it will be fenced (crash) every time it tries to send after that prolonged period. One could put that value to Integer.MAX, but that still will be around 24 days. In case of very rare events, this should be solved differently, e.g. by having separate producer ping topic, that producer will periodically send messages to.
 
-+  transaction.timeout.ms
+####  transaction.timeout.ms
     The maximum amount of time in ms that the transaction coordinator will wait for a transaction status update from the producer before proactively aborting the ongoing transaction.If this value is larger than the transaction.max.timeout.ms setting in the broker, the request will fail with a InvalidTxnTimeoutException error.
 
     This config value will be sent to the transaction coordinator along with the InitPidRequest.
@@ -66,35 +66,48 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
     Default:	60000 (1 minute)
     Valid Values:	
     Importance:	low
-    
+
+#### retry   
 + retries = 2147483647
     The default value for the producer's retries config was changed to Integer.MAX_VALUE, as we introduced delivery.timeout.ms in KIP-91, which sets an upper bound on the total time between sending a record and receiving acknowledgement from the broker. By default, the delivery timeout is set to 2 minutes.
 + retry.backoff.ms = 150
     The amount of time to wait before attempting to retry a failed request to a given topic partition. This avoids repeatedly sending requests in a tight loop under some failure scenarios.
 
-### Brokers
+#### producer.properties.max.request.size
+“The message is 1626232 bytes when serialized which is larger than the maximum request size you have configured with the max.request.size configuration.”
 
-+ transactional.id.expiration.ms	
+producer.properties.max.request.size=838860800 800M
+
+#### acks=all
+
+if the producer receives an  acknowledgement (ack) from the Kafka broker and acks=all, it means that  the message has been written exactly once to the Kafka topic
+
+When a producer sets acks to "all" (or "-1"), min.insync.replicas specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful. If this minimum cannot be met, then the producer will raise an exception (either NotEnoughReplicas or NotEnoughReplicasAfterAppend).
+When used together, min.insync.replicas and acks allow you to enforce greater durability guarantees. A typical scenario would be to create a topic with a replication factor of 3, set min.insync.replicas to 2, and produce with acks of "all". This will ensure that the producer raises an exception if a majority of replicas do not receive a write.
+
+### Brokers Config
+
+#### transactional.id.expiration.ms	
     The maximum amount of time in ms that the transaction coordinator will wait before proactively expire a producer TransactionalId without receiving any transaction status updates from it.
 
     Default is 604800000 (7 days). This allows periodic weekly producer jobs to maintain its id.
-+ max.transaction.timeout.ms	
+#### max.transaction.timeout.ms	
     The maximum allowed timeout for transactions. If a client’s requested transaction time exceeds this, then the broker will return an error in InitPidRequest. This prevents a client from too large of a timeout, which can stall consumers reading from topics included in the transaction.
 
     efault is 900000 (15 min). This is a conservative upper bound on the period of time a transaction of messages will need to be sent.
-+ transaction.state.log.min.isr	
+#### transaction.state.log.min.isr	
     The minimum number of insync replicas for the transaction state topic. 
     Default: 2
-+ transaction.state.log.replication.factor	
+#### transaction.state.log.replication.factor	
     The number of replicas for the transaction state topic.
     Default: 3
-+ transaction.state.log.num.partitions	
+#### transaction.state.log.num.partitions	
     The number of partitions for the transaction state topic.
     Default: 50
-+ transaction.state.log.segment.bytes	
+#### transaction.state.log.segment.bytes	
     The segment size for the transaction state topic.
     Default: 104857600 bytes.
-+ transaction.state.log.load.buffer.size	
+#### transaction.state.log.load.buffer.size	
     The loading buffer size for the transaction stat topic.
     Default: 5242880 bytes.
 

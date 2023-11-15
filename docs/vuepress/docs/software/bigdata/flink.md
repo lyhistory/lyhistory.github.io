@@ -6,7 +6,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 https://flink.apache.org/
 
-![](https://flink.apache.org/img/flink-home-graphic.png)
+![](/docs/docs_image/software/bigdata/flink/flink_home_graphic.png)
 
 ## 1. Intro
 ### 1.1 Architecture
@@ -260,6 +260,59 @@ Application state is a first-class citizen in Flink. You can see that by looking
 
 ## 2. Deployment
 [Deployment Modes](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/deployment/overview/)
+
+![](/docs/docs_image/software/bigdata/flink/flink_deployment_overview.png)
+
++ Flink Client
+  Compiles batch or streaming applications into a dataflow graph, which it then submits to the JobManager. 
+
+  **Implementation:**
+  - [Command Line Interface](//nightlies.apache.org/flink/flink-docs-release-1.18/docs/deployment/cli/)
+  - [REST Endpoint](//nightlies.apache.org/flink/flink-docs-release-1.18/docs/ops/rest_api/)
+  - [SQL Client](//nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/table/sqlclient/)
+  - [Python REPL](//nightlies.apache.org/flink/flink-docs-release-1.18/docs/deployment/repls/python_shell/)
+
++ JobManager 
+	JobManager is the name of the central work coordination component of Flink. It has implementations for different resource providers, which differ on high-availability, resource allocation behavior and supported job submission modes.
+  JobManager modes for job submissions:
+  - Application Mode: 
+    runs the cluster exclusively for one application. The job's main method (or client) gets executed on the JobManager. Calling `execute`/`executeAsync` multiple times in an application is supported.
+  -Per-Job Mode: 
+    runs the cluster exclusively for one job. The job's main method (or client) runs only prior to the cluster creation.
+  - Session Mode: 
+    one JobManager instance manages multiple jobs sharing the same cluster of TaskManagers
+
+  **Implementation:**
+  - Standalone (this is the barebone mode that requires just JVMs to be launched. Deployment with Docker, Docker Swarm / Compose, non-native Kubernetes and other models is possible through manual setup in this mode)
+  - Kubernetes
+  - YARN
+
++ TaskManager
+  TaskManagers are the services actually performing the work of a Flink job.
+
++ Optional External Components - High Availability Service Provider
+  Flink's JobManager can be run in high availability mode which allows Flink to recover from JobManager faults. In order  to failover faster, multiple standby JobManagers can be started to act as backups.
+  - Zookeeper
+  - Kubernetes HA
+
++ Optional External Components - File Storage and Persistency
+	For checkpointing (recovery mechanism for streaming jobs) Flink relies on external [file storage systems](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/deployment/filesystems/overview/)
+  - Local File System
+    Flink has built-in support for the file system of the local machine, including any NFS or SAN drives mounted into that local file system. It can be used by default without additional configuration. Local files are referenced with the file:// URI scheme.
+  - hadoop-compatible
+  - Pluggable File Systems (Amazon S3, Aliyun OSS and Azure Blob Storage.)
+
++ Optional External Components - Resource Provider
+  Flink can be deployed through different Resource Provider Frameworks, such as Kubernetes or YARN.
+  See JobManager implementations above.
+
++ Optional External Components - Metrics Storage
+  [Flink components report internal metrics and Flink jobs can report additional, job specific metrics as well.](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/deployment/metric_reporters/)
+
++ Optional External Components - Application-level data sources and sinks
+  While application-level data sources and sinks are not technically part of the deployment of Flink cluster components, they should be considered when planning a new Flink production deployment. Colocating frequently used data with Flink can have significant performance benefits
+
+
 
 ### 2.1 Mode: Local Standalone 
 

@@ -312,9 +312,55 @@ https://kafka.apache.org/26/documentation/
 
 https://docs.confluent.io/platform/current/installation/configuration
 
-#### 2.2.1 Server Config
+#### 2.2.1 Broker/Server Config
 
-##### 配置 external zookeeper
+##### 通用配置
+
+```
+############################# Server Basics #############################
+# The id of the broker. This must be set to a unique integer for each broker.
+broker.id=0
+
+############################# Socket Server Settings #############################
+port=9092
+host.name=X.X.X.48
+advertised.host.name=X.X.X.48
+advertised.port=9092
+listeners = PLAINTEXT://your.host.name:9092
+#advertised.listeners=PLAINTEXT://your.host.name:9092 //This is the metadata that’s passed back to clients.
+listener.security.protocol.map=PLAINTEXT:PLAINTEXT,SSL:SSL,SASL_PLAINTEXT:SASL_PLAINTEXT,SASL_SSL:SASL_SSL
+#Kafka brokers communicate between themselves, usually on the internal network (e.g., Docker network, AWS VPC, etc.). To define which listener to use, specify：
+inter.broker.listener.name //https://cwiki.apache.org/confluence/display/KAFKA/KIP-103%3A+Separation+of+Internal+and+External+traffic
+
+You need to set advertised.listeners (or KAFKA_ADVERTISED_LISTENERS if you’re using Docker images) to the external address (host/IP) so that clients can correctly connect to it. Otherwise, they’ll try to connect to the internal host address—and if that’s not reachable, then problems ensue.
+
+https://stackoverflow.com/questions/42998859/kafka-server-configuration-listeners-vs-advertised-listeners
+https://cwiki.apache.org/confluence/display/KAFKA/KIP-103%3A+Separation+of+Internal+and+External+traffic
+https://cwiki.apache.org/confluence/display/KAFKA/KIP-291%3A+Separating+controller+connections+and+requests+from+the+data+plane
+
+############################# Group Coordinator Settings #############################
+# The following configuration specifies the time, in milliseconds, that the GroupCoordinator will delay the initial consumer rebalance.
+# The rebalance will be further delayed by the value of group.initial.rebalance.delay.ms as new members join the group, up to a maximum of max.poll.interval.ms.
+# The default value for this is 3 seconds.
+# We override this to 0 here as it makes for a better out-of-the-box experience for development and testing.
+# However, in production environments the default value of 3 seconds is more suitable as this will help to avoid unnecessary, and potentially expensive, rebalances during application startup.
+group.initial.rebalance.delay.ms=0
+
+还看到配置 scheduled.rebalance.max.delay.ms，
+https://medium.com/streamthoughts/apache-kafka-rebalance-protocol-or-the-magic-behind-your-streams-applications-e94baf68e4f2
+但是这好像是confluence提供的产品，并不是kafka默认的
+
+############################# Log Retention Policy #############################
+# The minimum age of a log file to be eligible for deletion due to age
+log.retention.hours=336
+# The maximum size of a log segment file. When this size is reached a new log segment will be created.
+#log.segment.bytes=1073741824
+log.segment.bytes=2147483647
+https://stackoverflow.com/questions/65507232/kafka-log-segment-bytes-vs-log-retention-hours
+
+```
+
+###### 配置 external zookeeper
 
 ```
 kafka配置：
@@ -352,7 +398,7 @@ server.2=1.1.1.2:2888:3888
 server.3=1.1.1.3:2888:3888                               
 SERVER_JVMFLAGS=-Xmx1024m'                                     
 ```
-##### listener
+###### listener
 
 关于host
 
@@ -381,7 +427,7 @@ SERVER_JVMFLAGS=-Xmx1024m'
    nc -vz 1.1.1.1 9092
   ```
 
-##### retention / delete
+###### retention / delete
 
 log.retention.ms:
 log.retention.ms parameter (default to 1 week). If set to -1, no time limit is applied.
@@ -404,7 +450,7 @@ So the "segment of just 35 bytes, which contained just one message, was deleted 
 
 https://stackoverflow.com/questions/41048041/kafka-deletes-segments-even-before-segment-size-is-reached
 
-##### 复制因子 replica factor 详解
+###### 复制因子 replica factor 详解
 
 很重要，对于普通的topic replica factor来说，replica多一些没有问题，但是对internal topic要特别注意，尤其是对于 __transaction_state来说，如果min.isr设置跟replication.factor设置一样，那么任何一个kafka节点down掉，都会造成无法写入kafka（transactional producer写入会报错 NotEnoughReplicasException）
 
@@ -525,130 +571,16 @@ transaction.state.log.min.isr=2
 + 丢数据：min.insync.replicas=2 && unclean.leader.election.enable=true (It is default false)
   https://stackoverflow.com/questions/57277370/min-insync-replicas-vs-unclean-leader-election
 
-##### 通用配置
+##### [Consumer相关](/software/buildingblock/kafka_consumer.md#broker-config)
 
-```
-############################# Server Basics #############################
-# The id of the broker. This must be set to a unique integer for each broker.
-broker.id=0
-
-############################# Socket Server Settings #############################
-port=9092
-host.name=X.X.X.48
-advertised.host.name=X.X.X.48
-advertised.port=9092
-listeners = PLAINTEXT://your.host.name:9092
-#advertised.listeners=PLAINTEXT://your.host.name:9092 //This is the metadata that’s passed back to clients.
-listener.security.protocol.map=PLAINTEXT:PLAINTEXT,SSL:SSL,SASL_PLAINTEXT:SASL_PLAINTEXT,SASL_SSL:SASL_SSL
-#Kafka brokers communicate between themselves, usually on the internal network (e.g., Docker network, AWS VPC, etc.). To define which listener to use, specify：
-inter.broker.listener.name //https://cwiki.apache.org/confluence/display/KAFKA/KIP-103%3A+Separation+of+Internal+and+External+traffic
-
-You need to set advertised.listeners (or KAFKA_ADVERTISED_LISTENERS if you’re using Docker images) to the external address (host/IP) so that clients can correctly connect to it. Otherwise, they’ll try to connect to the internal host address—and if that’s not reachable, then problems ensue.
-
-https://stackoverflow.com/questions/42998859/kafka-server-configuration-listeners-vs-advertised-listeners
-https://cwiki.apache.org/confluence/display/KAFKA/KIP-103%3A+Separation+of+Internal+and+External+traffic
-https://cwiki.apache.org/confluence/display/KAFKA/KIP-291%3A+Separating+controller+connections+and+requests+from+the+data+plane
-
-############################# Group Coordinator Settings #############################
-# The following configuration specifies the time, in milliseconds, that the GroupCoordinator will delay the initial consumer rebalance.
-# The rebalance will be further delayed by the value of group.initial.rebalance.delay.ms as new members join the group, up to a maximum of max.poll.interval.ms.
-# The default value for this is 3 seconds.
-# We override this to 0 here as it makes for a better out-of-the-box experience for development and testing.
-# However, in production environments the default value of 3 seconds is more suitable as this will help to avoid unnecessary, and potentially expensive, rebalances during application startup.
-group.initial.rebalance.delay.ms=0
-
-还看到配置 scheduled.rebalance.max.delay.ms，
-https://medium.com/streamthoughts/apache-kafka-rebalance-protocol-or-the-magic-behind-your-streams-applications-e94baf68e4f2
-但是这好像是confluence提供的产品，并不是kafka默认的
-
-############################# Log Retention Policy #############################
-# The minimum age of a log file to be eligible for deletion due to age
-log.retention.hours=336
-# The maximum size of a log segment file. When this size is reached a new log segment will be created.
-#log.segment.bytes=1073741824
-log.segment.bytes=2147483647
-https://stackoverflow.com/questions/65507232/kafka-log-segment-bytes-vs-log-retention-hours
-
-```
+##### [Producer相关](/software/buildingblock/kafka_producer.md#brokers-config)
 
 #### 2.2.2 Client Config
 
-##### auto.create.topics.enable
+##### [Consumer相关](/software/buildingblock/kafka_consumer.md#consumer-client-config)
 
-Enable auto creation of topic on the server
-Type:	boolean
-Default:	true
-Valid Values:	
-Importance:	high
-Update Mode:	read-only
+##### [Producer相关](/software/buildingblock/kafka_producer.md#producer-client-config)
 
-##### request.timeout.ms & retries
-request.timeout.ms:
-The configuration controls the maximum amount of time the client will wait for the response of a request. If the response is not received before the timeout elapses the client will resend the request if necessary or fail the request if retries are exhausted.
-
-Type:	int
-Default:	30000 (30 seconds)
-
-retries:
-Setting a value greater than zero will cause the client to resend any request that fails with a potentially transient error. It is recommended to set the value to either zero or `MAX_VALUE` and use corresponding timeout parameters to control how long a client should retry a request.
-
-Type:	int
-Default:	0
-Valid Values:	[0,...,2147483647]
-Importance:	low
-
-##### max.poll.interval.ms vs session.timeout.ms
-max.poll.interval.ms:
-The maximum delay between invocations of poll() when using consumer group management. This places an upper bound on the amount of time that the consumer can be idle before fetching more records. If poll() is not called before expiration of this timeout, then the consumer is considered failed and the group will rebalance in order to reassign the partitions to another member. For consumers using a non-null group.instance.id which reach this timeout, partitions will not be immediately reassigned. Instead, the consumer will stop sending heartbeats and partitions will be reassigned after expiration of session.timeout.ms. This mirrors the behavior of a static consumer which has shutdown.
-
-Type:	int
-Default:	300000 (5 minutes)
-Valid Values:	[1,...]
-Importance:	medium
-
-session.timeout.ms:
-The timeout used to detect client failures when using Kafka's group management facility. The client sends periodic heartbeats to indicate its liveness to the broker. If no heartbeats are received by the broker before the expiration of this session timeout, then the broker will remove this client from the group and initiate a rebalance. Note that the value must be in the allowable range as configured in the broker configuration by group.min.session.timeout.ms and group.max.session.timeout.ms.
-
-Type:	int
-Default:	45000 (45 seconds)
-Valid Values:	
-Importance:	high
-
-> Before KIP-62, there is only session.timeout.ms (ie, Kafka 0.10.0 and earlier). max.poll.interval.ms is introduced via KIP-62 (part of Kafka 0.10.1).
-> KIP-62, decouples heartbeats from calls to poll() via a background heartbeat thread, allowing for a longer processing time (ie, time between two consecutive poll()) than heartbeat interval.
-> Assume processing a message takes 1 minute. If heartbeat and poll are coupled (ie, before KIP-62), you will need to set session.timeout.ms larger than 1 minute to prevent consumer to time out. However, if a consumer dies, it also takes longer than 1 minute to detect the failed consumer.
-> KIP-62 decouples polling and heartbeat allowing to send heartbeats between two consecutive polls. Now you have two threads running, the heartbeat thread and the processing thread and thus, KIP-62 introduced a timeout for each. session.timeout.ms is for the heartbeat thread while max.poll.interval.ms is for the processing thread.
-> Assume, you set session.timeout.ms=30000, thus, the consumer heartbeat thread must sent a heartbeat to the broker before this time expires. On the other hand, if processing of a single message takes 1 minutes, you can set max.poll.interval.ms larger than one minute to give the processing thread more time to process a message.
-> If the processing thread dies, it takes max.poll.interval.ms to detect this. However, if the whole consumer dies (and a dying processing thread most likely crashes the whole consumer including the heartbeat thread), it takes only session.timeout.ms to detect it.
-> The idea is, to allow for a quick detection of a failing consumer even if processing itself takes quite long.
-> https://stackoverflow.com/questions/39730126/difference-between-session-timeout-ms-and-max-poll-interval-ms-for-kafka-0-10
-
-##### scheduled.rebalance.max.delay.ms
-The maximum delay that is scheduled in order to wait for the return of one or more departed workers before rebalancing and reassigning their connectors and tasks to the group. During this period the connectors and tasks of the departed workers remain unassigned
-
-Type:	int
-Default:	300000 (5 minutes)
-
-##### session.timeout.ms
- After every rebalance, all members of the current generation begin sending periodic heartbeats to the group coordinator. As long as the coordinator continues receiving heartbeats, it assumes that members are healthy. On every received heartbeat, the coordinator starts (or resets) a timer. If no heartbeat is received when the timer expires, the coordinator marks the member dead and signals the rest of the group that they should rejoin so that partitions can be reassigned. The duration of the timer is known as the session timeout and is configured on the client with the setting session.timeout.ms. 
-  The only problem with this is that a spurious rebalance might be triggered if the consumer takes longer than the session timeout to process messages. You should therefore set the session timeout large enough to make this unlikely. The default is 30 seconds, but it’s not unreasonable to set it as high as several minutes. The only downside of a larger session timeout is that it will take longer for the coordinator to detect genuine consumer crashes.
-
-##### producer.properties.max.request.size
-“The message is 1626232 bytes when serialized which is larger than the maximum request size you have configured with the max.request.size configuration.”
-
-producer.properties.max.request.size=838860800 800M
-
-##### metadata.max.age.ms
-不是订阅某个topic 而是订阅某种pattern
-repeat subscribe()
-[Kafka pattern subscription. Rebalancing is not being triggered on new topic](https://stackoverflow.com/questions/38754865/kafka-pattern-subscription-rebalancing-is-not-being-triggered-on-new-topic/66758840#66758840)
-
-##### acks=all
-
-if the producer receives an  acknowledgement (ack) from the Kafka broker and acks=all, it means that  the message has been written exactly once to the Kafka topic
-
-When a producer sets acks to "all" (or "-1"), min.insync.replicas specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful. If this minimum cannot be met, then the producer will raise an exception (either NotEnoughReplicas or NotEnoughReplicasAfterAppend).
-When used together, min.insync.replicas and acks allow you to enforce greater durability guarantees. A typical scenario would be to create a topic with a replication factor of 3, set min.insync.replicas to 2, and produce with acks of "all". This will ensure that the producer raises an exception if a majority of replicas do not receive a write.
 
 ### 2.3 GUI & Commands
 
@@ -1942,12 +1874,6 @@ transactional.id.expiration.ms=2073600000
 
 修改了其中一个broker节点的config，忘记同步到所有的节点
 
-### Kafka Client Compatibility
-
-https://spring.io/projects/spring-kafka
-org.springframework.kafka org.apache.kafka
-https://www.cnblogs.com/wangb0402/p/6187796.html
-
 ### Replica factor
 
 ```
@@ -2007,349 +1933,6 @@ client端日志
 	Preparing to rebalance group TEST-SZL in state PreparingRebalance with old generation 0 (__consumer_offsets-43) (reason: Adding new member consumer-2-ab88af5d-b206-48fb-a38b-ead5e50ad76e) (kafka.coordinator.group.GroupCoordinator)
 
 
-### 网络故障 / kafka集群有节点挂掉（不是正常停节点，而是broker节点所在服务器网络断开或暴力停机）
-
-#### 造成kafka client端程序读取 metadata 超过默认 30s 抛错
-
-public java.util.Map<TopicPartition,java.lang.Long> endOffsets(java.util.Collection<TopicPartition> partitions)
-
-TimeoutException - if the offset metadata could not be fetched before the amount of time allocated by **request.timeout.ms expires**
-
-异常日志分析：
-```
-场景1：
-现在dev上3个节点配置 borker 0 1 2：
-offsets.topic.replication.factor=3
-min.insync.isr=2
-transaction.state.log.replication.factor=3
-transaction.state.log.min.isr=2
-default.replication.factor=3
-正常挂掉1个是没问题的，但是居然挂掉2个居然都能启动client端（能成功join group，kafka成功rebalance）：
-这个比较诡异，就是测试的时候其实只有两个活着的节点，broker 0不知道被谁用root更改了几个kafka-logs文件权限，造成borker 0停了，
-，然后测试断开broker 2的网络，只有broker 1一个可用节点，client端居然能够启动并且订阅topic，只不过恢复的时候（onPartitionAssign内部进一步访问kafka读取快照数据）抛错，比如可能是恢复的时候创建临时consumer，kafka服务端向zookeeper注册的时候出现超时（下面有zookeeper问题的log），
-2022-03-12 18:33:29.793 [31mERROR[m [35m15732GG[m [TEST-MANAGER] [36mo.a.k.c.c.i.ConsumerCoordinator[m : [Consumer clientId=consumer-2, groupId=TEST-TRADEFRONT-SZL] User provided listener com.lyhistory.core.boot.SimpleWorkBalancer failed on partition assignment
-
-com.lyhistory.core.exception.RecoveryException: Failed Recovery Worker
-	at com.lyhistory.core.boot.SimpleWorkBalancer.onPartitionsAssigned(SimpleWorkBalancer.java:54)
-	at org.apache.kafka.clients.consumer.internals.ConsumerCoordinator.onJoinComplete(ConsumerCoordinator.java:292)
-	at org.apache.kafka.clients.consumer.internals.AbstractCoordinator.joinGroupIfNeeded(AbstractCoordinator.java:410)
-	at org.apache.kafka.clients.consumer.internals.AbstractCoordinator.ensureActiveGroup(AbstractCoordinator.java:344)
-	at org.apache.kafka.clients.consumer.internals.ConsumerCoordinator.poll(ConsumerCoordinator.java:342)
-	at org.apache.kafka.clients.consumer.KafkaConsumer.updateAssignmentMetadataIfNeeded(KafkaConsumer.java:1226)
-	at org.apache.kafka.clients.consumer.KafkaConsumer.poll(KafkaConsumer.java:1191)
-	at org.apache.kafka.clients.consumer.KafkaConsumer.poll(KafkaConsumer.java:1176)
-	at com.lyhistory.core.boot.SimpleWorkerManager.doServe(SimpleWorkerManager.java:96)
-	at com.lyhistory.core.boot.AdministrableService.serve(AdministrableService.java:98)
-	at com.lyhistory.core.boot.AdministrableService.start(AdministrableService.java:36)
-	at com.lyhistory.core.boot.Starter$$Lambda$826/315805187.run(Unknown Source)
-	at java.lang.Thread.run(Thread.java:745)
-Caused by: com.lyhistory.core.exception.RecoveryException: Failed Recovery Worker
-	at com.lyhistory.core.boot.SimpleWorkBalancer.getWorkState(SimpleWorkBalancer.java:64)
-	at com.lyhistory.core.boot.SimpleWorkBalancer$$Lambda$872/1231621690.apply(Unknown Source)
-	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
-	at java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1374)
-	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:512)
-	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:502)
-	at java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151)
-	at java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174)
-	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
-	at java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:418)
-	at com.lyhistory.core.boot.SimpleWorkBalancer.onPartitionsAssigned(SimpleWorkBalancer.java:52)
-	... 12 more
-Caused by: java.util.concurrent.ExecutionException: org.apache.kafka.common.errors.TimeoutException: Failed to get offsets by times in 30000ms
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122)
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192)
-	at com.lyhistory.core.boot.SimpleWorkBalancer.getWorkState(SimpleWorkBalancer.java:62)
-	... 22 more
-Caused by: org.apache.kafka.common.errors.TimeoutException: Failed to get offsets by times in 30000ms
-
-但是正常不应该能够订阅topic，应该抛出错误类似：
-1 partitions have leader brokers without a matching listener （因为factor=2，挂了2台了肯定有节点的leader不在了）
-或者
-insufficient isr (min.isr=2>live broker=1)
-从而导致client无法join group：
-Group coordinator XXXX:9092 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery
-
-猜测1： broker 0并非真的挂，只是因为kafka log文件权限为root，造成kafka服务处于异常状态（还可以跟其他机器沟通），所以此时仍然满足min.isr=2的要求
-否定：根据broker 0上面的日志，可以看到kafka根本没有对应时间段的任何日志
-猜测2: 虽然broker 2网络断开，此时 broker 2 对于 broker 1 来说属于假死状态，尚未更新metadata，所以没有检测出insufficient isr
-验证：发现断网后出现如下错误 Opening socket connection to server sgkc2-devclr-v07/x.x.x.47:2181. Will not attempt to authenticate using SASL (unknown error)
-比较可靠的猜测：猜测2基本对的，不过不是假死，而是本身就已经成了孤立节点，又无法与broker 0和2的zookeeper通信更新信息，从而造成kafka服务端异常，产生了绕过min.isr限制的假象
-[2022-03-14 08:59:39,144] WARN Client session timed out, have not heard from server in 4002ms for sessionid 0x17862f2bedc0004 (org.apache.zookeeper.ClientCnxn)
-[2022-03-14 08:59:39,145] INFO Client session timed out, have not heard from server in 4002ms for sessionid 0x17862f2bedc0004, closing socket connection and attempting reconnect (org.apache.zookeeper.ClientCnxn)
-[2022-03-14 08:59:39,826] INFO Opening socket connection to server sgkc2-devclr-v07/x.x.x.47:2181. Will not attempt to authenticate using SASL (unknown error) (org.apache.zookeeper.ClientCnxn)
-[2022-03-14 08:59:41,829] WARN Client session timed out, have not heard from server in 2583ms for sessionid 0x17862f2bedc0004 (org.apache.zookeeper.ClientCnxn)
-[2022-03-14 08:59:41,829] INFO Client session timed out, have not heard from server in 2583ms for sessionid 0x17862f2bedc0004, closing socket connection and attempting reconnect (org.apache.zookeeper.ClientCnxn)
-[2022-03-14 08:59:42,820] INFO Opening socket connection to server sgkc2-devclr-v05/x.x.x.45:2181. Will not attempt to authenticate using SASL (unknown error) (org.apache.zookeeper.ClientCnxn)
-[2022-03-14 08:59:42,821] INFO Socket error occurred: sgkc2-devclr-v05/x.x.x.45:2181: Connection refused (org.apache.zookeeper.ClientCnxn)
-[2022-03-14 09:00:00,597] INFO [ReplicaFetcher replicaId=1, leaderId=2, fetcherId=0] Error sending fetch request (sessionId=2095832195, epoch=8913816) to node 2: java.io.IOException: Connection to 2 was disconnected before the response was read. (org.apache.kafka.clients.FetchSessionHandler)
-[2022-03-14 09:00:00,598] WARN [ReplicaFetcher replicaId=1, leaderId=2, fetcherId=0] Error in response for fetch request (type=FetchRequest, replicaId=1, maxWait=500, minBytes=1, maxBytes=10485760, fetchData={}, isolationLevel=READ_UNCOMMITTED, toForget=, metadata=(sessionId=2095832195, epoch=8913816)) (kafka.server.ReplicaFetcherThread)
-java.io.IOException: Connection to 2 was disconnected before the response was read
-        at org.apache.kafka.clients.NetworkClientUtils.sendAndReceive(NetworkClientUtils.java:100)
-        at kafka.server.ReplicaFetcherBlockingSend.sendRequest(ReplicaFetcherBlockingSend.scala:100)
-        at kafka.server.ReplicaFetcherThread.fetchFromLeader(ReplicaFetcherThread.scala:193)
-        at kafka.server.AbstractFetcherThread.processFetchRequest(AbstractFetcherThread.scala:280)
-        at kafka.server.AbstractFetcherThread.$anonfun$maybeFetch$3(AbstractFetcherThread.scala:132)
-        at kafka.server.AbstractFetcherThread.$anonfun$maybeFetch$3$adapted(AbstractFetcherThread.scala:131)
-        at scala.Option.foreach(Option.scala:274)
-        at kafka.server.AbstractFetcherThread.maybeFetch(AbstractFetcherThread.scala:131)
-        at kafka.server.AbstractFetcherThread.doWork(AbstractFetcherThread.scala:113)
-        at kafka.utils.ShutdownableThread.run(ShutdownableThread.scala:82)
-。。。
-[2022-03-14 09:00:32,612] INFO [ReplicaFetcher replicaId=1, leaderId=2, fetcherId=0] Error sending fetch request (sessionId=2095832195, epoch=INITIAL) to node 2: java.net.SocketTimeoutException: Failed to connect within 30000 ms. (org.apache.kafka.clients.FetchSessionHandler)
-[2022-03-14 09:00:32,612] WARN [ReplicaFetcher replicaId=1, leaderId=2, fetcherId=0] Error in response for fetch request (type=FetchRequest, replicaId=1, maxWait=500, minBytes=1, maxBytes=10485760, fetchData={T-TRADE-CHK-0=(fetchOffset=0, logStartOffset=0, maxBytes=1048576, currentLeaderEpoch=Optional[0]), T-EOD-SNP-1=(fetchOffset=86, logStartOffset=86, maxBytes=1048576, currentLeaderEpoch=Optional[0]), T-DBMS-CHK-0=(fetchOffset=2002, logStartOffset=1992, maxBytes=1048576, currentLeaderEpoch=Optional[0]), T-CAPTURE-2=(fetchOffset=2002, logStartOffset=1992, maxBytes=1048576, currentLeaderEpoch=Optional[0])}, isolationLevel=READ_UNCOMMITTED, toForget=, metadata=(sessionId=2095832195, epoch=INITIAL)) (kafka.server.ReplicaFetcherThread)
-java.net.SocketTimeoutException: Failed to connect within 30000 ms
-        at kafka.server.ReplicaFetcherBlockingSend.sendRequest(ReplicaFetcherBlockingSend.scala:96)
-        at kafka.server.ReplicaFetcherThread.fetchFromLeader(ReplicaFetcherThread.scala:193)
-        at kafka.server.AbstractFetcherThread.processFetchRequest(AbstractFetcherThread.scala:280)
-        at kafka.server.AbstractFetcherThread.$anonfun$maybeFetch$3(AbstractFetcherThread.scala:132)
-        at kafka.server.AbstractFetcherThread.$anonfun$maybeFetch$3$adapted(AbstractFetcherThread.scala:131)
-        at scala.Option.foreach(Option.scala:274)
-        at kafka.server.AbstractFetcherThread.maybeFetch(AbstractFetcherThread.scala:131)
-        at kafka.server.AbstractFetcherThread.doWork(AbstractFetcherThread.scala:113)
-        at kafka.utils.ShutdownableThread.run(ShutdownableThread.scala:82)
-
-场景2：类似上面场景
-现在dev上3个节点配置 borker 0 1 2：
-offsets.topic.replication.factor=3 
-min.insync.replicas=1 
-transaction.state.log.replication.factor=3 
-transaction.state.log.min.isr=1 
-default.replication.factor=3 
-
-同时断开了broker 0 和 2的网络，然后启动kafka client，此时kafka client端所在的网络分区内只能连接到 borker 1，同样出现了场景1中的情形，
-可以正常subscribe topic并且kafka server端borker 1正常进行了rebalance，但是接下来client端在onPartitionAssigned内进一步访问kafka获取一些快照数据时产生超时错误
-
-不过跟场景1不太一样的是，后来broker 2恢复了，并且broker 1成功连接了broker 2（以及其同一机器上的zookeeper），只不过过程中fetch的时候出错
-虽然 18:09:48,061 连接上了，但是后面fetch io错误
-[2022-03-12 18:10:07,087] INFO Opening socket connection to server vm-v01/x.x.x.x:2181. Will not attempt to authenticate using SASL (unknown error) (org.apache.zookeeper.ClientCnxn)
-[2022-03-12 18:10:07,089] INFO Socket connection established to vm-v01/x.x.x.x:2181, initiating session (org.apache.zookeeper.ClientCnxn)
-[2022-03-12 18:10:07,093] INFO Session establishment complete on server vm-v01/x.x.x.x:2181, sessionid = 0x27b6bf74fac000e, negotiated timeout = 6000 (org.apache.zookeeper.ClientCnxn)
-[2022-03-12 18:10:07,093] INFO [ZooKeeperClient] Connected. (kafka.zookeeper.ZooKeeperClient)
-
-注意到关键词：Shrinking
-[2022-03-12 18:10:07,139] INFO [Partition __consumer_offsets-43 broker=3] Shrinking ISR from 3,1,4 to 3. Leader: (highWatermark: 115, endOffset: 120). Out of sync replicas: (brokerId: 1, endOffset: 115) (brokerId: 4, endOffset: 116). (kafka.cluster.Partition)
-紧接着又expand？
-[2022-03-12 18:10:07,381] INFO [Partition __consumer_offsets-43 broker=3] Expanding ISR from 3 to 3,4 (kafka.cluster.Partition)
-
-但是fetch错误
-[2022-03-12 18:10:07,471] INFO [ReplicaFetcher replicaId=3, leaderId=4, fetcherId=0] Shutting down (kafka.server.ReplicaFetcherThread)
-[2022-03-12 18:10:07,471] INFO [ReplicaFetcher replicaId=3, leaderId=4, fetcherId=0] 
-	Error sending fetch request (sessionId=346995240, epoch=1677663) to node 4: 
-	java.io.IOException: Client was shutdown before response was read. (org.apache.kafka.clients.FetchSessionHandler)
-[2022-03-12 18:10:07,471] INFO [ReplicaFetcher replicaId=3, leaderId=4, fetcherId=0] Stopped (kafka.server.ReplicaFetcherThread)
-[2022-03-12 18:10:07,471] INFO [ReplicaFetcher replicaId=3, leaderId=4, fetcherId=0] Shutdown completed (kafka.server.ReplicaFetcherThread)
-
-可见网络还是不稳定或者broker 1 和 2之间的通信同步出现错误
-
-场景3：
-既然前面两个场景中都是有两个节点不正常，再测试一次：
-broker 0 1 2，断网broker 2（以及其服务器上面的zookeeper节点）
-同样启动kafka-client，仍然跟前面类似，client端能够启动并且订阅topic，只不过恢复的时候（onPartitionAssign内部进一步访问kafka读取快照数据）抛错；
-但是再试了几次发现这个错误有点意思，刚开始的时候，每次都会随机成功某几个partition，直到2小时后才稳定的成功（后面再测试几轮实际是随机成功和失败）
-程序的main consumer subscribe topic基本都没有问题 （中间只有一次出现了场景5中的无法启动的问题），
-然后onPartitionAssign内部进一步访问kafka读取快照数据的时候不稳定
-读取快照自然用的不是subscribe而是
-        TopicPartition topicPartition = new TopicPartition(config.getSnapshotTopic(), partition);
-        Consumer<String, Snapshot> consumer = createConsumer(partition);
-        long lastOffset = consumer.endOffsets(Collections.singleton(topicPartition)).get(topicPartition) - 2;
-        if (lastOffset < 0) {
-            lastOffset = 0;
-        }
-        consumer.assign(Collections.singleton(topicPartition));
-        consumer.seek(topicPartition, lastOffset);
-        ConsumerRecords<String, Snapshot> records = consumer.poll(Duration.ofMillis(10_000L));
-        Snapshot snapshot = null;
-        for (ConsumerRecord<String, Snapshot> record : records) {
-            snapshot = record.value();
-        }
-        consumer.close();
-```
-通过加日志，发现错误都是发生在endOffsets这里，默认的timeout应该是30s， 
-这个问题就是读取metadata出现问题，
-最终反复测试确定根源：
-如果某个broker节点是直接杀死，只要该节点网络通的，client端读取metadata就不会超时，
-但是如果某个broker节点所在服务器网络断开，client端的kafka cluster配置中仍有该broker的信息，那么client端读取metadata的时候可能会尝试连接有问题的节点由于网络重试造成超时
-##### 所以解决方案：
-1）修改 consumer.properties.bootstrap.servers，移除坏节点
-2）修改api调用，增加timeout时间到5分钟（实测超时在2分钟左右）：consumer.endOffsets(Collections.singleton(topicPartition),Duration.ofMillis(300000)).get(topicPartition)
-3）修改配置 consumer.properties.request.timeout.ms=300000，注意这个只对org.apache.kafka.clients.consumer.KafkaConsumer生效，我们这里用的是org.apache.kafka.clients.consumer.Consumer
-
-```
-场景4：
-1. broker 0 1 2 都启动
-2.停 broker 2，启动kafka client端服务正常，expected
-3.停broker 0，无法启动kafka client端服务，expected
-4.恢复broker2，无法启动kafka client端服务，报错，unexpected
-  client端仍然是报错跟3一样，[Consumer clientId=consumer-2, groupId=TEST-SZL] 1 partitions have leader brokers without a matching listener, including [T-TRADE-1]，
-  kafka服务端报错：
-  [2022-03-16 10:58:02,825] TRACE [Controller id=1] Leader imbalance ratio for broker 2 is 0.1282051282051282 (kafka.controller.KafkaController)
-[2022-03-16 10:58:02,825] INFO [Controller id=1] Starting preferred replica leader election for partitions T-TEST-SNP-2,T-TEST-0,T-TRADE-SNP-2,T-TRADE-1,T-CAPTURE-1 (kafka.controller.KafkaController)
-[2022-03-16 10:58:02,836] ERROR [Controller id=1] Error completing preferred replica leader election for partition T-TEST-0 (kafka.controller.KafkaController)
-kafka.common.StateChangeFailedException: Failed to elect leader for partition T-TEST-0 under strategy PreferredReplicaPartitionLeaderElectionStrategy
-        at kafka.controller.PartitionStateMachine.$anonfun$doElectLeaderForPartitions$9(PartitionStateMachine.scala:390)
-        at scala.collection.mutable.ResizableArray.foreach(ResizableArray.scala:62)
-        at scala.collection.mutable.ResizableArray.foreach$(ResizableArray.scala:55)
-        at scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:49)
-        at kafka.controller.PartitionStateMachine.doElectLeaderForPartitions(PartitionStateMachine.scala:388)
-        at kafka.controller.PartitionStateMachine.electLeaderForPartitions(PartitionStateMachine.scala:315)
-        at kafka.controller.PartitionStateMachine.doHandleStateChanges(PartitionStateMachine.scala:225)
-        at kafka.controller.PartitionStateMachine.handleStateChanges(PartitionStateMachine.scala:141)
-        at kafka.controller.KafkaController.kafka$controller$KafkaController$$onPreferredReplicaElection(KafkaController.scala:649)
-        at kafka.controller.KafkaController.$anonfun$checkAndTriggerAutoLeaderRebalance$6(KafkaController.scala:1008)
-        at scala.collection.immutable.Map$Map3.foreach(Map.scala:195)
-        at kafka.controller.KafkaController.kafka$controller$KafkaController$$checkAndTriggerAutoLeaderRebalance(KafkaController.scala:989)
-        at kafka.controller.KafkaController$AutoPreferredReplicaLeaderElection$.process(KafkaController.scala:1020)
-        at kafka.controller.ControllerEventManager$ControllerEventThread.$anonfun$doWork$1(ControllerEventManager.scala:94)
-        at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
-        at kafka.metrics.KafkaTimer.time(KafkaTimer.scala:31)
-        at kafka.controller.ControllerEventManager$ControllerEventThread.doWork(ControllerEventManager.scala:94)
-        at kafka.utils.ShutdownableThread.run(ShutdownableThread.scala:82)
-[2022-03-16 10:58:02,837] WARN [Controller id=1] Partition T-TEST-0 failed to complete preferred replica leader election to 2. Leader is still 0 (kafka.controller.KafkaController)
-原因分析：应该是由于操作频率过快，启停kafka borker的时候没有给足时间做failover，可见kafka服务本身可以看到他的健壮性有问题了，居然无法选举新leader
-
-重新设计连续测试场景：
------------------------------------
---- borker 0 1 2 alive
------------------------------------
-start kafka client
-test kafka client
------------------------------------
---- kill 2(both zookeeper&kafka), borker 0 1 alive
------------------------------------
-test kafka client
-restart kafka client
-test kafka client
-
------------------------------------
---- resume 2, borker 0 1 2 alive
------------------------------------
-test kafka client
-restart kafka client
-test kafka client
-
------------------------------------
---- shutdown network for borker 2, borker 0 1 alive
------------------------------------
-test kafka client	
-restart kafka client
-test kafka client
-
-
-场景5：跟前面类似，只不过这次是kafka客户端启停太快
-断开 borker 2网络, borker 0 1 alive
-第一次重启kafka client端（stop then start）失败！
-    2022-03-16 17:14:21.728  INFO 370GG [main] o.a.k.c.u.AppInfoParser$AppInfo : Kafka version: 2.2.0
-		2022-03-16 17:14:21.728  INFO 370GG [main] o.a.k.c.u.AppInfoParser$AppInfo : Kafka commitId: 05fcfde8f69b0349
-		2022-03-16 17:15:21.737  INFO 370GG [main] ConditionEvaluationReportLoggingListener : 
-
-		Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-		2022-03-16 17:15:21.767 ERROR 370GG [main] o.s.b.SpringApplication : Application run failed
-
-		org.apache.kafka.common.errors.TimeoutException: Timeout expired while fetching topic metadata
-
-		2022-03-16 17:15:21.808  INFO 370GG [main] o.s.s.c.ExecutorConfigurationSupport : Shutting down ExecutorService 'applicationTaskExecutor'
-		2022-03-16 17:15:21.809  INFO 370GG [main] o.a.k.c.p.KafkaProducer : [Producer clientId=producer-1] Closing the Kafka producer with timeoutMillis = 9223372036854775807 ms.
-		2022-03-16 17:15:21.816  INFO 370GG [main] c.a.d.p.DruidDataSource : {dataSource-1} closing ...
-		2022-03-16 17:15:21.831  INFO 370GG [main] c.a.d.p.DruidDataSource : {dataSource-1} closed
-    possible reason:
-		停掉 kafka client大概是在：
-		2022-03-16 17:13:51.918 ^[[32m INFO^[[m ^[[35m30256GG^[[m [QFJ Timer] ^[[36mc.q.c.f.f.s.AbstractApplication^[[m : fix server toAdmin: [8=FIX.4.4|9=60|35=0|34=683|49=EXEC|52=20220316-09:13:51.918|56=EXCHANGE_FS|10=167|]
-		然后很快启动了 kafka client：
-		2022-03-16 17:14:17.944 ^[[32m INFO^[[m ^[[35m370GG^[[m [main] ^[[36mo.s.b.StartupInfoLogger^[[m : Starting TradeFrontMain v1.1.0-SNAPSHOT using Java 1.8.0_40 on XXXX with PID 370 (/lyhistory/kafka client.jar started by xxx in /lyhistory)
-		2022-03-16 17:14:17.955 ^[[32mDEBUG^[[m ^[[35m370GG^[[m [main] ^[[36mo.s.b.StartupInfoLogger^[[m : Running with Spring Boot v2.4.5, Spring v5.3.6
-		2022-03-16 17:14:17.956 ^[[32m INFO^[[m ^[[35m370GG^[[m [main] ^[[36mo.s.b.SpringApplication^[[m : The following profiles are active: dev
-		2022-03-16 17:14:19.821 ^[[32m INFO^[[m ^[[35m370GG^[[m [main] ^[[36mo.s.b.w.e.t.TomcatWebServer^[[m : Tomcat initialized with port(s): 10102 (http)
-		2022-03-16 17:14:19.835 ^[[32m INFO^[[m ^[[35m370GG^[[m [main] ^[[36mo.a.j.l.DirectJDKLog^[[m : Initializing ProtocolHandler ["http-nio-10102"]
-		2022-03-16 17:14:19.836 ^[[32m INFO^[[m ^[[35m370GG^[[m [main] ^[[36mo.a.j.l.DirectJDKLog^[[m : Starting service [Tomcat]
-		2022-03-16 17:14:19.836 ^[[32m INFO^[[m ^[[35m370GG^[[m [main] ^[[36mo.a.j.l.DirectJDKLog^[[m : Starting Servlet engine: [Apache Tomcat/9.0.45]
-		对应的group coordinator在broker 1上：
-		[2022-03-16 17:14:07,063] INFO [GroupCoordinator 1]: Member consumer-2-f852e86d-7db8-4943-b378-097fe08415f8 in group TEST-SZL has failed, removing it from the group (kafka.coordinator.group.GroupCoordinator)
-		[2022-03-16 17:14:07,064] INFO [GroupCoordinator 1]: Preparing to rebalance group TEST-SZL in state PreparingRebalance with old generation 1 (__consumer_offsets-43) (reason: removing member consumer-2-f852e86d-7db8-4943-b378-097fe08415f8 on heartbeat expiration) (kafka.coordinator.group.GroupCoordinator)
-		[2022-03-16 17:14:07,065] INFO [GroupCoordinator 1]: Group TEST-SZL with generation 2 is now empty (__consumer_offsets-43) (kafka.coordinator.group.GroupCoordinator)
-		[2022-03-16 17:15:54,415] INFO [GroupMetadataManager brokerId=1] Group TEST-SZL transitioned to Dead in generation 2 (kafka.coordinator.group.GroupMetadataManager)
-		可以看到在kafka client启动的时候，刚好是group coordinator在处理remove之前的kafka client consumer的时候，所以造成读取offset时间超时！
-
-经验总结：
-1. 遇到网络故障，即使自动恢复了，也最好要启停一下zookeeper和kafka
-2. 启停kafka服务操作时不要动作太快
-3. 启停kafka客户端操作时也不要动作太快
-
-这些异常情况可能也是kafka最终抛弃zookeeper的原因！
-```
-
-#### 造成kafka client端程序poll自己维护的offset topic出现问题
-结合前面 【4.1.3 不依赖interal offset，自己维护offset exactly-once】
-public ConsumerRecords<K,V> poll(java.time.Duration timeout)
-
-This method returns immediately if there are records available. Otherwise, it will await the passed timeout. If the timeout expires, an empty record set will be returned. 
-
-```
-consumer.seek(topicPartition, snpoffset);
-        ConsumerRecords<String, SimpleSnapshot> records = consumer.poll(Duration.ofMillis(10_000L));
-        if(records!=null) {
-            System.out.println("records not null, count=" + String.valueOf(records.count()));
-        }
-```
-和前面情况类似，经过实际测试，发现这个10s的设置，指定的offset有时候能返回正确的message，有时候返回empty record！，
-然后改成 30000 即5分钟则没有问题
-
-[kafka consumer.seek 之后立即 poll 可能拉不到消息 ](https://www.cnblogs.com/duanguyuan/p/15906363.html)
-
-#### 造成kafka client端程序读取 metadata 超过默认 1分钟 抛错
-
-public java.util.List<PartitionInfo> partitionsFor(java.lang.String topic)
-Get metadata about the partitions for a given topic. This method will issue a remote call to the server if it does not already have any metadata about the given topic.
-
-TimeoutException - if the offset metadata could not be fetched before the amount of time allocated by **default.api.timeout.ms** expires.
-
-### This member will leave the group because consumer poll timeout has expired
-
-[36m.c.i.AbstractCoordinator$HeartbeatThread^[[m : 
-[Consumer clientId=consumer-1, groupId=TEST-SZL] 
-This member will leave the group because consumer poll timeout has expired. This means the time between subsequent calls to poll() was longer than the configured max.poll.interval.ms, which typically implies that the poll loop is spending too much time processing messages. You can address this either by increasing max.poll.interval.ms or by reducing the maximum size of batches returned in poll() with max.poll.records.
-[[36mo.a.k.c.c.i.AbstractCoordinator^[[m : [
-Consumer clientId=consumer-1, groupId=TEST-SZL] Member consumer-1-7f40d109-cd66-4554-82a9-376f1922c1b5 sending LeaveGroup request to coordinator x.x.x.x:9092 (id: 2147483647 rack: null)
-
-分析：
-首先报错的意思是程序处理一批kafka消息（max.poll.records 默认500条）的时间超过了max.poll.interval.ms，所以直观的看来就是降低max.poll.records或者提高max.poll.interval.ms，不过我们这里的场景并没有这么简单，因为我们出错的时候还没有开始获取并处理kafka消息，而是第一次poll触发的rebalance的过程中出现的错误；
-
-观察到的现象是，每次我们删除了所有topic，然后重新启动程序的时候（程序设置了auto.create.topics.enable=true），第一次consumer join group后，过了五分钟后就报上面的错误；
-
-该程序的主要逻辑：
-```
-private void start(ApplicationContext context) {
-        if (managerThread == null) {
-            workerManager = new SimpleWorkerManager(workContext);
-            managerThread = new Thread(workerManager::start);
-            managerThread.setDaemon(true);
-            managerThread.setName(config.getTaskType() + "-MANAGER");
-            managerThread.start();
-        }
-    }
-SimpleWorkerManager的构造方法中调用了kafka的消息订阅
-this.kafkaConsumer.subscribe(Collections.singleton(context.getConfig().getTaskTopic()), new SimpleWorkBalancer(context.getRestorer(), this::removeWorker, this::addWorker));
-
-然后strat()方法是去poll消息
-ConsumerRecords<String, Info> records = kafkaConsumer.poll(pollDuration);
-```
-After subscribing to a set of topics, the consumer will automatically join the group when poll(Duration) is invoked.
-
-所以问题出在第一次poll引起的rebalance的处理时间过长，超过了max.poll.interval.ms，然后我们查一下这个配置：
-
-> The maximum delay between invocations of poll() when using consumer group management. This places an upper bound on the amount of time that the consumer can be idle before fetching more records. If poll() is not called before expiration of this timeout, then the consumer is considered failed and the group will rebalance in order to reassign the partitions to another member. For consumers using a non-null group.instance.id which reach this timeout, partitions will not be immediately reassigned. Instead, the consumer will stop sending heartbeats and partitions will be reassigned after expiration of session.timeout.ms. This mirrors the behavior of a static consumer which has shutdown.
-> Type:	int
-> Default:	300000 (5 minutes)
-> Valid Values:	[1,...]
-> Importance:	medium
-
-此时我想到了[前面的另外一个bug做的修复](#网络故障--kafka集群有节点挂掉不是正常停节点而是broker节点所在服务器网络断开或暴力停机) request.timeout.ms 我设置成了5分钟，然后应该是在reblance的过程中，我们程序的逻辑会去从kafka中恢复我们自己管理的快照，但是由于所有topic已经删除，所以读取的时候可能会等待5分钟，然后 max.poll.interval.ms 默认也是5分钟，自然就timeout了，所以修复办法是延长 max.poll.interval.ms到更长的时间
-
-注意：
-> Also as part of KIP-266, the default value of request.timeout.ms has been changed to 30 seconds. The previous value was a little higher than 5 minutes to account for maximum time that a rebalance would take. Now we treat the JoinGroup request in the rebalance as a special case and use a value derived from max.poll.interval.ms for the request timeout. All other request types use the timeout defined by request.timeout.ms
-> Notable changes in 0.10.2.1
-> The default values for two configurations of the StreamsConfig class were changed to improve the resiliency of Kafka Streams applications. The internal Kafka Streams producer retries default value was changed from 0 to 10. The internal Kafka Streams consumer max.poll.interval.ms default value was changed from 300000 to Integer.MAX_VALUE.
-> The new Java Consumer now supports heartbeating from a background thread. There is a new configuration max.poll.interval.ms which controls the maximum time between poll invocations before the consumer will proactively leave the group (5 minutes by default). The value of the configuration request.timeout.ms (default to 30 seconds) must always be smaller than max.poll.interval.ms(default to 5 minutes), since that is the maximum time that a JoinGroup request can block on the server while the consumer is rebalance. Finally, the default value of session.timeout.ms has been adjusted down to 10 seconds, and the default value of max.poll.records has been changed to 500.
 
 ### Kafka 节点挂掉
 [Kafka Broker node JVM crash - kafka.coordinator.transaction.TransactionCoordinator.$anonfun$handleEndTransaction](https://issues.apache.org/jira/browse/KAFKA-7625)
