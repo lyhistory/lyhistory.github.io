@@ -79,12 +79,50 @@ https://post.smzdm.com/p/a90xmo3o/
 
 西数
 
-群晖 synology
+### 群晖 synology
+
+[工具](https://www.synology.cn/zh-cn/support/download/DS224+?version=7.2#utilities)
+
+[视频教程](https://www.synology.cn/zh-cn/knowledgebase/DSM/video)
+
+#### 安装操作系统DSM-Disk Station Manager：
+Mobile:
++ 群晖管家 DS Finder
+
+Desktop：
++ Synology Assistant
+Synology Assistant 是一款桌面实用程序，可在局域网中搜索 Synology 服务器。使您可以搜索并连接到 Synology 服务器或设置 Wake on LAN (WOL)。
+
+配置：
+
++ 远程连接 Quick Connect 
+
+#### 备份
+
+移动硬盘：USB copy
+
+电脑整机备份： 使用 Active Backup for Business 
+
+文件备份（手机/电脑）：
+Synology Drive Client
+Synology Drive Client 是 DSM 附加套件 Synology Drive Server 的桌面实用程序，让您可以在集中化的 Synology NAS 与多台客户端计算机之间，同步和共享您拥有的文件或他人与您共享的文件。
+
+
+
+Synology Note Station Client
+Synology Note Station Client讓您連線至 Synology NAS 上的 Note Station。從本機電腦便可離線管理筆記及待辦清單。
+
+#### 同步
+Active Backup for Business
 
 ## 硬件工具
 ### 测试
 crystal disk info
 https://crystalmark.info/en/software/crystaldiskinfo/
+
+### 同步备份
+https://freefilesync.org/download.php
+
 ### 恢复
 TestDisk
 https://www.cgsecurity.org/wiki/TestDisk
