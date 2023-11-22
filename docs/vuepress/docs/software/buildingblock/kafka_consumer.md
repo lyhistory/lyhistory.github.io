@@ -779,7 +779,7 @@ broker 0 1 2，断网broker 2（以及其服务器上面的zookeeper节点）
 ##### 所以解决方案：
 1）修改 consumer.properties.bootstrap.servers，移除坏节点
 2）修改api调用，增加timeout时间到5分钟（实测超时在2分钟左右）：consumer.endOffsets(Collections.singleton(topicPartition),Duration.ofMillis(300000)).get(topicPartition)
-3）修改配置 consumer.properties.request.timeout.ms=300000，注意这个只对org.apache.kafka.clients.consumer.KafkaConsumer生效，我们这里用的是org.apache.kafka.clients.consumer.Consumer
+3）修改配置 consumer.properties.request.timeout.ms=300000
 
 ```
 场景4：
@@ -812,6 +812,7 @@ kafka.common.StateChangeFailedException: Failed to elect leader for partition T-
         at kafka.controller.ControllerEventManager$ControllerEventThread.doWork(ControllerEventManager.scala:94)
         at kafka.utils.ShutdownableThread.run(ShutdownableThread.scala:82)
 [2022-03-16 10:58:02,837] WARN [Controller id=1] Partition T-TEST-0 failed to complete preferred replica leader election to 2. Leader is still 0 (kafka.controller.KafkaController)
+
 原因分析：应该是由于操作频率过快，启停kafka borker的时候没有给足时间做failover，可见kafka服务本身可以看到他的健壮性有问题了，居然无法选举新leader
 
 重新设计连续测试场景：
@@ -920,7 +921,6 @@ Consumer clientId=consumer-1, groupId=TEST-SZL] Member consumer-1-7f40d109-cd66-
 分析：
 首先报错的意思是程序处理一批kafka消息（max.poll.records 默认500条）的时间超过了max.poll.interval.ms，所以直观的看来就是降低max.poll.records或者提高max.poll.interval.ms，不过我们这里的场景并没有这么简单，因为我们出错的时候还没有开始获取并处理kafka消息，而是第一次poll触发的rebalance的过程中出现的错误；
 
-观察到的现象是，每次我们删除了所有topic，然后重新启动程序的时候（程序设置了auto.create.topics.enable=true），第一次consumer join group后，过了五分钟后就报上面的错误；
 
 该程序的主要逻辑：
 ```

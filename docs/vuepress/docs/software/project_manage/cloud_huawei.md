@@ -147,6 +147,16 @@ https://github.com/huaweicloudDocs
 
 ## Troubleshooting
 
-?# ECS减配后之前配置的静态IP失效
+### ECS减配后之前配置的静态IP失效
 减配后，虚拟的ECS下面的物理机器肯定会变化，可能引起虚拟mac地址发生变化？从而导致绑定的ip跟mac不再匹配，
 解决办法:使用华为云的dhcp自动配置
+
+### 修改安全组导致服务在一年后才发现问题
+上云一年后，突然有一天发现一个zookeeper节点挂了(看日志是其自动重启之后无法join cluster)
+```
+FastLeaderElection Notification time out: 60000
+- fsync-ing the write ahead log in SyncThre ad:1 took 4111ms which will adversely effect operation latency. See the ZooKeeper troubleshooting guide
+```
+根据配置的ip和端口2888 3888做常规的telnet发现不通，但是奇怪的是发现另外两个节点之间虽然也是telnet不通，但是存在established tcp connection，所以整个cluster还是正常对外服务
+
+后来发现原来是后来对主网卡和扩展网卡的安全组做了区分，并不会影响之前已经建立的连接，但是新的连接肯定是被挡住了

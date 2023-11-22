@@ -224,8 +224,11 @@ _千万不要那个default走fiddler的proxy，不然会造成死循环，因为
 	
 ![fiddler mobile](/docs/docs_image/coder2hacker/ch2web/web05.png)
 
-配置手机wifi代理
-	手机打开http://\<host\>:\<port 8888\> 下载FiddlerRoot certificate 安装，默认选择APP/VPN即可
+配置手机wifi代理：
+wifi proxy manual=> host port 8888
+	
+下载证书：
+手机打开http://\<host\>:\<port 8888\> 下载FiddlerRoot certificate 安装，默认选择APP/VPN即可
 
 fiddler高级用法：
 

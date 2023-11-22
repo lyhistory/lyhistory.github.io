@@ -1956,7 +1956,7 @@ INVALID_PRODUCER_EPOCH(47, "Producer attempted an operation with an old epoch. E
             "with the same transactionalId, or the producer's transaction has been expired by the broker.",
             ProducerFencedException::new),
 搜索reference可以发现，都是kafka client这边处理服务器端的response部分的代码：
-kafka-clients-2.2.0.jar - C:\Users\yue.liu\.m2\repository\org\apache\kafka\kafka-clients\2.2.0
+kafka-clients-2.2.0.jar - C:\Users\xxx\.m2\repository\org\apache\kafka\kafka-clients\2.2.0
 org.apache.kafka.clients.producer.internals
 AddOffsetsToTxnHandler
 handleResponse(AbstractResponse)

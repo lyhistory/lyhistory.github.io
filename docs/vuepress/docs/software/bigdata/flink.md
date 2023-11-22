@@ -8,6 +8,21 @@ https://flink.apache.org/
 
 ![](/docs/docs_image/software/bigdata/flink/flink_home_graphic.png)
 
+
++ **Is Flink a Hadoop Project?**
+  Flink is a data processing system and an alternative to Hadoop’s MapReduce component. It comes with its own runtime rather than building on top of MapReduce. As such, it can work completely independently of the Hadoop ecosystem. However, Flink can also access Hadoop’s distributed file system (HDFS) to read and write data, and Hadoop’s next-generation resource manager (YARN) to provision cluster resources. Since most Flink users are using Hadoop HDFS to store their data, Flink already ships the required libraries to access HDFS.
+
++ **Do I have to install Apache Hadoop to use Flink?**
+  No. Flink can run without a Hadoop installation. However, a very common setup is to use Flink to analyze data stored in the Hadoop Distributed File System (HDFS). To make these setups work out of the box, Flink bundles the Hadoop client libraries by default.
+
+  Additionally, we provide a special YARN Enabled download of Flink for users with an existing Hadoop YARN cluster. Apache Hadoop YARN is Hadoop’s cluster resource manager that allows use of different execution engines next to each other on a cluster.
+
++ **An Alternative to Hadoop MapReduce?**
+  Apache Flink is considered an alternative to Hadoop MapReduce. Flink offers cyclic data, a flow which is missing in MapReduce. Flink offers APIs, which are easier to implement compared to MapReduce APIs. It supports in-memory processing, which is much faster. Flink is also capable of working with other file systems along with HDFS. Flink can analyze real-time stream data along with graph processing and using machine learning algorithms. It also extends the MapReduce model with new operators like join, cross and union. Flink offers lower latency, exactly one processing guarantee, and higher throughput. Flink is also considered as an alternative to Spark and Storm. (To learn more about Spark, see How Apache Spark Helps Rapid Application Development.)
+
+Flink可以完全独立于Hadoop，在不依赖Hadoop组件下运行。但是做为大数据的基础设施，Hadoop体系是任何大数据框架都绕不过去的。Flink可以集成众多Hadooop 组件，例如Yarn、Hbase、HDFS等等。例如，Flink可以和Yarn集成做资源调度，也可以读写HDFS，或者利用HDFS做检查点
+
+
 ## 1. Intro
 ### 1.1 Architecture
 
@@ -259,11 +274,14 @@ Application state is a first-class citizen in Flink. You can see that by looking
   A Transformation is applied on one or more data streams or data sets and results in one or more output data streams or data sets. A transformation might change a data stream or data set on a per-record basis, but might also only change its partitioning or perform an aggregation. While Operators and Functions are the “physical” parts of Flink’s API, Transformations are only an API concept. Specifically, most transformations are implemented by certain Operators.
 
 ## 2. Deployment
+
+### 2.0 Deployment Mode
+
 [Deployment Modes](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/deployment/overview/)
 
 ![](/docs/docs_image/software/bigdata/flink/flink_deployment_overview.png)
 
-+ Flink Client
+#### Flink Client
   Compiles batch or streaming applications into a dataflow graph, which it then submits to the JobManager. 
 
   **Implementation:**
@@ -272,7 +290,7 @@ Application state is a first-class citizen in Flink. You can see that by looking
   - [SQL Client](//nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/table/sqlclient/)
   - [Python REPL](//nightlies.apache.org/flink/flink-docs-release-1.18/docs/deployment/repls/python_shell/)
 
-+ JobManager 
+#### JobManager 
 	JobManager is the name of the central work coordination component of Flink. It has implementations for different resource providers, which differ on high-availability, resource allocation behavior and supported job submission modes.
   JobManager modes for job submissions:
   - Application Mode: 
@@ -287,47 +305,79 @@ Application state is a first-class citizen in Flink. You can see that by looking
   - Kubernetes
   - YARN
 
-+ TaskManager
+#### TaskManager
   TaskManagers are the services actually performing the work of a Flink job.
 
-+ Optional External Components - High Availability Service Provider
+#### Optional External Components - High Availability Service Provider
   Flink's JobManager can be run in high availability mode which allows Flink to recover from JobManager faults. In order  to failover faster, multiple standby JobManagers can be started to act as backups.
   - Zookeeper
   - Kubernetes HA
 
-+ Optional External Components - File Storage and Persistency
+#### Optional External Components - File Storage and Persistency
 	For checkpointing (recovery mechanism for streaming jobs) Flink relies on external [file storage systems](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/deployment/filesystems/overview/)
   - Local File System
     Flink has built-in support for the file system of the local machine, including any NFS or SAN drives mounted into that local file system. It can be used by default without additional configuration. Local files are referenced with the file:// URI scheme.
   - hadoop-compatible
   - Pluggable File Systems (Amazon S3, Aliyun OSS and Azure Blob Storage.)
 
-+ Optional External Components - Resource Provider
-  Flink can be deployed through different Resource Provider Frameworks, such as Kubernetes or YARN.
-  See JobManager implementations above.
+#### Optional External Components - Resource Provider
+Flink can be deployed through different Resource Provider Frameworks, such as Kubernetes or YARN.
+[See JobManager implementations above.](#jobmanager)
 
-+ Optional External Components - Metrics Storage
+#### Optional External Components - Metrics Storage
   [Flink components report internal metrics and Flink jobs can report additional, job specific metrics as well.](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/deployment/metric_reporters/)
 
-+ Optional External Components - Application-level data sources and sinks
-  While application-level data sources and sinks are not technically part of the deployment of Flink cluster components, they should be considered when planning a new Flink production deployment. Colocating frequently used data with Flink can have significant performance benefits
+#### Optional External Components - Application-level data sources and sinks
+  
+While application-level data sources and sinks are not technically part of the deployment of Flink cluster components, they should be considered when planning a new Flink production deployment. Colocating frequently used data with Flink can have significant performance benefits
 
++ [Predefined Sources](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/datastream/overview/#data-sources) and [Sinks](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/datastream/overview/#data-sinks)
+  A few basic data sources and sinks are built into Flink and are always available. The predefined data sources include reading from files, directories, and sockets, and ingesting data from collections and iterators. The predefined data sinks support writing to files, to stdout and stderr, and to sockets.
 
++ Bundled Connectors
+  Connectors provide code for interfacing with various third-party systems. Currently these systems are supported:
+  - [Apache Kafka (source/sink)](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/connectors/datastream/kafka/)
+  - [Apache Cassandra (source/sink)](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/connectors/datastream/cassandra/)
+  - [Amazon DynamoDB (sink)](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/connectors/datastream/dynamodb/)
+  - [Amazon Kinesis Data Streams (source/sink)](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/connectors/datastream/kinesis/)
+  - [Amazon Kinesis Data Firehose (sink)](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/connectors/datastream/firehose/)
+  - [DataGen (source)](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/connectors/datastream/datagen/)
+  - [Elasticsearch (sink)](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/connectors/datastream/elasticsearch/)
+  - [Opensearch (sink)](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/connectors/datastream/opensearch/)
+  - [FileSystem (source/sink)](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/connectors/datastream/filesystem/)
+  - [RabbitMQ (source/sink)](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/connectors/datastream/rabbitmq/)
+  - [Google PubSub (source/sink)](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/connectors/datastream/pubsub/)
+  - [Hybrid Source (source)](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/connectors/datastream/hybridsource/)
+  - [Apache Pulsar (source)](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/connectors/datastream/pulsar/)
+  - [JDBC (sink)](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/connectors/datastream/jdbc/)
+  - [MongoDB (source/sink)](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/connectors/datastream/mongodb/)
 
-### 2.1 Mode: Local Standalone 
++ Connectors in Apache Bahir
+  Additional streaming connectors for Flink are being released through Apache Bahir, including:
+
+- [Apache ActiveMQ (source/sink)](https://bahir.apache.org/docs/flink/current/flink-streaming-activemq/)
+- [Apache Flume (sink)](https://bahir.apache.org/docs/flink/current/flink-streaming-flume/)
+- [Redis (sink)](https://bahir.apache.org/docs/flink/current/flink-streaming-redis/)
+- [Akka (sink)](https://bahir.apache.org/docs/flink/current/flink-streaming-akka/)
+- [Netty (source)](https://bahir.apache.org/docs/flink/current/flink-streaming-netty/)
+
++ [Data Enrichment via Async I/O](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/datastream/operators/asyncio/)
+  Using a connector isn’t the only way to get data in and out of Flink. One common pattern is to query an external database or web service in a Map or FlatMap in order to enrich the primary datastream. Flink offers an API for Asynchronous I/O to make it easier to do this kind of enrichment efficiently and robustly.
+
+### 2.1 Resource Provider Standalone Mode: Local Standalone 
+
+The standalone mode is the most barebone way of deploying Flink: The Flink services described in the deployment overview are just launched as processes on the operating system. Unlike deploying Flink with a resource provider such as Kubernetes or YARN, you have to take care of restarting failed processes, or allocation and de-allocation of resources during operation.
 
 [Deployment/Standalone](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/deployment/resource-providers/standalone/overview/)
-https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/deployment/resource-providers/standalone/overview/
-
-https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/try-flink/flink-operations-playground/
-https://nightlies.apache.org/flink/flink-docs-release-1.14//docs/try-flink/local_installation/
 
 #### Insall
+
+##### Session Mode
 ```
 $ java -version
 $ tar -xzf flink-*.tgz
 $ cd flink-* && ls -l
-$ ./bin/start-cluster.sh
+$ ./bin/start-cluster.sh  //started 2 processes: A JVM for the JobManager, and a JVM for the TaskManager.
 
 localhost:8081 to view the Flink dashboard 
 
@@ -432,6 +482,102 @@ public class WordCount
 }
 
 ```
+
+##### Application Mode
+
+```
+The application jar file needs to be available in the classpath. The easiest approach to achieve that is putting the jar into the lib/ folder:
+
+$ cp ./examples/streaming/TopSpeedWindowing.jar lib/
+
+To start a Flink JobManager with an embedded application, we use the bin/standalone-job.sh script. We demonstrate this mode by locally starting the TopSpeedWindowing.jar example, running on a single TaskManager.
+
+$ ./bin/standalone-job.sh start --job-classname org.apache.flink.streaming.examples.windowing.TopSpeedWindowing
+
+The web interface is now available at localhost:8081. However, the application won’t be able to start, because there are no TaskManagers running yet:
+
+$ ./bin/taskmanager.sh start //Note: You can start multiple TaskManagers, if your application needs more resources.
+
+Stopping the services is also supported via the scripts. Call them multiple times if you want to stop multiple instances, or use stop-all:
+
+$ ./bin/taskmanager.sh stop
+$ ./bin/standalone-job.sh stop
+```
+
+##### Multiple Instances
+
+bin/start-cluster.sh and bin/stop-cluster.sh rely on conf/masters and conf/workers to determine the number of cluster component instances.
+
+**Example 1: Start a cluster with 2 TaskManagers locally**
+```
+conf/masters contents:
+
+localhost
+conf/workers contents:
+
+localhost
+localhost
+```
+
+If password-less SSH access to the listed machines is configured, and they share the same directory structure, the scripts also support starting and stopping instances remotely.
+
+**Example 2: Start a distributed cluster JobManagers** 
+
+This assumes a cluster with 4 machines (master1, worker1, worker2, worker3), which all can reach each other over the network.
+```
+conf/masters contents:
+
+master1
+conf/workers contents:
+
+worker1
+worker2
+worker3
+
+Note that the configuration key jobmanager.rpc.address needs to be set to master1 for this to work.
+```
+
+High-Availability
+**Example 3: Standalone HA Cluster with 2 JobManagers**
+```
+1. In order to enable HA for a standalone cluster, you have to use the ZooKeeper HA services.
+Configure high availability mode and ZooKeeper quorum in conf/flink-conf.yaml:
+high-availability.type: zookeeper
+high-availability.zookeeper.quorum: localhost:2181
+high-availability.zookeeper.path.root: /flink
+high-availability.cluster-id: /cluster_one # important: customize per cluster
+high-availability.storageDir: hdfs:///flink/recovery
+
+2. In order to start an HA-cluster configure the masters file in conf/masters, the masters file contains all hosts, on which JobManagers are started, and the ports to which the web user interface binds.
+Configure masters in conf/masters:
+localhost:8081
+localhost:8082
+
+3. Configure ZooKeeper server in conf/zoo.cfg (currently it’s only possible to run a single ZooKeeper server per machine):
+server.0=localhost:2888:3888
+
+4. Start ZooKeeper quorum:
+$ ./bin/start-zookeeper-quorum.sh
+Starting zookeeper daemon on host localhost.
+
+5. Start an HA-cluster:
+$ ./bin/start-cluster.sh
+Starting HA cluster with 2 masters and 1 peers in ZooKeeper quorum.
+Starting standalonesession daemon on host localhost.
+Starting standalonesession daemon on host localhost.
+Starting taskexecutor daemon on host localhost.
+
+6. Stop ZooKeeper quorum and cluster:
+$ ./bin/stop-cluster.sh
+Stopping taskexecutor daemon (pid: 7647) on localhost.
+Stopping standalonesession daemon (pid: 7495) on host localhost.
+Stopping standalonesession daemon (pid: 7349) on host localhost.
+$ ./bin/stop-zookeeper-quorum.sh
+Stopping zookeeper daemon (pid: 7101) on host localhost.
+
+By default, the JobManager will pick a random port for inter process communication. You can change this via the high-availability.jobmanager.port key. This key accepts single ports (e.g. 50010), ranges (50000-50025), or a combination of both (50010,50011,50020-50025,50050-50075).
+```
+
 #### Log Analysis
 ##### Job Manager Log
 vim log/flink-root-standalonesession-0-vm01.log 
@@ -608,13 +754,10 @@ vim log/flink-root-client-vm01.log
 2022-05-27 16:13:00,207 INFO  org.apache.flink.client.program.rest.RestClusterClient       [] - Successfully submitted job 'Streaming WordCount' (f69c1ca4892ecbc08d4247ded254f467) to 'http://localhost:8081'.
 2022-05-27 16:13:03,555 INFO  org.apache.flink.configuration.Configuration                 [] - Config uses fallback configuration key 'jobmanager.rpc.address' instead of key 'rest.address'
 ```
+### 2.2 Resource Provider Stanalone Mode: Hadoop file system 
 
-### 2.2 Mode: Production cluster deployment
-https://nightlies.apache.org/flink/flink-docs-master/docs/deployment/overview/
-hdfs
-
-https://flink.apache.org/training.html
-
+[在文件存储 HDFS 版上使用Apache Flink](https://help.aliyun.com/document_detail/141362.html)
+[阿里巴巴 Flink 踩坑经验：如何大幅降低 HDFS 压力？](https://www.infoq.cn/article/olljnzqptohfyrgog8xq)
 #### Install with Hadoop
 
 ##### Hadoop
@@ -989,13 +1132,65 @@ vim flink-root-taskexecutor-0-vm01.log
 #### Failover&Recoery
 https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/try-flink/flink-operations-playground/
 
-## 4. Config
+### 2.3 Resource Provider Cluster Mode: Hadoop YARN cluster 
 
+Apache Hadoop YARN is a resource provider popular with many data processing frameworks. Flink services are submitted to YARN’s ResourceManager, which spawns containers on machines managed by YARN NodeManagers. Flink deploys its JobManager and TaskManager instances into such containers.
+
+Flink can dynamically allocate and de-allocate TaskManager resources depending on the number of processing slots required by the job(s) running on the JobManager.
+
+https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/deployment/resource-providers/yarn/
+
+### 2.4 Configuration
+
+#### Working Directory
+https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/deployment/resource-providers/standalone/working_directory/
+
+Flink supports to configure a working directory (FLIP-198) for Flink processes (JobManager and TaskManager). The working directory is used by the processes to store information that can be recovered upon a process restart. The requirement for this to work is that the process is started with the same identity and has access to the volume on which the working directory is stored.
+
+#### dynamic properties
+The following scripts also allow configuration parameters to be set via dynamic properties:
+
+jobmanager.sh
+standalone-job.sh
+taskmanager.sh
+historyserver.sh
+
+#### log debug:
+conf/log4.properties rootLogger.level = DEBUG 
+
+https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/deployment/advanced/logging/
+
+#### basics
+https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/deployment/config/
 + web.upload.dir
 
 JAR files are renamed when they are uploaded and stored in a directory that can be configured with the web.upload.dir configuration key.
 
 If the web.upload.dir parameter is not set, the JAR files are stored in a dynamically generated directory under the jobmanager.web.tmpdir (default is System.getProperty("java.io.tmpdir")).
+
+### 2.4 Advanced
+
+#### History Server
+
+https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/deployment/advanced/historyserver/
+
+Flink has a history server that can be used to query the statistics of completed jobs after the corresponding Flink cluster has been shut down.
+
+Furthermore, it exposes a REST API that accepts HTTP requests and responds with JSON data.
+
+#### External Resource Framework
+
+https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/deployment/advanced/external_resources/
+
+In addition to CPU and memory, many workloads also need some other resources, e.g. GPUs for deep learning. To support external resources, Flink provides an external resource framework. The framework supports requesting various types of resources from the underlying resource management systems (e.g., Kubernetes), and supplies information needed for using these resources to the operators. Different resource types can be supported. You can either leverage built-in plugins provided by Flink (currently only for GPU support), or implement your own plugins for custom resource types.
+
+#### Custom failure enrichers
+
+https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/deployment/advanced/failure_enrichers/
+
+Flink provides a pluggable interface for users to register their custom logic and enrich failures with extra metadata labels (string key-value pairs). This enables users to implement their own failure enrichment plugins to categorize job failures, expose custom metrics, or make calls to external notification systems.
+
+FailureEnrichers are triggered every time an exception is reported at runtime by the JobManager. Every FailureEnricher may asynchronously return labels associated with the failure that are then exposed via the JobManager’s REST API (e.g., a ’type:System’ label implying the failure is categorized as a system error).
 
 ## 5. API&Libs
 ### Layered APIs
@@ -1162,6 +1357,18 @@ Flink integrates nicely with many common logging and monitoring services and pro
 + Logging: Flink implements the popular slf4j logging interface and integrates with the logging frameworks log4j or logback.
 + Metrics: Flink features a sophisticated metrics system to collect and report system and user-defined metrics. Metrics can be exported to several reporters, including JMX, Ganglia, Graphite, Prometheus, StatsD, Datadog, and Slf4j.
 + REST API: Flink exposes a REST API to submit a new application, take a savepoint of a running application, or cancel an application. The REST API also exposes meta data and collected metrics of running or completed applications.
+
+### Debug
+
+[User jars & Classpath](https://nightlies.apache.org/flink/flink-docs-release-1.18/docs/ops/debugging/debugging_classloading/)
+
+In Standalone mode, the following jars will be recognized as user-jars and included into user classpath:
+
+Session Mode: The JAR file specified in startup command.
+Application Mode: The JAR file specified in startup command and all JAR files in Flink’s usrlib folder.
+
+
+
 
 ## 7. Integration
 

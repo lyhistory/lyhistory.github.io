@@ -456,13 +456,18 @@ https://stackoverflow.com/questions/41048041/kafka-deletes-segments-even-before-
 
 https://stackoverflow.com/questions/47483016/recommended-settings-for-kafka-internal-topics-after-upgrade-to-1-0
 
+
 ```
 ############################# Internal Topic Settings  #############################
 # The replication factor for the group metadata internal topics "__consumer_offsets" and "__transaction_state"                                                                        
-# For anything other than development testing, a value greater than 1 is recommended for to ensure availability such as 3.                                                            
+# For anything other than development testing, a value greater than 1 is recommended for to ensure availability such as 3.          
+offsets.topic.num.partitions = 50 （default）
 offsets.topic.replication.factor=3
 transaction.state.log.replication.factor=3
 transaction.state.log.min.isr=2
+
+kafka-topics.sh -describe --bootstrap-server ip:9092 --topic __consumer_offsets
+kafka-topics.sh -describe --bootstrap-server ip:9092 --topic __transaction_state
 ```
 
 说明：
@@ -1874,32 +1879,14 @@ transactional.id.expiration.ms=2073600000
 
 修改了其中一个broker节点的config，忘记同步到所有的节点
 
-### Replica factor
-
-```
-############################# Internal Topic Settings  #############################
-# The replication factor for the group metadata internal topics "__consumer_offsets" and "__transaction_state"                                                                        
-# For anything other than development testing, a value greater than 1 is recommended for to ensure availability such as 3.          
-offsets.topic.num.partitions = 50 （default）
-offsets.topic.replication.factor=3
-transaction.state.log.replication.factor=3
-transaction.state.log.min.isr=2
-
-kafka-topics.sh -describe --bootstrap-server ip:9092 --topic __consumer_offsets
-kafka-topics.sh -describe --bootstrap-server ip:9092 --topic __transaction_state
-```
 
 ### 无法删除topic
-
-
 
 ```
 bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic T-*
 可以通过zookeeper删除
 bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic T-.*
 ```
-
-
 
 ### 删除topic后无法创建，提示已存在，但是找不到 org.apache.kafka.common.errors.TopicExistsException
 ```
@@ -1925,13 +1912,13 @@ rm -rf ../zookeeper/logs/version-2/*
 rm -rf kafka-logs/*
 rm -rf logs/*
 ```
+
 ### 时钟漂移
 client端日志
 2022-03-14 09:00:56.202 ^[[32m INFO^[[m ^[[35m16686GG^[[m [JOB-MANAGER] ^[[36mordinator$FindCoordinatorResponseHandler^[[m : [Consumer clientId=consumer-2, groupId=TEST-SZL] Discovered group coordinator HOST2:9092 (id: 2147483646 rack: null)
 但是在机器HOST2上没有找到对应时间段日志，最后发现 HOST2比HOST1和3时钟快了几分钟，对应kafka日志刚好是四分钟[2022-03-14 09:04:23,689]
 [2022-03-14 09:04:23,689] INFO [GroupCoordinator 1]: 
 	Preparing to rebalance group TEST-SZL in state PreparingRebalance with old generation 0 (__consumer_offsets-43) (reason: Adding new member consumer-2-ab88af5d-b206-48fb-a38b-ead5e50ad76e) (kafka.coordinator.group.GroupCoordinator)
-
 
 
 ### Kafka 节点挂掉
