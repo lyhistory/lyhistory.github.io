@@ -761,18 +761,17 @@ vim log/flink-root-client-vm01.log
 #### Install with Hadoop
 
 ##### Hadoop
-HOME: /home/hadoop
 
-download hadoop:
+https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/ClusterSetup.html#Slaves_File
 
-https://downloads.apache.org/hadoop/common/hadoop-3.3.0/hadoop-3.3.0.tar.gz
+准备：
 
+[download hadoop](https://downloads.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz)
 ```
 target:
 10.1.1.1: JournalNode, NameNode (active), DataNode, ZKFailoverController
 10.1.1.2: JournalNode, NameNode (standby), DataNode, ZKFailoverController
 10.1.1.3: JournalNode, NameNode (standby), DataNode, ZKFailoverController
-
 
 ON MAIN VM:
 useradd -m -d /home/hadoop hadoop
@@ -780,19 +779,51 @@ passwd hadoop
 
 chmod 755 /home/hadoop
 
-tar -zxvf /tmp/hadoop-3.3.0.tar.gz 
+tar -zxvf /tmp/hadoop-3.3.0.tar.gz -C /home/hadoop
+
 ln -s hadoop-3.3.0 hadoop-current
 ssh-keygen
 
 ssh-copy-id hadoop@vm-v01
 ssh-copy-id hadoop@vm-v02
 ssh-copy-id hadoop@vm-v03
+```
+
+配置Hadoop
+```
 
 cd hadoop-current/etc/hadoop/
 cp -p hadoop-env.sh hadoop-env.sh_factory
 vi hadoop-env.sh
 	export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.332.b09-1.el7_9.x86_64/jre
 chmod u+x hadoop-env.sh
+
+cp core-site.xml core-site.xml_factory
+vim core-site.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+  <property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://test</value>
+  </property>
+</configuration>
 
 cp hdfs-site.xml hdfs-site.xml_factory
 vim hdfs-site.xml
@@ -913,41 +944,14 @@ vim hdfs-site.xml
   </property>
 </configuration>
 
-
-cp core-site.xml core-site.xml_factory
-vim core-site.xml
-<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
-<!--
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License. See accompanying LICENSE file.
--->
-
-<!-- Put site-specific property overrides in this file. -->
-
-<configuration>
-  <property>
-    <name>fs.defaultFS</name>
-    <value>hdfs://test</value>
-  </property>
-</configuration>
-
-
 cp workers workers_factory
 vim workers
 10.1.1.1
 10.1.1.2
 10.1.1.3
+```
 
+```
 
 cd ~/hadoop-current
 #In all hosts, start the JournalNode.
@@ -1000,6 +1004,8 @@ rm -r ~/hadoop-current/data/ ~/hadoop-current/logs/
 then repeat previous boot up process
 
 ```
+
+
 ##### Flink
 
 HOME: /home/flink
