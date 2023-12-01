@@ -101,7 +101,7 @@ Synology Assistant 是一款桌面实用程序，可在局域网中搜索 Synolo
 
 移动硬盘：USB copy
 
-电脑整机备份： 使用 Active Backup for Business 
+电脑整机备份： 使用 Active Backup for Business ,客户端 Synology Active Backup for Business Agent
 
 文件备份（手机/电脑）：
 Synology Drive Client
@@ -133,6 +133,8 @@ https://recoverit.wondershare.com/free-data-recovery/open-source-data-recovery-s
 How to Fix the “File or Directory is Corrupted and Unreadable” Error on a Windows 10 Computer https://www.makeuseof.com/windows-10-fix-the-file-or-directory-is-corrupted-and-unreadable-error/
 
 https://zhuanlan.zhihu.com/p/32304270
+
+手机恢复：drfone
 
 ## 软件系统
 ### TrueNAS
