@@ -290,6 +290,11 @@ Application state is a first-class citizen in Flink. You can see that by looking
   - [SQL Client](//nightlies.apache.org/flink/flink-docs-release-1.18/docs/dev/table/sqlclient/)
   - [Python REPL](//nightlies.apache.org/flink/flink-docs-release-1.18/docs/deployment/repls/python_shell/)
 
+```
+$ ./bin/flink list
+
+./bin/flink run -p 2 ./examples/*WordCount-java*.jar
+```
 #### JobManager 
 	JobManager is the name of the central work coordination component of Flink. It has implementations for different resource providers, which differ on high-availability, resource allocation behavior and supported job submission modes.
   JobManager modes for job submissions:
@@ -764,7 +769,12 @@ vim log/flink-root-client-vm01.log
 
 https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/ClusterSetup.html#Slaves_File
 
-准备：
+Typically one machine in the cluster is designated as the NameNode and another machine as the ResourceManager, exclusively. These are the masters. Other services (such as Web App Proxy Server and MapReduce Job History server) are usually run either on dedicated hardware or on shared infrastructure, depending upon the load.
+
+The rest of the machines in the cluster act as both DataNode and NodeManager. These are the workers.
+
+
+**准备：**
 
 [download hadoop](https://downloads.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz)
 ```
@@ -787,9 +797,11 @@ ssh-keygen
 ssh-copy-id hadoop@vm-v01
 ssh-copy-id hadoop@vm-v02
 ssh-copy-id hadoop@vm-v03
+
+yum install -y psmisc
 ```
 
-配置Hadoop
+**配置Hadoop**
 ```
 
 cd hadoop-current/etc/hadoop/
@@ -826,6 +838,17 @@ vim core-site.xml
 </configuration>
 
 cp hdfs-site.xml hdfs-site.xml_factory
+
+HA集群需要使用命名空间区分一个HDFS集群。同一个集群中的不同NameNode，使用不同的NameNode ID区分。为了支持所有NameNode使用相同的配置文件，因此在配置参数中，需要把“nameservice ID”作为NameNode ID的前缀。
+
+dfs.nameservices 命名空间的逻辑名称。提供服务的NS（nameservices）逻辑名称，与core-site.xml里的对应。如果有多个HDFS集群，可以配置多个命名空间的名称，使用逗号分开即可。
+
+dfs.ha.namenodes.[nameservice ID] 命名空间中所有NameNode的唯一标示名称。可以配置多个，使用逗号分隔。该名称是可以让DataNode知道每个集群的所有NameNode。
+
+dfs.namenode.rpc-address.[nameservice ID].[name node ID] 每个namenode监听的RPC地址。
+
+dfs.namenode.http-address.[nameservice ID].[name node ID] 每个namenode监听的http地址。
+
 vim hdfs-site.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
@@ -951,11 +974,11 @@ vim workers
 10.1.1.3
 ```
 
+**启动**
 ```
-
 cd ~/hadoop-current
 #In all hosts, start the JournalNode.
-./bin/hdfs --daemon start journalnode
+./bin/hdfs --daemon start journalnode / sbin/hadoop-daemon.sh start journalnode
 tail -f logs/hadoop-hadoop-journalnode-vm-v01.log 
 
 # If this is the host for active NameNode (only execute in one host)
@@ -965,16 +988,23 @@ tail -f logs/hadoop-hadoop-journalnode-vm-v01.log
 # If above commend executed successfully, it will gracefully quit.
 
 # Start the NameNode (the first NameNode started will be the active NameNode).
-./bin/hdfs --daemon start namenode
+./bin/hdfs --daemon start namenode  / sbin/hadoop-daemon.sh start namenode
 
 # If this is the host for standby NameNode (only execute in hosts other than active namenode)
 # Copy metadata from formatted NameNode to this NameNode.
 ./bin/hdfs namenode -bootstrapStandby
 # Start the NameNode (the NameNodes started later will be standby NameNodes).
-./bin/hdfs --daemon start namenode
+./bin/hdfs --daemon start namenode / sbin/hadoop-daemon.sh start namenode
+
+此时两个NameNode都是standby模式，需要强制转换一个
+bin/hdfs haadmin -transitionToActive --forcemanual nn1
+##查看一下状态
+bin/hdfs haadmin -getServiceState nn1
+bin/hdfs haadmin -getServiceState nn2
 
 #In all hosts, start the DataNode.
 ./bin/hdfs --daemon start datanode
+
 #Initialize Zookeeper state (execute the following command in only one of the hosts).
 ./bin/hdfs zkfc -formatZK
 #In all hosts, start the ZKFailoverController.
@@ -1004,7 +1034,6 @@ rm -r ~/hadoop-current/data/ ~/hadoop-current/logs/
 then repeat previous boot up process
 
 ```
-
 
 ##### Flink
 
