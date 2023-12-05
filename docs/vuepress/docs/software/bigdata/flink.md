@@ -51,22 +51,22 @@ is responsible for managing the execution of a single JobGraph. Multiple jobs ca
 
 #### 1.1.2 TaskManagers 
 
-+ **Flink Job**
+##### **Flink Job**
   A Flink Job is the runtime representation of a logical graph (also often called dataflow graph) that is created and submitted by calling execute() in a Flink Application.
   一个Job代表一个可以独立提交给Flink执行的作业，我们向JobManager提交任务的时候就是以Job为单位的，只不过一份代码里可以包含多个Job（每个Job对应一个类的main函数）
   Example:
   ![](/docs/docs_image/software/bigdata/flink/flink_wordcount.png)
 
-+ **JobGraph / Logical Graph**
+##### **JobGraph / Logical Graph**
   A logical graph is a directed graph where the nodes are Operators and the edges define input/output-relationships of the operators and correspond to data streams or data sets. A logical graph is created by submitting jobs from a Flink Application.
   Logical graphs are also often referred to as dataflow graphs. 
 
-+ **ExecutionGraph/Physical Graph**
+##### **ExecutionGraph/Physical Graph**
   A physical graph is the result of translating a Logical Graph for execution in a distributed runtime. The nodes are Tasks and the edges indicate input/output-relationships or partitions of data streams or data sets.
 
-+ **TM: Task Manager** 
+##### **TM: Task Manager** 
   - is a JVM process, (also called workers) execute the tasks of a dataflow, and buffer and exchange the data streams. There must always be at least one TaskManager. Each worker (TaskManager) is a JVM process, and may execute one or more subtasks in separate threads. To control how many tasks a TaskManager accepts, it has so called task slots (at least one).
-+ **TS: Task Slot** 
+##### **TS: Task Slot** 
   - each TS represents a fixed subset of resources of the TaskManager (No CPU isolation happens between the slots, just the managed memory is divided.)
   The smallest unit of resource scheduling in a TaskManager is a task slot. The number of task slots in a TaskManager indicates the number of concurrent processing tasks. Note that multiple operators may execute in a task slot
 
@@ -77,8 +77,10 @@ is responsible for managing the execution of a single JobGraph. Multiple jobs ca
 
   By adjusting the number of task slots, users can define how subtasks are isolated from each other. Having one slot per TaskManager means that each task group runs in a separate JVM (which can be started in a separate container, for example). Having multiple slots means more subtasks share the same JVM. Tasks in the same JVM share TCP connections (via multiplexing) and heartbeat messages. They may also share data sets and data structures, thus reducing the per-task overhead.
 
-+ **Task** 
-  - Node of a Physical Graph. A task is the basic unit of work, which is executed by Flink’s runtime. Tasks encapsulate exactly one parallel instance of an Operator or Operator Chain.
+##### **Task** 
+  - Node of a Physical Graph. 
+  
+  A task is the basic unit of work, which is executed by Flink’s runtime. Tasks encapsulate exactly one parallel instance of an Operator or Operator Chain.
   For distributed execution, Flink chains operator subtasks together into tasks. 
   
   Task是逻辑概念，一个Operator就代表一个Task（多个Operator被chain之后产生的新Operator算一个Operator）, 真正运行的时候，Task会按照并行度分成多个Subtask，Subtask是执行/调度的基本单元,每个Subtask需要一个线程（Thread）来执行。
@@ -102,24 +104,91 @@ is responsible for managing the execution of a single JobGraph. Multiple jobs ca
 
   By default, Flink allows subtasks to share slots even if they are subtasks of different tasks, so long as they are from the same job. The result is that one slot may hold an entire pipeline of the job. Allowing this slot sharing has two main benefits:
 
-  - **parallelism**
-    [Operator Level / Execution Environment Level / Client Level / System Level](https://nightlies.apache.org/flink/flink-docs-master/docs/dev/datastream/execution/parallel/)
+##### **parallelism**
 
-    + A Flink cluster needs exactly as many task slots as the highest parallelism used in the job. No need to calculate how many tasks (with varying parallelism) a program contains in total.
++ A Flink cluster needs exactly as many task slots as the highest parallelism used in the job. No need to calculate how many tasks (with varying parallelism) a program contains in total. slot的个数不能多于cpu-cores
 
-    + It is easier to get better resource utilization. Without slot sharing, the non-intensive source/map() subtasks would block as many resources as the resource intensive window subtasks. With slot sharing, increasing the base parallelism in our example from two to six yields full utilization of the slotted resources, while making sure that the heavy subtasks are fairly distributed among the TaskManagers.
++ It is easier to get better resource utilization. Without slot sharing, the non-intensive source/map() subtasks would block as many resources as the resource intensive window subtasks. With slot sharing, increasing the base parallelism in our example from two to six yields full utilization of the slotted resources, while making sure that the heavy subtasks are fairly distributed among the TaskManagers.
 
-    example:
+[Operator Level / Execution Environment Level / Client Level / System Level](https://nightlies.apache.org/flink/flink-docs-master/docs/dev/datastream/execution/parallel/)
 
-    If run with parallelism of two in a cluster with 2 task managers, each offering 3 slots, the scheduler will use 5 task slots, like this:
++ Operator Level
+  ```
+  final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-    ![](/docs/docs_image/software/bigdata/flink/flink_taskslot_example1.png)
+  DataStream<String> text = [...]
+  DataStream<Tuple2<String, Integer>> wordCounts = text
+      .flatMap(new LineSplitter())
+      .keyBy(0)
+      .timeWindow(Time.seconds(5))
+      .sum(1).setParallelism(5);
 
-    However, if the base parallelism is increased to six, then the scheduler will do this (note that the sink remains at a parallelism of one in this example):
+  wordCounts.print();
 
-    ![](/docs/docs_image/software/bigdata/flink/flink_taskslot_example2.png)
+  env.execute("Word Count Example");
+  operators、data sources、data sinks都可以调用setParallelism()方法来设置parallelism
+  ```
++ Execution Environment Level
+  ```
+  final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+  env.setParallelism(3);
 
-  - **operator chaining**
+  DataStream<String> text = [...]
+  DataStream<Tuple2<String, Integer>> wordCounts = [...]
+  wordCounts.print();
+
+  env.execute("Word Count Example");
+  在ExecutionEnvironment里头可以通过setParallelism来给operators、data sources、data sinks设置默认的parallelism；如果operators、data sources、data sinks自己有设置parallelism则会覆盖ExecutionEnvironment设置的parallelism
+  ```
++ Client Level
+  ```
+  ./bin/flink run -p 10 ../examples/*WordCount-java*.jar
+  或者
+
+  try {
+      PackagedProgram program = new PackagedProgram(file, args);
+      InetSocketAddress jobManagerAddress = RemoteExecutor.getInetFromHostport("localhost:6123");
+      Configuration config = new Configuration();
+
+      Client client = new Client(jobManagerAddress, config, program.getUserCodeClassLoader());
+
+      // set the parallelism to 10 here
+      client.run(program, 10, true);
+
+  } catch (ProgramInvocationException e) {
+      e.printStackTrace();
+  }
+  使用CLI client，可以在命令行调用是用-p来指定，或者Java/Scala调用时在Client.run的参数中指定parallelism
+  ```
++ System Level
+  ```
+  # The parallelism used for programs that did not specify and other parallelism.
+
+  parallelism.default: 1
+  可以在flink-conf.yaml中通过parallelism.default配置项给所有execution environments指定系统级的默认parallelism
+  ```
+
+example:
+
+If run with parallelism of two in a cluster with 2 task managers, each offering 3 slots, the scheduler will use 5 task slots, like this:
+
+![](/docs/docs_image/software/bigdata/flink/flink_taskslot_example1.png)
+
+However, if the base parallelism is increased to six, then the scheduler will do this (note that the sink remains at a parallelism of one in this example):
+
+![](/docs/docs_image/software/bigdata/flink/flink_taskslot_example2.png)
+
+实测 1 task manager with 4 slots, run wordcount with p=2/3/4/5:
+![](./flink_parallelism_wordcount.png)
+可以看到，p从2到4，用时降低在预期之内，但是p=5居然也能成功，不过耗时变长，找到解释：
+> 在Flink中，Slot和并行度是相互影响的。如果一个任务的并行度大于Slot的数量，那么这个任务就无法完全并行执行。在这种情况下，Flink会根据一定的算法将任务的子任务分配到不同的Slot中执行，从而实现部分并行执行。另外，如果一个任务的并行度小于Slot的数量，那么有些Slot可能会闲置，从而浪费资源。
+
+就是说实际上p=5是把并行度是5的子任务中只有4个是真正并行的，另外一个是放在等某个slots空闲的时候再跑
+
+不过需要注意，再高就会出问题 [Flink: fail fast if job parallelism is larger than the total number of slots](https://stackoverflow.com/questions/57732800/flink-fail-fast-if-job-parallelism-is-larger-than-the-total-number-of-slots)
+
+中文解读：[Apache Flink——任务（Tasks）和任务槽（Task Slots）](https://www.jianshu.com/p/62fa262736b9)
+##### **operator chaining**
     An Operator Chain consists of two or more consecutive Operators without any repartitioning in between. Operators within the same Operator Chain forward records to each other directly without going through serialization or Flink’s network stack.
     The sample dataflow in the figure below is executed with five subtasks, and hence with five parallel threads:
     ![](/docs/docs_image/software/bigdata/flink/flink_operator_chaining.png)
@@ -129,7 +198,7 @@ is responsible for managing the execution of a single JobGraph. Multiple jobs ca
     http://wuchong.me/blog/2016/05/09/flink-internals-understanding-execution-resources/
     https://stackoverflow.com/questions/62664972/what-happens-if-total-parallel-instances-of-operators-are-higher-than-the-parall
 
-总结：
+##### 总结：
 一个程序Process可以运行在多个TM上，一个TM有多个TS（TS的总和代表支持的最高并行度），一个TS中可以运行多个sub task（task实例），每个subtask都对应一个Thread
 
 对 TM 而言：它占用着一定数量的 CPU 和 Memory 资源，具体可通过 taskmanager.numberOfTaskSlots, taskmanager.heap.size 来配置，实际上 taskmanager.numberOfTaskSlots 只是指定 TM 的 Slot 数量，并不能隔离指定数量的 CPU 给 TM 使用。在不考虑 Slot Sharing的情况下，一个 Slot 内运行着一个 SubTask（Task 实现 Runable，SubTask 是一个执行 Task 的具体实例），所以官方建议 taskmanager.numberOfTaskSlots 配置的 Slot 数量和 CPU 相等或成比例。
@@ -137,6 +206,7 @@ is responsible for managing the execution of a single JobGraph. Multiple jobs ca
 当然，我们可以借助 Yarn 等调度系统，用 Flink On Yarn 的模式来为 Yarn Container 分配指定数量的 CPU 资源，以达到较严格的 CPU 隔离（Yarn 采用 Cgroup 做基于时间片的资源调度，每个 Container 内运行着一个 JM/TM 实例）。而 taskmanager.heap.size 用来配置 TM 的 Memory，如果一个 TM 有 N 个 Slot，则每个 Slot 分配到的 Memory 大小为整个 TM Memory 的 1/N，同一个 TM 内的 Slots 只有 Memory 隔离，CPU 是共享的。
 
 对 Job 而言：一个 Job 所需的 Slot 数量大于等于 Operator 配置的最大 Parallelism 数，在保持所有 Operator 的 slotSharingGroup 一致的前提下 Job 所需的 Slot 数量与 Job 中 Operator 配置的最大 Parallelism 相等。
+
 
 #### 1.1.3 StreamGraph/JobGraph/ExecutionGraph
 
@@ -1440,11 +1510,77 @@ kill xxxx
 2.flink已经rename slave=》workers，注意文件改动
 
 
+### NoResourceAvailableException
+```
+org.apache.flink.runtime.jobmanager.scheduler.NoResourceAvailableException: Could not allocate the required slot within slot request timeout. Please make sure that the cluster has enough resources.
+	at org.apache.flink.runtime.scheduler.DefaultScheduler.maybeWrapWithNoResourceAvailableException(DefaultScheduler.java:441) ~[flink-dist_2.11-1.11.2.jar:1.11.2]
+	at org.apache.flink.runtime.scheduler.DefaultScheduler.lambda$assignResourceOrHandleError$6(DefaultScheduler.java:422) ~[flink-dist_2.11-1.11.2.jar:1.11.2]
+	at java.util.concurrent.CompletableFuture.uniHandle(CompletableFuture.java:836) ~[?:1.8.0_372]
+	at java.util.concurrent.CompletableFuture$UniHandle.tryFire(CompletableFuture.java:811) ~[?:1.8.0_372]
+	at java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:488) ~[?:1.8.0_372]
+	at java.util.concurrent.CompletableFuture.completeExceptionally(CompletableFuture.java:1990) ~[?:1.8.0_372]
+	at org.apache.flink.runtime.jobmaster.slotpool.SchedulerImpl.lambda$internalAllocateSlot$0(SchedulerImpl.java:168) ~[flink-dist_2.11-1.11.2.jar:1.11.2]
+	at java.util.concurrent.CompletableFuture.uniWhenComplete(CompletableFuture.java:774) ~[?:1.8.0_372]
+	at java.util.concurrent.CompletableFuture$UniWhenComplete.tryFire(CompletableFuture.java:750) ~[?:1.8.0_372]
+	at java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:488) ~[?:1.8.0_372]
+	at java.util.concurrent.CompletableFuture.completeExceptionally(CompletableFuture.java:1990) ~[?:1.8.0_372]
+	at org.apache.flink.runtime.jobmaster.slotpool.SlotSharingManager$SingleTaskSlot.release(SlotSharingManager.java:726) ~[flink-dist_2.11-1.11.2.jar:1.11.2]
+	at org.apache.flink.runtime.jobmaster.slotpool.SlotSharingManager$MultiTaskSlot.release(SlotSharingManager.java:537) ~[flink-dist_2.11-1.11.2.jar:1.11.2]
+	at org.apache.flink.runtime.jobmaster.slotpool.SlotSharingManager$MultiTaskSlot.lambda$new$0(SlotSharingManager.java:432) ~[flink-dist_2.11-1.11.2.jar:1.11.2]
+	at java.util.concurrent.CompletableFuture.uniHandle(CompletableFuture.java:836) ~[?:1.8.0_372]
+	at java.util.concurrent.CompletableFuture$UniHandle.tryFire(CompletableFuture.java:811) ~[?:1.8.0_372]
+	at java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:488) ~[?:1.8.0_372]
+	at java.util.concurrent.CompletableFuture.completeExceptionally(CompletableFuture.java:1990) ~[?:1.8.0_372]
+	at org.apache.flink.runtime.concurrent.FutureUtils.lambda$forwardTo$21(FutureUtils.java:1132) ~[flink-dist_2.11-1.11.2.jar:1.11.2]
+	at java.util.concurrent.CompletableFuture.uniWhenComplete(CompletableFuture.java:774) ~[?:1.8.0_372]
+	at java.util.concurrent.CompletableFuture$UniWhenComplete.tryFire(CompletableFuture.java:750) ~[?:1.8.0_372]
+	at java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:488) ~[?:1.8.0_372]
+	at java.util.concurrent.CompletableFuture.completeExceptionally(CompletableFuture.java:1990) ~[?:1.8.0_372]
+	at org.apache.flink.runtime.concurrent.FutureUtils$Timeout.run(FutureUtils.java:1036) ~[flink-dist_2.11-1.11.2.jar:1.11.2]
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRunAsync(AkkaRpcActor.java:402) ~[flink-dist_2.11-1.11.2.jar:1.11.2]
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleRpcMessage(AkkaRpcActor.java:195) ~[flink-dist_2.11-1.11.2.jar:1.11.2]
+	at org.apache.flink.runtime.rpc.akka.FencedAkkaRpcActor.handleRpcMessage(FencedAkkaRpcActor.java:74) ~[flink-dist_2.11-1.11.2.jar:1.11.2]
+	at org.apache.flink.runtime.rpc.akka.AkkaRpcActor.handleMessage(AkkaRpcActor.java:152) ~[flink-dist_2.11-1.11.2.jar:1.11.2]
+	at akka.japi.pf.UnitCaseStatement.apply(CaseStatements.scala:26) [flink-dist_2.11-1.11.2.jar:1.11.2]
+	at akka.japi.pf.UnitCaseStatement.apply(CaseStatements.scala:21) [flink-dist_2.11-1.11.2.jar:1.11.2]
+	at scala.PartialFunction$class.applyOrElse(PartialFunction.scala:123) [flink-dist_2.11-1.11.2.jar:1.11.2]
+	at akka.japi.pf.UnitCaseStatement.applyOrElse(CaseStatements.scala:21) [flink-dist_2.11-1.11.2.jar:1.11.2]
+	at scala.PartialFunction$OrElse.applyOrElse(PartialFunction.scala:170) [flink-dist_2.11-1.11.2.jar:1.11.2]
+	at scala.PartialFunction$OrElse.applyOrElse(PartialFunction.scala:171) [flink-dist_2.11-1.11.2.jar:1.11.2]
+	at scala.PartialFunction$OrElse.applyOrElse(PartialFunction.scala:171) [flink-dist_2.11-1.11.2.jar:1.11.2]
+	at akka.actor.Actor$class.aroundReceive(Actor.scala:517) [flink-dist_2.11-1.11.2.jar:1.11.2]
+	at akka.actor.AbstractActor.aroundReceive(AbstractActor.scala:225) [flink-dist_2.11-1.11.2.jar:1.11.2]
+	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:592) [flink-dist_2.11-1.11.2.jar:1.11.2]
+	at akka.actor.ActorCell.invoke(ActorCell.scala:561) [flink-dist_2.11-1.11.2.jar:1.11.2]
+	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:258) [flink-dist_2.11-1.11.2.jar:1.11.2]
+	at akka.dispatch.Mailbox.run(Mailbox.scala:225) [flink-dist_2.11-1.11.2.jar:1.11.2]
+	at akka.dispatch.Mailbox.exec(Mailbox.scala:235) [flink-dist_2.11-1.11.2.jar:1.11.2]
+	at akka.dispatch.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [flink-dist_2.11-1.11.2.jar:1.11.2]
+	at akka.dispatch.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [flink-dist_2.11-1.11.2.jar:1.11.2]
+	at akka.dispatch.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [flink-dist_2.11-1.11.2.jar:1.11.2]
+	at akka.dispatch.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [flink-dist_2.11-1.11.2.jar:1.11.2]
+Caused by: java.util.concurrent.CompletionException: java.util.concurrent.TimeoutException
+	at java.util.concurrent.CompletableFuture.encodeThrowable(CompletableFuture.java:292) ~[?:1.8.0_372]
+	at java.util.concurrent.CompletableFuture.completeThrowable(CompletableFuture.java:308) ~[?:1.8.0_372]
+	at java.util.concurrent.CompletableFuture.uniApply(CompletableFuture.java:607) ~[?:1.8.0_372]
+	at java.util.concurrent.CompletableFuture$UniApply.tryFire(CompletableFuture.java:591) ~[?:1.8.0_372]
+	... 25 more
+Caused by: java.util.concurrent.TimeoutException
+	... 23 more
+
+```
+
+#### verify using official example
+
+`/bin/flink run -p 5 ./examples/batch/WordCount.jar`
+
+
 flink自定义函数加线程锁 https://juejin.cn/s/flink%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0%E5%8A%A0%E7%BA%BF%E7%A8%8B%E9%94%81
 
 
 使用Flink前必知的10个『陷阱』
 https://dbaplus.cn/news-73-3769-1.html
+
 
 ---
 Refer:
