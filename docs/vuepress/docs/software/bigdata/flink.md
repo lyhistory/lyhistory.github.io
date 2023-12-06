@@ -180,10 +180,166 @@ However, if the base parallelism is increased to six, then the scheduler will do
 
 实测 1 task manager with 4 slots, run wordcount with p=2/3/4/5:
 ![](./flink_parallelism_wordcount.png)
-可以看到，p从2到4，用时降低在预期之内，但是p=5居然也能成功，不过耗时变长，找到解释：
+这个测试很有意思，p=1的时候最快，p=2反而慢了（因为增加了任务分割和聚合的过程吧），p从2到3，用时降低在预期之内，但是p=4反而更久(后来又测了几次，这个耗时不稳定)，另外p>4居然也能成功，不过耗时变长，找到解释：
 > 在Flink中，Slot和并行度是相互影响的。如果一个任务的并行度大于Slot的数量，那么这个任务就无法完全并行执行。在这种情况下，Flink会根据一定的算法将任务的子任务分配到不同的Slot中执行，从而实现部分并行执行。另外，如果一个任务的并行度小于Slot的数量，那么有些Slot可能会闲置，从而浪费资源。
 
 就是说实际上p=5是把并行度是5的子任务中只有4个是真正并行的，另外一个是放在等某个slots空闲的时候再跑
+
+日志：
+p=1
+```
+2023-12-06 10:44:35,152 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Receive slot request 1040904f312d051825b9205caf4c87de for job cab7d3dd7306786f754237f2771c0a62 from resource manager with leader id 00000000000000000000000000000000.
+2023-12-06 10:44:35,152 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Allocated slot for 1040904f312d051825b9205caf4c87de.
+..............................
+
+2023-12-06 10:44:35,206 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot 1040904f312d051825b9205caf4c87de.
+2023-12-06 10:44:35,207 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Received task Reduce (SUM(1), at main(WordCount.java:87) (1/1).
+2023-12-06 10:44:35,211 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (1/1) (4e89f2aef62b7d61bbafc9fff95cd9aa) switched from CREATED to DEPLOYING.
+```
+p=2
+```
+2023-12-06 10:44:43,328 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Receive slot request 5bd806ad550923769e95d4d86a4744e5 for job fd43c3b3c49c0afe0be4c6706b904cc3 from resource manager with leader id 00000000000000000000000000000000.
+2023-12-06 10:44:43,328 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Allocated slot for 5bd806ad550923769e95d4d86a4744e5.
+...................................
+2023-12-06 10:44:43,365 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot 5bd806ad550923769e95d4d86a4744e5.
+2023-12-06 10:44:43,366 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Received task Reduce (SUM(1), at main(WordCount.java:87) (1/2).
+2023-12-06 10:44:43,370 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot bae54b7f4b9437bf81acafd292978241.
+2023-12-06 10:44:43,370 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot bae54b7f4b9437bf81acafd292978241.
+2023-12-06 10:44:43,371 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Received task Reduce (SUM(1), at main(WordCount.java:87) (2/2).
+2023-12-06 10:44:43,371 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (1/2) (1acde70402c0fe9c43e309b6f2f4b4cd) switched from CREATED to DEPLOYING.
+2023-12-06 10:44:43,373 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (2/2) (c347c9c47c4b81fb954311a874b7d79d) switched from CREATED to DEPLOYING.
+```
+p=3
+```
+2023-12-06 10:44:56,191 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Receive slot request 413728b6858e88e8be8ddeb986d865c1 for job 1851bfb11c5dc283209bbda14a5b7a91 from resource manager with leader id 00000000000000000000000000000000.
+2023-12-06 10:44:56,191 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Allocated slot for 413728b6858e88e8be8ddeb986d865c1.
+.......................................
+2023-12-06 10:44:56,252 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot 413728b6858e88e8be8ddeb986d865c1.
+2023-12-06 10:44:56,252 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Received task Reduce (SUM(1), at main(WordCount.java:87) (1/3).
+2023-12-06 10:44:56,253 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot 46bc54661e712a95825369cac5cc6af6.
+2023-12-06 10:44:56,253 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot 46bc54661e712a95825369cac5cc6af6.
+2023-12-06 10:44:56,254 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot c7a90293611545315fb34eefd29ce7d3.
+2023-12-06 10:44:56,254 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (1/3) (ced34a25137bf391bafb0044262f04ae) switched from CREATED to DEPLOYING.
+2023-12-06 10:44:56,254 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Loading JAR files for task Reduce (SUM(1), at main(WordCount.java:87) (1/3) (ced34a25137bf391bafb0044262f04ae) [DEPLOYING].
+2023-12-06 10:44:56,254 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot 46bc54661e712a95825369cac5cc6af6.
+2023-12-06 10:44:56,254 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Registering task at network: Reduce (SUM(1), at main(WordCount.java:87) (1/3) (ced34a25137bf391bafb0044262f04ae) [DEPLOYING].
+2023-12-06 10:44:56,254 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Received task Reduce (SUM(1), at main(WordCount.java:87) (2/3).
+2023-12-06 10:44:56,254 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (1/3) (ced34a25137bf391bafb0044262f04ae) switched from DEPLOYING to RUNNING.
+2023-12-06 10:44:56,255 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot c7a90293611545315fb34eefd29ce7d3.
+2023-12-06 10:44:56,255 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Received task Reduce (SUM(1), at main(WordCount.java:87) (3/3).
+2023-12-06 10:44:56,256 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (2/3) (ae17aca0dbc22c6cc0b3ef75ec03e097) switched from CREATED to DEPLOYING.
+2023-12-06 10:44:56,256 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Loading JAR files for task Reduce (SUM(1), at main(WordCount.java:87) (2/3) (ae17aca0dbc22c6cc0b3ef75ec03e097) [DEPLOYING].
+2023-12-06 10:44:56,256 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Registering task at network: Reduce (SUM(1), at main(WordCount.java:87) (2/3) (ae17aca0dbc22c6cc0b3ef75ec03e097) [DEPLOYING].
+2023-12-06 10:44:56,256 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (2/3) (ae17aca0dbc22c6cc0b3ef75ec03e097) switched from DEPLOYING to RUNNING.
+2023-12-06 10:44:56,256 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (3/3) (a25fcb1abd5fa545eb5f055335661f2a) switched from CREATED to DEPLOYING.
+2023-12-06 10:44:56,256 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Loading JAR files for task Reduce (SUM(1), at main(WordCount.java:87) (3/3) (a25fcb1abd5fa545eb5f055335661f2a) [DEPLOYING].
+2023-12-06 10:44:56,257 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Registering task at network: Reduce (SUM(1), at main(WordCount.java:87) (3/3) (a25fcb1abd5fa545eb5f055335661f2a) [DEPLOYING].
+2023-12-06 10:44:56,257 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (3/3) (a25fcb1abd5fa545eb5f055335661f2a) switched from DEPLOYING to RUNNING.
+2023-12-06 10:44:56,297 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (2/3) (ae17aca0dbc22c6cc0b3ef75ec03e097) switched from RUNNING to FINISHED.
+2023-12-06 10:44:56,297 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Freeing task resources for Reduce (SUM(1), at main(WordCount.java:87) (2/3) (ae17aca0dbc22c6cc0b3ef75ec03e097).
+2023-12-06 10:44:56,298 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Un-registering task and sending final execution state FINISHED to JobManager for task Reduce (SUM(1), at main(WordCount.java:87) (2/3) ae17aca0dbc22c6cc0b3ef75ec03e097.
+2023-12-06 10:44:56,299 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (1/3) (ced34a25137bf391bafb0044262f04ae) switched from RUNNING to FINISHED.
+2023-12-06 10:44:56,299 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Freeing task resources for Reduce (SUM(1), at main(WordCount.java:87) (1/3) (ced34a25137bf391bafb0044262f04ae).
+2023-12-06 10:44:56,299 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Un-registering task and sending final execution state FINISHED to JobManager for task Reduce (SUM(1), at main(WordCount.java:87) (1/3) ced34a25137bf391bafb0044262f04ae.
+```
+p=4
+```
+
+2023-12-06 10:45:07,403 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Receive slot request 02585101726cd4ee416a88da77fc4618 for job bc618f19d10f2973cbdb4e74b1def0f0 from resource manager with leader id 00000000000000000000000000000000.
+2023-12-06 10:45:07,404 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Allocated slot for 02585101726cd4ee416a88da77fc4618.
+................................
+10:45:07,449 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot 02585101726cd4ee416a88da77fc4618.
+2023-12-06 10:45:07,449 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Received task Reduce (SUM(1), at main(WordCount.java:87) (1/4).
+2023-12-06 10:45:07,452 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot eb4fbc442d7c400158fe9a9ebfa2691c.
+2023-12-06 10:45:07,452 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot eb4fbc442d7c400158fe9a9ebfa2691c.
+2023-12-06 10:45:07,452 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot fa67f55e86b4b171eb32e58df1ab73ac.
+2023-12-06 10:45:07,452 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot eb4fbc442d7c400158fe9a9ebfa2691c.
+2023-12-06 10:45:07,452 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot fa67f55e86b4b171eb32e58df1ab73ac.
+2023-12-06 10:45:07,452 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot 4fb95f5d1a690c5954e6a0f4d4e96828.
+2023-12-06 10:45:07,453 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot eb4fbc442d7c400158fe9a9ebfa2691c.
+2023-12-06 10:45:07,453 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Received task Reduce (SUM(1), at main(WordCount.java:87) (2/4).
+2023-12-06 10:45:07,453 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (1/4) (a36fef48a5c8328355d9630b67947b14) switched from CREATED to DEPLOYING.
+2023-12-06 10:45:07,465 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot fa67f55e86b4b171eb32e58df1ab73ac.
+2023-12-06 10:45:07,466 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Received task Reduce (SUM(1), at main(WordCount.java:87) (3/4).
+2023-12-06 10:45:07,466 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (2/4) (3d4d2bfeada831e87d50771c71809e63) switched from CREATED to DEPLOYING.
+2023-12-06 10:45:07,468 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot 4fb95f5d1a690c5954e6a0f4d4e96828.
+2023-12-06 10:45:07,468 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Received task Reduce (SUM(1), at main(WordCount.java:87) (4/4).
+2023-12-06 10:45:07,468 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (3/4) (8c8d42092ff829ac4aef87f9371116c4) switched from CREATED to DEPLOYING.
+2023-12-06 10:45:07,470 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Loading JAR files for task Reduce (SUM(1), at main(WordCount.java:87) (1/4) (a36fef48a5c8328355d9630b67947b14) [DEPLOYING].
+2023-12-06 10:45:07,470 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Registering task at network: Reduce (SUM(1), at main(WordCount.java:87) (1/4) (a36fef48a5c8328355d9630b67947b14) [DEPLOYING].
+2023-12-06 10:45:07,470 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (1/4) (a36fef48a5c8328355d9630b67947b14) switched from DEPLOYING to RUNNING.
+2023-12-06 10:45:07,470 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Loading JAR files for task Reduce (SUM(1), at main(WordCount.java:87) (3/4) (8c8d42092ff829ac4aef87f9371116c4) [DEPLOYING].
+2023-12-06 10:45:07,470 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Registering task at network: Reduce (SUM(1), at main(WordCount.java:87) (3/4) (8c8d42092ff829ac4aef87f9371116c4) [DEPLOYING].
+2023-12-06 10:45:07,470 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (3/4) (8c8d42092ff829ac4aef87f9371116c4) switched from DEPLOYING to RUNNING.
+2023-12-06 10:45:07,470 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (4/4) (def950d6feb829be9cd06a581c6f3089) switched from CREATED to DEPLOYING.
+2023-12-06 10:45:07,522 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Loading JAR files for task Reduce (SUM(1), at main(WordCount.java:87) (2/4) (3d4d2bfeada831e87d50771c71809e63) [DEPLOYING].
+2023-12-06 10:45:07,522 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Registering task at network: Reduce (SUM(1), at main(WordCount.java:87) (2/4) (3d4d2bfeada831e87d50771c71809e63) [DEPLOYING].
+2023-12-06 10:45:07,522 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (2/4) (3d4d2bfeada831e87d50771c71809e63) switched from DEPLOYING to RUNNING.
+2023-12-06 10:45:07,534 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Loading JAR files for task Reduce (SUM(1), at main(WordCount.java:87) (4/4) (def950d6feb829be9cd06a581c6f3089) [DEPLOYING].
+2023-12-06 10:45:07,535 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Registering task at network: Reduce (SUM(1), at main(WordCount.java:87) (4/4) (def950d6feb829be9cd06a581c6f3089) [DEPLOYING].
+2023-12-06 10:45:07,535 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (4/4) (def950d6feb829be9cd06a581c6f3089) switched from DEPLOYING to RUNNING.
+```
+p=5
+```
+2023-12-06 10:45:51,425 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Receive slot request 36baecc30276e70935cea5246ce9738d for job 1fd73f83a716da9f0b3aa769687287e2 from resource manager with leader id 00000000000000000000000000000000.
+2023-12-06 10:45:51,425 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Allocated slot for 36baecc30276e70935cea5246ce9738d.
+..............................................
+2023-12-06 10:45:51,463 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Offer reserved slots to the leader of job 1fd73f83a716da9f0b3aa769687287e2.
+2023-12-06 10:45:51,463 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot 36baecc30276e70935cea5246ce9738d.
+2023-12-06 10:45:51,464 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Received task Reduce (SUM(1), at main(WordCount.java:87) (1/5).
+2023-12-06 10:45:51,475 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot f2b43e2529e1649dbdd931214c9f94ea.
+2023-12-06 10:45:51,475 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot f2b43e2529e1649dbdd931214c9f94ea.
+2023-12-06 10:45:51,475 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot 8158510413de83b2cf98f1b610fbc85d.
+2023-12-06 10:45:51,475 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot f2b43e2529e1649dbdd931214c9f94ea.
+2023-12-06 10:45:51,475 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot 8158510413de83b2cf98f1b610fbc85d.
+2023-12-06 10:45:51,475 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot a305dcf6190e4f1ce377a8dd4bff7461.
+2023-12-06 10:45:51,475 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot f2b43e2529e1649dbdd931214c9f94ea.
+2023-12-06 10:45:51,475 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Received task Reduce (SUM(1), at main(WordCount.java:87) (2/5).
+2023-12-06 10:45:51,489 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (1/5) (b42996ba5c2dd049f48bdf145a958284) switched from CREATED to DEPLOYING.
+2023-12-06 10:45:51,490 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot 8158510413de83b2cf98f1b610fbc85d.
+2023-12-06 10:45:51,491 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Received task Reduce (SUM(1), at main(WordCount.java:87) (3/5).
+2023-12-06 10:45:51,491 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (2/5) (d8864a3c570049ce4eca5a353564e6df) switched from CREATED to DEPLOYING.
+2023-12-06 10:45:51,492 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot a305dcf6190e4f1ce377a8dd4bff7461.
+2023-12-06 10:45:51,492 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Received task Reduce (SUM(1), at main(WordCount.java:87) (4/5).
+2023-12-06 10:45:51,492 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (3/5) (c5916f065223d42e912caaedfacf84c8) switched from CREATED to DEPLOYING.
+2023-12-06 10:45:51,494 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (4/5) (130f7afca9aef9f118f3a8bf2ef0faf0) switched from CREATED to DEPLOYING.
+2023-12-06 10:45:51,494 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Loading JAR files for task Reduce (SUM(1), at main(WordCount.java:87) (1/5) (b42996ba5c2dd049f48bdf145a958284) [DEPLOYING].
+2023-12-06 10:45:51,494 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Registering task at network: Reduce (SUM(1), at main(WordCount.java:87) (1/5) (b42996ba5c2dd049f48bdf145a958284) [DEPLOYING].
+2023-12-06 10:45:51,494 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (1/5) (b42996ba5c2dd049f48bdf145a958284) switched from DEPLOYING to RUNNING.
+2023-12-06 10:45:51,495 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Loading JAR files for task Reduce (SUM(1), at main(WordCount.java:87) (4/5) (130f7afca9aef9f118f3a8bf2ef0faf0) [DEPLOYING].
+2023-12-06 10:45:51,495 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Registering task at network: Reduce (SUM(1), at main(WordCount.java:87) (4/5) (130f7afca9aef9f118f3a8bf2ef0faf0) [DEPLOYING].
+2023-12-06 10:45:51,495 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (4/5) (130f7afca9aef9f118f3a8bf2ef0faf0) switched from DEPLOYING to RUNNING.
+2023-12-06 10:45:51,508 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Loading JAR files for task Reduce (SUM(1), at main(WordCount.java:87) (3/5) (c5916f065223d42e912caaedfacf84c8) [DEPLOYING].
+2023-12-06 10:45:51,509 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Registering task at network: Reduce (SUM(1), at main(WordCount.java:87) (3/5) (c5916f065223d42e912caaedfacf84c8) [DEPLOYING].
+2023-12-06 10:45:51,509 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (3/5) (c5916f065223d42e912caaedfacf84c8) switched from DEPLOYING to RUNNING.
+2023-12-06 10:45:51,522 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Loading JAR files for task Reduce (SUM(1), at main(WordCount.java:87) (2/5) (d8864a3c570049ce4eca5a353564e6df) [DEPLOYING].
+2023-12-06 10:45:51,522 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Registering task at network: Reduce (SUM(1), at main(WordCount.java:87) (2/5) (d8864a3c570049ce4eca5a353564e6df) [DEPLOYING].
+2023-12-06 10:45:51,522 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (2/5) (d8864a3c570049ce4eca5a353564e6df) switched from DEPLOYING to RUNNING.
+2023-12-06 10:45:51,524 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (1/5) (b42996ba5c2dd049f48bdf145a958284) switched from RUNNING to FINISHED.
+2023-12-06 10:45:51,524 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Freeing task resources for Reduce (SUM(1), at main(WordCount.java:87) (1/5) (b42996ba5c2dd049f48bdf145a958284).
+2023-12-06 10:45:51,524 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Un-registering task and sending final execution state FINISHED to JobManager for task Reduce (SUM(1), at main(WordCount.java:87) (1/5) b42996ba5c2dd049f48bdf145a958284.
+2023-12-06 10:45:51,549 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (4/5) (130f7afca9aef9f118f3a8bf2ef0faf0) switched from RUNNING to FINISHED.
+2023-12-06 10:45:51,549 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Freeing task resources for Reduce (SUM(1), at main(WordCount.java:87) (4/5) (130f7afca9aef9f118f3a8bf2ef0faf0).
+2023-12-06 10:45:51,549 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Un-registering task and sending final execution state FINISHED to JobManager for task Reduce (SUM(1), at main(WordCount.java:87) (4/5) 130f7afca9aef9f118f3a8bf2ef0faf0.
+2023-12-06 10:45:51,550 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (3/5) (c5916f065223d42e912caaedfacf84c8) switched from RUNNING to FINISHED.
+2023-12-06 10:45:51,550 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Freeing task resources for Reduce (SUM(1), at main(WordCount.java:87) (3/5) (c5916f065223d42e912caaedfacf84c8).
+2023-12-06 10:45:51,550 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Un-registering task and sending final execution state FINISHED to JobManager for task Reduce (SUM(1), at main(WordCount.java:87) (3/5) c5916f065223d42e912caaedfacf84c8.
+2023-12-06 10:45:51,551 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot f2b43e2529e1649dbdd931214c9f94ea.
+2023-12-06 10:45:51,551 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Received task DataSink (collect()) (1/5).
+2023-12-06 10:45:51,557 INFO  org.apache.flink.runtime.taskexecutor.slot.TaskSlotTableImpl [] - Activate slot 36baecc30276e70935cea5246ce9738d.
+
+2023-12-06 10:45:51,557 INFO  org.apache.flink.runtime.taskexecutor.TaskExecutor           [] - Received task Reduce (SUM(1), at main(WordCount.java:87) (5/5).
+.....
+
+2023-12-06 10:45:51,562 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (5/5) (98314de2f88839e8129230fdec72e1c0) switched from CREATED to DEPLOYING.
+2023-12-06 10:45:51,562 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Loading JAR files for task Reduce (SUM(1), at main(WordCount.java:87) (5/5) (98314de2f88839e8129230fdec72e1c0) [DEPLOYING].
+2023-12-06 10:45:51,563 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Registering task at network: Reduce (SUM(1), at main(WordCount.java:87) (5/5) (98314de2f88839e8129230fdec72e1c0) [DEPLOYING].
+2023-12-06 10:45:51,563 INFO  org.apache.flink.runtime.taskmanager.Task                    [] - Reduce (SUM(1), at main(WordCount.java:87) (5/5) (98314de2f88839e8129230fdec72e1c0) switched from DEPLOYING to RUNNING.
+.....................
+
+
+```
+
 
 不过需要注意，再高就会出问题 [Flink: fail fast if job parallelism is larger than the total number of slots](https://stackoverflow.com/questions/57732800/flink-fail-fast-if-job-parallelism-is-larger-than-the-total-number-of-slots)
 
