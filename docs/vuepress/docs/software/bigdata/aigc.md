@@ -55,6 +55,9 @@ open-interpreter https://github.com/lyhistory/tools_aigc_open-interpreter
 https://duozhongcao.com/
 https://www.jasper.ai/
 ### 文字转语音
+
+https://ttsmaker.com/
+
 google bart
 open-source text-to-speech+ model.
 https://github.com/suno-ai/bark
