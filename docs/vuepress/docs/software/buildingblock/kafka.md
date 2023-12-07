@@ -1928,6 +1928,27 @@ client端日志
 1. Upgrade the JDK to version 1.8.0_192 or later.
 2. Adjust the garbage collection strategy from G1 to CMS.
 
+### retention time
+
+segment.bytes -> 1073741824, retention.ms -> 604800000
+delete.retention.ms -> 86400000
+
+[2023-12-06 17:26:18,574] INFO Created log for partition QD-WEBSOCKET-0 in /kafka_2.13-2.7.0/bin/../kafka-logs/QD-WEBSOCKET-0 with properties {compression.type -> producer, message.downconversion.enable -> true, min.insync.replicas -> 1, segment.jitter.ms -> 0, cleanup.policy -> [delete], flush.ms -> 9223372036854775807, segment.bytes -> 1073741824, retention.ms -> 604800000, flush.messages -> 9223372036854775807, message.format.version -> 2.7-IV2, file.delete.delay.ms -> 60000, max.compaction.lag.ms -> 9223372036854775807, max.message.bytes -> 1048588, min.compaction.lag.ms -> 0, message.timestamp.type -> CreateTime, preallocate -> false, min.cleanable.dirty.ratio -> 0.5, index.interval.bytes -> 4096, unclean.leader.election.enable -> false, retention.bytes -> -1, delete.retention.ms -> 86400000, segment.ms -> 604800000, message.timestamp.difference.max.ms -> 9223372036854775807, segment.index.bytes -> 10485760}. (kafka.log.LogManager)
+
+
+2023-12-06 17:33:32.993 [32mDEBUG[m [35m23619GG[m [MANAGER] [36mc.q.c.c.b.SimpleWorkerManager[m : Received 1 message(s)
+2023-12-06 17:33:32.994 [32mDEBUG[m [35m23619GG[m [MANAGER] [36mc.q.c.c.b.SimpleWorkerManager[m : Message header payload:P=0,O=24,C=TESTMsgToKafka,V=1
+
+```
+bin/kafka-console-consumer.sh --bootstrap-server XXXXXX --topic T-TEST --partition 0 --offset 0 --max-messages 10 --property print.key=true --property print.offset=true --property print.timestamp=true
+
+CreateTime:1701855000436        Offset:0        null    testMs
+CreateTime:1701855100740        Offset:2        null     testMs
+CreateTime:1701855100749        Offset:3        null     testMs
+CreateTime:1701855100774        Offset:5        null     testMs
+CreateTime:1701855100776        Offset:6        null     testMs
+```
+
 
 ## Appendix
 ### Reference
