@@ -51,6 +51,31 @@ When Mozilla’s built-in logging capabilities aren’t good enough, and you nee
 
 
 ## Troubleshooting
+
+### DNS issues
+
+同事访问网站 A.COM 显示白页，通过google capture network traffic工具发现包括main.js在内的resource都出现
+net_error=-118(ERR_CONNECTION_TIMED_OUT)
+这些js和css无法加载造成白页问题，
+然后注意到这些resource对应的域名是另一个子域名sub.A.COM,
+所以nslookup一下，发现我们内网自己的dns解析器
+```
+>nslookup sub.A.COM
+Server:  UnKnown
+Address:  172.31.200.1
+
+Non-authoritative answer:
+DNS request timed out.
+    timeout was 2 seconds.
+Name:    XXX.global.cdnhwcuwd107.cn
+Address:  62.0.58.94
+Aliases:  sub.A.COM
+          sub.A.COM.0c91a5b4.c.cdnhwc1.com
+```
+timeout并且解析到了一个不是我们所在地区的国家
+
+更换dns服务器即可
+
 ### Waf issues
 表现：公司内部访问公司网站随机被屏蔽
 

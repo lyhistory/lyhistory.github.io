@@ -1985,18 +1985,19 @@ client端日志
 1. Upgrade the JDK to version 1.8.0_192 or later.
 2. Adjust the garbage collection strategy from G1 to CMS.
 
-### kafka topic retention.ms vs delete.retention.ms
-情况是：
-我们有两个服务，服务A是job scheduler，另一个服务B会接受A的指令做任务，A和B之间就是通过kafka消息来发指令以及更新结果；
-某次我们发现启动之后，因为时间的原因，服务A把应该触发的一堆任务发到了kafka，同时B还在启动之中（读取kafka metadata，seek last offset），当B poll的时候发现虽然是seek到0的位置，但是实际接受到底kafka msg offset却是 24
+### kafka transaction failed but msg committed without error
+大概情况是：
+我们有两个服务，服务A发送了一堆kafka消息给下游B，同时B还在启动之中（读取kafka metadata，seek last offset），当B poll的时候发现虽然是seek到0的位置，但是实际接受到底kafka msg offset却是 24
 
 ```
 2023-12-06 17:33:32.993 [32mDEBUG[m [35m23619GG[m [MANAGER] [36mc.q.c.c.b.SimpleWorkerManager[m : Received 1 message(s)
 2023-12-06 17:33:32.994 [32mDEBUG[m [35m23619GG[m [MANAGER] [36mc.q.c.c.b.SimpleWorkerManager[m : Message header payload:P=0,O=24,C=TESTMsgToKafka,V=1
 ```
-然后手动查询却又能看到从0开始的数据
+
+然后手动查询：
 
 ```
+正常消费可以看到从0开始的数据
 bin/kafka-console-consumer.sh --bootstrap-server XXXXXX --topic T-TEST --partition 0 --offset 0 --max-messages 10 --property print.key=true --property print.offset=true --property print.timestamp=true
 
 CreateTime:1701855000436        Offset:0        null    testMs
@@ -2004,17 +2005,35 @@ CreateTime:1701855100740        Offset:2        null     testMs
 CreateTime:1701855100749        Offset:3        null     testMs
 CreateTime:1701855100774        Offset:5        null     testMs
 CreateTime:1701855100776        Offset:6        null     testMs
+
+但是提高 isolation.level=read_committed 就只能跳过这些消息
+bin/kafka-console-consumer.sh --consumer-property "isolation.level=read_committed" --bootstrap-server XXXXXX --topic T-TEST --partition 0 --offset 0 --max-messages 10 --property print.key=true --property print.offset=true --property print.timestamp=true
+
+CreateTime:1701855213182        Offset:24        null    testMs
+CreateTime:1701855213229        Offset:226        null     testMs
+
 ```
-
-
-
-
-segment.bytes -> 1073741824, retention.ms -> 604800000
-delete.retention.ms -> 86400000
+证明0-24之间的消息作为Transaction失败了，
+client端代码
 ```
-[2023-12-06 17:26:18,574] INFO Created log for partition QD-WEBSOCKET-0 in /kafka_2.13-2.7.0/bin/../kafka-logs/QD-WEBSOCKET-0 with properties {compression.type -> producer, message.downconversion.enable -> true, min.insync.replicas -> 1, segment.jitter.ms -> 0, cleanup.policy -> [delete], flush.ms -> 9223372036854775807, segment.bytes -> 1073741824, retention.ms -> 604800000, flush.messages -> 9223372036854775807, message.format.version -> 2.7-IV2, file.delete.delay.ms -> 60000, max.compaction.lag.ms -> 9223372036854775807, max.message.bytes -> 1048588, min.compaction.lag.ms -> 0, message.timestamp.type -> CreateTime, preallocate -> false, min.cleanable.dirty.ratio -> 0.5, index.interval.bytes -> 4096, unclean.leader.election.enable -> false, retention.bytes -> -1, delete.retention.ms -> 86400000, segment.ms -> 604800000, message.timestamp.difference.max.ms -> 9223372036854775807, segment.index.bytes -> 10485760}. (kafka.log.LogManager)
+ try {
+                rawProducer.commitTransaction();
+                logger.debug("sucess");
+            } catch (Exception ex) {
+                rawProducer.abortTransaction();
+                throw new RuntimeException("abortTransaction", ex);
+            } finally {
+                inTransactions = false;
+            }
+        }
 ```
+但是client端并没有触发catch，
+然后检查了kafka服务器端，也没有看到任何异常，只是在这个问题发生的前后kafka一直在做清理*.deleted 文件
 
+然后也没有重现出来，
+后续思路：
+1.开启kafka服务器端debug模式，log4j mode=DEBUG
+2.更改retention time，在kafka做清理的时间内再次重试看能否reproduce
 
 [producer.close，代码没报错但是消息却发送失败](https://blog.csdn.net/Howinfun/article/details/104172441)
 
