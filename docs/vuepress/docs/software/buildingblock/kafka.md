@@ -429,6 +429,40 @@ SERVER_JVMFLAGS=-Xmx1024m'
 
 ###### retention / delete
 
+retention.ms 参数指定消息在 topic 中保留的时间，单位是毫秒。在指定的时间过去后，Kafka 会将该 topic 中旧的消息删除
+
+delete.retention.ms 参数是在消息被删除后，要等待多长时间才能在磁盘上删除该消息的文件
+
+cleanup.policy
+A string that is either "delete" or "compact" or both. This string designates the retention policy to use on old log segments. The default policy ("delete") will discard old segments when their retention time or size limit has been reached. The "compact" setting will enable log compaction on the topic.
+
+Type:	list
+Default:	delete
+Valid Values:	[compact, delete]
+Server Default Property:	log.cleanup.policy
+Importance:	medium
+
+retention.ms
+This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy. This represents an SLA on how soon consumers must read their data. If set to -1, no time limit is applied.
+
+Type:	long
+Default:	604800000 (7 days)
+Valid Values:	[-1,...]
+Server Default Property:	log.retention.ms
+Importance:	medium
+
+delete.retention.ms
+The amount of time to retain delete tombstone markers for log compacted topics. This setting also gives a bound on the time in which a consumer must complete a read if they begin from offset 0 to ensure that they get a valid snapshot of the final stage (otherwise delete tombstones may be collected before they complete their scan).
+
+Type:	long
+Default:	86400000 (1 day)
+Valid Values:	[0,...]
+Server Default Property:	log.cleaner.delete.retention.ms
+Importance:	medium
+
+kafka至少会保留1个工作segment保存消息。消息量超过单个文件存储大小就会新建segment，比如消息量为2.6GB, 就会建立3个segment。kafka会定时扫描非工作segment，将该文件时间和设置的topic过期时间进行对比，如果发现过期就会将该segment文件（具体包括一个log文件和两个index文件）打上.deleted 的标记: kafka-logs/Topic-1/XXXXX.log.deleted
+最后kafka中会有专门的删除日志定时任务过来扫描，发现.deleted文件就会将其从磁盘上删除，释放磁盘空间，至此kafka过期消息删除完成。
+
 log.retention.ms:
 log.retention.ms parameter (default to 1 week). If set to -1, no time limit is applied.
 
@@ -616,6 +650,8 @@ config/server-1.properties:
 
 ```
 
+[Kafka CLI Tutorials](https://www.conduktor.io/kafka/kafka-cli-tutorial/)
+
 ##### Create topic
 
 ```
@@ -660,6 +696,23 @@ bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic "ngs.svl.20220
 bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic my-replicated-topic
 
 bin/kafka-console-consumer.sh --bootstrap-server <你的kafka配置> --topic T-RISK --partition 0 --offset 3350 --max-messages 1
+
+kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic first_topic --formatter kafka.tools.DefaultMessageFormatter --property print.timestamp=true --property print.key=true --property print.value=true --from-beginning
+
+More properties are available such as:
+
+print.partition
+
+print.offset
+
+print.headers
+
+key.separator
+
+line.separator
+
+headers.separator
+
 
 #inspect partition assignments and consumption progress 
 bin/kafka-consumer-groups.sh --new-consumer --describe --group consumer-tutorial-group --bootstrap-server localhost:9092 
@@ -1797,6 +1850,10 @@ https://stackoverflow.com/questions/54544074/how-to-make-restart-able-producer
 
 __consumer_offsets https://stackoverflow.com/questions/41429053/how-to-change-consumer-offsets-cleanup-plicy-to-delete-from-compact
 
+### kafka的日志模块
+https://www.cnblogs.com/boanxin/p/13466209.html
+https://www.applenice.net/2020/05/31/Kafka-Notes-06/
+
 ## 7. Troubleshooting 踩过的坑
 
 ### Caused by: org.apache.kafka.common.errors.InvalidReplicationFactorException: Replication factor is below 1 or larger than the number of available brokers.
@@ -1949,36 +2006,7 @@ CreateTime:1701855100774        Offset:5        null     testMs
 CreateTime:1701855100776        Offset:6        null     testMs
 ```
 
-retention.ms 参数指定消息在 topic 中保留的时间，单位是毫秒。在指定的时间过去后，Kafka 会将该 topic 中旧的消息删除
 
-delete.retention.ms 参数是在消息被删除后，要等待多长时间才能在磁盘上删除该消息的文件
-
-cleanup.policy
-A string that is either "delete" or "compact" or both. This string designates the retention policy to use on old log segments. The default policy ("delete") will discard old segments when their retention time or size limit has been reached. The "compact" setting will enable log compaction on the topic.
-
-Type:	list
-Default:	delete
-Valid Values:	[compact, delete]
-Server Default Property:	log.cleanup.policy
-Importance:	medium
-
-retention.ms
-This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy. This represents an SLA on how soon consumers must read their data. If set to -1, no time limit is applied.
-
-Type:	long
-Default:	604800000 (7 days)
-Valid Values:	[-1,...]
-Server Default Property:	log.retention.ms
-Importance:	medium
-
-delete.retention.ms
-The amount of time to retain delete tombstone markers for log compacted topics. This setting also gives a bound on the time in which a consumer must complete a read if they begin from offset 0 to ensure that they get a valid snapshot of the final stage (otherwise delete tombstones may be collected before they complete their scan).
-
-Type:	long
-Default:	86400000 (1 day)
-Valid Values:	[0,...]
-Server Default Property:	log.cleaner.delete.retention.ms
-Importance:	medium
 
 
 segment.bytes -> 1073741824, retention.ms -> 604800000
@@ -1988,7 +2016,7 @@ delete.retention.ms -> 86400000
 ```
 
 
-
+[producer.close，代码没报错但是消息却发送失败](https://blog.csdn.net/Howinfun/article/details/104172441)
 
 
 ## Appendix
