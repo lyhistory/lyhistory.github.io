@@ -57,22 +57,24 @@ https://panzoid.com/
 自动剪辑神器
 
 ### 文案 =》视频
+
 #### 第一步：chatgpt文案
 
-#### 路径 1：第二步 直接用视频剪辑软件如剪映的一键文字AI图文成片生成视频功能
+#### 路径 1：直接在chatgpt中使用capcut插件
+#### 路径 2：第二步 直接用视频剪辑软件如剪映的一键文字AI图文成片生成视频功能
 
-#### 路径 2： 第二步：转语音
+#### 路径 3： 第二步：转语音
 配音鹅小程序，微软语音合成助手 或者等第四步或第五步生成
 语音合成助手：
 + https://cloud.google.com/text-to-speech?hl=zh-cn
 + 微软语音合成工具 https://github.com/Baiyuetribe/paper2gui/blob/main/Text2Speech/microsoft_tts.md
-#### 路径 2：第三步：生成静态虚拟人物图片
+#### 路径 3：第三步：生成静态虚拟人物图片
 Midjourney / STABLE DIFFUTION / 百度文心一格
 
-#### 路径 2：第四步：视频生成
+#### 路径 3：第四步：视频生成
 DID CT8-CrazyTalk HeyGen Lumen5 、Animaker
 
-#### 路径 2：第五步：视频剪辑
+#### 路径 3：第五步：视频剪辑
 去水印 换音频 加字幕
 
 ### 文案=》动画视频
@@ -108,6 +110,11 @@ https://mp.weixin.qq.com/s/WvSXb-dQ2dFaEAKqXis_9w
 动画字幕： invideo.io 视频制作平台 Create new – text to video， 勾选 Auto suggest Images/Videos
 
 Camtasia 视频剪辑录屏
+
+## 更多工具
+
+YouTube Dubbing
+🚀一个帮你把外语视频变成中文视频的神奇插件
 
 
 

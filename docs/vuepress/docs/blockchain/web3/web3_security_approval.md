@@ -12,6 +12,12 @@ Web3 gives you ownership of your digital assets in an unprecedented way. For exa
 
 Driven by the FOMO mode, a lot of people participate in airdrops or delegates without safety mindset, prone to lose all the moeny in malicious Dapps interactions, it's time to gear up.
 
+security-centric projects: Fire, Wallet Guard, Pocket Universe, and Webacy.
+OpSec, short for Operational Security, involves procedures and actions taken to protect sensitive information.
+
+One of the most common threats, phishing attempts to trick you into sharing sensitive info. Always double-check URLs and be skeptical of unsolicited communications
+
+
 ## 防御准备：三个钱包 Three Wallets For Success & Safety
 
 也许你见过一些漂亮的流程图表建议使用 5到7 个以上的钱包， 实际上三个钱包是足够合理的。

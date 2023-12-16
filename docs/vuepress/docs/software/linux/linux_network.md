@@ -4,6 +4,8 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
+剖析Linux网络包接收过程：掌握数据如何被捕获和分发的全过程 https://mp.weixin.qq.com/s/zyqIN3G5xwkQfa1uaU8DmQ
+
 ## 基本
 
 查端口找pid netstat -anp|grep :80 

@@ -1,3 +1,5 @@
+电商生意 = （产品力+服务力）×获客力×品牌力
+
 ## B2B B2C C2M
 Consumer-to-manufacturer (C2M) 
 MCN全称为Multi-Channel Network，主要依托电商、社交、视频等平台，整合内容创作者资源（如网红、UP主、大V等），进行持续内容生产、输出并实现商业变现。MCN机构具体业务主要为网红签约、孵化、内容创作、社区运营、内容分发、平台对接等。
@@ -108,6 +110,8 @@ https://mp.weixin.qq.com/s/exjVdZj4Qc4DFDcRSQAIjg
 分享一波针对“脚”的外贸独立站
 https://mp.weixin.qq.com/s/vKO1E1fcvwhxV5-e5_s-Uw
 
+http://www.lotsofbuttons.com/en/
+
 https://firebox.com/
 
 https://www.uncommongoods.com/
@@ -118,6 +122,7 @@ https://www.renogy.com/
 
 新奇特选品：
 odditymall.com
+
 
 ## 流量漏斗 funnel
 

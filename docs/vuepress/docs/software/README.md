@@ -38,7 +38,6 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<!--<li><a href="/docs/software/programming/js_angularjs">angularjs开发</a></li>-->
 		<li><a href="/docs/software/programming/interview_frontend">前端知识</a></li>
 		<li><a href="/docs/software/programming/ide_vscode">IDE-VSCode</a></li>
-		<!--<li><a href="/docs/software/programming/programming">编程基础</a></li>-->
 		<li><a href="/docs/software/programming/webdev/webdev">web开发</a></li>
 		<li><a href="/docs/software/programming/webdev/webdev_debug">web开发调试</a></li>
 		<li><a href="/docs/software/programming/webdev/chromeextension">浏览器插件开发</a></li>

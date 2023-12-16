@@ -1926,3 +1926,7 @@ https://developers.weixin.qq.com/miniprogram/dev/api/network/request/wx.request.
 
 ### ChatGPT插件Stories =》绘本
 https://mp.weixin.qq.com/s/7McYXWaT8_q3IQgLq7iBEw
+
+## GPTs 应用商店
+You can now create custom versions of ChatGPT that combine instructions, extra knowledge, and any combination of skills.
+https://openai.com/blog/introducing-gpts

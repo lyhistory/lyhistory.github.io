@@ -115,6 +115,11 @@ Synology Note Station Client讓您連線至 Synology NAS 上的 Note Station。�
 #### 同步
 Active Backup for Business
 
+#### ssh docker
+
+通过SSH访问群晖NAS并运行Docker https://www.jianshu.com/p/1d01326016fc
+
+
 ## 硬件工具
 ### 测试
 crystal disk info
@@ -142,6 +147,11 @@ TrueNAS（12.0 版前称为 FreeNAS）是一套基于 FreeBSD 操作系统核心
 
 ### File Server
 Caddy file server
+
+### 专门工具
+
+[微信聊天记录备份](https://github.com/greycodee/wechat-backup)
+
 
 ## troubleshooting
 WD External Hard Drive Not Recognized But the Light is On https://www.easeus.com/storage-media-recovery/wd-external-hard-drive-not-recognized-working-with-light-on.html#:~:text=Change%20the%20USB%20Port%2FCable%20to%20Detect%20WD%20External%20Hard,shows%20up%20on%20the%20PC.

@@ -329,6 +329,53 @@ https://doscher.com/work/recovery-kit
 images for miner: http://cryptomining-blog.com/tag/raspberry-pi-mining/
 http://www.digital-coins.net/wordpress/index.php/2014/12/20/setup-your-raspberry-pi-as-mining-device-controller/
 
+### Private Tracker魔力值
+
+基于这个开源项目 https://github.com/linuxserver/docker-qbittorrent
+
+```
+# 创建用于存储下载资源的文件夹（推荐将外接硬盘挂载到这个位置，有效提升提升树莓派的存储上限）
+mkdir /opt/sda1
+# 创建文件夹
+mkdir /opt/server-qbittorrent
+cd /opt/server-qbittorrent
+# 创建用于存储配置的文件夹
+mkdir /opt/server-qbittorrent/appdata
+# 创建配置文件
+touch /opt/server-qbittorrent/docker-compose.yml
+
+---
+version: "2.1"
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - WEBUI_PORT=8080
+    volumes:
+      - /opt/server-qbittorrent/appdata/config:/config
+      - /opt/sda1/pt/downloads:/downloads
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+
+cd /opt/server-qbittorrent/
+sudo docker-compose up -d
+
+在树莓派frpc.ini文件添加端口映射，将树莓派的8080端口映射到服务器8081端口实例配置
+[qbit-8080]
+type = tcp
+local_ip = 127.0.0.1
+local_port = 8080
+remote_port = 8081
+最后记得重启树莓派的frpc服务，服务器放行8081端口，公网可以通过Web访问，开始愉快做种，赚魔力值吧。
+```
+
 ## Troubleshooting
 
 ### 关于显示器无法显示：

@@ -3,7 +3,9 @@ LLM:
 + chatgpt
 + claude 
 
-## 本地部署 FastGPT
+## 本地部署 
+
+### FastGPT
 
 代理方案：
 + nginx 方案 - 需要一台国外服务器 (商用)
@@ -22,6 +24,12 @@ https://github.com/labring/FastGPT
 [github.com/Yidadaa/ChatGPT-Next-Web](https://github.com/Yidadaa/ChatGPT-Next-Web)
 支持vercel免费一键部署
   
+### NAS gpt
+https://mariushosting.com/how-to-install-chat-with-gpt-on-your-synology-nas/
+
+https://cloud.tencent.com/developer/article/2312981
+
+
 ## prompt
 [chatgpt#prompt](/software/bigdata/chatgpt#prompt-实战)
 https://prompthero.com/
@@ -48,9 +56,18 @@ https://mp.weixin.qq.com/s/tdgld7kH4GFhgtjOK1LQ7w
 
 ## 应用
 
+### 图片生成
++ Dalle3
++ Bing上的GPT-4V
+  完全免费使用gpt-4最新的多模态和最强图片生成模型 https://mp.weixin.qq.com/s/MNIZCA9pxyXobA3VVEOEqQ
+
 ### AI 写程序
 OpenAI's Code Interpreter 
 open-interpreter https://github.com/lyhistory/tools_aigc_open-interpreter
+
+Draw a ui and make it real
+https://github.com/tldraw/make-real
+
 ### 标题/文案
 https://duozhongcao.com/
 https://www.jasper.ai/
@@ -62,9 +79,16 @@ google bart
 open-source text-to-speech+ model.
 https://github.com/suno-ai/bark
 
+### 语音翻译
+
+rask ai
+https://www.rask.ai/
+
 ### PPT
 MotionGo是必优科技(原口袋动画团队)全新升级的一款PPT动画插件,兼容WPS和office软件,轻量级产品,让PPT动效表达更专业。
 https://motion.yoo-ai.com/?viaurl=ainavpro.com
+
+https://www.beautiful.ai/
 
 ### Stable Diffusion model
 
@@ -98,7 +122,7 @@ tryondiffusion https://tryondiffusion.github.io/
 https://convert.leiapix.com/
 https://lumalabs.ai/interactive-scenes
 
-### AI视频
+### 文字=》视频
 
 text to video https://runwayml.com/
 
@@ -109,11 +133,19 @@ https://runwayml.com/
 
 https://wonderdynamics.com/
 
+## GPT+DB
+An intelligent and versatile general-purpose SQL client and reporting tool for databases which integrates ChatGPT capabilities.(智能的通用数据库SQL客户端和报表工具)
+https://github.com/chat2db/Chat2DB
+
 ## GPT+Eyes
 https://www.youtube.com/watch?v=w-wxguIs-0I
 
 ## GPT GAMES World
 虚拟世界的人 Generative Agents: Interactive Simulacra of Human Behavior https://github.com/joonspk-research/generative_agents
+
+## GPT Robot
+https://hackaday.io/project/189041-a-workbench-companion-from-an-amazon-echo-dot
+https://www.youtube.com/watch?v=bO-DWWFolPw&embeds_referring_euri=https%3A%2F%2Fhackaday.io%2F&source_ve_path=MjM4NTE&feature=emb_title
 
 ## other
 https://creatorkit.com/

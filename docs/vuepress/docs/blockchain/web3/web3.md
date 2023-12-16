@@ -49,3 +49,5 @@ https://orangexyz.mirror.xyz/Nv9FZ9G4OweAJzNnaPFooScS5kGk2M46MSAwqiIyZYQ
 DXC 区块链架构师 张韡武 - 彪悍的区块链来了
 https://myslide.cn/slides/4665#
 解决集成需求才是未来区块链业务的重点 https://zhuanlan.zhihu.com/p/36113034
+
+理解 Web3 及其架构和技术栈 https://mp.weixin.qq.com/s/PkcjfCWe1GnsSxAbXTNYvA
