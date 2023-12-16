@@ -22,3 +22,6 @@ Protocol vs. Applications: Layer 2 often involves protocols built on top of the 
 
 ## other
 https://orion.xyz/refer-earn/
+
+
+https://mp.weixin.qq.com/s/0bT0IDpffehKmI_kh7R_QQ

@@ -1924,6 +1924,9 @@ https://developers.weixin.qq.com/miniprogram/dev/api/network/request/wx.request.
 
 ## 插件
 
+油猴插件！无限制使用ChatGPT4.0方法！
+https://mp.weixin.qq.com/s/AzsFGhtajZQ31qPoGNX5zg
+
 ### ChatGPT插件Stories =》绘本
 https://mp.weixin.qq.com/s/7McYXWaT8_q3IQgLq7iBEw
 

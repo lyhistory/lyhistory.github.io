@@ -85,6 +85,10 @@ ChatGPT变现实操教程，照着做就能月入过万，不是标题党
 https://mp.weixin.qq.com/s/BXr34o4xO9Jh0VQSCVgO_A
 
 ## 独立站
+为什么老外喜欢在独立站买东西？
+https://mp.weixin.qq.com/s/FbG6e7viT44MZY2QcWhApg
+你知道，为什么老外喜欢在独立站买东西吗？
+https://mp.weixin.qq.com/s/FMCs0oURjhCTlj_av06IZA
 
 独立站的常见类型
 https://mp.weixin.qq.com/s/Vnb0e2HsEP8l6vxvso9OZg

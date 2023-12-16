@@ -462,3 +462,6 @@ KWP OBD2 ECU Target Address https://mechanics.stackexchange.com/questions/83343/
 https://www.linkedin.com/pulse/electronic-control-unit-ecu-vijay-tharad
 
 https://zhuanlan.zhihu.com/p/35973304
+
+Github上的超硬核嵌入式项目之——星球漫游车 https://mp.weixin.qq.com/s/q_QXb3TOFKhXEuMQckLnug
+https://github.com/nasa-jpl/open-source-rover

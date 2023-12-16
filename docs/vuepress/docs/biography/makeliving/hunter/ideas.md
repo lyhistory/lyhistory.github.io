@@ -49,3 +49,8 @@ sia app store 这个&[/search/%2320540]#20540 ;得关注下：https://blog.sia.t
 这个&[/search/%2320540]#20540 ;得研究下 https://augur.substack.com/p/how-one-trader-turned-400-into-400k
 
 “80后”华商夫妇在美国做跨境物流：“还在摸索” https://mp.weixin.qq.com/s/1dTJjVK7MWYWxQODprcNxA
+
+Canva 制作的 5 款数字产品赚了 639 美元
+https://mp.weixin.qq.com/s/NfcrEh1D_Kz1axKKVl76Eg
+
+https://mp.weixin.qq.com/s/wSzGkxI4IYQBRcW5EP37wA

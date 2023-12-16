@@ -269,6 +269,12 @@ https://mp.weixin.qq.com/s/hxJAlYp8Qc7YrHLOBC08Yg
 AdsEmpire
 https://mp.weixin.qq.com/s/l-gApN3UQsv24PLpH1DXmA
 
+国外广告联盟怎么快捷测出转化高的任务？
+https://mp.weixin.qq.com/s/R-MX-Mc90RdEsVbaTUy9WQ
+
+申请国外广告联盟时最容易审核通过快速下号的是哪种网站类目？
+https://mp.weixin.qq.com/s/GDaNQxkuXJO7FA-__eZuCg
+
 ### POA
 
 + Smartfinancial - Car insurance

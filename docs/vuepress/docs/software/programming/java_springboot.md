@@ -1202,6 +1202,10 @@ SpringApplicationRunListener只有一个实现类： EventPublishingRunListener�
 
 ## 3. 使用springboot开发应用
 
+### 3.0 语法
+
+SpringBoot常见异步编程 https://mp.weixin.qq.com/s/Z-GE_qBtnSgLQTVr9bQYcQ
+
 ### 3.0 项目技巧
 
 #### include

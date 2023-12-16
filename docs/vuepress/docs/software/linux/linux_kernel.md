@@ -107,6 +107,8 @@ dmesg
 
 ## 内存
 
+从软件和硬件角度去看内存 https://mp.weixin.qq.com/s/Br7uEIz_LOJXg8v7CXJKgQ
+
 + 主存
 + 虚拟内存
 + 常驻内存

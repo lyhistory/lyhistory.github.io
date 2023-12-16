@@ -5,6 +5,10 @@ LLM:
 
 ## 本地部署 
 
+https://github.com/jmorganca/ollama
+
+https://mp.weixin.qq.com/s/iwsSKjGloNe7SCM4-5nzDA
+
 ### FastGPT
 
 代理方案：
@@ -54,7 +58,14 @@ Drag & drop UI to build your customized LLM flow https://github.com/FlowiseAI/Fl
 [自动化视频制作工具ShortGPT](https://github.com/lyhistory/tools_aigc_ShortGPT)
 https://mp.weixin.qq.com/s/tdgld7kH4GFhgtjOK1LQ7w
 
-## 应用
+## 按平台分类
+ChatGPT
+
+GOOGLE Bard
+
+Cloudflare Workers AI https://mp.weixin.qq.com/s/R1m7IMUfHq53yEe-b9cjlA
+
+## 按应用分类
 
 ### 图片生成
 + Dalle3
@@ -67,6 +78,9 @@ open-interpreter https://github.com/lyhistory/tools_aigc_open-interpreter
 
 Draw a ui and make it real
 https://github.com/tldraw/make-real
+
+IP工具箱：开源 IP 信息查看器，使用 AI 写了 70% 代码，上线12天，GitHub 已获 900+ 星
+https://www.appinn.com/myip-a-better-ip-toolbox/
 
 ### 标题/文案
 https://duozhongcao.com/
@@ -117,6 +131,9 @@ AI商品图片：https://design.meitu.com/product-shoot/?from=home_icon
 
 
 tryondiffusion https://tryondiffusion.github.io/
+
+Stable Diffusion｜儿童绘本全流程制作分享
+https://mp.weixin.qq.com/s/Q42AQQ7YVLuMCZF1uA3V2Q
 
 ### 2D => 3D, 3D建模
 https://convert.leiapix.com/
