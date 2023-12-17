@@ -41,6 +41,120 @@ https://support.google.com/webmasters/answer/9128668?hl=en&visit_id=638064352321
 
 Google SEO: 2023年23个已被证实的Google排名因素 https://mp.weixin.qq.com/s/ZTosrw3voAw9P_K6w40q2w
 
+[如何使用谷歌关键词规划师](https://support.google.com/google-ads/answer/7337243?hl=zh-Hans)
++ Keywords Everywhere
++ SEOQuake
+ 
+[谷歌外链推广方案](https://mp.weixin.qq.com/s/IvwT86JFi1mVacHrO8BTIA)
+[以时间戳Timestamp在线工具网站为例，手把手教你做一个工具网站的详细步骤](https://mp.weixin.qq.com/s?__biz=MjM5OTIzMzYyMA==&mid=2650079501&idx=1&sn=84b905dfcf0423bce6fffad25205c53b&chksm=bf3f30368848b920e1e40dfebb7d061b417378733f43096087b5727ef6c36cfc716a48745817)
+搭建外贸独立站不再是终点，SEO才是带来订单的王道！
+https://mp.weixin.qq.com/s/RioiEs3xym9ExUrke9U6jg
+https://mp.weixin.qq.com/s/TpoS7unEY1YYf0d5EHed5A
+https://mp.weixin.qq.com/s/3GW_psgJX0KmbnW85kws9A
+
+谷歌SEO：5个小技巧助你更快获得流量！
+https://mp.weixin.qq.com/s/rmFFy5-f1arsRpER7SxytA
+
+SEO 工具：
+keyword everywhere
+https://keywordeverywhere.com/
+
+SERP 工具： 
+https://ahrefs.com/serp-checker
+https://mp.weixin.qq.com/s/l5xgiRM4GODQHDSQwtrJSw
+
+Buy Now Type Keywords:
+- buy + [product]
+
+- discount + [product]
+
+- [product] + discount
+
+- [product] + sale
+
+- [product] + offers
+
+- available deals/Offers on [product]
+
+- [product] + coupon + codes
+
+- coupon for + [product]
+
+Buyer Intent Keywords:
+- best [keyword]
+
+- best [product]
+
+- cheap [keyword]
+
+- cheap [product name]
+
+- [product name] discounts
+
+- [product name] review
+
+- buy [keyword]
+
+- buy [product name]
+
+- buy [product name] online
+
+- coupon code for [product name]
+
+- [product name] coupon code
+
+Product Type Keywords：
+
+- [Brand]
+
+- [Brand] + [Product Name]
+
+- [Product Name]
+
+- [Services]
+
+- [Brand] + [Services]
+
+- [Product] + [Guide]
+
+Informative Type Keywords：
+- [how to]
+
+- [looking for]
+
+- [how is]
+
+- [details for]
+
+- [details about]
+
+- [best way to]
+
+- [ways to]
+
+- [Is it Possible]
+
+- [compare] + [brand]
+
+- [brand] + vs + [brand]
+
+- [is] + [brand] + [Worth it]
+
+Traffic Driving Type Keywords:
+
+- [Free]
+
+- Free + [Product]
+
+- [Download]
+
+- Download + [Product]
+
+- Free + Download + [Product]
+
+- [Product] + for free
+
+
 ### 外链
 
 外链说起来很简单，毕竟各种方法总结起来也就那么点字。但是要做好、执行到位，却又是一个极其考验耐心的过程。所以从这点出发，去分析竞对的外链，找到那些链向竞对但却没链向我们的站点，同时利用数据反馈来确定在哪里可以更容易获得好的外链，这点就显得尤为重要了。

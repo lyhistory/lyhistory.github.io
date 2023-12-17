@@ -1,15 +1,14 @@
 
-LLM:
-+ chatgpt
-+ claude 
+[AI News](https://aisecret.us/)
 
-## 本地部署 
+## 基础
+### 本地部署 
 
 https://github.com/jmorganca/ollama
 
 https://mp.weixin.qq.com/s/iwsSKjGloNe7SCM4-5nzDA
 
-### FastGPT
+#### FastGPT
 
 代理方案：
 + nginx 方案 - 需要一台国外服务器 (商用)
@@ -28,13 +27,19 @@ https://github.com/labring/FastGPT
 [github.com/Yidadaa/ChatGPT-Next-Web](https://github.com/Yidadaa/ChatGPT-Next-Web)
 支持vercel免费一键部署
   
-### NAS gpt
+#### NAS gpt
 https://mariushosting.com/how-to-install-chat-with-gpt-on-your-synology-nas/
 
 https://cloud.tencent.com/developer/article/2312981
 
+### 自动化
 
-## prompt
+Drag & drop UI to build your customized LLM flow https://github.com/FlowiseAI/Flowise
+
+[自动化视频制作工具ShortGPT](https://github.com/lyhistory/tools_aigc_ShortGPT)
+https://mp.weixin.qq.com/s/tdgld7kH4GFhgtjOK1LQ7w
+
+### prompt
 [chatgpt#prompt](/software/bigdata/chatgpt#prompt-实战)
 https://prompthero.com/
 https://flowgpt.com/
@@ -48,63 +53,21 @@ https://udify.app/completion/SiKtiPJ9gHUrHUPy
 越狱:
 https://github.com/lyhistory/learn_aigc_CipherChat
 
-## model 模型库
+
+
+## 按模型分
+
+### LLM - Large Language Models
+#### 开源 huggingface 
 https://huggingface.co/
 
-## 自动化
+#### 闭源
++ chatgpt
++ claude 
+  
+### Text to image model
 
-Drag & drop UI to build your customized LLM flow https://github.com/FlowiseAI/Flowise
-
-[自动化视频制作工具ShortGPT](https://github.com/lyhistory/tools_aigc_ShortGPT)
-https://mp.weixin.qq.com/s/tdgld7kH4GFhgtjOK1LQ7w
-
-## 按平台分类
-ChatGPT
-
-GOOGLE Bard
-
-Cloudflare Workers AI https://mp.weixin.qq.com/s/R1m7IMUfHq53yEe-b9cjlA
-
-## 按应用分类
-
-### 图片生成
-+ Dalle3
-+ Bing上的GPT-4V
-  完全免费使用gpt-4最新的多模态和最强图片生成模型 https://mp.weixin.qq.com/s/MNIZCA9pxyXobA3VVEOEqQ
-
-### AI 写程序
-OpenAI's Code Interpreter 
-open-interpreter https://github.com/lyhistory/tools_aigc_open-interpreter
-
-Draw a ui and make it real
-https://github.com/tldraw/make-real
-
-IP工具箱：开源 IP 信息查看器，使用 AI 写了 70% 代码，上线12天，GitHub 已获 900+ 星
-https://www.appinn.com/myip-a-better-ip-toolbox/
-
-### 标题/文案
-https://duozhongcao.com/
-https://www.jasper.ai/
-### 文字转语音
-
-https://ttsmaker.com/
-
-google bart
-open-source text-to-speech+ model.
-https://github.com/suno-ai/bark
-
-### 语音翻译
-
-rask ai
-https://www.rask.ai/
-
-### PPT
-MotionGo是必优科技(原口袋动画团队)全新升级的一款PPT动画插件,兼容WPS和office软件,轻量级产品,让PPT动效表达更专业。
-https://motion.yoo-ai.com/?viaurl=ainavpro.com
-
-https://www.beautiful.ai/
-
-### Stable Diffusion model
+#### Stable Diffusion model
 
 ControlNet is a Stable Diffusion model that lets you copy compositions or human poses from a reference image. 
 
@@ -135,6 +98,74 @@ tryondiffusion https://tryondiffusion.github.io/
 Stable Diffusion｜儿童绘本全流程制作分享
 https://mp.weixin.qq.com/s/Q42AQQ7YVLuMCZF1uA3V2Q
 
+https://m1-project.com/
+
+### Large Vision Models (LVM)
+
+## 按平台分类
+ChatGPT
+
+GOOGLE Bard
+
+Cloudflare Workers AI https://mp.weixin.qq.com/s/R1m7IMUfHq53yEe-b9cjlA
+
+## 按应用分类
+
+### 图片生成
++ Dalle3
++ Bing上的GPT-4V
+  完全免费使用gpt-4最新的多模态和最强图片生成模型 https://mp.weixin.qq.com/s/MNIZCA9pxyXobA3VVEOEqQ
+
+logo制作： https://www.uugai.com/
+
+https://logodiffusion.com/
+
+### AI 写程序
+OpenAI's Code Interpreter 
+open-interpreter https://github.com/lyhistory/tools_aigc_open-interpreter
+
+Draw a ui and make it real
+https://github.com/tldraw/make-real
+
+IP工具箱：开源 IP 信息查看器，使用 AI 写了 70% 代码，上线12天，GitHub 已获 900+ 星
+https://www.appinn.com/myip-a-better-ip-toolbox/
+
+生成网站：
+https://typedream.com/
+
+### 标题/文案
+https://duozhongcao.com/
+https://www.jasper.ai/
+
+https://hix.ai/
+
+https://mymap.ai/
+
+### 文字《=》语音
+
+https://ttsmaker.com/
+
+google bart
+open-source text-to-speech+ model.
+https://github.com/suno-ai/bark
+
+https://www.notta.ai/en
+
+### 语音翻译
+
+rask ai
+https://www.rask.ai/
+
+### PPT
+MotionGo是必优科技(原口袋动画团队)全新升级的一款PPT动画插件,兼容WPS和office软件,轻量级产品,让PPT动效表达更专业。
+https://motion.yoo-ai.com/?viaurl=ainavpro.com
+
+https://www.beautiful.ai/
+
+https://gamma.app/?lng=en
+
+
+
 ### 2D => 3D, 3D建模
 https://convert.leiapix.com/
 https://lumalabs.ai/interactive-scenes
@@ -150,21 +181,29 @@ https://runwayml.com/
 
 https://wonderdynamics.com/
 
-## GPT+DB
+### 家居设计
+https://collov.ai/
+
+
+## 按领域分
+
+### 软件
+
+#### GPT+DB
 An intelligent and versatile general-purpose SQL client and reporting tool for databases which integrates ChatGPT capabilities.(智能的通用数据库SQL客户端和报表工具)
 https://github.com/chat2db/Chat2DB
 
-## GPT+Eyes
-https://www.youtube.com/watch?v=w-wxguIs-0I
-
-## GPT GAMES World
+#### GPT GAMES World
 虚拟世界的人 Generative Agents: Interactive Simulacra of Human Behavior https://github.com/joonspk-research/generative_agents
 
-## GPT Robot
+### 机器人
+#### GPT+Eyes
+https://www.youtube.com/watch?v=w-wxguIs-0I
+#### GPT Robot
 https://hackaday.io/project/189041-a-workbench-companion-from-an-amazon-echo-dot
 https://www.youtube.com/watch?v=bO-DWWFolPw&embeds_referring_euri=https%3A%2F%2Fhackaday.io%2F&source_ve_path=MjM4NTE&feature=emb_title
 
-## other
+## todo
 https://creatorkit.com/
 OpenDAN Open-source Private AI OS https://www.opendan.ai/
 
