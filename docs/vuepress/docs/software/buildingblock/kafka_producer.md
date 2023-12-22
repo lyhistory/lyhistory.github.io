@@ -2440,6 +2440,89 @@ transaction.max.timeout.ms
 #### 后记
 看到 [这里](https://stackoverflow.com/questions/56460688/kafka-ignoring-transaction-timeout-ms-for-producer)有人说设置transaction.timeout.ms不生效，不过他的问题是将timeout设置为比默认1分钟还要小的时间，然后brokers默认好像是每间隔分钟去检查一次是否timeout，所以设置transaction.timeout.ms小于1分钟是没有作用的，他的情况实际上是需要用另一个配置解决transaction.abort.timed.out.transaction.cleanup.interval.ms
 
+### kafka transaction failed but msg committed without error
+大概情况是：
+我们有两个服务，服务A发送了一堆kafka消息给下游B，同时B还在启动之中（读取kafka metadata，seek last offset），当B poll的时候发现虽然是seek到0的位置，但是实际接受到底kafka msg offset却是 24
+
+```
+2023-12-06 17:33:32.993 [32mDEBUG[m [35m23619GG[m [MANAGER] [36mc.q.c.c.b.SimpleWorkerManager[m : Received 1 message(s)
+2023-12-06 17:33:32.994 [32mDEBUG[m [35m23619GG[m [MANAGER] [36mc.q.c.c.b.SimpleWorkerManager[m : Message header payload:P=0,O=24,C=TESTMsgToKafka,V=1
+```
+
+然后手动查询：
+
+```
+正常消费可以看到从0开始的数据
+bin/kafka-console-consumer.sh --bootstrap-server XXXXXX --topic T-TEST --partition 0 --offset 0 --max-messages 10 --property print.key=true --property print.offset=true --property print.timestamp=true
+
+CreateTime:1701855000436        Offset:0        null    testMs
+CreateTime:1701855100740        Offset:2        null     testMs
+CreateTime:1701855100749        Offset:3        null     testMs
+CreateTime:1701855100774        Offset:5        null     testMs
+CreateTime:1701855100776        Offset:6        null     testMs
+
+但是提高 isolation.level=read_committed 就只能跳过这些消息
+bin/kafka-console-consumer.sh --consumer-property "isolation.level=read_committed" --bootstrap-server XXXXXX --topic T-TEST --partition 0 --offset 0 --max-messages 10 --property print.key=true --property print.offset=true --property print.timestamp=true
+
+CreateTime:1701855213182        Offset:24        null    testMs
+CreateTime:1701855213229        Offset:226        null     testMs
+
+```
+证明0-24之间的消息作为Transaction失败了，
+client端代码
+```
+ try {
+                rawProducer.commitTransaction();
+                logger.debug("sucess");
+            } catch (Exception ex) {
+                rawProducer.abortTransaction();
+                throw new RuntimeException("abortTransaction", ex);
+            } finally {
+                inTransactions = false;
+            }
+        }
+```
+但是client端并没有触发catch，
+然后检查了kafka服务器端，也没有看到任何异常，只是在这个问题发生的前后kafka一直在做清理*.deleted 文件
+
+然后也没有重现出来，
+后续思路：
+1.开启kafka服务器端debug模式，log4j mode=DEBUG
+2.更改retention time，在kafka做清理的时间内再次重试看能否reproduce
+
+转机：
+一周后，这个问题再次出现，
+
+确认服务端的状态：
+`../../bin/kafka-dump-log.sh --print-data-log --transaction-log-decoder --files 00000000000000001979.log > dump.log`
+
+```
+baseOffset: 2 lastOffset: 3 count: 2 baseSequence: 0 lastSequence: 1 producerId: 10041 producerEpoch: 6 partitionLeaderEpoch: 0 isTransactional: true isControl: false position: 374 CreateTime: 1702456565105 size: 265 magic: 2 compresscodec: LZ4 crc: 1454848932 isvalid: true
+| offset: 2 CreateTime: 1702456565096 keysize: -1 valuesize: 130 sequence: 0 headerKeys: [Class,Version,Class,Version] payload:  �com.test.ReportToKafka 2c9f5362328b4594ac61d88aafbc7cc�  �����c���
+| offset: 3 CreateTime: 1702456565105 keysize: -1 valuesize: 130 sequence: 1 headerKeys: [Class,Version,Class,Version] payload:  �com.test.ReportToKafka 2c9f5362328b4594ac61d88aafbc7cc�  �����c���
+.............................................................
+baseOffset: 2059 lastOffset: 2060 count: 2 baseSequence: 2 lastSequence: 3 producerId: 10041 producerEpoch: 9 partitionLeaderEpoch: 5 isTransactional: true isControl: false position: 10642 CreateTime: 1703123297309 size: 266 magic: 2 compresscodec: LZ4 crc: 2409570126 isvalid: true
+| offset: 2059 CreateTime: 1703123297306 keysize: -1 valuesize: 130 sequence: 2 headerKeys: [Class,Version,Class,Version] payload: ^A^@�^Acom.test.ReportToKafka^A^@^A^B^Aaf97126b3d924d738454424362cffc6�^@^@^A�����c^A�^A^D^A��^H
+| offset: 2060 CreateTime: 1703123297309 keysize: -1 valuesize: 130 sequence: 3 headerKeys: [Class,Version,Class,Version] payload: ^A^@�^Acom.test.ReportToKafka^A^@^A^B^Aaf97126b3d924d738454424362cffc6�^@^@^A�����c^A�^A^F^A��^H
+baseOffset: 2061 lastOffset: 2061 count: 1 baseSequence: -1 lastSequence: -1 producerId: 10041 producerEpoch: 9 partitionLeaderEpoch: 5 isTransactional: true isControl: true position: 10908 CreateTime: 1703123297355 size: 78 magic: 2 compresscodec: NONE crc: 1107521758 isvalid: true
+| offset: 2061 CreateTime: 1703123297355 keysize: 4 valuesize: 6 sequence: -1 headerKeys: [] endTxnMarker: ABORT coordinatorEpoch: 18
+```
+
+可以看到一周前producerId: 10041还能成功commit，但是一周后就失败了，肯定是过期了，所以先不纠结“为什么事务提交失败但是不报错”，现在重点就是看哪些配置会控制事务型producer过期，显然一查就是：
+
+transactional.id.expiration.ms
+The time in ms that the transaction coordinator will wait without receiving any transaction status updates for the current transaction before expiring its transactional id. Transactional IDs will not expire while a the transaction is still ongoing.
+
+Type:	int
+Default:	604800000 (7 days)
+Valid Values:	[1,...]
+Importance:	high
+Update Mode:	read-only
+
+因为这个是broker端控制的，所以client端lib没有报错，不合理，这种属于metadata，lib应该同步并且报错才对
+
+[producer.close，代码没报错但是消息却发送失败](https://blog.csdn.net/Howinfun/article/details/104172441)
+
 ---
 REFER:
 https://www.cnblogs.com/luozhiyun/p/12079527.html
