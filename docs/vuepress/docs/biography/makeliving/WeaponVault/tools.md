@@ -17,7 +17,9 @@ ubersuggest https://neilpatel.com/ubersuggest/
 选品和竞品分析 Commerce Inspector shopgram.io
 
 ### 私域
-1688 商品上新（趋势商品）
++ 1688 商品上新（趋势商品）
++ Shopify data 
+  shopgram.io
 
 ## 知对手=》竞争对手分析
 ### 私域对手

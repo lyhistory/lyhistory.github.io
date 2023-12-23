@@ -770,6 +770,10 @@ done
 popd &>/dev/null
 
 ```
+##### dump log
+```
+ ./kafka-run-class.sh kafka.tools.DumpLogSegments --deep-iteration --print-data-log --files /tmp/kafka-logs/mftp1-0/00000000000000000000.log
+```
 
 #### 2.3.2 虚拟机远程调试 Remote 
 

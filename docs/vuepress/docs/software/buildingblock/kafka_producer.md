@@ -2440,7 +2440,7 @@ transaction.max.timeout.ms
 #### 后记
 看到 [这里](https://stackoverflow.com/questions/56460688/kafka-ignoring-transaction-timeout-ms-for-producer)有人说设置transaction.timeout.ms不生效，不过他的问题是将timeout设置为比默认1分钟还要小的时间，然后brokers默认好像是每间隔分钟去检查一次是否timeout，所以设置transaction.timeout.ms小于1分钟是没有作用的，他的情况实际上是需要用另一个配置解决transaction.abort.timed.out.transaction.cleanup.interval.ms
 
-### kafka transaction failed but msg committed without error
+### kafka transaction failed but msg committed without error (transactional.id.expiration.ms)
 大概情况是：
 我们有两个服务，服务A发送了一堆kafka消息给下游B，同时B还在启动之中（读取kafka metadata，seek last offset），当B poll的时候发现虽然是seek到0的位置，但是实际接受到底kafka msg offset却是 24
 
@@ -2494,9 +2494,9 @@ client端代码
 一周后，这个问题再次出现，
 
 确认服务端的状态：
-`../../bin/kafka-dump-log.sh --print-data-log --transaction-log-decoder --files 00000000000000001979.log > dump.log`
-
 ```
+../../bin/kafka-dump-log.sh --print-data-log --transaction-log-decoder --files 00000000000000001979.log > dump.log
+
 baseOffset: 2 lastOffset: 3 count: 2 baseSequence: 0 lastSequence: 1 producerId: 10041 producerEpoch: 6 partitionLeaderEpoch: 0 isTransactional: true isControl: false position: 374 CreateTime: 1702456565105 size: 265 magic: 2 compresscodec: LZ4 crc: 1454848932 isvalid: true
 | offset: 2 CreateTime: 1702456565096 keysize: -1 valuesize: 130 sequence: 0 headerKeys: [Class,Version,Class,Version] payload:  �com.test.ReportToKafka 2c9f5362328b4594ac61d88aafbc7cc�  �����c���
 | offset: 3 CreateTime: 1702456565105 keysize: -1 valuesize: 130 sequence: 1 headerKeys: [Class,Version,Class,Version] payload:  �com.test.ReportToKafka 2c9f5362328b4594ac61d88aafbc7cc�  �����c���

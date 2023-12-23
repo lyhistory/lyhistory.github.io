@@ -1,5 +1,42 @@
+ControlNet is a Stable Diffusion model that lets you copy compositions or human poses from a reference image. 
+
+
 ## 本地安装
 
+[Stable Diffusion web UI](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
+
+1. Install Python 3.10.6 (Newer version of Python does not support torch), checking "Add Python to PATH".
+2. git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git.
+3. Run webui-user.bat from Windows Explorer as normal, non-administrator, user.
+
+https://www.youtube.com/watch?v=mmZSOBSg2E4
+Controlnet Github: https://github.com/Mikubill/sd-webui-controlnet
+Controlnet Models Download: https://huggingface.co/lllyasviel/ControlNet-v1-1/tree/main
+Segmentation Color Sheet: https://docs.google.com/spreadsheets/d/1se8YEtb2detS7OuPE86fXGyD269pMycAWe2mtKUj2W8/
+
+https://clipdrop.co/stable-doodle
+
+Ai 绘图：模特生成与换装 https://www.douyin.com/video/7220447504221965627
+
+抠图：https://www.remove.bg/
+
+Toonme - Cartoon
+
+DragGAN
+
+https://magicstudio.com/magiceraser/ Remove unwanted things in seconds
+
+图片修复 https://pixfix.com/
+
+AI商品图片：https://design.meitu.com/product-shoot/?from=home_icon
+
+
+tryondiffusion https://tryondiffusion.github.io/
+
+Stable Diffusion｜儿童绘本全流程制作分享
+https://mp.weixin.qq.com/s/Q42AQQ7YVLuMCZF1uA3V2Q
+
+https://m1-project.com/
 
 
 ## Kaggle安装 

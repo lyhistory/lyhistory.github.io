@@ -66,39 +66,7 @@ https://huggingface.co/
 + claude 
   
 ### Text to image model
-
-#### Stable Diffusion model
-
-ControlNet is a Stable Diffusion model that lets you copy compositions or human poses from a reference image. 
-
-https://www.youtube.com/watch?v=mmZSOBSg2E4
-Controlnet Github: https://github.com/Mikubill/sd-webui-controlnet
-Controlnet Models Download: https://huggingface.co/lllyasviel/ControlNet-v1-1/tree/main
-Segmentation Color Sheet: https://docs.google.com/spreadsheets/d/1se8YEtb2detS7OuPE86fXGyD269pMycAWe2mtKUj2W8/
-
-https://clipdrop.co/stable-doodle
-
-Ai 绘图：模特生成与换装 https://www.douyin.com/video/7220447504221965627
-
-抠图：https://www.remove.bg/
-
-Toonme - Cartoon
-
-DragGAN
-
-https://magicstudio.com/magiceraser/ Remove unwanted things in seconds
-
-图片修复 https://pixfix.com/
-
-AI商品图片：https://design.meitu.com/product-shoot/?from=home_icon
-
-
-tryondiffusion https://tryondiffusion.github.io/
-
-Stable Diffusion｜儿童绘本全流程制作分享
-https://mp.weixin.qq.com/s/Q42AQQ7YVLuMCZF1uA3V2Q
-
-https://m1-project.com/
+[Stable Diffusion model](/software/bigdata/stable_diffusion.md)
 
 ### Large Vision Models (LVM)
 
