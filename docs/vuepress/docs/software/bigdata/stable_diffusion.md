@@ -1,46 +1,27 @@
 ControlNet is a Stable Diffusion model that lets you copy compositions or human poses from a reference image. 
 
 
-## 本地安装
+## 安装
+### 本地安装
+[Repo-Stable Diffusion web UI](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
 
-[Stable Diffusion web UI](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
+[WIKI-Stable Diffusion web UI](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki)
+
+[Install and Run on NVidia GPUs](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Install-and-Run-on-NVidia-GPUs)
+[Install and Run on AMD GPUs](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Install-and-Run-on-AMD-GPUs)
 
 1. Install Python 3.10.6 (Newer version of Python does not support torch), checking "Add Python to PATH".
 2. git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git.
 3. Run webui-user.bat from Windows Explorer as normal, non-administrator, user.
 
-https://www.youtube.com/watch?v=mmZSOBSg2E4
-Controlnet Github: https://github.com/Mikubill/sd-webui-controlnet
-Controlnet Models Download: https://huggingface.co/lllyasviel/ControlNet-v1-1/tree/main
-Segmentation Color Sheet: https://docs.google.com/spreadsheets/d/1se8YEtb2detS7OuPE86fXGyD269pMycAWe2mtKUj2W8/
 
-https://clipdrop.co/stable-doodle
+### Docker安装
+[Install and run via container (i.e. Docker)](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Containers)
 
-Ai 绘图：模特生成与换装 https://www.douyin.com/video/7220447504221965627
+[Maintained by neggles](https://github.com/neggles/sd-webui-docker)
 
-抠图：https://www.remove.bg/
-
-Toonme - Cartoon
-
-DragGAN
-
-https://magicstudio.com/magiceraser/ Remove unwanted things in seconds
-
-图片修复 https://pixfix.com/
-
-AI商品图片：https://design.meitu.com/product-shoot/?from=home_icon
-
-
-tryondiffusion https://tryondiffusion.github.io/
-
-Stable Diffusion｜儿童绘本全流程制作分享
-https://mp.weixin.qq.com/s/Q42AQQ7YVLuMCZF1uA3V2Q
-
-https://m1-project.com/
-
-
-## Kaggle安装 
-Kaggle 是一个流行的数据科学和机器学习竞赛平台，也是数据科学家、机器学习工程师和研究人员分享、发现和交流知识的社区。
+### Online Sevice-Kaggle安装
+[Kaggle](https://www.kaggle.com/) 是一个流行的数据科学和机器学习竞赛平台，也是数据科学家、机器学习工程师和研究人员分享、发现和交流知识的社区。
 
 Kaggle 提供许多数据集和竞赛，鼓励用户分享并提交他们的解决方案。
 该平台还提供了一个云端的 Jupyter Notebook 环境，提供对 GPU 和 TPU 的免费访问，以加速数据科学项目的执行速度。
@@ -48,19 +29,23 @@ Kaggle 每周有 30 小时免费使用时长，平均到每天可以使用 4 个
 
 关键是提供可选 GPU : P100、T4 x2 显卡
 
-https://www.kaggle.com/
+**Fork:**
++ [Maintained by roguewild](https://www.kaggle.com/code/roguewild/automatic1111-s-stable-diffusion-webui)
++ [Maintained by camenduru](https://www.kaggle.com/code/camenduru/stable-diffusion-webui-kaggle)
 
-Create->New Notebook
+**自行安装：**
 
-Add Data-> stable diffusion v2.0 config
+1. Create->New Notebook
 
-在 Notebook options ，选择 ACCELERATOR，选择 GPU T4 x2。
+2. Add Data-> stable diffusion v2.0 config
 
-设置 ENVIRONMENT=>Always use latest environment
+3. 在 Notebook options ，选择 ACCELERATOR，选择 GPU T4 x2。
 
-Internet 默认off，选择on
+4. 设置 ENVIRONMENT=>Always use latest environment
 
-左侧代码框中
+5. Internet 默认off，选择on
+
+6. 左侧代码框中
 ```
 !python --version
 !rm -rf /kaggle/working/stable-diffusion-webui
@@ -94,16 +79,53 @@ Internet 默认off，选择on
 !python launch.py --share --gradio-auth user:password --no-half
 ```
 
-运行启动 SD
+7.运行启动 SD
 
-用完记得点击关闭按钮。这是云服务，你不点云服务关闭按钮，关闭本机它还是在运行。
+**注意：**
++ 用完记得点击关闭按钮。这是云服务，你不点云服务关闭按钮，关闭本机它还是在运行。用完或者长时间不绘图的时候，记得关闭，毕竟 1 周只有 30 小时。
++ 默认的库有限，其他地方贴过来的绘图提示词有些库可能没有，需要手动调下
++ 图片参数还是不要调得太大，不然会报错，无法生成图片。
++ 报错则需要重新启动服务。
 
-用完或者长时间不绘图的时候，记得关闭，毕竟 1 周只有 30 小时。
+## 使用
 
-不过注意，
+### Basic
+[Stable Diffusion WebUI AUTOMATIC1111: A Beginner’s Guide](https://stable-diffusion-art.com/automatic1111/)
+[Generate High-Quality Image Using Stable Diffusion WebUI](https://betterprogramming.pub/generate-high-quality-image-using-stable-diffusion-webui-de96d6947d85)
 
-第一，默认的库有限，其他地方贴过来的绘图提示词有些库可能没有，需要手动调下
+### promopt
 
-第二，图片参数还是不要调得太大，不然会报错，无法生成图片。
+[Stable Diffusion prompt: a definitive guide](https://stable-diffusion-art.com/prompt-guide/)
 
-报错则需要重新启动服务。
+### 高级
+
+https://www.youtube.com/watch?v=mmZSOBSg2E4
+Controlnet Github: https://github.com/Mikubill/sd-webui-controlnet
+Controlnet Models Download: https://huggingface.co/lllyasviel/ControlNet-v1-1/tree/main
+Segmentation Color Sheet: https://docs.google.com/spreadsheets/d/1se8YEtb2detS7OuPE86fXGyD269pMycAWe2mtKUj2W8/
+
+
+Stable Diffusion｜儿童绘本全流程制作分享
+https://mp.weixin.qq.com/s/Q42AQQ7YVLuMCZF1uA3V2Q
+
+https://m1-project.com/
+
+### 产品
+https://clipdrop.co/stable-doodle
+
+Ai 绘图：模特生成与换装 https://www.douyin.com/video/7220447504221965627
+
+抠图：https://www.remove.bg/
+
+Toonme - Cartoon
+
+DragGAN
+
+https://magicstudio.com/magiceraser/ Remove unwanted things in seconds
+
+图片修复 https://pixfix.com/
+
+AI商品图片：https://design.meitu.com/product-shoot/?from=home_icon
+
+
+tryondiffusion https://tryondiffusion.github.io/
