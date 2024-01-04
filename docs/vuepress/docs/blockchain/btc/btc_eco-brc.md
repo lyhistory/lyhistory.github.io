@@ -1,0 +1,1 @@
+https://www.okx.com/web3/marketplace/ordinals/brc20/satx
