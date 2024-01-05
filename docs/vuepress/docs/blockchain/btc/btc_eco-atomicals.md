@@ -1,4 +1,5 @@
 
+## 市场
 + Atomicals
   https://twitter.com/atomicalsxyz
   https://docs.atomicals.xyz/
@@ -14,9 +15,10 @@
 三大市场：
 https://atomicalmarket.com
 https://satsx.io
+https://satsx.io/wallet/atomicals
 https://bitatom.io
 
-
+## arc protocol
 |       Text        |                                                                               Atomicals                                                                               |                                                                   Ordinals                                                                   |                            Ethereum ERC721                             |
 |-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
 | Value Proposition |                                                                            Digital Objects                                                                            |                                                              Digital Artifacts                                                               |                          Digital Collectibles                          |
@@ -92,6 +94,48 @@ npm run cli list
 ```
 
 ## Troubleshooting
+### Q&A
+
+1.为什么ARC20资产会燃烧?
+ARC20作为BTC上的铭文,它的本质与普通BTC别无二致,只是这些聪带有了特殊的ARC20标记, 从而在索引里会被识别为铭文。
+因此当ARC20资产和普通BTC混合在一起的时候,有一定几率,ARC20的铭文会被作为普通的BTC 花出去。这种铭文被不小心损耗的现象,叫做铭文燃烧。
+
+2.如何避免ARC20资产被燃烧?
+a. 必须使用可以识别ARC20资产的钱包,如Wizz, Unisat。
+b. 推荐ARC20铭文与普通BTC资产分开存放。
+c. 如果要从钱包包含ARC20铭文的钱包中转出资产/BTC,请确保钱包里有足够的gas (去掉ARC20 资产意外的非铭文BTC)。
+d. 如果要从刚刚交易过的,包含ARC20的钱包中转出资产/BTC,请等待ARC20的索引确认。什么 叫等待索引确认?就是钱包里你可以能看到正确的ARC20数量。比如刚买了10张夸克,一定要等 你确认看到了这10张夸克,再去操作你的钱包。
+
+3.夸克之战之后,我现在手里有多个Atomicals的funding钱包,里面的钱能转出来吗?
+可以。把funding钱包的私钥导入普通的BTC钱包,把钱转出来。私钥就是Atomicals-js文件夹下面 wallets/wallet.json中Funding对应的WIF。
+
+1. 我手里的Primary钱包里有打废的铭文,可以转出来吗?
+可以。把Primary钱包的私钥导入普通的BTC钱包,把钱转出来。私钥就是Atomicals-js文件夹下面 wallets/wallet.json中Primary对应的WIF。
+
+1. Atomicals-js文件夹下的wallets/wallet.json如何理解?
+O
+wallet.json的初始结构是一组你的钱包,它由一组助记词+Primary钱包+Funding钱包组
+成。
+O
+三者是绑定关系,因为由助记词是可以间接推算得到这两个钱包的。
+o
+可以整体转移wallet.json中的内容,但是修改其中一部分是不行的。
+O 任意修改其中一个钱包,程序是会报错的,因为程序会校验它们的关系。
+
+1. 夸克之战之后,我有多组钱包,我怎么能再接下来的mint中使用它们?
+请研究一下 yarn cli wallet import <钱包WIF> <钱包名称> 这个命令,它可以导入别的钱
+包,这个钱包可以用来支付gas fee,也可以用来接收铭文。你可以导入多个钱包。
+
+1. 我如何用当前这个funding钱包出gas,铭文打进我的另一个归集铭文的钱包(非当前Primary 钱包)?
+首先把你的另一个钱包根据6中的命令导入,然后在未来mint铭文的过程中尝试以下命令:
+yarn cli mint-dft dragon --satsbyte 60 --initialowner <导入钱包名称>
+
+1. 我如何用我的另一个funding钱包中的钱付gas,铭文打进当前的Primary钱包?
+首先把你的另一个钱包根据6中的命令导入,然后在未来mint铭文的过程中尝试以下命令: yarn cli mint-dft dragon --satsbyte 60 --funding <导入钱包名称>
+
+9.为什么我的钱包里明明有余额,却无法继续打铭文了? Atomicals-js提醒我余额不足。 你的钱包里有余额,但是没有单笔utxo的余额满足当前铭文的需求。你需要归集小额utxo,推荐阅 读:BTC"废“铭文价值回收 & OKX & Sparrow使用技巧
+。
+
 ### SyntaxError....yarn-metadata.json Unexpected token '', is not valid json
 yarn cache clean 
 ### 500 error
