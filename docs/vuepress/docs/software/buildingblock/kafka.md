@@ -610,6 +610,8 @@ kafka-topics.sh -describe --bootstrap-server ip:9092 --topic __transaction_state
 + 丢数据：min.insync.replicas=2 && unclean.leader.election.enable=true (It is default false)
   https://stackoverflow.com/questions/57277370/min-insync-replicas-vs-unclean-leader-election
 
+###### log dir不要用/tmp
+
 ##### [Consumer相关](/software/buildingblock/kafka_consumer.md#broker-config)
 
 ##### [Producer相关](/software/buildingblock/kafka_producer.md#brokers-config)
