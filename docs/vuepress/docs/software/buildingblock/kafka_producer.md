@@ -55,7 +55,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
     This means that if your producer sends messages slower than once a week it will be fenced (crash) every time it tries to send after that prolonged period. One could put that value to Integer.MAX, but that still will be around 24 days. In case of very rare events, this should be solved differently, e.g. by having separate producer ping topic, that producer will periodically send messages to.
 
-####  transaction.timeout.ms
+#### transaction.timeout.ms
     The maximum amount of time in ms that the transaction coordinator will wait for a transaction status update from the producer before proactively aborting the ongoing transaction.If this value is larger than the transaction.max.timeout.ms setting in the broker, the request will fail with a InvalidTxnTimeoutException error.
 
     This config value will be sent to the transaction coordinator along with the InitPidRequest.
@@ -2521,6 +2521,8 @@ Update Mode:	read-only
 
 因为这个是broker端控制的，所以client端lib没有报错，不合理，这种属于metadata，lib应该同步并且报错才对
 
+> apurva Yes we tried that, only to realize the transactional.id.expiration.ms is just an int, which means it would max be 24 days. Additionally, it would represent a potential memory leak since the broker would then hold on to producer-metadata for a very long time.
+> https://issues.apache.org/jira/browse/KAFKA-6817
 [producer.close，代码没报错但是消息却发送失败](https://blog.csdn.net/Howinfun/article/details/104172441)
 
 ---
