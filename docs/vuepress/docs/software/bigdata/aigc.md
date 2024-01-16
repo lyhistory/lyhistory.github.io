@@ -32,6 +32,9 @@ https://mariushosting.com/how-to-install-chat-with-gpt-on-your-synology-nas/
 
 https://cloud.tencent.com/developer/article/2312981
 
+### 去中心
+https://github.com/OrbisWeb3/orbis-chat-gpt
+
 ### 自动化
 
 Drag & drop UI to build your customized LLM flow https://github.com/FlowiseAI/Flowise
@@ -148,6 +151,9 @@ pika labs
 https://runwayml.com/
 
 https://wonderdynamics.com/
+
+### 市场分析
+transform your product knowledge into a detailed Ideal Customer Profile https://m1-project.com
 
 ### 家居设计
 https://collov.ai/

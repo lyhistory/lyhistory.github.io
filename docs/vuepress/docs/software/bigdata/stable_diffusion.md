@@ -1,4 +1,4 @@
-ControlNet is a Stable Diffusion model that lets you copy compositions or human poses from a reference image. 
+ 
 
 
 ## 安装
@@ -97,20 +97,31 @@ Kaggle 每周有 30 小时免费使用时长，平均到每天可以使用 4 个
 
 [Stable Diffusion prompt: a definitive guide](https://stable-diffusion-art.com/prompt-guide/)
 
-### 高级
+反向prompt：cartoon,painting,illustration,(worst quality, low quality, normal quality:2)
+
+
+### ControlNet
+ControlNet is a Stable Diffusion model that lets you copy compositions or human poses from a reference image.
 
 https://www.youtube.com/watch?v=mmZSOBSg2E4
 Controlnet Github: https://github.com/Mikubill/sd-webui-controlnet
 Controlnet Models Download: https://huggingface.co/lllyasviel/ControlNet-v1-1/tree/main
 Segmentation Color Sheet: https://docs.google.com/spreadsheets/d/1se8YEtb2detS7OuPE86fXGyD269pMycAWe2mtKUj2W8/
 
+## 场景应用
 
-Stable Diffusion｜儿童绘本全流程制作分享
+### AI商品图
+
+#### 人台 mannequin=》真人
+https://www.youtube.com/watch?v=GxFljO22cM4
+
+https://www.youtube.com/watch?v=wJX4bBtDr9Y
+
+### 儿童绘本全流程制作分享
 https://mp.weixin.qq.com/s/Q42AQQ7YVLuMCZF1uA3V2Q
+本文将会用到“Stable Diffusion”、“极虎漫剪”、“剪映”以及一个Stable Diffusion的插件“Agent Scheduler”。对了，还有绘本内容，绘本内容可以用AI语言大模型生成，或者如果有现成也可以，然后直接复制粘贴到一个Word文档上即可。
 
-https://m1-project.com/
-
-### 产品
+## 市面产品
 https://clipdrop.co/stable-doodle
 
 Ai 绘图：模特生成与换装 https://www.douyin.com/video/7220447504221965627

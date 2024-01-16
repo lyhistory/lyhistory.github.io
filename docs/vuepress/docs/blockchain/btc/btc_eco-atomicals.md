@@ -68,6 +68,53 @@ phrase是收币钱包助记词，primary下是收币的钱包信息，funding下
 https://bitatom.io/token/quark
 ```
 
+自动脚本
+```
+ARC20 QUARK MINT
+1. 固定gas,循环执行。适合追求简单快捷的同学。
+#!/bin/bash
+while true; do
+	yarn cli mint-dft quark --satsbyte=$fee
+done
+
+保存以上代码到loop.sh,放在atomicals-js文件夹下,然后执行。Windows需要安装git bash环境。
+2. 智能gas,循环执行。适合有一定基础的同学。
+import requests
+def get_bitcoin_gas_fee():
+	# URL to get the latest Bitcoin fees information
+	url = "https://mempool.space/api/v1/fees/recommended"
+	try:
+		response = requests.get(url)
+		# Check if the request was successful
+		if response.status_code == 200:
+			fees_data=response.json()
+			hour_fee=fees_data.get('hourFee', 90)
+			print (fees_data)
+			return hour_fee
+		else:
+			return "Error: Unable to fetch fees data. Status code: + str(response.status_code)
+	except Exception as e:
+		return 90
+if __name__ == '__main__':
+	# Get the current Bitcoin gas fee
+	current_bitcoin_gas_fee = get_bitcoin_gas_fee()
+	print(current_bitcoin_gas_fee)
+Part-1: 保存以上代码到gas.py,放置于atomicals-js文件夹下。运行pip3 install requests安装依赖。该 python脚本会请求实时的gas。
+#!/bin/bash
+while true; do
+	# Run the Python script and capture the output fee=$(python3 gas.py)
+	if [[ $fee -lt 100 ]]; then
+		echo "Fee is $fee. Let's go!"
+		# Run your npm script with the fee
+		yarn cli mint-dft quark --satsbyte=$fee
+	else
+		echo "Fee is $fee, too high. Let's wait." 
+		sleep 300
+	fi
+done
+
+Part-2: 保存以上代码到loop.sh,放置于atomicals-js文件夹下。该脚本会在gas小于100时,找一个合适 的gas值运行mint命令。Windows执行需要git bash环境,也需要安装python3。
+```
 ## Realm Names 
 
 Realm Names are human-readable identifiers which can be used to associate network addresses and resource information. A Realm name begins with the plus + sign and has at least one alphabetical character, such as +alice and +agent007 which are both valid names (top-level-realms or TLRs) in the Realm Name System (RNS). Realm names are self-owned and self-managed directly on the Bitcoin blockchain using the Atomicals Digital Object format — which basically means that there is no middle man or centralized registrar. Once you claim a name, it's yours forever or until you transfer it to someone else.

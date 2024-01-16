@@ -7,6 +7,8 @@ https://github.com/yufish/tools/blob/master/README.md
 ### 公域
 trends.google.com
 
+商品关键词 多款工具帮你深度挖掘产品关键词 https://zhuanlan.zhihu.com/p/29672757
+
 新奇特选品：
 odditymall.com
 
@@ -206,6 +208,9 @@ AI目标客户研究:
 https://m1-project.com/
 
 自动化工具 coldiq.com
+
+https://zhuanlan.zhihu.com/p/628970882
+
 
 ### 查询
 汇率转换查询
