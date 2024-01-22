@@ -35,6 +35,17 @@ BitVM: The bitVM project is an innovative attempt to enhance the functionality a
 ## About segwit and taproot
 Before introducing many protocols and projects in the Bitcoin ecosystem, we need to have some brief understanding of segwit and taproot.
 
+Taproot, a major Bitcoin protocol upgrade, was activated in November 2021.
+It introduced several improvements, including better privacy for complex transactions, lower fees, and basic smart contract capabilities.
+
+🌱 Schnorr Signatures are a key component of the Taproot upgrade. They enable signature aggregation, resulting in smaller transaction sizes and increased efficiency.
+
+Taproot was a soft fork upgrade, meaning it's backwards compatible with the existing Bitcoin protocol. Nodes could choose to adopt the upgrade without affecting the core network.
+
+With Taproot and Schnorr Signatures, Bitcoin continues to evolve, solving key challenges and providing an improved user experience for its vast, global userbase ⚡
+
+
+
 Since the birth of Bitcoin, its simple and elegant technology and exquisite economic incentive design have become the belief of a large number of decentralists. In this process, after repeated demonstrations and iterations by the community, its network has gone through many important Upgrades, including BIP 34 introducing version numbers in blocks, laying the foundation for future protocol upgrades, BIP 66 enhancing the security of the network by requiring digital signatures in Bitcoin transactions to follow a determined format, BIP 65 (OP_CHECKLOCKTIMEVERIFY) Allows the creation of transactions with time-locking functions, thereby increasing the flexibility of creating complex transaction scripts, etc. Among the many upgrades, the most important to the expansion of the Bitcoin ecosystem are undoubtedly SegWit (Segregated Witness) and Taproot, which aim to improve Bitcoin The scalability and efficiency of the network also laid a solid foundation for subsequent technological innovations including Ordinal and other related protocols.
 
 SegWit, first introduced in 2017, mainly solves the problem of transaction plasticity. By separating transaction signature information (witness data) from transaction data, it increases the effective capacity of the block, thereby improving the networks processing power and reducing transaction costs. cost. Additionally, SegWit provides a better foundation for Bitcoin’s second-layer solutions, such as the Lightning Network, making micropayments more viable.
@@ -47,6 +58,21 @@ Overall, these two upgrades, SegWit and Taproot, have jointly improved the perfo
 For a long time, sidechains and Layer 2 solutions have been the focus of the Bitcoin ecosystem and are key technological innovations to address the scalability and efficiency issues of the Bitcoin network. Projects in this category include Lightning Network, Rootstock (RSK) , Stacks, Liquid, MintLayer, RGB, etc. Among them, the Lightning Network, as the king of legitimacy, was born out of the payment channel concept conceived by Satoshi Nakamoto. From 2016 to the outbreak of the Ordinal ecosystem, it attracted the attention of the Bitcoin ecosystem. More than half of the developers and participants, around 2020, the Lightning Network became known to the entire crypto community with the help of Nostr.
 
 A sidechain is an independent blockchain that runs parallel to the main Bitcoin chain and interacts with the main chain through a specific anchoring mechanism. This design allows users to move assets from the Bitcoin main chain to side chains, which can provide faster transaction confirmations, lower handling fees, and even support more complex smart contracts and applications. Since sidechains handle a large number of transactions on the main chain, they help reduce the burden on the main chain and improve the performance of the entire network.
+
+The Lightning Network is a layer 2 solution built on top of Bitcoin's blockchain. It uses smart contracts to create payment channels, allowing for instant transactions with minimal fees.
+
+This scalability solution addresses Bitcoin's capacity constraints. ⚡
+
+With the Lightning Network, users can transact with each other off-chain, reducing the burden on the main Bitcoin blockchain.
+
+Funds are locked in a multi-signature wallet, and the channel is updated with each transaction.
+
+When users want to settle their transactions on-chain, they can simply close the payment channel, and the final state of the channel is recorded on the blockchain.
+
+This innovative approach has opened the door for micropayments and new use cases. 🔓
+
+The Lightning Network is still growing and evolving. Its development demonstrates the potential for further innovation and expansion in the world of Bitcoin, ensuring its continued relevance in the digital economy. 🌐
+
 
 Layer 2 solutions, such as the famous Lightning Network, are protocol layers built on top of the Bitcoin main chain. These solutions achieve fast and efficient transaction processing by creating off-chain transaction channels that only need to interact with the Bitcoin main chain when opening or closing the channel. They are especially effective for supporting small-amount, high-frequency transactions, greatly expanding the Bitcoin’s application possibilities in areas such as daily payments and micro-transactions.
 
@@ -116,3 +142,6 @@ The difference is that although BitVM and Ethereums EVM (Ethereum Virtual Machin
 Not everyone believes that BitVM deserves attention, and it has also caused concern among some people. As Dan from the paradigm institute said, the protocol only applies to two parties, so it cannot be used for rollups or other multi-party applications, and this itself does not For the parts that are too new, for example, programmer Greg Maxwell proposed a better protocol (ZK contingent payments) a long time ago to solve the same problem. But we have to admit that if bitVM works, BitVM may have a broad impact on what is built on top of Bitcoin. Another criticism is that even if the computation is done off-chain, on-chain verification can still incur significant overhead. And the BitVM proposal says it won’t add a lot of transaction volume to the network and cause gas fees to spike — like they did when Ordinals surged in popularity.
 
 In general, bitVM is actually still in the conceptual stage. As Linus said, The purpose of publishing the white paper is to describe the idea in simple terms and stimulate community interest, but it is not yet a complete solution.
+
+
+Restoring your standard wallet from seed https://bitcoinelectrum.com/restoring-your-standard-wallet-from-seed/

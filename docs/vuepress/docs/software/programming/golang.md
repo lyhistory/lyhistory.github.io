@@ -37,11 +37,9 @@ https://www.cnblogs.com/chr-wonder/p/8464224.html
 Defaults    env_keep += "GOPATH"
 ```
 
-### PATH
+### PATH 环境变量
 
-`go env`
-
-GOPATH
++ **GOPATH**
 ```
 $HOME/go on Unix-like systems
 %USERPROFILE%\go on Windows
@@ -50,8 +48,9 @@ GOPATH/bin
 GOPATH/pkg
 
 
-GOROOT
++ **GOROOT**
 
+print env: `go env`
 
 ### Debug with vscode
 

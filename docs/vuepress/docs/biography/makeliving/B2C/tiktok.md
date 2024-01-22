@@ -67,3 +67,6 @@ Kalodata是全球首选的TikTok数据分析平台
 
 Tiktok运营技巧---严选音乐和音效
 https://mp.weixin.qq.com/s/G9pF-OvUx1SsBdffFKdFTw
+
+
+TikTok Shop 美国站女装月榜Top1—LovelyWholesale爆卖百万美金 | 嘀嗒狗 https://mp.weixin.qq.com/s/ss3QLhx69t9RytkvddbdpQ

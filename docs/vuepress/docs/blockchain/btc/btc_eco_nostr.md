@@ -31,7 +31,10 @@ Can We Turn a Nostr Public Key into a Bitcoin Address? https://bitcointalk.org/i
 使用 #TokenPocket 插件，在设置里开启 #nostr 功能
 https://help.tokenpocket.pro/cn/wallet-operation/protocol/nostr#ru-he-zai-tokenpocket-kai-qi-nostr
 
+## 挖矿
  $noss 
 @NoScription
  
 https://noscription.org/
+
+https://github.com/ubuygold/go-noss/?tab=readme-ov-file

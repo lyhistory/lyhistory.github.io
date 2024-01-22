@@ -1,3 +1,10 @@
+[docs.ordinals.com](https://docs.ordinals.com/)
+
+https://en.foresightnews.pro/unveiling-the-mysteries-of-ordinal-inscriptions-a-comprehensive-and-in-depth-popular-science-interpretation/
+
+
+ZK-proofs 是比特币序数和 BRC-20 问题的答案吗 https://zhuanlan.zhihu.com/p/629604259
+
 ## 市场
 https://www.okx.com/web3/marketplace/ordinals/brc20/satx
 
