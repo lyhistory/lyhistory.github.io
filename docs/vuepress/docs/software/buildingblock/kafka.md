@@ -776,6 +776,11 @@ popd &>/dev/null
 ```
  ./kafka-run-class.sh kafka.tools.DumpLogSegments --deep-iteration --print-data-log --files /tmp/kafka-logs/mftp1-0/00000000000000000000.log
 ```
+##### describe 
+
+```
+/bin/kafka-configs.sh --describe --bootstrap-server "192.168.250.11:9092" --all --entity-type "brokers" --entity-name "0"
+```
 
 #### 2.3.2 虚拟机远程调试 Remote 
 
