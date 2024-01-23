@@ -8,6 +8,9 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 ## What is?
 
+**servlet and servlet container**
+The servlet container provides the runtime environment for the servlet. The Agent handles the details of network programming, receives and parses requests, transmits responses, and manages connections. The servlet container instantiates the servlets and maintains state. The servlet itself focuses on application logic.
+
 **Web/HTTP Server,Application Server, Web/Servlet Container(Servlet Engines)关系和区别？**
 
 ![](/docs/docs_image/software/buildingblock/servlet01.png)
@@ -109,6 +112,8 @@ tomcat 内部的connector 是基于JDK NIO处理并发请求的，既然netty �
 
 ## 基础
 
+[JavaWeb——Servlet（全网最详细教程包括Servlet源码分析）](https://blog.csdn.net/qq_19782019/article/details/80292110)
+
 ### Servlet生命周期
 
 1，初始化阶段:调用init()方法：
@@ -140,6 +145,20 @@ service() 方法检查 HTTP 请求类型（GET、POST、PUT、DELETE 等），�
 
 Servlet thread pool vs Servlet instance pool： https://stackoverflow.com/questions/7826452/servlet-thread-pool-vs-servlet-instance-pool-by-the-web-container
 Servlet的单例模式的理解 https://www.breakyizhan.com/java/5016.html
+
+### 线程模型
+
+Thread per connection
+
+Thread per request
+
+[Servlet线程模型与异步请求](https://www.fishmaple.cn/blog/d?bid=1584721400f76601e30d6144868dfeec3711e46c12)
+[Servlet与多线程的关系是什么？](https://www.zhihu.com/question/23219109)
+[servlet单实例多线程模式](https://www.cnblogs.com/aspirant/p/9089373.html)
+
+### HandlerInterceptors vs. Filters in Spring MVC
+Interceptors operate at the controller level, while Filters operate at the servlet level. This means that Interceptors have access to the controller and can modify the model and view, while Filters do not have access to the controller and can only modify the request and response.
+https://www.baeldung.com/spring-mvc-handlerinterceptor-vs-filter
 
 ## 应用
 

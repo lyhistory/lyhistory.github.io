@@ -87,6 +87,9 @@ Kaggle 每周有 30 小时免费使用时长，平均到每天可以使用 4 个
 + 图片参数还是不要调得太大，不然会报错，无法生成图片。
 + 报错则需要重新启动服务。
 
+### 在线UI
+https://www.esheep.com/
+
 ## 使用
 
 ### Basic
@@ -100,7 +103,7 @@ Kaggle 每周有 30 小时免费使用时长，平均到每天可以使用 4 个
 反向prompt：cartoon,painting,illustration,(worst quality, low quality, normal quality:2)
 
 
-### ControlNet
+### Extension: ControlNet
 ControlNet is a Stable Diffusion model that lets you copy compositions or human poses from a reference image.
 
 https://www.youtube.com/watch?v=mmZSOBSg2E4
@@ -108,11 +111,29 @@ Controlnet Github: https://github.com/Mikubill/sd-webui-controlnet
 Controlnet Models Download: https://huggingface.co/lllyasviel/ControlNet-v1-1/tree/main
 Segmentation Color Sheet: https://docs.google.com/spreadsheets/d/1se8YEtb2detS7OuPE86fXGyD269pMycAWe2mtKUj2W8/
 
+### Extension: inpaint anything
+https://github.com/Uminosachi/sd-webui-inpaint-anything
+
+### ComfyUI 
+https://stable-diffusion-art.com/comfyui/
+https://zhuanlan.zhihu.com/p/620297462
+
+
 ## 场景应用
 
 ### AI商品图
 
 #### 人台 mannequin=》真人
+negative prompt
+```
+(((canvas frame))),cartoon,3d,((disfigured)),((bad art)),((extra limbs)),deformed face,((deformed)),((close up)),((b&w)),wierd colors,blurry,((duplicate)),((morbid)),((mutilated)),[out of frsme],extrs fingers,mutsted hands,((poorly drawn hands)),((poorly drawn face)),((mutation)),((deformed)),((ugly)),(bad anatomy),gross proportions,(malformed limbs),((missing arms)),((missing legs)),((extra legs)),mutated hands,(fused fingers),(too many fingers),((longneck)),video game,tiling,poorly,poorly drawn feet,poorly drawn face,extra arms,cross-eye,bodyoutof frame,3d render,16-token-negative-deliberate-neg,bad-hands-5,
+```
+
+positive prompt:
+```
+a woman in white tights and white sneakers is doing a split in the air with her leg up,david rudnick,superflat,a digital rendering,Évariste Vital Luminais,
+```
+
 https://www.youtube.com/watch?v=GxFljO22cM4
 
 https://www.youtube.com/watch?v=wJX4bBtDr9Y
@@ -120,6 +141,12 @@ https://www.youtube.com/watch?v=wJX4bBtDr9Y
 ### 儿童绘本全流程制作分享
 https://mp.weixin.qq.com/s/Q42AQQ7YVLuMCZF1uA3V2Q
 本文将会用到“Stable Diffusion”、“极虎漫剪”、“剪映”以及一个Stable Diffusion的插件“Agent Scheduler”。对了，还有绘本内容，绘本内容可以用AI语言大模型生成，或者如果有现成也可以，然后直接复制粘贴到一个Word文档上即可。
+
+## Troubleshooting
+
+### 肢体变形
+ControlNet Depth Libra https://github.com/jexom/sd-webui-depth-lib
+https://www.youtube.com/watch?v=_YLKg_k_sYQ
 
 ## 市面产品
 https://clipdrop.co/stable-doodle

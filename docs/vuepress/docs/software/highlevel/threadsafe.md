@@ -321,6 +321,12 @@ JDK 1.6之前，synchronized 还是一个重量级锁，是一个效率比较低
 例子：blockingqueue https://www.cnblogs.com/WangHaiMing/p/8798709.html
 
 ## 编程考虑
+### 局部变量线程安全?
+
++ 普通的局部变量确实是线程安全的,
+  [方法里的局部变量，因为不会和其他线程共享，所以不会存在并发问题。这种解决问题的技术也叫做线程封闭。官方的解释为：仅在单线程内访问数据。由于不存在共享，所以即使不设置同步，也不会出现并发问题！](https://www.cnblogs.com/binghe001/p/12808419.html)
++ 但是如果引用的是全局变量就不安全了
+
 ### 静态static与单例singleton的线程安全
 
 关于static及singleton：
@@ -403,5 +409,8 @@ https://mp.weixin.qq.com/s/9xjGYbcNwl1aQY5GNOx58g
 + 基于redis
 + 基于zookeeper的ephemeral sequential node
 
+## Troubleshooting
+### Servlet Concurrent
 
+[深入研究Servlet线程安全性问题](https://www.cnblogs.com/gw811/archive/2012/09/07/2674859.html)
 <disqus/>
