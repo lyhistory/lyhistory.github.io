@@ -179,7 +179,7 @@ However, if the base parallelism is increased to six, then the scheduler will do
 ![](/docs/docs_image/software/bigdata/flink/flink_taskslot_example2.png)
 
 实测 1 task manager with 4 slots, run wordcount with p=2/3/4/5:
-![](./flink_parallelism_wordcount.png)
+![](/docs/docs_image/software/bigdata/flink/flink_parallelism_wordcount.png)
 这个测试很有意思，p=1的时候最快，p=2反而慢了（因为增加了任务分割和聚合的过程吧），p从2到3，用时降低在预期之内，但是p=4反而更久(后来又测了几次，这个耗时不稳定)，另外p>4居然也能成功，不过耗时变长，找到解释：
 > 在Flink中，Slot和并行度是相互影响的。如果一个任务的并行度大于Slot的数量，那么这个任务就无法完全并行执行。在这种情况下，Flink会根据一定的算法将任务的子任务分配到不同的Slot中执行，从而实现部分并行执行。另外，如果一个任务的并行度小于Slot的数量，那么有些Slot可能会闲置，从而浪费资源。
 
