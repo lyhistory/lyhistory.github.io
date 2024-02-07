@@ -46,8 +46,8 @@ oneractive Alphalete Gymshark Bombshell
 
 迭代解决如何优化问题
 
-![](./method1.png)
-![](./method2.png)
+![](../tmp/method1.png)
+![](../tmp/method2.png)
 
 设计一套自动化赚钱系统：前端引流获客——中端知识付费——后端保险超市。
 
