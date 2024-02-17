@@ -344,6 +344,8 @@ p=5
 不过需要注意，再高就会出问题 [Flink: fail fast if job parallelism is larger than the total number of slots](https://stackoverflow.com/questions/57732800/flink-fail-fast-if-job-parallelism-is-larger-than-the-total-number-of-slots)
 
 中文解读：[Apache Flink——任务（Tasks）和任务槽（Task Slots）](https://www.jianshu.com/p/62fa262736b9)
+[Flink: fail fast if job parallelism is larger than the total number of slots](https://stackoverflow.com/questions/57732800/flink-fail-fast-if-job-parallelism-is-larger-than-the-total-number-of-slots)
+[Re: Is there any way to set the parallelism of operators like group by, join?](https://lists.apache.org/thread/yt9kd8lhgjvc6fcw4wozwl6nmbfhzsxz)
 ##### **operator chaining**
     An Operator Chain consists of two or more consecutive Operators without any repartitioning in between. Operators within the same Operator Chain forward records to each other directly without going through serialization or Flink’s network stack.
     The sample dataflow in the figure below is executed with five subtasks, and hence with five parallel threads:
