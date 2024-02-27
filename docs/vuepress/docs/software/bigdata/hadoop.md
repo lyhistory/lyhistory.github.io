@@ -22,6 +22,9 @@ https://lyhistory.com/hadoop_eco/
 
 https://lyhistory.com/hdfs/
 
+./bin/hdfs haadmin -getServiceState nn1
+./bin/hdfs haadmin -getServiceState nn2
+
 
 
 [三大组件HDFS、MapReduce、Yarn框架结构的深入解析](https://cloud.tencent.com/developer/article/1878444)
@@ -39,3 +42,8 @@ Hadoop HDFS基于ZK的高可用配置 https://chenzhonzhou.github.io/2021/10/12/
 HDFS集群搭建：完全分布式 https://www.cnblogs.com/Courage129/p/17528827.html
 
 https://open.alipay.com/portal/forum/post/126001299
+
+## troubleshooting
+?# Operation category JOURNAL is not supported in state standby
+两个namenode都是standby状态
+hdfs haadmin -transitionToActive --forcemanual nn1

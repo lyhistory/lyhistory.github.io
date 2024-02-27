@@ -52,7 +52,9 @@ ssh-copy-id -i .ssh/id_rsa_B.pub root@B
 ssh root@B still prompt password require, 仍然弹出密码要求
 
 2. Troubleshoot: 
-+ selinux 
++ selinux  
+getenforce
+setenforce 0
 + make sure correct permission for .ssh(700 at least) and .ssh/authorized_keys (400 at least)
 Both the host and the client should have the following permissions and owners:
 

@@ -17,7 +17,8 @@ Pgpool-II is a proxy server sitting between clients and PostgreSQL. Pgpool-II un
 
 Pgpool-II consists of multiple process. There is a **main process**, which is the parent process of all other process. It is responsible for forking child process each of which accepts connections from clients. There are some **worker process** those are forked from the main process as well, which is responsible for detecting streaming replication delay. There is also a special process called **"pcp process"**, which is solely used for management of Pgpool-II itself. Pgpool-II has a built-in high availability function called **"watchdog"**. Watchdog consists of some process.
 
-![](/docs/docs_image/software/postgresql/pgpool-ii_architect.gif)
+![https://www.pgpool.net/docs/42/en/html/tutorial-arch.html](/docs/docs_image/software/postgresql/pgpool-ii_architect.gif)
+https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/tutorial-arch.html
 
 It provides the following features:
 
@@ -251,7 +252,8 @@ https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/performance.html
 https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/example-configs.html
 
 ### 2.1 Simple two Nodes Replication
-
+https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/example-basic.html
+https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/example-watchdog.html
 #### 2.1.1 Installing Pgpool-II
 ```
 $ ./configure
@@ -492,6 +494,15 @@ arping_cmd = 'arping -U $_IP_$ -w 1'
 ```
 
 ### 2.2 Pgpool-II+ Watchdog Setup (Streaming replication mode)
+
++ Method 1:
+built in sample:
+https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/tutorial.html
+```
+pgpool_setup
+
+```
++ Method 2:
 In this example, we use 3 Pgpool-II servers to manage PostgreSQL servers to create a robust cluster system and avoid the single point of failure or split brain.
 
 ![](/docs/docs_image/software/postgresql/pgpool-ii+watchdog_cluster_example.gif)
@@ -1053,7 +1064,8 @@ First, we should set up PostgreSQL standby server by using Pgpool-II online reco
     server3:9999 Linux server3 server3 9999 9000 7 STANDBY
 
 ```
-#### 2.2.7 Failover
+#### 2.2.7 test Failover
+https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/tutorial-testing-failover.html
 ```
 //First, use psql to connect to PostgreSQL via virtual IP, and verify the backend informations.
 # psql -h 192.168.137.150 -p 9999 -U pgpool postgres -c "show pool_nodes"
@@ -1114,7 +1126,8 @@ First, we should set up PostgreSQL standby server by using Pgpool-II online reco
     reply_time       | 2019-08-06 11:42:59.823961+09
 ```
 
-#### 2.2.8 Online Recovery
+#### 2.2.8 test Online Recovery
+https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/tutorial-testing-online-recovery.html
 ```
 //Here, we use Pgpool-II online recovery functionality to restore server1 (old primary server) as a standby. Before restoring the old primary server, please ensure that recovery_1st_stage and pgpool_remote_start scripts exist in database cluster directory of current primary server server2.
   # pcp_recovery_node -h 192.168.137.150 -p 9898 -U pgpool -n 0
@@ -1131,13 +1144,13 @@ First, we should set up PostgreSQL standby server by using Pgpool-II online reco
     2       | server3  | 5432 | up     | 0.333333  | standby | 0          | true              | 0                 | streaming         | async                  | 2019-08-06 11:36:15
     (3 rows)
 ```
-## pgpool_setup (Streaming replication mode)
-https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/tutorial.html
-```
-pgpool_setup
 
-```
-
+#### 2.2.9 test replication
+https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/tutorial-testing-replication.html
+    $ pgbench -i -p 11000 test
+    
+#### 2.2.10 test loadbalance
+https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/tutorial-testing-load-balance.html
 
 ## Manage PgPool-II
 ```

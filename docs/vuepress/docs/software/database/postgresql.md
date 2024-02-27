@@ -52,6 +52,22 @@ $ /usr/pgsql-12/bin/postgres -V
 postgres (PostgreSQL) 12.7
 ```
 
+定位配置：
+```
+psql
+# show config_file; 
+# show data_directroy;
+```
+
+sudo vim /usr/lib/systemd/system/postgresql-12.service 
+
+PostgreSQL 修改数据存储路径:
++ method 1:
+https://zhuanlan.zhihu.com/p/671203356
++ method 2:
+https://blog.csdn.net/aikudexiaohai/article/details/129692013
+
+
 ### 1.2 client连接
 
 #### CLI - psql

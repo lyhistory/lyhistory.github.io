@@ -115,6 +115,8 @@ AES
 
 Theory: hash function(for signing long message)
 
+[关于哈希-hash-function](../btc/book-draft/区块链基础-深入浅出比特币05.md#note-关于哈希-hash-function和mac-message-authentication-codes)
+
 RSA 
 
 Elgamal 

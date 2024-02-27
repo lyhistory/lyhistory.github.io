@@ -1319,7 +1319,8 @@ web.upload.dir: /home/flink/flink-current/upload
 high-availability: zookeeper
 high-availability.zookeeper.quorum: 10.1.1.1:12006,10.1.1.2:12006,10.1.1.3:12006
 high-availability.zookeeper.path.root: /flink
-high-availability.storageDir: hdfs://vm-v01:13101/flink/ha/
+#keeps the hostname without underscore
+high-availability.storageDir: hdfs://vm-v01:13101/flink/ha/ 
 high-availability.cluster-id: /default_ns
 high-availability.jobmanager.port: 13002
 
