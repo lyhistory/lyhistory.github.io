@@ -1668,6 +1668,11 @@ kill xxxx
 1.检查每个节点的日志，看是否是因为host或端口连不上，然后检查相应端口是否正常监听以及防火墙配置
 2.flink已经rename slave=》workers，注意文件改动
 
+### Could not start actor system on any port in port range 6123
+
+现象：使用普通用户停止flink，但是web ui仍然可以访问
+
+原因：root用户启动了flink
 
 ### NoResourceAvailableException
 ```

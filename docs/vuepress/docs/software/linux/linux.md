@@ -510,7 +510,7 @@ https://unix.stackexchange.com/questions/321315/get-cron-to-run-in-the-same-envi
   
 + 源码编译安装
 
-  configuration或cmake之后make install，通常安装的路径在 install_manifest.txt，所以删除方式：`cat install_manifest.txt | xargs echo sudo rm | sh`
+  configuration(configure --prefix=安装路径)或cmake之后make install，通常安装的路径在 install_manifest.txt，所以删除方式：`cat install_manifest.txt | xargs echo sudo rm | sh`
   
   > The steps:
   >
