@@ -97,9 +97,9 @@ sudo -u postgres createdb -O owning_user dbname
 \c [DATABASE]
 \d
 \d TABLE_NAME
-\du
+\du 查看用户权限
 
-\dx
+\dx 查看插件
 SELECT * FROM pg_extension;
 
 --format output

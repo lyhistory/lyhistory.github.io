@@ -725,6 +725,8 @@ $ vi /etc/pgpool-II/follow_master.sh.sample  /etc/pgpool-II/follow_master.sh
 $ chmod +x /etc/pgpool-II/{failover.sh,follow_master.sh}
 ```
 
+Note: modify path in the scripts if needed: PGHOME=/usr/pgsql-12 
+
 ##### 2.2.2.4 Pgpool-II Configuration - Online Recovery Configurations
 ```
 $vim /etc/pgpool-II/pgpool.conf
@@ -1183,13 +1185,88 @@ vi /lyhistory/workspace/postgres/data/log/postgresql-Mon.log
 2022-06-27 12:00:21.267 +08 [9557] LOG:  database system is ready to accept connections
 sh: /lyhistory/workspace/postgres/data/recovery_1st_stage: /bin/bash^M: bad interpreter: No such file or directory
 2022-06-27 12:02:53.154 +08 [9825] ERROR:  pgpool_recovery failed
-2022-06-27 12:02:53.154 +08 [9825] STATEMENT:  SELECT pgpool_recovery('recovery_1st_stage', 'sghc1_prod_nss_alpha_v02', '/lyhistory/workspace/postgres/data', '5432', 1, '5432')
+2022-06-27 12:02:53.154 +08 [9825] STATEMENT:  SELECT pgpool_recovery('recovery_1st_stage', 'vm_v02', '/lyhistory/workspace/postgres/data', '5432', 1, '5432')
 sh: /lyhistory/workspace/postgres/data/recovery_1st_stage: /bin/bash^M: bad interpreter: No such file or directory
 
 
 dos2unix recovery_1st_stage
 ```
+#### ERROR: invalid character
+hostname invalid，只能包含下划线小写字母和数字
 
+ERROR:  replication slot name "vm_v02.novalocal" contains invalid character
+HINT:  Replication slot names may only contain lower case letters, numbers, and the underscore character.
+
+#### stuck in printing 'Password:'
+SELECT pgpool_recovery('recovery_1st_stage', 'vm_v02', '/lyhistory/workspace/postgres/data', '5432', 1, '5432')
+```
+PRIMARY_NODE_PGDATA="$1"
+DEST_NODE_HOST="$2" vm_v02
+DEST_NODE_PGDATA="$3" /lyhistory/workspace/postgres/data
+PRIMARY_NODE_PORT="$4" 5432
+DEST_NODE_ID="$5" 1
+DEST_NODE_PORT="$6" 5432
+
+PRIMARY_NODE_HOST=$(hostname) vm_v01
+PGHOME=/usr/pgsql-11
+ARCHIVEDIR=/var/lib/pgsql/archivedir
+REPLUSER=repl
+
+..............................
+## Execute pg_basebackup to recovery Standby node
+
+ssh -T -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null postgres@$DEST_NODE_HOST -i ~/.ssh/id_rsa_pgpool "
+    set -o errexit
+    rm -rf $DEST_NODE_PGDATA
+
+    rm -rf $ARCHIVEDIR/*
+
+    ${PGHOME}/bin/pg_basebackup -h $PRIMARY_NODE_HOST -U $REPLUSER -p $PRIMARY_NODE_PORT -D $DEST_NODE_PGDATA -X stream
+
+    if [ ${PGVERSION} -ge 12 ]; then
+
+        sed -i -e \"\\\$ainclude_if_exists = '$(echo ${RECOVERYCONF} | sed -e 's/\//\\\//g')'\" \
+
+               -e \"/^include_if_exists = '$(echo ${RECOVERYCONF} | sed -e 's/\//\\\//g')'/d\" ${DEST_NODE_PGDATA}/postgresql.conf
+
+    fi
+
+    cat > ${RECOVERYCONF} << EOT
+
+primary_conninfo = 'host=${PRIMARY_NODE_HOST} port=${PRIMARY_NODE_PORT} user=${REPLUSER} application_name=${DEST_NODE_HOST} passfile=''/var/lib/pgsql/.pgpass'''
+
+recovery_target_timeline = 'latest'
+
+restore_command = 'scp ${PRIMARY_NODE_HOST}:${ARCHIVEDIR}/%f %p'
+
+primary_slot_name = '${DEST_NODE_HOST}'
+
+EOT
+    if [ ${PGVERSION} -ge 12 ]; then
+            touch ${DEST_NODE_PGDATA}/standby.signal
+    else
+
+            echo \"standby_mode = 'on'\" >> ${RECOVERYCONF}
+
+    fi
+
+    sed -i \"s/#*port = .*/port = ${DEST_NODE_PORT}/\" ${DEST_NODE_PGDATA}/postgresql.conf
+
+"
+
+
+if [ $? -ne 0 ]; then
+    ${PGHOME}/bin/psql -p ${PRIMARY_NODE_PORT} << EOQ
+
+SELECT pg_drop_replication_slot('${DEST_NODE_HOST}');
+
+EOQ
+    logger -i -p local1.error recovery_1st_stage: end: pg_basebackup failed. online recovery failed
+
+    exit 1
+
+fi
+```
 #### ERROR:  executing remote start failed with error: "ERROR:  pgpool_remote_start failed
 奇怪，再试一次就可以成功 just retry one more time
 
