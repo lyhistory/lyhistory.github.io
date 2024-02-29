@@ -134,6 +134,8 @@ select * from pg_stat_activity where pid=3567;
 
 ### 1.3 Utilities
 
++ pg_ctl
+
 + pg_dump
 ```
 pg_dump -s dbName > db_schema_dump.sql
@@ -143,6 +145,10 @@ pg_dump -s dbName > db_schema_dump.sql
 pg_dumpall --globals-only  --file=globals.sql
 
 ```
++ pg_basebackup 备份恢复
+ https://www.cnblogs.com/cqdba/p/15920508.html
+
++ pgbench 官方压测
 
 ### 1.4 Config 
 
@@ -1283,7 +1289,11 @@ p_cjrs rec_cjr[];
 ```
 
 ## 6. System Table
-select * FROM information_schema.triggers
+
++ db: postgres
+    select * FROM information_schema.triggers
++ db: template0
++ db: template1
 
 ## Troubleshooting
 

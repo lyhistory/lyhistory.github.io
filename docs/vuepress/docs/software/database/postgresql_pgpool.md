@@ -995,6 +995,7 @@ log_destination = 'syslog'
 | Watchdog              | on                                                  | Life  check method: heartbeat                              |
 | Start  automatically  | Disable                                             | -                                                          |
 
+
 #### 2.2.3 Assign Permission and set env path
 
 chown –R postgres:postgres /var/lib/pgsql/12，
@@ -1154,21 +1155,31 @@ https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/tutorial-testing-replication
 #### 2.2.10 test loadbalance
 https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/tutorial-testing-load-balance.html
 
+
 ## Manage PgPool-II
-```
 
-psql -h <VirtualIP> -p 9999 -U pgpool postgres -c "show pool_nodes"
-pcp_watchdog_info -p 9898 -h <Virtual IP> -U pgpool
+### Pgpool cluster WorkFlow Summary
++ Pgpool cluster (master standby)
+  pcp 免密访问 localhost:9898 /var/lib/pgsql/.pcppass
 
-pgbench 
+  ```
+  pcp_watchdog_info -p 9898 -h <Virtual IP> -U pgpool
+  ```
++ Pgpool通过pcp将postgres服务加入到池子中
+  ```
+  pcp_recovery_node -h 192.168.137.150 -p 9898 -U pgpool -n <node id>
+  psql -h <VirtualIP> -p 9999 -U pgpool postgres -c "show pool_nodes"
+  ```
++ Postgres nodes(stream replication)
+    postgres standby replicate from master passwordless免密访问:
+    /var/lib/pgsql/.pgpass (content: hostname:port:database:username:password)
+  ```
+  pg_ctl -D /var/lib/pgsql/12/data -m immediate stop
 
-pg_ctl 
+  psql -h server3 -p 5432 -U pgpool postgres -c "select pg_is_in_recovery()"
+  psql -h server2 -p 5432 -U pgpool postgres -c "select * from pg_stat_replication" -x
+  ```
 
-pcp_recovery_node 
-
-
-
-```
 
 ## Troubleshooting
 
@@ -1198,6 +1209,10 @@ ERROR:  replication slot name "vm_v02.novalocal" contains invalid character
 HINT:  Replication slot names may only contain lower case letters, numbers, and the underscore character.
 
 #### stuck in printing 'Password:'
+不断打印 'Password:'
+
+调查：
+
 SELECT pgpool_recovery('recovery_1st_stage', 'vm_v02', '/lyhistory/workspace/postgres/data', '5432', 1, '5432')
 ```
 PRIMARY_NODE_PGDATA="$1"
@@ -1267,6 +1282,18 @@ EOQ
 
 fi
 ```
+定位到 
+${PGHOME}/bin/pg_basebackup -h $PRIMARY_NODE_HOST -U $REPLUSER -p $PRIMARY_NODE_PORT -D $DEST_NODE_PGDATA -X stream
+按照日志中的参数在pcp_recovery_node n 1 即node 1（第二台机器）上手动执行：
+su - postgres
+/usr/pgsql-12/bin/pg_basebackup -h vm_v01.novalocal -U repl -p 5432 -D /lyhistory/workspace/postgres/data -X stream
+发现要提供密码，而实际上我们配置了 /var/lib/pgsql/.pgpass,
+原因就在于配置的.pgpass 的hostname不是vm_v01.novalocal，而是vm_v01
+
+#### ERROR: sed no input files
+recovery_1st_stage脚本是从外部copy进来，可能是换行符的原因，其中的一些sed指令不识别参数
+解决方法，使用/etc/pgpool-II/recovery_1st_stage.sample
+
 #### ERROR:  executing remote start failed with error: "ERROR:  pgpool_remote_start failed
 奇怪，再试一次就可以成功 just retry one more time
 
