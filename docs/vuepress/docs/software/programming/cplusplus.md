@@ -19,6 +19,8 @@ https://www.toptal.com/c-plus-plus/c-plus-plus-understanding-compilation
 
 gcc -v -o hello.exe hello.c
 
+ldd - print shared object dependencies
+
 
 C++ Primer 5th
 https://github.com/Mooophy/Cpp-Primer

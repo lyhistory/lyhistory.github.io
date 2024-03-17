@@ -6,12 +6,6 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《kafka》
 
-
-
-[Kafka Client sourcecode in Java](https://github.com/apache/kafka/tree/trunk/clients)
-
-[kafka Server sourcecode in Scala](https://github.com/apache/kafka/tree/trunk/core/src/main/scala/kafka)
-
 ## 1. Basic concepts
 
 + zookeeper：
@@ -1474,6 +1468,14 @@ org.springframework.kafka包含：
 ## 6. Diving into Kafka 设计内幕
 
 理想情况下，我们使用类似kafka这样成熟的产品，一般只需要将kafka当做黑盒，然后通过kafka开放的API来达到跟kafka交互的exactly-once，但实际上为了更好的理解或者有时候kafka本身的很多细节也会影响到使用性能甚至是可用性，我们常常还是要打开黑盒，进入其代码内部或者阅读其代码设计文档
+
+### Sourcecodes
+[Kafka Client sourcecode in Java](https://github.com/apache/kafka/tree/trunk/clients)
+
+[kafka Server sourcecode in Scala](https://github.com/apache/kafka/tree/trunk/core/src/main/scala/kafka)
+
+KAFKA PROTOCOL GUIDE https://kafka.apache.org/protocol#The_Messages_WriteTxnMarkers
+Difference between kafka batch and kafka request https://stackoverflow.com/questions/74088393/difference-between-kafka-batch-and-kafka-request
 
 ### leader epoch & high watermark
 

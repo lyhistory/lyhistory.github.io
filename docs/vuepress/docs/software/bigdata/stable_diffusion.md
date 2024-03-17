@@ -89,6 +89,7 @@ Kaggle 每周有 30 小时免费使用时长，平均到每天可以使用 4 个
 
 ### 在线UI
 https://www.esheep.com/
+pro.aikobo.cn
 
 ## 使用
 
@@ -137,6 +138,9 @@ a woman in white tights and white sneakers is doing a split in the air with her 
 https://www.youtube.com/watch?v=GxFljO22cM4
 
 https://www.youtube.com/watch?v=wJX4bBtDr9Y
+
+#### OOTDiffusion
+https://github.com/levihsu/OOTDiffusion?tab=readme-ov-file
 
 ### 儿童绘本全流程制作分享
 https://mp.weixin.qq.com/s/Q42AQQ7YVLuMCZF1uA3V2Q

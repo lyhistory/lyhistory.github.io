@@ -1752,3 +1752,4 @@ Refer:
 [Flink Slot 详解与 Job Execution Graph 优化](https://www.infoq.cn/article/ZmL7TCcEchvANY-9jG1H)
 <disqus/>
 
+[Flink中: 你的Function是如何被执行的](https://cloud.tencent.com/developer/article/2170959)
