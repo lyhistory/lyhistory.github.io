@@ -53,12 +53,14 @@ postgres (PostgreSQL) 12.7
 ```
 
 定位配置：
+
 ```
 psql
 # show config_file; 
 # show data_directroy;
 ```
-
+systemctl status postgresql-12.servcie
+systemctl edit postgresql-12
 sudo vim /usr/lib/systemd/system/postgresql-12.service 
 
 PostgreSQL 修改数据存储路径:

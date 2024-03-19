@@ -1155,6 +1155,46 @@ https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/tutorial-testing-replication
 #### 2.2.10 test loadbalance
 https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/tutorial-testing-load-balance.html
 
+#### 2.2.11 reset
+
+```
+1. Stop all the postgres 
+su - postgres
+pg_ctl -D /lyhistory/workspace/postgres/data -m immediate stop
+
+2. Stop all the pgpool services
+CHANGE TO ROOT USER:
+systemctl stop pgpool.service
+
+3. clean up replication servers
+[replication servers only] rename or delete the postgres data directory (/lyhistory/workspace/postgres/data)
+
+4. clean up replication slots on primary server
+[primary server only] start postgres
+remove all the replication slots
+su - postgres
+psql
+select * from pg_replication_slots;
+ 
+select pg_drop_replication_slot('hostname') # replace the replication hostname
+
+5. init db on replication servers
+[replication servers only] init db, and start postgres
+# as root
+/usr/pgsql-12/bin/postgresql-12-setup initdb
+ 
+6. bring up replication postgres on primary server using pg_ctl
+su - postgres
+pg_ctl -D /lyhistory/workspace/postgres/data -m immediate start
+
+7. start pgpool
+[all servers] start pgpool
+systemctl start pgpool.service
+
+recover nodes from 1 → 5
+pcp_recovery_node -h 192.168.137.150 -p 9898 -U pgpool -n 1
+
+```
 
 ## Manage PgPool-II
 
