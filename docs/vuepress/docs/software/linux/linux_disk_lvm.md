@@ -72,6 +72,9 @@ mount -a
     /dev/vdb        /lyhistory/  xfs     defaults        0 0
 
 ```
+
+mkdir /lyhistory
+mount -a
 ### example mount lvm
 ```
 new:
@@ -137,6 +140,13 @@ https://stackoverflow.com/questions/51663585/centos-disk-lvm-extension/52312111#
     xfs_growfs /dev/mapper/centos-root or resize2fs /dev/mapper/centos-root
 
 ```
+
+
+## troubleshooting
+
+?# mount: wrong fs type, bad option, bad superblock on
+不识别，比如如果挂载的磁盘是nfs格式需要安装
+yum install nfs-utils.x86_64
 
 
 <disqus/>

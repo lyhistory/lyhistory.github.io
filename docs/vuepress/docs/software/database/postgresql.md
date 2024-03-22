@@ -137,6 +137,7 @@ select * from pg_stat_activity where pid=3567;
 ### 1.3 Utilities
 
 + pg_ctl
+pg_ctl status
 [pg_ctl start/stop vs systemctl start/stop postgresql.service](https://seydikorurer.wordpress.com/2021/04/08/pg_ctl-start-stop-vs-systemctl-start-stop-postgresql-service/)
 + pg_dump
 ```

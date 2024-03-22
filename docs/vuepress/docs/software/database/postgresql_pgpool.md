@@ -1024,6 +1024,8 @@ First, we should set up PostgreSQL standby server by using Pgpool-II online reco
     Password: 
     pcp_recovery_node -- Command Successful
 
+# pg_ctl -D /lyhistory/workspace/postgres/data status
+
 //After executing pcp_recovery_node command, vertify that server2 and server3 are started as PostgreSQL standby server.
 # psql -h 192.168.137.150 -p 9999 -U pgpool postgres -c "show pool_nodes"
     Password for user pgpool
@@ -1158,6 +1160,9 @@ https://www.pgpool.net/docs/pgpool-II-4.1.0/en/html/tutorial-testing-load-balanc
 #### 2.2.11 reset
 
 ```
+0. backup db
+pgdumpall
+
 1. Stop all the postgres 
 su - postgres
 pg_ctl -D /lyhistory/workspace/postgres/data -m immediate stop
@@ -1169,8 +1174,8 @@ systemctl stop pgpool.service
 3. clean up replication servers
 [replication servers only] rename or delete the postgres data directory (/lyhistory/workspace/postgres/data)
 
-4. clean up replication slots on primary server
-[primary server only] start postgres
+4. start primary postgres server and clean up replication slots on primary server
+[primary server only] start postgres: pg_ctl -D /lyhistory/workspace/postgres/data -m immediate start
 remove all the replication slots
 su - postgres
 psql
@@ -1178,14 +1183,22 @@ select * from pg_replication_slots;
  
 select pg_drop_replication_slot('hostname') # replace the replication hostname
 
+select * from pg_activity; (terminate active connection 查看是否有活跃的连接)
+drop db;
+
 5. init db on replication servers
 [replication servers only] init db, and start postgres
 # as root
 /usr/pgsql-12/bin/postgresql-12-setup initdb
- 
-6. bring up replication postgres on primary server using pg_ctl
+
+6. bring up replication postgres(can skip)
+systemctl start postgres-12.service 
+or
 su - postgres
 pg_ctl -D /lyhistory/workspace/postgres/data -m immediate start
+
+实验发现，不管是使用systemctl还是pg_ctl启动，最终都会变成pg_ctl管理，原因是，下一步 pcp_recovery_node
+都会调用pg_ctl启动replicaiton服务器上的postgres，所以这一步貌似是多余的
 
 7. start pgpool
 [all servers] start pgpool
@@ -1193,6 +1206,10 @@ systemctl start pgpool.service
 
 recover nodes from 1 → 5
 pcp_recovery_node -h 192.168.137.150 -p 9898 -U pgpool -n 1
+
+8 import db:
+psql# create database "dbname"
+gzip -dc /tmp/testdb.sql.gz | psql -U postgres -d "dbname"
 
 ```
 
