@@ -3,6 +3,10 @@ sidebar: auto
 sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
+## 虚拟化
+云管平台 
+https://github.com/yunionio/cloudpods
+CloudExplorer Lite https://github.com/CloudExplorer-Dev
 
 ## 云商
 + [Huawei Cloud](/docs/software/project_manage/cloud_huawei)
@@ -81,4 +85,5 @@ can be use to connect between a Cloud Service Provider and the company on-premis
 ## 云专线 Direct Connect
 
 用于搭建用户本地数据中心与云VPC之间高速、低时延、稳定安全的专属连接通道，充分利用云服务优势的同时，继续使用现有的IT设施，实现灵活一体，可伸缩的混合云计算环境。
+
 

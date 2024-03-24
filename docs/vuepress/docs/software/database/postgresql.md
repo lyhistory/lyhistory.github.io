@@ -147,6 +147,8 @@ pg_dump -s dbName > db_schema_dump.sql
 # dump users
 pg_dumpall --globals-only  --file=globals.sql
 
+gzip -dc filename.bak.gz | psql -U postgres
+
 ```
 + pg_basebackup 备份恢复
  https://www.cnblogs.com/cqdba/p/15920508.html
@@ -1294,7 +1296,14 @@ p_cjrs rec_cjr[];
 ## 6. System Table
 
 + db: postgres
+  ```
     select * FROM information_schema.triggers
+
+    SELECT pg_terminate_backend(pg_stat_activity.pid)
+FROM pg_stat_activity
+WHERE pg_stat_activity.datname = 'TARGET_DB' -- ← change this to your DB
+  AND pid <> pg_backend_pid();
+```
 + db: template0
 + db: template1
 

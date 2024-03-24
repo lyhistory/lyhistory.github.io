@@ -68,7 +68,15 @@ java程序启动，肯定有个主线程，然后当然一般还有其他的gc�
 
 然后主线程中新建一个ServerSocket，监听某个端口，三部曲：socket、bind、listen（查看系统调用：man 2 socket/bind/listen/accept），然后死循环daemon开始监听新客户端连接，accept会阻塞线程，所以每次当获取一个新的客户端连接比如11，就new一个新的线程（也是通过系统调用fork或clone获得的轻量级进程），新开的这个线程负责recv 11这个客户端的数据流，当然recv也会阻塞等待；
 
-注意，这里说的新建的线程跟客户端tcp三次握手及分手前保持的处理线程是不同的，那个是socket实现的，跟我们这里强调的IO读写线程没有关系，我们只是关注IO读写系统调用文件描述符，至于文件描述符发生读写后，socket怎么通过tcp处理线程发送及接受数据是另外一个话题，当然我在后面的netty讲解中有图示表明了他们的区别，所以如果我们代码写的更简单，可以完全只用一个主线程来处理accept和recv，但是缺陷就是，如果accept之后走到了11的recv，而11一直没有数据发送过来，就一直阻塞，无法走回到accept去获取新的连接!
+注意:
+如果我们代码写的更简单，可以完全只用一个主线程来处理accept和recv，但是缺陷就是，如果accept之后走到了11的recv，而11一直没有数据发送过来，就一直阻塞，无法走回到accept去获取新的连接!
+简单的解决办法就是，当主线程来处accept之后就会返回/产生一个新的线程负责数据传输；
+
+负责跟客户端三次握手以及分手的可以是主线程或者一个单独的线程：
+[which socket is used for the third stage of TCP three-way handshake?](https://stackoverflow.com/questions/63471078/which-socket-is-used-for-the-third-stage-of-tcp-three-way-handshake#:~:text=So%20welcoming%20socket%20ise%20used,transmission%20betweet%20client%20and%20server.&text=This%20third%20stage%20of%20the,data%20in%20the%20segment%20payload.)
+
+还需要注意的是，IO读写之后数据通常会hand off传给其他的工作线程进行业务处理，此时要注意线程安全问题
+[multithreading with non-blocking sockets](https://stackoverflow.com/questions/7744215/multithreading-with-non-blocking-sockets)
 
 ![BIO](/docs/docs_image/software/buildingblock/nio02.png)
 
@@ -133,6 +141,8 @@ epoll引入了内核空间，当创建server socket的时候获得文件描述�
 
 
 ## 基于epoll的框架和产品：netty redis haproxy等
+
+netty vs jetty
 
 ![netty](/docs/docs_image/software/buildingblock/nio06.png)
 
