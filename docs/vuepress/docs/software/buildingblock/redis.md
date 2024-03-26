@@ -812,12 +812,67 @@ bb483966fa9a7d60c9020a75d19fb2a4d1e8acf0 HOST1:6381@16381 slave b78a3f4b07cc5cf5
 ### 2.3 Sentinel
 
 
-
 ### 2.4 深度探索
 
 #### 内存优化
 
-redis的opsForHash带来的内存空间优化 https://my.oschina.net/u/2382040/blog/2236871
+##### 命令
+info memory
+memory usage
+memory stats
+memory doctor
+memory purge
+##### 概论
+
+Redis内存碎片通常是指Redis在内存中使用的空间并不是连续的，这是因为Redis在进行内存分配时遵循特定的内存管理策略，比如jemalloc，来减少内存碎片。
+
+如果您发现Redis的内存使用出现碎片问题，可能是因为您的应用程序正在进行频繁的键的添加和删除操作，这导致了内存不能被完全重用。
+
+解决方法：
+
+如果您正在频繁更换键，并且这些键的大小相似，您可以考虑使用CONFIG SET hash-max-ziplist-entries 512和CONFIG SET hash-max-ziplist-value 64这样的命令来减少哈希表的大小，从而减少内存碎片。
+
+如果您正在使用的是Redis的版本大于或等于4.0，您可以使用CONFIG SET activedefrag yes来启用自动内存碎片整理。
+
+定期手动运行MEMORY PURGE命令也可以帮助释放内存碎片。
+
+如果您正在使用的是Redis集群，请确保集群的配置是正确的，并且没有因为网络问题导致的数据倾斜分配。
+
+请注意，这些方法可能会影响Redis的性能，因此在调整配置或执行内存整理时，您应该在低峰时段进行操作，并且在生产环境中应该进行充分的测试。
+
+-------------------------
+
+redis hash slot 内存碎片
+Redis中的hash slot是一种数据分布策略，用于实现Redis集群的数据分布和负载均衡。在Redis集群中，所有的键都会根据它们的值被映射到不同的hash slot中。
+
+如果你在Redis集群中遇到了内存碎片的问题，这通常是因为某个或某些hash slot的内存使用并没有均衡分配。这可能是因为有些key被分配到了较小的slot，而其他的key被分配到了较大的slot，导致内存使用不均。
+
+解决这个问题的一种方法是通过重新分配键到不同的hash slot。Redis Cluster提供了CLUSTER REPLICATE命令，可以用来手动迁移hash slot。你可以先在新的节点上创建一个新的hash slot，然后将旧节点上的部分或全部hash slot迁移到新节点。
+
+下面是一个简单的例子，说明如何手动迁移hash slot：
+
+假设你想要迁移的hash slot是1，并且源节点是192.168.1.1:7000，目标节点是192.168.1.2:7000。
+
+在目标节点上创建一个新的hash slot：
+
+redis-cli -h 192.168.1.2 -p 7000 CLUSTER ADDSLOTS {slot}
+在源节点上迁移hash slot到目标节点：
+
+redis-cli -h 192.168.1.1 -p 7000 CLUSTER GETKEYSINSLOT 1 100
+上述命令会获取slot 1中的前100个key。然后，你可以使用MIGRATE命令将这些key迁移到目标节点：
+
+redis-cli -h 192.168.1.1 -p 7000 MIGRATE 192.168.1.2:7000 "" KEYS 100
+重复这个过程，直到源节点上的slot 1为空。
+
+注意：在实际操作中，你可能需要停止对这些key进行写操作，并且可能需要重新配置DNS，以便客户端可以连接到新的节点。
+
+此外，Redis 4.0及以上版本提供了CLUSTER RELOCATE命令，可以自动迁移hash slot中的keys，但这个命令不推荐在生产环境中使用，因为它可能会导致数据丢失。
+
+最后，定期监控集群的内存使用情况，并对键进行合理分布，可以最大程度上避免内存碎片问题。
+
+##### redis的opsForHash带来的内存空间优化
+https://my.oschina.net/u/2382040/blog/2236871
+
 
 #### 数据倾斜
 
@@ -1101,7 +1156,7 @@ nodes-*.conf
 
 ## 5. Redis操作和系统集成 Integration
 
-### 3.0 Redis基本数据操作
+### 5.0 Redis基本数据操作
 
 #### Data types
 https://redis.io/topics/data-types
@@ -1182,12 +1237,12 @@ https://stackoverflow.com/questions/46062283/what-is-the-difference-between-the-
 #### TTL key
  Returns the remaining time to live of a key that has a timeout.
 
-### 3.1 StackExchange.Redis
+### 5.1 StackExchange.Redis
 Driver for .net: StackExchange.Redis 1.2https://github.com/StackExchange/StackExchange.Redis
 for partial matching
 Where are KEYS, SCAN, FLUSHDB etc? https://github.com/StackExchange/StackExchange.Redis/blob/41f427bb5ed8c23d0992a1411d0c92667b133d8e/docs/KeysScan.md
 
-### 3.2 Python
+### 5.2 Python
 
 ```
 pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org redis-py-cluster
@@ -1199,7 +1254,7 @@ pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org redis-
 >>> https://github.com/Grokzen/redis-py-cluster/blob/unstable/tests/test_commands.py
 ```
 
-### 3.3 Java-Spring boot integration
+### 5.3 Java-Spring boot integration
 
 https://docs.spring.io/spring-data/data-redis/docs/current/reference/html/
 
@@ -1229,59 +1284,13 @@ opsForSet
 
 opsForZSet
 
-####  Redis Cluster
+Redis Cluster
 
 https://docs.spring.io/spring-data/data-redis/docs/current/reference/html/#cluster
 
-## 6. Optimization
 
-Redis内存碎片通常是指Redis在内存中使用的空间并不是连续的，这是因为Redis在进行内存分配时遵循特定的内存管理策略，比如jemalloc，来减少内存碎片。
 
-如果您发现Redis的内存使用出现碎片问题，可能是因为您的应用程序正在进行频繁的键的添加和删除操作，这导致了内存不能被完全重用。
-
-解决方法：
-
-如果您正在频繁更换键，并且这些键的大小相似，您可以考虑使用CONFIG SET hash-max-ziplist-entries 512和CONFIG SET hash-max-ziplist-value 64这样的命令来减少哈希表的大小，从而减少内存碎片。
-
-如果您正在使用的是Redis的版本大于或等于4.0，您可以使用CONFIG SET activedefrag yes来启用自动内存碎片整理。
-
-定期手动运行MEMORY PURGE命令也可以帮助释放内存碎片。
-
-如果您正在使用的是Redis集群，请确保集群的配置是正确的，并且没有因为网络问题导致的数据倾斜分配。
-
-请注意，这些方法可能会影响Redis的性能，因此在调整配置或执行内存整理时，您应该在低峰时段进行操作，并且在生产环境中应该进行充分的测试。
-
--------------------------
-
-redis hash slot 内存碎片
-Redis中的hash slot是一种数据分布策略，用于实现Redis集群的数据分布和负载均衡。在Redis集群中，所有的键都会根据它们的值被映射到不同的hash slot中。
-
-如果你在Redis集群中遇到了内存碎片的问题，这通常是因为某个或某些hash slot的内存使用并没有均衡分配。这可能是因为有些key被分配到了较小的slot，而其他的key被分配到了较大的slot，导致内存使用不均。
-
-解决这个问题的一种方法是通过重新分配键到不同的hash slot。Redis Cluster提供了CLUSTER REPLICATE命令，可以用来手动迁移hash slot。你可以先在新的节点上创建一个新的hash slot，然后将旧节点上的部分或全部hash slot迁移到新节点。
-
-下面是一个简单的例子，说明如何手动迁移hash slot：
-
-假设你想要迁移的hash slot是1，并且源节点是192.168.1.1:7000，目标节点是192.168.1.2:7000。
-
-在目标节点上创建一个新的hash slot：
-
-redis-cli -h 192.168.1.2 -p 7000 CLUSTER ADDSLOTS {slot}
-在源节点上迁移hash slot到目标节点：
-
-redis-cli -h 192.168.1.1 -p 7000 CLUSTER GETKEYSINSLOT 1 100
-上述命令会获取slot 1中的前100个key。然后，你可以使用MIGRATE命令将这些key迁移到目标节点：
-
-redis-cli -h 192.168.1.1 -p 7000 MIGRATE 192.168.1.2:7000 "" KEYS 100
-重复这个过程，直到源节点上的slot 1为空。
-
-注意：在实际操作中，你可能需要停止对这些key进行写操作，并且可能需要重新配置DNS，以便客户端可以连接到新的节点。
-
-此外，Redis 4.0及以上版本提供了CLUSTER RELOCATE命令，可以自动迁移hash slot中的keys，但这个命令不推荐在生产环境中使用，因为它可能会导致数据丢失。
-
-最后，定期监控集群的内存使用情况，并对键进行合理分布，可以最大程度上避免内存碎片问题。
-
-## 7.Security hardening
+## 6.Security hardening
 
 Redis RU330课程 Redis Security 第3周学习笔记 https://blog.csdn.net/stevensxiao/article/details/113542159
 
