@@ -396,6 +396,20 @@ redis> ZRANGE myzset 0 -1 WITHSCORES
 ZRANGEBYSCORE myzset -inf 1
 
 ```
+
+### 1.7 Restore an RDB file
+If you have an RDB file dump.rdb that contains the data you want you can use this file to create a new database
+
+Copy the dump.rdb file into the Redis working directory
+
+If you do not know what it is folder you can run the command `CONFIG get dir` where your Redis instance is up and running
+
+Start the Redis service with the redis-server
+
+The file dump.rdb is automatically imported.
+
+Connect to the database using redis-cli or any other client, to check that data have been imported. (for example SCAN)
+
 ## 2. 理论基础 Theory
 
 学习redis源码过程笔记、问题记录，通过代码阅读熟悉分布式NOSQL数据库redis cluster集群功能、主从复制，节点扩容、槽位迁移、failover故障切换、一致性选举完整分析，对理解redis源码很有帮助  https://github.com/daniel416/Reading-and-comprehense-redis/
