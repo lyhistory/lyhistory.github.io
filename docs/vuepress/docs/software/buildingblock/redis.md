@@ -178,6 +178,20 @@ M: 36d8fdd4eaedd2f601a2e27d9856d9b82dd8017c HOSTIP3:6379
 
 ```
 
+重建集群：
+要想删除一个集群，首先关闭Redis服务，方法如下：
+
+redis-cli -h 127.0.0.1 -p 7000 shutdown
+
+关闭所有集群上节点后，进入各个节点文件夹，删除以下文件：
+
+appendonly.aof
+dump.rdb
+nodes-7000.conf
+批量删除指令如下：
+
+`rm -f ./*/nodes-*.conf ./*/appendonly.aof ./*/dump.rdb`
+
 #### customize脚本
 
 ```
@@ -454,7 +468,7 @@ Goals:
 
 #### Cluster DATA SHARDING
 
-16384 slots, hash slot 哈希槽位,why ? https://cloud.tencent.com/developer/article/1042654
+16384 slots, hash slot 哈希槽位（*dict大小）又称为bucket桶（不过很多地方都特指 *dictEntry为桶）,why ? https://cloud.tencent.com/developer/article/1042654
 16384这个数字也不是作者随意指定的，Redis集群内部使用位图（bit map）来标志一个slot是否被占用，为了减少集群之间信息交换的大小，信息的大小被固定为2048字节
 2048 bytes = 2^11 * 8 bit= 2^14 bit= 16384
 
@@ -813,8 +827,142 @@ bb483966fa9a7d60c9020a75d19fb2a4d1e8acf0 HOST1:6381@16381 slave b78a3f4b07cc5cf5
 
 
 ### 2.4 深度探索
+[为了拿捏 Redis 数据结构，我画了 40 张图（完整版）](https://mp.weixin.qq.com/s/MGcOl1kGuKdA7om0Ahz5IA)
+[A Closer Look at Redis Dictionary Implementation Internals](https://codeburst.io/a-closer-look-at-redis-dictionary-implementation-internals-3fd815aae535)
+
+![](./redis_dict1.png)
+
+```
+typedef struct dict {
+    dictType *type;
+    void *privdata;
+    dictht ht[2];
+    long rehashidx; /* rehashing not in progress if rehashidx == -1 */
+    unsigned long iterators; /* number of iterators currently running */
+} dict;
+
+typedef struct dictht {
+    dictEntry **table;
+    unsigned long size;
+    unsigned long sizemask;
+    unsigned long used;
+} dictht;
+
+typedef struct dictEntry {
+    void *key;
+    union {
+        void *val;
+        uint64_t u64;
+        int64_t s64;
+        double d;
+    } v;
+    struct dictEntry *next;
+} dictEntry;
+```
+
+The initial size of hash table dictht is 4.{存在哈希冲突时，redis中使用拉链法解决哈希冲突，但是dictentry数组的默认大小为4，发送哈希冲突的概率极高，如果不进行扩容，会导致哈希表的时间复杂度恶化为O(logN)，所以满足一定条件时需要进行dicEntry数组的扩容} As more & more keys enter into the system, the hash table size also grows. When does redis resize hash table? Redis can resize hash tables or simply rehash in following 2 scenarios:
+
++ total_elements / total_buckets = 1 and dict resize is enabled. Enabling or disabling dict resize is handled by redis internally. Redis tries to avoid rehashing when some background process runs to do some sort of heavy operation like saving the database to disk as rehashing involves movement of memory pages in heavy amount. So simply stating, when background process runs, dict resize is usually disabled otherwise enabled.
++ total_elements / total_buckets > 5 ( force resize ratio, forcefully resizing is done)
+- https://kousiknath.medium.com/a-little-internal-on-redis-key-value-storage-implementation-fdf96bac7453
+- 
+注意，上面的hash table  dictEntry **table; 是可以通过rehash扩容的(任意大小)，但是dict本身(上图dict\* dict)作为最外层的hash table大小是固定的
+
+so the dict size equals to slot size which is fixed 16384
+
+Yes, that's correct! In Redis, the size of the dictionary (also known as the hash table) is fixed at 16384 slots. This means that the dictionary can store up to 16384 keys before it starts to overflow and start using additional memory.
+
+The size of the dictionary is determined by the dict-size configuration parameter, which is set to 16384 by default. You can adjust this parameter to change the size of the dictionary, but keep in mind that increasing the size of the dictionary will use more memory.
 
 #### 内存优化
+
+[容量评估](https://blog.csdn.net/u011983531/article/details/79598671)
+https://www.cnblogs.com/yxhblogs/p/12713739.html
+
+##### 内存模型
+
+Each data type in Redis has its own encoding, and most of them have several encodings for different scenarios. Even sds strings (and yes, string keys are usually sds strings) can have multiple encodings.
+
+Sets, sorted sets, lists and hashes use a compact "ziplist" encoding in memory when they are small, but move to a memory wasteful yet faster encoding when they grow.
+
+The most complex object is the sorted set, which is a combination of a skiplist and a hash table. And the new streams object also has a very interesting representation.
+
+In RDB though, they get serialized into a compact representation and not kept as they are in memory.
+https://stackoverflow.com/questions/48057733/is-redis-data-stored-as-sds-or-as-objects
+
+Redis Ziplist https://redis.com/glossary/redis-ziplist/
+
+Redis automatically switches between ziplist and other data structures, such as linked lists or hash tables, based on certain criteria. The decision to use ziplists depends on factors like the number of elements and their sizes. Redis provides configuration options to control the threshold values for switching between different representations.
+
+conn.rpush(‘test’, ‘a’, ‘b’, ‘c’, ‘d’)
+4
+We start by pushing four items onto a LIST.
+
+conn.debug_object(‘test’)
+To obtain information about a specific object, we can utilize the “debug object” command.it is important to note that for nonziplist encodings (except for the special encoding of SETs), this number does not accurately reflect the actual memory consumption.
+
+redisobject：
+但redis大多数情况下并没有直接使用底层数据结构（sds ziplist skiplist等）来实现键值对数据库，而是基于这些数据结构创建了一个对象系统，每个对象都包含了一种具体数据结构。比如，当redis数据库新创建一个键值对时，就需要创建一个值对象，值对象的*ptr属性指向具体的SDS字符串。
+
+###### 底层数据结构Sting字符串容量评估
+一个简单的key-value键值对最终会产生4个消耗内存的结构，中间free掉的不考虑：
+
+
+1个dictEntry结构，24字节，负责保存具体的键值对；
+1个redisObject结构，16字节，用作val对象；
+1个SDS结构，用作key字符串，占9个字节(free4个字节+len4个字节+字符串末尾”\0”1个字节)；
+1个SDS结构，用作val字符串，占9个字节(free4个字节+len4个字节+字符串末尾”\0”1个字节)
+
+　　当key个数逐渐增多，redis还会以rehash的方式扩展哈希表节点数组(也就是dictEntry[]数组)，即增大哈希表的bucket个数，每个bucket元素都是个指针(dictEntry*)，占8字节，bucket个数是超过key个数向上求整的2的n次方。
+
+　　真实情况下，每个结构最终真正占用的内存还要考虑jemalloc的内存分配规则，
+
+　jemalloc是一种通用的内存管理方法，着重于减少内存碎片和支持可伸缩的并发性，做redis容量评估前必须对jemalloc的内存分配规则有一定了解。
+
+jemalloc基于申请内存的大小把内存分配分为三个等级：small，large，huge：
+
+Small Object的size以8字节，16字节，32字节等分隔开，小于页大小；
+Large Object的size以分页为单位，等差间隔排列，小于chunk的大小；
+Huge Object的大小是chunk大小的整数倍。
+对于64位系统，一般chunk大小为4M，页大小为4K
+
+
+综上所述，string类型的容量评估模型为：
+
+总内存消耗 = (dictEntry大小＋redisObject大小＋key_SDS大小＋val_SDS大小) * key个数＋bucket个数 * 8
+【换算下来】
+总内存消耗 = (32 + 16 + key_SDS大小＋val_SDS大小) * key个数＋bucket个数 * 8 
+
+（1）举例说明
+当key长度为 13，value长度为15，key个数为2000，根据上面总结的容量评估模型，容量预估值为 (32 + 16 + 32 + 32) * 2000 + 2048 * 8 = 240384 
+
+（2）生产实践
+用redis做商品缓存，key为商品id，value为商品信息。key大约占用30个字节，value大约占用1500个字节。
+当缓存1百万商品时，容量预估值为(32 + 16 + 64 + 1536) * 1000000+ 1000000(预估) * 8 = 1656000000，约等于1.54G
+总结：当value比较大时，占用的内存约等于value的大小*个数
+
+###### 底层数据结构哈希表容量评估
+一个Hash存储结构最终会产生以下几个消耗内存的结构：
+
+1个SDS结构，用作key字符串，占9个字节(free4个字节+len4个字节+字符串末尾”\0”1个字节)；
+1个dictEntry结构，24字节，负责保存当前的哈希对象；
+1个redisObject结构，16字节，指向当前key下属的dict结构；
+1个dict结构，88字节，负责保存哈希对象的键值对；
+n个dictEntry结构，24*n字节，负责保存具体的field和value，n等于field个数；
+n个redisObject结构，16*n字节，用作field对象；
+n个redisObject结构，16*n字节，用作value对象；
+n个SDS结构，（field长度＋9）*n字节，用作field字符串；
+n个SDS结构，（value长度＋9）*n字节，用作value字符串；
+因为hash类型内部有两个dict结构，所以最终会有产生两种rehash，一种rehash基准是field个数，另一种rehash基准是key个数，结合jemalloc内存分配规则，hash类型的容量评估模型为：
+
+总内存消耗 = [key_SDS大小 + redisObject大小 + dictEntry大小 + dict大小 +(redisObject大小 * 2 + field_SDS大小 + val_SDS大小 + dictEntry大小) * field个数 + field_bucket个数 * 指针大小] * key个数 + key_bucket个数 * 指针大小
+【换算】
+总内存消耗 = [ key_SDS大小 + 16 + 24 + 88 + (16 * 2 + field_SDS大小 + val_SDS大小 + 24) * field个数 + field_bucket个数 * 8] * key个数 + key_bucket个数 * 8
+总内存消耗 =[128+ key_SDS大小 +(56 + field_SDS大小 + val_SDS大小 ) * field个数 + field_bucket个数 * 8] * key个数 + key_bucket个数 * 8
+
+生产实例
+用redis做商品缓存，key为商家id，field为商品id，value为商品信息。
+当有1000个key，每个key有1000个field，即总共1百万商品时，总容量跟使用key-value结构差不多，多出来几十兆的空间而已。
 
 ##### 命令
 info memory
@@ -822,8 +970,9 @@ memory usage
 memory stats
 memory doctor
 memory purge
-##### 概论
+##### 优化思路
 
+[Memory Optimization for Redis](https://docs.redis.com/latest/ri/memory-optimizations/)
 Redis内存碎片通常是指Redis在内存中使用的空间并不是连续的，这是因为Redis在进行内存分配时遵循特定的内存管理策略，比如jemalloc，来减少内存碎片。
 
 如果您发现Redis的内存使用出现碎片问题，可能是因为您的应用程序正在进行频繁的键的添加和删除操作，这导致了内存不能被完全重用。
@@ -876,6 +1025,9 @@ https://my.oschina.net/u/2382040/blog/2236871
 
 #### 数据倾斜
 
+reshard
+https://blog.csdn.net/qq1309664161/article/details/126712760
+
 https://cloud.tencent.com/developer/article/1676492
 
 big key
@@ -920,6 +1072,7 @@ https://redis.io/topics/rediscli
 + 集群模式命令 cluster mode
 
   特点是全部 cluster 开头的命令都可以，然后一部分非cluster开头的命令
+  注意区分 multi-key command，比如Redis cli - KEYS * not showing all keys （solution：run  on every one of the nodes: redis-cli --cluster call hostname:90001 KEYS "*"）
 
   ```
   redis-cli --cluster help
