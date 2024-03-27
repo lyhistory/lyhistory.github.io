@@ -877,6 +877,7 @@ The size of the dictionary is determined by the dict-size configuration paramete
 #### 内存优化
 
 [容量评估](https://blog.csdn.net/u011983531/article/details/79598671)
+https://cloud.tencent.com/developer/article/1004898
 https://www.cnblogs.com/yxhblogs/p/12713739.html
 
 ##### 内存模型
