@@ -346,6 +346,8 @@ redis> KEYS "<PATTEN>"
 
 $ redis-cli KEYS "<PATTEN>" | xargs redis-cli DEL
 
+redis-cli --scan --pattern "<PATTEN>" | xargs redis-cli DEL
+
 //字符串(string)
 redis> GET <KEY>
 redis> SET <KEY> <VALUE>
