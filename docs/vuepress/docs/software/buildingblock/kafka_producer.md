@@ -111,7 +111,7 @@ When used together, min.insync.replicas and acks allow you to enforce greater du
     The loading buffer size for the transaction stat topic.
     Default: 5242880 bytes.
 
-## 2. 客户端关键API及源码解读
+## 2. 客户端关键API及源码(客户端源码和服务端源码）解读
 
 + **transaction coordinator**
     The first part of the design is to enable producers to send a group of messages as a single transaction that either succeeds or fails atomically. In order to achieve this, we introduce a new server-side module called transaction coordinator, to manage transactions of messages sent by producers, and commit / abort the appends of these messages as a whole. 

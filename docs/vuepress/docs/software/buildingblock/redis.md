@@ -344,9 +344,15 @@ redis> ACL LIST
 redis> KEYS 
 redis> KEYS "<PATTEN>"
 
-$ redis-cli KEYS "<PATTEN>" | xargs redis-cli DEL
+keys vs scan:
+https://stackoverflow.com/questions/32603964/scan-vs-keys-performance-in-redis
+Note: When using Redis Cluster, the search is optimized for patterns that imply a single slot. If a pattern can only match keys of one slot, Redis only iterates over keys in that slot, rather than the whole database, when searching for keys matching the pattern. For example, with the pattern {a}h*llo, Redis would only try to match it with the keys in slot 15495, which hash tag {a} implies. To use pattern with hash tag, see Hash tags in the Cluster specification for more information.
 
-redis-cli --scan --pattern "<PATTEN>" | xargs redis-cli DEL
+redis-cli KEYS "<PATTEN>"
+redis-cli --scan --pattern "<PATTEN>"
+
+只会返回当前节点上的数据
+
 
 //字符串(string)
 redis> GET <KEY>
@@ -1453,6 +1459,61 @@ Redis RU330课程 Redis Security 第3周学习笔记 https://blog.csdn.net/steve
 
 
 ## Troubleshooting
+
+### ERR CROSSSLOT Keys in request don't hash to the same slot.
+模糊查询批量清理keys出现错误：
+redis-cli KEYS "<PATTEN>" | xargs redis-cli DEL
+redis-cli --scan --pattern "<PATTEN>" | xargs redis-cli DEL
+
+根源：
+```
+# Enter redis-cli with cluster mode
+$ redis-cli -c
+# Try to delete multiple keys
+127.0.0.1:6379>  DEL key1 key2 key3 ...
+-- (error) CROSSSLOT Keys in request don't hash to the same slot
+```
+解决办法：
+```
+./redis-scan-and-delete.sh:
+#!/bin/bash
+
+# Check if the required arguments are provided
+if [ "$#" -lt 4 ]; then
+    echo "Usage: $0 <redis_host> <redis_port> <database_number> <pattern>"
+    exit 1
+fi
+
+# Set variables from arguments
+REDIS_HOST="$1"
+REDIS_PORT="$2"
+DB_NUMBER="$3"
+PATTERN="$4"
+
+# Scan and delete keys matching the pattern
+CURRENT_CURSOR=0
+NEXT_CURSOR=0
+
+while [ "$CURRENT_CURSOR" -ne "0" ]; do
+    CURRENT_CURSOR=$NEXT_CURSOR
+
+    # Scan for keys matching the pattern
+    KEYS_COUNT=$($REDIS_CLI -h "${REDIS_HOST}" -p "${REDIS_PORT}" -n "${DB_NUMBER}" "SCAN ${CURRENT_CURSOR} COUNT 1000 MATCH '${PATTERN}'")
+
+    # Delete the scanned keys
+    for KEY in $KEYS_COUNT; do
+        $REDIS_CLI -h "${REDIS_HOST}" -p "${REDIS_PORT}" -n "${DB_NUMBER}" "DEL $KEY"
+    done
+
+    # Get the next cursor
+    NEXT_CURSOR=$(echo "$KEYS_COUNT" | awk -F' ' '{print $2}')
+done
+
+./redis-scan-and-delete.sh <redis_host> <redis_port> <database_number> "PREFIX_*"
+```
+
+[[Redis] Multi-key command in cluster mode (feat. CROSS-SLOT)](https://medium.com/@mbh023/redis-multi-key-command-in-cluster-mode-feat-cross-slot-ec27b999f169)
+
 ### RedisSystemException
 
 1.org.springframework.data.redis.RedisSystemException: Redis exception; nested exception is io.lettuce.core.RedisException: io.lettuce.core.RedisConnectionException: DENIED Redis is running in protected mode because protected mode is enabled, no bind address was specified, no authentication password is requested to clients. In this mode connections are only accepted from the loopback interface. If you want to connect from external computers to Redis you may adopt one of the following solutions: 1) Just disable protected mode sending the command 'CONFIG SET protected-mode no' from the loopback interface by connecting to Redis from the same host the server is running, however MAKE SURE Redis is not publicly accessible from internet if you do so. Use CONFIG REWRITE to make this change permanent. 2) Alternatively you can just disable the protected mode by editing the Redis configuration file, and setting the protected mode option to 'no', and then restarting the server. 3) If you started the server manually just for testing, restart it with the '--protected-mode no' option. 4) Setup a bind address or an authentication password. NOTE: You only need to do one of the above things in order for the server to start accepting connections from the outside.
