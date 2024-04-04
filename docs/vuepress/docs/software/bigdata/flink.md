@@ -32,9 +32,17 @@ Flink is a distributed system and requires effective allocation and management o
 
 The Client is not part of the runtime and program execution, but is used to prepare and send a dataflow to the JobManager. After that, the client can disconnect (detached mode), or stay connected to receive progress reports (attached mode). The client runs either as part of the Java/Scala program that triggers the execution, or in the command line process ./bin/flink run ....
 
-- [Flink Architecture](https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/concepts/flink-architecture/)
++ [Flink Architecture](https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/concepts/flink-architecture/)
 
 Flink 集群是由 JobManager（JM）、TaskManager（TM）两大组件组成的，每个 JM/TM 都是运行在一个独立的 JVM 进程中。JM 相当于 Master，是集群的管理节点，TM 相当于 Worker，是集群的工作节点，每个 TM 最少持有 1 个 Slot，Slot 是 Flink 执行 Job 时的最小资源分配单位，在 Slot 中运行着具体的 Task 任务。
+
++ Flink Memory Model
+  - [Set up Flink’s Process Memory](https://nightlies.apache.org/flink/flink-docs-stable/docs/deployment/memory/mem_setup/) 
+    Total Process Memory(The total process memory of Flink JVM processes) = 
+    JVM Off heap Memory to run the flink application(means the job manager)[=JVM Metaspace+JVM Overhead] + Total Flink Memory(consumed by the flink application)[=JVM heap + Off heap Memory(direct/native memory)] 
+  - [Set up TaskManager Memory](https://nightlies.apache.org/flink/flink-docs-stable/docs/deployment/memory/mem_setup_tm/)
+    the TaskManager memory components have a similar but more sophisticated structure compared to the memory model of the JobManager process.
+    Total Process Memory = JVM  Off heap Memory to run the flink application(means the taskmanager)[=JVM Metaspace+JVM Overhead{0.1XtotalProcessMemory}] + Total Flink Memory(consumed by the flink application)[=JVM heap + Off heap Memory[=Managed Memory{0.4XtotalFlinkMemory}+Direct Memory]] 
 
 #### 1.1.1 JobManager
 

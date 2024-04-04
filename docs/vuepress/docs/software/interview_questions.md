@@ -30,10 +30,26 @@ can you name the JVM class loader?
 spring bean vs java bean?
 
 the default scope of bean in springboot (singleton prototype)
+https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html
+
+spring bean lifecycle
+https://medium.com/@TheTechDude/spring-bean-lifecycle-full-guide-f865966e89ce
 
 what is dependency injection or invesion of control?
+https://www.linkedin.com/pulse/spring-ioc-boot-bandewar-shiva-krishna/
+
++ Inversion of Control (IoC), in the context of the Spring framework is a central design pattern with a primary focus on dependency injection (DI). IoC not only limited to Dependency Injection(DI), but also involves the complete lifecycle management of dependencies within the Spring framework.
++ At its core, IoC revolves around the concept of the Spring application context. This context encapsulates the IoC container, often referred to as the Bean Factory, which is responsible for managing beans throughout the application's runtime. Spring Boot further enhances this by providing automatic configuration for the Application Context.
++ The IoC container is responsible for managing the dependencies of objects throughout their lifecycle. This includes injecting dependencies into other objects, as well as releasing dependencies when objects are no longer needed. In Spring, dependencies are typically injected during application startup, as they are added to the Bean Factory. However, it is also possible to inject dependencies at runtime. This can be useful for certain types of applications, such as those that need to be able to dynamically load new components.
+
+benefit:
++ One of the key benefits of IoC is that it allows objects to be loosely coupled. This means that objects do not need to know how to create or manage their dependencies. Instead, the IoC container takes care of this for them.
++ This is achieved by having objects declare their dependencies, and then the IoC container injects those dependencies into the objects when they are created. The IoC container can also manage the lifecycle of the dependencies, which helps to prevent memory leaks and other problems.
++ In Spring, the IoC container is typically initialized from the main class of the application. The main class then configures the IoC container by telling it about the beans that need to be created and managed. The IoC container then creates the beans and injects their dependencies. 
 
 can you name the IOC container in spring?
+https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/beans.html
+
 
 can you name the annotations in spring or spring boot？
 example：@components 
@@ -56,7 +72,7 @@ BASEtheory
 
 https://lyhistory.com/docs/software/highlevel/distrubuted_system.html#_2-1-2-%E4%B8%80%E8%87%B4%E6%80%A7%E7%8A%B6%E6%80%81%E6%9C%BA
 
-## monolithic to microservice
+## monolithic application to microservice
 https://lyhistory.com/docs/software/highlevel/microservice.html#%E4%BB%80%E4%B9%88%E6%98%AF%E5%BE%AE%E6%9C%8D%E5%8A%A1
 
 is it correct if I say microservices is just to slice into smaller services based on business logic for example, or can i say microservices is only comprised of small services, what else is missing?
@@ -66,3 +82,4 @@ what problems does microservices arcthitecture bring in and how can we solve the
 could you give me some examples of how microservices communicated with each other
 
 single point of failure
+transactions consistency
