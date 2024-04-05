@@ -45,6 +45,14 @@ https://lyhistory.com/docs/software/programming/java_springboot.html#_1-1-spring
 
 javascript typescript?
 
+闭包 closure
+
+responsive layout
+
+cross origin resource sharing
+
+virtual dom（
+
 webpage loading speed optimize
 https://lyhistory.com/docs/software/programming/interview_frontend.html#%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96
 
