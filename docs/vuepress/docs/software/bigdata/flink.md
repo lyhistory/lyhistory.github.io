@@ -1747,6 +1747,11 @@ Caused by: java.util.concurrent.TimeoutException
 `/bin/flink run -p 5 ./examples/batch/WordCount.jar`
 
 
+### Task distribution in Apache Flink
+https://stackoverflow.com/questions/34773379/task-distribution-in-apache-flink
+
+
+--
 flink自定义函数加线程锁 https://juejin.cn/s/flink%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0%E5%8A%A0%E7%BA%BF%E7%A8%8B%E9%94%81
 
 
