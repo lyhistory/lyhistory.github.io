@@ -34,8 +34,13 @@ IDEA和eclipse各有优缺点，比如eclipse可以在同一个ide实例中操�
 我在查询一个AutoWired的依赖时，找到了这接口，然后直接找其引用reference是找不到的，可能是因为在不同的jar包中，
 最后是在右键“Open type Hierarchy”找到，而在IDEA中，直接左侧会显示一个i的小图标，点击即可显示“is implemented in”；
 
-Eclipse/STS 
++ Eclipse/STS 
 Project Explorer-> Projects Presentation (select hierarchy)
+
++ VSCODE:
+  extension: spring tool suite + extension pack for java 
+  Note: install jdk(Adoptium's Temurin version:[jdk21tls](https://objects.githubusercontent.com/github-production-release-asset-2e65be/602574963/7688eb32-8658-4c55-9752-5950bc55a06e?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240413%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240413T075318Z&X-Amz-Expires=300&X-Amz-Signature=53fbc7594384f8d586a9d45770a37fb83eaec807ebf128d3bb436e15259a5b9b&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=602574963&response-content-disposition=attachment%3B%20filename%3DOpenJDK21U-jdk_x64_windows_hotspot_21.0.2_13.msi&response-content-type=application%2Foctet-stream) ) following instructions in welcome page (self installed openjdk may not work!)
+  ctrl+shift+p: java: config classpath
 
 #### 1.2.1 Code Style
 
