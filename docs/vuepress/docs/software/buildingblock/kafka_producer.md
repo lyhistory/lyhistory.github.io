@@ -1559,11 +1559,11 @@ Error sending fetch request (sessionId=132458226, epoch=271322) to node 0: org.a
 
 2023-02-08 15:42:22.815 [33m WARN[m [35m21664GG[m [ad | producer-3] [36mo.a.k.c.p.i.Sender[m : 
 [Producer clientId=producer-3, transactionalId=TEST-TID-0] 
-Got error produce response with correlation id 851515 on topic-partition T-QUOTATION-SNP-0, retrying (2147483646 attempts left). Error: REQUEST_TIMED_OUT
+Got error produce response with correlation id 851515 on topic-partition T-TEST-SNP-0, retrying (2147483646 attempts left). Error: REQUEST_TIMED_OUT
 
 2023-02-08 15:42:52.967 [33m WARN[m [35m21664GG[m [ad | producer-3] [36mo.a.k.c.p.i.Sender[m : 
 [Producer clientId=producer-3, transactionalId=TEST-TID-0] 
-Got error produce response with correlation id 851516 on topic-partition T-QUOTATION-SNP-0, retrying (2147483645 attempts left). Error: REQUEST_TIMED_OUT
+Got error produce response with correlation id 851516 on topic-partition T-TEST-SNP-0, retrying (2147483645 attempts left). Error: REQUEST_TIMED_OUT
 
 2023-02-08 15:43:21.260 [32mDEBUG[m [35m21664GG[m [TEST-MANAGER] [36mc.q.c.c.b.SimpleWorkerManager[m : 
 	Received 2 message(s)
@@ -1583,7 +1583,7 @@ Got error produce response with correlation id 851516 on topic-partition T-QUOTA
 	Offset [2520209], Partition [0], Handling TestMsgToKafka{tradableInstrumentId='BTC2302', priceType=LAST, marketPriceSource=EXTERNAL, price=23.320000, currency='USD', publishTime=1675842201252, updateUser='null', updateTime=1675842201252, tradeDate='20230208'}
 2023-02-08 15:43:21.263 [32m INFO[m [35m21664GG[m [TEST-p0-1] [36mc.q.c.p.h.TestMsgHandler[m : 
 	Updated spot rate in price engine storage and REDIS. trade-date [20230208], tradable-instrument-id [BTC2302], price-type [LAST], price [23.320000]
-2023-02-08 15:43:22.789 [32m INFO[m [35m21664GG[m [EENGINE-TID-0-1] [36mc.l.d.IgnoreExceptionHandler[m : 
+2023-02-08 15:43:22.789 [32m INFO[m [35m21664GG[m [TEST-TID-0-1] [36mc.l.d.IgnoreExceptionHandler[m : 
 	Exception processing: 309941 ProduceActionWrapper{}
 
 org.apache.kafka.common.KafkaException: Cannot execute transactional method because we are in an error state
@@ -1599,7 +1599,7 @@ Caused by: org.apache.kafka.common.errors.ProducerFencedException: Producer atte
 .....
 
 
-2023-02-08 16:03:38.938 [32m INFO[m [35m21664GG[m [EENGINE-TID-2-1] [36mc.l.d.IgnoreExceptionHandler[m : Exception processing: 120 ProduceActionWrapper{}
+2023-02-08 16:03:38.938 [32m INFO[m [35m21664GG[m [TEST-TID-2-1] [36mc.l.d.IgnoreExceptionHandler[m : Exception processing: 120 ProduceActionWrapper{}
 
 org.apache.kafka.common.KafkaException: Cannot execute transactional method because we are in an error state
 	at org.apache.kafka.clients.producer.internals.TransactionManager.maybeFailWithError(TransactionManager.java:785)
@@ -1624,7 +1624,7 @@ Caused by: org.apache.kafka.common.KafkaException: The client hasn't received ac
 #### ProducerFencedException
 
 
-2023-02-08 15:43:22.789 [32m INFO[m [35m21664GG[m [EENGINE-TID-0-1] [36mc.l.d.IgnoreExceptionHandler[m : 
+2023-02-08 15:43:22.789 [32m INFO[m [35m21664GG[m [TEST-TID-0-1] [36mc.l.d.IgnoreExceptionHandler[m : 
 	Exception processing: 309941 ProduceActionWrapper{}
 
 org.apache.kafka.common.KafkaException: Cannot execute transactional method because we are in an error state
@@ -1746,7 +1746,7 @@ public final class IgnoreExceptionHandler implements ExceptionHandler<Object>
         logger.log(Level.INFO, "Exception processing: " + sequence + " " + event, ex);
     }
 所以对应上了整个输出是INFO
-2023-02-08 15:43:22.789 [32m INFO[m [35m21664GG[m [EENGINE-TID-0-1] [36mc.l.d.IgnoreExceptionHandler[m : 
+2023-02-08 15:43:22.789 [32m INFO[m [35m21664GG[m [TEST-TID-0-1] [36mc.l.d.IgnoreExceptionHandler[m : 
 	Exception processing: 309941 ProduceActionWrapper{}
 但是为啥没有打印出“处理信息时出现故障”？IgnoreExceptionHandler拿到的ex不是 new RuntimeException("处理信息时出现故障", ex)？
 又或者IgnoreExceptionHandler并不是处理这里throw的Exception的，所以外部也没有catch到这个exception？
@@ -2338,7 +2338,7 @@ txnMetadata.prepareFenceProducerEpoch()
 #### The client hasn't received acknowledgment for some previously sent messages and can no longer retry them. It isn't safe to continue.
 有了上面的基础，这部分时间很简单
 
-2023-02-08 16:03:38.938 [32m INFO[m [35m21664GG[m [EENGINE-TID-2-1] [36mc.l.d.IgnoreExceptionHandler[m : Exception processing: 120 ProduceActionWrapper{}
+2023-02-08 16:03:38.938 [32m INFO[m [35m21664GG[m [TEST-TID-2-1] [36mc.l.d.IgnoreExceptionHandler[m : Exception processing: 120 ProduceActionWrapper{}
 
 org.apache.kafka.common.KafkaException: Cannot execute transactional method because we are in an error state
 	at org.apache.kafka.clients.producer.internals.TransactionManager.maybeFailWithError(TransactionManager.java:785)
@@ -2441,10 +2441,49 @@ transaction.max.timeout.ms
 看到 [这里](https://stackoverflow.com/questions/56460688/kafka-ignoring-transaction-timeout-ms-for-producer)有人说设置transaction.timeout.ms不生效，不过他的问题是将timeout设置为比默认1分钟还要小的时间，然后brokers默认好像是每间隔分钟去检查一次是否timeout，所以设置transaction.timeout.ms小于1分钟是没有作用的，他的情况实际上是需要用另一个配置解决transaction.abort.timed.out.transaction.cleanup.interval.ms
 
 ### Error: REQUEST_TIMED_OUT
-跟前面报错类似，都是先报错 REQUEST_TIMED_OUT,不过接下来报错具体是 
+跟前面报错类似，都是先报错 REQUEST_TIMED_OUT,
+```
+2024-04-03 18:20:30.079 [33m WARN[m [35m26166GG[m [TEST-TID-1] [36mo.a.k.c.p.i.Sender[m : [Producer clientId=producer-TEST-TID-1, transactionalId=TEST-TID-1] Got error produce response with correlation id 1313 on topic-partition T-TEST-SNP-1, retrying (2147483646 attempts left). Error: REQUEST_TIMED_OUT
+```
 
+紧接着的报错具体是 
+
+```
+2024-04-03 18:21:00.063 [32m INFO[m [35m26166GG[m [TEST-TID-1-1] [36mo.a.k.c.p.KafkaProducer[m : [cducer clientId=producer-TEST-TID-1, transactionalId=TEST-TID-1] Aborting incomplete transaction
+2024-04-03 18:21:00.064 [32m INFO[m [35m26166GG[m [TEST-TID-1-1] [36mc.l.d.IgnoreExceptionHandler[m : Exception processing: 196 ProduceActionWrapper{}
+
+org.apache.kafka.common.KafkaException: TransactionalId TEST-TID-1: Invalid transition attempted from state COMMITTING_TRANSACTION to state ABORTING_TRANSACTION
+	at org.apache.kafka.clients.producer.internals.TransactionManager.transitionTo(TransactionManager.java:1065)
+	at org.apache.kafka.clients.producer.internals.TransactionManager.transitionTo(TransactionManager.java:1058)
+	at org.apache.kafka.clients.producer.internals.TransactionManager.lambda$beginAbort$3(TransactionManager.java:358)
+	at org.apache.kafka.clients.producer.internals.TransactionManager$$Lambda$1272/2139605238.get(Unknown Source)
+	at org.apache.kafka.clients.producer.internals.TransactionManager.handleCachedTransactionRequestResult(TransactionManager.java:1187)
+	at org.apache.kafka.clients.producer.internals.TransactionManager.beginAbort(TransactionManager.java:355)
+	at org.apache.kafka.clients.producer.KafkaProducer.abortTransaction(KafkaProducer.java:763)
+	at com.lyhistory.core.producer.DisruptorProducer.realProduce(DisruptorProducer.java:68)
+	at com.lyhistory.core.producer.DisruptorProducer$$Lambda$1024/989144861.onEvent(Unknown Source)
+	at com.lmax.disruptor.BatchEventProcessor.processEvents(BatchEventProcessor.java:168)
+	at com.lmax.disruptor.BatchEventProcessor.run(BatchEventProcessor.java:125)
+	at java.lang.Thread.run(Thread.java:745)
+```
+因为client端代码是
+```
+ try {
+                rawProducer.commitTransaction();
+                logger.debug("sucess");
+            } catch (Exception ex) {
+                rawProducer.abortTransaction();
+                throw new RuntimeException("abortTransaction", ex);
+            } finally {
+                inTransactions = false;
+            }
+        }
+```
+所以是catch到REQUEST_TIMED_OUT{前面第一行错误说retrying (2147483646 attempts left). Error: REQUEST_TIMED_OUT，不知道是不是还没有retry就被抓到异常了还是说retry到这么多次的时候就timeout了}，所以执行rawProducer.abortTransaction();但是执行abort报错：
+Invalid transition attempted from state COMMITTING_TRANSACTION to state ABORTING_TRANSACTION
 
 调查：
+首先是根据第一行错误的关键词 “ransactionalId=TEST-TID-1] Got error produce response with correlation id 1313 on topic-partition T-TEST-SNP-1,”找到了broker端日志，不过发现 correlation id 1311还是在broker id=0机器上处理的，也就是它对应的transaction coordinator的位置是borker id=0，但是1312开始就是到了broker id=1机器上，然后1312应该成功了，但是到了1313就出错了，说明broker集群肯定有变化，果然查到：
 ```
 [2024-04-03 18:20:00,116] DEBUG [TransactionCoordinator id=0] Connection with /x.x.x.2 disconnected (org.apache.kafka.common.network.Selector)
 [2024-04-03 18:20:00,116] TRACE [TransactionCoordinator id=0] Read from closing channel failed, ignoring exception (org.apache.kafka.common.network.Selector)
@@ -2457,7 +2496,7 @@ transaction.max.timeout.ms
 
 ```
 
-#### REQUEST_TIMED_OUT直接原因
+#### REQUEST_TIMED_OUT的直接原因
 
 涉及到两个配置：
 request.timeout.ms 和 timeout.ms
