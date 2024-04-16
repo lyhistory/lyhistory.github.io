@@ -2440,6 +2440,16 @@ transaction.max.timeout.ms
 #### 后记
 看到 [这里](https://stackoverflow.com/questions/56460688/kafka-ignoring-transaction-timeout-ms-for-producer)有人说设置transaction.timeout.ms不生效，不过他的问题是将timeout设置为比默认1分钟还要小的时间，然后brokers默认好像是每间隔分钟去检查一次是否timeout，所以设置transaction.timeout.ms小于1分钟是没有作用的，他的情况实际上是需要用另一个配置解决transaction.abort.timed.out.transaction.cleanup.interval.ms
 
+### Error: REQUEST_TIMED_OUT
+跟前面报错类似，都是先报错 REQUEST_TIMED_OUT,不过接下来报错具体是 
+
+涉及到两个配置：
+request.timeout.ms 和 timeout.ms
+> request.timeout.ms is the timeout configured on the client side. It says that the client is going to wait this much time for the server to respond to a request.
+> timeout.ms is the timeout configured on the leader in the Kafka cluster. This is the timeout on the server side. For example if you have set the acks setting to all, the server will not respond until all of its followers have sent a response back to the leader. The leader will wait timeout.ms amount of time for all the followers to respond.
+> So client sends a request to the server (leader). Based on the acks setting, the server will either wait or respond back to the client. timeout.ms is the amount of time the leader waits for its followers whereas request.timeout.ms is the amount of time the client waits for the server(leader
+> https://stackoverflow.com/questions/40781548/difference-between-request-timeout-ms-and-timeout-ms-properties-of-kafka-produce
+
 ### kafka transaction failed but msg committed without error (transactional.id.expiration.ms)
 大概情况是：
 我们有两个服务，服务A发送了一堆kafka消息给下游B，同时B还在启动之中（读取kafka metadata，seek last offset），当B poll的时候发现虽然是seek到0的位置，但是实际接受到底kafka msg offset却是 24
@@ -2533,4 +2543,9 @@ https://www.confluent.io/blog/transactions-apache-kafka/
 
 https://cwiki.apache.org/confluence/display/KAFKA/KIP-98+-+Exactly+Once+Delivery+and+Transactional+Messaging
 https://docs.google.com/document/d/11Jqy_GjUGtdXJK94XGsEIK7CP1SnQGdp2eF0wSw9ra8/
+
+kafka-producer源码分析
+https://github.com/Raray-chuan/xichuan_note/blob/main/docs/big-data/kafka/kafka-producer%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.md
+https://juejin.cn/post/7152581406516838408
+
 <disqus/>

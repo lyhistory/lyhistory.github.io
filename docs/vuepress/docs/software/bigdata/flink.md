@@ -1584,6 +1584,12 @@ The DataSet API is Flink’s core API for batch processing applications. The pri
 #### Gelly: 
 Gelly is a library for scalable graph processing and analysis. Gelly is implemented on top of and integrated with the DataSet API. Hence, it benefits from its scalable and robust operators. Gelly features built-in algorithms, such as label propagation, triangle enumeration, and page rank, but provides also a Graph API that eases the implementation of custom graph algorithms.
 
+### Exmaples:
+Flink State管理和使用 https://juejin.cn/post/7194847015677722681#heading-2
+
+分区 数据重分布： keyby rebalance rescale shuffle brodcast https://blog.csdn.net/qq_42596142/article/details/103727918
+https://blog.csdn.net/qq_37555071/article/details/122415430
+
 ## 6. Operations
 
 ### Run Your Applications Non-Stop 24/7
