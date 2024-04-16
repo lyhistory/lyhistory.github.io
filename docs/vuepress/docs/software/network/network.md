@@ -1148,6 +1148,50 @@ $   sysctl -p
 $   sysctl net.ipv4.ip_local_port_range
 
 ```
+### 5.6 final_wait-1 final_wait-2,大量 time_wait
+```
+统计连接状态：
+netstat -nat | awk '{print $6}' | sort | uniq -c
+统计连接数：
+netstat -anp|wc -l
+netstat -anp|grep ESTABLISHED|wc -l
+
+
+Active UNIX domain sockets (servers and established)
+Active Internet connections (servers and established)
+
+计算每秒最大连接数
+$ sysctl net.ipv4.ip_local_port_range
+net.ipv4.ip_local_port_range = 32768   61000
+$ sysctl net.ipv4.tcp_fin_timeout
+net.ipv4.tcp_fin_timeout = 60
+
+This basically means your system cannot consistently guarantee more than (61000 - 32768) / 60 = 470 sockets per second.
+https://stackoverflow.com/questions/410616/increasing-the-maximum-number-of-tcp-ip-connections-in-linux
+
+
+```
++ 优化1: 缩短FIN_WAIT_2 即fin_timeout 或者扩大 ephemeral port range
+
+fin_timeout 作用
+https://blog.csdn.net/qq_45859054/article/details/106885630
+https://sean22492249.medium.com/tcp-%E7%9A%84%E9%97%9C%E9%96%89%E5%8B%95%E4%BD%9C-1469750cd099
+
++ 优化2：time_wait 
+TCP 状态 https://sean22492249.medium.com/tcp-%E7%9A%84%E9%97%9C%E9%96%89%E5%8B%95%E4%BD%9C-1469750cd099
+为什么 TCP 协议有 TIME_WAIT 状态 https://draveness.me/whys-the-design-tcp-time-wait/
+
+    - shorten time wait缩短时间
+        ```
+        $ sysctl net.ipv4.tcp_tw_timeout
+        ```
+    - disable socket lingering;
+    - 直接复用 recycle
+        ```
+        $ sysctl net.ipv4.tcp_tw_recycle=1
+        $ sysctl net.ipv4.tcp_tw_reuse=1  
+        ```
+        This allows fast cycling of sockets in time_wait state and re-using them. But before you do this change make sure that this does not conflict with the protocols that you would use for the application that needs these sockets. Make sure to read post ["Coping with the TCP TIME-WAIT"](https://vincent.bernat.ch/en/blog/2014-tcp-time-wait-state-linux) from Vincent Bernat to understand the implications. The net.ipv4.tcp_tw_recycle option is quite problematic for public-facing servers as it won’t handle connections from two different computers behind the same NAT device, which is a problem hard to detect and waiting to bite you. Note that net.ipv4.tcp_tw_recycle has been removed from Linux 4.12.
 
 ## 6. （数据中心/云）组网 Network architecture
 

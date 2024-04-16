@@ -2443,12 +2443,43 @@ transaction.max.timeout.ms
 ### Error: REQUEST_TIMED_OUT
 跟前面报错类似，都是先报错 REQUEST_TIMED_OUT,不过接下来报错具体是 
 
+
+调查：
+```
+[2024-04-03 18:20:00,116] DEBUG [TransactionCoordinator id=0] Connection with /x.x.x.2 disconnected (org.apache.kafka.common.network.Selector)
+[2024-04-03 18:20:00,116] TRACE [TransactionCoordinator id=0] Read from closing channel failed, ignoring exception (org.apache.kafka.common.network.Selector)
+[2024-04-03 18:20:00,116] DEBUG [TransactionCoordinator id=0] Node 1 disconnected. (org.apache.kafka.clients.NetworkClient)
+........................
+[2024-04-03 18:20:37,167] DEBUG [Controller id=0, targetBrokerId=0] Connection with /x.x.x.1 disconnected (org.apache.kafka.common.network.Selector)
+[2024-04-03 18:20:37,167] TRACE Sending ALTER_ISR response to client 1 of 59 bytes. (kafka.network.RequestChannel)
+[2024-04-03 18:20:37,167] DEBUG [Controller id=0, targetBrokerId=1] Connection with /x.x.x.2 disconnected (org.apache.kafka.common.network.Selector)
+[2024-04-03 18:20:37,167] DEBUG [Controller id=0, targetBrokerId=2] Connection with /x.x.x.3 disconnected (org.apache.kafka.common.network.Selector)
+
+```
+
+#### REQUEST_TIMED_OUT直接原因
+
 涉及到两个配置：
 request.timeout.ms 和 timeout.ms
 > request.timeout.ms is the timeout configured on the client side. It says that the client is going to wait this much time for the server to respond to a request.
 > timeout.ms is the timeout configured on the leader in the Kafka cluster. This is the timeout on the server side. For example if you have set the acks setting to all, the server will not respond until all of its followers have sent a response back to the leader. The leader will wait timeout.ms amount of time for all the followers to respond.
-> So client sends a request to the server (leader). Based on the acks setting, the server will either wait or respond back to the client. timeout.ms is the amount of time the leader waits for its followers whereas request.timeout.ms is the amount of time the client waits for the server(leader
+> So client sends a request to the server (leader). Based on the acks setting, the server will either wait or respond back to the client. timeout.ms is the amount of time the leader waits for its followers whereas request.timeout.ms is the amount of time the client waits for the server(leader).
 > https://stackoverflow.com/questions/40781548/difference-between-request-timeout-ms-and-timeout-ms-properties-of-kafka-produce
+
+就是说，kafka client transactional producer发送消息到kafka集群并等待request.timeout.ms，但是kafka集群本身运行状态不正常，leader无法在timeout.ms内与follower完成任务，所以造成timeout
+
+#### kafka集群为什么互相无法连接呢
+简单的怀疑肯定是，集群之间的网络出现问题，比如分布在不同的数据中心AZ，数据中心之间通信存在延迟，查看网络监控，看到这段时间内TCP的连接数存在异常，established连接数比较稳定，但是total tcp connection却很高，可能代表这段时间内产生了很多final wait或者time wait连接，于是深入查了下
+```
+$ sysctl net.ipv4.ip_local_port_range
+net.ipv4.ip_local_port_range = 32768    60999
+$ sysctl net.ipv4.tcp_fin_timeout
+net.ipv4.tcp_fin_timeout = 60
+
+This basically means your system cannot consistently guarantee more than (60999 - 32768) / 60 = 470 sockets per second. 
+https://stackoverflow.com/questions/410616/increasing-the-maximum-number-of-tcp-ip-connections-in-linux
+```
+由于调研这个问题的时候已经过去了几天，所以无法得知当时的tcp连接状况，可能就是因为网络问题造成节点之间不断的retry产生了很多time wait的连接
 
 ### kafka transaction failed but msg committed without error (transactional.id.expiration.ms)
 大概情况是：
