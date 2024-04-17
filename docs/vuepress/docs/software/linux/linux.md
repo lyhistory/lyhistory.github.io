@@ -199,6 +199,8 @@ WantedBy=multi-user.target
 
 ```
 
+## 文件系统
+umask 指定在建立文件时预设的权限掩码
 
 
 ## About Env

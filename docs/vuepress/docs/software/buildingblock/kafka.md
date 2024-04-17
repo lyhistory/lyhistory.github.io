@@ -6,6 +6,9 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《kafka》
 
+cloud DMS PAAS VS original opensource KAFKA?
+EXAMPLE: [huawei DMS](https://support.huaweicloud.com/intl/en-us/productdesc-kafka/kafka-pd-200720001.html)
+
 ## 1. Basic concepts
 
 + zookeeper：
