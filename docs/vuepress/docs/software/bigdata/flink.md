@@ -1467,7 +1467,7 @@ Flink provides a pluggable interface for users to register their custom logic an
 
 FailureEnrichers are triggered every time an exception is reported at runtime by the JobManager. Every FailureEnricher may asynchronously return labels associated with the failure that are then exposed via the JobManager’s REST API (e.g., a ’type:System’ label implying the failure is categorized as a system error).
 
-## 5. API&Libs
+## 3. API&Libs
 ### Layered APIs
 ![](https://nightlies.apache.org/flink/flink-docs-release-1.15/fig/levels_of_abstraction.svg)
 #### Stateful Event-Driven Applications - ProcessFunctions(events,state,time)
@@ -1568,6 +1568,8 @@ GROUP BY SESSION(clicktime, INTERVAL '30' MINUTE), userId
 try out:
 https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/try-flink/table_api/
 
+SQL GATEWAY https://nightlies.apache.org/flink/flink-docs-release-1.19/docs/dev/table/sql-gateway/overview/#/starting-the-sql-gateway
+
 ### Advanced APIs
 #### Stateful Functions: A Platform-Independent Stateful Serverless Stack
 https://nightlies.apache.org/flink/flink-statefun-docs-stable/
@@ -1590,7 +1592,7 @@ Gelly is a library for scalable graph processing and analysis. Gelly is implemen
 ### Exmaples:
 Flink State管理和使用 https://juejin.cn/post/7194847015677722681#heading-2
 
-## 6. Operations
+## 4. Operations
 
 ### Run Your Applications Non-Stop 24/7
 Machine and process failures are ubiquitous in distributed systems. A distributed stream processors like Flink must recover from failures in order to be able to run streaming applications 24/7. Obviously, this does not only mean to restart an application after a failure but also to ensure that its internal state remains consistent, such that the application can continue processing as if the failure had never happened.
@@ -1648,7 +1650,7 @@ Application Mode: The JAR file specified in startup command and all JAR files in
 
 
 
-## 7. Integration
+## 5. Integration
 
 [Rest API](https://nightlies.apache.org/flink/flink-docs-release-1.17/docs/ops/rest_api/)
 
@@ -1662,6 +1664,12 @@ http://localhost:8081/v1/config
 http://localhost:8081/v1/jobmanager/config
 http://localhost:8081/v1/jobmanager/logs
 
+## 6. 深度解析
+深入了解 Apache Flink 的网络协议栈
+https://tianchi.aliyun.com/forum/post/61976#/
+
+Flink 已经拥有了强大的 DataStream/DataSet API，可以基本满足流计算和批计算中的所有需求。为什么还需要 Table & SQL API 呢？
+https://flink-learning.org.cn/article/detail/5133eced98854eff56cc2eaa2150b1e4#/
 ## Troubleshooting
 
 ### flink启动后无法正常关闭
@@ -1756,13 +1764,8 @@ Caused by: java.util.concurrent.TimeoutException
 ### Task distribution in Apache Flink
 https://stackoverflow.com/questions/34773379/task-distribution-in-apache-flink
 
-###  only one slot is actively processing data and the others quickly finish with 0 bytes
+cluster.evenly-spread-out-slots: true
 
-If you set the parallelism of your Flink job to 5 and notice that only one slot is actively processing data while the other four slots quickly finish with 0 bytes, there could be a few reasons for this behavior:
-
-+ Data Distribution: The data fetched from the database may not be evenly distributed among the parallel instances of the JDBC source. If the data distribution is skewed, one instance may fetch significantly more data than the others, leading to uneven processing.
-+ Parallelism Mismatch: The parallelism of the JDBC source may not match the parallelism of downstream operators. Even if you set the parallelism of your Flink job to 5, if the JDBC source has a lower parallelism or if it fetches data serially, only one instance of the source will be actively fetching data while the others remain idle.
-+ Resource Constraints: If the actively processing slot is starved of resources (CPU, memory, etc.), it may not be able to process data as efficiently as expected, causing other slots to finish quickly with 0 bytes.
 
 ### 分区和并发 maintain partition
 
@@ -1916,6 +1919,67 @@ stream.addSink(new KeyedFileSink("/path/to/output"));
 
 #### Partition the whole dataStream in flink at the start of source and maintain the partition till sink
 https://stackoverflow.com/questions/62303722/partition-the-whole-datastream-in-flink-at-the-start-of-source-and-maintain-the#/
+
+#### 数据库并行读取 only one slot is actively processing data and the others quickly finish with 0 bytes
+
+代码片段
+```
+DataStream<Row> streamSource = env.createInput(createInputFormat(url,username,password,tablename));
+DataStream<String> streamJsonString = streamSource.map(row -> (String) row.getField(0));
+DataStream<ObjectNode> streamJson = streamJsonString.map(string -> (ObjectNode) JsonUtil.fromJson(string));
+
+streamJson.addSink(new RedisAutoKeyExpirationSink<>(new SampleExtractor(), config));
+
+env.setParallelism(3);
+
+public static JDBCInputFormat createInputFormat(String url, String username, String password, String tablename) {
+
+        return JDBCInputFormat.buildJDBCInputFormat()
+                .setDrivername("org.postgresql.Driver")
+                .setDBUrl(url)
+                .setUsername(username)
+                .setPassword(password)
+                .setQuery(String.format("SELECT CAST(info AS TEXT) FROM %s ORDER BY id;", tablename))
+                .setRowTypeInfo(new RowTypeInfo(BasicTypeInfo.STRING_TYPE_INFO))
+                .setFetchSize(100)
+                .finish();
+    }
+```
+在flink dashboard发现运行时图像显示并行度虽然是3，但是2个快速结束（0 bytes）实际只有一个在跑
+
+openai：
+
+If you set the parallelism of your Flink job to 5 and notice that only one slot is actively processing data while the other four slots quickly finish with 0 bytes, there could be a few reasons for this behavior:
+
++ Data Distribution: The data fetched from the database may not be evenly distributed among the parallel instances of the JDBC source. If the data distribution is skewed, one instance may fetch significantly more data than the others, leading to uneven processing.
++ Parallelism Mismatch: The parallelism of the JDBC source may not match the parallelism of downstream operators. Even if you set the parallelism of your Flink job to 5, if the JDBC source has a lower parallelism or if it fetches data serially, only one instance of the source will be actively fetching data while the others remain idle.
++ Resource Constraints: If the actively processing slot is starved of resources (CPU, memory, etc.), it may not be able to process data as efficiently as expected, causing other slots to finish quickly with 0 bytes.
+
+显然是第一种情况，仔细琢磨了下，上面代码实际上用的是datastream，jdbc读取出的数据转成JDBCInputFormat作为输入，  
+有意思的是查看datastream api文档，JDBC是作为sink，MongoDB才有原生的source支持（在官方例子中可以看到可以直接设置partition分区类型）
+[JDBC (sink)](https://nightlies.apache.org/flink/flink-docs-release-1.19/docs/connectors/datastream/mongodb/)
+[MongoDB (source/sink)](https://nightlies.apache.org/flink/flink-docs-release-1.19/docs/connectors/datastream/mongodb/)
+
+所以大概是datastream对jdbc支持的一般，所以虽然设置并行度为3，只有一个线程连接数据库读取数据，其他两个线程空转，
+
+可能的解决办法：
+对接数据库采用flink tableAPI的默认BinaryHashPartitioner分区策略 https://nightlies.apache.org/flink/flink-docs-master/docs/dev/table/tableapi/#/ ，然后下游转成datastream重分区
+Converting between DataStream and Table 
+https://nightlies.apache.org/flink/flink-docs-master/docs/dev/table/data_stream_api/#/
+
+partitionby()
+https://blog.csdn.net/dinghua_xuexi/article/details/107759503#/
+https://zhuanlan.zhihu.com/p/139101137#/
+https://www.cnblogs.com/Springmoon-venn/p/16540664.html#/
+
+解决方法二：
+使用DataStream也行，不过出了设置并行度还需要设置NumericBetweenParametersProvider
+https://blog.csdn.net/SVDJASFHIAU/article/details/119416169#/
+
+解决方法三：
+又发现了 [cdc connector](https://nightlies.apache.org/flink/flink-cdc-docs-release-3.0/docs/connectors/cdc-connectors/overview/#/)
+里面明确标明了哪些支持 Parallel Read，所以cdc是flink官方提供的一种更强大的连接方式
+
 
 --
 flink自定义函数加线程锁 https://juejin.cn/s/flink%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0%E5%8A%A0%E7%BA%BF%E7%A8%8B%E9%94%81
