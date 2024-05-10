@@ -266,6 +266,8 @@ select t1.id, min(amt) keep (DENSE_RANK FIRST ORDER BY datecreated desc) as amou
 from money_transferlog t1
 group by t1.id
 
+## 复制
+ORACLE 几种同步灾备手段（OGG，ADG，DSG，高级复制，流复制，logmnr）
 ## 3.troubleshooting
 
 ?# :ORA-01861: literal does not match format string

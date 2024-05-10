@@ -63,7 +63,7 @@ is responsible for managing the execution of a single JobGraph. Multiple jobs ca
   A Flink Job is the runtime representation of a logical graph (also often called dataflow graph) that is created and submitted by calling execute() in a Flink Application.
   一个Job代表一个可以独立提交给Flink执行的作业，我们向JobManager提交任务的时候就是以Job为单位的，只不过一份代码里可以包含多个Job（每个Job对应一个类的main函数）
   Example:
-  ![](/docs/docs_image/software/bigdata/flink/flink_wordcount.png)
+  ![https://medium.com/@tirthshah100/word-count-in-apache-hadoop-mapreduce-c6ee8e737fb9#/](/docs/docs_image/software/bigdata/flink/flink_wordcount.png)
 
 ##### **JobGraph / Logical Graph**
   A logical graph is a directed graph where the nodes are Operators and the edges define input/output-relationships of the operators and correspond to data streams or data sets. A logical graph is created by submitting jobs from a Flink Application.
@@ -354,6 +354,7 @@ p=5
 中文解读：[Apache Flink——任务（Tasks）和任务槽（Task Slots）](https://www.jianshu.com/p/62fa262736b9)
 [Flink: fail fast if job parallelism is larger than the total number of slots](https://stackoverflow.com/questions/57732800/flink-fail-fast-if-job-parallelism-is-larger-than-the-total-number-of-slots)
 [Re: Is there any way to set the parallelism of operators like group by, join?](https://lists.apache.org/thread/yt9kd8lhgjvc6fcw4wozwl6nmbfhzsxz)
+
 ##### **operator chaining**
     An Operator Chain consists of two or more consecutive Operators without any repartitioning in between. Operators within the same Operator Chain forward records to each other directly without going through serialization or Flink’s network stack.
     The sample dataflow in the figure below is executed with five subtasks, and hence with five parallel threads:
@@ -530,6 +531,8 @@ Application state is a first-class citizen in Flink. You can see that by looking
 $ ./bin/flink list
 
 ./bin/flink run -p 2 ./examples/*WordCount-java*.jar
+
+post http://localhost:8081/jars/${jarId}/run
 ```
 #### JobManager 
 	JobManager is the name of the central work coordination component of Flink. It has implementations for different resource providers, which differ on high-availability, resource allocation behavior and supported job submission modes.
@@ -1587,9 +1590,6 @@ Gelly is a library for scalable graph processing and analysis. Gelly is implemen
 ### Exmaples:
 Flink State管理和使用 https://juejin.cn/post/7194847015677722681#heading-2
 
-分区 数据重分布： keyby rebalance rescale shuffle brodcast https://blog.csdn.net/qq_42596142/article/details/103727918
-https://blog.csdn.net/qq_37555071/article/details/122415430
-
 ## 6. Operations
 
 ### Run Your Applications Non-Stop 24/7
@@ -1657,7 +1657,7 @@ dashboard: localhost:8081
 jars: 
 
 http://localhost:8081/jars
-
+http://localhost:8081/jars/${jarId}/run
 http://localhost:8081/v1/config
 http://localhost:8081/v1/jobmanager/config
 http://localhost:8081/v1/jobmanager/logs
@@ -1756,6 +1756,166 @@ Caused by: java.util.concurrent.TimeoutException
 ### Task distribution in Apache Flink
 https://stackoverflow.com/questions/34773379/task-distribution-in-apache-flink
 
+###  only one slot is actively processing data and the others quickly finish with 0 bytes
+
+If you set the parallelism of your Flink job to 5 and notice that only one slot is actively processing data while the other four slots quickly finish with 0 bytes, there could be a few reasons for this behavior:
+
++ Data Distribution: The data fetched from the database may not be evenly distributed among the parallel instances of the JDBC source. If the data distribution is skewed, one instance may fetch significantly more data than the others, leading to uneven processing.
++ Parallelism Mismatch: The parallelism of the JDBC source may not match the parallelism of downstream operators. Even if you set the parallelism of your Flink job to 5, if the JDBC source has a lower parallelism or if it fetches data serially, only one instance of the source will be actively fetching data while the others remain idle.
++ Resource Constraints: If the actively processing slot is starved of resources (CPU, memory, etc.), it may not be able to process data as efficiently as expected, causing other slots to finish quickly with 0 bytes.
+
+### 分区和并发 maintain partition
+
+#### 分区 数据重分布
+
+算子数据传递的两种方式:
++ One-to-one：数据不需要重新分布，上游SubTask生产的数据与下游SubTask受到的数据完全一致，数据不需要重分区，也就是数据不需要经过IO，比如下图中source->map的数据传递形式就是One-to-One方式。常见的map、fliter、flatMap等算子的SubTask的数据传递都是one-to-one的对应关系。类似于spark中的窄依赖。
++ Redistributing：数据需要通过shuffle过程重新分区，需要经过IO，比如上图中的map->keyBy。创建的keyBy、broadcast、rebalance、shuffle等算子的SubTask的数据传递都是Redistributing方式，但它们具体数据传递方式是不同的。类似于spark中的宽依赖。
+
+根据partitioner的分类来进行分析，主要分为四种大类型，即RoundRobinChannelSelector、StreamPartitioner、DataSkewChannelSelector、OutputEmitter四种
+https://cloud.tencent.com/developer/article/1863680#/
+
+Flink 9种分区策略：
++ GlobalPartitioner 数据发到下游算子的第一个实例
+  `dataStream.global()`
++ ShufflePartitioner 数据随机分发到下游算子
+  `dataStream.shuffle()`
++ RebalancePartitioner 数据循环发送到下游的实例
+  ```
+  dataStream.setParallelism(2);
+
+  dataStreamAfter.setParallelism(3);
+
+  dataStream.rebalance()
+  ```
++ BroadcastPartitioner 输出到下游算子的每个实例中
+  `dataStream.broadcast()`
++ ForwardPartitioner 上下游算子并行度一致
+  `dataStream.forward()`
+  对于ForwardPartitioner，必须保证上下游算子并行度一致，否则会抛出异常。
++ KeyGroupStreamPartitioner 按Key的Hash值输出到下游算子
+  Key分区策略根据元素Key的Hash值输出到下游算子指定的实例。keyBy()算子底层正是使用的该分区策略，底层最终会调用KeyGroupStreamPartitioner的selectChannel()方法，计算每个Key对应的通道索引（通道编号，可理解为分区编号），根据通道索引将Key发送到下游相应的分区中。
+  总的来说，Flink底层计算通道索引（分区编号）的流程如下：
+  计算Key的HashCode值。
+  将Key的HashCode值进行特殊的Hash处理，即MathUtils.murmurHash(keyHash)，返回一个非负哈希码。
+  将非负哈希码除以最大并行度取余数，得到keyGroupId，即Key组索引。
+  使用公式keyGroupId×parallelism/maxParallelism得到分区编号。parallelism为当前算子的并行度，即通道数量；maxParallelism为系统默认支持的最大并行度，即128。
++ RescalePartitioner 根据上下游算子的并行度，循环输出到下游算子
+  `dataStream.rescale()` 
++ BinaryHashPartitioner 对 BinaryRowData 这种数据进行hash分区
+  该分区策略位于 Flink的Table API的org.apache.flink.table.runtime.partitioner包中，是一种针对BinaryRowData的哈希分区器。BinaryRowData是RowData的实现，可以显著减少Java对象的序列化／反序列化。RowData用于表示结构化数据类型，运行时通过Table API或SQL管道传递的所有顶级记录都是RowData的实例
++ CustomPartitionerWrapper 用户自定义分区器
+
+https://blog.csdn.net/qq_42596142/article/details/103727918
+https://blog.csdn.net/qq_37555071/article/details/122415430
+https://www.51cto.com/article/782165.html
+
+测试代码
+```
+public class PartitionerTest {
+    public static void main(String[] args) throws Exception {
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        env.setParallelism(3);
+        DataStream<Integer> dataStream = env.fromElements(1, 2, 3, 4, 5, 6);
+        //1.分区策略前的操作
+        //输出dataStream每个元素及所属的子任务编号
+        dataStream.map(new RichMapFunction<Integer, Object>() {
+            @Override
+            public Object map(Integer value) throws Exception {
+                System.out.println(String.format("元素值: %s, 分区策略前，子任务编号: %s", value,
+                        getRuntimeContext().getIndexOfThisSubtask()));
+                return value;
+            }
+        });
+        //2.设置分区策略
+        //设置DataStream向下游发送数据时使用的策略
+        DataStream<Integer> dataStreamAfter = dataStream.broadcast();
+        //3.分区策略后的操作
+        dataStreamAfter.map(new RichMapFunction<Integer, Object>() {
+            @Override
+            public Object map(Integer value) throws Exception {
+                System.out.println(String.format("元素值: %s, 分区策略后，子任务编号: %s", value,
+                        getRuntimeContext().getIndexOfThisSubtask()));
+                return value;
+            }
+        }).print();
+        env.execute("PartitionerTest Job");
+    }
+}
+```
+#### rescale 有无状态
+https://flink.apache.org/2017/07/04/a-deep-dive-into-rescalable-state-in-apache-flink/#/
+
+#### kafka source issue
+https://stackoverflow.com/questions/70096166/parallelism-in-flink-kafka-source-causes-nothing-to-execute#/
+
+
+#### sink Can Apache Flink write to files that are named based on a key?
+That is not possible ouf-of-the-box. However, you can implement an own output format 
+
+https://stackoverflow.com/questions/39276290/can-apache-flink-write-to-files-that-are-named-based-on-a-key#/
+
+Apache Flink can write to files with names based on a key. This functionality is typically achieved using Flink's KeyedProcessFunction or KeyedCoProcessFunction in conjunction with the ProcessFunction API.
+
+Here's a general approach you can take:
+
+KeyedStream: Start with a KeyedStream using the keyBy() method to partition your stream by a specific key.
+ProcessFunction: Use a ProcessFunction or KeyedProcessFunction to process each element in the stream. Within this function, you can implement the logic to write to files based on the key.
+File Output: Utilize Flink's OutputFileConfig or custom file sink implementations to control the file writing process. You can specify the file name based on the key within the ProcessFunction.
+
+```
+DataStream<MyEvent> stream = ... // your event stream
+DataStream<MyEvent> keyedStream = stream.keyBy(event -> event.getKey());
+
+keyedStream.process(new KeyedProcessFunction<KeyType, MyEvent, Void>() {
+    @Override
+    public void processElement(MyEvent event, Context ctx, Collector<Void> out) throws Exception {
+        // Write event to file named based on event.getKey()
+        String fileName = "file_" + event.getKey() + ".txt";
+        String content = event.toString(); // Convert event to string or desired format
+        // Write content to file with fileName
+        // Example: Files.write(Paths.get(fileName), content.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+    }
+});
+
+```
+OR
+```
+import org.apache.flink.api.common.serialization.SimpleStringEncoder;
+import org.apache.flink.core.fs.FileSystem;
+import org.apache.flink.streaming.api.functions.sink.filesystem.StreamingFileSink;
+import org.apache.flink.streaming.api.functions.sink.filesystem.bucketassigners.SimpleVersionedStringSerializer;
+import org.apache.flink.streaming.api.functions.sink.filesystem.bucketassigners.StringElementBucketAssigner;
+import org.apache.flink.streaming.api.functions.sink.filesystem.rollingpolicies.DefaultRollingPolicy;
+import org.apache.flink.streaming.api.functions.sink.filesystem.rollingpolicies.RollingPolicy;
+
+public class KeyedFileSink extends RichSinkFunction<MyEvent> {
+
+    private String basePath;
+
+    public KeyedFileSink(String basePath) {
+        this.basePath = basePath;
+    }
+
+    @Override
+    public void invoke(MyEvent event, Context context) throws Exception {
+        String key = event.getKey();
+        String fileName = basePath + "/file_" + key + ".txt";
+        String content = event.toString(); // Convert event to string or desired format
+
+        // Write content to file with fileName
+        // Example: Files.write(Paths.get(fileName), content.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+    }
+}
+
+.....
+DataStream<MyEvent> stream = ... // your event stream
+stream.addSink(new KeyedFileSink("/path/to/output"));
+
+```
+
+#### Partition the whole dataStream in flink at the start of source and maintain the partition till sink
+https://stackoverflow.com/questions/62303722/partition-the-whole-datastream-in-flink-at-the-start-of-source-and-maintain-the#/
 
 --
 flink自定义函数加线程锁 https://juejin.cn/s/flink%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0%E5%8A%A0%E7%BA%BF%E7%A8%8B%E9%94%81

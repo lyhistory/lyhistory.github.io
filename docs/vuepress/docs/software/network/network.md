@@ -486,6 +486,7 @@ LLDP（链路层发现协议）是定义在802.1ab中的一个二层协议，接
 ### 2.2 网络层的协议测试工具
 
 #### **ICMP协议**：ping，tracert
+tcping fping hping psping paping
 
 如果是使用ipv6，加 -6
 

@@ -703,9 +703,19 @@ return result;
 }
 ```
 
+async await
+https://stackoverflow.com/questions/17250047/how-is-async-with-await-different-from-a-synchronous-call#/
+
 ### IO的高并发发展
 参考 [BIO/NIO/多路复用/NETTY](/software/buildingblock/nio_epoll.md)
 [100万级连接，爱奇艺WebSocket网关如何架构](https://mp.weixin.qq.com/s/H3HPpW2w88v0tDCbQIh7CA)
+
+### 状态机
+同步状态机 异步状态机
+https://blog.the-pans.com/state-machine-and-sync/#/
+https://www.volcengine.com/theme/9743656-C-7-1#/
+
+https://www.volcengine.com/theme/8113445-R-7-1#/
 ## 3.系统和框架层面的并发限制
 
 比如linux句柄数 执行ulimit –n检查文件句柄数为1024，将该数值改为10240

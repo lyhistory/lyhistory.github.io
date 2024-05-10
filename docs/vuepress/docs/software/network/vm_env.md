@@ -73,7 +73,7 @@ xwindows http://x.cygwin.com/docs/ug/setup.html
 ssh https://docs.oracle.com/cd/E24628_01/install.121/e22624/preinstall_req_cygwin_ssh.htm#EMBSC150
 
 **SCP:**
-	scp /cygdrive/c/publish/PageHitExporter.py peter.liu@10.22.103.105:~/
+	scp /cygdrive/c/publish/PageHitExporter.py test@xx.x.x.x:~/
 	Winscp
 
 

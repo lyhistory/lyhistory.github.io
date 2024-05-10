@@ -13,6 +13,17 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 如果关掉了shell终端，，依附的所有子进程都会退出；
 加上&号可以避免这种情况，原理是将命令挂在systemd系统守护进程名下，其他办法还有nohup或者开tmux或者screen，并且加&可以让shell进程不再阻塞，从而继续响应新命令；
 
+how to find whether a script run as a nohup finished or not?
++ method 1:
+  put `echo $$ > /var/run/myscript.pid` at the top of your script:
+  to check if it's still running: ps -p `cat /var/run/myscript.pid`
++ method 2:
+  After running `nohup script.sh &`
+  store the PID into a variable. $! is the PID of the last background process. `HISPID=$!`
+  Then you can check if it's there with ps or kill:
+  `ps -p $HISPID`
+  `kill -0 $HISPID`
+
 set -x 可以显示shell在执行什么程序
 
 当使用 sudo 时，系统会使用 /etc/sudoers 这个文件中规定的该用户的权限和环境变量

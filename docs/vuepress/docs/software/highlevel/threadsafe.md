@@ -109,6 +109,27 @@ b)存在数据依赖关系的不允许重排序
 
 ## 内存模型与竞争资源
 
+到底什么是内存模型呢？看到有两种不同的观点：
+
+A：内存模型是用来描述编程语言在支持多线程编程中对共享内存访问的顺序。
+B：内存模型的本质是指在单线程情况下CPU指令在多大程度上发生指令重排(Reorder) [1]。
+
+实际上A，B两种说法都是正确的，只不过是在尝试从不同的角度去说明memory model的概念。不过个人认为，内存模型表达为“内存顺序模型”可能更加贴切一点。
+一个良好的memory model定义包含3个方面：
+
+Atomic Operations
+Partial order of operations
+Visable effects of operations
+
+这里要强调的是：
+
+我们这里所说的内存模型和CPU的体系结构、编译器实现和编程语言规范（ C/C++和Java等不同的编程语言都有定义内存模型相关规范。）3个层面都有关系。
+
++ jmm
++ C++11引入memory order的意义在于：在语言层提供了一个与运行平台无关和编译器无关的标准库， 让我们可以在high level languange层面实现对多处理器对共享内存的交互式控制。 https://juejin.cn/post/7350089511291289615
+
+https://www.youtube.com/watch?v=Sa08x_NMZIg
+
 ![](/docs/docs_image/software/threadsafe/threadsafe01.png)
 
 不同的系统内存缓存模型可能不同，甚至有的没有缓存，https://developpaper.com/what-exactly-does-volatile-solve/
@@ -124,6 +145,9 @@ synchronized 是独占锁/排他锁，而volatile不是排他的，根据下面�
 JMM即java内存模型规范是个抽象概念，本质上跟上面所描述的cpu缓存模型是类似的，当然有其标准如[JSR 133规范](https://jcp.org/en/jsr/detail?id=133)
 
 高并发下JMM的指令重排(volatile可以禁用指令重排)
+
+指令重排 memory reorder instruction reorder
+编译期重排 运行期重排
 
 ## 锁机制解读
 
