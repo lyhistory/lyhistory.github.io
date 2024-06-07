@@ -1,8 +1,14 @@
 ## Kafka Client Compatibility
+Bidirectional Client Compatibility is now supported, you don't need to worry about the compatibility matrix anymore, for KIP-35 enabled clients, any version are good, KIP-35 is released from Broker protocol - 0.10.0, Java clients - 0.10.2
+https://stackoverflow.com/questions/55691662/determine-the-kafka-client-compatibility-with-kafka-broker#/
+
+https://cwiki.apache.org/confluence/display/KAFKA/KIP-35+-+Retrieving+protocol+version#/
 
 https://spring.io/projects/spring-kafka
 org.springframework.kafka org.apache.kafka
 https://www.cnblogs.com/wangb0402/p/6187796.html
+
+
 
 ## Versions
 

@@ -1418,6 +1418,12 @@ $function$
 
 ```
 
+## 7.Troubleshooting
+?# can't start postgres
+
+postmaster[22235]: 2024-05-25 14:48:24.000 +08 [22235] FATAL:  data directory "/test/data" has invalid permissions
+postmaster[22235]: 2024-05-25 14:48:24.000 +08 [22235] DETAIL:  Permissions should be u=rwx (0700) or u=rwx,g=rx (0750).
+
 refer:
 
 https://www.tutorialspoint.com/postgresql/index.htm

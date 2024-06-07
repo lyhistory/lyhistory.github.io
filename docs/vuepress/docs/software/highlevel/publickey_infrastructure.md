@@ -466,6 +466,15 @@ https://www.sslshopper.com/article-how-to-create-a-self-signed-certificate-in-ii
 https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning
 
 主要是指app开发，对于浏览器来说由于历史原因 HKPK 已经被淘汰；
+
+具体是在 ssl handshake过程中加入：
+The client (such as a mobile app) establishes an SSL/TLS connection with the server.
+The server sends its public key, which is used to encrypt the data exchanged between the client and the server.
+The client verifies the server’s identity by checking the server’s digital certificate issued by a trusted Certificate Authority (CA).
+With SSL pinning, the client also checks that the server’s public key matches the hard-coded public key into the client’s code or configuration. If the public keys match, the connection is allowed to proceed.
+If the server’s public key does not match the pinned key, the client assumes that a MITM attack is underway and terminates the connection. This prevents any communication from being intercepted and tampered with.
+If the client needs to update the pinned public key, the app must be updated with a new pinned key.
+
 注意：不要直接pin certificate，否则certificate更新会很麻烦要同时更新app，可以pin public key（更新证书的时候保持public key不变）或者pin上一层CA的证书：
 it is recommended to place the pin on the intermediate certificate of the CA that issued the server certificate, to ease certificates renewals and rotations.
 

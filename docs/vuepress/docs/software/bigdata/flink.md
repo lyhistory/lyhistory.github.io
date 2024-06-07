@@ -1956,7 +1956,7 @@ If you set the parallelism of your Flink job to 5 and notice that only one slot 
 + Resource Constraints: If the actively processing slot is starved of resources (CPU, memory, etc.), it may not be able to process data as efficiently as expected, causing other slots to finish quickly with 0 bytes.
 
 显然是第一种情况，仔细琢磨了下，上面代码实际上用的是datastream，jdbc读取出的数据转成JDBCInputFormat作为输入，  
-有意思的是查看datastream api文档，JDBC是作为sink，MongoDB才有原生的source支持（在官方例子中可以看到可以直接设置partition分区类型）
+有意思的是查看[datastream api文档](https://nightlies.apache.org/flink/flink-docs-release-1.19/docs/connectors/datastream/overview/#/)，JDBC是作为sink，MongoDB才有原生的source支持（在官方例子中可以看到可以直接设置partition分区类型）
 [JDBC (sink)](https://nightlies.apache.org/flink/flink-docs-release-1.19/docs/connectors/datastream/mongodb/)
 [MongoDB (source/sink)](https://nightlies.apache.org/flink/flink-docs-release-1.19/docs/connectors/datastream/mongodb/)
 
@@ -1977,9 +1977,11 @@ https://www.cnblogs.com/Springmoon-venn/p/16540664.html#/
 https://blog.csdn.net/SVDJASFHIAU/article/details/119416169#/
 
 解决方法三：
-又发现了 [cdc connector](https://nightlies.apache.org/flink/flink-cdc-docs-release-3.0/docs/connectors/cdc-connectors/overview/#/)
+又发现了 [cdc connector](https://nightlies.apache.org/flink/flink-cdc-docs-stable/#/)
 里面明确标明了哪些支持 Parallel Read，所以cdc是flink官方提供的一种更强大的连接方式
 
+#### backpressure
+https://flink.apache.org/2019/06/05/a-deep-dive-into-flinks-network-stack
 
 --
 flink自定义函数加线程锁 https://juejin.cn/s/flink%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0%E5%8A%A0%E7%BA%BF%E7%A8%8B%E9%94%81
@@ -1988,6 +1990,7 @@ flink自定义函数加线程锁 https://juejin.cn/s/flink%E8%87%AA%E5%AE%9A%E4%
 使用Flink前必知的10个『陷阱』
 https://dbaplus.cn/news-73-3769-1.html
 
+https://stackoverflow.com/questions/63668191/flink-workflow-parallelism-with-custom-source#/
 
 ---
 Refer:

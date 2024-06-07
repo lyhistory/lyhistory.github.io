@@ -42,6 +42,11 @@ Project Explorer-> Projects Presentation (select hierarchy)
   Note: install jdk(Adoptium's Temurin version:[jdk21tls](https://objects.githubusercontent.com/github-production-release-asset-2e65be/602574963/7688eb32-8658-4c55-9752-5950bc55a06e?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240413%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240413T075318Z&X-Amz-Expires=300&X-Amz-Signature=53fbc7594384f8d586a9d45770a37fb83eaec807ebf128d3bb436e15259a5b9b&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=602574963&response-content-disposition=attachment%3B%20filename%3DOpenJDK21U-jdk_x64_windows_hotspot_21.0.2_13.msi&response-content-type=application%2Foctet-stream) ) following instructions in welcome page (self installed openjdk may not work!)
   ctrl+shift+p: java: config classpath
 
+  ?#The type java.lang.invoke.StringConcatFactory cannot be resolved. It is indirectly referenced from required .class filesJava 
+  SOLUTION: clean cache(click to expand the problem and then click fix)
+  ?# VS Code terminal doesn't recognize PATH variables
+  SOLUTION: restart vscode to pick up the env variables updates, if still not work, then print %PATH% to investigate
+
 #### 1.2.1 Code Style
 
 统一代码以及配置文件的缩进，以eclipse为例：
