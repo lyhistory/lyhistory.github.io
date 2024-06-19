@@ -210,6 +210,9 @@ WantedBy=multi-user.target
 
 ```
 
+系统自动启动程序：
+sudo systemctl list-unit-files --type=service --state=enabled --all
+
 ## 文件系统
 umask 指定在建立文件时预设的权限掩码
 
@@ -228,7 +231,8 @@ type -a bash
 chsh -s /usr/bin/bash
 restart
 ```
-
+"-bash: !": event not found"
+! is a special character to bash, it is used to refer to previous commands;
 ### env
 
 The files in /etc directory sets the respective shell configuration  for all the users on the system. This is normally set up by the system  administrator. 

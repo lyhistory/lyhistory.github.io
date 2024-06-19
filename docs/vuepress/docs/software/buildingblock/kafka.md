@@ -2049,6 +2049,8 @@ client端日志
 
     https://blog.csdn.net/u011637069/article/details/72899915
 
+    得物面试：消息0丢失，Kafka如何实现
+    https://mp.weixin.qq.com/s/nk4_mlOlvyQDA5qlkd-aLg
   + other detail
 
     partition message ordering:
@@ -2108,6 +2110,7 @@ client端日志
 
   Oracle provides native connectivity to Kafka from its Enterprise  Service Bus product called OSB (Oracle Service Bus) which allows  developers to leverage OSB built-in mediation capabilities to implement  staged data pipelines.
 
+  https://www.bilibili.com/read/cv24831491/#/
 
 + products
   https://cwiki.apache.org/confluence/display/KAFKA/Ecosystem

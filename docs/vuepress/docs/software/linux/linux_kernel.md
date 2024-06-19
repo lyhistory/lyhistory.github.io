@@ -43,6 +43,14 @@ uname -a
 ```
 linux show architecture `uname -m`
 
+x86-64 (also called x86_64, x64, or amd64) is the 64-bit CPU architecture that is used in Intel and AMD processors. It is an extension to the 32-bit x86 (i386) architecture. The x86-64 architecture is used in most CPUs for home computers and servers in use today.
+
+intel 与 amd 厂商使用的是基于X86架构的CPU，X86架构使用的是复杂指令集即指令一步到位，而arm使用的是精简指令集即指令由几个指令完成。
+X86架构性能好，但是耗电多、电压高，主要用于桌面合服务器。
+然而ARM架构耗电少、电压低，但是单核性能不如X86，主要用于移动设备。
+近几年来，X86架构发展迟缓，ARM架构进步显著，已经从移动设备向桌面电脑和服务器进军了，如m1芯片。
+
+
 ## cpu
 
 概念:

@@ -1664,7 +1664,141 @@ http://localhost:8081/v1/config
 http://localhost:8081/v1/jobmanager/config
 http://localhost:8081/v1/jobmanager/logs
 
-## 6. 深度解析
+## 6. Monitoring
+
+### Customized
+```
+package common;
+
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+
+import org.apache.flink.api.common.functions.RichMapFunction;
+import org.apache.flink.configuration.Configuration;
+import org.apache.flink.metrics.Counter;
+import org.apache.flink.metrics.Gauge;
+import org.apache.flink.metrics.MetricGroup;
+import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.node.ObjectNode;
+
+public class MetricMapper extends RichMapFunction<ObjectNode, ObjectNode> {
+    private transient Counter totalcounter;
+    private transient Counter mycounter;
+    private transient long currenttimestamp;
+    private SimpleDateFormat  dateFormatter = new SimpleDateFormat ("yyyyMMdd HH:mm:ss.S");
+    @Override
+    public void open(Configuration config) {
+      MetricGroup metricGroup=getRuntimeContext().getMetricGroup();
+      this.totalcounter =  metricGroup.addGroup("nss").counter("totalcount");
+      this.mycounter =  metricGroup.addGroup("nss").counter("mycounter");
+      metricGroup.addGroup("nss").gauge("currenttime", new Gauge<Long>() {
+        @Override
+        public Long getValue() {
+          return currenttimestamp;
+        }
+      });
+    }
+  
+    @Override
+    public ObjectNode map(ObjectNode value) throws Exception {
+      if(value.has("MsgType")){
+        switch(value.get("MsgType").asText()){
+          case Constant.TYPE1:
+            this.ordercounter.inc();
+            this.totalcounter.inc();
+            if(value.has("time")){
+              this.currenttimestamp=dateFormatter.parse(value.get("time").asText()).getTime();
+            }
+            break;
+
+        }
+      }
+      return value;
+    }
+  }
+  
+```
+### View Metric
+
+#### flink webui
+
+job => overview => click on the job=> scroll to the end => metric
+
+#### Rest Monitoring API
+In order to query the metric via Flink's REST interface you need to first figure some ids out:
+
+flink_cluster: Address of your flink cluster
+port: Port of REST endpoint
+jobId: Id of your job which can be figured out via http://flink_cluster:port/jobs
+vertexId: Id of the vertex to query. This can be figured out via http://flink_cluster:port/jobs/:jobId which gives you the job information with all vertexIds
+subtaskindex: Index of the parallel subtask to query
+http://flink_cluster:port/jobs/:jobId/vertices/:vertexId/subtasks/:subtaskindex/metrics?get=MyCustomMetric
+
+```
+http://X.X.X.X:8081//jobs/44dd9736f9f84bd6a545f7fea059245e/#/
+
+{"jid":"44dd9736f9f84bd6a545f7fea059245e","name":"TEST Postgres (TEST20240607) > Flink > Redis","isStoppable":false,"state":"FINISHED","start-time":1717989261618,"end-time":1717989299500,"duration":37882,"now":1717990389537,"timestamps":{"INITIALIZING":1717989261618,"CANCELLING":0,"CANCELED":0,"FAILING":0,"FAILED":0,"RESTARTING":0,"SUSPENDED":0,"FINISHED":1717989299500,"RUNNING":1717989261639,"RECONCILING":0,"CREATED":1717989261630},
+"vertices":[{"id":"cbc357ccb763df2852fee8c4fc7d55f2","name":"Source: Custom Source -> Map -> Map -> Map -> Sink: Unnamed","parallelism":1,"status":"FINISHED","start-time":1717989261685,"end-time":1717989299499,"duration":37814,"tasks":{"DEPLOYING":0,"CANCELED":0,"RECONCILING":0,"FINISHED":1,"SCHEDULED":0,"RUNNING":0,"FAILED":0,"CREATED":0,"CANCELING":0},"metrics":{"read-bytes":0,"read-bytes-complete":true,"write-bytes":0,"write-bytes-complete":true,"read-records":0,"read-records-complete":true,"write-records":0,"write-records-complete":true}}],"status-counts":{"DEPLOYING":0,"CANCELED":0,"RECONCILING":0,"FINISHED":1,"SCHEDULED":0,"RUNNING":0,"FAILED":0,"CREATED":0,"CANCELING":0},"plan":{"jid":"44dd9736f9f84bd6a545f7fea059245e","name":"TEST Postgres (TEST20240607) > Flink > Redis","nodes":[{"id":"cbc357ccb763df2852fee8c4fc7d55f2","parallelism":1,"operator":"","operator_strategy":"","description":"Source: Custom Source -&gt; Map -&gt; Map -&gt; Map -&gt; Sink: Unnamed","optimizer_properties":{}}]}}
+
+http://X.X.X.X:8081//jobs/44dd9736f9f84bd6a545f7fea059245e/vertices/cbc357ccb763df2852fee8c4fc7d55f2/#/
+{"id":"cbc357ccb763df2852fee8c4fc7d55f2","name":"Source: Custom Source -> Map -> Map -> Map -> Sink: Unnamed","parallelism":1,"now":1717990526875,
+"subtasks":[{"subtask":0,"status":"FINISHED","attempt":0,"host":"sghc5-stag-nss-beta-v01","start-time":1717989261685,"end-time":1717989299499,"duration":37814,"metrics":{"read-bytes":0,"read-bytes-complete":true,"write-bytes":0,"write-bytes-complete":true,"read-records":0,"read-records-complete":true,"write-records":0,"write-records-complete":true},"taskmanager-id":"X.X.X.X:43268-200172","start_time":1717989261685}]}
+
+http://X.X.X.X:8081//jobs/44dd9736f9f84bd6a545f7fea059245e/vertices/cbc357ccb763df2852fee8c4fc7d55f2/subtasks/0/metrics#/
+[{"id":"Shuffle.Netty.Output.Buffers.outPoolUsage"},{"id":"checkpointStartDelayNanos"},{"id":"numBytesInLocal"},{"id":"Shuffle.Netty.Input.numBytesInRemotePerSecond"},{"id":"numBytesInRemotePerSecond"},{"id":"Source__Custom_Source.numRecordsInPerSecond"},{"id":"numBytesOut"},{"id":"Map.MyGauge"},{"id":"numBytesIn"},{"id":"Map.numRecordsInPerSecond"},{"id":"numBuffersOut"},{"id":"Shuffle.Netty.Input.numBuffersInLocal"},{"id":"numBuffersInRemotePerSecond"},{"id":"numBytesOutPerSecond"},{"id":"Map.myCounter"},{"id":"buffers.outputQueueLength"},{"id":"numBuffersOutPerSecond"},{"id":"Shuffle.Netty.Input.Buffers.inputExclusiveBuffersUsage"},{"id":"isBackPressured"},{"id":"Sink__Unnamed.numRecordsIn"},{"id":"numBytesInLocalPerSecond"},{"id":"Map.currentOutputWatermark"},{"id":"Source__Custom_Source.numSplitsProcessed"},{"id":"Sink__Unnamed.numRecordsOut"},{"id":"buffers.inPoolUsage"},{"id":"idleTimeMsPerSecond"},{"id":"Shuffle.Netty.Input.numBytesInLocalPerSecond"},{"id":"numBytesInRemote"},{"id":"Source__Custom_Source.numRecordsOut"},{"id":"Map.numRecordsOutPerSecond"},{"id":"Shuffle.Netty.Input.numBytesInLocal"},{"id":"Shuffle.Netty.Input.numBytesInRemote"},{"id":"Shuffle.Netty.Output.Buffers.outputQueueLength"},{"id":"Sink__Unnamed.currentInputWatermark"},{"id":"buffers.inputFloatingBuffersUsage"},{"id":"Shuffle.Netty.Input.Buffers.inPoolUsage"},{"id":"Map.currentInputWatermark"},{"id":"numBuffersInLocalPerSecond"},{"id":"numRecordsOut"},{"id":"numBuffersInLocal"},{"id":"Source__Custom_Source.currentOutputWatermark"},{"id":"numBuffersInRemote"},{"id":"Map.numRecordsOut"},{"id":"buffers.inputQueueLength"},{"id":"Source__Custom_Source.numRecordsOutPerSecond"},{"id":"Sink__Unnamed.numRecordsInPerSecond"},{"id":"numRecordsIn"},{"id":"Shuffle.Netty.Input.numBuffersInRemote"},{"id":"numBytesInPerSecond"},{"id":"Shuffle.Netty.Input.Buffers.inputQueueLength"},{"id":"Source__Custom_Source.numRecordsIn"},{"id":"buffers.inputExclusiveBuffersUsage"},{"id":"Map.numRecordsIn"},{"id":"Shuffle.Netty.Input.numBuffersInRemotePerSecond"},{"id":"numRecordsOutPerSecond"},{"id":"buffers.outPoolUsage"},{"id":"Sink__Unnamed.numRecordsOutPerSecond"},{"id":"Shuffle.Netty.Input.numBuffersInLocalPerSecond"},{"id":"numRecordsInPerSecond"},{"id":"Shuffle.Netty.Input.Buffers.inputFloatingBuffersUsage"},{"id":"Sink__Unnamed.currentOutputWatermark"}]
+
+http://X.X.X.X:8081//jobs/44dd9736f9f84bd6a545f7fea059245e/vertices/cbc357ccb763df2852fee8c4fc7d55f2/subtasks/0/metrics?get=Map.myCounter#/
+[{"id":"Map.myCounter","value":"63509"}]
+```
+
+### Metric Reporters
+ https://nightlies.apache.org/flink/flink-docs-release-1.13/docs/deployment/metric_reporters/#/
+#### Prometheus
+前面都很顺利，到这里就有问题了！
+https://github.com/mbode/flink-prometheus-example#/
+https://juejin.cn/post/7037379343248523295#/
+
+首先是要配置flink的plugin metric-Prometheus reporter
+
+有人说还需要把flink-metrics-prometheus-1.12.0.jar放到 flink/lib下面，貌似不必要
+$ find / -name "flink-metrics-prometheus*"
+/apex/ngs/svl/flink/flink-1.12.0/plugins/metrics-prometheus/flink-metrics-prometheus-1.12.0.jar
+
+刚开始根据文档这么配置
+```
+metrics.reporter.prom.class: org.apache.flink.metrics.prometheus.PrometheusReporter
+
+$ grep -r "prometheus" ../log/*
+../log/flink-flink-standalonesession-0-sghc5-stag-nss-beta-v01.apex.com.log:INFO  [] - Loading configuration property: metrics.reporter.prom.class, org.apache.flink.metrics.prometheus.PrometheusReporter
+../log/flink-flink-standalonesession-0-sghc5-stag-nss-beta-v01.apex.com.log:2024-06-11 17:08:31,267 INFO  org.apache.flink.configuration.GlobalConfiguration           [] - Loading configuration property: metrics.reporter.prom.class, org.apache.flink.metrics.prometheus.PrometheusReporter
+../log/flink-flink-standalonesession-0-sghc5-stag-nss-beta-v01.apex.com.log:2024-06-11 17:08:32,620 INFO  org.apache.flink.metrics.prometheus.PrometheusReporter       [] - Started PrometheusReporter HTTP server on port 9249.
+```
+打开localhost:9249就会发现只有flink_jobmanager的信息，没有flink_taskmanager，
+应该改成如下配置，port给个区间，至少大于1
+
+```
+# JobManager and TaskManager expose /metrics REST API for Prometheus to scrape.
+metrics.reporters: prom
+metrics.reporter.prom.class: org.apache.flink.metrics.prometheus.PrometheusReporter
+metrics.reporter.prom.port: 9250-9260
+```
+查看监听端口就会发现至少有两个 9250 9251，
+一般 localhost:9250里面就是flink_jobmanager，localhost:9251就是flink_taskmanager和自定义的metric
+
+接着配置Prometheus，就可以接入grafana了（注意一旦接入Prometheus，自定义的Metric在上面的localhost:9251中可能就消失了，至少低版本比如flink1.12是这样）
+```
+scrape_configs:
+- job_name: 'flink'
+  static_configs:
+  - targets: ['flink-host:9249]
+```
+
+乐于助人贴：https://stackoverflow.com/questions/74386011/not-able-to-see-flink-custom-metrics-to-prometheus/78622484#/78622484
+
+
+
+
+
+## 7. 深度解析
 深入了解 Apache Flink 的网络协议栈
 https://tianchi.aliyun.com/forum/post/61976#/
 
