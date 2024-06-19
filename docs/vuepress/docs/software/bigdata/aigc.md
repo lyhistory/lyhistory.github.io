@@ -2,11 +2,17 @@
 [AI News](https://aisecret.us/)
 
 ## 基础
-### 本地部署 
+### 私人部署 
 
 https://github.com/jmorganca/ollama
 
 https://mp.weixin.qq.com/s/iwsSKjGloNe7SCM4-5nzDA
+
+#### NextJS+Vercel
+https://sdk.vercel.ai/
+
+https://www.youtube.com/watch?v=5_JT9H8j1Us
+https://github.com/a-bit-of-saas/examples/tree/main/next/chat-gpt?ref=ethanmick.com
 
 #### FastGPT
 

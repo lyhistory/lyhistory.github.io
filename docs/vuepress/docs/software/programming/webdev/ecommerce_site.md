@@ -12,7 +12,7 @@ passwd ecommerce
 ```
 $> tar -xvf  mysql-5.7.41-1.el7.x86_64.rpm-bundle.tar
 $> sudo yum localinstall mysql-community-{server,client,client-plugins,icu-data-files,common,libs}-*
-systemctl start mysqld
+systemctl start mysqld (貌似不需要systemctl enable mysqld就会自动重启)
 $> sudo grep 'temporary password' /var/log/mysqld.log
 $> mysql -uroot -p<TEMP PASSWORD>
 mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'New Password';
@@ -120,6 +120,8 @@ sudo nginx
 curl -I 127.0.0.1
 HTTP/1.1 200 OK
 Server: nginx/1.23.4
+
+systemctl enable nginx
 ```
 
 ### 3.3 Download and Extract
@@ -174,9 +176,9 @@ server {
 
 nginx -s reload
 
-firewall-cmd --add-service=http
+firewall-cmd --add-service=http --permanent
 
-firewall-cmd --add-service=https
+firewall-cmd --add-service=https --permanent
 
 sudo chown -R nginx: example
 #chmod 755 example
