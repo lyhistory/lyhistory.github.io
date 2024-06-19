@@ -1,4 +1,4 @@
-
+Google Analytics breaks down traffic sources into categories like organic search, direct, referral, and social traffic. Google Search Console focuses primarily on organic search traffic from Google but can also provide some referral traffic data.
 
 ## Google Analytics 4
 
