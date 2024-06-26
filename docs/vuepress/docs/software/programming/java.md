@@ -153,6 +153,20 @@ Install new software/ marketpalce 如果报错
 https://github.com/lyhistory/java-learn?organization=lyhistory&organization=lyhistory
 https://github.com/lyhistory/learn_coding
 
+Java HashMap doesn't use MD5 for calculating hash codes primarily because MD5 (Message Digest Algorithm 5) is not suitable for generating hash codes in the context of a HashMap. Here are the key reasons why:
+
+Size of Output: MD5 produces a 128-bit hash value (16 bytes). In contrast, Java HashMap uses a 32-bit integer to store hash codes (int). Storing a 128-bit hash value for each key would be inefficient in terms of memory usage and processing overhead.
+
+Performance: MD5 is designed for cryptographic purposes, where collision resistance and security are critical. It involves more computational overhead compared to simpler hash functions designed for rapid computation of non-cryptographic hash codes, which is what HashMap requires.
+
+Collision Handling: While MD5 is designed to minimize collisions in cryptographic contexts, HashMap uses hash codes to distribute keys across buckets in a hash table. The hash function used by HashMap should ideally distribute hash codes evenly across the available buckets to minimize collisions specific to the data structure's needs.
+
+Hash Distribution: Java's HashMap relies on the distribution of hash codes to evenly distribute entries across buckets in the hash table. MD5's distribution might not be optimal for this purpose, potentially leading to clustering of hash collisions in specific buckets rather than distributing them evenly.
+
+Instead of MD5, Java HashMap uses a combination of shifting and bitwise XOR operations to compute the hash code for keys. This approach is designed to provide a good distribution of hash codes across the range of possible int values and is optimized for performance and memory efficiency within the context of a hash table implementation.
+
+In summary, while MD5 is a robust cryptographic hash function, it is not suitable for the specific requirements of a HashMap in terms of size, performance, collision handling, and distribution of hash codes across buckets in a hash table.
+
 ### 2.1 Misconception
 Java always passes arguments by value, NOT by reference.
 https://stackoverflow.com/questions/40480/is-java-pass-by-reference-or-pass-by-value/12429953#12429953

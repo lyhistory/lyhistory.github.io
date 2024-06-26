@@ -237,6 +237,8 @@ getClass().getResourceAsStream("/filename");
 https://stackoverflow.com/questions/20389255/reading-a-resource-file-from-within-jar
 
 ### GC
+https://www.baeldung.com/java-verbose-gc#/
+https://juejin.cn/post/6999865723145158670#/
 #### The Serial Collector
 The serial collector is the simplest one, and the one you probably won’t be using, as it’s mainly designed for single-threaded environments (e.g. 32 bit or Windows) and for small heaps. This collector freezes all application threads whenever it’s working, which disqualifies it for all intents and purposes from being used in a server environment.
 
