@@ -28,6 +28,8 @@ javap java.class 可以把汇编指令/机器码反编译成jvm指令/字节码�
 
 ## jvm运行原理
 
+类型：hotspot vm /  OpenJ9 
+
 JVM是一份本地化的程序，本质上是可执行的文件-`/jre/bin/server/jvm.dll`，是静态的概念。
 
 程序运行起来成为进程，是动态的概念。java程序是跑在JVM上的，严格来讲，是跑在JVM实例上的，一个JVM实例其实就是JVM跑起来的进程，二者合起来称之为一个JAVA进程。各个JVM实例之间是相互隔离的。
@@ -239,7 +241,9 @@ https://stackoverflow.com/questions/20389255/reading-a-resource-file-from-within
 ### GC
 https://www.baeldung.com/java-verbose-gc#/
 https://juejin.cn/post/6999865723145158670#/
-#### The Serial Collector
+https://www.baeldung.com/jvm-garbage-collectors#/
+
+#### The Serial Collector(Stop-the-world)
 The serial collector is the simplest one, and the one you probably won’t be using, as it’s mainly designed for single-threaded environments (e.g. 32 bit or Windows) and for small heaps. This collector freezes all application threads whenever it’s working, which disqualifies it for all intents and purposes from being used in a server environment.
 
 How to use it: You can use it by turning on the -XX:+UseSerialGC JVM argument
@@ -264,15 +268,20 @@ This strategy reduced the chance of the heap being depleted before background th
 Large heaps have been a fairly contentious area over the past few years with many developers moving away from the single JVM per machine model to more micro-service, componentized architectures with multiple JVMs per machine. This has been driven by many factors including the desire to isolate different application parts, simplifying deployment and avoiding the cost which would usually come with reloading application classes into memory (something which has actually been improved in Java 8).
 
 Even so, one of the biggest drivers to do this when it comes to the JVM stems from the desire to avoid those long “stop the world” pauses (which can take many seconds in a large collection) that occur with large heaps. This has also been accelerated by container technologies like Docker that enable you to deploy multiple apps on the same physical machine with relative ease.
-### 5.3 JVM Crash debug
 
-jdk工具, openjdk跟Oracle jdk不太一样：
-openjdk使用的是hotspot vm，Oracle jdk有jvisualvm工具
+### JVM Crash debug
 
-jps
-jstat
-jmap
-jstack
+注意：jdk版本要跟工具一致（不过我成功的用oracle jdk的visualvm解析了openjdk的hprof文件）
+
++ 文件类型：
+   - core dump: core.xxx
+   - heap dump: pid.hprof
++ 常用工具：
+   - jvisualvm
+   - jps
+   - jstat
+   - jmap
+   - jstack
 https://www.jianshu.com/p/c6a04c88900a
 https://docs.oracle.com/javase/8/docs/technotes/guides/troubleshoot/tooldescr016.html
 

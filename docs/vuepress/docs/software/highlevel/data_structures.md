@@ -21,6 +21,14 @@ A data structure is a specialized format for organizing, processing, retrieving 
         - Hashtable
 ## 底层实现
 
+哈希表和数组区别#
+哈希表可以理解为数组的扩展，数组一般是使用索引下标来寻址。
+
+如果关键字key的索引范围较小且是数字，我们可以使用数组来存放。
+如果关键字key的范围比较大，用数组的话，申请的内存空间就比较大了。这样内存空间利用率就比较低效。
+所以人们开始想办法，能不能有一种方法，把它映射到特定的区域，这个“方法”就是哈希函数。
+https://www.cnblogs.com/jiujuan/p/11109509.html#/
+
 HashMap在jdk1.8之前结构为数组+链表，缺点就是哈希函数很难使元素百分百的均匀分布，这会产生一种极端的可能，就是大量的元素存在一个桶里，此时的复杂时间复杂度为O（n），极大的放慢了计算速率。 在jdk1.8之后，HashMap采用数组加链表或是红黑树的形式， 1、在HashMap添加元素时，按照数组+链表形式添加，当桶中的数量大于8时，链表会转换成红黑树的形式。 2、删除元素、扩容时，同上，数量大于8时，也是采用红黑树形式存贮，但是在数量较少时，即数量小于6时，会将红黑树转换回链表。 3、遍历、查找时，使用红黑树，他的时间复杂度O（log n），便于性能的提高。
 https://www.cnblogs.com/FondWang/p/11910355.html#/
 https://maimai.cn/article/detail?fid=1717181084&efid=l2yoT-ML3549-wpM3P0Rkg#/

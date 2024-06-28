@@ -1795,10 +1795,91 @@ scrape_configs:
 乐于助人贴：https://stackoverflow.com/questions/74386011/not-able-to-see-flink-custom-metrics-to-prometheus/78622484#/78622484
 
 
-
-
+### backpressure 背压
+[A Deep-Dive into Flink's Network Stack](https://flink.apache.org/2019/06/05/a-deep-dive-into-flinks-network-stack)
+[How to identify the source of backpressure?](https://flink.apache.org/2021/07/07/how-to-identify-the-source-of-backpressure/#/)
 
 ## 7. 深度解析
+
+### 数据重分布分区和并发 maintain partition
+
+算子数据传递的两种方式:
++ One-to-one：数据不需要重新分布，上游SubTask生产的数据与下游SubTask受到的数据完全一致，数据不需要重分区，也就是数据不需要经过IO，比如下图中source->map的数据传递形式就是One-to-One方式。常见的map、fliter、flatMap等算子的SubTask的数据传递都是one-to-one的对应关系。类似于spark中的窄依赖。
++ Redistributing：数据需要通过shuffle过程重新分区，需要经过IO，比如上图中的map->keyBy。创建的keyBy、broadcast、rebalance、shuffle等算子的SubTask的数据传递都是Redistributing方式，但它们具体数据传递方式是不同的。类似于spark中的宽依赖。
+
+根据partitioner的分类来进行分析，主要分为四种大类型，即RoundRobinChannelSelector、StreamPartitioner、DataSkewChannelSelector、OutputEmitter四种
+https://cloud.tencent.com/developer/article/1863680#/
+
+Flink 9种分区策略：
++ GlobalPartitioner 数据发到下游算子的第一个实例
+  `dataStream.global()`
++ ShufflePartitioner 数据随机分发到下游算子
+  `dataStream.shuffle()`
++ RebalancePartitioner 数据循环发送到下游的实例
+  ```
+  dataStream.setParallelism(2);
+
+  dataStreamAfter.setParallelism(3);
+
+  dataStream.rebalance()
+  ```
++ BroadcastPartitioner 输出到下游算子的每个实例中
+  `dataStream.broadcast()`
++ ForwardPartitioner 上下游算子并行度一致
+  `dataStream.forward()`
+  对于ForwardPartitioner，必须保证上下游算子并行度一致，否则会抛出异常。
++ KeyGroupStreamPartitioner 按Key的Hash值输出到下游算子
+  Key分区策略根据元素Key的Hash值输出到下游算子指定的实例。keyBy()算子底层正是使用的该分区策略，底层最终会调用KeyGroupStreamPartitioner的selectChannel()方法，计算每个Key对应的通道索引（通道编号，可理解为分区编号），根据通道索引将Key发送到下游相应的分区中。
+  总的来说，Flink底层计算通道索引（分区编号）的流程如下：
+  计算Key的HashCode值。
+  将Key的HashCode值进行特殊的Hash处理，即MathUtils.murmurHash(keyHash)，返回一个非负哈希码。
+  将非负哈希码除以最大并行度取余数，得到keyGroupId，即Key组索引。
+  使用公式keyGroupId×parallelism/maxParallelism得到分区编号。parallelism为当前算子的并行度，即通道数量；maxParallelism为系统默认支持的最大并行度，即128。
++ RescalePartitioner 根据上下游算子的并行度，循环输出到下游算子
+  `dataStream.rescale()` 
++ BinaryHashPartitioner 对 BinaryRowData 这种数据进行hash分区
+  该分区策略位于 Flink的Table API的org.apache.flink.table.runtime.partitioner包中，是一种针对BinaryRowData的哈希分区器。BinaryRowData是RowData的实现，可以显著减少Java对象的序列化／反序列化。RowData用于表示结构化数据类型，运行时通过Table API或SQL管道传递的所有顶级记录都是RowData的实例
++ CustomPartitionerWrapper 用户自定义分区器
+
+https://blog.csdn.net/qq_42596142/article/details/103727918
+https://blog.csdn.net/qq_37555071/article/details/122415430
+https://www.51cto.com/article/782165.html
+
+测试代码
+```
+public class PartitionerTest {
+    public static void main(String[] args) throws Exception {
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        env.setParallelism(3);
+        DataStream<Integer> dataStream = env.fromElements(1, 2, 3, 4, 5, 6);
+        //1.分区策略前的操作
+        //输出dataStream每个元素及所属的子任务编号
+        dataStream.map(new RichMapFunction<Integer, Object>() {
+            @Override
+            public Object map(Integer value) throws Exception {
+                System.out.println(String.format("元素值: %s, 分区策略前，子任务编号: %s", value,
+                        getRuntimeContext().getIndexOfThisSubtask()));
+                return value;
+            }
+        });
+        //2.设置分区策略
+        //设置DataStream向下游发送数据时使用的策略
+        DataStream<Integer> dataStreamAfter = dataStream.broadcast();
+        //3.分区策略后的操作
+        dataStreamAfter.map(new RichMapFunction<Integer, Object>() {
+            @Override
+            public Object map(Integer value) throws Exception {
+                System.out.println(String.format("元素值: %s, 分区策略后，子任务编号: %s", value,
+                        getRuntimeContext().getIndexOfThisSubtask()));
+                return value;
+            }
+        }).print();
+        env.execute("PartitionerTest Job");
+    }
+}
+```
+
+### others
 深入了解 Apache Flink 的网络协议栈
 https://tianchi.aliyun.com/forum/post/61976#/
 
@@ -1901,85 +1982,7 @@ https://stackoverflow.com/questions/34773379/task-distribution-in-apache-flink
 cluster.evenly-spread-out-slots: true
 
 
-### 分区和并发 maintain partition
-
-#### 分区 数据重分布
-
-算子数据传递的两种方式:
-+ One-to-one：数据不需要重新分布，上游SubTask生产的数据与下游SubTask受到的数据完全一致，数据不需要重分区，也就是数据不需要经过IO，比如下图中source->map的数据传递形式就是One-to-One方式。常见的map、fliter、flatMap等算子的SubTask的数据传递都是one-to-one的对应关系。类似于spark中的窄依赖。
-+ Redistributing：数据需要通过shuffle过程重新分区，需要经过IO，比如上图中的map->keyBy。创建的keyBy、broadcast、rebalance、shuffle等算子的SubTask的数据传递都是Redistributing方式，但它们具体数据传递方式是不同的。类似于spark中的宽依赖。
-
-根据partitioner的分类来进行分析，主要分为四种大类型，即RoundRobinChannelSelector、StreamPartitioner、DataSkewChannelSelector、OutputEmitter四种
-https://cloud.tencent.com/developer/article/1863680#/
-
-Flink 9种分区策略：
-+ GlobalPartitioner 数据发到下游算子的第一个实例
-  `dataStream.global()`
-+ ShufflePartitioner 数据随机分发到下游算子
-  `dataStream.shuffle()`
-+ RebalancePartitioner 数据循环发送到下游的实例
-  ```
-  dataStream.setParallelism(2);
-
-  dataStreamAfter.setParallelism(3);
-
-  dataStream.rebalance()
-  ```
-+ BroadcastPartitioner 输出到下游算子的每个实例中
-  `dataStream.broadcast()`
-+ ForwardPartitioner 上下游算子并行度一致
-  `dataStream.forward()`
-  对于ForwardPartitioner，必须保证上下游算子并行度一致，否则会抛出异常。
-+ KeyGroupStreamPartitioner 按Key的Hash值输出到下游算子
-  Key分区策略根据元素Key的Hash值输出到下游算子指定的实例。keyBy()算子底层正是使用的该分区策略，底层最终会调用KeyGroupStreamPartitioner的selectChannel()方法，计算每个Key对应的通道索引（通道编号，可理解为分区编号），根据通道索引将Key发送到下游相应的分区中。
-  总的来说，Flink底层计算通道索引（分区编号）的流程如下：
-  计算Key的HashCode值。
-  将Key的HashCode值进行特殊的Hash处理，即MathUtils.murmurHash(keyHash)，返回一个非负哈希码。
-  将非负哈希码除以最大并行度取余数，得到keyGroupId，即Key组索引。
-  使用公式keyGroupId×parallelism/maxParallelism得到分区编号。parallelism为当前算子的并行度，即通道数量；maxParallelism为系统默认支持的最大并行度，即128。
-+ RescalePartitioner 根据上下游算子的并行度，循环输出到下游算子
-  `dataStream.rescale()` 
-+ BinaryHashPartitioner 对 BinaryRowData 这种数据进行hash分区
-  该分区策略位于 Flink的Table API的org.apache.flink.table.runtime.partitioner包中，是一种针对BinaryRowData的哈希分区器。BinaryRowData是RowData的实现，可以显著减少Java对象的序列化／反序列化。RowData用于表示结构化数据类型，运行时通过Table API或SQL管道传递的所有顶级记录都是RowData的实例
-+ CustomPartitionerWrapper 用户自定义分区器
-
-https://blog.csdn.net/qq_42596142/article/details/103727918
-https://blog.csdn.net/qq_37555071/article/details/122415430
-https://www.51cto.com/article/782165.html
-
-测试代码
-```
-public class PartitionerTest {
-    public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        env.setParallelism(3);
-        DataStream<Integer> dataStream = env.fromElements(1, 2, 3, 4, 5, 6);
-        //1.分区策略前的操作
-        //输出dataStream每个元素及所属的子任务编号
-        dataStream.map(new RichMapFunction<Integer, Object>() {
-            @Override
-            public Object map(Integer value) throws Exception {
-                System.out.println(String.format("元素值: %s, 分区策略前，子任务编号: %s", value,
-                        getRuntimeContext().getIndexOfThisSubtask()));
-                return value;
-            }
-        });
-        //2.设置分区策略
-        //设置DataStream向下游发送数据时使用的策略
-        DataStream<Integer> dataStreamAfter = dataStream.broadcast();
-        //3.分区策略后的操作
-        dataStreamAfter.map(new RichMapFunction<Integer, Object>() {
-            @Override
-            public Object map(Integer value) throws Exception {
-                System.out.println(String.format("元素值: %s, 分区策略后，子任务编号: %s", value,
-                        getRuntimeContext().getIndexOfThisSubtask()));
-                return value;
-            }
-        }).print();
-        env.execute("PartitionerTest Job");
-    }
-}
-```
+### 分区问题
 #### rescale 有无状态
 https://flink.apache.org/2017/07/04/a-deep-dive-into-rescalable-state-in-apache-flink/#/
 
@@ -2112,12 +2115,89 @@ https://blog.csdn.net/SVDJASFHIAU/article/details/119416169#/
 
 解决方法三：
 又发现了 [cdc connector](https://nightlies.apache.org/flink/flink-cdc-docs-stable/#/)
-里面明确标明了哪些支持 Parallel Read，所以cdc是flink官方提供的一种更强大的连接方式
+[里面明确标明了哪些支持 Parallel Read](https://nightlies.apache.org/flink/flink-cdc-docs-release-3.1/docs/connectors/flink-sources/overview/#/)，所以cdc是flink官方提供的一种更强大的连接方式
 
-#### backpressure
-https://flink.apache.org/2019/06/05/a-deep-dive-into-flinks-network-stack
 
---
+
+### 千万级数据断崖式变慢
+
+**现象描述：**
+
+仍然是前面提到的代码片段，taskmanger jvm memory 5G，taskmanager内存，只不过：
+1. 为了监控增加了自定义的 MetricMapper 统计数据量和处理进度
+2. 并行度设置为1
+```
+DataStream<Row> streamSource = env.createInput(createInputFormat(url,username,password,tablename));
+DataStream<String> streamJsonString = streamSource.map(row -> (String) row.getField(0));
+DataStream<ObjectNode> streamJson = streamJsonString.map(new MetricMapper()).map(string -> (ObjectNode) JsonUtil.fromJson(string));
+.....
+```
+
+**肉眼观察：**
+300万数据量以下很快跑完,500万跑到快结束的时候迅速变慢
+
+**metric指标：**
+
+flink_taskmanager_job_task_operator_numRecordsOutPerSecond迅速变小；
+flink_taskmanager_Status_JVM_Memory_Heap_Max-flink_taskmanager_Status_JVM_Memory_Heap_Used 负责跑job的taskmanager只剩下几十M的容量，然后开始疯狂的gc，而且是从年轻代的minor gc升级为老年代的full gc
+
+delta(flink_taskmanager_Status_JVM_GarbageCollector_G1_Young_Generation_Time[30s])
+delta(flink_taskmanager_Status_JVM_GarbageCollector_G1_Old_Generation_Count[30s])
+
+**接着尝试监控flink jvm 发生full gc前 生成内存快照文件：**
+[修改flink.conf](https://nightlies.apache.org/flink/flink-docs-release-1.12/deployment/config.html#jvm-and-logging-options):
+```
+#(Java options to start the JVM of the TaskManager with.)
+env.java.opts.taskmanager: -XX:+HeapDumpBeforeFullGC -XX:HeapDumpPath=保存dump文件的文件绝对路径 	
+```
+
+**visualvm分析**
+发现 Dominators by Retained Size(The retained size for an object is the quantity of memory this objects preserves from garbage collection):
+org.apache.flink.streaming.api.functions.source.InputFormatSourceFunction#1 [GC root - Java frame]
+
+**flink分析**
+既然已经定位到了问题所在
+```
+DataStream<Row> streamSource = env.createInput(createInputFormat(url,username,password,tablename));
+=>
+public static JDBCInputFormat createInputFormat(String url, String username, String password, String tablename) {
+
+        return JDBCInputFormat.buildJDBCInputFormat()
+                .setDrivername("org.postgresql.Driver")
+                .setDBUrl(url)
+                .setUsername(username)
+                .setPassword(password)
+                .setQuery(String.format("SELECT CAST(info AS TEXT) FROM %s ORDER BY id;", tablename))
+                .setRowTypeInfo(new RowTypeInfo(BasicTypeInfo.STRING_TYPE_INFO))
+                .setFetchSize(100)
+                .finish();
+    }
+private <OUT> DataStreamSource<OUT> createInput(InputFormat<OUT, ?> inputFormat,
+													TypeInformation<OUT> typeInfo,
+													String sourceName) {
+
+		InputFormatSourceFunction<OUT> function = new InputFormatSourceFunction<>(inputFormat, typeInfo);
+		return addSource(function, sourceName, typeInfo);
+	}
+```
+所以flink的这个source不断的从db捞数据，一次100条，但是永不释放，全存在了resultset里面，这样早晚也得爆啊，为什么flink这么设计？肯定是我们用错了，仔细的对应查找了flink的data stream api，结果就是没找到这个InputFormatSourceFunction，版本flink1.12，终于在dataset api下面才找到，并且看到warning：
+> Starting with Flink 1.12 the DataSet API has been soft deprecated.
+
+> We recommend that you use the Table API and SQL to run efficient batch pipelines in a fully unified API. Table API is well integrated with common batch connectors and catalogs.
+
+> Alternatively, you can also use the DataStream API with BATCH execution mode. The linked section also outlines cases where it makes sense to use the DataSet API but those cases will become rarer as development progresses and the DataSet API will eventually be removed. Please also see FLIP-131 for background information on this decision.
+
+[原因是 too many api？](https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=158866741#/),不过感觉这里跟我们的问题相关：
++ DataSet API: All-or-nothing output: a job either produces data or it doesn't
++ DataStream API: "Incremental" output, based on watermarks or checkpoints
+
+总之现在的问题变成：
+1.为什么 dataset api读取数据库的数据一直会在resultset里面hold住所有的数据，不管下游是否处理了都一点不释放？
+2.那么datastream api和table api 呢
+
+https://flink.apache.org/2017/03/30/continuous-queries-on-dynamic-tables/#/
+
+---
 flink自定义函数加线程锁 https://juejin.cn/s/flink%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0%E5%8A%A0%E7%BA%BF%E7%A8%8B%E9%94%81
 
 
