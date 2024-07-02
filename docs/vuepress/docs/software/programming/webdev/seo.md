@@ -25,6 +25,8 @@ https://www.youtube.com/playlist?list=PLvR62X1KDi6VJ40EWFZr_On2We8B4EpG0
 
 ### Google Search Console
 
+https://search.google.com/search-console
+
 如何清晰的知道我们网站在搜索引擎的表现：Google Search Console 使用入门讲解 
 https://mp.weixin.qq.com/s/bETdv9x1Ytozi49Nfm-l6g
 
