@@ -260,6 +260,7 @@ Another downside to this algorithm in comparison to the parallel collector is th
 
 #### The G1 Collector
 [Garbage-First Garbage Collector](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/g1_gc.html)
+[Garbage First Garbage Collector Tuning](https://www.oracle.com/technical-resources/articles/java/g1gc.html#/)
 
 The Garbage first collector (G1) introduced in JDK 7 update 4 was designed to better support heaps larger than 4GB. The G1 collector utilizes multiple background threads to scan through the heap that it divides into regions, spanning from 1MB to 32MB (depending on the size of your heap). G1 collector is geared towards scanning those regions that contain the most garbage objects first, giving it its name (Garbage first). This collector is turned on using the –XX:+UseG1GC flag.
 

@@ -1704,7 +1704,7 @@ http://localhost:8081/v1/jobmanager/config
 http://localhost:8081/v1/jobmanager/logs
 
 ## 6. Monitoring
-
+[Monitoring Apache Flink Applications 101](https://flink.apache.org/2019/02/21/monitoring-apache-flink-applications-101/#/)
 ### Customized
 ```
 package common;
