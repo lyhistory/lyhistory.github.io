@@ -840,6 +840,40 @@ bb483966fa9a7d60c9020a75d19fb2a4d1e8acf0 HOST1:6381@16381 slave b78a3f4b07cc5cf5
 
 ![](./redis_dict1.png)
 
+Each Redis database has two dictionaries. The first one is used for keys with expiry date. It’s redisDb.expires, and values stored there are expiration timestamps. The other is for client values; it’s redisDb.dict.
+
+Each Redis dict has two hash tables. Both are implemented as a plain array; each slot, or bucket, contains a list of elements — in case of several elements’ hashes point at the same array index (this is known as a hash collision). 
+
+In Redis, the concept of "hash slots" refers to how Redis Cluster distributes keys across multiple Redis instances. Here’s a breakdown to clarify:
+
+1. Hash Slots in Redis Cluster:
+
+Redis Cluster uses a concept of hash slots to determine which Redis instance (node) should store each key-value pair.
+There are exactly 16384 hash slots available in Redis Cluster (2^14), numbered from 0 to 16383.
+Each key is hashed to determine which hash slot it belongs to. **Redis then uses this hash slot number to determine the node responsible for storing and handling operations for keys within that slot.**
+
+2. dict vs. dictht:
+
+In the context of Redis internals, a dict (dictionary) is a data structure used within each Redis instance to store keys and values.
+dictht (dictionary hash table) is a specific implementation detail within the dict data structure in Redis.
+The dictht is where the actual hash table resides that maps keys to their corresponding values within a dict.
+
+3. Relationship to Hash Slots:
+
+The number of hash slots (16384) in Redis Cluster does not directly correlate to the size of a dict or dictht in terms of memory or capacity.
+Instead, hash slots are a logical division used for partitioning data across Redis nodes in a cluster setup.
+Each Redis instance (node) manages its own dict, which can grow dynamically as keys and values are added.
+
+4. Size of dict or dictht:
+
+The size of a dict or dictht in Redis depends on several factors:
+The number of entries (keys and values) stored within it.
+The load factor of the hash table (how full it is relative to its capacity).
+Redis dynamically resizes dictht as needed to maintain efficient hash table operations (like rehashing when load factor exceeds a threshold).
+
+In summary, the 16384 hash slots in Redis refer to how keys are distributed across nodes in a Redis Cluster, not to the size of individual dict or dictht structures within each Redis instance. Each Redis instance manages its own dict, and the dictht within it grows and shrinks dynamically based on the number of entries and other factors, but its size isn't directly tied to the number of hash slots in Redis Cluster.
+
+
 ```
 typedef struct dict {
     dictType *type;
@@ -917,7 +951,7 @@ redisobject：
 一个简单的key-value键值对最终会产生4个消耗内存的结构，中间free掉的不考虑：
 
 
-1个dictEntry结构，24字节，负责保存具体的键值对；
+1个dictEntry结构，24字节，负责保存具体的键值对 向上取整为32；(jemalloc 在分配内存时，会根据我们申请的字节数 N，找一个比 N 大，但是最接近 N 的 2 的幂次数作为分配的空间，这样可以减少频繁分配的次数。举个例子。如果你申请 6 字节空间，jemalloc 实际会分配 8 字节空间；如果你申请 24 字节空间，jemalloc 则会分配 32 字节。所以，在我们刚刚说的场景里，dictEntry 结构就占用了 32 字节。)
 1个redisObject结构，16字节，用作val对象；
 1个SDS结构，用作key字符串，占9个字节(free4个字节+len4个字节+字符串末尾”\0”1个字节)；
 1个SDS结构，用作val字符串，占9个字节(free4个字节+len4个字节+字符串末尾”\0”1个字节)

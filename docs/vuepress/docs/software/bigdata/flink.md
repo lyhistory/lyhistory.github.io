@@ -42,7 +42,44 @@ Flink 集群是由 JobManager（JM）、TaskManager（TM）两大组件组成的
     JVM Off heap Memory to run the flink application(means the job manager)[=JVM Metaspace+JVM Overhead] + Total Flink Memory(consumed by the flink application)[=JVM heap + Off heap Memory(direct/native memory)] 
   - [Set up TaskManager Memory](https://nightlies.apache.org/flink/flink-docs-stable/docs/deployment/memory/mem_setup_tm/)
     the TaskManager memory components have a similar but more sophisticated structure compared to the memory model of the JobManager process.
-    Total Process Memory = JVM  Off heap Memory to run the flink application(means the taskmanager)[=JVM Metaspace+JVM Overhead{0.1XtotalProcessMemory}] + Total Flink Memory(consumed by the flink application)[=JVM heap + Off heap Memory[=Managed Memory{0.4XtotalFlinkMemory}+Direct Memory]] 
+
+    Total Process Memory(configed e.g taskmanager.memory.process.size:16G) = 
+      JVM Specific Memory to run the flink application(means the taskmanager) 
+      + 
+      Total Flink Memory(consumed by the flink application) 
+    JVM Specific Memory=
+      JVM Metaspace(taskmanager.memory.jvm-metaspace.size:256M)
+      +
+      JVM Overhead(taskmanager.memory.jvm-overhead.fraction,taskmanager.memory.jvm-overhead.max)
+      JVM Overhead= 0.1\*totalProcessMemory=1.6G>1G=1G
+    Total Flink Memory=
+      JVM Heap{=Framework Heap(taskmanager.memory.framework.heap.size)+Task Heap}
+      +
+      Off-Heap Memory
+    Total Flink Memory=Total Process Memory-JVM Metaspace - JVM Overhead=16G-256M-1G=14.75G
+    Off-Heap Memory=
+      Managed Memory(taskmanager.memory.managed.fraction,taskmanager.memory.managed.size)
+      +
+      Direct Memory
+    _The following workloads use managed memory:_
+      a)  Streaming jobs can use it for RocksDB state backend.
+      b)  Both streaming and batch jobs can use it for sorting, hash tables, caching of intermediate results.
+      c)  Both streaming and batch jobs can use it for executing User Defined Functions in Python processes
+    Direct Memory=
+      Framework Off-heap(taskmanager.memory.framework.off-heap.size)
+      +
+      Task Off-heap(taskmanager.memory.task.off-heap.size)
+      +
+      Network(taskmanager.memory.network.fraction,taskmanager.memory.network.max)
+    Managed Memory=0.4\*totalFlinkMemory=0.4\*14.75=5.9G
+    Network Memory=0.1\*totalFlinkMemory=0.1\*14.75=1.475G>1G=1G
+    Direct Memory=128M+0bytes+1G=1.125G
+    Off-Heap Memory=5.9G+1.125G=7.025G
+    JVM Heap(Framework Heap+Task Heap)=Total Flink Memory-Off-Heap Memory=14.75G-7.025G=7.725G=7.73G
+    Task Heap=JVM Heap-Framework Heap=7.725G-128M=7.6G
+
+    Note: If you want to guarantee that a certain amount of JVM Heap is available for your user code, you can set the task heap memory explicitly (taskmanager.memory.task.heap.size). It will be added to the JVM Heap size and will be dedicated to Flink’s operators running the user code.
+    specify explicitly both task heap and managed memory. It gives more control over the available JVM Heap to Flink’s tasks and its managed memory.
 
 #### 1.1.1 JobManager
 
@@ -97,6 +134,8 @@ is responsible for managing the execution of a single JobGraph. Multiple jobs ca
   ![](/docs/docs_image/software/bigdata/flink/flink_operator_chaining.png)
 
   A task is an abstraction representing a chain of operators that could be executed in a single thread. Something like a keyBy (which causes a network shuffle to partition the stream by some key) or a change in the parallelism of the pipeline will break the chaining and force operators into separate tasks. In the diagram above, the application has three tasks.
+
+  举例：source.map().filter().sink() 如果parallel=1，会看到只有一个subtask 跑在一个slot里面，所有操作都是链接在里面，如果想打破chain，可以使用startNewChain，disableChaining 或者采用分区策略，让上下游的并行度不同
 
   A subtask is one parallel slice of a task. This is the schedulable, runable unit of execution. In the diagram above, the application is to be run with a parallelism of two for the source/map and keyBy/Window/apply tasks, and a parallelism of one for the sink -- resulting in a total of 5 subtasks.
 
@@ -1795,15 +1834,108 @@ scrape_configs:
 乐于助人贴：https://stackoverflow.com/questions/74386011/not-able-to-see-flink-custom-metrics-to-prometheus/78622484#/78622484
 
 
-
-
+### backpressure 背压
+[A Deep-Dive into Flink's Network Stack](https://flink.apache.org/2019/06/05/a-deep-dive-into-flinks-network-stack)
+[How to identify the source of backpressure?](https://flink.apache.org/2021/07/07/how-to-identify-the-source-of-backpressure/#/)
 
 ## 7. 深度解析
+
+### 运行模式和机制
+[Execution Behavior](https://nightlies.apache.org/flink/flink-docs-release-1.12/dev/datastream_execution_mode.html#/)
+
+### 数据重分布分区和并发 maintain partition
+
+算子数据传递的两种方式:
++ One-to-one：数据不需要重新分布，上游SubTask生产的数据与下游SubTask受到的数据完全一致，数据不需要重分区，也就是数据不需要经过IO，比如下图中source->map的数据传递形式就是One-to-One方式。常见的map、fliter、flatMap等算子的SubTask的数据传递都是one-to-one的对应关系。类似于spark中的窄依赖。
++ Redistributing：数据需要通过shuffle过程重新分区，需要经过IO，比如上图中的map->keyBy。创建的keyBy、broadcast、rebalance、shuffle等算子的SubTask的数据传递都是Redistributing方式，但它们具体数据传递方式是不同的。类似于spark中的宽依赖。
+
+根据partitioner的分类来进行分析，主要分为四种大类型，即RoundRobinChannelSelector、StreamPartitioner、DataSkewChannelSelector、OutputEmitter四种
+https://cloud.tencent.com/developer/article/1863680#/
+
+Flink 9种分区策略：
++ GlobalPartitioner 数据发到下游算子的第一个实例
+  `dataStream.global()`
++ ShufflePartitioner 数据随机分发到下游算子
+  `dataStream.shuffle()`
++ RebalancePartitioner 数据循环发送到下游的实例
+  ```
+  dataStream.setParallelism(2);
+
+  dataStreamAfter.setParallelism(3);
+
+  dataStream.rebalance()
+  ```
++ BroadcastPartitioner 输出到下游算子的每个实例中
+  `dataStream.broadcast()`
++ ForwardPartitioner 上下游算子并行度一致
+  `dataStream.forward()`
+  对于ForwardPartitioner，必须保证上下游算子并行度一致，否则会抛出异常。
+  既然如此有什么用？
+  - Minimizing Shuffling Overhead
+    When you have multiple operators in a Flink job connected by data streams, each operator may have a different degree of parallelism. Flink distributes data between operators based on keys or partitioning strategies. However, when you know that the downstream operator logically follows the upstream operator without any need for key-based shuffling or redistribution, you can use forward().
+  - Efficiency in Data Movement
+    By using forward(), Flink avoids unnecessary data serialization, deserialization, and network overhead associated with key-based shuffling. This can lead to improved performance, especially in scenarios where data doesn't need to be redistributed across operators based on keys or partitions.
++ KeyGroupStreamPartitioner 按Key的Hash值输出到下游算子
+  Key分区策略根据元素Key的Hash值输出到下游算子指定的实例。keyBy()算子底层正是使用的该分区策略，底层最终会调用KeyGroupStreamPartitioner的selectChannel()方法，计算每个Key对应的通道索引（通道编号，可理解为分区编号），根据通道索引将Key发送到下游相应的分区中。
+  总的来说，Flink底层计算通道索引（分区编号）的流程如下：
+  计算Key的HashCode值。
+  将Key的HashCode值进行特殊的Hash处理，即MathUtils.murmurHash(keyHash)，返回一个非负哈希码。
+  将非负哈希码除以最大并行度取余数，得到keyGroupId，即Key组索引。
+  使用公式keyGroupId×parallelism/maxParallelism得到分区编号。parallelism为当前算子的并行度，即通道数量；maxParallelism为系统默认支持的最大并行度，即128。
++ RescalePartitioner 根据上下游算子的并行度，循环输出到下游算子
+  `dataStream.rescale()` 
++ BinaryHashPartitioner 对 BinaryRowData 这种数据进行hash分区
+  该分区策略位于 Flink的Table API的org.apache.flink.table.runtime.partitioner包中，是一种针对BinaryRowData的哈希分区器。BinaryRowData是RowData的实现，可以显著减少Java对象的序列化／反序列化。RowData用于表示结构化数据类型，运行时通过Table API或SQL管道传递的所有顶级记录都是RowData的实例
++ CustomPartitionerWrapper 用户自定义分区器
+
+https://blog.csdn.net/qq_42596142/article/details/103727918
+https://blog.csdn.net/qq_37555071/article/details/122415430
+https://www.51cto.com/article/782165.html
+
+测试代码
+```
+public class PartitionerTest {
+    public static void main(String[] args) throws Exception {
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        env.setParallelism(3);
+        DataStream<Integer> dataStream = env.fromElements(1, 2, 3, 4, 5, 6);
+        //1.分区策略前的操作
+        //输出dataStream每个元素及所属的子任务编号
+        dataStream.map(new RichMapFunction<Integer, Object>() {
+            @Override
+            public Object map(Integer value) throws Exception {
+                System.out.println(String.format("元素值: %s, 分区策略前，子任务编号: %s", value,
+                        getRuntimeContext().getIndexOfThisSubtask()));
+                return value;
+            }
+        });
+        //2.设置分区策略
+        //设置DataStream向下游发送数据时使用的策略
+        DataStream<Integer> dataStreamAfter = dataStream.broadcast();
+        //3.分区策略后的操作
+        dataStreamAfter.map(new RichMapFunction<Integer, Object>() {
+            @Override
+            public Object map(Integer value) throws Exception {
+                System.out.println(String.format("元素值: %s, 分区策略后，子任务编号: %s", value,
+                        getRuntimeContext().getIndexOfThisSubtask()));
+                return value;
+            }
+        }).print();
+        env.execute("PartitionerTest Job");
+    }
+}
+```
+
+### others
 深入了解 Apache Flink 的网络协议栈
 https://tianchi.aliyun.com/forum/post/61976#/
 
 Flink 已经拥有了强大的 DataStream/DataSet API，可以基本满足流计算和批计算中的所有需求。为什么还需要 Table & SQL API 呢？
 https://flink-learning.org.cn/article/detail/5133eced98854eff56cc2eaa2150b1e4#/
+
+Continuous Queries on Dynamic Tables
+https://flink.apache.org/2017/03/30/continuous-queries-on-dynamic-tables/#/
+
 ## Troubleshooting
 
 ### flink启动后无法正常关闭
@@ -1901,85 +2033,7 @@ https://stackoverflow.com/questions/34773379/task-distribution-in-apache-flink
 cluster.evenly-spread-out-slots: true
 
 
-### 分区和并发 maintain partition
-
-#### 分区 数据重分布
-
-算子数据传递的两种方式:
-+ One-to-one：数据不需要重新分布，上游SubTask生产的数据与下游SubTask受到的数据完全一致，数据不需要重分区，也就是数据不需要经过IO，比如下图中source->map的数据传递形式就是One-to-One方式。常见的map、fliter、flatMap等算子的SubTask的数据传递都是one-to-one的对应关系。类似于spark中的窄依赖。
-+ Redistributing：数据需要通过shuffle过程重新分区，需要经过IO，比如上图中的map->keyBy。创建的keyBy、broadcast、rebalance、shuffle等算子的SubTask的数据传递都是Redistributing方式，但它们具体数据传递方式是不同的。类似于spark中的宽依赖。
-
-根据partitioner的分类来进行分析，主要分为四种大类型，即RoundRobinChannelSelector、StreamPartitioner、DataSkewChannelSelector、OutputEmitter四种
-https://cloud.tencent.com/developer/article/1863680#/
-
-Flink 9种分区策略：
-+ GlobalPartitioner 数据发到下游算子的第一个实例
-  `dataStream.global()`
-+ ShufflePartitioner 数据随机分发到下游算子
-  `dataStream.shuffle()`
-+ RebalancePartitioner 数据循环发送到下游的实例
-  ```
-  dataStream.setParallelism(2);
-
-  dataStreamAfter.setParallelism(3);
-
-  dataStream.rebalance()
-  ```
-+ BroadcastPartitioner 输出到下游算子的每个实例中
-  `dataStream.broadcast()`
-+ ForwardPartitioner 上下游算子并行度一致
-  `dataStream.forward()`
-  对于ForwardPartitioner，必须保证上下游算子并行度一致，否则会抛出异常。
-+ KeyGroupStreamPartitioner 按Key的Hash值输出到下游算子
-  Key分区策略根据元素Key的Hash值输出到下游算子指定的实例。keyBy()算子底层正是使用的该分区策略，底层最终会调用KeyGroupStreamPartitioner的selectChannel()方法，计算每个Key对应的通道索引（通道编号，可理解为分区编号），根据通道索引将Key发送到下游相应的分区中。
-  总的来说，Flink底层计算通道索引（分区编号）的流程如下：
-  计算Key的HashCode值。
-  将Key的HashCode值进行特殊的Hash处理，即MathUtils.murmurHash(keyHash)，返回一个非负哈希码。
-  将非负哈希码除以最大并行度取余数，得到keyGroupId，即Key组索引。
-  使用公式keyGroupId×parallelism/maxParallelism得到分区编号。parallelism为当前算子的并行度，即通道数量；maxParallelism为系统默认支持的最大并行度，即128。
-+ RescalePartitioner 根据上下游算子的并行度，循环输出到下游算子
-  `dataStream.rescale()` 
-+ BinaryHashPartitioner 对 BinaryRowData 这种数据进行hash分区
-  该分区策略位于 Flink的Table API的org.apache.flink.table.runtime.partitioner包中，是一种针对BinaryRowData的哈希分区器。BinaryRowData是RowData的实现，可以显著减少Java对象的序列化／反序列化。RowData用于表示结构化数据类型，运行时通过Table API或SQL管道传递的所有顶级记录都是RowData的实例
-+ CustomPartitionerWrapper 用户自定义分区器
-
-https://blog.csdn.net/qq_42596142/article/details/103727918
-https://blog.csdn.net/qq_37555071/article/details/122415430
-https://www.51cto.com/article/782165.html
-
-测试代码
-```
-public class PartitionerTest {
-    public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        env.setParallelism(3);
-        DataStream<Integer> dataStream = env.fromElements(1, 2, 3, 4, 5, 6);
-        //1.分区策略前的操作
-        //输出dataStream每个元素及所属的子任务编号
-        dataStream.map(new RichMapFunction<Integer, Object>() {
-            @Override
-            public Object map(Integer value) throws Exception {
-                System.out.println(String.format("元素值: %s, 分区策略前，子任务编号: %s", value,
-                        getRuntimeContext().getIndexOfThisSubtask()));
-                return value;
-            }
-        });
-        //2.设置分区策略
-        //设置DataStream向下游发送数据时使用的策略
-        DataStream<Integer> dataStreamAfter = dataStream.broadcast();
-        //3.分区策略后的操作
-        dataStreamAfter.map(new RichMapFunction<Integer, Object>() {
-            @Override
-            public Object map(Integer value) throws Exception {
-                System.out.println(String.format("元素值: %s, 分区策略后，子任务编号: %s", value,
-                        getRuntimeContext().getIndexOfThisSubtask()));
-                return value;
-            }
-        }).print();
-        env.execute("PartitionerTest Job");
-    }
-}
-```
+### 分区问题
 #### rescale 有无状态
 https://flink.apache.org/2017/07/04/a-deep-dive-into-rescalable-state-in-apache-flink/#/
 
@@ -2081,8 +2135,6 @@ public static JDBCInputFormat createInputFormat(String url, String username, Str
 ```
 在flink dashboard发现运行时图像显示并行度虽然是3，但是2个快速结束（0 bytes）实际只有一个在跑
 
-openai：
-
 If you set the parallelism of your Flink job to 5 and notice that only one slot is actively processing data while the other four slots quickly finish with 0 bytes, there could be a few reasons for this behavior:
 
 + Data Distribution: The data fetched from the database may not be evenly distributed among the parallel instances of the JDBC source. If the data distribution is skewed, one instance may fetch significantly more data than the others, leading to uneven processing.
@@ -2112,12 +2164,348 @@ https://blog.csdn.net/SVDJASFHIAU/article/details/119416169#/
 
 解决方法三：
 又发现了 [cdc connector](https://nightlies.apache.org/flink/flink-cdc-docs-stable/#/)
-里面明确标明了哪些支持 Parallel Read，所以cdc是flink官方提供的一种更强大的连接方式
+[里面明确标明了哪些支持 Parallel Read](https://nightlies.apache.org/flink/flink-cdc-docs-release-3.1/docs/connectors/flink-sources/overview/#/)，所以cdc是flink官方提供的一种更强大的连接方式
 
-#### backpressure
-https://flink.apache.org/2019/06/05/a-deep-dive-into-flinks-network-stack
 
---
+
+### 千万级数据断崖式变慢
+
+**现象描述：**
+
+仍然是前面提到的代码片段，taskmanger jvm memory 5G，taskmanager内存，只不过：
+1. 为了监控增加了自定义的 MetricMapper 统计数据量和处理进度
+2. 并行度设置为1
+```
+DataStream<Row> streamSource = env.createInput(createInputFormat(url,username,password,tablename));
+DataStream<String> streamJsonString = streamSource.map(row -> (String) row.getField(0));
+DataStream<ObjectNode> streamJson = streamJsonString.map(new MetricMapper()).map(string -> (ObjectNode) JsonUtil.fromJson(string));
+.....
+```
+
+**肉眼观察：**
+300万数据量以下很快跑完,500万跑到快结束的时候迅速变慢
+
+**metric指标：**
+
+flink_taskmanager_job_task_operator_numRecordsOutPerSecond迅速变小；
+flink_taskmanager_Status_JVM_Memory_Heap_Max-flink_taskmanager_Status_JVM_Memory_Heap_Used 负责跑job的taskmanager只剩下几十M的容量，然后开始疯狂的gc，而且是从年轻代的minor gc升级为老年代的full gc
+
+delta(flink_taskmanager_Status_JVM_GarbageCollector_G1_Young_Generation_Time[30s])
+delta(flink_taskmanager_Status_JVM_GarbageCollector_G1_Old_Generation_Count[30s])
+
+**接着尝试监控flink jvm 发生full gc前 生成内存快照文件：**
+[修改flink.conf](https://nightlies.apache.org/flink/flink-docs-release-1.12/deployment/config.html#jvm-and-logging-options):
+```
+#(Java options to start the JVM of the TaskManager with.)
+env.java.opts.taskmanager: -XX:+HeapDumpBeforeFullGC -XX:HeapDumpPath=保存dump文件的文件绝对路径 	
+```
+
+**visualvm分析**
+发现 Dominators by Retained Size(The retained size for an object is the quantity of memory this objects preserves from garbage collection):
+下面这个对象实例占用了95%的内存，并且可以清晰的可以看到其中 resultset 从数据库拉回的所有数据的大小和size
+org.apache.flink.streaming.api.functions.source.InputFormatSourceFunction#1 [GC root - Java frame]
+
+**flink分析**
+既然已经定位到了问题所在
+```
+DataStream<Row> streamSource = env.createInput(createInputFormat(url,username,password,tablename));
+=>
+public static JDBCInputFormat createInputFormat(String url, String username, String password, String tablename) {
+
+        return JDBCInputFormat.buildJDBCInputFormat()
+                .setDrivername("org.postgresql.Driver")
+                .setDBUrl(url)
+                .setUsername(username)
+                .setPassword(password)
+                .setQuery(String.format("SELECT CAST(info AS TEXT) FROM %s ORDER BY id;", tablename))
+                .setRowTypeInfo(new RowTypeInfo(BasicTypeInfo.STRING_TYPE_INFO))
+                .setFetchSize(100)
+                .finish();
+    }
+private <OUT> DataStreamSource<OUT> createInput(InputFormat<OUT, ?> inputFormat,
+													TypeInformation<OUT> typeInfo,
+													String sourceName) {
+
+		InputFormatSourceFunction<OUT> function = new InputFormatSourceFunction<>(inputFormat, typeInfo);
+		return addSource(function, sourceName, typeInfo);
+	}
+```
+所以flink的这个source不断的从db捞数据，一次100条，但是永不释放，全存在了resultset里面，这样早晚也得爆啊，为什么flink这么设计？肯定是我们用错了，仔细的对应查找了flink的data stream api，结果就是没找到这个InputFormatSourceFunction，版本flink1.12，终于在dataset api下面才找到，并且看到warning：
+> Starting with Flink 1.12 the DataSet API has been soft deprecated.
+
+> We recommend that you use the Table API and SQL to run efficient batch pipelines in a fully unified API. Table API is well integrated with common batch connectors and catalogs.
+
+> Alternatively, you can also use the DataStream API with BATCH execution mode. The linked section also outlines cases where it makes sense to use the DataSet API but those cases will become rarer as development progresses and the DataSet API will eventually be removed. Please also see FLIP-131 for background information on this decision.
+
+[原因是 too many api？](https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=158866741#/),不过感觉这里跟我们的问题相关：
++ DataSet API: All-or-nothing output: a job either produces data or it doesn't
++ DataStream API: "Incremental" output, based on watermarks or checkpoints
+
+#### 解决方案
+总之现在的问题变成：
+##### 1.为什么 dataset api读取数据库的数据一直会在resultset里面hold住所有的数据，不管下游是否处理了都一点不释放？
+经过测试发现个有意思的现象，如果把setQuery的where条件每次改变，比如自己维护一个id的offset（startid,endid)，这样反而能够正常跑完数据，猜测jdbc每次执行的query不同，所以会垃圾回收前一个query对应的resultset
+
+```
+import org.apache.flink.api.common.functions.RichMapFunction;
+import org.apache.flink.api.java.ExecutionEnvironment;
+import org.apache.flink.api.java.io.jdbc.JDBCInputFormat;
+import org.apache.flink.api.java.tuple.Tuple2;
+import org.apache.flink.api.java.typeutils.RowTypeInfo;
+import org.apache.flink.configuration.Configuration;
+import org.apache.flink.types.Row;
+
+public class FlinkJDBCExample {
+
+    public static void main(String[] args) throws Exception {
+        final ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
+
+        // Configure JDBCInputFormat
+        String driverName = "org.postgresql.Driver";
+        String dbUrl = "jdbc:postgresql://localhost:5432/mydatabase";
+        String queryTemplate = "SELECT id, name FROM my_table WHERE id >= ? AND id < ?";
+        String username = "username";
+        String password = "password";
+        int fetchSize = 100; // Set fetch size
+        int batchSize = 100; // Number of records per batch
+        int startId = 0; // Initial start id
+
+        JDBCInputFormat jdbcInputFormat = JDBCInputFormat.buildJDBCInputFormat()
+                .setDrivername(driverName)
+                .setDBUrl(dbUrl)
+                .setQuery(queryTemplate)
+                .setUsername(username)
+                .setPassword(password)
+                .setRowTypeInfo(new RowTypeInfo(org.apache.flink.api.common.typeinfo.Types.INT, org.apache.flink.api.common.typeinfo.Types.STRING))
+                .setFetchSize(fetchSize)
+                .setParametersProvider(new DynamicParameterProvider(batchSize, startId))
+                .finish();
+
+        // Create input DataSet using JDBCInputFormat
+        env.createInput(jdbcInputFormat)
+                .map(new RichMapFunction<Row, Tuple2<Integer, String>>() {
+                    private int batchSize;
+                    private int startId;
+
+                    @Override
+                    public void open(Configuration parameters) throws Exception {
+                        super.open(parameters);
+                        this.batchSize = getRuntimeContext().getExecutionConfig().getGlobalJobParameters().getInt("batchSize", 100);
+                        this.startId = getRuntimeContext().getExecutionConfig().getGlobalJobParameters().getInt("startId", 0);
+                    }
+
+                    @Override
+                    public Tuple2<Integer, String> map(Row row) throws Exception {
+                        // Map Row to Tuple2
+                        return Tuple2.of((Integer) row.getField(0), (String) row.getField(1));
+                    }
+                })
+                .print(); // Example: Print the result
+
+        // Execute the Flink job
+        env.execute("Flink JDBC Example");
+    }
+
+    public static class DynamicParameterProvider implements JDBCInputFormat.ParameterProvider {
+        private final int batchSize;
+        private int startId;
+
+        public DynamicParameterProvider(int batchSize, int startId) {
+            this.batchSize = batchSize;
+            this.startId = startId;
+        }
+
+        @Override
+        public Object[][] getParameters() {
+            int endId = startId + batchSize;
+            Object[][] params = new Object[][] { { startId }, { endId } };
+            startId = endId; // Update startId for the next batch
+            return params;
+        }
+    }
+}
+
+```
+##### 2.那么datastream api和table api 呢
+
+When executing a SQL query, conventional database systems and query engines read and process a data set, which is completely available, and produce a fixed sized result. In contrast, data streams continuously provide new records such that data arrives over time. Hence, streaming queries have to continuously process the arriving data and never “complete”.
+
+API演进：
+**The JdbcRowInputFormat in Apache Flink was introduced in version 1.11.0：**
+the JdbcRowInputFormat to read data from PostgreSQL in a streaming fashion, which avoids loading the entire dataset into memory at once. 
+
+**However, JdbcRowInputFormat  was removed in subsequent versions like Apache Flink 1.12.0：**
+Simplification and Consolidation: Flink's ecosystem and API have undergone continuous improvements to streamline and simplify usage patterns. In many cases, having multiple ways to achieve similar functionality can lead to confusion and maintenance overhead. Thus, the decision might have been made to consolidate and standardize the approach to reading from JDBC sources.
+
+API Evolution: As Flink evolves, APIs and functionalities sometimes undergo changes to better align with the overall architecture and user needs. The removal of JdbcRowInputFormat could be part of such an evolution, where newer or more integrated solutions (like the JDBC connector via Table API or SQL) are preferred.
+
+Community and Usage Patterns: Feedback from the Flink community and users often plays a crucial role in shaping the direction of the framework. If a feature is found to be underutilized or if better alternatives are available, it may be deprecated or removed to focus development efforts on more impactful features.
+
+Extension and Compatibility: In later versions of Flink (post 1.11.0), JDBC connectivity is still supported but through separate extensions or connectors (like flink-jdbc-connector). This modular approach allows users to include only the dependencies they need, reducing the overall footprint and complexity.
+
+
+###### 2.1. flink server version 1.11.* 可以使用 JdbcRowInputFormat，但是1.12后被废弃
+###### 2.2. flink server version 1.11.* 可以使用 SourceFunction
+
+```
+public class FlinkJdbcExample {
+
+    public static void main(String[] args) throws Exception {
+        final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+
+        // Add JDBC source function
+        env.addSource(new JdbcSourceFunction())
+           .print();
+
+        // Execute the program
+        env.execute("Flink JDBC Example");
+    }
+
+    public static class JdbcSourceFunction implements SourceFunction<Row> {
+    private volatile boolean isRunning = true;
+    private transient Connection connection;
+    private transient PreparedStatement preparedStatement;
+
+    @Override
+    public void run(SourceContext<Row> ctx) throws Exception {
+        connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/your_database", "your_username", "your_password");
+        preparedStatement = connection.prepareStatement("SELECT * FROM your_table");
+        preparedStatement.setFetchSize(fetchSize); // Set fetchSize
+
+        while (isRunning) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                // Convert ResultSet row to Flink Row object
+                Row row = Row.of(resultSet.getInt("id"), resultSet.getString("name"));
+                ctx.collect(row);
+            }
+            Thread.sleep(1000); // Example: Sleep for 1 second before querying again
+        }
+    }
+
+    @Override
+    public void cancel() {
+        isRunning = false;
+        try {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            // Log or handle the exception
+        }
+    }
+}
+```
+how it work:
+
+In Apache Flink, when using the JdbcSourceFunction or similar custom implementations to read from JDBC sources, the number of records fetched in one batch and the timing of querying the next batch are influenced by several factors and settings:
+
+1. Batch Size
+The batch size, or the number of records fetched in one JDBC query execution, is typically determined by the database driver and configuration settings. This is not explicitly controlled by Flink's JdbcSourceFunction, but rather by how the JDBC driver interacts with the database.
+
+Default Settings: The default batch size is controlled by the JDBC driver's implementation and can vary. Some drivers may fetch all results at once (especially for smaller result sets), while others may use a cursor to fetch a certain number of rows at a time.
+
+Database Configuration: You can configure the batch fetching behavior in some JDBC drivers using properties like fetchSize or through specific driver configurations. This can influence how many rows are fetched per round trip to the database.
+
+2. Timing of Querying Next Batch
+The timing of when the JdbcSourceFunction queries the database for the next batch of data depends on your implementation:
+
+Thread Sleep: In the example provided (Thread.sleep(1000);), after fetching a batch of records and emitting them into the Flink stream, the function sleeps for 1 second before executing the query again. This introduces a delay between successive queries to the database.
+
+Backpressure and Internal Strategy: Flink's runtime manages backpressure internally. When downstream operators (like transformations or sinks) cannot keep up with the rate of incoming data, Flink's streaming runtime applies backpressure. This means it slows down or pauses upstream sources (such as JdbcSourceFunction) to balance the flow of data through the pipeline.
+
+Effect on Querying Next Batch: When backpressure is applied, Flink's runtime will pause the execution of the JdbcSourceFunction (specifically, it won't call run() again) until downstream operators indicate readiness to process more data. This helps prevent overwhelming downstream operators and ensures efficient resource usage.
+
+当然也可以喂给 table api
+```
+tableEnv.registerFunction("myFunction", new MyCustomTableFunction());
+Table resultTable = tableEnv.sqlQuery("SELECT * FROM MyTable, LATERAL TABLE(myFunction(...)) AS T(...) WHERE ...");
+```
+或者干脆直接使用 table api
+```
+tableEnv.executeSql("CREATE TEMPORARY TABLE jdbc_table (\n" +
+        "  id INT,\n" +
+        "  name STRING\n" +
+        ") WITH (\n" +
+        "  'connector' = 'jdbc',\n" +
+        "  'url' = 'jdbc:mysql://localhost:3306/database',\n" +
+        "  'table-name' = 'your_table',\n" +
+        "  'username' = 'user',\n" +
+        "  'password' = 'password'\n" +
+        ")");
+tableEnv.sqlQuery("SELECT * FROM jdbc_table").toAppendStream(Row.class).print();
+```
+然后再转成 datastream
+
+###### 2.3. flink server version 1.12.* 可以使用flink-jdbc-connector
+```
+import org.apache.flink.table.api.TableSchema;
+import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
+import org.apache.flink.table.sources.DefinedRowtimeAttributes;
+import org.apache.flink.table.sources.RowtimeAttributeDescriptor;
+import org.apache.flink.table.sources.TableSource;
+import org.apache.flink.types.Row;
+
+import java.util.Collections;
+import java.util.List;
+
+public class PostgreSQLTableSource implements TableSource<Row>, DefinedRowtimeAttributes {
+
+    private final String url = "jdbc:postgresql://localhost:5432/your_database";
+    private final String username = "your_username";
+    private final String password = "your_password";
+    private final String tableName = "your_table";
+
+    @Override
+    public DataStream<Row> getDataStream(StreamExecutionEnvironment execEnv) {
+        JDBCOptions jdbcOptions = JDBCOptions.builder()
+                .setDBUrl(url)
+                .setTableName(tableName)
+                .setDriverName("org.postgresql.Driver")
+                .setUsername(username)
+                .setPassword(password)
+                .build();
+
+        return JDBCInputFormat.buildJDBCInputFormat()
+                .setOptions(jdbcOptions)
+                .setRowTypeInfo(...) // Set your RowTypeInfo according to table schema
+                .finish()
+                .createInput(execEnv);
+    }
+
+    @Override
+    public TableSchema getTableSchema() {
+        // Define your table schema based on the PostgreSQL table structure
+        return TableSchema.builder()
+                .field("field1", DataTypes.STRING())
+                .field("field2", DataTypes.INT())
+                .build();
+    }
+
+    @Override
+    public String explainSource() {
+        return "PostgreSQL Table Source";
+    }
+
+    @Override
+    public List<RowtimeAttributeDescriptor> getRowtimeAttributeDescriptors() {
+        // Return descriptors if your table has rowtime attributes
+        return Collections.emptyList();
+    }
+}
+
+tableEnv.registerTableSource("source_table", new PostgreSQLTableSource());
+tableEnv.sqlQuery("SELECT * FROM source_table").toAppendStream(Row.class).print();
+
+```
+
+[我在stackoverflow的回答 How to run apache flink streaming job continuously on Flink server](https://stackoverflow.com/questions/48151881/how-to-run-apache-flink-streaming-job-continuously-on-flink-server/78696018#/78696018)
+
+
+---
 flink自定义函数加线程锁 https://juejin.cn/s/flink%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0%E5%8A%A0%E7%BA%BF%E7%A8%8B%E9%94%81
 
 

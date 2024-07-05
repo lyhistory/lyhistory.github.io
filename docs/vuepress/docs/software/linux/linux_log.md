@@ -186,4 +186,6 @@ https://unix.stackexchange.com/questions/460983/linux-system-time-temporally-jum
 
 可以ping，可以telnet 80端口，但是网站无法访问，之前遇到过一次，是因为路由器或交换机等设备的网络防火墙设置问题，
 
-但是这次是直接在该服务器本机上进行 curl http://127.0.0.1 都没有反应（nginx是监听的0.0.0.0:80），/var/log/messages里面有报错信息，跟一个crontab调用的python有关，猜测是因为crontab由于错误消耗了内存或cpu，导致nginx资源被占用而死掉，重启nginx恢复
+但是这次是直接在该服务器本机上进行 curl -v http://127.0.0.1 都没有反应（nginx是监听的0.0.0.0:80），/var/log/messages里面有报错信息，跟一个crontab调用的python有关，猜测是因为crontab由于错误消耗了内存或cpu，导致nginx资源被占用而死掉，重启nginx恢复
+
+telnet 跟 curl还是有区别的，比如假设 /etc/profile 里面有设置http proxy，telnet会绕过，curl则不会，

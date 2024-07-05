@@ -22,6 +22,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/highlevel/high_availability">高可用</a></li>
 		<li><a href="/docs/software/highlevel/publickey_infrastructure">公钥基础设施</a></li>
 		<li><a href="/docs/software/highlevel/oauth2">Oauth2.0</a></li>
+		<li><a href="/docs/software/highlevel/data_structures">数据结构</a></li>
 	</ul>
 	<p>-------------------------</p>
 	<h3>软件开发经验</h3>

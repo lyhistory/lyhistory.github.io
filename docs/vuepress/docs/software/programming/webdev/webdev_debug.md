@@ -54,6 +54,7 @@ When Mozilla’s built-in logging capabilities aren’t good enough, and you nee
 
 ### DNS issues
 
+#### 内部dns解析
 同事访问网站 A.COM 显示白页，通过google capture network traffic工具发现包括main.js在内的resource都出现
 net_error=-118(ERR_CONNECTION_TIMED_OUT)
 这些js和css无法加载造成白页问题，
@@ -75,6 +76,14 @@ Aliases:  sub.A.COM
 timeout并且解析到了一个不是我们所在地区的国家
 
 更换dns服务器即可
+
+#### http proxy代理
+报错 connect 503 error
+
+telnet example.com 443 是通的，并且显示的ip是对的
+
+不过curl -v https://example.com 解析出来的ip却是不同的，
+发现 /etc/profile 里面有 http_proxy设置
 
 ### Waf issues
 表现：公司内部访问公司网站随机被屏蔽

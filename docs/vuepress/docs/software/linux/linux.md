@@ -895,6 +895,9 @@ systemctl restart network
 
 ```
 
+#### proxy
+/etc/profile http_proxy
+
 ## Troubleshooting
 
 ### error: Package Requires
