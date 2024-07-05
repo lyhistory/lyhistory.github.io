@@ -85,6 +85,11 @@ telnet example.com 443 是通的，并且显示的ip是对的
 不过curl -v https://example.com 解析出来的ip却是不同的，
 发现 /etc/profile 里面有 http_proxy设置
 
+#### windows上常见问题
+代理软件自动设置了dns；
+系统proxy没有清理干净；
+浏览器插件（比如国内翻国外或者国外反向翻国内或者一些location伪造插件）；
+
 ### Waf issues
 表现：公司内部访问公司网站随机被屏蔽
 

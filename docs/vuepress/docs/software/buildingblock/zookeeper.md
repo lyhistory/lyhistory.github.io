@@ -421,6 +421,60 @@ SendThread 接收到服务端的通知事件后，会通过调用 EventThread �
 客户端在识别出事件类型 EventType 之后，会从相应的 Watcher 存储中删除对应的 Watcher，获取到相关的 Watcher 之后，会将其放入 waitingEvents 队列，该队列从字面上就能理解是一个待处理队列，线程的 run 方法会不断对该该队列进行处理，这就是一种异步处理思维的实现
 
 ### Curator api封装代码
+```
+import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.CuratorFrameworkFactory;
+import org.apache.curator.framework.recipes.leader.LeaderSelector;
+import org.apache.curator.framework.recipes.leader.LeaderSelectorListenerAdapter;
+import org.apache.curator.retry.ExponentialBackoffRetry;
+
+public class LeaderElectionExample {
+
+    private static final String ZK_CONNECTION_STRING = "localhost:2181";
+    private static final String LEADER_PATH = "/leader";
+
+    public static void main(String[] args) throws Exception {
+        CuratorFramework curatorFramework = CuratorFrameworkFactory.newClient(
+                ZK_CONNECTION_STRING,
+                new ExponentialBackoffRetry(1000, 3)
+        );
+        curatorFramework.start();
+
+        LeaderSelector leaderSelector = new LeaderSelector(curatorFramework, LEADER_PATH,
+                new LeaderSelectorListenerAdapter() {
+                    @Override
+                    public void takeLeadership(CuratorFramework curatorFramework) throws Exception {
+                        System.out.println("Node " + curatorFramework.getClientId() + " has become the leader.");
+                        // Implement logic for when this node becomes the leader
+                        Thread.sleep(3000); // Example: Perform leader activities
+                        System.out.println("Node " + curatorFramework.getClientId() + " is relinquishing leadership.");
+                    }
+
+                    @Override
+                    public void stateChanged(CuratorFramework curatorFramework, org.apache.curator.framework.state.ConnectionState connectionState) {
+                        if (connectionState == org.apache.curator.framework.state.ConnectionState.SUSPENDED) {
+                            System.out.println("Node " + curatorFramework.getClientId() + " lost connection to ZooKeeper");
+                        } else if (connectionState == org.apache.curator.framework.state.ConnectionState.RECONNECTED) {
+                            System.out.println("Node " + curatorFramework.getClientId() + " reconnected to ZooKeeper");
+                        } else if (connectionState == org.apache.curator.framework.state.ConnectionState.LOST) {
+                            System.out.println("Node " + curatorFramework.getClientId() + " lost connection and session with ZooKeeper");
+                            // Implement logic for handling loss of session, e.g., shutdown gracefully
+                        }
+                    }
+                });
+
+        leaderSelector.autoRequeue(); // Ensure requeueing of participants upon relinquishing leadership
+        leaderSelector.start();
+
+        // Example: Keep the application running indefinitely to observe leader changes
+        Thread.sleep(Long.MAX_VALUE);
+
+        leaderSelector.close();
+        curatorFramework.close();
+    }
+}
+
+```
 七张图彻底讲清楚ZooKeeper分布式锁的实现原理
 https://juejin.im/post/5c01532ef265da61362232ed
 Zookeeper使用之curator

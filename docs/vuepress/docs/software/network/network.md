@@ -920,6 +920,16 @@ The verbosity level of tcpdump is controlled by appending between one and three 
 
 ![tcpdump](/docs/docs_image/software/network/network06.png)
 
++ TCP Connections:
+    TCP connections are established over the network between two endpoints: typically a client and a server.
+    They involve IP addresses and port numbers to identify the communicating endpoints.
+    Example: tcp 0 0 0.0.0.0:5432 0.0.0.0:* LISTEN 32529/postgres
+
++ Unix Domain Socket Connections:
+    Unix domain socket connections (STREAM CONNECTED) are local connections established on the same host using filesystem paths.
+    They do not use network protocols like IP and port numbers but rather filesystem paths (e.g., /var/run/postgresql/.s.PGSQL.5432).
+    Example: unix 2 [ ] STREAM CONNECTED 57232269 32529/postgres
+
 處于LISTEN狀態的socket:
     Recv-Q表示了current listen backlog隊列元素數目(等待用戶調用accept的完成3次握手的socket)
     Send-Q表示了listen socket最大能容納的backlog.這個數目由listen時指定,且不能大於 /proc/sys/net/ipv4/tcp_max_syn_backlog;
@@ -1203,6 +1213,7 @@ https://serverfault.com/questions/962874/how-to-reach-1m-concurrent-tcp-connecti
 https://serverfault.com/questions/660237/hitting-ephemeral-tcp-port-exhaustion
 https://serverfault.com/questions/10852/what-limits-the-maximum-number-of-connections-on-a-linux-server
 https://stackoverflow.com/questions/10085705/load-balancer-scalability-and-max-tcp-ports
+
 
 ## 6. （数据中心/云）组网 Network architecture
 

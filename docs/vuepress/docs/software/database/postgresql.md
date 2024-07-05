@@ -6,6 +6,9 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《postgresql实用基础》
 
+## Arichtecture
+https://medium.com/@hnasr/postgresql-process-architecture-f21e16459907#/
+Postmaster 
 ## 1. Setup
 
 ### 1.1 install
@@ -1299,14 +1302,23 @@ p_cjrs rec_cjr[];
   ```
     select * FROM information_schema.triggers
 
-    SELECT pg_terminate_backend(pg_stat_activity.pid)
-FROM pg_stat_activity
-WHERE pg_stat_activity.datname = 'TARGET_DB' -- ← change this to your DB
-  AND pid <> pg_backend_pid();
-```
+        SELECT pg_terminate_backend(pg_stat_activity.pid)
+    FROM pg_stat_activity
+    WHERE pg_stat_activity.datname = 'TARGET_DB' -- ← change this to your DB
+    AND pid <> pg_backend_pid();
+    ```
 + db: template0
 + db: template1
 
+## Extension
+dblink vs postgres_fdw
+## Monitor
+### simple way: use postgres exporter
+https://github.com/prometheus-community/postgres_exporter#/
+
+```
+nohup sudo -u postgres DATA_SOURCE_NAME="user=postgres host=/var/run/postgresql/ sslmode=disable" ./postgres_exporter &
+```
 ## Troubleshooting
 
 删除“重复”的function或stored procedure，比如：bpchar和varchar：
