@@ -1195,7 +1195,7 @@ compile/provided/runtime/test/system/import
 
   Starting with Maven 3.5.0-beta-1 you can use the `${revision}`, `${sha1}`  and/or `${changelist}` as placeholders for the version in your pom file.  https://maven.apache.org/maven-ci-friendly.html
 
-##### 遇到的实际问题
+##### 依赖冲突
 
 ```
  
@@ -1213,7 +1213,7 @@ compile/provided/runtime/test/system/import
       		└── Dependency: some-framework-model
       		
 注意到，
-当我在 Project A的parent的pom里面的dependencyManagement里使用 ${project.version} 来声明 some-framework-model的版本，编译SubProject A-1: test-A的时候可以正确找到 some-framework-model 1.2.0-SNAPSHOT；
+当我在 Project A的parent的pom里面的dependencyManagement里使用 ${project.version} 来声明 some-framework-model的版本，编译SubProject A-1: test-A的时候可以正确找到 some-framework-model 比如1.2.0-SNAPSHOT；
 但是当编译Project B的时候就出现问题了，因为SubProejct B-1: some-project-service 并不是去找some-framework-model 1.2.0-SNAPSHOT 而是去找 some-framework-model 0.8.0-SNAPSHOT；
 显然SubProejct B-1找错了，可能是maven的这个${project.version}被Project B继承下来，然后简单的替换成了0.8.0，而不是沿用Project A的版本1.2.0-SNAPSHOT
 ```
@@ -1225,7 +1225,12 @@ compile/provided/runtime/test/system/import
 3、在当前dependencyManagement依赖管理中定义jar版本信息必须在properties属性中统一明确定义,便于集中版本维护管理与问题排查; 
 4、在当前业务工程内的各业务子模块禁止出现版本(version)标签信息。 
 
+解决方法：
+mvn dependency:tree -Dverbose
 
++ 将依赖的 scope 改成 provided
++ 显示的 exclusive 掉相关依赖
++ 对 class 进行 shade 操作
 
 https://maven.apache.org/guides/introduction/introduction-to-the-pom.html
 https://maven.apache.org/guides/introduction/introduction-to-profiles.html
