@@ -720,6 +720,12 @@ RPC框架众多，比如netty:
 > 作为对比的UDP，它没有缓冲区，应用层写的报文数据会直接加包头交给网络层，由网络层负责分片，所以是面向报文段的。
 > https://www.zhihu.com/question/34003599/answer/204379413
 
++ UDP
+    Message oriented, you have an API (send/recv and similar) that provide you with the ability to send one datagram, and receive one datagram. 1 send() call results in 1 datagram sent, and 1 recv() call will recieve exactly 1 datagram.
++ TCP
+    Stream oriented, you have an API (send/recv and similar) that gives you the ability to send or receive a byte stream. There is no preservation of message boundaries, TCP can bundle up data from many send() calls into one segment, or it could break down data from one send() call into many segments - but that's transparent to applications sitting on top of TCP, and recv() just gives you back data, with no relation to how many send() calls produced the data you get back.
+[TCP vs UDP - Explaining Facts and Debunking Myths](https://www.youtube.com/watch?v=jE_FcgpQ7Co)
+[TCP - 12 simple ideas to explain the Transmission Control Protocol](https://www.youtube.com/watch?v=JFch3ctY6nE)
 所以说TCP本质是一个面向字节流的协议，本质是流式的，如同水流，没有分段，无法得知何时开始结束，
 而TCP提供了可靠的流控方式：[滑动窗口sliding window](https://www.youtube.com/watch?v=klDhO9N01c4)，简单来说这个滑动窗口跟收发两端的缓存有关，可以控制“流速”；
 
@@ -733,6 +739,51 @@ RPC框架众多，比如netty:
 
 粘包问题的处理一般是加“分隔符”来标志一个包packet结束；
 拆包问题则是一般加上长度length字段，让接收方知道这个包的长度，比如10M，接收端可以把这些拆的包合并起来；
+
+很多应用层的协议已经帮我们解决了这些问题，而其他有些则根据不同的实现有些是解决了有些则可能存在偷懒（给出更大的自由度）而没有解决比如netty，所以当问到websocket是否存在粘包问题时，只能说websocket的rfc标准是不需要处理粘包问题的，但是netty也是支持websocket（存在偷懒），但是基于netty的websocket就需要注意粘包问题
+
++ 粘包 Sticky Packets problem
+    Sticky packets occur when multiple packets are combined or treated as one, causing confusion during the reading of data. This can happen for several reasons:
+
+    - Data Stream Nature: TCP is a stream-oriented protocol, meaning it delivers a continuous flow of bytes. When applications read data, they may receive a single read call that retrieves multiple packets' worth of data, leading to a situation where they need to determine where one packet ends and the next begins.
+    the sender uses the optimization method (Nagle algorithm) in order to send multiple packets to the receiver more efficiently. Combine data with small intervals and small data volume into one large data block, and then perform packetization.
+    In this way, the receiving end is difficult to distinguish, and a scientific unpacking mechanism must be provided. That is, stream-oriented communication is border-less with message protection.
+    - Buffering Issues: Network buffers may store packets, and when data is read from a buffer, it can include parts of multiple packets. This can lead to application-level issues if the application is not designed to handle such cases.
+    When the length of the sender buffer is greater than the MTU of the network card, TCP will split the data sent this time into several data packets and send it out.
+    MTU is the abbreviation of Maximum Transmission Unit. It means the largest packet transmitted on the network. The unit of MTU is a byte. Most network devices have an MTU of 1500. If the MTU of the machine is larger than the MTU of the gateway, large packets will be disconnected and transmitted, which will generate a lot of packet fragmentation
+    
++ 拆包 Unpacking Packets
+    Unpacking packets refers to the process of extracting individual packets from a data stream. Since TCP does not preserve message boundaries, applications must implement their own logic to parse the incoming data. This typically involves:
+
+    - Defining Protocol Structure: Knowing the structure of the packets being sent (headers, payload size) allows the application to correctly identify where each packet starts and ends.
+
+    - Handling Partial Data: When reading from the stream, the application may need to handle cases where it receives only part of a packet and must wait for more data to arrive.
+
++ Solutions
+    To address sticky packets and unpacking issues, developers often use several techniques:
+
+    - Length Prefixing: Prepend a fixed-size header to each packet that indicates its length. This helps the receiver know how many bytes to read.
+
+    - Delimiter-Based Protocols: Use special characters to signify the end of a packet, similar to how HTTP headers work.
+
+    - State Machines: Implementing a state machine to track the state of the incoming data and correctly assemble packets.
+
+    Note: The extra header you're referring to is part of the application data and not the TCP protocol headers.
+ + Example: http
+    1. Message Boundaries
+    HTTP is a request-response protocol with well-defined message boundaries. Each HTTP message is separate and includes headers that indicate the start and end of the message. This structure helps the receiving application know when one message ends and another begins.
+
+    2. Content-Length Header
+    When sending data, HTTP includes a Content-Length header in the request or response. This header specifies the exact size of the payload, allowing the receiving application to read the specified number of bytes, thereby avoiding issues with sticky packets.
+
+    3. Chunked Transfer Encoding
+    For cases where the content length is not known in advance, HTTP can use chunked transfer encoding. In this method, data is sent in chunks, each preceded by its size, allowing the receiver to identify the end of each chunk and assemble the complete message.
+
+    4. Connection Management
+    HTTP/1.1 uses persistent connections by default, allowing multiple requests and responses to be sent over a single TCP connection. This design helps manage the flow of data without causing confusion between messages.
+
+    5. Standardized Parsing Libraries
+    Most programming languages and frameworks provide robust HTTP libraries that handle parsing and managing HTTP messages, abstracting away the complexities of sticky packets and unpacking issues. These libraries ensure that applications receive data in the correct format.
 
 #### HTTPS
 
