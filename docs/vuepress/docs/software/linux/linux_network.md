@@ -6,7 +6,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 剖析Linux网络包接收过程：掌握数据如何被捕获和分发的全过程 https://mp.weixin.qq.com/s/zyqIN3G5xwkQfa1uaU8DmQ
 
-## 基本
+## 基本命令
 
 查端口找pid netstat -anp|grep :80 
 
@@ -23,12 +23,7 @@ ps -lef|grep 21268
 ps -eo pid,lstart,cmd |grep pid //程序启动时间
 ```
 
-## dns
-/etc/dhcp/dhclient.conf // Change #prepend domain-name-servers line, add the dns you want. Example:
-prepend domain-name-servers 1.1.1.1, 8.8.8.8;
-https://unix.stackexchange.com/questions/174349/what-overwrites-etc-resolv-conf-on-every-boot
-
-## 软硬限制
+### 软硬限制
 
 要知道,在linux的世界里,一切皆文件.因此要实现大的并发量的第一步,修改linux系统的文件标识符限制数,也就是文件打开数量的限制
 
@@ -59,6 +54,30 @@ $ps -lef|grep "kafka"
 
 $ls /proc/<kafka pid>/fd | wc -l
 ```
+### Socket Statistics
+ss是Socket Statistics的缩写。顾名思义，ss命令可以用来获取socket统计信息，它可以显示和netstat类似的内容。ss的优势在于它能够显示更多更详细的有关TCP和连接状态的信息，而且比netstat更快速更高效。
+当服务器的socket连接数量变得非常大时，无论是使用netstat命令还是直接cat /proc/net/tcp，执行速度都会很慢。
+ss快的秘诀在于，它利用到了TCP协议栈中tcp_diag。tcp_diag是一个用于分析统计的模块，可以获得Linux 内核中第一手的信息，这就确保了ss的快捷高效。
+
+```
+#查看进程使用的socket
+# ss -pl
+显示所有UDP Sockets
+ss -u -a
+查看建立的 TCP 连接
+ss -tna
+
+使用 -p 选项查看监听端口的程序名称
+ss -tlp
+
+
+```
+### dns
+/etc/dhcp/dhclient.conf // Change #prepend domain-name-servers line, add the dns you want. Example:
+prepend domain-name-servers 1.1.1.1, 8.8.8.8;
+https://unix.stackexchange.com/questions/174349/what-overwrites-etc-resolv-conf-on-every-boot
+
+
 
 ## 端口TCP流量
 

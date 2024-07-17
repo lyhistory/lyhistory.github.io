@@ -693,11 +693,6 @@ https://superuser.com/questions/77914/whats-the-difference-between-default-gatew
 
 DNS防火墙： https://developer.aliyun.com/article/766501
 
-#### Socket '协议'
-
-前面也提到websocket是完整的应用层协议，所以不会访问raw tcp packets，但是常用的socket是可以的，因为它是基于应用层和传输层的抽象，并不是一个协议；
-
-在《nio_epoll》中提到了ServerSocket，用来跟客户端建立连接，实际上socket也常常作为进程间通信的“协议”，有个特殊情况是，如果是本机进程间通信，有个特别的所谓socket Unix域套接字（Unix Domain Socket）https://blog.csdn.net/roland_sun/article/details/50266565，例子gitlab server、haproxy
 
 #### HTTP协议和 RPC'协议'
 
@@ -712,6 +707,36 @@ RPC框架众多，比如netty:
 > Nowadays we use general purpose applications or libraries to communicate with each other. For example, we often use an HTTP client library to retrieve information from a web server and to invoke a remote procedure call via web services. However, a general purpose protocol or its implementation sometimes does not scale very well. It is like how we don't use a general purpose HTTP server to exchange huge files, e-mail messages, and near-realtime messages such as financial information and multiplayer game data. What's required is a highly optimized protocol implementation that is dedicated to a special purpose. For example, you might want to implement an HTTP server that is optimized for AJAX-based chat application, media streaming, or large file transfer. You could even want to design and implement a whole new protocol that is precisely tailored to your need. Another inevitable case is when you have to deal with a legacy proprietary protocol to ensure the interoperability with an old system. What matters in this case is how quickly we can implement that protocol while not sacrificing the stability and performance of the resulting application.
 > https://netty.io/wiki/user-guide-for-4.x.html
 
+##### Socket '协议'
+
+an abstraction provided by the operating system to allow communication between applications over a network. Sockets can operate over different transport protocols, such as TCP or UDP.
+
+前面也提到websocket是完整的应用层协议，所以不会访问raw tcp packets，但是常用的socket是可以的，因为它是基于应用层和传输层的抽象接口，并不是一个协议；
+
+通常应用层的协议都是基于这个socket接口进行设计开发的，socket五元组（protocol[TCP/UDP],source IP,source PORT, destination IP, destination PORT)，系统调用传给TCP接口，具体参考[Socket 系统调用深入研究(TCP协议的整个通信过程)](https://mp.weixin.qq.com/s/ufTsU_Vk5uBKfoY7jZJ-nQ)：
++ 服务器端三部曲：
+    socket(生成一个用于通信的套接字文件描述符 sockfd) bind listen
++ 客户端 connect
+    在发起 connect() 之前，连接发起方也需要生成一个 sockfd, 发起 connect 触发 TCP三次握手
++ 服务器端accept：
+    accpet() 函数的作用是读取已完成连接队列中的第一项（读完就从队列中移除），并对此项生成一个用于后续连接的套接字描述符（姑且用 connfd 来表示），有了新的连接套接字，用户进程/线程（称其为工作者）就可以通过这个连接套接字和客户端进行数据传输，而前文所说的监听套接字（sockfd）则仍然被监听者监听。
+
+    accept() 函数是由用户空间进程发起，由内核空间消费操作，只要经过 accept() 过的连接，连接将从已完成队列（accept queue）中移除，也就表示 TCP 已经建立完成了，两端的用户空间进程可以通过这个连接进行真正的数据传输了，直到使用 close() 或 shutdown() 关闭连接时的四次挥手，中间再也不需要内核的参与。
+
+    经过 accept() 函数后，tcp 连接的套接字从 sockfd 变成了 connfd ，也就是说，经过 accept() 之后，这个连接和 sockfd 套接字已经没有任何关系了。
++ 客户端 和 服务器端互相 send recv
+
+[具体的工作模型在这里:基础:BIO/NIO/多路复用](/software/buildingblock/nio_epoll.md)
+
+所有应用层协议都是基于socket？
+
+Protocols like HTTP, WebSocket, and RPC are built on top of the transport layer (which often uses TCP). They define how data is formatted and transmitted but rely on sockets (and typically TCP) for the underlying transport mechanism.So, while it's accurate to say that these application protocols often utilize sockets, they are not exclusively "built on sockets" but rather built on the transport services provided by protocols like TCP, which are accessed via sockets.
+
+socket也常常作为不同主机之间两个进程间通信的“协议”，有个特殊情况是，如果是本机进程间通信，有个特别的所谓socket Unix域套接字（Unix Domain Socket）https://blog.csdn.net/roland_sun/article/details/50266565，例子gitlab server、haproxy
+
+[Socket 支持 HTTP 通信原理揭秘](https://mp.weixin.qq.com/s/RAdq9mli3L734jSuUtpJSQ)
+
+##### TCP 粘包 拆包问题
 要了解这些框架的原理首先要搞明白TCP本身的原理，最重要的一个问题是：
 **TCP面向字节流，UDP面向报文段，TCP的报文段呢？**
 
@@ -785,11 +810,14 @@ RPC框架众多，比如netty:
     5. Standardized Parsing Libraries
     Most programming languages and frameworks provide robust HTTP libraries that handle parsing and managing HTTP messages, abstracting away the complexities of sticky packets and unpacking issues. These libraries ensure that applications receive data in the correct format.
 
-#### HTTPS
+##### HTTPS
 
 https通信是http建立在tls上，最新的tls1.3(SSL is deprecated predecessor of TLS)，TLS typically relies on a set of trusted third-party certificate authorities to establish the authenticity of certificates. 也就是CA
 
 TLS握手发生在TCP握手结束之后，具体参考《publickey_infrastructure.md/[#](/docs/software/highlevel/publickeyinfrastructure.html#_3-1-ssl-tls)3.1 SSL/TLS》
+
+##### 不同协议的数据包路径
+[能ping通，TCP就一定能连通吗？](https://mp.weixin.qq.com/s/gLrRgfwmzMvk9T6MIY4cWg)
 
 ### 2.5 应用层之proxy代理服务器
 
