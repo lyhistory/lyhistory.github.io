@@ -206,6 +206,8 @@ https://stackoverflow.com/questions/6405127/how-do-i-specify-a-password-to-psql-
 PGPASSWORD=postgres psql --host IP --port 5432 -U postgres -d DBNAME -c "query;"
 PGPASSWORD=postgres psql --host IP --port 5432 -U postgres -d DBNAME -f file.sql
 ```
+### Extension
+dblink vs postgres_fdw
 
 ## 2. Syntax
 
@@ -843,7 +845,65 @@ https://www.postgresql.org/docs/current/explicit-locking.html
 + Deadlocks
 + Advisory Locks
 
-## 3. High Availability
+### System Table
+
++ db: postgres
+  ```
+    select * FROM information_schema.triggers
+
+        SELECT pg_terminate_backend(pg_stat_activity.pid)
+    FROM pg_stat_activity
+    WHERE pg_stat_activity.datname = 'TARGET_DB' -- ← change this to your DB
+    AND pid <> pg_backend_pid();
+    ```
++ db: template0
++ db: template1
+
+### Gaps between Oracle PLSQL and PostgreSQL
+
+https://github.com/digoal/blog/blob/master/201607/20160714_01.md
+
+https://wiki.postgresql.org/wiki/Oracle_to_Postgres_Conversion
+
+#### oracle keep dense_rank CHANGE in postgresql 
+
+https://www.eversql.com/rank-vs-dense_rank-vs-row_number-in-postgresql/
+
+#### oracle is record, is table CHANGE in postgresql
+
+```
+type rec_tk is record(
+	tkno VARCHAR2(100),
+	cg_zdj number(12, 0) := 0,
+	cg_jsf number(12, 0) := 0
+);
+type tklist is table of rec_tk index by binary_integer;
+```
+
+修改为
+
+```
+create type rec_tk as(
+tkno VARCHAR(100),
+cg_zdj numeric(12,0),
+cg_jsf numeric(12,0)
+);
+
+#函数外执行创建类型的SQL
+create type rec_cjr as(
+cjrid varchar(30),
+tk rec_tk[]
+);
+#函数内对table的使用修改为数组的使用，数组的下标从1开始
+p_cjrs rec_cjr[];
+```
+
+## 3. Backup and Restore
+[Continuous Archiving and Point-in-Time Recovery (PITR) ](https://www.postgresql.org/docs/current/continuous-archiving.html#/)
+
+[How To Set Up Continuous Archiving and Perform Point-In-Time-Recovery with PostgreSQL 12 on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-continuous-archiving-and-perform-point-in-time-recovery-with-postgresql-12-on-ubuntu-20-04#/)
+
+## 4. High Availability
 
 > Database servers can work together to allow a second server to take over quickly if the primary server fails (high availability), or to allow several computers to serve the same data (load balancing). Ideally, database servers could work together seamlessly. Web servers serving static web pages can be combined quite easily by merely load-balancing web requests to multiple machines. In fact, read-only database servers can be combined relatively easily too. Unfortunately, most database servers have a read/write mix of requests, and read/write servers are much harder to combine. This is because though read-only data needs to be placed on each server only once, a write to any server has to be propagated to all servers so that future read requests to those servers return consistent results.
 >
@@ -851,7 +911,7 @@ https://www.postgresql.org/docs/current/explicit-locking.html
 >
 > https://www.postgresql.org/docs/current/high-availability.html
 
-### 3.1 Replication不同方案：
+### 4.1 Replication不同方案：
 
 https://www.postgresql.org/docs/current/different-replication-solutions.html
 
@@ -899,25 +959,27 @@ Data partitioning splits tables into data sets. Each set can be modified by only
 
 Many of the above solutions allow multiple servers to handle multiple queries, but none allow a single query to use multiple servers to complete faster. This solution allows multiple servers to work concurrently on a single query. It is usually accomplished by splitting the data among servers and having each server execute its part of the query and return results to a central server where they are combined and returned to the user. 
 
-### 3.2具体方案1：warm standby or log shipping
+### 4.2 具体方案1：warm standby or log shipping
 
-https://www.postgresql.org/docs/current/warm-standby.html
+[Log-Shipping Standby Servers #](https://www.postgresql.org/docs/current/warm-standby.html)
+[PostgreSQL and SRE : Log Shipping Replication.](https://medium.com/@PinkOwl/postgresql-and-me-log-shipping-replication-6bc945757822#/)
+
 
 The primary server operates in continuous archiving mode, while each standby server operates in continuous recovery mode, reading the WAL(write ahead logging) files from the primary(Directly moving WAL records from one database server to another is typically described as log shipping). 
 
-### 3.3 具体方案2：hot standby 
+### 4.3 具体方案2：hot standby 
 
 https://www.postgresql.org/docs/current/hot-standby.html
 
-### 3.4 具体配置 温备/热备
+### 4.4 具体配置 温备/热备
 
 http://www.mamicode.com/info-detail-2466322.html
 
-## 4. Integreation - Drivers
+## 5. Integreation - Drivers
 
 download: https://jdbc.postgresql.org/download.html
 
-### 4.1 Java
+### 5.1 Java
 
 ```
 pom.xml:
@@ -1113,7 +1175,7 @@ $$
 
 
 
-### 4.2 .NET npgsql
+### 5.2 .NET npgsql
 https://github.com/npgsql
 
 **about composite array**
@@ -1257,68 +1319,16 @@ https://www.postgresql.org/docs/9.5/static/sql-explain.html
 Refer
 https://www.asciitable.com
 
-## 5. Gaps between Oracle PLSQL and PostgreSQL
 
-https://github.com/digoal/blog/blob/master/201607/20160714_01.md
-
-https://wiki.postgresql.org/wiki/Oracle_to_Postgres_Conversion
-
-### 5.1 oracle keep dense_rank CHANGE in postgresql 
-
-https://www.eversql.com/rank-vs-dense_rank-vs-row_number-in-postgresql/
-
-### 5.2 oracle is record, is table CHANGE in postgresql
-
-```
-type rec_tk is record(
-	tkno VARCHAR2(100),
-	cg_zdj number(12, 0) := 0,
-	cg_jsf number(12, 0) := 0
-);
-type tklist is table of rec_tk index by binary_integer;
-```
-
-修改为
-
-```
-create type rec_tk as(
-tkno VARCHAR(100),
-cg_zdj numeric(12,0),
-cg_jsf numeric(12,0)
-);
-
-#函数外执行创建类型的SQL
-create type rec_cjr as(
-cjrid varchar(30),
-tk rec_tk[]
-);
-#函数内对table的使用修改为数组的使用，数组的下标从1开始
-p_cjrs rec_cjr[];
-```
-
-## 6. System Table
-
-+ db: postgres
-  ```
-    select * FROM information_schema.triggers
-
-        SELECT pg_terminate_backend(pg_stat_activity.pid)
-    FROM pg_stat_activity
-    WHERE pg_stat_activity.datname = 'TARGET_DB' -- ← change this to your DB
-    AND pid <> pg_backend_pid();
-    ```
-+ db: template0
-+ db: template1
-
-## Extension
-dblink vs postgres_fdw
-## Monitor
+## 6. Monitor
 ### simple way: use postgres exporter
 https://github.com/prometheus-community/postgres_exporter#/
 
 ```
 nohup sudo -u postgres DATA_SOURCE_NAME="user=postgres host=/var/run/postgresql/ sslmode=disable" ./postgres_exporter &
 ```
+
+
 ## Troubleshooting
 
 删除“重复”的function或stored procedure，比如：bpchar和varchar：
@@ -1326,6 +1336,11 @@ nohup sudo -u postgres DATA_SOURCE_NAME="user=postgres host=/var/run/postgresql/
 
 psql: error: FATAL: Ident authentication failed
 To configure IDENT authentication, add entries to the /etc/postgresql/12/main/pg_ident.conf file. There are detailed comments in the file to guide you.
+
+?# can't start postgres
+
+postmaster[22235]: 2024-05-25 14:48:24.000 +08 [22235] FATAL:  data directory "/test/data" has invalid permissions
+postmaster[22235]: 2024-05-25 14:48:24.000 +08 [22235] DETAIL:  Permissions should be u=rwx (0700) or u=rwx,g=rx (0750).
 
 ## todo
 
@@ -1429,12 +1444,6 @@ $function$
 ;
 
 ```
-
-## 7.Troubleshooting
-?# can't start postgres
-
-postmaster[22235]: 2024-05-25 14:48:24.000 +08 [22235] FATAL:  data directory "/test/data" has invalid permissions
-postmaster[22235]: 2024-05-25 14:48:24.000 +08 [22235] DETAIL:  Permissions should be u=rwx (0700) or u=rwx,g=rx (0750).
 
 refer:
 

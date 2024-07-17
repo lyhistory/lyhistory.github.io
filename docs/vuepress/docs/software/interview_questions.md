@@ -1,3 +1,11 @@
+network:
+could you name the layers of TCP/IP Model and You can elaborate on the functions of each layer
+
+you should know the 3 way handshake for tcp connection, how about tcp termination, is it the same 3 way or different? why?
+
+you devlelped restful api before, I assume your restful api was built on http protocol, 
+could you name another protocol or products build on the protocol and elaborate the differences between http?
+
 please brief the tcp/ip model (OR the Open Systems Interconnection model )
 https://lyhistory.com/docs/software/network/network.html#_1-%E7%BD%91%E7%BB%9C%E5%88%86%E5%B1%82-tcp-ip%E5%8D%8F%E8%AE%AE%E7%BB%84
 
@@ -59,6 +67,12 @@ https://lyhistory.com/docs/software/programming/java_springboot.html#_1-1-spring
 
 ## frontend
 
+what's the difference between javascript typescript?
+how about nodejs and reactjs, what's differences and things in common
+
+closure
+
+cross origin resource sharing
 javascript typescript?
 
 闭包 closure
@@ -91,3 +105,19 @@ could you give me some examples of how microservices communicated with each othe
 
 single point of failure
 transactions consistency
+
+
+
+have you ever heard of CRUD, what's it? what's the method in a http request to do CRUD respectively?
+GET for Read, POST is for CREATE, PUT is for UPDATE and DELETE is for DELETE
+
+for a typical client-server model, what's 
+SQL:
+
+
+blockchain:
+
+blockchain aka distributed ledger, what do you think is the fundmental differences between distributed ledger and traditional distributed system like spark flink kafka  
+byzantine general problem
+
+what's the property of Digital Signature

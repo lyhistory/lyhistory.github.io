@@ -137,25 +137,52 @@ TCP/IP模型是当今IP网络的基础（也被称为DoD模型），它将整个
 
 ![网络分层](/docs/docs_image/software/network/network00_2.png)
 
+[TCP socket buffer](https://www.cnblogs.com/jmcui/p/14145488.html#/)
 
 用户从应用层发起http get request，比如通过浏览器或者直接通过shell命令
+
+有一个特殊的文件/dev/tcp,打开这个文件就类似于发出了一个socket调用，建立一个socket连接，读写这个文件就相当于在这个socket连接中传输数据。
+
+Socket是应用层与TCP/IP协议族通信的中间软件抽象层，它是一组接口（API）。我们所说的TCP/IP网站栈是在操作系统内核实现的，而Socket就是操作系统内核提供给应用层的一系列接口，Socket封装了TCP/IP，要使用TCP/IP来发送数据，就调用Socket的OutputStream，要使用TCP/IP接收数据，就调用Socket的InputStream,现在计算机A与计算机B建立了Socket连接，这时候计算机A要发送数据给计算机B，不是直接就发送过去，Socket发送数据首先需要经过Socket的读写缓冲区,用户态的数据，要想发送到互联网上，必须先把数据拷贝到内核态，由内核态帮我们把数据发送出去。
+因此，计算机每创建一个socket，cpu就会在内存中为它分配一对读写缓冲区，读写缓冲区在内核态，它的大小不随数据大小而改变。
+计算机A想发数据到计算机B，首先计算机A把用户态的数据拷贝到内核态的输出缓冲区，再由把输出缓冲区的数据通过互联网发送到计算机B的输入缓冲区，计算机B把输入缓冲区的数据拷贝到用户态，就完成了一次数据的发送和接收。
+由于数据缓冲区的大小有限，如果数据缓冲区里有数据没有发送出去，用户态这时候又有其他数据要发送，数据缓冲区的空间就不够用了，就会造成一系列问题。如果计算机B要接收数据，而一直没有收到计算机A发送过来的数据，导致输入缓冲区一直为空，也会造成问题。
+对于上面这些存在的问题，linux有5种解决方案，这就是linux的5大IO模型。
+
 ```
 https://www.tldp.org/LDP/abs/html/devref1.html
 
-有一个特殊的文件/dev/tcp,打开这个文件就类似于发出了一个socket调用，建立一个socket连接，读写这个文件就相当于在这个socket连接中传输数据。
-1.打开/dev/tcp
-    以读写方式打开/dev/tcp，并指定服务器名为：www.baidu.com,端口号为：80,指定描述符为8
-    要注意的是：/dev/tcp本身是不存在的。
-exec 8<> /dev/tcp/www.baidu.com/80
-2. 向文件中写入数据，向文件中随便写一些数据
-echo -e "GET / HTTP/1.0\n" 1>& 8
-3. 读文件
-cat 0<& 8 或 cat<&8
+1.查看当前bash的文件描述符
+ll /proc/$$/fd //$$ 表示当前bash的进程id号 可以看到当前进程中有0,1,2三个文件描述符，代表标准输入、标准输出、错误输出的入口，这里的255是bash独有的，可以不用管
 
-查看
-cd /proc/$$/fd
-关闭
-exec 8<& -
+2.在linux中与www.baidu.com建立socket连接
+ 以读写方式打开/dev/tcp，并指定服务器名为：www.baidu.com,端口号为：80,指定描述符为6
+    要注意的是：/dev/tcp本身是不存在的。
+exec 6<> /dev/tcp/www.baidu.com/80
+
+6是文件描述符，数字任意，不能与存在的数字重复（0,1,2,255）
+<> 是重定向，< 表示是输入流，> 表示输出流，意思是/dev/tcp/www.baidu.com/80这个文件的文件描述符重定向到6（或者是这个文件的输入输出流执行文件描述符6），根据文件描述符6可以得到这个文件的输入输出流
+
+3.查看socket连接
+ll /proc/$$/fd  
+看到文件描述符6指向了一个socket，说明与百度的socket建立成功
+
+4. 往socket中发请求头，获取百度首页html
+向文件中写入数据，向文件中随便写一些数据
+echo -e "GET / HTTP/1.0\n" 1>& 6
+echo 是在控制台输出的命令，-e 表示字符串中的 \n 自动转为换行
+1> 6 是控制台的输出重定向到文件描述符6，就是往百度发数据
+1>& 6因为 > 的后面跟的是文件描述符，所以 > 后要加 &
+
+5. 查看返回的数据
+读文件
+cat 0<& 6 或 cat<&6
+
+cat是查看文件内容的命令
+cat 0<& 6 表示文件描述符 6 的内容（socket 读缓冲区中的内容）输入到 cat 的标准输入中，这样就能查看到百度发过来的内容了
+
+6. 关闭
+exec 6<& -
 ```
 然后系统内核就会一层层往下打包，先打包“传输控制层”，这一层是需要通过三次握手建立连接的，
 第一次握手就是发送SYN给服务器端（这里的百度），通过dns获取了百度的IP，TCP socket套接字需要用到local客户端的ip和port以及server端的ip和port，那么具体怎么发送出这第一个包呢，很多人误以为传输层就可以直接发送，其实这个层强调的是传输“控制”层，
@@ -666,11 +693,6 @@ https://superuser.com/questions/77914/whats-the-difference-between-default-gatew
 
 DNS防火墙： https://developer.aliyun.com/article/766501
 
-#### Socket '协议'
-
-前面也提到websocket是完整的应用层协议，所以不会访问raw tcp packets，但是常用的socket是可以的，因为它是基于应用层和传输层的抽象，并不是一个协议；
-
-在《nio_epoll》中提到了ServerSocket，用来跟客户端建立连接，实际上socket也常常作为进程间通信的“协议”，有个特殊情况是，如果是本机进程间通信，有个特别的所谓socket Unix域套接字（Unix Domain Socket）https://blog.csdn.net/roland_sun/article/details/50266565，例子gitlab server、haproxy
 
 #### HTTP协议和 RPC'协议'
 
@@ -685,6 +707,36 @@ RPC框架众多，比如netty:
 > Nowadays we use general purpose applications or libraries to communicate with each other. For example, we often use an HTTP client library to retrieve information from a web server and to invoke a remote procedure call via web services. However, a general purpose protocol or its implementation sometimes does not scale very well. It is like how we don't use a general purpose HTTP server to exchange huge files, e-mail messages, and near-realtime messages such as financial information and multiplayer game data. What's required is a highly optimized protocol implementation that is dedicated to a special purpose. For example, you might want to implement an HTTP server that is optimized for AJAX-based chat application, media streaming, or large file transfer. You could even want to design and implement a whole new protocol that is precisely tailored to your need. Another inevitable case is when you have to deal with a legacy proprietary protocol to ensure the interoperability with an old system. What matters in this case is how quickly we can implement that protocol while not sacrificing the stability and performance of the resulting application.
 > https://netty.io/wiki/user-guide-for-4.x.html
 
+##### Socket '协议'
+
+an abstraction provided by the operating system to allow communication between applications over a network. Sockets can operate over different transport protocols, such as TCP or UDP.
+
+前面也提到websocket是完整的应用层协议，所以不会访问raw tcp packets，但是常用的socket是可以的，因为它是基于应用层和传输层的抽象接口，并不是一个协议；
+
+通常应用层的协议都是基于这个socket接口进行设计开发的，socket五元组（protocol[TCP/UDP],source IP,source PORT, destination IP, destination PORT)，系统调用传给TCP接口，具体参考[Socket 系统调用深入研究(TCP协议的整个通信过程)](https://mp.weixin.qq.com/s/ufTsU_Vk5uBKfoY7jZJ-nQ)：
++ 服务器端三部曲：
+    socket(生成一个用于通信的套接字文件描述符 sockfd) bind listen
++ 客户端 connect
+    在发起 connect() 之前，连接发起方也需要生成一个 sockfd, 发起 connect 触发 TCP三次握手
++ 服务器端accept：
+    accpet() 函数的作用是读取已完成连接队列中的第一项（读完就从队列中移除），并对此项生成一个用于后续连接的套接字描述符（姑且用 connfd 来表示），有了新的连接套接字，用户进程/线程（称其为工作者）就可以通过这个连接套接字和客户端进行数据传输，而前文所说的监听套接字（sockfd）则仍然被监听者监听。
+
+    accept() 函数是由用户空间进程发起，由内核空间消费操作，只要经过 accept() 过的连接，连接将从已完成队列（accept queue）中移除，也就表示 TCP 已经建立完成了，两端的用户空间进程可以通过这个连接进行真正的数据传输了，直到使用 close() 或 shutdown() 关闭连接时的四次挥手，中间再也不需要内核的参与。
+
+    经过 accept() 函数后，tcp 连接的套接字从 sockfd 变成了 connfd ，也就是说，经过 accept() 之后，这个连接和 sockfd 套接字已经没有任何关系了。
++ 客户端 和 服务器端互相 send recv
+
+[具体的工作模型在这里:基础:BIO/NIO/多路复用](/software/buildingblock/nio_epoll.md)
+
+所有应用层协议都是基于socket？
+
+Protocols like HTTP, WebSocket, and RPC are built on top of the transport layer (which often uses TCP). They define how data is formatted and transmitted but rely on sockets (and typically TCP) for the underlying transport mechanism.So, while it's accurate to say that these application protocols often utilize sockets, they are not exclusively "built on sockets" but rather built on the transport services provided by protocols like TCP, which are accessed via sockets.
+
+socket也常常作为不同主机之间两个进程间通信的“协议”，有个特殊情况是，如果是本机进程间通信，有个特别的所谓socket Unix域套接字（Unix Domain Socket）https://blog.csdn.net/roland_sun/article/details/50266565，例子gitlab server、haproxy
+
+[Socket 支持 HTTP 通信原理揭秘](https://mp.weixin.qq.com/s/RAdq9mli3L734jSuUtpJSQ)
+
+##### TCP 粘包 拆包问题
 要了解这些框架的原理首先要搞明白TCP本身的原理，最重要的一个问题是：
 **TCP面向字节流，UDP面向报文段，TCP的报文段呢？**
 
@@ -693,6 +745,12 @@ RPC框架众多，比如netty:
 > 作为对比的UDP，它没有缓冲区，应用层写的报文数据会直接加包头交给网络层，由网络层负责分片，所以是面向报文段的。
 > https://www.zhihu.com/question/34003599/answer/204379413
 
++ UDP
+    Message oriented, you have an API (send/recv and similar) that provide you with the ability to send one datagram, and receive one datagram. 1 send() call results in 1 datagram sent, and 1 recv() call will recieve exactly 1 datagram.
++ TCP
+    Stream oriented, you have an API (send/recv and similar) that gives you the ability to send or receive a byte stream. There is no preservation of message boundaries, TCP can bundle up data from many send() calls into one segment, or it could break down data from one send() call into many segments - but that's transparent to applications sitting on top of TCP, and recv() just gives you back data, with no relation to how many send() calls produced the data you get back.
+[TCP vs UDP - Explaining Facts and Debunking Myths](https://www.youtube.com/watch?v=jE_FcgpQ7Co)
+[TCP - 12 simple ideas to explain the Transmission Control Protocol](https://www.youtube.com/watch?v=JFch3ctY6nE)
 所以说TCP本质是一个面向字节流的协议，本质是流式的，如同水流，没有分段，无法得知何时开始结束，
 而TCP提供了可靠的流控方式：[滑动窗口sliding window](https://www.youtube.com/watch?v=klDhO9N01c4)，简单来说这个滑动窗口跟收发两端的缓存有关，可以控制“流速”；
 
@@ -707,11 +765,59 @@ RPC框架众多，比如netty:
 粘包问题的处理一般是加“分隔符”来标志一个包packet结束；
 拆包问题则是一般加上长度length字段，让接收方知道这个包的长度，比如10M，接收端可以把这些拆的包合并起来；
 
-#### HTTPS
+很多应用层的协议已经帮我们解决了这些问题，而其他有些则根据不同的实现有些是解决了有些则可能存在偷懒（给出更大的自由度）而没有解决比如netty，所以当问到websocket是否存在粘包问题时，只能说websocket的rfc标准是不需要处理粘包问题的，但是netty也是支持websocket（存在偷懒），但是基于netty的websocket就需要注意粘包问题
+
++ 粘包 Sticky Packets problem
+    Sticky packets occur when multiple packets are combined or treated as one, causing confusion during the reading of data. This can happen for several reasons:
+
+    - Data Stream Nature: TCP is a stream-oriented protocol, meaning it delivers a continuous flow of bytes. When applications read data, they may receive a single read call that retrieves multiple packets' worth of data, leading to a situation where they need to determine where one packet ends and the next begins.
+    the sender uses the optimization method (Nagle algorithm) in order to send multiple packets to the receiver more efficiently. Combine data with small intervals and small data volume into one large data block, and then perform packetization.
+    In this way, the receiving end is difficult to distinguish, and a scientific unpacking mechanism must be provided. That is, stream-oriented communication is border-less with message protection.
+    - Buffering Issues: Network buffers may store packets, and when data is read from a buffer, it can include parts of multiple packets. This can lead to application-level issues if the application is not designed to handle such cases.
+    When the length of the sender buffer is greater than the MTU of the network card, TCP will split the data sent this time into several data packets and send it out.
+    MTU is the abbreviation of Maximum Transmission Unit. It means the largest packet transmitted on the network. The unit of MTU is a byte. Most network devices have an MTU of 1500. If the MTU of the machine is larger than the MTU of the gateway, large packets will be disconnected and transmitted, which will generate a lot of packet fragmentation
+    
++ 拆包 Unpacking Packets
+    Unpacking packets refers to the process of extracting individual packets from a data stream. Since TCP does not preserve message boundaries, applications must implement their own logic to parse the incoming data. This typically involves:
+
+    - Defining Protocol Structure: Knowing the structure of the packets being sent (headers, payload size) allows the application to correctly identify where each packet starts and ends.
+
+    - Handling Partial Data: When reading from the stream, the application may need to handle cases where it receives only part of a packet and must wait for more data to arrive.
+
++ Solutions
+    To address sticky packets and unpacking issues, developers often use several techniques:
+
+    - Length Prefixing: Prepend a fixed-size header to each packet that indicates its length. This helps the receiver know how many bytes to read.
+
+    - Delimiter-Based Protocols: Use special characters to signify the end of a packet, similar to how HTTP headers work.
+
+    - State Machines: Implementing a state machine to track the state of the incoming data and correctly assemble packets.
+
+    Note: The extra header you're referring to is part of the application data and not the TCP protocol headers.
+ + Example: http
+    1. Message Boundaries
+    HTTP is a request-response protocol with well-defined message boundaries. Each HTTP message is separate and includes headers that indicate the start and end of the message. This structure helps the receiving application know when one message ends and another begins.
+
+    2. Content-Length Header
+    When sending data, HTTP includes a Content-Length header in the request or response. This header specifies the exact size of the payload, allowing the receiving application to read the specified number of bytes, thereby avoiding issues with sticky packets.
+
+    3. Chunked Transfer Encoding
+    For cases where the content length is not known in advance, HTTP can use chunked transfer encoding. In this method, data is sent in chunks, each preceded by its size, allowing the receiver to identify the end of each chunk and assemble the complete message.
+
+    4. Connection Management
+    HTTP/1.1 uses persistent connections by default, allowing multiple requests and responses to be sent over a single TCP connection. This design helps manage the flow of data without causing confusion between messages.
+
+    5. Standardized Parsing Libraries
+    Most programming languages and frameworks provide robust HTTP libraries that handle parsing and managing HTTP messages, abstracting away the complexities of sticky packets and unpacking issues. These libraries ensure that applications receive data in the correct format.
+
+##### HTTPS
 
 https通信是http建立在tls上，最新的tls1.3(SSL is deprecated predecessor of TLS)，TLS typically relies on a set of trusted third-party certificate authorities to establish the authenticity of certificates. 也就是CA
 
 TLS握手发生在TCP握手结束之后，具体参考《publickey_infrastructure.md/[#](/docs/software/highlevel/publickeyinfrastructure.html#_3-1-ssl-tls)3.1 SSL/TLS》
+
+##### 不同协议的数据包路径
+[能ping通，TCP就一定能连通吗？](https://mp.weixin.qq.com/s/gLrRgfwmzMvk9T6MIY4cWg)
 
 ### 2.5 应用层之proxy代理服务器
 
@@ -1159,7 +1265,143 @@ $   sysctl -p
 $   sysctl net.ipv4.ip_local_port_range
 
 ```
-### 5.6 final_wait-1 final_wait-2,大量 time_wait
+### 5.6 全连接队列溢出
+[使用dubbo时请求超过问题](https://mp.weixin.qq.com/s/MDY-gQ74uFmCt_ZsHNS4mQ#/)
+采用的是dubbo服务，这是个稳定成熟的RPC框架。但是我们在某些应用中会发现，只要这个应用一发布(或者重启),就会出现请求超时的问题，而且都是第一笔请求会报错，之后就再也没有问题了
+
+直接讲结论：
+
+在server端连接数过多, linux系统有个连接队列溢出了。溢出的连接被丢弃，但是client端不知道，仍然给此server发送消息。连接没有建立自然发送不成功。client发第一笔消息超时，相当于探活失败，client端于是重新建立连接。连接成功建立后开始正常的通信，所以后面都成功了。
+
+怎么来解决这个问题呢？四个思路。
+
+第一个是队列溢出了，那就说明队列太小。可以把队列值改大。dubbo使用的是一个写死的默认值：50。可以修改dubbo源码把值改大或者干脆动态获取队列值。
+
+第二个是队列数不变，实际连接数减少。减少server端的连接方，比如有些client端其实没有实际业务调用这个server端了，就双方聊聊把无用的依赖去掉。
+
+第三个是可以让服务端在丢弃连接的同时给client端通知一下，linux有个系统参数/proc/sys/net/ipv4/tcp_abort_on_overflow，默认为0。不会给client端发通知，但是设置为1时会给server端发一个reset请求，客户端收到会重连。
+
+第四个是让client端定时心跳探测。探测发现超时了马上重连，超时的那笔只是探测请求，不影响业务。
+
+提到溢出的队列到底是什么队列？
+
+一次握手：
+
+一开始client端和server端都处于closed状态(未建立连接状态)。client端主动向server端发起syn请求建立连接请求，server端收到后将与client端的连接设置为listen状态(半连接状态)。问题来了，server端怎么保存与client端的状态呢？总需要有地方存呀，存的地方就是队列。连接队列又叫backlog队列。到这里，server端与client端的半连接建立了。这里的backlog队列也叫半连接队列。
+
+二次握手：
+
+server端返回ack应答+syn请求给client，意思是：ack我收到了你的请求，syn你收到我的了没？client端收到server端响应，将自己的状态设置为established状态(连接状态)。
+
+三次握手：
+
+client向server端发送一个ack响应，告诉server端收到。然后server端收到后将与client端的连接设置为established状态(全连接状态)。同样，全连接状态在server端也需要一个backlog队列存储。这里的backlog队列也叫全连接队列。
+
+backlog队列到底是全连接队列还是半连接队列？
+
+backlog其实是一个连接队列，在Linux内核2.2之前，backlog包括半连接状态和全连接状态两种队列。在Linux内核2.2之后，分离为两个backlog来分别限制半连接（SYN_RCVD状态）队列大小和全连接（ESTABLISHED状态）队列大小。
+
+半连接队列：
+
+队列长度由/proc/sys/net/ipv4/tcp_max_syn_backlog指定，默认为2048。
+
+全连接队列：
+
+队列长度由/proc/sys/net/core/somaxconn和使用listen函数时传入的参数，二者取最小值。默认为128。
+
+在Linux内核2.4.25之前，是写死在代码常量 SOMAXCONN ，在Linux内核2.4.25之后，在配置文件/proc/sys/net/core/somaxconn中直接修改，或者在 /etc/sysctl.conf 中配置 net.core.somaxconn = 128 。
+
+到底是全连接队列还是半连接队列溢出导致了超时？
+
+server端与client端进行二次握手的前提是server端认为自己与client建立连接是没有任何问题的。如果server端半连接队列溢出了，自己这边都没有处于半连接状态，自然不会发送ack+syn给client端。client端做的应该是重新尝试建立连接，不是发送数据。请求会发送到已经建立好连接的server端(server端是多机器多活部署的)不会造成请求超时。
+
+而二次握手一旦完成，进行三次握手时，如果全连接队列已满，服务器收到客户端发来的ACK, 不会将该连接的状态从SYN_RCVD变为ESTABLISHED。但是客户端已经认为连接建立好了开始发送数据了，这时候是有可能造成超时的。
+
+全连接队列满了之后server端是怎么处理的呢？
+
+当全连接队列已满时，则根据 tcp_abort_on_overflow 的值来执行相应动作。
+
+tcp_abort_on_overflow = 0 处理：
+
+则服务器建立该连接的定时器，这个定时器是一个服务器的规则是从新发送syn+ack的时间间隔成倍的增加，比如从新了第二次握手，进行了5次，这五次的时间分别是 1s, 2s,4s,8s,16s,这种倍数规则叫“二进制指数退让”(binary exponential backoff)。
+
+给客户端定时从新发回SYN+ACK即重新进行第二次握手，(如果客户端设定的超时时间比较短就很容易出现异常)服务器重新进行第二次握手的次数由/proc/sys/net/ipv4/tcp_synack_retries 这个linux系统参数决定。
+
+tcp_abort_on_overflow = 1 处理：
+当 tcp_abort_on_overflow 等于1 时,发送一个reset请求重置连接。客户端收到可以尝试再次从第一次握手开始建立连接或者其他处理。
+
+怎么验证确实是backlog队列溢出呢？
+
+ss 是 Socket Statistics 的缩写。ss 命令可以用来获取 socket 统计信息。ss -l 是显示listen状态的数据
+
+在LISTEN状态，其中 Send-Q 即为全连接队列的最大值，Recv-Q 则表示全连接队列中等待被server段处理的数量。数量为0，说明处理能力很够；Send-Q =Recv-Q ，满了，再来就丢弃掉了。
+
+但是这是一个实时的数据，一段时间有拥塞，过一会儿就好了怎么查呢？
+
+可以使用netstat -s 可以查看被全连接队列丢弃的数据。
+
+`# netstat -s | grep "times the listen queue of a socket overflowed"`
+半连接队列很多文章叫做SYN QUEUE队列。全连接队列很多文章叫做ACCEPT QUEUE队列。这是一些研究linux源码的同学根据源码的命名来叫的。
+
+除了字面理解里提到的四种思路，前因后果里还提到了重新进行第二次握手的次数由/proc/sys/net/ipv4/tcp_synack_retries 这个linux系统参数决定。
+
+分别来分析一下各个方案的可行性和优缺点：
+
+方案1：把队列值调大
+
+这个队列值是指全连接队列，调大之后，client端的二次握手就在这个队列里排队等待server端真正建立连接。假设队列值调到上限65535。第65535号请求在排队的过程，client端是established状态，数据可能会发送过来，服务端还没有established状态，还不能处理。
+
+到什么时候能处理呢？65535个请求全部处理完需要13s的样子。对一般的服务来说妥妥的超时。所以nginx和redis都是使用的511，让响应时间在100ms内完成。
+
+方案2：减少连接数
+
+只要能减少的下来，这是理想的法子。现在server端都过载了，可想而知，接入的client端不再少数，推动他们一个个去梳理和改造，就算大家执行力很强，把改下的下了。可想而知，废弃的也一般不会有多少。不展开了啊，现在已经三千多字了，争取五千字内结束。
+
+还有没有别的方法减少连接数呢？最简单的就是使用分治法。
+
+划分子集
+
+跟同事讨论请教的时候，他给我提供了一个划分子集的思路。让client端只和server端一部分服务器建立连接。有两种分配谁跟谁连接的算法，一个是随机算法。但是server端服务器我最多见过几千台组成一个集群的。对随机(虽然连接数是服务器台数的n倍)来说，样本是很少的，会很不均匀；另外一个是确定性算法，思路也很简单。连接的client端及数量是确定的，那就排个序，按照server端数量分配一下。这样连接数是均匀的，但是就没办法做到请求级别的流量均匀。
+
+粘滞连接
+
+尽可能让客户端总是向同一提供者发起调用，除非该提供者挂了，再连另一台。<dubbo:protocol name="dubbo" sticky="true" />。如果每个client端都只和一个server端建立连接。那server端压力就是原来的(1/机器台数)。不够加机器就行了，横向可扩展。
+
+这种做法最大的问题是高可用和并发请求的问题，对于可用性要求不高、请求量不高的服务(比如后台定时任务定时拉取可重试)其实是可以用的。但是这需要client端的自觉性，而对维护这个client端的人员来讲，他们自身是没有好处的，因为原本也就是只是重启时发生一次超时嘛。所以客户端在可以的情况下愿不愿意这样做就看格局了。
+
+方案3：服务端通知
+
+服务端通知上面前因后果中有提到可以设置
+
+/proc/sys/net/ipv4/tcp_synack_retries
+
+重新进行几次进行第二次握手。但是这个阶段，client端可能会发数据包过来造成超时；另外，可以设置
+
+/proc/sys/net/ipv4/tcp_abort_on_overflow=1
+
+整个握手直接断掉，client端是closed状态，它会找其他established状态的连接进行数据包发送，不会造成超时。事实上，调研了一些大厂，
+
+tcp_abort_on_overflow=1是作为默认配置的。
+
+方案4：客户端探测
+
+客户端探测想自己做的话比较麻烦，比如说把，客户端调了n个服务，每个服务建立了n个连接。资源开销大，还必须要复用这些已经建立的连接，复杂度高。
+
+其实provider 和consumer 有双向心跳(探测)的，那为什么没检测出并进行重连？
+
+这个首先面临的问题：client端认为连接成功了，但server端认为没有成功。那么server端 是不会发送心跳给 client端的。
+
+client端是不是应该发心跳给server端呢？是的，原来使用dubbo2.5.3版本时3分钟client端会发送一个探测，之后把问题连接closed掉。只是dubbo 2.6.9使用了netty4。他们强强联手搞出来一个bug，探测机制楞没生效！
+心跳有个条件，就是lastRead 和 lastWrite 不为空。那就需要看哪里设置了这两个参数。通过代码查到client端连接成功和server端连接成功的时候都会设置。这里只考虑client端情况，对比netty3发现netty4里少了
+
+NettyServerHandler的handler链处理。这个handler链处理就是用来初始化那两个值的。
+
+除了改client端源码，有没有别的方法让client端探测生效呢？其实什么都不用TCP就有keepalive(探活)机制。默认是7200秒，也就是2小时。可以修改：
+
+/proc/sys/net/ipv4/tcp_keepalive_time 
+单位是秒
+
+### 5.7 final_wait-1 final_wait-2,大量 time_wait
 ```
 统计连接状态：
 netstat -nat | awk '{print $6}' | sort | uniq -c

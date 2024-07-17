@@ -17,6 +17,11 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 其二：因为IO的相关处理是内核做的，属于系统调用，我们写的应用层的应用在跟用户交互的过程中需要获取客户端连接以及读取连接发送的数据流的时候，都需要转到内核态进行系统调用才能获取网卡IO的数据，至于为啥我们用户程序不可以直接操作这些IO，是因为正常的情况下我们不会重复造轮子写驱动！另外用户空间和内核空间是保护模式隔离开的，用户程序并不可以直接调用内核的程序，系统调用是唯一的方式，由于用户程序不能直接调用内核程序，所以系统调用不是函数调用，系统调用的方式是用户程序设置好参数，然后故意产生一个异常即INT 0x80软件中断，CPU就会切换到内核空间执行内核程序；
 
 
+要通过 TCP 连接发送出去的数据都先拷贝到 send buffer，可能是从用户空间进程的 app buffer 拷入的，也可能是从内核的 kernel buffer 拷入的，拷入的过程是通过 send() 函数完成的，由于也可以使用 write() 函数写入数据，所以也把这个过程称为写数据，相应的 send buffer 也就有了别称 write buffer。
+
+最终数据是通过网卡流出去的，所以 send buffer 中的数据需要拷贝到网卡中。由于一端是内存，一端是网卡设备，可以直接使用 DMA 的方式进行拷贝，无需 CPU 的参与。也就是说，send buffer 中的数据通过 DMA 的方式拷贝到网卡中并通过网络传输给 TCP 连接的另一端。
+
+当通过 TCP 连接接收数据时，数据肯定是先通过网卡流入的，然后同样通过 DMA 的方式拷贝到 recv buffer 中，再通过 recv() 函数将数据从 recv buffer 拷入到用户空间进程的 app buffer 中。
 
 首先还是要复习下计算机组成原理的基本知识，
 
@@ -115,7 +120,7 @@ select和poll是一类，epoll是另一类，下面分类讲解
 
 #### select poll
 
-代码逻辑更改大概是，select或者poll一次将所有文件描述符传给内核，不需要遍历传递，第一次是传server socket 8，后面假设有新的连接比如11，就传（8，11）
+代码逻辑更改大概是，select或者poll一次将所有文件描述符传给内核，不需要遍历传递，第一次是传server socket 8，后面假设有~~新的连接~~需要监听的新的文件描述符（意思是new 新的socket来监听新端口，产生新的文件描述符，比如起了http服务）比如11，就传（8，11）
 
 ![select poll](/docs/docs_image/software/buildingblock/nio04.png)
 
@@ -173,4 +178,6 @@ jdk工具：jvisualvm
 
 [图解通用网络IO底层原理、Socket、epoll、用户态内核态······](https://mp.weixin.qq.com/s/Cema4S_qCq4JbIlEEefvcA)
 
+[Socket和TCP连接过程解析](https://mp.weixin.qq.com/s/8Qa6mhg_dvGIafpFeC2zUg)
+[Socket 系统调用深入研究(TCP协议的整个通信过程)](https://mp.weixin.qq.com/s/ufTsU_Vk5uBKfoY7jZJ-nQ)
 <disqus/>

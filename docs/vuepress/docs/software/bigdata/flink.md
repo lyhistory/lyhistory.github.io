@@ -1839,6 +1839,8 @@ scrape_configs:
 [How to identify the source of backpressure?](https://flink.apache.org/2021/07/07/how-to-identify-the-source-of-backpressure/#/)
 
 ## 7. 深度解析
+### Version 版本
+[Flink 1.12 release notes](https://flink.apache.org/2020/12/10/apache-flink-1.12.0-release-announcement/#/)
 
 ### 运行模式和机制
 [Execution Behavior](https://nightlies.apache.org/flink/flink-docs-release-1.12/dev/datastream_execution_mode.html#/)
@@ -2183,7 +2185,7 @@ DataStream<ObjectNode> streamJson = streamJsonString.map(new MetricMapper()).map
 ```
 
 **肉眼观察：**
-300万数据量以下很快跑完,500万跑到快结束的时候迅速变慢
+300万数据量以下很快跑完,500万跑到快结束的时候迅速变慢,更多的数据跑到后面会挂掉，注意不是一下挂掉，而是跑着跑着挂掉
 
 **metric指标：**
 
@@ -2230,7 +2232,7 @@ private <OUT> DataStreamSource<OUT> createInput(InputFormat<OUT, ?> inputFormat,
 		return addSource(function, sourceName, typeInfo);
 	}
 ```
-所以flink的这个source不断的从db捞数据，一次100条，但是永不释放，全存在了resultset里面，这样早晚也得爆啊，为什么flink这么设计？肯定是我们用错了，仔细的对应查找了flink的data stream api，结果就是没找到这个InputFormatSourceFunction，版本flink1.12，终于在dataset api下面才找到，并且看到warning：
+所以~~flink的这个source~~jdbc不断的从db捞数据，一次100条，但是永不释放，全存在了resultset里面，这样早晚也得爆啊，为什么flink这么设计？肯定是我们用错了，仔细的对应查找了flink的data stream api，结果就是没找到这个InputFormatSourceFunction，版本flink1.12，终于在dataset api下面才找到，并且看到warning：
 > Starting with Flink 1.12 the DataSet API has been soft deprecated.
 
 > We recommend that you use the Table API and SQL to run efficient batch pipelines in a fully unified API. Table API is well integrated with common batch connectors and catalogs.
@@ -2326,6 +2328,35 @@ public class FlinkJDBCExample {
 }
 
 ```
+但是注意，这么写会引入另一个潜在问题：当我们提供了ParameterValuesProvider,会触发jdbc的并行模式，导致从数据库分批次拿的数据不是顺序执行！如果数据前后有依赖会造成问题
+```
+/**
+	 * Connects to the source database and executes the query in a <b>parallel
+	 * fashion</b> if
+	 * this {@link InputFormat} is built using a parameterized query (i.e. using
+	 * a {@link PreparedStatement})
+	 * and a proper {@link ParameterValuesProvider}, in a <b>non-parallel
+	 * fashion</b> otherwise.
+	 *
+	 * @param inputSplit which is ignored if this InputFormat is executed as a
+	 *        non-parallel source,
+	 *        a "hook" to the query parameters otherwise (using its
+	 *        <i>splitNumber</i>)
+	 * @throws IOException if there's an error during the execution of the query
+	 */
+	@Override
+	public void open(InputSplit inputSplit) throws IOException {
+```
+调用栈：
+```
+at org.apache.flink.api.java.ExecutionEnvironment.execute(ExecutionEnvironment.java:123)
+at org.apache.flink.api.java.DataSet.collect(DataSet.java:456)
+at org.apache.flink.api.java.DataSet.output(DataSet.java:789)
+at org.apache.flink.connector.jdbc.JdbcInputFormat.open(JdbcInputFormat.java:101)
+at org.apache.flink.api.common.functions.RichFunction.open(RichFunction.java:95)
+at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:117)
+at org.apache.flink.runtime.taskmanager.Task.run(Task.java:705)
+```
 ##### 2.那么datastream api和table api 呢
 
 When executing a SQL query, conventional database systems and query engines read and process a data set, which is completely available, and produce a fixed sized result. In contrast, data streams continuously provide new records such that data arrives over time. Hence, streaming queries have to continuously process the arriving data and never “complete”.
@@ -2345,13 +2376,14 @@ Extension and Compatibility: In later versions of Flink (post 1.11.0), JDBC conn
 
 
 ###### 2.1. flink server version 1.11.* 可以使用 JdbcRowInputFormat，但是1.12后被废弃
-###### 2.2. flink server version 1.11.* 可以使用 SourceFunction
+###### 2.2. flink server version 1.12.* 可以使用 SourceFunction
 
 ```
 public class FlinkJdbcExample {
 
     public static void main(String[] args) throws Exception {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        //env.setRuntimeMode(RuntimeMode.BATCH);
 
         // Add JDBC source function
         env.addSource(new JdbcSourceFunction())
@@ -2398,7 +2430,7 @@ public class FlinkJdbcExample {
         }
     }
 }
-```
+
 how it work:
 
 In Apache Flink, when using the JdbcSourceFunction or similar custom implementations to read from JDBC sources, the number of records fetched in one batch and the timing of querying the next batch are influenced by several factors and settings:
@@ -2418,6 +2450,32 @@ Thread Sleep: In the example provided (Thread.sleep(1000);), after fetching a ba
 Backpressure and Internal Strategy: Flink's runtime manages backpressure internally. When downstream operators (like transformations or sinks) cannot keep up with the rate of incoming data, Flink's streaming runtime applies backpressure. This means it slows down or pauses upstream sources (such as JdbcSourceFunction) to balance the flow of data through the pipeline.
 
 Effect on Querying Next Batch: When backpressure is applied, Flink's runtime will pause the execution of the JdbcSourceFunction (specifically, it won't call run() again) until downstream operators indicate readiness to process more data. This helps prevent overwhelming downstream operators and ensures efficient resource usage.
+```
+
+注意：
+1.流处理该程序会一直执行不会终止，如果需要处理完数据就终止则必须设置条件主动终止
+```
+while (running) {
+                ResultSet resultSet = statement.executeQuery(query);
+
+                boolean hasRecords = false;
+                while (resultSet.next()) {
+                    hasRecords = true;
+                    MyDataType record = new MyDataType(
+                            resultSet.getString("column1"),
+                            resultSet.getInt("column2")
+                    );
+                    ctx.collect(record);
+                }
+
+                // If no records were found, exit the loop
+                if (!hasRecords) {
+                    break; // Exit after processing all records
+                }
+```
+2. 注意 虽然可以使用 env.setRuntimeMode(RuntimeMode.BATCH); 切换到batch模式，Flink will eventually terminate the job if no records are emitted and if there are no further tasks to process, but this behavior is not guaranteed. It may lead to an indefinite execution state if the loop doesn't exit correctly.
+
+3. 笔者还犯了个错误，由于flink server版本是1.11，而client端这边误用了1.12，虽然setFetchSize可以编译通过，但是1.11并不支持，所以提交任务之后，因为fetchsize失效，jdbc直接一次性将所有数据都load进来，导致oom
 
 当然也可以喂给 table api
 ```
@@ -2502,6 +2560,93 @@ tableEnv.sqlQuery("SELECT * FROM source_table").toAppendStream(Row.class).print(
 
 ```
 
+###### 2.4 flink server version 1.11.* 强行使用sourcefunction
+因为setFetchSize是1.12引入的，所以1.11需要自己控制每个批次要拿的size
+```
+    StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+    DataStream<String> streamJsonString = env.addSource(new SourceFunction<String>(){
+        private volatile boolean running = true;
+        private PGPoolConnection pgPoolConnection = new PGPoolConnection(config);
+        private Connection conn;
+        private PreparedStatement stmt;
+        private ResultSet rs;
+        private int windowSize = 1000000;
+        private int total = 0;
+        private int processedCount = 0;
+        private String tablename = config.getPostgresTable();
+
+        @Override
+        public void run(SourceContext<String> ctx) throws Exception {
+            pgPoolConnection.open();
+            conn = pgPoolConnection.getDataSource().getConnection();
+            stmt = conn.prepareStatement(String.format("SELECT count(*) AS total FROM %s", tablename));
+            stmt.setFetchSize(1);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt("total");
+                System.out.println("Total:: " + total);
+            }
+            this.close();
+
+            while (running) {
+                pgPoolConnection.open();
+                conn = pgPoolConnection.getDataSource().getConnection();
+                stmt = conn.prepareStatement(String.format("SELECT CAST(info AS TEXT) AS info FROM %s ORDER BY id ASC LIMIT ? OFFSET ?", tablename));
+                stmt.setInt(1, windowSize);
+                stmt.setInt(2, processedCount);
+                rs = stmt.executeQuery();
+                while (running && rs.next()) {
+                    ctx.collect(rs.getString("info"));
+                    processedCount++;
+                }
+                System.out.println("PCount:: " + processedCount + (processedCount >= total));
+                if (processedCount >= total) {
+                    running = false;
+                }
+                this.close();
+            }
+            //FOR STREAMING MODE, CODE NEVER COME HERE UNTIL PROGRAM TERMINATED
+            this.terminated();
+        }
+
+        @Override
+        public void cancel() {
+            isRunning = false;
+            this.finish();
+        }
+
+        private void close() {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                rs = null;
+                stmt = null;
+                conn = null;
+            }
+        }
+
+        private void terminated() {
+            this.close();
+            try {
+                pgPoolConnection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                pgPoolConnection = null;
+            }
+        }
+    });
+```
 [我在stackoverflow的回答 How to run apache flink streaming job continuously on Flink server](https://stackoverflow.com/questions/48151881/how-to-run-apache-flink-streaming-job-continuously-on-flink-server/78696018#/78696018)
 
 
