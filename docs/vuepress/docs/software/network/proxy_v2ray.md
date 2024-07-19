@@ -461,3 +461,90 @@ https://blog.cascade.moe/posts/nginx-proxy-v2ray-ws/
 
 V2ray HTTP/2+TLS+WEB 一键部署
 https://iitii.github.io/2022/03/02/1
+
+## Troubleshooting
+基本检查：
++ 网卡属性 ipv4 ip gateway dns
++ proxy设置
++ 是否跟其他vpn软件冲突
++ 浏览器插件是否有开启（比如定位服务）
++ 防火墙
+
+### app/proxyman/outbound: failed to process outbound traffic
+一看就是出去的流量有问题，做了基本检查，防火墙也全关了，
+
+Open Command Prompt and ping the loopback address:
+ping 127.0.0.1
+If this works (you get replies), it indicates that your TCP/IP stack is operational.
+
+并且重置了network
+netsh int ip reset
+netsh winsock reset
+
+ping本地没问题，但是ping局域网其他机器都有问题，报错 General failure
+
+最后发现卸载其他vpn尤其是cloudflare的warp之后问题解决！
+
+
+### v2ray failed to dial WebSocket
+解决方案：
+第一步：判断当前VPS主机时间是否有问题。判断方法参考“v2ray 主机时间同步问题”，如果确定没问题，则进行下一步，如果有问题则按照文章中的步骤同步一下时间即可。然后再次尝试v2ray客户端连接，看看还会不会报错，如果还是会报错，则进行第二步判断。
+
+第二步：判断当前VPS主机端口是否有问题。首先安装一个nc
+
+yum install -y nc
+安装完后，随意开启监听一个端口，例如直接执行下面的命令。监听8181
+
+nc -lv -p 8181
+然后在本机打开cmd，尝试连接一下VPS的8181端口
+
+telnet xxx.你VPS的IP.xx.xx 8181
+如果没连进去，这里就要分析多种可能了。
+例如：1、可能是你VPS没有关闭防火墙
+2、可能是你电脑网络没办法访问互联网其他主机的端口，可能公司限制
+3、你的VPS被墙了，只能考虑使用CloudFlare来做中转帮你自己恢复被墙的限制(CloudFlare恢复被墙方法)
+
+如果没问题，那么你要注意以下你的V2RAY的配置，是否使用的WebSocket+TLS模式，或者你v2ray对外开放的是什么端口。是什么端口，你连接一下什么端口。WebSocket+TLS这个默认是443 你继续在你的电脑中telnet连接一下，我这边尝试连接我自己的VPS结果就是443端口是不通的，其他任何端口都没问题。
+
+那就只能证明一个结果，我VPS的IP的443端口被墙了，所以只能更换其他端口。v2ray WebSocket+TLS 模式更换其他端口的方法如下：
+
+vi /etc/caddy/Caddyfile
+##注意，里面的内容第一行，绝对是你自己配置的域名，这里更改为如下，英文冒号，端口随意设置
+www.你自己配置的域名.com:8080 {
+    gzip
+timeouts none
+    proxy / https://www.baidu.com {
+        except /ddd
+    }
+    proxy /ddd 127.0.0.1:40507 {
+        without /ddd
+        websocket
+    }
+}
+http://www.你自己配置的域名.com {
+    gzip
+timeouts none
+    proxy / https://woj.app {
+    }
+}
+import sites/*
+
+然后你使用v2ray 客户端连接的时候，把443端口更改成你设定的端口即可。例如我这里面设定的是8080，我更改为8080就搞定了。
+后续就可以正常使用v2ray啦。
+
+最新caddy的设置如下：
+
+ltang.suning.com {
+    reverse_proxy https://fanyi.baidu.com {
+        header_up Host {upstream_hostport}
+        header_up X-Forwarded-Host {host}
+    }
+    handle_path /search {
+        reverse_proxy 127.0.0.1:20363
+    }
+}
+http://ltang.suning.com {
+    reverse_proxy  / https://woj.app {
+    }
+}
+import sites/*
