@@ -202,6 +202,22 @@ Private leased line (also known as MPLS) provides a dedicated connection that of
 
 ## Troubleshooting
 
+### Win10下设置自动跳跃数
+跃点：即路由。一个路由为一个跃点。传输过程中需要经过多个网络，每个被经过的网络设备点（有能力路由的）叫做一个跃点，地址就是它的ip。跃点数是经过了多少个跃点的累加器，为了防止无用的数据包在网上流散。 为路由指定所需跃点数的整数值（范围是 1 ~ 9999），它用来在路由表里的多个路由中选择与转发包中的目标地址最为匹配的路由。所选的路由具有最少的跃点数。跃点数能够反映跃点的数量、路径的速度、路径可靠性、路径吞吐量以及管理属性。
+自动跃点这个功能适用于有多个相同速度的网络接口的场合，例如，当每个网络接口都被分配了一个默认网关时。在这种情况下，用户可能需要手动配置一个网络接口上的跃点数，然后启用“自动跃点计数”功能来配置其他网络接口上的跃点数。使用这种设置可以控制在 IP 流量路由中首先使用的网络接口。
+简单来说电脑两张网卡，一个内网一个外网，如果使用一个必须断开另外一个非常麻烦，使用自动跃点就可以轻松在两个网络中进行切换。
+
+先用win+R打开命令提示符，输入“route print”即可显示当前计算机的路由表，我们可以看出第一条是我们本地计算机，最后一个35表示优先级，
+
+在我们连接了WiFi热点后，再次输入命令查看路由表，发现路由表多出一行，这就是我的WiFi，优先级为50，低于以太网；
+
+现在我们设置自动跳跃数，打开“网络连接”，右键以太网，选择“属性”；
+在以太网状态窗口中单击“属性”按钮；
+在以太网属性窗口中双击“Internet协议版本4（TCP/IPV4）”；
+双击“高级”按钮；
+把勾选的“自动跳跃点”去掉，把接口跃点数改为35，单击“确定”；
+打开命令提示符再次查看一下路由表，发现WiFi热点的路由优先级已经高于以太网了
+[Windows主机连接WIFI无法访问内网的网络故障](https://baijiahao.baidu.com/s?id=1757152878290441136&wfr=spider&for=pc#/)
 ### Asymmetric Routing 非对称路由
 What is Asymmetric Routing?
 In Asymmetric routing, a packet traverses from a source to a destination in one path and takes a different path when it returns to the source. This is commonly seen in Layer-3 routed networks.
