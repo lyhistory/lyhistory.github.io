@@ -176,6 +176,8 @@ strace -ff -o prefix
 
 jdk工具：jvisualvm
 
+https://www.xiaolincoding.com/os/8_network_system/selete_poll_epoll.html#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B
+
 [图解通用网络IO底层原理、Socket、epoll、用户态内核态······](https://mp.weixin.qq.com/s/Cema4S_qCq4JbIlEEefvcA)
 
 [Socket和TCP连接过程解析](https://mp.weixin.qq.com/s/8Qa6mhg_dvGIafpFeC2zUg)

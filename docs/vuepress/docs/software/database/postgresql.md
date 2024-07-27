@@ -206,6 +206,34 @@ https://stackoverflow.com/questions/6405127/how-do-i-specify-a-password-to-psql-
 PGPASSWORD=postgres psql --host IP --port 5432 -U postgres -d DBNAME -c "query;"
 PGPASSWORD=postgres psql --host IP --port 5432 -U postgres -d DBNAME -f file.sql
 ```
+#### 更改PGDATA位置
+```
+# systemctl status postgresql-12.service
+● postgresql-12.service - PostgreSQL 12 database server
+   Loaded: loaded (/usr/lib/systemd/system/postgresql-12.service;
+
+vi /usr/lib/systemd/system/postgresql-12.service 
+# Location of database directory
+Environment=PGDATA=/var/lib/pgsql/12/data/
+
+mkdir pg_data_base
+#careful, it's parent folder
+rsync -av /var/lib/pgsql/12 pg_data_base/
+
+mv /var/lib/pgsql/12/data /var/lib/pgsql/12/data-bk
+
+vi /usr/lib/systemd/system/postgresql-12.service 
+[Service]
+Environment=PGDATA=/apex/data/pg_data_base/12/data/
+
+systemctl daemon-reload
+systemctl start postgresql-12.service
+
+
+sudo -u postgres psql
+SHOW data_directory;
+```
+
 ### Extension
 dblink vs postgres_fdw
 
@@ -899,6 +927,18 @@ p_cjrs rec_cjr[];
 ```
 
 ## 3. Backup and Restore
+### full backup restore
+make sure all connections to db disconnected or systemctl restart
+
+pg_dump -Fc dbname > outfile
+psql dbname < infile
+
+pg_dump dbname | gzip > filename.gz
+createdb dbname
+gunzip -c filename.gz | psql dbname
+pg_restore -d dbname /path-to-backup
+### incremental backup restore
+
 [Continuous Archiving and Point-in-Time Recovery (PITR) ](https://www.postgresql.org/docs/current/continuous-archiving.html#/)
 
 [How To Set Up Continuous Archiving and Perform Point-In-Time-Recovery with PostgreSQL 12 on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-continuous-archiving-and-perform-point-in-time-recovery-with-postgresql-12-on-ubuntu-20-04#/)

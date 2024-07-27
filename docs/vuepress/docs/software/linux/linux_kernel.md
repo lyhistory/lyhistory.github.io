@@ -308,6 +308,19 @@ tcpdump -i eth1 host 192.168.1.1 and port 80
 //抓包以流为单位显示数据内容
 tcpflow -cp host 192.168.1.1
 ```
+## 内核编程
+### Kernel bypass
+https://blog.cloudflare.com/kernel-bypass#/
+### tcp
+[内核源码] tcp 连接队列 https://wenfh2020.com/2022/01/22/kernel-tcp-socket-backlog/#/
+
+### ebpf
+https://ebpf.io/
+
+[一文读懂内核可编程技术eBPF](https://www.sdnlab.com/26501.html#/)
+[Introduction to BPF | LINUX Berkeley Packet Filter | CodiLime](https://www.youtube.com/watch?v=qXFi-G_7IuU)
+[Tutorial: Create Your First EBPF Program to Monitor Your System Using Bumblebee - Adam Sayah](https://www.youtube.com/watch?v=os2f0yfcgIU#/)
+
 
 ## 辅助工具 
 
