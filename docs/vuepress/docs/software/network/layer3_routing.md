@@ -18,6 +18,17 @@ The routing process usually directs forwarding on the basis of routing tables. R
 
 Routing, in a narrower sense of the term, often refers to IP routing and is contrasted with bridging. IP routing assumes that network addresses are structured and that similar addresses imply proximity within the network. Structured addresses allow a single routing table entry to represent the route to a group of devices. In large networks, structured addressing (routing, in the narrow sense) outperforms unstructured addressing (bridging). Routing has become the dominant form of addressing on the Internet. Bridging is still widely used within local area networks.
 
+### ARP
+ARP协议位于TCP/IP协议栈的网络层和数据链路层之间,可以看作是这两层之间的一个接口。具体来说,ARP协议工作在TCP/IP协议中的网络层,
+‌主要负责将网络层地址（‌如IPv4地址）‌解析为链路层地址（‌如MAC地址）‌。‌当主机需要向另一个主机发送数据时，‌它会发送ARP请求广播，‌询问网络中哪个设备的IP地址与目标IP地址匹配。‌收到请求的设备会回应自己的MAC地址，‌这样发送方就知道了目标设备的MAC地址，‌进而可以直接发送数据到目标设备，‌而不需要再进行广播。‌
+
+虽然交换机和ARP在计算机网络中扮演不同的角色，‌但它们之间有一定的联系。‌交换机通过学习MAC地址进行数据帧的转发，‌而ARP协议则负责将IP地址解析为MAC地址，‌确保数据能够正确发送到目标设备。‌在大型网络中，‌ARP和交换机共同工作，‌使得数据能够高效、‌准确地传输到目的设备。‌
+
+路由器和ARP的关系主要体现在路由器通过ARP协议获取物理地址，‌以及通过绑定IP和MAC地址来防止ARP欺骗。‌
+路由器作为网络通信的关键设备，‌其功能之一是通过ARP（‌地址解析协议）‌将网络中的IP地址转换为对应的物理地址，‌从而确保数据包能够准确地发送到目标设备。‌ARP协议允许主机发送包含目标IP地址的ARP请求广播到网络上的所有主机，‌并接收返回消息来确定目标的物理地址。‌这个过程是TCP/IP协议栈中的一部分，‌确保了数据包的正确路由。‌
+
+为了防止ARP欺骗，‌路由器支持IP和MAC地址的绑定功能。‌这种绑定可以通过两种方式进行：‌手动添加和通过ARP扫描导入条目。‌手动添加虽然操作复杂，‌但安全性高，‌适用于存在ARP欺骗的情况下；‌而通过ARP扫描导入条目则简单快捷，‌但要求网络中没有ARP欺骗，‌否则可能会绑定错误的IP MAC条目导致某些主机无法上网。‌此外，‌为了防止ARP欺骗，‌不仅需要在路由器上绑定主机的MAC地址，‌还必须在主机上绑定路由器的MAC地址，‌进行双向绑定，‌以确保网络安全。‌
+
 ### 路由器 VS 网关（不是具体某一层）
 路由器是产品，网关是概念
 
@@ -54,7 +65,8 @@ Routing, in a narrower sense of the term, often refers to IP routing and is cont
 
 表面区别:路由打通的两个网段地位是公平的，既都是公网或都是私网，理解起来比较简单，因为路由不改变包头信息，所以如果用路由连接公网和私网的话，目的地址为私网(192.168.1.2)的数据包在公网上找不到归宿。其实路由表里面也没有相关的路由信息。
 
-NAT打通的可以是两个公平的网络，也可以是一个内网和一个外网。
+**NAT打通的可以是两个公平的网络，也可以是一个内网和一个外网。**
+内网机器访问外网肯定要NAT
 
 ### MPLS VS IP Routing
 In MPLS, the switching of traffic is based on the labels assigned to the network packets. While in IP routing, it is based on the destination IP address. In MPLS, a fixed and dedicated path is established for the routing of network packets.
@@ -80,7 +92,7 @@ https://developer.aliyun.com/article/447528
 
 ### 工具
 
-route VS ip route:
+#### route VS ip route:
 
 route is a fairly simple tool, perfect for creating static routes. It's still present in many distributions for compatibility. ip route is much more powerful, it has much more functionality, and can create more specialized rules.
 
@@ -100,6 +112,8 @@ ip route add 10.0.0.0/24 dev eth0 table 10
 ip rule add from 10.0.0.115 table 10
 
 ```
+#### arpspoof ARP欺骗攻击
+
 
 ### 路由类型分类一：
 + 主机路由
@@ -201,6 +215,33 @@ Private leased line (also known as MPLS) provides a dedicated connection that of
 [Advice for getting my own ASN](https://www.reddit.com/r/ipv6/comments/yoesvg/advice_for_getting_my_own_asn/)
 
 ## Troubleshooting
+### intranet access issue raised by wrong arp
+
+I got an issue access the shared folder on the other pc in the same intranet at home, actually it was working fine a few days ago.
+both pc are win10 os.
+
+without firm knowlege on networking I started to google without thinking, tried all the online suggestions but no luck;
+
+ok, it could be something wrong either on my win10 or the other one, so I turned off firewall, started all the "file and printer sharing" realted services, turned on sharing for private/public network, grant remote access to both everyone and guest with full permissions, 
+even tried modify regedit(registry editor) to enable AllowInsecureGuestAuth, still no luck;
+
+finally I come to think of ping, source ip:192.168.0.141, target ip:192.168.0.113, so ping 192.168.0.113 result in:
+```
+Pinging 192.168.0.113 with 32 bytes of data:
+Reply from *192.168.0.141*: Destination host unreachable.
+```
+the ip "Reply from " is the source machine, it indicates that it's something wrong with the source machine, 
+then I run 'arp -a', 
+![](/docs/docs_image/software/network/arp.png)
+now things get a bit clear, the target ip isn't in the arp table, I tried arp -d to reset arp, but not working, so I decided the easiest way is to restart router to clear the arp table;
+after restarting router, all settled!
+
+finally thoughts: I should spare some time to learn networking.
+refer:
+https://www.coursera.org/learn/network-protocols-architecture
+
+整理了8张图详解ARP原理
+https://zhuanlan.zhihu.com/p/395157603
 
 ### Win10下设置自动跳跃数
 跃点：即路由。一个路由为一个跃点。传输过程中需要经过多个网络，每个被经过的网络设备点（有能力路由的）叫做一个跃点，地址就是它的ip。跃点数是经过了多少个跃点的累加器，为了防止无用的数据包在网上流散。 为路由指定所需跃点数的整数值（范围是 1 ~ 9999），它用来在路由表里的多个路由中选择与转发包中的目标地址最为匹配的路由。所选的路由具有最少的跃点数。跃点数能够反映跃点的数量、路径的速度、路径可靠性、路径吞吐量以及管理属性。

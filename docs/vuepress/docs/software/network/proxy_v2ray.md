@@ -170,8 +170,30 @@ Optionally run service v2ray start|stop|status|reload|restart|force-reload to co
 
 #### 客户端：
 
+[三方下载地址](https://itlanyan.com/v2ray-clients-download/)
+
 ##### Windows客户端
-https://github.com/v2ray/V2RayN
+
+
+
+下载安装[V2RayN下载地址](https://github.com/v2ray/V2RayN)后运行V2rayN.exe，根据提示下载 dotnet framework 并安装后重启，添加vmess服务器：
+```
+别名：任意
+地址：域名
+端口：443
+用户id：对应v2ray config inbounds->clients->id
+alertId:默认0
+加密方式：auto
+传输协议：ws
+伪装域名：域名
+路径：对应v2ray config streamSettings->wsSettings->path
+传输层安全：tls
+sni:域名
+跳过证书验证 allowInsecure: false
+```
+
+添加后观察下方窗口输出结果，注意到：
+在文件夹 (...\V2RAY\v2rayN\bin\Xray) 下未找到Core文件 (文件名:xray, wxray)，请下载后放入文件夹，[下载地址](https://github.com/XTLS/Xray-core/releases)
 
 ##### linux客户端：
 https://v2raya.org/docs/prologue/introduction/
@@ -463,12 +485,15 @@ V2ray HTTP/2+TLS+WEB 一键部署
 https://iitii.github.io/2022/03/02/1
 
 ## Troubleshooting
-基本检查：
+
+### 基本检查和终极方法
 + 网卡属性 ipv4 ip gateway dns
 + proxy设置
 + 是否跟其他vpn软件冲突
 + 浏览器插件是否有开启（比如定位服务）
 + 防火墙
+
+有时候观察到不稳定或者手机可以,windows不可以,完全可以通过升级客户端解决!
 
 ### app/proxyman/outbound: failed to process outbound traffic
 一看就是出去的流量有问题，做了基本检查，防火墙也全关了，

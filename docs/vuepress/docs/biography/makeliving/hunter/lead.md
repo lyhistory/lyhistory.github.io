@@ -94,8 +94,25 @@
 
 联盟经理的方式：拿到职位→开展EMU→联盟住结算给你→EMU完成起付金额→你结算给EMU→你赚差价！
 
-CJ Affiliate
-https://mp.weixin.qq.com/s?__biz=Mzg5NjIzNDA1NQ==&mid=2247484792&idx=1&sn=b3cadec3d4a04c191e27e31551787592&chksm=c0056250f772eb46c67e1f66d7660eb44c03e665602f09cbcfe4ce14969f20beb612634e06d6&cur_album_id=2803612459847680002&scene=190#rd
+rakutenadvertising.com
+shareasale
+https://affbank.com/auth/register
+
+https://www.amz123.com/aff
+https://zhuandaoke.com/favorites/yingwenguanggaolianmeng
+
++ EMU
+  
++ STANDARD
+  - [CJ Affiliate](https://mp.weixin.qq.com/s?__biz=Mzg5NjIzNDA1NQ==&mid=2247484792&idx=1&sn=b3cadec3d4a04c191e27e31551787592&chksm=c0056250f772eb46c67e1f66d7660eb44c03e665602f09cbcfe4ce14969f20beb612634e06d6&cur_album_id=2803612459847680002&scene=190#rd)
+
+### 通过offer查找联盟平台的方式：
+
+1：通过https://affi.io/ 查找
+
+2：直接谷歌 xxx Affiliate Program
+
+3：通过返利网去查上级联盟 浏览器插件：Link Redirect Trace
 
 ### POA
 
