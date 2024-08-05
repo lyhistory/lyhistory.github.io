@@ -4,6 +4,14 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
+real 实际时间：程序运行的实际时长。
+
+user 用户时间：程序在用户态运行的时长。
+
+sys 系统时间：程序在内核态运行的时长。
+
+注意：多核处理器存在用户时间+系统时间 > 实际时间的情况。
+
 ## 系统启动过程
 
 1. 内核的引导

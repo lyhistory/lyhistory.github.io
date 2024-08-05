@@ -147,6 +147,7 @@ epoll引入了内核空间，当创建server socket的时候获得文件描述�
 
 ## 基于epoll的框架和产品：netty redis haproxy等
 
+### netty
 netty vs jetty
 
 ![netty](/docs/docs_image/software/buildingblock/nio06.png)
@@ -166,7 +167,8 @@ tools: \jdk1.8\bin\jvisualvm.exe
 
 多提一个角度，常常有比较tomcat和netty，说netty的性能远远超过tomcat，原因大致是因为协议，tomcat走http，netty走tcp，这是一方面，另一个方面就是虽然两者都支持NIO，都是采用jdk的nio，但是由于tomcat受制于servlet的规范，不能充分发挥NIO的优势，莫非这就是tomcat8以上推高性能apr的原因（随便猜测一下）？通过前面的分析也可以知道，上层的应用程序本质受制于内核的进化，即使内核进化的很优化，应用程序没有实现好同样无法发挥优势的；
 
-
+### redis
+redis支持多种多路I/O复用机制，包括 select、poll、epoll、kqueue等，其中epoll是linux系统下性能最好的一种机制
 
 本文发布公众号专辑[软件开发](https://mp.weixin.qq.com/mp/appmsgalbum?action=getalbum&album_id=1350228280636686336&__biz=MzU1NTUyMzYzMg==#wechat_redirect)
 
