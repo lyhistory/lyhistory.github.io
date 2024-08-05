@@ -38,3 +38,9 @@ c++ free 原理
 
 GPU编程CUBA
 锁页内存
+
+RAII模式（Resource Acquisition Is Initialization）资源获取即初始化，是 C++ 中最基本、应用最广范的惯用法（idiom）之一。
+
+RAII 的基本思想是通过构造/析构函数，对资源的获取/释放进行封装，然后借助局部对象的自动生命周期来管理资源。使用 RAII 可以让用户无需手动管理资源的获取/释放，减少出错的机会。不仅如此，RAII 还是异常安全的：即使获取资源后，在使用资源的过程中抛出异常，也可以自动释放，避免资源泄露。
+
+C++ 标准库里面有很多 RAII 的例子，如 unique_ptr、lock_guard、fstream、string 以及 vector 等各类容器。我们在实现自己的类时，也要尽量遵循 RAII。

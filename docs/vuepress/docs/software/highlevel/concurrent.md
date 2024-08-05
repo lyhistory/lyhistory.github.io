@@ -114,9 +114,20 @@ java sdk默认提供了非线程安全的队列和线程安全的队列，实际
 
 但是，
 ### 多线程不代表高性能！
-多线程有读写问题，需要加锁，则触发内核态，从而降低性能
+
+#### cache line false sharing
+
+#### 维护线程以及线程间开销
+
+#### 多线程锁升级可能触发内核态，从而降低性能
 
 **要处理高并发，肯定要考虑性能，有没有性能高即无锁non-blocking并且有界的队列呢，LMAX开发的Disruptor就是这么一个无锁高性能有界循环队列，**
+
+但是需要注意的是：
+
+1）所谓无锁并非完全没有锁，而是指没有用到重锁从而导致系统调用操作系统线程的挂起唤醒等耗时操作，本质还是要用到所谓原子锁（无锁队列通常使用原子操作（如CAS）来避免锁的使用。原子操作能够在单个CPU指令中完成，这减少了线程之间的冲突和等待时间，从而提高了性能）
+
+2）所谓的单线程并非完全单线程，而是分为单线程模式（单个生产者）和多线程模式（多个生产者），即使单线程模式下也并非只有一个线程，而是指没有竞争线程，而多线程模式下是指少量的竞争者并且竞争时间很短可以使用轻量级锁
 
 “It ensures that any data is owned by only one thread for write access, therefore reducing write contention compared to other structures.”
 
@@ -706,9 +717,7 @@ return result;
 async await
 https://stackoverflow.com/questions/17250047/how-is-async-with-await-different-from-a-synchronous-call#/
 
-### IO的高并发发展
-参考 [BIO/NIO/多路复用/NETTY](/software/buildingblock/nio_epoll.md)
-[100万级连接，爱奇艺WebSocket网关如何架构](https://mp.weixin.qq.com/s/H3HPpW2w88v0tDCbQIh7CA)
+
 
 ### 状态机
 同步状态机 异步状态机
@@ -718,6 +727,11 @@ https://www.volcengine.com/theme/9743656-C-7-1#/
 https://www.volcengine.com/theme/8113445-R-7-1#/
 ## 3.系统和框架层面的并发限制
 
+### IO的高并发发展
+参考 [BIO/NIO/多路复用/NETTY](/software/buildingblock/nio_epoll.md)
+[100万级连接，爱奇艺WebSocket网关如何架构](https://mp.weixin.qq.com/s/H3HPpW2w88v0tDCbQIh7CA)
+
+### 其他
 比如linux句柄数 执行ulimit –n检查文件句柄数为1024，将该数值改为10240
 /etc/security/limits.con
 
