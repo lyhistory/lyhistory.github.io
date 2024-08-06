@@ -200,6 +200,9 @@ http://www.mofcom.gov.cn/article/ckzn/index.shtml
 ## 辅助工具
 
 ### AI
+
+https://www.linkfox.com/
+
 AI可实现人工智能选品、图文和视频广告素材制作/广告语智能输出、广告智能投放、智能客服回复等功
 
 https://www.mogic.ai/
@@ -287,3 +290,55 @@ https://mp.weixin.qq.com/s/UFrn_D4lyDfXzsICptfDMA
 邮件签名美化
 
 https://www.hubspot.com/email-signature-generator#sig-generator-anchor
+
+### whatsapp
+
+```
+
+<html>
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>给任意whatsapp账号发信息</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+        <script>
+      $(function(){
+        $("#submit").click(function(){
+                        var m=$("#m").val();
+                        var t = m.replace(/(^\+0*)|[\s()-]/g, "");
+                        var text=$("#text").val();
+                        var n=encodeURI(text);
+                        r = "https://wa.me/"+t+"?text="+n;
+                        window.open(r);
+        });
+      })
+</script>
+        <style>
+            *{    font-family: monospace;}
+            h1 a{color:darkolivegreen;    text-decoration: none;}
+            h2{margin:0;}
+            h2 a{text-decoration: none;    font-size: 16px;    color: #333;}
+            h2 a:hover{color:darkolivegreen;}
+            label{font-size: 1.5em;}
+            input{margin:10px 20px;display:inline-block;}
+            #m,#text{font-size: 32px; border: none;border-bottom: 1px solid gray;color: gray;}
+            #submit{border-radius: 15px;border: none;    background: #14664b;    font-size: 20px;   
+    cursor: pointer;padding: 10px 50px;color:white;}
+            #submit:hover{background:#21a67a;color:white;}
+            p{font-size:12px;}
+</style>
+    </head>
+    <body>
+        <div style="margin:0 auto;width:95%;text-align: center;">
+            <h1>给任意手机号发WA信息</h1>
+            <p>这个小工具完全在浏览器端运行，不会向服务器提交任何信息，大可放心使用。</p>
+            <div>
+                <input id="m" type="text" placeholder="对方手机号：" /><br/>
+                <input id="text" type="text" placeholder="预填信息：" /><br/>
+                <input type="button" id="submit" value="跳转至WhatsApp客户端发信息"/>
+            </div>
+            <h2><a href="/">210 Studio，版权所有 | 返回首页</a></h2>
+        </div>
+    </body>
+</html>
+```

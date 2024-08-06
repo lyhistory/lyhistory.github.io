@@ -15,3 +15,6 @@ https://www.hdb.gov.sg/residential/buying-a-flat/flat-and-grant-eligibility/coup
 https://www.propertyguru.com.sg/property-guides/how-do-singapore-permanent-residents-buy-a-hdb-flat-9914
 
 BTO build to order
+
+难道这就是普通人在新加坡“暴富”的打开方式嘛
+https://mp.weixin.qq.com/s/r-9EA-w7Vqtk3j94-eSjtQ

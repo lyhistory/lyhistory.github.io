@@ -91,7 +91,7 @@ Kaggle 每周有 30 小时免费使用时长，平均到每天可以使用 4 个
 https://www.esheep.com/
 pro.aikobo.cn
 
-## 使用
+## 基本使用
 
 ### Basic
 [Stable Diffusion WebUI AUTOMATIC1111: A Beginner’s Guide](https://stable-diffusion-art.com/automatic1111/)
@@ -103,6 +103,9 @@ pro.aikobo.cn
 
 反向prompt：cartoon,painting,illustration,(worst quality, low quality, normal quality:2)
 
+## 插件 Extension
+
+https://mp.weixin.qq.com/s/z_rD7HP_yJLXiMIBu4nAug
 
 ### Extension: ControlNet
 ControlNet is a Stable Diffusion model that lets you copy compositions or human poses from a reference image.
@@ -114,11 +117,47 @@ Segmentation Color Sheet: https://docs.google.com/spreadsheets/d/1se8YEtb2detS7O
 
 ### Extension: inpaint anything
 https://github.com/Uminosachi/sd-webui-inpaint-anything
+https://mp.weixin.qq.com/s/gSUNdSKP-cZzIouJLBU9Ag
+
+### Extension:LightFlow 工作流复用插件
+https://mp.weixin.qq.com/s/UXg777w3F7wggA3F29cACg
 
 ### ComfyUI 
 https://stable-diffusion-art.com/comfyui/
 https://zhuanlan.zhihu.com/p/620297462
 
+## 常用模型分类
+
+五大类，分别是Stable diffusion模型、VAE模型、Lora模型、Embedding模型以及Hypernetwork模型。
+
+https://www.53ai.com/news/qianyanjishu/2444.html
+https://zhuanlan.zhihu.com/p/649749094
+
+从用途上看，还分为官方模型、二次元模型（动漫）、真实系模型和2.5D模型四大类
+
+### lora
+AI字体+城市海报制作 https://mp.weixin.qq.com/s/LJjGYBrigK0rB0FSMqbe8g
+电商模型 https://mp.weixin.qq.com/s/yiCc_u_W21w_PbeWHSJ7Mg
+
+### ControlNet和IP-Adapter塑造风格化的头像
+https://mp.weixin.qq.com/s/k4rSCOAYYKNHkIvjJDGPhg
+
+### AnimateDiff 文生动图gif
+https://mp.weixin.qq.com/s/AiA_Rkz35FD1uv2deXPIKg
+https://mp.weixin.qq.com/s/K7eWwxcPeUDggt9P6A9UcQ
+
+### EasyPhoto AI 写真照片生成器
+https://mp.weixin.qq.com/s/zSwXJY14hECwHrDIc5X4ZA
+
+### Deforum 
+全息动画 https://mp.weixin.qq.com/s/27rK6S9YSrtTM2icDDNm-g
+Deforum和AE https://mp.weixin.qq.com/s/n_jz-wliJXTRKio_lqBDPA
+
+### Latent Consistency Models
+https://mp.weixin.qq.com/s/-eBJndDRNOjvjJMeN2UZEw
+
+### SDXL-Turbo 快速
+https://mp.weixin.qq.com/s/pArAPDESJXTG2OLzHjUbxQ
 
 ## 场景应用
 
@@ -151,6 +190,9 @@ https://mp.weixin.qq.com/s/Q42AQQ7YVLuMCZF1uA3V2Q
 ### 肢体变形
 ControlNet Depth Libra https://github.com/jexom/sd-webui-depth-lib
 https://www.youtube.com/watch?v=_YLKg_k_sYQ
+
+### 角色一致性
+Midjourney 实现角色一致性的新方法 https://mp.weixin.qq.com/s/OQgb3jDGmmBsId-k5pMpOA
 
 ## 市面产品
 https://clipdrop.co/stable-doodle

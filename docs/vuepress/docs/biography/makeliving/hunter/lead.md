@@ -106,6 +106,9 @@ https://zhuandaoke.com/favorites/yingwenguanggaolianmeng
 + STANDARD
   - [CJ Affiliate](https://mp.weixin.qq.com/s?__biz=Mzg5NjIzNDA1NQ==&mid=2247484792&idx=1&sn=b3cadec3d4a04c191e27e31551787592&chksm=c0056250f772eb46c67e1f66d7660eb44c03e665602f09cbcfe4ce14969f20beb612634e06d6&cur_album_id=2803612459847680002&scene=190#rd)
 
+CPA Grip（https://www.cpagrip.com/）是一个著名的 CPA 网站
+https://mp.weixin.qq.com/s/iPX-urvOA5SFaGkYcLY2-w
+
 ### 通过offer查找联盟平台的方式：
 
 1：通过https://affi.io/ 查找

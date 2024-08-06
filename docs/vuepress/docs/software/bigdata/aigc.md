@@ -38,6 +38,8 @@ https://mariushosting.com/how-to-install-chat-with-gpt-on-your-synology-nas/
 
 https://cloud.tencent.com/developer/article/2312981
 
+#### 个人知识库 
++ chatpgt GPTs
 ### 去中心 web3+AI
 https://github.com/OrbisWeb3/orbis-chat-gpt
 
@@ -81,6 +83,17 @@ https://huggingface.co/
 ### Text to image model
 [Stable Diffusion model](/software/bigdata/stable_diffusion.md)
 
+### Video Model - Image to Video
+https://github.com/camenduru/stable-video-diffusion-colab
+https://mp.weixin.qq.com/s/aLXCrH4sUK8HY-h2D5zPSw
+
+Deepfake 视频换脸
+https://mp.weixin.qq.com/s/9RJGpxvKieMY4Mu__mHfFQ
+https://colab.research.google.com/drive/1NG9AoH3QDtC7h97z1Yodmn_CiiGh8Y1T?usp=sharing#scrollTo=0aHr4Fo-7IRy
+
+钉钉+SD+UE5
+https://mp.weixin.qq.com/s/fNxb2B5PiTTzTSXMuXHvOg
+
 ### Large Vision Models (LVM)
 
 ## 按平台分类
@@ -108,8 +121,7 @@ open-interpreter https://github.com/lyhistory/tools_aigc_open-interpreter
 Draw a ui and make it real
 https://github.com/tldraw/make-real
 
-IP工具箱：开源 IP 信息查看器，使用 AI 写了 70% 代码，上线12天，GitHub 已获 900+ 星
-https://www.appinn.com/myip-a-better-ip-toolbox/
+
 
 生成网站：
 https://typedream.com/
@@ -161,6 +173,11 @@ pika labs
 https://runwayml.com/
 
 https://wonderdynamics.com/
+
+https://github.com/SCUTlihaoyu/open-chat-video-editor
+
+极虎漫剪
+https://mp.weixin.qq.com/s/eKkcFNx77DJM4Usoc72fjw
 
 ### 市场分析
 transform your product knowledge into a detailed Ideal Customer Profile https://m1-project.com

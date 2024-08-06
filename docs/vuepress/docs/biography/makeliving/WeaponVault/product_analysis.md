@@ -1,6 +1,15 @@
 选品 竞品分析
 https://www.yuntingai.com/bokewenzhang/38.html
 
+TikTok Shop“踏步机”爆卖160万美金，“互动游戏”售出2万单 | 嘀嗒狗
+https://mp.weixin.qq.com/s/Sg2OjkwuFTBdMdgcMcODaQ
+
+看古老而神秘的国货在跨境电商界独领风骚！
+https://mp.weixin.qq.com/s/IxpTkX_k_pxnWEDYWmNxLw
+
+“搞钱女孩”天猫创业，年增长610%，又挖掘出一条蓝海赛道
+https://mp.weixin.qq.com/s/mGubiuc0gf7U_stkclUvFg
+
 [4大步骤教你完成一份专业的电商竞品分析报告(附案例)](https://www.yuntingai.com/bokewenzhang/38.html)
 
 

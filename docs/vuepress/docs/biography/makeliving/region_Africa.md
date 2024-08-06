@@ -9,3 +9,7 @@ https://ug.kilimall.com/
  官网：www.kilimall.com.cn 注册链接：https://kilimall.com.cn/seller/register?referid=2713
  肯尼亚站点：wwww.kilimall.co.ke 乌干达站点：www.kilimall.co.ug 尼日利亚站点：www.kilimall.ng
  卖家支持帮助中心：help.kilimall.com
+
+ 做外贸，如何开发非洲市场？
+ https://mp.weixin.qq.com/s/r1gvdhqf5qjax2TUWjrxfQ
+ 

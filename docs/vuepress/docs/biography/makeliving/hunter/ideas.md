@@ -1,9 +1,14 @@
+
 使用青龙面板自动获取京东京豆 https://mp.weixin.qq.com/s/zUm8LBGku3gBLNGIU24xWQ
 
 
 如何做虚拟产品年入百万 https://mp.weixin.qq.com/s/1FmMEUeIGb-Zgc1YB_pXPg
 https://mp.weixin.qq.com/s/ZJmzXhF5AV3bewCj5j1lLQ
 https://mp.weixin.qq.com/s/UJdUPf6FKWHcqq40O6GhlA
+
+出售“脚”的照片：每张5-100美元
+https://mp.weixin.qq.com/s/YYxANYf1GpKFwzeYmpocUA
+
 
 小王高中毕业，半年靠卖课赚了500万，你怎么看？
 https://mp.weixin.qq.com/s/J-52wA2KpFbqAxHf-Idyjg

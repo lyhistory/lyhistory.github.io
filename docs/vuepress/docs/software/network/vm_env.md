@@ -129,6 +129,15 @@ virtualbox (save the state) +LVM+ cmder/ConEmu/cygwin (x11, tmux session+tmux-re
 
 Other ssh client like: google chrome secure shell extension and http://web-console.org/
 
+由于系统内核不同，当我们要在一个操作系统中运行另一个系统上的程序时，一般需要安装虚拟机来实现。不过常规虚拟机的安装比较麻烦，并且换用其他电脑时也可能不容许我们安装软件，遇到这种情况，我们可以制作便携式虚拟机来解决。下面就以制作绿色便携版VirtualBox虚拟机为例。
+
+首先上网下载Portable-VirtualBox，接着再到VirtualBox主页下载对应版本的VirtualBox（注意两个软件版本号要一致）。启动Portable-VirtualBox后点击“search”选择上述下载到的“VirtualBox”安装文件，同时勾选32和64位制作版本。
+
+点击OK，程序开始完成“VirtualBox”绿色版的制作。制作好的绿色版默认保存在“Portable-VirtualBox”安装目录下的APP目录中中如\Portable-VirtualBox\app64”。
+
+现在可以将上述目录全部复制到闪存盘中，再将闪存盘插入到任意一部安装Windows的电脑中，运行其中的“VirtualBox.EXE”即可启动虚拟机。启动虚拟机后点击“Setting”进入设置，将USB设置开启，这样便携虚拟机可以直接读取USB设备中的内容如虚拟机系统文件，配置等。
+完成上述设置后就可以新建虚拟机，为了方便读取虚拟机的文件，在新建虚拟机硬盘设置里要选择“Use an existing virtual disk file”（使用存在的虚拟文件），这样将常用的虚拟系统文件先设置好保存在闪存盘中，以后闪存盘插入到不同电脑上都可以直接选择制作好的虚拟系统文件。
+
 #### 2.2.1 常用工具
 
 Mouse escape from ubuntu: Esc

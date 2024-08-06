@@ -1804,6 +1804,29 @@ https://developers.weixin.qq.com/miniprogram/dev/api/network/request/wx.request.
 
 ## Prompt 实战
 
+### 广告投放
+
+
+Facebook Ads Setup (CHATGPT PROMPT)
+My client: 
+The target:
+My budget:
+
+make a table with the name "Campaign" with these
+column headers
+show the column headers horizontally
+the text before the | is the column head the text after | is the information
+Campaign "my client" & "Interest testing" Budget "my budget",
+Campaign Type | Purchase Conversion Networks | Facebook
+Languages | en
+Bid Strategy Type | Lowest Cost
+Start Date 2023-07-12
+End date | 2023-14-12
+make a second table with the name "Audience" with these horizontal column headers
+Campaign | same name as Campaign name above Ad group make 5 audiences that has to do with people interested in running
+make a third table with the name "Ads" with these column headers
+headlines of max. 15 characters and description lines of max. 90 characters
+
 ### 中文指令万能公式 = 角色 + 角色技能 + 任务核心关键词 + 任务目标 + 任务背景 + 任务范围 + 任务解决与否判定 + 任务限制条件 + 输出格式/形式 + 输出量。
 
 角色比如：市场营销专家、幼儿教师、面试官等。

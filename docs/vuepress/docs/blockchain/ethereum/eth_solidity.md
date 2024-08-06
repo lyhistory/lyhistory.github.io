@@ -380,6 +380,9 @@ Because it’s an internal function, not public function
 
 refer:
 
+Solidity 面试问题汇总
+https://mp.weixin.qq.com/s/5xdNTCXrOSm0qwtqLCx30g
+
 The following represents a list of tutorials/resources that could help to learn specifics of developing smart-contracts:
 + Full guide about smart-contract development: https://blockgeeks.com/guides/solidity/
 + ICO/DApp development, additional list of useful resources: https://medium.com/@robbertvermeulen/learn-solidity-the-ethereum-smart-contract-programming-language-7f106fc26d6
