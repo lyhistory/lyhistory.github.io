@@ -6,35 +6,6 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 交换机有MAC地址表，无ARP表，MAC地址表一般存在在交换机中
 
-## arp
-
-troubleshooting intranet access issue raised by wrong arp
-
-I got an issue access the shared folder on the other pc in the same intranet at home, actually it was working fine a few days ago.
-both pc are win10 os.
-
-without firm knowlege on networking I started to google without thinking, tried all the online suggestions but no luck;
-
-ok, it could be something wrong either on my win10 or the other one, so I turned off firewall, started all the "file and printer sharing" realted services, turned on sharing for private/public network, grant remote access to both everyone and guest with full permissions, 
-even tried modify regedit(registry editor) to enable AllowInsecureGuestAuth, still no luck;
-
-finally I come to think of ping, source ip:192.168.0.141, target ip:192.168.0.113, so ping 192.168.0.113 result in:
-```
-Pinging 192.168.0.113 with 32 bytes of data:
-Reply from *192.168.0.141*: Destination host unreachable.
-```
-the ip "Reply from " is the source machine, it indicates that it's something wrong with the source machine, 
-then I run 'arp -a', 
-![](/docs/docs_image/software/network/arp.png)
-now things get a bit clear, the target ip isn't in the arp table, I tried arp -d to reset arp, but not working, so I decided the easiest way is to restart router to clear the arp table;
-after restarting router, all settled!
-
-finally thoughts: I should spare some time to learn networking.
-refer:
-https://www.coursera.org/learn/network-protocols-architecture
-
-整理了8张图详解ARP原理
-https://zhuanlan.zhihu.com/p/395157603
 
 ## 广播风暴 破环协议
 STP（Spanning Tree Protocol）是运行在交换机上的二层破环协议，环路会导致广播风暴、MAC地址表震荡等后果，STP的主要目的就是确保在网络中存在冗余路径时，不会产生环路。

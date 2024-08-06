@@ -38,8 +38,12 @@ https://mariushosting.com/how-to-install-chat-with-gpt-on-your-synology-nas/
 
 https://cloud.tencent.com/developer/article/2312981
 
-### 去中心
+### 去中心 web3+AI
 https://github.com/OrbisWeb3/orbis-chat-gpt
+
+https://www.gizatech.xyz/
+https://www.youtube.com/watch?v=BHdP5oSISQE
+
 
 ### 自动化
 

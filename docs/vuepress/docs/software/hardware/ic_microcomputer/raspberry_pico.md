@@ -2,8 +2,6 @@ picow
 
 https://projects.raspberrypi.org/en/projects/get-started-pico-w
 
-Install Thonny
-https://thonny.org/
 
 ## Set up your Raspberry Pi Pico W
 
@@ -15,7 +13,9 @@ Connect the other end to your desktop computer, laptop, or Raspberry Pi.
 
 Your file manager should open up, with Raspberry Pi Pico being show as an externally connected drive. Drag and drop the firmware file you downloaded into the file manager. Your Raspberry Pi Pico should disconnect and the file manager will close.
 
-## IDE
+## IDE - Thonny
+[Install Thonny](https://thonny.org/)
+
 Open the Thonny editor.
 
 Look at the text in the bottom right-hand corner of the Thonny editor. It will show you the version of Python that is being used.
