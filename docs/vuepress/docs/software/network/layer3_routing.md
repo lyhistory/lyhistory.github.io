@@ -18,6 +18,53 @@ The routing process usually directs forwarding on the basis of routing tables. R
 
 Routing, in a narrower sense of the term, often refers to IP routing and is contrasted with bridging. IP routing assumes that network addresses are structured and that similar addresses imply proximity within the network. Structured addresses allow a single routing table entry to represent the route to a group of devices. In large networks, structured addressing (routing, in the narrow sense) outperforms unstructured addressing (bridging). Routing has become the dominant form of addressing on the Internet. Bridging is still widely used within local area networks.
 
+### 路由器 VS 三层交换机
+[三层交换机和路由器啥区别](https://mp.weixin.qq.com/s/0bULeAB9kA5etngHrAXvcw)
+
+1、性能不同：三层交换机硬件转发数据而路由基于CPU转发数据，三层交换机比路由器更强大的转发性能
+
+Re：不对。为了保护CPU资源，对于跨三层转发的数据包不论是路由器还是三层交换都采用的是“一次CPU路由，多次硬件转发”机制。
+自己找台千兆路由和千兆三层交换配置VLAN，去对比测试不同网段终端交互的吞吐量就知道了，肯定都要到千兆才算合格！但别跟我说你能接受千兆路由器跨三层转发吞吐量达不到千兆，那我真的给你👍👍，代表厂商感谢你的理解！
+
+2.路由功能不同：路由器支持丰富的路由功能，三层交换机只具备基本的路由功能
+
+Re：不对。这个不多讲了吧，静态路由、OSPF、ISIS、RIP、PBR、BGP、PIM、路由策略等路由功能三层交换机基本都支持。比如锐捷的RG-S5750C-24GT8XS-X：
+
+3.规格不同：路由器端口数少而三层交换端口数多
+
+Re：是区别但不是重点。我们讨论的是本质区别，有硬件需求让厂商定制个十几、二十个LAN口的路由器给你用都行，无非是内部堆硬件交换芯片而已。
+
+4.机制不同：三层交换机基于MAC和IP转发数据，路由器基于IP转发数据
+
+Re：不对。路由器LAN-LAN转发不就是基于MAC的么？如果路由器是基于IP转发的，那么二层arp(无IP头部)等报文就不要在LAN转发了，这样LAN下的设备之间就无法通信了。
+
+首先，大家可以想想什么时候会去使用路由器而不会用三层交换机？
+
+我就提1个最简单的且最常见的：NAT功能，用路由器来区分内外网而不用交换机。
+
+想必你们可能会很疑惑：目前具备丰富路由功能的三层交换机为啥基本不支持NAT功能？路由器会有WAN口而三层交换机没有。是因为路由器的设计能基于“会话”去控制连接，可以工作在第四层，从而实现数据包的NAT转发。
+
+比如NAPT机制，一条LAN内网TCP连接会转换成WAN外网TCP连接，源/目的端口也会转换，这样就会在路由器内部生成1条“会话映射表”，基于这条TCP连接的数据流就会被路由器内网<--->外网放行和双向转发。
+
+而三层交换机无“会话”的概念，它只能处理数据包无法处理“会话”，最多工作在第三层。
+
+路由器基于“session”的特性，它能实现NAT、DMZ、PPPoE拨号、虚拟服务器、防火墙(访问控制)等基于连接的功能，能够提供广域网服务。路由器和防火墙一样，是有iptable链表的。很多教材中说路由器是工作在三层的设备，我其实更愿意说它是工作在第四层的设备，因为它能基于TCP/UDP连接实现交换机所没有的功能和需求。
+举个实际的例子：任何项目招投标，路由器都要求有这个参数:带机量
+带机量是在有线场景下根据设备支持的上网流量最大会话数除以每个用户占用的应用连接数估算的结果，供选型参考，不构成商业承诺。
+
+这个就是会话数规格，交换机是没有的。
+
+那么什么时候会去使用三层交换机而不会用路由器呢？
+
+承载大量交换业务的时候用交换机而不是路由器。交换机的使命就是“数据交换”。所谓术业有专攻，控制会话的任务交给你“路由器或防火墙”，核心数据交换的任务则交给我“三层交换机”。
+
+举个最直接的例子就是Fabric网络中的VXLAN技术仅三层交换机才支持，这种纯“MAC in UDP”的封包转发技术在10G甚至上100G的东西流量网络架构中不会涉及“会话处理”，三层交换机只需要全力去实现路由交换的能力即可。
+
+总结:
++ 路由器和三层交换机的本质区别在于，前者可以基于“session”去控制连接而后者不行；后者的主要工作是全力承载高速流量的交换转发。
+
++ 基于此，也就能知道两者在网络架构中的基本位置：出口连接外网的位置使用路由器，而核心做路由交换的位置用三层交换机，各司其职为IT网络保驾护航。
+
 ### 路由器 VS 网关（不是具体某一层）
 路由器是产品，网关是概念
 

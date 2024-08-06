@@ -197,6 +197,8 @@ public class LeftRightDeadLock {
 
 如果按照相同的顺序来请求锁，那么就不会发生死锁。例如，每个需要L和M的线程都一相同的顺序来获取L和M，就不会发生死锁了。
 
+要想验证锁顺序的一致性,需要对程序中的加锁行为进行全局分析。如果只是单独地分析 每条获取多个锁的代码路径,那是不够的 :leftRight 和 rightLeft 都采用了“合理的”方式来获 得锁,它们只是不能相互兼容。当需要加锁时,它们需要知道彼此正在执行什么操作。
+
 + 动态锁顺序死锁：这种死锁类型与锁顺序死锁相似，但区别在于锁的顺序不是固定的，而是根据运行时的数据或条件动态决定的。这增加了死锁发生的复杂性和难以预测性。
 
 下面的代码：将资金从一个账户转入另一个账户。在开始转账之前，首先要获得这两个Account对象的锁，以确保通过原子的方式来更新两个账户中的余额。
@@ -392,10 +394,181 @@ public class Dispatcher {
 #### 活锁
 活锁(Livelock) 是另一种形式的活跃性问题：它不会阻塞线程，但也不能继续执行，因为线程将不断重复执行相同的操作，而且总是失败。可以类比现实世界里的例子，路人甲从左手边出门，路人乙从右手边进门，两人为了不相撞而互相谦让，路人甲让路走右手边，路人乙也让路走左手边，结果是两人又相撞了。这种情况，基本上谦让几次就解决了，因为人会交流。可是如果这种情况发生在程序中，就有可能会一直没完没了地“谦让”下去，成为没有发生阻塞但依然执行不下去的“活锁”。解决“活锁”的方案很简单，谦让时，尝试等待一个随机的时间就可以了。例如上面的那个例子，路人甲走左手边发现前面有人，并不是立刻换到右手边，而是等待一个随机的时间后，再换到右手边；同样，路人乙也不是立刻切换路线，也是等待一个随机的时间再切换。由于路人甲和路人乙等待的时间是随机的，所以同时相撞后再次相撞的概率就很低了。“等待一个随机时间”的方案虽然很简单，却非常有效，Raft 这样知名的分布式一致性算法中也用到了它。
 
- 
 活锁通常发生在处理事务消息的应用程序中：如果不能成功地处理某个消息，那么消息处理机制将会回滚整个事务，并将它重新放到队列的开头。如果消息处理器在处理某种特定类型的消息时存在错误并导致它失败，那么每当这个消息从队列中取出并传递到存在错误的处理器时，都会发生事务回滚。由于这条消息被放到队列开头，因此消息处理器将被反复调用，并返回相同的结果(有时也被称为毒药消息，Poison Message)。虽然处理消息的线程没阻塞，但也无法继续执行。这种形式的活锁通常是由过度的错误恢复代码造成的，因为它错误地将不可修复的错误作为可修复的错误。
 
-#### 死锁避免
+#### 死锁预防/避免/检测/消除
+##### 银行家算法
+银行家算法（Banker's Algorithm）是一种避免死锁的资源分配策略，主要应用于操作系统中，用于动态分配资源，以确保系统始终处于安全状态。以下通过一个例子来详细解释银行家算法的工作原理：
+
+```
+class BankersAlgorithm:
+    def __init__(self, num_processes, num_resources, available, max_demand, allocation):
+        self.num_processes = num_processes
+        self.num_resources = num_resources
+        self.available = available[:]  # Copy the list
+        self.max_demand = [row[:] for row in max_demand]  # Copy the matrix
+        self.allocation = [row[:] for row in allocation]  # Copy the matrix
+        self.need = [[self.max_demand[i][j] - self.allocation[i][j] for j in range(num_resources)] for i in range(num_processes)]
+
+    def request_resources(self, process_id, request):
+        # Step 1: Check if the request exceeds the maximum claim
+        if any(request[j] > self.need[process_id][j] for j in range(self.num_resources)):
+            return False, "Request exceeds maximum claim"
+
+        # Step 2: Check if there are enough resources available
+        if all(request[j] <= self.available[j] for j in range(self.num_resources)):
+            # Try to allocate resources
+            self.available = [self.available[j] - request[j] for j in range(self.num_resources)]
+            self.allocation[process_id] = [self.allocation[process_id][j] + request[j] for j in range(self.num_resources)]
+            self.need[process_id] = [self.need[process_id][j] - request[j] for j in range(self.num_resources)]
+
+            # Step 3: Check for safety
+            if self.is_safe():
+                return True, "Resources allocated successfully"
+            else:
+                # If not safe, rollback the allocation
+                self.available = [self.available[j] + request[j] for j in range(self.num_resources)]
+                self.allocation[process_id] = [self.allocation[process_id][j] - request[j] for j in range(self.num_resources)]
+                self.need[process_id] = [self.need[process_id][j] + request[j] for j in range(self.num_resources)]
+                return False, "Allocation would lead to unsafe state"
+        else:
+            return False, "Insufficient resources available"
+
+    def is_safe(self):
+        # Work and Finish vectors
+        work = self.available[:]
+        finish = [False] * self.num_processes
+
+        # Try to find a safe sequence
+        while True:
+            found = False
+            for i in range(self.num_processes):
+                if not finish[i] and all(self.need[i][j] <= work[j] for j in range(self.num_resources)):
+                    # Process i can finish
+                    for j in range(self.num_resources):
+                        work[j] += self.allocation[i][j]
+                    finish[i] = True
+                    found = True
+            if not found:
+                # No more processes can finish
+                break
+
+        # Check if all processes have finished
+        return all(finish)
+
+# Example usage
+num_processes = 5
+num_resources = 3
+available = [3, 3, 2]
+max_demand = [
+    [7, 5, 3],
+    [3, 2, 2],
+    [9, 0, 2],
+    [2, 2, 2],
+    [4, 3, 3]
+]
+allocation = [
+    [0, 1, 0],
+    [2, 0, 0],
+    [3, 0, 2],
+    [2, 1, 1],
+    [0, 0, 2]
+]
+
+banker = BankersAlgorithm(num_processes, num_resources, available, max_demand, allocation)
+# Testing a resource request
+request = [1, 0, 2]  # Request from process 0
+success, message = banker.request_resources(0, request)
+print(f"Request Result: {success}, {message}")
+```
+
+**系统设定**
+假设系统中有以下资源类型和进程：
+
++ 资源类型：A, B, C 三种资源。
++ 进程：P0, P1, P2, P3, P4 五个进程。
+
+**数据结构**
+系统使用以下数据结构来管理资源和进程：
+
++ Available：一个数组，表示当前系统中每种资源的可用数量。
++ Max：一个矩阵，表示每个进程对每种资源的最大需求。
++ Allocation：一个矩阵，表示当前已分配给每个进程的资源数量。
++ Need：一个矩阵，表示每个进程还需要多少资源才能完成其任务。Need[i, j] = Max[i, j] - Allocation[i, j]。
+
+**初始状态**
+假设初始状态如下：
+```
+Available = [3, 3, 2]
+Max = [
+[7, 5, 3],
+[3, 2, 2],
+[9, 0, 2],
+[2, 2, 2],
+[4, 3, 3]
+]
+Allocation = [
+[0, 1, 0],
+[2, 0, 0],
+[3, 0, 2],
+[2, 1, 1],
+[0, 0, 2]
+]
+```
+根据Allocation和Max，我们可以计算出Need矩阵。
+
+**进程请求资源**
+假设进程P0现在请求资源[0, 2, 0]，即需要额外的0个A资源，2个B资源和0个C资源。
+
+**银行家算法步骤**
+
+1. 检查请求是否超过最大需求：
+
+Request[0] = [0, 2, 0]
+Need[0] = [7, 5, 3] - [0, 1, 0] = [7, 4, 3]
+因为 Request[0] <= Need[0]，所以请求没有超过P0的最大需求。
+
+2. 检查系统是否有足够的资源：
+
+Request[0] = [0, 2, 0]
+Available = [3, 3, 2]
+因为 [0, 2, 0] <= [3, 3, 2]，所以系统有足够的资源满足P0的请求。
+
+3. 试探性分配资源：
+
+更新Available, Allocation, Need矩阵。
+Available = [3, 3, 2] - [0, 2, 0] = [3, 1, 2]
+Allocation[0] = [0, 1, 0] + [0, 2, 0] = [0, 3, 0]
+Need[0] = [7, 4, 3] - [0, 3, 0] = [7, 1, 3]
+
+4. 执行安全性检查：
+
+尝试找到一个安全序列，即检查是否存在一个进程序列，使得对于每个进程Pi，它在未来需要的资源量不超过系统当前剩余资源量与所有在Pi之前的进程Pj当前占有资源量之和。
+如果存在这样的序列，则分配是安全的；否则，需要撤销这次试探性分配，恢复系统到分配前的状态，并让请求进程等待。
+在这个例子中，由于我们没有具体执行安全性检查的所有步骤，所以我们假设系统找到了一个安全序列，并允许这次资源分配。
+
+**安全性检查算法详细步骤**
+
+在进行了试探性资源分配后，我们需要执行安全性检查来确保系统仍然处于安全状态。以下是安全性检查的详细步骤：
+
+1. 初始化工作向量和完成向量：
+
+Work：初始化为Available向量，即系统中每种资源的可用数量。
+Finish：一个布尔数组，用于跟踪每个进程是否已经被考虑在安全序列中。初始时，所有进程的Finish值都设为false。
+
+2. 查找可安全完成的进程：
+
+遍历所有进程，查找一个其Need资源量不超过当前Work向量的进程Pi（即Need[i] <= Work）。
+如果找到这样的进程，则标记该进程为已完成（Finish[i] = true），并更新Work向量，加上该进程当前已分配的资源量（Work = Work + Allocation[i]）。这是因为如果进程Pi能够在未来某个时刻完成（即它需要的资源量现在就可以被满足），那么它所占用的资源将在它完成后被释放回系统，这些资源可以被其他进程使用。
+
+3. 重复步骤2：
+
+继续查找下一个可安全完成的进程，并更新Work向量和Finish向量，直到所有进程的Finish值都为true（即所有进程都能在安全序列中完成），或者没有更多的进程可以被标记为已完成（即系统处于不安全状态）。
+
+4. 判断系统是否安全：
+
+如果所有进程的Finish值都为true，则系统处于安全状态，试探性分配成功，资源可以被分配给请求的进程。
+如果存在至少一个进程的Finish值为false，则系统处于不安全状态，试探性分配失败，需要撤销这次资源分配，恢复系统到分配前的状态，并让请求进程等待。
 
 ### 锁分类
 
@@ -1256,9 +1429,96 @@ futex提供了比传统锁更丰富的同步原语，如重排队（requeue）�
 
 此外，由于futex的使用涉及到内核态和用户态之间的切换，以及可能的优先级调整等复杂操作，因此在使用时需要格外小心，以避免引入死锁、活锁或其他同步问题。
 
-##### 性能测试-无锁(不是前面的“无锁”是真没有锁），互斥锁，自旋锁，自定义原子锁
+##### 自定义原子锁（原子操作+内存屏障）及性能测试
+
+###### 通过原子操作自定义原子锁：
+
+在实现锁时，特别是使用原子操作实现的锁（如自旋锁），**必须考虑指令重排的影响。**原因如下：
+
+内存可见性：原子操作虽然保证了操作的原子性和完整性，但如果不加控制地允许指令重排，可能会导致其他线程无法及时看到原子操作的结果，从而影响程序的正确性。
+
+锁的正确性：锁的实现依赖于一系列有序的操作，如果这些操作被无序地重排，可能会导致锁无法正确工作。例如，在自旋锁的实现中，如果检查锁状态和更新锁状态的操作被重排，可能会导致多个线程同时进入临界区。
+
+解决方案
+为了避免指令重排对原子操作和锁实现的影响，现代编程语言和处理器提供了多种机制，如内存屏障（memory barriers）和volatile关键字：
+
+内存屏障：内存屏障是一种特殊的指令，用于阻止指令重排。在原子操作或锁实现的关键点插入内存屏障，可以确保指令的执行顺序不被打乱。
+
+volatile关键字：在某些编程语言中（如Java），volatile关键字被用来标记变量，表明该变量的读写操作不能被重排，且每次读写都必须直接从主内存中读取或写入，从而保证了变量的可见性和有序性。
+
+综上所述，原子操作虽然提供了操作的原子性和完整性，但在实现锁等并发控制机制时，仍需要考虑指令重排的影响，并通过相应的机制来避免潜在的问题。
+
+###### 为什么Java中不需要考虑指令重排？
+在Java中，使用AtomicReference的compareAndSet（CAS）方法实现的锁（如自旋锁或基于CAS的锁）通常不需要开发者直接考虑指令重排的问题，因为Java内存模型（Java Memory Model, JMM）和AtomicReference的实现已经为开发者封装好了必要的内存可见性和有序性保证。
+
+Java内存模型
+
+Java内存模型定义了线程和主内存之间的抽象关系，以及线程之间共享变量的可见性和有序性规则。JMM确保了在多线程环境下，对共享变量的操作是安全且可预测的。具体来说，JMM通过以下几种方式来保证内存可见性和有序性：
+
+volatile关键字：虽然AtomicReference本身不使用volatile来标记其内部变量（因为CAS操作已经足够保证原子性），但JMM规定了对volatile变量的读写操作具有特殊的内存语义，包括防止指令重排。不过，AtomicReference的实现依赖于底层的CAS操作，而不是直接使用volatile。
+
+锁和同步机制：JMM还定义了锁和同步机制（如synchronized关键字和显式锁）的内存语义，这些机制同样能够防止指令重排，并确保共享变量的正确同步。然而，AtomicReference并不依赖于这些传统的锁机制，而是使用CAS操作来实现无锁的线程安全。
+
+CAS操作：AtomicReference的compareAndSet方法底层实现依赖于CAS操作。CAS操作是一个原子操作，它包含三个参数：内存位置（V）、预期原值（A）和新值（B）。如果内存位置的值与预期原值相匹配，那么处理器会自动将该位置值更新为新值。由于CAS操作是由底层硬件直接支持的，因此它是原子的，并且处理器在执行CAS操作时，会隐式地防止指令重排，以确保操作的完整性和可见性。
+
+封装好的保证
+
+因此，当开发者使用AtomicReference的compareAndSet方法来实现锁时，他们实际上是在利用一个已经封装好了内存可见性和有序性保证的原子操作。开发者不需要（也不应该）直接干预指令重排的过程，因为Java平台和底层硬件已经为他们处理了这些细节。
+
+总结来说，使用AtomicReference的compareAndSet方法实现的锁不需要开发者直接考虑指令重排的问题，因为Java内存模型和AtomicReference的实现已经为开发者提供了必要的内存可见性和有序性保证。
+
+###### 性能测试-无锁(不是前面的“无锁”是真没有锁），互斥锁，自旋锁，自定义原子锁
+
 
 ```
+1）原子锁初始化
+
+atomic_bool atomic_lock; //定义原子锁
+atomic_init(&atomic_lock, false); //初始化原子锁
+
+2）原子锁加锁
+
+bool val = false;//通过CAS指令实现原子锁加锁
+while(!atomic_compare_exchange_weak_explicit(&atomic_lock, &val, true, memory_order_acquire, memory_order_relaxed)) {
+  val = false;
+}
+
+解释：
+atomic_compare_exchange_weak_explicit 是一个原子操作，它尝试以原子方式更新一个原子变量的值，但它是“弱”版本的比较交换操作。这个操作的“弱”意味着它可能会在某些情况下“伪失败”（spuriously fail），即使没有其他线程同时修改该变量。这意味着调用者通常需要在一个循环中重试该操作，直到它成功为止。
+
+atomic_compare_exchange_weak_explicit 是一个原子操作，它尝试以原子方式更新一个原子变量的值，但它是“弱”版本的比较交换操作。这个操作的“弱”意味着它可能会在某些情况下“伪失败”（spuriously fail），即使没有其他线程同时修改该变量。这意味着调用者通常需要在一个循环中重试该操作，直到它成功为止。
+
+参数说明
+&atomic_lock：指向要操作的原子变量的指针。在这个例子中，atomic_lock 是一个 atomic<bool> 类型的原子变量，用作锁。
+&val：这是一个指向变量的指针，该变量包含我们期望在原子变量中的当前值（在比较之前）。如果原子变量中的值与此值相等，则比较交换操作将尝试更新该值。在比较之后，此变量将被更新为原子变量的实际值。
+true：这是我们想要将原子变量更新为的新值（如果当前值等于 val 指向的值）。
+memory_order_acquire：
+	当前线程执行的memory_order_acquire指令能够保证读到其他线程memory_order_release指令之前的所有内存写入操作。
+	这是成功时的内存顺序。如果比较交换成功（即，原子变量中的值之前确实等于 val），则此内存顺序确保在此操作之前的所有读取和写入操作都不会被重排到该操作之后，且对所有后续memory_order_acquire 或更强顺序进行的读取都是可见的。
+memory_order_relaxed：这是失败时的内存顺序。如果比较交换失败（即，原子变量中的值之前不等于 val），则此内存顺序表示不进行任何额外的内存顺序保证。
+
+3）原子锁解锁
+
+//通过store指令设置原子锁的值为false
+atomic_store_explicit(&atomic_lock, false, memory_order_release);
+
+memory_order_release： 当前线程memory_order_release指令之前的所有内存写操作对于其他线程memory_order_acquire指令之后可见。
+
+进一步解释：
+
+通常情况下，我们的确期望先获取锁（或执行具有 memory_order_acquire 语义的原子操作），然后再进行受保护的内存操作。然而，memory_order_acquire 的“阻止之前的内存操作重排到该原子操作之后”这一作用，主要是从编译器和处理器优化的角度来考虑的。
+
+在多线程程序中，编译器和处理器可能会对指令进行重排（reordering），以优化程序的执行效率。这种重排通常是在保证单线程执行顺序不变的前提下进行的。但是，在多线程环境中，如果这种重排涉及到共享数据的访问，就可能导致数据竞争或逻辑错误（比如这里可能把bool val = false排到后面肯定就会运行出错）。
+
+具体到 memory_order_acquire，它告诉编译器和处理器，在执行具有 memory_order_acquire 语义的原子操作之前，所有之前的内存访问操作（无论是读还是写）都不能被重排到该原子操作之后。这样做是为了确保在逻辑上，这些内存访问操作发生在获取锁（或执行具有 memory_order_acquire 语义的原子操作）之前。
+
+虽然在实际编程中，我们通常会在获取锁之后再进行受保护的内存操作，但 memory_order_acquire 的这一作用仍然很重要，因为它确保了即使在编译器和处理器进行优化的情况下，这种逻辑顺序也不会被打破。
+
+此外，值得注意的是，memory_order_acquire 和 memory_order_release 通常是一起使用的，它们共同建立了一个“释放-获取”关系，用于在多线程之间同步对共享数据的访问。在这个关系中，memory_order_release 确保在释放锁（或执行具有 memory_order_release 语义的原子操作）之前的所有内存访问操作都不会被重排到该原子操作之后，并且这些操作对随后获取锁（或执行具有 memory_order_acquire 语义的原子操作）的线程是可见的。
+
+
+完整代码：
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <pthread.h>
@@ -1343,6 +1603,8 @@ TIMES：每个线程自增次数。
 LOCK_TYPE：锁类型。
 
 通过gcc test.c -o test命令将程序编译成可执行程序，然后通过time命令执行程序。
+显然无锁的结果肯定是错的，主要是对比互斥锁、自旋锁和自定义原子锁的性能
+
 ```
 [引用Linux高性能编程_原子操作，作者的结论有问题，不能以并发高低来区分，应该说互斥锁重锁适用于竞争激烈（多且时间长的场景），竞争不激烈比如时间短或者并发低的时候则用轻量级的](https://mp.weixin.qq.com/s/wG9mrxz0L-_hakqyJkaIVQ#/)
 
@@ -1350,6 +1612,392 @@ LOCK_TYPE：锁类型。
 
 [Linux高性能编程_无锁队列](https://mp.weixin.qq.com/s/4tnAYIry-kwS0PvDTxN-qQ#/)
 
+```
+#include <stdatomic.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <unistd.h>
+#include <pthread.h>
+
+#define PROD_THREAD_NUM (1)   //生产者线程数量
+#define CONS_THREAD_NUM (1)   //消费者线程数量
+#define TOTAL_PACKET_NUM (20000000) //测试入队数据包总数量
+                                   
+#define LOCK_TYPE  (1)
+#define FREE_LOCK  (0)
+#define MUTEX_LOCK (1)
+
+struct mini_ring;
+struct mini_ring *g_ring;
+_Atomic(uint32_t) g_seq;      //全局数据包序列号，每产生一个新的数据包加1
+_Atomic(uint32_t) g_count;    //全局出队数据包序列号，每出队一个数据包加1
+                               
+int g_done;
+
+pthread_mutex_t g_mutex;
+pthread_cond_t g_cond;
+
+struct mini_packet {
+    uint32_t seq;             //数据包序列号  
+};
+
+struct mini_packet *mini_packet_alloc() {
+    struct mini_packet *pkt = (struct mini_packet *)malloc(sizeof(*pkt));
+    if (!pkt) return NULL;
+
+    pkt->seq = atomic_fetch_add(&g_seq, 1);
+    if (pkt->seq > TOTAL_PACKET_NUM) {
+        return NULL;
+    }
+    return pkt;
+}
+
+void mini_packet_free(struct mini_packet *pkt) {
+   free(pkt); 
+}
+
+struct mini_headtail {
+    _Atomic(uint32_t) head;
+    _Atomic(uint32_t) tail;
+};
+
+struct mini_ring {
+    struct mini_headtail prod;
+    struct mini_headtail cons;
+    uint32_t head;
+    uint32_t tail;
+    uint32_t size;
+    uint32_t mask;
+};
+
+struct mini_ring* mini_ring_create(uint32_t size) {
+    uint32_t count = sizeof(struct mini_ring) + (sizeof(void *) * size);
+#if 0
+    printf("mini ring size:%u, size:%u, count:%u\n", 
+            sizeof(struct mini_ring),
+            size,
+            count);
+#endif
+    struct mini_ring *ring = (struct mini_ring *)malloc(count);
+    if (!ring) return NULL;
+
+    atomic_init(&ring->prod.head, 0);
+    atomic_init(&ring->prod.tail, 0);
+    atomic_init(&ring->cons.head, 0);
+    atomic_init(&ring->cons.tail, 0);
+
+    ring->head = 0;
+    ring->tail = 0;
+    ring->size = size;
+    ring->mask = size - 1;
+
+    return ring;
+}
+
+int mini_ring_free(struct mini_ring *ring) {
+    free(ring);
+}
+
+int mini_ring_move_prod_head(struct mini_ring *ring, uint32_t n, unsigned int *cur_head, unsigned int *next_head) {
+    uint32_t cons_tail;
+    int free_entries;
+    bool suc;
+
+    *cur_head = atomic_load_explicit(&ring->prod.head, memory_order_relaxed);
+    do {
+        //atomic_thread_fence(memory_order_acquire);
+        cons_tail = atomic_load_explicit(&ring->cons.tail, memory_order_acquire);
+
+        free_entries = ring->size - (*cur_head - cons_tail);
+        if (n > free_entries) {
+#if 0
+            printf("mini queue enqueue ring->size:%u, *cur_head:%u, cons_tail:%u, free_entries:%u\n",
+                    ring->size,
+                    *cur_head,
+                    cons_tail,
+                    free_entries);
+#endif
+            return -1;
+        }
+
+        *next_head = *cur_head + n;
+
+        suc = atomic_compare_exchange_strong_explicit(&ring->prod.head, 
+                cur_head, 
+                *next_head,
+                memory_order_relaxed,
+                memory_order_relaxed);
+    } while (suc == false);
+
+    return 0;
+}
+
+int mini_ring_enqueue_elems(struct mini_ring *ring, uint32_t *cur_head, void *obj_table, uint32_t n) {
+    uint32_t id = (*cur_head) & ring->mask;
+    uint64_t **slot = (uint64_t**)&ring[1];
+    uint64_t **p = (uint64_t **)obj_table;
+    if ((id + n) <= ring->size) {
+        for (int i = 0; i < n; i++) {
+            slot[id++] = p[i];
+        }
+    } else {
+        int i = 0;
+        for (; id < ring->size; i++) {
+            slot[id++] = p[i];
+        }
+        for (id = 0; i < n; i++) {
+            slot[id++] = p[i];
+        }
+    }
+    return 0;
+}
+
+int mini_ring_update_prod_tail(struct mini_ring *ring, uint32_t *cur_head, uint32_t *next_head) {
+    while(atomic_load_explicit(&ring->prod.tail, memory_order_relaxed) != *cur_head) {}
+
+    atomic_store_explicit(&ring->prod.tail, *next_head, memory_order_release);
+}
+
+int mini_ring_enqueue(struct mini_ring *ring, void *obj_table, uint32_t n) {
+#if (LOCK_TYPE == FREE_LOCK)
+    uint32_t cur_head;
+    uint32_t next_head;
+
+    int ret = mini_ring_move_prod_head(ring, n, &cur_head, &next_head);
+    if (ret) {
+        //printf("mini ring move prod head error\n");
+        return -1;
+    }
+    mini_ring_enqueue_elems(ring, &cur_head, obj_table, n);
+    mini_ring_update_prod_tail(ring, &cur_head, &next_head);
+#elif (LOCK_TYPE == MUTEX_LOCK)
+    uint32_t cur_head;
+    uint32_t next_head;
+    uint32_t free_entries;
+
+    pthread_mutex_lock(&g_mutex);
+    free_entries = ring->size - (ring->head - ring->tail); 
+    if (n > free_entries) {
+        pthread_cond_signal(&g_cond);
+        pthread_mutex_unlock(&g_mutex);
+        return -1;
+    }
+    
+    cur_head = ring->head;
+    next_head = ring->head + n; 
+    mini_ring_enqueue_elems(ring, &cur_head, obj_table, n);
+    ring->head = next_head;
+    pthread_cond_signal(&g_cond);
+    pthread_mutex_unlock(&g_mutex);
+#else
+
+#endif
+    return 0;
+}
+
+int mini_ring_move_cons_head(struct mini_ring *ring, uint32_t n, unsigned int *cur_head, unsigned int *next_head) {
+    uint32_t prod_tail;
+    int entries;
+    bool suc;
+
+    *cur_head = atomic_load_explicit(&ring->cons.head, memory_order_relaxed);
+    do {
+        //atomic_thread_fence(memory_order_acquire);
+        prod_tail = atomic_load_explicit(&ring->prod.tail, memory_order_acquire);
+
+        entries = prod_tail - *cur_head;
+        if (n > entries) return -1;
+
+        *next_head = *cur_head + n;
+
+        suc = atomic_compare_exchange_strong_explicit(&ring->cons.head, 
+                cur_head, 
+                *next_head,
+                memory_order_relaxed,
+                memory_order_relaxed);
+    }while (suc == false);
+
+    return 0;
+}
+
+int mini_ring_dequeue_elems(struct mini_ring *ring, uint32_t *cur_head, void *obj_table, uint32_t n) {
+    uint32_t id = (*cur_head) & ring->mask;
+    uint64_t **slot = (uint64_t**)&ring[1];
+    uint64_t **p = (uint64_t **)obj_table;
+    if ((id + n) <= ring->size) {
+        for (int i = 0; i < n; i++) {
+            p[i] = slot[id++];
+        }
+    } else {
+        int i = 0;
+        for (; id < ring->size; i++) {
+            p[i] = slot[id++]; 
+        }
+        for (id = 0; i < n; i++) {
+            p[i] = slot[id++]; 
+        }
+    }
+    return 0;
+}
+
+int mini_ring_update_cons_tail(struct mini_ring *ring, uint32_t *cur_head, uint32_t *next_head) {
+    while(atomic_load_explicit(&ring->cons.tail, memory_order_relaxed) != *cur_head) {}
+
+    atomic_store_explicit(&ring->cons.tail, *next_head, memory_order_release);
+}
+
+int mini_ring_dequeue(struct mini_ring *ring, void *obj_table, uint32_t n) {
+#if (LOCK_TYPE == FREE_LOCK)
+    uint32_t cur_head;
+    uint32_t next_head;
+
+    int ret = mini_ring_move_cons_head(ring, n, &cur_head, &next_head);
+    if (ret) {
+        //printf("mini ring move cons head ret:%d error\n", ret);
+        return -1;
+    }
+
+    mini_ring_dequeue_elems(ring, &cur_head, obj_table, n);
+    mini_ring_update_cons_tail(ring, &cur_head, &next_head);
+#elif (LOCK_TYPE == MUTEX_LOCK)
+    uint32_t cur_tail;
+    uint32_t next_tail;
+    uint32_t entries;
+    pthread_mutex_lock(&g_mutex);
+    entries = ring->head - ring->tail; 
+#if 0
+    if (n > entries) {
+        pthread_mutex_unlock(&g_mutex);
+        return -1;
+    }
+#else
+    while((n > entries) && (g_done == 0)) {
+        pthread_cond_wait(&g_cond, &g_mutex);
+        entries = ring->head - ring->tail; 
+    }
+
+    if (g_done != 0) {
+        pthread_mutex_unlock(&g_mutex);
+        return -1;
+    }
+#endif
+    
+    cur_tail = ring->tail;
+    next_tail = ring->tail + n; 
+    mini_ring_dequeue_elems(ring, &cur_tail, obj_table, n);
+    ring->tail = next_tail;
+    pthread_mutex_unlock(&g_mutex);
+#else
+#endif
+    return 0;
+}
+
+void *prod_thread(void *arg) {
+    int thread_num = (int)arg;
+    uint64_t **obj_table = NULL;
+    while(1) {
+        //for (int i = 0; i < 10000; i++) ;
+        struct mini_packet *pkt = mini_packet_alloc();
+        if (!pkt) {
+            printf("入队:%d个数据包，生产者线程:%d 退出!\n", TOTAL_PACKET_NUM, thread_num);
+            break;
+        }
+        //printf("prod thread num:%d, new pkt seq:%u\n", thread_num, pkt->seq);
+        obj_table = (uint64_t **)&pkt;
+try_again:
+        int ret = mini_ring_enqueue(g_ring, (void *)obj_table, 1); 
+        if (ret) {
+            //printf("mini ring enqueue ret:%d error\n", ret);
+            goto try_again;
+        }
+    }
+
+    return NULL;
+}
+
+void *cons_thread(void *arg) {
+    int thread_num = (int)arg;
+    int ret = 0;
+    uint64_t **obj_table = NULL;
+    struct mini_packet *pkt = NULL;
+    int failed_times = 0;
+    uint32_t count = 0;
+    while(1) {
+        count = atomic_load(&g_count);
+        if (count > TOTAL_PACKET_NUM) {
+            printf("出队:%d个数据包，消费者线程:%d 退出!\n", count - 1, thread_num);
+            break;
+        }
+        obj_table = (uint64_t **)&pkt;
+        ret = mini_ring_dequeue(g_ring, (void *)obj_table, 1);
+        if (ret < 0) {
+            if (failed_times < 1000) {
+                failed_times++;
+            } else {
+                //printf("dequeue failed times:%d\n", failed_times);
+                usleep(10);
+                failed_times = 0;
+            }
+            continue;
+        }
+
+#if 0
+        if ((pkt->seq % 1000) == 0){
+            printf("cons thread num:%d, dequeue pkt seq:%u\n", thread_num, pkt->seq);
+        }
+#endif
+        mini_packet_free(pkt);
+        atomic_fetch_add(&g_count, 1);
+    }
+
+    g_done++;
+
+    return NULL;
+}
+
+int main(int argc, char *argv[]) {
+    atomic_init(&g_seq, 0);
+    atomic_init(&g_count, 0);
+    pthread_mutex_init(&g_mutex, NULL);
+    pthread_cond_init(&g_cond, NULL);
+    g_done = 0;
+
+    int size = 4096;
+    g_ring = mini_ring_create(size);   
+
+    pthread_t prod_th[PROD_THREAD_NUM];
+    pthread_t cons_th[CONS_THREAD_NUM];
+    for (int i = 0; i < CONS_THREAD_NUM; i++) {
+        pthread_create(&cons_th[i], NULL, cons_thread, (void *)i); 
+    }
+    for (int i = 0; i < PROD_THREAD_NUM; i++) {
+        pthread_create(&prod_th[i], NULL, prod_thread, (void *)i); 
+    }
+
+    for (int i = 0; i < PROD_THREAD_NUM; i++) {
+        pthread_join(prod_th[i], NULL);
+    }
+
+    while(g_done < CONS_THREAD_NUM) {
+        pthread_cond_signal(&g_cond);
+        usleep(10);
+        //printf("g_done:%d\n", g_done);
+    }
+
+    //printf("--g_done:%d\n", g_done);
+    for (int i = 0; i < CONS_THREAD_NUM; i++) {
+        pthread_join(cons_th[i], NULL);
+    }
+
+    pthread_mutex_destroy(&g_mutex);
+    pthread_cond_destroy(&g_cond);
+
+    return 0;
+}
+
+```
 ## 编程考虑
 ### 局部变量线程安全?
 
@@ -1430,13 +2078,27 @@ System.timer Thread.timer
 腾讯面试官：如何停止一个正在运行的线程？
 https://mp.weixin.qq.com/s/9xjGYbcNwl1aQY5GNOx58g
 
-## 进程安全 - 分布式锁
+## 节点安全 - 分布式锁
+
++ 线程锁
+	主要用于控制同一进程中的多个线程对共享资源的访问。
++ 进程锁 
+	进程锁是用于控制同一台机器上的多个进程对共享资源的访问。进程锁可以是系统级的，如文件锁，也可以是用户级的，如信号量（Semaphore）。
++ 分布式锁
+	分布式锁是用于控制分布式系统中的多个节点对共享资源的访问。由于分布式系统中的节点可能位于不同的机器甚至不同的地理位置，因此分布式锁的实现比线程锁和进程锁要复杂得多。分布式锁需要在网络中的多个节点之间进行协调，以保证锁的唯一性和一致性。
 
 对于分布式系统来说，同样存在着访问竞争资源的问题，比如最基本的是竞争称为leader，这个一般就需要采用一种“分布式锁”来进行资源保护，
 
+分布式锁特性：
++ 互斥性：在任何时刻，只有一个节点可以持有锁。
++ 不会发生死锁：如果一个节点崩溃，锁可以被其他节点获取。
++ 公平性：如果多个节点同时申请锁，系统应该保证每个节点都有获取锁的机会。
++ 可重入性：同一个节点可以多次获取同一个锁，而不会被阻塞。
++ 高可用：锁服务应该是高可用的，不能因为锁服务的故障而影响整个系统的运行
+
 分布式锁的常见实现方式：
 + 基于数据库 select for update
-+ 基于redis
++ [基于redis](https://mp.weixin.qq.com/s/tmX0foZ0t7y4NpN6du_Dmw)
 + 基于zookeeper的ephemeral sequential node
 
 ## Troubleshooting

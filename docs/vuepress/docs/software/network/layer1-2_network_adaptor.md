@@ -40,3 +40,5 @@ A network interface controller (NIC, also known as a network interface card, net
 此外，物理网卡也有缓存。当内核想要通过某网卡发送数据时，该网卡可以将内核写入该网卡的数据缓存起来，然后由网卡自身来决定何时发送数据。同理，网卡接收数据时也可以缓存一部分后再通知内核来读取网卡中的数据。
 
 举例实例分析参考：[BIO/NIO/多路复用/NETTY](/docs/software/buildingblock/nio_epoll)
+
+## [RDMA网卡](/software/project_manage/trading.md)
