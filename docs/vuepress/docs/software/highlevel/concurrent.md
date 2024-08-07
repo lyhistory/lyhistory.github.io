@@ -6,6 +6,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《concurrency并发》
 
+阿里巴巴亿级流量并发手册
+
 ## concurrency并发 VS Parallelism并行
 首先要明确个词的意思，首先引用：
 > Concurrency means multiple tasks which start, run, and complete in overlapping time periods, in no specific order. Parallelism is when multiple tasks OR several part of a unique task literally run at the same time, e.g. on a multi-core processor. Remember that Concurrency and parallelism are NOT the same thing.

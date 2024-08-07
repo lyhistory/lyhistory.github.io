@@ -50,4 +50,9 @@ Incubated by the largest CEX Coinbase, Base offers the best scalability solution
 
 ## zksnc
 https://zksync.io/
+
+## BTC Layer2
+Bitcoin Layer2 RGB - Web3 协议解读 https://mp.weixin.qq.com/s/Ahz3e2v3qefFWq-q8az4Wg
+Jan：CKB 是理想的比特币二层 https://mp.weixin.qq.com/s/gM0ptyMQsfUuSGGj9PzIRw
+比特币 Layer2：在比特币上重建以太坊 https://mp.weixin.qq.com/s/Rmjh8WQTDqAkq1aj5T9PDg
 <disqus/>

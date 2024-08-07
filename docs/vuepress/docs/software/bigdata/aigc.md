@@ -40,6 +40,9 @@ https://cloud.tencent.com/developer/article/2312981
 
 #### 个人知识库 
 + chatpgt GPTs
++ 数据库助手
+  https://github.com/panosperi/superduperdb
+
 ### 去中心 web3+AI
 https://github.com/OrbisWeb3/orbis-chat-gpt
 
@@ -82,9 +85,17 @@ https://huggingface.co/
   
 ### Text to image model
 [Stable Diffusion model](/software/bigdata/stable_diffusion.md)
+Stream Diffusion
+https://github.com/cumulo-autumn/StreamDiffusion
+https://colab.research.google.com/github/hewis123/stream-d/blob/main/Untitled2.ipynb
+### 音频处理
+OpenVoice
+https://mp.weixin.qq.com/s/QDPX7D1mnwwmmv1pb_TbOA
 
 ### Video Model - Image to Video
 https://github.com/camenduru/stable-video-diffusion-colab
+https://mp.weixin.qq.com/s/jD1hoQNjUv9eCCH__dzOQQ
+
 https://mp.weixin.qq.com/s/aLXCrH4sUK8HY-h2D5zPSw
 
 Deepfake 视频换脸
@@ -104,6 +115,9 @@ GOOGLE Bard
 Cloudflare Workers AI https://mp.weixin.qq.com/s/R1m7IMUfHq53yEe-b9cjlA
 
 ## 按应用分类
+
+### 图像增强
+Demofusion
 
 ### 图片生成
 + Dalle3

@@ -1,4 +1,11 @@
  
+## 原理解析
+
+全网最全AI绘画Stable Diffusion关键技术解析
+https://mp.weixin.qq.com/s/i_0d6qw1kgQ9McMnOaW9Sw
+
+Stable Diffusion 模型演进：LDM、SD 1.0, 1.5, 2.0、SDXL、SDXL-Turbo 等
+https://mp.weixin.qq.com/s/q3n01GEq5eGeSXKnB6-Wkg
 
 
 ## 安装
@@ -90,6 +97,7 @@ Kaggle 每周有 30 小时免费使用时长，平均到每天可以使用 4 个
 ### 在线UI
 https://www.esheep.com/
 pro.aikobo.cn
+https://www.lanrui-ai.com/
 
 ## 基本使用
 
@@ -107,6 +115,10 @@ pro.aikobo.cn
 
 https://mp.weixin.qq.com/s/z_rD7HP_yJLXiMIBu4nAug
 
+### Extension: Prompt
+【Stable Diffusion】提示词插件
+https://mp.weixin.qq.com/s/oPY2CYBSl6wx237lTQuYmA
+
 ### Extension: ControlNet
 ControlNet is a Stable Diffusion model that lets you copy compositions or human poses from a reference image.
 
@@ -122,10 +134,6 @@ https://mp.weixin.qq.com/s/gSUNdSKP-cZzIouJLBU9Ag
 ### Extension:LightFlow 工作流复用插件
 https://mp.weixin.qq.com/s/UXg777w3F7wggA3F29cACg
 
-### ComfyUI 
-https://stable-diffusion-art.com/comfyui/
-https://zhuanlan.zhihu.com/p/620297462
-
 ## 常用模型分类
 
 五大类，分别是Stable diffusion模型、VAE模型、Lora模型、Embedding模型以及Hypernetwork模型。
@@ -136,6 +144,14 @@ https://zhuanlan.zhihu.com/p/649749094
 从用途上看，还分为官方模型、二次元模型（动漫）、真实系模型和2.5D模型四大类
 
 ### lora
+深入浅出学习Stable diffusion之使用Lora（入门篇）
+https://mp.weixin.qq.com/s/EpfUH6yfCt934UnbiRjgcg
+stable diffusion模特换装服装换ai模特软件整合包，含大模型、LORA模型和必备插件，解压即用
+https://mp.weixin.qq.com/s/witSptyfBKhy1pPCPRQSkg
+
+Stable Diffusion 角色一致性LoRA训练
+https://mp.weixin.qq.com/s/EpnZiw51eMF7JQj3H5-Xdw
+
 AI字体+城市海报制作 https://mp.weixin.qq.com/s/LJjGYBrigK0rB0FSMqbe8g
 电商模型 https://mp.weixin.qq.com/s/yiCc_u_W21w_PbeWHSJ7Mg
 
@@ -158,6 +174,7 @@ https://mp.weixin.qq.com/s/-eBJndDRNOjvjJMeN2UZEw
 
 ### SDXL-Turbo 快速
 https://mp.weixin.qq.com/s/pArAPDESJXTG2OLzHjUbxQ
+https://mp.weixin.qq.com/s/Vm4eusltNrx5XCXNxARnQw
 
 ## 场景应用
 

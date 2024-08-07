@@ -200,6 +200,8 @@ http://www.mofcom.gov.cn/article/ckzn/index.shtml
 ## 辅助工具
 
 ### AI
+https://www.weshop.com/
+ifoto
 
 https://www.linkfox.com/
 
