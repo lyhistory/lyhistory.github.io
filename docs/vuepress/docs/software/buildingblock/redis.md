@@ -1707,6 +1707,7 @@ public class RedisConfiguration {
 ---
 refer:
 [大半夜排查bug：竟然是同事把Redis用成这鬼样子，坑了我](https://mp.weixin.qq.com/s/m4mquHozppME92Vmb_LqIQ)
+[为了拿捏 Redis 数据结构，我画了 40 张图（完整版）](https://mp.weixin.qq.com/s/MGcOl1kGuKdA7om0Ahz5IA)
 <disqus/>
 
 

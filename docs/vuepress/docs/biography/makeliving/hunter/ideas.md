@@ -1,6 +1,12 @@
+仅凭一台手机和TikTok，这位中国小哥每月赚30万美金！📈太极课程在国外爆红，看看怎样将传统文化变现！🥋国潮如何走出去，让世界爱上中国太极？
+https://taichizidong.com/
+
+可爱的猫猫狗狗，盈利能力居然大大超过了普通网红！来看海外宠物网红是怎么带货的
+
 
 使用青龙面板自动获取京东京豆 https://mp.weixin.qq.com/s/zUm8LBGku3gBLNGIU24xWQ
 
+youtube：soothing relaxation 舒缓音乐+AI图片
 
 如何做虚拟产品年入百万 https://mp.weixin.qq.com/s/1FmMEUeIGb-Zgc1YB_pXPg
 https://mp.weixin.qq.com/s/ZJmzXhF5AV3bewCj5j1lLQ

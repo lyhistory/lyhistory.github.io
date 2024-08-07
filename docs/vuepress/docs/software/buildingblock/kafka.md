@@ -2049,8 +2049,7 @@ client端日志
 
     https://blog.csdn.net/u011637069/article/details/72899915
 
-    得物面试：消息0丢失，Kafka如何实现
-    https://mp.weixin.qq.com/s/nk4_mlOlvyQDA5qlkd-aLg
+    [得物面试：消息0丢失，Kafka如何实现](https://mp.weixin.qq.com/s/nk4_mlOlvyQDA5qlkd-aLg)
   + other detail
 
     partition message ordering:

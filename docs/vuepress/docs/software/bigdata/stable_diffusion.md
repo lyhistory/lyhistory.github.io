@@ -9,6 +9,10 @@ https://mp.weixin.qq.com/s/q3n01GEq5eGeSXKnB6-Wkg
 
 
 ## 安装
+
+Version:
+[Stable Diffusion 3](https://mp.weixin.qq.com/s/4Lf-G3iBdvKNXtrgAcOT3w)
+
 ### 本地安装
 [Repo-Stable Diffusion web UI](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
 

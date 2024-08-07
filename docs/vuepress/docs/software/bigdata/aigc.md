@@ -38,7 +38,7 @@ https://mariushosting.com/how-to-install-chat-with-gpt-on-your-synology-nas/
 
 https://cloud.tencent.com/developer/article/2312981
 
-#### 个人知识库 
+#### 个人知识库 local rag
 + chatpgt GPTs
 + 数据库助手
   https://github.com/panosperi/superduperdb
@@ -83,17 +83,24 @@ https://huggingface.co/
 + chatgpt
 + claude 
   
-### Text to image model
-[Stable Diffusion model](/software/bigdata/stable_diffusion.md)
-Stream Diffusion
-https://github.com/cumulo-autumn/StreamDiffusion
-https://colab.research.google.com/github/hewis123/stream-d/blob/main/Untitled2.ipynb
+
 ### 音频处理
 OpenVoice
 https://mp.weixin.qq.com/s/QDPX7D1mnwwmmv1pb_TbOA
 
-### Video Model - Image to Video
+
+### Large Vision Models (LVM)
+#### Text to image model
+[Stable Diffusion model](/software/bigdata/stable_diffusion.md)
+Stream Diffusion
+https://github.com/cumulo-autumn/StreamDiffusion
+https://colab.research.google.com/github/hewis123/stream-d/blob/main/Untitled2.ipynb
+
+#### Video Model - Image to Video
 https://github.com/camenduru/stable-video-diffusion-colab
+
+https://animatediff.github.io/
+
 https://mp.weixin.qq.com/s/jD1hoQNjUv9eCCH__dzOQQ
 
 https://mp.weixin.qq.com/s/aLXCrH4sUK8HY-h2D5zPSw
@@ -105,7 +112,8 @@ https://colab.research.google.com/drive/1NG9AoH3QDtC7h97z1Yodmn_CiiGh8Y1T?usp=sh
 钉钉+SD+UE5
 https://mp.weixin.qq.com/s/fNxb2B5PiTTzTSXMuXHvOg
 
-### Large Vision Models (LVM)
+### ROBOT
+[Dobb·E An open-source, general framework for learning household robotic manipulation](https://dobb-e.com/)
 
 ## 按平台分类
 ChatGPT
@@ -201,6 +209,8 @@ https://collov.ai/
 
 
 ## 按领域分
+### 安全渗透
+https://github.com/hackerai-tech/PentestGPT
 
 ### 软件
 

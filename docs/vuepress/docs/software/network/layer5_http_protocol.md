@@ -376,6 +376,9 @@ Lastly, SOCKS5 is considered to establish a more secure connection as it does so
 
 https://brightdata.com/blog/leadership/socks5-proxy-vs-http-proxy
 
+## http3 Over QUIC(UDP)
+[HTTP3为什么抛弃了经典的TCP，转而拥抱 QUIC 呢](https://mp.weixin.qq.com/s/HVNYiX9uNgUhp1u8PSBgIg)
+
 ## Learn:
 
 http proxy转socks proxy: https://github.com/Equim-chan/h2s
