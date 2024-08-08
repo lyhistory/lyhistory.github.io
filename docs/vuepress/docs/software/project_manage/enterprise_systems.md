@@ -10,3 +10,5 @@ https://github.com/odoo/odoo?tab=readme-ov-file#odoo
 
 ## OTHER
 https://pot-app.com/
+
+开源免费舆情监测网络监控系统 https://gitee.com/stonedtx/yuqing

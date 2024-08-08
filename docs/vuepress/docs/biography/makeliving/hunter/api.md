@@ -6,3 +6,6 @@ IP工具箱：开源 IP 信息查看器，使用 AI 写了 70% 代码，上线12
 https://www.appinn.com/myip-a-better-ip-toolbox/
 
 AIGC crypto contract monitoring api
+
+
+https://github.com/public-apis/public-apis

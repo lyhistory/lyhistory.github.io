@@ -3,6 +3,8 @@ https://taichizidong.com/
 
 可爱的猫猫狗狗，盈利能力居然大大超过了普通网红！来看海外宠物网红是怎么带货的
 
+美国煤炉保姆级Mercari煤炉干货教程
+https://mp.weixin.qq.com/s/4ZmZBV3ACNaE_1upDUBMaQ
 
 使用青龙面板自动获取京东京豆 https://mp.weixin.qq.com/s/zUm8LBGku3gBLNGIU24xWQ
 

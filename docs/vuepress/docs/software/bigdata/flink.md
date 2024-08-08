@@ -2666,3 +2666,4 @@ Refer:
 <disqus/>
 
 [Flink中: 你的Function是如何被执行的](https://cloud.tencent.com/developer/article/2170959)
+[如何实现 Flink 读写数据到 Redis ？](https://mp.weixin.qq.com/s/GDKlZtLqx6xR4wxBnteRnQ)

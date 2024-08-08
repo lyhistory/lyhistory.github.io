@@ -1,4 +1,11 @@
-选品 竞品分析
+
+
+选品 
+reddit petagadget 看产品评论
+
+竞品独立站:similar sites
+
+竞品分析
 https://www.yuntingai.com/bokewenzhang/38.html
 
 TikTok Shop“踏步机”爆卖160万美金，“互动游戏”售出2万单 | 嘀嗒狗

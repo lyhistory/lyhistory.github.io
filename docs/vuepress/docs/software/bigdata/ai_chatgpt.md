@@ -13,6 +13,16 @@ Ada — Capable of very simple tasks, usually the fastest model in the GPT-3 ser
 
 https://platform.openai.com/docs/models/gpt-3
 
+Clip:
+CLIP Contrastive Language-Image Pre-Training 是OpenAI于2021年提出的一个模型。CLIP将图像和文本编码成向量，可以在同一空间进行比较的表示。
+
+https://mp.weixin.qq.com/s/wOqBjAfEGheevtVykpHeIg
+
+https://mazzzystar.github.io/2022/12/29/Run-CLIP-on-iPhone-to-Search-Photos/
+
+https://github.com/mazzzystar/Queryable
+
+
 ## API
 https://platform.openai.com/docs/api-reference/authentication
 
@@ -1956,3 +1966,4 @@ https://mp.weixin.qq.com/s/7McYXWaT8_q3IQgLq7iBEw
 ## GPTs 应用商店
 You can now create custom versions of ChatGPT that combine instructions, extra knowledge, and any combination of skills.
 https://openai.com/blog/introducing-gpts
+

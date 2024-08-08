@@ -316,7 +316,7 @@ Asymmetric routing is not a problem by itself, but will cause problems when Netw
 
 
 #### 双网卡路由问题
-
+[Windows电脑有两张网卡，如何实现网卡1访问外网而网卡2访问内网？](https://mp.weixin.qq.com/s/odiTqa1FdA3J3vt3_Jnrlg)
 为什么需要双网卡，场景：
 + 1. 降低成本，缩减虚拟机，一台虚拟机上跑两个应用，程序代码中做了 IP 地址限制，所以需要在一台虚拟机上配置两个内网 IP 地址
 + 2. 隔离业务（程序运行）网和管理（运维）网，以免运维的时候影响业务网的流量带宽，并且业务网内有安全组设置，而管理网则是通过跳板机

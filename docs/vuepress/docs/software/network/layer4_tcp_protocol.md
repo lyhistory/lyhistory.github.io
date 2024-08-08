@@ -447,6 +447,8 @@ NettyServerHandler的handler链处理。这个handler链处理就是用来初始
 /proc/sys/net/ipv4/tcp_keepalive_time 
 单位是秒
 
+### PING通 vs tcp通？
+[能ping通，TCP就一定能连通吗？](https://mp.weixin.qq.com/s/gLrRgfwmzMvk9T6MIY4cWg)
 -----------
 
 https://datatracker.ietf.org/doc/html/rfc9293
@@ -465,3 +467,7 @@ https://www.baeldung.com/cs/tcp-active-vs-passive
 [TCP流量控制和拥塞控制](https://mp.weixin.qq.com/s/4D2Y9mQ5EzKPusGfo_Hr1Q)
 
 [TCP socket buffer](https://www.cnblogs.com/jmcui/p/14145488.html#/)
+
+[Socket 系统调用深入研究(TCP协议的整个通信过程)](https://mp.weixin.qq.com/s/ufTsU_Vk5uBKfoY7jZJ-nQ)
+
+[Socket 支持 HTTP 通信原理揭秘](https://mp.weixin.qq.com/s/RAdq9mli3L734jSuUtpJSQ)

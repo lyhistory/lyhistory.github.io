@@ -13,6 +13,8 @@ Depth of market data is also known as the order book since it consists of a list
 交易系统开发系列：
 https://blog.51cto.com/quantfabric/2536010?articleABtest=0#/
 
+高频交易系统的设计框架
+https://mp.weixin.qq.com/s/HXif617UxGQTnVf0p9YVow
 
 ## 技术点
 ### 单线程无锁队列

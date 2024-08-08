@@ -1,6 +1,12 @@
 
 [AI News](https://aisecret.us/)
 
+## todo
+[利用AI大模型，一键生成高清短视频 Generate short videos with one click using AI LLM.](https://github.com/lyhistory/tools_aigc_MoneyPrinterTurbo)
+
+[PyVideoTrans一键视频翻译+配音+字幕](https://github.com/jianchang512/pyvideotrans)
+https://mp.weixin.qq.com/s/6J35rQO8v69mpJfypFl8Tw
+
 ## 基础
 ### 私人部署 
 
@@ -72,19 +78,44 @@ https://udify.app/completion/SiKtiPJ9gHUrHUPy
 https://github.com/lyhistory/learn_aigc_CipherChat
 
 
+### community
+开源 huggingface 
+https://huggingface.co/
+
+https://latentbox.com/en
+
+### 原理学习
+
+https://github.com/naklecha/llama3-from-scratch
+
+https://github.com/karpathy/LLM101n
+
+
+可视化
+https://github.com/bbycroft/llm-viz
+
 
 ## 按模型分
 
 ### LLM - Large Language Models
-#### 开源 huggingface 
-https://huggingface.co/
 
-#### 闭源
-+ chatgpt
-+ claude 
++ 开源
+  - LangChain 
+  - LlamaIndex
+  - 手机上运行 https://h2o.ai/platform/danube/
++ 闭源
+  - chatgpt
+  - claude 
+  
   
 
 ### 音频处理
+文字转语音
+https://chattts.com/
+方言:
+https://github.com/rany2/edge-tts
+https://mp.weixin.qq.com/s/HhIE3QUfr6kh6-6jA2Tk_g
+
 OpenVoice
 https://mp.weixin.qq.com/s/QDPX7D1mnwwmmv1pb_TbOA
 
@@ -123,6 +154,10 @@ GOOGLE Bard
 Cloudflare Workers AI https://mp.weixin.qq.com/s/R1m7IMUfHq53yEe-b9cjlA
 
 ## 按应用分类
+
+### BOT
+https://www.coze.com/
+使用扣子Coze——你想给你的抖音搭建一个24小时营业的机器人吗？ https://mp.weixin.qq.com/s/GZXfoTRROP15ZKf8GP0cug
 
 ### 图像增强
 Demofusion
@@ -214,6 +249,18 @@ https://github.com/hackerai-tech/PentestGPT
 
 ### 软件
 
+#### 开发
+[Open Interpreter lets LLMs run code (Python, Javascript, Shell, and more) locally.](https://github.com/OpenInterpreter/open-interpreter)
+
+[OpenDevin](https://github.com/OpenDevin/OpenDevin)
+
+[A framework to enable multimodal models to operate a computer](https://github.com/OthersideAI/self-operating-computer)
+[指令爬虫](https://pypi.org/project/scrapegraphai/)
+
+GitHub Copilot Workspace
+
+编程助手 codey
+
 #### GPT+DB
 An intelligent and versatile general-purpose SQL client and reporting tool for databases which integrates ChatGPT capabilities.(智能的通用数据库SQL客户端和报表工具)
 https://github.com/chat2db/Chat2DB
@@ -222,6 +269,8 @@ https://github.com/chat2db/Chat2DB
 虚拟世界的人 Generative Agents: Interactive Simulacra of Human Behavior https://github.com/joonspk-research/generative_agents
 
 ### 机器人
+#### open glass
+[Turn any glasses into AI-powered smart glasses](https://github.com/BasedHardware/OpenGlass)
 #### GPT+Eyes
 https://www.youtube.com/watch?v=w-wxguIs-0I
 #### GPT Robot
