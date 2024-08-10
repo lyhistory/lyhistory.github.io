@@ -33,6 +33,7 @@ Microcontrollers can be used to control a wide variety of electronic devices. Th
 
 ### 基本概念
 + 半导体（semiconductor）指常温下导电性能介于导体与绝缘体之间的材料 
+  [48页PPT，看懂芯片半导体基础！](https://mp.weixin.qq.com/s/cBQC7fy_eZT-nPnFwjV1tg)
   半导体在最原始的时候是一种材料，比如硅。后来使用这些半导体材料制作了集成电路，又将集成电路封装成芯片。但是半导体这个名字一直保留着，所以我们通常把这些统统以半导体这三个字代替。
   半导体（材料）=》芯片（组成）+其他电子元器件=》集成电路
   二极管和晶闸管 transistor是半导体器件，电阻电容不是
@@ -358,6 +359,8 @@ blynk.io
 https://www.circuitbasics.com/how-to-build-an-electronics-work-bench/
 
 ## 通信协议
+
+[逼真动画展示I2C、SPI、UART的通信过程](https://mp.weixin.qq.com/s/d-BkHdBCnMH0uGmXF1r0xg)
 
 **硬件接口：**
 + Serial port 串口 即 COM口(communication port)

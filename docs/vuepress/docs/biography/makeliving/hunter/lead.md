@@ -109,6 +109,8 @@ https://zhuandaoke.com/favorites/yingwenguanggaolianmeng
 CPA Grip（https://www.cpagrip.com/）是一个著名的 CPA 网站
 https://mp.weixin.qq.com/s/iPX-urvOA5SFaGkYcLY2-w
 
+https://www.affpaying.com/affiliate-networks
+
 ### 通过offer查找联盟平台的方式：
 
 1：通过https://affi.io/ 查找

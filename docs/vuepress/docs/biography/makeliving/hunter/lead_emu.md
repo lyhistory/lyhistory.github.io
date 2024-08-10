@@ -76,3 +76,7 @@ POPADS（跑流量必备）
 最最重要的一点是抽奖类offer的挑选方法比其他类目任务简单一些，对于很多新手更容易上手
 
 做Affiliate国外LEAD的EMU前一定要看一下各大平台的审核机制，最大概率的避免：K号、扣量；
+
+## 参考：
+https://fuyeluzi.com/lead-emu/
+https://www.wangyuran.com/%e7%bd%91%e8%b5%9a%e6%a1%88%e4%be%8b/836.html

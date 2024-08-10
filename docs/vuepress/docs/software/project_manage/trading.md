@@ -74,3 +74,7 @@ Key Differences
 + Memory Registration: RDMA requires explicit memory registration.
 + Complexity: RDMA setup is more complex due to the need for Queue Pairs and memory registration.
 
+
+### 神经网络
+【手把手教你】利用神经网络构建量化交易策略
+https://zhuanlan.zhihu.com/p/459701298

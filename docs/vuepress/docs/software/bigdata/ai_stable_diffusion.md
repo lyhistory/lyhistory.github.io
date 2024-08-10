@@ -14,6 +14,8 @@ Version:
 [Stable Diffusion 3](https://mp.weixin.qq.com/s/4Lf-G3iBdvKNXtrgAcOT3w)
 
 ### 本地安装
+
+#### 官方版本
 [Repo-Stable Diffusion web UI](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
 
 [WIKI-Stable Diffusion web UI](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki)
@@ -25,11 +27,14 @@ Version:
 2. git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git.
 3. Run webui-user.bat from Windows Explorer as normal, non-administrator, user.
 
+#### 秋叶大佬Stable Diffusion整合包
 
 ### Docker安装
 [Install and run via container (i.e. Docker)](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Containers)
 
 [Maintained by neggles](https://github.com/neggles/sd-webui-docker)
+
+### Online Sevice- Googlecolab
 
 ### Online Sevice-Kaggle安装
 [Kaggle](https://www.kaggle.com/) 是一个流行的数据科学和机器学习竞赛平台，也是数据科学家、机器学习工程师和研究人员分享、发现和交流知识的社区。

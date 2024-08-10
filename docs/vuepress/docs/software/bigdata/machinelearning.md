@@ -63,10 +63,23 @@ http://www.fanyeong.com/2017/03/29/machine-learning-%E7%BA%BF%E6%80%A7%E5%9B%9E%
 ![](/docs/docs_image/software/bigdata/machinelearning04.png)
 https://stats.stackexchange.com/questions/155580/cost-function-in-ols-linear-regression
 
+Gradient Descent, Step-by-Step
+https://www.youtube.com/watch?v=sDv4f4s2SB8
+
+梯度下降与最小二乘法的区别
+https://blog.csdn.net/hu_666666/article/details/127204192
+
 梯度下降
 ![](/docs/docs_image/software/bigdata/machinelearning05.png)
 
 ## 3. Logistic regression
+
+1. 线性回归要求变量服从正态分布，logistic回归对变量分布没有要求。
+2. 线性回归要求因变量是连续性数值变量，而logistic回归要求因变量是分类型变量。
+3. 线性回归要求自变量和因变量呈线性关系，而logistic回归不要求自变量和因变量呈线性关系
+4. logistic回归是分析因变量取某个值的概率与自变量的关系，而线性回归是直接分析因变量与自变量的关系
+5. 线性回归是拟合函数，逻辑回归是预测函数
+6. 线性回归的参数计算方法是最小二乘法，逻辑回归的参数计算方法是梯度下降
 
 Sigmoid function / logistic function
 为什么采用sigmoid function（正态分布）作为cost function
@@ -78,6 +91,18 @@ http://www.hanlongfei.com/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/2015/08/05/mle/
 regularization
 ![](/docs/docs_image/software/bigdata/machinelearning07.png)
 
+## 神经网络
+
+[很好的对比了神经网络和logistic regression的区别 Artificial neural networks (ANN) - explained super simple](https://www.youtube.com/watch?v=XxZ0BibMTjw)
+
+[数字识别例子 Neural Networks Explained from Scratch using Python](https://www.youtube.com/watch?v=9RN2Wr8xvro)
+
+反向传播
+
+CNN:
+一图胜千言：没有数学推导，5分钟理解CNN(卷积神经网络)的实现过程 
+https://mp.weixin.qq.com/s/AjnS2ljdtfAkQ9PGHYbOZQ
+https://medium.com/impactai/cnns-from-different-viewpoints-fab7f52d159c
 
 ## Quiz
 Linear Regression with One Variable
@@ -348,6 +373,9 @@ Note: error in ex8_cofi.m (click this link)
 Tip for estimateGaussian(): Compute the mean using "mean()". You can compute sigma2 using the equation in ex8.pdf, or you can use "var()" if you set the OPT parameter so it normalizes over the entire sample size.
 cofiCostFunc() tutorial
 
+## development
+
+TensorFlow is a free and open-source software library for machine learning and artificial intelligence.
 
 ## 案例
 [Shopee 多语言商品知识图谱技术构建方法和应用](https://www.51cto.com/article/758984.html)
@@ -367,9 +395,6 @@ http://blog.coursegraph.com/tag/机器学习
 斯坦福机器学习笔记 https://legacy.gitbook.com/book/yoyoyohamapi/mit-ml/details
 http://openclassroom.stanford.edu/MainFolder/DocumentPage.php?course=MachineLearning&doc=exercises/ex7/ex7.html
 
-CNN:
-一图胜千言：没有数学推导，5分钟理解CNN(卷积神经网络)的实现过程 
-https://mp.weixin.qq.com/s/AjnS2ljdtfAkQ9PGHYbOZQ
-https://medium.com/impactai/cnns-from-different-viewpoints-fab7f52d159c
+
 
 <disqus/>
