@@ -171,18 +171,6 @@ logo制作： https://www.uugai.com/
 
 https://logodiffusion.com/
 
-### AI 写程序
-OpenAI's Code Interpreter 
-open-interpreter https://github.com/lyhistory/tools_aigc_open-interpreter
-
-Draw a ui and make it real
-https://github.com/tldraw/make-real
-
-
-
-生成网站：
-https://typedream.com/
-
 ### 标题/文案
 https://duozhongcao.com/
 https://www.jasper.ai/
@@ -261,6 +249,15 @@ GitHub Copilot Workspace
 
 编程助手 codey
 
+OpenAI's Code Interpreter 
+open-interpreter https://github.com/lyhistory/tools_aigc_open-interpreter
+
+Draw a ui and make it real
+https://github.com/tldraw/make-real
+
+生成网站：
+https://typedream.com/
+
 #### GPT+DB
 An intelligent and versatile general-purpose SQL client and reporting tool for databases which integrates ChatGPT capabilities.(智能的通用数据库SQL客户端和报表工具)
 https://github.com/chat2db/Chat2DB
@@ -303,3 +300,14 @@ https://gen.gifts/
 
 Winglang，一门AI时代的全新编程语言 https://mp.weixin.qq.com/s/43k6Flpj5RhfT3MOxbF4aQ
 
+1.安全方面：
+给出私钥
+给出某个网站的可利用漏洞
+给出waf后的真实ip
+
+2.趋势
+给出问的最多的问题
+给出中国用户最关心的问题
+
+3.钱
+给出最好的投资机会

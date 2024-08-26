@@ -91,6 +91,14 @@ https://www.extendoffice.com/documents/excel/2476-excel-convert-date-to-text-or-
 https://www.extendoffice.com/documents/excel/4970-excel-sum-by-group.html
 =IF(A2=A1,"",SUMIF(A:A,A2,B:B)), (A2 is the relative cell you want to sum based on, A1 is the column header, A:A is the column you want to sum based on, the B:B is the column you want to sum the values.) Press Enter key, drag fill handle down to the cells to fill the formula.
 
+### locate
+
+if using fixed index, after insert row/column, you have to change the formula, using ADDRESS will dynamic solve the issue
+
+=SUMIFS(INDIRECT(ADDRESS(2,COLUMN())&":"&ADDRESS(ROW()-1,COLUMN())),INDIRECT(ADDRESS(2,COLUMN())&":"&ADDRESS(ROW()-1,COLUMN())),">0")
+
+=SUM(INDIRECT(ADDRESS(2,COLUMN())&":"&ADDRESS(ROW()-1,COLUMN())):INDIRECT(ADDRESS(2,COLUMN())&":"&ADDRESS(ROW()-1,COLUMN())))
+
 ## problems:
 #### to prevent possible loss of data excel cannot shift non-blank cells off of the worksheet
 remove the formats

@@ -16,9 +16,16 @@ Linux客户端：V2rayA
 
 安卓客户端： V2rayNG
 
+注意：如果多次安装不同版本的v2ray要注意最好移除之前安装的v2ray，如果不确定安装了哪个，通过which v2ray或者systemctl确定v2ray的位置，每个不同的安装版本提供的v2ray的功能有所区别，需要注意
+
 ### 官方(不推荐小白，需要自行配置)：
 
+https://wiki.linuxchina.net/index.php/V2ray
+
 #### 服务端
+
+##### 基本安装
+
 https://github.com/v2fly/fhs-install-v2ray
 
 // 安裝和更新 V2Ray 安裝執行檔和 .dat 資料檔
@@ -127,7 +134,7 @@ service v2ray start
 ```
 
 //开防火墙
-ufw allow <port>
+ufw allow <port> //后续如果通过nginx伪装流量则不需要对外开放v2ray的port
 // 安裝最新發行的 geoip.dat 和 geosite.dat 只更新 .dat 資料檔
 ```
 # bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-dat-release.sh)
@@ -167,6 +174,13 @@ Optionally run service v2ray start|stop|status|reload|restart|force-reload to co
 ```
 ---Discarded END
 
+##### 更新
+```
+// 只更新 .dat 資料檔
+# bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-dat-release.sh)
+```
+##### bbr加速
+https://www.linuxv2ray.com/speedup/google-tcp-bbr-one-click-script-for-v2ray/
 
 #### 客户端：
 
@@ -227,14 +241,20 @@ https://itlanyan.com/v2ray-clients-download/
 ### 民间脚本(推荐小白，保姆式一步步即可)：
 
 #### 服务端
-https://github.com/githubvpn007/V2Ray
+[教程](https://github.com/githubvpn007/V2Ray)
+[脚本作者](https://github.com/233boy/v2ray)
+
 ```
+#安装
 bash <(curl -s -L https://git.io/v2ray.sh)
 
-# v2ray bbr
+# 一键加速v2ray bbr
+v2ray bbr
 
-ufw allow 端口号
-ufw status
+#卸载
+v2ray uninstall
+
+貌似执行安装脚本也是可以卸载
 
 ```
 

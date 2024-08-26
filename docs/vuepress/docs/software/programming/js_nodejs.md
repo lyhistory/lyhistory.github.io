@@ -4,7 +4,7 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
-**基本语法:**
+## 基本语法:
 
 模块系统 Modules
 
@@ -128,6 +128,13 @@ https://yq.aliyun.com/articles/80217
 
 https://segmentfault.com/a/1190000009368204
 
+## online install
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+nvm -v
+nvm install 17
+
+```
 ## offline install
 
 ```
@@ -320,8 +327,33 @@ $ pm2 install pm2-logrotate
 
 [Discover the monitoring dashboard for PM2](https://app.pm2.io/)
 
+## NextJs
+```
+npx create-next-app@latest my-nextjs-app
+
+npm install next
+
+/pages/api/test/index.js
+
+npm run build
+npm run start
+
+ curl -s  http://127.0.0.1:3000/api/airdrop
+```
 ## troubleshooting
 
+### nodejs version 18 开始有改动
+```
+$ node -v
+node: /lib64/libm.so.6: version `GLIBC_2.27' not found (required by node)
+node: /lib64/libstdc++.so.6: version `GLIBCXX_3.4.20' not found (required by node)
+node: /lib64/libstdc++.so.6: version `CXXABI_1.3.9' not found (required by node)
+node: /lib64/libstdc++.so.6: version `GLIBCXX_3.4.21' not found (required by node)
+node: /lib64/libc.so.6: version `GLIBC_2.28' not found (required by node)
+node: /lib64/libc.so.6: version `GLIBC_2.25' not found (required by node)
+[rapidapi@vultr ~]$ strings /lib64/libc.so.6 | grep GLIBC
+
+```
 ### install phantomjs
 
 缘由是安装安全工具:webscreenshot和snapper,其实正确的指引就在

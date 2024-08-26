@@ -907,6 +907,10 @@ trustee
 outlier
 actuator
 ### common nouns
+pavilion p??v?li?n 亭，阁楼; （公共活动或展览用的） 临时建筑物; 大型文体馆; 看台
+bootstrap  引导程序; 解靴带; 靴袢; 自益;
+arithmetic ??r?θm?t?k 算法; 算术，计算
+adversary ??dv?s?ri 对手，敌手; 魔鬼;
 acronym ˈækrənɪm 缩写词
 acre [ˈeɪkə(r)]
 arbitrage [ˈɑ:bɪtrɑ:ʒ]仲裁; 套汇，套利
@@ -1166,7 +1170,7 @@ wage
 wrath rɒθ 愤怒; 激怒
 workaround 变通办法
 criterion -> criteria
-## Adjective -> Noun
+### Adjective -> Noun
 implicit -> implication
 explicit -> explication
 intuitive-> intuitiveness
@@ -1227,7 +1231,7 @@ irrelevant
 irresponsible 不负责任的
 irrespective不顾的 不考虑的
 irregular
-## Compound Nouns 复合名词
+### Compound Nouns 复合名词
 safeguard
 subtotal
 electromagnetic
@@ -1382,6 +1386,7 @@ awkward causing or feeling embarrassment or inconvenience.
 allied 同盟的
 ambient 环境; 周围的，包围着的; 产生轻松氛围的
 amenable 负责的; 易控制的; 经得起检验（或考查）的; 可用某种方式处理的
+arbitrary and ambiguous https://hinative.com/en-US/questions/204654
 anxious
 anomalous 反常的
 annoyed
@@ -1418,6 +1423,8 @@ canonical [kəˈnɒnɪkl] 权威
 coupled 连结的，联系的;
 coherent 连贯的 一致的
 cohesive 粘性的 有结合性/粘聚性的
+crumbling 摇摇欲坠
+convertible [k?n?v?:t?bl]可改变的; 可变换的; （货币） 可以自由兑换的; （汽车等） 有折篷的;
 compelling 引人入胜的 扣人心弦 不可抗拒
 competent 有能力的，能胜任的; 能干的，称职的; 足够的，充足的; 有决定权的
 competitive  competitive pressure competitive advantage
@@ -1470,6 +1477,7 @@ flatterred 过份夸奖的; 高兴的，感到荣幸的;
 fledged  羽翼丰满的 fully fledged system
 flimsy 薄的，薄弱的; 易损坏的; 不足信的; 没有价值的
 fluctuant
+finite ?fa?na?t
 fossil 化石 食古不化
 foul 违反规则的，犯规的; 邪恶的; 难闻的，有恶臭的; 下流的
 foremost 第一流的，最重要的; 最初的，最前面的
@@ -1844,6 +1852,10 @@ appealing  adj. 吸引人的，令人心动的; 恳求的; v. （迫切） 要�
 
 
 ## Vocabulary  Phrases
+stop by 顺路看看
+in the middle of something
+don't make a scene
+
 with that being said
 pro rata adv.	<拉>按比例，成比例;
 slice and dice 切片和切块 - 交叉分析

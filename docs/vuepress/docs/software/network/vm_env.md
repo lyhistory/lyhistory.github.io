@@ -281,7 +281,7 @@ https://www.digitalocean.com/community/tutorials/initial-server-setup-with-cento
 
 ```
 groupadd gapp
-useradd newUser –g newGroup –d /home/newUser
+useradd newUser –g newGroup –d /home/newUser -s /bin/bash
 passwd newUser 
 id
 	uid=1001(newUser) gid=500(newGroup) groups=500(newGroup)	
@@ -296,6 +296,9 @@ id
 mkdir -p /path/to/app
 chown root:newGroup /path/
 $ chown -R newUser:newGroup /path/to/app
+
+check current bash: $0
+
 ```
 
 

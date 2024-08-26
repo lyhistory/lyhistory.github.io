@@ -306,3 +306,16 @@ lib_deps = h2zero/NimBLE-Arduino@^1.3.1
 ```
 
 
+这段文字是ESP32-C3的资料。
+基础资料包括（原理图尺寸图等）：http://124.222.62.86/yd-data/YD-ESP32-C3/
+如果查看引脚功能图可以参考链接如下：
+https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32c3/_images/esp32-c3-devkitm-1-v1-pinout.jpg
+如果计划使用官方的idf-C语言编程详细资料链接（例程就是的API参考）：
+https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/index.html
+如果计划使用Ardiuno编程资料链接：
+https://docs.espressif.com/projects/arduino-esp32/en/latest/getting_started.html#about-arduino-esp32
+如果计划使用micropython语言编程资料链接如下：
+https://docs.micropython.org/en/latest/esp32/quickref.html
+如需要安装核心板的硬件usb转串口驱动：
+https://www.wch.cn/products/CH340.html?from=list
+micropython的ESP32-C3固件注意有两个固件：https://micropython.org/download/
