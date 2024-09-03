@@ -142,7 +142,9 @@ for readonly file:
 
 ```
 
-
+### compress
+tar -zxvf file.tar
+tar -zcvf file.tar /path/to/target
 
 ### transfer
 
