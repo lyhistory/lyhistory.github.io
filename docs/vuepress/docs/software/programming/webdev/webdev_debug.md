@@ -1550,6 +1550,66 @@ drwx------. 12 nobody root   96 Oct 21 15:08 proxy_temp
 
 ```
 
+## CORS问题
+场景：
+浏览器=》cdn=》waf=》elb=》源服务器（nginx=》后端程序）
 
+后端程序里面的Access-Control-Allow-Origin是允许了所有domain，现在需要做的是为了安全，不允许跨域访问，
+但是因为后端程序维护人员不在，只好从nginx上动手，做法是nginx上直接 proxy_hide_header Access-Control-Allow-Origin; 移除这个头就好了，
+
+测试结果：
+正常外网访问没问题：burpsuite返回没有ACAO头，chrome浏览器从其他域打开console执行：
+```
+fetch("https://testurl", {
+  "headers": {
+.................
+  },
+  "referrer": "https://www.google.com/",
+  "referrerPolicy": "strict-origin-when-cross-origin",
+  "body": null,
+  "method": "GET",
+  "mode": "cors",
+  "credentials": "include"
+});
+```
+也会正常显示preflight cors拦截的错误
+
+但是神奇的是从内网访问表现异常
+
+浏览器=》公司内网vpn=》elb=》源服务器（nginx=》后端程序）
+
+首先burp返回仍然一致没问题，但是从chrome console执行上述脚本，preflight+get通过200，而且测试任意origin访问任意网站全部通过，response ACAO返回的用于都是允许相应的origin，
+不过通过chrome net log抓包会发现
+```
+t= 9826 [st=  0] +CORS_REQUEST  [dt=611]
+                  --> cors_preflight_policy = "consider_preflight"
+                  --> headers = "sec-ch-ua: \"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"\r\npragma: no-cache\r\naccept-language: en-US,en;q=0.9\r\nupgrade-insecure-requests: 1\r\nsec-ch-ua-mobile: ?0\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36\r\naccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7\r\ncache-control: no-cache\r\npriority: u=0, i\r\nsec-ch-ua-platform: \"Windows\"\r\n\r\n"
+                  --> is_revalidating = false
+                  --> method = "GET"
+                  --> url = "https://qmcms.asiapacificex.com/mobile/data/webQuery?id=587"
+t= 9826 [st=  0]    CHECK_CORS_PREFLIGHT_REQUIRED
+                    --> preflight_required = true
+                    --> preflight_required_reason = "disallowed_header"
+t= 9826 [st=  0]    CORS_PREFLIGHT_URL_REQUEST
+                    --> source_dependency = 299473 (URL_REQUEST)
+t=10210 [st=384]    CORS_PREFLIGHT_RESULT
+                    --> access-control-allow-headers = "accept,cache-control,pragma,priority,upgrade-insecure-requests"
+                    --> access-control-allow-methods = "*"
+......................................
+t=10337 [st=511]       +HTTP_TRANSACTION_READ_HEADERS  [dt=98]
+t=10337 [st=511]          HTTP_STREAM_PARSER_READ_HEADERS  [dt=98]
+t=10435 [st=609]          HTTP_TRANSACTION_READ_RESPONSE_HEADERS
+                          --> HTTP/1.1 200
+                              Date: Tue, 10 Sep 2024 02:03:21 GMT
+                              Content-Type: application/json;charset=UTF-8
+                              Transfer-Encoding: chunked
+                              Connection: keep-alive
+                              Vary: Origin
+                              Vary: Access-Control-Request-Method
+                              Vary: Access-Control-Request-Headers
+                              Access-Control-Allow-Methods: GET,POST,OPTIONS,HEAD
+                              Server: elb
+```
+preflight 莫名奇妙通过了，不过这哥get的response里面并没有ACAO，所以猜测是因为内网的这个vpn里面通过了preflight，浏览器在这种情况下产生bug，所以前端的network里面会自动带上ACAO的头
 
 <disqus/>
