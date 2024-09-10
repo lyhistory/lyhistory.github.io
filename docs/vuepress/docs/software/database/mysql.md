@@ -311,7 +311,9 @@ backup https://dev.mysql.com/doc/refman/5.7/en/mysqldump-sql-format.html
 --------------------------------------------------------------
 --- all db
 --------------------------------------------------------------
-mysqldump -uroot -p123456--all-databases > mysqldump_20190524.sql
+mysqldump -uroot -p123456 --all-databases > mysqldump_20190524.sql
+
+mysqldump -uroot -p123456 <dbname> > mysqldump_20190524.sql
 
 --------------------------------------------------------------
 --- schema only
