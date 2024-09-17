@@ -260,7 +260,10 @@ forces/considerations/constraints
 
 D3.js is a JavaScript library that is widely used in data visualisation and animation. The power of d3.js and its flexibility, comes at the expense of its steep learning curve. There are some libraries built on top of it that provide numerous off-the-shelf charts in order to make the users’ life easier, however, learning to work with d3.js is essential sometimes, especially when you need to create sophisticated and custom visualisations.
 If you are not familiar with d3.js, you can read this introduction. In brief, just like jQuery and other DOM manipulation frameworks, it allows you to dynamically manipulate the properties and attributes of your HTML document elements. Nevertheless, it doesn’t stop here. Its power comes from two additional functionality. It can also create and manipulate SVG elements, and it can also bind the DOM or SVG elements to arrays of data, so that any changes in that data will be reflected on those elements they are binded to. There are numerous SVG shapes, such as circles, rectangles, paths and texts. Those shapes serve as the building blocks of your visualisations. For example, a bar chart is composed of multiple rectangles. while a scatter plot is made of circles scattered in different parts of you drawing area. You may also want to see this interactive tutorial about creating and manipulation SVG elements, as well as binding them to data arrays. - See more at: http://schoolofdata.org/2013/10/01/pie-and-donut-charts-in-d3-js
-----------------------------------
+
+
+## todo 
+
 The system shall be capable of performing optimally when the following are simultaneously using the system performing typical tasks.
 Spiral Model(unit-1 prototype)
 The model reflects the underlying concept that each cycle involves a progression that addresses the same sequence of steps for each portion of the product and for each of its levels of elaboration.

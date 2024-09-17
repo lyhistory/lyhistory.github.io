@@ -1,6 +1,8 @@
 <>seldom use []explain () related ~diverge
 
 ## Pronounce 
+Vowel Consonant
+
 ### Correction 
 di
 Si

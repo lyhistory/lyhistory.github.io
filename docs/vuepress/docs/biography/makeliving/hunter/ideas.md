@@ -1,35 +1,5 @@
 
 
-## Memecoin Sniper
-1. build a sniper bot
-Write a python script to snipe memecoin launches on the Solana network for building a sniper bot
-2. analyze the coin
-Upgrade this code to verify the token contract via rugcheck.xyz and analyze the coin before buying
-
-based on this analysis, the bot will determine if it's a rug pull
-
-some other metrics/criteria:
-+ FDV
-+ liquidity
-+ Volume
-+ social metrics
-+ number of holders
-+ number of tokens launched by the dev
-
-3. set buy/sell conditions
-
-Define the "Slippage" and "Price Impact" parameters in the code, recommended settings:
-+ Max Slippage: 5-10%
-+ Max Price Impact: 5%
-
-set by/sell conditions and set max slippage at 5-10% and max price impact at 5%
-
-4. Improve your bot adapt to your needs
-
-for example: add standard buy/sell amounts to perform these actions even faster
-
-
-
 ## other
 仅凭一台手机和TikTok，这位中国小哥每月赚30万美金！📈太极课程在国外爆红，看看怎样将传统文化变现！🥋国潮如何走出去，让世界爱上中国太极？
 https://taichizidong.com/

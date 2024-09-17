@@ -4,25 +4,31 @@ I wouldn’t if
 https://english.stackexchange.com/questions/314087/i-wouldnt-work-if-i-wouldnt-get-paid
 
 I, Me, Myself, and My www.englishteachermelanie.com/english-grammar-i-me-myself-and-my/
-修辞手法
+
+## 修辞手法
 metaphor,analogy,allusion
 Maybe a good analogy here is bar codes and serial numbers. Take an iPod in a store. On the packaging will be a bar code. This tells the store what the product is, so when it is scanned, the system knows exactly what the product is and what it costs. It might even be able to know what color it is or where it was kept in the store. All iPod of this same type has the exact same barcode on them.
 The iPod will also have a serial number on it which is absolutely unique to any other iPod (or any other device) in the world. The serial number doesn't know the price. It could, but for the store, this wouldn't be a very efficient way to store and use that data. Much easier to use the barcode, so that for example, if the price changed, you could just change the price for that bar code and not every individual serial number in your system.
 This is much like ID's and Classes. Information that is reusable should be kept in a class and information that is totally unique should be kept in an ID.
- 
-Vowel Consonant
+
+## Tense
+
 动词的形式有多种：动词原形、动词三单、动词过去时、动词的现在分词、过去分词 以do为例，对应 do, does, did, doing, done
-Tense
+
 Present simple and Present continuous, Present Perfect and past simple
 (Stative Verbs: Verbs that describe states rather than actions are normally only used in the simple form, i.e. verbs of thinking(e.g. know,agree), verbs of appearance(e.g. look,seem), feeling(e.g. prefer,want), possession(e.g. own,belong), the senses(e.g. taste,sound). Some stative verbs can sometimes be used in the continuous form, but with a change in meaning: I'm seeing Bob on Monday=I am meeting Bob)
- 
+
+## questions
 Closed Question / Open Question / Tag Question / Choice Question / Declarative statements with rising intonation
 Answering Tag Questions https://www.englishclub.com/grammar/verbs-questions-tag-answering.htm
 If you were wrong, admit it. You won't lose dignity but will gain respect.
  
-compound predicate
+## compound predicate
 Comparative and Superlative http://english.stackexchange.com/questions/67991/much-more-easy-versus-much-easier
  
+## Pied-piping with inversion 伴随法则  
+To whom could we direct our questions?
+
 ## Phrase
 A phrase is two or more words that do not contain the subject-verb pair necessary to form a clause. Phrases can be very short or quite long.
 Certain phrases have specific names based on the type of word that begins or governs the word group: noun phrase, verb phrase, prepositional phrase, infinitive phrase, participle phrase(present participle and past participle), gerund phrase, and absolute phrase.
@@ -77,8 +83,6 @@ I will be studying English =我在学习英语的时候，可能有其它事情�
 3.Provided/Providing that .....
 Provided that the funding is obtained, the company intends to produce a first version of the production system in the following three months.
 IF, EVEN IF, ONLY IF, AS LONG AS, PROVIDED, SUPPOSING, UNLESS, BUT FOR, IF NECESSARY, IF SO, IN CASE etc.
- 
-Pied-piping with inversion 伴随法则  To whom could we direct our questions?
  
 as spoken https://forum.wordreference.com/threads/as-spoken-as-speaking.2955245/
 https://forum.wordreference.com/threads/as-per-we-spoke-said.1052811/
