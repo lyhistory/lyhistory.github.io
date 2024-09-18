@@ -33,6 +33,33 @@ accumulation
 permutation and combination 排列组合
 Normal distribution  bell curve
 
+## computer
+desktop/laptop ram ssd hd monitor main processor case main board driver keyboard flash drive external drive portable
+
+## Technical Products Specification and Review
+headphone jack   battery life   trackpad  dock(多功能底座) connector adapter
+Peripherals 外围设备  mother board 主板
+Lightning to 30-pin Adaptor(苹果闪电接口转换器)
+https://www.yahoo.com/tech/iphone-7-already-generating-more-excitement-iphone-6s-214543073.html
+https://www.yahoo.com/tech/iphone-7-already-generating-more-excitement-iphone-6s-214543073.html
+https://www.yahoo.com/tech/iphone-7-already-generating-more-excitement-iphone-6s-214543073.html
+https://pimylifeup.com/pi-top-review/
+http://makezine.com/2015/12/04/admittedly-simplistic-guide-raspberry-pi-vs-arduino/
+http://www.apple.com/sg/shop/product/MD823AM/A/lightning-to-30-pin-adapter?fnode=91
+Huawei P8 Lite Takes a Bullet for South African Businessman http://www.zdnet.com/article/raspberry-pi-how-i-spent-almost-150-on-a-35-computer/
+Galaxy S7 edge explosion shocker: Man suffers third degree burn in US, to sue Samsung
+https://in.news.yahoo.com/galaxy-s7-edge-explosion-shocker-124550880.html
+http://swns.com/news/dad-of-five-who-was-shot-in-the-chest-by-robbers-miraculously-survived-thanks-to-his-bulletproof-phone-75231/
+Huawei plots to seize anohter tech Industry https://www.bloomberg.com/gadfly/articles/2016-08-31/huawei-of-china-plots-to-seize-market-for-data-center-gear
+Why We Don’t Sell Tempered Glass Screen Protectors www.moutfitters.com/blog/why-we-dont-sell-tempered-glass-screen-protectors/
+
+## Fiber Broadband Services
+http://community.starhub.com/t5/MaxInfinity-Fibre-BroadBand/Relocation-of-services/td-p/36627
+router modem cable , terminal point, cable/fiber broadband, pull out the cable
+http://pc.net/helpcenter/answers/difference_between_router_and_modem
+rip customers off 宰客
+How To Protect Your Business From The Dark Side Of The Internet Of Things https://www.forbes.com/sites/centurylink/2016/02/15/how-to-protect-your-business-from-the-dark-side-of-the-internet-of-things/#19b71ccf5fcf
+
 ## Software engineer 
 This is a pretty straightforward collapse operation where we make the elements arrange themselves in a vertical fashion as opposed to horizontally.
 I’ll only depict the operative element. Any markup within it that is not immediately relevant will be truncated [it’s still there but I just won’t show it] and replaced with the HTML comment with caption ‘MARKUP TRUNCATED’ [I’ll also do the same for Javascript code with caption ‘CODE TRUNCATED’].

@@ -1,8 +1,14 @@
-## Common stuff
-In case /in the event of
-still valid 依然有效
-the (whole) idea is, the (whole) point is
-of that I am sure
+## Think in English/ How to say in English
+
+卧槽 Drat 讨厌!见鬼! Bingo 中了
+Faint 我倒!
+take a cut
+rummage ˈrʌmɪdʒ翻箱倒柜; 翻查; 搜出;
+encumbered assets 抵押资产
+Fifty-fifty 一半对一半
+in a worse-case scenario 更严重的情况是
+Allow me 让我来
+Anytime 随时吩咐
 接触不良 poor contact
 夜宵 night-time snack
 翻过来 turn outside in
@@ -13,110 +19,377 @@ pretty much has been done
 硅胶 silicon
 土 soil 陶土 pottery clay
 备用件 spare parts  配件 accessories parts
-## Common phrase
-Absolutely 毫无疑问
-Adorable 可爱极了
-Amazing 太神奇了
-Anytime 随时吩咐
-Anyway
-Almost 差不多了
-Awful 好可怕啊
-Allow me 让我来
-Baloney 胡扯，荒谬
-Bingo 中了
-Boring 真无聊
-Bravo 太棒了
-Bullshit 胡说
-Correct 对的
-Crazy 疯了
-Damn 该死的
-Deal 一言为定
-Definitely 当然
-Disgusting 好恶心啊
-Drat 讨厌!
-Exactly 完全正确
-Faint 我倒!
-Fantastic 妙极了
-Fifty-fifty 一半对一半
-Fresh 好有型，帅极了
-Gorgeous 美极了
-Great! 太好了!
-Hopefully 希望如此
-Horrible 好可怕
-Hot 好辣
-Hurray/Hurrah 万岁
-Imagine 想想看
-Impossible 不可能吧
-Impressive 很感人，永生难忘
-Incredible 不可思议
-Indeed? 真的?
-Listen 听着
-Lousy 差劲
-Now 现在就做
-Objection 我抗议
-Outrageous 不得了
-Perfect 很完美
-Please 拜托了
-Probably 很可能
-Rats 差劲
-Relax 放轻松
-Right 对的!
-Satisfied 满意了吗
-So so 马马虎虎
-Still 仍是这样
-Stingy!——小气鬼!
-Crap 
-Native speakers' brains are already on the right path. We won't mess it up in a conversation between native English speakers. When a native speaker hears, "What's your name? Mine ..." we already have "is" in our heads queued up. If we hear anything else, we will be surprised. A non-native speaker may not have this anticipation, and may hear "Minus" instead of "Mine is". This exact problem happened this morning between my German roommate and me.
-Native speakers would almost never hear "minus" where the speaker said "mine is", and likewise we will never confuse "crab" for "crap".
-- http://english.stackexchange.com/questions/15045/is-it-common-for-english-people-to-say-crap-instead-of-crab
-Of course, I make the assumption that the speaker is also a native speaker. Non-native English speakers also have subtle linguistic clumsiness that throws off this anticipation effect. So another time we could mess it up is if the speaker says something that we have to parse word-by-word to understand, throwing off the sense of rhythm and anticipation.
-No worries 
-is an expression seen in Australian English, British English and New Zealand English meaning "do not worry about that", "that's all right", or "sure thing". It is similar to the English no problem.
 
-## Think in English
+时差 time difference
+倒时差/时差综合症 jet lag
+无根据 groundless
+viewer discretion is advised 以下内容建议慎重观看
+stay tuned 别换频道
+部分 a fraction of
+人品满格 RP Full Reception
+无下限 数学说法 NO Lower Boundary 极其专业 no superlinear lower bound, 中文意思 You are unbelievable son of a bitch
+正宗川菜 Authentic SiChuan Cuisine
+笑容满面 he(his face) is beaming with delight.
+各回各家 各找各妈 Each of you get back home to your parents' basements.
+如有更改，恕不另行通知 subject to change without notice
+并不全面/详尽 Not Exhaustive
+吃春卷‘形象’的谓之咬春
+Spring rolls are synonymous with takeout in the U.S. However, they have a long history as a snack in China, the idea being that you're literally "biting spring"
+我的直觉告诉我你就是个傻逼 My gut says you are asshole . instinct
+intuitive The user interface should be intuitive and easy to learn without formal training.
+我××之前的日程已经排满了 I have a tight/packed schedule until ×××
+抢购 Thank you for your interest, all the tickets have been snapped up.
+催化剂 catalyst
+软导线雕塑 Soft wire sculptures
+迷惑性 欺骗性 Scenario 2 is much more common, and trickier.
+下流 恶心的 This is a nasty situation that I knew I had to fix.
+混乱的 杂乱 麻烦 messy chaos
+吹捧 吹嘘 兜售 We see developers touting the benefits of using the repository pattern for internal data access over leveraging the tools and APIs specific to their technology of choice.
 
-"I would do it" and "I would have done it"?
-https://www.quora.com/What-is-the-difference-between-I-would-do-it-and-I-would-have-done-it-Why
+command respect 必然得到尊重 赢得尊重
 
-How are you? Good or well
-https://www.businessinsider.com/how-are-you-im-good-is-acceptable-reply-2014-2/?IR=T
 
-who'd have guessed? 谁能猜得到？
-误：I think I can't.
-正：I don't think I can.
-提示：汉语里说“我想我不会”的时候，英语里面总是说“我不认为我会”。以后在说类似的英语句子的时候，只要留心，也会习惯英语的表达习惯的。
-误：I don't dance well too.
-正：I am not a very good dancer either.
-提示：当我们说不擅长做什么事情的时候，英语里面通常用not good at something，英语的思维甚至直接跳跃到：我不是一个好的舞者。
-误：I have something to do tomorrow.
-正：I am tied up all day tomorrow.
-提示：用I have something to do来表示很忙，这也完全是中国式的说法。因为每时每刻我们都有事情要做，躺在那里睡大觉也是事情。所以可以说我很忙，脱不开身：I'm tied up。还有其它的说法：I can't make it at that time. I'd love to, but I can't, I have to stay at home.
-误：Would you like to join our party on Friday?
-正：Would you like to come to our party on Friday night?
-提示：join往往是指参加俱乐部或者协会，如：join a health club; join the Communist Party。事实上，常常与party搭配的动词是come 或者go。如go a wild party，或者come to a Christmas Party。
-误：I have no experience.
-正：I don't know much about that.
-提示：I have no experience这句话听起来古里古怪，因为只需要说那方面我懂得不多，或者这方面我不在行，就行了。I am not really an expert in this area。
---Will you be going back home for the Spring Festival?
-误：--Of course!
-正：--Sure. / Certainly.
-提示：以英语为母语的人使用of course的频率要比中国的学生低得多，只有在回答一些众所周知的问题时才说of course。因为of course后面隐含的一句话是“我当然知道啦！难道我是一个傻瓜吗？”因此，of course带有挑衅的意味。在交谈时，用sure或certainly效果会好得多。同时，of course not也具挑衅的意味。正常情况下语气温和的说法是certainly not。
-误：The price is very suitable for me.
-正：The price is right.
-提示：suitable(合适的、相配的)最常见的用法是以否定的形式出现在告示或通知上，如：下列节目儿童不宜。The following programme is not suitable for children.
-command respect 必然得到尊重
-Support gives peace of mind (like insurance) and throat to choke (even if bug fix might not be immediate)
-A throat to choke
-Common Mistake
-https://www.douban.com/note/221114977/
-http://www.businessweekly.com.tw/KBlogArticle.aspx?ID=20&pnumber=1
-http://wss.mofcom.gov.cn/article/a/j/201209/20120908345591.shtml
-http://www.welinkis.com/html/4127304656.html
-http://contest.i21st.cn/article/speaking/4990_1.html
-http://www.linewow.com/html/article-34436.html
-http://www.businessweekly.com.tw/KBlogArticle.aspx?id=2165
+自拍 selfie 表情Emoticons
+笨拙 别扭 awkward
 
-## About house
+
+
+bicycle: disk brake air pump nut bolt brake cables wheel(hub wheel edge spokes)
+Toolbox: plier , scissor screwdriver spanner paper clip（回形针） tape（胶带） stapler(订书机）, spring（弹簧） bolt(螺栓） nut（螺母） screw（螺丝钉） https://www.quora.com/What-is-the-difference-between-a-bolt-a-screw-and-a-stud
+爽肤水 toner lotion sunscreen
+archery
+Wholesale warehouse sale retail
+尾货 Wei Huo is the normal order of foreign trade surplus goods.
+rent: tenant
+电子公告板 bulletin board
+ingestion digestion absorption and elimination http://seattlecentral.edu/faculty/jwhorley/Digestion.pdf
+heat food with microwave
+
+纪念钞 Commemorative Notes 纪念钞册 booklet http://www.dbs.com.sg/personal/dbs-commemorative-notes.page?pid=sg-dbs-pweb-home-heroblock-commemorative-notes-btnlearnmore-
+免除信用卡年费 waive credit card annual fee
+还信用卡钱 settle/pay credit card bills
+discount mark-up
+交通卡Fare Card for bus and train journeys 月票 Price for all existing monthly concession passes remain unchanged.
+tap fare card tap in tap out
+swipe credit card
+scan fingerprints scan in scan out
+注意个人卫生 People should wash regularly to ensure personal hygiene.
+ulcer 口腔溃疡 diarrhea 腹泻
+耳毛鼻毛修剪器 Ear&Nose Trimmer NOSE-BEARD-HAIRCUT http://www.braun.com/global/male-grooming/cruzer-shavers-and-trimmers/cruzer-beard-and-head.html
+foam mousse
+fragrance - perfume
+post-it notes / sticky notes save time flipping book
+snack edibles dose slice
+water-proof
+plaster 创可贴
+cushion 橡皮软垫
+styrofoam box 泡沫箱
+Bubble wrap
+carring handles
+shoulder strap
+ 
+get in your way  block your way
+让我们通过了 they waved us through. / we got approved.
+There are a few things that I find incredibly attractive when it comes to NativeScript.  These are benefits that have kept me attached to the framework for as long as I’ve been.
+You could spend a week building the feature, and you might be reinventing the wheel. Sounds like it’s time to see what’s on the shelf!
+Today’s business environment is constantly disrupted by new players leveraging innovative technology. 93% of technology and business leaders believe that their businesses will be deeply affected by digital. Only companies who adopt strong digital competencies can become the winners of tomorrow.
+ 
+if you're a web developer, you can use React Native to write clean, fast mobile apps, from the comfort of a familiar framework and a single JavaScript codebase.
+React has seen widespread adoption.
+Developers have flocked to React for a number of reasons. It's lightweight, and offers impressive performance, especially for quickly-changing data. Because of its component structure, it also encourages you to naturally write more modular, reusable code.
+Because your application is mostly just JavaScript, you get a lot of the perks of web development, like being able to instantly "refresh" your application to see your code changes.Compared to the long minutes spent waiting to rebuild a traditional mobile application, this feels like a godsend.
+Being able to write truly native iOS and Android apps using a single JavaScript codebase seems like a no-brainer.
+In lieu of tags such as <div>, <img>, and <p>, React Native provides you with basic components such as <Text> and <View>.
+In practice, this means that you can write what looks like ordinary React code, and the React Native "bridge" will take care of the heavy lifting. But what happens when the bridge is incomplete?
+Happily, React Native gives you the flexibility to write and use these so-called "native modules" when you need to, and the process is straightforward.
+Deploying React Native applications is very similar to working with ordinary mobile applications. That doesn't mean it's easy, as the mobile release process is known for its headaches.
+Angular's data binding and dependency injection eliminate much of the code you would otherwise have to write.
+ 
+A tantalising aroma of roast beef fills the air
+please direct any questions to peter or me.
+
+electronic magnetic field palm numb
+走通整个流程 walk through the process
+让我想一下/一会 let me think about it/ let me think it over
+
+三个女人一台戏 three women will make a real drama
+遇到的问题/困难/坑 http://www.ichacha.net/%E9%81%87%E5%88%B0%E5%9B%B0%E9%9A%BE.html
+断断续续 from time to time ;intermittently
+抢购 代付
+不是不好，是相对不好的地方
+帮你看着东西
+最希望 wish to get it most
+更需要 who need more
+最早/最迟 at the earliest/latest
+how early / how much time in advance
+how late does uber run
+at the latest no later then
+人体 肉体 精神 stress pressure
+主动 被动 active passive
+送给我 http://blogs.teachersammy.com/Blogs/entry/common-English-error-he-sent-me-a-present#.Vp4Q-VJOEbE
+替我问好  Please give my sincere regards to all the members of your family.
+过关 （游戏过关 clear a stage）
+1.(通过关口) pass a barrier; go through an ordeal
+2.(比喻, 通过检验) pass a test; reach a standard
+错过机会
+贵在坚持
+剩下的全在这里 the rest are all here
+对于饮料，我没有偏好，平时一般喝。。。
+坐过站了 you missed your stop
+想起来了
+赶上了
+（怎样/什么）都行
+都可以/随便
+内幕消息
+微妙的关联
+行为冲动 act impluse
+睡过头
+眼不见心不烦
+家庭教养
+个人素质
+行为/举止粗鲁
+执行力
+帮忙看下东西/行李
+总体来说 你的意思是 overall speaking, what you mean is ...
+整理文件/桌子/资料/磁盘 file up sth/filing clean up the table
+异性的 hetero 异构 heterogeneous
+减肥/瘦身
+临时决定 tentatively decided / made a decision at the last minute
+突然有急事 Something urgent has come up, so the appointment will have to be canceled.
+旁听 sit in
+摆设
+可以退款吗 refundable
+罚金 peanut fine
+奖励 bonus praise
+反对 object to/oppose be opposed to /disagree/protest
+遇到阻力 face a resistance
+障碍 鸿沟 language obstacle / gap
+迁移 transfer/migrate
+接下来 next  subsequent following downstream
+之前的 previous upstream
+傀儡
+发芽开花结果
+赔钱 losing money
+撤回
+整容 plastic surgery
+啤酒肚
+二手烟 passive smoking secondhand smoke
+学会了 learnt have learned，acquired，mastered
+全靠你了
+顶贴 bump this thread http://sgforums.com/forums/1902/topics/270128
+租金
+房屋设施: eatery
+不急 there is no hurry/ in no hurry http://www.macmillandictionary.com/thesaurus-category/british/ways-of-telling-someone-not-to-hurry
+冲向我http://www.hujiang.com/ciku/53286_-103160306/
+我晕了 http://news.iciba.com/study/oral/1568075.shtml
+我错了
+我记错了
+我想错了
+我想起来了
+勾起很多回忆 bring back a lot of memories
+过着一天算一天的生活 Until now he never thought of tomorrow , and lived from one day to the next
+但凡 if ** some if ** any
+本能反应 http://www.ichacha.net/%E6%9C%AC%E8%83%BD%E5%8F%8D%E5%BA%94.html
+裁员 chop cut 罢工
+背影the sight of his back
+保守治疗
+日光浴
+很抢手 in great demand / very hot / well sought after by
+
+quite a few http://english.stackexchange.com/questions/4085/what-is-the-proper-usage-of-quite-a-few
+expresses that the speaker was impressed or astonished by the number, as they would have expected less.
+最高 cap/capping
+大件物品 bulky item
+Which between “crap” and “shit” is more rude?
+http://ell.stackexchange.com/questions/23246/which-between-crap-and-shit-is-more-rude
+retrofit  retrospect  revision recap
+revamp rephrase
+regression 回归 recursive   递归
+refill recharge
+recompense 补偿
+overwrite
+override
+overload
+overhead
+overkill
+overwhelming
+overrun
+forward, ahead, onward, forth, foremost,along,outward, outwardly, outwards
+downside
+downwards
+downterm
+downstream
+downfall 下台 (fall down)
+highrise
+counterclockwise
+undermine 逐渐削弱
+underestimate
+upward
+downward
+inner ward
+come out work out try out
+turn out
+turn round
+tease out 梳理出
+take off 出发  kick off 开始
+trade-off权衡
+ 
+With regard to that 关于这一点
+Be that as it may
+more so
+whatsoever
+last but not least
+the reason being is
+ 
+扶梯上面 escalator landing / upper landing
+掉下来 drop / fall / land / lose
+ 
+常用词习惯不准确
+different
+variant
+stop
+halt
+ride on you / take credit from you / take advantage from u
+ask / enquire
+ask for / request / apply for
+asked to / required to
+happened occurred
+argue retort debate dispute
+ 
+publish issued sign off finalize communicate to
+persist insist
+plural/singular compound multiple diverse
+ 
+ambitious timescale / challenge / tight schedule
+perform activity    proceed procedure
+entail/bring risk
+technique  technical
+ 
+how earlier should I inform you?
+notice period
+administer / manage
+the system would administer the rostering of pilots and cabin crew on commercial flights.
+merchandise / goods /
+I was talking on the phone and suddenly got disconnected.
+ 
+volatile paramount
+Business needs were paramount
+emerge arise surface envision 预见想象 anticipate
+ 
+adopt apply use
+ 
+adhere vs comply http://forum.wordreference.com/threads/adherence-compliance.1930164/
+the new end date must be adhered to.
+align vs conform http://www.wikidiff.com/conform/align
+ 
+oral verbal : verbal warning
+ 
+left over/ remain /rest
+ 
+scold shoot shrew
+A week elapsed before she could see Elizabeth without scolding her
+irritate annoy frustrate
+http://forum.wordreference.com/threads/annoy-vs-irritate.1550833/
+beef up 充实, bump up, screw up,mess up, ramp up 巩固提高 sum up hang up挂掉
+high up: avoids feature-laden classes high up in the hierarchy
+gobble up 吞噬
+miss out figure out work out leak out
+sort out
+pump in
+crack down (on) 严厉打击
+clamp down (on) 钳制
+chewing gum on a train is not seemly in a lady. 淑女在火车上嚼口香糖不太合适
+The boy popped a piece of gum into his mouth. 塞进嘴里
+That guy who snaps his gum in class is so annoying 吹响口香糖
+ 
+coordinated cooperation correlation
+interpersonnel 人际关系  interlinked interoperate interoperable interconnecting
+cycling to work , biking to work, ride bike to work
+ 
+stimulation vs incentive
+Incentives to motivate employees
+Does governmental incentives or economic growth stimulate green-building construction
+condom vs rubber (rubber sticker) vs gum
+source vs jam
+prosecute sue
+speculate vs hedge vs invest vs infer
+The main purpose of speculation, on the other hand, is to profit from betting on the direction in which an asset will be moving. Hedgers reduce their risk by taking an opposite position in the market to what they are trying to hedge.
+The main difference between speculating and investing is the amount of of risk undertaken in the trade. Typically, high-risk trades that are almost akin to gambling fall under the umbrella of speculation, whereas lower-risk investments based on fundamentals and analysis fall into the category of investing.
+ As verbs the difference between speculate and infer is that speculate is to think, meditate or reflect on a subject; to consider, to deliberate or cogitate while infer is to introduce (something) as a reasoned conclusion; to conclude by reasoning or deduction, as from premises or evidence.
+akin similar
+accountability responsibility liability
+benchmark collate calibrate
+serially sequence
+intervene interfere 干涉
+中英物语 http://www.chtoen.com/
+http://edu.qq.com/a/20160401/021015.htm
+Why do Chinese websites look so busy? https://econsultancy.com/blog/67466-why-do-chinese-websites-look-so-busy
+Like always/as always/as usual http://forum.wordreference.com/threads/like-always-as-always-as-usual.1766024/
+as usual - per usual https://www.quora.com/Whats-the-difference-between-as-usual-and-as-per-usual
+as you usually do
+How would you like your steak done?
+1. rare (almost raw) 2. medium-rare 3. medium ("half" raw) 4. well-done (fully cooked)
+ambiguous ambiguity vague
+grocery goods  electronic gadgets
+cosmetic toiletries
+territory region protectorate state  http://english.stackexchange.com/questions/3572/what-are-province-territory-protectorate-state
+intuitive
+consent 同意赞成 consensus 一致 共识  sensation 感觉 知觉 sensitivity 敏感 灵敏度
+conceive 设想 deceive 欺骗 perceive
+perceive conscious realize
+conscious anxious(anxiety)
+perception feel cognition consciousness apperception
+conserve 保存 节省 reserve sustain 维持 经受
+前(提前 之前 早于）upfront in advance prior to precede in advance
+后（后续 接着） subsequent
+accostomed to get/be used to
+discrete scatter
+ 
+pertaining to
+in terms of vs with respect/regard to
+'in terms of' When we speak in this way, using these kinds of terms.
+eg In terms of computer skills, his programming and website design abilities are excellent.
+'with regard to' When we look at something.
+eg With regard to this problem, we need a solution by Friday.
+novelty origin
+widget gadget device
+ 
+it can make your head spin. fuzzy
+ball sphere
+under below beneath underneath http://www.phrasemix.com/answers/whats-the-difference-between-under-below-beneath-and-underne
+precise concise
+be accounted for 占
+guarantee warranty promise
+omission ignorance
+ 
+ 
+categorize classify
+per pax=per person/passenger person is a decent substitute for individuals, People is the ordinary plural of person
+differ / not in sync with / not be aligned
+It can be differ for different organizational units and corporate functions
+Organization may not be in sync with market force.
+Top management and staff may not always be aligned.
+ 
+obtain retain attain detain（扣留）
+defer delay lag
+accommodate to
+throughput吞吐量 threshold 临界值 capacity
+omit忽略   leave out省去 不考虑
+ 
+work around to 逐步的解决
+correspond to 相应于 符合于
+respond to 相应
+ 
+contradict反驳 与...矛盾 on contrary counter protest 反对
+ 
+elicit 引出 诱出 solicit 恳求 征求 勾引
+ 
+hereinafter 以下，在下文中
+ 
+packed 拥挤 crowded
+
+## Topic 
+### About house
 餐具室 pantry
 水池 sink basin handbasin/hand washing basin; pool
 blanket 毯子
@@ -136,17 +409,27 @@ the tap has little flow/ the tap can not be tightened
 睡衣 pajamas 
 	She tried to kick the pajamas loose, but they were tangled in the satin sheet.她想把睡衣踢脱，可是它却和缎子床单绞到了一块。
 
-## About food
+### About food
 my mouth is watering
 delicacy 英[ˈdelɪkəsi] 美[ˈdɛlɪkəsi] n. 美味佳肴; 精美; 敏锐，敏感; 世故，圆滑
 浓郁的香味 strong fragrance; Strong Aroma;
 course -- main course 主菜 crank course 曲柄路线
-## About hair cut
+### About hair cut
 理发：http://blogs.teachersammy.com/Blogs/entry/describing-hairdessing-in-English-1#.WdXv_z6g-Ul
 hairstylist, hairdresser/barber
 cut/trim/wash/dry/style/perm/dye/hair care session
 style / shape the hair
-## About healthy
+### About healthy
+
+sun exposure vitamin afternoon ultraviolet light
+http://playgroundsafety.org/safety-tips/sun-exposure
+http://www.vitamindwiki.com/No+%E2%80%93+10+minutes+per+day+of+sun-UVB+is+NOT+enough
+
+body heals
+body natural healing process
+disease transmission
+
+
 Early detection through regular screening helps to detect the increase risk of chronic diseases like heart disease, stroke and kidney failure.
 Partnered with The Clinical Laboratory, the company will provide the below health screening package to you.
 Do seize this opportunity to have your health checked at your doorstep.
@@ -202,14 +485,20 @@ sanitizer
 我看东西，看来小小的，又歪歪曲曲的。Objects look small and distorted.
 我看到有一个黑点在我的视野里。I have a black spot in my vision.
 我无法分辨颜色。I cannot distinguish the colors.
-## About banking
+### About banking
 整存整取、零存整取和定活两用 3g.en8848.com.cn/hangye/bank/voadh/146480.html
-## About Clothing
+### About Clothing
 ripped hole
 https://www.threadsmagazine.com/readerproject/2015/04/02/how-to-properly-remove-clothing-labels
 sewing label holes stitching
 
-## About driving 
+
+格子 checkered design 条纹 stripe （strip是脱衣舞^..^)
+背心 singlet/tank top 套管running sleeve
+褶状裙边 Accordion pleats （Accordion blinds褶状遮阳‘伞’）
+shoelace zipper collar
+
+### About driving 
 beacon 烽火; 灯塔，信号浮标; 指路明灯; 警标，界标;
 swerve [swɜ:v] 使突然转向; 使转弯;
 skid 打滑; 滑行; （通常指车辆） 侧滑; （住在） 贫民区;
@@ -366,9 +655,9 @@ Right turn wait for the go straight car
 Slope half clutch the release brake
 Yellow box bus lane
 Change over
+### About politics
 
-## Topic 
-### 1.politics
+US CHINA
 discriminate discrimination
 discrete discretion
 monopoly
@@ -388,7 +677,7 @@ Hundreds of Chinese parents who lost their only child are now demanding compensa
 China's startup investment fund is bigger than the entire GDP of Denmark www.businessinsider.com/chinas-startup-investment-fund-is-bigger-than-denmarks-gdp-2016-4?IR=T&r=UK&IR=T
 China plans to tear down walls of gated condos and let public in www.theedgemarkets.com/article/china-plans-tear-down-walls-gated-condos-and-let-public
 China’s missile gambit https://www.washingtonpost.com/opinions/chinas-missile-gambit/2016/02/21/fc87c29a-d746-11e5-9823-02b905009f99_story.html?utm_term=.b9331253c0d1
-### 2.Employ
+### About Employ
 compel compulsory
 retrenchment
 He said such benefits should apply to all staff, including professionals, managers, executives and technicians (PMETs) and management. Currently, retrenchment benefits are determined by agreements between employers and employees.
@@ -398,11 +687,8 @@ http://www.forbes.com/sites/lizryan/2016/04/07/did-this-employee-take-work-life-
 http://www.forbes.com/sites/lizryan/2016/04/07/did-this-employee-take-work-life-balance-too-far/#14d119415c42
 http://sbr.com.sg/hr-education/news/over-6-in-10-local-firms-have-mentally-absent-employees-says-survey
 working remotely www.techrepublic.com/blog/10-things/10-good-reasons-why-working-remotely-makes-sense/
-### 3. sun exposure vitamin afternoon ultraviolet light
-http://playgroundsafety.org/safety-tips/sun-exposure
-http://www.vitamindwiki.com/No+%E2%80%93+10+minutes+per+day+of+sun-UVB+is+NOT+enough
- 
-### 4.Tour
+
+### About Tour/Culture
 自由行 跟团
 景色 景点
 历史遗迹 遗址 遗产 heritage conservation  natural reserves/resource natural reservoir
@@ -411,33 +697,7 @@ environmental sustainability
 tripod/lens
 http://www.thegreencorridor.org/
  
-### 5. Technical Products Specification and Review
-headphone jack   battery life   trackpad  dock(多功能底座) connector adapter
-Peripherals 外围设备  mother board 主板
-Lightning to 30-pin Adaptor(苹果闪电接口转换器)
-https://www.yahoo.com/tech/iphone-7-already-generating-more-excitement-iphone-6s-214543073.html
-https://www.yahoo.com/tech/iphone-7-already-generating-more-excitement-iphone-6s-214543073.html
-https://www.yahoo.com/tech/iphone-7-already-generating-more-excitement-iphone-6s-214543073.html
-https://pimylifeup.com/pi-top-review/
-http://makezine.com/2015/12/04/admittedly-simplistic-guide-raspberry-pi-vs-arduino/
-http://www.apple.com/sg/shop/product/MD823AM/A/lightning-to-30-pin-adapter?fnode=91
-Huawei P8 Lite Takes a Bullet for South African Businessman http://www.zdnet.com/article/raspberry-pi-how-i-spent-almost-150-on-a-35-computer/
-Galaxy S7 edge explosion shocker: Man suffers third degree burn in US, to sue Samsung
-https://in.news.yahoo.com/galaxy-s7-edge-explosion-shocker-124550880.html
-http://swns.com/news/dad-of-five-who-was-shot-in-the-chest-by-robbers-miraculously-survived-thanks-to-his-bulletproof-phone-75231/
-Huawei plots to seize anohter tech Industry https://www.bloomberg.com/gadfly/articles/2016-08-31/huawei-of-china-plots-to-seize-market-for-data-center-gear
-Why We Don’t Sell Tempered Glass Screen Protectors www.moutfitters.com/blog/why-we-dont-sell-tempered-glass-screen-protectors/
-### 6.Fiber Broadband Services
-http://community.starhub.com/t5/MaxInfinity-Fibre-BroadBand/Relocation-of-services/td-p/36627
-router modem cable , terminal point, cable/fiber broadband, pull out the cable
-http://pc.net/helpcenter/answers/difference_between_router_and_modem
-rip customers off 宰客
-How To Protect Your Business From The Dark Side Of The Internet Of Things https://www.forbes.com/sites/centurylink/2016/02/15/how-to-protect-your-business-from-the-dark-side-of-the-internet-of-things/#19b71ccf5fcf
- 
-### 7.Speech/Presentation/Exam jitters, calm down, preparation
-http://www.inc.com/larry-kim/15-power-up-tips-to-make-you-a-better-presenter.html
- 
-### 8.LifeStyle
+### About LifeStyle
 trail running
 trail corridor
 Servers trash customers in private note on check — then forget to delete it https://www.washingtonpost.com/news/going-out-guide/wp/2016/05/09/servers-trash-customers-in-private-note-on-check-then-forget-to-delete-it/?utm_term=.631460c40846
@@ -466,16 +726,26 @@ After your selection and prior to proceeding with the print, our customer servic
 You can choose from a wide variety of backdrops and props to create the ideal theme for your graduation portraits. Whether you prefer a more formal and classical style, or have the appetite for something more adventurous, we are able to assist you in bringing forth the perfect portrait.
 We understand that portraits are deeply personal and highly significant. Our dedecated make-up artists and renowned photographers will work closely with you for a picture-perfect shot that will remind you of your proud achievements for a lifetime. Our attention to detail is what sets us apart. We will ensure every single aspect - right down to matching the correct make-up - is perfect for the shoot. From setting the lighting, choosing the angle and even during editing, we go the extra mile for the very best result.
  
-9.Education
+### AboutEducation
 Medical student who fatally poisoned his roommate as an April Fool’s joke loses his appeal against death sentence in China
 http://www.dailymail.co.uk/news/article-2901745/Medical-student-fatally-poisoned-room-mate-April-Fool-s-joke-loses-appeal-against-death-sentence-China.html
  
 http://www.bloomberg.com/news/articles/2016-08-30/tencent-china-s-biggest-internet-company-wants-to-use-its-headquarters-as-a-testing-lab
  
-10.family emotion
+### About family emotion
 Carolyn Hax: Trying to get past a wife seeing a married man on the side https://www.washingtonpost.com/lifestyle/style/carolyn-hax-trying-to-get-past-a-wife-seeing-a-married-man-on-the-side/2016/02/18/36bbc662-d4d3-11e5-9823-02b905009f99_story.html?utm_term=.3ec57c599e7e
 
+### Anecdote
+“Do not shop at Mustafa Shopping Centre”
+Me and my husband visited Singapore in March 08. I had earlier visited Singapore some 4-5 years back and I knew that Singapore is a shopping heaven. So I had Mustafa on my list.
+We decided to buy Mobiles for us and we zeroed in on Mustafa after reading soooo many good reviews about it.We decided on the models and headed to Mustafa. I was actually surprised on how bad the place has turned out to be..lots of people were in the shop..the salesperson was unaware about the mobile features.We asked whether they will give us International Guarantee of these mobiles for which they refused. The place looked shady..But with good reviews on various forums we shirked all our doubts and went ahead and shopped the mobiles. All good..we returned home and started using the mobiles. My mobile worked fine for few days after which it hangs while I am talking..sometimes it refuses to ring even when I get calls..sometimes it refuses to make me ring a missed call..sometimes it simply blanks out!! The memory chip place holder is loose and so is the SIM holder place...My husbands mobile has similar problems.
+So I would suggest that if someone is planning to shop in Mustafa its better you have good know how of the thing you are buying so that you dont feel cheated and if you dont have the know how then the best thing you can do is not to buy at all from there!
+https://www.tripadvisor.com.sg/ShowUserReviews-g294265-d2139541-r17779786-Mustafa_Centre-Singapore.html#
+
 ## Presentation
+Speech/Presentation/Exam jitters, calm down, preparation
+http://www.inc.com/larry-kim/15-power-up-tips-to-make-you-a-better-presenter.html
+
 If following a specific methodology, be explicit about what it is and how it works to all involved
 the likely implications of change
 increase visibility into operational efficiencies and bottlenecks
@@ -650,6 +920,157 @@ I am thinking
 the whole point is
 just a few cool new things to look out for
  
+
+## Analysis 
+误：I think I can't.
+正：I don't think I can.
+提示：汉语里说“我想我不会”的时候，英语里面总是说“我不认为我会”。以后在说类似的英语句子的时候，只要留心，也会习惯英语的表达习惯的。
+误：I don't dance well too.
+正：I am not a very good dancer either.
+提示：当我们说不擅长做什么事情的时候，英语里面通常用not good at something，英语的思维甚至直接跳跃到：我不是一个好的舞者。
+误：I have something to do tomorrow.
+正：I am tied up all day tomorrow.
+提示：用I have something to do来表示很忙，这也完全是中国式的说法。因为每时每刻我们都有事情要做，躺在那里睡大觉也是事情。所以可以说我很忙，脱不开身：I'm tied up。还有其它的说法：I can't make it at that time. I'd love to, but I can't, I have to stay at home.
+误：Would you like to join our party on Friday?
+正：Would you like to come to our party on Friday night?
+提示：join往往是指参加俱乐部或者协会，如：join a health club; join the Communist Party。事实上，常常与party搭配的动词是come 或者go。如go a wild party，或者come to a Christmas Party。
+误：I have no experience.
+正：I don't know much about that.
+提示：I have no experience这句话听起来古里古怪，因为只需要说那方面我懂得不多，或者这方面我不在行，就行了。I am not really an expert in this area。
+--Will you be going back home for the Spring Festival?
+误：--Of course!
+正：--Sure. / Certainly.
+提示：以英语为母语的人使用of course的频率要比中国的学生低得多，只有在回答一些众所周知的问题时才说of course。因为of course后面隐含的一句话是“我当然知道啦！难道我是一个傻瓜吗？”因此，of course带有挑衅的意味。在交谈时，用sure或certainly效果会好得多。同时，of course not也具挑衅的意味。正常情况下语气温和的说法是certainly not。
+误：The price is very suitable for me.
+正：The price is right.
+提示：suitable(合适的、相配的)最常见的用法是以否定的形式出现在告示或通知上，如：下列节目儿童不宜。The following programme is not suitable for children.
+
+Is saying "Noted" a rude answer? If so, what are the alternative answers to reply to a person besides “Noted”? https://www.quora.com/Is-saying-Noted-a-rude-answer-If-so-what-are-the-alternative-answers-to-reply-to-a-person-besides-“Noted”
+1.how are you feeling?
+http://www.crazyboards.org/forums/index.php?/topic/52259-problems-answering-the-question-how-are-you-feeling/
+100 WAYS TO ANSWER THE QUESTION “HOW ARE YOU?”
+"it's not working" and "it doesn't work"
+
+How are you? Good or well
+https://www.businessinsider.com/how-are-you-im-good-is-acceptable-reply-2014-2/?IR=T
+
+Crap 
+Native speakers' brains are already on the right path. We won't mess it up in a conversation between native English speakers. When a native speaker hears, "What's your name? Mine ..." we already have "is" in our heads queued up. If we hear anything else, we will be surprised. A non-native speaker may not have this anticipation, and may hear "Minus" instead of "Mine is". This exact problem happened this morning between my German roommate and me.
+Native speakers would almost never hear "minus" where the speaker said "mine is", and likewise we will never confuse "crab" for "crap".
+- http://english.stackexchange.com/questions/15045/is-it-common-for-english-people-to-say-crap-instead-of-crab
+Of course, I make the assumption that the speaker is also a native speaker. Non-native English speakers also have subtle linguistic clumsiness that throws off this anticipation effect. So another time we could mess it up is if the speaker says something that we have to parse word-by-word to understand, throwing off the sense of rhythm and anticipation.
+No worries 
+is an expression seen in Australian English, British English and New Zealand English meaning "do not worry about that", "that's all right", or "sure thing". It is similar to the English no problem.
+
+
+what happens what happened what has happened
+In the sentences below, the pronoun 'it' functions as an object, not as a subject. Objects do not agree in number with (what appear to be) verbs:
+1.	I will make it happens. 
+2.	You should let it happens.  
+3.	I will make it happen.  
+4.	You should let it happen.  
+Below, the word 'he' functions as a subject, and so the verb agrees in number with its subject:
+1.	I wish (that) he succeeds.  <but the semantics seem awkward to me; shouldn't it be 'I hope'?>
+2.	I wish (that) he succeed.  
+what happened vs what has happened
+http://jenny-liveabc.blogspot.sg/2012/08/what-happened.html#.VuFPvNWqpBc
+He said that he was tired
+He said he has no feeling of me
+He didn't do what he said he did
+He has done what he said he would do
+he said he had done with me
+You should have some way to assess how the work being done
+Go to where the actual work is being done
+how the work has been done
+It's been really busy here all day.
+she just got here
+ 
+I knew they would...
+If I knew then what I know now.
+
+1.(It's) The simplest approach to formally developing software.
+Here it is : "Because of the links between the Type A behavior pattern and heart disease, various approaches have been taken to changing this pattern of behavior."
+extend reading: to doing sth，此时to是介词，有很多常用搭配
+2.will do VS will be doing
+SLA said it will not be giving the club an alternative site for another golf course, but may offer it another area for social uses.
+[box title="http://bulo.hujiang.com/question/293589/"]
+will do 简单陈述将来要发生的动作; 而will be doing则强调将来发生这种动作的状态，及在此状态或背景下可能发生的其它动作。
+The train will arrive in a few minutes. 一般将来时，仅指火车几分钟就要到达的客观事实
+The train will be arriving in a few minutes. 将来进行时，指火车几分钟后到站的那种状态，可暗含做好准备上车，接人什么的意味。 如： The train will be arriving in a few minutes, let's be ready to get on board.
+对比：
+I will study English = 陈述将来的一个事实，将来的某个时间我会学英语。
+I will be studying English =我在学习英语的时候，可能有其它事情发生。如: I will be studying English when you come to pick me up.
+[/box]
+3.Provided/Providing that .....
+Provided that the funding is obtained, the company intends to produce a first version of the production system in the following three months.
+IF, EVEN IF, ONLY IF, AS LONG AS, PROVIDED, SUPPOSING, UNLESS, BUT FOR, IF NECESSARY, IF SO, IN CASE etc.
+
+I will appreciate it if you will
+https://www.quora.com/Which-is-the-correct-grammar-I-will-appreciate-if-you-or-I-would-appreciate-if-you
+beside, besides
+http://learnersdictionary.com/qa/difference-between-beside-and-besides-preposition-adverb
+ 
+as spoken https://forum.wordreference.com/threads/as-spoken-as-speaking.2955245/
+https://forum.wordreference.com/threads/as-per-we-spoke-said.1052811/
+https://www.zybang.com/question/08b5a8c16467bd3319bdecc3adf18384.html
+bob and I , bob and me, bob and someone else, someone is ***
+http://www.learnersdictionary.com/qa/when-to-use-i-and-when-to-use-me
+https://english.stackexchange.com/questions/59618/i-and-someone-me-and-someone-or-i-and-someone-we
+
+## to do 
+Do in actions make possible
+
+Take Responsibilities for your parents and yourself
+
+Start thinking after major changes
+
+Connect the dots when u look back
+Quit school but not quit study
+
+Don't hate the education system, embrace the challenges, train your mind 
+
+Have your own judgement,Believe in your decision but don't stick to it, make adjustment accordingly
+Don't believe authorities blindly
+
+Grow through life but don't go through life
+
+ Treasure your time
+
+Respect other's life and yours
+
+Be modest humble
+    
+
+接打电话
+http://video.toggle.sg/en/series/it-figures-s4/ep5/349163
+By the age of 4, children from privileged backgrounds heard 30 million MORE WORDS than their peers under welfare. American researchers called this the 30 million word gap. Does a word gap exists in Singapore? How big is it and how do we close it?
+http://www.channelnewsasia.com/tv/tvshows/itfigures-s4/mind-the-gap/2307044.html
+退货 http://chinaenglish.com.cn/html/c11/2012-03/46154.html
+https://zh.wikipedia.org/wiki/User:Msnhinet8jp/%E6%8B%9C%E7%88%BE%E5%BE%B7
+https://sg.ixl.com/promo?partner=google&campaign=1097&adGroup=Visit+%3E8+pages&gclid=CMzGmc-ApMkCFdKIaAodrcYLWw
+http://www.mumbrella.asia/2015/09/united-overseas-bank-focuses-on-values-in-right-by-you-brand-refresh-to-mark-80th-year/
+http://st.hujiang.com/topic/166448714056/
+https://www.youtube.com/watch?v=qrbnWZWb92w&index=3&list=PLJ5D4r6yvv5dgaO_LG3G3UpMyTZTg3lhe
+
+http://forum.wordreference.com/threads/%E4%BD%A0%E6%9C%80%E6%99%9A%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%A6%81%EF%BC%9F.1299970/
+
+http://www.chtoen.com/%E6%A8%A1%E4%BB%BF%E7%9A%84%E8%8B%B1%E6%96%87%E6%80%8E%E9%BA%BC%E8%AA%AA
+http://english.stackexchange.com/questions/64016/ill-take-you-home-ill-bring-you-home
+walk you home under my umbrella https://books.google.com.sg/books?id=LOVhAwAAQBAJ&pg=PT53&lpg=PT53&dq=walk+you+home+umbrella&source=bl&ots=T-4GUxL4Jz&sig=IHgjf9H3HPsZ6EI8ljEgo8eg5MA&hl=en&sa=X&ved=0ahUKEwiatJHG6PPPAhXKvLwKHTyuAKMQ6AEIGjAA#v=onepage&q=walk%20you%20home%20umbrella&f=false
+https://books.google.com.sg/books?id=RYG8BwAAQBAJ&pg=PT48&lpg=PT48&dq=walk+you+home+umbrella&source=bl&ots=ZO9knShWHN&sig=XsXFLy8V5JVU1mCJV8z-n6iINq0&hl=en&sa=X&ved=0ahUKEwiatJHG6PPPAhXKvLwKHTyuAKMQ6AEIIDAC#v=onepage&q=walk%20you%20home%20umbrella&f=false
+http://webcache.googleusercontent.com/search?q=cache:F1-l4ML5KbkJ:www.rr365.com/Article/Class9/200608/7624.html+&cd=1&hl=en&ct=clnk
+https://www.douban.com/note/221114977/
+http://web2.yzu.edu.tw/YZU/SO/Bilingual%20Campus/Bilingual%20Activities/Bilingual%20Activities_2_3.htm
+http://starken.pixnet.net/blog/post/38072249-%E7%94%A8%E8%8B%B1%E6%96%87%E5%95%8F%E5%A5%BD%E3%80%81%E6%89%93%E6%8B%9B%E5%91%BC%E5%8F%A5%E5%AD%90%E5%A4%A7%E9%9B%86%E5%90%88-\
+// Think in English/Chinese
+http://www.toeic900.com.tw/category/%E8%81%AF%E5%90%88%E5%A0%B1%E5%B0%88%E6%AC%84/%E5%85%A8%E6%B0%91%E8%AA%AA%E8%8B%B1%E8%AA%9E/
+论洗脑 Brainwash http://edu.sina.com.hk/news/41/1/4/91491/1.html
+冷笑话 lame joke http://www.betamedia.com.tw/blog/post.aspx?ip=329
+用英文問好、打招呼句子大集合
+http://starken.pixnet.net/blog/post/38072249-%E7%94%A8%E8%8B%B1%E6%96%87%E5%95%8F%E5%A5%BD%E3%80%81%E6%89%93%E6%8B%9B%E5%91%BC%E5%8F%A5%E5%AD%90%E5%A4%A7%E9%9B%86%E5%90%88-
+ adage proverb http://english.stackexchange.com/questions/73199/what-is-the-difference-between-a-proverb-an-adage-and-an-aphorism
+
+
 ------------------------------------------------------------------------------
 -- from reading material
 ------------------------------------------------------------------------------
@@ -686,282 +1107,16 @@ be list down for you to choose, ok, submit, we are redirecting to pay-pal mercha
 using sandbox to test, let me key-in test account,
 Now we are succeed, now we can go to member center to check our order
 
-## Anecdote
-“Do not shop at Mustafa Shopping Centre”
-Me and my husband visited Singapore in March 08. I had earlier visited Singapore some 4-5 years back and I knew that Singapore is a shopping heaven. So I had Mustafa on my list.
-We decided to buy Mobiles for us and we zeroed in on Mustafa after reading soooo many good reviews about it.We decided on the models and headed to Mustafa. I was actually surprised on how bad the place has turned out to be..lots of people were in the shop..the salesperson was unaware about the mobile features.We asked whether they will give us International Guarantee of these mobiles for which they refused. The place looked shady..But with good reviews on various forums we shirked all our doubts and went ahead and shopped the mobiles. All good..we returned home and started using the mobiles. My mobile worked fine for few days after which it hangs while I am talking..sometimes it refuses to ring even when I get calls..sometimes it refuses to make me ring a missed call..sometimes it simply blanks out!! The memory chip place holder is loose and so is the SIM holder place...My husbands mobile has similar problems.
-So I would suggest that if someone is planning to shop in Mustafa its better you have good know how of the thing you are buying so that you dont feel cheated and if you dont have the know how then the best thing you can do is not to buy at all from there!
-https://www.tripadvisor.com.sg/ShowUserReviews-g294265-d2139541-r17779786-Mustafa_Centre-Singapore.html#
 
 
+---
 
-## to do 
-Do in actions make possible
+refer
 
-Take Responsibilities for your parents and yourself
-
-Start thinking after major changes
-
-Connect the dots when u look back
-Quit school but not quit study
-Three idiot
-
-Don't hate the education system, embrace the challenges, train your mind 
-
-Have your own judgement,Believe in your decision but don't stick to it, make adjustment accordingly
-Don't believe authorities blindly
-
-Grow through life but don't go through life
-
- Treasure your time
-
-Respect other's life and yours
-
-Be modest humble
-    
-### How to say in English
-时差 time difference
-倒时差/时差综合症 jet lag
-无根据 groundless
-viewer discretion is advised 以下内容建议慎重观看
-stay tuned 别换频道
-部分 a fraction of
-人品满格 RP Full Reception
-无下限 数学说法 NO Lower Boundary 极其专业 no superlinear lower bound, 中文意思 You are unbelievable son of a bitch
-正宗川菜 Authentic SiChuan Cuisine
-笑容满面 he(his face) is beaming with delight.
-各回各家 各找各妈 Each of you get back home to your parents' basements.
-如有更改，恕不另行通知 subject to change without notice
-并不全面/详尽 Not Exhaustive
-吃春卷‘形象’的谓之咬春
-Spring rolls are synonymous with takeout in the U.S. However, they have a long history as a snack in China, the idea being that you're literally "biting spring"
-我的直觉告诉我你就是个傻逼 My gut says you are asshole . instinct
-intuitive The user interface should be intuitive and easy to learn without formal training.
-我××之前的日程已经排满了 I have a tight/packed schedule until ×××
-抢购 Thank you for your interest, all the tickets have been snapped up.
-催化剂 catalyst
-软导线雕塑 Soft wire sculptures
-迷惑性 欺骗性 Scenario 2 is much more common, and trickier.
-下流 恶心的 This is a nasty situation that I knew I had to fix.
-混乱的 杂乱 麻烦 messy chaos
-吹捧 吹嘘 兜售 We see developers touting the benefits of using the repository pattern for internal data access over leveraging the tools and APIs specific to their technology of choice.
-/**/
-chop&stamp&seal
-evaluate assessment
-revenue[进] (expense[消费]) tax[出]
-subsidy(津贴 奖学金) scholarship
-complimentary / free
-abbreviation / short for
-encounter confront
-what problems do you confront?
-alternate way to / replacement to
-replace a with b, substitute b for a
-候补 subsidiary alternative
-自拍 selfie 表情Emoticons
-笨拙 别扭 awkward
-enclosure vs attachment:
-http://english.stackexchange.com/questions/71757/enclosure-vs-attachment
-Are you using WordPress for podcasting? If so, it's important to know that newer versions of WordPress will automatically convert linked MP3 files to RSS enclosures, but using our SmartCast™ service will guarantee maximum compatibility and reliability for your podcast. Either way, you will need to make sure you're publishing a "full text" feed so your links make it into the RSS feed.
-https://support.google.com/feedburner/answer/78485?hl=en&ref_topic=13252&vid=1-635796169155976363-2547650487
-衣服：
-格子 checkered design 条纹 stripe （strip是脱衣舞^..^)
-背心 singlet/tank top 套管running sleeve
-褶状裙边 Accordion pleats （Accordion blinds褶状遮阳‘伞’）
-shoelace zipper collar
-computer: desktop/laptop ram ssd hd monitor main processor case main board driver keyboard flash drive external drive portable
-bicycle: disk brake air pump nut bolt brake cables wheel(hub wheel edge spokes)
-Toolbox: plier , scissor screwdriver spanner paper clip（回形针） tape（胶带） stapler(订书机）, spring（弹簧） bolt(螺栓） nut（螺母） screw（螺丝钉） https://www.quora.com/What-is-the-difference-between-a-bolt-a-screw-and-a-stud
-爽肤水 toner lotion sunscreen
-archery
-Wholesale warehouse sale retail
-尾货 Wei Huo is the normal order of foreign trade surplus goods.
-rent: tenant
-电子公告板 bulletin board
-ingestion digestion absorption and elimination http://seattlecentral.edu/faculty/jwhorley/Digestion.pdf
-heat food with microwave
-/**/
-纪念钞 Commemorative Notes 纪念钞册 booklet http://www.dbs.com.sg/personal/dbs-commemorative-notes.page?pid=sg-dbs-pweb-home-heroblock-commemorative-notes-btnlearnmore-
-免除信用卡年费 waive credit card annual fee
-还信用卡钱 settle/pay credit card bills
-discount mark-up
-交通卡Fare Card for bus and train journeys 月票 Price for all existing monthly concession passes remain unchanged.
-tap fare card tap in tap out
-swipe credit card
-scan fingerprints scan in scan out
-注意个人卫生 People should wash regularly to ensure personal hygiene.
-ulcer 口腔溃疡 diarrhea 腹泻
-耳毛鼻毛修剪器 Ear&Nose Trimmer NOSE-BEARD-HAIRCUT http://www.braun.com/global/male-grooming/cruzer-shavers-and-trimmers/cruzer-beard-and-head.html
-foam mousse
-fragrance - perfume
-post-it notes / sticky notes save time flipping book
-snack edibles dose slice
-water-proof
-plaster 创可贴
-cushion 橡皮软垫
-styrofoam box 泡沫箱
-Bubble wrap
-carring handles
-shoulder strap
- 
-get in your way  block your way
-让我们通过了 they waved us through. / we got approved.
-There are a few things that I find incredibly attractive when it comes to NativeScript.  These are benefits that have kept me attached to the framework for as long as I’ve been.
-You could spend a week building the feature, and you might be reinventing the wheel. Sounds like it’s time to see what’s on the shelf!
-Today’s business environment is constantly disrupted by new players leveraging innovative technology. 93% of technology and business leaders believe that their businesses will be deeply affected by digital. Only companies who adopt strong digital competencies can become the winners of tomorrow.
- 
-if you're a web developer, you can use React Native to write clean, fast mobile apps, from the comfort of a familiar framework and a single JavaScript codebase.
-React has seen widespread adoption.
-Developers have flocked to React for a number of reasons. It's lightweight, and offers impressive performance, especially for quickly-changing data. Because of its component structure, it also encourages you to naturally write more modular, reusable code.
-Because your application is mostly just JavaScript, you get a lot of the perks of web development, like being able to instantly "refresh" your application to see your code changes.Compared to the long minutes spent waiting to rebuild a traditional mobile application, this feels like a godsend.
-Being able to write truly native iOS and Android apps using a single JavaScript codebase seems like a no-brainer.
-In lieu of tags such as <div>, <img>, and <p>, React Native provides you with basic components such as <Text> and <View>.
-In practice, this means that you can write what looks like ordinary React code, and the React Native "bridge" will take care of the heavy lifting. But what happens when the bridge is incomplete?
-Happily, React Native gives you the flexibility to write and use these so-called "native modules" when you need to, and the process is straightforward.
-Deploying React Native applications is very similar to working with ordinary mobile applications. That doesn't mean it's easy, as the mobile release process is known for its headaches.
-Angular's data binding and dependency injection eliminate much of the code you would otherwise have to write.
- 
-A tantalising aroma of roast beef fills the air
-please direct any questions to peter or me.
-
-### Chinese thinking
-electronic magnetic field palm numb
-走通整个流程 walk through the process
-让我想一下/一会 let me think about it/ let me think it over
-
-三个女人一台戏 three women will make a real drama
-遇到的问题/困难/坑 http://www.ichacha.net/%E9%81%87%E5%88%B0%E5%9B%B0%E9%9A%BE.html
-断断续续 from time to time ;intermittently
-抢购 代付
-不是不好，是相对不好的地方
-帮你看着东西
-最希望 wish to get it most
-更需要 who need more
-最早/最迟 at the earliest/latest
-how early / how much time in advance
-how late does uber run
-at the latest no later then
-人体 肉体 精神 stress pressure
-主动 被动 active passive
-送给我 http://blogs.teachersammy.com/Blogs/entry/common-English-error-he-sent-me-a-present#.Vp4Q-VJOEbE
-替我问好  Please give my sincere regards to all the members of your family.
-过关 （游戏过关 clear a stage）
-1.(通过关口) pass a barrier; go through an ordeal
-2.(比喻, 通过检验) pass a test; reach a standard
-错过机会
-贵在坚持
-剩下的全在这里 the rest are all here
-对于饮料，我没有偏好，平时一般喝。。。
-坐过站了 you missed your stop
-想起来了
-赶上了
-（怎样/什么）都行
-都可以/随便
-内幕消息
-微妙的关联
-行为冲动 act impluse
-睡过头
-眼不见心不烦
-家庭教养
-个人素质
-行为/举止粗鲁
-执行力
-帮忙看下东西/行李
-总体来说 你的意思是 overall speaking, what you mean is ...
-整理文件/桌子/资料/磁盘 file up sth/filing clean up the table
-异性的 hetero 异构 heterogeneous
-减肥/瘦身
-临时决定 tentatively decided / made a decision at the last minute
-突然有急事 Something urgent has come up, so the appointment will have to be canceled.
-旁听 sit in
-摆设
-可以退款吗 refundable
-罚金 peanut fine
-奖励 bonus praise
-反对 object to/oppose be opposed to /disagree/protest
-遇到阻力 face a resistance
-障碍 鸿沟 language obstacle / gap
-迁移 transfer/migrate
-接下来 next  subsequent following downstream
-之前的 previous upstream
-傀儡
-发芽开花结果
-赔钱 losing money
-撤回
-整容 plastic surgery
-啤酒肚
-二手烟 passive smoking secondhand smoke
-学会了 learnt have learned，acquired，mastered
-全靠你了
-顶贴 bump this thread http://sgforums.com/forums/1902/topics/270128
-租金
-房屋设施: eatery
-不急 there is no hurry/ in no hurry http://www.macmillandictionary.com/thesaurus-category/british/ways-of-telling-someone-not-to-hurry
-冲向我http://www.hujiang.com/ciku/53286_-103160306/
-我晕了 http://news.iciba.com/study/oral/1568075.shtml
-我错了
-我记错了
-我想错了
-我想起来了
-勾起很多回忆 bring back a lot of memories
-过着一天算一天的生活 Until now he never thought of tomorrow , and lived from one day to the next
-但凡 if ** some if ** any
-本能反应 http://www.ichacha.net/%E6%9C%AC%E8%83%BD%E5%8F%8D%E5%BA%94.html
-裁员 chop cut 罢工
-背影the sight of his back
-保守治疗
-日光浴
-很抢手 in great demand / very hot / well sought after by
-
-
- 
- 
-
-
-
-接打电话
-http://video.toggle.sg/en/series/it-figures-s4/ep5/349163
-By the age of 4, children from privileged backgrounds heard 30 million MORE WORDS than their peers under welfare. American researchers called this the 30 million word gap. Does a word gap exists in Singapore? How big is it and how do we close it?
-http://www.channelnewsasia.com/tv/tvshows/itfigures-s4/mind-the-gap/2307044.html
-退货 http://chinaenglish.com.cn/html/c11/2012-03/46154.html
-https://zh.wikipedia.org/wiki/User:Msnhinet8jp/%E6%8B%9C%E7%88%BE%E5%BE%B7
-https://sg.ixl.com/promo?partner=google&campaign=1097&adGroup=Visit+%3E8+pages&gclid=CMzGmc-ApMkCFdKIaAodrcYLWw
-http://www.mumbrella.asia/2015/09/united-overseas-bank-focuses-on-values-in-right-by-you-brand-refresh-to-mark-80th-year/
-http://st.hujiang.com/topic/166448714056/
-https://www.youtube.com/watch?v=qrbnWZWb92w&index=3&list=PLJ5D4r6yvv5dgaO_LG3G3UpMyTZTg3lhe
-
-http://forum.wordreference.com/threads/%E4%BD%A0%E6%9C%80%E6%99%9A%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%A6%81%EF%BC%9F.1299970/
-
-http://www.chtoen.com/%E6%A8%A1%E4%BB%BF%E7%9A%84%E8%8B%B1%E6%96%87%E6%80%8E%E9%BA%BC%E8%AA%AA
-http://english.stackexchange.com/questions/64016/ill-take-you-home-ill-bring-you-home
-walk you home under my umbrella https://books.google.com.sg/books?id=LOVhAwAAQBAJ&pg=PT53&lpg=PT53&dq=walk+you+home+umbrella&source=bl&ots=T-4GUxL4Jz&sig=IHgjf9H3HPsZ6EI8ljEgo8eg5MA&hl=en&sa=X&ved=0ahUKEwiatJHG6PPPAhXKvLwKHTyuAKMQ6AEIGjAA#v=onepage&q=walk%20you%20home%20umbrella&f=false
-https://books.google.com.sg/books?id=RYG8BwAAQBAJ&pg=PT48&lpg=PT48&dq=walk+you+home+umbrella&source=bl&ots=ZO9knShWHN&sig=XsXFLy8V5JVU1mCJV8z-n6iINq0&hl=en&sa=X&ved=0ahUKEwiatJHG6PPPAhXKvLwKHTyuAKMQ6AEIIDAC#v=onepage&q=walk%20you%20home%20umbrella&f=false
-http://webcache.googleusercontent.com/search?q=cache:F1-l4ML5KbkJ:www.rr365.com/Article/Class9/200608/7624.html+&cd=1&hl=en&ct=clnk
 https://www.douban.com/note/221114977/
-http://web2.yzu.edu.tw/YZU/SO/Bilingual%20Campus/Bilingual%20Activities/Bilingual%20Activities_2_3.htm
-http://starken.pixnet.net/blog/post/38072249-%E7%94%A8%E8%8B%B1%E6%96%87%E5%95%8F%E5%A5%BD%E3%80%81%E6%89%93%E6%8B%9B%E5%91%BC%E5%8F%A5%E5%AD%90%E5%A4%A7%E9%9B%86%E5%90%88-\
-// Think in English/Chinese
-http://www.toeic900.com.tw/category/%E8%81%AF%E5%90%88%E5%A0%B1%E5%B0%88%E6%AC%84/%E5%85%A8%E6%B0%91%E8%AA%AA%E8%8B%B1%E8%AA%9E/
-论洗脑 Brainwash http://edu.sina.com.hk/news/41/1/4/91491/1.html
-冷笑话 lame joke http://www.betamedia.com.tw/blog/post.aspx?ip=329
-用英文問好、打招呼句子大集合
-http://starken.pixnet.net/blog/post/38072249-%E7%94%A8%E8%8B%B1%E6%96%87%E5%95%8F%E5%A5%BD%E3%80%81%E6%89%93%E6%8B%9B%E5%91%BC%E5%8F%A5%E5%AD%90%E5%A4%A7%E9%9B%86%E5%90%88-
- adage proverb http://english.stackexchange.com/questions/73199/what-is-the-difference-between-a-proverb-an-adage-and-an-aphorism
-
-
-Analysis 
-Is saying "Noted" a rude answer? If so, what are the alternative answers to reply to a person besides “Noted”? https://www.quora.com/Is-saying-Noted-a-rude-answer-If-so-what-are-the-alternative-answers-to-reply-to-a-person-besides-“Noted”
-1.how are you feeling?
-http://www.crazyboards.org/forums/index.php?/topic/52259-problems-answering-the-question-how-are-you-feeling/
-100 WAYS TO ANSWER THE QUESTION “HOW ARE YOU?”
-"it's not working" and "it doesn't work"
-
-disaggregation vs segregation vs congregation
-The default quota is max 1000 (one thousand) requests per minute (~16RPS) and with burst up to 60 requests
-
-
-stretch out
-skin colouration
-body heals
-body natural healing process
-disease transmission
-worse case scenario
+http://www.businessweekly.com.tw/KBlogArticle.aspx?ID=20&pnumber=1
+http://wss.mofcom.gov.cn/article/a/j/201209/20120908345591.shtml
+http://www.welinkis.com/html/4127304656.html
+http://contest.i21st.cn/article/speaking/4990_1.html
+http://www.linewow.com/html/article-34436.html
+http://www.businessweekly.com.tw/KBlogArticle.aspx?id=2165
