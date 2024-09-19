@@ -389,6 +389,43 @@ hereinafter 以下，在下文中
 packed 拥挤 crowded
 
 ## Topic 
+### About view of life
+
+Grow through life but don't go through life
+
+ Treasure your time
+
+Respect other's life and yours
+
+Be modest humble
+### About LifeStyle
+trail running
+trail corridor
+Servers trash customers in private note on check — then forget to delete it https://www.washingtonpost.com/news/going-out-guide/wp/2016/05/09/servers-trash-customers-in-private-note-on-check-then-forget-to-delete-it/?utm_term=.631460c40846
+An island resort with a dive centre and private beach can be yours for £34 — but there’s one catch Read more at http://www.businessinsider.sg/how-to-win-an-island-resort-2016-5/#972Eo7J3PBlpt8Vq.99 www.businessinsider.sg/how-to-win-an-island-resort-2016-5/?r=US&IR=T#.VyxpQqMRXqA#keYZtqRTMCK13Rrl.97
+Carolyn Hax: Trying to get past a wife seeing a married man on the side https://www.washingtonpost.com/lifestyle/style/carolyn-hax-trying-to-get-past-a-wife-seeing-a-married-man-on-the-side/2016/02/18/36bbc662-d4d3-11e5-9823-02b905009f99_story.html?utm_term=.d7fc7b60b233
+tv series
+One of the craziest 'Game of Thrones' fan theories may actually come true this season www.businessinsider.com/game-of-thrones-cleganebowl-theory-2015-5?IR=T&r=UK&IR=T
+ 
+Photography
+canvas ˈkænvəs
+reprint 重印版，再改版; 单行本; 复印的邮票;
+versatility ˌvɜ:sə'tɪlətɪ 多才多艺; 多用途; 可转动性; 易变;
+appropriate sentiment
+hood n. 兜帽; 头巾; 车篷; 引擎罩;
+backdrops <戏>背景幕布( backdrop的名词复数 ); 周围的景物
+props 道具; 小道具; 支柱( prop的名词复数 ); 支持者; （橄榄球中的） 支柱前锋;
+bridal gown ˈbraidl ɡaun 新娘服装;
+stylist 发型师; 造型设计师; 文体家;
+photographer fəˈtɒgrəfə(r)
+Graduations are formal ceremonies, and in order to capture the appropriate sentiment, it is imperative that the graduate dresses formally. It is strongly recommended that the graduate be dressed in white top and black bottom, in order for the attire to complement the faculty hood. For males who are not gowned, please be dressed in a jacket, light-colored long-sleeved shirt and black pants. Female who are not gowned should be dressed in your best bright outfit.
+we have a passionate team of in-house make-up artists who will go the extra mile to help you look your best for the shoot.
+Photographer style: traditional, contemporary
+With our extensive experience and wide range of props and backdrop, we have the versatility to accommodate all styles.
+Our dedicated team of photographers and stylists will work with you for a portrait styled to your exact specifications.
+After your selection and prior to proceeding with the print, our customer service staff will be on hand to offer our professional opinions on your selection to assist you in choosing the best shot
+You can choose from a wide variety of backdrops and props to create the ideal theme for your graduation portraits. Whether you prefer a more formal and classical style, or have the appetite for something more adventurous, we are able to assist you in bringing forth the perfect portrait.
+We understand that portraits are deeply personal and highly significant. Our dedecated make-up artists and renowned photographers will work closely with you for a picture-perfect shot that will remind you of your proud achievements for a lifetime. Our attention to detail is what sets us apart. We will ensure every single aspect - right down to matching the correct make-up - is perfect for the shoot. From setting the lighting, choosing the angle and even during editing, we go the extra mile for the very best result.
 ### About house
 餐具室 pantry
 水池 sink basin handbasin/hand washing basin; pool
@@ -717,6 +754,19 @@ http://www.forbes.com/sites/lizryan/2016/04/07/did-this-employee-take-work-life-
 http://sbr.com.sg/hr-education/news/over-6-in-10-local-firms-have-mentally-absent-employees-says-survey
 working remotely www.techrepublic.com/blog/10-things/10-good-reasons-why-working-remotely-makes-sense/
 
+### About Start up Business/Entrepreneurship
+
++ Business Premise:
+  Definition: The term encompasses the entire physical location or property where business activities take place. This can include offices, retail stores, warehouses, factories, and more.
+  Usage: It’s a general term that applies to any property used for business purposes. For example:
+  "Our business premise is located in downtown." (This could refer to any type of business location, whether an office, store, or factory.)
++ Office:
+  Definition: An office specifically refers to a space where administrative, clerical, or professional work is conducted. It’s a subset of business premises.
+  Usage: The term "office" is used when talking about a workspace for employees to conduct business activities such as meetings, paperwork, or client interactions. For example:
+  "We need to renovate our office to accommodate more staff."
+
+Do in actions make possible
+
 ### About Tour/Culture
 自由行 跟团
 景色 景点
@@ -726,42 +776,30 @@ environmental sustainability
 tripod/lens
 http://www.thegreencorridor.org/
  
-### About LifeStyle
-trail running
-trail corridor
-Servers trash customers in private note on check — then forget to delete it https://www.washingtonpost.com/news/going-out-guide/wp/2016/05/09/servers-trash-customers-in-private-note-on-check-then-forget-to-delete-it/?utm_term=.631460c40846
-An island resort with a dive centre and private beach can be yours for £34 — but there’s one catch Read more at http://www.businessinsider.sg/how-to-win-an-island-resort-2016-5/#972Eo7J3PBlpt8Vq.99 www.businessinsider.sg/how-to-win-an-island-resort-2016-5/?r=US&IR=T#.VyxpQqMRXqA#keYZtqRTMCK13Rrl.97
-Carolyn Hax: Trying to get past a wife seeing a married man on the side https://www.washingtonpost.com/lifestyle/style/carolyn-hax-trying-to-get-past-a-wife-seeing-a-married-man-on-the-side/2016/02/18/36bbc662-d4d3-11e5-9823-02b905009f99_story.html?utm_term=.d7fc7b60b233
-tv series
-One of the craziest 'Game of Thrones' fan theories may actually come true this season www.businessinsider.com/game-of-thrones-cleganebowl-theory-2015-5?IR=T&r=UK&IR=T
+
  
-Photography
-canvas ˈkænvəs
-reprint 重印版，再改版; 单行本; 复印的邮票;
-versatility ˌvɜ:sə'tɪlətɪ 多才多艺; 多用途; 可转动性; 易变;
-appropriate sentiment
-hood n. 兜帽; 头巾; 车篷; 引擎罩;
-backdrops <戏>背景幕布( backdrop的名词复数 ); 周围的景物
-props 道具; 小道具; 支柱( prop的名词复数 ); 支持者; （橄榄球中的） 支柱前锋;
-bridal gown ˈbraidl ɡaun 新娘服装;
-stylist 发型师; 造型设计师; 文体家;
-photographer fəˈtɒgrəfə(r)
-Graduations are formal ceremonies, and in order to capture the appropriate sentiment, it is imperative that the graduate dresses formally. It is strongly recommended that the graduate be dressed in white top and black bottom, in order for the attire to complement the faculty hood. For males who are not gowned, please be dressed in a jacket, light-colored long-sleeved shirt and black pants. Female who are not gowned should be dressed in your best bright outfit.
-we have a passionate team of in-house make-up artists who will go the extra mile to help you look your best for the shoot.
-Photographer style: traditional, contemporary
-With our extensive experience and wide range of props and backdrop, we have the versatility to accommodate all styles.
-Our dedicated team of photographers and stylists will work with you for a portrait styled to your exact specifications.
-After your selection and prior to proceeding with the print, our customer service staff will be on hand to offer our professional opinions on your selection to assist you in choosing the best shot
-You can choose from a wide variety of backdrops and props to create the ideal theme for your graduation portraits. Whether you prefer a more formal and classical style, or have the appetite for something more adventurous, we are able to assist you in bringing forth the perfect portrait.
-We understand that portraits are deeply personal and highly significant. Our dedecated make-up artists and renowned photographers will work closely with you for a picture-perfect shot that will remind you of your proud achievements for a lifetime. Our attention to detail is what sets us apart. We will ensure every single aspect - right down to matching the correct make-up - is perfect for the shoot. From setting the lighting, choosing the angle and even during editing, we go the extra mile for the very best result.
- 
-### AboutEducation
+### About Education
+Connect the dots when u look back
+Quit school but not quit study
+
+Don't hate the education system, embrace the challenges, train your mind 
+
+Have your own judgement,Believe in your decision but don't stick to it, make adjustment accordingly
+Don't believe authorities blindly
+
 Medical student who fatally poisoned his roommate as an April Fool’s joke loses his appeal against death sentence in China
 http://www.dailymail.co.uk/news/article-2901745/Medical-student-fatally-poisoned-room-mate-April-Fool-s-joke-loses-appeal-against-death-sentence-China.html
  
 http://www.bloomberg.com/news/articles/2016-08-30/tencent-china-s-biggest-internet-company-wants-to-use-its-headquarters-as-a-testing-lab
  
+ By the age of 4, children from privileged backgrounds heard 30 million MORE WORDS than their peers under welfare. American researchers called this the 30 million word gap. Does a word gap exists in Singapore? How big is it and how do we close it?
+http://www.channelnewsasia.com/tv/tvshows/itfigures-s4/mind-the-gap/2307044.html
+
 ### About family emotion
+Take Responsibilities for your parents and yourself
+
+Start thinking after major changes
+
 Carolyn Hax: Trying to get past a wife seeing a married man on the side https://www.washingtonpost.com/lifestyle/style/carolyn-hax-trying-to-get-past-a-wife-seeing-a-married-man-on-the-side/2016/02/18/36bbc662-d4d3-11e5-9823-02b905009f99_story.html?utm_term=.3ec57c599e7e
 
 ### Anecdote
@@ -1047,58 +1085,6 @@ http://www.learnersdictionary.com/qa/when-to-use-i-and-when-to-use-me
 https://english.stackexchange.com/questions/59618/i-and-someone-me-and-someone-or-i-and-someone-we
 
 ## to do 
-Do in actions make possible
-
-Take Responsibilities for your parents and yourself
-
-Start thinking after major changes
-
-Connect the dots when u look back
-Quit school but not quit study
-
-Don't hate the education system, embrace the challenges, train your mind 
-
-Have your own judgement,Believe in your decision but don't stick to it, make adjustment accordingly
-Don't believe authorities blindly
-
-Grow through life but don't go through life
-
- Treasure your time
-
-Respect other's life and yours
-
-Be modest humble
-    
-
-接打电话
-http://video.toggle.sg/en/series/it-figures-s4/ep5/349163
-By the age of 4, children from privileged backgrounds heard 30 million MORE WORDS than their peers under welfare. American researchers called this the 30 million word gap. Does a word gap exists in Singapore? How big is it and how do we close it?
-http://www.channelnewsasia.com/tv/tvshows/itfigures-s4/mind-the-gap/2307044.html
-退货 http://chinaenglish.com.cn/html/c11/2012-03/46154.html
-https://zh.wikipedia.org/wiki/User:Msnhinet8jp/%E6%8B%9C%E7%88%BE%E5%BE%B7
-https://sg.ixl.com/promo?partner=google&campaign=1097&adGroup=Visit+%3E8+pages&gclid=CMzGmc-ApMkCFdKIaAodrcYLWw
-http://www.mumbrella.asia/2015/09/united-overseas-bank-focuses-on-values-in-right-by-you-brand-refresh-to-mark-80th-year/
-http://st.hujiang.com/topic/166448714056/
-https://www.youtube.com/watch?v=qrbnWZWb92w&index=3&list=PLJ5D4r6yvv5dgaO_LG3G3UpMyTZTg3lhe
-
-http://forum.wordreference.com/threads/%E4%BD%A0%E6%9C%80%E6%99%9A%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%A6%81%EF%BC%9F.1299970/
-
-http://www.chtoen.com/%E6%A8%A1%E4%BB%BF%E7%9A%84%E8%8B%B1%E6%96%87%E6%80%8E%E9%BA%BC%E8%AA%AA
-http://english.stackexchange.com/questions/64016/ill-take-you-home-ill-bring-you-home
-walk you home under my umbrella https://books.google.com.sg/books?id=LOVhAwAAQBAJ&pg=PT53&lpg=PT53&dq=walk+you+home+umbrella&source=bl&ots=T-4GUxL4Jz&sig=IHgjf9H3HPsZ6EI8ljEgo8eg5MA&hl=en&sa=X&ved=0ahUKEwiatJHG6PPPAhXKvLwKHTyuAKMQ6AEIGjAA#v=onepage&q=walk%20you%20home%20umbrella&f=false
-https://books.google.com.sg/books?id=RYG8BwAAQBAJ&pg=PT48&lpg=PT48&dq=walk+you+home+umbrella&source=bl&ots=ZO9knShWHN&sig=XsXFLy8V5JVU1mCJV8z-n6iINq0&hl=en&sa=X&ved=0ahUKEwiatJHG6PPPAhXKvLwKHTyuAKMQ6AEIIDAC#v=onepage&q=walk%20you%20home%20umbrella&f=false
-http://webcache.googleusercontent.com/search?q=cache:F1-l4ML5KbkJ:www.rr365.com/Article/Class9/200608/7624.html+&cd=1&hl=en&ct=clnk
-https://www.douban.com/note/221114977/
-http://web2.yzu.edu.tw/YZU/SO/Bilingual%20Campus/Bilingual%20Activities/Bilingual%20Activities_2_3.htm
-http://starken.pixnet.net/blog/post/38072249-%E7%94%A8%E8%8B%B1%E6%96%87%E5%95%8F%E5%A5%BD%E3%80%81%E6%89%93%E6%8B%9B%E5%91%BC%E5%8F%A5%E5%AD%90%E5%A4%A7%E9%9B%86%E5%90%88-\
-// Think in English/Chinese
-http://www.toeic900.com.tw/category/%E8%81%AF%E5%90%88%E5%A0%B1%E5%B0%88%E6%AC%84/%E5%85%A8%E6%B0%91%E8%AA%AA%E8%8B%B1%E8%AA%9E/
-论洗脑 Brainwash http://edu.sina.com.hk/news/41/1/4/91491/1.html
-冷笑话 lame joke http://www.betamedia.com.tw/blog/post.aspx?ip=329
-用英文問好、打招呼句子大集合
-http://starken.pixnet.net/blog/post/38072249-%E7%94%A8%E8%8B%B1%E6%96%87%E5%95%8F%E5%A5%BD%E3%80%81%E6%89%93%E6%8B%9B%E5%91%BC%E5%8F%A5%E5%AD%90%E5%A4%A7%E9%9B%86%E5%90%88-
- adage proverb http://english.stackexchange.com/questions/73199/what-is-the-difference-between-a-proverb-an-adage-and-an-aphorism
-
 
 ------------------------------------------------------------------------------
 -- from reading material
@@ -1149,3 +1135,30 @@ http://www.welinkis.com/html/4127304656.html
 http://contest.i21st.cn/article/speaking/4990_1.html
 http://www.linewow.com/html/article-34436.html
 http://www.businessweekly.com.tw/KBlogArticle.aspx?id=2165
+
+接打电话
+
+
+退货 http://chinaenglish.com.cn/html/c11/2012-03/46154.html
+https://zh.wikipedia.org/wiki/User:Msnhinet8jp/%E6%8B%9C%E7%88%BE%E5%BE%B7
+https://sg.ixl.com/promo?partner=google&campaign=1097&adGroup=Visit+%3E8+pages&gclid=CMzGmc-ApMkCFdKIaAodrcYLWw
+http://www.mumbrella.asia/2015/09/united-overseas-bank-focuses-on-values-in-right-by-you-brand-refresh-to-mark-80th-year/
+http://st.hujiang.com/topic/166448714056/
+https://www.youtube.com/watch?v=qrbnWZWb92w&index=3&list=PLJ5D4r6yvv5dgaO_LG3G3UpMyTZTg3lhe
+
+http://forum.wordreference.com/threads/%E4%BD%A0%E6%9C%80%E6%99%9A%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%A6%81%EF%BC%9F.1299970/
+
+http://www.chtoen.com/%E6%A8%A1%E4%BB%BF%E7%9A%84%E8%8B%B1%E6%96%87%E6%80%8E%E9%BA%BC%E8%AA%AA
+http://english.stackexchange.com/questions/64016/ill-take-you-home-ill-bring-you-home
+walk you home under my umbrella https://books.google.com.sg/books?id=LOVhAwAAQBAJ&pg=PT53&lpg=PT53&dq=walk+you+home+umbrella&source=bl&ots=T-4GUxL4Jz&sig=IHgjf9H3HPsZ6EI8ljEgo8eg5MA&hl=en&sa=X&ved=0ahUKEwiatJHG6PPPAhXKvLwKHTyuAKMQ6AEIGjAA#v=onepage&q=walk%20you%20home%20umbrella&f=false
+https://books.google.com.sg/books?id=RYG8BwAAQBAJ&pg=PT48&lpg=PT48&dq=walk+you+home+umbrella&source=bl&ots=ZO9knShWHN&sig=XsXFLy8V5JVU1mCJV8z-n6iINq0&hl=en&sa=X&ved=0ahUKEwiatJHG6PPPAhXKvLwKHTyuAKMQ6AEIIDAC#v=onepage&q=walk%20you%20home%20umbrella&f=false
+http://webcache.googleusercontent.com/search?q=cache:F1-l4ML5KbkJ:www.rr365.com/Article/Class9/200608/7624.html+&cd=1&hl=en&ct=clnk
+https://www.douban.com/note/221114977/
+http://web2.yzu.edu.tw/YZU/SO/Bilingual%20Campus/Bilingual%20Activities/Bilingual%20Activities_2_3.htm
+http://starken.pixnet.net/blog/post/38072249-%E7%94%A8%E8%8B%B1%E6%96%87%E5%95%8F%E5%A5%BD%E3%80%81%E6%89%93%E6%8B%9B%E5%91%BC%E5%8F%A5%E5%AD%90%E5%A4%A7%E9%9B%86%E5%90%88-\
+
+论洗脑 Brainwash http://edu.sina.com.hk/news/41/1/4/91491/1.html
+冷笑话 lame joke http://www.betamedia.com.tw/blog/post.aspx?ip=329
+用英文問好、打招呼句子大集合
+http://starken.pixnet.net/blog/post/38072249-%E7%94%A8%E8%8B%B1%E6%96%87%E5%95%8F%E5%A5%BD%E3%80%81%E6%89%93%E6%8B%9B%E5%91%BC%E5%8F%A5%E5%AD%90%E5%A4%A7%E9%9B%86%E5%90%88-
+ adage proverb http://english.stackexchange.com/questions/73199/what-is-the-difference-between-a-proverb-an-adage-and-an-aphorism
