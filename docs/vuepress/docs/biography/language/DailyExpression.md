@@ -234,7 +234,7 @@ tease out 梳理出
 take off 出发  kick off 开始
 trade-off权衡
  
-With regard to that 关于这一点
+With regard to that/regarding that 关于这一点
 Be that as it may
 more so
 whatsoever
