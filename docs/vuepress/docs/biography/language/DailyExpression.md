@@ -410,16 +410,27 @@ the tap has little flow/ the tap can not be tightened
 	She tried to kick the pajamas loose, but they were tangled in the satin sheet.她想把睡衣踢脱，可是它却和缎子床单绞到了一块。
 
 ### About food
+
+"Main Menu" vs. "Main Course":
++ Main Menu: Refers to the list of available food options or, in digital terms, the primary screen where choices or functions are displayed.
+  At the main menu, you can choose your meal.
++ Main Course: In a meal, "course" refers to a specific part of a multi-course meal, typically the most substantial or important dish (such as a main dish following appetizers).
+  For the main course, we’re having steak.
+  In this context, "course" refers to the sequence or stage in a meal (e.g., starter, main course, dessert). The word "course" is used here because a meal is divided into different parts, each one being a stage of the overall dining experience.
+
 my mouth is watering
 delicacy 英[ˈdelɪkəsi] 美[ˈdɛlɪkəsi] n. 美味佳肴; 精美; 敏锐，敏感; 世故，圆滑
 浓郁的香味 strong fragrance; Strong Aroma;
-course -- main course 主菜 crank course 曲柄路线
+course -- main course 主菜  曲柄路线
 ### About hair cut
 理发：http://blogs.teachersammy.com/Blogs/entry/describing-hairdessing-in-English-1#.WdXv_z6g-Ul
 hairstylist, hairdresser/barber
 cut/trim/wash/dry/style/perm/dye/hair care session
 style / shape the hair
 ### About healthy
+
+**A course of treatment**
+refers to the series of medical steps or actions taken over a period of time to treat a condition. "Course" here highlights the sequence or timeline over which the treatment occurs.
 
 sun exposure vitamin afternoon ultraviolet light
 http://playgroundsafety.org/safety-tips/sun-exposure
@@ -655,6 +666,9 @@ Right turn wait for the go straight car
 Slope half clutch the release brake
 Yellow box bus lane
 Change over
+
+The S-course (or S-curve) is a specific maneuver taught during driving training. It involves navigating through a series of curves shaped like the letter "S," often to simulate sharp or winding roads. This type of course is designed to help new drivers practice controlling the vehicle while steering through tight turns, maintaining proper speed, and ensuring smooth handling of the car.
+
 ### About politics
 
 US CHINA
@@ -678,6 +692,21 @@ China's startup investment fund is bigger than the entire GDP of Denmark www.bus
 China plans to tear down walls of gated condos and let public in www.theedgemarkets.com/article/china-plans-tear-down-walls-gated-condos-and-let-public
 China’s missile gambit https://www.washingtonpost.com/opinions/chinas-missile-gambit/2016/02/21/fc87c29a-d746-11e5-9823-02b905009f99_story.html?utm_term=.b9331253c0d1
 ### About Employ
+
+**in your line of work**
+the word "line" refers to a specific field, occupation, or area of expertise. It's a commonly used expression to talk about someone's profession or the kind of tasks they regularly perform in their job.
+Example:
+"In your line of work, you probably deal with a lot of clients."
+This means: In your profession (e.g., sales, law, medicine), you likely interact with many clients.
+
+**in the course of your work**
++ "Course" generally refers to the path or direction something takes over time. It emphasizes the flow or sequence of events or actions.
+  Example: In the course of your work (the path your work takes over time or as part of the job).
+  Emphasis: The journey, events, or timeline.
++ "Process" refers to a systematic series of actions or steps taken to achieve a specific end. It focuses more on the structured actions or stages that lead to a result.
+  Example: In the process of completing your work (the steps involved in getting the work done).
+  Emphasis: The structure, method, or stages involved.
+
 compel compulsory
 retrenchment
 He said such benefits should apply to all staff, including professionals, managers, executives and technicians (PMETs) and management. Currently, retrenchment benefits are determined by agreements between employers and employees.

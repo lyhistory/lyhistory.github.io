@@ -758,6 +758,8 @@ select * from pg_class c join pg_namespace ns on c.relnamespace = ns.oid where c
 ```
 https://stackoverflow.com/questions/27306539/at-what-level-do-postgres-index-names-need-to-be-unique
 
+https://stackoverflow.com/questions/61408317/creating-multicolumn-indexes-in-postgresql#/
+
 #### Temp table
 https://github.com/yallie/pg_global_temp_tables
 ![](/docs/docs_image/software/postgresql/postgresql03.png)
