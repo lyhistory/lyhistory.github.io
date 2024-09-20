@@ -1,25 +1,17 @@
 ## Think in English/ How to say in English
+take a cut
+pretty much has been done
 
 卧槽 Drat 讨厌!见鬼! Bingo 中了
 Faint 我倒!
-take a cut
 rummage ˈrʌmɪdʒ翻箱倒柜; 翻查; 搜出;
-encumbered assets 抵押资产
 Fifty-fifty 一半对一半
 in a worse-case scenario 更严重的情况是
 Allow me 让我来
 Anytime 随时吩咐
-接触不良 poor contact
-夜宵 night-time snack
 翻过来 turn outside in
 hardly that 很难算是
 现在没事了 now is all right
-谚语 idiom saying
-pretty much has been done
-硅胶 silicon
-土 soil 陶土 pottery clay
-备用件 spare parts  配件 accessories parts
-
 时差 time difference
 倒时差/时差综合症 jet lag
 无根据 groundless
@@ -27,20 +19,18 @@ viewer discretion is advised 以下内容建议慎重观看
 stay tuned 别换频道
 部分 a fraction of
 人品满格 RP Full Reception
-无下限 数学说法 NO Lower Boundary 极其专业 no superlinear lower bound, 中文意思 You are unbelievable son of a bitch
 正宗川菜 Authentic SiChuan Cuisine
 笑容满面 he(his face) is beaming with delight.
 各回各家 各找各妈 Each of you get back home to your parents' basements.
 如有更改，恕不另行通知 subject to change without notice
 并不全面/详尽 Not Exhaustive
-吃春卷‘形象’的谓之咬春
-Spring rolls are synonymous with takeout in the U.S. However, they have a long history as a snack in China, the idea being that you're literally "biting spring"
+
 我的直觉告诉我你就是个傻逼 My gut says you are asshole . instinct
-intuitive The user interface should be intuitive and easy to learn without formal training.
+
 我××之前的日程已经排满了 I have a tight/packed schedule until ×××
 抢购 Thank you for your interest, all the tickets have been snapped up.
-催化剂 catalyst
-软导线雕塑 Soft wire sculptures
+
+
 迷惑性 欺骗性 Scenario 2 is much more common, and trickier.
 下流 恶心的 This is a nasty situation that I knew I had to fix.
 混乱的 杂乱 麻烦 messy chaos
@@ -48,26 +38,15 @@ intuitive The user interface should be intuitive and easy to learn without forma
 
 command respect 必然得到尊重 赢得尊重
 
-
 自拍 selfie 表情Emoticons
 笨拙 别扭 awkward
 
-
-
-bicycle: disk brake air pump nut bolt brake cables wheel(hub wheel edge spokes)
-Toolbox: plier , scissor screwdriver spanner paper clip（回形针） tape（胶带） stapler(订书机）, spring（弹簧） bolt(螺栓） nut（螺母） screw（螺丝钉） https://www.quora.com/What-is-the-difference-between-a-bolt-a-screw-and-a-stud
-爽肤水 toner lotion sunscreen
-archery
-Wholesale warehouse sale retail
-尾货 Wei Huo is the normal order of foreign trade surplus goods.
 rent: tenant
 电子公告板 bulletin board
-ingestion digestion absorption and elimination http://seattlecentral.edu/faculty/jwhorley/Digestion.pdf
-heat food with microwave
+
 
 纪念钞 Commemorative Notes 纪念钞册 booklet http://www.dbs.com.sg/personal/dbs-commemorative-notes.page?pid=sg-dbs-pweb-home-heroblock-commemorative-notes-btnlearnmore-
-免除信用卡年费 waive credit card annual fee
-还信用卡钱 settle/pay credit card bills
+
 discount mark-up
 交通卡Fare Card for bus and train journeys 月票 Price for all existing monthly concession passes remain unchanged.
 tap fare card tap in tap out
@@ -399,6 +378,8 @@ Respect other's life and yours
 
 Be modest humble
 ### About LifeStyle
+夜宵 night-time snack
+
 trail running
 trail corridor
 Servers trash customers in private note on check — then forget to delete it https://www.washingtonpost.com/news/going-out-guide/wp/2016/05/09/servers-trash-customers-in-private-note-on-check-then-forget-to-delete-it/?utm_term=.631460c40846
@@ -426,13 +407,22 @@ Our dedicated team of photographers and stylists will work with you for a portra
 After your selection and prior to proceeding with the print, our customer service staff will be on hand to offer our professional opinions on your selection to assist you in choosing the best shot
 You can choose from a wide variety of backdrops and props to create the ideal theme for your graduation portraits. Whether you prefer a more formal and classical style, or have the appetite for something more adventurous, we are able to assist you in bringing forth the perfect portrait.
 We understand that portraits are deeply personal and highly significant. Our dedecated make-up artists and renowned photographers will work closely with you for a picture-perfect shot that will remind you of your proud achievements for a lifetime. Our attention to detail is what sets us apart. We will ensure every single aspect - right down to matching the correct make-up - is perfect for the shoot. From setting the lighting, choosing the angle and even during editing, we go the extra mile for the very best result.
+
+#### Sports
+archery 射箭运动
+
+### About Investment/Banking
+encumbered assets 抵押资产
+免除信用卡年费 waive credit card annual fee
+还信用卡钱 settle/pay credit card bills
+
 ### About house
 餐具室 pantry
 水池 sink basin handbasin/hand washing basin; pool
 blanket 毯子
 basket 篮子
 bucket 小桶
-trolley 小推车
+
 cart
 plumber
 hotel
@@ -445,6 +435,21 @@ the tap has little flow/ the tap can not be tightened
 拖鞋 slipper
 睡衣 pajamas 
 	She tried to kick the pajamas loose, but they were tangled in the satin sheet.她想把睡衣踢脱，可是它却和缎子床单绞到了一块。
+
+硅胶 silicon
+土 soil 陶土 pottery clay
+备用件 spare parts  配件 accessories parts
+
+爽肤水 toner lotion sunscreen
+
+#### 水电
+接触不良 poor contact
+heat food with microwave
+#### 家用工具
+bicycle: disk brake air pump nut bolt brake cables wheel(hub wheel edge spokes)
+Toolbox: plier , scissor screwdriver spanner paper clip（回形针） tape（胶带） stapler(订书机）, spring（弹簧） bolt(螺栓） nut（螺母） screw（螺丝钉） https://www.quora.com/What-is-the-difference-between-a-bolt-a-screw-and-a-stud
+
+trolley 小推车
 
 ### About food
 
@@ -465,6 +470,9 @@ hairstylist, hairdresser/barber
 cut/trim/wash/dry/style/perm/dye/hair care session
 style / shape the hair
 ### About healthy
+
+ingestion digestion absorption and elimination http://seattlecentral.edu/faculty/jwhorley/Digestion.pdf
+Digestion begins with ingestion, where the food is taken in the mouth. Digestion and absorption take place in a series of steps with special enzymes playing important roles in digesting carbohydrates, proteins, and lipids. Elimination describes removal of undigested food contents and waste products from the body.
 
 **A course of treatment**
 refers to the series of medical steps or actions taken over a period of time to treat a condition. "Course" here highlights the sequence or timeline over which the treatment occurs.
@@ -767,6 +775,8 @@ working remotely www.techrepublic.com/blog/10-things/10-good-reasons-why-working
 
 Do in actions make possible
 
+Wholesale warehouse sale retail
+尾货 Wei Huo is the normal order of foreign trade surplus goods.
 ### About Tour/Culture
 自由行 跟团
 景色 景点
@@ -776,7 +786,9 @@ environmental sustainability
 tripod/lens
 http://www.thegreencorridor.org/
  
-
+#### Chinese Culture
+吃春卷‘形象’的谓之咬春
+Spring rolls are synonymous with takeout in the U.S. However, they have a long history as a snack in China, the idea being that you're literally "biting spring"
  
 ### About Education
 Connect the dots when u look back
@@ -801,6 +813,12 @@ Take Responsibilities for your parents and yourself
 Start thinking after major changes
 
 Carolyn Hax: Trying to get past a wife seeing a married man on the side https://www.washingtonpost.com/lifestyle/style/carolyn-hax-trying-to-get-past-a-wife-seeing-a-married-man-on-the-side/2016/02/18/36bbc662-d4d3-11e5-9823-02b905009f99_story.html?utm_term=.3ec57c599e7e
+
+### About Science
+催化剂 catalyst
+
+### About Art
+软导线雕塑 Soft wire sculptures
 
 ### Anecdote
 “Do not shop at Mustafa Shopping Centre”
@@ -1083,6 +1101,9 @@ https://www.zybang.com/question/08b5a8c16467bd3319bdecc3adf18384.html
 bob and I , bob and me, bob and someone else, someone is ***
 http://www.learnersdictionary.com/qa/when-to-use-i-and-when-to-use-me
 https://english.stackexchange.com/questions/59618/i-and-someone-me-and-someone-or-i-and-someone-we
+
+## source
+https://www.mewatch.sg/
 
 ## to do 
 

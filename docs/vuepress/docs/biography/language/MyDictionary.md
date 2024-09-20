@@ -1670,6 +1670,7 @@ intermittent [ˌɪntəˈmɪtənt] 间歇性; 间歇的; ，断断续续的;
 integral 完整的 intact integrated
 intact 完好无损; 原封不动的; 完整无缺的，未经触动的，未受损伤的; 完好无缺
 intrinsic ɪnˈtrɪnsɪk 本征; 固有的，内在的，本质的; [解剖] 体内的; 先天性
+intuitive intuitive The user interface should be intuitive and easy to learn without formal training.
 If referential integrity is intact
 instinctive
 instructive  有益的; 教育性的;
@@ -2177,7 +2178,7 @@ http://ell.stackexchange.com/questions/13698/study-in-or-study-at-some-universit
 https://www.englishforums.com/English/CanAlthoughEventhoughSinceSame-Sentence/bvbcpm/post.htm
 http://english.stackexchange.com/questions/36377/though-vs-although
 
-## idom
+## idiom saying 谚语/成语
 A throat to choke
 
 ## Urban Dictionary(SLANG)/lingo
