@@ -47,48 +47,13 @@ rent: tenant
 
 纪念钞 Commemorative Notes 纪念钞册 booklet http://www.dbs.com.sg/personal/dbs-commemorative-notes.page?pid=sg-dbs-pweb-home-heroblock-commemorative-notes-btnlearnmore-
 
-discount mark-up
-交通卡Fare Card for bus and train journeys 月票 Price for all existing monthly concession passes remain unchanged.
-tap fare card tap in tap out
-swipe credit card
-scan fingerprints scan in scan out
-注意个人卫生 People should wash regularly to ensure personal hygiene.
-ulcer 口腔溃疡 diarrhea 腹泻
-耳毛鼻毛修剪器 Ear&Nose Trimmer NOSE-BEARD-HAIRCUT http://www.braun.com/global/male-grooming/cruzer-shavers-and-trimmers/cruzer-beard-and-head.html
-foam mousse
-fragrance - perfume
-post-it notes / sticky notes save time flipping book
-snack edibles dose slice
-water-proof
-plaster 创可贴
-cushion 橡皮软垫
-styrofoam box 泡沫箱
-Bubble wrap
-carring handles
-shoulder strap
- 
+
 get in your way  block your way
 让我们通过了 they waved us through. / we got approved.
-There are a few things that I find incredibly attractive when it comes to NativeScript.  These are benefits that have kept me attached to the framework for as long as I’ve been.
-You could spend a week building the feature, and you might be reinventing the wheel. Sounds like it’s time to see what’s on the shelf!
-Today’s business environment is constantly disrupted by new players leveraging innovative technology. 93% of technology and business leaders believe that their businesses will be deeply affected by digital. Only companies who adopt strong digital competencies can become the winners of tomorrow.
- 
-if you're a web developer, you can use React Native to write clean, fast mobile apps, from the comfort of a familiar framework and a single JavaScript codebase.
-React has seen widespread adoption.
-Developers have flocked to React for a number of reasons. It's lightweight, and offers impressive performance, especially for quickly-changing data. Because of its component structure, it also encourages you to naturally write more modular, reusable code.
-Because your application is mostly just JavaScript, you get a lot of the perks of web development, like being able to instantly "refresh" your application to see your code changes.Compared to the long minutes spent waiting to rebuild a traditional mobile application, this feels like a godsend.
-Being able to write truly native iOS and Android apps using a single JavaScript codebase seems like a no-brainer.
-In lieu of tags such as <div>, <img>, and <p>, React Native provides you with basic components such as <Text> and <View>.
-In practice, this means that you can write what looks like ordinary React code, and the React Native "bridge" will take care of the heavy lifting. But what happens when the bridge is incomplete?
-Happily, React Native gives you the flexibility to write and use these so-called "native modules" when you need to, and the process is straightforward.
-Deploying React Native applications is very similar to working with ordinary mobile applications. That doesn't mean it's easy, as the mobile release process is known for its headaches.
-Angular's data binding and dependency injection eliminate much of the code you would otherwise have to write.
- 
-A tantalising aroma of roast beef fills the air
+走通整个流程 walk through the process
+
 please direct any questions to peter or me.
 
-electronic magnetic field palm numb
-走通整个流程 walk through the process
 让我想一下/一会 let me think about it/ let me think it over
 
 三个女人一台戏 three women will make a real drama
@@ -374,6 +339,8 @@ Grow through life but don't go through life
 
  Treasure your time
 
+Do in actions make possible
+
 Respect other's life and yours
 
 Be modest humble
@@ -416,6 +383,10 @@ encumbered assets 抵押资产
 免除信用卡年费 waive credit card annual fee
 还信用卡钱 settle/pay credit card bills
 
+交通卡Fare Card for bus and train journeys 月票 Price for all existing monthly concession passes remain unchanged.
+tap fare card tap in tap out
+swipe credit card
+scan fingerprints scan in scan out
 ### About house
 餐具室 pantry
 水池 sink basin handbasin/hand washing basin; pool
@@ -442,6 +413,20 @@ the tap has little flow/ the tap can not be tightened
 
 爽肤水 toner lotion sunscreen
 
+耳毛鼻毛修剪器 Ear&Nose Trimmer NOSE-BEARD-HAIRCUT http://www.braun.com/global/male-grooming/cruzer-shavers-and-trimmers/cruzer-beard-and-head.html
+foam mousse
+fragrance - perfume
+
+post-it notes / sticky notes save time flipping book
+ 
+water-proof
+
+cushion 橡皮软垫
+styrofoam box 泡沫箱
+Bubble wrap
+carring handles
+shoulder strap
+
 #### 水电
 接触不良 poor contact
 heat food with microwave
@@ -463,7 +448,13 @@ trolley 小推车
 my mouth is watering
 delicacy 英[ˈdelɪkəsi] 美[ˈdɛlɪkəsi] n. 美味佳肴; 精美; 敏锐，敏感; 世故，圆滑
 浓郁的香味 strong fragrance; Strong Aroma;
-course -- main course 主菜  曲柄路线
+course -- main course 主菜 
+
+A tantalising aroma of roast beef fills the air
+
+snack
+edibles
+
 ### About hair cut
 理发：http://blogs.teachersammy.com/Blogs/entry/describing-hairdessing-in-English-1#.WdXv_z6g-Ul
 hairstylist, hairdresser/barber
@@ -516,7 +507,7 @@ sanitizer
 创可贴 plaster
 传染给你 infect you with the flu
 不停打喷嚏 sneeze  snooze（打瞌睡）
-嗓子哑/痒 itchy sore
+嗓子哑/痒 itchy sore , sore throat
 痰 phlegm
 腹泻 diarrhea 消毒
 浑身是汗 sweaty
@@ -541,6 +532,13 @@ sanitizer
 我看东西，看来小小的，又歪歪曲曲的。Objects look small and distorted.
 我看到有一个黑点在我的视野里。I have a black spot in my vision.
 我无法分辨颜色。I cannot distinguish the colors.
+
+注意个人卫生 People should wash regularly to ensure personal hygiene.
+ulcer 口腔溃疡 diarrhea 腹泻
+plaster 创可贴
+
+Palm Numb: Refers to a sensation of numbness or tingling in the palm, often due to nerve issues or circulation problems.
+
 ### About banking
 整存整取、零存整取和定活两用 3g.en8848.com.cn/hangye/bank/voadh/146480.html
 ### About Clothing
@@ -773,7 +771,9 @@ working remotely www.techrepublic.com/blog/10-things/10-good-reasons-why-working
   Usage: The term "office" is used when talking about a workspace for employees to conduct business activities such as meetings, paperwork, or client interactions. For example:
   "We need to renovate our office to accommodate more staff."
 
-Do in actions make possible
+**discount <-> mark-up**
+
+A store buys a shirt for $50 from a supplier. They apply a 50% mark-up, meaning they increase the price by 50% of the cost price.
 
 Wholesale warehouse sale retail
 尾货 Wei Huo is the normal order of foreign trade surplus goods.

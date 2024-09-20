@@ -485,6 +485,8 @@ Anyway
 不可数数量词
 https://www.facebook.com/permalink.php?story_fbid=1661131650833479&id=1487230268223619
 
+dose slice
+
 ### Preposition
 at or in mcdonald's
 of that I am sure

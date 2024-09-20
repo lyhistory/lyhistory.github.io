@@ -1246,6 +1246,35 @@ https://www.bookstack.cn/read/WeBASE-1.2.4-zh/96bb971c90544168.md
 yum -y install gcc
 yum -y install gcc-c++
 ```
+### java.io.IOException: Connection reset by peer
+
+client -> load balance with public ip -> internal firewall -> cloud firewall & enterprice router -> 后端服务
+
+报错：
+```
+2024-09-16 03:32:09.215 [32m INFO[m [35m4556GG[m [NioProcessor-2] [36mq.m.a.AcceptorIoHandler[m : MINA session created: local=/192.168.10.1:9890, class org.apache.mina.transport.socket.nio.NioSocketSession, remote=/192.168.10.79:12097
+2024-09-16 03:32:09.216 [31mERROR[m [35m4556GG[m [NioProcessor-2] [36mq.m.AbstractIoHandler[m : Socket (/192.168.10.79:12097): java.io.IOException: Connection reset by peer
+
+java.io.IOException: Connection reset by peer
+	at sun.nio.ch.FileDispatcherImpl.read0(Native Method)
+	at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:39)
+	at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
+	at sun.nio.ch.IOUtil.read(IOUtil.java:197)
+	at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:380)
+	at org.apache.mina.transport.socket.nio.NioProcessor.read(NioProcessor.java:378)
+	at org.apache.mina.transport.socket.nio.NioProcessor.read(NioProcessor.java:47)
+	at org.apache.mina.core.polling.AbstractPollingIoProcessor.read(AbstractPollingIoProcessor.java:519)
+	at org.apache.mina.core.polling.AbstractPollingIoProcessor.access$1200(AbstractPollingIoProcessor.java:68)
+	at org.apache.mina.core.polling.AbstractPollingIoProcessor$Processor.process(AbstractPollingIoProcessor.java:1242)
+	at org.apache.mina.core.polling.AbstractPollingIoProcessor$Processor.process(AbstractPollingIoProcessor.java:1231)
+	at org.apache.mina.core.polling.AbstractPollingIoProcessor$Processor.run(AbstractPollingIoProcessor.java:683)
+	at org.apache.mina.util.NamePreservingRunnable.run(NamePreservingRunnable.java:64)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+```
+
+首先通过eclipse的dependency hierarchy查了下MINA 是我们用的quickfix的底层依赖，所以确认了报错的大概范围，然后连过来的这个ip 192.168.10.79 有时候是 load balance 有时候是 internal firewall，注意：cloud firewall & enterprice router是二层设备
 
 ### ClientAbortException - Broken pipe
 前端=》nginx=》后端服务
