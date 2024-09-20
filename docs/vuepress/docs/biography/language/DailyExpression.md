@@ -144,11 +144,10 @@ quite a few http://english.stackexchange.com/questions/4085/what-is-the-proper-u
 expresses that the speaker was impressed or astonished by the number, as they would have expected less.
 最高 cap/capping
 大件物品 bulky item
-Which between “crap” and “shit” is more rude?
-http://ell.stackexchange.com/questions/23246/which-between-crap-and-shit-is-more-rude
+
 retrofit  retrospect  revision recap
 revamp rephrase
-regression 回归 recursive   递归
+
 refill recharge
 recompense 补偿
 overwrite
@@ -254,7 +253,7 @@ stimulation vs incentive
 Incentives to motivate employees
 Does governmental incentives or economic growth stimulate green-building construction
 condom vs rubber (rubber sticker) vs gum
-source vs jam
+
 prosecute sue
 speculate vs hedge vs invest vs infer
 The main purpose of speculation, on the other hand, is to profit from betting on the direction in which an asset will be moving. Hedgers reduce their risk by taking an opposite position in the market to what they are trying to hedge.
@@ -291,46 +290,21 @@ discrete scatter
  
 pertaining to
 in terms of vs with respect/regard to
-'in terms of' When we speak in this way, using these kinds of terms.
-eg In terms of computer skills, his programming and website design abilities are excellent.
-'with regard to' When we look at something.
-eg With regard to this problem, we need a solution by Friday.
+  'in terms of' When we speak in this way, using these kinds of terms.
+  eg In terms of computer skills, his programming and website design abilities are excellent.
+  'with regard to' When we look at something.
+  eg With regard to this problem, we need a solution by Friday.
+
 novelty origin
 widget gadget device
  
 it can make your head spin. fuzzy
 ball sphere
 under below beneath underneath http://www.phrasemix.com/answers/whats-the-difference-between-under-below-beneath-and-underne
-precise concise
+
 be accounted for 占
-guarantee warranty promise
-omission ignorance
  
- 
-categorize classify
-per pax=per person/passenger person is a decent substitute for individuals, People is the ordinary plural of person
-differ / not in sync with / not be aligned
-It can be differ for different organizational units and corporate functions
-Organization may not be in sync with market force.
-Top management and staff may not always be aligned.
- 
-obtain retain attain detain（扣留）
-defer delay lag
-accommodate to
-throughput吞吐量 threshold 临界值 capacity
-omit忽略   leave out省去 不考虑
- 
-work around to 逐步的解决
-correspond to 相应于 符合于
-respond to 相应
- 
-contradict反驳 与...矛盾 on contrary counter protest 反对
- 
-elicit 引出 诱出 solicit 恳求 征求 勾引
- 
-hereinafter 以下，在下文中
- 
-packed 拥挤 crowded
+
 
 ## Topic 
 ### About view of life
@@ -455,6 +429,10 @@ A tantalising aroma of roast beef fills the air
 snack
 edibles
 
+umami 鲜度; 鲜味; 甘味; 旨味;
+bento 盒饭
+
+source vs jam
 ### About hair cut
 理发：http://blogs.teachersammy.com/Blogs/entry/describing-hairdessing-in-English-1#.WdXv_z6g-Ul
 hairstylist, hairdresser/barber
@@ -1039,13 +1017,11 @@ http://www.crazyboards.org/forums/index.php?/topic/52259-problems-answering-the-
 How are you? Good or well
 https://www.businessinsider.com/how-are-you-im-good-is-acceptable-reply-2014-2/?IR=T
 
-Crap 
-Native speakers' brains are already on the right path. We won't mess it up in a conversation between native English speakers. When a native speaker hears, "What's your name? Mine ..." we already have "is" in our heads queued up. If we hear anything else, we will be surprised. A non-native speaker may not have this anticipation, and may hear "Minus" instead of "Mine is". This exact problem happened this morning between my German roommate and me.
-Native speakers would almost never hear "minus" where the speaker said "mine is", and likewise we will never confuse "crab" for "crap".
-- http://english.stackexchange.com/questions/15045/is-it-common-for-english-people-to-say-crap-instead-of-crab
-Of course, I make the assumption that the speaker is also a native speaker. Non-native English speakers also have subtle linguistic clumsiness that throws off this anticipation effect. So another time we could mess it up is if the speaker says something that we have to parse word-by-word to understand, throwing off the sense of rhythm and anticipation.
+
+
 No worries 
 is an expression seen in Australian English, British English and New Zealand English meaning "do not worry about that", "that's all right", or "sure thing". It is similar to the English no problem.
+
 
 
 what happens what happened what has happened

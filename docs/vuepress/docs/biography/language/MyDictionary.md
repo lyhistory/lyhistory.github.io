@@ -279,6 +279,7 @@ assess & access
 acquaint(acquaintance) & acquire(acquisition 收购; 获得; 购置物; 获得物)
 bot bolt
 exercise excise
+categorize classify
 causal casual
 complaint compliant
 complementary 补充补足 complimentary 恭维的 赠送的 赞美
@@ -286,11 +287,14 @@ conversion 转换 & convertion 规范& convention 会议
 constitute 构成 constituent成分选民
 condo condom（套套）
 censor 检察官 检查员
+defer delay lag
+
 elusive exclusive
 exercise excise
 gum glue
 idiot 白痴 idiom 成语
-simulate & stimulate
+obtain retain attain detain（扣留）
+omit忽略   leave out省去 不考虑
 parallel   paralyze ['pærəlaɪz] 使瘫痪，使麻痹;使不能正常活动
 perceptive perspective
 prompt promote
@@ -311,6 +315,7 @@ anonymous synonymous onymous
 numerous synchronous advantageous
 semen sperm
 spear 矛 sphere 球体
+simulate & stimulate
 synchronous <-> asynchronous
 synchronize <-> desynchronize
 Stationary stationery
@@ -352,9 +357,12 @@ blink wink blink 是普通的眨眼 wink 是单眼表示暗示
 background backdrop
 back ago 2 years back (ago)
 broken spoil
+crowded 拥挤 packed
 conversely; the other way round;
 come again ( repeat/pardon)
 calibrate / recalibrate  tune / fine tune  redressal 调整，修正
+contradict反驳 与...矛盾 on contrary counter protest 反对
+correspond to 相应于 符合于 respond to 相应
 conformity consistent
 consecutive continuous constant constantly 时刻; 不断地，时常地; 常川; 历来;
 consistency collate tally
@@ -368,8 +376,13 @@ claim reimburse https://www.zhihu.com/question/37729052
 dash hyphen
 density compact
 deprecate obsolete
+differ / not in sync with / not be aligned
+  It can be differ for different organizational units and corporate functions
+  Organization may not be in sync with market force.
+  Top management and staff may not always be aligned.
 dizzy drowsiness sleepy faint mess up fatigue dazzle fuzzy faint
 dustbin liter bin
+elicit 引出 诱出 solicit 恳求 征求 勾引
 expire dated
 excessive extreme over
 excel expert mastery 精通，熟练; 统治，控制; 优势
@@ -377,6 +390,7 @@ exception , anomaly əˈnɒməl 异常现象; 异常，反常; 不规则; 畸形
 fake counterfeit
 finally eventually ultimately
 	Arthur Anderson Consulting found it difficult to agree the requirements with BSkyB and produce a detailed requirement specification.This in turn lead to delays in producing the architectural design and ultimately the software code.
+guarantee warranty promise
 hush quite
 hurry rush: in a hurry
 hypen dash http://www.cbkx.com/2004-1/527.shtml
@@ -397,8 +411,9 @@ national nationality ethnicity [eθˈnɪsəti] 种族地位，种族特点，种
 nuance micro cosmetic
 opposite object to disagree argue challenge
 oblivious [əˈblɪviəs] ignorant innocent
-
+omission ignorance
 offload dump discharge pass
+precise concise
 preserve conserve battery
 population populated pre-populate
 proficient adj. 精通的，熟练的;n. 能手，老手，专家;  familiar skilled expert professional
@@ -406,7 +421,7 @@ paradigm template style
 pertinent ˈpɜ:tɪnənt 有关的，相干的; 恰当的，中肯的; 关于…的; 切题的; related, relevant
 propagate pass broadcast disperse:  When no updates occur for a long period of time, eventually all udpates will propagate through the system and all the nodes will be consistent
 prominent profound
-resume resurgence 回潮; 再起; 复苏，复活; 中断之后的继续;
+
 regardless ;despite; in spite of; let alone / not mention; even though; set aside
 Set aside 'Me' time to revitalise and rejuvenate yourself. It could be as simple as taking a 10 minute break to chill! Set aside time to exercise, watch a good movie or simply listen to some music. You'll be amazed at how refreshed you'll be with a short break!
 rash rush rectless
@@ -1112,7 +1127,7 @@ have make let
 ### Common used verbs
 ascertain ˌæsəˈteɪn弄清，确定，查明
 abstain əbˈsteɪn弃权; 避免; 戒（尤指酒），戒除;
-accomodate
+accommodate
 accrue  [əˈkru:] 增加; 获得; （通过自然增长） 产生; （使钱款、债务） 积累
 adjudicate əˈdʒu:dɪkeɪt 判决，宣判; 当…的评判员（或裁判员、仲裁人）;
 aggregate / group:
@@ -1263,7 +1278,7 @@ engage
 enact
 entail 需要; 牵涉; 使必要; 限定继承
 entertain
-Please note that due to overwhelming registrations for the *** elective, we will NOT be able to entertain any additional students.Kindly refrain from attending and requesting us for equipment if you have not registered for the elective.
+	Please note that due to overwhelming registrations for the *** elective, we will NOT be able to entertain any additional students.Kindly refrain from attending and requesting us for equipment if you have not registered for the elective.
 expedite 加速
 exacerbate 激怒 加重
 endorse
@@ -1282,7 +1297,7 @@ empower
 erode ɪˈrəʊd 侵蚀，腐蚀
 esteem  尊敬，敬重; 认为，以为; 考虑; 估价
 exhibit inhibit:
-If the classes do not exhibit 'is-a' relationship, use association/aggregation instead to delegate/forward the call to the original class.
+	If the classes do not exhibit 'is-a' relationship, use association/aggregation instead to delegate/forward the call to the original class.
 estimate guesstimate
 Estimate = speculation based on data or past performance or observation
 Guesstimate = Wild-ass shot in the dark, based on a gut feeling or intuition
@@ -1316,6 +1331,7 @@ hype 炒作 media hype - promote or publicize (a product or idea) intensively, o
 Imagine
 imperil
 impair
+impart knowledge
 inform notify alert:
 The extension use case inserts its course without altering the course of the base use case.
 instill 灌輸 We hope to instill in you, some new insights and throw new light into how to build well designed software systems.
@@ -2155,7 +2171,11 @@ U name it, we do it
 piled up
 benchmark
 Make it uniform
-Accommodate to population increase
+
+correspond to 
+	closely/directly correspond to/with sth The dip in their sales in-store directly corresponds to the increase in sales online.
+	In resistor code, red corresponds to the digit ‘2.’
+
 Conform to
 On and off
 Hog off
@@ -2180,14 +2200,28 @@ http://ell.stackexchange.com/questions/13698/study-in-or-study-at-some-universit
 https://www.englishforums.com/English/CanAlthoughEventhoughSinceSame-Sentence/bvbcpm/post.htm
 http://english.stackexchange.com/questions/36377/though-vs-although
 
+## formal statement
+
+hereinafter 以下，在下文中
+per pax=per person/passenger person is a decent substitute for individuals, People is the ordinary plural of person
+
 ## idiom saying 谚语/成语
 A throat to choke
 
 ## Urban Dictionary(SLANG)/lingo
+
+Crap 
+Native speakers' brains are already on the right path. We won't mess it up in a conversation between native English speakers. When a native speaker hears, "What's your name? Mine ..." we already have "is" in our heads queued up. If we hear anything else, we will be surprised. A non-native speaker may not have this anticipation, and may hear "Minus" instead of "Mine is". This exact problem happened this morning between my German roommate and me.
+Native speakers would almost never hear "minus" where the speaker said "mine is", and likewise we will never confuse "crab" for "crap".
+- http://english.stackexchange.com/questions/15045/is-it-common-for-english-people-to-say-crap-instead-of-crab
+Of course, I make the assumption that the speaker is also a native speaker. Non-native English speakers also have subtle linguistic clumsiness that throws off this anticipation effect. So another time we could mess it up is if the speaker says something that we have to parse word-by-word to understand, throwing off the sense of rhythm and anticipation.
+Which between “crap” and “shit” is more rude?
+http://ell.stackexchange.com/questions/23246/which-between-crap-and-shit-is-more-rude
+
 non-trivial https://www.zhihu.com/question/20681622
 KARMA 佛教 因果报应 因缘
 opcodes 操作码; 伪代码;
-umami 鲜度; 鲜味; 甘味; 旨味;
+
 Trie; 又称单词查找树; 是一种树形结构; 用于保存大量的字符串。它的优点是：利用字符串的公共前缀来节约存储空间。;
 opt-out 自愿退出; 不参加;
 opt-in 选择进入; 选择使用; 选入;
@@ -2198,7 +2232,7 @@ ontology 本体论，实体论;
 jumpstart 启动; 助推启动; 助推起动; 快速启动
 reasonable man unreasonable man
 quo 维持现状
-bento 盒饭
+
 bulling From the expletive bullshit. To talk nonsense/bullshit.He was bulling me but I didn't believe him.
 LOLS http://slang.org/LOLS-meaning-definition
 hush hush

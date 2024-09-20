@@ -67,6 +67,7 @@ rip customers off 宰客
 How To Protect Your Business From The Dark Side Of The Internet Of Things https://www.forbes.com/sites/centurylink/2016/02/15/how-to-protect-your-business-from-the-dark-side-of-the-internet-of-things/#19b71ccf5fcf
 
 ## Software engineer 
+
 This is a pretty straightforward collapse operation where we make the elements arrange themselves in a vertical fashion as opposed to horizontally.
 I’ll only depict the operative element. Any markup within it that is not immediately relevant will be truncated [it’s still there but I just won’t show it] and replaced with the HTML comment with caption ‘MARKUP TRUNCATED’ [I’ll also do the same for Javascript code with caption ‘CODE TRUNCATED’].
 Now this task is a real doozy. We’re going to need to enable two different navigational systems, one for the original website, and the other for the mobile website. However, they have to consume the same markup space.
@@ -225,6 +226,9 @@ building block
 standalone cluster
  
 ### high frequency Software Engineering words
+regression 回归 recursive   递归
+throughput吞吐量 threshold 临界值 capacity
+resume resurgence 回潮; 再起; 复苏，复活; 中断之后的继续;
 outsourcing subcontract  architecture guideline artifacts
 Artifacts and Deliverables
 inception elaboration construction transition
