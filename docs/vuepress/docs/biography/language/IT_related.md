@@ -225,7 +225,9 @@ Use Cases provide the central thread(binding) throughout analysis, design and te
 building block
 standalone cluster
  
+If a user's machine crashes, the network suffers an outage or a machine is turned off unexpectedly, the project file might require repair to compensate for the sudden inconsistency; a repair facility is provided to carry out this task.
 ### high frequency Software Engineering words
+widget gadget device
 regression 回归 recursive   递归
 throughput吞吐量 threshold 临界值 capacity
 resume resurgence 回潮; 再起; 复苏，复活; 中断之后的继续;
