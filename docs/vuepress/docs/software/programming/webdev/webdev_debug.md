@@ -1274,7 +1274,29 @@ java.io.IOException: Connection reset by peer
 	at java.lang.Thread.run(Thread.java:745)
 ```
 
-首先通过eclipse的dependency hierarchy查了下MINA 是我们用的quickfix的底层依赖，所以确认了报错的大概范围，然后连过来的这个ip 192.168.10.79 有时候是 load balance 有时候是 internal firewall，注意：cloud firewall & enterprice router是二层设备
+首先通过eclipse的dependency hierarchy查了下MINA 是我们用的quickfix的底层依赖，所以确认了报错的大概范围，然后连过来的这个ip 192.168.10.79 有时候是 load balance 有时候是 internal firewall，注意：cloud firewall & enterprice router是二层设备，经过调查，发现实际上我们的load balancer和firewall都有定时对backend后端的这个端口进行tcp健康检查，这样就出现一个问题：为什么tcp检查会触发业务层的这个错误？
+
+按照简单的理解，我以为tcp检查并不会触发这里的后端也就是quickfix程序的反应，比如类似ping之类的，当然我是说类似tcp ping或telnet，但是进一步思考发现，实际上telnet的行为跟 quickfix client端没有多大区别，
+
+对于backend - quickfix server来说，不管是telnet还是 quickfix client,都是先3次握手(SYN, SYN-ACK, ACK)建立连接，然后接着client端可以发送tcp header + payload（为了讨论方便我省略了ip header mac header等），唯一的区别是，telnet的payload是纯文本的 raw message， 而 quickfix client的则是通过程序规范化的 quickfix header|message, backend 可能会给raw message请求一个greetings的响应，取决于这个quickfix server的实现，更可能的情况是对于非法的raw message，quickfix backend不予处理，可想而知，我们完全可以构造一个 raw message使其内容是合法的quickfix header|message，这样backend就会认为telnet client也是个合法的quickfix client
+
+In conclusion, your assessment is correct:
++ The initial connection process is the same regardless of client type.
++ The difference lies in the payload structure.
++ The QuickFIX server's response depends on whether the payload matches the expected FIX format. If you can construct a valid FIX message through telnet, the server would treat it as a legitimate QuickFIX client message.
+
+然后再回看日志，这个错误确实是发生在三次握手之后socket/bind/listen/accept，NIO介入rec读取信息：
+
+NIO (Non-blocking I/O): The log indicates that the application is using Java NIO to handle socket connections. NIO can handle multiple connections using fewer threads than traditional blocking I/O. It becomes involved after the socket has been accepted and is ready to read or write data.This indicates that the server was trying to read data from the newly created session when it encountered the "connection reset by peer" exception. This typically means the server was attempting to process a message (or expecting to receive one) but found that the connection was no longer valid.
+
+还有一种场景 TCP-PING/SYN scan,这种端口检查的过程是：
+the client sends a SYN packet, the server responds with a SYN-ACK, and then the client sends an RST packet instead of completing the handshake with an ACK. This interaction occurs in the initial connection establishment phase, before any application-level interaction takes place.
+When the client sends an RST packet in response to a SYN-ACK (like in a SYN scan), it will typically lead to a "Connection reset by peer" error.
+This exception can indeed manifest at the OS level, indicating that the connection was terminated unexpectedly. When the server tries to read from this socket, it will receive an error.
+In the context of Java and frameworks like MINA, the "Connection reset by peer" error is translated into an IOException. This is a higher-level indication that the application was attempting to read from a connection that has been unexpectedly closed.
+Therefore, while the underlying cause of the reset is at a lower level (like the OS or TCP stack), the application can catch this as an IOException.
+
+简言之，TCP-PING/SYN scan在三次握手中也可以通过 RST 触发 reset by peer错误，从而被 application抓到，只不过这种场景跟我们的stack trace对应不上，前面已经分析了我们这次碰到的明显是握手之后的情况。
 
 ### ClientAbortException - Broken pipe
 前端=》nginx=》后端服务
