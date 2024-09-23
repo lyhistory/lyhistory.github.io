@@ -1,6 +1,85 @@
 ## Think in English/ How to say in English
-take a cut
-pretty much has been done
+
+不是不好，是相对不好的地方
+帮你看着东西
+
+送给我 http://blogs.teachersammy.com/Blogs/entry/common-English-error-he-sent-me-a-present#.Vp4Q-VJOEbE
+
+错过机会
+贵在坚持
+
+对于饮料，我没有偏好，平时一般喝。。。
+
+想起来了
+赶上了
+（怎样/什么）都行
+都可以/随便
+内幕消息
+微妙的关联
+行为冲动 act impluse
+睡过头
+眼不见心不烦
+家庭教养
+个人素质
+行为/举止粗鲁
+执行力
+帮忙看下东西/行李
+
+减肥/瘦身
+
+摆设
+
+傀儡
+发芽开花结果
+
+撤回
+
+啤酒肚
+
+全靠你了
+
+租金
+房屋设施: eatery
+
+冲向我http://www.hujiang.com/ciku/53286_-103160306/
+我晕了 http://news.iciba.com/study/oral/1568075.shtml
+我错了
+我记错了
+我想错了
+我想起来了
+
+
+但凡 if ** some if ** any
+本能反应 http://www.ichacha.net/%E6%9C%AC%E8%83%BD%E5%8F%8D%E5%BA%94.html
+日光浴
+
+Be that as it may
+more so
+
+the reason being is
+
+## Topic 
+### About view of life
+
+Grow through life but don't go through life
+
+ Treasure your time
+
+Do in actions make possible
+
+Respect other's life and yours
+
+Be modest humble
+
+### About dailylife
+在我看起来
+  It seems to me she is a good teacher.
+  It seems to me that she is a good teacher.
+  She appears to be a good teacher.
+  It looks as though she is a good teacher.
+扶梯上面 escalator landing / upper landing
+take a cut 见者有份
+  It means to take a portion of whatever you are referring to. In the case of a bank robbery, it would mean to take a portion of the money stolen from the bank. For Example: "Jonny took a cut of the haul from the bank."
 
 卧槽 Drat 讨厌!见鬼! Bingo 中了
 Faint 我倒!
@@ -19,7 +98,6 @@ viewer discretion is advised 以下内容建议慎重观看
 stay tuned 别换频道
 部分 a fraction of
 人品满格 RP Full Reception
-正宗川菜 Authentic SiChuan Cuisine
 笑容满面 he(his face) is beaming with delight.
 各回各家 各找各妈 Each of you get back home to your parents' basements.
 如有更改，恕不另行通知 subject to change without notice
@@ -29,7 +107,6 @@ stay tuned 别换频道
 
 我××之前的日程已经排满了 I have a tight/packed schedule until ×××
 抢购 Thank you for your interest, all the tickets have been snapped up.
-
 
 迷惑性 欺骗性 Scenario 2 is much more common, and trickier.
 下流 恶心的 This is a nasty situation that I knew I had to fix.
@@ -44,9 +121,7 @@ command respect 必然得到尊重 赢得尊重
 rent: tenant
 电子公告板 bulletin board
 
-
 纪念钞 Commemorative Notes 纪念钞册 booklet http://www.dbs.com.sg/personal/dbs-commemorative-notes.page?pid=sg-dbs-pweb-home-heroblock-commemorative-notes-btnlearnmore-
-
 
 get in your way  block your way
 让我们通过了 they waved us through. / we got approved.
@@ -57,293 +132,41 @@ please direct any questions to peter or me.
 让我想一下/一会 let me think about it/ let me think it over
 
 三个女人一台戏 three women will make a real drama
-遇到的问题/困难/坑 http://www.ichacha.net/%E9%81%87%E5%88%B0%E5%9B%B0%E9%9A%BE.html
+遇到问题/困难/坑 
+  1.have trouble in (doing)
+  2.get stuck
+  3.run into a stone wall
+  4.have difficulties in (doing)/sth
+  5.meet challenges
 断断续续 from time to time ;intermittently
-抢购 代付
-不是不好，是相对不好的地方
-帮你看着东西
+
 最希望 wish to get it most
 更需要 who need more
-最早/最迟 at the earliest/latest
-how early / how much time in advance
-how late does uber run
-at the latest no later then
+
+剩下的全在这里 the rest are all here
 人体 肉体 精神 stress pressure
 主动 被动 active passive
-送给我 http://blogs.teachersammy.com/Blogs/entry/common-English-error-he-sent-me-a-present#.Vp4Q-VJOEbE
 替我问好  Please give my sincere regards to all the members of your family.
-过关 （游戏过关 clear a stage）
-1.(通过关口) pass a barrier; go through an ordeal
-2.(比喻, 通过检验) pass a test; reach a standard
-错过机会
-贵在坚持
-剩下的全在这里 the rest are all here
-对于饮料，我没有偏好，平时一般喝。。。
-坐过站了 you missed your stop
-想起来了
-赶上了
-（怎样/什么）都行
-都可以/随便
-内幕消息
-微妙的关联
-行为冲动 act impluse
-睡过头
-眼不见心不烦
-家庭教养
-个人素质
-行为/举止粗鲁
-执行力
-帮忙看下东西/行李
+
 总体来说 你的意思是 overall speaking, what you mean is ...
 整理文件/桌子/资料/磁盘 file up sth/filing clean up the table
-异性的 hetero 异构 heterogeneous
-减肥/瘦身
 临时决定 tentatively decided / made a decision at the last minute
 突然有急事 Something urgent has come up, so the appointment will have to be canceled.
-旁听 sit in
-摆设
 可以退款吗 refundable
-罚金 peanut fine
-奖励 bonus praise
-反对 object to/oppose be opposed to /disagree/protest
 遇到阻力 face a resistance
 障碍 鸿沟 language obstacle / gap
-迁移 transfer/migrate
-接下来 next  subsequent following downstream
-之前的 previous upstream
-傀儡
-发芽开花结果
 赔钱 losing money
-撤回
-整容 plastic surgery
-啤酒肚
-二手烟 passive smoking secondhand smoke
 学会了 learnt have learned，acquired，mastered
-全靠你了
 顶贴 bump this thread http://sgforums.com/forums/1902/topics/270128
-租金
-房屋设施: eatery
+
 不急 there is no hurry/ in no hurry http://www.macmillandictionary.com/thesaurus-category/british/ways-of-telling-someone-not-to-hurry
-冲向我http://www.hujiang.com/ciku/53286_-103160306/
-我晕了 http://news.iciba.com/study/oral/1568075.shtml
-我错了
-我记错了
-我想错了
-我想起来了
 勾起很多回忆 bring back a lot of memories
 过着一天算一天的生活 Until now he never thought of tomorrow , and lived from one day to the next
-但凡 if ** some if ** any
-本能反应 http://www.ichacha.net/%E6%9C%AC%E8%83%BD%E5%8F%8D%E5%BA%94.html
-裁员 chop cut 罢工
 背影the sight of his back
-保守治疗
-日光浴
 很抢手 in great demand / very hot / well sought after by
-
-quite a few http://english.stackexchange.com/questions/4085/what-is-the-proper-usage-of-quite-a-few
-expresses that the speaker was impressed or astonished by the number, as they would have expected less.
 最高 cap/capping
 大件物品 bulky item
-Which between “crap” and “shit” is more rude?
-http://ell.stackexchange.com/questions/23246/which-between-crap-and-shit-is-more-rude
-retrofit  retrospect  revision recap
-revamp rephrase
-regression 回归 recursive   递归
-refill recharge
-recompense 补偿
-overwrite
-override
-overload
-overhead
-overkill
-overwhelming
-overrun
-forward, ahead, onward, forth, foremost,along,outward, outwardly, outwards
-downside
-downwards
-downterm
-downstream
-downfall 下台 (fall down)
-highrise
-counterclockwise
-undermine 逐渐削弱
-underestimate
-upward
-downward
-inner ward
-come out work out try out
-turn out
-turn round
-tease out 梳理出
-take off 出发  kick off 开始
-trade-off权衡
- 
-With regard to that/regarding that 关于这一点
-Be that as it may
-more so
-whatsoever
-last but not least
-the reason being is
- 
-扶梯上面 escalator landing / upper landing
-掉下来 drop / fall / land / lose
- 
-常用词习惯不准确
-different
-variant
-stop
-halt
-ride on you / take credit from you / take advantage from u
-ask / enquire
-ask for / request / apply for
-asked to / required to
-happened occurred
-argue retort debate dispute
- 
-publish issued sign off finalize communicate to
-persist insist
-plural/singular compound multiple diverse
- 
-ambitious timescale / challenge / tight schedule
-perform activity    proceed procedure
-entail/bring risk
-technique  technical
- 
-how earlier should I inform you?
-notice period
-administer / manage
-the system would administer the rostering of pilots and cabin crew on commercial flights.
-merchandise / goods /
-I was talking on the phone and suddenly got disconnected.
- 
-volatile paramount
-Business needs were paramount
-emerge arise surface envision 预见想象 anticipate
- 
-adopt apply use
- 
-adhere vs comply http://forum.wordreference.com/threads/adherence-compliance.1930164/
-the new end date must be adhered to.
-align vs conform http://www.wikidiff.com/conform/align
- 
-oral verbal : verbal warning
- 
-left over/ remain /rest
- 
-scold shoot shrew
-A week elapsed before she could see Elizabeth without scolding her
-irritate annoy frustrate
-http://forum.wordreference.com/threads/annoy-vs-irritate.1550833/
-beef up 充实, bump up, screw up,mess up, ramp up 巩固提高 sum up hang up挂掉
-high up: avoids feature-laden classes high up in the hierarchy
-gobble up 吞噬
-miss out figure out work out leak out
-sort out
-pump in
-crack down (on) 严厉打击
-clamp down (on) 钳制
-chewing gum on a train is not seemly in a lady. 淑女在火车上嚼口香糖不太合适
-The boy popped a piece of gum into his mouth. 塞进嘴里
-That guy who snaps his gum in class is so annoying 吹响口香糖
- 
-coordinated cooperation correlation
-interpersonnel 人际关系  interlinked interoperate interoperable interconnecting
-cycling to work , biking to work, ride bike to work
- 
-stimulation vs incentive
-Incentives to motivate employees
-Does governmental incentives or economic growth stimulate green-building construction
-condom vs rubber (rubber sticker) vs gum
-source vs jam
-prosecute sue
-speculate vs hedge vs invest vs infer
-The main purpose of speculation, on the other hand, is to profit from betting on the direction in which an asset will be moving. Hedgers reduce their risk by taking an opposite position in the market to what they are trying to hedge.
-The main difference between speculating and investing is the amount of of risk undertaken in the trade. Typically, high-risk trades that are almost akin to gambling fall under the umbrella of speculation, whereas lower-risk investments based on fundamentals and analysis fall into the category of investing.
- As verbs the difference between speculate and infer is that speculate is to think, meditate or reflect on a subject; to consider, to deliberate or cogitate while infer is to introduce (something) as a reasoned conclusion; to conclude by reasoning or deduction, as from premises or evidence.
-akin similar
-accountability responsibility liability
-benchmark collate calibrate
-serially sequence
-intervene interfere 干涉
-中英物语 http://www.chtoen.com/
-http://edu.qq.com/a/20160401/021015.htm
-Why do Chinese websites look so busy? https://econsultancy.com/blog/67466-why-do-chinese-websites-look-so-busy
-Like always/as always/as usual http://forum.wordreference.com/threads/like-always-as-always-as-usual.1766024/
-as usual - per usual https://www.quora.com/Whats-the-difference-between-as-usual-and-as-per-usual
-as you usually do
-How would you like your steak done?
-1. rare (almost raw) 2. medium-rare 3. medium ("half" raw) 4. well-done (fully cooked)
-ambiguous ambiguity vague
-grocery goods  electronic gadgets
-cosmetic toiletries
-territory region protectorate state  http://english.stackexchange.com/questions/3572/what-are-province-territory-protectorate-state
-intuitive
-consent 同意赞成 consensus 一致 共识  sensation 感觉 知觉 sensitivity 敏感 灵敏度
-conceive 设想 deceive 欺骗 perceive
-perceive conscious realize
-conscious anxious(anxiety)
-perception feel cognition consciousness apperception
-conserve 保存 节省 reserve sustain 维持 经受
-前(提前 之前 早于）upfront in advance prior to precede in advance
-后（后续 接着） subsequent
-accostomed to get/be used to
-discrete scatter
- 
-pertaining to
-in terms of vs with respect/regard to
-'in terms of' When we speak in this way, using these kinds of terms.
-eg In terms of computer skills, his programming and website design abilities are excellent.
-'with regard to' When we look at something.
-eg With regard to this problem, we need a solution by Friday.
-novelty origin
-widget gadget device
- 
-it can make your head spin. fuzzy
-ball sphere
-under below beneath underneath http://www.phrasemix.com/answers/whats-the-difference-between-under-below-beneath-and-underne
-precise concise
-be accounted for 占
-guarantee warranty promise
-omission ignorance
- 
- 
-categorize classify
-per pax=per person/passenger person is a decent substitute for individuals, People is the ordinary plural of person
-differ / not in sync with / not be aligned
-It can be differ for different organizational units and corporate functions
-Organization may not be in sync with market force.
-Top management and staff may not always be aligned.
- 
-obtain retain attain detain（扣留）
-defer delay lag
-accommodate to
-throughput吞吐量 threshold 临界值 capacity
-omit忽略   leave out省去 不考虑
- 
-work around to 逐步的解决
-correspond to 相应于 符合于
-respond to 相应
- 
-contradict反驳 与...矛盾 on contrary counter protest 反对
- 
-elicit 引出 诱出 solicit 恳求 征求 勾引
- 
-hereinafter 以下，在下文中
- 
-packed 拥挤 crowded
 
-## Topic 
-### About view of life
-
-Grow through life but don't go through life
-
- Treasure your time
-
-Do in actions make possible
-
-Respect other's life and yours
-
-Be modest humble
 ### About LifeStyle
 夜宵 night-time snack
 
@@ -387,6 +210,11 @@ encumbered assets 抵押资产
 tap fare card tap in tap out
 swipe credit card
 scan fingerprints scan in scan out
+speculate vs hedge vs invest vs infer
+  The main purpose of speculation, on the other hand, is to profit from betting on the direction in which an asset will be moving. Hedgers reduce their risk by taking an opposite position in the market to what they are trying to hedge.
+  The main difference between speculating and investing is the amount of of risk undertaken in the trade. Typically, high-risk trades that are almost akin to gambling fall under the umbrella of speculation, whereas lower-risk investments based on fundamentals and analysis fall into the category of investing.
+  As verbs the difference between speculate and infer is that speculate is to think, meditate or reflect on a subject; to consider, to deliberate or cogitate while infer is to introduce (something) as a reasoned conclusion; to conclude by reasoning or deduction, as from premises or evidence.
+
 ### About house
 餐具室 pantry
 水池 sink basin handbasin/hand washing basin; pool
@@ -455,6 +283,20 @@ A tantalising aroma of roast beef fills the air
 snack
 edibles
 
+umami 鲜度; 鲜味; 甘味; 旨味;
+bento 盒饭
+
+source vs jam
+
+正宗川菜 Authentic SiChuan Cuisine
+
+How would you like your steak done?
+1. rare (almost raw) 2. medium-rare 3. medium ("half" raw) 4. well-done (fully cooked)
+
+
+chewing gum on a train is not seemly in a lady. 淑女在火车上嚼口香糖不太合适
+The boy popped a piece of gum into his mouth. 塞进嘴里
+That guy who snaps his gum in class is so annoying 吹响口香糖
 ### About hair cut
 理发：http://blogs.teachersammy.com/Blogs/entry/describing-hairdessing-in-English-1#.WdXv_z6g-Ul
 hairstylist, hairdresser/barber
@@ -539,6 +381,12 @@ plaster 创可贴
 
 Palm Numb: Refers to a sensation of numbness or tingling in the palm, often due to nerve issues or circulation problems.
 
+fuzzy
+ it can make your head spin. 
+
+保守治疗
+整容 plastic surgery
+二手烟 passive smoking secondhand smoke
 ### About banking
 整存整取、零存整取和定活两用 3g.en8848.com.cn/hangye/bank/voadh/146480.html
 ### About Clothing
@@ -734,6 +582,8 @@ Hundreds of Chinese parents who lost their only child are now demanding compensa
 China's startup investment fund is bigger than the entire GDP of Denmark www.businessinsider.com/chinas-startup-investment-fund-is-bigger-than-denmarks-gdp-2016-4?IR=T&r=UK&IR=T
 China plans to tear down walls of gated condos and let public in www.theedgemarkets.com/article/china-plans-tear-down-walls-gated-condos-and-let-public
 China’s missile gambit https://www.washingtonpost.com/opinions/chinas-missile-gambit/2016/02/21/fc87c29a-d746-11e5-9823-02b905009f99_story.html?utm_term=.b9331253c0d1
+
+territory region protectorate state  http://english.stackexchange.com/questions/3572/what-are-province-territory-protectorate-state
 ### About Employ
 
 **in your line of work**
@@ -760,6 +610,7 @@ http://www.forbes.com/sites/lizryan/2016/04/07/did-this-employee-take-work-life-
 http://sbr.com.sg/hr-education/news/over-6-in-10-local-firms-have-mentally-absent-employees-says-survey
 working remotely www.techrepublic.com/blog/10-things/10-good-reasons-why-working-remotely-makes-sense/
 
+裁员 chop cut 罢工
 ### About Start up Business/Entrepreneurship
 
 + Business Premise:
@@ -777,6 +628,11 @@ A store buys a shirt for $50 from a supplier. They apply a 50% mark-up, meaning 
 
 Wholesale warehouse sale retail
 尾货 Wei Huo is the normal order of foreign trade surplus goods.
+merchandise / goods
+
+#### 电话/会议
+I was talking on the phone and suddenly got disconnected.
+
 ### About Tour/Culture
 自由行 跟团
 景色 景点
@@ -786,6 +642,10 @@ environmental sustainability
 tripod/lens
 http://www.thegreencorridor.org/
  
+坐过站了 you missed your stop
+过关 （游戏过关 clear a stage）
+  1.(通过关口) pass a barrier; go through an ordeal
+  2.(比喻, 通过检验) pass a test; reach a standard
 #### Chinese Culture
 吃春卷‘形象’的谓之咬春
 Spring rolls are synonymous with takeout in the U.S. However, they have a long history as a snack in China, the idea being that you're literally "biting spring"
@@ -807,6 +667,8 @@ http://www.bloomberg.com/news/articles/2016-08-30/tencent-china-s-biggest-intern
  By the age of 4, children from privileged backgrounds heard 30 million MORE WORDS than their peers under welfare. American researchers called this the 30 million word gap. Does a word gap exists in Singapore? How big is it and how do we close it?
 http://www.channelnewsasia.com/tv/tvshows/itfigures-s4/mind-the-gap/2307044.html
 
+ivory tower 象牙塔
+旁听 sit in
 ### About family emotion
 Take Responsibilities for your parents and yourself
 
@@ -1039,13 +901,11 @@ http://www.crazyboards.org/forums/index.php?/topic/52259-problems-answering-the-
 How are you? Good or well
 https://www.businessinsider.com/how-are-you-im-good-is-acceptable-reply-2014-2/?IR=T
 
-Crap 
-Native speakers' brains are already on the right path. We won't mess it up in a conversation between native English speakers. When a native speaker hears, "What's your name? Mine ..." we already have "is" in our heads queued up. If we hear anything else, we will be surprised. A non-native speaker may not have this anticipation, and may hear "Minus" instead of "Mine is". This exact problem happened this morning between my German roommate and me.
-Native speakers would almost never hear "minus" where the speaker said "mine is", and likewise we will never confuse "crab" for "crap".
-- http://english.stackexchange.com/questions/15045/is-it-common-for-english-people-to-say-crap-instead-of-crab
-Of course, I make the assumption that the speaker is also a native speaker. Non-native English speakers also have subtle linguistic clumsiness that throws off this anticipation effect. So another time we could mess it up is if the speaker says something that we have to parse word-by-word to understand, throwing off the sense of rhythm and anticipation.
+
+
 No worries 
 is an expression seen in Australian English, British English and New Zealand English meaning "do not worry about that", "that's all right", or "sure thing". It is similar to the English no problem.
+
 
 
 what happens what happened what has happened
@@ -1183,3 +1043,6 @@ http://starken.pixnet.net/blog/post/38072249-%E7%94%A8%E8%8B%B1%E6%96%87%E5%95%8
 用英文問好、打招呼句子大集合
 http://starken.pixnet.net/blog/post/38072249-%E7%94%A8%E8%8B%B1%E6%96%87%E5%95%8F%E5%A5%BD%E3%80%81%E6%89%93%E6%8B%9B%E5%91%BC%E5%8F%A5%E5%AD%90%E5%A4%A7%E9%9B%86%E5%90%88-
  adage proverb http://english.stackexchange.com/questions/73199/what-is-the-difference-between-a-proverb-an-adage-and-an-aphorism
+中英物语 http://www.chtoen.com/
+http://edu.qq.com/a/20160401/021015.htm
+Why do Chinese websites look so busy? https://econsultancy.com/blog/67466-why-do-chinese-websites-look-so-busy

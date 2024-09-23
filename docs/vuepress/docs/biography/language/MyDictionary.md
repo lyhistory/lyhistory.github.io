@@ -279,6 +279,7 @@ assess & access
 acquaint(acquaintance) & acquire(acquisition 收购; 获得; 购置物; 获得物)
 bot bolt
 exercise excise
+categorize classify
 causal casual
 complaint compliant
 complementary 补充补足 complimentary 恭维的 赠送的 赞美
@@ -286,11 +287,15 @@ conversion 转换 & convertion 规范& convention 会议
 constitute 构成 constituent成分选民
 condo condom（套套）
 censor 检察官 检查员
+defer delay lag
+
 elusive exclusive
 exercise excise
+fetch pick up
 gum glue
 idiot 白痴 idiom 成语
-simulate & stimulate
+obtain retain attain detain（扣留）
+omit忽略   leave out省去 不考虑
 parallel   paralyze ['pærəlaɪz] 使瘫痪，使麻痹;使不能正常活动
 perceptive perspective
 prompt promote
@@ -311,6 +316,7 @@ anonymous synonymous onymous
 numerous synchronous advantageous
 semen sperm
 spear 矛 sphere 球体
+simulate & stimulate
 synchronous <-> asynchronous
 synchronize <-> desynchronize
 Stationary stationery
@@ -336,8 +342,13 @@ master maester
 scam(scamp) spam
 hash 弄乱 搞砸 harsh 刺耳的;残酷的 hissing
 
-## Synonym - Words in mind
 
+## Synonym - Words in mind
+adopt apply use
+ 
+adhere vs comply http://forum.wordreference.com/threads/adherence-compliance.1930164/
+  the new end date must be adhered to.
+align vs conform http://www.wikidiff.com/conform/align
 adequate decent
 acknowledge response
 amend remedy rectify modify change
@@ -348,13 +359,17 @@ ask request
 axes dimensions angle
 analog analogy Analogous相似的，可比拟的; <生>同功的; 模拟式
 actualization ˌæktʃʊəlaɪ'zeɪʃən 实现，现实化 realization implementation
+ball sphere
 blink wink blink 是普通的眨眼 wink 是单眼表示暗示
 background backdrop
 back ago 2 years back (ago)
 broken spoil
+crowded 拥挤 packed
 conversely; the other way round;
 come again ( repeat/pardon)
 calibrate / recalibrate  tune / fine tune  redressal 调整，修正
+contradict反驳 与...矛盾 on contrary counter protest 反对
+correspond to 相应于 符合于 respond to 相应
 conformity consistent
 consecutive continuous constant constantly 时刻; 不断地，时常地; 常川; 历来;
 consistency collate tally
@@ -368,8 +383,14 @@ claim reimburse https://www.zhihu.com/question/37729052
 dash hyphen
 density compact
 deprecate obsolete
+differ / not in sync with / not be aligned
+  It can be differ for different organizational units and corporate functions
+  Organization may not be in sync with market force.
+  Top management and staff may not always be aligned.
 dizzy drowsiness sleepy faint mess up fatigue dazzle fuzzy faint
 dustbin liter bin
+emerge arise surface envision 预见想象 anticipate
+elicit 引出 诱出 solicit 恳求 征求 勾引
 expire dated
 excessive extreme over
 excel expert mastery 精通，熟练; 统治，控制; 优势
@@ -377,6 +398,7 @@ exception , anomaly əˈnɒməl 异常现象; 异常，反常; 不规则; 畸形
 fake counterfeit
 finally eventually ultimately
 	Arthur Anderson Consulting found it difficult to agree the requirements with BSkyB and produce a detailed requirement specification.This in turn lead to delays in producing the architectural design and ultimately the software code.
+guarantee warranty promise
 hush quite
 hurry rush: in a hurry
 hypen dash http://www.cbkx.com/2004-1/527.shtml
@@ -395,10 +417,13 @@ melt desolve
 moderate mild mediate
 national nationality ethnicity [eθˈnɪsəti] 种族地位，种族特点，种族渊源;
 nuance micro cosmetic
+novelty originality
+  originality relates directly with the idea of creation and Novelty is creating something different than the existing concept or use of a better idea thereby creating a new/fresh idea itself.
 opposite object to disagree argue challenge
 oblivious [əˈblɪviəs] ignorant innocent
-
+omission ignorance
 offload dump discharge pass
+precise concise
 preserve conserve battery
 population populated pre-populate
 proficient adj. 精通的，熟练的;n. 能手，老手，专家;  familiar skilled expert professional
@@ -406,7 +431,7 @@ paradigm template style
 pertinent ˈpɜ:tɪnənt 有关的，相干的; 恰当的，中肯的; 关于…的; 切题的; related, relevant
 propagate pass broadcast disperse:  When no updates occur for a long period of time, eventually all udpates will propagate through the system and all the nodes will be consistent
 prominent profound
-resume resurgence 回潮; 再起; 复苏，复活; 中断之后的继续;
+
 regardless ;despite; in spite of; let alone / not mention; even though; set aside
 Set aside 'Me' time to revitalise and rejuvenate yourself. It could be as simple as taking a 10 minute break to chill! Set aside time to exercise, watch a good movie or simply listen to some music. You'll be amazed at how refreshed you'll be with a short break!
 rash rush rectless
@@ -468,6 +493,76 @@ https://support.google.com/feedburner/answer/78485?hl=en&ref_topic=13252&vid=1-6
 
 disaggregation vs segregation vs congregation
 
+under below beneath underneath 
+	http://www.phrasemix.com/answers/whats-the-difference-between-under-below-beneath-and-underne
+
+left over/ remain /rest
+ 
+scold shoot shrew
+  A week elapsed before she could see Elizabeth without scolding her
+irritate annoy frustrate
+  http://forum.wordreference.com/threads/annoy-vs-irritate.1550833/
+
+前(提前 之前 早于）upfront in advance prior to precede in advance pertaining to
+accostomed to get/be used to
+
+之前的 previous upstream
+
+后（后续 接着） subsequent/following/succeeding 接下来 next  subsequent following downstream
+
+Like always/as always/as usual http://forum.wordreference.com/threads/like-always-as-always-as-usual.1766024/
+  as usual - per usual https://www.quora.com/Whats-the-difference-between-as-usual-and-as-per-usual
+  as you usually do
+
+akin similar
+ambiguous ambiguity vague
+accountability responsibility liability
+benchmark collate calibrate
+cycling to work , biking to work, ride bike to work
+coordinated cooperation correlation
+condom vs rubber (rubber sticker) vs gum
+cosmetic toiletries
+conserve 保存 节省 reserve sustain 维持 经受
+consent 同意赞成 consensus 一致 共识  sensation 感觉 知觉 sensitivity 敏感 灵敏度
+conceive 设想 deceive 欺骗 perceive
+conscious anxious(anxiety)
+discrete scatter
+grocery goods  electronic gadgets
+intervene interfere 干涉
+perceive conscious realize
+prosecute sue
+perception feel cognition consciousness apperception
+serially sequence
+stimulation vs incentive
+  Incentives to motivate employees
+  Does governmental incentives or economic growth stimulate green-building construction
+
+oral verbal 
+	verbal warning "Oral Consent" or "Verbal Consent" 
+
+different variant
+stop halt
+ask / enquire
+ask for / request / apply for
+asked to / required to
+happened occurred
+argue retort debate dispute
+publish issued sign off finalize communicate to
+persist insist
+plural/singular compound multiple diverse
+ 
+ambitious timescale / challenge / tight schedule
+perform activity    proceed procedure
+entail/bring risk
+technique  technical
+
+administer / manage
+ the system would administer the rostering of pilots and cabin crew on commercial flights.
+掉下来 drop / fall / land / lose
+罚金 peanut fine
+奖励 bonus praise
+反对 object to/oppose be opposed to /disagree/protest
+迁移 transfer/migrate
 ## Contrast meaning  意义反差
 appealing  adj. 吸引人的，令人心动的; 恳求的; v. （迫切） 要求(appeal的现在分词); 将…上诉;
 
@@ -479,6 +574,7 @@ whatsoever  pron. 任何; 无论什么;
 therefore thereby https://english.stackexchange.com/questions/148009/thereby-vs-therefore
 
 Anyway
+whatsoever
 
 ## Nouns
 ### 数量词
@@ -486,7 +582,8 @@ Anyway
 https://www.facebook.com/permalink.php?story_fbid=1661131650833479&id=1487230268223619
 
 dose slice
-
+quite a few 
+	expresses that the speaker was impressed or astonished by the number, as they would have expected less.
 ### Preposition
 at or in mcdonald's
 of that I am sure
@@ -506,6 +603,7 @@ bounty （由政府提供的） 奖金，赏金; 慷慨，大方; 赠物，赠�
 blurb 简介 推介广告
 burger flipper
 beliver
+communiter 通勤者
 captive 俘虏 迷恋者
 carrier 运营商 dealer 经销商 reseller 代理商 distributor 分销商
 contractor 契约人 承包商
@@ -650,6 +748,8 @@ eviction 逐出，赶出; （租地，租房等的） 收回
 facet 小平面 方面 刻面
 Faucet ˈfɔ:sɪt <美>水龙头;
 failover [电脑][数据库]失效备援 （为系统备援能力的一种，当系统中其中一项设备失效而无法运作时，另一项设备即可自动接手原失效系统所执行的工作）;
+fidelity 真度; 逼真; 忠诚，忠实; 尽责;
+Fermentation 发酵; 激动，纷扰;
 flagship 旗舰; 〈比喻〉最重要的一个; 佼佼者;
 feat 功绩，伟业; 技艺表演; 卓绝的手艺，技术，本领; 武艺;
 fidelity loyalty
@@ -718,6 +818,7 @@ obsession 着魔，萦绕; 使人痴迷的人（或物）; 摆脱不了的思想
 octagon ˈɒktəgən 八边形，八角形
 operand ˈɒpərænd 操作数; 运算数
 organism ˈɔ:gənɪzəm 有机体; 生物体; 微生物; 有机体系，有机组织
+privatization ˌpraɪvətaɪ'zeɪʃn 私有化
 pavilion p??v?li?n 亭，阁楼; （公共活动或展览用的） 临时建筑物; 大型文体馆; 看台
 palate ˈpælət 味觉，嗜好; 审美眼光，鉴赏力
 paradigm 范例，样式，模范; 词形变化表
@@ -820,120 +921,7 @@ wrath rɒθ 愤怒; 激怒
 workaround 变通办法
 criterion -> criteria
 
-### Compound Nouns 复合名词
-safeguard
-subtotal
-electromagnetic
-foothold 据点; 立足处（攀登时脚踩的地方）; （在事业等方面可以进一步发展的） 稳固地位
-outset 开始，开端;
-breakthrough 突破; 穿透; 重要技术成就; 炉衬烧穿
-Pattern
-Bi-
-bipolar ˌbaɪˈpəʊlə(r) 双极
-hybrid混合物 hydro hygiene hype 夸大的宣传hyper hyphen连字符 hypnotic 催眠的 hysteric 亢奋/歇斯底里的
-hydro 水利 hydroelectric
-hyper 亢奋的 hyperlink hypertension 高血压 hypermobility 高流动性
-hypo n. 海波; 硫化硫酸钠; <口>刺激; 瘾君子;vt. 给…作皮下注射; （以皮下注射毒品等方式） 刺激; 助长
-hypothesis
-anti  antispetic 防腐剂/消毒水
-counter- 表示“相反，相对”  countermeasure
-reentrant [ri:'entrənt 再进去，凹角;
-resurface 重铺路面; 重新露面; 浮上水面
-de- 脱 去 除 离 解除
-de-inflation 去通胀
-devauation 贬值
-un-
-unease 不安; 忧虑，担心
-ultra 过激的 ultrasonic scan 超声波检测
-super superconduct 超导 supersonic 超音速
-tamper-resistant 防篡改
-water-proof 防水 tamper-proof
-under undercharging underestimate undertake
-over overstated overlook overtaxed overarch overarching overhaul overrate overdue
-overdrive 驱使过度，虐待，超速传动;
-overstatement 言过其实
-hygiene
-thermal 暖气流 geothermal 地热
-asymmetric 不对称的
-cryptography 密码使用法，密码系统
-typo
-age: mileage usage
- 
-scale： global scale time scale
-dispose discharge disclose discipline displace
-proactive provocate advocate
-close-out
-coresponding corelate cooperate collaborate coordinate
-innovation renovation
-injestion  conjestion  digestion
-inject conject conjunct
-payload 负载 workload工作量 overload
-bypass
-overlook
-overturn -- tip (something) over so that it is on its side or upside down.
-overclocking  is the configuration of a computer hardware component to operate at a faster rate than was certified by the original manufacturer Not to be confused with overclocking(mileometer/odometer)
-out outbreak outrange outperform outstrip outreach 到达顶端，超越;
-outperform 做得比…更好，胜过
-headless stateless
-inverse reverse vice-verse adverse converse
-tri trishaw 三轮车 triple
-worthy  trustworthy  click-worthy
-ficiency  proficiency熟练 娴熟 deficiency efficiency
-outset -  the start or beginning of something
-outlet
-outfit -a set of clothes worn together, especially for a particular occasion or purpose. 装备
-outline outbreak outcome
-outage - a period when a power supply or other service is not available or when equipment is closed down.
-outrage 激怒
-outcry
-outshine
-semi  semiconductor semifinal
-decimeter
-centimeter
-millimetres
-kilogram kilobyte
-megabyte megatrends
-premises  premium account   premier(总理)  premiere(首映) prelude 序曲，前奏曲; 开场戏，序幕; 前兆，预兆
-scribe transcribe suscribe screenscribe
-magnify magnetic
-drawback fallback
-aside downside beside preside 主持，指挥; 担任会议主席 reside
-cessation （暂时） 停止，休止，中断; recession procession队伍，行列; 一列，一排; 列队行进; concessionary （对某类人） 减价的;
-rise highrise
-wise
-pairwise in pairwise成对[双]地，两个两个地;
-wide
-corrupted disrupted
-inter interdependency cross dependent interdepartmental interoperability interchange  interdisciplinary 跨学科 interchangeably  interdependence
-interrogative 表示疑问的，质问的;
-interleaved 交叉存取的，隔行扫描的
-intermediary 媒介; 中间人; 调解人; 中间阶段
-recraft rebuild
-diligence intelligence
-multi multitenancy
-linkage slipage
-hot hot-spot hot-swapping
-liquid fluid
-constrain restrain refrain
-polyglot （人） 通晓、使用多种语言的，（书等）用多种语言写的;
-graphy - demography
-fore- foresight
-hind- hindsight
-mag- magnitude(altitude longitude latitude) magnet
-geneity: homogeneity, heterogeneity
-poly: polymorphic, polynomial polyglot
-mono: monolithic整体的 monopoly垄断的
-ele- elevation elevated elevator
-appeal repeal
-ior - senior superior inferior
-let booklet leaflet [ˈli:flət] 传单，散页印刷品; 小叶，嫩叶; 复叶的一片; 叶状器官
-attire  n. 服装，衣服; vt. 使穿上衣服，使穿上盛装;
-arise
-propa - propagate  propaganda
-after- afterthoughts事后的考虑或想法; 事后聪明; 事后再想起; 后来添加的东西;  aftereffects 后果; 事后影响; （药物的） 后效; 后作用;
-ture
-texture 质地; 结构; 本质
-moisture 水分; 湿气; 潮湿; 降雨量;
+
 to noun
 mean=> means is a means to
 ### Verb --> Noun
@@ -1112,7 +1100,8 @@ have make let
 ### Common used verbs
 ascertain ˌæsəˈteɪn弄清，确定，查明
 abstain əbˈsteɪn弃权; 避免; 戒（尤指酒），戒除;
-accomodate
+accommodate
+	One of the ways of accommodating for wheelchairs at work is to provide parking spaces near entrances for wheelchair users and other persons with disabilities.
 accrue  [əˈkru:] 增加; 获得; （通过自然增长） 产生; （使钱款、债务） 积累
 adjudicate əˈdʒu:dɪkeɪt 判决，宣判; 当…的评判员（或裁判员、仲裁人）;
 aggregate / group:
@@ -1263,7 +1252,7 @@ engage
 enact
 entail 需要; 牵涉; 使必要; 限定继承
 entertain
-Please note that due to overwhelming registrations for the *** elective, we will NOT be able to entertain any additional students.Kindly refrain from attending and requesting us for equipment if you have not registered for the elective.
+	Please note that due to overwhelming registrations for the *** elective, we will NOT be able to entertain any additional students.Kindly refrain from attending and requesting us for equipment if you have not registered for the elective.
 expedite 加速
 exacerbate 激怒 加重
 endorse
@@ -1282,7 +1271,7 @@ empower
 erode ɪˈrəʊd 侵蚀，腐蚀
 esteem  尊敬，敬重; 认为，以为; 考虑; 估价
 exhibit inhibit:
-If the classes do not exhibit 'is-a' relationship, use association/aggregation instead to delegate/forward the call to the original class.
+	If the classes do not exhibit 'is-a' relationship, use association/aggregation instead to delegate/forward the call to the original class.
 estimate guesstimate
 Estimate = speculation based on data or past performance or observation
 Guesstimate = Wild-ass shot in the dark, based on a gut feeling or intuition
@@ -1316,6 +1305,7 @@ hype 炒作 media hype - promote or publicize (a product or idea) intensively, o
 Imagine
 imperil
 impair
+impart knowledge
 inform notify alert:
 The extension use case inserts its course without altering the course of the base use case.
 instill 灌輸 We hope to instill in you, some new insights and throw new light into how to build well designed software systems.
@@ -1715,6 +1705,7 @@ overarching adj.     首要的;v. 在…上方成拱形( overarch的现在分词
 parabolic ˌpærə'bɒlɪk 抛物线的; 比喻的，寓言似的;
 parametric 参数的
 paramount
+  Business needs were paramount
 particular specific http://the-difference-between.com/particular/specific
 permissible
 permissive pəˈmɪsɪv 放任的; 容许的; 宽大的; 自由的
@@ -1835,11 +1826,12 @@ volatile
 vital essential 本质 重要必要
 viable 能生存的 sustainable vs feasible https://www.italki.com/question/271673
 vigorous 有力的; 精力充沛的; 充满活力的; 朝气蓬勃的
+verbose 冗长的，啰唆的，累赘的
+volatile
 wary
 wieldy 易于使用的，适合的;
 wrought 制造的; 加工的; 经装饰的; （金属） 锤打成形的  wrought with risks
-time-dependent effects
-verbose 冗长的，啰唆的，累赘的
+
 
 ### noun to adjective
 domain -> dominant
@@ -1909,12 +1901,180 @@ wholly 完全地，全部地; 十足，统统; 专门; 一并
 lately
 mostly
 
+## Compound words 复合词
+asymmetric 不对称的
+anti  antispetic 防腐剂/消毒水
+attire  n. 服装，衣服; vt. 使穿上衣服，使穿上盛装;
+
+arise
+after- afterthoughts事后的考虑或想法; 事后聪明; 事后再想起; 后来添加的东西;  aftereffects 后果; 事后影响; （药物的） 后效; 后作用;
+age: mileage usage linkage slipage
+back drawback fallback
+Bi-
+bipolar ˌbaɪˈpəʊlə(r) 双极
+bypass
+breakthrough 突破; 穿透; 重要技术成就; 炉衬烧穿
+close-out
+coresponding corelate cooperate collaborate coordinate
+counter- 表示“相反，相对”  
+	countermeasure counterclockwise
+cessation （暂时） 停止，休止，中断; recession procession队伍，行列; 一列，一排; 列队行进; concessionary （对某类人） 减价的;
+
+corrupted disrupted
+de- 脱 去 除 离 解除
+	de-inflation 去通胀
+	devauation 贬值
+dis
+	dispose discharge disclose discipline displace
+dependent
+	time-dependent effects
+down
+	downside
+	downwards
+	downterm
+	downstream
+	downfall 下台 (fall down)
+ele- elevation elevated elevator
+electromagnetic
+foothold 据点; 立足处（攀登时脚踩的地方）; （在事业等方面可以进一步发展的） 稳固地位
+ficiency  proficiency熟练 娴熟 deficiency efficiency
+fore- foresight
+geneity: homogeneity, heterogeneity
+graphy
+	cryptography 密码使用法，密码系统 demography Calligraphic 书法的;
+hetero 异构 heterogeneous
+hybrid混合物 hydro hygiene hype 夸大的宣传hyper hyphen连字符 hypnotic 催眠的 hysteric 亢奋/歇斯底里的
+hydro 水利 hydroelectric
+hyper 亢奋的 hyperlink hypertension 高血压 hypermobility 高流动性
+hypo n. 海波; 硫化硫酸钠; <口>刺激; 瘾君子;vt. 给…作皮下注射; （以皮下注射毒品等方式） 刺激; 助长
+hypothesis
+hygiene
+hot hot-spot hot-swapping
+hind- hindsight
+inter 
+	interdependency cross dependent interdepartmental interoperability interchange  interdisciplinary 跨学科 interchangeably  interdependence Interpersonal  人际关系  interlinked interoperate interoperable interconnecting
+	interrogative 表示疑问的，质问的;
+	interleaved 交叉存取的，隔行扫描的
+	intermediary 媒介; 中间人; 调解人; 中间阶段
+innovation renovation
+injestion  conjestion  digestion
+inject conject conjunct
+ior - senior superior inferior
+kilo
+	kilogram kilobyte
+less
+	headless stateless
+load 
+	payload 负载 workload工作量 overload
+let booklet leaflet [ˈli:flət] 传单，散页印刷品; 小叶，嫩叶; 复叶的一片; 叶状器官
+gence
+ diligence intelligence
+multi multitenancy
+
+mal
+	thermal 暖气流 geothermal 地热
+meter
+	decimeter
+	centimeter
+	millimetres
+
+mega
+	megabyte megatrends
+mono: monolithic整体的 monopoly垄断的
+mag- magnitude(altitude longitude latitude) magnet magnify magnetic
+over 
+	overstated overlook overtaxed overarch overarching overhaul overrate overdue
+	overdrive 驱使过度，虐待，超速传动;
+	overstatement 言过其实
+
+outset 开始，开端;
+outset -  the start or beginning of something
+outlet
+outfit -a set of clothes worn together, especially for a particular occasion or purpose. 装备
+outline outbreak outcome
+outage - a period when a power supply or other service is not available or when equipment is closed down.
+outrage 激怒
+outcry
+outshine
+over
+	overwrite
+	override
+	overload
+	overhead
+	overkill
+	overwhelming
+	overrun
+	overlook
+	overturn -- tip (something) over so that it is on its side or upside down.
+	overclocking  is the configuration of a computer hardware component to operate at a faster rate than was certified by the original manufacturer Not to be confused with overclocking(mileometer/odometer)
+out outbreak outrange outperform outstrip outreach 到达顶端，超越;
+outperform 做得比…更好，胜过
+peal appeal repeal
+proof water-proof 防水 tamper-proof
+propa - propagate  propaganda
+pre
+	premises  premium account   premier(总理)  premiere(首映) prelude 序曲，前奏曲; 开场戏，序幕; 前兆，预兆
+pro
+	proactive provocate advocate
+poly 
+	polyglot （人） 通晓、使用多种语言的，（书等）用多种语言写的;
+	polymorphic, polynomial polyglot
+rain constrain restrain refrain
+re 
+	retrofit  retrospect  revision recap
+	revamp rephrase
+	refill recharge
+	recompense 补偿
+	recraft rebuild
+	reentrant [ri:'entrənt 再进去，凹角;
+	resurface 重铺路面; 重新露面; 浮上水面
+resistant
+	tamper-resistant 防篡改
+safeguard
+subtotal 
+scale： global scale time scale
+semi  semiconductor semifinal
+scribe transcribe suscribe screenscribe
+side aside downside beside preside 主持，指挥; 担任会议主席 reside
+super superconduct 超导 supersonic 超音速
+tri trishaw 三轮车 triple
+typo
+worthy  trustworthy  click-worthy
+uid
+	liquid fluid
+
+rise 
+	highrise
+ture
+	texture 质地; 结构; 本质
+	moisture 水分; 湿气; 潮湿; 降雨量;
+
+verse
+	inverse reverse vice-verse adverse converse
+ward
+	forward, ahead, onward, forth, foremost,along,outward, outwardly, outwards upward downward inner ward
+wise
+	pairwise in pairwise成对[双]地，两个两个地;
+wide
+
+un-
+	unease 不安; 忧虑，担心
+ultra 过激的 ultrasonic scan 超声波检测
+under undercharging underestimate undertake undermine 逐渐削弱
+
 ## Vocabulary  Phrases
 A phrase is two or more words that do not contain the subject-verb pair necessary to form a clause. Phrases can be very short or quite long.
 Certain phrases have specific names based on the type of word that begins or governs the word group: noun phrase, verb phrase, prepositional phrase, infinitive phrase 动词不定式, participle phrase(present participle and past participle), gerund phrase 动名词, and absolute phrase.
 http://www.chompchomp.com/terms/phrase.htm
 
-stop by 顺路看看
+With regard to that/regarding that 关于这一点
+ride on you / take credit from you / take advantage from u
+
+最早/最迟 at the earliest/latest
+  how early / how much time in advance
+  how late does uber run
+  at the latest no later then
+
 in the middle of something
 don't make a scene
 
@@ -1951,8 +2111,8 @@ behave regularly
 conjestion penalty
 laughing matter 笑料
 end to end
-End to end is a term used in many business arenas referring to the beginning and end points of a method or service, and end-to-end theory embraces the philosophy that eliminating as many middle layers or steps as possible will optimize performance and efficiency in any process. An end-to-end process ensures the comprehensive completion of work and is typically managed within a specified timeframe. Internal procedures at a company often lay out a process for end-to-end management using the most efficient and timely approach to manufacture goods or complete a service.Read more: End To End Definition | Investopedia http://www.investopedia.com/terms/e/end-to-end.asp
-ivory tower 象牙塔
+	End to end is a term used in many business arenas referring to the beginning and end points of a method or service, and end-to-end theory embraces the philosophy that eliminating as many middle layers or steps as possible will optimize performance and efficiency in any process. An end-to-end process ensures the comprehensive completion of work and is typically managed within a specified timeframe. Internal procedures at a company often lay out a process for end-to-end management using the most efficient and timely approach to manufacture goods or complete a service.Read more: End To End Definition | Investopedia http://www.investopedia.com/terms/e/end-to-end.asp
+
 water retention
 This pus, if it collects in large enough amounts, will bloat the etheric body leading to physical "puffiness" and water retention.
 ultimate consumer 最终用户
@@ -1973,13 +2133,8 @@ soon after
 on the fly / in real-time / instantly / in a jerk
 from scratch / draft idea
 brute force approach
-bring up
-It is important for your team to keep up with the schedule so as not to cause unnecessary delays to downstream workshops.
-It is best to allow only one analyst to work on a diagram at a time.
-If a user's machine crashes, the network suffers an outage or a machine is turned off unexpectedly, the project file might require repair to compensate for the sudden inconsistency; a repair facility is provided to carry out this task.
-as if
-as is
-as though
+
+
 in an ad hoc manner
 As the group gears up towards the business challenges of the new economy
 self-contained 自给自足
@@ -1999,7 +2154,7 @@ end state 最终状态
 bottlenecks and loops  bottlenecks and efficiencies
 lose yourself in complexity
 an array of situations
-wrap up 包裹 圆满完成
+
 geographic expansion / corporate expansion
 ongoing cost 持续的成本 an onging basis 持续的基础上 on an 'as-needed-basis'
 rubber stamping 常规刻板批准 approve automatically without proper consideration.
@@ -2148,26 +2303,54 @@ Line through, strike through, crossed through
 Affordable to the mass
 Neglect one important thing
 
-
-Adapt to changes
-Cater for different crowds
 U name it, we do it
 piled up
 benchmark
 Make it uniform
-Accommodate to population increase
-Conform to
+
 On and off
 Hog off
 hardness 利用
 Rolling out more bus
-Pull back
+
 Building on the idea earlier on
-communiter 通勤者
+
 bridging service
-fetch pick up
-Bring up a good idea
-accommodate wheel chair user
+
+in terms of vs in the sense of vs with respect/regard to
+  'in terms of' When we speak in this way, using these kinds of terms.
+  eg In terms of computer skills, his programming and website design abilities are excellent.
+  'with regard to' When we look at something.
+  eg With regard to this problem, we need a solution by Friday.
+
+### phrasal verb
+accounted for
+	to form part of a total:
+	High-tech companies account for 32% of the total value of the payrolls in the area.
+	to explain the reason for something or the cause of something:
+	Rural Americans are often older than those in other parts of America and that may account for the slower adoption rates for internet access.
+
+bring up Bring up a good idea
+keep up
+	It is important for your team to keep up with the schedule so as not to cause unnecessary delays to downstream workshops.
+wrap up 包裹 圆满完成
+stop by 顺路看看
+
+beef up 充实, bump up, screw up,mess up, ramp up 巩固提高 sum up hang up挂掉
+high up: avoids feature-laden classes high up in the hierarchy
+gobble up 吞噬
+miss out figure out work out leak out
+sort out
+pump in
+crack down (on) 严厉打击
+clamp down (on) 钳制
+
+come out work out try out
+turn out
+turn round
+tease out 梳理出
+take off 出发  kick off 开始
+trade-off权衡
 
 ### to-infinitive preposition phrase
 regret (not) to do / regret (not) doing
@@ -2180,14 +2363,69 @@ http://ell.stackexchange.com/questions/13698/study-in-or-study-at-some-universit
 https://www.englishforums.com/English/CanAlthoughEventhoughSinceSame-Sentence/bvbcpm/post.htm
 http://english.stackexchange.com/questions/36377/though-vs-although
 
+Adapt to changes
+Cater for different crowds
+
+Conform to
+correspond to 
+	closely/directly correspond to/with sth The dip in their sales in-store directly corresponds to the increase in sales online.
+	In resistor code, red corresponds to the digit ‘2.’
+
+opt in 决定参加
+extends to
+	It remains unclear of the vulnerability is unique to DEOSGames, or if it extends to all similar EOS smart contracts. We’ve asked the company for a clarification.
+## formal statement
+
+hereinafter 以下，在下文中
+per pax=per person/passenger person is a decent substitute for individuals, People is the ordinary plural of person
+
+notice period
+grace period
 ## idiom saying 谚语/成语
 A throat to choke
+last but not least
+
+in the sense of
+	"in the sense of" can be considered an idiom when it's used to clarify or specify the particular meaning of a word or phrase in a given context. For example: - "When I say 'bank,' I mean it in the sense of a financial institution, not the side of a river."
+
+In the same context
 
 ## Urban Dictionary(SLANG)/lingo
+
+**BOYD:**
+
+Bring your own *device* —also called bring your own technology (BYOT), bring your own *phone* (BYOP)
+
+**Lmao** is an abbreviation of the phrase “laughing my ass off.” It is used to indicate that something is funny.
+
+**imo**
+
+In My Opinion
+
+LMO: let's move on
+
+bc：because
+
+TLDR: Too Long; Didn’t Read
+
+https://www.howtogeek.com/435266/what-does-tldr-mean-and-how-do-you-use-it/
+
+IIRC if I recall correctly. 
+
+AIK	As I Know
+
+Crap 
+Native speakers' brains are already on the right path. We won't mess it up in a conversation between native English speakers. When a native speaker hears, "What's your name? Mine ..." we already have "is" in our heads queued up. If we hear anything else, we will be surprised. A non-native speaker may not have this anticipation, and may hear "Minus" instead of "Mine is". This exact problem happened this morning between my German roommate and me.
+Native speakers would almost never hear "minus" where the speaker said "mine is", and likewise we will never confuse "crab" for "crap".
+- http://english.stackexchange.com/questions/15045/is-it-common-for-english-people-to-say-crap-instead-of-crab
+Of course, I make the assumption that the speaker is also a native speaker. Non-native English speakers also have subtle linguistic clumsiness that throws off this anticipation effect. So another time we could mess it up is if the speaker says something that we have to parse word-by-word to understand, throwing off the sense of rhythm and anticipation.
+Which between “crap” and “shit” is more rude?
+http://ell.stackexchange.com/questions/23246/which-between-crap-and-shit-is-more-rude
+
 non-trivial https://www.zhihu.com/question/20681622
 KARMA 佛教 因果报应 因缘
 opcodes 操作码; 伪代码;
-umami 鲜度; 鲜味; 甘味; 旨味;
+
 Trie; 又称单词查找树; 是一种树形结构; 用于保存大量的字符串。它的优点是：利用字符串的公共前缀来节约存储空间。;
 opt-out 自愿退出; 不参加;
 opt-in 选择进入; 选择使用; 选入;
@@ -2198,7 +2436,7 @@ ontology 本体论，实体论;
 jumpstart 启动; 助推启动; 助推起动; 快速启动
 reasonable man unreasonable man
 quo 维持现状
-bento 盒饭
+
 bulling From the expletive bullshit. To talk nonsense/bullshit.He was bulling me but I didn't believe him.
 LOLS http://slang.org/LOLS-meaning-definition
 hush hush

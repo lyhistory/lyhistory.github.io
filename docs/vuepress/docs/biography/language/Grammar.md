@@ -216,7 +216,10 @@ can or could https://learnenglish.britishcouncil.org/en/english-grammar/can-or-c
 I wouldn’t if
 https://english.stackexchange.com/questions/314087/i-wouldnt-work-if-i-wouldnt-get-paid
 
+how earlier should I inform you?
 
+What’s the difference between will be and would be?
+https://www.quora.com/What%E2%80%99s-the-difference-between-will-be-and-would-be
 
 ## Tense
 
@@ -230,6 +233,19 @@ https://www.quora.com/What-is-the-difference-between-I-would-do-it-and-I-would-h
 
 who'd have guessed? 谁能猜得到？
 
+pretty much has been done
+
+Past past perfect
+Didn’t havn’t
+https://ell.stackexchange.com/questions/385/when-should-i-use-didnt-instead-of-havent
+
+Past perfect, present perfect
+I wondered if you’d had time to look through the portfolio I sent.
+https://english.stackexchange.com/questions/26256/i-had-finished-the-work-on-friday-i-have-finished-the-work
+https://forum.wordreference.com/threads/i-was-wondering-if-you-have-had-had-a-chance.3187192/
+
+## 比较级
+It is best to allow only one analyst to work on a diagram at a time.
 
 ## 修辞手法
 metaphor,analogy,allusion
