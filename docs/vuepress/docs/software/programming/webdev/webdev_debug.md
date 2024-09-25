@@ -1298,6 +1298,11 @@ Therefore, while the underlying cause of the reset is at a lower level (like the
 
 简言之，TCP-PING/SYN scan在三次握手中也可以通过 RST 触发 reset by peer错误，从而被 application抓到，只不过这种场景跟我们的stack trace对应不上，前面已经分析了我们这次碰到的明显是握手之后的情况。
 
+最后确认了确实是 tcp健康检查引起的问题：
+![](./tcp_health_check.png)
+
+没有采用syn scan是因为会引起[半连接溢出](/software/network/layer4_tcp_protocol.md)
+
 ### ClientAbortException - Broken pipe
 前端=》nginx=》后端服务
 ```

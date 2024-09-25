@@ -5,6 +5,7 @@ Note: an abstraction provided by the operating system to allow communication bet
  websocket是完整的应用层协议，所以不会访问raw tcp packets，但是常用的socket是可以的，因为它是基于应用层和传输层的抽象接口，并不是一个协议；Socket是应用层与TCP/IP协议族通信的中间软件抽象层，它是一组接口（API）。我们所说的TCP/IP网站栈是在操作系统内核实现的，而Socket就是操作系统内核提供给应用层的一系列接口，Socket封装了TCP/IP，
 
 通常应用层的协议都是基于这个socket接口进行设计开发的，socket五元组（protocol[TCP/UDP],source IP,source PORT, destination IP, destination PORT)，系统调用传给TCP接口，具体参考[Socket 系统调用深入研究(TCP协议的整个通信过程)](https://mp.weixin.qq.com/s/ufTsU_Vk5uBKfoY7jZJ-nQ)：
+
 + 服务器端三部曲：
     socket(生成一个用于通信的套接字文件描述符 sockfd) bind listen
 + 客户端 connect
@@ -25,10 +26,7 @@ Note: an abstraction provided by the operating system to allow communication bet
     要使用TCP/IP来发送数据，就调用Socket的OutputStream，要使用TCP/IP接收数据，就调用Socket的InputStream,
     计算机A想发数据到计算机B，首先计算机A把用户态的数据拷贝到内核态的输出缓冲区，再由把输出缓冲区的数据通过互联网发送到计算机B的输入缓冲区，计算机B把输入缓冲区的数据拷贝到用户态，就完成了一次数据的发送和接收。
     由于数据缓冲区的大小有限，如果数据缓冲区里有数据没有发送出去，用户态这时候又有其他数据要发送，数据缓冲区的空间就不够用了，就会造成一系列问题。如果计算机B要接收数据，而一直没有收到计算机A发送过来的数据，导致输入缓冲区一直为空，也会造成问题。
-    对于上面这些存在的问题，linux有5种解决方案，这就是linux的5大IO模型。
-
-    
-[具体的工作模型在这里:基础:BIO/NIO/多路复用](/software/buildingblock/nio_epoll.md)
+    对于上面这些存在的问题，linux有5种解决方案，这就是linux的5大IO模型。[具体的工作模型在这里:基础:BIO/NIO/多路复用](/software/buildingblock/nio_epoll.md)
 
 所有应用层协议都是基于socket？
 
@@ -316,7 +314,13 @@ https://serverfault.com/questions/660237/hitting-ephemeral-tcp-port-exhaustion
 https://serverfault.com/questions/10852/what-limits-the-maximum-number-of-connections-on-a-linux-server
 https://stackoverflow.com/questions/10085705/load-balancer-scalability-and-max-tcp-ports
 
-###  全连接队列溢出
+### 半连接队列溢出
+很简单的场景就是 syn scan，比如使用nmap扫端口
+client->syn
+server->syn+ack
+client->RST
+
+### 全连接队列溢出
 [使用dubbo时请求超过问题](https://mp.weixin.qq.com/s/MDY-gQ74uFmCt_ZsHNS4mQ#/)
 采用的是dubbo服务，这是个稳定成熟的RPC框架。但是我们在某些应用中会发现，只要这个应用一发布(或者重启),就会出现请求超时的问题，而且都是第一笔请求会报错，之后就再也没有问题了
 
@@ -500,9 +504,18 @@ function process_connection(connection) {
 
 最后，‌需要强调的是，‌将应用程序从单线程改为多线程并不总是解决全连接队列溢出的最佳方法。‌在某些情况下，‌可能需要结合其他方法（‌如增加服务器数量、‌优化网络配置、‌调整TCP参数等）‌来共同解决问题。‌
 
+### passive connections rejected because of time stamp
+netstat -s 
+包含：xxx passive connections rejected because of time stamp
+
+Linux tcp_tw_recycle/tcp_timestamps设置导致的问题。 因为在linux kernel源码中发现tcp_tw_recycle/tcp_timestamps都开启的条件下，60s内同一源ip主机(nat之后的主机可能是负载均衡器或者防火墙)的socket connect请求中的timestamp必须是递增的。
+
+[linux系统收到SYN但不回SYN+ACK问题排查](https://blog.51cto.com/leejia/1954628#/)
 
 ### PING通 vs tcp通？
 [能ping通，TCP就一定能连通吗？](https://mp.weixin.qq.com/s/gLrRgfwmzMvk9T6MIY4cWg)
+
+
 -----------
 
 https://datatracker.ietf.org/doc/html/rfc9293
