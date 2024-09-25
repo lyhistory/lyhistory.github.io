@@ -13,6 +13,7 @@ Note: an abstraction provided by the operating system to allow communication bet
     第三次client向server端发送一个ack响应，告诉server端收到。然后server端收到后将与client端的连接设置为established状态(全连接状态)。同样，全连接状态在server端也需要一个backlog队列存储。这里的backlog队列也叫全连接队列。
     backlog其实是一个连接队列，在Linux内核2.2之前，backlog包括半连接状态和全连接状态两种队列。在Linux内核2.2之后，分离为两个backlog来分别限制半连接（SYN_RCVD状态）队列大小和全连接（ESTABLISHED状态）队列大小。
 + 服务器端accept：
+    一旦有客户端尝试建立连接，服务器端就会调用accept函数来接受这个请求，并为这个新的连接创建一个新的套接字专门用于与该客户端的通信，accept函数并不直接对应三次握手的某一步，而是发生在握手过程后，在TCP三次握手成功完成后，服务器端的 accept 调用才会返回，此时服务器得到了一个新的套接字，这个套接字就用于与刚刚完成握手的客户端进行数据传输。
     accpet() 函数的作用是读取已完成连接队列中的第一项（读完就从队列中移除），并对此项生成一个用于后续连接的套接字描述符（姑且用 connfd 来表示），有了新的连接套接字，用户进程/线程（称其为工作者）就可以通过这个连接套接字和客户端进行数据传输，而前文所说的监听套接字（sockfd）则仍然被监听者监听。
 
     accept() 函数是由用户空间进程发起，由内核空间消费操作，只要经过 accept() 过的连接，连接将从已完成队列（accept queue）中移除，也就表示 TCP 已经建立完成了，两端的用户空间进程可以通过这个连接进行真正的数据传输了，直到使用 close() 或 shutdown() 关闭连接时的四次挥手，中间再也不需要内核的参与。
