@@ -673,6 +673,44 @@ https://www.postgresql.org/docs/current/plpgsql-trigger.html
 
 https://www.postgresql.org/docs/10/ddl-partitioning.html
 
+在 PostgreSQL 中，当使用 INHERITS 关键字创建一个表来继承另一个表时，子表会继承父表的列结构（但不包括约束、索引、外键等），并且你可以为子表添加自己的约束。但是，由于 INHERITS 不会自动继承约束，你需要在子表上显式地重新声明这些约束。
+
+然而，对于主键（PRIMARY KEY），情况有点特殊。PostgreSQL 不允许直接在子表上设置与父表相同列的主键约束，因为主键约束本质上是一个唯一约束加上一个非空约束，并且 PostgreSQL 不允许在不同的表上设置跨表的主键约束。但是，你可以通过 UNIQUE 约束和 NOT NULL 约束来模拟主键的行为。
+
+不过，在大多数情况下，如果父表已经有一个主键，并且子表想要使用相同的列作为唯一标识符，那么你可以简单地在子表上设置一个 UNIQUE 约束（尽管这不是严格意义上的主键，因为它不会被自动用作外键引用的目标）。但是，由于你已经知道 id 是自增的，并且父表已经将其作为主键，因此在子表中保持 id 的唯一性（并且不为空）是合理的。
+
+下面是一个例子，展示如何创建一个名为 employees2024 的子表，它继承自 employees 表，并且尝试模拟与 employees 表相同的 PRIMARY KEY、CHECK 和 UNIQUE 约束（注意，PRIMARY KEY 约束在子表中被模拟为 UNIQUE NOT NULL）：
+
+sql
+CREATE TABLE employees2024 (
+    CHECK (id >= (SELECT MAX(id) FROM employees) + 1)  -- 这是一个可选的CHECK约束，用于确保子表的id不会与父表冲突（但通常不推荐这样做，因为更好的做法是使用序列或生成器）
+) INHERITS (employees);
+
+-- 由于我们不能直接继承主键约束，我们在这里添加一个UNIQUE约束来模拟主键的行为
+-- 注意：这通常不是必需的，因为子表会继承id列，并且由于id是自增的，它自然会在子表中保持唯一
+ALTER TABLE employees2024 ADD CONSTRAINT employees2024_pkey UNIQUE (id);
+
+-- 如果父表的CHECK和UNIQUE约束对于子表来说也是必要的，你通常不需要再次添加它们，
+-- 因为子表已经继承了这些列的定义，并且可以在需要时依赖父表的约束。
+-- 但是，如果你想要为子表添加额外的CHECK约束，你可以这样做：
+ALTER TABLE employees2024 ADD CONSTRAINT employees2024_age_check CHECK (age >= 20);  -- 例如，只接受20岁及以上的员工
+
+-- 注意：由于email在父表中已经是UNIQUE的，并且子表继承了email列，
+-- 因此你不需要（也不能）在子表上再次添加UNIQUE约束到email列，
+-- 因为这将违反UNIQUE约束的定义（即不能有重复的值）。
+-- 但是，如果你想要对子表的email应用更严格的规则（尽管这通常不是必需的），
+-- 你可能需要考虑使用触发器或更复杂的逻辑。
+
+然而，请注意以下几点：
+
+我添加了一个可选的 CHECK 约束来确保 employees2024 表的 id 不会与 employees 表的 id 冲突。然而，这通常不是一个好主意，因为更好的做法是使用序列或某种形式的ID生成器来确保ID的唯一性和连续性。
+
+我为 id 列添加了一个 UNIQUE 约束来模拟主键的行为。但是，请注意，这实际上是不必要的，因为 id 列在父表中已经是主键，并且子表会继承这个列。在大多数情况下，你可以依赖父表的主键约束来确保 id 的唯一性。
+
+对于 email 列，由于它在父表中已经是 UNIQUE 的，因此你不需要（也不能）在子表上再次添加 UNIQUE 约束。
+
+如果你想要为子表添加额外的 CHECK 约束，你可以像上面那样做。但是，请确保这些约束与父表的约束不冲突，并且它们对于子表来说是有意义的。
+
 #### 自动分区-继承分区
 
 ```

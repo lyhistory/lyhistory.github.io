@@ -235,12 +235,16 @@ who'd have guessed? 谁能猜得到？
 
 pretty much has been done
 
-Past past perfect
+### Past past perfect
 Didn’t havn’t
 https://ell.stackexchange.com/questions/385/when-should-i-use-didnt-instead-of-havent
 
 Past perfect, present perfect
 I wondered if you’d had time to look through the portfolio I sent.
+
+A: I wondered if you'd(had) had time to look at the brochure I sent you.
+B: Yes, it looks very interesting.
+
 https://english.stackexchange.com/questions/26256/i-had-finished-the-work-on-friday-i-have-finished-the-work
 https://forum.wordreference.com/threads/i-was-wondering-if-you-have-had-had-a-chance.3187192/
 
