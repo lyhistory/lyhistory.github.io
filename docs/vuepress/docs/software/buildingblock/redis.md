@@ -838,7 +838,7 @@ bb483966fa9a7d60c9020a75d19fb2a4d1e8acf0 HOST1:6381@16381 slave b78a3f4b07cc5cf5
 [为了拿捏 Redis 数据结构，我画了 40 张图（完整版）](https://mp.weixin.qq.com/s/MGcOl1kGuKdA7om0Ahz5IA)
 [A Closer Look at Redis Dictionary Implementation Internals](https://codeburst.io/a-closer-look-at-redis-dictionary-implementation-internals-3fd815aae535)
 
-![](./redis_dict1.png)
+![](/docs/docs_image/software/buildingblock/redis_dict1.png)
 
 Each Redis database has two dictionaries. The first one is used for keys with expiry date. It’s redisDb.expires, and values stored there are expiration timestamps. The other is for client values; it’s redisDb.dict.
 
