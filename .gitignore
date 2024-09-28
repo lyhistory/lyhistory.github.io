@@ -1,2 +1,11 @@
 docs/vuepress/node_modules/
 docs/vuepress/docs/.vuepress/
+
+# dependencies
+/node_modules
+*/node_modules
+
+# local env files
+.env*.local
+
+.vscode
