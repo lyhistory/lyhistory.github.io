@@ -38,7 +38,9 @@ MicroPython is a version of the Python programming language for microcontrollers
 
 Linux:	Which python
 
-Windows Powershell: where python
+Windows Powershell: 
+    where python
+    pip list -v
 
 Windows path:
 ;%PYTHON_HOME%\;
@@ -75,6 +77,17 @@ Ctrl+shift+`
 	python -m pip install ****
 python -m pip install scrapy
 ```
+选择python版本及找不到安装包问题请查看我在stackoverflow的回答：
+[Why do I get a "ModuleNotFoundError" in VS Code despite the fact that I already installed the module?](https://stackoverflow.com/questions/56658553/why-do-i-get-a-modulenotfounderror-in-vs-code-despite-the-fact-that-i-already/79033320#79033320)
+[VS Code does not change python environment](https://stackoverflow.com/questions/63702163/vs-code-does-not-change-python-environment/79031860#79031860)
+
+>note 1:mind the terminals
+>the terminal you installed the pip package may be different from the terminal you debug/run the python, example one is powershell and another is bash, better config to use the same terminal type or make sure they are using the same python and pip (verify by python -V and pip list -v)
+>note 2: python and pip
+>make sure the python version you are using consistent with pip, example sometimes people pip install to %AppData%\Local\Programs\Python\Python310 and run python in %AppData%\Local\Programs\Python\Python312
+>note 3: VS Code does not change python environment
+>sometimes vscode may not work, I mean someone encountered when you try to choose the python interpreter version, they thought they did but vscode failed to take what they selected, refer to this topic to solve the issue
+>so in the end, it's very simple, calm down and check where your packages installed to, make sure it's consistent with python version you are using during debug/run
 
 ## 2. Python Usage
 

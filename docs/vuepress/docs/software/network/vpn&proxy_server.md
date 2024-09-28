@@ -28,7 +28,14 @@ VPN的全名是virtual private network，缩写：VPN，是常用于连接中、
 购买之后直接安装使用，
 
 比如有我个人经常用的
-+ StrongVPN(推荐，一直比较稳)：
++ LetsVPN(推荐，最稳，支持支付宝，注意安装后输入：505716601，可以获取免费使用额度，可以先用再购买)
+  - [下载链接1](https://bitbucket.org/letsgo666/letsgo_en_1/src/main/README.md)
+  - [下载链接2](https://github.com/LetsgoNetwork/LetsGo_EN_1/blob/main/README.md)
+
++ WS(推荐，这个的协议众多，当其他vpn有问题的时候这个都不会有问题，另外可以白嫖很多地址，当然如果你想省事购买也是性价比不错的) 
+  [官网链接](https://windscribe.com/yo/w4aoykqp)
+
++ StrongVPN（一般，没有前面两个好）：
 
   + [StrongVPN 镜像1](https://intranet.strongconnectivity.com/services/strongvpn/refer/204835b682517019/)
   + [StrongVPN 镜像2](https://intranet.reliablehosting.com/services/strongvpn/refer/204835b682517019/)
@@ -39,7 +46,7 @@ VPN的全名是virtual private network，缩写：VPN，是常用于连接中、
       + [android](https://mirror2.reliablehosting.com/android/1.7.0.apk)
 
 
-+ ExpressVPN(最近不稳定):
++ ExpressVPN(不推荐，貌似已经无法在国内用了):
   + [ExpressVPN 镜像1](https://tfiflve.com/refer-a-friend/30-days-free?referrer_id=68966376&utm_campaign=referrals&utm_medium=copy_link&utm_source=referral_dashboard)
   + [ExpressVPN 镜像2](https://upghsbc.com/refer-a-friend/30-days-free?referrer_id=68966376&utm_campaign=referrals&utm_medium=copy_link&utm_source=referral_dashboard)
   + [ExpressVPN 镜像3](https://www.expressrefer.com/refer-a-friend/30-days-free?referrer_id=68966376&utm_campaign=referrals&utm_medium=copy_link&utm_source=referral_dashboard)

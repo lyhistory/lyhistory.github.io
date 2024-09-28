@@ -7,6 +7,16 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 如果你已经购买了VPN服务比如strong vpn或者express vpn等，他们会提供openvpn的客户端配置文件，您只需查看下面的客户端安装步骤；
 如果你是要服务端也亲自安装，则需要购买服务器（[推荐：传送前去机场](/docs/software/network/vps)），然后参考下面client端和server端的安装步骤
 
+## OpenVPN end to end
+
+步骤：
+登录 https://openvpn.net/sign-in/ 选择 CloudConnexa 
+=》document quick start下载安装客户端，注意连接上并不能立马访问网络，还需要配置connector
+=》选择network，找到需要的场景如下，按照提示一步步配置远端（connector）
+
+![场景](https://openvpn.net/cloud-docs/image/uuid-b138f7b9-5c4b-7a8a-1af3-77a90afa4e27.png)
+
+[Tutorial: Use CloudConnexa for Secure Internet Access](https://openvpn.net/cloud-docs/owner/tutorials/use-case-tutorials/internet-security/tutorial--use-cloudconnexa-for-secure-internet-access.html)
 ## Client Install 客户端安装
 
 ### 基本版本
