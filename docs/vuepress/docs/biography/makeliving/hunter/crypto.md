@@ -524,6 +524,11 @@ window.addEventListener('load', () => {
 2). click the button with class "kit-button is-large is-primary is-fill button" and it has a child span with text "Start farming" when the playButtons empty
 ```
 function checkAndClickPlayButton() {
+    const resetButton=document.getElementsByClassName("reset");
+    if(resetButton){
+        resetButton[0].click();
+    }
+
         const playButtons = document.querySelectorAll('button.kit-button.is-large.is-primary, a.play-btn[href="/game"], button.kit-button.is-large.is-primary');
 
         playButtons.forEach(button => {
@@ -533,6 +538,11 @@ function checkAndClickPlayButton() {
                     gameStats.isGameOver = false;
                 }, getNewGameDelay());
             }else if(/Start farming/.test(button.textContent)){
+                setTimeout(() => {
+                    button.click();
+                    gameStats.isGameOver = false;
+                }, getNewGameDelay());
+            }else if(/Continue/.test(button.textContent)){
                 setTimeout(() => {
                     button.click();
                     gameStats.isGameOver = false;
