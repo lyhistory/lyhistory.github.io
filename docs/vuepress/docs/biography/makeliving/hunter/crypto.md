@@ -1,3 +1,9 @@
+## Airdrop
+
+### Free NFT Claim
+[BERA FAUCET x BRICKS MINT](https://bricksmint.com/bera-faucet?r=0x93b4eC8eD7F1FAD2107CDAd30fd9ECEC3f7975fE)
+
+
 ## Memecoin Sniper
 1. build a sniper bot
 Write a python script to snipe memecoin launches on the Solana network for building a sniper bot

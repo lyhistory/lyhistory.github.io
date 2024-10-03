@@ -12,11 +12,12 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 <div>
     <h3>科普知识</h3>
 	<ul>
+		<li><a href="/docs/biography/makeliving/hunter/crypto" >每日撸币自动脚本2024最新</a></li>
 		<li><a href="/docs/blockchain/wallets" >钱包使用</a></li>
 		<li><a href="/docs/blockchain/ecosystem/crypto" >主流项目简介</a></li>
         <li><a href="/docs/blockchain/btc/btc_intro" >比特币简介</a></li>
         <li><a href="/docs/resources/bitcoin.pdf" >比特币白皮书</a></li>
-        <li><a href="/docs/blockchain/ecosystem/namebase_hns">获取顶级域名（目前还有免费机会）</a></li>
+        <li><a href="/docs/blockchain/ecosystem/namebase_hns">获取顶级域名</a></li>
 		<li><a href="/docs/blockchain/ecosystem/brave_browser">brave浏览器</a></li>
 		<li><a href="/docs/blockchain/ecosystem/decred" >Decred得信币</a></li>
 	</ul>
