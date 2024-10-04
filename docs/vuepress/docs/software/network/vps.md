@@ -12,6 +12,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 + [目前 Hostwinds 主要有达拉斯、西雅图 2 个数据中心，其中西雅图数据中心在国内访问速度最快。现在 Hostwinds 提供免费更换IP了，没错，就是免费，免费，随意更换，可以一键解决 IP 被墙的问题，点击前去](https://www.hostwinds.com/17007.html)
 
-+ [Vultr](https://www.vultr.com/?ref=7398935)（[目前vultr还可以领取100美金免费体验，点击此处，没有门槛直接用，点击前去](https://www.vultr.com/?ref=8972472-8H)），换ip的时候就是需删除vps重新创建
++ [Vultr](https://www.vultr.com/?ref=7398935)换ip的时候就是需删除vps重新创建
+  - [链接1 免费领取300美金使用额度](https://www.vultr.com/?ref=9359723)
+  - [链接2 免费领取300美金使用额度](https://www.vultr.com/?ref=8972472-8H)）
 
 + ~~[搬瓦工，这个有点尴尬，目前国内无法访问，点击前去](https://bandwagonhost.com/aff.php?aff=58544)~~

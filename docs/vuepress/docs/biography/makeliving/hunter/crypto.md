@@ -3,6 +3,9 @@
 ### Free NFT Claim
 [BERA FAUCET x BRICKS MINT](https://bricksmint.com/bera-faucet?r=0x93b4eC8eD7F1FAD2107CDAd30fd9ECEC3f7975fE)
 
+### DEPIN - Decentralized Physical Infrastructure Networks
+
+[Cloud Rebellion](https://rebellion.acurast.com/?ref=7o2ag6) 
 
 ## Memecoin Sniper
 1. build a sniper bot

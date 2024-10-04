@@ -58,9 +58,9 @@ VPN的全名是virtual private network，缩写：VPN，是常用于连接中、
   WARP secures your data with encryption to keep your personal information safe, but it doesn’t provide any extra security. For instance, it doesn’t offer any form of anonymity protection. There’s no new IP address allocated to you, which means your traffic is not disguised from your ISP and other third parties – they can trace it back to you! 
 + 还有开源的[protonvpn](https://protonvpn.com) (暂未尝试)
 + [未来VPN?去中心化VPN](https://www.orchid.com/)
-### 1.2 自行搭建(不推荐小白)
+### 1.2 自行搭建
 
-#### 1.2.1 理论
+#### 1.2.1 理论（可跳过直接看1.2.2的步骤）
 
 VPN虚拟专用网络发展至今已经不在是一个单纯的经过加密的访问隧道了，它已经融合了访问控制、传输管理、加密、路由选择、可用性管理等多种功能
 
@@ -178,9 +178,9 @@ step 5: Once a secure, encrypted tunnel connects the user’s browser to the SSL
   - [Just My Socks 官网镜像2](https://justmysocks3.net/members/aff.php?aff=25045)
   - [Just My Socks 官网 (已被墙)](https://justmysocks.net/members/aff.php?aff=25045)
 
-### 2.2 自行搭建(不推荐小白)
+### 2.2 自行搭建
 
-#### 2.2.1 理论
+#### 2.2.1 理论（可跳过，直接看2.2.2步骤）
 
 Shadowsocks，Shadowsocks-R ，Socks5，VMess，VLESS，Trojann，V2Ray，Xray，Clash， 其中Shadowsocks，Shadowsocks-R，V2Ray，Trojan，Clash既是一种协议也是一个代理软件的名字。Shadowsocks和Shadowsocks-R的速度会更快，因为他少了很多加密伪装的中间算法，但据说Shadowsocks 很早就已经能被GFW精准探测了安全性不高。 但是最新的Xray，V2Ray等通过升级加密和伪装大大提高了安全性
 
