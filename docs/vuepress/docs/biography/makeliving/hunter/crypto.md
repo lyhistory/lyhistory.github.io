@@ -595,6 +595,12 @@ promot:
 
 your implementation using selenium won't work because moonbix blocking access from telegram web, now we can only play it using desktop, so we have no idea of the elements, change to use pyautogui lib to implement
 
+promot:
+
+seems you misundertood the game play sequence, please update it according to this:
+first the bot will click on "play" button to start play the games, then the game start it will capture_items, 
+after that the game end, then it will click on "play again", then the game will start over again, the maixum play is 5 times
+
 Summary of Key Steps:
 Find Coordinates: Use pyautogui.position() to get the exact screen coordinates for the "Play Game" and "Play Again" buttons.
 Image Recognition: Save images of boxes and coins and use pyautogui.locateCenterOnScreen() to detect and click them.
@@ -605,6 +611,7 @@ what do you mean by Find Coordinates Use pyautogui.position(), i don't see it in
 what else should I do or How do l run a bot or fine-tune it step by step
 
 How to Find Coordinates,Run this simple Python script to display the current mouse position in real-time, Move your mouse over the desired location (like the "Play Game" button), and note down the coordinates printed in the terminal.Once you have the coordinates, you can use them in your bot for clicking:
+
 + METHOD 1: 
   ```
   import pyautogui
@@ -635,6 +642,4 @@ pip install pillow
 more promot:
 Add anti-detection measures for this bot and security
 
-import pyautogui
-pyautogui.mouseInfo()
 

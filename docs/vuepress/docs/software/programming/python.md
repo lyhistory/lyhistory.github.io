@@ -82,7 +82,7 @@ python -m pip install scrapy
 [VS Code does not change python environment](https://stackoverflow.com/questions/63702163/vs-code-does-not-change-python-environment/79031860#79031860)
 
 >note 1:mind the terminals
->the terminal you installed the pip package may be different from the terminal you debug/run the python, example one is powershell and another is bash, better config to use the same terminal type or make sure they are using the same python and pip (verify by python -V and pip list -v)
+>the terminal you installed the pip package may be different from the terminal you debug/run the python, example one is powershell and another is bash, better config to use the same terminal type or make sure they are using the same python and pip (verify by python -V and pip -V / pip list -v)
 >note 2: python and pip
 >make sure the python version you are using consistent with pip, example sometimes people pip install to %AppData%\Local\Programs\Python\Python310 and run python in %AppData%\Local\Programs\Python\Python312
 >note 3: VS Code does not change python environment
