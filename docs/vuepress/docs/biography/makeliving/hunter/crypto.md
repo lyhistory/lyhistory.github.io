@@ -582,6 +582,110 @@ How do l run a bot if i don't understand programming, tell me a step by step gui
 ```
 
 ## Telegram minigame->Binance Moonbix
+
+最早有人找到漏洞：https://pastebin.com/rHJvz2uw
+```
+import requests
+import pyautogui
+import random
+import time
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
+
+# Auth Token and Proxy setup
+AUTH_TOKEN = "your_auth_token_here"  # Replace with your actual auth token
+PROXY = {
+    'http': 'http://your_proxy:port',  # Replace with your proxy details
+    'https': 'https://your_proxy:port'
+}
+
+# Headers for authorization
+HEADERS = {
+    'Authorization': f'Bearer {AUTH_TOKEN}',
+    'Content-Type': 'application/json'
+}
+
+# Configure retries for network issues
+retry_strategy = Retry(
+    total=3,  # Number of retries
+    status_forcelist=[429, 500, 502, 503, 504],
+    method_whitelist=["HEAD", "GET", "OPTIONS"]
+)
+
+adapter = HTTPAdapter(max_retries=retry_strategy)
+http = requests.Session()
+http.mount("https://", adapter)
+http.mount("http://", adapter)
+
+# Function to get game data using API with Auth Token and Proxy
+def get_game_data():
+    url = "https://moonbixapi.com/game_data"  # Example API endpoint for game data
+    
+    try:
+        # Send a GET request with Auth Token and Proxy
+        response = http.get(url, headers=HEADERS, proxies=PROXY)
+
+        # Raise an error for bad responses (like 401 Unauthorized)
+        response.raise_for_status()
+
+        # Process the JSON response
+        game_data = response.json()
+        return game_data
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching game data: {e}")
+        return None
+
+# Adjust click coordinates with random offsets
+def click_object_randomized(object_location):
+    if object_location:
+        # Get the center of the object
+        x, y = pyautogui.center(object_location)
+
+        # Add a small random offset to simulate natural movement
+        offset_x = random.randint(-5, 5)  # Random offset between -5 to +5 pixels
+        offset_y = random.randint(-5, 5)
+
+        # Click with the randomized offset
+        pyautogui.click(x + offset_x, y + offset_y)
+
+# Main function to collect boxes and coins with randomization
+def collect_boxes_and_coins_via_api_randomized():
+    while True:
+        # Randomize how many items to collect in this cycle
+        points_to_collect = random.randint(5, 10)  # Collect between 5 and 10 items per cycle
+        collected_points = 0
+
+        # Fetch game data from API
+        game_data = get_game_data()
+
+        if game_data:
+            # Loop through game items (boxes and coins)
+            for item in game_data['items']:
+                if item['type'] == 'box' or item['type'] == 'coin':
+                    x, y = item['x'], item['y']
+                    
+                    # Randomized click location
+                    offset_x = random.randint(-5, 5)
+                    offset_y = random.randint(-5, 5)
+                    pyautogui.click(x + offset_x, y + offset_y)
+
+                    # Increment collected points
+                    collected_points += 1
+
+                    # Break once we've collected the random number of points
+                    if collected_points >= points_to_collect:
+                        break
+
+        # Randomized sleep between collection cycles to simulate human behavior
+        sleep_time = random.uniform(1.5, 3.0)  # Sleep between 1.5 to 3 seconds
+        time.sleep(sleep_time)
+
+# Start collecting boxes and coins
+collect_boxes_and_coins_via_api_randomized()
+```
+
+binance风控后：
+
 promot:
 envision yourself as a seasoned programmer with a decade of experience, Develop a bot designed to engage with the Moonbix mini-app, a Telegram mini-game
 
@@ -609,6 +713,8 @@ Automation Loop: Continuously loop to click buttons and capture items
 promot:
 what do you mean by Find Coordinates Use pyautogui.position(), i don't see it in the code, and for Image Recognition,do you mean I have to Save images of boxes and coins manually?
 what else should I do or How do l run a bot or fine-tune it step by step
+
+[full code](https://github.com/lyhistory/hunter_automation.git)
 
 How to Find Coordinates,Run this simple Python script to display the current mouse position in real-time, Move your mouse over the desired location (like the "Play Game" button), and note down the coordinates printed in the terminal.Once you have the coordinates, you can use them in your bot for clicking:
 
@@ -642,4 +748,11 @@ pip install pillow
 more promot:
 Add anti-detection measures for this bot and security
 
+现在又加上了验证码，所以不再可行
 
+## Telegram minigame->Not Pixel
+
+Violentmonkey
+https://api.pastes.dev/cHv0H6XwgE
+
+https://t.me/notpixel/app?startapp=f7352585642
