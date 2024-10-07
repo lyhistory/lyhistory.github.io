@@ -825,11 +825,10 @@ Add anti-detection measures for this bot and security
 现在又加上了验证码，所以不再可行
 
 ## Telegram minigame->Not Pixel
-
-Violentmonkey
-https://api.pastes.dev/cHv0H6XwgE
-
 https://t.me/notpixel/app?startapp=f7352585642
 
-增加自动启动脚本
+[Violentmonkey脚本](https://pastes.dev/7obFPcDYq9)
+
+
+location.reload 重启有问题，增加自动启动脚本
 [telegram_minigame_autostart](https://github.com/lyhistory/hunter_automation.git)
