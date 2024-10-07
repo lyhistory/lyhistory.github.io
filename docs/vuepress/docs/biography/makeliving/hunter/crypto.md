@@ -788,7 +788,7 @@ promot:
 what do you mean by Find Coordinates Use pyautogui.position(), i don't see it in the code, and for Image Recognition,do you mean I have to Save images of boxes and coins manually?
 what else should I do or How do l run a bot or fine-tune it step by step
 
-[full code](https://github.com/lyhistory/hunter_automation.git)
+[telegram minigame_moonbix.py](https://github.com/lyhistory/hunter_automation.git)
 
 How to Find Coordinates,Run this simple Python script to display the current mouse position in real-time, Move your mouse over the desired location (like the "Play Game" button), and note down the coordinates printed in the terminal.Once you have the coordinates, you can use them in your bot for clicking:
 
@@ -831,68 +831,5 @@ https://api.pastes.dev/cHv0H6XwgE
 
 https://t.me/notpixel/app?startapp=f7352585642
 
-
-```
-import pyautogui
-import time
-import random
-
-# Coordinates for the "Start" button (replace with your exact values)
-start_button_x = 1000  # Example X coordinate for "Start"
-start_button_y = 500   # Example Y coordinate for "Start"
-
-# Coordinates for the "Close" button (replace with your exact values)
-close_button_x = 1200  # Example X coordinate for "Close"
-close_button_y = 100   # Example Y coordinate for "Close"
-
-# Function to introduce random delays (for anti-detection)
-def random_delay(min_time=0.5, max_time=2):
-    time.sleep(random.uniform(min_time, max_time))
-
-# Human-like mouse movement to avoid detection
-def human_like_mouse_move(target_x, target_y):
-    current_x, current_y = pyautogui.position()
-    intermediate_x = current_x + random.uniform(-2, 2)
-    intermediate_y = current_y + random.uniform(-2, 2)
-    
-    pyautogui.moveTo(intermediate_x, intermediate_y, duration=random.uniform(0.2, 0.5))
-    random_delay(0.2, 0.5)
-    
-    pyautogui.moveTo(target_x, target_y, duration=random.uniform(0.5, 1.5))
-    random_delay(0.2, 1.0)
-
-# Step 1: Click on "Start" button in Telegram chat
-def click_start_button():
-    try:
-        human_like_mouse_move(start_button_x, start_button_y)
-        pyautogui.click()
-        print("Clicked on Start button!")
-    except Exception as e:
-        print(f"Error while clicking Start button: {e}")
-
-# Step 2: Close the game window after 30 minutes
-def close_game_window():
-    try:
-        human_like_mouse_move(close_button_x, close_button_y)
-        pyautogui.click()
-        print("Closed the game window!")
-    except Exception as e:
-        print(f"Error while closing the game window: {e}")
-
-# Main loop: Repeat every 35 minutes
-def main_loop(interval=35 * 60):
-    while True:
-        # Step 1: Click on the "Start" button to start the game
-        click_start_button()
-        
-        # Step 2: Wait for 30 minutes before restarting
-        print("Game started. Waiting for 35 minutes...")
-        time.sleep(interval)
-        
-        # Step 3: Close the game window
-        close_game_window()
-
-# Run the bot
-main_loop()
-
-```
+增加自动启动脚本
+[telegram_minigame_autostart](https://github.com/lyhistory/hunter_automation.git)
