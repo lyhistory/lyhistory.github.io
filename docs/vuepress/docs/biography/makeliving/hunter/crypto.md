@@ -84,6 +84,7 @@ login Telegram Web, go to Hamster Kombat https://t.me/haMster_kombat_bot/start?s
 
 https://web.telegram.org/k/#@BlumCryptoBot
 
+### 猴子脚本
 1. fix "refused connection"
 install Ignore X-Frame headers
 https://chromewebstore.google.com/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe
@@ -566,7 +567,80 @@ function checkAndClickPlayButton() {
 3. Open BlumBot in the browser
 make sure the Violentmonkey enabled the scripts, reload Blumbot if necessary until you see a gadget setting symbol over the game
 
-gpt prompt:
+### 简单js
+chrome developer tool-> network -> 找到 balance请求，保存Auth Token/Bearer token
+
+Open "Console" Tab
+✓ Enter following code:
+
+```
+
+
+const play = 5
+const authen = "YOUR_TOKEN"
+
+clear()
+async function sleep(ms) {
+return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function playAndClaimGame() {
+for (let i = 0; i < play; i++) {
+console.log(` - ${i}. Start Play game..`)
+const _points = Math.floor(Math.random() * (120 -80 + 1)) + 110;
+
+const headers =  {
+'accept': 'application/json, text/plain, */*',
+'accept-language': 'en-US,en;q=0.9',
+'authorization': authen,
+'origin': 'https://telegram.blum.codes',
+'priority': 'u=1, i',
+'sec-ch-ua': '"Chromium";v="128", "Not;A=Brand";v="24", "Microsoft Edge";v="128", "Microsoft Edge WebView2";v="128"',
+'sec-ch-ua-mobile': '?0',
+'sec-ch-ua-platform': '"Windows"',
+'sec-fetch-dest': 'empty',
+'sec-fetch-mode': 'cors',
+'sec-fetch-site': 'same-site',
+'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0'
+}
+delete headers["content-type"]
+const response = await fetch('https://game-domain.blum.codes/api/v1/game/play', {
+method: 'POST',
+headers: headers,
+});
+const responseData = await response.json();
+const gameid = responseData.gameId;
+console.log(` - GameId: ${gameid}`)
+
+const _sleep = Math.floor(Math.random() * 11 + 50) * 1000
+console.log(` - sleep: ${_sleep/1000}s`)
+await sleep(_sleep)
+headers["content-type"] = 'application/json'
+delete headers["content-length"]
+const claim = await fetch('https://game-domain.blum.codes/api/v1/game/claim', {
+method: 'POST',
+headers: headers,
+body: JSON.stringify({
+'gameId': gameid,
+'points': _points
+})
+});
+const claimText = await claim.text();
+console.log(` - Play status: ${claimText}. Points: ${_points}`)
+
+const _sleep2 = Math.floor(Math.random() * 6 + 15) * 1000
+console.log(` - sleep: ${_sleep2/1000}s`)
+await sleep(_sleep2);
+}
+console.log(" - [ DONE ALL ] ")
+}
+
+(async () => {
+await playAndClaimGame();
+})();
+```
+
+### 其他方法，通过gpt prompt:
 ```
 Create a bot to play BlumCryptoBot, a Telegram mini-game
 
@@ -756,3 +830,69 @@ Violentmonkey
 https://api.pastes.dev/cHv0H6XwgE
 
 https://t.me/notpixel/app?startapp=f7352585642
+
+
+```
+import pyautogui
+import time
+import random
+
+# Coordinates for the "Start" button (replace with your exact values)
+start_button_x = 1000  # Example X coordinate for "Start"
+start_button_y = 500   # Example Y coordinate for "Start"
+
+# Coordinates for the "Close" button (replace with your exact values)
+close_button_x = 1200  # Example X coordinate for "Close"
+close_button_y = 100   # Example Y coordinate for "Close"
+
+# Function to introduce random delays (for anti-detection)
+def random_delay(min_time=0.5, max_time=2):
+    time.sleep(random.uniform(min_time, max_time))
+
+# Human-like mouse movement to avoid detection
+def human_like_mouse_move(target_x, target_y):
+    current_x, current_y = pyautogui.position()
+    intermediate_x = current_x + random.uniform(-2, 2)
+    intermediate_y = current_y + random.uniform(-2, 2)
+    
+    pyautogui.moveTo(intermediate_x, intermediate_y, duration=random.uniform(0.2, 0.5))
+    random_delay(0.2, 0.5)
+    
+    pyautogui.moveTo(target_x, target_y, duration=random.uniform(0.5, 1.5))
+    random_delay(0.2, 1.0)
+
+# Step 1: Click on "Start" button in Telegram chat
+def click_start_button():
+    try:
+        human_like_mouse_move(start_button_x, start_button_y)
+        pyautogui.click()
+        print("Clicked on Start button!")
+    except Exception as e:
+        print(f"Error while clicking Start button: {e}")
+
+# Step 2: Close the game window after 30 minutes
+def close_game_window():
+    try:
+        human_like_mouse_move(close_button_x, close_button_y)
+        pyautogui.click()
+        print("Closed the game window!")
+    except Exception as e:
+        print(f"Error while closing the game window: {e}")
+
+# Main loop: Repeat every 35 minutes
+def main_loop(interval=35 * 60):
+    while True:
+        # Step 1: Click on the "Start" button to start the game
+        click_start_button()
+        
+        # Step 2: Wait for 30 minutes before restarting
+        print("Game started. Waiting for 35 minutes...")
+        time.sleep(interval)
+        
+        # Step 3: Close the game window
+        close_game_window()
+
+# Run the bot
+main_loop()
+
+```
