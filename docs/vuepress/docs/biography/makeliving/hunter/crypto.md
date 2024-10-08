@@ -7,33 +7,8 @@
 
 [Cloud Rebellion](https://rebellion.acurast.com/?ref=7o2ag6) 
 
-## Memecoin Sniper
-1. build a sniper bot
-Write a python script to snipe memecoin launches on the Solana network for building a sniper bot
-2. analyze the coin
-Upgrade this code to verify the token contract via rugcheck.xyz and analyze the coin before buying,based on this analysis, the bot will determine if it's a rug pull
-
-some other metrics/criteria:
-+ FDV
-+ liquidity
-+ Volume
-+ social metrics
-+ number of holders
-+ number of tokens launched by the dev
-
-3. set buy/sell conditions
-
-Define the "Slippage" and "Price Impact" parameters in the code, recommended settings:
-+ Max Slippage: 5-10%
-+ Max Price Impact: 5%
-
-set by/sell conditions and set max slippage at 5-10% and max price impact at 5%
-
-4. Improve your bot adapt to your needs
-
-for example: add standard buy/sell amounts to perform these actions even faster
-
-## Telegram minigame->Hamster Kombat(done)
+## 自动化脚本
+### Telegram minigame->Hamster Kombat(done)
 
 手机检测：
 web.telegram => UI显示 Play on your mobile
@@ -80,11 +55,11 @@ login Telegram Web, go to Hamster Kombat https://t.me/haMster_kombat_bot/start?s
 })();
 ```
 
-## Telegram minigame->Blumbot
+### Telegram minigame->Blumbot
 
-https://web.telegram.org/k/#@BlumCryptoBot
+[Blumbot 入口链接](https://t.me/blum/app?startapp=ref_J1fzmOwIsm)
 
-### 猴子脚本
+#### 猴子脚本
 1. fix "refused connection"
 install Ignore X-Frame headers
 https://chromewebstore.google.com/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe
@@ -567,7 +542,7 @@ function checkAndClickPlayButton() {
 3. Open BlumBot in the browser
 make sure the Violentmonkey enabled the scripts, reload Blumbot if necessary until you see a gadget setting symbol over the game
 
-### 简单js
+#### 简单js
 chrome developer tool-> network -> 找到 balance请求，保存Auth Token/Bearer token
 
 Open "Console" Tab
@@ -640,7 +615,7 @@ await playAndClaimGame();
 })();
 ```
 
-### 其他方法，通过gpt prompt:
+#### 其他方法，通过gpt prompt:
 ```
 Create a bot to play BlumCryptoBot, a Telegram mini-game
 
@@ -655,7 +630,9 @@ Add to the code the ability to perform all these actions from multitude of teleg
 How do l run a bot if i don't understand programming, tell me a step by step guide how do i run this bot
 ```
 
-## Telegram minigame->Binance Moonbix
+### Telegram minigame->Binance Moonbix
+
+[Moonbix入口链接 Join the Moonbix Journey! Get 1000 Coins as a new player and stay tuned for exciting airdrops and special rewards from Binance!](https://t.me/Binance_Moonbix_bot/start?startapp=ref_350644282&startApp=ref_350644282)
 
 最早有人找到漏洞：https://pastebin.com/rHJvz2uw
 ```
@@ -824,11 +801,40 @@ Add anti-detection measures for this bot and security
 
 现在又加上了验证码，所以不再可行
 
-## Telegram minigame->Not Pixel
-https://t.me/notpixel/app?startapp=f7352585642
+### Telegram minigame->Not Pixel
+[Not Pixel 入口链接](https://t.me/notpixel/app?startapp=f350644282)
 
 [Violentmonkey脚本](https://pastes.dev/7obFPcDYq9)
 
 
 location.reload 重启有问题，增加自动启动脚本
 [telegram_minigame_autostart](https://github.com/lyhistory/hunter_automation.git)
+
+### 更多
+[DOGS 入口链接](https://t.me/dogshouse_bot/join?startapp=P3MoBOnmR_2RgwTxRQ6dKw)
+
+## Memecoin Sniper
+1. build a sniper bot
+Write a python script to snipe memecoin launches on the Solana network for building a sniper bot
+2. analyze the coin
+Upgrade this code to verify the token contract via rugcheck.xyz and analyze the coin before buying,based on this analysis, the bot will determine if it's a rug pull
+
+some other metrics/criteria:
++ FDV
++ liquidity
++ Volume
++ social metrics
++ number of holders
++ number of tokens launched by the dev
+
+3. set buy/sell conditions
+
+Define the "Slippage" and "Price Impact" parameters in the code, recommended settings:
++ Max Slippage: 5-10%
++ Max Price Impact: 5%
+
+set by/sell conditions and set max slippage at 5-10% and max price impact at 5%
+
+4. Improve your bot adapt to your needs
+
+for example: add standard buy/sell amounts to perform these actions even faster
