@@ -643,7 +643,18 @@ location.reload 重启有问题，增加自动启动脚本
 ### Telegram minigame->Bybit Coinsweeper
 [Bybit Coinsweeper 入口链接](https://t.me/BybitCoinsweeper_Bot?start=referredBy=350644282)
 
-https://api.pastes.dev/ZcHOhADQy9
+脚本 https://api.pastes.dev/ZcHOhADQy9
+
+### Telegram minigame->Clayton
+
+[Clayton入口链接](https://t.me/claytoncoinbot/game?startapp=350644282)
+
+Resource Override
+规则：url-url
+
+https://tonclayton.fun/assets/index-CM8DCHvL.js - https://api.pastes.dev/5imvKtcxhb
+
+猴子脚本 https://api.pastes.dev/lLE804hn10
 
 ### Telegram minigame->Binance Moonbix
 
