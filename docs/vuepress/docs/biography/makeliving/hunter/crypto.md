@@ -630,6 +630,21 @@ Add to the code the ability to perform all these actions from multitude of teleg
 How do l run a bot if i don't understand programming, tell me a step by step guide how do i run this bot
 ```
 
+
+### Telegram minigame->Not Pixel
+[Not Pixel 入口链接](https://t.me/notpixel/app?startapp=f350644282)
+
+[Violentmonkey脚本](https://pastes.dev/7obFPcDYq9)
+
+
+location.reload 重启有问题，增加自动启动脚本
+[telegram_minigame_autostart](https://github.com/lyhistory/hunter_automation.git)
+
+### Telegram minigame->Bybit Coinsweeper
+[Bybit Coinsweeper 入口链接](https://t.me/BybitCoinsweeper_Bot?start=referredBy=350644282)
+
+https://api.pastes.dev/ZcHOhADQy9
+
 ### Telegram minigame->Binance Moonbix
 
 [Moonbix入口链接 Join the Moonbix Journey! Get 1000 Coins as a new player and stay tuned for exciting airdrops and special rewards from Binance!](https://t.me/Binance_Moonbix_bot/start?startapp=ref_350644282&startApp=ref_350644282)
@@ -800,15 +815,6 @@ more promot:
 Add anti-detection measures for this bot and security
 
 现在又加上了验证码，所以不再可行
-
-### Telegram minigame->Not Pixel
-[Not Pixel 入口链接](https://t.me/notpixel/app?startapp=f350644282)
-
-[Violentmonkey脚本](https://pastes.dev/7obFPcDYq9)
-
-
-location.reload 重启有问题，增加自动启动脚本
-[telegram_minigame_autostart](https://github.com/lyhistory/hunter_automation.git)
 
 ### 更多
 [DOGS 入口链接](https://t.me/dogshouse_bot/join?startapp=P3MoBOnmR_2RgwTxRQ6dKw)
