@@ -5,6 +5,8 @@
 
 ### DEPIN - Decentralized Physical Infrastructure Networks
 
+[Grass小草](https://app.getgrass.io/register/?referralCode=jVAWeVwPdlcwoIP)
+
 [Cloud Rebellion](https://rebellion.acurast.com/?ref=7o2ag6) 
 
 ## 自动化脚本
