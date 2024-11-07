@@ -2102,7 +2102,7 @@ https://mp.weixin.qq.com/s/9xjGYbcNwl1aQY5GNOx58g
 + 基于zookeeper的ephemeral sequential node
 
 ## Troubleshooting
-### Servlet Concurrent
+### Servlet ConcurrentModificationException
 
 ```
 2024-01-15 08:08:37.018 [31mERROR[m [35m26037GG[m [io-10001-exec-3] [36mc.q.f.w.a.CommonExceptionHandler[m : InternalException: null
@@ -2217,6 +2217,10 @@ public class SessionInterceptor implements HandlerInterceptor {
 }
 ```
 统计在线人数，虽然是局部变量但是引用了全局的httpsession，每个请求进来 servlet就会新建一个线程拦截处理（调用service），那么自然这里就存在线程安全问题了，改成线程安全的set就行了
+
+### 迭代器Iterator与ConcurrentModificationException详解 
+https://www.cnblogs.com/lixuwu/p/7990141.html#/
+https://github.com/alibaba/fastjson/issues/2528#/
 
 [深入研究Servlet线程安全性问题](https://www.cnblogs.com/gw811/archive/2012/09/07/2674859.html)
 
