@@ -16,9 +16,28 @@ The DePIN sector has several unique advantages:
 - Economic incentives for participants: Active participants are rewarded, motivating them to invest more resources and effort into the network’s development.
 
 
-[Grass小草](https://app.getgrass.io/register/?referralCode=jVAWeVwPdlcwoIP)
++ [Grass小草](https://app.getgrass.io/register/?referralCode=jVAWeVwPdlcwoIP)
 
-[Cloud Rebellion](https://rebellion.acurast.com/?ref=7o2ag6) 
++ [Nodepay](https://app.nodepay.ai/register?ref=UP8LaqAjdyJaQHz)
+
++ [rivalz最大的空投](https://rivalz.ai?r=liuyue) ， [节点安装文档](https://docs.rivalz.ai/rclients-ocy-depin/rclient-cli-guide)
+
++ [Cloud Rebellion](https://rebellion.acurast.com/?ref=7o2ag6) 
+
++ [UPLINK](https://explorer.uplink.xyz/register?referralCode=WwCZsH)
+
+## Copy Trade 跟买技巧
+### GMGN AI
+[电报入口](https://t.me/gmgnaibot?start=i_sxpTtAih)
+[官网入口](https://gmgn.ai/?ref=sxpTtAih)
+
+（1）收集大流量的KOLs钱包，他们的钱包常常是最容易被发现的，而且流量就是最大金钱，任何永远流量的Kol一定是在市场上有自己的长处的，我们使用GMGN就可以直接在左上角的探索页面—KOL\VC 这里去寻找我们需要的Kol钱包了，这也是GMGN最强的地方，钱包与数据收集，那比如你收集到了我的钱包，这就是属于你自己认知的数据库了，因为你已经在寻找的过程中看到了，这个Kol地址的盈利与大概操作等等，这才是属于你真正的认知，而不知识冰冷的地址，我也会在推文底部分享几个我认为很好的Kol钱包，附带我的认知，新人有需要可以自取，并进行练习。（2）建立当下活跃的聪明钱信息库，方法也很简单，请把每日金狗的前20盈利的钱包，分析并且筛选出是最近赚钱最猛的，且不是新钱包的聪明钱，做好监控，我们可以直接在GMGN交易界面里点击 持有者—总利润\从高排序 比如：某A钱包最近大仓位的交易都是赚钱的，我们可以标记为“11月大仓位高胜率”，大家可以通过列子进行举一反三，一旦你做好了以上这2点，恭喜你，你现在可以称自己为加密猎人了！！！
+
+### 地址搜集
+地址分享
+Cooker（母语英文，在国外大叙事上他的反应是最快的，所以ai行情龙头几乎都吃到了，同时也是顶级的交易者，列为重点关注地址）：8deJ9xeUvXSJwicYptA9mHsU2rN2pDx37KWzkDkEXhU6
+鸡块（经常内盘高胜率，但是全是阴谋，列为参考地址）：8MaVa9kdt3NW4Q5HyNAm1X5LbR8PQRVDc1W8NMVK88D5
+扫链哥（打新选标频繁，作为新狗筛选器）：73LnJ7G9ffBDjEBGgJDdgvLUhD5APLonKrNiHsKDCw5B
 
 ## 自动化脚本
 ### Telegram minigame->Hamster Kombat(done)
