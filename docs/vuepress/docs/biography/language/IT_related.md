@@ -68,6 +68,9 @@ How To Protect Your Business From The Dark Side Of The Internet Of Things https:
 
 ## Software engineer 
 
+Click |> (green button) in the gutter of the editor.
+https://www.jetbrains.com/help/idea/getting-started-with-gradle.html#run_terminal
+
 This is a pretty straightforward collapse operation where we make the elements arrange themselves in a vertical fashion as opposed to horizontally.
 I’ll only depict the operative element. Any markup within it that is not immediately relevant will be truncated [it’s still there but I just won’t show it] and replaced with the HTML comment with caption ‘MARKUP TRUNCATED’ [I’ll also do the same for Javascript code with caption ‘CODE TRUNCATED’].
 Now this task is a real doozy. We’re going to need to enable two different navigational systems, one for the original website, and the other for the mobile website. However, they have to consume the same markup space.
