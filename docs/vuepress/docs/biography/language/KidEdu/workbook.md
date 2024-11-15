@@ -7,3 +7,5 @@ lessons/courses/practices/guide/answer
 ## first last top bottom
 
 ## front behind up down 
+
+## logics - pattern
