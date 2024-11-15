@@ -317,6 +317,15 @@ SSH无法连接，SSR连不上，网站打不开；
 安装KCPTUN，可以将TCP流量转成UDP流量（不稳定，但是副作用是可以加速）；
 将SSR改为V2ray或者Trojan，V2ray可以将流量设置为mkcp
 
+### 引发某些网页无法访问：ERR_SSL_PROTOCOL_ERROR?
+比如 This site can’t provide a secure connection m6zkzl2r.r.us-east-1.awstrack.me sent an invalid response.
+
+有些应用发送的邮箱验证链接打开后会有一个跳转 比如
+https://m6zkzl2r.r.us-east-1.awstrack.me/L0/https:%2F%2Fapp.getgrass.io%2Fconfirm-email%2F%3Ftoken=xxxx
+
+有时候可以通过移除https://m6zkzl2r.r.us-east-1.awstrack.me/L0/，然后对后面的链接 url decode，然后直接访问即可，但是有时候应用会有验证导致该方法达不到想要的验证结果，可以临时关掉proxy 或 vpn client尝试
+
+
 ## 后记-安全使用方法
 
 遵纪守法，老实使用vpn进行学习研究工作，不要搞其他乱七八糟的东西，如果某端口被封就是一种警告，不要做害人害己的事情；
