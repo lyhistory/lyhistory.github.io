@@ -24,6 +24,8 @@ MT messages are designated by three-digit numbers (e.g., MT103, MT202), each rep
 
 **MT type**
 
+[SWIFT Message Type Reference](https://docs.oracle.com/cd/E19509-01/820-7113/6nid5dl2r/index.html)
+
 Identifying the MT type of a SWIFT FIN message from its content usually relies on information in the Application Header Block ({2:}). Specifically, the message type (MTxxx) is typically in the second block ({2:}). Here’s how it works:
 
 The {2:} block, known as the Application Header Block, contains the MT type in positions 4 to 6.
