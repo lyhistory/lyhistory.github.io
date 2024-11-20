@@ -6,6 +6,18 @@ Cross-border payments and reporting plus (CBPR+) is a workgroup of payments expe
 
 [ISO 20022 Programme User Handbook - Swift](https://verificationswift.com/swift-resource/252039/swift_iso-20022_programme_uhb_sr2023_final_edition.pdf#/)
 
+
+A debtor is the person or entity that owes money to a creditor, while a creditor is the person or entity that is owed money:
++ Debtor
+    The person or entity that owes money, often for goods or services, or because they have borrowed money. Debtors are responsible for making payments according to the terms of court orders or enforceable support agreements.
++ Creditor/Debtee 
+    The person or entity that is owed money. Creditors are responsible for setting the terms for a borrower and have the right to collect repayment. 
+
+Here are some examples of debtors and creditors: 
+If Jay loans Reva $100, Reva is the debtor and Jay is the creditor. 
+If Sal takes out a mortgage to buy a home, Sal is the debtor and the bank is the creditor. 
+In financial statements, debtors are usually listed under current assets as “Accounts Receivable” or “Trade Receivables”.
+
 ### MT (Message Type):
 
 MT messages are part of SWIFT's older format, referred to as the FIN (Financial Information Network) messaging standard. These messages are encoded in a block-based format and are text-based.
