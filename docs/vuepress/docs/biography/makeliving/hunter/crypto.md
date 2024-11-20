@@ -1,3 +1,7 @@
+## Verification Tools 
+鉴定是否是骗局的工具：
++ 社媒打分：tweetscout.io
+
 ## Airdrop
 
 ### Free NFT Claim
