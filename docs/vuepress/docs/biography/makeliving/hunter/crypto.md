@@ -31,6 +31,8 @@ The DePIN sector has several unique advantages:
 
 + [Nodepay](https://app.nodepay.ai/register?ref=UP8LaqAjdyJaQHz)
 
++ [DATs](https://t.me/DATSAPP_bot/datsapp?startapp=350644282)
+
 + [rivalz最大的空投](https://rivalz.ai?r=liuyue) ， [节点安装文档](https://docs.rivalz.ai/rclients-ocy-depin/rclient-cli-guide)
 
 + [Cloud Rebellion](https://rebellion.acurast.com/?ref=7o2ag6) 
