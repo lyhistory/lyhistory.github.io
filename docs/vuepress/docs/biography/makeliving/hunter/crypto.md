@@ -4,6 +4,10 @@
 
 ## Airdrop
 
+### 重点项目
+
++ [比特币金融重磅项目CoreBTC，比特币质押革命，早期奖励进行中，点击链接注册参与！](https://ignition.coredao.org/registration/code?code=1E9201)
+
 ### Free NFT Claim
 [BERA FAUCET x BRICKS MINT](https://bricksmint.com/bera-faucet?r=0x93b4eC8eD7F1FAD2107CDAd30fd9ECEC3f7975fE)
 
@@ -19,6 +23,9 @@ The DePIN sector has several unique advantages:
 - Decentralized infrastructure management.
 - Economic incentives for participants: Active participants are rewarded, motivating them to invest more resources and effort into the network’s development.
 
++ [intract所有depin入口](https://www.intract.io/?referralCode=2DzB2V&referralSource=REFERRAL_PAGE&referralLink=https%3A%2F%2Fwww.intract.io%2Freferral)
+
++ [Galxe WEB3所有最新项目](https://t.me/Galxe_app_bot/GalxeMiniapp?startapp=GICzZGj1Iq3TZGonzwos5xFnaMK7UiqZsWF)
 
 + [Grass小草](https://app.getgrass.io/register/?referralCode=jVAWeVwPdlcwoIP)
 
