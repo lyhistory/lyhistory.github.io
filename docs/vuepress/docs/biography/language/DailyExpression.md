@@ -682,6 +682,16 @@ Carolyn Hax: Trying to get past a wife seeing a married man on the side https://
 ### About Art
 软导线雕塑 Soft wire sculptures
 
+### About music
+
+**Pro sound**, or professional audio, is a term that refers to the equipment and technology used to produce and deliver high-quality sound in professional settings: 
+Recording studios: For audio mastering and recording 
+Broadcast studios: For broadcasting audio 
+Live performances: For sound reinforcement at concerts and DJ events 
+Theaters: For sound reinforcement and piped music 
+Conference centers: For fixed installations 
+Educational institutions: For fixed installations 
+
 ### Anecdote
 “Do not shop at Mustafa Shopping Centre”
 Me and my husband visited Singapore in March 08. I had earlier visited Singapore some 4-5 years back and I knew that Singapore is a shopping heaven. So I had Mustafa on my list.

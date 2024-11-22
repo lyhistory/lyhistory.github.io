@@ -9,3 +9,6 @@ lessons/courses/practices/guide/answer
 ## front behind up down 
 
 ## logics - pattern
+
+the snake is sticking out its tongue tap its tongue
+
