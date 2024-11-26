@@ -235,6 +235,10 @@ who'd have guessed? 谁能猜得到？
 
 pretty much has been done
 
+### Present simple and Present continuous
+
+"How do you interpret" is a general question asking for someone's understanding or explanation of something, while "how are you interpreting" focuses on how a specific person is currently understanding or analyzing something in the moment, implying a more active process of making sense of information.
+
 ### Past past perfect
 Didn’t havn’t
 https://ell.stackexchange.com/questions/385/when-should-i-use-didnt-instead-of-havent
