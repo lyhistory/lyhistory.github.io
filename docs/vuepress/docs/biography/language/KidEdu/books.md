@@ -33,3 +33,19 @@ the snake is hunting a frog, tap the frog
 ### Otters
 
 what soud do you think sea otters make, tap it to find out
+
+
+## birds
+which bird has a long beak, tap it (the toucan has a long beak, )
+which bird has a short beak, tap it (the flycatcher has a short beak)
+the flamingo has long legs, tap its legs
+the penguin has short legs, tap its legs
+the humingbird has long tail feathers, tap its tail feathers
+the kingfisher's tail feathers are short, tap its tail feathers
+the barn owl has long wings, tap its wings
+the humingbird's wings are short, tap its wings
+which bird has long beak
+which bird has a short legs
+which bird has long tail feathers
+
+
