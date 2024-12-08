@@ -35,6 +35,7 @@ the snake is hunting a frog, tap the frog
 what soud do you think sea otters make, tap it to find out
 
 
+
 ## birds
 which bird has a long beak, tap it (the toucan has a long beak, )
 which bird has a short beak, tap it (the flycatcher has a short beak)
@@ -47,5 +48,30 @@ the humingbird's wings are short, tap its wings
 which bird has long beak
 which bird has a short legs
 which bird has long tail feathers
+
+## insects
+
+### buffterfly
+today we're going to read about butterflies
+
+tap the butterfly's antennae (you found the antennae)
+
+a butterfly's favorite food is the nectar
+
+the butterfly is laying eggs, tap the eggs
+
+the caterpillar changes into a butterfly, thanks for reading with me
+
+
+## Machines
+
+### Crane
+today we are going to read about cranes, crane start with the letter C , the letter c makes the 'k' sound, can you say crane, coolbins, I can't wait to learn about cranes, let's start reading
+
+the boom is so high in the air, tap the crane's boom
+
+the gantry cranes are near a ship,tap the ship (you found the ship)
+
+there are so many kinds of cranes, which is your favarite, my favorite is the floting cranes, thank you for reading with me
 
 
