@@ -30,9 +30,18 @@ what color is this snake
 
 the snake is hunting a frog, tap the frog
 
+### Seal pups
+
+which one is the seal pup, tap it( the sea pup is leaning with its mother)
+
+the seal pup is eating a fish, tap the fish
+
+we learned so much about seal pups, thanks for reading with me
+
 ### Otters
 
 what soud do you think sea otters make, tap it to find out
+
 
 
 
@@ -72,6 +81,6 @@ the boom is so high in the air, tap the crane's boom
 
 the gantry cranes are near a ship,tap the ship (you found the ship)
 
-there are so many kinds of cranes, which is your favarite, my favorite is the floting cranes, thank you for reading with me
+there are so many kinds of cranes, which is your favorite, my favorite is the floting cranes, thank you for reading with me
 
 
