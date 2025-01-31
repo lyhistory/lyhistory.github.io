@@ -1,0 +1,1 @@
+FreeRTOS (Free Real-Time Operating System) is a lightweight OS for microcontrollers 

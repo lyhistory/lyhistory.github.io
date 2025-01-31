@@ -1,6 +1,11 @@
 
 ## Animal Safari
 
+### Dogs
+which dog is the mom, tap it(you found the mom)
+tap the puppy to hear it bark
+looks like it's time to play fetch, thanks for reading with me
+
 ### Frog
 this is tree frogs, today we're going to learn about tree frogs, frog starts with the letter F, the letter F makes the F sound, can you say frog
 
