@@ -89,3 +89,10 @@ the gantry cranes are near a ship,tap the ship (you found the ship)
 there are so many kinds of cranes, which is your favorite, my favorite is the floting cranes, thank you for reading with me
 
 
+## Others
+
+### pull push
+
+she is carrying fruits on her bike, tap the fruits
+tap and count the boys
+the camel doesn't want to move, tap the camel

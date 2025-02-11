@@ -42,5 +42,23 @@ https://www.zhihu.com/question/358163960/answer/913684940
 ## 常见电路学习
 
 
+PWM, or pulse width modulation is a technique which allows us to adjust the average value of the voltage that’s going to the electronic device by turning on and off the power at a fast rate. The average voltage depends on the duty cycle, or the amount of time the signal is ON versus the amount of time the signal is OFF in a single period of time.
+[L298N Motor Driver – Arduino Interface, How It Works, Codes, Schematics](https://howtomechatronics.com/tutorials/arduino/arduino-dc-motor-control-tutorial-l298n-pwm-h-bridge/)
+
 
 基本电学单位：电流、电压、功率 https://zh.khanacademy.org/science/physics/circuits-topic/circuits-resistance/a/ee-voltage-and-current
+
+
+"The Art of Electronics" by Paul Horowitz and Winfield Hill
+    Basic circuits (resistors, capacitors, diodes, transistors, etc.)
+    How to build circuits and analyze them
+    PWM and signal processing
+    How to design and troubleshoot real-world circuits
+
+"Practical Electronics for Inventors" by Paul Scherz and Simon Monk
+"Make: Electronics: Learning Through Discovery" by Charles Platt
+
+YouTube Channels:
+Paul McWhorter’s Arduino Tutorials (great for both Arduino projects and circuit basics)
+GreatScott! (provides practical electronics knowledge, including PWM and circuit design)
+EEVblog (covers various electronics topics, often with deep dives into circuit analysis)

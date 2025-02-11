@@ -2,11 +2,70 @@
 
 [](https://github.com/DFRobot/SportsButtonESP32C3)
 
+## Basics
+
+### How to choose
+
+1. Esp32 vs ESP8266
+
+2. ESP32各个型号
+
+AI 选 ESP32S3
+
+
+
+### references
+
+
++ ESP32 Architecture and Features
++ GPIOs and Pin Mapping
++ PWM (Pulse Width Modulation) and ADC (Analog to Digital Conversion)
++ Communication Protocols (e.g., I2C, SPI, UART)
++ Low Power Modes and Deep Sleep
++ Real-Time Operating Systems (RTOS) using FreeRTOS (multitasking on ESP32)
++ Low Power Consumption for battery-powered projects
++ Security Features like encryption, secure storage, and OTA updates
+
+["Mastering ESP32" by Neil Kolban](https://archive.org/details/kolban-ESP32/mode/2up)
+
+[projects](https://randomnerdtutorials.com/projects-esp32/)
+
+### ESP32 Devices
+
+https://docs.espressif.com/projects/esp-idf/en/latest/esp32c3/get-started/index.html
+
+#### ESP32-C3-DevKitM-1 (ESP32-C3-MINI-1)
+ESP32-C3-DevKitM-1 is an entry-level development board based on ESP32-C3-MINI-1, a module named for its small size. This board integrates complete Wi-Fi and Bluetooth LE functions.
+
+[EN-pinout](https://docs.espressif.com/projects/esp-idf/en/v5.0/esp32c3/hw-reference/esp32c3/user-guide-devkitm-1.html)
+
+[中文-管脚](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32c3/hw-reference/esp32c3/user-guide-devkitm-1.html?highlight=esp32%20c3%20devkitm%201%20v1%20pinout)
+
+#### ESP32-C3-DevKitC-02 (ESP32-C3-WROOM-02)
+ESP32-C3-DevKitC-02 is an entry-level development board based on ESP32-C3-WROOM-02, a general-purpose module with 4 MB SPI flash. This board integrates complete Wi-Fi and Bluetooth LE functions.
+
+[pinout](https://docs.espressif.com/projects/esp-idf/en/v5.0/esp32c3/hw-reference/esp32c3/user-guide-devkitc-02.html?highlight=esp32%20c3%20wroom)
+
+ESP32 With Integrated OLED (WEMOS/Lolin)
+https://www.instructables.com/ESP32-With-Integrated-OLED-WEMOSLolin-Getting-Star/
+
 ## Core Libs 
+
+### Arduino lib
 [Arduino core for the ESP32, ESP32-P4, ESP32-S2, ESP32-S3, ESP32-C3, ESP32-C6 and ESP32-H2](https://github.com/espressif/arduino-esp32)
 
+### ESP-IDF libs
+When using ESP-IDF (without Arduino-esp32 lib), the most common libraries you’ll use include:
 
-## Setup
++ GPIO Driver (driver/gpio.h) → Controls GPIO pins (replaces digitalWrite, pinMode, etc.).
++ LED Control (driver/ledc.h) → Provides PWM support for LEDs.
++ RMT (Remote Control) → Used for precise timing, including controlling NeoPixel (WS2812) RGB LEDs.
++ FreeRTOS (freertos/FreeRTOS.h) → For multitasking and delays (vTaskDelay instead of delay).
++ Log (esp_log.h) → For debugging/logging.
++ WiFi (esp_wifi.h) → To connect to WiFi.
++ I2C/SPI (driver/i2c.h, driver/spi_master.h) → For communicating with sensors/devices.
+
+## Setup DEV Env and Test
 
 Development Environment Differences:
 + Arduino IDE (Beginner-Friendly)
@@ -357,7 +416,72 @@ If you see an error about the serial port, find your device's port in Device Man
 `idf.py --port COMx flash monitor`
 Replace COMx with your actual serial port.
 
-8. debugging
+8. replace Arduino-esp32 with common used ESP-IDF libs
+
+Remove "REQUIRES arduino-esp32" in CMakeLists.txt
+
+idf_component:
+```
+dependencies:
+  espressif/led_strip: "*"
+```
+
+main.cpp
+```
+#include "led_strip.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+
+#define LED_STRIP_GPIO 8  // Built-in RGB LED on ESP32-C3
+#define LED_STRIP_LENGTH 1 // Only 1 LED on the board
+
+static led_strip_handle_t led_strip;
+
+void init_led() {
+        led_strip_config_t strip_config = {
+        .strip_gpio_num = LED_STRIP_GPIO,
+        .max_leds = LED_STRIP_LENGTH,  
+        .led_model = LED_MODEL_WS2812, 
+        .flags = {
+            .invert_out = false
+        }
+    };
+
+    led_strip_rmt_config_t rmt_config = {
+        .resolution_hz = 10 * 1000 * 1000 // 10MHz
+    };
+
+    esp_err_t err = led_strip_new_rmt_device(&strip_config, &rmt_config, &led_strip);
+    if (err != ESP_OK) {
+        printf("LED Strip initialization failed!\n");
+    }
+}
+
+extern "C" void app_main()
+{
+    init_led();
+
+    while (1) {
+        led_strip_set_pixel(led_strip, 0, 255, 0, 0);  // Red
+        led_strip_refresh(led_strip);
+        vTaskDelay(pdMS_TO_TICKS(1000));
+
+        led_strip_set_pixel(led_strip, 0, 0, 255, 0);  // Green
+        led_strip_refresh(led_strip);
+        vTaskDelay(pdMS_TO_TICKS(1000));
+
+        led_strip_set_pixel(led_strip, 0, 0, 0, 255);  // Blue
+        led_strip_refresh(led_strip);
+        vTaskDelay(pdMS_TO_TICKS(1000));
+
+        led_strip_clear(led_strip); // Turn off LED
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
+}
+
+```
+
+9. debugging
 
 Set Up the USB Driver (if needed)
 
@@ -370,36 +494,16 @@ Press Ctrl + Shift + P → Select "ESP-IDF: show example projects"
 https://github.com/espressif/esp-idf/tree/v5.4/examples
 
 
-
-
 [Arduino as an ESP-IDF component](https://docs.espressif.com/projects/arduino-esp32/en/latest/esp-idf_component.html)
 [Getting Started with Espressif’s ESP32-C3-DevKITM-1 on ESP-IDF](https://www.electronics-lab.com/getting-started-with-espressifs-esp32-c3-devkitm-1-on-esp-idf/)
 [Controlling a LED with ESP32-C3-DevKITM-1 Development Board using ESP-IDF](https://www.electronics-lab.com/deep-dive-on-controlling-led-with-esp32-c3-devkitm-1-development-board-using-esp-idf/)
 
 
-## ESP32 Products
+## DEV
+### PWM
+https://www.electronicwings.com/esp32/pwm-of-esp32
 
-https://docs.espressif.com/projects/esp-idf/en/latest/esp32c3/get-started/index.html
-
-
-
-### ESP32-C3-DevKitM-1 (ESP32-C3-MINI-1)
-ESP32-C3-DevKitM-1 is an entry-level development board based on ESP32-C3-MINI-1, a module named for its small size. This board integrates complete Wi-Fi and Bluetooth LE functions.
-
-[EN-pinout](https://docs.espressif.com/projects/esp-idf/en/v5.0/esp32c3/hw-reference/esp32c3/user-guide-devkitm-1.html)
-
-[中文-管脚](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32c3/hw-reference/esp32c3/user-guide-devkitm-1.html?highlight=esp32%20c3%20devkitm%201%20v1%20pinout)
-
-### ESP32-C3-DevKitC-02 (ESP32-C3-WROOM-02)
-ESP32-C3-DevKitC-02 is an entry-level development board based on ESP32-C3-WROOM-02, a general-purpose module with 4 MB SPI flash. This board integrates complete Wi-Fi and Bluetooth LE functions.
-
-[pinout](https://docs.espressif.com/projects/esp-idf/en/v5.0/esp32c3/hw-reference/esp32c3/user-guide-devkitc-02.html?highlight=esp32%20c3%20wroom)
-
-ESP32 With Integrated OLED (WEMOS/Lolin)
-https://www.instructables.com/ESP32-With-Integrated-OLED-WEMOSLolin-Getting-Star/
-
-
-## Power Options
+### Power Options
 [如何给ESP32供电](https://mp.weixin.qq.com/s/JOmDmY3TJXq7wD9f76UtPw)
 To power your ESP32 dev kit, you have three options:
 
@@ -424,7 +528,7 @@ Guide for WS2812B Addressable RGB LED Strip with Arduino https://randomnerdtutor
 
 https://espressif-docs.readthedocs-hosted.com/projects/arduino-esp32/en/latest/api/ledc.html
 
-## esp32 12v solenoid lock 
+### esp32 12v solenoid lock 
 
 清单：
 + 5v1a 微型电磁锁 ph2.0公头
@@ -619,10 +723,10 @@ void loop()
 }
 ```
 
-## ESP32 Mini Smart Farm 
+### ESP32 Mini Smart Farm 
 https://www.elec-cafe.com/esp32-mini-smart-farm-micropython/
 
-## ESP32 遥控器
+### ESP32 遥控器
 https://www.youtube.com/watch?v=SVlm7QU5Nkk
 https://www.seeedstudio.com/blog/2023/04/13/ble-wifi-remote-using-seeed-studio-xiao-esp32c3/
 
