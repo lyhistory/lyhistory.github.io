@@ -49,6 +49,20 @@ ESP32-C3-DevKitC-02 is an entry-level development board based on ESP32-C3-WROOM-
 ESP32 With Integrated OLED (WEMOS/Lolin)
 https://www.instructables.com/ESP32-With-Integrated-OLED-WEMOSLolin-Getting-Star/
 
+这段文字是ESP32-C3的资料。
+基础资料包括（原理图尺寸图等）：http://124.222.62.86/yd-data/YD-ESP32-C3/
+如果查看引脚功能图可以参考链接如下：
+https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32c3/_images/esp32-c3-devkitm-1-v1-pinout.jpg
+如果计划使用官方的idf-C语言编程详细资料链接（例程就是的API参考）：
+https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/index.html
+如果计划使用Ardiuno编程资料链接：
+https://docs.espressif.com/projects/arduino-esp32/en/latest/getting_started.html#about-arduino-esp32
+如果计划使用micropython语言编程资料链接如下：
+https://docs.micropython.org/en/latest/esp32/quickref.html
+如需要安装核心板的硬件usb转串口驱动：
+https://www.wch.cn/products/CH340.html?from=list
+micropython的ESP32-C3固件注意有两个固件：https://micropython.org/download/
+
 ## Core Libs 
 
 ### Arduino lib
@@ -80,6 +94,10 @@ Development Environment Differences:
   - Best for low-level control over ESP32.
   - More complex setup, but provides full access to ESP32 features.
   - Recommended for production-level projects.
+
+### Mixly 米思奇
+青少年编程首选 推拽式，不过很多模块他们是用自己的lib，不是通用的lib，比如espnow，不容易移植到其他平台
+https://go.mixly.cn/
 
 ### Arduino IDE
 
@@ -519,7 +537,8 @@ With this, you should have a good understanding of what the ESP32 is, and you mu
 
 ## Example
 
-###  “addressable” RGB LED,
+### RGB
+“addressable” RGB LED,
 
 ESP32-C3 Blink Test with Arduino IDE and DumbDisplay
 https://www.youtube.com/watch?v=BAnvHOs5Fks
@@ -528,7 +547,13 @@ Guide for WS2812B Addressable RGB LED Strip with Arduino https://randomnerdtutor
 
 https://espressif-docs.readthedocs-hosted.com/projects/arduino-esp32/en/latest/api/ledc.html
 
-### esp32 12v solenoid lock 
+### ESP32CAM
+
+没有烧录座，自行连接一个USB转TTL模块：
+  确保接线正确，ESP32-CAM 的IO0接口接地即为烧录模式，不接地悬空即为运作模式
+  部分设备烧录前需要按一下RST键，或重新上电重启
+
+### ESP32 12v solenoid lock 
 
 清单：
 + 5v1a 微型电磁锁 ph2.0公头
@@ -723,23 +748,38 @@ void loop()
 }
 ```
 
+### [ESP32 Smart Car]((/software/hardware/kid_edu/esp32_smart_car.md))
+
+### ESP32 AI Robot
+https://www.hackster.io/longpth/esp32-cam-ai-robot-50173c
+https://github.com/lyhistory/tools_iot_aigc-ESP32CamAI
+
+小智项目：
+https://github.com/78/xiaozhi-esp32
+https://ccnphfhqs21z.feishu.cn/wiki/F5krwD16viZoF0kKkvDcrZNYnhb
+
+自定义后端：
+  https://github.com/78/xiaozhi-esp32/issues/119
+  https://github.com/xinnan-tech/xiaozhi-esp32-server
+
 ### ESP32 Mini Smart Farm 
 https://www.elec-cafe.com/esp32-mini-smart-farm-micropython/
 
-### ESP32 遥控器
-https://www.youtube.com/watch?v=SVlm7QU5Nkk
-https://www.seeedstudio.com/blog/2023/04/13/ble-wifi-remote-using-seeed-studio-xiao-esp32c3/
-
-https://www.e-tinkers.com/2019/11/build-an-esp32-web-server-and-ir-remote/
-
-https://oshwhub.com/satun/c3mini-yao-kong-qi_copy
-https://www.youtube.com/watch?v=SVlm7QU5Nkk
-https://www.hackster.io/techstudycell/esp32-bluetooth-home-automation-with-ir-remote-control-relay-10d4e8?f=1
-https://www.youtube.com/watch?v=dODmsoAu0D4
 
 ## troubleshooting
 
-?# class WiFiClientSecure' has no member named 'setInsecure'
+### Serial.print in the setup() not showing
+是因为setup执行比较快，serial monitor还开始监控setup就跑完了，可以重新插电，或者加个延迟语句
+
+```
+Serial.println("Starting setup...");
+  delay(10000);
+  Serial.println("Setup complete.");
+```
+### 乱码
+确认代码的波特率 `Serial.begin(115200);`和监视器的波特率一致，并且 board选择正确
+
+### class WiFiClientSecure' has no member named 'setInsecure'
 
 upgrade to latest:
 ```
@@ -766,23 +806,19 @@ lib_deps = h2zero/NimBLE-Arduino@^1.3.1
     AugustESP32
 ```
 
+### ESP32CAM初始化失败
+选择正确的model，比如
+`#define CAMERA_MODEL_AI_THINKER // Has PSRAM`
 
-这段文字是ESP32-C3的资料。
-基础资料包括（原理图尺寸图等）：http://124.222.62.86/yd-data/YD-ESP32-C3/
-如果查看引脚功能图可以参考链接如下：
-https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32c3/_images/esp32-c3-devkitm-1-v1-pinout.jpg
-如果计划使用官方的idf-C语言编程详细资料链接（例程就是的API参考）：
-https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/index.html
-如果计划使用Ardiuno编程资料链接：
-https://docs.espressif.com/projects/arduino-esp32/en/latest/getting_started.html#about-arduino-esp32
-如果计划使用micropython语言编程资料链接如下：
-https://docs.micropython.org/en/latest/esp32/quickref.html
-如需要安装核心板的硬件usb转串口驱动：
-https://www.wch.cn/products/CH340.html?from=list
-micropython的ESP32-C3固件注意有两个固件：https://micropython.org/download/
+wifi连接 2.4G，
+连接的电脑最好关掉vpn，连接同一个wifi
 
-
+### Soft WDT reset
+使用espnow遥控的时候，接收信息打印日志会报这个错误，因为串口来不及打印，不影响使用，注释掉Serial.print即可
+```
+Soft WDT reset
+Exception (4):
+epc1=0x40204bc8 epc2=0x00000000 epc3=0x00000000 excvaddr=0x00000000 depc=0x00000000
+```
 
 
-由 ESP32 驱动的 FPV 汽车
-https://www.espressif.com/zh-hans/news/ESP32_Powered_FPV_Car

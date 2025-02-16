@@ -23,6 +23,16 @@ https://www.instructables.com/OSOYOO-2WD-Robot-Car-Starter-Kit/
 
 ## Remote Control 
 
+https://www.youtube.com/watch?v=SVlm7QU5Nkk
+https://www.seeedstudio.com/blog/2023/04/13/ble-wifi-remote-using-seeed-studio-xiao-esp32c3/
+
+https://www.e-tinkers.com/2019/11/build-an-esp32-web-server-and-ir-remote/
+
+https://oshwhub.com/satun/c3mini-yao-kong-qi_copy
+https://www.youtube.com/watch?v=SVlm7QU5Nkk
+https://www.hackster.io/techstudycell/esp32-bluetooth-home-automation-with-ir-remote-control-relay-10d4e8?f=1
+https://www.youtube.com/watch?v=dODmsoAu0D4
+
 ### 基本控制器
 Remote Control Options for an ESP32-C3 Smart Car
 
@@ -328,6 +338,110 @@ Search on GitHub: Similarly, you can search for "ESP32 Joystick TFT control" or 
 就是前两者的配合，典型的就是遥控器配上手机
 
 
+## 其他模块
+
+### 超声波避障
+[HC-SR04 Ultrasonic Sensor](https://randomnerdtutorials.com/esp32-hc-sr04-ultrasonic-arduino/)
+
 ## 实战
 
 ### 2wd esp8266小车 + esp32 遥控
+
+#### 小车接线和代码
+清单：
++ 2wd小车底盘
++ 电机*2
++ 万向轮
++ [超声波 HC-SR04 Ultrasonic Sensor](https://www.instructables.com/Distance-Measurement-Using-HC-SR04-Via-NodeMCU/)
++ ESP8266
++ [L298N电机驱动](https://randomnerdtutorials.com/esp32-dc-motor-l298n-motor-driver-control-speed-direction/)
++ todo [SG90舵机云台](https://www.techcoil.com/blog/how-to-control-a-sg90-servo-motor-with-the-esp8266-nodemcu-lua-development-board/)
++ todo ESP23CAM
+
+接线
+```
+
+电源    --------------  L298N电机驱动
+正极 -------------------------  12V
+负极 -------------------------  GND
+
+ESP8266  --------------  超声波 HC-SR04 
+3.3V    -------------------------   VCC
+GND -------------------------   GND
+D1  -------------------------   Trigger Pin
+D2  -------------------------   Echo Pin
+
+ESP8266  --------------  L298N电机驱动
+VIN -------------------------   5V (电机给ESP供电)
+GND -------------------------   GND
+D5  -------------------------   ENA 
+D8  -------------------------   IN1	
+D7  -------------------------   IN2	
+D4  -------------------------   IN3
+D3  -------------------------   IN4
+D6  -------------------------   ENB
+ 
+
+电机 -------------- L298N电机驱动
+电机的两级输入线头朝内，然后上面的线接电机驱动的最前面，下面的线接电机驱动的后面第二个
+
+左边电机接电机驱动A侧，右边电机接电机驱动B侧。
+前进时如果哪边电机有反转的情况，将该电机的两电线反接即可。
+
+ESP8266 -------------- 超声波模块
+VCC
+Trig
+Echo
+GND
+
+```
+代码
+```
+
+```
+#### 遥控接线和代码
+
+接线
+```
+ESP32  -----------------  OLED屏
+22  --------------------  SCL（SCK）
+21  --------------------  SDA
+3V  --------------------- VCC
+GND  ------------------- GND
+
+ESP32  -----------------  摇杆模块
+34  ---------------------  Y轴
+35 ----------------------  X轴
+26 ----------------------- VCC
+
+ESP32  -----------------  电位器模块（上）
+32  --------------------  信号（OUT）
+27 ---------------------   VCC
+
+ESP32  -----------------  电位器模块（下）
+33  --------------------  信号（OUT）
+14  ---------------------   VCC
+
+ESP32  -----------------  按钮模块
+25  --------------------  信号（S）
+12  ---------------------   GND
+
+稳压电源模块  ----------------- 各模块
+5V  ---------------------   ESP32的Vin
+GND  -------------------   ESP32的GND
+GND  -------------------   摇杆模块的GND
+GND  -------------------   电位器模块（上）的GND
+GND  -------------------   电位器模块（下）的GND
+GND  -------------------   按钮模块的VCC
+
+```
+
+代码
+```
+
+```
+
+---
+
+由 ESP32 驱动的 FPV 汽车
+https://www.espressif.com/zh-hans/news/ESP32_Powered_FPV_Car
