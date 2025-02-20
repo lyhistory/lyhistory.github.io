@@ -1,6 +1,11 @@
 
 ## Animal Safari
 
+### Dogs
+which dog is the mom, tap it(you found the mom)
+tap the puppy to hear it bark
+looks like it's time to play fetch, thanks for reading with me
+
 ### Frog
 this is tree frogs, today we're going to learn about tree frogs, frog starts with the letter F, the letter F makes the F sound, can you say frog
 
@@ -89,3 +94,10 @@ the gantry cranes are near a ship,tap the ship (you found the ship)
 there are so many kinds of cranes, which is your favorite, my favorite is the floting cranes, thank you for reading with me
 
 
+## Others
+
+### pull push
+
+she is carrying fruits on her bike, tap the fruits
+tap and count the boys
+the camel doesn't want to move, tap the camel
