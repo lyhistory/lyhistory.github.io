@@ -71,6 +71,11 @@ the butterfly is laying eggs, tap the eggs
 
 the caterpillar changes into a butterfly, thanks for reading with me
 
+## plants
+
+these plants are carrots, what color are the carrots
+these plants are lettuce, what color are 
+thes plants are strawberries, what color are the 
 
 ## Machines
 
