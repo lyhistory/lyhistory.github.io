@@ -32,6 +32,13 @@ Basically an electric motor is a mechanical device that switches electric energy
 ### 减速电机
 TT电机/310电机/370电机选型对比原创
 
+#### TT马达减速电机
+减速比=》扭矩
+
+电压
+
+电流
+
 ### 步进电机
 
 步进电机上的“A+A-B+B-”就是电机的驱动线，“A+”、“ A-”代表一相，“B+”、“B-”代表另一相。
@@ -64,7 +71,9 @@ https://docs.sunfounder.com/projects/galaxy-rvr/zh-cn/latest/lesson4_motor.html
   - L298P 
   - L298N motor driver
 
-### L298N 原理
+### L298N 
+
+#### pinout
 The motor driver has a two-terminal block on each side for each motor. OUT1 and OUT2 at the left and OUT3 and OUT4 at the right.
 
 - OUT1: DC motor A + terminal
@@ -121,3 +130,58 @@ To turn the robot in one direction, you need to spin the opposite motor faster. 
 [ESP32 with DC Motor and L298N Motor Driver – Control Speed and Direction](https://randomnerdtutorials.com/esp32-dc-motor-l298n-motor-driver-control-speed-direction/)
 
 
+#### 原理
+
+The L298N motor driver acts as an interface between your power supply and motors. It doesn’t have a fixed current requirement because it’s determined by the load (motors) connected to it. However, the L298N has voltage requirements because it needs a certain voltage to operate.
+
++ Motor Supply Voltage (V_s):
+The L298N requires a voltage supply for the motors (the V_s pin).
+The V_s pin determines the voltage you want to apply to the motors.
+Motors have a voltage rating (e.g., 12V), and the V_s pin must be powered with a voltage that matches the motor's requirements.
+
+The current drawn by the motors depends on the voltage applied to them and the load on the motor (e.g., whether it's moving freely or under a heavy load).
+The motor’s current draw can vary significantly based on the torque required by the load.
+
++ Logic Supply Voltage (Vcc):
+  The Vcc pin on the L298N powers the logic circuits inside the L298N that control the motors' speed, direction, and operation.
+  The L298N can use a 5V supply for the logic (from the 5V pin of the microcontroller or from an external 5V power source). This pin does not require a lot of current—typically 50mA to 100mA for the logic circuits.
+  If you don’t provide a 5V supply to the Vcc pin, the L298N will still work because it can generate 5V internally from the 12V (motor supply) using its built-in voltage regulator.
+
+The L298N motor driver actually has a built-in 5V regulator that allows it to function even when the 5V pin is not connected to anything. Here's how it works:
+
+1. How the L298N Works with Only the 12V Pin Connected:
+
+When you connect a 12V power supply to the 12V (V_s) pin, the L298N uses this 12V input to power the motor outputs (OUT1, OUT2, OUT3, OUT4) and its internal logic circuit via a built-in voltage regulator.
+
+The built-in 5V regulator in the L298N can step down the 12V (or any higher voltage within the motor supply range, typically 4.5V to 46V) to supply 5V to the internal logic.
+
+This is why the L298N can function without the 5V pin being connected to an external 5V source. The L298N generates its own 5V internally from the 12V input.
+
+2. Why the 5V Pin is Optional for Powering the L298N:
+
+The 5V pin on the L298N is connected to the output of the internal voltage regulator. This is a convenient way to power the L298N's logic circuits if you need to use an external 5V power supply.
+For example, you might want to connect this pin to the 5V pin of an Arduino or ESP32 if you want to power the microcontroller from the L298N.(Current Limitations: The internal 5V regulator is limited in current output, usually around 500mA. )
+If you don't use the 5V pin, the L298N will still work as long as the 12V supply is connected, since the internal regulator will still power the logic circuit.
+
+3. Current Requirements
++ Motor Current Requirements (For V_s Pin)
+  The most important factor for selecting a power supply is the current draw of the motors you plan to drive with the L298N.
+  The L298N can drive motors that draw significant amounts of current, especially when under load.
+  The current drawn by the motor is determined by its voltage and load. For example, a small DC motor might draw 100mA at idle, but could draw 1A or more under load.
+  Current Limits: The L298N can handle up to 2A per motor (4A max for both motors), but this depends on your motor's current draw and the specific model of L298N you're using.
+  So, for the motor power supply (V_s), your power supply must be able to supply enough current to meet the demands of your motors. For example:
+  - For low-power motors: A 5V-12V power supply rated for at least 2A (depending on the number of motors and their load).
+  - For high-power motors: You may need a 12V-24V power supply rated for 5A or more if you're driving motors that draw a lot of current under load.
+
++ Logic Power (Vcc Pin)
+  The Vcc pin of the L298N, which powers the logic circuits, typically requires 5V.
+  Current requirements for the logic circuit are relatively low — typically around 50mA to 100mA.
+  If you're powering the L298N's logic from the 5V pin of an external microcontroller (e.g., ESP32, Arduino), the current demand here is negligible compared to the motor current.
+
+4. Important Considerations:
++ Power Supply Wattage: 
+  Ensure your power supply has a high enough wattage to supply the required voltage and current. The total wattage P=V×I. For example, a 12V, 5A power supply would provide 60W of power.
++ Overcurrent Protection: 
+  It's a good idea to use a power supply with overcurrent protection to avoid damage to your components if the current draw exceeds safe limits.
++ Heat Dissipation: 
+  The L298N can get hot, especially if the current draw is near its maximum (2A per motor), so ensure adequate cooling or use a heat sink.

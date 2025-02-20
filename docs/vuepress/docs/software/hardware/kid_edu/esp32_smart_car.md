@@ -36,6 +36,15 @@ https://www.youtube.com/watch?v=dODmsoAu0D4
 ### 基本控制器
 Remote Control Options for an ESP32-C3 Smart Car
 
++ 低成本、短距离：蓝牙、红外（IR）。
+
++ 中距离、低功耗：ZigBee、LoRa。
+    - 大夏龙雀
++ 远距离、实时性：4G/5G （LTE LTE stands for Long-Term Evolution. It is a standard for wireless broadband communication, commonly used for high-speed data transfer in cellular networks.)。
+    - 4g模块： 中移远
+    - 4g模块：EC20
++ 复杂功能、高扩展性：云平台（如AWS IoT、阿里云IoT）、ROS（机器人操作系统）。
+
 | Method                    | Technology                         | Range         | Latency         | Power Consumption | Ease of Implementation | Pros                                                          | Cons                                                  |
 |---------------------------|------------------------------------|---------------|-----------------|-------------------|------------------------|---------------------------------------------------------------|-------------------------------------------------------|
 | Wi-Fi Web Server          | Wi-Fi (ESP32-C3 as AP/STA)         | Up to 100m    | Medium (~50ms)  | High              | ⭐⭐⭐⭐                   | - Control via any browser. - No app required.                 | - Requires Wi-Fi network. - Higher power usage.       |
@@ -48,6 +57,10 @@ Remote Control Options for an ESP32-C3 Smart Car
 | NRF24L01                  | 2.4GHz RF Module                   | Up to 1km     | Low (~10ms)     | Low               | ⭐⭐                     | - Simple, fast, and reliable.                                 | - Requires additional module. - Not internet-capable. |
 | IR Remote                 | Infrared (38kHz)                   | Up to 5m      | Low (~10ms)     | Very Low          | ⭐⭐⭐                    | - Cheap and simple.                                           | - Needs line-of-sight. - Can be affected by sunlight. |
 | RF Remote (433MHz/315MHz) | Radio Frequency (RF)               | Up to 100m    | Low (~20ms)     | Low               | ⭐⭐                     | - Cheap modules available. - No pairing needed.               | - No encryption. - Prone to interference.             |
+| ZigBee | ZigBee（IEEE 802.15.4） | 100m | low | low | - | 低功耗，支持多设备组网 | 通信距离较短（通常100米以内） |
+| 4g/5g LTE | 基站 | 不限距离 | low | low | 不限距离 全球可用 | 流量费用贵 | 
+
+
 
 #### Wi-Fi WebSocket
 WebSocket provides real-time, low-latency communication between a Web UI or another ESP32 device and your ESP32-C3 smart car over Wi-Fi.
@@ -266,6 +279,19 @@ void loop() {
 
 ```
 
+#### LORA
+
+#### 4G/5G
+
+| 模块/关键词      | 描述                                                                 | 特点                                                                 | 应用场景                             | 与其他模块的区别                                                                 |
+|------------------|--------------------------------------------------------------------|--------------------------------------------------------------------|------------------------------------|--------------------------------------------------------------------------------|
+| **ML307R**       | 中移物联推出的4G Cat.1通信模块                                      | - 支持4G LTE Cat.1，速率约10Mbps<br>- 低功耗<br>- 内置GNSS定位       | 智能表计、共享设备、物流追踪         | 速率较低，适合低功耗、低成本场景；SIM7600和EC20速率更高，功能更强大               |
+| **SIM7600**      | SIMCom推出的4G LTE Cat.4模块                                        | - 支持4G LTE Cat.4，下行速率150Mbps<br>- 内置GNSS<br>- 支持语音通话 | 远程监控、智能交通、工业物联网       | 速率较高，功能丰富；ML307R速率较低，适合低成本场景                                |
+| **Quectel系列**  | Quectel推出的多种通信模块（2G/3G/4G/5G/NB-IoT）                    | - 高可靠性<br>- 支持多种网络协议和功能（如GNSS、VoLTE）              | 工业物联网、车联网、远程监控         | 功能更强大，支持更多频段和协议；ML307R偏向低成本、低功耗场景                      |
+| **EC20**         | Quectel推出的4G LTE Cat.4模块                                       | - 支持全球频段<br>- 下行速率150Mbps<br>- 内置GNSS                   | 远程监控、智能交通、工业物联网       | 速率较高，适合全球化应用；ML307R速率较低，适合低成本场景                          |
+| **AT固件**       | 通信模块中常见的固件类型，用于通过AT指令控制模块                     | - 基于文本的指令集（如AT+CGATT=1、AT+CSQ）<br>- 简单易用             | 嵌入式开发、模块控制                 | 几乎所有通信模块（ML307R、SIM7600、Quectel模块）都支持AT指令                      |
+| **5G模块（如RM500Q）** | Quectel推出的5G模块                                           | - 支持超高速率和低延迟<br>- 适合高带宽应用                          | 自动驾驶、远程医疗、工业自动化       | 速率和性能远超4G模块（如ML307R、SIM7600、EC20），但成本较高                       |
+
 ### Transmitter with Joysticks 
 
 #### ESP32 + ESP-NOW Joystick Controller Tutorial
@@ -345,7 +371,7 @@ Search on GitHub: Similarly, you can search for "ESP32 Joystick TFT control" or 
 
 ## 实战
 
-### 2wd esp8266小车 + esp32 遥控
+### 2wd esp8266小车 + esp32 遥控 (espnow)
 
 #### 小车接线和代码
 清单：
@@ -368,18 +394,18 @@ Search on GitHub: Similarly, you can search for "ESP32 Joystick TFT control" or 
 ESP8266  --------------  超声波 HC-SR04 
 3.3V    -------------------------   VCC
 GND -------------------------   GND
-D1  -------------------------   Trigger Pin
-D2  -------------------------   Echo Pin
+D8  -------------------------   Trigger Pin
+D7  -------------------------   Echo Pin
 
 ESP8266  --------------  L298N电机驱动
 VIN -------------------------   5V (电机给ESP供电)
 GND -------------------------   GND
-D5  -------------------------   ENA 
-D8  -------------------------   IN1	
-D7  -------------------------   IN2	
-D4  -------------------------   IN3
-D3  -------------------------   IN4
-D6  -------------------------   ENB
+D6  -------------------------   ENA 
+D5  -------------------------   IN1	(motorPinA1)
+D4  -------------------------   IN2	(motorPinA2)
+D3  -------------------------   IN3 (motorPinB2)
+D2  -------------------------   IN4 (motorPinB1)
+D1  -------------------------   ENB
  
 
 电机 -------------- L298N电机驱动
@@ -388,11 +414,6 @@ D6  -------------------------   ENB
 左边电机接电机驱动A侧，右边电机接电机驱动B侧。
 前进时如果哪边电机有反转的情况，将该电机的两电线反接即可。
 
-ESP8266 -------------- 超声波模块
-VCC
-Trig
-Echo
-GND
 
 ```
 代码
@@ -441,7 +462,53 @@ GND  -------------------   按钮模块的VCC
 
 ```
 
+### ESP32CAM car
+
+[ESP32-CAM远程视频监控&底盘控制](https://yanjingang.com/blog/?p=6598)
+
+[Building a Webserver-Controlled Spy Car with ESP32-Cam: A Step Guide](https://www.embeddedbrew.com/post/building-a-webserver-controlled-spy-car-with-esp32-cam-a-step-guide)
+
+
+### 4g小车 2wd esp8266小车+mobile app（MQTTClient）
+
+[ESP8266采用AT指令连接华为云服务器(MQTT固件)](https://juejin.cn/post/7315126213696716838)
+
+[ESP32 远程图传遥控车，基于 MQTT](https://www.techfens.com/posts/esp32mqttcar.html)
+
+
+
+[MCU with 4G LTE Modem. Connecting with the server anywhere!](https://www.youtube.com/watch?app=desktop&v=kOYJ-4oZ8Ws)
+
 ---
+
 
 由 ESP32 驱动的 FPV 汽车
 https://www.espressif.com/zh-hans/news/ESP32_Powered_FPV_Car
+
+
+## Troubleshooting
+
+### L298N电机驱动蜂鸣声 beep buzz
+
+从[这个帖子](https://ask.csdn.net/questions/7475568)的评论得到启示
+
+pwm分频可以小点，这样频率高出20000hz就听不到了
+
+在esp32中有配置：`ledcAttachChannel(enable1Pin, freq, resolution, pwmChannel);`
+但是 esp8266 中我没有配置，加上：
+
+```
+// Set PWM frequency to 25 kHz (above the audible range)
+  analogWriteFreq(25000);
+  
+  // Optionally set PWM resolution; default range is 1023 on ESP8266 (10-bit resolution)
+  analogWriteRange(1023);
+
+  int dutyCycle = map(desiredValue, 0, 255, 0, 1023); // convert from 0-255 to 0-1023
+  analogWrite(enablePin, dutyCycle);
+
+```
+
+
+### L298N两边电机不一致
+原来是一边加了注释，一边没加，可能导致执行快慢有区别，最好是计算好两个轮子的功率后，同时赋值，给pin输出的逻辑之间间隔太久

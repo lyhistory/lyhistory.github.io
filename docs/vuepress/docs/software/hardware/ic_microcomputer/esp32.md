@@ -549,9 +549,72 @@ https://espressif-docs.readthedocs-hosted.com/projects/arduino-esp32/en/latest/a
 
 ### ESP32CAM
 
-没有烧录座，自行连接一个USB转TTL模块：
+[pinout](https://microcontrollerslab.com/esp32-cam-ai-thinker-pinout-gpio-pins-features-how-to-program/)
+
+#### 烧录方案
+没有usb接口，解决方案：
++ 直接买带烧录座的
++ 自行连接一个USB转TTL模块：
   确保接线正确，ESP32-CAM 的IO0接口接地即为烧录模式，不接地悬空即为运作模式
   部分设备烧录前需要按一下RST键，或重新上电重启
++ [使用 ESP8266连线烧录](https://www.instructables.com/Programming-ESP32-CAM-With-ESP8266/)
+
+#### STA模式
+测试sample ESP32->Camera->CameraWebServer, 确定对应的板子model修改：
+```
+#define CAMERA_MODEL_AI_THINKER // Has PSRAM
+const char *ssid = "wifi name";
+const char *password = "password";
+
+```
+
+打开串口监视器，波特率修改为代码里的115200，按一次esp32-cam的RST复位键，即可打印出wifi摄像头的url地址，可以看到esp32使用80端口启动一个web服务，使用81端口传输视频流：
+
+web服务（参数设置、视频播放）：http://x.x.x.x
+视频流地址：http://x.x.x.x:81/stream
+
+如果想单独显示视频，最简单的方法就是建个html页面，里边添加一个img即可：
+
+`<img id="stream" src="http://192.168.0.102:81/stream">`
+也可以直接jpage压缩后发送二进制流进行显示。
+
+#### AP离线模式
+
+```
+#include <DNSServer.h>
+DNSServer dnsServer;
+#define DNS_PORT 53
+
+const char *ssid = "ESP32-CAM_AP";
+const char *password = "123456";
+
+// Set ESP32-CAM to AP mode
+WiFi.softAP(ssid, password);
+IPAddress apIP = WiFi.softAPIP();
+Serial.println("ESP32-CAM is in AP mode");
+Serial.print("AP IP address: ");
+Serial.println(apIP);
+
+// Set up captive portal DNS server: redirect all queries to our AP IP
+dnsServer.start(DNS_PORT, "*", apIP);
+```
+
+The IP 192.168.4.1 is the default IP address for the ESP32 in AP mode. This IP is assigned automatically when the ESP32 starts as an access point using WiFi.softAP(), can customize by:
+```
+WiFi.softAP(ssid, password, 1, false, 1);
+IPAddress apIP(192, 168, 1, 1);
+WiFi.softAPConfig(apIP, apIP, IPAddress(255, 255, 255, 0));
+
+void loop() {
+  // Process DNS requests for captive portal
+  dnsServer.processNextRequest();  // 我没加这个也正常工作 This happens because DNS processing is often handled internally by the ESP32's network stack, and in some cases, the default DNS server behavior can automatically process requests without the need to call processNextRequest().However, in general practice, if you want to handle DNS requests explicitly, you would call processNextRequest() to ensure that the DNS server is running in the loop, especially if you are managing complex DNS resolutions or want more control over how requests are handled. 
+}
+```
+
+dns劫持：
+- DNS Query Mechanism: When a device connects to the ESP32-CAM’s Wi-Fi network, the device tries to resolve a domain name (e.g., when accessing a URL like http://example.com). The device sends a DNS request to the network's DNS server.
+- DNS Redirection: The DNS server (dnsServer.start(DNS_PORT, "*", apIP)) intercepts these DNS requests and responds with the ESP32-CAM's IP address (apIP). This causes the device to navigate to the ESP32-CAM's web server (even if the client tried to access a random URL).
+- Captive Portal Functionality: By intercepting DNS queries and always pointing them to 192.168.4.1, the ESP32-CAM forces the client to view the content hosted on the ESP32
 
 ### ESP32 12v solenoid lock 
 
