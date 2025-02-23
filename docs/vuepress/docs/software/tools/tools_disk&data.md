@@ -119,6 +119,9 @@ Active Backup for Business
 
 通过SSH访问群晖NAS并运行Docker https://www.jianshu.com/p/1d01326016fc
 
+### 自制NAS
+
+[Windows Server 2022 存储池有多强？全网最简单，保姆级存储池设置教程](https://www.youtube.com/watch?v=4XexASl44lc&list=PLEoL2HF0ZDa71LfVBwFksLk9abK3q-NTn)
 
 ## 硬件工具
 ### 测试
