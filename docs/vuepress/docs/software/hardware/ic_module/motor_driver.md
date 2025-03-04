@@ -185,3 +185,13 @@ If you don't use the 5V pin, the L298N will still work as long as the 12V supply
   It's a good idea to use a power supply with overcurrent protection to avoid damage to your components if the current draw exceeds safe limits.
 + Heat Dissipation: 
   The L298N can get hot, especially if the current draw is near its maximum (2A per motor), so ensure adequate cooling or use a heat sink.
+
+### RZ7889
+
+###  L9110S
+双驱动
+
+[Comprehensive Guide to the L9110S Motor Driver: Technical Insights and Applications](https://www.ic-components.com/blog/comprehensive-guide-to-the-l9110s-motor-driver-technical-insights-and-applications.jsp)
+
+### TB6612FNG 
+[Simple 2 Wheel ESP32 Robot Using the TB6612FNG Dual Motor Controller](https://www.instructables.com/Simple-2-Wheel-ESP32-Robot-Using-the-TB6612FNG-Dua/)

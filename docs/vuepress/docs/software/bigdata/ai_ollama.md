@@ -22,6 +22,7 @@ Models:
 
 + Deepseek
     - [越狱版huihui_ai/deepseek-r1-abliterated](https://ollama.com/huihui_ai/deepseek-r1-abliterated)
+    `ollama run huihui_ai/deepseek-r1-abliterated`
 + other
 
 

@@ -813,6 +813,9 @@ void loop()
 
 ### [ESP32 Smart Car]((/software/hardware/kid_edu/esp32_smart_car.md))
 
+### ESP32 Robot Arm
+[ESP32 Micro Robot Arm](https://www.instructables.com/ESP32-Micro-Robot-Arm/)
+
 ### ESP32 AI Robot
 https://www.hackster.io/longpth/esp32-cam-ai-robot-50173c
 https://github.com/lyhistory/tools_iot_aigc-ESP32CamAI

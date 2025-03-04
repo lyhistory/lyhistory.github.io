@@ -1,5 +1,5 @@
 制作材料：半导体
-## diodes
+## diodes 二极管
 
 https://www.youtube.com/watch?v=Fwj_d3uO5g8
 
@@ -24,6 +24,6 @@ voltage source
 + zener diode
 + light emitting diode
 
-## Triode
+## Triode 三极管
 
 ## MOS

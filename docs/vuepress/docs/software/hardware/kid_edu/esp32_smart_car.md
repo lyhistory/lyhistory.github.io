@@ -15,6 +15,7 @@
     - 超声波 [HC-SR04 Ultrasonic Sensor](https://randomnerdtutorials.com/esp32-hc-sr04-ultrasonic-arduino/)
 
 参考链接：
+[Arduino Obstacle Avoiding Robot Car 2WD With AA Battery](https://www.instructables.com/Arduino-Obstacle-Avoiding-Robot-Car-2WD-With-AA-Ba/)
 [YFROBOT Motor Driver Library for Arduino 可用模块： L298P / PM-R3 / MD01 / MD02 / MD03 / MD04 / MD_GB36 / IIC_MOTORDRIVER / IIC_MOTORDRIVER_RZ7889 小车套件： VALON / 4WD Mecanum Wheel](https://github.com/YFROBOT-TM/Yfrobot-Motor-Driver-Library)
 
 [由 ESP32 驱动的 FPV 汽车](https://www.espressif.com/zh-hans/news/ESP32_Powered_FPV_Car)
@@ -403,6 +404,7 @@ Search on GitHub: Similarly, you can search for "ESP32 Joystick TFT control" or 
 + [超声波 HC-SR04 Ultrasonic Sensor](https://www.instructables.com/Distance-Measurement-Using-HC-SR04-Via-NodeMCU/)
 + ESP8266
 + [L298N电机驱动](https://randomnerdtutorials.com/esp32-dc-motor-l298n-motor-driver-control-speed-direction/)
++ 废旧7000mAh充电宝+升压模块（淘宝DP2 15W）
 + todo [SG90舵机云台](https://www.techcoil.com/blog/how-to-control-a-sg90-servo-motor-with-the-esp8266-nodemcu-lua-development-board/)
 + todo ESP23CAM
 
@@ -416,18 +418,18 @@ Search on GitHub: Similarly, you can search for "ESP32 Joystick TFT control" or 
 ESP8266  --------------  超声波 HC-SR04 
 3.3V    -------------------------   VCC
 GND -------------------------   GND
-D8  -------------------------   Trigger Pin
-D7  -------------------------   Echo Pin
+D3  -------------------------   Trigger Pin
+D4|  -------------------------   Echo Pin
 
 ESP8266  --------------  L298N电机驱动
 VIN -------------------------   5V (电机给ESP供电)
 GND -------------------------   GND
 D6  -------------------------   ENA 
-D5  -------------------------   IN1	(motorPinA1)
-D4  -------------------------   IN2	(motorPinA2)
-D3  -------------------------   IN3 (motorPinB2)
-D2  -------------------------   IN4 (motorPinB1)
-D1  -------------------------   ENB
+D8  -------------------------   IN1	(motorPinA1)
+D7  -------------------------   IN2	(motorPinA2)
+D2  -------------------------   IN3 (motorPinB2)
+D1  -------------------------   IN4 (motorPinB1)
+D5  -------------------------   ENB
  
 
 电机 -------------- L298N电机驱动
@@ -443,6 +445,10 @@ D1  -------------------------   ENB
 
 ```
 #### 遥控接线和代码
+
+遥控器现成开源产品：
++ M5Stack M5At
++ M5Stack JoyC+M5StickC
 
 接线
 ```
@@ -1124,3 +1130,15 @@ pwm分频可以小点，这样频率高出20000hz就听不到了
 
 ### L298N两边电机不一致
 原来是一边加了注释，一边没加，可能导致执行快慢有区别，最好是计算好两个轮子的功率后，同时赋值，给pin输出的逻辑之间间隔太久
+
+### 电机智能往前不能往后
+esp8266:
+// Motor B
+int motorPinB1 = D2; 
+int motorPinB2 = D3; 
+int enablePinB = D1;
+
+无法后退，可能是D3这个引脚比较特殊: Enters flash mode if LOW at boot，其他的特殊引脚比如：
+❌ GPIO2 (D4) → Must be HIGH at boot. May cause instability.
+❌ GPIO9 (SD2) & GPIO10 (SD3) → Connected to Flash Memory.
+❌ GPIO16 (D0) → No PWM support, only Digital I/O.
