@@ -319,6 +319,9 @@ void loop() {
 | **QuecOpen**   | Quectel提供的开发平台固件                                           | - 提供高级API和功能<br>- 支持二次开发                               | 工业物联网、车联网、远程监控         |
 | **自定义固件** | 用户根据需求开发的固件                                               | - 高度定制化<br>- 适合特定应用场景                                  | 特殊需求项目、科研开发               |
 
+#### 遥控器现成开源产品
++ M5Stack M5At
++ M5Stack JoyC+M5StickC
 
 ### Transmitter with Joysticks 
 
@@ -418,8 +421,8 @@ Search on GitHub: Similarly, you can search for "ESP32 Joystick TFT control" or 
 ESP8266  --------------  超声波 HC-SR04 
 3.3V    -------------------------   VCC
 GND -------------------------   GND
-D3  -------------------------   Trigger Pin
-D4|  -------------------------   Echo Pin
+D4  -------------------------   Trigger Pin
+D3|  -------------------------   Echo Pin
 
 ESP8266  --------------  L298N电机驱动
 VIN -------------------------   5V (电机给ESP供电)
@@ -445,10 +448,6 @@ D5  -------------------------   ENB
 
 ```
 #### 遥控接线和代码
-
-遥控器现成开源产品：
-+ M5Stack M5At
-+ M5Stack JoyC+M5StickC
 
 接线
 ```
@@ -485,9 +484,148 @@ GND  -------------------   按钮模块的VCC
 
 ```
 
-代码
+代码(mixly 代码，待翻译成esp32版本)
 ```
 
+#include <U8g2lib.h>
+#include <Wire.h>
+#include <WiFi.h>
+#include <WifiEspNow.h>
+#include <SimpleTimer.h>
+
+U8G2_SH1106_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, U8X8_PIN_NONE);
+volatile int Y轴;
+volatile int X轴;
+volatile int 上旋钮;
+volatile int 下旋钮;
+volatile int 按钮;
+String 数据;
+String 挡位;
+volatile int 功率修正值;
+String 修正方向;
+uint8_t PEER_5CCF7F0A77FB[] = {0x5C, 0xCF, 0x7F, 0x0A, 0x77, 0xFB};
+
+SimpleTimer timer;
+
+void page1() {
+  u8g2.setFont(u8g2_font_timR10_tf);
+  u8g2.setFontPosTop();
+  u8g2.setCursor(0,0);
+  u8g2.print(数据);
+  u8g2.setFont(u8g2_font_timB24_tf);
+  u8g2.setFontPosTop();
+  u8g2.setCursor(15,30);
+  u8g2.print(挡位);
+  u8g2.setCursor(60,30);
+  u8g2.print(修正方向);
+  u8g2.setCursor(80,30);
+  u8g2.print(功率修正值);
+}
+
+bool sendMessage(uint8_t *macAddress, String _data) {
+  bool ok = WifiEspNow.addPeer(macAddress, 0, nullptr, WIFI_IF_STA);
+  if (!ok) return false;
+  uint16_t length = _data.length();
+  char _msg[length];
+  strcpy(_msg, _data.c_str());
+  return WifiEspNow.send(macAddress, reinterpret_cast<const uint8_t*>(_msg), length);
+}
+
+void Simple_timer_1() {
+  if (digitalRead(25)) {
+    挡位 = "A";
+
+  } else {
+    if (上旋钮 < 33) {
+      挡位 = "0";
+
+    } else {
+      if (上旋钮 >= 33 && 上旋钮 < 66) {
+        挡位 = "1";
+
+      } else {
+        挡位 = "2";
+
+      }
+
+    }
+
+  }
+  if (下旋钮 < 40) {
+    修正方向 = "A";
+    功率修正值 = (map(下旋钮, 0, 39, 40, 1));
+
+  } else {
+    if (下旋钮 > 59) {
+      修正方向 = 'B';
+      功率修正值 = (map(下旋钮, 60, 99, 1, 40));
+
+    } else {
+      修正方向 = "0";
+      功率修正值 = 0;
+
+    }
+
+  }
+  u8g2.firstPage();
+  do
+  {
+    page1();
+  }while(u8g2.nextPage());
+}
+
+void setup(){
+  u8g2.setI2CAddress(0x3C*2);
+  u8g2.begin();
+  pinMode(26, OUTPUT);
+  pinMode(27, OUTPUT);
+  pinMode(14, OUTPUT);
+  pinMode(12, OUTPUT);
+  Y轴 = 0;
+  X轴 = 0;
+  上旋钮 = 0;
+  下旋钮 = 0;
+  按钮 = 0;
+  数据 = "";
+  挡位 = "";
+  功率修正值 = 0;
+  修正方向 = "";
+  digitalWrite(26,HIGH);
+  digitalWrite(27,HIGH);
+  digitalWrite(14,HIGH);
+  digitalWrite(12,HIGH);
+  u8g2.enableUTF8Print();
+
+  pinMode(25, INPUT);
+
+  WiFi.mode(WIFI_STA);
+
+  Serial.print("当前设备MAC:");
+  Serial.println(WiFi.macAddress());
+
+  bool ok = WifiEspNow.begin();
+  if (!ok) {
+    Serial.println("WifiEspNow初始化失败");
+    ESP.restart();
+  }
+  timer.setInterval(100L, Simple_timer_1);
+
+}
+
+void loop(){
+  Y轴 = (map(analogRead(34), 0, 4095, 0, 99));
+  X轴 = (map(analogRead(35), 0, 4095, 0, 99));
+  上旋钮 = (map(analogRead(32), 0, 4095, 0, 99));
+  下旋钮 = (map(analogRead(33), 0, 4095, 0, 99));
+  按钮 = digitalRead(25);
+  数据 = String(按钮) + String(Y轴) + String("Y") + String(X轴) + String("X") + String(上旋钮) + String("A") + String(下旋钮) + String("B");
+  if (sendMessage(PEER_5CCF7F0A77FB, 数据)) {
+  } else {
+  }
+
+  timer.run();
+
+}
 ```
 
 ### L298N => rz7889
@@ -1106,6 +1244,7 @@ void sendAT(const char* cmd, const char* expected, int timeout) {
 
 ## Troubleshooting
 
+
 ### L298N电机驱动蜂鸣声 beep buzz
 
 从[这个帖子](https://ask.csdn.net/questions/7475568)的评论得到启示
@@ -1142,3 +1281,61 @@ int enablePinB = D1;
 ❌ GPIO2 (D4) → Must be HIGH at boot. May cause instability.
 ❌ GPIO9 (SD2) & GPIO10 (SD3) → Connected to Flash Memory.
 ❌ GPIO16 (D0) → No PWM support, only Digital I/O.
+
+
+### A fatal esptool.py error occurred: Failed to connect to ESP8266: Timed out waiting for packet header
+由于前面遇到的问题，现在超声模块的连接是：
+
+```
+D3  -------------------------   Trigger Pin
+D4|  -------------------------   Echo Pin
+```
+
+遇到这个问题我一度以为是板子坏了，结果拔掉跟超声模块的连接后问题消失，怀疑是pin的连接问题：
+
+On the ESP8266, D3 is GPIO0 and D4 is GPIO2, and the ESP8266’s boot process requires these pins to be in specific states:
+
+- GPIO0 (D3) must be HIGH at boot for the ESP8266 to start normally (if it’s LOW, the chip goes into programming/flash mode).
+- GPIO2 (D4) also must be HIGH at boot.
+
+Here's what likely happened:
+
+Trigger on GPIO0: As an output, the trigger pin might be driven LOW (or pulled low by the HC-SR04 module) during boot. This violates the boot condition (GPIO0 must be HIGH), causing the ESP8266 to fail to boot properly or to enter flash mode—resulting in failed uploads.
+Echo on GPIO2: Even if the echo pin behaves normally, if GPIO0 isn’t in the correct state, the board won’t boot as expected.
+
+解决方案：
+AI 回答说可以：
+Use an external pull-up resistor (e.g., 10kΩ to 3.3V) to keep it HIGH at boot.
+不过我尝试没有成功，
+
+然后自己尝试了调换 D3 和 D4 成功了
+```
+D4  -------------------------   Trigger Pin
+D3  -------------------------   Echo Pin
+```
+
+至于原因，这是AI的回答：
+Swapping the pins can change how the sensor’s output affects the ESP8266’s boot conditions—even though both GPIO0 (D3) and GPIO2 (D4) ideally should be high at boot. Here’s a more detailed explanation:
+
+1. Different Pin Roles (Input vs. Output):
+
+In your original setup, you had the Trigger on D3 (GPIO0) and the Echo on D4 (GPIO2).
+The Trigger pin is an output from the ESP8266, so you actively drive it. In contrast, the Echo pin is an input that the HC-SR04 drives.
+Even if both pins are required to be high at boot, an input pin (Echo) might be influenced by the sensor’s characteristics (for example, if the sensor’s output is low or floating) more than an output pin (Trigger), which is actively driven by your code.
+
+2. Internal Pull-up Differences:
+
+GPIO0 (D3) typically has a weak internal pull-up, but when it is used as an input (Echo), it might more reliably be pulled high by an external resistor or the sensor’s circuitry.
+GPIO2 (D4), while also needing to be high at boot, can be more sensitive to external circuitry. If the sensor’s Echo output isn’t actively driven high (or if it has a tendency to be low when idle), it might force GPIO2 to remain low, preventing a normal boot.
+
+3. Sensor Output Characteristics:
+
+The HC-SR04’s Echo pin may not output a solid HIGH level when idle—its output can be weak or even low if nothing is triggering it.
+When you connect this potentially “low” signal to GPIO2 (D4), the ESP8266 might interpret that as a violation of its boot condition.
+Swapping the pins means the Echo signal is now on GPIO0 (D3). In this configuration, if GPIO0’s internal pull-up (or an external pull-up if used) manages to keep the pin high despite the sensor’s output, the board can boot normally.
+Practical Outcome:
+
+Original configuration (Trigger on D3, Echo on D4): The Echo signal on D4 may be inadvertently pulling GPIO2 low during boot, causing upload failures.
+Swapped configuration (Trigger on D4, Echo on D3): The Echo signal on D3 is less likely to drop below the necessary HIGH threshold (due to internal/external pull-up properties or the sensor’s output characteristics), allowing the ESP8266 to boot and upload code properly.
+
+In short, swapping D3 and D4 works because the behavior of the sensor’s Echo output on those two pins is different—likely due to differences in internal pull-up strength and how the sensor interacts with each pin. Even though both pins are required to be high at boot, the sensor’s output may affect one pin (GPIO2/D4) more adversely than the other (GPIO0/D3) when left in its default state.

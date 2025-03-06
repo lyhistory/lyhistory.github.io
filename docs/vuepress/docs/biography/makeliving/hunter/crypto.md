@@ -1034,7 +1034,7 @@ A mention graph is useful as many mentions of a project can boost a meme coin's 
     - Bundle check
         - http://t.me/TrenchScannerBot
         - [@bubblemaps to make sure there are no connections between the wallets. ](https://bubblemaps.io/) https://photon-sol.tinyastro.io/ 集成了该功能
-
+        - @TTFBot
 
 + 社交媒體分析
     - @getmoni_io https://getmoni.io/
