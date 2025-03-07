@@ -828,6 +828,8 @@ https://ccnphfhqs21z.feishu.cn/wiki/F5krwD16viZoF0kKkvDcrZNYnhb
   https://github.com/78/xiaozhi-esp32/issues/119
   https://github.com/xinnan-tech/xiaozhi-esp32-server
 
+Partitions tables occupies 13.0MB of flash (13631488 bytes) which does not fit in configured flash size 2MB. Change the flash size in menuconfig under the 'Serial Flasher Config' menu.
+
 ### ESP32 Mini Smart Farm 
 https://www.elec-cafe.com/esp32-mini-smart-farm-micropython/
 

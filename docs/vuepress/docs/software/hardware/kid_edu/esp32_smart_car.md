@@ -422,7 +422,7 @@ ESP8266  --------------  超声波 HC-SR04
 3.3V    -------------------------   VCC
 GND -------------------------   GND
 D4  -------------------------   Trigger Pin
-D3|  -------------------------   Echo Pin
+D0  -------------------------   Echo Pin
 
 ESP8266  --------------  L298N电机驱动
 VIN -------------------------   5V (电机给ESP供电)
@@ -443,8 +443,357 @@ D5  -------------------------   ENB
 
 
 ```
+
 代码
 ```
+
+#include <ESP8266WiFi.h>
+#include <espnow.h>
+
+volatile int enableAvoidCollision;
+volatile int joystickYMedian;
+volatile int joystickXMedian;
+volatile int joystickY;
+volatile int joystickX;
+volatile int rotationSensorSpeed;
+volatile int rotationSensorSpeedAdj;
+volatile int connectionLostCountdown;
+volatile int motorASpeed;
+volatile int motorBSpeed;
+volatile int motorASpeedAdj;
+volatile int motorBSpeedAdj;
+
+unsigned long lastTrigger = 0;
+#define timeSeconds 10
+
+const int trigPin = D4;
+const int echoPin = D0;
+
+//define sound speed in cm/uS
+#define SOUND_SPEED 0.034
+#define CM_TO_INCH 0.393701
+
+long duration;
+float distanceCm;
+
+// Motor A
+int motorPinA1 = D8; 
+int motorPinA2 = D7; 
+int enablePinA = D6; 
+
+// Motor B
+int motorPinB1 = D1; 
+int motorPinB2 = D2; 
+int enablePinB = D5;
+
+uint8_t motorPinA1Val;
+uint8_t motorPinA2Val;
+int enablePinAVal;
+uint8_t motorPinB1Val;
+uint8_t motorPinB2Val;
+int enablePinBVal;
+
+void OnDataRecv(uint8_t * mac, uint8_t *incomingData, uint8_t len) {
+  //Serial.printf("Recived Message from MAC:%02X:%02X:%02X:%02X:%02X:%02X\n", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+  String message = "";
+  for (int i = 0; i < static_cast<int>(len); i++) {
+    message += String(static_cast<char>(incomingData[i]));
+  }
+  enableAvoidCollision = String(String(message).substring(0,1)).toInt();
+  joystickY = String(String(message).substring(1,String(message).indexOf(String("Y")))).toInt();
+  joystickX = String(String(message).substring((String(message).indexOf(String("Y")) + 1),String(message).indexOf(String("X")))).toInt();
+  rotationSensorSpeed = String(String(message).substring((String(message).indexOf(String("X")) + 1),String(message).indexOf(String("A")))).toInt();
+  rotationSensorSpeedAdj = String(String(message).substring((String(message).indexOf(String("A")) + 1),String(message).indexOf(String("B")))).toInt();
+  //046Y45X90A44B
+  // sscanf((char*)incomingData, "%1d%2dY%2dX%2dA%2dB", 
+  //      &enableAvoidCollision, &joystickY, &joystickX, 
+  //      &rotationSensorSpeed, &rotationSensorSpeedAdj);
+    
+  connectionLostCountdown = 10;
+  lastTrigger = millis();
+  RemoteControlMotorsLogic();
+}
+
+void ConnectionLostCountdownTimer() {
+  if (millis() - lastTrigger >= (timeSeconds*1000)) { 
+    if (connectionLostCountdown > 0) {
+      connectionLostCountdown = connectionLostCountdown - 1;
+
+    }
+    if (connectionLostCountdown == 0) {
+      motorASpeed = 0;
+      motorBSpeed = 0;
+      enableAvoidCollision = 0;
+      // Serial.println("Motion stopped...");
+    }
+  }
+}
+// 0-37 move forward(0 fast, 37 slow)
+// 38-48 STOP (median-4, median+4)
+// 48-99 move backward (99 fast, 48 slow)
+void RemoteControlMotorsLogic() {
+  if (joystickY < joystickYMedian - 4) {
+    if (joystickX > joystickXMedian + 4) {
+      motorASpeed = (map(joystickY, 37, 0, 0, 255)) + (map(joystickX, 49, 99, 0, 255));
+      motorBSpeed = (map(joystickY, 37, 0, 0, 255)) - (map(joystickX, 49, 99, 0, 255));
+
+    }
+    if (joystickX >= joystickXMedian - 4 && joystickX <= joystickXMedian + 4) {
+      motorBSpeed = (map(joystickY, 37, 0, 0, 255));
+      motorASpeed = (map(joystickY, 37, 0, 0, 255));
+
+    }
+    if (joystickX < joystickXMedian - 4) {
+      motorASpeed = (map(joystickY, 37, 0, 0, 255)) + (map(joystickX, 37, 0, 0, (-256)));
+      motorBSpeed = (map(joystickY, 37, 0, 0, 255)) - (map(joystickX, 37, 0, 0, (-256)));
+
+    }
+
+  }
+  if (joystickY >= joystickYMedian - 4 && joystickY <= joystickYMedian + 4) {
+    if (joystickX > joystickXMedian + 4) {
+      motorASpeed = (map(joystickX, 49, 99, 0, 255));
+      motorBSpeed = (map(joystickX, 49, 99, 0, (-256)));
+
+    }
+    if (joystickX >= joystickXMedian - 4 && joystickX <= joystickXMedian + 4) {
+      motorASpeed = 0;
+      motorBSpeed = 0;
+
+    }
+    if (joystickX < joystickXMedian - 4) {
+      motorASpeed = (map(joystickX, 37, 0, 0, (-256)));
+      motorBSpeed = (map(joystickX, 37, 0, 0, 255));
+
+    }
+
+  }
+  if (joystickY > joystickYMedian + 4) {
+    if (joystickX > joystickXMedian + 4) {
+      motorASpeed = (map(joystickY, 49, 99, 0, (-256))) - (map(joystickX, 49, 99, 0, 255));
+      motorBSpeed = (map(joystickY, 49, 99, 0, (-256))) + (map(joystickX, 49, 99, 0, 255));
+
+    }
+    if (joystickX >= joystickXMedian - 4 && joystickX <= joystickXMedian + 4) {
+      motorBSpeed = (map(joystickY, 49, 99, 0, (-256)));
+      motorASpeed = (map(joystickY, 49, 99, 0, (-256)));
+
+    }
+    if (joystickX < joystickXMedian - 4) {
+      motorASpeed = (map(joystickY, 49, 99, 0, (-256))) - (map(joystickX, 37, 0, 0, (-256)));
+      motorBSpeed = (map(joystickY, 49, 99, 0, (-256))) + (map(joystickX, 37, 0, 0, (-256)));
+
+    }
+
+  }
+}
+
+void AvoidCollision() {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  // Reads the echoPin, returns the sound wave travel time in microseconds
+  duration = pulseIn(echoPin, HIGH);
+  // Calculate the distance
+  distanceCm = duration * SOUND_SPEED/2;
+  Serial.print("Distance (cm): ");
+  Serial.println(distanceCm);
+  if (distanceCm <= 40) {
+    motorPinA1Val=HIGH;
+    motorPinA2Val=LOW;
+    enablePinAVal=map(constrain(180, 0, 255), 0, 255, 0, 1023);
+    motorPinB1Val=LOW;
+    motorPinB2Val=HIGH;
+    enablePinBVal=map(constrain(180, 0, 255), 0, 255, 0, 1023);
+  }else {
+    motorPinA1Val=HIGH;
+    motorPinA2Val=LOW;
+    enablePinAVal=map(constrain(200, 0, 255), 0, 255, 0, 1023);
+    motorPinB1Val=HIGH;
+    motorPinB2Val=LOW;
+    enablePinBVal=map(constrain(200, 0, 255), 0, 255, 0, 1023);
+  }
+  Serial.print("enablePinAVal:");
+  Serial.println(enablePinAVal);
+  Serial.print("enablePinBVal:");
+  Serial.println(enablePinBVal);
+  digitalWrite(motorPinA1, motorPinA1Val);
+  digitalWrite(motorPinA2, motorPinA2Val);
+  analogWrite(enablePinA, enablePinAVal);
+  
+  digitalWrite(motorPinB1, motorPinB1Val);
+  digitalWrite(motorPinB2, motorPinB2Val);
+  analogWrite(enablePinB, enablePinBVal);
+}
+
+void SetMotorDirectionSpeed(){
+  if (rotationSensorSpeedAdj < 40) {
+    motorASpeedAdj = (map(rotationSensorSpeedAdj, 0, 39, 120, 3));
+    motorBSpeedAdj = (map(rotationSensorSpeedAdj, 0, 39, (-120), (-3)));
+  } else {
+    if (rotationSensorSpeedAdj > 59) {
+      motorASpeedAdj = (map(rotationSensorSpeedAdj, 60, 99, (-3), (-120)));
+      motorBSpeedAdj = (map(rotationSensorSpeedAdj, 60, 99, 3, 120));
+    } else {
+      motorASpeedAdj = 0;
+      motorBSpeedAdj = 0;
+    }
+  }
+  // Gear0
+  if (rotationSensorSpeed < 33) {
+    motorPinA1Val=LOW;
+    motorPinA2Val=LOW;
+    enablePinAVal=0;
+    motorPinB1Val=LOW;
+    motorPinB2Val=LOW;
+    enablePinBVal=0;
+  }
+  // Gear1
+  if (rotationSensorSpeed >= 33 && rotationSensorSpeed < 66) {
+    
+    if (motorBSpeed > 0) {
+      motorPinA1Val=HIGH;
+      motorPinA2Val=LOW;
+      enablePinAVal=map(constrain(motorBSpeed + motorBSpeedAdj, 0, 255), 0, 255, 0, 1023);
+    } else if (motorBSpeed < 0) {
+      motorPinA1Val=LOW;
+      motorPinA2Val=HIGH;
+      enablePinAVal=map(constrain(abs(motorBSpeed - motorBSpeedAdj), 0, 255), 0, 255, 0, 1023);
+    } else {
+      motorPinA1Val=LOW;
+      motorPinA2Val=LOW;
+      enablePinAVal=0;
+    }
+    
+    if (motorASpeed > 0) {
+      motorPinB1Val=HIGH;
+      motorPinB2Val=LOW;
+      enablePinBVal=map(constrain(motorASpeed + motorASpeedAdj, 0, 255), 0, 255, 0, 1023);
+    } else if (motorASpeed < 0) {
+      motorPinB1Val=LOW;
+      motorPinB2Val=HIGH;
+      enablePinBVal=map(constrain(abs(motorASpeed - motorASpeedAdj), 0, 255), 0, 255, 0, 1023);
+    } else {
+      motorPinB1Val=LOW;
+      motorPinB2Val=LOW;
+      enablePinBVal=0;
+    }
+  }
+  // Gear2
+  if (rotationSensorSpeed >= 66) {
+    
+    if (motorBSpeed > 0) {
+      motorPinA1Val=HIGH;
+      motorPinA2Val=LOW;
+      enablePinAVal=map(constrain(motorBSpeed + motorBSpeedAdj, 0, 255), 0, 255, 0, 1023);
+
+    } else if (motorBSpeed < 0) {
+      motorPinA1Val=LOW;
+      motorPinA2Val=HIGH;
+      enablePinAVal=map(constrain(abs(motorBSpeed - motorBSpeedAdj), 0, 255), 0, 100, 0, 1023);
+
+    } else {
+      motorPinA1Val=LOW;
+      motorPinA2Val=LOW;
+      enablePinAVal=0;
+    }
+
+    if (motorASpeed > 0) {
+      motorPinB1Val=HIGH;
+      motorPinB2Val=LOW;
+      enablePinBVal=map(constrain(motorASpeed + motorASpeedAdj, 0, 255), 0, 255, 0, 1023);
+    } else if (motorASpeed < 0) {
+      motorPinB1Val=LOW;
+      motorPinB2Val=HIGH;
+      enablePinBVal=map(constrain(abs(motorASpeed - motorASpeedAdj), 0, 255), 0, 100, 0, 1023);
+    } else {
+      motorPinB1Val=LOW;
+      motorPinB2Val=LOW;
+      enablePinBVal=0;
+    }
+  }
+
+  // Serial.print("enablePinAVal:");
+  // Serial.println(enablePinAVal);
+  // Serial.print("enablePinBVal:");
+  // Serial.println(enablePinBVal);
+  digitalWrite(motorPinA1, motorPinA1Val);
+  digitalWrite(motorPinA2, motorPinA2Val);
+  analogWrite(enablePinA, enablePinAVal);
+
+  digitalWrite(motorPinB1, motorPinB1Val);
+  digitalWrite(motorPinB2, motorPinB2Val);
+  analogWrite(enablePinB, enablePinBVal);
+}
+void setup(){
+  Serial.begin(115200);
+  enableAvoidCollision = 0;
+  joystickYMedian = 43;
+  joystickXMedian = 43;
+  joystickY = 43;
+  joystickX = 43;
+  rotationSensorSpeed = 0;
+  rotationSensorSpeedAdj = 0;
+  connectionLostCountdown = 0;
+  motorASpeed = 0;
+  motorBSpeed = 0;
+  motorASpeedAdj = 0;
+  motorBSpeedAdj = 0;
+
+  Serial.println("Starting setup...");                                                                                                                                                                                                                                                                                                                          
+  delay(10000);
+  Serial.println("Setup complete.");
+
+  // Set device as a Wi-Fi Station
+  WiFi.mode(WIFI_STA);
+
+  //WiFi.persistent(false);
+  //WiFi.mode(WIFI_AP);
+  //WiFi.disconnect();
+  //WiFi.softAP("ESPNOW", nullptr, 3);
+  //WiFi.softAPdisconnect(false);
+
+  Serial.print("Device MAC:");
+  Serial.println(WiFi.softAPmacAddress());
+
+  // Init ESP-NOW
+  if (esp_now_init() != 0) {
+    Serial.println("Error initializing ESP-NOW");
+    ESP.restart();
+    //return;
+  }
+
+  // Once ESPNow is successfully Init, we will register for recv CB to
+  // get recv packer info
+  esp_now_set_self_role(ESP_NOW_ROLE_SLAVE);
+  esp_now_register_recv_cb(OnDataRecv);
+
+  pinMode(motorPinA1, OUTPUT);
+  pinMode(motorPinA2, OUTPUT);
+  pinMode(enablePinA, OUTPUT);
+  pinMode(motorPinB1, OUTPUT);
+  pinMode(motorPinB2, OUTPUT);
+  pinMode(enablePinB, OUTPUT);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+
+  // Set PWM frequency to 25 kHz (above the audible range)
+  analogWriteFreq(25000);
+  // Optionally set PWM resolution; default range is 1023 on ESP8266 (10-bit resolution)
+  analogWriteRange(1023);
+
+}
+
+void loop(){
+  ConnectionLostCountdownTimer();
+  if (enableAvoidCollision) {
+    AvoidCollision();
+  } else {
+    SetMotorDirectionSpeed();
+  }
+}
 
 ```
 #### 遥控接线和代码
@@ -1339,3 +1688,87 @@ Original configuration (Trigger on D3, Echo on D4): The Echo signal on D4 may be
 Swapped configuration (Trigger on D4, Echo on D3): The Echo signal on D3 is less likely to drop below the necessary HIGH threshold (due to internal/external pull-up properties or the sensor’s output characteristics), allowing the ESP8266 to boot and upload code properly.
 
 In short, swapping D3 and D4 works because the behavior of the sensor’s Echo output on those two pins is different—likely due to differences in internal pull-up strength and how the sensor interacts with each pin. Even though both pins are required to be high at boot, the sensor’s output may affect one pin (GPIO2/D4) more adversely than the other (GPIO0/D3) when left in its default state.
+
+### ESP8266无法启动
+
+发现 serial monitor没有任何输出，setup和loop貌似没有执行，怀疑根本没启动，发现是因为为了解决上面上传代码的问题调换了接线：
+```
+D4  -------------------------   Trigger Pin
+D3  -------------------------   Echo Pin
+```
+现在代码可以上传了，但是无法启动
+
+
+AI回答原因：
+
+The ESP8266’s boot process is very sensitive to the state of certain GPIO pins, particularly GPIO0 (commonly D3) and GPIO2 (commonly D4). Here’s what that means and why your wiring might be affecting boot-up:
+- GPIO0 (D3) and GPIO2 (D4) must be in a specific state (usually pulled HIGH) during power-up for the ESP8266 to exit the bootloader and start running your user code.
+- If one or both of these pins are pulled LOW at boot, the ESP8266 may enter flash/programming mode (or fail to boot normally). This means it could get stuck in the bootloader, never fully starting your application.
+
+D3 (GPIO 0) is connected to the Echo pin: The HC-SR04’s Echo pin is an output that starts LOW when idle (before a measurement is triggered). This could pull GPIO 0 LOW during boot, preventing the ESP8266 from starting normally.
+D4 (GPIO 2) is connected to the Trigger pin: The Trigger pin is an input to the HC-SR04 and should be floating or HIGH when idle, so this is less likely to cause an issue unless there’s a wiring problem.
+The most probable culprit is D3 (GPIO 0) being held LOW by the Echo pin, forcing the ESP8266 into a non-bootable state.
+
+尝试解决方案：
+
+AI说可以尝试 pull up 10kΩ resistor，就是在D3和vcc（3.3v）之间加一个10kΩ的电阻，加上后还是没反应，我测了下此时D3的电压，只有0.2v左右，
+又换成220Ω的，只升了一点点0.25v
+With the 10kΩ pull-up, D3 was 0.2V. With 220Ω, it’s now 0.25V—slightly higher, but still far below the ~2V needed for the ESP8266 to boot normally.
+
+Voltage Divider Effect:
+The HC-SR04 Echo pin, when idle (LOW), acts like a low-impedance path to GND (likely <100Ω).
+With a 220Ω pull-up to 3.3V, the voltage on D3 is determined by the divider:
+V_D3 = 3.3V * (R_Echo / (220Ω + R_Echo)), where R_Echo is the Echo pin’s effective resistance when LOW.
+Solving for R_Echo:
+0.25V = 3.3V * (R_Echo / (220Ω + R_Echo))
+=>
+R_Echo ≈ 18Ω.
+
+The HC-SR04 Echo pin’s LOW state has an effective impedance of ~18Ω—extremely low! This explains why even 220Ω (15mA pull-up current) can’t lift D3 above 0.25V.
+
+Why 220Ω Isn’t Enough
+Current: 220Ω provides 3.3V / 220Ω = 15mA to pull D3 HIGH. The Echo pin sinks almost all of this to GND through its ~18Ω impedance, leaving D3 near 0V.
+
+多少欧合适？
+Idea: Use a lower resistance to provide more current and raise D3’s voltage above 2V.
+Calculation: To get >2V with R_Echo ≈ 18Ω:
+V_D3 = 3.3V * (18Ω / (R_pullup + 18Ω)) > 2V
+=>
+R_pullup < 11.7Ω.
+
+潜在问题 Problem: Even 110Ω isn’t enough, and 10Ω (330mA!) risks overheating the resistor or stressing the HC-SR04’s Echo pin (max current ~20-40mA).
+
+所以pull up方案即使可以，高出这么多的电流有可能会让传感器挂掉
+
+最终解决方案
+
+```
+D4  -------------------------   Trigger Pin
+D0  -------------------------   Echo Pin
+```
+
+### esp8266不断重启
+
+观察到 esp8266 后面的蓝色led rear blue led 总会突然熄灭
+
+When motors or other loads suddenly draw extra current, the supply voltage can drop. This can cause the ESP8266 (and its peripherals, like the LED) to reset or behave erratically.
+
+我用的是一个废旧的充电宝加上一个升压模块，很有可能是输出不稳定，当电机工作时会突然导致重启
+
+Make sure your power supply can handle the peak current required by the motors. Consider adding a capacitor (e.g., a 470µF or 1000µF electrolytic capacitor) across the power supply near the ESP8266 to help smooth out transients.
+
+
+### esp-now遥控延迟
+
+Possible Causes:
+
+- Radio Interference/Environment:
+  ESP-NOW is designed for low latency, but in a noisy RF environment or with many obstacles, latency can increase.
+- Processing Overhead:
+  If your code (such as sensor readings, string parsing, or collision logic) takes significant time, it might delay handling incoming ESP-NOW messages.
+- ESP8266 Limitations:
+  The ESP8266 is less robust than the ESP32 in handling concurrent tasks, so heavy code in the loop() might introduce delays.
+
+Optimizing Code:
+Simplify message parsing (e.g., using sscanf() instead of multiple String operations) and try to offload heavy tasks or optimize collision detection logic to reduce delays.
+
