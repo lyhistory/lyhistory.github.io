@@ -37,14 +37,14 @@ https://docs.espressif.com/projects/esp-idf/en/latest/esp32c3/get-started/index.
 #### ESP32-C3-DevKitM-1 (ESP32-C3-MINI-1)
 ESP32-C3-DevKitM-1 is an entry-level development board based on ESP32-C3-MINI-1, a module named for its small size. This board integrates complete Wi-Fi and Bluetooth LE functions.
 
-[EN-pinout](https://docs.espressif.com/projects/esp-idf/en/v5.0/esp32c3/hw-reference/esp32c3/user-guide-devkitm-1.html)
+[ESP32-C3-DevKitM-1 EN-pinout](https://docs.espressif.com/projects/esp-idf/en/v5.0/esp32c3/hw-reference/esp32c3/user-guide-devkitm-1.html)
 
 [中文-管脚](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32c3/hw-reference/esp32c3/user-guide-devkitm-1.html?highlight=esp32%20c3%20devkitm%201%20v1%20pinout)
 
 #### ESP32-C3-DevKitC-02 (ESP32-C3-WROOM-02)
 ESP32-C3-DevKitC-02 is an entry-level development board based on ESP32-C3-WROOM-02, a general-purpose module with 4 MB SPI flash. This board integrates complete Wi-Fi and Bluetooth LE functions.
 
-[pinout](https://docs.espressif.com/projects/esp-idf/en/v5.0/esp32c3/hw-reference/esp32c3/user-guide-devkitc-02.html?highlight=esp32%20c3%20wroom)
+[ESP32-C3-DevKitC-02 pinout](https://docs.espressif.com/projects/esp-idf/en/v5.0/esp32c3/hw-reference/esp32c3/user-guide-devkitc-02.html?highlight=esp32%20c3%20wroom)
 
 ESP32 With Integrated OLED (WEMOS/Lolin)
 https://www.instructables.com/ESP32-With-Integrated-OLED-WEMOSLolin-Getting-Star/
@@ -62,6 +62,10 @@ https://docs.micropython.org/en/latest/esp32/quickref.html
 如需要安装核心板的硬件usb转串口驱动：
 https://www.wch.cn/products/CH340.html?from=list
 micropython的ESP32-C3固件注意有两个固件：https://micropython.org/download/
+
+#### ESP32-S3-DevKitC-1
+
+[ESP32-S3-DevKitC-1 PINOUT](https://docs.espressif.com/projects/esp-dev-kits/zh_CN/latest/esp32s3/esp32-s3-devkitc-1/user_guide.html)
 
 ## Core Libs 
 
@@ -124,7 +128,9 @@ Search for ESP32 and install the latest esp32 by Espressif Systems.
 3. Select Your Board:
 
 Tools → Board.
-example: Select ESP32C3 Dev Module (matches your ESP32-C3-DevKitM-1).
+example: 
+  Select ESP32C3 Dev Module (matches your ESP32-C3-DevKitM-1).
+  ESP32S3 Dev Module (matches your ESP32-S3-DevKitC-1 )
 
 4. Open Blink Example:
 
@@ -811,29 +817,13 @@ void loop()
 }
 ```
 
-### [ESP32 Smart Car]((/software/hardware/kid_edu/esp32_smart_car.md))
+### [ESP32 Smart Car](/software/hardware/kid_edu/esp32_smart_car.md)
 
 ### ESP32 Robot Arm
 [ESP32 Micro Robot Arm](https://www.instructables.com/ESP32-Micro-Robot-Arm/)
 
-### ESP32 AI Robot
-https://www.hackster.io/longpth/esp32-cam-ai-robot-50173c
-https://github.com/lyhistory/tools_iot_aigc-ESP32CamAI
+### [ESP32 AI Robot](/software/hardware/kid_edu/esp32_AI.md)
 
-小智项目：
-https://github.com/78/xiaozhi-esp32
-https://ccnphfhqs21z.feishu.cn/wiki/F5krwD16viZoF0kKkvDcrZNYnhb
-
-自定义后端：
-  https://github.com/78/xiaozhi-esp32/issues/119
-  https://github.com/xinnan-tech/xiaozhi-esp32-server
-
-Partitions tables occupies 13.0MB of flash (13631488 bytes) which does not fit in configured flash size 2MB. Change the flash size in menuconfig under the 'Serial Flasher Config' menu.
-
-
-Target 'esp32s3' specified on command line is not consistent with target 'esp32' in the environment.
-
-Solution: open a new terminal
 
 ### ESP32 Mini Smart Farm 
 https://www.elec-cafe.com/esp32-mini-smart-farm-micropython/

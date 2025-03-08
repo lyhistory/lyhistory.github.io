@@ -1637,10 +1637,12 @@ int enablePinB = D1;
 
 ```
 D3  -------------------------   Trigger Pin
-D4|  -------------------------   Echo Pin
+D4  -------------------------   Echo Pin
 ```
 
 遇到这个问题我一度以为是板子坏了，结果拔掉跟超声模块的连接后问题消失，怀疑是pin的连接问题：
+
+Note: D4 HIGH at boot connected to on-board LED, boot fails if pulled LOW
 
 On the ESP8266, D3 is GPIO0 and D4 is GPIO2, and the ESP8266’s boot process requires these pins to be in specific states:
 
@@ -1698,6 +1700,7 @@ D3  -------------------------   Echo Pin
 ```
 现在代码可以上传了，但是无法启动
 
+Note: D3 connected to FLASH button, boot fails if pulled LOW
 
 AI回答原因：
 
