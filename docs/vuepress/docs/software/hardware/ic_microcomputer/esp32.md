@@ -830,6 +830,11 @@ https://ccnphfhqs21z.feishu.cn/wiki/F5krwD16viZoF0kKkvDcrZNYnhb
 
 Partitions tables occupies 13.0MB of flash (13631488 bytes) which does not fit in configured flash size 2MB. Change the flash size in menuconfig under the 'Serial Flasher Config' menu.
 
+
+Target 'esp32s3' specified on command line is not consistent with target 'esp32' in the environment.
+
+Solution: open a new terminal
+
 ### ESP32 Mini Smart Farm 
 https://www.elec-cafe.com/esp32-mini-smart-farm-micropython/
 

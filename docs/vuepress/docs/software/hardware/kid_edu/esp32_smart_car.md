@@ -1740,12 +1740,50 @@ R_pullup < 11.7Ω.
 
 所以pull up方案即使可以，高出这么多的电流有可能会让传感器挂掉
 
-最终解决方案
+**最终解决方案**
 
 ```
 D4  -------------------------   Trigger Pin
 D0  -------------------------   Echo Pin
 ```
+
+附： 好奇pull up方案如果成功，HC-SR04如何在正常工作的时候把这个pin拉回低电平？
+
+据说是跟内部的transistor有关 When LOW: The HC-SR04 turns on an internal NPN transistor or MOSFET connected between Echo and GND. This creates a low-impedance path to ground
+
+1. Idle with Pull-Up (D3 Case)
+
+220Ω Pull-Up: With D3 at 0.25V, the 220Ω (15mA to 3.3V) and ~18Ω to GND form a divider, as we calculated. The transistor’s LOW state wins, but the pull-up keeps D3 above 0V.
+
+Stronger Pull-Up: If you used a much stronger pull-up (e.g., 10Ω, 330mA to 3.3V) to get D3 to 2V when idle:
+V_D3 = 3.3V * (18Ω / (10Ω + 18Ω)) ≈ 2.12V.
+
+This would indeed hold D3 above 2V, making boot possible.
+Problem: During operation, the same ~18Ω transistor would still pull against the 10Ω pull-up, keeping D3 at ~2.12V when LOW—not low enough for the ESP8266 to reliably detect as a logic LOW (<0.8V).
+
+2. Transistor’s Actual Behavior
+~18Ω is an Estimate: The 18Ω was derived from the idle state with a 220Ω pull-up. In reality, the transistor’s ON resistance (R_ON) is likely lower (e.g., 5-10Ω), and the 0.25V included some measurement or wiring factors. Without a pull-up (like on D0), it pulls closer to 0V.
+Active Drive: When the HC-SR04 switches Echo LOW, the transistor is fully ON, aiming for ~0V. With no pull-up, it achieves this. With a pull-up, the voltage depends on the resistor’s strength.
+
+3. Can It Pull LOW If Idle is 2V or 3.3V? Let’s test your hypothesis with scenarios:
+
+Scenario 1: Idle at 3.3V (Diode Isolation)
+Setup: Echo → Diode → D3, 220Ω pull-up to 3.3V. Idle D3 = 3.3V (diode blocks LOW).
+Operation:
+  Trigger: Echo goes HIGH, diode conducts, D3 ≈ 3.3V (or adjusted by divider).
+  Post-Pulse: Echo goes LOW (0V), but diode blocks, D3 stays 3.3V via pull-up.
+Issue: pulseIn() won’t work—it needs a HIGH-to-LOW transition. The diode prevents the LOW state, so duration = 0 or infinite.
+Fix: Remove the diode or use a buffer—D3 must see the LOW.
+
+Scenario 2: Idle at 2V (Strong Pull-Up)
+Setup: 10Ω pull-up to 3.3V, Echo on D3, idle V_D3 ≈ 2.12V (18Ω vs. 10Ω).
+Operation:
+  Trigger: Echo HIGH, D3 ≈ 3.3V.
+  Post-Pulse: Echo LOW, D3 back to 2.12V.
+Issue: 2.12V isn’t LOW (<0.8V) for the ESP8266. pulseIn() might not detect the transition, or it’ll misread the duration.
+Reality Check: Your D0 setup worked because no pull-up kept LOW near 0V.
+
+所以结论是行不通，即使可能成功boot成功，但是后续会阻止echo从高电平到低电平 无法正常工作
 
 ### esp8266不断重启
 
