@@ -1,0 +1,1 @@
+[30分钟 OpenClash 最强攻略，FakeIP 最佳部署，无DNS污染，无DNS泄露，自动选择、负载均衡，丝滑切换节点](https://www.youtube.com/watch?v=S2l_0g4EOHk)

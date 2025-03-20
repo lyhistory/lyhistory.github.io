@@ -1,6 +1,11 @@
 
 ## Animal Safari
 
+### Dogs
+which dog is the mom, tap it(you found the mom)
+tap the puppy to hear it bark
+looks like it's time to play fetch, thanks for reading with me
+
 ### Frog
 this is tree frogs, today we're going to learn about tree frogs, frog starts with the letter F, the letter F makes the F sound, can you say frog
 
@@ -30,9 +35,19 @@ what color is this snake
 
 the snake is hunting a frog, tap the frog
 
+### Seal pups
+
+which one is the seal pup, tap it( the sea pup is leaning with its mother)
+
+the seal pup is eating a fish, tap the fish
+
+we learned so much about seal pups, thanks for reading with me
+
 ### Otters
 
 what soud do you think sea otters make, tap it to find out
+
+
 
 
 ## birds
@@ -48,4 +63,41 @@ which bird has long beak
 which bird has a short legs
 which bird has long tail feathers
 
+## insects
 
+### buffterfly
+today we're going to read about butterflies
+
+tap the butterfly's antennae (you found the antennae)
+
+a butterfly's favorite food is the nectar
+
+the butterfly is laying eggs, tap the eggs
+
+the caterpillar changes into a butterfly, thanks for reading with me
+
+## plants
+
+these plants are carrots, what color are the carrots
+these plants are lettuce, what color are 
+thes plants are strawberries, what color are the 
+
+## Machines
+
+### Crane
+today we are going to read about cranes, crane start with the letter C , the letter c makes the 'k' sound, can you say crane, coolbins, I can't wait to learn about cranes, let's start reading
+
+the boom is so high in the air, tap the crane's boom
+
+the gantry cranes are near a ship,tap the ship (you found the ship)
+
+there are so many kinds of cranes, which is your favorite, my favorite is the floting cranes, thank you for reading with me
+
+
+## Others
+
+### pull push
+
+she is carrying fruits on her bike, tap the fruits
+tap and count the boys
+the camel doesn't want to move, tap the camel

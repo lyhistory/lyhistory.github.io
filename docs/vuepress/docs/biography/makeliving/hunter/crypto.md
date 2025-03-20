@@ -864,7 +864,16 @@ Add anti-detection measures for this bot and security
 现在又加上了验证码，所以不再可行
 
 ## Meme Trading （Copy Trade 跟买 & Sniper 狙击）
+
 ### 基本概念
+
+The term meme is a shortening (modeled on gene) of mimeme, which comes from Ancient Greek mīmēma (μίμημα; pronounced [míːmɛːma]), meaning 'imitated thing', itself from mimeisthai (μιμεῖσθαι, 'to imitate'), from mimos (μῖμος, 'mime').
+
+The word was coined by British evolutionary biologist Richard Dawkins in The Selfish Gene (1976) as a concept for discussion of evolutionary principles in explaining the spread of ideas and cultural phenomena. Examples of memes given in Dawkins' book include melodies, catchphrases, fashion, and the technology of building arches
+
+meme coin (also spelled memecoin) is a cryptocurrency that originated from an Internet meme or has some other humorous characteristic.
+
+
 + 内盘/外盘：
 
     当一个新项目使用自动发币工具 pump.fun 成功部署后，用户可以使用 sol去购买该项目的代币，
@@ -879,6 +888,72 @@ Add anti-detection measures for this bot and security
     MEV三明治攻击是指 MEV 机器人读取传入的交易信息并抢先执行订单，从而推高你买入时的代币价格，打开防夹模式可以有效防止三明治攻击。
 
 + 需要注意的是，所有Telegram bot都面临私钥是服务器托管的安全问题
+
++ 市值（market cap）
+
+市值 = 流通供应量 x 代币价格
+
++ FDV Fully diluted valuation (FDV) explained
+
+FDV = 总供应量 x 代币价格
+
+
+In the cryptocurrency world, FDV is the total estimated value of a project if all of its tokens — currently available and those still not released — were sold on the open market.
+
+例如，如果一个新项目的当前市值与最大加密货币的市值相比相对较小，但该项目的FDV却与那些成熟的加密货币的市值相当，这可能表明该项目目前被高估了。
+
+what's bundler? https://www.youtube.com/watch?v=NvB4-c_Qtew
+
+聪明钱、KOL/VC、鲸鱼、新钱包、狙击者、持币大户、开发者、老鼠仓
+
+### 基本思路
+My strategy consists of 5 main points:
+
+- Be always in the market;
+- Bags manage;
+- Analysis of coin
+- Track whales & insiders;
+- Sniping bot.
+
+
+What's the trend now?
+
+To understand it, I use Photon's Memescope - http://photon-sol.tinyastro.io/.
+- Check the "Graduated" section.
+
+Can u see the consistent pattern in the graduated memes?
+
+Now, there's a squirrel/animal trend.
+Also, political memes are graduating right now, but the elections are soon, so I won't bet on them, and after migration, it dumps
+
+Is it pumped 2x? Sell 50%-60% and keep your moonbag.
+
+if a coin dumps - u don't lose anything.
+
+If a coin pumps, wait for 10-40x on your moonbag and sell, again, only part of it.
+It can make 50-100x after that.
+
+Analysis of Coin
+
+Make sure if:
+
+- Liquidity is locked
+- 5 min volume > $10k
+- 5 min makers > 100
+- Active Social Media
+- Mint & Frezee disabled
+
+Also, I recommend u check the guide on http://gmgn.ai that analyzes deeply the token.
+
+Find everything you need about each token here - http://gmgn.ai:
+
+- Snipers (if they hold/sold)
+- BlueChip rate (ratio of holders who also hold BlueChip tokens)
+- Rugpull chance (based on DEV's previous activity)
+- Top Holders
+- Key metrics
+- Transactions
+
 
 
 ### 代币分析
@@ -953,13 +1028,26 @@ A mention graph is useful as many mentions of a project can boost a meme coin's 
 
 #### 工具
 
-+ 代币分析  @Rugcheckxyz https://rugcheck.xyz/
++ 代币分析  
+    - for Solana tokens @Rugcheckxyz https://rugcheck.xyz/
+    - for EVM @CoinScanDeFi
+    - Bundle check
+        - http://t.me/TrenchScannerBot
+        - [@bubblemaps to make sure there are no connections between the wallets. ](https://bubblemaps.io/) https://photon-sol.tinyastro.io/ 集成了该功能
+        - @TTFBot
 
 + 社交媒體分析
     - @getmoni_io https://getmoni.io/
     - tweetscout.io
+    - @getmoni_io
 
-聪明钱、KOL/VC、鲸鱼、新钱包、狙击者、持币大户、开发者、已关注、老鼠仓
++ 钱包分析
+    - @solanasniffer
+    - @CieloFinance
+
++ 交易追踪
+    - @RayBot_sol
+
 
 ### 聪明钱地址搜集
 
@@ -985,6 +1073,54 @@ Cooker（母语英文，在国外大叙事上他的反应是最快的，所以ai
 
 注意：如果是挂限价单或者自动操作一般需要连接电报telegram充币，注意风险
 
+#### Pump Fun
+All memes were initially launched on Pump Fun.
+
+Thus, unlike other terminals, Pumpfun Advanced has the fastest trade experience.
+
+It was launched over two months ago, but less than 0.2% of all degens even know about it.
+
+Here's the link: https://pump.fun/advanced
+
+step 1: pick a coin that you like
+step 2: buy the coin on the bonding curve
+step 3: sell at any time to lock in your profits or losses
+step 4: when enough people buy on the bonding curve it reaches a market cap of $100k
+step 5: $17k of liquidity is then deposited in raydium and burned
+
+Short introduction:
+
+On the home page will appear newly launched tokens with detailed coin information.
+
+• Bonding process
+• Total holders
+• Snipers
+• how much top 10 holds
+• Detailed holders tab•
+
+You can quickly distinguish between trash coins and potential mooners by using these filters:
+
+• Market Cap: min $5,000
+• Volume: min $10,000
+• Holders: min 20
+
+Additionally, manually analyze the Detailed Holders tab by reviewing the Realized and Unrealized Profit tabs.
+
+You can apply my parameters:
+
+• Easy memeable idea
+• Dev hold: 0% - 5%
+• Top 10 hold: <25%
+• Holders: 20+
+• Snipers: <7
+
+Once you find a promising meme, you need to buy it quickly:
+
+• Set Quick Buy amount
+• Slippage 20%
+• Front-running protection makes your trades slow but protected from MEV bots. If you set Quick Buy > 0.5 SOL enable this function.
+• Priority fee: 0.03 SOL
+
 #### GMGN AI
 + [电报入口](https://t.me/gmgnaibot?start=i_sxpTtAih)
 + [官网入口](https://gmgn.ai/?ref=sxpTtAih)
@@ -1006,6 +1142,43 @@ Bluechip 蓝筹代币：蓝筹代币是指各条链上经过市场验证与认�
 ETH链 https://gmgn.ai/discover?chain=eth
 Solana链 https://gmgn.ai/discover/?chain=sol
 Blast 链 https://gmgn.ai/discover?chain=blast
+
+/Finding insider wallets
+
+Head over to the "Copytrade" tab to locate influencer wallets, smart wallets, snipers, and insiders.
+
+They are all sorted, but not thoroughly enough. We need to use additional filters for better results.
+
+/ Filtering insider wallets
+
+To do this, we need to apply the following settings:
+
+• 7D PNL: 100%+
+• 7D TXs: More than 20
+
+These settings effectively sort profitable insiders.
+
+/ Save the wallets to a list.
+
+To do this, go to the insider's profile and check their Win Rate.
+
+If the Win Rate is over 70%, you can subscribe to that insider.
+
+/ Set up copytrading on insiders.
+
+To do this, click "Create Copytrade," then enter the insider's wallet.
+
+I usually set the parameters between 0.3 - 1 SOL and enable AutoSell.
+
+You can also configure Stop Loss (SL) and Take Profit (TP) if you wish.
+
+/ Check your Earnings
+
+To do this, go to the wallet of the insider you are copytrading and review the details.
+
+You can see the profit, realized profit, and failed transactions.
+
+This allows you to analyze their mistakes and learn their strategy.
 
 **交易追蹤**
 
@@ -1053,6 +1226,214 @@ GMGN左下角的“Sniper New 狙击新币”部分，发现新代币后，点�
 设置自动卖预设值：在聊天中输入 /start，然后选择“设置”进入自动卖设置，或者直接发送 /autosell。点击“开启自动卖”，然后添加预设挂单。配置止损和止盈单：止损单：填写负的百分比（例如，-30%表示当价格下跌30%时自动卖出），并设置卖出数量的比例（不超过100%）。止盈单：填写正的百分比（例如，30%表示当价格上涨30%时自动卖出），建议所有卖出数量加起来等于100%。执行卖出：一旦配置完成，机器人将自动创建有效期为24小时的止盈和止损限价卖单。
 
 
+#### DexScreener
+
+##### find toknes
+
+###### method 1
+/Gainers
+Start by selecting the Solana chain. Then, go to "Gainers" to see which tokens have trended over the past week.
+
+Pay attention to the current narrative. It can shift quickly, sometimes even daily.
+
+/Set up Dexscreener filters.
+
+I'll walk you through a few filter options I use. Pick the range that feels right for your strategy.
+
+Micro-caps filters:
+
+• Liquidity: $10,000
+• Min FDV: $100,000
+• Pair age: 0-48 hours
+• 1H txns: 50 transactions.
+
+Mid-caps Filters:
+
+• Liquidity: $100,000
+• Min FDV: $1M
+• 24H volume: $1.5M
+• 24H txns: 150 transactions.
+
+Old Mid-caps Filters:
+
+• Liquidity: $100,000
+• Min FDV: $200,000 - $100M
+• 24H volume: $200,000
+• 24H txns: 2000 transactions.
+• Pair age: 720-2800 hours
+
+ Low-caps Filters:
+
+• Liquidity: $75,000
+• Min FDV: $500,000
+• 24H volume: $1M+
+• 24H txns: 50 transactions.
+
+Old Low-caps Filters:
+
+• Liquidity: $100,000
+• Min FDV: $250,000 - $1M
+• 24H volume: $250,000
+• 24H txns: 1000 transactions.
+
+
+
+
+###### method 2
+1/ Start with the New Pairs section
+
+➢ Use 12H/24H to find fresh but established tokens
+➢ For riskier plays, try 1H/6H or the Newest Pairs tab
+
+Shorter timeframes = more rugs. Be careful and DYOR.
+
+2/ Filters are your best friend. Use them
+
+➢ Start simple: min tx count, buyer numbers, etc.
+➢ Play around with the settings — stay flexible and adjust as needed
+
+ breaking down the PERFECT filter setup to dodge bad plays  👇
+
+        Filter: 1-Hour-Old New Pairs
+
+        This filter displays coins that meet the following criteria:
+
+        ➣ Ranked by age
+        ➣ Liquidity over $100 (degen mode)
+        ➣ Market cap less than $500k
+
+        These settings provide me with new and high-risk coins without other noise.
+
+        Filter: 5-Minute Timeframe
+
+        I select the "Last 5 minutes" filter to determine if coins are currently active.
+
+        Filters:
+
+        ➣ More than 3 buys in last 5 mins
+        ➣ Ranked by Buys
+
+        Filter: 3-Day-Old New Pairs
+
+        To identify middle-aged tokens, use this filter:
+
+        ➣ Liquidity over $10k
+        ➣ Market Cap between $100k and $1M
+        ➣ At least 15 buys and 10 sells in the last 24 hours
+
+        Customize parameters based on your strategy.
+
+        Filter: Hot Pairs Tab
+
+        The Hot Pairs Tab displays coins that meet the following criteria:
+
+        ➣ Liquidity over $10k
+        ➣ Market Cap: $100k - $5M
+        ➣ At least 15 buys and 10 sells in the last 24 hours
+
+        In general, this tab lists all hot tokens with a market cap of less than $5M.``
+
+
+3/ Verify the token’s safety
+
+➢ Check the Audit section — if you see red flags, RUN
+➢ Use 
+@solanasniffer
+ or 
+@Rugcheckxyz
+ with the token’s contract address
+
+Anything scoring above 85? Usually safe to play. Below that? Enter at your own risk.
+
+Watch for red flags:
+
+➢ Active mint functions
+➢ Suspicious deployers
+➢ Unlocked/unburned liquidity
+
+No tool is perfect, but this will save you from obvious rugs.
+
+4/ Check the social presence
+
+A strong, engaged community equals potential for growth.
+
+➢ Use the Socials section on DEX Screener and tools like 
+@TweetScout_io
+ to analyze activity
+➢ Look for whales, big names, or even VCs lurking
+➢ Look for active engagement on X and Telegram
+
+5/ Use the Watchlist to stay organized
+
+Finding the perfect gem takes time.
+
+➢ Save promising tokens to your Watchlist
+➢ Sort them into categories: safe bets, degen plays, etc.
+➢ Manage it all on http://dexscreener.com/watchlist
+
+6/ Set up price alerts
+
+➢ Set custom alerts for dips or profit targets
+➢ Add notes to stay organized
+➢ Update or clear old alerts
+
+Alerts = less noise, more action.
+
+7/ Use Multicharts
+
+Monitor multiple coins simultaneously with this feature.
+
+➢ Go to https://dexscreener.com/multicharts
+➢ Add tokens from your Watchlist or search by CA
+➢ Adjust chart intervals
+➢ Organize with separate tabs for different categories to keep your analysis clean
+
+
+8/ Monitor portfolio
+
+DEX Screener simplifies wallet tracking:
+
+➢ Add SOL and EVM wallets to view all holdings in one spot
+➢ Small balances are auto-hidden, and you can manually exclude tokens you don’t care about
+
+##### find traders
+找到一个成功的代币，
+前往“頂級交易者”標籤，選擇多個錢包。
+
+ 錢包分析
+
+接下來，我們需要找到那些在幣價起飛前買入的交易者。
+
+我們將使用 
+@solanasniffer
+ 來完成這個任務。插入錢包地址並分析該錢包。
+
+注意查看已實現損益（Realized PNL）和勝率（WinRate）部分。
+
+交易追蹤
+
+選擇合適的錢包後，我們需要確切知道交易者何時購買了什麼。
+
+這樣你就不會錯過購買時機，並有時間跟著買入。
+
+我使用 
+@RayBot_sol
+ 來完成這個任務。
+
+接着就是代币分析、社媒分析，然后交易
+
+#### Bullx
+
+To find truly early gems, you'll 
+@bullx_io
+ "Pump Vision":
+
+• Dev holding: 5-7% (max)
+• Holders: 10 (min)
+• Volume: $2000-3000 (min)
+
+These settings will help you find new coins that haven't yet gained liquidity.
+
 #### photon-sol.tinyastro.io
 
 #### dexscreener+BullX
@@ -1081,8 +1462,7 @@ GMGN左下角的“Sniper New 狙击新币”部分，发现新代币后，点�
  來完成這個任務。
 
 **交易操作**
-bullx.io
-
+bullx.io bot
 
 ### 自动化脚本
 
@@ -1112,6 +1492,47 @@ set by/sell conditions and set max slippage at 5-10% and max price impact at 5%
 
 for example: add standard buy/sell amounts to perform these actions even faster
 
+#### 通过twitter名人获取memecoin
+
+promot:
+
+Create a bot that parses Twitter pages of famous Solana KOLs (suchas CryptoNobler, Danny_Crypton and DefiWimar) and searches forpromising memecoins tickers.
+Also, use https://docs.dexscreener.com/api/reference and make alocal database of the most successful Solana memecoins.
+
+我們將追蹤PumpFun和DEX Screener上的新發行項目。
+
+Adjust the code so the bot searches for the discovered tickers onhttps://pump.fun/board and https://dexscreener.com/ using thecontract addresses mentioned in KOLs' tweets.
+
+/ 分析歷史數據
+
+➢ 接下來，我們將利用專門的AI模型，根據歷史數據預測代幣的潛在成功機會。
+➢ 關鍵在於比較各項指標，並做出明智的決策 ⤵️
+
+Set up specialized Al models to predict the success of any giventoken we've parsed based on historical data from DEX Screener andits overall hype on social media.
+
+驗證代幣安全性
+
+➢ 使用 
+@solanasniffer
+ 檢查代幣的安全分數。
+➢ 分數高於85、流動性鎖定且禁用鑄造的代幣通常被認為是安全的 ⤵️
+
+Adjust the code so it checks the contract score via solsniffer.comand notifies me if the score is lower than 85.
+
+實施買入與賣出模組
+
+➢ 最後，設定買入和賣出模組。
+➢ 設定優先費用、購買金額、滑點和獲利目標 ⤵️
+
+Create buy and sell modules for coin on Solana, set priority fees, buyamount to 1 SOL, buy & sell slippage to 15% and take profit levels at10x leaving a moonbag of 15%.
+
+設定並啟動你的機器人
+
+➢ 請GPT將所有範例合併成一個檔案並運行你的機器人 ⤵️
+➢ 若遇到任何錯誤，只需請GPT解決，你將迅速獲得更新後的程式碼版本。
+
+Convert every code snippet you send above to python and put theminto a single file. Fix all errors. Create a step-by-step guide on howto run the code.
+
 
 ### 案例
 #### coinmarketcap treading - MAD
@@ -1128,3 +1549,22 @@ https://www.tradingview.com/symbols/BTC.D/
 + Altcoin double the price or 10 times
 
 monitor top20
+
+## appendix
+
+meme 迷因币
+
+an image, video, piece of text, etc., typically humorous in nature, that is copied and spread rapidly by internet users, often with slight variations.
+"celebrity gossip and memes often originate on the site"
+2.
+an element of a culture or system of behavior passed from one individual to another by imitation or other nongenetic means.
+
+Memecoins are cryptocurrencies often inspired by internet memes or trends. They are typically characterized by their volatile nature.
+
+
+Degen has multiple meanings, including a term for a type of trader, a cryptocurrency, and a type of short sword: 
+A type of trader
+Degen is a derogatory term for a trader who uses risky, aggressive strategies to maximize gains. The term comes from gambling, where "degenerate" gamblers are known for their reckless betting habits. In the cryptocurrency world, degens are traders who make risky decisions without proper research. They may base their decisions on superficial factors like a token's logo or slogan. However, some in the crypto community have adopted the term as a badge of honor. 
+A cryptocurrency
+Degen is also the name of a cryptocurrency that focuses on decentralized finance (DeFi). Users can explore DeFi solutions and financial services like staking and yield farming within the Degen community. 
+
