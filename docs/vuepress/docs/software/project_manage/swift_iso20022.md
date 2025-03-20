@@ -1,5 +1,7 @@
 ## Basics
 
+BIC - means Bank Identification Code
+
 In the context of SWIFT, MT stands for Message Type and MX refers to Message XML.
 
 Cross-border payments and reporting plus (CBPR+) is a workgroup of payments experts whose mission is to create global ISO 20022 Market Practice and Implementation Guidelines to ensure a common roll-out and implementation of ISO 20022 by banks.
