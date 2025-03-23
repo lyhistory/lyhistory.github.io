@@ -23,6 +23,7 @@ openjdk source: https://github.com/openjdk/jdk/tree/jdk8-b25
 
 openjdk release(注意，有些低版本的updates比高版本还要新):
 https://openjdk.org/projects/jdk/
+https://wiki.openjdk.org/display/jdk8u/Main#/
 https://github.com/adoptium/temurin8-binaries/releases/
 
 ## jdk install
