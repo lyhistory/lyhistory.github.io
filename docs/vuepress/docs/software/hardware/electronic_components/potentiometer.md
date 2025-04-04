@@ -1,0 +1,1 @@
+potentiometer 电位计
