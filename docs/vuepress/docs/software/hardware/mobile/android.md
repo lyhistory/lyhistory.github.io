@@ -1,4 +1,7 @@
 
+## de-compile
+[jadx](https://github.com/skylot/jadx/releases)
+
 ## data recovery
 
 https://github.com/topics/android-recovery
