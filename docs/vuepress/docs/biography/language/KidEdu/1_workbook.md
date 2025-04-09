@@ -7,9 +7,10 @@ mix colors
 
 ## counting is fun
 
-## first last top bottom
+## directions
+first last top bottom
 
-## front behind up down 
+front behind up down 
 
 ## logics 
 
@@ -23,6 +24,8 @@ place in order
 ### mystery box
 
 ## daily life
+
+### fruits and vegitables
 
 ### actions
 clap hands
