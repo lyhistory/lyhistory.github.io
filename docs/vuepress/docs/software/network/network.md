@@ -302,6 +302,12 @@ That is if you have console connectivity to the host, which might not be the cas
 
 
 ### 1.2 Layer 2: The data link layer 数据链路层
++ 局域网
+  - 以太网：交换机
+  - 令牌网
++ 广域网
+  - PPP PPPoE
+
 设备：
 + 网卡：网卡工作在物理层和数据链路层的MAC子层，网卡是一块被设计用来允许计算机在计算机网络上进行通讯的计算机硬件。由于其拥有MAC地址，因此属于OSI模型的第2层。它使得用户可以通过电缆或无线相互连接。每一个网卡都有一个被称为MAC地址的独一无二的48位串行号，它被写在卡上的一块ROM中。在网络上的每一个计算机都必须拥有一个独一无二的MAC地址。
 + 交换机：

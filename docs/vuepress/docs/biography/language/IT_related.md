@@ -35,6 +35,10 @@ Normal distribution  bell curve
 
 无下限 数学说法 NO Lower Boundary 极其专业 no superlinear lower bound, 中文意思 You are unbelievable son of a bitch
 
+## Physics
+
+trajectory 轨迹
+
 ## hardware
 ### computer
 desktop/laptop ram ssd hd monitor main processor case main board driver keyboard flash drive external drive portable
