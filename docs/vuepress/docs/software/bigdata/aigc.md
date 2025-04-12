@@ -8,6 +8,19 @@
 https://mp.weixin.qq.com/s/6J35rQO8v69mpJfypFl8Tw
 
 ## 基础
+
+### Protocol
+Model Context Protocol vs Function Calling:
+
+[Model Context Protocol Clearly Explained](https://www.youtube.com/watch?v=tzrwxLNHtRY)
+
+[Sample MCP client](https://github.com/modelcontextprotocol/python-sdk/blob/main/examples/clients/simple-chatbot/mcp_simple_chatbot/main.py)
+[Google maps MCP server](https://github.com/modelcontextprotocol/servers/blob/main/src/google-maps/index.ts#L297)
+[MCP Schema](https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/schema/2024-11-05/schema.ts)
+[Simple tool, resource, prompt servers](https://github.com/modelcontextprotocol/python-sdk/tree/main/examples/servers)
+[Example servers](https://modelcontextprotocol.io/examples)
+[MCP inspector (postman like tool)](https://modelcontextprotocol.io/docs/tools/inspector)
+
 ### 私人部署 
 
 https://github.com/jmorganca/ollama
