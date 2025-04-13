@@ -1,5 +1,6 @@
 
 
+[Resources for Learning at Home](https://khankids.zendesk.com/hc/en-us/sections/360008428292-Resources-for-Learning-at-Home)
 
 [Printable activities for parents and teachers](https://khankids.zendesk.com/hc/en-us/articles/360041004572-Printable-activities-for-parents-and-teachers#h_01EN1NR1D0AE21PXJ1KFY79TBB)
 
