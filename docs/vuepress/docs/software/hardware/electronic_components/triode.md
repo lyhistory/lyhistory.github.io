@@ -1,0 +1,1 @@
+英文世界 triode默认是非半导体材料的真空三极管，而中文世界三极管则默认是指晶体管的NPN or PNP transistors

@@ -15,6 +15,11 @@ You can connect an LED directly to ESP32 but you cannot connect a high voltage d
     
 Some relays can work with both DC and AC voltage, we extremely recommend you NOT to use AC voltage. Use a DC device (≤24V) only.
 
+[很多场合mos管可以替代继电器，什么情况下不用mos管？](https://www.youtube.com/watch?v=okZHPbtItWQ)
+1) 首先mos管不能加交流电，
+2) 高电压 大电流
+3) 而且继电器有电气隔离功能，线圈端和负载端完全隔离，即使负载端短路也不会危机线圈端的电路，
+
 ## pinout
 
 ![SRD-05VDC-SL-C PINOUT](![](/docs/docs_image/software/hardware/components/srd_05vdc_sl_c_pinout.png)
