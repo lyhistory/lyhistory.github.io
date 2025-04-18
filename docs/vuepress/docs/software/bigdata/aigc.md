@@ -23,8 +23,14 @@ Model Context Protocol vs Function Calling:
 
 ### 私人部署 
 
-https://github.com/jmorganca/ollama
-
++ 推理框架
+  允许开发人员轻松地在本地部署和运行 LLM
+  - [Ollama](/software/bigdata/ai_ollama.md) 
+  - [vllm](/software/bigdata/ai_vllm.md)
++ AI 应用开发平台 
+  提供了一套完整的工具和 API，用于构建、管理和部署 AI 应用
+  - [Dify](https://github.com/langgenius/dify)
+  
 https://mp.weixin.qq.com/s/iwsSKjGloNe7SCM4-5nzDA
 
 #### NextJS+Vercel

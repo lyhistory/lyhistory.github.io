@@ -99,7 +99,11 @@ Synology Assistant 是一款桌面实用程序，可在局域网中搜索 Synolo
 
 #### 备份
 
+**Note:** 如果自行备份比如使用usb copy千万要自己创建一个文件夹，而不用用系统创建的比如ActiveBackupforBusiness或Homes等，不然会被覆盖！ 创建方法是：控制面板->共享文件夹->新增
+
 移动硬盘：USB copy
+  任务设置，指定到自己创建的文件夹（不要用系统的！）
+  tips:建议不同的移动硬盘指定不同的文件夹，然后在移动硬盘上贴纸以方便区分
 
 电脑整机备份： 使用 Active Backup for Business ,客户端 Synology Active Backup for Business Agent
 

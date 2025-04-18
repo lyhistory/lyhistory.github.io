@@ -4,7 +4,8 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
-整理 google doc：Basics: Linux Basic
+Book: Linux Bible, 9th Edition
+LAB:  [Minimal Linux](https://github.com/ivandavidov/minimal)
 
 ## 万物皆文件
 

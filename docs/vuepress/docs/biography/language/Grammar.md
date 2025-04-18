@@ -1,3 +1,17 @@
+"Tom, your friend, is sitting in your big sitting room, listening to some beautiful music after dinner." 1
+
+主语 ：Tom（名词）
+
+谓语 ：is sitting（动词短语） 2
+
+宾语 ：in your big sitting room（介词短语作地点状语） 1
+
+定语 ：your friend（名词短语作定语）
+
+状语 ：after dinner（时间状语） 2
+
+补语 ：listening to some beautiful music（动名词短语作后置定语
+
 ## 句子结构/Sentence Structure
 Sentence structure is the order of all the parts in a sentence: subject, predicate, objects, phrases, punctuation, etc.
 
