@@ -1,5 +1,84 @@
-Vowel Consonant
+## Basic
 
+### Vowel Consonant
+All 16 English Vowel Sounds (with Examples)
+
+#### 1. Short Vowels (Monophthongs)
+| Sound | IPA Symbol | Example Words (UK/US) |
+|-------|------------|------------------------|
+| /æ/   | æ          | **c**a**t**, **h**a**t**, **m**a**p** |
+| /ɛ/   | e          | **b**e**d**, **l**e**g**, **r**e**d** |
+| /ɪ/   | ɪ          | **s**i**t**, **b**i**g**, **f**i**ll** |
+| /ɒ/   | ɒ (UK)     | **h**o**t**, **l**o**t**, **r**o**ck** (British) |
+| /ʌ/   | ʌ          | **c**u**p**, **l**u**ck**, **b**u**s** |
+| /ʊ/   | ʊ          | **f**oo**t**, **p**u**t**, **w**o**man** |
+
+**Note:**  
+- Americans often replace /ɒ/ with /ɑː/ (e.g., *hot* sounds like *haht*).
+
+---
+
+#### 2. Long Vowels (Monophthongs)
+| Sound | IPA Symbol | Example Words |
+|-------|------------|---------------|
+| /iː/  | iː         | **s**ee**, **m**e**, **h**ea**t** |
+| /ɑː/  | ɑː         | **f**a**ther**, **c**a**r**, **p**a**lm** |
+| /ɔː/  | ɔː         | **s**aw**, **c**au**ght**, **t**a**lk** |
+| /uː/  | uː         | **b**oo**t**, **f**oo**d**, **bl**ue** |
+| /ɜː/  | ɜː         | **b**ir**d**, **w**or**k**, **f**ur** |
+
+**Note:**  
+- /ɜː/ is the "er" sound (British *bird* = /bɜːd/; American often merges with /ər/).
+
+---
+
+#### 3. Diphthongs (Gliding Vowels)
+| Sound | IPA Symbol | Example Words |
+|-------|------------|---------------|
+| /eɪ/  | eɪ         | **m**a**ke**, **d**a**y**, **r**ai**n** |
+| /aɪ/  | aɪ         | **m**y**, **t**ie**, **b**uy** |
+| /ɔɪ/  | ɔɪ         | **b**oy**, **c**oi**n**, **j**oy** |
+| /əʊ/  | əʊ (UK), oʊ (US) | **g**o**, **h**o**me**, **b**oa**t** |
+| /aʊ/  | aʊ         | **n**ow**, **h**ou**se**, **c**ow** |
+| /ɪə/  | ɪə (UK)    | **h**ere**, **b**eer**, **n**ear** (British) |
+| /eə/  | eə (UK)    | **h**air**, **b**ear**, **wh**ere** (British) |
+
+**Note:**  
+- Americans often replace /ɪə/ and /eə/ with /ɪr/ and /er/ (*here* = /hɪr/, *hair* = /her/).
+
+---
+
+#### 4. R-Controlled Vowels (Vowel + /r/)
+| Sound | IPA Symbol | Example Words |
+|-------|------------|---------------|
+| /ɑːr/ | ɑːr        | **c**ar**, **st**ar**, **f**ar** |
+| /ɜːr/ | ɜːr        | **b**ir**d**, **w**or**k**, **n**ur**se** |
+| /ɔːr/ | ɔːr        | **f**or**, **n**or**th**, **sp**or**t** |
+
+**Note:**  
+- British English often drops the /r/ (*car* = /kɑː/), while Americans pronounce it clearly (/kɑːr/).
+
+---
+
+#### Summary Table (16 Vowel Sounds)
+| Type            | Sounds (IPA)               |
+|-----------------|----------------------------|
+| **Short**       | /æ, ɛ, ɪ, ɒ, ʌ, ʊ/         |
+| **Long**        | /iː, ɑː, ɔː, uː, ɜː/       |
+| **Diphthongs**  | /eɪ, aɪ, ɔɪ, əʊ, aʊ, ɪə, eə/ |
+| **R-Controlled**| /ɑːr, ɜːr, ɔːr/            |
+
+---
+
+#### Tips for Pronunciation:
+1. **Short vs. Long**:  
+   - /ɪ/ (short) → *sit* vs. /iː/ (long) → *seat*.  
+2. **Diphthongs glide**:  
+   - /aɪ/ = "ah" + "ee" (like *I*).  
+3. **R-controlled vowels**:  
+   - Americans emphasize the /r/; British often omit it.  
+
+Need audio examples or help with a specific sound? Let me know! 😊
 ### Correction 
 di
 Si

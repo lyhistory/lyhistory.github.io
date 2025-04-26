@@ -1,3 +1,270 @@
+## Vocabulary  Phrases
+A phrase is two or more words that do not contain the subject-verb pair necessary to form a clause. Phrases can be very short or quite long.
+Certain phrases have specific names based on the type of word that begins or governs the word group: noun phrase, verb phrase, prepositional phrase, infinitive phrase 动词不定式, participle phrase(present participle and past participle), gerund phrase 动名词, and absolute phrase.
+http://www.chompchomp.com/terms/phrase.htm
+
+With regard to that/regarding that 关于这一点
+ride on you / take credit from you / take advantage from u
+
+最早/最迟 at the earliest/latest
+  how early / how much time in advance
+  how late does uber run
+  at the latest no later then
+
+in the middle of something
+don't make a scene
+
+with that being said
+pro rata adv.	<拉>按比例，成比例;
+slice and dice 切片和切块 - 交叉分析
+on the gounds 由于, not ground!!!
+At no point between then and 01/03
+far-reaching
+make good his failure to
+drill down
+fine tuning 微调
+fine tuned
+well oiled  (especially of an organization) operating smoothly."the ruling party's well-oiled political machine" 2.informaldrunk."I was pretty well oiled that evening"
+out of the box 非常好的 现成的
+tweak and tune 调整
+density of work
+fast tracking 快车道
+Multi-Disciplined 多学科
+critical distinctions 关键区别
+Causal analysis 因果分析
+as of
+fast forward
+corollary effect 必然的效果kəˈrɒləri
+earliest opportunity
+ultimate objective
+readily available 随时可用
+pledge to donate
+of minimum IT literacy
+in the event of contingencies
+literacy and numeracy 读写计算能力
+grace period
+behave regularly
+conjestion penalty
+laughing matter 笑料
+end to end
+	End to end is a term used in many business arenas referring to the beginning and end points of a method or service, and end-to-end theory embraces the philosophy that eliminating as many middle layers or steps as possible will optimize performance and efficiency in any process. An end-to-end process ensures the comprehensive completion of work and is typically managed within a specified timeframe. Internal procedures at a company often lay out a process for end-to-end management using the most efficient and timely approach to manufacture goods or complete a service.Read more: End To End Definition | Investopedia http://www.investopedia.com/terms/e/end-to-end.asp
+
+water retention
+This pus, if it collects in large enough amounts, will bloat the etheric body leading to physical "puffiness" and water retention.
+ultimate consumer 最终用户
+strong or eventual consistency 强一致 最终一致
+sole purpose 唯一目的 sole argument
+syntax and semantic 语法和语义
+behind the scene/curtains
+pretty much everyone does 相当多人也是如此
+everyone is very positive and supportive of each other
+bare-bones 极简单的
+heavy lifting 艰难的事
+impedance mismatch 不匹配的障碍 The Controller layer reduces the impedance mismatch between HTTP and the Domain Model.
+showstopper 精彩的 致命的
+workhorse 负重机器
+Retrenchment Benefits 辞退费
+far-reaching impact 深远影响
+soon after
+on the fly / in real-time / instantly / in a jerk
+from scratch / draft idea
+brute force approach
+
+
+in an ad hoc manner
+As the group gears up towards the business challenges of the new economy
+self-contained 自给自足
+tight correlation 紧密相关
+error-prone 易错
+course-correct
+composable services 可组合的服务
+right away
+sexual harassment http://www.un.org/womenwatch/osagi/pdf/whatissh.pdf
+non-stop = forever
+no later than
+at most
+compare and contrast
+tread with caution 步步小心
+unguarded moment 不经意的瞬间 The photographers managed to capture Jane in an unguarded moment.
+end state 最终状态
+bottlenecks and loops  bottlenecks and efficiencies
+lose yourself in complexity
+an array of situations
+
+geographic expansion / corporate expansion
+ongoing cost 持续的成本 an onging basis 持续的基础上 on an 'as-needed-basis'
+rubber stamping 常规刻板批准 approve automatically without proper consideration.
+tempered glass 钢化玻璃
+plastic surgery surgical strike
+form factor 物理尺寸 规格 - is an aspect of hardware design which defines and prescribes the size, shape, and other physical specifications of components, particularly in consumer electronics and electronic packaging
+immune to industry hype 对行业炒作免疫
+headless computer/software - without a graphical user interface , headless mode (for drones)
+steering group/committee - a committee that decides on the priorities or order of business of an organization and manages the general course of its operations.
+in a timely fashion / in this fashion http://english.stackexchange.com/questions/18635/what-is-the-meaning-of-the-phrase-in-timely-fashion
+mission critical system
+mutual exclusive
+seed budget
+energy efficient
+blow budget
+lose sight of
+cross-currents 逆流 错流
+counter pull 反拉力 pull back
+human dynamics 沟通
+inherent drawbacks 固有缺点
+Staying relevant means finding new ways to offer added value, support the team, and contribute. The world is a competitive jungle and unless you dial in on how you can differentiate your company or skill set, Darwin's evolutionary theory will have some real personal meaning
+happy path
+running repair 日常修理
+handover point 交接点
+boiler pate
+clear cut 明确的
+best of breed http://www.pcmag.com/encyclopedia/term/38561/best-of-breed
+ 
+acronyms and abbreviations / acronyms and labels
+canned (pre-set) query
+Judge and Jury
+in the first instance
+technical and philosophical
+device agnostic http://searchmobilecomputing.techtarget.com/definition/device-agnostic-device-agnosticism
+audit trail
+regulated environment 监管环境
+a lean team 精干的团队
+home grown 土生土长的
+reinvent the wheel
+low hang fruit
+on-premise 部署; 预置; 本机端; 预置的; 部署的
+Lead time 订货至交货的时间 Lead time to get hardware
+thought through 仔细思考
+common good
+general public
+mega trend
+slate for  提名为，内定为，任命为
+opt in opt out
+a handful of
+turnover rate
+turn around
+halfway/partway through
+early on
+all about
+Use your best judgment http://chicanaontheedge.blogspot.sg/2012/09/use-your-best-judgment.html  按你最好的判断来吧
+Dying of Curiosity 好奇的要死
+get your butt in here 快过来
+let us in on it 让我们谈谈
+full of shit / bullshit
+so wrong
+It doesn't matter what I say
+no worries
+don't mess me up
+Analysis Paralysis http://blog.sina.com.cn/s/blog_487ddcc00100o9lk.html
+long drawn 长期以来 旷日持久
+buy-out 全面收购，全部买下市场产品
+buy-in 买进，补进（为了接管某公司买进其控制股权）
+tourist attraction 游览胜地
+human intervention 人为干预
+competitive edge 竞争优势
+value proposition
+capability assessment 能力评估
+business imperative 业务需要
+touch points
+spelling the demise 宣告死亡
+all-inclusive 包括一切的; 包罗万象; 兼容并包; 无所不包
+diploma mill, bill mill
+buy in / buy out
+constant time
+novel theory 原理
+either in alphabetical or chronological order
+prescriptive definition
+reject inference 信用评分中的拒绝推断
+leaps and bounds 跳跃
+upsell crosssell
+temporal and spatial
+Multivariate analysis
+optimal route
+commute to work
+Tamper Evidence  窜改证据;
+broad context大环境
+mind blowing
+breath taking
+complementary not contradictory
+personal matters www.wikihow.com/Separate-Your-Professional-and-Private-Life
+fractional reserve 部分储备
+shoulder to shoulder, side by side
+In Reponse To https://www.englishforums.com/English/InReponseToOrInRespondTo/cqmlw/post.htm
+way less than the odds 远远小的概率
+compare and contrast
+be aware of complexity - but don't be overwhelmed by it - capture essentials
+improve and correct it before automate it
+in a nutshell 简言之 一言以蔽之
+out of box 开箱即用
+off the shelf 现货供应
+open ended 完全开放
+if you are given sth on a silver platter , you do not have to do much to get it 无须费劲；唾手可得
+in the sense of 从…意义上说;
+all the more reasons for patience 所以才更需要耐心
+marshal resources 韬光养晦
+or lack thereof https://zhidao.baidu.com/question/329100185.html
+monolith and distributed system
+full-fledged 羽毛生齐的; 经过充分训练的，成熟的; VS matured
+the more time you put in hardwork, the more skills you acquire
+in infancy 在早期阶段
+notable amount of energy 相当多的×××
+Bitcoin led to a huge number of look-alike cryptocurrencies,
+and most public discussion has centred around the potential for illegal or illicit uses (such as the purchase of drugs on the Silk Road website).
+In keeping with the ‘libertarian’ origins of Bitcoin, it has been remarked that one of the major events which propelled Bitcoin to
+widespread adoption was the blockade of WikiLeaks by Visa and MasterCard, 促使×××
+在计算机领域中，“False Positive”通常指误报；“alse Negative”通常指漏报。 在医学领域中，“False Positive”通常指假阳性；“alse Negative”通常指假阴性。
+not trival https://www.zhihu.com/question/20681622
+not negligible
+gossip network
+gossip ˈgɒsɪp 流言蜚语，谣言; 爱讲闲话的人; 谈话，闲话; 关系亲密的伙伴
+ramp up 上升; 提升;
+by-product 副产品; 副作用; 意外结果
+name squatting [squatting 动物一样蹲下( squat的现在分词 ); 非法擅自占用; 为获得其所有权]
+whip up 激发，激励; 匆匆做; 当场完成; whip 鞭打，抽打; 严厉地折磨、责打或责备，迫使; 把…打起泡沫;
+comment out 注释掉
+broadly similar 大致相似
+vetted for use 审查过可以使用
+harsh environment 网络 恶劣环境; 严酷环境
+mega trend
+significant benefit
+tied up 忙得不可开交的；不得闲的；正在使用的;
+tap on 轻轻敲击（某物的表面）， 轻击…（某部位）
+personal matters 私事
+feet of clay 受景仰受尊敬的人）品格上的缺陷（或弱点）;泥足（比喻站不住脚的事物）
+
+suit yourself 随你便！
+Wider spectrum
+Particular attractive
+Proven effective
+Line through, strike through, crossed through
+Affordable to the mass
+Neglect one important thing
+
+U name it, we do it
+piled up
+benchmark
+Make it uniform
+
+On and off
+Hog off
+hardness 利用
+Rolling out more bus
+
+Building on the idea earlier on
+
+bridging service
+
+in terms of vs in the sense of vs with respect/regard to
+  'in terms of' When we speak in this way, using these kinds of terms.
+  eg In terms of computer skills, his programming and website design abilities are excellent.
+  'with regard to' When we look at something.
+  eg With regard to this problem, we need a solution by Friday.
+
+
+## formal statement
+
+notice period
+grace period
+
 ## Think in English/ How to say in English
 
 不是不好，是相对不好的地方
@@ -560,6 +827,9 @@ Change over
 
 The S-course (or S-curve) is a specific maneuver taught during driving training. It involves navigating through a series of curves shaped like the letter "S," often to simulate sharp or winding roads. This type of course is designed to help new drivers practice controlling the vehicle while steering through tight turns, maintaining proper speed, and ensuring smooth handling of the car.
 
+### About philosophy
+ontology 本体论，实体论;
+
 ### About politics
 
 US CHINA
@@ -634,6 +904,7 @@ merchandise / goods
 I was talking on the phone and suddenly got disconnected.
 
 ### About Tour/Culture
+预约/预订 make appointment advance subscribe(订阅)
 自由行 跟团
 景色 景点
 历史遗迹 遗址 遗产 heritage conservation  natural reserves/resource natural reservoir
