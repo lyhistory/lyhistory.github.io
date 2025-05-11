@@ -1,4 +1,6 @@
-"Tom, your friend, is sitting in your big sitting room, listening to some beautiful music after dinner." 1
+syntax and semantic 语法和语义
+
+"Tom, your friend, is sitting in your big sitting room, listening to some beautiful music after dinner." 
 
 主语 ：Tom（名词）
 
@@ -154,6 +156,19 @@ If you don’t eat, you get hungry.
 
 Remember, the zero conditional is all about facts and general truths. It’s not about specific situations or possibilities. It’s about what’s always true.
 
+特殊形式：
+If following a specific methodology, be explicit about what it is and how it works to all involved
+‌原型1：条件句的现在分词省略结构‌
+
+完整形式：If ‌you are following‌ a specific methodology, ‌you must‌ be explicit...
+省略逻辑：主从句主语一致时，可省略主语 you 和助动词 are，保留现在分词 following 作条件状语36。
+‌适用场景‌：强调“正在遵循方法论”的持续状态，常见于学术写作或操作指南中
+
+原型2：一般现在时省略结构‌
+
+完整形式：If ‌you follow‌ a specific methodology, ‌you must‌ be explicit...
+省略逻辑：省略主语 you，直接保留动词原形 follow；但此结构在语法上需依赖上下文明确主语，否则易造成歧义36。
+‌适用场景‌：描述普遍性或常规操作，例如指导性文件或一般性建议
 ##### The first conditional: real possibilities
 
 It’s used to talk about real and possible situations in the future. The structure is If + [present simple], … will + [infinitive].
@@ -167,6 +182,8 @@ Here are a few more examples:
 If you study hard, you will pass the exam.
 If I see her, I will say hello.
 If they don’t hurry, they will miss the train.
+
+If you name it, we will do it=>U name it, we do it
 
 Remember, the first conditional is all about real possibilities in the future. It’s not about general truths or hypothetical situations. It’s about what might happen.
 
@@ -209,31 +226,83 @@ Conditional sentences aren’t always cut and dry. There are exceptions and spec
 + Inverted conditionals and formal structures
     Inverted conditionals are a more formal structure. They invert the subject and auxiliary verb in the if clause. For example, “Had I known [instead of “If I had known”], I would have acted differently.”
 
-## pronoun
-+ subject pronoun: I
-+ object pronoun: Me
-  He asked me a question.
-+ reflexive pronoun: Myself
-  I bought myself a new car!
-+ possessive pronoun: My 
-  Have you met my family?
+### 拆解
+#### infinitive 动词不定式
+‌Infinitive‌ 是动词的非谓语形式，其基本结构为 ‌to + 动词原形‌（如 to do），但某些语境下可省略 to（称为 ‌bare infinitive‌，如 do）
+
+‌语法独立性‌：
+不受主语的人称或数限制（如 I want to go 与 They want to go 中 to go 不变）36。
+‌动词性质保留‌：
+可带宾语或状语（如 to read a book、to speak clearly）26。
+‌形式多样性‌：
+包含完成式（to have done）和被动式（to be done）
+
+| &zwnj;**功能**&zwnj;   | &zwnj;**例句**&zwnj;                          | &zwnj;**说明**&zwnj;                     |
+|------------|-----------------------------------|------------------------------|
+| 主语        | `To learn is challenging.`        | 表抽象动作，多用于正式文本    |
+| 宾语        | `She decided to study.`           | 接在 `want`/`try` 等动词后    |
+| 定语        | `He has a plan to start.`         | 修饰名词，表目的/用途         |
+| 状语        | `She woke up early to catch...`   | 表目的/结果/原因             |
+| 补足语      | `My goal is to help others.`      | 补充说明主语/宾语性质        |
+
+| &zwnj;**语法场景**&zwnj;               | &zwnj;**动词形式**&zwnj;          | &zwnj;**例句**&zwnj;                      | &zwnj;**语法解析**&zwnj;                     |
+|----------------------------|-----------------------|-------------------------------|----------------------------------|
+| &zwnj;**情态动词 (*will*)**&zwnj;       | 不带 *to* 不定式      | *I &zwnj;**will stay**&zwnj;.*            | *stay* 直接依附情态动词构成谓语  |
+| &zwnj;**普通动词 (*want*)**&zwnj;       | 带 *to* 不定式        | *I &zwnj;**want to stay**&zwnj;.*         | *to stay* 作宾语，需 *to* 连接   |
+| &zwnj;**使役动词 (*make*)**&zwnj;       | 不带 *to* 不定式      | *He &zwnj;**made me stay**&zwnj;.*        | 强调强制动作，跳过 *to*          |
+| &zwnj;**疑问句中的情态动词**&zwnj;      | 不带 *to* 不定式      | &zwnj;***Can**&zwnj; you &zwnj;**stay**&zwnj;?*       | 情态动词疑问式仍保留 bare 特性   |
+| &zwnj;**过去时态中的不定式**&zwnj;      | 不带 *to* 不定式      | *I &zwnj;**had to stay**&zwnj;.*          | *had to* 整体作情态，后接原形    |
 
 
-## Subordinating Conjunction
+Sell the vision of what you want to be able to do
+组合后逻辑为“想做某事并具备能力实现”，属于复合不定式结构
+want（主动词） → to be（不定式） → able（形容词补语） → to do（不定式） 
+
+#### compound predicate 复合谓语
+同一主语下多个动作/状态	He ‌opened the door‌ and ‌walked in‌
+
+#### 后置定语（postpositive modifier）‌ 
+have confidence to do sth / in sb 
+
+
+#### 比较状语从句 
+Friction is normal as is conflict, don't avoid it altogether
+完整形式应为 `as conflict is normal`   因主句与从句表语相同（normal），故省略表语形成 `as is conflict`
+倒装结构 `as is conflict` 强化"冲突"与"摩擦"的并列关系 
+
+Courage is vital, as is perseverance in adversity`（勇气至关重要，逆境中的坚持亦然）
+Success requires effort as does opportunity
+
+#### Subordinating Conjunction 从属连词
 after/although/as/as if/as long as/as much as/as soon as/as though/because/before/by the time/even if/even though/if/in case/in order that/in the event that/lest/now that/once/only/only if/provided that/since/so/supposing/than/that/though/till/unless/until/when/whenever/where/whereas/wherever/whether or not/while
 
 https://www.grammarly.com/blog/subordinating-conjunctions/
 
+#### 倒装 inversion‌
+1. ‌完全倒装 (Full Inversion)‌
 
-## 情态动词 Modal verb
-can or could https://learnenglish.britishcouncil.org/en/english-grammar/can-or-could
-I wouldn’t if
-https://english.stackexchange.com/questions/314087/i-wouldnt-work-if-i-wouldnt-get-paid
+定义：整个谓语动词移至主语之前。
+常见触发词：
+方位副词（here, there, out, in, up, down等）
+地点介词短语（如 "At the top of the hill..."）
+例句：
+"‌Here comes‌ the bus." （正常语序：The bus comes here.）
 
-how earlier should I inform you?
+2. ‌部分倒装 (Partial Inversion)‌
 
-What’s the difference between will be and would be?
-https://www.quora.com/What%E2%80%99s-the-difference-between-will-be-and-would-be
+定义：仅助动词/情态动词提前，主语与实义动词顺序不变。
+常见触发词：
+否定词（never, seldom, hardly等）
+"Only + 状语" 结构
+"So...that..." 结构中 "so" 前置
+例句：
+"‌Never have I seen‌ such a spectacular view." （正常语序：I have never seen...）
+
+
+条件状语从句前置（Only when...）引发主句倒装（should you go...）
+Only when you are sure your existing toolset will not suffice should you go out into the marketplace
+You should go out into the marketplace ‌only when‌ you are sure your existing toolset will not suffice.
+
 
 ## Tense
 
@@ -253,6 +322,26 @@ pretty much has been done
 
 "How do you interpret" is a general question asking for someone's understanding or explanation of something, while "how are you interpreting" focuses on how a specific person is currently understanding or analyzing something in the moment, implying a more active process of making sense of information.
 
+将来进行时
+In view of the limited time for Day 2 lesson this week, please spend some time to read the following topics before the lesson. If you have any specific questions on these topics, feel free to let me know in advance.
+I will still be going through important points on these topics, the rest of the Day 2 lesson time will be used for in-class discussions.
+I will also be spending some time to discuss the scenario for the first individual assignment and specific areas which are out of scope for the examination during Day 2 lesson.
+
+1. ‌强调“时间分配”的刻意性‌
+通过将来进行时，暗示 ‌“特意留出时间”‌ 完成该任务，而非随意插入。
+对比：
+"I ‌will spend‌ time..." → 中性陈述（可能临时起意）
+"I ‌will be spending‌ time..." → 暗示提前规划（课程设计中已预留时段）
+2. ‌弱化“义务感”，增强“流程性”‌
+使用进行时能避免让听众感觉这是教师的单方面要求（"will do" 可能隐含强制感），而更像 ‌“课程自然进展的一部分”‌。
+例：
+领导开会时说 "We ‌will be reviewing‌ the policy"（流程性） vs. "We ‌will review‌ the policy"（可能暗示强制任务）。
+
+3. ‌暗示与其他动作的同步性‌
+未来进行时可暗示 ‌“在Day 2课程期间，讨论与其他活动并行”‌。
+例：
+"I ‌will be teaching‌ grammar while you ‌take‌ notes."（教学与记笔记同时进行）
+
 ### Past past perfect
 Didn’t havn’t
 https://ell.stackexchange.com/questions/385/when-should-i-use-didnt-instead-of-havent
@@ -266,8 +355,12 @@ B: Yes, it looks very interesting.
 https://english.stackexchange.com/questions/26256/i-had-finished-the-work-on-friday-i-have-finished-the-work
 https://forum.wordreference.com/threads/i-was-wondering-if-you-have-had-had-a-chance.3187192/
 
-## 比较级
+## 比较级 Comparative and Superlative
 It is best to allow only one analyst to work on a diagram at a time.
+
+[Generally, if a two-syllable word ends in /i/ or /o/ (e.g, easy, happy, silly, narrow), then it gets the morphological -er and -est. Otherwise it's more and most.](http://english.stackexchange.com/questions/67991/much-more-easy-versus-much-easier)
+ 
+ 
 
 ## 修辞手法
 metaphor,analogy,allusion
@@ -281,9 +374,8 @@ Closed Question / Open Question / Tag Question / Choice Question / Declarative s
 Answering Tag Questions https://www.englishclub.com/grammar/verbs-questions-tag-answering.htm
 If you were wrong, admit it. You won't lose dignity but will gain respect.
  
-## compound predicate
-Comparative and Superlative http://english.stackexchange.com/questions/67991/much-more-easy-versus-much-easier
- 
+
+
 ## Pied-piping with inversion 伴随法则  
 To whom could we direct our questions?
 
@@ -293,3 +385,5 @@ Let me know the details once u have them.
 Dear ***,
 The driver's name is **. His h/p: ******. Minibus vehicle no. *****. I will update for any changes.
 Feel free to call me on my hp:**** for any queries.
+
+what can (not) do you for? http://english.stackexchange.com/questions/22405/distinction-what-can-i-do-you-for-vs-what-can-i-do-for-you

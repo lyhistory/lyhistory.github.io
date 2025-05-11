@@ -1,274 +1,87 @@
-## Vocabulary  Phrases
-A phrase is two or more words that do not contain the subject-verb pair necessary to form a clause. Phrases can be very short or quite long.
-Certain phrases have specific names based on the type of word that begins or governs the word group: noun phrase, verb phrase, prepositional phrase, infinitive phrase 动词不定式, participle phrase(present participle and past participle), gerund phrase 动名词, and absolute phrase.
-http://www.chompchomp.com/terms/phrase.htm
+## Think in English/ How to say in English
+laughing matter 笑料
 
-With regard to that/regarding that 关于这一点
-ride on you / take credit from you / take advantage from u
+bare-bones 表示“极简的”“基础的”或“最低限度的”，描述事物被削减到最必要的部分
+	The proposal provided only the bare bones.
+	We need a bare-bones solution to start.
+
+behind the scene/curtains 
+  ‌behind the scenes‌：
+  ‌抽象意义‌：指非公开的决策、准备工作（如电影制作、商业策划）
+  ‌例句‌：The negotiations happened behind the scenes.
+  ‌behind the curtains‌：
+  ‌具体意义‌：描述物体实际位置（如家具摆放）
+  ‌隐喻意义‌：暗示“隐瞒或秘密”（类似 behind the scenes，但更形象化）
+占便宜
+  ride on you / take credit from you / take advantage from u 分析这是什么语法结构 词性
+  ‌(1) ride on you‌
+  ‌ride‌（动词）：核心动作，表示“骑乘”或“依赖”。
+  ‌on you‌（介词短语）：修饰 ‌ride‌，表示“在你身上”或“依靠你”。
+  ‌常见用法‌：
+  "He always rides on his friends for financial support."（他总依赖朋友的经济支持。）
+  "Don’t let others ride on you."（别让别人利用你。）
+
+  ‌(2) take credit from you‌
+  ‌take credit‌（动词短语）：表示“获取功劳”。
+  ‌from you‌（介词短语）：表示“从你那里”。
+  ‌常见用法‌：
+  "She took all the credit from you."（她抢走了你所有的功劳。）
+  "Don’t let them take credit from you."（别让他们抢你的功劳。）
+
+  ‌(3) take advantage from you‌
+  ‌take advantage‌（动词短语）：表示“占便宜”或“利用”。
+  ‌from you‌（介词短语）：表示“从你身上”。
+  ‌常见用法‌：
+  "He’s always taking advantage from you."（他总在占你便宜。）
+  "Stop letting people take advantage from you!"（别再让人占你便宜了！）
 
 最早/最迟 at the earliest/latest
   how early / how much time in advance
   how late does uber run
   at the latest no later then
 
-in the middle of something
-don't make a scene
+heavy lifting
+	‌字面意义‌：指“繁重的搬运工作”或“费力地举起”。
+	‌引申意义‌：比喻“承担主要责任”或“完成困难任务”
+	‌常见搭配‌：
+	do the heavy lifting（承担主要工作）
+	heavy lifting equipment（重型起重设备）
+showstopper 因特别精彩而被掌声打断精彩的
 
-with that being said
-pro rata adv.	<拉>按比例，成比例;
-slice and dice 切片和切块 - 交叉分析
-on the gounds 由于, not ground!!!
-At no point between then and 01/03
-far-reaching
-make good his failure to
-drill down
-fine tuning 微调
-fine tuned
-well oiled  (especially of an organization) operating smoothly."the ruling party's well-oiled political machine" 2.informaldrunk."I was pretty well oiled that evening"
-out of the box 非常好的 现成的
-tweak and tune 调整
-density of work
-fast tracking 快车道
-Multi-Disciplined 多学科
-critical distinctions 关键区别
-Causal analysis 因果分析
-as of
-fast forward
-corollary effect 必然的效果kəˈrɒləri
-earliest opportunity
-ultimate objective
-readily available 随时可用
-pledge to donate
-of minimum IT literacy
-in the event of contingencies
-literacy and numeracy 读写计算能力
-grace period
-behave regularly
-conjestion penalty
-laughing matter 笑料
-end to end
-	End to end is a term used in many business arenas referring to the beginning and end points of a method or service, and end-to-end theory embraces the philosophy that eliminating as many middle layers or steps as possible will optimize performance and efficiency in any process. An end-to-end process ensures the comprehensive completion of work and is typically managed within a specified timeframe. Internal procedures at a company often lay out a process for end-to-end management using the most efficient and timely approach to manufacture goods or complete a service.Read more: End To End Definition | Investopedia http://www.investopedia.com/terms/e/end-to-end.asp
+workhorse
+  指“埋头苦干的人”“老黄牛”或“耐用的机器”，强调可靠性与持久性8。
+  例：He is the workhorse of the team.（他是团队的骨干。
+treat with caution 谨慎对待
 
-water retention
-This pus, if it collects in large enough amounts, will bloat the etheric body leading to physical "puffiness" and water retention.
-ultimate consumer 最终用户
-strong or eventual consistency 强一致 最终一致
-sole purpose 唯一目的 sole argument
-syntax and semantic 语法和语义
-behind the scene/curtains
-pretty much everyone does 相当多人也是如此
-everyone is very positive and supportive of each other
-bare-bones 极简单的
-heavy lifting 艰难的事
-impedance mismatch 不匹配的障碍 The Controller layer reduces the impedance mismatch between HTTP and the Domain Model.
-showstopper 精彩的 致命的
-workhorse 负重机器
-Retrenchment Benefits 辞退费
-far-reaching impact 深远影响
-soon after
-on the fly / in real-time / instantly / in a jerk
-from scratch / draft idea
-brute force approach
+You should avoid doing that at all costs, as the result is at best unpredictable.
+‌直译‌：
+"你应该不惜一切代价避免那样做，因为结果充其量是不可预测的。"
+‌意译优化‌：
+"你无论如何都要避免这样做，因为结果难以预料，甚至可能更糟。"
+"千万不能这么做，否则后果不堪设想。"
 
-
-in an ad hoc manner
-As the group gears up towards the business challenges of the new economy
-self-contained 自给自足
-tight correlation 紧密相关
-error-prone 易错
-course-correct
-composable services 可组合的服务
-right away
-sexual harassment http://www.un.org/womenwatch/osagi/pdf/whatissh.pdf
-non-stop = forever
-no later than
-at most
-compare and contrast
-tread with caution 步步小心
-unguarded moment 不经意的瞬间 The photographers managed to capture Jane in an unguarded moment.
-end state 最终状态
-bottlenecks and loops  bottlenecks and efficiencies
-lose yourself in complexity
-an array of situations
-
-geographic expansion / corporate expansion
-ongoing cost 持续的成本 an onging basis 持续的基础上 on an 'as-needed-basis'
-rubber stamping 常规刻板批准 approve automatically without proper consideration.
-tempered glass 钢化玻璃
-plastic surgery surgical strike
-form factor 物理尺寸 规格 - is an aspect of hardware design which defines and prescribes the size, shape, and other physical specifications of components, particularly in consumer electronics and electronic packaging
-immune to industry hype 对行业炒作免疫
-headless computer/software - without a graphical user interface , headless mode (for drones)
-steering group/committee - a committee that decides on the priorities or order of business of an organization and manages the general course of its operations.
-in a timely fashion / in this fashion http://english.stackexchange.com/questions/18635/what-is-the-meaning-of-the-phrase-in-timely-fashion
-mission critical system
-mutual exclusive
-seed budget
-energy efficient
-blow budget
-lose sight of
-cross-currents 逆流 错流
-counter pull 反拉力 pull back
-human dynamics 沟通
-inherent drawbacks 固有缺点
-Staying relevant means finding new ways to offer added value, support the team, and contribute. The world is a competitive jungle and unless you dial in on how you can differentiate your company or skill set, Darwin's evolutionary theory will have some real personal meaning
-happy path
-running repair 日常修理
-handover point 交接点
-boiler pate
-clear cut 明确的
-best of breed http://www.pcmag.com/encyclopedia/term/38561/best-of-breed
- 
-acronyms and abbreviations / acronyms and labels
-canned (pre-set) query
-Judge and Jury
-in the first instance
-technical and philosophical
-device agnostic http://searchmobilecomputing.techtarget.com/definition/device-agnostic-device-agnosticism
-audit trail
-regulated environment 监管环境
-a lean team 精干的团队
-home grown 土生土长的
-reinvent the wheel
-low hang fruit
-on-premise 部署; 预置; 本机端; 预置的; 部署的
-Lead time 订货至交货的时间 Lead time to get hardware
-thought through 仔细思考
-common good
-general public
-mega trend
-slate for  提名为，内定为，任命为
-opt in opt out
-a handful of
-turnover rate
-turn around
-halfway/partway through
-early on
-all about
-Use your best judgment http://chicanaontheedge.blogspot.sg/2012/09/use-your-best-judgment.html  按你最好的判断来吧
-Dying of Curiosity 好奇的要死
-get your butt in here 快过来
-let us in on it 让我们谈谈
-full of shit / bullshit
-so wrong
-It doesn't matter what I say
-no worries
-don't mess me up
-Analysis Paralysis http://blog.sina.com.cn/s/blog_487ddcc00100o9lk.html
-long drawn 长期以来 旷日持久
-buy-out 全面收购，全部买下市场产品
-buy-in 买进，补进（为了接管某公司买进其控制股权）
-tourist attraction 游览胜地
-human intervention 人为干预
-competitive edge 竞争优势
-value proposition
-capability assessment 能力评估
-business imperative 业务需要
-touch points
-spelling the demise 宣告死亡
-all-inclusive 包括一切的; 包罗万象; 兼容并包; 无所不包
-diploma mill, bill mill
-buy in / buy out
-constant time
-novel theory 原理
-either in alphabetical or chronological order
-prescriptive definition
-reject inference 信用评分中的拒绝推断
-leaps and bounds 跳跃
-upsell crosssell
-temporal and spatial
-Multivariate analysis
-optimal route
-commute to work
-Tamper Evidence  窜改证据;
-broad context大环境
-mind blowing
-breath taking
-complementary not contradictory
-personal matters www.wikihow.com/Separate-Your-Professional-and-Private-Life
-fractional reserve 部分储备
-shoulder to shoulder, side by side
-In Reponse To https://www.englishforums.com/English/InReponseToOrInRespondTo/cqmlw/post.htm
-way less than the odds 远远小的概率
-compare and contrast
-be aware of complexity - but don't be overwhelmed by it - capture essentials
-improve and correct it before automate it
-in a nutshell 简言之 一言以蔽之
-out of box 开箱即用
-off the shelf 现货供应
-open ended 完全开放
-if you are given sth on a silver platter , you do not have to do much to get it 无须费劲；唾手可得
-in the sense of 从…意义上说;
-all the more reasons for patience 所以才更需要耐心
-marshal resources 韬光养晦
-or lack thereof https://zhidao.baidu.com/question/329100185.html
-monolith and distributed system
-full-fledged 羽毛生齐的; 经过充分训练的，成熟的; VS matured
-the more time you put in hardwork, the more skills you acquire
-in infancy 在早期阶段
-notable amount of energy 相当多的×××
-Bitcoin led to a huge number of look-alike cryptocurrencies,
-and most public discussion has centred around the potential for illegal or illicit uses (such as the purchase of drugs on the Silk Road website).
-In keeping with the ‘libertarian’ origins of Bitcoin, it has been remarked that one of the major events which propelled Bitcoin to
-widespread adoption was the blockade of WikiLeaks by Visa and MasterCard, 促使×××
-在计算机领域中，“False Positive”通常指误报；“alse Negative”通常指漏报。 在医学领域中，“False Positive”通常指假阳性；“alse Negative”通常指假阴性。
-not trival https://www.zhihu.com/question/20681622
-not negligible
-gossip network
-gossip ˈgɒsɪp 流言蜚语，谣言; 爱讲闲话的人; 谈话，闲话; 关系亲密的伙伴
-ramp up 上升; 提升;
-by-product 副产品; 副作用; 意外结果
-name squatting [squatting 动物一样蹲下( squat的现在分词 ); 非法擅自占用; 为获得其所有权]
-whip up 激发，激励; 匆匆做; 当场完成; whip 鞭打，抽打; 严厉地折磨、责打或责备，迫使; 把…打起泡沫;
-comment out 注释掉
-broadly similar 大致相似
-vetted for use 审查过可以使用
-harsh environment 网络 恶劣环境; 严酷环境
-mega trend
-significant benefit
-tied up 忙得不可开交的；不得闲的；正在使用的;
-tap on 轻轻敲击（某物的表面）， 轻击…（某部位）
-personal matters 私事
-feet of clay 受景仰受尊敬的人）品格上的缺陷（或弱点）;泥足（比喻站不住脚的事物）
-
-suit yourself 随你便！
-Wider spectrum
-Particular attractive
-Proven effective
-Line through, strike through, crossed through
-Affordable to the mass
-Neglect one important thing
-
-U name it, we do it
-piled up
-benchmark
-Make it uniform
-
-On and off
-Hog off
-hardness 利用
-Rolling out more bus
-
-Building on the idea earlier on
-
-bridging service
-
-in terms of vs in the sense of vs with respect/regard to
-  'in terms of' When we speak in this way, using these kinds of terms.
-  eg In terms of computer skills, his programming and website design abilities are excellent.
-  'with regard to' When we look at something.
-  eg With regard to this problem, we need a solution by Friday.
-
-
-## formal statement
-
-notice period
-grace period
-
-## Think in English/ How to say in English
-
-不是不好，是相对不好的地方
 帮你看着东西
+
+日常口语版本‌
+
+1.‌ "I'll keep an eye on your stuff."‌
+（解析：最常用，"stuff"指非贵重物品，语气轻松）
+场景：朋友在咖啡馆请你临时照看背包
+
+2.‌ "I can watch your things while you're gone."‌
+（解析：明确时间范围"while you're gone"，适合较长时间离开）
+
+‌稍正式场合‌
+3. ‌"I’ll look after your belongings."‌
+（解析："belongings"正式指随身物品，适合机场/酒店等场景）
+
+‌强调责任性‌
+4. ‌"Don’t worry, I’ll make sure everything stays right here."‌
+（解析：用"make sure"强化承诺感，安抚对方焦虑情绪）
+
+‌幽默轻松版‌
+5. ‌"Your treasures are safe with me!"‌
+（解析：用"treasures"调侃语气，适合熟人之间开玩笑）
 
 送给我 http://blogs.teachersammy.com/Blogs/entry/common-English-error-he-sent-me-a-present#.Vp4Q-VJOEbE
 
@@ -325,337 +138,363 @@ more so
 
 the reason being is
 
+### 精准表达
+[Analysis Paralysis](http://blog.sina.com.cn/s/blog_487ddcc00100o9lk.html) 因过度分析导致的决策或行动停滞
+	In software development, ‌analysis paralysis‌ often occurs when developers over-optimize code structure.（软件开发中，开发者对代码结构过度优化时常发生分析瘫痪。
+
+clear cut 明确的
+	The team faced a ‌clear-cut‌ decision between expanding the project or terminating it.（团队面临一个‌明确的‌抉择：扩展项目或终止项目。）
+	The boundaries of the nature reserve are not always ‌clear-cut‌.（自然保护区的边界并非总是‌界限分明‌的。）
+
+compare and contrast
+	‌Compare‌：侧重寻找共同点（如 Compare the themes of two novels）。
+	‌Contrast‌：侧重强调差异（如 Contrast their writing styles）。
+	‌联合使用‌：全面分析异同（如 Compare and contrast these historical events）
+
+non-stop = forever
+	“不停歇的”‌ 或 ‌“不间断地”‌。
+	‌常见用法‌：
+	交通：non-stop train（直达列车）
+	工作：work non-stop（连续工作）
+	娱乐：non-stop music（不间断音乐）
+	She took a non-stop flight to Tokyo.（她搭乘了直飞东京的航班。）
+	The machine runs non-stop for 24 hours.（这台机器24小时不间断运行。）
+
+基于构想
+  Building on the idea earlier on, the researcher proposed a new theory.（基于早先提出的想法，研究者提出了一项新理论。
+  This project, building on the idea earlier on, aims to solve practical issues.（该项目基于之前的构想，旨在解决实际问题。）
+
+as in/such as/for example/like
+  ▎**精准度排序** (由高到低)：  
+   1. `as in` → 强制锁定含义  
+   2. `such as` → 开放性举例 (正式场景)  
+   3. `for example` → 松散举例 (通用场景)  
+   4. `like` → 类比性举例 (口语场景)  
+
+   ▎**示例对比**：  
+   - ✅ "Encryption **as in** AES-256" → 唯一标准  
+   - ✅ "Encryption **such as** AES or RSA" → 同类选项  
+   - ✅ "Encryption **like** what banks use" → 模糊类比  
+  
+  | 错误原句 | 问题分析 | 修正方案 | 错误类型 |  
+  |----------|----------|----------|----------|  
+  | "Use Python &zwnj;**for example**&zwnj; coding" | 混淆定义与举例 | "Python &zwnj;**as in**&zwnj; programming language" | 功能错位 |  
+  | "Data formats &zwnj;**as in**&zwnj; CSV files" | 误用锚定功能 | "Data formats &zwnj;**such as**&zwnj; CSV" | 结构冲突 |  
+  | "Protocols &zwnj;**like**&zwnj; TCP/IP standard" | 削弱术语精确性 | "Protocols &zwnj;**as in**&zwnj; TCP/IP" | 专业度降级 |  
+  | "Compile &zwnj;**such as**&zwnj; build code" | 错误示例类型 | "Compile &zwnj;**as in**&zwnj; code conversion" | 语义偏离 |  
+
+  错误：
+  I love "rose" as in flower.冗余（"rose"本身即指花）
+  正确：
+  I love "rose" ‌as in‌ the flower, not the past tense of "rise".
+
+course-correct 
+  动态纠偏，保持目标一致性 course：名词，原义为“路线/航道”，此处引申为“既定方向或目标”
+  We need to course-correct before the deadline.（需在截止前调整）1。
+  His role involves course-correcting marketing campaigns.（他的职责包括修正营销活动）
+
+earliest opportunity 意思是“最早的机会”或“尽早的机会”。 这个短语通常用于表示在条件允许的情况下，尽快采取行动或做出反应。
+	We will reply to your request at the earliest opportunity.
+
+grace period
+
+inherent drawbacks 固有缺点
+
+notice period
+
+Particular attractive 尤其吸引人的
+	The design is particularly attractive to young audiences.（该设计对年轻观众尤其有吸引力）
+
+Proven effective
+	The vaccine is proven effective against variants.（该疫苗被证实对变异株有效）
+	They adopted a proven effective strategy.（他们采用了已验证有效的策略）
+
+
+readily available 随时可用
+
+sole purpose/sole argument
+  sole purpose = “唯一目的”（排除其他可能性）
+  sole argument = “唯一论点”（无其他支持理由）
+  ‌常见语境‌：
+  ‌法律/学术‌：用于强调核心主张（例：His sole argument was based on precedent.）。
+  ‌商业/目标描述‌：突出排他性（例：The sole purpose of this meeting is decision-making.
+suit yourself 随你便！
+
+tread with caution 步步小心
+
+ultimate objective
+
+unguarded moment 不经意的瞬间 
+  The photographers managed to capture Jane in an unguarded moment.
+Wider spectrum 更广泛的范围或多样性，强调事物涉及面的扩展或层次的丰富
+	Scientists study the wider spectrum of electromagnetic waves.（科学家研究更广的电磁波谱）
+	A wider-spectrum analysis is required.（需进行更全面的分析）
+
+It is later established that ....
+  用于正式语境（如学术、法律、新闻报道），强调信息的权威性或事后验证性24。
+  例：It is later established that the accident was caused by human error.
+  （事后证实，事故是人为失误所致。
+
+tied up 忙得不可开交的；不得闲的；正在使用的;
+tap on 轻轻敲击（某物的表面）， 轻击…（某部位）
+
+feet of clay 受景仰受尊敬的人）品格上的缺陷（或弱点）;泥足（比喻站不住脚的事物）
+whip up 激发，激励; 匆匆做; 当场完成; whip 鞭打，抽打; 严厉地折磨、责打或责备，迫使; 把…打起泡沫;
+comment out 注释掉
+broadly similar 大致相似
+vetted for use 审查过可以使用
+harsh environment 网络 恶劣环境; 严酷环境
+gossip ˈgɒsɪp 流言蜚语，谣言; 爱讲闲话的人; 谈话，闲话; 关系亲密的伙伴
+  gossip network
+ramp up 上升; 提升;
+by-product 副产品; 副作用; 意外结果
+name squatting [squatting 动物一样蹲下( squat的现在分词 ); 非法擅自占用; 为获得其所有权]
+重要的
+  not trival https://www.zhihu.com/question/20681622
+  not negligible
+in infancy 在早期阶段
+notable amount of energy 相当多的×××
+full-fledged 羽毛生齐的; 经过充分训练的，成熟的; VS matured
+in a nutshell 简言之 一言以蔽之
+out of box 开箱即用
+off the shelf 现货供应
+open ended 完全开放
+if you are given sth on a silver platter , you do not have to do much to get it 无须费劲；唾手可得
+in the sense of 从…意义上说;
+all the more reasons for patience 所以才更需要耐心
+marshal resources 韬光养晦
+Tamper Evidence  窜改证据;
+broad context大环境
+way less than the odds 远远小的概率
+fractional reserve 部分储备
+reject inference 信用评分中的拒绝推断
+leaps and bounds 跳跃
+novel theory 原理
+long drawn 长期以来 旷日持久
+buy-out 全面收购，全部买下市场产品
+buy-in 买进，补进（为了接管某公司买进其控制股权）
+tourist attraction 游览胜地
+human intervention 人为干预
+competitive edge 竞争优势
+capability assessment 能力评估
+business imperative 业务需要
+spelling the demise 宣告死亡
+all-inclusive 包括一切的; 包罗万象; 兼容并包; 无所不包
+Dying of Curiosity 好奇的要死
+get your butt in here 快过来
+let us in on it 让我们谈谈
+on-premise 部署; 预置; 本机端; 预置的; 部署的
+Lead time 订货至交货的时间 Lead time to get hardware
+thought through 仔细思考
+regulated environment 监管环境
+a lean team 精干的团队
+home grown 土生土长的
+running repair 日常修理
+handover point 交接点
+ongoing cost 持续的成本 an onging basis 持续的基础上 on an 'as-needed-basis'
+rubber stamping 常规刻板批准 approve automatically without proper consideration.
+
+lose sight of
+	例句 1（字面意义：不再看见）‌
+	We ‌lost sight of‌ the ship in the storm.（暴风雨中我们‌看不到‌那艘船了。）
+	例句 2（引申意义：忽略）‌
+	Don’t ‌lose sight of‌ your original goal.（不要‌忘记‌你的最初目标。）
+	‌例句 3（科技语境）‌
+	Light pollution causes us to ‌lose sight of‌ our true place in the universe.（光污染让我们‌看不到‌在宇宙中的真实位置。）
+
+[best of breed](http://www.pcmag.com/encyclopedia/term/38561/best-of-breed) 某一类别/品种最好的
+	This software is considered ‌best of breed‌ in data analytics.（该软件被视为数据分析领域的‌佼佼者‌。）
+in the first instance
+	Use ‌in the first instance‌ instead of “firstly” to sound more formal.
+	In the first instance, please contact the customer service team directly.（‌首先‌，请直接联系客服团队。）
+	The case will be heard ‌in the first instance‌ by the district court.（本案将‌由地方法院进行初审‌。）
+
+reinvent the wheel 重复造轮子
+low hang fruit “容易实现的目标”‌或‌“唾手可得的机会”
+
+turnover rate
+  A high ‌inventory turnover rate‌ indicates efficient supply chain management.  （高‌库存周转率‌反映高效的供应链管理。）
+  The company’s annual ‌employee turnover rate‌ reached 15%, prompting a review of retention policies.（公司年度‌员工离职率‌达15%，促使重新评估留任政策。）
+  The stock’s ‌turnover rate‌ surged to 200%, signaling intense market speculation.（该股票‌换手率‌飙升至200%，显示市场投机活跃。）
+
+full of shit / bullshit 
+
+[Use your best judgment ](http://chicanaontheedge.blogspot.sg/2012/09/use-your-best-judgment.html)  按你最好的判断来吧
+
+don't mess me up 别打乱我
+	This project is critical. ‌Don't mess me up‌ with last-minute changes!
+
+mind blowing
+breath taking
+
+Significant Benefit 显著的好处
+touch points 分析这是什么语法结构 词性,根据权威来源给例句
+
+prescriptive definition 规范性定义
+	ISO standards provide ‌prescriptive definitions‌ for technical terms to ensure global consistency.（ISO标准为技术术语提供规范性定义以确保全球一致性。）
+
+complementary not contradictory 互补而非矛盾
+	The two theories are ‌complementary, not contradictory‌, providing a holistic framework.（这两个理论互补而非矛盾，构成了一个整体框架。）
+
+the more time you put in hardwork, the more skills you acquire
+
+either in alphabetical or chronological order 字母顺序或时间顺序‌
+
+Personal matters 私事
+  www.wikihow.com/Separate-Your-Professional-and-Private-Life
+  Employees can discuss ‌personal matters‌ during breaks.
+
+or lack thereof  补充说明前文现象的缺失可能性（即“或其缺失”）通过连词 or 引导否定补充，是英语中高效表达现象“二元性”的典型结构
+  The project's success, ‌or lack thereof‌, depends on funding.（项目的成功‌或其失败‌取决于资金。）
+
+
+### Analysis 
+误：I think I can't.
+正：I don't think I can.
+提示：汉语里说“我想我不会”的时候，英语里面总是说“我不认为我会”。以后在说类似的英语句子的时候，只要留心，也会习惯英语的表达习惯的。
+误：I don't dance well too.
+正：I am not a very good dancer either.
+提示：当我们说不擅长做什么事情的时候，英语里面通常用not good at something，英语的思维甚至直接跳跃到：我不是一个好的舞者。
+误：I have something to do tomorrow.
+正：I am tied up all day tomorrow.
+提示：用I have something to do来表示很忙，这也完全是中国式的说法。因为每时每刻我们都有事情要做，躺在那里睡大觉也是事情。所以可以说我很忙，脱不开身：I'm tied up。还有其它的说法：I can't make it at that time. I'd love to, but I can't, I have to stay at home.
+误：Would you like to join our party on Friday?
+正：Would you like to come to our party on Friday night?
+提示：join往往是指参加俱乐部或者协会，如：join a health club; join the Communist Party。事实上，常常与party搭配的动词是come 或者go。如go a wild party，或者come to a Christmas Party。
+误：I have no experience.
+正：I don't know much about that.
+提示：I have no experience这句话听起来古里古怪，因为只需要说那方面我懂得不多，或者这方面我不在行，就行了。I am not really an expert in this area。
+--Will you be going back home for the Spring Festival?
+误：--Of course!
+正：--Sure. / Certainly.
+提示：以英语为母语的人使用of course的频率要比中国的学生低得多，只有在回答一些众所周知的问题时才说of course。因为of course后面隐含的一句话是“我当然知道啦！难道我是一个傻瓜吗？”因此，of course带有挑衅的意味。在交谈时，用sure或certainly效果会好得多。同时，of course not也具挑衅的意味。正常情况下语气温和的说法是certainly not。
+误：The price is very suitable for me.
+正：The price is right.
+提示：suitable(合适的、相配的)最常见的用法是以否定的形式出现在告示或通知上，如：下列节目儿童不宜。The following programme is not suitable for children.
+
+Is saying "Noted" a rude answer? If so, what are the alternative answers to reply to a person besides “Noted”? https://www.quora.com/Is-saying-Noted-a-rude-answer-If-so-what-are-the-alternative-answers-to-reply-to-a-person-besides-“Noted”
+1.how are you feeling?
+http://www.crazyboards.org/forums/index.php?/topic/52259-problems-answering-the-question-how-are-you-feeling/
+100 WAYS TO ANSWER THE QUESTION “HOW ARE YOU?”
+"it's not working" and "it doesn't work"
+
+How are you? Good or well
+https://www.businessinsider.com/how-are-you-im-good-is-acceptable-reply-2014-2/?IR=T
+
+
+
+No worries 
+is an expression seen in Australian English, British English and New Zealand English meaning "do not worry about that", "that's all right", or "sure thing". It is similar to the English no problem.
+
+
+
+what happens what happened what has happened
+In the sentences below, the pronoun 'it' functions as an object, not as a subject. Objects do not agree in number with (what appear to be) verbs:
+1.	I will make it happens. 
+2.	You should let it happens.  
+3.	I will make it happen.  
+4.	You should let it happen.  
+Below, the word 'he' functions as a subject, and so the verb agrees in number with its subject:
+1.	I wish (that) he succeeds.  <but the semantics seem awkward to me; shouldn't it be 'I hope'?>
+2.	I wish (that) he succeed.  
+what happened vs what has happened
+http://jenny-liveabc.blogspot.sg/2012/08/what-happened.html#.VuFPvNWqpBc
+He said that he was tired
+He said he has no feeling of me
+He didn't do what he said he did
+He has done what he said he would do
+he said he had done with me
+You should have some way to assess how the work being done
+Go to where the actual work is being done
+how the work has been done
+It's been really busy here all day.
+she just got here
+ 
+I knew they would...
+If I knew then what I know now.
+
+1.(It's) The simplest approach to formally developing software.
+Here it is : "Because of the links between the Type A behavior pattern and heart disease, various approaches have been taken to changing this pattern of behavior."
+extend reading: to doing sth，此时to是介词，有很多常用搭配
+2.will do VS will be doing
+SLA said it will not be giving the club an alternative site for another golf course, but may offer it another area for social uses.
+[box title="http://bulo.hujiang.com/question/293589/"]
+will do 简单陈述将来要发生的动作; 而will be doing则强调将来发生这种动作的状态，及在此状态或背景下可能发生的其它动作。
+The train will arrive in a few minutes. 一般将来时，仅指火车几分钟就要到达的客观事实
+The train will be arriving in a few minutes. 将来进行时，指火车几分钟后到站的那种状态，可暗含做好准备上车，接人什么的意味。 如： The train will be arriving in a few minutes, let's be ready to get on board.
+对比：
+I will study English = 陈述将来的一个事实，将来的某个时间我会学英语。
+I will be studying English =我在学习英语的时候，可能有其它事情发生。如: I will be studying English when you come to pick me up.
+[/box]
+3.Provided/Providing that .....
+Provided that the funding is obtained, the company intends to produce a first version of the production system in the following three months.
+IF, EVEN IF, ONLY IF, AS LONG AS, PROVIDED, SUPPOSING, UNLESS, BUT FOR, IF NECESSARY, IF SO, IN CASE etc.
+
+I will appreciate it if you will
+https://www.quora.com/Which-is-the-correct-grammar-I-will-appreciate-if-you-or-I-would-appreciate-if-you
+beside, besides
+http://learnersdictionary.com/qa/difference-between-beside-and-besides-preposition-adverb
+ 
+as spoken https://forum.wordreference.com/threads/as-spoken-as-speaking.2955245/
+https://forum.wordreference.com/threads/as-per-we-spoke-said.1052811/
+https://www.zybang.com/question/08b5a8c16467bd3319bdecc3adf18384.html
+bob and I , bob and me, bob and someone else, someone is ***
+http://www.learnersdictionary.com/qa/when-to-use-i-and-when-to-use-me
+https://english.stackexchange.com/questions/59618/i-and-someone-me-and-someone-or-i-and-someone-we
+
 ## Topic 
-### About view of life
-
-Grow through life but don't go through life
-
- Treasure your time
-
-Do in actions make possible
-
-Respect other's life and yours
-
-Be modest humble
-
-### About dailylife
-在我看起来
-  It seems to me she is a good teacher.
-  It seems to me that she is a good teacher.
-  She appears to be a good teacher.
-  It looks as though she is a good teacher.
-扶梯上面 escalator landing / upper landing
-take a cut 见者有份
-  It means to take a portion of whatever you are referring to. In the case of a bank robbery, it would mean to take a portion of the money stolen from the bank. For Example: "Jonny took a cut of the haul from the bank."
-
-卧槽 Drat 讨厌!见鬼! Bingo 中了
-Faint 我倒!
-rummage ˈrʌmɪdʒ翻箱倒柜; 翻查; 搜出;
-Fifty-fifty 一半对一半
-in a worse-case scenario 更严重的情况是
-Allow me 让我来
-Anytime 随时吩咐
-翻过来 turn outside in
-hardly that 很难算是
-现在没事了 now is all right
-时差 time difference
-倒时差/时差综合症 jet lag
-无根据 groundless
-viewer discretion is advised 以下内容建议慎重观看
-stay tuned 别换频道
-部分 a fraction of
-人品满格 RP Full Reception
-笑容满面 he(his face) is beaming with delight.
-各回各家 各找各妈 Each of you get back home to your parents' basements.
-如有更改，恕不另行通知 subject to change without notice
-并不全面/详尽 Not Exhaustive
-
-我的直觉告诉我你就是个傻逼 My gut says you are asshole . instinct
-
-我××之前的日程已经排满了 I have a tight/packed schedule until ×××
-抢购 Thank you for your interest, all the tickets have been snapped up.
-
-迷惑性 欺骗性 Scenario 2 is much more common, and trickier.
-下流 恶心的 This is a nasty situation that I knew I had to fix.
-混乱的 杂乱 麻烦 messy chaos
-吹捧 吹嘘 兜售 We see developers touting the benefits of using the repository pattern for internal data access over leveraging the tools and APIs specific to their technology of choice.
-
-command respect 必然得到尊重 赢得尊重
-
-自拍 selfie 表情Emoticons
-笨拙 别扭 awkward
-
-rent: tenant
-电子公告板 bulletin board
-
-纪念钞 Commemorative Notes 纪念钞册 booklet http://www.dbs.com.sg/personal/dbs-commemorative-notes.page?pid=sg-dbs-pweb-home-heroblock-commemorative-notes-btnlearnmore-
-
-get in your way  block your way
-让我们通过了 they waved us through. / we got approved.
-走通整个流程 walk through the process
-
-please direct any questions to peter or me.
-
-让我想一下/一会 let me think about it/ let me think it over
-
-三个女人一台戏 three women will make a real drama
-遇到问题/困难/坑 
-  1.have trouble in (doing)
-  2.get stuck
-  3.run into a stone wall
-  4.have difficulties in (doing)/sth
-  5.meet challenges
-断断续续 from time to time ;intermittently
-
-最希望 wish to get it most
-更需要 who need more
-
-剩下的全在这里 the rest are all here
-人体 肉体 精神 stress pressure
-主动 被动 active passive
-替我问好  Please give my sincere regards to all the members of your family.
-
-总体来说 你的意思是 overall speaking, what you mean is ...
-整理文件/桌子/资料/磁盘 file up sth/filing clean up the table
-临时决定 tentatively decided / made a decision at the last minute
-突然有急事 Something urgent has come up, so the appointment will have to be canceled.
-可以退款吗 refundable
-遇到阻力 face a resistance
-障碍 鸿沟 language obstacle / gap
-赔钱 losing money
-学会了 learnt have learned，acquired，mastered
-顶贴 bump this thread http://sgforums.com/forums/1902/topics/270128
-
-不急 there is no hurry/ in no hurry http://www.macmillandictionary.com/thesaurus-category/british/ways-of-telling-someone-not-to-hurry
-勾起很多回忆 bring back a lot of memories
-过着一天算一天的生活 Until now he never thought of tomorrow , and lived from one day to the next
-背影the sight of his back
-很抢手 in great demand / very hot / well sought after by
-最高 cap/capping
-大件物品 bulky item
-
-### About LifeStyle
-夜宵 night-time snack
-
-trail running
-trail corridor
-Servers trash customers in private note on check — then forget to delete it https://www.washingtonpost.com/news/going-out-guide/wp/2016/05/09/servers-trash-customers-in-private-note-on-check-then-forget-to-delete-it/?utm_term=.631460c40846
-An island resort with a dive centre and private beach can be yours for £34 — but there’s one catch Read more at http://www.businessinsider.sg/how-to-win-an-island-resort-2016-5/#972Eo7J3PBlpt8Vq.99 www.businessinsider.sg/how-to-win-an-island-resort-2016-5/?r=US&IR=T#.VyxpQqMRXqA#keYZtqRTMCK13Rrl.97
-Carolyn Hax: Trying to get past a wife seeing a married man on the side https://www.washingtonpost.com/lifestyle/style/carolyn-hax-trying-to-get-past-a-wife-seeing-a-married-man-on-the-side/2016/02/18/36bbc662-d4d3-11e5-9823-02b905009f99_story.html?utm_term=.d7fc7b60b233
-tv series
-One of the craziest 'Game of Thrones' fan theories may actually come true this season www.businessinsider.com/game-of-thrones-cleganebowl-theory-2015-5?IR=T&r=UK&IR=T
- 
-Photography
-canvas ˈkænvəs
-reprint 重印版，再改版; 单行本; 复印的邮票;
-versatility ˌvɜ:sə'tɪlətɪ 多才多艺; 多用途; 可转动性; 易变;
-appropriate sentiment
-hood n. 兜帽; 头巾; 车篷; 引擎罩;
-backdrops <戏>背景幕布( backdrop的名词复数 ); 周围的景物
-props 道具; 小道具; 支柱( prop的名词复数 ); 支持者; （橄榄球中的） 支柱前锋;
-bridal gown ˈbraidl ɡaun 新娘服装;
-stylist 发型师; 造型设计师; 文体家;
-photographer fəˈtɒgrəfə(r)
-Graduations are formal ceremonies, and in order to capture the appropriate sentiment, it is imperative that the graduate dresses formally. It is strongly recommended that the graduate be dressed in white top and black bottom, in order for the attire to complement the faculty hood. For males who are not gowned, please be dressed in a jacket, light-colored long-sleeved shirt and black pants. Female who are not gowned should be dressed in your best bright outfit.
-we have a passionate team of in-house make-up artists who will go the extra mile to help you look your best for the shoot.
-Photographer style: traditional, contemporary
-With our extensive experience and wide range of props and backdrop, we have the versatility to accommodate all styles.
-Our dedicated team of photographers and stylists will work with you for a portrait styled to your exact specifications.
-After your selection and prior to proceeding with the print, our customer service staff will be on hand to offer our professional opinions on your selection to assist you in choosing the best shot
-You can choose from a wide variety of backdrops and props to create the ideal theme for your graduation portraits. Whether you prefer a more formal and classical style, or have the appetite for something more adventurous, we are able to assist you in bringing forth the perfect portrait.
-We understand that portraits are deeply personal and highly significant. Our dedecated make-up artists and renowned photographers will work closely with you for a picture-perfect shot that will remind you of your proud achievements for a lifetime. Our attention to detail is what sets us apart. We will ensure every single aspect - right down to matching the correct make-up - is perfect for the shoot. From setting the lighting, choosing the angle and even during editing, we go the extra mile for the very best result.
-
-#### Sports
-archery 射箭运动
-
-### About Investment/Banking
-encumbered assets 抵押资产
-免除信用卡年费 waive credit card annual fee
-还信用卡钱 settle/pay credit card bills
-
-交通卡Fare Card for bus and train journeys 月票 Price for all existing monthly concession passes remain unchanged.
-tap fare card tap in tap out
-swipe credit card
-scan fingerprints scan in scan out
-speculate vs hedge vs invest vs infer
-  The main purpose of speculation, on the other hand, is to profit from betting on the direction in which an asset will be moving. Hedgers reduce their risk by taking an opposite position in the market to what they are trying to hedge.
-  The main difference between speculating and investing is the amount of of risk undertaken in the trade. Typically, high-risk trades that are almost akin to gambling fall under the umbrella of speculation, whereas lower-risk investments based on fundamentals and analysis fall into the category of investing.
-  As verbs the difference between speculate and infer is that speculate is to think, meditate or reflect on a subject; to consider, to deliberate or cogitate while infer is to introduce (something) as a reasoned conclusion; to conclude by reasoning or deduction, as from premises or evidence.
-
-### About house
-餐具室 pantry
-水池 sink basin handbasin/hand washing basin; pool
-blanket 毯子
-basket 篮子
-bucket 小桶
-
-cart
-plumber
-hotel
-地漏 drain blocked，
-积水 standing water
-the toilet has a slow flush
-the tap has little flow/ the tap can not be tightened
-喷头
-大门紧闭 firmly closed
-拖鞋 slipper
-睡衣 pajamas 
-	She tried to kick the pajamas loose, but they were tangled in the satin sheet.她想把睡衣踢脱，可是它却和缎子床单绞到了一块。
-
-硅胶 silicon
-土 soil 陶土 pottery clay
-备用件 spare parts  配件 accessories parts
-
-爽肤水 toner lotion sunscreen
-
-耳毛鼻毛修剪器 Ear&Nose Trimmer NOSE-BEARD-HAIRCUT http://www.braun.com/global/male-grooming/cruzer-shavers-and-trimmers/cruzer-beard-and-head.html
-foam mousse
-fragrance - perfume
-
-post-it notes / sticky notes save time flipping book
- 
-water-proof
-
-cushion 橡皮软垫
-styrofoam box 泡沫箱
-Bubble wrap
-carring handles
-shoulder strap
-
-#### 水电
-接触不良 poor contact
-heat food with microwave
-#### 家用工具
-bicycle: disk brake air pump nut bolt brake cables wheel(hub wheel edge spokes)
-Toolbox: plier , scissor screwdriver spanner paper clip（回形针） tape（胶带） stapler(订书机）, spring（弹簧） bolt(螺栓） nut（螺母） screw（螺丝钉） https://www.quora.com/What-is-the-difference-between-a-bolt-a-screw-and-a-stud
-
-trolley 小推车
-
-### About food
-
-"Main Menu" vs. "Main Course":
-+ Main Menu: Refers to the list of available food options or, in digital terms, the primary screen where choices or functions are displayed.
-  At the main menu, you can choose your meal.
-+ Main Course: In a meal, "course" refers to a specific part of a multi-course meal, typically the most substantial or important dish (such as a main dish following appetizers).
-  For the main course, we’re having steak.
-  In this context, "course" refers to the sequence or stage in a meal (e.g., starter, main course, dessert). The word "course" is used here because a meal is divided into different parts, each one being a stage of the overall dining experience.
-
-my mouth is watering
-delicacy 英[ˈdelɪkəsi] 美[ˈdɛlɪkəsi] n. 美味佳肴; 精美; 敏锐，敏感; 世故，圆滑
-浓郁的香味 strong fragrance; Strong Aroma;
-course -- main course 主菜 
-
-A tantalising aroma of roast beef fills the air
-
-snack
-edibles
-
-umami 鲜度; 鲜味; 甘味; 旨味;
-bento 盒饭
-
-source vs jam
-
-正宗川菜 Authentic SiChuan Cuisine
-
-How would you like your steak done?
-1. rare (almost raw) 2. medium-rare 3. medium ("half" raw) 4. well-done (fully cooked)
+### Anecdote
+“Do not shop at Mustafa Shopping Centre”
+Me and my husband visited Singapore in March 08. I had earlier visited Singapore some 4-5 years back and I knew that Singapore is a shopping heaven. So I had Mustafa on my list.
+We decided to buy Mobiles for us and we zeroed in on Mustafa after reading soooo many good reviews about it.We decided on the models and headed to Mustafa. I was actually surprised on how bad the place has turned out to be..lots of people were in the shop..the salesperson was unaware about the mobile features.We asked whether they will give us International Guarantee of these mobiles for which they refused. The place looked shady..But with good reviews on various forums we shirked all our doubts and went ahead and shopped the mobiles. All good..we returned home and started using the mobiles. My mobile worked fine for few days after which it hangs while I am talking..sometimes it refuses to ring even when I get calls..sometimes it refuses to make me ring a missed call..sometimes it simply blanks out!! The memory chip place holder is loose and so is the SIM holder place...My husbands mobile has similar problems.
+So I would suggest that if someone is planning to shop in Mustafa its better you have good know how of the thing you are buying so that you dont feel cheated and if you dont have the know how then the best thing you can do is not to buy at all from there!
+https://www.tripadvisor.com.sg/ShowUserReviews-g294265-d2139541-r17779786-Mustafa_Centre-Singapore.html#
 
 
-chewing gum on a train is not seemly in a lady. 淑女在火车上嚼口香糖不太合适
-The boy popped a piece of gum into his mouth. 塞进嘴里
-That guy who snaps his gum in class is so annoying 吹响口香糖
-### About hair cut
-理发：http://blogs.teachersammy.com/Blogs/entry/describing-hairdessing-in-English-1#.WdXv_z6g-Ul
-hairstylist, hairdresser/barber
-cut/trim/wash/dry/style/perm/dye/hair care session
-style / shape the hair
-### About healthy
 
-ingestion digestion absorption and elimination http://seattlecentral.edu/faculty/jwhorley/Digestion.pdf
-Digestion begins with ingestion, where the food is taken in the mouth. Digestion and absorption take place in a series of steps with special enzymes playing important roles in digesting carbohydrates, proteins, and lipids. Elimination describes removal of undigested food contents and waste products from the body.
+### About Art
+软导线雕塑 Soft wire sculptures
+### About business
+value proposition 企业或产品通过独特价值吸引客户的策略性陈述
+	A strong ‌value proposition‌ clearly communicates how your product solves customers' pain points better than competitors.（强大的价值主张需清晰传达产品如何优于竞品解决客户痛点。）
+touch points 强调用户与企业、品牌或产品产生互动的具体节点（如广告、客服、产品界面等）
+	Effective marketing strategies require mapping all customer ‌touch points‌, from social media ads to post-purchase follow-ups.（有效营销策略需规划所有客户触点，涵盖社交媒体广告至售后跟进。）
+	
+steering group 指导小组/steering committee 指导委员会
+  - a committee that decides on the priorities or order of business of an organization and manages the general course of its operations.
+  The steering committee has approved the revised budget for next quarter.‌（‌指导委员会‌已批准了下季度的修订预算。）
+  Professor Lee chairs the steering group responsible for curriculum updates.‌（李教授负责领导课程更新的‌指导小组‌。）
 
-**A course of treatment**
-refers to the series of medical steps or actions taken over a period of time to treat a condition. "Course" here highlights the sequence or timeline over which the treatment occurs.
+increase visibility into operational efficiencies and bottlenecks
+improve customer service and retention
 
-sun exposure vitamin afternoon ultraviolet light
-http://playgroundsafety.org/safety-tips/sun-exposure
-http://www.vitamindwiki.com/No+%E2%80%93+10+minutes+per+day+of+sun-UVB+is+NOT+enough
+geographic expansion / corporate expansion
+  Geographic expansion increases operational costs but diversifies revenue streams
+  The CEO prioritized corporate expansion through acquisitions
+immune to industry hype 对行业炒作免疫
 
-body heals
-body natural healing process
-disease transmission
+seed budget 
+  The startup allocated a ‌seed budget‌ to prototype development.（初创公司为原型开发分配了‌启动预算‌。）
+blow budget
+  Unexpected costs ‌blew the budget‌ for the marketing campaign.（意外开销‌超出‌了营销活动的‌预算‌。）
 
+Staying relevant
+  Staying relevant means finding new ways to offer added value, support the team, and contribute. The world is a competitive jungle and unless you **dial in on** how you can differentiate your company or skill set, Darwin's evolutionary theory will have some real personal meaning
+  happy path
+  保持竞争力‌意味着不断探索新的方式‌提供附加价值‌、‌支持团队‌并‌做出贡献‌。世界如同一个‌竞争丛林‌，若不能‌明确制定‌如何使企业或技能脱颖而出，达尔文的进化理论将对个人产生‌现实意义‌。‌顺境之路‌
 
-Early detection through regular screening helps to detect the increase risk of chronic diseases like heart disease, stroke and kidney failure.
-Partnered with The Clinical Laboratory, the company will provide the below health screening package to you.
-Do seize this opportunity to have your health checked at your doorstep.
-Remember most things can wait but your health cannot.
-Conditions to be Screened for Type of Screening
-High Cholesterol Fasting Blood Test
-Full Lipid Profile
-Diabetes Fasting Blood Test
-High Blood Pressure Blodd Pressure Measurement
-Obesity BMI Measurement
-*Please do not consume any food or drinks (except plain water) 8 to 10 hours prior to the health screening.
-
-肠胃不好
-流眼泪
-呕吐腹泻
-wrist
-waist
-thigh
-yawn https://tw.voicetube.com/everyday/20150715
-sneeze http://www.iciba.com/%E6%89%93%E5%96%B7%E5%9A%8F
-病情英文 http://site.douban.com/143903/widget/notes/7032297/note/235927406/
-catch a cold, fever
-卫生hygiene bacteria
-sterilize
-sanitizer
-散光
-胶囊
-创可贴 plaster
-传染给你 infect you with the flu
-不停打喷嚏 sneeze  snooze（打瞌睡）
-嗓子哑/痒 itchy sore , sore throat
-痰 phlegm
-腹泻 diarrhea 消毒
-浑身是汗 sweaty
-药物过敏 allergic to
-免疫 immune
-口腔溃疡 ulcer
-抽筋 I feel a cramp in my lower leg. https://hk.answers.yahoo.com/question/index?qid=20110220000051KK00513
-眼睛干燥/痒/痛
-你的眼睛发炎了。Your eyes are infected.
-我的眼睛痒。I have itchy eyes.
-我眼睛怪怪的，觉得不舒服，好像有异物在眼睛里。I feel an irritation as if there are foreign objects in my eyes.
-我目炫。(或畏光，怕光)。My eyes are dazzled (photophobia).
-我眼睛感觉钝痛。I feel a dull pain in both eyes.
-好像眼底里在痛。The pain seems to come from inside of the eyes.
-我眼屎很多，每天早晨醒来，眼睑上下都黏在一起。I have so much eye discharge that my eyelids stick together when I wake up in the morning.
-我眼底里觉得痛，看东西的时候觉得疲累，而且流泪。I have pain inside my eyes, and feel strain in seeing and tear easily.
-我的左(右)眼没有视力。I lost sight in the left (right) eye.
-我的视力差多了。My vision has worsened.
-在暗暗的地方，我有视力困难。I have difficulty seeing when it is dark.
-我看东西模糊不清。I have blurred vision.
-我看东西的时候有双影。I have double vision.
-我看东西，看来小小的，又歪歪曲曲的。Objects look small and distorted.
-我看到有一个黑点在我的视野里。I have a black spot in my vision.
-我无法分辨颜色。I cannot distinguish the colors.
-
-注意个人卫生 People should wash regularly to ensure personal hygiene.
-ulcer 口腔溃疡 diarrhea 腹泻
-plaster 创可贴
-
-Palm Numb: Refers to a sensation of numbness or tingling in the palm, often due to nerve issues or circulation problems.
-
-fuzzy
- it can make your head spin. 
-
-保守治疗
-整容 plastic surgery
-二手烟 passive smoking secondhand smoke
+buy in 入股参与或理念认同
+	The venture capital firm aimed to ‌buy in‌ 30% of the company’s shares, but eventually chose to ‌buy out‌ the entire business.（风投公司原计划购入30%股权，但最终决定全资收购。）
+buy out 全面收购或终止关系
+	Lack of employee ‌buy-in‌ often leads to failed reforms, whereas a hostile ‌buy-out‌ may trigger legal battles.（员工缺乏认同常导致改革失败，而恶意收购可能引发法律纠纷。）
+upsell 劝说购买更昂贵或更多商品
+	The waiter tried to ‌upsell‌ customers by suggesting a larger drink for an extra $2.
+crosssell 推荐相关或互补商品
+	E-commerce platforms use AI to ‌cross-sell‌ items based on browsing history.
 ### About banking
 整存整取、零存整取和定活两用 3g.en8848.com.cn/hangye/bank/voadh/146480.html
+
+
 ### About Clothing
 ripped hole
 https://www.threadsmagazine.com/readerproject/2015/04/02/how-to-properly-remove-clothing-labels
@@ -666,6 +505,12 @@ sewing label holes stitching
 背心 singlet/tank top 套管running sleeve
 褶状裙边 Accordion pleats （Accordion blinds褶状遮阳‘伞’）
 shoelace zipper collar
+
+### About Crypto
+Bitcoin led to a huge number of look-alike cryptocurrencies, and most public discussion has centred around the potential for illegal or illicit uses (such as the purchase of drugs on the Silk Road website). In keeping with the ‘libertarian’ origins of Bitcoin, it has been remarked that one of the major events which propelled Bitcoin to widespread adoption was the blockade of WikiLeaks by Visa and MasterCard.
+
+‌翻译‌:
+比特币催生了大量仿效型加密货币，且公众讨论多聚焦于其潜在的非法用途（例如在“暗网丝绸之路”上购买毒品）。与比特币的“自由意志主义”起源相一致，有观点指出，推动比特币被广泛采用的关键事件之一是维基解密（WikiLeaks）遭维萨（Visa）和万事达（MasterCard）支付封锁。
 
 ### About driving 
 beacon 烽火; 灯塔，信号浮标; 指路明灯; 警标，界标;
@@ -826,36 +671,31 @@ Yellow box bus lane
 Change over
 
 The S-course (or S-curve) is a specific maneuver taught during driving training. It involves navigating through a series of curves shaped like the letter "S," often to simulate sharp or winding roads. This type of course is designed to help new drivers practice controlling the vehicle while steering through tight turns, maintaining proper speed, and ensuring smooth handling of the car.
+### About Education
+diploma mill 文凭工厂
+	Governments worldwide are tightening regulations to crack down on ‌diploma mills‌.（各国政府正加强监管打击野鸡大学。）
 
-### About philosophy
-ontology 本体论，实体论;
+Connect the dots when u look back
+Quit school but not quit study
 
-### About politics
+Don't hate the education system, embrace the challenges, train your mind 
 
-US CHINA
-discriminate discrimination
-discrete discretion
-monopoly
-Discrimination is the prejudicial treatment of individuals based on their membership,
-or perceived membership, in a certain group, such as race, ethnicity, religion, skin color, etc.
-It involves the group's initial reaction or interaction,influencing someone's behavior toward the group,
-restricting members of one group from opportunities that are available to another group, leading to
-the exclusion of the individual or group based on logical or irrational decision making.
---<<the dragon network>> https://books.google.com.sg/books?id=budNEqARJBAC&pg=PT13&lpg=PT13&dq=dragon+network+malaysia++policy&source=bl&ots=rKvDXCLePd&sig=FowsTDzSgumwa8e_2Wtvr56kZ20&hl=en&sa=X&ved=0ahUKEwiohdexlPXLAhVIHY4KHe56BdEQ6AEIGjAA#v=onepage&q=dragon%20network%20malaysia%20%20policy&f=false
-North Korea (officially known as the Democratic People’s Republic of Korea, or DPRK) has owned the title of “Most Worthless Government on Earth” for decades. It owes that title to many things; one of them is its monopoly on the information to which its citizens have access. (Others include things like imprisoning and executing dissidents.)
---https://www.yahoo.com/tech/new-use-for-old-flash-1393496814829622.html
-http://www.businessinsider.sg/china-lost-500-billion-in-reserves-in-2015-2016-5/?r=US&IR=T#.VzvR3dV96Um
+Have your own judgement,Believe in your decision but don't stick to it, make adjustment accordingly
+Don't believe authorities blindly
+
+Medical student who fatally poisoned his roommate as an April Fool’s joke loses his appeal against death sentence in China
+http://www.dailymail.co.uk/news/article-2901745/Medical-student-fatally-poisoned-room-mate-April-Fool-s-joke-loses-appeal-against-death-sentence-China.html
  
-about China
-Here’s how China managed to lose $500 billion in reserves in one year Read more at http://www.businessinsider.sg/china-lost-500-billion-in-reserves-in-2015-2016-5/#YsTShVu1vIKBlIaj.99 www.businessinsider.sg/china-lost-500-billion-in-reserves-in-2015-2016-5/?r=US&IR=T#.Vy1BfKMRXqC#s70t9uuYAh30CGLr.97
-Hundreds of Chinese parents who lost their only child are now demanding compensation www.businessinsider.com/r-hundreds-of-bereaved-chinese-protest-over-one-child-compensation-2016-4?IR=T&r=US&IR=T
-China's startup investment fund is bigger than the entire GDP of Denmark www.businessinsider.com/chinas-startup-investment-fund-is-bigger-than-denmarks-gdp-2016-4?IR=T&r=UK&IR=T
-China plans to tear down walls of gated condos and let public in www.theedgemarkets.com/article/china-plans-tear-down-walls-gated-condos-and-let-public
-China’s missile gambit https://www.washingtonpost.com/opinions/chinas-missile-gambit/2016/02/21/fc87c29a-d746-11e5-9823-02b905009f99_story.html?utm_term=.b9331253c0d1
+http://www.bloomberg.com/news/articles/2016-08-30/tencent-china-s-biggest-internet-company-wants-to-use-its-headquarters-as-a-testing-lab
+ 
+ By the age of 4, children from privileged backgrounds heard 30 million MORE WORDS than their peers under welfare. American researchers called this the 30 million word gap. Does a word gap exists in Singapore? How big is it and how do we close it?
+http://www.channelnewsasia.com/tv/tvshows/itfigures-s4/mind-the-gap/2307044.html
 
-territory region protectorate state  http://english.stackexchange.com/questions/3572/what-are-province-territory-protectorate-state
+ivory tower 象牙塔
+旁听 sit in
 ### About Employ
 
+Retrenchment Benefits 辞退费
 **in your line of work**
 the word "line" refers to a specific field, occupation, or area of expertise. It's a commonly used expression to talk about someone's profession or the kind of tasks they regularly perform in their job.
 Example:
@@ -881,7 +721,419 @@ http://sbr.com.sg/hr-education/news/over-6-in-10-local-firms-have-mentally-absen
 working remotely www.techrepublic.com/blog/10-things/10-good-reasons-why-working-remotely-makes-sense/
 
 裁员 chop cut 罢工
+### About family emotion
+Take Responsibilities for your parents and yourself
+
+Start thinking after major changes
+
+Carolyn Hax: Trying to get past a wife seeing a married man on the side https://www.washingtonpost.com/lifestyle/style/carolyn-hax-trying-to-get-past-a-wife-seeing-a-married-man-on-the-side/2016/02/18/36bbc662-d4d3-11e5-9823-02b905009f99_story.html?utm_term=.3ec57c599e7e
+
+### About food
+
+"Main Menu" vs. "Main Course":
++ Main Menu: Refers to the list of available food options or, in digital terms, the primary screen where choices or functions are displayed.
+  At the main menu, you can choose your meal.
++ Main Course: In a meal, "course" refers to a specific part of a multi-course meal, typically the most substantial or important dish (such as a main dish following appetizers).
+  For the main course, we’re having steak.
+  In this context, "course" refers to the sequence or stage in a meal (e.g., starter, main course, dessert). The word "course" is used here because a meal is divided into different parts, each one being a stage of the overall dining experience.
+
+my mouth is watering
+delicacy 英[ˈdelɪkəsi] 美[ˈdɛlɪkəsi] n. 美味佳肴; 精美; 敏锐，敏感; 世故，圆滑
+浓郁的香味 strong fragrance; Strong Aroma;
+course -- main course 主菜 
+
+A tantalising aroma of roast beef fills the air
+
+snack
+edibles
+
+umami 鲜度; 鲜味; 甘味; 旨味;
+bento 盒饭
+
+source vs jam
+
+正宗川菜 Authentic SiChuan Cuisine
+
+How would you like your steak done?
+1. rare (almost raw) 2. medium-rare 3. medium ("half" raw) 4. well-done (fully cooked)
+
+
+chewing gum on a train is not seemly in a lady. 淑女在火车上嚼口香糖不太合适
+The boy popped a piece of gum into his mouth. 塞进嘴里
+That guy who snaps his gum in class is so annoying 吹响口香糖
+
+### About house
+餐具室 pantry
+水池 sink basin handbasin/hand washing basin; pool
+blanket 毯子
+basket 篮子
+bucket 小桶
+boiler 锅炉”或“热水器 
+cart
+plumber
+hotel
+地漏 drain blocked，
+积水 standing water
+the toilet has a slow flush
+the tap has little flow/ the tap can not be tightened
+喷头
+大门紧闭 firmly closed
+拖鞋 slipper
+睡衣 pajamas 
+	She tried to kick the pajamas loose, but they were tangled in the satin sheet.她想把睡衣踢脱，可是它却和缎子床单绞到了一块。
+
+硅胶 silicon
+土 soil 陶土 pottery clay
+备用件 spare parts  配件 accessories parts
+
+爽肤水 toner lotion sunscreen
+
+耳毛鼻毛修剪器 Ear&Nose Trimmer NOSE-BEARD-HAIRCUT http://www.braun.com/global/male-grooming/cruzer-shavers-and-trimmers/cruzer-beard-and-head.html
+foam mousse
+fragrance - perfume
+
+post-it notes / sticky notes save time flipping book
+ 
+water-proof
+
+cushion 橡皮软垫
+styrofoam box 泡沫箱
+Bubble wrap
+carring handles
+shoulder strap
+
+#### 水电
+接触不良 poor contact
+heat food with microwave
+#### 家用工具
+bicycle: disk brake air pump nut bolt brake cables wheel(hub wheel edge spokes)
+Toolbox: plier , scissor screwdriver spanner paper clip（回形针） tape（胶带） stapler(订书机）, spring（弹簧） bolt(螺栓） nut（螺母） screw（螺丝钉） https://www.quora.com/What-is-the-difference-between-a-bolt-a-screw-and-a-stud
+
+trolley 小推车
+
+
+### About hair cut
+理发：http://blogs.teachersammy.com/Blogs/entry/describing-hairdessing-in-English-1#.WdXv_z6g-Ul
+hairstylist, hairdresser/barber
+cut/trim/wash/dry/style/perm/dye/hair care session
+style / shape the hair
+### About healthy/Medical
+
+ingestion digestion absorption and elimination http://seattlecentral.edu/faculty/jwhorley/Digestion.pdf
+Digestion begins with ingestion, where the food is taken in the mouth. Digestion and absorption take place in a series of steps with special enzymes playing important roles in digesting carbohydrates, proteins, and lipids. Elimination describes removal of undigested food contents and waste products from the body.
+
+pus‌：脓液
+  This pus, if it collects in large enough amounts, will bloat the **etheric body**(以太体（神秘学概念，指能量体或灵性身体）) leading to physical "puffiness" and water retention.
+  ‌直译‌：“这些脓液若积聚到足够量，会使以太体膨胀，进而导致身体‘浮肿’和水分滞留。”
+  ‌意译（医学语境）‌：  “脓液大量积聚时，可能引发以太体肿胀，并表现为体表浮肿及体液潴留。”
+**A course of treatment**
+refers to the series of medical steps or actions taken over a period of time to treat a condition. "Course" here highlights the sequence or timeline over which the treatment occurs.
+
+sun exposure vitamin afternoon ultraviolet light
+http://playgroundsafety.org/safety-tips/sun-exposure
+http://www.vitamindwiki.com/No+%E2%80%93+10+minutes+per+day+of+sun-UVB+is+NOT+enough
+
+body heals
+body natural healing process
+disease transmission
+
+
+Early detection through regular screening helps to detect the increase risk of chronic diseases like heart disease, stroke and kidney failure.
+Partnered with The Clinical Laboratory, the company will provide the below health screening package to you.
+Do seize this opportunity to have your health checked at your doorstep.
+Remember most things can wait but your health cannot.
+Conditions to be Screened for Type of Screening
+High Cholesterol Fasting Blood Test
+Full Lipid Profile
+Diabetes Fasting Blood Test
+High Blood Pressure Blodd Pressure Measurement
+Obesity BMI Measurement
+*Please do not consume any food or drinks (except plain water) 8 to 10 hours prior to the health screening.
+
+肠胃不好
+流眼泪
+呕吐腹泻
+wrist
+waist
+thigh
+yawn https://tw.voicetube.com/everyday/20150715
+sneeze http://www.iciba.com/%E6%89%93%E5%96%B7%E5%9A%8F
+病情英文 http://site.douban.com/143903/widget/notes/7032297/note/235927406/
+catch a cold, fever
+卫生hygiene bacteria
+sterilize
+sanitizer
+散光
+胶囊
+创可贴 plaster
+传染给你 infect you with the flu
+不停打喷嚏 sneeze  snooze（打瞌睡）
+嗓子哑/痒 itchy sore , sore throat
+痰 phlegm
+腹泻 diarrhea 消毒
+浑身是汗 sweaty
+药物过敏 allergic to
+免疫 immune
+口腔溃疡 ulcer
+抽筋 I feel a cramp in my lower leg. https://hk.answers.yahoo.com/question/index?qid=20110220000051KK00513
+眼睛干燥/痒/痛
+你的眼睛发炎了。Your eyes are infected.
+我的眼睛痒。I have itchy eyes.
+我眼睛怪怪的，觉得不舒服，好像有异物在眼睛里。I feel an irritation as if there are foreign objects in my eyes.
+我目炫。(或畏光，怕光)。My eyes are dazzled (photophobia).
+我眼睛感觉钝痛。I feel a dull pain in both eyes.
+好像眼底里在痛。The pain seems to come from inside of the eyes.
+我眼屎很多，每天早晨醒来，眼睑上下都黏在一起。I have so much eye discharge that my eyelids stick together when I wake up in the morning.
+我眼底里觉得痛，看东西的时候觉得疲累，而且流泪。I have pain inside my eyes, and feel strain in seeing and tear easily.
+我的左(右)眼没有视力。I lost sight in the left (right) eye.
+我的视力差多了。My vision has worsened.
+在暗暗的地方，我有视力困难。I have difficulty seeing when it is dark.
+我看东西模糊不清。I have blurred vision.
+我看东西的时候有双影。I have double vision.
+我看东西，看来小小的，又歪歪曲曲的。Objects look small and distorted.
+我看到有一个黑点在我的视野里。I have a black spot in my vision.
+我无法分辨颜色。I cannot distinguish the colors.
+
+注意个人卫生 People should wash regularly to ensure personal hygiene.
+ulcer 口腔溃疡 diarrhea 腹泻
+plaster 创可贴
+
+Palm Numb: Refers to a sensation of numbness or tingling in the palm, often due to nerve issues or circulation problems.
+
+fuzzy
+ it can make your head spin. 
+
+保守治疗
+整容 plastic surgery
+二手烟 passive smoking secondhand smoke
+
+
+### About Life
+
+#### About dailylife
+在我看起来
+  It seems to me she is a good teacher.
+  It seems to me that she is a good teacher.
+  She appears to be a good teacher.
+  It looks as though she is a good teacher.
+扶梯上面 escalator landing / upper landing
+take a cut 见者有份
+  It means to take a portion of whatever you are referring to. In the case of a bank robbery, it would mean to take a portion of the money stolen from the bank. For Example: "Jonny took a cut of the haul from the bank."
+
+卧槽 Drat 讨厌!见鬼! Bingo 中了
+Faint 我倒!
+rummage ˈrʌmɪdʒ翻箱倒柜; 翻查; 搜出;
+Fifty-fifty 一半对一半
+in a worse-case scenario 更严重的情况是
+Allow me 让我来
+Anytime 随时吩咐
+翻过来 turn outside in
+hardly that 很难算是
+现在没事了 now is all right
+时差 time difference
+倒时差/时差综合症 jet lag
+无根据 groundless
+viewer discretion is advised 以下内容建议慎重观看
+stay tuned 别换频道
+部分 a fraction of
+人品满格 RP Full Reception
+笑容满面 he(his face) is beaming with delight.
+各回各家 各找各妈 Each of you get back home to your parents' basements.
+如有更改，恕不另行通知 subject to change without notice
+并不全面/详尽 Not Exhaustive
+
+我的直觉告诉我你就是个傻逼 My gut says you are asshole . instinct
+
+我××之前的日程已经排满了 I have a tight/packed schedule until ×××
+抢购 Thank you for your interest, all the tickets have been snapped up.
+
+迷惑性 欺骗性 Scenario 2 is much more common, and trickier.
+下流 恶心的 This is a nasty situation that I knew I had to fix.
+混乱的 杂乱 麻烦 messy chaos
+吹捧 吹嘘 兜售 We see developers touting the benefits of using the repository pattern for internal data access over leveraging the tools and APIs specific to their technology of choice.
+
+command respect 必然得到尊重 赢得尊重
+
+自拍 selfie 表情Emoticons
+笨拙 别扭 awkward
+
+rent: tenant
+电子公告板 bulletin board
+
+纪念钞 Commemorative Notes 纪念钞册 booklet http://www.dbs.com.sg/personal/dbs-commemorative-notes.page?pid=sg-dbs-pweb-home-heroblock-commemorative-notes-btnlearnmore-
+
+get in your way  block your way
+让我们通过了 they waved us through. / we got approved.
+走通整个流程 walk through the process
+
+please direct any questions to peter or me.
+
+让我想一下/一会 let me think about it/ let me think it over
+
+三个女人一台戏 three women will make a real drama
+遇到问题/困难/坑 
+  1.have trouble in (doing)
+  2.get stuck
+  3.run into a stone wall
+  4.have difficulties in (doing)/sth
+  5.meet challenges
+断断续续 from time to time ;intermittently
+
+最希望 wish to get it most
+更需要 who need more
+
+剩下的全在这里 the rest are all here
+人体 肉体 精神 stress pressure
+主动 被动 active passive
+替我问好  Please give my sincere regards to all the members of your family.
+
+总体来说 你的意思是 overall speaking, what you mean is ...
+整理文件/桌子/资料/磁盘 file up sth/filing clean up the table
+临时决定 tentatively decided / made a decision at the last minute
+突然有急事 Something urgent has come up, so the appointment will have to be canceled.
+可以退款吗 refundable
+遇到阻力 face a resistance
+障碍 鸿沟 language obstacle / gap
+赔钱 losing money
+学会了 learnt have learned，acquired，mastered
+顶贴 bump this thread http://sgforums.com/forums/1902/topics/270128
+
+不急 there is no hurry/ in no hurry http://www.macmillandictionary.com/thesaurus-category/british/ways-of-telling-someone-not-to-hurry
+勾起很多回忆 bring back a lot of memories
+过着一天算一天的生活 Until now he never thought of tomorrow , and lived from one day to the next
+背影the sight of his back
+很抢手 in great demand / very hot / well sought after by
+最高 cap/capping
+大件物品 bulky item
+
+#### About LifeStyle
+夜宵 night-time snack
+
+trail running
+trail corridor
+Servers trash customers in private note on check — then forget to delete it https://www.washingtonpost.com/news/going-out-guide/wp/2016/05/09/servers-trash-customers-in-private-note-on-check-then-forget-to-delete-it/?utm_term=.631460c40846
+An island resort with a dive centre and private beach can be yours for £34 — but there’s one catch Read more at http://www.businessinsider.sg/how-to-win-an-island-resort-2016-5/#972Eo7J3PBlpt8Vq.99 www.businessinsider.sg/how-to-win-an-island-resort-2016-5/?r=US&IR=T#.VyxpQqMRXqA#keYZtqRTMCK13Rrl.97
+Carolyn Hax: Trying to get past a wife seeing a married man on the side https://www.washingtonpost.com/lifestyle/style/carolyn-hax-trying-to-get-past-a-wife-seeing-a-married-man-on-the-side/2016/02/18/36bbc662-d4d3-11e5-9823-02b905009f99_story.html?utm_term=.d7fc7b60b233
+tv series
+One of the craziest 'Game of Thrones' fan theories may actually come true this season www.businessinsider.com/game-of-thrones-cleganebowl-theory-2015-5?IR=T&r=UK&IR=T
+ 
+Photography
+canvas ˈkænvəs
+reprint 重印版，再改版; 单行本; 复印的邮票;
+versatility ˌvɜ:sə'tɪlətɪ 多才多艺; 多用途; 可转动性; 易变;
+appropriate sentiment
+hood n. 兜帽; 头巾; 车篷; 引擎罩;
+backdrops <戏>背景幕布( backdrop的名词复数 ); 周围的景物
+props 道具; 小道具; 支柱( prop的名词复数 ); 支持者; （橄榄球中的） 支柱前锋;
+bridal gown ˈbraidl ɡaun 新娘服装;
+stylist 发型师; 造型设计师; 文体家;
+photographer fəˈtɒgrəfə(r)
+Graduations are formal ceremonies, and in order to capture the appropriate sentiment, it is imperative that the graduate dresses formally. It is strongly recommended that the graduate be dressed in white top and black bottom, in order for the attire to complement the faculty hood. For males who are not gowned, please be dressed in a jacket, light-colored long-sleeved shirt and black pants. Female who are not gowned should be dressed in your best bright outfit.
+we have a passionate team of in-house make-up artists who will go the extra mile to help you look your best for the shoot.
+Photographer style: traditional, contemporary
+With our extensive experience and wide range of props and backdrop, we have the versatility to accommodate all styles.
+Our dedicated team of photographers and stylists will work with you for a portrait styled to your exact specifications.
+After your selection and prior to proceeding with the print, our customer service staff will be on hand to offer our professional opinions on your selection to assist you in choosing the best shot
+You can choose from a wide variety of backdrops and props to create the ideal theme for your graduation portraits. Whether you prefer a more formal and classical style, or have the appetite for something more adventurous, we are able to assist you in bringing forth the perfect portrait.
+We understand that portraits are deeply personal and highly significant. Our dedecated make-up artists and renowned photographers will work closely with you for a picture-perfect shot that will remind you of your proud achievements for a lifetime. Our attention to detail is what sets us apart. We will ensure every single aspect - right down to matching the correct make-up - is perfect for the shoot. From setting the lighting, choosing the angle and even during editing, we go the extra mile for the very best result.
+
+#### About view of life
+
+Grow through life but don't go through life
+
+ Treasure your time
+
+Do in actions make possible
+
+Respect other's life and yours
+
+Be modest humble
+
+
+
+### About Investment/Banking
+
+
+encumbered assets 抵押资产
+免除信用卡年费 waive credit card annual fee
+还信用卡钱 settle/pay credit card bills
+
+交通卡Fare Card for bus and train journeys 月票 Price for all existing monthly concession passes remain unchanged.
+tap fare card tap in tap out
+swipe credit card
+scan fingerprints scan in scan out
+speculate vs hedge vs invest vs infer
+  The main purpose of speculation, on the other hand, is to profit from betting on the direction in which an asset will be moving. Hedgers reduce their risk by taking an opposite position in the market to what they are trying to hedge.
+  The main difference between speculating and investing is the amount of of risk undertaken in the trade. Typically, high-risk trades that are almost akin to gambling fall under the umbrella of speculation, whereas lower-risk investments based on fundamentals and analysis fall into the category of investing.
+  As verbs the difference between speculate and infer is that speculate is to think, meditate or reflect on a subject; to consider, to deliberate or cogitate while infer is to introduce (something) as a reasoned conclusion; to conclude by reasoning or deduction, as from premises or evidence.
+
+
+
+### About music
+
+**Pro sound**, or professional audio, is a term that refers to the equipment and technology used to produce and deliver high-quality sound in professional settings: 
+Recording studios: For audio mastering and recording 
+Broadcast studios: For broadcasting audio 
+Live performances: For sound reinforcement at concerts and DJ events 
+Theaters: For sound reinforcement and piped music 
+Conference centers: For fixed installations 
+Educational institutions: For fixed installations 
+### About philosophy
+ontology 本体论，实体论;
+technical and philosophical
+	The book explores ‌technical and philosophical‌ challenges in artificial intelligence.（本书探讨人工智能领域的‌技术与哲学挑战‌。
+
+### About politics
+
+US CHINA
+discriminate discrimination
+discrete discretion
+monopoly
+Discrimination is the prejudicial treatment of individuals based on their membership,
+or perceived membership, in a certain group, such as race, ethnicity, religion, skin color, etc.
+It involves the group's initial reaction or interaction,influencing someone's behavior toward the group,
+restricting members of one group from opportunities that are available to another group, leading to
+the exclusion of the individual or group based on logical or irrational decision making.
+--<<the dragon network>> https://books.google.com.sg/books?id=budNEqARJBAC&pg=PT13&lpg=PT13&dq=dragon+network+malaysia++policy&source=bl&ots=rKvDXCLePd&sig=FowsTDzSgumwa8e_2Wtvr56kZ20&hl=en&sa=X&ved=0ahUKEwiohdexlPXLAhVIHY4KHe56BdEQ6AEIGjAA#v=onepage&q=dragon%20network%20malaysia%20%20policy&f=false
+North Korea (officially known as the Democratic People’s Republic of Korea, or DPRK) has owned the title of “Most Worthless Government on Earth” for decades. It owes that title to many things; one of them is its monopoly on the information to which its citizens have access. (Others include things like imprisoning and executing dissidents.)
+--https://www.yahoo.com/tech/new-use-for-old-flash-1393496814829622.html
+http://www.businessinsider.sg/china-lost-500-billion-in-reserves-in-2015-2016-5/?r=US&IR=T#.VzvR3dV96Um
+ 
+about China
+Here’s how China managed to lose $500 billion in reserves in one year Read more at http://www.businessinsider.sg/china-lost-500-billion-in-reserves-in-2015-2016-5/#YsTShVu1vIKBlIaj.99 www.businessinsider.sg/china-lost-500-billion-in-reserves-in-2015-2016-5/?r=US&IR=T#.Vy1BfKMRXqC#s70t9uuYAh30CGLr.97
+Hundreds of Chinese parents who lost their only child are now demanding compensation www.businessinsider.com/r-hundreds-of-bereaved-chinese-protest-over-one-child-compensation-2016-4?IR=T&r=US&IR=T
+China's startup investment fund is bigger than the entire GDP of Denmark www.businessinsider.com/chinas-startup-investment-fund-is-bigger-than-denmarks-gdp-2016-4?IR=T&r=UK&IR=T
+China plans to tear down walls of gated condos and let public in www.theedgemarkets.com/article/china-plans-tear-down-walls-gated-condos-and-let-public
+China’s missile gambit https://www.washingtonpost.com/opinions/chinas-missile-gambit/2016/02/21/fc87c29a-d746-11e5-9823-02b905009f99_story.html?utm_term=.b9331253c0d1
+
+territory region protectorate state  http://english.stackexchange.com/questions/3572/what-are-province-territory-protectorate-state
+
+### About Society
+[sexual harassment](http://www.un.org/womenwatch/osagi/pdf/whatissh.pdf)
+human dynamics 
+	社会学研究‌：分析群体行为（如“‌human dynamics‌ in crowd behavior analysis”）。
+	‌企业管理‌：优化团队协作（如“manage ‌human dynamics‌ to boost productivity”）。
+	‌人工智能‌：模拟人类交互（如“model ‌human dynamics‌ in virtual environments”）
+
+judge（法官）和 jury（陪审团）
+
+general public
+common good 
+	Policymakers should prioritize the ‌common good‌ over individual interests.（决策者应优先考虑‌公共利益‌而非个人利益。）
+	Sacrificing personal gains for the ‌common good‌ is a core value in many cultures.（为‌共同利益‌牺牲个人利益是许多文化的核心价值。）
+
+mega trend 大趋势”或“重大趋势”
+  The shift toward multipolar globalization reflects a ‌mega trend‌ of geopolitical realignment.（多极化全球化的转向体现了地缘政治格局重构的‌重大趋势‌。）
 ### About Start up Business/Entrepreneurship
+
+A sudden spike in interest in 'Green' options has taken us by surprise, how to offer energy efficient models, and still manage our legacy inventory.
+市场对“绿色”选项的兴趣激增令我们措手不及，如何在提供高能效产品的同时妥善处理传统库存？legacy inventory‌ 指因技术迭代或政策变化滞销的传统产品（如燃油车、非智能电器）
+
+Don't lose sight of the business plan you created, among the cross-currents of internal politics and group management.
+在内部政治与团队管理的暗流中，切勿忽视你制定的商业计划 cross-currents暗流
+
+The driver is a stronger organization that can deliver ever increasing benefits.
+核心驱动力在于构建能持续创造增效的强大组织架构
 
 + Business Premise:
   Definition: The term encompasses the entire physical location or property where business activities take place. This can include offices, retail stores, warehouses, factories, and more.
@@ -903,6 +1155,13 @@ merchandise / goods
 #### 电话/会议
 I was talking on the phone and suddenly got disconnected.
 
+### About Sports
+archery 射箭运动
+
+
+### About Science
+催化剂 catalyst
+
 ### About Tour/Culture
 预约/预订 make appointment advance subscribe(订阅)
 自由行 跟团
@@ -912,383 +1171,34 @@ I was talking on the phone and suddenly got disconnected.
 environmental sustainability
 tripod/lens
 http://www.thegreencorridor.org/
- 
+
+late arrival - belate
+
 坐过站了 you missed your stop
 过关 （游戏过关 clear a stage）
   1.(通过关口) pass a barrier; go through an ordeal
   2.(比喻, 通过检验) pass a test; reach a standard
+
+Bridging service plays a key role in international communication.
+（桥梁服务在国际交流中起关键作用。
+
 #### Chinese Culture
 吃春卷‘形象’的谓之咬春
 Spring rolls are synonymous with takeout in the U.S. However, they have a long history as a snack in China, the idea being that you're literally "biting spring"
- 
-### About Education
-Connect the dots when u look back
-Quit school but not quit study
-
-Don't hate the education system, embrace the challenges, train your mind 
-
-Have your own judgement,Believe in your decision but don't stick to it, make adjustment accordingly
-Don't believe authorities blindly
-
-Medical student who fatally poisoned his roommate as an April Fool’s joke loses his appeal against death sentence in China
-http://www.dailymail.co.uk/news/article-2901745/Medical-student-fatally-poisoned-room-mate-April-Fool-s-joke-loses-appeal-against-death-sentence-China.html
- 
-http://www.bloomberg.com/news/articles/2016-08-30/tencent-china-s-biggest-internet-company-wants-to-use-its-headquarters-as-a-testing-lab
- 
- By the age of 4, children from privileged backgrounds heard 30 million MORE WORDS than their peers under welfare. American researchers called this the 30 million word gap. Does a word gap exists in Singapore? How big is it and how do we close it?
-http://www.channelnewsasia.com/tv/tvshows/itfigures-s4/mind-the-gap/2307044.html
-
-ivory tower 象牙塔
-旁听 sit in
-### About family emotion
-Take Responsibilities for your parents and yourself
-
-Start thinking after major changes
-
-Carolyn Hax: Trying to get past a wife seeing a married man on the side https://www.washingtonpost.com/lifestyle/style/carolyn-hax-trying-to-get-past-a-wife-seeing-a-married-man-on-the-side/2016/02/18/36bbc662-d4d3-11e5-9823-02b905009f99_story.html?utm_term=.3ec57c599e7e
-
-### About Science
-催化剂 catalyst
-
-### About Art
-软导线雕塑 Soft wire sculptures
-
-### About music
-
-**Pro sound**, or professional audio, is a term that refers to the equipment and technology used to produce and deliver high-quality sound in professional settings: 
-Recording studios: For audio mastering and recording 
-Broadcast studios: For broadcasting audio 
-Live performances: For sound reinforcement at concerts and DJ events 
-Theaters: For sound reinforcement and piped music 
-Conference centers: For fixed installations 
-Educational institutions: For fixed installations 
-
-### Anecdote
-“Do not shop at Mustafa Shopping Centre”
-Me and my husband visited Singapore in March 08. I had earlier visited Singapore some 4-5 years back and I knew that Singapore is a shopping heaven. So I had Mustafa on my list.
-We decided to buy Mobiles for us and we zeroed in on Mustafa after reading soooo many good reviews about it.We decided on the models and headed to Mustafa. I was actually surprised on how bad the place has turned out to be..lots of people were in the shop..the salesperson was unaware about the mobile features.We asked whether they will give us International Guarantee of these mobiles for which they refused. The place looked shady..But with good reviews on various forums we shirked all our doubts and went ahead and shopped the mobiles. All good..we returned home and started using the mobiles. My mobile worked fine for few days after which it hangs while I am talking..sometimes it refuses to ring even when I get calls..sometimes it refuses to make me ring a missed call..sometimes it simply blanks out!! The memory chip place holder is loose and so is the SIM holder place...My husbands mobile has similar problems.
-So I would suggest that if someone is planning to shop in Mustafa its better you have good know how of the thing you are buying so that you dont feel cheated and if you dont have the know how then the best thing you can do is not to buy at all from there!
-https://www.tripadvisor.com.sg/ShowUserReviews-g294265-d2139541-r17779786-Mustafa_Centre-Singapore.html#
 
 ## Presentation
-Speech/Presentation/Exam jitters, calm down, preparation
-http://www.inc.com/larry-kim/15-power-up-tips-to-make-you-a-better-presenter.html
+[Speech/Presentation/Exam jitters, calm down, preparation](http://www.inc.com/larry-kim/15-power-up-tips-to-make-you-a-better-presenter.html)
 
-If following a specific methodology, be explicit about what it is and how it works to all involved
-the likely implications of change
-increase visibility into operational efficiencies and bottlenecks
-improve customer service and retention
-tread with caution
-Friction is normal as is conflict, don't avoid it altogether
-different flavors of
-*** is potentially complimentary to ***
-market fashions
-gets you to a deeper level of understanding
-The tools vary widely and have been designed to meet an array of situations.
-Sell the vision of what you want to be able to do
-Clearly articulate the problem and opportunities using business language
-late arrival - belate
-usability presents many challenges
-The project may strive to make the enterprise more effective, but success hinges on end-user adoption
-A consultant with specific credentials in implementing successful BPM systems can be an asset.
-Consultants run the gamut from strategic advisors to nuts-and-bolts integrator.
-A sudden spike in interest in 'Green' options has taken us by surprise, how to offer energy efficient models, and still manage our legacy inventory.
-My sales process is more costly than my competitors - how to reduce yet stay competitive.
-How can I provide some kind of local service, without blowing my budget.
-Don't lose sight of the business plan you created, among the cross-currents of internal politics and group management.
-'Successful' projects run in isolation may have a negative impact in unexpected places.
-evaluate the situation from various angles and identify core issues.
-Inadequate appreciation of the human dynamics can crush great projects.
-85% of system defects originate in requirements
-45% of project costs are attributable to rework.
-Locating relevant docs can be time consuming; some documents may be redundant or outdated; reading and summarizing disparate documentation is difficult; there is a danger of getting sucked into detail and not seeing process-level information
-Questionnaire may well be ignored by recipients, requires a concise and very well thought out explanation to each recipient, can be the cause of much speculation and disruption due to the blunt nature of a blank questionnaire.
-meter your expectation accordingly
-when the heat is intense
-have I adequately catalogued exceptions?
-Processes obey a standard set of rules and policies
-Vary widely in capabilities
-The reality is far more complex tools for moving from modeling to execution are evolving slowly.
-Are hand-off smooth?
-If inputs coming into the process naturally cluster, then you may need to consider separating out into multiple sub-processes
-Flowcharts and models can help to iron out logical problems, but that's not always the complete picture.
-Complex interactions are multidimensional
-Be aware of complexity - but don't be overwhelmed by it - capture essentials
-Both role and user routing fall foul if not kept current
-Structures can be open to debate
-you will encounter resistance regardless of which approach you take
-Appropriate methodologies must be adapted to face hard realities
-The process itself needs to be continuously improved by disciplined redefinition and refinement
-Treat geographically dispersed resources as though they were centralized.
-Put the decision point where the work is performed, and build control into the process.
-The difference is in the amount of emphasis each one places on individual steps
-Identify the steps required to ingest new technology -- if needed-- into the enterprise
-Only when you are sure your existing toolset will not suffice should you go out into the marketplace
-Documentation and training can be refined in light of experience
-The driver is a stronger organization that can deliver ever increasing benefits.
-Usually trust is not that high, therefore your goal is to pinpoint hotspots of distrust and manage accordingly
-Plan for it and identify it early on -- and your chances of success will rise substantially
-These methods share common themes.
-boxed in
-Time/Costs need to be accurately factored into the process model to have real value.
-To be of value needs to be highly accurate and in near or real time.
-How many jobs waiting to step through task/overdue
-Thresholds exceeded -- escalation to supervisor.
-Simulations allows you to undertake a dry run of processes, can show you bottlenecks, breaks, unresolved loops, etc.
-Point out flaws or missing pieces in a strategic approach
-Business value frequently stems from cross-silo process improvements
-The loudest complaints emanated from it.
-Tendency to see systems consolidation as an end in itself.
-*** means many things to many people, to some it's ***, to others ***
-*** is a bit of both
-Workflow model is still in wide use today, however, it did not account fully for emerging complexity.
-The process should be agnostic as to whether the process step is human to human or system to system.
-service costs can skyrocket out of control.
-self-synchronization
-Only the right information is seen by the right people
-That documents can be checked in and out to ensure continuity and an audit trail of changes
-Measurement is a never-ending quest, but true analytics ( as opposed to simple metrics) requires more sophisticated tools
-stable system means that the impact of changes are localized
-Build a system that is elastic and changes according to the required traffic
-Although sometimes you can hide behind technical jargons, having an understandable make it easier to change it in the future
-when some of the underlying assumption changes
-Based on the pattern of historical data, extrapolate the same pattern into the future
- 
-comparatively relatively
- 
-In view of the limited time for Day 2 lesson this week, please spend some time to read the following topics before the lesson. If you have any specific questions on these topics, feel free to let me know in advance.
-I will still be going through important points on these topics, the rest of the Day 2 lesson time will be used for in-class discussions.
-I will also be spending some time to discuss the scenario for the first individual assignment and specific areas which are out of scope for the examination during Day 2 lesson.
- 
-Survey of benefits perceived from systems architecture among 86 respoinding organizations.
-Solution Architecture commonly describes the components required for and end-to-end solution, tying together patterns from more than one domain.
-A Solution Architect may shield the Enterprise/Segment Architect from the unnecessary details of the systems, products, and/or technologies.
-Detailed Design is representing sufficient details for implementing the system.
-Good object oriented design practices also apply at architectural level.
-The Architect defines solutions to client business problems through the reasoned application of information technology.These solutions are manifested as architectures and can include systems, applications and process components.
-Architecture is the organization of components, its relationship to each other and to the environment, governed by the principles.
-Modularity is the degree to which a system or computer program is composed of discrete components such that a change to one component has minimal impact on other components
-Competitive pressure and short window of opportunity
-Efficiency: resource expended in relation to the accuracy and completeness with which users achieve goals
-Each tier acts as a server for its caller and client to the next tier in the architecture.
-NoSQL can be strong or eventual consistency.
-Records the significant decisions made in shaping the overall architecture, and describes the rationale used in making the decision, the options considered, and the implications of the decision. Focus on high impact, high priority areas that are in strong alignment with the business strategy.
-tailored to the needs
-The user opts to reserve the slot by clicking on the reserve button
-Integrity: protecting the 'accuracy' of information processing and data from improper modification
-Confidentiality: Protecting the secrecy and privacy of information
-Availability: Ensuring that the systems and data can be accessed when required
-Structure a system so that all access by clients to resources is mediated by a guard which enforces a security policy.
-Less than 0.1 second, instant
-Less than 1 second, Flow of though remains unbroken, User is not waiting for the computer
-10 seconds, Attention span is maxed out, User flow is broken
- 
-object to resistance to
-phase out
-open end
-on demand
-on spot
-thereafter
-You should avoid doing that at all costs, as the result is at best unpredictable.
-as such
-at distinct points in time
-set aside
-along alongside
-over the time
-up to
-consititue to
-general public
-and the download for it is listed down below
-which in most cases
-slightly unattractive and mostly blank window
-you won't be able to see as you type it in, so do it accurately
-type *** into command line
-if you see colon backslash you'll know you did it right
-this password gives access to any ether that you mind, so guarded as you would your money
-so you'll have two of those boxes side-by-side
-holding down ctrl c
-jump in
-ethereum has hardforked and this tutorial is no longer current.
-https://donnellydoesdev.wordpress.com/category/topshelf/
-Using Topshelf this week to quickly put together a windows service. It has lots of handy little features that avoid the usual service set up headache when developing and testing services
-http://integrated-security.csoonline.com/dont-let-data-held-hostage/?utm_source=idg&utm_medium=cpc&utm_campaign=IntelSecurity&utm_content_id=1311660&utm_boost_id=181155&utm_targeting=technology%20and%20gadgets&utm_widget_id=42196
-defending against ransomware requires the ability to adapt quickly as hackers’ techniques evolve.
- 
-configure home network to sync up with Ethereum network
-get it going
-http://news.asiaone.com/news/singapore/property-portal-99co-employee-fired-insulting-singapore-facebook-over-pokemon-go-game
-had posted in a Facebook discusstion
-http://www.ibtimes.sg/singapore-jails-man-over-facebook-post-calling-murder-policemen-4082
-over facebook post
-http://www.msn.com/en-sg/news/national/photos-of-schoolgirl-chained-to-pole-goes-viral/ar-AAjrK6m?li=BBuW5k4&ocid=UP97DHP
-The images circulating on Facebook since Wednesday evening show the girl’s right leg being chained to a pole while her school bag and water bottle are left lying on the ground beside her.
-It was not immediately clear if she had been left there by a parent or guardian, and for how long.
-Netizens were quick to condemn the act, with many of them blaming the girl’s parents for resorting to such measures to punish their child.
-http://www.stomp.com.sg/what-say-you/october-2016/you-wouldnt-book-a-hotel-room-just-to-hug-and-kiss-your-partner
-you wouldn't do
-http://www.moutfitters.com/blog/why-we-dont-sell-tempered-glass-screen-protectors/
-or so - more or less
-compete on prices compete on completeness
-at the same price
- 
-get enrolled / on board
-speaking of ***
-walk you through
-get through
-lift it up  sum up  assemble up
- 
-or else
-freak out
-what ever you are comfortable with
-let me tell you
 Before we jump in, I need to define two important terms
  
 the idea is
 I am thinking
 the whole point is
 just a few cool new things to look out for
- 
 
-## Analysis 
-误：I think I can't.
-正：I don't think I can.
-提示：汉语里说“我想我不会”的时候，英语里面总是说“我不认为我会”。以后在说类似的英语句子的时候，只要留心，也会习惯英语的表达习惯的。
-误：I don't dance well too.
-正：I am not a very good dancer either.
-提示：当我们说不擅长做什么事情的时候，英语里面通常用not good at something，英语的思维甚至直接跳跃到：我不是一个好的舞者。
-误：I have something to do tomorrow.
-正：I am tied up all day tomorrow.
-提示：用I have something to do来表示很忙，这也完全是中国式的说法。因为每时每刻我们都有事情要做，躺在那里睡大觉也是事情。所以可以说我很忙，脱不开身：I'm tied up。还有其它的说法：I can't make it at that time. I'd love to, but I can't, I have to stay at home.
-误：Would you like to join our party on Friday?
-正：Would you like to come to our party on Friday night?
-提示：join往往是指参加俱乐部或者协会，如：join a health club; join the Communist Party。事实上，常常与party搭配的动词是come 或者go。如go a wild party，或者come to a Christmas Party。
-误：I have no experience.
-正：I don't know much about that.
-提示：I have no experience这句话听起来古里古怪，因为只需要说那方面我懂得不多，或者这方面我不在行，就行了。I am not really an expert in this area。
---Will you be going back home for the Spring Festival?
-误：--Of course!
-正：--Sure. / Certainly.
-提示：以英语为母语的人使用of course的频率要比中国的学生低得多，只有在回答一些众所周知的问题时才说of course。因为of course后面隐含的一句话是“我当然知道啦！难道我是一个傻瓜吗？”因此，of course带有挑衅的意味。在交谈时，用sure或certainly效果会好得多。同时，of course not也具挑衅的意味。正常情况下语气温和的说法是certainly not。
-误：The price is very suitable for me.
-正：The price is right.
-提示：suitable(合适的、相配的)最常见的用法是以否定的形式出现在告示或通知上，如：下列节目儿童不宜。The following programme is not suitable for children.
-
-Is saying "Noted" a rude answer? If so, what are the alternative answers to reply to a person besides “Noted”? https://www.quora.com/Is-saying-Noted-a-rude-answer-If-so-what-are-the-alternative-answers-to-reply-to-a-person-besides-“Noted”
-1.how are you feeling?
-http://www.crazyboards.org/forums/index.php?/topic/52259-problems-answering-the-question-how-are-you-feeling/
-100 WAYS TO ANSWER THE QUESTION “HOW ARE YOU?”
-"it's not working" and "it doesn't work"
-
-How are you? Good or well
-https://www.businessinsider.com/how-are-you-im-good-is-acceptable-reply-2014-2/?IR=T
-
-
-
-No worries 
-is an expression seen in Australian English, British English and New Zealand English meaning "do not worry about that", "that's all right", or "sure thing". It is similar to the English no problem.
-
-
-
-what happens what happened what has happened
-In the sentences below, the pronoun 'it' functions as an object, not as a subject. Objects do not agree in number with (what appear to be) verbs:
-1.	I will make it happens. 
-2.	You should let it happens.  
-3.	I will make it happen.  
-4.	You should let it happen.  
-Below, the word 'he' functions as a subject, and so the verb agrees in number with its subject:
-1.	I wish (that) he succeeds.  <but the semantics seem awkward to me; shouldn't it be 'I hope'?>
-2.	I wish (that) he succeed.  
-what happened vs what has happened
-http://jenny-liveabc.blogspot.sg/2012/08/what-happened.html#.VuFPvNWqpBc
-He said that he was tired
-He said he has no feeling of me
-He didn't do what he said he did
-He has done what he said he would do
-he said he had done with me
-You should have some way to assess how the work being done
-Go to where the actual work is being done
-how the work has been done
-It's been really busy here all day.
-she just got here
- 
-I knew they would...
-If I knew then what I know now.
-
-1.(It's) The simplest approach to formally developing software.
-Here it is : "Because of the links between the Type A behavior pattern and heart disease, various approaches have been taken to changing this pattern of behavior."
-extend reading: to doing sth，此时to是介词，有很多常用搭配
-2.will do VS will be doing
-SLA said it will not be giving the club an alternative site for another golf course, but may offer it another area for social uses.
-[box title="http://bulo.hujiang.com/question/293589/"]
-will do 简单陈述将来要发生的动作; 而will be doing则强调将来发生这种动作的状态，及在此状态或背景下可能发生的其它动作。
-The train will arrive in a few minutes. 一般将来时，仅指火车几分钟就要到达的客观事实
-The train will be arriving in a few minutes. 将来进行时，指火车几分钟后到站的那种状态，可暗含做好准备上车，接人什么的意味。 如： The train will be arriving in a few minutes, let's be ready to get on board.
-对比：
-I will study English = 陈述将来的一个事实，将来的某个时间我会学英语。
-I will be studying English =我在学习英语的时候，可能有其它事情发生。如: I will be studying English when you come to pick me up.
-[/box]
-3.Provided/Providing that .....
-Provided that the funding is obtained, the company intends to produce a first version of the production system in the following three months.
-IF, EVEN IF, ONLY IF, AS LONG AS, PROVIDED, SUPPOSING, UNLESS, BUT FOR, IF NECESSARY, IF SO, IN CASE etc.
-
-I will appreciate it if you will
-https://www.quora.com/Which-is-the-correct-grammar-I-will-appreciate-if-you-or-I-would-appreciate-if-you
-beside, besides
-http://learnersdictionary.com/qa/difference-between-beside-and-besides-preposition-adverb
- 
-as spoken https://forum.wordreference.com/threads/as-spoken-as-speaking.2955245/
-https://forum.wordreference.com/threads/as-per-we-spoke-said.1052811/
-https://www.zybang.com/question/08b5a8c16467bd3319bdecc3adf18384.html
-bob and I , bob and me, bob and someone else, someone is ***
-http://www.learnersdictionary.com/qa/when-to-use-i-and-when-to-use-me
-https://english.stackexchange.com/questions/59618/i-and-someone-me-and-someone-or-i-and-someone-we
-
-## source
+## refer source
 https://www.mewatch.sg/
 
-## to do 
-
-------------------------------------------------------------------------------
--- from reading material
-------------------------------------------------------------------------------
-It is later established that ....
-The customer had signed the proposal to indicate acceptance.
-start off
-In MAXWARE, the design stage is very informal. More often design specifications are produced only for major and critical modules. Review of the design specifications are done by the senior development staff, who have more experience. The design specifications are then handed over to the programmers to start the coding. "We can do well even without design as long as we trust our engineers and programmers...", say the development managers, whenever there is an issue or comment about practicing more formal and disciplined design process. Some of the other reasons given are: short development time and attitude of some team members towards additional work and responsibility.
-There are no software testing tools employed other than some test programs written and/or modified by the programmers themselves.
-In an incident, the software system crashed and was disrupted necessitating a re-build of the system. When the build was completed and released to the customer, he reported some more bugs. It was realized that these bugs had previously been rectified.
-In that short time, she managed to tighten up the process for handling field reported incidents and the consequential resolution of defects.
-The users could not articulate their needs and the analysts had to evolve them through working models created with the developers to help the users visualize the use of the system.
-Unconventionally, the Requirements, Architecture and Design phases were by-passed. The scope of the project was based solely on the working model to represent the user's needs. The PM told the Systems Testing group to derive their test plans and test cases using the working model in lieu of the requirements and design documents.
-The situation was exacerbated by the continuous stream of changes to the requirements. Unknown to the analysts and developers, the users held several sessions amongst themselves to further orientate themselves to the working model.
-Fortunately, the QM maintained rigorously tracking of all defects, including the classification and characterization of each.
-Testing the first iteration had been a significant struggle for the System Testers. Most defects were due to ambiguous requirements or undocumented requirements that crept in through the emails
-On average, for the same class severity defects, the rework effort and defect turnaround speed for the second iteration was almost triple that of what was registered in the first iteration. In essence, the actual application developed up to that point was far from what had been written in the test plan and test cases for the project.
-Everything turned out well in the end.
-There are still occasional high severity defects, but many more are minor ones now.
- 
- 
- 
-///
-This prototype is for demonstrating our high level architecture which is designed by Mr.Jagdish,
-and contributed by all of our team members.
-The Use Case we pick up is 'Purchase Product', for this is one of the most complicated one.
-For Presentation we chose to use MVC Framework,because by using MVC we can fast adopting multiple features
-like URL routing/session management/authentication and authorization etc., for view engine we use razor,
-which can set master layout/partial layout, make our live much easier.
-OK, now I show you the demo, first as a guest or before you login to the website, it's allowed to add any items
-into your shopping cart,(show the process,)
-but you must login to proceed payment, now I login using an existing account,
-let's continue to proceed payment, you are request to provide delivery address, next time this address will
-be list down for you to choose, ok, submit, we are redirecting to pay-pal merchant payment page, as we are
-using sandbox to test, let me key-in test account,
-Now we are succeed, now we can go to member center to check our order
-
-
-
----
-
-refer
 
 https://www.douban.com/note/221114977/
 http://www.businessweekly.com.tw/KBlogArticle.aspx?ID=20&pnumber=1

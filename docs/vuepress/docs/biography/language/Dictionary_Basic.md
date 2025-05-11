@@ -24,6 +24,10 @@ Breakdown:
 ​​Idiomatic Meaning
 Literal Meaning
 
+acronyms 指由首字母组成的可发音单词（如 NASA） 
+abbreviations 广义缩略语，包含首字母缩略词、截短词等（如 lab 为 laboratory 的截短词）
+
+
 ## Basic Words Type
 ### Article
 the
@@ -43,8 +47,13 @@ accredited 公认的;可接受的;可信任的;质量合格的
 adhoc created or done for a particular purpose as necessary.
 Adorable 可爱极了
 adequate
+	have I adequately catalogued exceptions?
+	Inadequate appreciation of the human dynamics can crush great projects.
+	对人际动态的认知不足会摧毁优秀项目。
 adverse 不利的
 aesthetic  i:sˈθetɪk  审美的; 美的，美学的; 有关美的; 具有审美趣味的
+Affordable
+	Housing should be affordable to the mass.
 agnostic
 akin
 Almost 差不多了
@@ -78,6 +87,8 @@ belated 迟来的
 biased 有偏见的; 有偏的; 结果偏倚的
 blatantly lie 睁眼说瞎话
 blunt 直率的; 迟钝的; 钝的，不锋利的; 呆板的
+	Questionnaire may well be ignored by recipients, requires a concise and very well thought out explanation to each recipient, can be the cause of much speculation and disruption due to the blunt nature of a blank questionnaire.
+	问卷很可能被收件人忽略 需要为每位接收者提供简明且经过深思熟虑的解释说明 空白问卷的粗放性可能导致大量猜测性解读和调查进程混乱
 Bravo 太棒了
 
 canonical [kəˈnɒnɪkl] 权威
@@ -129,6 +140,10 @@ disciplinary
 discrete
 discretionary 任意的; 自由决定的; 酌情行事的; 便宜行事的
 disparate 完全不同的
+	Locating relevant docs can be time consuming; some documents may be redundant or outdated; reading and summarizing disparate documentation is difficult; there is a danger of getting sucked into detail and not seeing process-level information
+	定位相关文档可能非常耗时 部分文档存在冗余或过时问题 阅读并汇总分散的文档资料存在困难 存在陷入细节而忽略流程层面信息的风险
+disperse 分散的
+	Treat geographically dispersed resources as though they were centralized.
 dispensable 非必需的
 disruptive 分裂的 破坏性的
 distinctive
@@ -198,10 +213,12 @@ intrinsic ɪnˈtrɪnsɪk 本征; 固有的，内在的，本质的; [解剖] 体
 intuitive intuitive The user interface should be intuitive and easy to learn without formal training.
 If referential integrity is intact
 instinctive
+instrusive 侵入
 instructive  有益的; 教育性的;
 incentive 刺激的
 inferior 较低的 此等 的 secondary
 intense
+	when the heat is intense
 intensive
 1.concentrated on a single subject or into a short time; very thorough or vigorous.
 2.of an adjective, adverb, or particle) giving force or emphasis.
@@ -252,6 +269,8 @@ notorious 臭名昭著的; 声名狼藉的; 臭名远扬的; 恶名昭著
 nutrient
 
 opaque əʊˈpeɪk 不透明的; 无光泽的，晦暗的; 不传导性的; 含糊的，迟钝的
+open end 
+	The pipe has an open end for drainage.（管道有一端开口用于排水。）
 optimal
 opportunistic ˌɒpətju:ˈnɪstɪk 投机取巧的; 机会主义的，机会主义者的;
 orbital 轨道的
@@ -344,6 +363,8 @@ susceptible 易受影响的; 易受感染的
 superfluous su:ˈpɜ:fluəs 多余的; 过多的; 不必要的; 奢侈的
 suboptimal 未达最佳标准的; 不最理想的; 不最适宜的; 不最满意的;
 susceptible səˈseptəbl 易受影响的; 易受感染的; 善感的; 可以接受或允许的
+supportive 
+	everyone is very positive and supportive of each other
 symmetric 相称性的，均衡的
 
 tactile 触觉的; 触觉感知的; 能触知的; 有形的
@@ -405,6 +426,7 @@ Degree: very, too ("​​Very​​ cold")
 
 Absolutely
 accordingly
+	Usually trust is not that high, therefore your goal is to pinpoint hotspots of distrust and manage accordingly
 adversely 逆地，反对地; 不利地; 有害地
 allegedly 据说
 analogously ə'næləgəslɪ 类似地，近似地
@@ -436,6 +458,7 @@ hereto thereto
 Hopefully 希望如此
 hereinafter 以下，在下文中
 
+infra 在下，以下，下文
 inherently flawed
 intelligently
 intensively 强烈 深入 密集
@@ -450,11 +473,13 @@ notoriously
 
 overly 过度的
 
+pacifically
 phenomenologically
 preferably 更好的 宁愿
 presumably prɪˈzju:məbli大概; 可能; 想来; 据推测;
 predominantly
 provisionally
+pro rata adv.	<拉>按比例，成比例;
 
 radically 彻底的 激进的  vs drasticlly
 
@@ -464,9 +489,11 @@ sensibly
 somehow 以某种方式，用某种方法; <非正>不知怎么地，不知道怎样，不晓得什么缘故; 设法，想办法，想个方法; 莫明其妙地;
 somewhat
 succinctly sək'sɪŋktlɪ
-
+substantially
+	Plan for it and identify it early on -- and your chances of success will rise substantially
 thereby
 therefore 所以 因此
+thereafter
 
 ultimately eventually http://forum.wordreference.com/threads/eventually-finally-ultimately.167661/
 unilaterally ˌju:nɪˈlætərəlɪ 单方面地; 单方面做出地; 仅影响一方地; 单边地;
@@ -476,6 +503,47 @@ validly  正当地，妥当地
 whereas 然而 反之
 wholly 完全地，全部地; 十足，统统; 专门; 一并
 
+##### 副词短语
+early on 在初期；早些时候；开始不久
+
+‌high and low‌（到处）
+	例：I searched high and low for my keys.（我到处找钥匙）
+‌here and there‌（零星散布）
+	例：Flowers bloomed here and there in the field.（田野里零星开着花）
+‌give and take‌（相互让步）
+	例：A good marriage requires some give and take.（美满的婚姻需要互相妥协）
+On and off
+	描述动作的‌间歇性‌或‌不连续性‌12。
+	例：It rained on and off all day.（雨断断续续下了一整天
+‌off and on‌（断断续续）
+	例：He studied French off and on for ten years.（他断断续续学了十年法语
+‌on and on‌（持续不断）
+	例：The speaker talked on and on about politics.（演讲者滔滔不绝地谈论政治）
+
+out there 
+	字面意义‌：指物理空间的“外部”或“远处”。
+		It's freezing ‌out there‌.（外面冷极了。）
+	‌引申意义‌：
+	口语中可表示“在战场上”或“逍遥法外”。
+	抽象语境中暗示“未被发现的领域”或“广泛存在的现象”（如：The truth is ‌out there‌.）
+		The truth is ‌out there‌.
+pretty much 出“近乎全部”的普遍性
+	Pretty much everyone agrees with the new policy.
+right away
+	‌时间状语‌（最常见）：
+	例：He left right away.（他立刻离开了）13。
+	‌补语‌（修饰动词）：
+	例：Do it right away!（马上做！
+soon after 
+	‌接句子‌（after 为连词）：
+	例：He left soon after the meeting ended.（会后不久他离开了）
+	‌接名词/代词/动名词‌（after 为介词）：
+	例：She recovered soon after the treatment.（治疗后她很快康复）
+	‌单独使用‌（after 为副词）：
+	例：The event ended at 5 PM; soon after, everyone left.（活动5点结束，随后众人离开）
+‌up and down‌（起伏不定；来回）
+	例：Her mood has been up and down recently.（她最近情绪起伏不定）
+	例：The cat ran up and down the staircase.（猫在楼梯上跑来跑去）
 ### Conjunction
 Definition:​​ Words that connect clauses, phrases, or words.
 ​​Examples:​​
@@ -493,9 +561,15 @@ therefore thereby https://english.stackexchange.com/questions/148009/thereby-vs-
 Anyway
 whatsoever
 
+yet
+	My sales process is more costly than my competitors - how to reduce yet stay competitive.
+	我的销售流程成本高于竞争对手——如何在降低成本的同时保持竞争力？在句中，“yet”连接两个动词不定式（reduce 与 stay）不同于单纯的“but”或“however”，“yet”在此更偏向‌矛盾目标间的动态平衡‌，而非非此即彼的对立
 ### ​​Determiners
 
 ​​ my, some, each (modify nouns like adjectives)
+
+a handful of 强调数量少，常用于具体或抽象事物，如“一把（量词）”或引申为“少数”
+	Only ‌a handful of‌ companies dominate the global tech market.（仅有‌少数‌几家公司主导全球科技市场。）
 
 ### Exclamations
 Definition:​​ Words, phrases, or sentences that express strong emotion (e.g., surprise, anger, joy) and often end with an exclamation mark (!).
@@ -540,6 +614,8 @@ dose slice
 quite a few 
 	expresses that the speaker was impressed or astonished by the number, as they would have expected less.
 
+or so 是后置型模糊量词短语，核心规则为 ‌“数量词 + or so”
+more or less 是 ‌多功能模糊量化短语
 #### descriptive noun/agent nouns
 actuator
 adversary ˈædvəsəri 对手，敌手; 魔鬼;
@@ -682,7 +758,9 @@ counterfeit 仿制品 伪造物
 courtesy 承蒙 授权 courtesy of ***
 critique 评论文章，评论; 批评，批判
 criterion -> criteria
+cross-currents 逆流 错流
 cross-section 横断面 截面图
+cross-silo 跨部门
 curx 关键
 cushion ˈkʊʃn 垫子;（隔离两个表面的）垫;起保护（或缓冲）作用的事物;（台球等运动）（台球桌内侧边缘的）弹性衬里
 	cushion finiacle impact
@@ -705,6 +783,7 @@ directive 指令
 discretion dɪˈskreʃn 慎重; 考虑周到; 判断力，辨别力; 自行决定的自由
 diskettes 磁盘
 dissemination 散播，宣传; 浸染
+doozy
 dysfunction 机能障碍，机能失调
 
 
@@ -780,6 +859,8 @@ latency 潜伏 延迟
 lever ˈli:və(r) 杠杆; 操作杆; 工具
 Leaderboard 选手积分榜
 liquidity lɪˈkwɪdəti 流动性; 流动资金; 资产流动性; <财>资产折现力;
+literacy
+	In modern workplaces, **employees of minimum IT literacy** are expected to handle basic tasks such as email correspondence and cloud document sharing."  
 
 
 mattress ˈmætrəs 床垫;褥垫;空气垫;[建]沉排
@@ -822,6 +903,8 @@ pillar 柱子 culture is a basic pillar of sustainable development http://www.th
 pitfall
 plateaus 高原( plateau的名词复数 ); 平稳时期; 稳定状态; 停滞时期
 pole  杆; [物] 极点，顶点; 地极; 两极端
+	The images circulating on Facebook since Wednesday evening show the girl’s right leg being chained to a pole while her school bag and water bottle are left lying on the ground beside her. It was not immediately clear if she had been left there by a parent or guardian, and for how long. Netizens were quick to condemn the act, with many of them blaming the girl’s parents for resorting to such measures to punish their child.
+
 portfolio
 possession pəˈzeʃn 有，所有，拥有; 领地; 财产，所有权，占有物，所有物; 持有违禁物
 prowess ˈpraʊəs 英勇; 高超技艺;
@@ -870,6 +953,8 @@ shell 壳 coconut shell
 shortfall 不足
 silo 筒仓; （核武器的） 发射井; （危险物品的） 地下贮藏库; 青贮窖
 sixth former 六年级
+skyrocket 
+	service costs can skyrocket out of control.
 slang slæŋ 俚语; 黑话;
 spacer 间隔装置
 spectrum 波谱 范围
@@ -942,6 +1027,7 @@ specify specifier
 
 #### Adjective -> Noun
 implicit -> implication
+	the likely implications of change
 explicit -> explication
 intuitive-> intuitiveness
 fluid -> fluidity
@@ -1016,7 +1102,15 @@ Demonstrative: this, that, these, those
 Relative: who, which, that ("The book ​​that​​ I read")
 Indefinite: someone, anybody, nothing
 
-### Preposition
++ subject pronoun: I
++ object pronoun: Me
+  He asked me a question.
++ reflexive pronoun: Myself
+  I bought myself a new car!
++ possessive pronoun: My 
+  Have you met my family?
+
+### Preposition 介词
 Definition:​​ Words that show relationships (time, place, direction).
 ​​Examples:​​
 
@@ -1024,43 +1118,188 @@ Time: at, on, in ("​​at​​ 5 PM")
 Place: under, over, between
 Direction: to, from, into
 
-per pax=per person/passenger person is a decent substitute for individuals, People is the ordinary plural of person
+along 
+	作介词（Preposition）
+		空间‌：指“沿某物的长度方向”（+ 线性路径，如道路、河流）。
+		We walked ‌along‌ the river.（我们沿着河边走。）
+		‌时间‌：表示“在…期间”（非正式用法）
+		Changes happened ‌along‌ the way.（变化在过程中发生。）
+	作副词（Adverb）表示“向前移动”或“一起”。
+	Come ‌along‌!（一起来吧！）
+	The dog ran ‌along‌.（狗向前跑。
+alongside 
+	作介词（Preposition）
+		空间‌：指“紧挨着某物”（+ 静态位置，强调平行或邻近）。
+		The ship docked ‌alongside‌ the pier.（船停靠在码头旁。）
+		抽象‌：表示“与…合作/同时发生”。
+		She worked ‌alongside‌ experts.（她与专家一起工作。）
+	作副词（Adverb）表示“在旁边”或“并行”
+	Two cars drove ‌alongside‌.（两辆车并排行驶。）
+at
+	At no point between then and 01/03
+	at the same price
 
-at or in mcdonald's
-of that I am sure
 
-to the extent that
-"To me" vs. "For me" http://english.stackexchange.com/questions/3098/expressing-an-opinion-to-me-or-for-me
-on of
-at/in at school workplace office home
+by
+	drawer by drawer 一个一个的翻抽屉
+	by rotation
 
-towards The written exam paper at the end of the course contributes 70% towards your final assessment.
-at in on 地点 时间 http://www.zybang.com/question/42a3219636fccdac61cb0d6e54b9d0dd.html
-https://tw.answers.yahoo.com/question/index?qid=20110817000015KK11854
-Locators in Time and Place: http://grammar.ccc.commnet.edu/grammar/prepositions.htm
-Twitter is fast at adapting to those changes with its quick pivots.
-Discuss the key issues that must be considered in achieving it.
-Needs for the development methodology and good understanding of fundamental concepts of OO involves achieving best practices through leveraging on the fundamental concepts of OO.
-of for from
-In general,the parts are inseparable from the whole
-next Monday就相当于时间状语,不需要再加on,这是习惯用法.只有today，next Monday，next week等时间副词或者时间词组可以省略on.
-
-keep to the budget
-among amongst http://grammarist.com/usage/among-amongst/
-year over year 年比
-drawer by drawer 一个一个的翻抽屉
-over the years
-in response to the request, he **** (respond)
-out there
-have confidence to do sth / in sb
-purpose of purpose for http://english.stackexchange.com/questions/6969/the-purpose-of-versus-the-purpose-for-which-one-is-proper
-from to vs from until http://ask.metafilter.com/54660/Fromuntil-or-Fromto
-in the long run
-to closure
-by rotation
 cum  及; 和; 与; <拉>连同
-passion for in about? https://ell.stackexchange.com/questions/62659/shall-i-use-pursue-my-passion-for-or-in
-infra 在下，以下，下文
+
+for
+
+from
+	In general,the parts are inseparable from the whole
+
+in 
+	in the long run
+of
+	of that I am sure
+	To be of value needs to be highly accurate and in near or real time.
+on
+	next Monday就相当于时间状语,不需要再加on,这是习惯用法.只有today，next Monday，next week等时间副词或者时间词组可以省略on.
+over
+	year over year 年比
+	‌over the time （vs 副词短语 over time)
+		‌over the time 需特指某段具体时间（常搭配定语从句或具体时间段）：
+		Her skills evolved ‌over the time‌ she studied abroad
+		over time描述自然积累或长期变化：
+		The old building decayed ‌over time‌.（老建筑逐渐破败。）
+	over the years
+
+per
+	per pax=per person/passenger person is a decent substitute for individuals, People is the ordinary plural of person
+to
+	to closure
+	keep to the budget
+	to the extent that
+	"To me" vs. "For me" http://english.stackexchange.com/questions/3098/expressing-an-opinion-to-me-or-for-me
+	in response to the request, he **** (respond)
+towards
+	towards The written exam paper at the end of the course contributes 70% towards your final assessment.
+
+
+对比：
+at in on 
+	地点 时间 http://www.zybang.com/question/42a3219636fccdac61cb0d6e54b9d0dd.html
+	https://tw.answers.yahoo.com/question/index?qid=20110817000015KK11854
+	Locators in Time and Place: http://grammar.ccc.commnet.edu/grammar/prepositions.htm
+
+of for
+	purpose of purpose for http://english.stackexchange.com/questions/6969/the-purpose-of-versus-the-purpose-for-which-one-is-proper
+
+for in about
+	passion for in about? https://ell.stackexchange.com/questions/62659/shall-i-use-pursue-my-passion-for-or-in
+
+from to vs from until 
+	http://ask.metafilter.com/54660/Fromuntil-or-Fromto
+
+at vs in
+	at or in mcdonald's
+	at/in at school workplace office home
+among amongst http://grammarist.com/usage/among-amongst/
+
+#### 复合介词
+as for
+as of 用于表示时间或日期的起点或截止点
+	As of next month, prices will increase.（自下月起，价格将上涨。
+	As of yesterday, the project was 80% complete.（截至昨日，项目已完成80%。）
+as such
+	| ‌用法类型‌     | ‌结构‌            | ‌例句‌                                                                            |
+	|------------|-----------------|---------------------------------------------------------------------------------|
+	| ‌指代身份或本质‌  | 名词 + as such    | He is a doctor, and as such must follow medical ethics.（他是医生，因此需遵守医德。）        |
+	| ‌强调事物本身属性‌ | as such + 描述性内容 | The plan as such is feasible, but the timeline is tight.（计划本身可行，但时间紧迫。）        |
+	| ‌句首表因果关系‌  | As such, + 结果句  | The product sold out. As such, we need to restock immediately.（产品售罄，因此需立即补货。） |
+
+because of/‌in view of/considering‌/in light of
+	Documentation and training can be refined in light of experience
+	| 短语          | 语体  | 主观程度 | 适用场景      | 例句                                                     |
+	|-------------|-----|------|-----------|--------------------------------------------------------|
+	| because of  | 通用  | 无    | 直接因果关系说明  | The event failed because of poor planning              |
+	| in view of  | 正式  | 低    | 官方决策/法律文件 | In view of the evidence, we suspend the license        |
+	| considering | 口语  | 高    | 个人体谅/折中判断 | Considering the budget, this is acceptable             |
+	| in light of | 半正式 | 中    | 基于新证据的调整  | In light of latest research, we updated the guidelines |
+
+in front of
+in terms of vs in the sense of vs with respect/regard to
+  'in terms of' When we speak in this way, using these kinds of terms.
+  eg In terms of computer skills, his programming and website design abilities are excellent.
+  'with regard to' When we look at something.
+  eg With regard to this problem, we need a solution by Friday.
+according to
+instead of
+due to
+owing to
+prior to
+
+With regard to that/regarding that 关于这一点
+by means of
+in the event of
+	in the event of contingencies
+in spite of
+
+In Reponse To
+	The government lowered taxes ‌in response to‌ the economic crisis.
+
+no later than
+	固定搭配的介词短语‌（prepositional phrase）13，由 ‌否定词（no） + 比较级副词（later） + 介词（than）‌
+	限定动作的最晚时间（如 Submit the report no later than Friday）
+	表示截止条件（如 Payment must be made no later than the due date）
+regardless of
+	you will encounter resistance regardless of which approach you take
+up to
+	It’s ‌up to‌ you to decide.（由你决定。）
+#### 介词短语‌（Prepositional Phrase）
+at most
+	‌状语‌（最常见）：
+	修饰数量或程度，位置灵活（句首、句中、句尾）
+	例：The project will take at most two weeks.（项目最多耗时两周）
+	例：At most, 10 people attended the meeting.（最多10人参会）
+	‌后置定语‌（较少见）：
+	例：A budget of $100 at most is allocated.（最多分配100美元预算）
+
+at distinct points in time
+	Data was collected ‌at distinct points in time‌ to track changes.（数据在不同时间点收集以追踪变化
+end to end
+	End to end is a term used in many business arenas referring to the beginning and end points of a method or service, and end-to-end theory embraces the philosophy that eliminating as many middle layers or steps as possible will optimize performance and efficiency in any process. An end-to-end process ensures the comprehensive completion of work and is typically managed within a specified timeframe. Internal procedures at a company often lay out a process for end-to-end management using the most efficient and timely approach to manufacture goods or complete a service.Read more: End To End Definition | Investopedia http://www.investopedia.com/terms/e/end-to-end.asp
+
+halfway/partway through
+	‌halfway through 强调时间或进程的‌精确中点‌（50%完成度），多用于量化场景
+		The car broke down ‌halfway through‌ the race.
+	partway through 泛指‌中途某点‌（未必是50%），侧重未完成或意外中断，语义更模糊
+		He paused ‌partway through‌ the speech.
+in the middle of something
+	| ‌功能‌       | ‌例句‌                                                | ‌含义‌                   |
+	|------------|-----------------------------------------------------|------------------------|
+	| ‌表示时间进行中‌  | She’s ‌in the middle of‌ a meeting.（她正在开会。）         | 强调动作正在进行（= busy doing） |
+	| ‌表示物理位置居中‌ | The vase is ‌in the middle of‌ the table.（花瓶在桌子中间。） | 指具体空间位置的中心             |
+	| ‌比喻性用法‌    | We’re ‌in the middle of‌ a crisis.（我们正处于危机中。）       | 抽象状态的中期或关键阶段           |
+
+[in a timely fashion / in this fashion](http://english.stackexchange.com/questions/18635/what-is-the-meaning-of-the-phrase-in-timely-fashion)
+	以…方式”或“在…状态下”
+	The project manager ensured all tasks were completed in a timely fashion.‌（项目经理确保所有任务‌及时完成‌。）
+	‌Data must be processed in this fashion to avoid errors.‌（数据必须‌以这种方式‌处理以避免错误。）
+on board
+	We need to ‌get‌ more experts ‌on board‌.（我们需要让更多专家加入。）
+	Is everyone ‌on board‌ with the plan?（大家都同意这个计划吗？）
+on demand
+	‌商业场景‌：
+	The system provides data ‌on demand‌.（系统按需提供数据。）
+	‌金融术语‌：
+	A promissory note payable ‌on demand‌.（见票即付的本票。）
+on the gounds （not ground!!!）
+	He resigned ‌on the grounds of‌ health issues.后接名词或从句，说明具体原因
+	The case was dismissed ‌on the grounds that‌ evidence was insufficient.引导同位语从句，强调法律或逻辑依据
+shoulder to shoulder, side by side
+	The team fought ‌shoulder to shoulder‌ against the crisis.
+	The children walked ‌side by side‌.
+with that being said
+	是一个 ‌独立主格结构（Absolute Construction）‌，属于 ‌介词短语（Prepositional Phrase）‌ 的一种特殊形式，用于承接上下文或过渡逻辑关系
+	| ‌功能‌   | ‌作用‌                                                 | ‌例句‌                                                                      |
+	|--------|------------------------------------------------------|---------------------------------------------------------------------------|
+	| ‌逻辑过渡‌ | 总结前文并引出转折或结论，相当于 ‌"however"‌ 或 ‌"having said that"‌。 | The plan has risks. ‌With that being said‌, we should proceed cautiously. |
+	| ‌强调前提‌ | 先承认某事实，再提出后续观点，类似 ‌"given that"‌。                    | He’s inexperienced. ‌With that being said‌, he shows great potential.     |
+	| ‌正式替代‌ | 比 ‌"but"‌ 更正式，多用于书面语或演讲。                             | The data is limited. ‌With that being said‌, the trend is clear.          |
 
 
 ### Verb
@@ -1088,6 +1327,9 @@ He became ​​famous​​.
 ​​Common Linking Verbs:​​
 be, seem, appear, become, feel, look, smell, taste, sound
 
+get enrolled
+	She ‌got enrolled‌ in Harvard.（她被哈佛录取了。）
+	Students must ‌get enrolled‌ before the deadline.（学生必须在截止日期前完成注册。）
 #### Auxiliary (Helping) Verbs​​
 ​​Definition:​​ Used with a main verb to form tenses, moods, or voices.
 ​​Examples:​​
@@ -1098,7 +1340,7 @@ He does ​​not​​ like coffee.
 ​​Primary Auxiliaries:​​
 be, have, do
 
-#### Modal Verbs​​
+#### 情态动词 Modal Verbs​​
 ​​Definition:​​ Auxiliary verbs expressing ability, permission, necessity, etc.
 | Modal Verb | Function | Example |
 |------------|----------|------------------------|
@@ -1114,6 +1356,18 @@ Followed by a base verb (e.g., He ​​must eat​​).
 can may must should ought to
 can, could, will, would, shall, should, may, might, must
 
+you wouldn't do
+
+can or could https://learnenglish.britishcouncil.org/en/english-grammar/can-or-could
+I wouldn’t if
+https://english.stackexchange.com/questions/314087/i-wouldnt-work-if-i-wouldnt-get-paid
+
+how earlier should I inform you?
+
+What’s the difference between will be and would be?
+https://www.quora.com/What%E2%80%99s-the-difference-between-will-be-and-would-be
+
+Discuss the key issues that must be considered in achieving it.
 #### Causative Verbs​ 使役动词
 
 ​​Definition:​​ Verbs indicating someone/something ​​causes an action​​.
@@ -1136,6 +1390,13 @@ Make + base verb (apologize) vs. Get + infinitive (to sign).
 interest bore ing&ed format http://blog.sina.com.cn/s/blog_6e87738d0100n1g4.html （注意和被动语态分别 比如 familiarize be familiarized with ）
 have make let
 
+gets you to a deeper level of understanding
+
+make
+	例：The manager asked us to make the report uniform.（经理要求我们统一报告格式）。
+	‌设计或生产‌：
+	例：The factory makes all products uniform in size.（工厂使所有产品尺寸一致）
+
 #### Transitive Verbs (VT)​​
 ​​Definition:​​ Require a ​​direct object​​ to complete their meaning.
 ​​Example:​​
@@ -1145,6 +1406,23 @@ have make let
 ​​Key Point:​​ Without an object, the sentence is incomplete.
 ❌ She ate. → ❓ (What did she eat?)
 
+##### Transitive Verb+infinitive 及物动词加不定时
+
+box in
+	The traffic boxed us in.（车流把我们困住了。
+	My car was boxed in by a truck.
+freak out 是 ‌多功能口语短语‌，核心用法包括：
+	及物动词（freak sb out）表“使某人失控”
+	不及物动词（freak out）表“自行情绪爆发”
+mean to
+	means many things to many people, to some it's xxx to others xx
+	mean 为 ‌及物动词‌，需接宾语（如 mean something 或 mean to do）
+	to 为 ‌不定式标记‌（非介词），引导动作目标（mean to help = “打算帮助”）
+	‌不可替换‌：mean to 中的 to 不能改为其他介词（如 mean for 含义不同）
+
+walk you through
+get through
+lift it up  sum up  assemble up
 
 #### Intransitive Verbs (VI)​​
 ​​Definition:​​ Do ​​not require an object​​; the action stays with the subject.
@@ -1205,7 +1483,48 @@ Key Features:​​
 Transitive: "She ​​gave up​​ smoking." (Object = smoking)
 Intransitive: "The car ​​broke down​​."
 
+behave regularly 
+	多用于描述行为规范（如教育、心理学场景）：
+	The program teaches students to behave regularly in class.
+	也可指机械/系统运行的规律性（较少见）：
+	The machine behaves regularly under normal conditions.
 
+drill down
+dug up 挖出
+
+gears up 常见搭配表“筹备”或“动员
+	As the group gears up towards the business challenges of the new economy
+Hog off 强行占据某物并拒绝分享”或“彻底清除某物
+	He hogged off all the snacks.（他霸占了所有零食）
+	Farmers hogged off the weeds.（农民彻底清除了杂草）
+Line through, strike through, crossed through
+	短语动词用法‌（动作描述）：
+	line through：指“划掉”（如：She lined through the mistake.）8。
+	strike through：与 line through 同义（如：He struck through the outdated clause.）8。
+	‌分词修饰用法‌（被动或完成状态）：
+	crossed through：过去分词短语，作定语或表语（如：The crossed-through text was unreadable.）
+piled up
+ books piled up on the desk（堆在桌上的书）
+place on
+	The difference is in the amount of emphasis each one places on individual steps
+phase out
+	The government plans to phase out coal-powered plants.政府计划逐步淘汰燃煤电厂。
+	Samsung discontinued the Note series but phased it out gradually.（三星停产Note系列，但逐步退出市场。）
+pull back
+	The troops were ordered to ‌pull back‌ from the frontline.
+	Investors ‌pulled back‌ from risky assets during the crisis.
+roll out
+	The city is rolling out more buses next month.（市政府下个月将推出更多公交车。）
+set aside
+	She set aside some money for emergencies.（她留出一些钱应急。）
+	He set the disagreement aside.（他把分歧搁置一边。）
+	Please set it aside.（请把它放到一边。）（代词宾语必须放在中间）
+start off
+	‌start off right‌：强调“正确/顺利的开端”1。
+	‌start somebody off‌：表示“帮助某人开始”（如 The teacher started the students off with a warm-up
+turn around
+	She ‌turned around‌ to face the unexpected visitor.
+	The new CEO managed to ‌turn‌ the company ‌around‌ within a year.新任CEO一年内成功‌扭转‌公司颓势
 #### Prepositional Verbs(fixed preposition)
 Definition:​​ Verbs that ​​must​​ pair with a specific preposition.
 
@@ -1241,6 +1560,9 @@ change over
 cut across
 consent to
 commit to the same mistake （犯）
+‌compete on‌ 后接名词或名词短语，不可接动词原形（如 compete on improve 错误）
+	与 ‌compete in‌（参加比赛）和 ‌compete with/against‌（与……对抗）区分
+	compete on prices compete on completeness
 cut through 穿过 挤进
 cut across 抄近道 涉及
 crack down (on) 严厉打击
@@ -1265,6 +1587,10 @@ look after
 lay down lay off
 opt-out 自愿退出; 不参加;
 opt-in 选择进入; 选择使用; 选入;
+object to vs. resistance to(名词短语)
+	They object to the change.
+	Resistance to change is common.
+pledge to donate
 pump in
 pull over
 pursuant to 依照，按照，依据;
@@ -1274,9 +1600,13 @@ mash-ups 混搭
 miss out figure out work out leak out
 roll back
 right away
+slate for  表示“被计划用于某用途”或“被安排在某一时间” 提名为，内定为，任命为
+	The new policy changes are ‌slated for‌ implementation in early 2026.（新政变革‌计划于‌2026年初实施。）
+speak of
 stop by 顺路看看
 subject to
 stem from
+	Business value frequently stems from cross-silo process improvements
 sign off 结束 签订
 switch off  turn off kick off
 stretch out
@@ -1309,6 +1639,7 @@ annoy bother
 apportion The desire to apportion blame and seek retribution after disaster strikes is human.
 arbitrate 仲裁
 articulate 清楚的讲话  以关节连接 verbalize 用语言表达 赘述
+	Clearly articulate the problem and opportunities using business language
 assess 评定 评估
 assign to assign for :
 Stereotypes can be assigned for the objects or a class.
@@ -1324,9 +1655,15 @@ bash 撞坏
 beware be aware http://english.stackexchange.com/questions/160651/what-is-the-difference-between-beware-and-be-aware
 beacon 照亮，指引; 为…设置信标; 用灯指
 bloat 使膨胀; 使肿起; 使自大; 腌熏（鱼）
+blow
+	How can I provide some kind of local service, without blowing my budget.
+bluff 
+	try to deceive someone as to one's abilities or intentions.
 boast
 bombard 炮击，轰炸 one of the student always bombard the teacher with a question and prevent others from asking quesiton.
-bully 欺负
+bully 欺负 
+bulling 
+	From the expletive bullshit. To talk nonsense/bullshit.He was bulling me but I didn't believe him.
 bulldoze [ˈbʊldəʊz] 铲平; 强迫（某人做某事）(-sb +into doing sth); （用推土机） 推倒; （使） 强行通过;
 burst:
 	The default quota is max 1000 (one thousand) requests per minute (~16RPS) and with burst up to 60 requests
@@ -1356,7 +1693,13 @@ compromise 妥协 危害
 comprise incorporate consist compose collection constitute
 An automated world comprising the software equivalents of the real world objects.
 The whole object is constructed from other part objects, for example:An object is physically composed of another objects. An object is a logical collection of other objects.
+commute
+	They ‌commute to work‌ by train every weekday.
 concatenate 联系起来
+constitute 
+	Seven members ‌constitute‌ the committee.（七名成员组成了委员会。）
+	He was ‌constituted as‌ the leader.（他被指定为领导。）
+	These elements ‌constitute‌ the solution.
 conduct
 confer 授予，颁与; 比较，对照
 consent  同意
@@ -1387,6 +1730,8 @@ cruise 巡航 漫游
 curse 诅咒
 
 dabble 涉猎
+deceive 
+	deliberately cause (someone) to believe something that is not true, especially for personal gain.
 demolish 拆毁
 derive 导出 派生
 defer delay postpone latency lag
@@ -1404,6 +1749,8 @@ deviate 偏离
 deserve
 debate
 designate 指定 表明 选派
+depict
+	Singapore's multi-racial diversity is also depicted in the coin design. The obverse design features the Singapore Coat of Arms.
 dispatch 快递 派遣
 deter 阻止，制止; 使不敢; 使踌躇
 deteriorate 使。。恶化
@@ -1442,7 +1789,8 @@ elapse
 elicit 引出 诱出
 elaborate 精心制作
 emit 排放 emission
-emanate 散发 发出 :
+emanate 散发 发出 源自/发轫于:
+	The loudest complaints emanated from it.
 	There may be multiple exchanges between an actor an a use case. Only one communication association is shown.Since the exchanges are initiated by one of the parties, the arrow emanates from the initiating party.
 enumerate
 	Enumerate the goals of the system or enumerate the business activities that occur as part of the system.
@@ -1469,6 +1817,8 @@ estimate guesstimate
 esteem  尊敬，敬重; 认为，以为; 考虑; 估价
 escalate 升级
 evade 逃避 躲避
+evaluate
+	evaluate the situation from various angles and identify core issues.
 expedite 加速
 exacerbate 激怒 加重
 exhibit inhibit:
@@ -1495,11 +1845,14 @@ grill roast 烤
 
 hamper 束缚
 harness 给（马等）套轭具; 控制利用
+	The horse wore a leather harness.（马匹套着皮制马具、挽具”或“安全带、系带）
+	Scientists harness solar energy for power.（科学家利用太阳能发电）
 hazard 冒险; 使遭受危险
 hatch hætʃ 秘密策划，（尤指）密谋; 使（小鸟、小鱼、小虫等）孵出
 hike fare hike
 hinder ˈhɪndə(r) 阻碍，妨碍; 成为阻碍
 hinge 绞链链接
+hush
 hydrate 水合 dehydrate 使脱水
 hydrolysis 水解
 hype 炒作 media hype - promote or publicize (a product or idea) intensively, often exaggerating its importance or benefits.
@@ -1526,6 +1879,7 @@ infect vs infest http://grammarist.com/usage/infect-infest/
 infer deduce imply ? http://forum.wordreference.com/threads/to-infer-to-deduce-to-imply-a-conclusion.770273/
 inflate使膨胀
 intersect  vt.  横断，横切，横穿;vt. （指线条、道路等） 相交，交叉
+	Geographical areas may overlap and intersect liberally.
 intrude
 intercept 截击 拦阻
 incept
@@ -1538,6 +1892,12 @@ indicate vs denote vs annotate http://the-difference-between.com/annotation/deno
 intimidate 恐吓 威胁
 isolate: Isolates application from the computing platform making it portable across multiple OS platform.
 
+jump 
+	jump in‌不及物短语动词
+		She ‌jumped in‌ to correct me.（她突然插话纠正我。）
+		Don’t hesitate—just ‌jump in‌!（别犹豫，直接开始吧！）
+	jump in‌及物短语动词
+		He ‌jumped in‌ the pool.（他跳进了泳池。）
 jumpstart 启动; 助推启动; 助推起动; 快速启动
 
 latch 闩上; 用碰锁锁上（门等）; 抓住，占有
@@ -1551,15 +1911,22 @@ manifest 显示 证实 表露
 	These solutions are manifested as architectures and can include systems, applications and process components
 marshall 安排; 引领; 统帅;
 marshal 整理，排列，集结
+meter
+	meter your expectation accordingly
+	需合理调适预期
 mimic 摹拟; 模仿，学样; [生] 拟形，拟色  Make sure it mimics the real usage pattern for accurate result
 mitigate 减轻 migrate 迁移
 moderate 使和缓 节制
 mold 塑造; 浇铸; 用模子做; 用泥土覆盖
 monopolize 垄断
 
+neglect
+	They neglect one important thing.（他们忽视了一件重要的事）
 necessitating 使。。成为必要
 nurture 养育 培育
 
+obey
+	Processes obey a standard set of rules and policies
 obsolete vs deprecate http://english.stackexchange.com/questions/87887/what-is-the-difference-between-obsolete-and-deprecate-in-computer-science
 obfuscate ˈɒbfʌskeɪt 使模糊，使混乱; 使糊涂
 opine 认为
@@ -1597,6 +1964,8 @@ protrude使突出; 使伸出;
 pun 说双关语
 purge execute script to purge the tables if necessary
 prune pru:n 删除; 减少;
+
+quo 维持现状
 
 rattle 迅速而嘎嘎作响地移动，堕下或走动 使紧张，使恐惧; 给（桅索）扎梯绳
 raise: 
@@ -1663,6 +2032,8 @@ spew 喷涌
 	If there is one web trend that is seemingly unending, it is the trend of the Internet to spew forth new words and phrases every year. From portals to blogs to widgets to mashups to Web 2.0, the Internet has a knack for lighting these words on fire. And the worst part is that sometimes the word lacks any true definition that everyone can agree on.
 spun 使旋转 杜撰 急转身spun off 剥离
 squash skwɒʃ 挤进; 将（某人[某物]）压扁; 使沉默; 平定（叛乱等）;
+state
+	Textiles must state the name of the manufacturing country.纺织品须标注生产国名
 stagnate 停滞，不流动，不发展; 变萧条
 stem 阻止; 遏制[阻止]（液体的流动等）; 封堵; 遏止
 strain 拉紧
@@ -1711,6 +2082,10 @@ upsize(<>downsize/streamline) http://www.tigerair.com/sg/en/luggage_upsize.php?s
 undermine 逐渐削弱; 使逐步减少效力; 从根基处破坏; 挖…的墙脚;
 unveil 揭露; 揭去…的面罩; 拉开…的帷幔; 使公之于众
 
+vary
+	Vary widely 在种类、功能、特性或应用范围等方面存在显著差异或广泛变化
+	The tools vary widely and have been designed to meet an array of situations.
+	Vary widely in capabilities
 vet 检查; 审查（某人过去的记录、资格等）; 诊疗
 violate
 visualize
@@ -1762,6 +2137,7 @@ close-out
 coresponding corelate cooperate collaborate coordinate
 counter- 表示“相反，相对”  
 	countermeasure counterclockwise
+	counter pull The ‌counter-pull‌ of market forces delayed the merger.（市场力量的‌反向拉力‌延缓了并购进程。）
 cessation （暂时） 停止，休止，中断; recession procession队伍，行列; 一列，一排; 列队行进; concessionary （对某类人） 减价的;
 
 corrupted disrupted
@@ -1784,9 +2160,19 @@ down
 ele- elevation elevated elevator
 electromagnetic
 
+efficient‌
+	energy-efficient‌
+		The new factory was designed to be ‌energy efficient‌.（新工厂的设计旨在实现‌能源高效利用‌。）
+	cost-efficient‌
+		The new software system proves to be ‌cost efficient‌ and user-friendly.（新软件系统兼具‌成本效益‌且易于使用。）
 foothold 据点; 立足处（攀登时脚踩的地方）; （在事业等方面可以进一步发展的） 稳固地位
 ficiency  proficiency熟练 娴熟 deficiency efficiency
 fore- foresight
+
+far-reaching
+	far-reaching impact 深远影响
+fast tracking 快车道
+fast forward
 
 geneity: homogeneity, heterogeneity
 graphy
@@ -1828,7 +2214,11 @@ let booklet leaflet [ˈli:flət] 传单，散页印刷品; 小叶，嫩叶; 复�
 gence
  diligence intelligence
 
-multi multitenancy
+multi 
+	multitenancy
+	Multi-Disciplined 多学科
+	multidimensional 
+		Complex interactions are multidimensional
 
 mal
 	thermal 暖气流 geothermal 地热
@@ -1874,7 +2264,11 @@ out outbreak outrange outperform outstrip outreach 到达顶端，超越;
 outperform 做得比…更好，胜过
 
 peal appeal repeal
-
+prone
+	error-prone 易错
+	injury-prone‌（易受伤的）
+	‌accident-prone‌（易出事故的）
+	failure-prone‌（易失败的）
 proof water-proof 防水 tamper-proof
 propa - propagate  propaganda
 pre
@@ -1897,6 +2291,9 @@ re
 resistant
 	tamper-resistant 防篡改
 safeguard
+self-
+	self-explanatory 不言自明
+	self-contained 自给自足
 subtotal 
 scale： global scale time scale
 semi  semiconductor semifinal
@@ -1929,6 +2326,7 @@ ultra 过激的 ultrasonic scan 超声波检测
 under undercharging underestimate undertake undermine 逐渐削弱
 
 uphold
+
 ## Synonym - Words in mind
 adopt apply use
  
@@ -2057,7 +2455,7 @@ take no notice of 不注意(某人/某事物);不理会 despite me看不起
 workaround circumvent ˌsɜ:kəmˈvent 避免; 围绕，包围; 用计防止; （用欺骗手段） 陷害;  prevent
 work together / collaboration - It is expected that the efforts of all the students, when taken in synergy would provide a comprehensive collection of information in the "Big Data Engineering" area.
 
-In case /in the event of
+In case
 the (whole) idea is, the (whole) point is
 
 chop&stamp&seal
@@ -2065,6 +2463,7 @@ evaluate assessment
 revenue[进] (expense[消费]) tax[出]
 subsidy(津贴 奖学金) scholarship
 complimentary / free
+	*** is potentially complimentary to ***
 abbreviation / short for
 encounter confront
 what problems do you confront?
@@ -2154,14 +2553,24 @@ appealing  adj. 吸引人的，令人心动的; 恳求的; v. （迫切） 要�
 
 
 ## idiom saying 谚语/成语
-tit for tat
+
 A throat to choke
+
+don't make a scene 不要制造一场戏”或“不要大吵大闹”。但在实际使用中，它通常指的是“不要当众闹情绪”或“不要在公共场合引起骚动
+
 last but not least
 
 in the sense of
 	"in the sense of" can be considered an idiom when it's used to clarify or specify the particular meaning of a word or phrase in a given context. For example: - "When I say 'bank,' I mean it in the sense of a financial institution, not the side of a river."
 
 In the same context
+
+run the gamut 包罗万象
+	Consultants **run the gamut** from strategic advisors to nuts-and-bolts integrator.
+	顾问的职能范围涵盖从战略规划者到具体执行者的全谱系, run the gamut涵盖全范围
+
+tit for tat 以牙还牙
+
 
 ## Urban Dictionary(SLANG)/lingo
 
@@ -2197,6 +2606,10 @@ http://ell.stackexchange.com/questions/23246/which-between-crap-and-shit-is-more
 
 non-trivial https://www.zhihu.com/question/20681622
 KARMA 佛教 因果报应 因缘
+
+LOLS http://slang.org/LOLS-meaning-definition
+in the wild:
+Part of the use of the slang term “in the wild,” which was popularized by the HBO TV series "Silicon Valley," relies upon an analogy to the natural world. In nature, people look for wildlife and plants in the wild, where they are beyond any human monitoring or supervision.
 
 
 ## Latin
