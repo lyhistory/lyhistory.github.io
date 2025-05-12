@@ -336,9 +336,12 @@ sarcastic sɑ:ˈkæstɪk adj. 讥讽的，讽刺的，挖苦的;
 scathing
 scarce skeəs adj. 缺乏的，罕见的; adv. 勉强; 仅仅; 几乎不; 简直不;
 
-sensational
+sensational 
+	Her performance at the concert was sensational!（她的演唱会表现令人惊艳）
+	The trial received sensational coverage in the media.（审判案件引发媒体轰动报道）
+	The tabloid published sensational stories about celebrities.（小报刊登名人耸人听闻的报道）
 
-significant
+significant 
 skeptical 怀疑性的，好怀疑的，
 sketchy - not thorough or detailed.
 skew 斜交的
@@ -347,11 +350,14 @@ sluggish 行动迟缓的，反应慢的; 不机警的; 懒散的，不活泼的;
 sneaky
 sophisticated algorithm 复杂的算法 unsophisticated 不熟不专业
 spontaneous 自发的 本能的
-sole
+sole 脚底/鞋底（物理实体）唯一的；独占的
+	She is the ‌sole‌ heir to the family fortune.（她是家族财产的唯一继承人
 solitary 独自的，独立的; 单个的; 唯一的; 隐居的
+	He lived ‌solitarily‌ in the forest for years.（他在森林中独自生活多年）
 spatial 空间的; 存在于空间的; 受空间条件限制的; 占大篇幅的
 squiggly 弯弯曲曲的
-statutory 法定的
+statutory 法定的；依法必须执行的
+	The FCC has no ‌statutory‌ authority to regulate the Internet.（联邦通信委员会无权依法监管互联网）
 Stingy!——小气鬼!
 stale 陈腐的; 不新鲜的; 走了味的
 stagnant ˈstægnənt  污浊的; 不流动的，停滞的; 不景气的; 迟钝的，呆笨的
@@ -359,7 +365,6 @@ strenuous ˈstrenjuəs 紧张的; 奋发的; 费力的，用力的; 热烈的
 subsequent vs consequent http://english.stackexchange.com/questions/37872/difference-between-subsequently-and-consequently
 substantial substantive significant considerable 大量的 相当可观的
 subordinate 从属 次要 下级
-susceptible 易受影响的; 易受感染的
 superfluous su:ˈpɜ:fluəs 多余的; 过多的; 不必要的; 奢侈的
 suboptimal 未达最佳标准的; 不最理想的; 不最适宜的; 不最满意的;
 susceptible səˈseptəbl 易受影响的; 易受感染的; 善感的; 可以接受或允许的

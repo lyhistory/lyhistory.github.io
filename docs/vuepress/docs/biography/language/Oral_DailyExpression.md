@@ -347,7 +347,42 @@ Personal matters 私事
 or lack thereof  补充说明前文现象的缺失可能性（即“或其缺失”）通过连词 or 引导否定补充，是英语中高效表达现象“二元性”的典型结构
   The project's success, ‌or lack thereof‌, depends on funding.（项目的成功‌或其失败‌取决于资金。）
 
+subsequent vs consequent 
+	subsequent
+	时间/顺序上紧随其后‌（强调“后来发生”）
+	The policy was revised in ‌subsequent‌ years.（政策在后续几年被修订）
+	consequent‌
+	因果关系的必然结果‌（强调“由前因引发”）
+	The flooding was ‌consequent‌ on the heavy rainfall.（洪水是暴雨的必然结果）
+	
+substantial substantive significant considerable 大量的 相当可观的
+	substantial
+	‌物理量或程度大‌（具体可量化）
+	‌重要性显著‌（强调实质价值或影响）
+	+ 具体名词‌: budget, evidence, progress, damage
+	反义对比‌: insubstantial（非实质的
+	The project requires a ‌substantial‌ investment of time and resources.（项目需投入大量时间和资源 
 
+	Substantive‌
+	实质性的‌（内容充实、非形式化）
+‌	法律/政治术语中‌：涉及核心权利或规则
+	+ 抽象名词‌: rights, issues, changes, negotiations
+	‌辨析‌: 与 procedural（程序性的）对立
+	The treaty includes ‌substantive‌ provisions on human rights.（条约包含人权相关的实质性条款
+
+	Significant‌
+	统计学/科学上‌：显著性（非随机结果）
+‌	广义重要性‌（影响深远或值得注意）
+	+ 数据/结论‌: difference, result, impact, achievement
+‌	辨析‌: 强调“有意义的”而非单纯“量大”
+	The study found a ‌significant‌ correlation between diet and health.（研究发现饮食与健康显著相关
+	
+	Considerable‌
+	程度或数量大‌（侧重主观评估的可观性）
+‌	隐含重要性或影响力‌（非严格量化）
+	+ 抽象/非量化名词‌: effort, attention, influence, risk
+‌	近义替换‌: 与 substantial 部分重叠，但更侧重“值得考量”
+	The decision faced ‌considerable‌ opposition from stakeholders.该决策遭到利益相关者的强烈反对
 ### Analysis 
 误：I think I can't.
 正：I don't think I can.
