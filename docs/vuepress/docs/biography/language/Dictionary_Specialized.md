@@ -736,10 +736,16 @@ convertible debt 可换债务;
 well oiled  (especially of an organization) operating smoothly."the ruling party's well-oiled political machine" 2.informal drunk."I was pretty well oiled that evening"
 
 peninsular
-
+### war
+arsenal 兵工厂 军械库
+theater of war 战区
 missile
 
 surgical strike 外科手术式打击
 
+### religion
+priest 神父
+catholic 天主教
+inshallah 真主保佑
 ## Other
 trifecta traɪ'fektə n. 赌马时，押中某一场前三名的赛马，排名序完全押中; [例句]What would achieving this kind of trifecta really mean? 一举连下三城，究竟意味着什么？

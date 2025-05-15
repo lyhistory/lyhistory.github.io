@@ -139,6 +139,9 @@ more so
 the reason being is
 
 ### 精准表达
+
+当时机成熟 when the time will come for that to happen
+
 [Analysis Paralysis](http://blog.sina.com.cn/s/blog_487ddcc00100o9lk.html) 因过度分析导致的决策或行动停滞
 	In software development, ‌analysis paralysis‌ often occurs when developers over-optimize code structure.（软件开发中，开发者对代码结构过度优化时常发生分析瘫痪。
 
@@ -526,6 +529,20 @@ upsell 劝说购买更昂贵或更多商品
 	The waiter tried to ‌upsell‌ customers by suggesting a larger drink for an extra $2.
 crosssell 推荐相关或互补商品
 	E-commerce platforms use AI to ‌cross-sell‌ items based on browsing history.
+
+Thermal coal 热煤
+coking coal 焦煤
+Market Relevance 市场相关性
+	指产品或服务与当前市场需求、竞争环境或消费者需求的匹配程度，侧重战略层面的适配性
+Strong demand from China and India still makes Indonesian grades more relevant due to their cost efficiencies.
+来自中国和印度的强劲需求，仍使印尼（产品）品级因其成本效益更具市场相关性
+Indonesia’s renewable energy research ‌makes its coal grades more relevant‌ in Asian markets despite environmental concerns。
+（尽管存在环境争议，印尼的可再生能源研究使其煤炭品级在亚洲市场更具相关性。）
+
+Freight vs. Cargo‌：
+Freight 强调运输过程及费用，Cargo 侧重货物本身属性；
+‌Freight vs. Shipping‌：
+Shipping 特指海运，Freight 覆盖多运输模式
 ### About banking
 整存整取、零存整取和定活两用 3g.en8848.com.cn/hangye/bank/voadh/146480.html
 
@@ -756,6 +773,8 @@ http://sbr.com.sg/hr-education/news/over-6-in-10-local-firms-have-mentally-absen
 working remotely www.techrepublic.com/blog/10-things/10-good-reasons-why-working-remotely-makes-sense/
 
 裁员 chop cut 罢工
+
+
 ### About family emotion
 Take Responsibilities for your parents and yourself
 

@@ -692,6 +692,7 @@ spectator 观众，旁观者;
 superior supervisor
 surrogate ˈsʌrəgət
 surety 担保人
+surveyor 测量员 检验员
 
 technician
 terminator
@@ -1906,6 +1907,10 @@ jump
 jumpstart 启动; 助推启动; 助推起动; 快速启动
 
 latch 闩上; 用碰锁锁上（门等）; 抓住，占有
+laminate
+	Laminated name tags withstand daily handling by toddlers（层压姓名牌可耐受幼儿每日取放）
+	美国幼儿园课堂强调‌高频互动性‌（如每日签到、角色扮演、动手操作），未保护的纸质卡片易因频繁使用而卷边、破损或字迹模糊，
+	在美国幼儿园教材及教学实践中，“‌层压‌”（laminate）指通过‌物理覆膜工艺‌（如热压或冷裱）对纸质材料（姓名卡、识字卡、图表等）进行‌表面保护处理‌，使其具备‌防水、防污、抗撕裂‌等特性
 leap
 lease 出租 租借
 leverage the power of *** http://blog.accepted.com/good-grammar-essay-flow/
@@ -2122,7 +2127,7 @@ lag jet lag/ internet lag/ lag time
 
 mean=> means is a means to
 
-## Compound words 复合词
+## Compound words 复合词 / etyma 词根
 
 asymmetric 不对称的
 anti  antispetic 防腐剂/消毒水
@@ -2295,6 +2300,12 @@ re
 	resurface 重铺路面; 重新露面; 浮上水面
 resistant
 	tamper-resistant 防篡改
+rise 
+	highrise
+	arise
+shore
+	reshroe 
+	ashore
 safeguard
 self-
 	self-explanatory 不言自明
@@ -2304,15 +2315,16 @@ scale： global scale time scale
 semi  semiconductor semifinal
 scribe transcribe suscribe screenscribe
 side aside downside beside preside 主持，指挥; 担任会议主席 reside
-super superconduct 超导 supersonic 超音速
+super
+	superiority 表示“优越性”或“优势”，侧重于比较中的优越地位或质量
+		quality superiority（质量优势）
+	superconduct 超导 supersonic 超音速
+	特殊：supremacy 霸权 
+		supreme‌：由 super（拉丁词根） 的最高级形式演变而来，本义为“至高无上的
+		tech supremacy 科技霸权
 tri trishaw 三轮车 triple
 typo
-worthy  trustworthy  click-worthy
-uid
-	liquid fluid
 
-rise 
-	highrise
 ture
 	texture 质地; 结构; 本质
 	moisture 水分; 湿气; 潮湿; 降雨量;
@@ -2324,7 +2336,9 @@ ward
 wise
 	pairwise in pairwise成对[双]地，两个两个地;
 wide
-
+worthy  trustworthy  click-worthy
+uid
+	liquid fluid
 un-
 	unease 不安; 忧虑，担心
 ultra 过激的 ultrasonic scan 超声波检测
@@ -2357,6 +2371,7 @@ crowded 拥挤 packed
 conversely; the other way round;
 come again ( repeat/pardon)
 calibrate / recalibrate  tune / fine tune  redressal 调整，修正
+	all actions are calibrated amongst the three armed forces at what time what is to be done
 contradict反驳 与...矛盾 on contrary counter protest 反对
 correspond to 相应于 符合于 respond to 相应
 conformity consistent
