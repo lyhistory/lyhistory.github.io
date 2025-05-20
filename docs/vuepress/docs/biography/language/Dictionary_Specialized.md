@@ -14,19 +14,27 @@ in an ad hoc manner
 Multivariate analysis 多变量分析
 
 ## biography
+anal 肛门
+apical dominance  顶芽优势
 
 contaminate 污染
 dehydration 脱水
 diarrhea
+melatonin 褪黑素
 pathogen 病原体
 
+
+
+
 ## Chemistry
+acid
 aluminum
 carbon
 nitrogen
 potassium
 tin
 lid
+litmus test paper
 
 dissolve
 
@@ -736,6 +744,16 @@ convertible debt 可换债务;
 well oiled  (especially of an organization) operating smoothly."the ruling party's well-oiled political machine" 2.informal drunk."I was pretty well oiled that evening"
 
 peninsular
+play out
+    商务/政治领域‌：表示事件逐步展开或谈判进程演变，强调动态性。
+    牛津词典典型例句："The trade tensions will play out over the next fiscal quarter."
+    实际应用例句（结合搜索结果）："The U.S.-EU trade talks may play out differently depending on tariff adjustment timelines"
+
+to come
+    与 "yet" 连用强调未完成的未来事件
+    The crucial phase of negotiations ‌is yet to come‌."（谈判的关键阶段尚未到来）
+    后置定语成分 修饰名词，强调时间延续性和未来性
+    Economic policies ‌for years to come‌ must address climate risks."（未来数年的经济政策需应对气候风险）
 ### war
 arsenal 兵工厂 军械库
 theater of war 战区

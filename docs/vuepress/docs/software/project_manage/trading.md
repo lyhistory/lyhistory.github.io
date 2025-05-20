@@ -78,3 +78,11 @@ Key Differences
 ### 神经网络
 【手把手教你】利用神经网络构建量化交易策略
 https://zhuanlan.zhihu.com/p/459701298
+
+## market maker liquidity provider
+
+Market makers and liquidity providers are essentially the same thing in financial markets. They provide the necessary liquidity to facilitate trading by quoting both a buy and sell price for an asset. This continuous buying and selling ensures there's always a buyer and seller available, making it easier for investors to trade quickly and at a fair price. 
+
+[深入探究主流加密做市商 Jump、Wintermute、Amber Group、B2C2、DRW Trading 的幕后故事](https://www.chaincatcher.com/article/2090237)
+
+[A deep dive into Automated Market Maker Decentralized Exchanges (Uniswap v1)](https://learnweb3.io/lessons/a-deep-dive-into-automated-market-maker-decentralized-exchanges-uniswap-v1/)

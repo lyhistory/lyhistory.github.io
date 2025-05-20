@@ -138,6 +138,18 @@ more so
 
 the reason being is
 
+playbook
+  体育领域：指战术手册/比赛策略（牛津词典例句："The coach studied the playbook before the championship game."）
+  商业领域：指操作指南/策略方案（剑桥词典例句："Our corporate playbook outlines crisis management procedures."）
+  playbook vs manual
+  playbook强调策略性和场景应对（例句："The sales playbook includes objection-handling techniques"）
+  manual侧重技术操作指南（例句："Refer to the user manual for installation steps"）
+  playbook vs handbook
+  playbook具有动态调整特性（例句："We update our marketing playbook quarterly"）
+  handbook多为静态参考（例句："The employee handbook specifies vacation policies"）
+
+play out 走向
+
 ### 精准表达
 
 当时机成熟 when the time will come for that to happen
@@ -386,6 +398,10 @@ substantial substantive significant considerable 大量的 相当可观的
 	+ 抽象/非量化名词‌: effort, attention, influence, risk
 ‌	近义替换‌: 与 substantial 部分重叠，但更侧重“值得考量”
 	The decision faced ‌considerable‌ opposition from stakeholders.该决策遭到利益相关者的强烈反对
+
+努力保持清醒
+we all can push on and stay awake more easily than we can just force ourselves to sleep
+
 ### Analysis 
 误：I think I can't.
 正：I don't think I can.
@@ -773,6 +789,8 @@ http://sbr.com.sg/hr-education/news/over-6-in-10-local-firms-have-mentally-absen
 working remotely www.techrepublic.com/blog/10-things/10-good-reasons-why-working-remotely-makes-sense/
 
 裁员 chop cut 罢工
+
+transit strike 公交罢工
 
 
 ### About family emotion
@@ -1211,7 +1229,7 @@ I was talking on the phone and suddenly got disconnected.
 
 ### About Sports
 archery 射箭运动
-
+seesaw 跷跷板
 
 ### About Science
 催化剂 catalyst
