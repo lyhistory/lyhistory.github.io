@@ -45,6 +45,8 @@ thermal coal
 ### 标点符号 
 http://language.chinadaily.com.cn/trans/2010-09/08/content_11276232.htm
 
+x′is read as ‌x prime‌.
+
 exclamation point
 
 calculus ˈkælkjələs [医] 结石，石，积石，牙垢; [数]运算，演算，微积分（学）;
@@ -81,6 +83,9 @@ permutation and combination 排列组合
 Normal distribution  bell curve
 
 无下限 数学说法 NO Lower Boundary 极其专业 no superlinear lower bound, 中文意思 You are unbelievable son of a bitch
+
+### 函数
+hyperbola 双曲线 x*y=k
 
 ## Physics
 illuminate

@@ -629,6 +629,7 @@ amateur 业余爱好者
 apprentice əˈprentɪs 学徒，徒弟; 新手
 ancillary ænˈsɪləri 助手，随从
 arbiter 仲裁人 主宰者  arbitrator 仲裁人 moderator 调解人
+arbitrageurs 套利者
 attendant
 auditor auditee
 
