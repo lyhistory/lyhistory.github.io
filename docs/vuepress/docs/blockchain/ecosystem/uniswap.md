@@ -1,7 +1,7 @@
 ---
 sidebar: auto
 sidebarDepth: 2
-footer: Author: Ivan Kuznetsov
+footer: Author Ivan Kuznetsov
 ---
 ## Introduction
 The best way to learn something is to teach others. Second best way to learn something is to do it yourself. I decided to combine the two ways and teach myself and you how to program DeFi services on Ethereum (and any other blockchains based on EVM – Ethereum Virtual Machine).
