@@ -28,18 +28,28 @@ pathogen 病原体
 
 ## Chemistry
 acid
+acetone
+    Acetone is essentially nail varnish remover, this is sort of a super strength version
 aluminum
 carbon
+catalyst 催化剂
+ceramic 陶瓷 ceramic tile
+crude oil
+cryogenic 冷冻
+dissolve
+
 nitrogen
+oxidizer 氧化剂
 potassium
-tin
+
 lid
 litmus test paper
 
-dissolve
 
-crude oil
+
+
 thermal coal
+tin
 
 ## Math 
 ### 标点符号 
@@ -88,8 +98,13 @@ Normal distribution  bell curve
 hyperbola 双曲线 x*y=k
 
 ## Physics
+curl off 指物体（尤其是薄片或涂层）因受热、老化或外力作用而‌卷曲、剥离‌。
+    The old paint ‌curled off‌ the wall after years of humidity.（多年的潮湿使旧墙漆‌卷曲剥落‌。）
+    All of the plastic has just curled off and then sticking out of the wreckage, there is just this very thin hint of a wire which I think we should fish out.
 illuminate
 trajectory 轨迹
+stick out 物体‌突出、显露‌于表面，或明显到难以忽视
+    A broken nail was ‌sticking out‌ of the wooden board.（一块木板上‌突出一根‌断裂的钉子。）
 stick up
 min-entropy 最小熵
 tempered glass 钢化玻璃
@@ -700,75 +715,5 @@ be list down for you to choose, ok, submit, we are redirecting to pay-pal mercha
 using sandbox to test, let me key-in test account,
 Now we are succeed, now we can go to member center to check our order
 
-## Politics
-
-appreciation depreciation
-belittle
-bifurcate
-crony 裙带关系
-decency
-derail
-dissenter
-dismantle
-deficit
-echelon
-erratic
-implication
-injunction
-legislation
-judiciary
-offshored
-overreach
-overhear
-non-parties
-peasent
-proverbial
-provoke
-resilient
-resolute
-relegate
-reciprocate
-retaliatory
-succumb
-spook
-ultimatum
-uphold
-vigilant
-viligantes
-Zeitgeist
-
-tip of the spear
-yield back
-
-what's the US reaction to xxx's remarks
-tit to tat
-quote unquote
-coopetition 合作竞争
-omnichannel 全渠道
-convertible debt 可换债务;
-well oiled  (especially of an organization) operating smoothly."the ruling party's well-oiled political machine" 2.informal drunk."I was pretty well oiled that evening"
-
-peninsular
-play out
-    商务/政治领域‌：表示事件逐步展开或谈判进程演变，强调动态性。
-    牛津词典典型例句："The trade tensions will play out over the next fiscal quarter."
-    实际应用例句（结合搜索结果）："The U.S.-EU trade talks may play out differently depending on tariff adjustment timelines"
-
-to come
-    与 "yet" 连用强调未完成的未来事件
-    The crucial phase of negotiations ‌is yet to come‌."（谈判的关键阶段尚未到来）
-    后置定语成分 修饰名词，强调时间延续性和未来性
-    Economic policies ‌for years to come‌ must address climate risks."（未来数年的经济政策需应对气候风险）
-### war
-arsenal 兵工厂 军械库
-theater of war 战区
-missile
-
-surgical strike 外科手术式打击
-
-### religion
-priest 神父
-catholic 天主教
-inshallah 真主保佑
 ## Other
 trifecta traɪ'fektə n. 赌马时，押中某一场前三名的赛马，排名序完全押中; [例句]What would achieving this kind of trifecta really mean? 一举连下三城，究竟意味着什么？

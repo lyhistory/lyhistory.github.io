@@ -44,6 +44,7 @@ Comparative/Superlative: taller, tallest
 
 abundant
 accredited 公认的;可接受的;可信任的;质量合格的
+acoustic 声音的 听觉的
 adhoc created or done for a particular purpose as necessary.
 Adorable 可爱极了
 adequate
@@ -302,6 +303,8 @@ profound
 promptly 及时
 provocative 挑衅的; 刺激性的;
 prevailing 现行的
+	You will be assessed for entry into Singapore as a foreign visitor, subject to prevailing entry requirements. 
+	您将以外国访客身份接受入境新加坡的审核，‌须遵守‌现行入境要求
 pre-emptive 先发制人的；抢先的
 primitive [ˈprɪmətɪv]
 proactive 积极主动的; 前摄的; 主动出击的; 先发制人的
@@ -646,6 +649,15 @@ change agent 变革者
 contractor 契约人 承包商
 coalition ˌkəʊəˈlɪʃn 联合; 同盟; 结合体; （两党或多党） 联合政府
 communiter 通勤者
+Counselor‌
+	服务对象多为个人（如学生、患者）；心理、教育、职业规划等个人发展领域；提供情感支持或指导建议
+	The school counselor helped students choose their majors.
+	She works as a marriage counselor to resolve family conflicts.
+Consultant‌
+	服务对象多为企业/组织；商业、技术、管理等专业领域（如IT、法律）；提供专业解决方案或策略性建议
+	The IT consultant optimized the company’s data security system.
+
+courier 导游
 cynic 愤世嫉俗者，讽世者; 犬儒学派的人
 
 deputy 代表；副手；议员
@@ -793,7 +805,8 @@ dissemination 散播，宣传; 浸染
 doozy
 dysfunction 机能障碍，机能失调
 
-
+echelon 梯队
+	top echelon university 顶尖大学
 efficacy 功效; 效力; 效验; 生产率
 epiphany 顿悟 a moment of sudden and great revelation or realization.
 epoch  ˈi:pɒk 时期; 纪元; 世; 新时代
@@ -875,6 +888,8 @@ maiden 处女; 未婚女子; 断头机; 未得分的投球
 medallion məˈdæliən 大奖章，大勋章; （大奖章形的）圆形图案（饰物）
 mezzanine ˈmezəni:n  （尤指介于一层与二层之间的） 中层楼，（戏院中的）包厢;
 merit 价值，优点; [宗教] （行善得到的） 功德; 功绩，功勋; 荣誉
+	The program aims to ‌evaluate students on their merit‌ in practical projects.
+	该项目旨在通过实践成果‌评估学生的真实能力
 mint 薄荷; 铸币厂;
 morality məˈræləti
 moat 壕沟，护城河;
@@ -1633,6 +1648,9 @@ wrap up 包裹 圆满完成
 abstain əbˈsteɪn弃权; 避免; 戒（尤指酒），戒除;
 accommodate
 	One of the ways of accommodating for wheelchairs at work is to provide parking spaces near entrances for wheelchair users and other persons with disabilities.
+accord
+	Please note that the checkpoint may only ‌accord‌ you clearance as a PR if you have a valid REP with the updated passport details at the point of entry.
+	请注意，只有当你持有更新护照信息的有效再入境许可（REP）时，检查站才会‌**给予‌**你作为永久居民（PR）的通关许可。
 accrue  [əˈkru:] 增加; 获得; （通过自然增长） 产生; （使钱款、债务） 积累
 acquire acquisition
 acquaint acquaintance
@@ -2242,6 +2260,8 @@ mega
 	megabyte megatrends
 mono: monolithic整体的 monopoly垄断的
 mag- magnitude(altitude longitude latitude) magnet magnify magnetic
+	mag-‌：源自 ‌magnetic‌（磁性的）的缩写，常见于技术术语（如 magcard 指磁卡）
+	magstripe 磁卡 （信用卡磁条）
 
 outset 开始，开端;
 outflow 流出
@@ -2591,6 +2611,8 @@ run the gamut 包罗万象
 	顾问的职能范围涵盖从战略规划者到具体执行者的全谱系, run the gamut涵盖全范围
 
 tit for tat 以牙还牙
+
+tried and tested 经过反复验证并被证明有效可靠‌
 
 
 ## Urban Dictionary(SLANG)/lingo

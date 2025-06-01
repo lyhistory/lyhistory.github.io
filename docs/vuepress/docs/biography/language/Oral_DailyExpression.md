@@ -402,6 +402,34 @@ substantial substantive significant considerable 大量的 相当可观的
 努力保持清醒
 we all can push on and stay awake more easily than we can just force ourselves to sleep
 
+收回 retraction
+  The cat's claws have a retraction mechanism.（猫的爪子具有收缩机制。）
+  The journal issued a retraction of the study due to fabricated data.（该期刊因数据造假撤回了这项研究。）
+  The newspaper published a retraction of the false allegations.（报纸刊登了对不实指控的撤回声明。）
+
+克服/超越某障碍、释怀某事 get past that
+  If we can get past that mountain, the village is just ahead.
+  Once you get past that anger, you'll see clearer.
+  The proposal needs to get past the committee first.（提案需先通过委员会审核。）
+
+Beclown 成了笑柄
+  是 ‌现代英语中的非标准动词‌，由前缀 ‌be-‌（表“使成为”）+ ‌clown‌（小丑）构成，意为 ‌使（某人或自己）显得像小丑般滑稽可笑‌。
+  He beclowned himself to lighten the mood.（他故意出洋相活跃气氛。）
+亲眼目睹
+  It happened in my very eyes. ‌“in my very eyes”‌ 中的介词 in 在此处属于非常规搭配，常规表达应为 ‌“before my very eyes”‌（强调“亲眼目睹”）或 ‌“under my eyes”‌（隐含“在某人关注下发生”）
+
+thin hint of‌ ‌极细微的迹象或线索‌，几乎难以察觉。
+  There was only a ‌thin hint of‌ smoke in the distance, barely visible.（远处只有‌一丝若有若无的‌烟雾，几乎看不见。）
+  Her voice carried a ‌thin hint of‌ sadness, though she smiled.（她的声音带着‌一丝几不可察的‌悲伤，尽管她在微笑。）
+
+### 逻辑
+I would not say XXX any more than I would say XXX A 不成立，正如 B 也不成立 → ‌否定 A 的同时，连带否定 B‌
+  I would not say I am more of a scientist ‌any more than‌ I would say I am an artist.（我既非更偏向科学家，亦非自诩艺术家。）
+
+but if you were to say(提出反向假设或反例‌) VS ‌If you said... (直接假设，无虚拟语气)
+  省略主句的虚拟条件句，隐含主句结果（如 it would be incorrect）
+  The dictionary lists "irregardless" as nonstandard, ‌but if you were to say‌ it in formal writing, most editors would correct it.
+
 ### Analysis 
 误：I think I can't.
 正：I don't think I can.
@@ -559,6 +587,11 @@ Freight vs. Cargo‌：
 Freight 强调运输过程及费用，Cargo 侧重货物本身属性；
 ‌Freight vs. Shipping‌：
 Shipping 特指海运，Freight 覆盖多运输模式
+
+subdued demand 需求不旺
+"growing steel demand in india and southeast asia offers some support, but may not fully offset potential moderation in China"
+可译为：
+‌“印度及东南亚地区钢铁需求的持续增长提供了一定支撑，但可能无法完全抵消中国市场需求潜在放缓的影响。”
 ### About banking
 整存整取、零存整取和定活两用 3g.en8848.com.cn/hangye/bank/voadh/146480.html
 
@@ -740,6 +773,7 @@ Change over
 
 The S-course (or S-curve) is a specific maneuver taught during driving training. It involves navigating through a series of curves shaped like the letter "S," often to simulate sharp or winding roads. This type of course is designed to help new drivers practice controlling the vehicle while steering through tight turns, maintaining proper speed, and ensuring smooth handling of the car.
 ### About Education
+trade school 职业技术学校
 diploma mill 文凭工厂
 	Governments worldwide are tightening regulations to crack down on ‌diploma mills‌.（各国政府正加强监管打击野鸡大学。）
 
@@ -761,6 +795,9 @@ http://www.channelnewsasia.com/tv/tvshows/itfigures-s4/mind-the-gap/2307044.html
 
 ivory tower 象牙塔
 旁听 sit in
+
+eduction endowment fundation 教育捐赠基金会
+
 ### About Employ
 
 Retrenchment Benefits 辞退费
@@ -979,6 +1016,7 @@ fuzzy
 整容 plastic surgery
 二手烟 passive smoking secondhand smoke
 
+chronic 慢性病
 
 ### About Life
 
@@ -1157,6 +1195,89 @@ technical and philosophical
 
 ### About politics
 
+appreciation depreciation
+belittle
+bifurcate
+crony 裙带关系
+civil
+decency
+derail
+dissenter
+dismantle
+deficit
+domestic
+
+erratic
+implication
+injunction
+legislation
+judiciary
+offshored
+overreach
+overhear
+non-parties
+peasent
+proverbial
+provoke
+resilient
+resolute
+relegate
+reciprocate
+retaliatory
+succumb
+spook
+ultimatum
+uphold
+vigilant
+viligantes
+Zeitgeist
+
+tip of the spear
+yield back
+
+what's the US reaction to xxx's remarks
+tit to tat
+quote unquote
+coopetition 合作竞争
+omnichannel 全渠道
+convertible debt 可换债务;
+well oiled  (especially of an organization) operating smoothly."the ruling party's well-oiled political machine" 2.informal drunk."I was pretty well oiled that evening"
+
+peninsular
+play out
+    商务/政治领域‌：表示事件逐步展开或谈判进程演变，强调动态性。
+    牛津词典典型例句："The trade tensions will play out over the next fiscal quarter."
+    实际应用例句（结合搜索结果）："The U.S.-EU trade talks may play out differently depending on tariff adjustment timelines"
+
+to come
+    与 "yet" 连用强调未完成的未来事件
+    The crucial phase of negotiations ‌is yet to come‌."（谈判的关键阶段尚未到来）
+    后置定语成分 修饰名词，强调时间延续性和未来性
+    Economic policies ‌for years to come‌ must address climate risks."（未来数年的经济政策需应对气候风险）
+
+optics‌ 舆论形象 公众形象
+  I think the optics here are terrible and the first shoe to drop is going to be gobsmacking realization on the part of a lot of regular Americans that this university is already stitting on 54 billion dollars
+  "我认为此事的公众观感极差，而首当其冲的冲击将是许多普通美国人震惊地意识到——这所大学已经坐拥540亿美元资金
+nationalism
+
+narrative
+
+#### economic
+tax exempt status
+
+#### war
+arsenal 兵工厂 军械库
+theater of war 战区
+missile
+
+surgical strike 外科手术式打击
+wreckage
+
+#### religion
+priest 神父
+catholic 天主教
+inshallah 真主保佑
+
 US CHINA
 discriminate discrimination
 discrete discretion
@@ -1179,6 +1300,7 @@ China plans to tear down walls of gated condos and let public in www.theedgemark
 China’s missile gambit https://www.washingtonpost.com/opinions/chinas-missile-gambit/2016/02/21/fc87c29a-d746-11e5-9823-02b905009f99_story.html?utm_term=.b9331253c0d1
 
 territory region protectorate state  http://english.stackexchange.com/questions/3572/what-are-province-territory-protectorate-state
+
 
 ### About Society
 [sexual harassment](http://www.un.org/womenwatch/osagi/pdf/whatissh.pdf)
@@ -1257,6 +1379,12 @@ Bridging service plays a key role in international communication.
 #### Chinese Culture
 吃春卷‘形象’的谓之咬春
 Spring rolls are synonymous with takeout in the U.S. However, they have a long history as a snack in China, the idea being that you're literally "biting spring"
+
+## About universe
+orbital 轨道的
+maneuver 
+shuttle 航天飞机
+thruster 推进器
 
 ## Presentation
 [Speech/Presentation/Exam jitters, calm down, preparation](http://www.inc.com/larry-kim/15-power-up-tips-to-make-you-a-better-presenter.html)
