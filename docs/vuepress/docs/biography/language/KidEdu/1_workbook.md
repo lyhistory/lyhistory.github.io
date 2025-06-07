@@ -27,6 +27,7 @@ UK/US Focus: Mud kitchens (UK), climbing frames (US).
 
 Playground Rules
 
+shovel dustpan rake
 ### ​​Bathroom/Hygiene Routines​​
 Key: Independence language
 
@@ -88,6 +89,9 @@ e.g., "Private parts = PANTS rule" in UK
 
 身体部位认知​​ (Body Parts Game)
 ​
+belly button 肚脐
+cover the ears 捂耳朵
+blow one's nose 擤鼻涕
 ### ​​​Transportation & Travel​​
 Why taught? Car/bus safety terms ("Buckle up"), travel routines.
 

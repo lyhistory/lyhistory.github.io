@@ -1,17 +1,252 @@
-## Think in English/ How to say in English
-laughing matter 笑料
+## Think in English/ How to say in English 精准表达
 
-bare-bones 表示“极简的”“基础的”或“最低限度的”，描述事物被削减到最必要的部分
-	The proposal provided only the bare bones.
-	We need a bare-bones solution to start.
+Everyday expressions 日常用语
+Catchphrase / Pet phrase 口头禅
+Plain language 大白话
+Common saying / Old adage 俗话/老话
+Polite formulas 客套话
+Buzzword / Slang 网络热词（如“内卷”、“躺平”）
 
-behind the scene/curtains 
-  ‌behind the scenes‌：
-  ‌抽象意义‌：指非公开的决策、准备工作（如电影制作、商业策划）
-  ‌例句‌：The negotiations happened behind the scenes.
-  ‌behind the curtains‌：
-  ‌具体意义‌：描述物体实际位置（如家具摆放）
-  ‌隐喻意义‌：暗示“隐瞒或秘密”（类似 behind the scenes，但更形象化）
+### 骂人的句子
+dumass
+idiot
+hypocrisy 伪善
+猥琐
+
+### 中文=>英文
+搁置 abeyance
+	源自古法语 ‌abeiance‌（期待）→ 拉丁语 ‌batāre‌（张口）6，原意“张大嘴期待”，暗含“等待未来结果”之意
+	The project remains in abeyance until funding is secured.（项目资金到位前暂缓实施）
+	My travel plans are in abeyance due to visa delays.   （签证延误使旅行计划搁置）
+	The throne was in abeyance after the king's death.   （国王逝世后王位虚悬待定）
+坚不可摧、无懈可击 ironclad
+	This guarantee is not ironclad."（这一保证并非铁板钉钉）→
+	An ironclad case against the defendant closed the trial."（针对被告的铁案终结了审判）→ 突出证据的无可辩驳性
+
+少的可怜
+  | 词汇       | 语义侧重                 | 情感色彩          | 典型搭配                            |
+  |----------|----------------------|---------------|---------------------------------|
+  | ‌measly‌ | ‌少得可怜；低贱寒酸‌（强调不足与贬义） | ‌强烈负面‌（轻视/嘲讽） | ~ salary, ~ amount, ~ portion14 |
+  | ‌few‌    | ‌数量稀少‌（可数名词）         | 中性            | ~ people, ~ opportunities2      |
+  | ‌little‌ | ‌量少/微小‌（不可数名词或抽象概念）  | 中性或轻微负面       | ~ time, ~ money, ~ effort2      |
+  | ‌merely‌ | ‌仅仅；不过‌（表程度或范围限制）    | 中性            | ~ a child, ~ decorative2        |
+  He received a measly $10 tip for 8 hours of work.
+
+背景 backdrop 舞台的背景幕布”或“事件的周围陪衬景物 在抽象语境中，名词延伸为“事态或活动的背景”
+	‌物理背景‌："The mountains provide a stunning backdrop to the village, enhancing its charm."（群山为村庄提供了壮丽的背景，增添了其魅力。）
+	‌抽象隐喻‌："The social unrest formed a dark backdrop to the economic reforms."（社会动荡成为经济改革的阴暗背景。）
+	‌UI应用‌："In web design, a backdrop component dims the screen to focus user attention on pop-ups."（在网页设计中，backdrop组件通过调暗屏幕来集中用户对弹窗的注意力。)
+
+撤回
+	A[撤回对象] --> B[消息/邮件] -->|术语| Recall	The CEO demanded to ‌recall‌ the email containing financial data.
+    A --> C[文件/声明] -->|术语| Retract	Please ‌retract‌ the previous version and use the revised contract.
+    A --> D[申请/报价] -->|术语| Withdraw	Buyers can ‌withdraw‌ bids before auction closure
+    A --> E[人员/部队] -->|术语| Pull_back	Troops were ‌pulled back‌ from the conflict zone.
+
+
+全靠你了
+	The client's deadline is tomorrow - it's all up to you now.
+	This pitch will decide our funding - we're counting on you, Sarah.
+	If I take this promotion, it all rests on your shoulders as new director.
+	The village will flood if the dam breaks... you're our only hope.
+	
+租金
+	英式："‌Rent‌ includes utilities" (租金含水电) 
+	美式："‌Rental‌ fee covers water and trash" (租费含水费与垃圾处理)
+	Tenant shall pay ‌advance rent‌ equivalent to two months' fees
+	Outstanding ‌rent‌ must be cleared by the 5th of each month
+
+
+冲向我
+	The gorilla rushed at me, so I escaped on a motorcycle
+	He suddenly lunged toward me with a knife.
+	Seeing me fall, she rushed over to help immediately.
+	In the song lyrics, emotions rush over me like a tidal wave.
+本能反应 
+	The animal's ‌instinct‌ drives it to protect its young.
+	Running away is an ‌instinctive reaction‌ when we meet danger.
+	His anger sparked a ‌visceral reaction‌ to the injustice.
+	Critics dismissed the policy as a ‌knee jerk reaction‌ to public pressure.
+	
+日光浴
+	Tourists enjoy ‌sunbathing‌ on the beach" (游客喜欢在海滩日光浴)
+对于饮料，我没有偏好，平时一般喝。。。
+	I have no particular preference for drinks and usually stick to plain water.
+行为/举止粗鲁
+	Licking fingers at the dinner table is considered ‌uncouth‌ in Western etiquette.(餐桌上舔手指在西方礼仪中属粗俗行为)
+	The passenger's ‌loutish conduct‌ toward flight attendants led to arrest.(乘客对空乘的粗鲁行为导致被捕)
+	We must correct children's ‌ill-mannered habits‌ like nose-picking in public.(必须纠正孩子当众挖鼻孔等无礼习惯)
+执行力
+	Her ‌execution ability‌ shines in crisis management.(她在危机处理中展现卓越执行力) 
+	Demonstrate ‌commitment‌ by delivering ahead of deadline.(提前交付彰显执行力/承诺态度/敬业精神 / 责任担当)
+啤酒肚
+	My gym trainer says planks are effective against beer bellies.(健身教练说平板支撑对消除啤酒肚有效)
+	Excessive beer consumption often leads to visceral fat accumulation, known as beer belly syndrome.(过度饮酒常导致内脏脂肪堆积，称为啤酒肚综合征)
+减肥/瘦身
+	生活口语
+	I need to ‌lose weight‌ before the wedding.(婚礼前需减肥) 
+
+	健身指导
+	High-intensity training effectively ‌burns fat‌.(高强度训练高效燃脂)
+
+	健康管理
+	Scientific ‌weight management‌ requires balanced nutrition.(科学体重管理需均衡营养) 1
+
+	医美广告
+	Non-invasive ‌body contouring‌ services now available.(提供无创身材塑形服务) 
+	
+摆设
+	The interior designer will furnish and decorate the gallery.(室内设计师将布置画廊陈设) 
+	This vase is not just bric-a-brac, but a Ming artifact.(此花瓶非普通摆设，乃明代文物) 
+	The committee became a mere ornament with no real power.(该委员会沦为无实权的摆设) 
+傀儡
+	The occupation forces installed a puppet government.(占领军扶植傀儡政府) 
+	He's merely a figurehead CEO – the board makes all decisions.(他只是挂名CEO，董事会掌实权)
+	The assassin was a stooge of the intelligence agency.(杀手是情报机构的傀儡) 
+发芽开花结果
+	After years of effort, his startup finally ‌came to fruition‌.(多年耕耘后，他的初创公司终见成果)
+	Language learning needs time to ‌blossom‌ and ‌bear fruit‌.(语言学习需时日沉淀方能开花结果)
+	The theory ‌germinated‌ in 2020, ‌bloomed‌ during trials, and ‌bore fruit‌ with a patented invention.(该理论2020年萌芽，试验期间开花，最终以专利发明结果) 
+	Hope ‌sprouts‌ in wasteland, ‌blooms‌ in adversity, ‌fruits‌ in perseverance.(希望于荒原发芽，在逆境开花，借坚持结果) 
+家庭教养
+	 The child shows excellent upbringing
+	 My family upbringing instilled Confucian values of filial piety and social harmony.(我的家庭教养灌输了孝道与社会和谐的儒家价值观)
+	 His negotiation etiquette reflects exceptional breeding.(他的谈判礼仪展现出非凡的家庭教养)
+个人素质
+	True ‌character‌ is revealed when no one is watching.(无人注视时方显真实人品素质) 
+	His ‌moral fiber‌ remained unshaken under pressure.(他的道德素质在压力下依然坚定) 
+
+睡过头
+	My alarm didn't go off and I ‌overslept‌.(闹钟没响，我睡过头了)
+眼不见心不烦
+	 "It's out of sight, out of mind with guys, Rachel!"(《老友记》经典台词：男人就是眼不见心不烦！)
+久别情更深
+	Absence makes the heart grow fonder 
+
+错过机会
+	 If you hesitate, you'll miss the chance to invest.
+	 She missed the opportunity for a promotion.（她错失了晋升机会）
+	 Don't miss out on this limited offer!（别错过这次限时优惠！）
+	 He lost an opportunity to study abroad.（他失去了留学机会）
+贵在坚持
+	 Perseverance is the most important merit for learning.
+	 ‌Success relies on perseverance
+切苹果 切西瓜
+		She sliced the apple thinly for the pie." （她将苹果切成薄片做馅饼）
+		Let's cut up the watermelon for the party." （我们把西瓜切块用于聚会）
+		Dad used a serrated knife to cut the watermelon into wedges.（爸爸用锯齿刀把西瓜切成瓣）
+		Kids practice fine motor skills by slicing toy apples.（儿童通过切玩具苹果练习精细动作）
+我晕了 
+	Doctor, I suddenly felt dizzy with blurred vision.(医生，我突然头晕伴随视力模糊) 
+	Standing up too fast made me lightheaded.(站得太快让我有点头晕) 
+	That math problem made my head spin!(那道数学题让我晕头转向！)
+	‌中文梗‌ → "我晕！"
+‌	英文等效‌ → "Faint!" (网络用语，表震惊) 
+	例句："Faint! You ate the whole cake by yourself?(我晕！你一个人吃了整块蛋糕？)
+我错了
+	忘带钥匙：‌My bad‌ 
+	计算错误：‌I'm wrong‌ 
+	项目失误：‌My mistake‌ 
+	造成损失：‌It's all my fault‌ 
+我记错了 我想错了
+	Sorry, I misremembered the meeting time – it's actually 3 PM.(抱歉记错会议时间，其实是下午3点) 
+	My hypothesis was invalid because I was mistaken about the core data.(因核心数据认知错误，我的假设不成立) 
+	文化梗彩蛋
+‌	  中文‌："我记岔了"
+‌	  英文等效‌："I got my wires crossed" (原指电线交错→记忆混乱)
+想起来了
+  i just remembered
+	1. 会议中突然记起数据： 
+	→ Wait – it comes to me now! The Q3 figure was 18%.
+
+	2. 朋友提醒后想起约定：
+	   → Oh yes! Our dinner at 7!
+
+	3. 考试时灵光一现：
+	   → Got it! The answer is photosynthesis!
+
+赶上了
+	We rushed to the airport and ‌caught the plane‌ just before boarding ended.（我们冲进机场，在登机结束前赶上了飞机）错过飞机：miss the plane
+	追赶任务‌：After working overtime, she caught up with the project deadline.（加班后，她赶上了项目截止日期。）
+	竞赛超越‌：The cyclist overtook his rival in the final lap.（自行车手在最后一圈赶上了对手。）
+	日常努力‌：It takes effort to get up to the class average.（要赶上班级平均水平需努力。）
+	
+（怎样/什么）都行
+	餐厅点单
+	Waiter: Beef or fish for the main course?  
+	You: I'm easy – **anything's fine**! （自然友好）  
+
+	会议决策 
+	Colleague: Shall we present digitally or with prints?  
+	You: **Either way works** for me. （专业中性）  
+
+	朋友争执  
+	Friend: Movie or karaoke tonight? Stop saying 'whatever'!  
+	You: Honestly, **I don't mind** – you pick! （化解冲突）
+
+内幕消息
+	He was accused of trading stocks using ‌inside information‌.
+	Got any ‌inside dope‌ about the merger?(有没有并购的内幕消息？)
+	
+微妙的关联
+	There's a ‌subtle connection‌ between sleep quality and immune function.(睡眠质量与免疫功能存在微妙关联) 
+	The film explores the ‌nuanced relationship‌ between trauma and memory.(影片探讨创伤与记忆间的微妙关联) 
+	They maintained a ‌delicate link‌ despite years of separation.(虽分离多年，他们仍保持着微妙联系) 
+	
+行为冲动 
+	Teenagers often exhibit ‌impulsive behavior‌ due to undeveloped prefrontal cortex.(青少年因前额叶未发育成熟常表现出行为冲动)
+	The robbery was an ‌impulsive action‌ triggered by sudden rage.(此次抢劫是由暴怒引发的冲动行为)
+	I bought this yacht on a whim - total ‌spur-of-the-moment decision‌!(我一时冲动买了这游艇——完全心血来潮的决定)
+送礼物
+	He gave me a birthday present.
+	She gave her dad a watch for Christmas.
+	I sent my sister a present by registered mail.(我用掛號寄了一份禮物給我姐姐。)
+	Dana sent her parents a package by courier.(黛娜用專人快遞寄了一個包裹給她父母。)
+
+刚到
+  She just got here 5 minutes ago.（她5分钟前刚到）
+  She ‌just arrived‌.
+
+千万不能这么做，否则后果不堪设想。
+	You should avoid doing that at all costs, as the result is at best unpredictable.
+	‌直译‌：
+	"你应该不惜一切代价避免那样做，因为结果充其量是不可预测的。"
+
+重要的
+  not trival https://www.zhihu.com/question/20681622
+  not negligible
+
+基于构想
+  Building on the idea earlier on, the researcher proposed a new theory.（基于早先提出的想法，研究者提出了一项新理论。
+  This project, building on the idea earlier on, aims to solve practical issues.（该项目基于之前的构想，旨在解决实际问题。）
+
+当时机成熟 when the time will come for that to happen
+
+亲眼目睹
+  It happened in my very eyes. ‌“in my very eyes”‌ 中的介词 in 在此处属于非常规搭配，常规表达应为 ‌“before my very eyes”‌（强调“亲眼目睹”）或 ‌“under my eyes”‌（隐含“在某人关注下发生”）
+
+努力保持清醒
+ we all can push on and stay awake more easily than we can just force ourselves to sleep
+
+收回 retraction
+  The cat's claws have a retraction mechanism.（猫的爪子具有收缩机制。）
+  The journal issued a retraction of the study due to fabricated data.（该期刊因数据造假撤回了这项研究。）
+  The newspaper published a retraction of the false allegations.（报纸刊登了对不实指控的撤回声明。）
+
+克服/超越某障碍、释怀某事 get past that
+  If we can get past that mountain, the village is just ahead.
+  Once you get past that anger, you'll see clearer.
+  The proposal needs to get past the committee first.（提案需先通过委员会审核。）
+天上掉馅饼
+	She expects everything on a **silver platter**.
+	‌高匹配译法‌：‌"她以为天下好事都会从天上掉馅饼"‌ 
+	if you are given sth on a **silver platter** , you do not have to do much to get it 无须费劲；唾手可得
+终极解决方案／王牌‌（普适）＞ ‌杀手锏‌（对抗场景）＞ ‌万能灵药‌（讽刺语境）
+  The werewolf can only be killed by a silver bullet.（只有银子弹才能杀死狼人）
+  Quantum computing is often hailed as the ‌silver bullet‌ for complex drug discovery, yet its practical application remains limited.（量子计算常被誉为药物研发的‌终极解决方案‌，但其实际应用仍受限）
+  The hypersonic missile serves as our ‌silver bullet‌ against aerial threats.（高超音速导弹是对抗空中威胁的‌杀手锏‌）
+  Politicians promise tax cuts as a ‌silver bullet‌ for economic woes—a dangerously simplistic view.（政客将减税吹嘘为经济困境的‌万能灵药‌，实为危险的简化论）
+  Blockchain was touted as a ‌silver bullet‌ for supply chains, but most projects failed to deliver.（区块链曾被鼓吹为供应链的‌万能灵药‌，但多数项目折戟沉沙）
 占便宜
   ride on you / take credit from you / take advantage from u 分析这是什么语法结构 词性
   ‌(1) ride on you‌
@@ -40,103 +275,194 @@ behind the scene/curtains
   how late does uber run
   at the latest no later then
 
+无限提前 in an advance infinitely
+	The system requires updates ‌in an advance infinitely‌ manner to prevent zero-day attacks."
+	‌译文‌：系统需‌以无限提前的方式‌更新，以防范零日漏洞攻击
+
+帮你看着东西
+	日常口语版本‌
+
+	1.‌ "I'll keep an eye on your stuff."‌
+	（解析：最常用，"stuff"指非贵重物品，语气轻松）
+	场景：朋友在咖啡馆请你临时照看背包
+
+	2.‌ "I can watch your things while you're gone."‌
+	（解析：明确时间范围"while you're gone"，适合较长时间离开）
+
+	‌稍正式场合‌
+	1. ‌"I’ll look after your belongings."‌
+	（解析："belongings"正式指随身物品，适合机场/酒店等场景）
+
+	‌强调责任性‌
+	2. ‌"Don’t worry, I’ll make sure everything stays right here."‌
+	（解析：用"make sure"强化承诺感，安抚对方焦虑情绪）
+
+	‌幽默轻松版‌
+	3. ‌"Your treasures are safe with me!"‌
+	（解析：用"treasures"调侃语气，适合熟人之间开玩笑）
+
+
+误：I think I can't.
+正：I don't think I can.
+提示：汉语里说“我想我不会”的时候，英语里面总是说“我不认为我会”。以后在说类似的英语句子的时候，只要留心，也会习惯英语的表达习惯的。
+
+误：I don't dance well too.
+正：I am not a very good dancer either.
+提示：当我们说不擅长做什么事情的时候，英语里面通常用not good at something，英语的思维甚至直接跳跃到：我不是一个好的舞者。
+
+误：I have something to do tomorrow.
+正：I am tied up all day tomorrow.
+提示：用I have something to do来表示很忙，这也完全是中国式的说法。因为每时每刻我们都有事情要做，躺在那里睡大觉也是事情。所以可以说我很忙，脱不开身：I'm tied up。还有其它的说法：I can't make it at that time. I'd love to, but I can't, I have to stay at home.
+
+误：Would you like to join our party on Friday?
+正：Would you like to come to our party on Friday night?
+提示：join往往是指参加俱乐部或者协会，如：join a health club; join the Communist Party。事实上，常常与party搭配的动词是come 或者go。如go a wild party，或者come to a Christmas Party。
+
+误：I have no experience.
+正：I don't know much about that.
+提示：I have no experience这句话听起来古里古怪，因为只需要说那方面我懂得不多，或者这方面我不在行，就行了。I am not really an expert in this area。
+
+误：Will you be going back home for the Spring Festival? --Of course!
+正：--Sure. / Certainly.
+提示：以英语为母语的人使用of course的频率要比中国的学生低得多，只有在回答一些众所周知的问题时才说of course。因为of course后面隐含的一句话是“我当然知道啦！难道我是一个傻瓜吗？”因此，of course带有挑衅的意味。在交谈时，用sure或certainly效果会好得多。同时，of course not也具挑衅的意味。正常情况下语气温和的说法是certainly not。
+
+误：The price is very suitable for me.
+正：The price is right.
+提示：suitable(合适的、相配的)最常见的用法是以否定的形式出现在告示或通知上，如：下列节目儿童不宜。The following programme is not suitable for children.
+
+### 英文表达
+a lean team 精干的团队
+
+all the more reasons for patience 所以才更需要耐心
+all-inclusive 包括一切的; 包罗万象; 兼容并包; 无所不包
+
+[Analysis Paralysis](http://blog.sina.com.cn/s/blog_487ddcc00100o9lk.html) 因过度分析导致的决策或行动停滞
+	In software development, ‌analysis paralysis‌ often occurs when developers over-optimize code structure.（软件开发中，开发者对代码结构过度优化时常发生分析瘫痪。
+
+bare-bones 表示“极简的”“基础的”或“最低限度的”，描述事物被削减到最必要的部分
+	The proposal provided only the bare bones.
+	We need a bare-bones solution to start.
+behind the scene/curtains 
+  ‌behind the scenes‌：
+  ‌抽象意义‌：指非公开的决策、准备工作（如电影制作、商业策划）
+  ‌例句‌：The negotiations happened behind the scenes.
+  ‌behind the curtains‌：
+  ‌具体意义‌：描述物体实际位置（如家具摆放）
+  ‌隐喻意义‌：暗示“隐瞒或秘密”（类似 behind the scenes，但更形象化）
+  
+Beclown 成了笑柄
+  是 ‌现代英语中的非标准动词‌，由前缀 ‌be-‌（表“使成为”）+ ‌clown‌（小丑）构成，意为 ‌使（某人或自己）显得像小丑般滑稽可笑‌。
+  He beclowned himself to lighten the mood.（他故意出洋相活跃气氛。）
+[best of breed](http://www.pcmag.com/encyclopedia/term/38561/best-of-breed) 某一类别/品种最好的
+	This software is considered ‌best of breed‌ in data analytics.（该软件被视为数据分析领域的‌佼佼者‌。）
+by-product 副产品; 副作用; 意外结果
+broadly similar 大致相似
+broad context大环境
+breath taking vs mind blowing
+buy-out 全面收购，全部买下市场产品
+buy-in 买进，补进（为了接管某公司买进其控制股权）
+business imperative 业务需要
+
+competitive edge 竞争优势
+capability assessment 能力评估
+clear cut 明确的
+	The team faced a ‌clear-cut‌ decision between expanding the project or terminating it.（团队面临一个‌明确的‌抉择：扩展项目或终止项目。）
+	The boundaries of the nature reserve are not always ‌clear-cut‌.（自然保护区的边界并非总是‌界限分明‌的。）
+
+course-correct 
+  动态纠偏，保持目标一致性 course：名词，原义为“路线/航道”，此处引申为“既定方向或目标”
+  We need to course-correct before the deadline.（需在截止前调整）1。
+  His role involves course-correcting marketing campaigns.（他的职责包括修正营销活动）
+
+comment out 注释掉
+
+Dying of Curiosity 好奇的要死
+double guess 反复纠结 vs second-guess 事后质疑‌
+  He double guessed every step (对每个步骤反复纠结)
+  She second-guessed the CEO’s strategy (事后质疑CEO策略)
+
+don't mess me up 别打乱我
+	This project is critical. ‌Don't mess me up‌ with last-minute changes!
+
+earliest opportunity 意思是“最早的机会”或“尽早的机会”。 这个短语通常用于表示在条件允许的情况下，尽快采取行动或做出反应。
+	We will reply to your request at the earliest opportunity.
+
+either in alphabetical or chronological order 字母顺序或时间顺序‌
+
+feet of clay 受景仰受尊敬的人）品格上的缺陷（或弱点）;泥足（比喻站不住脚的事物）
+fractional reserve 部分储备
+full-fledged 羽毛生齐的; 经过充分训练的，成熟的; VS matured
+full of shit / bullshit 
+
+get your butt in here 快过来
+gossip ˈgɒsɪp 流言蜚语，谣言; 爱讲闲话的人; 谈话，闲话; 关系亲密的伙伴
+  gossip network
+grace period
+
+harsh environment 网络 恶劣环境; 严酷环境
+handover point 交接点
 heavy lifting
 	‌字面意义‌：指“繁重的搬运工作”或“费力地举起”。
 	‌引申意义‌：比喻“承担主要责任”或“完成困难任务”
 	‌常见搭配‌：
 	do the heavy lifting（承担主要工作）
 	heavy lifting equipment（重型起重设备）
-showstopper 因特别精彩而被掌声打断精彩的
+home grown 土生土长的
+human intervention 人为干预
 
-workhorse
-  指“埋头苦干的人”“老黄牛”或“耐用的机器”，强调可靠性与持久性8。
-  例：He is the workhorse of the team.（他是团队的骨干。
-treat with caution 谨慎对待
+in infancy 在早期阶段
+in a nutshell 简言之 一言以蔽之
+in the sense of 从…意义上说;
+in the first instance
+	Use ‌in the first instance‌ instead of “firstly” to sound more formal.
+	In the first instance, please contact the customer service team directly.（‌首先‌，请直接联系客服团队。）
+	The case will be heard ‌in the first instance‌ by the district court.（本案将‌由地方法院进行初审‌。）
 
-You should avoid doing that at all costs, as the result is at best unpredictable.
-‌直译‌：
-"你应该不惜一切代价避免那样做，因为结果充其量是不可预测的。"
-‌意译优化‌：
-"你无论如何都要避免这样做，因为结果难以预料，甚至可能更糟。"
-"千万不能这么做，否则后果不堪设想。"
+inherent drawbacks 固有缺点
 
-帮你看着东西
+laughing matter 笑料
+leaps and bounds 跳跃
+let us in on it 让我们谈谈
+Lead time 订货至交货的时间 Lead time to get hardware
+long drawn 长期以来 旷日持久
+low hang fruit “容易实现的目标”‌或‌“唾手可得的机会”
 
-日常口语版本‌
+lose sight of
+	例句 1（字面意义：不再看见）‌
+	We ‌lost sight of‌ the ship in the storm.（暴风雨中我们‌看不到‌那艘船了。）
+	例句 2（引申意义：忽略）‌
+	Don’t ‌lose sight of‌ your original goal.（不要‌忘记‌你的最初目标。）
+	‌例句 3（科技语境）‌
+	Light pollution causes us to ‌lose sight of‌ our true place in the universe.（光污染让我们‌看不到‌在宇宙中的真实位置。）
 
-1.‌ "I'll keep an eye on your stuff."‌
-（解析：最常用，"stuff"指非贵重物品，语气轻松）
-场景：朋友在咖啡馆请你临时照看背包
+marshal resources 韬光养晦
 
-2.‌ "I can watch your things while you're gone."‌
-（解析：明确时间范围"while you're gone"，适合较长时间离开）
+name squatting [squatting 动物一样蹲下( squat的现在分词 ); 非法擅自占用; 为获得其所有权]
+notable amount of energy 相当多的×××
+novel theory 原理
+notice period
 
-‌稍正式场合‌
-3. ‌"I’ll look after your belongings."‌
-（解析："belongings"正式指随身物品，适合机场/酒店等场景）
+non-stop = forever
+	“不停歇的”‌ 或 ‌“不间断地”‌。
+	‌常见用法‌：
+	交通：non-stop train（直达列车）
+	工作：work non-stop（连续工作）
+	娱乐：non-stop music（不间断音乐）
+	She took a non-stop flight to Tokyo.（她搭乘了直飞东京的航班。）
+	The machine runs non-stop for 24 hours.（这台机器24小时不间断运行。）
 
-‌强调责任性‌
-4. ‌"Don’t worry, I’ll make sure everything stays right here."‌
-（解析：用"make sure"强化承诺感，安抚对方焦虑情绪）
+ongoing cost 持续的成本 an onging basis 持续的基础上 on an 'as-needed-basis'
+on-premise 部署; 预置; 本机端; 预置的; 部署的
+out of box 开箱即用
+off the shelf 现货供应
+open ended 完全开放
 
-‌幽默轻松版‌
-5. ‌"Your treasures are safe with me!"‌
-（解析：用"treasures"调侃语气，适合熟人之间开玩笑）
+Particular attractive 尤其吸引人的
+	The design is particularly attractive to young audiences.（该设计对年轻观众尤其有吸引力）
 
-送给我 http://blogs.teachersammy.com/Blogs/entry/common-English-error-he-sent-me-a-present#.Vp4Q-VJOEbE
-
-错过机会
-贵在坚持
-
-对于饮料，我没有偏好，平时一般喝。。。
-
-想起来了
-赶上了
-（怎样/什么）都行
-都可以/随便
-内幕消息
-微妙的关联
-行为冲动 act impluse
-睡过头
-眼不见心不烦
-家庭教养
-个人素质
-行为/举止粗鲁
-执行力
-帮忙看下东西/行李
-
-减肥/瘦身
-
-摆设
-
-傀儡
-发芽开花结果
-
-撤回
-
-啤酒肚
-
-全靠你了
-
-租金
-房屋设施: eatery
-
-冲向我http://www.hujiang.com/ciku/53286_-103160306/
-我晕了 http://news.iciba.com/study/oral/1568075.shtml
-我错了
-我记错了
-我想错了
-我想起来了
-
-
-但凡 if ** some if ** any
-本能反应 http://www.ichacha.net/%E6%9C%AC%E8%83%BD%E5%8F%8D%E5%BA%94.html
-日光浴
-
-Be that as it may
-more so
-
-the reason being is
+Personal matters 私事
+  www.wikihow.com/Separate-Your-Professional-and-Private-Life
+  Employees can discuss ‌personal matters‌ during breaks.
 
 playbook
   体育领域：指战术手册/比赛策略（牛津词典例句："The coach studied the playbook before the championship game."）
@@ -150,34 +476,142 @@ playbook
 
 play out 走向
 
-### 精准表达
+prescriptive definition 规范性定义
+	ISO standards provide ‌prescriptive definitions‌ for technical terms to ensure global consistency.（ISO标准为技术术语提供规范性定义以确保全球一致性。）
 
-当时机成熟 when the time will come for that to happen
+Proven effective
+	The vaccine is proven effective against variants.（该疫苗被证实对变异株有效）
+	They adopted a proven effective strategy.（他们采用了已验证有效的策略）
 
-[Analysis Paralysis](http://blog.sina.com.cn/s/blog_487ddcc00100o9lk.html) 因过度分析导致的决策或行动停滞
-	In software development, ‌analysis paralysis‌ often occurs when developers over-optimize code structure.（软件开发中，开发者对代码结构过度优化时常发生分析瘫痪。
+readily available 随时可用
+regulated environment 监管环境
+reinvent the wheel 重复造轮子
 
-clear cut 明确的
-	The team faced a ‌clear-cut‌ decision between expanding the project or terminating it.（团队面临一个‌明确的‌抉择：扩展项目或终止项目。）
-	The boundaries of the nature reserve are not always ‌clear-cut‌.（自然保护区的边界并非总是‌界限分明‌的。）
+rival VS peer competitor vs adversary vs contender 竞争对手 
+  contestant‌ 参赛者‌（多指竞赛中的个体）
+    She is a contestant in the singing competition.（强调“参与竞争”而非敌对）
+  opponent‌ 直接对抗的对手‌（尤指体育、辩论中的对立方）
+    She had an advantage over her opponent.（临时性对抗，无长期敌意）
+  antagonist‌ 正式对手‌（强调对立立场，如文学、法律）
+    The antagonist in the novel represents social injustice.（结构性对立角色）
+  rival‌ 商业、体育、学术竞争；‌中性偏负面‌（隐含敌对性）
+  ‌peer competitor 商业分析、战略评估；‌中性‌（侧重客观描述竞争格局）
+  adversary‌ 法律、政治、军事；‌负面‌（暗示需克服的障碍或威胁）
+  contender 指 ‌“有实力争夺目标（如地位、奖项）的竞争者”‌，强调竞争潜力与资格，而非既定对手关系 在贸易语境中隐含 ‌“新兴挑战者”‌ 属性
 
-compare and contrast
-	‌Compare‌：侧重寻找共同点（如 Compare the themes of two novels）。
-	‌Contrast‌：侧重强调差异（如 Contrast their writing styles）。
-	‌联合使用‌：全面分析异同（如 Compare and contrast these historical events）
+ramp up 上升; 提升;
+reject inference 信用评分中的拒绝推断
+running repair 日常修理
+rubber stamping 常规刻板批准 approve automatically without proper consideration.
 
-non-stop = forever
-	“不停歇的”‌ 或 ‌“不间断地”‌。
-	‌常见用法‌：
-	交通：non-stop train（直达列车）
-	工作：work non-stop（连续工作）
-	娱乐：non-stop music（不间断音乐）
-	She took a non-stop flight to Tokyo.（她搭乘了直飞东京的航班。）
-	The machine runs non-stop for 24 hours.（这台机器24小时不间断运行。）
+showstopper 因特别精彩而被掌声打断精彩的
 
-基于构想
-  Building on the idea earlier on, the researcher proposed a new theory.（基于早先提出的想法，研究者提出了一项新理论。
-  This project, building on the idea earlier on, aims to solve practical issues.（该项目基于之前的构想，旨在解决实际问题。）
+sole purpose/sole argument
+  sole purpose = “唯一目的”（排除其他可能性）
+  sole argument = “唯一论点”（无其他支持理由）
+  ‌常见语境‌：
+  ‌法律/学术‌：用于强调核心主张（例：His sole argument was based on precedent.）。
+  ‌商业/目标描述‌：突出排他性（例：The sole purpose of this meeting is decision-making.
+
+suit yourself 随你便！
+
+subsequent vs consequent 
+	subsequent
+	时间/顺序上紧随其后‌（强调“后来发生”）
+	The policy was revised in ‌subsequent‌ years.（政策在后续几年被修订）
+	consequent‌
+	因果关系的必然结果‌（强调“由前因引发”）
+	The flooding was ‌consequent‌ on the heavy rainfall.（洪水是暴雨的必然结果）
+	
+strict vs stern vs severe  vs austere
+  strict‌ ‌规则符合度 strict quality control‌ procedures (严格的质量控制流程)
+  stern‌ 权威威慑性 stern‌ warning
+  severe‌ 客观严重性 severe penalties‌ for tax evasion (逃税的严厉惩处) 
+  austere‌ ‌朴素克制感‌	生活方式、艺术风格、经济政策 an ‌austere Buddhist monastery‌ (简朴的佛教寺院) 
+
+substantial substantive significant considerable 大量的 相当可观的
+	substantial
+	‌物理量或程度大‌（具体可量化）
+	‌重要性显著‌（强调实质价值或影响）
+	+ 具体名词‌: budget, evidence, progress, damage
+	反义对比‌: insubstantial（非实质的
+	The project requires a ‌substantial‌ investment of time and resources.（项目需投入大量时间和资源 
+
+	Substantive‌
+	实质性的‌（内容充实、非形式化）
+‌	  法律/政治术语中‌：涉及核心权利或规则
+	+ 抽象名词‌: rights, issues, changes, negotiations
+	‌辨析‌: 与 procedural（程序性的）对立
+	The treaty includes ‌substantive‌ provisions on human rights.（条约包含人权相关的实质性条款
+
+	Significant‌
+	统计学/科学上‌：显著性（非随机结果）
+‌	  广义重要性‌（影响深远或值得注意）
+	+ 数据/结论‌: difference, result, impact, achievement
+‌	辨析‌: 强调“有意义的”而非单纯“量大”
+	The study found a ‌significant‌ correlation between diet and health.（研究发现饮食与健康显著相关
+	Significant Benefit 显著的好处
+
+	Considerable‌
+	程度或数量大‌（侧重主观评估的可观性）
+‌	隐含重要性或影响力‌（非严格量化）
+	+ 抽象/非量化名词‌: effort, attention, influence, risk
+‌	近义替换‌: 与 substantial 部分重叠，但更侧重“值得考量”
+	The decision faced ‌considerable‌ opposition from stakeholders.该决策遭到利益相关者的强烈反对
+
+Tamper Evidence  窜改证据;
+tap on 轻轻敲击（某物的表面）， 轻击…（某部位）
+
+tied up 忙得不可开交的；不得闲的；正在使用的;
+thought through 仔细思考
+thin hint of‌ ‌极细微的迹象或线索‌，几乎难以察觉。
+  There was only a ‌thin hint of‌ smoke in the distance, barely visible.（远处只有‌一丝若有若无的‌烟雾，几乎看不见。）
+  Her voice carried a ‌thin hint of‌ sadness, though she smiled.（她的声音带着‌一丝几不可察的‌悲伤，尽管她在微笑。）
+
+treat with caution 谨慎对待
+tread with caution 步步小心
+tourist attraction 游览胜地
+turnover rate
+  A high ‌inventory turnover rate‌ indicates efficient supply chain management.  （高‌库存周转率‌反映高效的供应链管理。）
+  The company’s annual ‌employee turnover rate‌ reached 15%, prompting a review of retention policies.（公司年度‌员工离职率‌达15%，促使重新评估留任政策。）
+  The stock’s ‌turnover rate‌ surged to 200%, signaling intense market speculation.（该股票‌换手率‌飙升至200%，显示市场投机活跃。）
+
+spelling the demise 宣告死亡
+
+ultimate objective
+unguarded moment 不经意的瞬间 
+  The photographers managed to capture Jane in an unguarded moment.
+[Use your best judgment ](http://chicanaontheedge.blogspot.sg/2012/09/use-your-best-judgment.html)  按你最好的判断来吧
+
+vetted for use 审查过可以使用
+
+way less than the odds 远远小的概率
+whip up 激发，激励; 匆匆做; 当场完成; whip 鞭打，抽打; 严厉地折磨、责打或责备，迫使; 把…打起泡沫;
+Wider spectrum 更广泛的范围或多样性，强调事物涉及面的扩展或层次的丰富
+	Scientists study the wider spectrum of electromagnetic waves.（科学家研究更广的电磁波谱）
+	A wider-spectrum analysis is required.（需进行更全面的分析）
+workhorse
+  指“埋头苦干的人”“老黄牛”或“耐用的机器”，强调可靠性与持久性8。
+  例：He is the workhorse of the team.（他是团队的骨干。
+
+### 逻辑
+whereby
+	主要译为“‌凭此‌”、“‌借以‌”、“‌由此‌”或“‌从而‌”，强调通过某种方式或手段实现后续动作
+	在正式文本中可译为“‌据此‌”或“‌靠此‌”，突出方法或工具的关联性
+	They created a system ‌whereby‌ expenses are tracked automatically.（他们建立了一个系统，‌凭此‌费用可自动追踪。）
+	The company adopted a policy ‌whereby‌ remote work is permitted twice weekly.（公司采纳了一项政策，‌凭此‌允许每周远程工作两次。）
+	The treaty includes a provision ‌whereby‌ disputes are resolved via arbitration.（条约包含一项条款，‌据此‌争议通过仲裁解决。）
+	The emergency patch only ‌resolves‌ the issue ‌whereby‌ your operations are impacted.该应急补丁仅解决影响业务运行的根本故障问题。
+
+more so 更加强调前文所述状态‌（so 为关键替代词）
+  基础形式：[A is true], and [B is] more so → B 比 A 更符合该描述；
+  She is talented, and he is ‌more so‌.→ ‌so‌ 替代 talented（他‌更有才华‌
+  强化形式：never/all the more so than... → 突出极端比较
+  Central Park is a refuge, ‌never more so than‌ during the pandemic.（中央公园是避难所，‌疫情期间尤其如此‌）
+Be that as it may 即便如此；尽管如此；就算那样
+  用于承认前文事实，同时引出与前文构成转折或对比的后文，强调后者的重要性不受前者影响
+  I know he's tried hard; ‌be that as it may‌, his work is still unsatisfactory.（我知道他很努力；‌即便如此‌，他的工作仍不令人满意。）
+  The risks are real; ‌be that as it may‌, innovation cannot stop.（风险确实存在；‌尽管如此‌，创新不能停止。）
 
 as in/such as/for example/like
   ▎**精准度排序** (由高到低)：  
@@ -203,326 +637,87 @@ as in/such as/for example/like
   正确：
   I love "rose" ‌as in‌ the flower, not the past tense of "rise".
 
-course-correct 
-  动态纠偏，保持目标一致性 course：名词，原义为“路线/航道”，此处引申为“既定方向或目标”
-  We need to course-correct before the deadline.（需在截止前调整）1。
-  His role involves course-correcting marketing campaigns.（他的职责包括修正营销活动）
+but if you were to say(提出反向假设或反例‌) VS ‌If you said... (直接假设，无虚拟语气)
+  省略主句的虚拟条件句，隐含主句结果（如 it would be incorrect）
+  The dictionary lists "irregardless" as nonstandard, ‌but if you were to say‌ it in formal writing, most editors would correct it.
 
-earliest opportunity 意思是“最早的机会”或“尽早的机会”。 这个短语通常用于表示在条件允许的情况下，尽快采取行动或做出反应。
-	We will reply to your request at the earliest opportunity.
+compare and contrast
+	‌Compare‌：侧重寻找共同点（如 Compare the themes of two novels）。
+	‌Contrast‌：侧重强调差异（如 Contrast their writing styles）。
+	‌联合使用‌：全面分析异同（如 Compare and contrast these historical events）
 
-grace period
+complementary not contradictory 互补而非矛盾
+	The two theories are ‌complementary, not contradictory‌, providing a holistic framework.（这两个理论互补而非矛盾，构成了一个整体框架。）
 
-inherent drawbacks 固有缺点
+I would not say XXX any more than I would say XXX A 不成立，正如 B 也不成立 → ‌否定 A 的同时，连带否定 B‌
+  I would not say I am more of a scientist ‌any more than‌ I would say I am an artist.（我既非更偏向科学家，亦非自诩艺术家。）
 
-notice period
-
-Particular attractive 尤其吸引人的
-	The design is particularly attractive to young audiences.（该设计对年轻观众尤其有吸引力）
-
-Proven effective
-	The vaccine is proven effective against variants.（该疫苗被证实对变异株有效）
-	They adopted a proven effective strategy.（他们采用了已验证有效的策略）
-
-
-readily available 随时可用
-
-sole purpose/sole argument
-  sole purpose = “唯一目的”（排除其他可能性）
-  sole argument = “唯一论点”（无其他支持理由）
-  ‌常见语境‌：
-  ‌法律/学术‌：用于强调核心主张（例：His sole argument was based on precedent.）。
-  ‌商业/目标描述‌：突出排他性（例：The sole purpose of this meeting is decision-making.
-suit yourself 随你便！
-
-tread with caution 步步小心
-
-ultimate objective
-
-unguarded moment 不经意的瞬间 
-  The photographers managed to capture Jane in an unguarded moment.
-Wider spectrum 更广泛的范围或多样性，强调事物涉及面的扩展或层次的丰富
-	Scientists study the wider spectrum of electromagnetic waves.（科学家研究更广的电磁波谱）
-	A wider-spectrum analysis is required.（需进行更全面的分析）
 
 It is later established that ....
   用于正式语境（如学术、法律、新闻报道），强调信息的权威性或事后验证性24。
   例：It is later established that the accident was caused by human error.
   （事后证实，事故是人为失误所致。
 
-tied up 忙得不可开交的；不得闲的；正在使用的;
-tap on 轻轻敲击（某物的表面）， 轻击…（某部位）
-
-feet of clay 受景仰受尊敬的人）品格上的缺陷（或弱点）;泥足（比喻站不住脚的事物）
-whip up 激发，激励; 匆匆做; 当场完成; whip 鞭打，抽打; 严厉地折磨、责打或责备，迫使; 把…打起泡沫;
-comment out 注释掉
-broadly similar 大致相似
-vetted for use 审查过可以使用
-harsh environment 网络 恶劣环境; 严酷环境
-gossip ˈgɒsɪp 流言蜚语，谣言; 爱讲闲话的人; 谈话，闲话; 关系亲密的伙伴
-  gossip network
-ramp up 上升; 提升;
-by-product 副产品; 副作用; 意外结果
-name squatting [squatting 动物一样蹲下( squat的现在分词 ); 非法擅自占用; 为获得其所有权]
-重要的
-  not trival https://www.zhihu.com/question/20681622
-  not negligible
-in infancy 在早期阶段
-notable amount of energy 相当多的×××
-full-fledged 羽毛生齐的; 经过充分训练的，成熟的; VS matured
-in a nutshell 简言之 一言以蔽之
-out of box 开箱即用
-off the shelf 现货供应
-open ended 完全开放
-if you are given sth on a silver platter , you do not have to do much to get it 无须费劲；唾手可得
-in the sense of 从…意义上说;
-all the more reasons for patience 所以才更需要耐心
-marshal resources 韬光养晦
-Tamper Evidence  窜改证据;
-broad context大环境
-way less than the odds 远远小的概率
-fractional reserve 部分储备
-reject inference 信用评分中的拒绝推断
-leaps and bounds 跳跃
-novel theory 原理
-long drawn 长期以来 旷日持久
-buy-out 全面收购，全部买下市场产品
-buy-in 买进，补进（为了接管某公司买进其控制股权）
-tourist attraction 游览胜地
-human intervention 人为干预
-competitive edge 竞争优势
-capability assessment 能力评估
-business imperative 业务需要
-spelling the demise 宣告死亡
-all-inclusive 包括一切的; 包罗万象; 兼容并包; 无所不包
-Dying of Curiosity 好奇的要死
-get your butt in here 快过来
-let us in on it 让我们谈谈
-on-premise 部署; 预置; 本机端; 预置的; 部署的
-Lead time 订货至交货的时间 Lead time to get hardware
-thought through 仔细思考
-regulated environment 监管环境
-a lean team 精干的团队
-home grown 土生土长的
-running repair 日常修理
-handover point 交接点
-ongoing cost 持续的成本 an onging basis 持续的基础上 on an 'as-needed-basis'
-rubber stamping 常规刻板批准 approve automatically without proper consideration.
-
-lose sight of
-	例句 1（字面意义：不再看见）‌
-	We ‌lost sight of‌ the ship in the storm.（暴风雨中我们‌看不到‌那艘船了。）
-	例句 2（引申意义：忽略）‌
-	Don’t ‌lose sight of‌ your original goal.（不要‌忘记‌你的最初目标。）
-	‌例句 3（科技语境）‌
-	Light pollution causes us to ‌lose sight of‌ our true place in the universe.（光污染让我们‌看不到‌在宇宙中的真实位置。）
-
-[best of breed](http://www.pcmag.com/encyclopedia/term/38561/best-of-breed) 某一类别/品种最好的
-	This software is considered ‌best of breed‌ in data analytics.（该软件被视为数据分析领域的‌佼佼者‌。）
-in the first instance
-	Use ‌in the first instance‌ instead of “firstly” to sound more formal.
-	In the first instance, please contact the customer service team directly.（‌首先‌，请直接联系客服团队。）
-	The case will be heard ‌in the first instance‌ by the district court.（本案将‌由地方法院进行初审‌。）
-
-reinvent the wheel 重复造轮子
-low hang fruit “容易实现的目标”‌或‌“唾手可得的机会”
-
-turnover rate
-  A high ‌inventory turnover rate‌ indicates efficient supply chain management.  （高‌库存周转率‌反映高效的供应链管理。）
-  The company’s annual ‌employee turnover rate‌ reached 15%, prompting a review of retention policies.（公司年度‌员工离职率‌达15%，促使重新评估留任政策。）
-  The stock’s ‌turnover rate‌ surged to 200%, signaling intense market speculation.（该股票‌换手率‌飙升至200%，显示市场投机活跃。）
-
-full of shit / bullshit 
-
-[Use your best judgment ](http://chicanaontheedge.blogspot.sg/2012/09/use-your-best-judgment.html)  按你最好的判断来吧
-
-don't mess me up 别打乱我
-	This project is critical. ‌Don't mess me up‌ with last-minute changes!
-
-mind blowing
-breath taking
-
-Significant Benefit 显著的好处
-touch points 分析这是什么语法结构 词性,根据权威来源给例句
-
-prescriptive definition 规范性定义
-	ISO standards provide ‌prescriptive definitions‌ for technical terms to ensure global consistency.（ISO标准为技术术语提供规范性定义以确保全球一致性。）
-
-complementary not contradictory 互补而非矛盾
-	The two theories are ‌complementary, not contradictory‌, providing a holistic framework.（这两个理论互补而非矛盾，构成了一个整体框架。）
-
-the more time you put in hardwork, the more skills you acquire
-
-either in alphabetical or chronological order 字母顺序或时间顺序‌
-
-Personal matters 私事
-  www.wikihow.com/Separate-Your-Professional-and-Private-Life
-  Employees can discuss ‌personal matters‌ during breaks.
-
 or lack thereof  补充说明前文现象的缺失可能性（即“或其缺失”）通过连词 or 引导否定补充，是英语中高效表达现象“二元性”的典型结构
   The project's success, ‌or lack thereof‌, depends on funding.（项目的成功‌或其失败‌取决于资金。）
 
-subsequent vs consequent 
-	subsequent
-	时间/顺序上紧随其后‌（强调“后来发生”）
-	The policy was revised in ‌subsequent‌ years.（政策在后续几年被修订）
-	consequent‌
-	因果关系的必然结果‌（强调“由前因引发”）
-	The flooding was ‌consequent‌ on the heavy rainfall.（洪水是暴雨的必然结果）
-	
-substantial substantive significant considerable 大量的 相当可观的
-	substantial
-	‌物理量或程度大‌（具体可量化）
-	‌重要性显著‌（强调实质价值或影响）
-	+ 具体名词‌: budget, evidence, progress, damage
-	反义对比‌: insubstantial（非实质的
-	The project requires a ‌substantial‌ investment of time and resources.（项目需投入大量时间和资源 
+the more time you put in hardwork, the more skills you acquire
 
-	Substantive‌
-	实质性的‌（内容充实、非形式化）
-‌	法律/政治术语中‌：涉及核心权利或规则
-	+ 抽象名词‌: rights, issues, changes, negotiations
-	‌辨析‌: 与 procedural（程序性的）对立
-	The treaty includes ‌substantive‌ provisions on human rights.（条约包含人权相关的实质性条款
+### 文化习惯 
 
-	Significant‌
-	统计学/科学上‌：显著性（非随机结果）
-‌	广义重要性‌（影响深远或值得注意）
-	+ 数据/结论‌: difference, result, impact, achievement
-‌	辨析‌: 强调“有意义的”而非单纯“量大”
-	The study found a ‌significant‌ correlation between diet and health.（研究发现饮食与健康显著相关
-	
-	Considerable‌
-	程度或数量大‌（侧重主观评估的可观性）
-‌	隐含重要性或影响力‌（非严格量化）
-	+ 抽象/非量化名词‌: effort, attention, influence, risk
-‌	近义替换‌: 与 substantial 部分重叠，但更侧重“值得考量”
-	The decision faced ‌considerable‌ opposition from stakeholders.该决策遭到利益相关者的强烈反对
+#### I would appreciate it if you …
+If you want to be fluent in your usage, and you are willing to come off as formal and a bit peremptory and demanding, you would say, “I would appreciate it if you …” But unless you want to convey impatient formality, you would probably want to say instead, “I would be grateful if you …”
 
-努力保持清醒
-we all can push on and stay awake more easily than we can just force ourselves to sleep
+You would probably never in any circumstance say "I will appreciate if you.." or "I would appreciate if you.."
 
-收回 retraction
-  The cat's claws have a retraction mechanism.（猫的爪子具有收缩机制。）
-  The journal issued a retraction of the study due to fabricated data.（该期刊因数据造假撤回了这项研究。）
-  The newspaper published a retraction of the false allegations.（报纸刊登了对不实指控的撤回声明。）
+And you would also probably never even say "I will appreciate it if you.." This is just not the way English speakers speak. One reason you wouldn’t say “I will appreciate it” (besides the fact that it would sound impatient) is that you need to use the subjunctive “would” when you are using “if,” instead of the predictive “will.” You are only predicting that if a hypothetical event occurs, appreciation will occur. For instance: You impatiently say, “I would appreciate it if you would pay your rent.” You are predicting (or sarcastically claiming to predict) that if the rent is paid, you will be appreciative.
 
-克服/超越某障碍、释怀某事 get past that
-  If we can get past that mountain, the village is just ahead.
-  Once you get past that anger, you'll see clearer.
-  The proposal needs to get past the committee first.（提案需先通过委员会审核。）
+#### what happens vs what happened vs what has happened
 
-Beclown 成了笑柄
-  是 ‌现代英语中的非标准动词‌，由前缀 ‌be-‌（表“使成为”）+ ‌clown‌（小丑）构成，意为 ‌使（某人或自己）显得像小丑般滑稽可笑‌。
-  He beclowned himself to lighten the mood.（他故意出洋相活跃气氛。）
-亲眼目睹
-  It happened in my very eyes. ‌“in my very eyes”‌ 中的介词 in 在此处属于非常规搭配，常规表达应为 ‌“before my very eyes”‌（强调“亲眼目睹”）或 ‌“under my eyes”‌（隐含“在某人关注下发生”）
+| 表达形式              | 时态与结构 | 时间指向    | 核心焦点 | 典型使用场景 |
+|-------------------------------|-------------------|---------------------|------------------|--------------------|
+| What happens      | 一般现在时             | 现在或未来   | 常态规律、常规结果        | 科学规律、操作流程、日常惯例   |
+| What happened     | 一般过去时             | 具体过去时间点 | 已结束的孤立事件         | 突发事件回顾、事故调查      |
+| What has happened | 现在完成时（has + PP）   | 过去→现在   | 过去事件对当下的持续影响     | 突发状况、近期变化追踪      |
 
-thin hint of‌ ‌极细微的迹象或线索‌，几乎难以察觉。
-  There was only a ‌thin hint of‌ smoke in the distance, barely visible.（远处只有‌一丝若有若无的‌烟雾，几乎看不见。）
-  Her voice carried a ‌thin hint of‌ sadness, though she smiled.（她的声音带着‌一丝几不可察的‌悲伤，尽管她在微笑。）
+What happens* when you mix oil and water?"*（油水混合会发生什么？）→ ‌物理常态
+Press this button to see ‌what happens‌. （按下按钮看结果）→ ‌可预见的操作反馈
 
-### 逻辑
-I would not say XXX any more than I would say XXX A 不成立，正如 B 也不成立 → ‌否定 A 的同时，连带否定 B‌
-  I would not say I am more of a scientist ‌any more than‌ I would say I am an artist.（我既非更偏向科学家，亦非自诩艺术家。）
+What happened* to your leg? It's bruised!"*（你腿怎么了？有淤青！）→ ‌已发生的意外
 
-but if you were to say(提出反向假设或反例‌) VS ‌If you said... (直接假设，无虚拟语气)
-  省略主句的虚拟条件句，隐含主句结果（如 it would be incorrect）
-  The dictionary lists "irregardless" as nonstandard, ‌but if you were to say‌ it in formal writing, most editors would correct it.
-
-### Analysis 
-误：I think I can't.
-正：I don't think I can.
-提示：汉语里说“我想我不会”的时候，英语里面总是说“我不认为我会”。以后在说类似的英语句子的时候，只要留心，也会习惯英语的表达习惯的。
-误：I don't dance well too.
-正：I am not a very good dancer either.
-提示：当我们说不擅长做什么事情的时候，英语里面通常用not good at something，英语的思维甚至直接跳跃到：我不是一个好的舞者。
-误：I have something to do tomorrow.
-正：I am tied up all day tomorrow.
-提示：用I have something to do来表示很忙，这也完全是中国式的说法。因为每时每刻我们都有事情要做，躺在那里睡大觉也是事情。所以可以说我很忙，脱不开身：I'm tied up。还有其它的说法：I can't make it at that time. I'd love to, but I can't, I have to stay at home.
-误：Would you like to join our party on Friday?
-正：Would you like to come to our party on Friday night?
-提示：join往往是指参加俱乐部或者协会，如：join a health club; join the Communist Party。事实上，常常与party搭配的动词是come 或者go。如go a wild party，或者come to a Christmas Party。
-误：I have no experience.
-正：I don't know much about that.
-提示：I have no experience这句话听起来古里古怪，因为只需要说那方面我懂得不多，或者这方面我不在行，就行了。I am not really an expert in this area。
---Will you be going back home for the Spring Festival?
-误：--Of course!
-正：--Sure. / Certainly.
-提示：以英语为母语的人使用of course的频率要比中国的学生低得多，只有在回答一些众所周知的问题时才说of course。因为of course后面隐含的一句话是“我当然知道啦！难道我是一个傻瓜吗？”因此，of course带有挑衅的意味。在交谈时，用sure或certainly效果会好得多。同时，of course not也具挑衅的意味。正常情况下语气温和的说法是certainly not。
-误：The price is very suitable for me.
-正：The price is right.
-提示：suitable(合适的、相配的)最常见的用法是以否定的形式出现在告示或通知上，如：下列节目儿童不宜。The following programme is not suitable for children.
-
-Is saying "Noted" a rude answer? If so, what are the alternative answers to reply to a person besides “Noted”? https://www.quora.com/Is-saying-Noted-a-rude-answer-If-so-what-are-the-alternative-answers-to-reply-to-a-person-besides-“Noted”
-1.how are you feeling?
-http://www.crazyboards.org/forums/index.php?/topic/52259-problems-answering-the-question-how-are-you-feeling/
-100 WAYS TO ANSWER THE QUESTION “HOW ARE YOU?”
-"it's not working" and "it doesn't work"
-
-How are you? Good or well
-https://www.businessinsider.com/how-are-you-im-good-is-acceptable-reply-2014-2/?IR=T
-
-
-
-No worries 
+The road is blocked! ‌What has happened‌?（道路封锁了！发生什么事了？）→ ‌现状与事件直接关联
+You look upset. ‌What has happened‌ since morning?（你看起来沮丧，上午到现在发生什么了？）→ ‌追溯未明影响源
+#### No worries 
 is an expression seen in Australian English, British English and New Zealand English meaning "do not worry about that", "that's all right", or "sure thing". It is similar to the English no problem.
 
+#### How are you? Good or well
+Bottom line: You are good (and sometimes well). But you do well. 
+"We danced well," not "We danced good." Adjectives are only used to describe nouns, as in "We performed a good dance."
+"I'm good," is a proper response.
+"I'm well" is also allowed but not for the reasons many think. That response only works if "well" takes on its adjectival form, meaning "in good health" or "good or satisfactory."
+Now, if someone asks "How are you doing?" "I'm doing well" is the correct response. "Doing" — a form of "to do" — becomes the main verb, and action verbs require adverbs. 
 
+#### "it's not working" and "it doesn't work"
 
-what happens what happened what has happened
-In the sentences below, the pronoun 'it' functions as an object, not as a subject. Objects do not agree in number with (what appear to be) verbs:
-1.	I will make it happens. 
-2.	You should let it happens.  
-3.	I will make it happen.  
-4.	You should let it happen.  
-Below, the word 'he' functions as a subject, and so the verb agrees in number with its subject:
-1.	I wish (that) he succeeds.  <but the semantics seem awkward to me; shouldn't it be 'I hope'?>
-2.	I wish (that) he succeed.  
-what happened vs what has happened
-http://jenny-liveabc.blogspot.sg/2012/08/what-happened.html#.VuFPvNWqpBc
-He said that he was tired
-He said he has no feeling of me
-He didn't do what he said he did
-He has done what he said he would do
-he said he had done with me
-You should have some way to assess how the work being done
-Go to where the actual work is being done
-how the work has been done
-It's been really busy here all day.
-she just got here
- 
-I knew they would...
-If I knew then what I know now.
+it's not working 现在进行时（强调进行中状态） 当前临时故障或突发异常 设备突然失灵、软件卡顿
+  My phone was fine this morning, but now ‌it's not working‌.（手机早还好好的，现在突然失灵了）
+it doesn't work 一般现在时（描述常态或属性）固有缺陷或长期失效 设计缺陷、永久性损坏
+  This old TV ‌doesn't work‌ even after repairs.（旧电视修了也修不好）
+  Your excuse ‌doesn't work‌ on the teacher.（你的借口对老师无效）
+#### Is saying "Noted" a rude answer? If so, what are the alternative answers to reply to a person besides “Noted”? 
+Noted is incorrect regardless of context. By its very brevity, it IS rude. It is used by people who think they are being “hip” or sounding uber-professional, when in fact they are in effect dismissing the other person.
 
-1.(It's) The simplest approach to formally developing software.
-Here it is : "Because of the links between the Type A behavior pattern and heart disease, various approaches have been taken to changing this pattern of behavior."
-extend reading: to doing sth，此时to是介词，有很多常用搭配
-2.will do VS will be doing
-SLA said it will not be giving the club an alternative site for another golf course, but may offer it another area for social uses.
-[box title="http://bulo.hujiang.com/question/293589/"]
-will do 简单陈述将来要发生的动作; 而will be doing则强调将来发生这种动作的状态，及在此状态或背景下可能发生的其它动作。
-The train will arrive in a few minutes. 一般将来时，仅指火车几分钟就要到达的客观事实
-The train will be arriving in a few minutes. 将来进行时，指火车几分钟后到站的那种状态，可暗含做好准备上车，接人什么的意味。 如： The train will be arriving in a few minutes, let's be ready to get on board.
-对比：
-I will study English = 陈述将来的一个事实，将来的某个时间我会学英语。
-I will be studying English =我在学习英语的时候，可能有其它事情发生。如: I will be studying English when you come to pick me up.
-[/box]
-3.Provided/Providing that .....
-Provided that the funding is obtained, the company intends to produce a first version of the production system in the following three months.
-IF, EVEN IF, ONLY IF, AS LONG AS, PROVIDED, SUPPOSING, UNLESS, BUT FOR, IF NECESSARY, IF SO, IN CASE etc.
+If someone has given you an instruction in a business or professional or superior to lower-ranked person context, the correct response is “Yes”; or “I’ll do it [when] and deliver the finished product/result by [when]” (e.g., “Yes, Dad, I’ll take the trash out now, then start my homework.”)
 
-I will appreciate it if you will
-https://www.quora.com/Which-is-the-correct-grammar-I-will-appreciate-if-you-or-I-would-appreciate-if-you
-beside, besides
-http://learnersdictionary.com/qa/difference-between-beside-and-besides-preposition-adverb
- 
-as spoken https://forum.wordreference.com/threads/as-spoken-as-speaking.2955245/
-https://forum.wordreference.com/threads/as-per-we-spoke-said.1052811/
-https://www.zybang.com/question/08b5a8c16467bd3319bdecc3adf18384.html
-bob and I , bob and me, bob and someone else, someone is ***
-http://www.learnersdictionary.com/qa/when-to-use-i-and-when-to-use-me
-https://english.stackexchange.com/questions/59618/i-and-someone-me-and-someone-or-i-and-someone-we
+If someone has told you a useful fact or taught you a skill or procedure, the polite response is “Thank you,” plus more words to indicate you understood what was conveyed, plus more words yet to indicate you appreciate the other person sharing knowledge or skills with you (e.g., “Thanks for pointing that out; now I understand that “noted” is a rude response because it doesn’t promise compliance and only serves to dismiss the other party.”)
+
+If someone is complaining about something you’re doing, the polite response is “I’m sorry” plus a description of what you’ll do to rectify (“I’ll stop picking my nose”, or “I’ll send you a replacement immediately”). If you can’t or won’t comply, you should still begin with “I’m sorry” and continue with a polite explanation of the situation and whether you can do anything (e.g., “I’m sorry, we made a mistake on your reservation for a seaview room, but I’ll give you a complimentary upgrade to a suite which overlooks our interior garden; will that be satisfactory?”)
+
+Noted as a response to an instruction means (by the absence of affirmative statements promising compliance) “I have no intention of doing this anytime soon; I’ll get around to it when I get around to it.”
+
+Noted as a response to fact-sharing or skill-sharing means “I didn’t understand you, or I don’t agree with you, but I’ll say “Noted” so you stop talking.”
+
+Noted as a response to a complaint means “I don’t plan to do anything about your complaint, but this conversation is now over.”
 
 ## Topic 
 ### Anecdote
@@ -838,6 +1033,17 @@ Start thinking after major changes
 Carolyn Hax: Trying to get past a wife seeing a married man on the side https://www.washingtonpost.com/lifestyle/style/carolyn-hax-trying-to-get-past-a-wife-seeing-a-married-man-on-the-side/2016/02/18/36bbc662-d4d3-11e5-9823-02b905009f99_story.html?utm_term=.3ec57c599e7e
 
 ### About food
+
+| ‌英文词汇‌       | ‌语义侧重点‌        | ‌正式度‌  | ‌典型场景‌            | ‌地域偏好‌   |
+|--------------|----------------|--------|-------------------|----------|----|
+| ‌Eatery‌     | 简便饮食店（便餐/小吃为主） | 低（口语化） | 街头快餐、码头简餐店、连锁速食   | 北美地区主导   |
+| ‌Restaurant‌ | 提供完整服务的正式餐饮场所  | 高      | 正餐厅、高级料理、需服务员点餐上菜 | 全球通用     | 
+| ‌Diner‌      | 美式复古风格平价餐馆     | 中      | 公路餐厅、餐车式店铺、经典美式快餐 | 北美特色     | 
+| ‌Café‌       | 咖啡轻食+简餐        | 中      | 休闲社交、下午茶、工作简餐     | 全球通用     |
+| ‌Bistro‌     | 欧式小酒馆（含酒类+简餐）  | 中      | 法式小馆、夜间小酌、特色家常菜   | 欧陆地区     |
+| ‌Cafeteria‌  | 自助取餐式食堂        | 中低     | 学校/公司食堂、按餐盘计价     | 全球通用     |
+| ‌Beanery‌    | 廉价小餐馆（俚语）      | 低（非正式） | 经济型就餐、怀旧语境        | 北美（过时用语） | 
+
 
 "Main Menu" vs. "Main Course":
 + Main Menu: Refers to the list of available food options or, in digital terms, the primary screen where choices or functions are displayed.
@@ -1188,6 +1394,16 @@ Live performances: For sound reinforcement at concerts and DJ events
 Theaters: For sound reinforcement and piped music 
 Conference centers: For fixed installations 
 Educational institutions: For fixed installations 
+
+### About nature
+scallop
+crayfish
+coral
+conch
+squid
+puffer fish
+stingray
+
 ### About philosophy
 ontology 本体论，实体论;
 technical and philosophical
@@ -1198,6 +1414,7 @@ technical and philosophical
 appreciation depreciation
 belittle
 bifurcate
+bilateral matter
 crony 裙带关系
 civil
 decency
@@ -1224,6 +1441,7 @@ resolute
 relegate
 reciprocate
 retaliatory
+
 succumb
 spook
 ultimatum
@@ -1261,6 +1479,15 @@ optics‌ 舆论形象 公众形象
 nationalism
 
 narrative
+treaty
+due consultation
+	subject to approval after due consultation with the Member State”官方译文：“‌经与会员国协商后‌报批”（联合国文件）
+
+hostile
+
+#### ideology
+white supremacy
+dei diversity/equity/inclusion 
 
 #### economic
 tax exempt status
@@ -1269,6 +1496,7 @@ tax exempt status
 arsenal 兵工厂 军械库
 theater of war 战区
 missile
+massacre
 
 surgical strike 外科手术式打击
 wreckage
@@ -1380,11 +1608,35 @@ Bridging service plays a key role in international communication.
 吃春卷‘形象’的谓之咬春
 Spring rolls are synonymous with takeout in the U.S. However, they have a long history as a snack in China, the idea being that you're literally "biting spring"
 
-## About universe
+### About universe
 orbital 轨道的
 maneuver 
 shuttle 航天飞机
 thruster 推进器
+
+## idiom saying 谚语/成语
+
+A throat to choke
+
+don't make a scene 不要制造一场戏”或“不要大吵大闹”。但在实际使用中，它通常指的是“不要当众闹情绪”或“不要在公共场合引起骚动
+
+last but not least
+
+in the sense of
+	"in the sense of" can be considered an idiom when it's used to clarify or specify the particular meaning of a word or phrase in a given context. For example: - "When I say 'bank,' I mean it in the sense of a financial institution, not the side of a river."
+
+In the same context
+
+run the gamut 包罗万象
+	Consultants **run the gamut** from strategic advisors to nuts-and-bolts integrator.
+	顾问的职能范围涵盖从战略规划者到具体执行者的全谱系, run the gamut涵盖全范围
+
+tit for tat 以牙还牙
+
+tried and tested 经过反复验证并被证明有效可靠‌
+
+已所不欲 勿施于人
+don't do to others what you don't want to be done to yourself
 
 ## Presentation
 [Speech/Presentation/Exam jitters, calm down, preparation](http://www.inc.com/larry-kim/15-power-up-tips-to-make-you-a-better-presenter.html)

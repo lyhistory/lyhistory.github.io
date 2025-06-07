@@ -14,6 +14,10 @@ syntax and semantic 语法和语义
 
 补语 ：listening to some beautiful music（动名词短语作后置定语
 
+‌He and I‌ went shopping.
+They invited ‌her and me‌ to the party. 
+‌Between you and me‌...
+
 ## 句子结构/Sentence Structure
 Sentence structure is the order of all the parts in a sentence: subject, predicate, objects, phrases, punctuation, etc.
 
@@ -227,6 +231,26 @@ Conditional sentences aren’t always cut and dry. There are exceptions and spec
     Inverted conditionals are a more formal structure. They invert the subject and auxiliary verb in the if clause. For example, “Had I known [instead of “If I had known”], I would have acted differently.”
 
 ### 拆解
+#### 独立主格结构（Absolute Construction）
+"独立主格"‌ 指由 ‌名词/代词（需与主句主语不同） + 非谓语成分（分词/不定式/形容词/介词短语等）‌ 构成的复合结构，在句中作状语修饰整个主句，但与主句主语无语法关联（故称"独立"）
+| 类型       | 示例                                                   |
+|----------|------------------------------------------------------|
+| ‌现在分词‌   | Weather permitting, we'll hike.（天气允许的话）2             |
+| ‌过去分词‌   | The task finished, he relaxed.（任务完成后）4               |
+| ‌不定式‌    | The plan to be discussed, everyone prepared.（计划待讨论）5 |
+| ‌形容词/副词‌ | He stood silent, his eyes wide.（他沉默站着，双眼圆睁）5         |
+| ‌介词短语‌   | Book in hand, she entered the room.（手拿书本）3           |
+
+‌句首‌：常用逗号与主句隔开
+‌The meeting over‌, staff returned to work.（会议结束后）
+
+‌句尾‌：强调结果或伴随状态
+He rushed out, ‌face pale with anger‌.（他冲了出去，脸色铁青）
+
+❌ He missed the deadline, ‌the reason being is‌ that he underestimated the complexity.
+部分语法学者认为 ‌"being is"‌ 构成冗余（双重系动词）
+✅ He missed the deadline, ‌the reason being is‌ that he underestimated the complexity.
+
 #### infinitive 动词不定式
 ‌Infinitive‌ 是动词的非谓语形式，其基本结构为 ‌to + 动词原形‌（如 to do），但某些语境下可省略 to（称为 ‌bare infinitive‌，如 do）
 
@@ -237,7 +261,7 @@ Conditional sentences aren’t always cut and dry. There are exceptions and spec
 ‌形式多样性‌：
 包含完成式（to have done）和被动式（to be done）
 
-| &zwnj;**功能**&zwnj;   | &zwnj;**例句**&zwnj;                          | &zwnj;**说明**&zwnj;                     |
+| **功能**   | **例句**                          | **说明**                     |
 |------------|-----------------------------------|------------------------------|
 | 主语        | `To learn is challenging.`        | 表抽象动作，多用于正式文本    |
 | 宾语        | `She decided to study.`           | 接在 `want`/`try` 等动词后    |
@@ -245,13 +269,13 @@ Conditional sentences aren’t always cut and dry. There are exceptions and spec
 | 状语        | `She woke up early to catch...`   | 表目的/结果/原因             |
 | 补足语      | `My goal is to help others.`      | 补充说明主语/宾语性质        |
 
-| &zwnj;**语法场景**&zwnj;               | &zwnj;**动词形式**&zwnj;          | &zwnj;**例句**&zwnj;                      | &zwnj;**语法解析**&zwnj;                     |
+| **语法场景**               | **动词形式**          | **例句**                      | **语法解析**                     |
 |----------------------------|-----------------------|-------------------------------|----------------------------------|
-| &zwnj;**情态动词 (*will*)**&zwnj;       | 不带 *to* 不定式      | *I &zwnj;**will stay**&zwnj;.*            | *stay* 直接依附情态动词构成谓语  |
-| &zwnj;**普通动词 (*want*)**&zwnj;       | 带 *to* 不定式        | *I &zwnj;**want to stay**&zwnj;.*         | *to stay* 作宾语，需 *to* 连接   |
-| &zwnj;**使役动词 (*make*)**&zwnj;       | 不带 *to* 不定式      | *He &zwnj;**made me stay**&zwnj;.*        | 强调强制动作，跳过 *to*          |
-| &zwnj;**疑问句中的情态动词**&zwnj;      | 不带 *to* 不定式      | &zwnj;***Can**&zwnj; you &zwnj;**stay**&zwnj;?*       | 情态动词疑问式仍保留 bare 特性   |
-| &zwnj;**过去时态中的不定式**&zwnj;      | 不带 *to* 不定式      | *I &zwnj;**had to stay**&zwnj;.*          | *had to* 整体作情态，后接原形    |
+| **情态动词 (*will*)**       | 不带 *to* 不定式      | *I **will stay**.*            | *stay* 直接依附情态动词构成谓语  |
+| **普通动词 (*want*)**       | 带 *to* 不定式        | *I **want to stay**.*         | *to stay* 作宾语，需 *to* 连接   |
+| **使役动词 (*make*)**       | 不带 *to* 不定式      | *He **made me stay**.*        | 强调强制动作，跳过 *to*          |
+| **疑问句中的情态动词**      | 不带 *to* 不定式      | ***Can** you **stay**?*       | 情态动词疑问式仍保留 bare 特性   |
+| **过去时态中的不定式**      | 不带 *to* 不定式      | *I **had to stay**.*          | *had to* 整体作情态，后接原形    |
 
 
 Sell the vision of what you want to be able to do
@@ -264,6 +288,8 @@ want（主动词） → to be（不定式） → able（形容词补语） → t
 #### 后置定语（postpositive modifier）‌ 
 have confidence to do sth / in sb 
 
+#### 省略状语从句
+as spoken 是 ‌"as it is spoken"‌ 的省略形式，属于状语从句的省略结构
 
 #### 比较状语从句 
 Friction is normal as is conflict, don't avoid it altogether
@@ -322,7 +348,10 @@ pretty much has been done
 
 "How do you interpret" is a general question asking for someone's understanding or explanation of something, while "how are you interpreting" focuses on how a specific person is currently understanding or analyzing something in the moment, implying a more active process of making sense of information.
 
-将来进行时
+将来进行时 will do VS will be doing
+
+SLA said it will not be giving the club an alternative site for another golf course, but may offer it another area for social uses.
+
 In view of the limited time for Day 2 lesson this week, please spend some time to read the following topics before the lesson. If you have any specific questions on these topics, feel free to let me know in advance.
 I will still be going through important points on these topics, the rest of the Day 2 lesson time will be used for in-class discussions.
 I will also be spending some time to discuss the scenario for the first individual assignment and specific areas which are out of scope for the examination during Day 2 lesson.
@@ -337,10 +366,46 @@ I will also be spending some time to discuss the scenario for the first individu
 例：
 领导开会时说 "We ‌will be reviewing‌ the policy"（流程性） vs. "We ‌will review‌ the policy"（可能暗示强制任务）。
 
-3. ‌暗示与其他动作的同步性‌
+3. ‌暗示与其他动作的同步性‌ will do 简单陈述将来要发生的动作; 而 will be doing 则强调将来发生这种动作的状态，及在此状态或背景下可能发生的其它动作。
 未来进行时可暗示 ‌“在Day 2课程期间，讨论与其他活动并行”‌。
 例：
 "I ‌will be teaching‌ grammar while you ‌take‌ notes."（教学与记笔记同时进行）
+
+The train will arrive in a few minutes. 一般将来时，仅指火车几分钟就要到达的客观事实
+The train will be arriving in a few minutes. 将来进行时，指火车几分钟后到站的那种状态，可暗含做好准备上车，接人什么的意味。 如： The train will be arriving in a few minutes, let's be ready to get on board.
+对比：
+I will study English = 陈述将来的一个事实，将来的某个时间我会学英语。
+I will be studying English =我在学习英语的时候，可能有其它事情发生。如: I will be studying English when you come to pick me up.
+
+**is done VS is being done**
+
+‌You should have some way to assess how the work is being done.‌ 你应当有办法评估工作的实时执行情况。
+‌You should have some way to assess how the work is done.‌你应当有某种方法来评估工作是如何完成的
+
+
+1. ‌is done‌ → ‌一般性/已完成状态‌
+‌含义‌：描述‌常态、习惯或已完成的被动动作‌，不强调进行过程。
+‌场景‌：
+The work ‌is done‌ every Friday.
+（工作每周五完成）→ ‌固定流程‌
+The window ‌is closed‌ at night.
+（窗户每晚关闭）→ ‌重复性动作‌
+
+2. ‌is being done‌ → ‌当前进行中的动作‌
+‌含义‌：明确表示‌此刻正在发生的被动动作‌，突出动作的持续性。
+‌场景‌：
+The bridge ‌is being built‌ right now.
+（桥梁正在建设中）→ ‌施工中‌ 
+Your computer ‌is being repaired‌.
+（你的电脑正在维修）→ ‌维修过程未结束‌ 
+
+Being done‌ 单独出现时可能是动名词（如 Being criticized is painful）或分词（如 The project being discussed），‌不可独立作谓语‌。‌谓语必须完整‌：is being done 是唯一正确的进行时被动谓语形式（不可省略 is）
+### future tense
+
+过去将来时
+I knew they would...
+### Past
+If I knew then what I know now, I'd avoid those mistakes.
 
 ### Past past perfect
 Didn’t havn’t
@@ -355,13 +420,93 @@ B: Yes, it looks very interesting.
 https://english.stackexchange.com/questions/26256/i-had-finished-the-work-on-friday-i-have-finished-the-work
 https://forum.wordreference.com/threads/i-was-wondering-if-you-have-had-had-a-chance.3187192/
 
+### 从句时态
+
+He said that he was tired.‌
+‌语法结构‌：
+主句：He said（一般过去时）
+从句：that he was tired（一般过去时）
+‌时态逻辑‌：
+主句动词 said 为过去时，从句需保持时态一致，因此将直接引语 "I am tired" 中的现在时 am 转为过去时 was，描述‌说话当时的持续状态‌（如疲劳感）24。
+‌隐含含义‌：强调过去某个时间点他表达疲劳的状态，不涉及当前影响。
+
+
+He didn't do what he said he did.‌
+‌语法结构‌：
+主句：He didn't do（一般过去时，否定形式）
+嵌套从句：
+一级从句 what he said（said 为一般过去时）
+二级从句 he did（一般过去时）
+‌时态逻辑‌：
+主句过去时驱动所有从句时态统一为过去范畴。he did 表示‌他声称已完成的动作‌，但主句 didn't do 否定其真实性，形成“承诺未履行”的对比6。
+‌隐含含义‌：揭露言行不一致（他说做了某事，实则未做）
+
+He has done what he said he would do.‌
+‌语法结构‌：
+主句：He has done（现在完成时）
+嵌套从句：
+一级从句 what he said（said 为一般过去时）
+二级从句 he would do（过去将来时）
+‌时态逻辑‌：
+主句现在完成时 has done 强调‌动作已完成且对当前有影响‌。
+从句中 said 为过去时，would do 为过去将来时，表示从过去视角计划的未来动作，时态链完整（过去承诺 → 现已实现）67。
+‌隐含含义‌：突出承诺的兑现（他说会做某事，现已做到）
+
+he said he had done with me.‌
+‌语法结构‌：
+主句：he said（一般过去时）
+从句：he had done with me（过去完成时）
+‌时态逻辑‌：
+从句动词 had done（过去完成时）表示动作发生于主句动作 said ‌之前‌，意为“结束关系或处理完毕”。“done with me” 为习惯表达，指“与我了断”6。
+‌隐含含义‌：声明在说话前已终止关系（如分手或决裂）
+
 ## 比较级 Comparative and Superlative
 It is best to allow only one analyst to work on a diagram at a time.
 
 [Generally, if a two-syllable word ends in /i/ or /o/ (e.g, easy, happy, silly, narrow), then it gets the morphological -er and -est. Otherwise it's more and most.](http://english.stackexchange.com/questions/67991/much-more-easy-versus-much-easier)
  
- 
+## gerund‌ 动名词
+Gerund 是由 ‌动词原形 + -ing‌ 构成的‌名词性成分‌（如 swimming, reading），在句中起‌名词作用‌（可作主语、宾语、表语等）
 
+‌主语 ‌Swimming‌ is good exercise.
+‌宾语 I enjoy ‌reading‌.
+介词宾语 She is good at ‌dancing‌.
+‌表语 His hobby is ‌cooking‌.
+### 介词固定搭配
+情感/态度类‌
+‌be accustomed to‌ (习惯于)
+She is accustomed to ‌working‌ late.
+‌be opposed to‌ (反对)
+They are opposed to ‌cutting‌ down the trees.
+‌object to‌ (反对)
+He objected to ‌paying‌ extra fees.
+
+行为/习惯类‌
+‌devote time to‌ (投入时间做)
+He devotes his weekends to ‌painting‌.
+‌get around to‌ (抽时间做)
+I finally got around to ‌repairing‌ the door.
+‌resort to‌ (诉诸于)
+They resorted to ‌begging‌ for food.
+
+感官/互动类‌
+‌listen to‌ (听)
+I love listening to ‌birds singing‌.
+‌pay attention to‌ (注意)
+Pay attention to ‌reading‌ the instructions.
+
+其他高频搭配‌
+‌be committed to‌ (致力于)
+The team is committed to ‌improving‌ the system.
+‌be dedicated to‌ (献身于)
+She is dedicated to ‌helping‌ stray animals.
+
+approach to + 名词/动名词
+
+(It's) The simplest approach to formally developing software.
+
+Because of the links between the Type A behavior pattern and heart disease, various approaches have been taken to changing this pattern of behavior.
+这是一个关于‌介词后非谓语动词形式‌的核心语法问题。关键在于识别 ‌"to" 的词性‌——此处 ‌"to" 是介词而非不定式符号‌，因此必须接 ‌动名词 (changing)‌
 ## 修辞手法
 metaphor,analogy,allusion
 Maybe a good analogy here is bar codes and serial numbers. Take an iPod in a store. On the packaging will be a bar code. This tells the store what the product is, so when it is scanned, the system knows exactly what the product is and what it costs. It might even be able to know what color it is or where it was kept in the store. All iPod of this same type has the exact same barcode on them.

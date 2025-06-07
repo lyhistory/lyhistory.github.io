@@ -134,7 +134,7 @@ dedicated 专用的; 专注的，投入的; 献身的;
 detrimental ˌdetrɪˈmentl 有害的
 definite 明确的
 defiant 挑衅的
-deliberate 深思熟虑 从容不迫
+deliberate 深思熟虑 从容不迫 蓄意的
 deviant 离经叛道的; 不正常的，异常的; <=> rational
 diagonally daɪ'æɡənəlɪ  对角线地，斜线地;
 disciplinary
@@ -167,6 +167,7 @@ extant 存世的 仍然存在的
 excessive 过分的
 exhaustive 彻底的详尽的
 exterior 外面的，外部的，外表上的，表面的
+exotic
 
 faulty
 Fantastic 
@@ -201,6 +202,8 @@ hypothetical 假设的
 
 imperative 势在必行的; 必要的，不可避免的
 impending 即将发生的
+	now what this means is that this will not stop the flow of water to Pakistan but what it will do is that it will deny the Pakistan officials  the water data which will disrupt Pakistan's water management, they will not have the forewarning of the impending drought or a flood there 
+
 imminent 迫在眉睫; （通常指不愉快的事） 即将发生的; 迫切的，危急的; 逼近的
 improvised 临时做的
 Impressive
@@ -284,6 +287,7 @@ parametric 参数的
 paramount
   Business needs were paramount
 particular specific http://the-difference-between.com/particular/specific
+pathetic 可怜的
 permissible
 permissive pəˈmɪsɪv 放任的; 容许的; 宽大的; 自由的
 pedantic pɪˈdæntɪk 卖弄学问的; 学究式的，迂腐的; 卖弄笔墨
@@ -374,6 +378,7 @@ susceptible səˈseptəbl 易受影响的; 易受感染的; 善感的; 可以接
 supportive 
 	everyone is very positive and supportive of each other
 symmetric 相称性的，均衡的
+synergistic 协同的
 
 tactile 触觉的; 触觉感知的; 能触知的; 有形的
 tactic 策略 战术
@@ -445,14 +450,18 @@ arguably 可争辩的
 
 blindly
 briskly 快地; 迅速地; 活泼地; 伶俐地
-
+brusquely 
+	She brusquely pushed past the crowd to catch the train.（她粗率地挤过人群赶火车）
 circa 近似 大约[ˈsɜ:kə]
 constantly: continuously over a period of time
 consciously
 comparatively comparably http://english.stackexchange.com/questions/254248/the-difference-between-comparably-and-comparatively
-
+curt
+	His curt "No." ended the conversation.（他一句简短的“不行”终结了对话）
 deliberately consciously and intentionally; on purpose.
 Definitely
+diametrically 完全的，正好相反的
+	we hold diametrically opposed views
 
 easily - Change management is easily the most difficult and complex element in the project mix.
 emphatically 断然的 强调的
@@ -572,6 +581,12 @@ whatsoever
 yet
 	My sales process is more costly than my competitors - how to reduce yet stay competitive.
 	我的销售流程成本高于竞争对手——如何在降低成本的同时保持竞争力？在句中，“yet”连接两个动词不定式（reduce 与 stay）不同于单纯的“but”或“however”，“yet”在此更偏向‌矛盾目标间的动态平衡‌，而非非此即彼的对立
+
+Provided that/so long as（只要）/ on condition that（在……条件下）
+	Provided that the funding is obtained, the company intends to produce a first version of the production system in the following three months.
+
+IF, EVEN IF, ONLY IF, AS LONG AS, PROVIDED, SUPPOSING, UNLESS, BUT FOR, IF NECESSARY, IF SO, IN CASE etc.
+
 ### ​​Determiners
 
 ​​ my, some, each (modify nouns like adjectives)
@@ -629,6 +644,7 @@ actuator
 adversary ˈædvəsəri 对手，敌手; 魔鬼;
 agnostic 不可知论者
 amateur 业余爱好者
+anchor 主持人
 apprentice əˈprentɪs 学徒，徒弟; 新手
 ancillary ænˈsɪləri 助手，随从
 arbiter 仲裁人 主宰者  arbitrator 仲裁人 moderator 调解人
@@ -649,6 +665,8 @@ change agent 变革者
 contractor 契约人 承包商
 coalition ˌkəʊəˈlɪʃn 联合; 同盟; 结合体; （两党或多党） 联合政府
 communiter 通勤者
+commentator 评论员 解说员
+commissioner 首长 长官
 Counselor‌
 	服务对象多为个人（如学生、患者）；心理、教育、职业规划等个人发展领域；提供情感支持或指导建议
 	The school counselor helped students choose their majors.
@@ -682,6 +700,7 @@ liaison 联络；私通
 
 nonconformity 特立独行
 
+origninator 创始人 发明者 
 outlier
 
 plankton ˈplæŋktən 浮游生物
@@ -882,7 +901,8 @@ liquidity lɪˈkwɪdəti 流动性; 流动资金; 资产流动性; <财>资产�
 literacy
 	In modern workplaces, **employees of minimum IT literacy** are expected to handle basic tasks such as email correspondence and cloud document sharing."  
 
-
+Machinery‌ 不可数 机器总称或系统机制 Machine‌ 可数	具体单个机器
+	The factory's ‌machinery‌ includes multiple machines."（工厂的机械系统包含多种机器）
 mattress ˈmætrəs 床垫;褥垫;空气垫;[建]沉排
 maiden 处女; 未婚女子; 断头机; 未得分的投球
 medallion məˈdæliən 大奖章，大勋章; （大奖章形的）圆形图案（饰物）
@@ -1419,6 +1439,12 @@ make
 	‌设计或生产‌：
 	例：The factory makes all products uniform in size.（工厂使所有产品尺寸一致）
 
+In the sentences below, the pronoun 'it' functions as an object, not as a subject. Objects do not agree in number with (what appear to be) verbs:
+	I will make it happen.  
+	You should let it happen.  
+Below, the word 'he' functions as a subject, and so the verb agrees in number with its subject:
+	I wish (that) he succeeds.  <but the semantics seem awkward to me; shouldn't it be 'I hope'?>
+
 #### Transitive Verbs (VT)​​
 ​​Definition:​​ Require a ​​direct object​​ to complete their meaning.
 ​​Example:​​
@@ -1703,6 +1729,7 @@ chop Cheap oil prices chop jobs by thousands http://www.usatoday.com/story/money
 choke 噎住 窒息
 churn
 coalesce ˌkəʊəˈles 联合，合并;
+coerce 胁迫
 collude 密谋，共谋
 collaborate incorporate
 coincide 重合 暗合: Composition is a stronger form of aggregation in which the lifetime of the two elements coincide with each other.
@@ -1721,6 +1748,8 @@ The whole object is constructed from other part objects, for example:An object i
 commute
 	They ‌commute to work‌ by train every weekday.
 concatenate 联系起来
+construe
+	he may construe the approach as a hostile act.
 constitute 
 	Seven members ‌constitute‌ the committee.（七名成员组成了委员会。）
 	He was ‌constituted as‌ the leader.（他被指定为领导。）
@@ -1749,7 +1778,14 @@ crunch 嘎吱嘎吱地咀嚼
 crush 挤压
 creep 爬行 蔓延(scope creep) creep up to the room 蹑手蹑脚
 crawl 爬行 卑躬屈膝
-crept 爬行
+crept 
+	植物攀爬或自然物移动
+		Ivy ‌crept up‌ the castle walls.（常春藤蔓爬上城堡墙壁）
+	悄声移动（避免被察觉）描述人或动物 ‌轻缓隐蔽地行进‌（常含警惕或隐秘意图）
+		The thief ‌crept silently‌ towards the safe.（小偷悄声爬向保险箱）
+	缓慢蔓延/逐渐显现（抽象概念）指情感、自然现象等 ‌无声息地扩散或渗透
+		A feeling of drowsiness ‌crept over him‌.（困倦感逐渐笼罩了他）
+
 crunch data crunching
 cruise 巡航 漫游
 curse 诅咒
@@ -1856,6 +1892,7 @@ fabricate 编造 虚构
 flatter
 fluctuate 波动 起伏
 forfeit （因违反协议、犯规、受罚等） 丧失，失去;
+	The company forfeited the opportunity to expand.（公司放弃了扩张机会）
 foster facilitate (facilitate and promote)
 	An important factor of the development of socialist culture is to inherit and promote the excellence of Chinese culture as well as the fine cultures in the world.
 	继承和发扬中华民族优秀文化与一切世界的文明成果是发展社会主义文化的重要条件，创新是保持社会主义文化具有先进属性的重要基石。
@@ -2592,29 +2629,15 @@ administer / manage
 ## Contrast meaning  意义反差
 appealing  adj. 吸引人的，令人心动的; 恳求的; v. （迫切） 要求(appeal的现在分词); 将…上诉;
 
-
-## idiom saying 谚语/成语
-
-A throat to choke
-
-don't make a scene 不要制造一场戏”或“不要大吵大闹”。但在实际使用中，它通常指的是“不要当众闹情绪”或“不要在公共场合引起骚动
-
-last but not least
-
-in the sense of
-	"in the sense of" can be considered an idiom when it's used to clarify or specify the particular meaning of a word or phrase in a given context. For example: - "When I say 'bank,' I mean it in the sense of a financial institution, not the side of a river."
-
-In the same context
-
-run the gamut 包罗万象
-	Consultants **run the gamut** from strategic advisors to nuts-and-bolts integrator.
-	顾问的职能范围涵盖从战略规划者到具体执行者的全谱系, run the gamut涵盖全范围
-
-tit for tat 以牙还牙
-
-tried and tested 经过反复验证并被证明有效可靠‌
-
-
+beside vs besides
+beside（介词）
+	She sat beside the window. （她坐在窗边。）
+	My efforts seem small beside yours. （与你相比，我的努力显得微不足道。）
+	Your excuse is beside the point. （你的借口与主题无关。）
+besides‌‌作介词（包含性排除）
+	Besides pizza, we ordered pasta. （除了披萨，我们还点了意面。）
+besides作副词（补充信息）
+	I don’t want to go; besides, it’s raining. （我不想去；‌况且‌还在下雨。）
 ## Urban Dictionary(SLANG)/lingo
 
 **BOYD:**
