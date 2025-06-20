@@ -14,6 +14,30 @@ hypocrisy 伪善
 猥琐
 
 ### 中文=>英文
+滑倒了
+	She ‌slipped‌ on the wet floor and fell.
+	He ‌fell‌ down the stairs.
+戛然而止
+	grinding halt
+腿上被蚊子咬了个包
+	‌I have a mosquito bite on my leg.
+	突出肿块 There's a bump on my leg from a mosquito bite.
+	描述症状：‌
+		‌It's itchy!‌（好痒！）
+		‌I can't stop scratching it.‌（我忍不住一直挠）
+		‌The bite is swollen/red.‌（蚊子包肿了/发红了
+	‌驱蚊防护：‌
+
+		‌Use mosquito repellent.‌（涂驱蚊水）
+		‌Sleep under a mosquito net.‌（用蚊帐）
+
+恕我直言
+  with all due respect
+  no offense
+决定 make a call ‌字面含义（打电话 引申含义（做决定）
+  I need to make a call to my boss.
+  It's your turn to make a call on this project.”（轮到您为这个项目做决定了。）
+
 搁置 abeyance
 	源自古法语 ‌abeiance‌（期待）→ 拉丁语 ‌batāre‌（张口）6，原意“张大嘴期待”，暗含“等待未来结果”之意
 	The project remains in abeyance until funding is secured.（项目资金到位前暂缓实施）
@@ -792,6 +816,7 @@ subdued demand 需求不旺
 
 
 ### About Clothing
+crew neck 圆领
 ripped hole
 https://www.threadsmagazine.com/readerproject/2015/04/02/how-to-properly-remove-clothing-labels
 sewing label holes stitching
@@ -1116,6 +1141,9 @@ styrofoam box 泡沫箱
 Bubble wrap
 carring handles
 shoulder strap
+#### 家具
+mattress
+竹席 bamboo mat
 
 #### 水电
 接触不良 poor contact
@@ -1427,6 +1455,7 @@ domestic
 erratic
 implication
 injunction
+indigenous 本土的
 legislation
 judiciary
 offshored
@@ -1485,6 +1514,7 @@ due consultation
 
 hostile
 
+law enforcement
 #### ideology
 white supremacy
 dei diversity/equity/inclusion 

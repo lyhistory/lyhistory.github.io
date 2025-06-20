@@ -17,13 +17,15 @@ Multivariate analysis 多变量分析
 anal 肛门
 apical dominance  顶芽优势
 
+bladder
+
 contaminate 污染
 dehydration 脱水
 diarrhea
 melatonin 褪黑素
 pathogen 病原体
 
-
+germs
 
 
 ## Chemistry

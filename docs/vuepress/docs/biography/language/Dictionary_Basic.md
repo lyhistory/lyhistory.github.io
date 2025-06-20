@@ -108,6 +108,7 @@ coupled 连结的，联系的;
 coherent 连贯的 一致的
 cohesive 粘性的 有结合性/粘聚性的
 convertible [k?n?v?:t?bl]可改变的; 可变换的; （货币） 可以自由兑换的; （汽车等） 有折篷的;
+combustible 易燃的
 compelling 引人入胜的 扣人心弦 不可抗拒
 competent 有能力的，能胜任的; 能干的，称职的; 足够的，充足的; 有决定权的
 competitive  competitive pressure competitive advantage
@@ -408,6 +409,7 @@ viable 能生存的 sustainable vs feasible https://www.italki.com/question/2716
 vigorous 有力的; 精力充沛的; 充满活力的; 朝气蓬勃的
 verbose 冗长的，啰唆的，累赘的
 volatile
+vulgar 粗俗的
 
 wary
 wieldy 易于使用的，适合的 unwieldy [ʌnˈwi:ldi] 笨重的; 笨拙的; 不便利的
@@ -845,6 +847,7 @@ Faucet ˈfɔ:sɪt <美>水龙头;
 failover [电脑][数据库]失效备援 （为系统备援能力的一种，当系统中其中一项设备失效而无法运作时，另一项设备即可自动接手原失效系统所执行的工作）;
 Fermentation 发酵; 激动，纷扰;
 feat 功绩，伟业; 技艺表演; 卓绝的手艺，技术，本领; 武艺;
+feud 不和
 fidelity loyalty
 fixation 固着 执迷
 filler 填装物，填塞物; 填装者，填注者; （杂志等的） 补白; （报纸等的） 补白
@@ -1724,6 +1727,7 @@ capture
 calibrate 校准 collate 核对校对
 cease to do 和cease doing 意思都是“同一件事情停止下来”,区别在于前者是一种自然而然的变化,而后表示主观控制的结果
 cease our journeys will cease to exist 我们的旅程不复存在
+chant 反复唱
 chipper
 chop Cheap oil prices chop jobs by thousands http://www.usatoday.com/story/money/business/2015/03/31/oil-job-cuts/70683670/
 choke 噎住 窒息
@@ -1733,6 +1737,7 @@ coerce 胁迫
 collude 密谋，共谋
 collaborate incorporate
 coincide 重合 暗合: Composition is a stronger form of aggregation in which the lifetime of the two elements coincide with each other.
+commandeer 征用
 compact 压紧 压实
 compel 强迫
 comply 顺从
@@ -1927,6 +1932,8 @@ Imagine
 imperil
 impair
 impart knowledge
+implode 使内爆
+inflame 激怒 使燃烧 使发炎
 inform notify alert:
 	The extension use case inserts its course without altering the course of the base use case.
 instill 灌輸 
