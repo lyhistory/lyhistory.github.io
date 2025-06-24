@@ -268,7 +268,30 @@ Based on CDC/UNICEF’s 5-step handwashing .
 | ​​Rinse​​ | "Rinse away germs!"       | 💦 Flush hands under water |
 | ​​Dry​​   | "Dry super dry!"          | 🧺 Use paper towel         |
 
-Activities​​
+| English Term         | Child-Friendly Pronunciation         | Visual Aid |
+|----------------------|--------------------------------------|------------|
+| ​​Soap bubbles​​     | "Sō-puh buh-buls!" (rub hands)       | 🫧         |
+| ​​Scrub fingers​​    | "Skruhb fing-gers!" (wiggle fingers) | ✋          |
+| ​​Rinse away germs​​ | "Rins uh-way jurms!" (fling water)   | 💦         |
+
+
+**Seven-Step Technique​​**
+
+​​1. Palms​​: Rub together with soap → "Make soap clouds!"
+​​
+2. Backs​​: Scrub knuckles and backs → "Clean your turtle shell!"
+​​
+3. Fingers​​: Interlace fingers → "Zip and unzip!"
+​​
+4. Thumbs​​: Rotate thumbs → "Twist the bottle cap!"
+​​
+5. Fingertips​​: Scrub nails on palms → "Scratch the germs away!"
+​​
+6. Wrists​​: Rotate wrists → "Polish your watch!"
+​​
+7. Rinse & Dry​​: → "Wave goodbye to germs!"
+
+**Activities**​​
 
 1. ​​Germ Glow Game​​:
    
@@ -294,6 +317,16 @@ Cover all surfaces: outer, inner, and chewing sides.
 Let kids brush a toy’s teeth first. Use flavored fluoride toothpaste and reward charts for consistency
 
 #### Showering & Bathtub
+
+[亲子英语 ：Taking a shower洗澡](https://mp.weixin.qq.com/s?__biz=MzIzODc2MTkyOA==&mid=2247484841&idx=1&sn=5c283ea56650d3071fef5e444c5ff3dd&chksm=e87c515226ccbbf5f41dcfd546c46ae2d9eedc6d0af36e37597fd9e8f72386bf2269bff73fdd#rd)
+
+Don't splash,不要把水溅出来Don't splash me.不要把水溅到我身上!
+Let's wash off the bubbles.
+▲现在我们把身上的泡泡冲干净
+Dry yourself with the bath towel/ towel.
+拿浴巾/毛巾把自己擦干。
+bath towel浴巾，towel 毛巾
+Be careful, the floor is slippemy.小心地滑Let me blow-dry your hair.我帮你吹头发。Feel fresh now?现在感觉舒服吗?Now let's apply some body lotion.涂一点身体乳。Now put on your pajamas.穿上睡衣Let's go to bed.我们去睡觉吧!
 
 **Safety:**
 

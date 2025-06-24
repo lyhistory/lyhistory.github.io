@@ -13,7 +13,19 @@ idiot
 hypocrisy 伪善
 猥琐
 
+simp
+
+lowlife scum
+
+
 ### 中文=>英文
+拧干毛巾
+	‌拧干湿毛巾‌ → wring out a wet towel
+	‌彻底拧干‌ → thoroughly wring out the towel
+	Wring out the towel before hanging it to dry.
+	"After bathing the baby, gently wring out the washcloth."（给宝宝洗澡后，轻轻拧干小毛巾）
+	"Make sure to wring the towel out properly – it dries faster that way."（务必把毛巾拧干透，这样干得更快）
+	"Wring out the face towel with warm water before wiping the infant's skin."
 滑倒了
 	She ‌slipped‌ on the wet floor and fell.
 	He ‌fell‌ down the stairs.
@@ -1519,11 +1531,14 @@ law enforcement
 white supremacy
 dei diversity/equity/inclusion 
 
+zionist
+
 #### economic
 tax exempt status
 
 #### war
 arsenal 兵工厂 军械库
+bunker
 theater of war 战区
 missile
 massacre
@@ -1532,6 +1547,7 @@ surgical strike 外科手术式打击
 wreckage
 
 #### religion
+cult
 priest 神父
 catholic 天主教
 inshallah 真主保佑
