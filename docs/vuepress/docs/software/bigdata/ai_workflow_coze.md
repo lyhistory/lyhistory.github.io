@@ -24,7 +24,7 @@ merge_audios
     format->mp3
     urls->LoopText2Audio.audio_list
 
-    
+
 ## 案例
 ### 英文水平教学案例
 
@@ -116,6 +116,8 @@ async def main(args: Args) -> Output:
         输入：text_array->SplitLinesByComma.text_array
         输出：images-> 图像生成节点.data
         循环体 翻译节点--图像生成节点
+            儿童英文教学卡片，线条简约，{{scene}}场景，画面突出细节：{{text}}，角色表情：嘴角上扬（+15°）且苹果肌隆起，眼轮匝肌轻微收缩（眼尾皱褶≤2条），眉毛平直或眉尾微扬（与鼻翼-外眼角连线平行），尽量保持角色一致，文本必须100%准确：{{origin_english_text}}，若无法正确渲染则隐藏文字，无乱码、无拼写错误、无语法错误
+            负向提示词:no words, letters, fonts, labels, signs, alphabets, logos, trademarks, watermarks, handwriting
   
 两个分支合并：
 

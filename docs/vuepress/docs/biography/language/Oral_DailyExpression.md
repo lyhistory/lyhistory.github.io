@@ -17,8 +17,21 @@ simp
 
 lowlife scum
 
-
+没素质 
++ ill-mannered
+	"His ill-mannered behavior at the dinner table—talking with his mouth full, interrupting guests—left everyone uncomfortable."（他在餐桌上狼吞虎咽地说话、打断客人，这种没素质的行为让所有人都很尴尬。）
++ Lacking in basic decency​
+	"Even in the heat of argument, there’s no excuse for being so lacking in basic decency as to insult someone’s family."（即便争吵激烈，也没理由没素质到辱骂对方家人。）
++  Uncivilized
+  "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
+
+确认一下”、“跟进一下” Just checking in!
+	Morning! Has Eric already shared the access solution with you? (Just checking in!)
+
+二次提醒
+	“Hi Peter, gentle reminder on the ​upgrade rationale​! If no further comments are needed, we’ll ​finalize this as the official explanation.”
+	(翻译：温馨提醒关于升级原因的说明！若无补充意见，我们将以此作为正式解释。
 拧干毛巾
 	‌拧干湿毛巾‌ → wring out a wet towel
 	‌彻底拧干‌ → thoroughly wring out the towel
@@ -631,6 +644,38 @@ workhorse
   例：He is the workhorse of the team.（他是团队的骨干。
 
 ### 逻辑
+
+will/would
+	​现实性未来动作​：表示即将发生的具体行动或当前做出的决定，具有较高确定性。
+		I will call you tomorrow.
+	表示当前或未来的习惯性倾向（客观规律）
+		I will always remember this day.
+	非现实或假设性动作​：需依赖特定条件（常隐含或明示），或描述过去习惯(：描述过去重复性动作（≈ used to），但强调动作细节而非状态变化)
+		I would travel more if I had money.
+		When I was young, I would play chess every Sunday.
+	would 的核心场景​：在虚拟条件句（与事实相反）中表达结果
+		If I were you, I would accept the offer.
+		I would have called, but my phone died.
+	will 在条件句中仅表示“意愿”（非未来时态）
+		If you will wait, I will check the schedule.
+	will 直接表达意愿，可能显得生硬 would通过假设降低直接性，更委婉礼貌：
+		I would like a coffee, please.
+		I would appreciate your feedback.
+
+yet/already/
+	否定句 未完成（中性）
+	He hasn’t replied ​yet.
+	在疑问句中，“yet” 表示“已经”，用于中性询问进展，不带有惊讶情绪，常置于句末。
+	Have you finished your homework yet?
+	Is the tea cold yet?
+	肯定句的“yet”意为“仍然”“还需”，但语气较正式，或用于强调持续性/未来可能性，常与比较级、最高级或情态动词搭配。
+	She is yet a child.
+	I have yet much to do."​（我还有许多事要做。）→ 强调任务剩余量。
+	You must work yet harder."​（你还需更努力。）
+	This is his best performance yet.（这是他迄今最好的表现。）
+	The truth is yet to be revealed.（真相仍待揭露。）→ 正式表达“尚未发生但将来会”
+	“Has Eric already shared the solution?​”→ 隐含惊讶（“他居然这么快就搞定了？！”）
+
 whereby
 	主要译为“‌凭此‌”、“‌借以‌”、“‌由此‌”或“‌从而‌”，强调通过某种方式或手段实现后续动作
 	在正式文本中可译为“‌据此‌”或“‌靠此‌”，突出方法或工具的关联性
