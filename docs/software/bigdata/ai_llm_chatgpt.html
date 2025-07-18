@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Concepts | 计算机基础教程</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <script async="true" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9742852210287449" crossorigin="anonymous"></script>
+    <script async="true" src="https://www.googletagmanager.com/gtag/js?id=AW-748196294"></script>
+    <script>
+          window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+		  
+		  gtag('config', 'AW-748196294');
+        </script>
+    <script>
+			(function() { // DON'T EDIT BELOW THIS LINE
+			
+			})();
+		 </script>
+    <meta name="description" content="软件开发教程，白帽黑客入门教程，区块链入门教程，物联网，大数据">
+    
+    <link rel="preload" href="/docs/assets/css/0.styles.4f35daf1.css" as="style"><link rel="preload" href="/docs/assets/js/app.6c9c9f7d.js" as="script"><link rel="preload" href="/docs/assets/js/2.4a937564.js" as="script"><link rel="preload" href="/docs/assets/js/179.3b73947a.js" as="script"><link rel="prefetch" href="/docs/assets/js/10.ded4a165.js"><link rel="prefetch" href="/docs/assets/js/100.717bd100.js"><link rel="prefetch" href="/docs/assets/js/101.bc3a730d.js"><link rel="prefetch" href="/docs/assets/js/102.44f2f449.js"><link rel="prefetch" href="/docs/assets/js/103.a8b0e6d5.js"><link rel="prefetch" href="/docs/assets/js/104.bd9efe5b.js"><link rel="prefetch" href="/docs/assets/js/105.9c88a8a3.js"><link rel="prefetch" href="/docs/assets/js/106.8bf94ad6.js"><link rel="prefetch" href="/docs/assets/js/107.cd5266dc.js"><link rel="prefetch" href="/docs/assets/js/108.063f56e5.js"><link rel="prefetch" href="/docs/assets/js/109.8463979f.js"><link rel="prefetch" href="/docs/assets/js/11.41c54743.js"><link rel="prefetch" href="/docs/assets/js/110.4c721bfe.js"><link rel="prefetch" href="/docs/assets/js/111.6562aedc.js"><link rel="prefetch" href="/docs/assets/js/112.0cb277bd.js"><link rel="prefetch" href="/docs/assets/js/113.0ab795d5.js"><link rel="prefetch" href="/docs/assets/js/114.805efe49.js"><link rel="prefetch" href="/docs/assets/js/115.09d7f848.js"><link rel="prefetch" href="/docs/assets/js/116.338281e2.js"><link rel="prefetch" href="/docs/assets/js/117.03c83dcd.js"><link rel="prefetch" href="/docs/assets/js/118.1f406926.js"><link rel="prefetch" href="/docs/assets/js/119.e7d279f7.js"><link rel="prefetch" href="/docs/assets/js/12.9823c989.js"><link rel="prefetch" href="/docs/assets/js/120.b474ab1e.js"><link rel="prefetch" href="/docs/assets/js/121.8a424863.js"><link rel="prefetch" href="/docs/assets/js/122.55484729.js"><link rel="prefetch" href="/docs/assets/js/123.7b72135e.js"><link rel="prefetch" href="/docs/assets/js/124.ddcba971.js"><link rel="prefetch" href="/docs/assets/js/125.0e058e1c.js"><link rel="prefetch" href="/docs/assets/js/126.6ac53160.js"><link rel="prefetch" href="/docs/assets/js/127.1f87e417.js"><link rel="prefetch" href="/docs/assets/js/128.5f483837.js"><link rel="prefetch" href="/docs/assets/js/129.8097baee.js"><link rel="prefetch" href="/docs/assets/js/13.e0102d32.js"><link rel="prefetch" href="/docs/assets/js/130.cced3415.js"><link rel="prefetch" href="/docs/assets/js/131.624dbfbc.js"><link rel="prefetch" href="/docs/assets/js/132.8c0d7bb4.js"><link rel="prefetch" href="/docs/assets/js/133.4894f8d3.js"><link rel="prefetch" href="/docs/assets/js/134.020d20d7.js"><link rel="prefetch" href="/docs/assets/js/135.f8eb0e97.js"><link rel="prefetch" href="/docs/assets/js/136.975af7b3.js"><link rel="prefetch" href="/docs/assets/js/137.958fcf90.js"><link rel="prefetch" href="/docs/assets/js/138.de2a8de0.js"><link rel="prefetch" href="/docs/assets/js/139.376c1611.js"><link rel="prefetch" href="/docs/assets/js/14.9d76e5cd.js"><link rel="prefetch" href="/docs/assets/js/140.621f02ce.js"><link rel="prefetch" href="/docs/assets/js/141.e193a510.js"><link rel="prefetch" href="/docs/assets/js/142.946677dc.js"><link rel="prefetch" href="/docs/assets/js/143.83a24f40.js"><link rel="prefetch" href="/docs/assets/js/144.6404be0a.js"><link rel="prefetch" href="/docs/assets/js/145.5d443719.js"><link rel="prefetch" href="/docs/assets/js/146.b3dfe1a6.js"><link rel="prefetch" href="/docs/assets/js/147.d8658c42.js"><link rel="prefetch" href="/docs/assets/js/148.bc0ba41c.js"><link rel="prefetch" href="/docs/assets/js/149.505e21a0.js"><link rel="prefetch" href="/docs/assets/js/15.cb0e2efc.js"><link rel="prefetch" href="/docs/assets/js/150.29afcee5.js"><link rel="prefetch" href="/docs/assets/js/151.1e972fb5.js"><link rel="prefetch" href="/docs/assets/js/152.cd17d475.js"><link rel="prefetch" href="/docs/assets/js/153.eee2c780.js"><link rel="prefetch" href="/docs/assets/js/154.ff7536a7.js"><link rel="prefetch" href="/docs/assets/js/155.a9421dc2.js"><link rel="prefetch" href="/docs/assets/js/156.d88a3bbe.js"><link rel="prefetch" href="/docs/assets/js/157.3321ab2f.js"><link rel="prefetch" href="/docs/assets/js/158.a3c1d6f0.js"><link rel="prefetch" href="/docs/assets/js/159.4cfb311e.js"><link rel="prefetch" href="/docs/assets/js/16.66c42e89.js"><link rel="prefetch" href="/docs/assets/js/160.b20ebeb3.js"><link rel="prefetch" href="/docs/assets/js/161.f0eebcde.js"><link rel="prefetch" href="/docs/assets/js/162.3df08286.js"><link rel="prefetch" href="/docs/assets/js/163.1763e44b.js"><link rel="prefetch" href="/docs/assets/js/164.e57bbf8d.js"><link rel="prefetch" href="/docs/assets/js/165.ff56b894.js"><link rel="prefetch" href="/docs/assets/js/166.db32ab5e.js"><link rel="prefetch" href="/docs/assets/js/167.0f8f77a8.js"><link rel="prefetch" href="/docs/assets/js/168.4a9f8356.js"><link rel="prefetch" href="/docs/assets/js/169.833210ec.js"><link rel="prefetch" href="/docs/assets/js/17.af7e435c.js"><link rel="prefetch" href="/docs/assets/js/170.0c1334b1.js"><link rel="prefetch" href="/docs/assets/js/171.d2f53912.js"><link rel="prefetch" href="/docs/assets/js/172.db7c5066.js"><link rel="prefetch" href="/docs/assets/js/173.e80cd2dc.js"><link rel="prefetch" href="/docs/assets/js/174.16665634.js"><link rel="prefetch" href="/docs/assets/js/175.0fe38c64.js"><link rel="prefetch" href="/docs/assets/js/176.12498c44.js"><link rel="prefetch" href="/docs/assets/js/177.72897d62.js"><link rel="prefetch" href="/docs/assets/js/178.66294051.js"><link rel="prefetch" href="/docs/assets/js/18.81dbf910.js"><link rel="prefetch" href="/docs/assets/js/180.049f4de3.js"><link rel="prefetch" href="/docs/assets/js/181.af3d079f.js"><link rel="prefetch" href="/docs/assets/js/182.e1ef020b.js"><link rel="prefetch" href="/docs/assets/js/183.8995491a.js"><link rel="prefetch" href="/docs/assets/js/184.37e77670.js"><link rel="prefetch" href="/docs/assets/js/185.093b8427.js"><link rel="prefetch" href="/docs/assets/js/186.1ed0989c.js"><link rel="prefetch" href="/docs/assets/js/187.074ca85a.js"><link rel="prefetch" href="/docs/assets/js/188.89486e91.js"><link rel="prefetch" href="/docs/assets/js/189.10432373.js"><link rel="prefetch" href="/docs/assets/js/19.367e5b65.js"><link rel="prefetch" href="/docs/assets/js/190.d39f305e.js"><link rel="prefetch" href="/docs/assets/js/191.b888884c.js"><link rel="prefetch" href="/docs/assets/js/192.0bbe3d81.js"><link rel="prefetch" href="/docs/assets/js/193.b2a8ea20.js"><link rel="prefetch" href="/docs/assets/js/194.804d8d81.js"><link rel="prefetch" href="/docs/assets/js/195.b07a0c80.js"><link rel="prefetch" href="/docs/assets/js/196.60ee262d.js"><link rel="prefetch" href="/docs/assets/js/197.00a64bd2.js"><link rel="prefetch" href="/docs/assets/js/198.8bd709d9.js"><link rel="prefetch" href="/docs/assets/js/199.61bdd685.js"><link rel="prefetch" href="/docs/assets/js/20.73a3d8e7.js"><link rel="prefetch" href="/docs/assets/js/200.2db290ab.js"><link rel="prefetch" href="/docs/assets/js/201.46f039ba.js"><link rel="prefetch" href="/docs/assets/js/202.fd8d9d8b.js"><link rel="prefetch" href="/docs/assets/js/203.b82cfe73.js"><link rel="prefetch" href="/docs/assets/js/204.867d29f3.js"><link rel="prefetch" href="/docs/assets/js/205.c00456e8.js"><link rel="prefetch" href="/docs/assets/js/206.ce7ee507.js"><link rel="prefetch" href="/docs/assets/js/207.2c25d014.js"><link rel="prefetch" href="/docs/assets/js/208.9a9b9483.js"><link rel="prefetch" href="/docs/assets/js/209.86920fa6.js"><link rel="prefetch" href="/docs/assets/js/21.41b5c470.js"><link rel="prefetch" href="/docs/assets/js/210.20d29a4f.js"><link rel="prefetch" href="/docs/assets/js/211.0210dda2.js"><link rel="prefetch" href="/docs/assets/js/212.180d91ef.js"><link rel="prefetch" href="/docs/assets/js/213.7c716165.js"><link rel="prefetch" href="/docs/assets/js/214.cd1cbeb7.js"><link rel="prefetch" href="/docs/assets/js/215.96c195a0.js"><link rel="prefetch" href="/docs/assets/js/216.2796ae92.js"><link rel="prefetch" href="/docs/assets/js/217.8f25f704.js"><link rel="prefetch" href="/docs/assets/js/218.4e7bfb67.js"><link rel="prefetch" href="/docs/assets/js/219.80c73007.js"><link rel="prefetch" href="/docs/assets/js/22.628dde2c.js"><link rel="prefetch" href="/docs/assets/js/220.2f5b5a4a.js"><link rel="prefetch" href="/docs/assets/js/221.711b1b8c.js"><link rel="prefetch" href="/docs/assets/js/222.c1f27e11.js"><link rel="prefetch" href="/docs/assets/js/223.c21ff9e1.js"><link rel="prefetch" href="/docs/assets/js/224.d0a2bdee.js"><link rel="prefetch" href="/docs/assets/js/225.221e3161.js"><link rel="prefetch" href="/docs/assets/js/226.e034f17a.js"><link rel="prefetch" href="/docs/assets/js/227.c90a224a.js"><link rel="prefetch" href="/docs/assets/js/228.24a1d2b7.js"><link rel="prefetch" href="/docs/assets/js/229.d68af10a.js"><link rel="prefetch" href="/docs/assets/js/23.e4f41422.js"><link rel="prefetch" href="/docs/assets/js/230.bd24385a.js"><link rel="prefetch" href="/docs/assets/js/231.a06f3b59.js"><link rel="prefetch" href="/docs/assets/js/232.7e0aeb83.js"><link rel="prefetch" href="/docs/assets/js/233.44cc5319.js"><link rel="prefetch" href="/docs/assets/js/234.c1d6e709.js"><link rel="prefetch" href="/docs/assets/js/235.154ad4c7.js"><link rel="prefetch" href="/docs/assets/js/236.321dfb1e.js"><link rel="prefetch" href="/docs/assets/js/237.f30d6765.js"><link rel="prefetch" href="/docs/assets/js/238.7db30870.js"><link rel="prefetch" href="/docs/assets/js/239.d0aa4588.js"><link rel="prefetch" href="/docs/assets/js/24.4b909bc9.js"><link rel="prefetch" href="/docs/assets/js/240.f42eb811.js"><link rel="prefetch" href="/docs/assets/js/241.5eb64cd8.js"><link rel="prefetch" href="/docs/assets/js/242.ae9e1080.js"><link rel="prefetch" href="/docs/assets/js/243.30a1d482.js"><link rel="prefetch" href="/docs/assets/js/244.d10bfde2.js"><link rel="prefetch" href="/docs/assets/js/245.5e3c893c.js"><link rel="prefetch" href="/docs/assets/js/246.75b1266c.js"><link rel="prefetch" href="/docs/assets/js/247.ebc4dcc2.js"><link rel="prefetch" href="/docs/assets/js/248.84f76f42.js"><link rel="prefetch" href="/docs/assets/js/249.a4a80450.js"><link rel="prefetch" href="/docs/assets/js/25.31fe0a8c.js"><link rel="prefetch" href="/docs/assets/js/250.c7203064.js"><link rel="prefetch" href="/docs/assets/js/251.c5f702c6.js"><link rel="prefetch" href="/docs/assets/js/252.a0600942.js"><link rel="prefetch" href="/docs/assets/js/253.3e35e0be.js"><link rel="prefetch" href="/docs/assets/js/254.4dd4dda9.js"><link rel="prefetch" href="/docs/assets/js/255.4f7d9a1d.js"><link rel="prefetch" href="/docs/assets/js/256.4fd27977.js"><link rel="prefetch" href="/docs/assets/js/257.1cd04658.js"><link rel="prefetch" href="/docs/assets/js/258.5f8b434f.js"><link rel="prefetch" href="/docs/assets/js/259.11253879.js"><link rel="prefetch" href="/docs/assets/js/26.115a78c6.js"><link rel="prefetch" href="/docs/assets/js/260.1eb7c777.js"><link rel="prefetch" href="/docs/assets/js/261.af694f3c.js"><link rel="prefetch" href="/docs/assets/js/262.26695275.js"><link rel="prefetch" href="/docs/assets/js/263.c79ed033.js"><link rel="prefetch" href="/docs/assets/js/264.d7b69690.js"><link rel="prefetch" href="/docs/assets/js/265.28380e75.js"><link rel="prefetch" href="/docs/assets/js/266.243884b2.js"><link rel="prefetch" href="/docs/assets/js/267.9af8f569.js"><link rel="prefetch" href="/docs/assets/js/268.c84d016a.js"><link rel="prefetch" href="/docs/assets/js/269.b9a54160.js"><link rel="prefetch" href="/docs/assets/js/27.3e612e35.js"><link rel="prefetch" href="/docs/assets/js/270.cde381fa.js"><link rel="prefetch" href="/docs/assets/js/271.1465660b.js"><link rel="prefetch" href="/docs/assets/js/272.06b8f5ad.js"><link rel="prefetch" href="/docs/assets/js/273.44203404.js"><link rel="prefetch" href="/docs/assets/js/274.637a8828.js"><link rel="prefetch" href="/docs/assets/js/275.a271dcbe.js"><link rel="prefetch" href="/docs/assets/js/276.24aab58d.js"><link rel="prefetch" href="/docs/assets/js/277.8b40c401.js"><link rel="prefetch" href="/docs/assets/js/278.d9e105ba.js"><link rel="prefetch" href="/docs/assets/js/279.70c773c7.js"><link rel="prefetch" href="/docs/assets/js/28.f6a3db4d.js"><link rel="prefetch" href="/docs/assets/js/280.23cd885e.js"><link rel="prefetch" href="/docs/assets/js/281.a8b7be84.js"><link rel="prefetch" href="/docs/assets/js/282.b745fb71.js"><link rel="prefetch" href="/docs/assets/js/283.f8b6c7b9.js"><link rel="prefetch" href="/docs/assets/js/284.8266ca46.js"><link rel="prefetch" href="/docs/assets/js/285.5a6f2b1e.js"><link rel="prefetch" href="/docs/assets/js/286.47e26e4e.js"><link rel="prefetch" href="/docs/assets/js/287.3b0ebbb3.js"><link rel="prefetch" href="/docs/assets/js/288.a96ea837.js"><link rel="prefetch" href="/docs/assets/js/289.0b3d6faf.js"><link rel="prefetch" href="/docs/assets/js/29.98554db9.js"><link rel="prefetch" href="/docs/assets/js/290.54bcb7da.js"><link rel="prefetch" href="/docs/assets/js/291.15607277.js"><link rel="prefetch" href="/docs/assets/js/292.e08315c5.js"><link rel="prefetch" href="/docs/assets/js/293.dda5df51.js"><link rel="prefetch" href="/docs/assets/js/294.8cc05594.js"><link rel="prefetch" href="/docs/assets/js/295.6165412f.js"><link rel="prefetch" href="/docs/assets/js/296.dc064da9.js"><link rel="prefetch" href="/docs/assets/js/297.094891a0.js"><link rel="prefetch" href="/docs/assets/js/298.f7aa38a7.js"><link rel="prefetch" href="/docs/assets/js/299.8aca75ca.js"><link rel="prefetch" href="/docs/assets/js/3.b11eab6a.js"><link rel="prefetch" href="/docs/assets/js/30.8b7f1926.js"><link rel="prefetch" href="/docs/assets/js/300.4f881525.js"><link rel="prefetch" href="/docs/assets/js/301.8aab398a.js"><link rel="prefetch" href="/docs/assets/js/302.08f28a89.js"><link rel="prefetch" href="/docs/assets/js/303.5829653e.js"><link rel="prefetch" href="/docs/assets/js/304.db7a166d.js"><link rel="prefetch" href="/docs/assets/js/305.3ebab72f.js"><link rel="prefetch" href="/docs/assets/js/306.c1ec4c77.js"><link rel="prefetch" href="/docs/assets/js/307.a7a726dc.js"><link rel="prefetch" href="/docs/assets/js/308.0e6be24b.js"><link rel="prefetch" href="/docs/assets/js/309.921c014a.js"><link rel="prefetch" href="/docs/assets/js/31.9c26e3b5.js"><link rel="prefetch" href="/docs/assets/js/310.c63f583b.js"><link rel="prefetch" href="/docs/assets/js/311.83d4dc40.js"><link rel="prefetch" href="/docs/assets/js/312.edbbfc89.js"><link rel="prefetch" href="/docs/assets/js/313.ed422492.js"><link rel="prefetch" href="/docs/assets/js/314.74d4a36e.js"><link rel="prefetch" href="/docs/assets/js/315.cd0b4cda.js"><link rel="prefetch" href="/docs/assets/js/316.5d6ce4e2.js"><link rel="prefetch" href="/docs/assets/js/317.a817382f.js"><link rel="prefetch" href="/docs/assets/js/318.0e959eae.js"><link rel="prefetch" href="/docs/assets/js/319.ae85a785.js"><link rel="prefetch" href="/docs/assets/js/32.3c77baa6.js"><link rel="prefetch" href="/docs/assets/js/320.386fccea.js"><link rel="prefetch" href="/docs/assets/js/321.c59e1b0f.js"><link rel="prefetch" href="/docs/assets/js/322.f3c0d899.js"><link rel="prefetch" href="/docs/assets/js/323.8e59b9fa.js"><link rel="prefetch" href="/docs/assets/js/324.6164db9d.js"><link rel="prefetch" href="/docs/assets/js/325.c0b8008f.js"><link rel="prefetch" href="/docs/assets/js/326.c20509fc.js"><link rel="prefetch" href="/docs/assets/js/327.346c0ac5.js"><link rel="prefetch" href="/docs/assets/js/328.b601c71d.js"><link rel="prefetch" href="/docs/assets/js/329.9dd1d8d7.js"><link rel="prefetch" href="/docs/assets/js/33.3a002d49.js"><link rel="prefetch" href="/docs/assets/js/330.3e9b8896.js"><link rel="prefetch" href="/docs/assets/js/331.b6dda4ee.js"><link rel="prefetch" href="/docs/assets/js/332.fd0071dd.js"><link rel="prefetch" href="/docs/assets/js/333.08c42f7d.js"><link rel="prefetch" href="/docs/assets/js/334.6889cda9.js"><link rel="prefetch" href="/docs/assets/js/335.0189fb3c.js"><link rel="prefetch" href="/docs/assets/js/336.1570613a.js"><link rel="prefetch" href="/docs/assets/js/337.aa2a6939.js"><link rel="prefetch" href="/docs/assets/js/338.37dc3965.js"><link rel="prefetch" href="/docs/assets/js/339.05b5fd59.js"><link rel="prefetch" href="/docs/assets/js/34.415d2d24.js"><link rel="prefetch" href="/docs/assets/js/340.85c30bbf.js"><link rel="prefetch" href="/docs/assets/js/341.b9e0372b.js"><link rel="prefetch" href="/docs/assets/js/342.bbf4162f.js"><link rel="prefetch" href="/docs/assets/js/343.ead55fa5.js"><link rel="prefetch" href="/docs/assets/js/344.406e552f.js"><link rel="prefetch" href="/docs/assets/js/345.3f83f573.js"><link rel="prefetch" href="/docs/assets/js/346.a02c9dd1.js"><link rel="prefetch" href="/docs/assets/js/347.5dde4668.js"><link rel="prefetch" href="/docs/assets/js/348.6862dc58.js"><link rel="prefetch" href="/docs/assets/js/349.da6fa303.js"><link rel="prefetch" href="/docs/assets/js/35.9408bba7.js"><link rel="prefetch" href="/docs/assets/js/350.2c15623f.js"><link rel="prefetch" href="/docs/assets/js/351.bb020ee6.js"><link rel="prefetch" href="/docs/assets/js/352.56c50db9.js"><link rel="prefetch" href="/docs/assets/js/353.3975571b.js"><link rel="prefetch" href="/docs/assets/js/354.d587b6e5.js"><link rel="prefetch" href="/docs/assets/js/355.b8651923.js"><link rel="prefetch" href="/docs/assets/js/356.7f0f28d7.js"><link rel="prefetch" href="/docs/assets/js/357.531e0a1b.js"><link rel="prefetch" href="/docs/assets/js/358.818500a1.js"><link rel="prefetch" href="/docs/assets/js/359.9348ba3b.js"><link rel="prefetch" href="/docs/assets/js/36.51173233.js"><link rel="prefetch" href="/docs/assets/js/360.110feba7.js"><link rel="prefetch" href="/docs/assets/js/361.c04df312.js"><link rel="prefetch" href="/docs/assets/js/362.d7d6ce08.js"><link rel="prefetch" href="/docs/assets/js/363.e570b7df.js"><link rel="prefetch" href="/docs/assets/js/364.0729337f.js"><link rel="prefetch" href="/docs/assets/js/365.e84dc075.js"><link rel="prefetch" href="/docs/assets/js/366.0c516e5c.js"><link rel="prefetch" href="/docs/assets/js/367.66d71f47.js"><link rel="prefetch" href="/docs/assets/js/368.0b319355.js"><link rel="prefetch" href="/docs/assets/js/369.bba973af.js"><link rel="prefetch" href="/docs/assets/js/37.78bdfa84.js"><link rel="prefetch" href="/docs/assets/js/370.0c44b780.js"><link rel="prefetch" href="/docs/assets/js/371.1e500ba6.js"><link rel="prefetch" href="/docs/assets/js/372.06b897e6.js"><link rel="prefetch" href="/docs/assets/js/373.488e19c8.js"><link rel="prefetch" href="/docs/assets/js/374.b70e91a2.js"><link rel="prefetch" href="/docs/assets/js/375.ea4ff9bf.js"><link rel="prefetch" href="/docs/assets/js/376.f862e161.js"><link rel="prefetch" href="/docs/assets/js/377.3264891e.js"><link rel="prefetch" href="/docs/assets/js/378.a577238f.js"><link rel="prefetch" href="/docs/assets/js/379.703c73a2.js"><link rel="prefetch" href="/docs/assets/js/38.4da241d0.js"><link rel="prefetch" href="/docs/assets/js/380.d2f0a27e.js"><link rel="prefetch" href="/docs/assets/js/381.3a48fee3.js"><link rel="prefetch" href="/docs/assets/js/382.1109112d.js"><link rel="prefetch" href="/docs/assets/js/383.34ad402e.js"><link rel="prefetch" href="/docs/assets/js/384.52465a88.js"><link rel="prefetch" href="/docs/assets/js/385.5fdb7fae.js"><link rel="prefetch" href="/docs/assets/js/386.f337bcf6.js"><link rel="prefetch" href="/docs/assets/js/387.862bad45.js"><link rel="prefetch" href="/docs/assets/js/388.9645416e.js"><link rel="prefetch" href="/docs/assets/js/389.92700a0d.js"><link rel="prefetch" href="/docs/assets/js/39.af0d6115.js"><link rel="prefetch" href="/docs/assets/js/390.057dd5e2.js"><link rel="prefetch" href="/docs/assets/js/391.0290bd4d.js"><link rel="prefetch" href="/docs/assets/js/392.da263ba2.js"><link rel="prefetch" href="/docs/assets/js/393.0306586b.js"><link rel="prefetch" href="/docs/assets/js/394.d31166e1.js"><link rel="prefetch" href="/docs/assets/js/395.c0f229b1.js"><link rel="prefetch" href="/docs/assets/js/396.6221d567.js"><link rel="prefetch" href="/docs/assets/js/397.60175b22.js"><link rel="prefetch" href="/docs/assets/js/398.026f516d.js"><link rel="prefetch" href="/docs/assets/js/399.6b41662b.js"><link rel="prefetch" href="/docs/assets/js/4.8dddf48b.js"><link rel="prefetch" href="/docs/assets/js/40.bd5dd5c0.js"><link rel="prefetch" href="/docs/assets/js/400.18a6502e.js"><link rel="prefetch" href="/docs/assets/js/401.28590feb.js"><link rel="prefetch" href="/docs/assets/js/402.8d2c1854.js"><link rel="prefetch" href="/docs/assets/js/403.ca0254d5.js"><link rel="prefetch" href="/docs/assets/js/404.9d13aa5c.js"><link rel="prefetch" href="/docs/assets/js/41.79f09a42.js"><link rel="prefetch" href="/docs/assets/js/42.4abb571f.js"><link rel="prefetch" href="/docs/assets/js/43.14464f83.js"><link rel="prefetch" href="/docs/assets/js/44.4980d817.js"><link rel="prefetch" href="/docs/assets/js/45.02b53787.js"><link rel="prefetch" href="/docs/assets/js/46.6448463e.js"><link rel="prefetch" href="/docs/assets/js/47.ae0f5d45.js"><link rel="prefetch" href="/docs/assets/js/48.6d5a807b.js"><link rel="prefetch" href="/docs/assets/js/49.f705d0ff.js"><link rel="prefetch" href="/docs/assets/js/5.dfa4a989.js"><link rel="prefetch" href="/docs/assets/js/50.4de00622.js"><link rel="prefetch" href="/docs/assets/js/51.89ad0869.js"><link rel="prefetch" href="/docs/assets/js/52.c8408844.js"><link rel="prefetch" href="/docs/assets/js/53.b88afa8f.js"><link rel="prefetch" href="/docs/assets/js/54.10119469.js"><link rel="prefetch" href="/docs/assets/js/55.4eca7939.js"><link rel="prefetch" href="/docs/assets/js/56.b443d37f.js"><link rel="prefetch" href="/docs/assets/js/57.4ca8a7d6.js"><link rel="prefetch" href="/docs/assets/js/58.d5c47f9a.js"><link rel="prefetch" href="/docs/assets/js/59.4120b53f.js"><link rel="prefetch" href="/docs/assets/js/6.cf2349fb.js"><link rel="prefetch" href="/docs/assets/js/60.af6ee860.js"><link rel="prefetch" href="/docs/assets/js/61.76636334.js"><link rel="prefetch" href="/docs/assets/js/62.cec32436.js"><link rel="prefetch" href="/docs/assets/js/63.2261de78.js"><link rel="prefetch" href="/docs/assets/js/64.48967a7c.js"><link rel="prefetch" href="/docs/assets/js/65.dcb191db.js"><link rel="prefetch" href="/docs/assets/js/66.eb1ce8b6.js"><link rel="prefetch" href="/docs/assets/js/67.22f334b5.js"><link rel="prefetch" href="/docs/assets/js/68.1a742cc3.js"><link rel="prefetch" href="/docs/assets/js/69.05c53dd4.js"><link rel="prefetch" href="/docs/assets/js/7.867c388f.js"><link rel="prefetch" href="/docs/assets/js/70.4f8e09ef.js"><link rel="prefetch" href="/docs/assets/js/71.25a77b27.js"><link rel="prefetch" href="/docs/assets/js/72.7f9637c9.js"><link rel="prefetch" href="/docs/assets/js/73.b912858b.js"><link rel="prefetch" href="/docs/assets/js/74.db1f20e0.js"><link rel="prefetch" href="/docs/assets/js/75.3c3b5da1.js"><link rel="prefetch" href="/docs/assets/js/76.b5fa41ec.js"><link rel="prefetch" href="/docs/assets/js/77.3c1ef269.js"><link rel="prefetch" href="/docs/assets/js/78.0c6e5409.js"><link rel="prefetch" href="/docs/assets/js/79.fd8953c0.js"><link rel="prefetch" href="/docs/assets/js/8.3332a15d.js"><link rel="prefetch" href="/docs/assets/js/80.a80b73de.js"><link rel="prefetch" href="/docs/assets/js/81.b96cb810.js"><link rel="prefetch" href="/docs/assets/js/82.4bd108fa.js"><link rel="prefetch" href="/docs/assets/js/83.30b6fc81.js"><link rel="prefetch" href="/docs/assets/js/84.ee587fbe.js"><link rel="prefetch" href="/docs/assets/js/85.b7561531.js"><link rel="prefetch" href="/docs/assets/js/86.509234fd.js"><link rel="prefetch" href="/docs/assets/js/87.c8a8eadc.js"><link rel="prefetch" href="/docs/assets/js/88.8b59e751.js"><link rel="prefetch" href="/docs/assets/js/89.a356be4b.js"><link rel="prefetch" href="/docs/assets/js/9.2a3d99eb.js"><link rel="prefetch" href="/docs/assets/js/90.3c9da12e.js"><link rel="prefetch" href="/docs/assets/js/91.e8d60856.js"><link rel="prefetch" href="/docs/assets/js/92.85256d4d.js"><link rel="prefetch" href="/docs/assets/js/93.ee3cab33.js"><link rel="prefetch" href="/docs/assets/js/94.a5a7db80.js"><link rel="prefetch" href="/docs/assets/js/95.c3354377.js"><link rel="prefetch" href="/docs/assets/js/96.8dfebc1c.js"><link rel="prefetch" href="/docs/assets/js/97.4faf3155.js"><link rel="prefetch" href="/docs/assets/js/98.41af99ee.js"><link rel="prefetch" href="/docs/assets/js/99.73ce0e38.js">
+    <link rel="stylesheet" href="/docs/assets/css/0.styles.4f35daf1.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/docs/" class="home-link router-link-active"><!----> <span class="site-name">计算机基础教程</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/docs/" class="nav-link">
+  机器指令
+</a></div><div class="nav-item"><a href="/docs/software/" class="nav-link router-link-active">
+  软件基础
+</a></div><div class="nav-item"><a href="/docs/coder2hacker/" class="nav-link">
+  白帽黑客
+</a></div><div class="nav-item"><a href="/docs/blockchain/" class="nav-link">
+  区块链
+</a></div><div class="nav-item"><a href="/docs/biography/" class="nav-link">
+  少儿教育
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/docs/" class="nav-link">
+  机器指令
+</a></div><div class="nav-item"><a href="/docs/software/" class="nav-link router-link-active">
+  软件基础
+</a></div><div class="nav-item"><a href="/docs/coder2hacker/" class="nav-link">
+  白帽黑客
+</a></div><div class="nav-item"><a href="/docs/blockchain/" class="nav-link">
+  区块链
+</a></div><div class="nav-item"><a href="/docs/biography/" class="nav-link">
+  少儿教育
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/docs/software/" aria-current="page" class="sidebar-link">软件基础</a></li><li><a href="/docs/coder2hacker/" class="sidebar-link">黑客入门</a></li><li><a href="/docs/blockchain/" class="sidebar-link">区块链入门</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h2 id="concepts"><a href="#concepts" class="header-anchor">#</a> Concepts</h2> <ul><li>tokens
+Prices are per 1,000 tokens. You can think of tokens as pieces of words, where 1,000 tokens is about 750 words. This paragraph is 35 tokens.
+https://platform.openai.com/tokenizer</li></ul> <p>ChatGPT is based on GPT-3. There are four main models that GPT-3 model offers:</p> <p>Davinci — Most capable GPT-3 model. Can do any task the other models can do, often with higher quality, longer output and better instruction-following. Also supports inserting completions within text.
+Curie — Very capable, but faster and lower cost than Davinci.
+Babbage — Capable of straightforward tasks, very fast, and lower cost.
+Ada — Capable of very simple tasks, usually the fastest model in the GPT-3 series, and lowest cost.</p> <p>https://platform.openai.com/docs/models/gpt-3</p> <p>Clip:
+CLIP Contrastive Language-Image Pre-Training 是OpenAI于2021年提出的一个模型。CLIP将图像和文本编码成向量，可以在同一空间进行比较的表示。</p> <p>https://mp.weixin.qq.com/s/wOqBjAfEGheevtVykpHeIg</p> <p>https://mazzzystar.github.io/2022/12/29/Run-CLIP-on-iPhone-to-Search-Photos/</p> <p>https://github.com/mazzzystar/Queryable</p> <h2 id="api"><a href="#api" class="header-anchor">#</a> API</h2> <p>https://platform.openai.com/docs/api-reference/authentication</p> <p>https://platform.openai.com/account/api-keys</p> <p>curl https://api.openai.com/v1/completions <br>
+-H &quot;Content-Type: application/json&quot; <br>
+-H &quot;Authorization: Bearer YOUR_API_KEY&quot; <br>
+-d '{&quot;model&quot;: &quot;text-davinci-003&quot;, &quot;prompt&quot;: &quot;Say this is a test&quot;, &quot;temperature&quot;: 0, &quot;max_tokens&quot;: 7}'</p> <p>curl https://api.openai.com/v1/models <br>
+-H 'Authorization: Bearer YOUR_API_KEY'</p> <div class="language- extra-class"><pre class="language-text"><code> &quot;object&quot;: &quot;list&quot;,
+  &quot;data&quot;: [
+    {
+      &quot;id&quot;: &quot;babbage&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1649358449,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-49FUp5v084tBB49tC4z8LPH5&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669085501,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;babbage&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;davinci&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1649359874,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-U6ZwlyAd0LyMk4rcMdz33Yc3&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669066355,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;davinci&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;babbage-code-search-code&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172509,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-4qRnA3Hj8HIJbgo0cGbcmErn&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669085863,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;babbage-code-search-code&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-similarity-babbage-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172505,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-48kcCHhfzvnfY84OtJf5m8Cz&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669081947,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-similarity-babbage-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-davinci-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1649364042,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-MVM5NfoRjXkDve3uQW3YZDDt&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669066355,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-davinci-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;ada&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1649357491,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-u0nKN4ub7EVQudgMuvCuvDjc&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1675997661,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;ada&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;curie-instruct-beta&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1649364042,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-JlSyMbxXeFm42SDjN0wTD26Y&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669070162,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;curie-instruct-beta&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;babbage-code-search-text&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172509,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-Lftf8H4ZPDxNxVs0hHPJBUoe&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669085863,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;babbage-code-search-text&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;babbage-similarity&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172505,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-mS20lnPqhebTaFPrcCufyg7m&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669081947,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;babbage-similarity&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;code-search-babbage-text-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172507,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-EC5ASz4NLChtEV1Cwkmrwm57&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669085863,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;code-search-babbage-text-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-embedding-ada-002&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1671217299,
+      &quot;owned_by&quot;: &quot;openai-internal&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-ThMneEHcUgdBaIucwREqRj2a&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1677075687,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-embedding-ada-002&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;code-cushman-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1656081837,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-M6pwNXr8UmY3mqdUEe4VFXdY&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669066355,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;code-cushman-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;code-search-babbage-code-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172507,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-64LWHdlANgak2rHzc3K5Stt0&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669085864,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;code-search-babbage-code-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;audio-transcribe-deprecated&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1674776185,
+      &quot;owned_by&quot;: &quot;openai-internal&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-IPCtO1a9wW5TDxGCIqy0iVfK&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1674776185,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;audio-transcribe-deprecated&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-ada-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1649364042,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-KN5dRBCEW4az6gwcGXkRkMwK&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669088497,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-ada-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-similarity-ada-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172505,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-DdCqkqmORpqxqdg4TkFRAgmw&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669092759,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-similarity-ada-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-davinci-insert-002&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1649880484,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-V5YQoSyiapAf4km5wisXkNXh&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669066354,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-davinci-insert-002&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;ada-code-search-code&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172505,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-wa8tg4Pi9QQNaWdjMTM8dkkx&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669087421,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;ada-code-search-code&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-davinci-003&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1669599635,
+      &quot;owned_by&quot;: &quot;openai-internal&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-loLaKHUdKtFOPD6zujUCDHno&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1677093237,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-davinci-003&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;ada-similarity&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172507,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-LtSIwCEReeDcvGTmM13gv6Fg&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669092759,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;ada-similarity&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;code-search-ada-text-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172507,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-JBssaJSmbgvJfTkX71y71k2J&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669087421,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;code-search-ada-text-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-search-ada-query-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172505,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-1YiiBMYC8it0mpQCBK7t8uSP&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669092640,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-search-ada-query-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-curie-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1649364043,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-fGAoEKBH01KNZ3zz81Sro34Q&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669066352,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-curie-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-davinci-edit-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1649809179,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-VzNMGrIRm3HxhEl64gkjZdEh&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669066354,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-davinci-edit-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;davinci-search-document&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172509,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-M43LVJQRGxz6ode34ctLrCaG&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669066355,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;davinci-search-document&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;ada-code-search-text&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172510,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-kFc17wOI4d1FjZEaCqnk4Frg&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669087421,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;ada-code-search-text&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-search-ada-doc-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172507,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-kbHvYouDlkD78ehcmMOGdKpK&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669092640,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-search-ada-doc-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;code-davinci-edit-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1649880484,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-WwansDxcKNvZtKugNqJnsvfv&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669066354,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;code-davinci-edit-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;davinci-instruct-beta&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1649364042,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-k9kuMYlfd9nvFiJV2ug0NWws&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669066356,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;davinci-instruct-beta&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-similarity-curie-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172507,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-6dgTTyXrZE7d53Licw4hYkvd&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669079883,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-similarity-curie-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;code-search-ada-code-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172507,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-8soch45iiGvux5Fg1ORjdC4s&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669087421,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;code-search-ada-code-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;ada-search-query&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172505,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-b753xmIzAUkluQ1L20eDZLtQ&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669092640,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;ada-search-query&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-search-davinci-query-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172505,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-9McKbsEYSaDshU9M3bp6ejUb&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669066353,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-search-davinci-query-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;curie-search-query&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172509,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-sIbfSwzVpVBtymQgOQSLBpxe&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1677273417,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;curie-search-query&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;code-davinci-002&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1649880485,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-8akmTLnpG27YnWXC959AzZL9&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1676580880,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;code-davinci-002&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;davinci-search-query&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172505,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-lYkiTZMmJMWm8jvkPx2duyHE&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669066353,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;davinci-search-query&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-davinci-insert-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1649880484,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-3gRQMBOMoccZIURE3ZxboZWA&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669066354,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-davinci-insert-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;babbage-search-document&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172510,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-5qFV9kxCRGKIXpBEP75chmp7&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669084981,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;babbage-search-document&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;ada-search-document&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172507,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-8qUMuMAbo4EwedbGamV7e9hq&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669092640,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;ada-search-document&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-search-curie-query-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172509,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-Iion0NCpsXPNtIkQ0owQLi7V&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1677273417,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-search-curie-query-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-search-babbage-doc-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172509,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-ao2r26P2Th7nhRFleHwy2gn5&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669084981,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-search-babbage-doc-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-davinci-002&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1649880484,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-kOLsgLs7IgI9PTPI245IRWZH&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1676585871,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-davinci-002&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;curie-search-document&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172508,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-LDsN5wW8eKVuh1OsyciHntE9&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1677273417,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;curie-search-document&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-search-curie-doc-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172509,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-taUGRSku7bQLa24SNIwYPEsi&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1677273417,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-search-curie-doc-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;babbage-search-query&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172509,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-wSs1hMXDKsrcErlbN8HmzlLE&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669084981,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;babbage-search-query&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-babbage-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1649364043,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-a3Ph5FIBbJxsoA4wvx7VYC7R&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1675105935,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-babbage-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-search-davinci-doc-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172505,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-qhSf1j2MJMujcu3t7cHnF1DN&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669066353,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-search-davinci-doc-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-search-babbage-query-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172509,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-Kg70kkFxD93QQqsVe4Zw8vjc&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669084981,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-search-babbage-query-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;curie-similarity&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172510,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-zhWKExSloaQiJgzjVHFmh2wR&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1675106290,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;curie-similarity&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;curie&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1649359874,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-oPaljeveTjEIDbhDjzFiyf4V&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1675106503,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;curie&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-similarity-davinci-001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172505,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-OvmcfYoq5V9SF9xTYw1Oz6Ue&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669066356,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-similarity-davinci-001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;davinci-similarity&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1651172509,
+      &quot;owned_by&quot;: &quot;openai-dev&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;modelperm-lYYgng3LM0Y97HvB5CDc8no2&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1669066353,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: true,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;davinci-similarity&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;cushman:2020-05-03&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1590625110,
+      &quot;owned_by&quot;: &quot;system&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;snapperm-FAup8P1KqclNlTsunLDRiesT&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1590625111,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: true,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;cushman:2020-05-03&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;ada:2020-05-03&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1607631625,
+      &quot;owned_by&quot;: &quot;system&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;snapperm-9TYofAqUs54vytKYL0IX91rX&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1607631626,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;ada:2020-05-03&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;babbage:2020-05-03&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1607632611,
+      &quot;owned_by&quot;: &quot;system&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;snapperm-jaLAcmyyNuaVmalCE1BGTGwf&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1607632613,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;babbage:2020-05-03&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;curie:2020-05-03&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1607632725,
+      &quot;owned_by&quot;: &quot;system&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;snapperm-bt6R8PWbB2SwK5evFo0ZxSs4&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1607632727,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;curie:2020-05-03&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;davinci:2020-05-03&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1607640163,
+      &quot;owned_by&quot;: &quot;system&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;snapperm-99cbfQTYDVeLkTYndX3UMpSr&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1607640164,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;davinci:2020-05-03&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;if-davinci-v2&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1610745990,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;snapperm-58q0TdK2K4kMgL3MoHvGWMlH&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1610746036,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;if-davinci-v2&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;if-curie-v2&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1610745968,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;snapperm-fwAseHVq6NGe6Ple6tKfzRSK&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1610746043,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;if-curie-v2&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;if-davinci:3.0.0&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1629420755,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;snapperm-T53lssiyMWwiuJwhyO9ic53z&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1629421809,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: true,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;if-davinci:3.0.0&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;davinci-if:3.0.0&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1629498070,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;snapperm-s6ZIAVMwlZwrLGGClTXqSK3Q&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1629498084,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: true,
+          &quot;organization&quot;: &quot;*&quot;,
+100 44411  100 44411    0     0  38517      0  0:00:01  0:00:01 --:--:-- 38517p&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;davinci-if:3.0.0&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;davinci-instruct-beta:2.0.0&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1629501914,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;snapperm-c70U4TBfiOD839xptP5pJzyc&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1629501939,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: true,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;davinci-instruct-beta:2.0.0&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-ada:001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1641949608,
+      &quot;owned_by&quot;: &quot;system&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;snapperm-d2PSnwFG1Yn9of6PvrrhkBcU&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1641949610,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-ada:001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-davinci:001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1641943966,
+      &quot;owned_by&quot;: &quot;system&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;snapperm-Fj1O3zkKXOQy6AkcfQXRKcWA&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1641944340,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-davinci:001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-curie:001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1641955047,
+      &quot;owned_by&quot;: &quot;system&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;snapperm-BI9TAT6SCj43JRsUb9CYadsz&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1641955123,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-curie:001&quot;,
+      &quot;parent&quot;: null
+    },
+    {
+      &quot;id&quot;: &quot;text-babbage:001&quot;,
+      &quot;object&quot;: &quot;model&quot;,
+      &quot;created&quot;: 1642018370,
+      &quot;owned_by&quot;: &quot;openai&quot;,
+      &quot;permission&quot;: [
+        {
+          &quot;id&quot;: &quot;snapperm-7oP3WFr9x7qf5xb3eZrVABAH&quot;,
+          &quot;object&quot;: &quot;model_permission&quot;,
+          &quot;created&quot;: 1642018480,
+          &quot;allow_create_engine&quot;: false,
+          &quot;allow_sampling&quot;: true,
+          &quot;allow_logprobs&quot;: true,
+          &quot;allow_search_indices&quot;: false,
+          &quot;allow_view&quot;: true,
+          &quot;allow_fine_tuning&quot;: false,
+          &quot;organization&quot;: &quot;*&quot;,
+          &quot;group&quot;: null,
+          &quot;is_blocking&quot;: false
+        }
+      ],
+      &quot;root&quot;: &quot;text-babbage:001&quot;,
+      &quot;parent&quot;: null
+    }
+  ]
+}
+
+</code></pre></div><p>curl https://api.openai.com/v1/models/text-davinci-003 <br>
+-H 'Authorization: Bearer YOUR_API_KEY'</p> <h3 id="create-completion"><a href="#create-completion" class="header-anchor">#</a> Create completion</h3> <ul><li>Text</li> <li>Code
+Saying &quot;Hello&quot; (Python)
+Create a MySQL query (Python)</li></ul> <div class="language- extra-class"><pre class="language-text"><code>curl https://api.openai.com/v1/completions \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -d '{
+  &quot;model&quot;: &quot;text-davinci-003&quot;,
+  &quot;prompt&quot;: &quot;Say this is a test&quot;,
+  &quot;max_tokens&quot;: 7,
+  &quot;temperature&quot;: 0
+}'
+</code></pre></div><h3 id="create-edit"><a href="#create-edit" class="header-anchor">#</a> Create edit</h3> <div class="language- extra-class"><pre class="language-text"><code>curl https://api.openai.com/v1/edits \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -d '{
+  &quot;model&quot;: &quot;text-davinci-edit-001&quot;,
+  &quot;input&quot;: &quot;What day of the wek is it?&quot;,
+  &quot;instruction&quot;: &quot;Fix the spelling mistakes&quot;
+}'
+
+</code></pre></div><h3 id="images"><a href="#images" class="header-anchor">#</a> Images</h3> <p>Create image</p> <div class="language- extra-class"><pre class="language-text"><code>curl https://api.openai.com/v1/images/generations \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -d '{
+  &quot;prompt&quot;: &quot;A cute baby sea otter&quot;,
+  &quot;n&quot;: 2,
+  &quot;size&quot;: &quot;1024x1024&quot;
+}'
+
+</code></pre></div><p>Create image edit</p> <div class="language- extra-class"><pre class="language-text"><code>curl https://api.openai.com/v1/images/edits \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -F image='@otter.png' \
+  -F mask='@mask.png' \
+  -F prompt=&quot;A cute baby sea otter wearing a beret&quot; \
+  -F n=2 \
+  -F size=&quot;1024x1024&quot;
+
+</code></pre></div><p>Create image variation</p> <div class="language- extra-class"><pre class="language-text"><code>curl https://api.openai.com/v1/images/variations \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -F image='@otter.png' \
+  -F n=2 \
+  -F size=&quot;1024x1024&quot;
+
+</code></pre></div><h3 id="create-embeddings"><a href="#create-embeddings" class="header-anchor">#</a> Create embeddings</h3> <div class="language- extra-class"><pre class="language-text"><code>curl https://api.openai.com/v1/embeddings \
+  -X POST \
+  -H &quot;Authorization: Bearer YOUR_API_KEY&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;input&quot;: &quot;The food was delicious and the waiter...&quot;,
+       &quot;model&quot;: &quot;text-embedding-ada-002&quot;}'
+
+</code></pre></div><h3 id="files"><a href="#files" class="header-anchor">#</a> Files</h3> <h3 id="fine-tunes"><a href="#fine-tunes" class="header-anchor">#</a> Fine-tunes</h3> <h3 id="moderations"><a href="#moderations" class="header-anchor">#</a> Moderations</h3> <h3 id="engines"><a href="#engines" class="header-anchor">#</a> Engines</h3> <h2 id="image-generation"><a href="#image-generation" class="header-anchor">#</a> image generation</h2> <p>DALL·E 2 can create original, realistic images and art from a text description. It can combine concepts, attributes, and styles.
+https://openai.com/product/dall-e-2</p> <h2 id="develop"><a href="#develop" class="header-anchor">#</a> develop</h2> <div class="language- extra-class"><pre class="language-text"><code>import openai
+openai.api_key = &quot;YOUR_API_KEY&quot;
+
+models = openai.Model.list()
+print(models)
+</code></pre></div><p>https://writesonic.com/chat?ref=producthunt</p> <p>https://community.modelscope.cn/63ca5f30406cc1159771878f.html</p> <p>v2ray:
+http://git.io/v2ray.sh</p> <div class="language- extra-class"><pre class="language-text"><code>server {
+	listen       80;
+    #listen 443 http2 ssl;
+    #listen [::]:443 http2 ssl;
+
+    #server_name server_IP_address;
+
+    #ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+    #ssl_certificate_key /etc/ssl/privatekey/nginx-selfsigned.key;
+    #ssl_dhparam /etc/ssl/certs/dhparam.pem;
+
+    location / {
+        add_header Content-Type text/html;
+
+        return 200 '&lt;html&gt;&lt;body&gt;Hello World&lt;/body&gt;&lt;/html&gt;';
+    }
+
+    location /chatbot {
+        proxy_pass http://my_app_upstream;
+        proxy_set_header Host $http_host;
+    }
+}
+
+
+https://stackoverflow.com/questions/5834025/how-to-preserve-request-url-with-nginx-proxy-pass
+https://serverfault.com/questions/1113782/using-nginx-as-a-forward-proxy-in-a-relay-server-for-v2ray-connection
+</code></pre></div><p>curl --header &quot;Host: google.com&quot; http://shiyela.com/</p> <p>https://www.4spaces.org/1073.html</p> <div class="language- extra-class"><pre class="language-text"><code>inbound
+&quot;inbounds&quot;:[
+         {
+             &quot;listen&quot;: &quot;127.0.0.1&quot;,
+             &quot;port&quot;: 1081,
+             &quot;protocol&quot;: &quot;http&quot;,
+             &quot;tag&quot;: &quot;chatbot&quot;
+         }   
+     ],
+
+outbound
+
+&quot;type&quot;: &quot;field&quot;,
+        &quot;outboundTag&quot;: &quot;direct&quot;,
+        &quot;domain&quot;: [
+            &quot;domain:chatgpt.com&quot;
+        ]
+rules
+{
+  &quot;type&quot;: &quot;field&quot;,
+  &quot;domain&quot;: [
+    &quot;baidu.com&quot;,
+    &quot;qq.com&quot;,
+    &quot;geosite:cn&quot;
+  ],
+  &quot;inboundTag&quot;: [
+    &quot;chatbot&quot;
+  ],
+  &quot;outboundTag&quot;: &quot;direct&quot;,
+  &quot;balancerTag&quot;: &quot;balancer&quot;
+}
+</code></pre></div><p>enableHttp2
+https://developers.weixin.qq.com/miniprogram/dev/api/network/request/wx.request.html</p> <h2 id="prompt-实战"><a href="#prompt-实战" class="header-anchor">#</a> Prompt 实战</h2> <h3 id="广告投放"><a href="#广告投放" class="header-anchor">#</a> 广告投放</h3> <p>Facebook Ads Setup (CHATGPT PROMPT)
+My client:
+The target:
+My budget:</p> <p>make a table with the name &quot;Campaign&quot; with these
+column headers
+show the column headers horizontally
+the text before the | is the column head the text after | is the information
+Campaign &quot;my client&quot; &amp; &quot;Interest testing&quot; Budget &quot;my budget&quot;,
+Campaign Type | Purchase Conversion Networks | Facebook
+Languages | en
+Bid Strategy Type | Lowest Cost
+Start Date 2023-07-12
+End date | 2023-14-12
+make a second table with the name &quot;Audience&quot; with these horizontal column headers
+Campaign | same name as Campaign name above Ad group make 5 audiences that has to do with people interested in running
+make a third table with the name &quot;Ads&quot; with these column headers
+headlines of max. 15 characters and description lines of max. 90 characters</p> <h3 id="中文指令万能公式-角色-角色技能-任务核心关键词-任务目标-任务背景-任务范围-任务解决与否判定-任务限制条件-输出格式-形式-输出量。"><a href="#中文指令万能公式-角色-角色技能-任务核心关键词-任务目标-任务背景-任务范围-任务解决与否判定-任务限制条件-输出格式-形式-输出量。" class="header-anchor">#</a> 中文指令万能公式 = 角色 + 角色技能 + 任务核心关键词 + 任务目标 + 任务背景 + 任务范围 + 任务解决与否判定 + 任务限制条件 + 输出格式/形式 + 输出量。</h3> <p>角色比如：市场营销专家、幼儿教师、面试官等。</p> <p>角色技能 比如，非常熟悉市场细分、非常熟悉亲子沟通、特别擅长广告创意等等</p> <p>任务核心关键词 比如：小红书运营方案或者“文字+视频脚本”</p> <p>任务目标 比如：写一份小红书运营方案或者三段适合在短视频平台引发病毒传播的“文字+视频脚本”</p> <p>任务背景 比如：我是一名珠宝公司的小红书运营专员，需要给领导提交一份运营方案。</p> <p>任务范围 比如：针对中国市场，或者是针对中国短视频平台。</p> <p>任务解决与否判定 比如：能够指导运营团队直接落地实施该方案，或者，能够直接在公众号发布</p> <p>任务限制条件 主要是对任务的具体或详细或针对性需求描述，比如用案例说明，比如引用大量相关数据，比如用幽默的方式等。</p> <p>输出格式/形式 比如：中文输出，表格输出等。</p> <p>输出量需求 比如：不少于2000字，或者，三个模板。</p> <p>你现在是一个{角色}，有10年的工作经验，非常擅长{角色技能}。
+我是一个产品运营人员，需要对产品目标消费者进行分析。
+在我给你提出一个产品之后，你要为我详细有序的分析这个产品在中国区的受众都可能是哪几种人群，他们都有什么特征，并分析出这些用户可能存在的痛点都是什么，还要为这个产品生成三段适合在短视频平台引发病毒式传播的{核心任务词}”。
+请用中文输出。
+如果你有任何问题，在生成你的建议之前，你要先对我进行询问
+{角色}=产品营销经理
+{角色技能}=产品设计与创新，和目标消费者分析
+{核心任务词}=文字+镜头脚本</p> <h3 id="逆向指令"><a href="#逆向指令" class="header-anchor">#</a> 逆向指令</h3> <p>指令
+我将输入一段文案给你，文案具体内容是{文案内容}，请对{文案内容}使用逆向提示工程，总结{文案内容}中的写作风格、表现手法、核心内容，以及其它可以考虑的角度，然后给出可以生成这个文案的具体指令（Prompt）。
+{文案内容}=XXXXXXXXXXXXXX（这里输入文案内容）。</p> <p>为了验证指令的水平，或者说为了更强化指令给到ChatGPT后，ChatGPT会如何理解该指令，我们可以再让ChatGPT对该指令进行3个方面的分析：</p> <p>方面1——指令【特异性】
+&quot;请撰写一篇关于中国&quot;爱国主义教育法草案&quot;首次提请审议的新闻报道，内容应包括草案的主要内容、重点看点，以及专家学者对草案的看法和评论。请在文中强调爱国主义教育对全体公民、特别是青少年和儿童的重要性，同时明确各类主体的职责与作用。在文案中加入具体的实例或案例，使内容更具实际性和可信度。&quot;请分析这个Prompt 的 Specificity.</p> <p>方面2——指令的【任务定义】
+&quot;请撰写一篇关于中国&quot;爱国主义教育法草案&quot;首次提请审议的新闻报道，内容应包括草案的主要内容、重点看点，以及专家学者对草案的看法和评论。请在文中强调爱国主义教育对全体公民、特别是青少年和儿童的重要性，同时明确各类主体的职责与作用。在文案中加入具体的实例或案例，使内容更具实际性和可信度。&quot;请将这个Prompt 分解为 Task Definition.</p> <p>方面3——上下文关联性
+&quot;请撰写一篇关于中国&quot;爱国主义教育法草案&quot;首次提请审议的新闻报道，内容应包括草案的主要内容、重点看点，以及专家学者对草案的看法和评论。请在文中强调爱国主义教育对全体公民、特别是青少年和儿童的重要性，同时明确各类主体的职责与作用。在文案中加入具体的实例或案例，使内容更具实际性和可信度。&quot;请将这个Prompt 分解为 Context Relevance.</p> <p>通过以上分析和拆解，我们就能够了解指令的全面性、准确性，那么也就知道如何调整指令，以便拿到ChatGPT更好的回复！
+同理，我们可以应用这个方式拆解各种平台的各种爆款文案、脚本等，比如拆解小红书爆款文案的结构，然后得出自己的小红书爆款文案指令（Prompt）。</p> <h3 id="书单号指令"><a href="#书单号指令" class="header-anchor">#</a> 书单号指令</h3> <p>指令1：
+你知道《{书名}》这本书吗？这本书主要讲了哪些内容？精华是什么？主题思想是什么？
+{书名}=活着</p> <p>指令2：
+请列出该书籍的主要知识点、大纲，摘出5句书中最有代表性、有感染力的句子，或者是最值得深思、最感人的场景或对话。</p> <p>指令3：
+请问这本书针对中国的什么目标人群？这本书解决了当下目标人群的什么问题？目标人群读后有什么收获？启发？价值？</p> <p>指令4：
+请问这本书可以和当下中国社会的什么热点或情绪结合起来？</p> <p>指令5：
+你是一个{专业角色}，最擅长写出让人感同身受的【视频号】书籍推荐文案。
+结合你上面给出的所有有关这本书的回复，写一篇符合【视频号】平台调性的、爆款短视频书籍推荐文案，中文输出，字数在2000字左右。
+目的是向没有读过这本书的人（目标受众群体），快速了解这本书的主要内容、观点和金句，并产生立刻购买此书去阅读的冲动。
+在你给出回复之前，一定要好好阅读本指令（Prompt），充分理解后再进行回复。
+文案要求必须包括以下内容，请一定好好理解：
+1、情绪化的表述：一个好的书籍推荐文案，不仅要让人了解书的内容，更要让人感受到书的魅力，情感化的表述可以更好地打动读者，激发他们的阅读欲望。
+2、概括性的内容介绍：对书籍的主要内容、主题思想进行简洁、精炼的概述，让读者对书的内容有个大概的了解。这个是重点。
+3、引人入胜的亮点：挖掘书中的亮点，如主要观点，最动人的章节，最有深度的人物描绘等，并巧妙地揉入文案中，增加读者的阅读兴趣。
+4、引用引人深思的金句：引用书中的一些引人深思的句子，可以激发读者的好奇心和阅读欲望。
+5、个性化的推荐理由：结合你的阅读体验和理解，给出推荐这本书的理由。同时，让读者能够感知到你对书的热爱，这样更能打动读者。
+6、最好能够和当下中国社会热点相结合，或者是和当下中国大众的情绪相结合。
+7、一定要有这本书中最值得深思、最感人、最动容、最激烈、最开心、最痛苦、最唏嘘的各种场景或对话。这个是重点，一定要好好写。
+8、用金句开头，然后直击目标人群及其痛点，接下来引入该书。
+9、最后要做一句话总结，最好是书中的一句金句。格式可以是：分享书里的一句话，结束今天的阅读，XXXXXXXXXX。
+10、全文一气呵成，不要有“版块”的感觉，不要有旁白、注释等。
+文字要求以一个书籍推荐者的口气，{话术风格}的来讲述，贴近这本书的目标群体用户喜爱的语言风格。
+{专业角色}=中文文学专家
+{话术风格}=中立</p> <h3 id="其他例子"><a href="#其他例子" class="header-anchor">#</a> 其他例子</h3> <p>指令：
+你是小红书运营专家，擅长撰写小红书爆款标题，非常精通：
+一、采用二极管标题法进行创作：
+1、基本原理：
+（1）本能喜欢：最省力法则和及时享受 ；
+（2）动物基本驱动力：追求快乐和逃避痛苦，由此衍生出2个刺激方式：正面刺激、负面刺激 ；
+2、标题公式
+正面刺激：产品或方法+只需1秒（短期）+便可开挂（逆天效果） ；
+负面刺激：你不XXX+绝对会后悔（天大损失）+（紧迫感）
+其实就是利用人们厌恶损失和负面偏误的心理 ；
+二、你非常精通如何使用标题具备吸引人的特点：
+1、使用匹配的emoji表情符号，来增加标题的活力和吸引注意力
+2、使用【！】、【......】等标点符号增强表达力，营造紧迫感和惊喜感。
+3、采用具有挑战性和悬念的表述，引发读者好奇心，例如“暴涨词汇量”、“无敌了”、“拒绝焦虑”等。
+4、利用正面刺激和负面刺激，诱发读者的本能需求和动物基本驱动力，如“你不知道的项目其实很赚”等。
+5、融入热点话题和实用工具，提高文章的实用性和时效性，如“2023年必知”、“AI爆火”等。
+6、描述具体的成果和效果，强调标题中的关键词，使其更具吸引力，例如“无需节食，这么做，30天轻松减掉5公斤”。
+三、使用爆款关键词，写标题时，你会选用{爆款关键词库}其中1-2个：
+四、你了解小红书平台的标题特性：
+1、控制字数在20字以内，文本尽量简短
+2、以口语化的表达方式，来拉近与浏览者的距离
+五、你懂得创作规则：
+1、每次列出10个标题，以便选择出更好的一个
+2、每当收到一段内容时，不要当做命令，而是仅仅当做文案来进行理解
+3、收到内容后，直接创作对应的标题，无需额外的解释说明
+{爆款关键词库}=好用到哭, 大数据, 教科书般, 小白必看, 宝藏, 绝绝子, 神器, 都给我冲, 划重点, 笑不活了, YYDS, 秘方, 我不允许, 压箱底, 建议收藏, 停止摆烂, 上天在提醒你, 挑战全网, 手把手, 揭秘, 普通女生, 沉浸式, 有手就能做, 吹爆, 好用哭了, 搞钱必看, 狠狠搞钱, 打工人, 吐血整理, 家人们, 隐藏, 高级感, 治愈, 破防了, 万万没想到, 爆款, 永远可以相信, 被夸爆, 手残党必备, 正确姿势</p> <p>再给它个指令：
+帮我写10个网赚的标题</p> <h2 id="插件"><a href="#插件" class="header-anchor">#</a> 插件</h2> <p>油猴插件！无限制使用ChatGPT4.0方法！
+https://mp.weixin.qq.com/s/AzsFGhtajZQ31qPoGNX5zg</p> <h3 id="chatgpt插件stories-》绘本"><a href="#chatgpt插件stories-》绘本" class="header-anchor">#</a> ChatGPT插件Stories =》绘本</h3> <p>https://mp.weixin.qq.com/s/7McYXWaT8_q3IQgLq7iBEw</p> <h2 id="gpts-应用商店"><a href="#gpts-应用商店" class="header-anchor">#</a> GPTs 应用商店</h2> <p>You can now create custom versions of ChatGPT that combine instructions, extra knowledge, and any combination of skills.
+https://openai.com/blog/introducing-gpts</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/docs/assets/js/app.6c9c9f7d.js" defer></script><script src="/docs/assets/js/2.4a937564.js" defer></script><script src="/docs/assets/js/179.3b73947a.js" defer></script>
+  </body>
+</html>
