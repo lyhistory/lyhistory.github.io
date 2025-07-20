@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 3
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 The EYFS, or Early Years Foundation Stage, is a framework that sets the standards for the learning, development, and care of children from birth to five years old in England. 
 
 [幼儿英语课堂教给孩子的20个生活技能（下篇） ](https://www.sohu.com/a/475629809_120106456)

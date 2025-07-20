@@ -26,6 +26,12 @@ lowlife scum
   "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
 
+我现在突然有事，等下再看
+	I suddenly have something to take care of now; I’ll check it again later.​
+	Something urgent came up—I’ll check back later.
+	​朋友间闲聊​： Got something to handle now—I’ll circle back later!
+	工作场景​："An unexpected task came up—I’ll revisit this after.
+	更随意​："Something popped up—I’ll check it later!
 确认一下”、“跟进一下” Just checking in!
 	Morning! Has Eric already shared the access solution with you? (Just checking in!)
 
