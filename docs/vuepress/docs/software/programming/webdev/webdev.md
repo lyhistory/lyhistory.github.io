@@ -426,6 +426,63 @@ sites.google.com
 ### 3.3-1 google Firebase(dynamic apps)
 https://firebase.google.com/docs
 
+### 3.4-1 cloudflare page
+
+Computer(Workers)->Select Pages
+
+### 3.4-1 cloudflare page WORKER
+
+Computer(Workers)->Select Worker
+
+```
+
+<project name>->Settings->Build
+	Build Configuration
+		Deploy Command: npx wrangler pages deploy ./ --project-name=test
+
+当我从cloudflare在线编辑代码的时候发现，cloudflare page显示的代码是个worker.js: export default {
+  async fetch(request, env) {
+    return new Response("Hello world")
+  }
+}
+		
+my-project/
+├── worker.js          # Workers 入口文件
+├── src/               # 源代码目录
+│   ├── api.js         # 业务逻辑
+│   └── utils.js       # 工具函数
+├── public/            # 静态资源
+│   └── index.html    
+├── wrangler.toml      # 部署配置
+└── package.json       # 依赖管理
+
+// 导入 GitHub 仓库中的模块
+import { handleApiRequest } from './src/api.js';
+import { validateRequest } from './src/utils.js';
+
+// 静态资源处理
+const staticFileHandler = {
+  async fetch(request) {
+    return fetch(new URL(request.url));
+  }
+};
+
+// Worker 主逻辑
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+    
+    // API路由处理
+    if (url.pathname.startsWith('/api')) {
+      return handleApiRequest(request, env);
+    }
+    
+    // 静态资源处理
+    return staticFileHandler.fetch(request);
+  }
+};
+
+```
 
 ## 4. 站长必备
 

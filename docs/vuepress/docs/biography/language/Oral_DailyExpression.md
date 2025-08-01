@@ -1224,6 +1224,8 @@ hairstylist, hairdresser/barber
 cut/trim/wash/dry/style/perm/dye/hair care session
 style / shape the hair
 ### About healthy/Medical
+dizzy and nauseous
+pass out
 
 ingestion digestion absorption and elimination http://seattlecentral.edu/faculty/jwhorley/Digestion.pdf
 Digestion begins with ingestion, where the food is taken in the mouth. Digestion and absorption take place in a series of steps with special enzymes playing important roles in digesting carbohydrates, proteins, and lipids. Elimination describes removal of undigested food contents and waste products from the body.

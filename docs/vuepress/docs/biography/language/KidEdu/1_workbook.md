@@ -326,13 +326,6 @@ Let kids brush a toy’s teeth first. Use flavored fluoride toothpaste and rewar
 
 [亲子英语 ：Taking a shower洗澡](https://mp.weixin.qq.com/s?__biz=MzIzODc2MTkyOA==&mid=2247484841&idx=1&sn=5c283ea56650d3071fef5e444c5ff3dd&chksm=e87c515226ccbbf5f41dcfd546c46ae2d9eedc6d0af36e37597fd9e8f72386bf2269bff73fdd#rd)
 
-Don't splash,不要把水溅出来Don't splash me.不要把水溅到我身上!
-Let's wash off the bubbles.
-▲现在我们把身上的泡泡冲干净
-Dry yourself with the bath towel/ towel.
-拿浴巾/毛巾把自己擦干。
-bath towel浴巾，towel 毛巾
-Be careful, the floor is slippemy.小心地滑Let me blow-dry your hair.我帮你吹头发。Feel fresh now?现在感觉舒服吗?Now let's apply some body lotion.涂一点身体乳。Now put on your pajamas.穿上睡衣Let's go to bed.我们去睡觉吧!
 
 **Safety:**
 
@@ -481,19 +474,19 @@ UK/US: "Predict/Retell" skills
 
 
 
-## colors and shapes
+## logics 
+
+### colors and shapes
 sort by colors/shapes
 purple violet
 mix colors
 
-## counting is fun
+### counting is fun
 
-## directions
+### directions
 first last top bottom
 
 front behind up down 
-
-## logics 
 
 ### order
 place in order
@@ -503,28 +496,6 @@ place in order
 ### opposite
 
 ### mystery box
-
-## daily life
-
-### fruits and vegitables
-
-### actions
-clap hands
-stamp feet
-wiggle
-wag
-
-### wash
-
-### put on clothes
-shoes/jackets/scarlf/hat
-tangle up
-
-### sports
-walking hop running tiptoe twirl galop 
-
-## words
-words start with A-Z
 
 ## Song
 do you know the muffin man/bread man/fruitstand man
@@ -540,10 +511,5 @@ cleanup song
 
 if you are happy clap your hands, if you are angry stamp your feet
 
-## playground
 
-### draw
-pigment
-
-### play dough
 

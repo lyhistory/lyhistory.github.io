@@ -27,6 +27,9 @@ pathogen 病原体
 
 germs
 
+parasites 寄生虫
+microorganism 微生物
+fart
 
 ## Chemistry
 acid
@@ -40,6 +43,8 @@ crude oil
 cryogenic 冷冻
 dissolve
 
+fluoride 氟化物
+
 nitrogen
 oxidizer 氧化剂
 potassium
@@ -47,11 +52,12 @@ potassium
 lid
 litmus test paper
 
-
-
+hydrogen 氢; 氢元素
+sulfide 硫化物
 
 thermal coal
 tin
+铝罐”时，用 aluminum can（非 tin）；指“锡罐”时，用 tin can（英美通用）
 
 ## Math 
 ### 标点符号 

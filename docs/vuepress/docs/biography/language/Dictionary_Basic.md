@@ -283,6 +283,7 @@ ostentatious
 oval
 overarching adj.     首要的;v. 在…上方成拱形( overarch的现在分词 )
 
+panick
 parabolic ˌpærə'bɒlɪk 抛物线的; 比喻的，寓言似的;
 parametric 参数的
 paramount
@@ -390,6 +391,7 @@ tentative ˈtentətɪv 试探性的; 尝试性的; 试验的; 不确定的;
 tenable 站得住脚的 可维持的 vs sustainable
 terrific təˈrɪfɪk了不起的; 极好的; 异乎寻常的; 很大的;
 thermal 热的 thermal spring thermal photo（热成像）
+toxic
 transactional 相互作用的 事务性的  transnational 跨国的
 transient ˈtrænziənt短暂的; 转瞬即逝的; 临时的;
 tricky
@@ -967,7 +969,12 @@ progression 进展 一系列
 propensity 倾向，习性，癖好，偏爱;
 proposition: something, such as a plan or offer, that is presented to a person or group of people to consider
 proposal: something, such as a plan or suggestion, that is presented to a person or group of people to consider
-provision 供应； 条款 先见之明
+provision 
+	日常物资	提供所需物品/服务	Make provisions for the party (food, drinks).（为派对准备食物饮料。）
+	交通/设备	启用某功能	Light provision required – turn on headlights.（需开启灯光。）
+	法律/合同	条款/规定	The contract has a provision for early termination.（合同含提前终止条款。）
+	金融/预算	预留资金/资源	Set aside a provision for emergencies.（为紧急情况预留资金。）
+
 provenance ˈprɒvənəns 起源，出处;
 propensity 倾向，习性，癖好，偏爱
 pulp 使…化成纸浆; 除去…的果肉; 取出（咖啡豆的）果肉
@@ -1044,6 +1051,7 @@ vogue n. 时尚，流行; 时髦的事物;
 vulnerability
 
 wage
+walnut
 workaround 变通办法
 wrath rɒθ 愤怒; 激怒
 
@@ -1933,6 +1941,8 @@ imperil
 impair
 impart knowledge
 implode 使内爆
+inhaling
+	Inhaling toxic gases can cause death.
 inflame 激怒 使燃烧 使发炎
 inform notify alert:
 	The extension use case inserts its course without altering the course of the base use case.
