@@ -899,6 +899,7 @@ jeopardy 危险; 危险境地; 被告在法庭上有被判罪的危险;
 
 kiosk 亭子，凉亭; （车站、广场等处的） 书报摊，，公共电话亭; 小摊棚，售货亭
 
+lather 泡沫; 皂沫; 肥皂泡
 latency 潜伏 延迟
 lever ˈli:və(r) 杠杆; 操作杆; 工具
 Leaderboard 选手积分榜

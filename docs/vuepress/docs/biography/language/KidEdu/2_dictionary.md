@@ -73,17 +73,64 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 | ​​Blip​​   | /blɪp/  | 电子设备的短促提示音  | “My phone blipped with a new message.”（手机“滴”了一声，收到新消息。） |
 | ​​Zing​​   | /zɪŋ/   | 尖锐的摩擦/碰撞声   | “The arrow zinged through the air.”（箭“咻”地一声飞过空中。）       |
 
-## 1. Dress up / take off
+## Danger Awareness
+keywords: Safety Sensory Squeeze ​choke Spit out
+
+1. 感官对比：真实 vs. 玩具（Sensory Comparison）​​
+​Teacher​（举起真实苹果和塑料苹果）：
+
+"Look, friends! ​Two red apples!​​ Touch them—which one feels cold and smooth? 🍎 And which feels hard and shiny? 🧸 Smell them… oh! The real apple has a ​sweet smell​! The toy? ​No smell!​​"
+​Child A​（摸真实苹果）： "Cold one is real! Yummy smell!"（冰的是真的！香香的！）
+​Teacher: "Yes! ​Real food​ gives us energy. We ​eat it​! But ​toy food​ is for ​playing. Never put toys in mouth—yucky germs!"
+
+​2. 分类游戏：食物篮 vs. 玩具箱（Sorting Game）​​
+​Teacher​（分发物品篮）：
+
+"Time to sort! Put ​real food​ in the green basket—for ​eating​! Put ​toys​ in the blue box—for ​playing​! Ready? Go!"
+（分类时间到！真食物放绿色篮子——用来吃！玩具放蓝色箱子——用来玩！开始！）
+​Child B​（举起塑料香蕉犹豫）： "Banana? Eat or play?"（香蕉？吃还是玩？）
+​Teacher​（轻摇手指）： "Is it ​squishy​? Real bananas are soft! Toy bananas are ​hard. Squeeze it… no bend? Then ​toy box!​​"
+（捏一下软吗？真香蕉是软的！玩具香蕉是硬的。捏不动？放玩具箱！）
+
+​3. 安全规则强化：儿歌与动作（Safety Rhyme）​​
+​Teacher​（带领幼儿做动作）：
+
+"Toys are fun for hands to hold, 🙌
+Food goes in my mouth, not toys! 🚫🧸
+If it’s not on Mama’s plate,
+Check with teacher—make it safe!" 👩🏫
+​Children​（拍手跟唱）： "Food in mouth! Toys in hands!"（食物进嘴！玩具在手！）
+
+​4. 危险物品认知：非食物警示（Danger Awareness）​​
+​Teacher​（展示纽扣、积木）：
+"Oh no! Tiny things! Can we eat buttons? ​No!​​ They might ​choke us​! ✋ Only ​food​ goes here!"（举起手指嘴唇）
+（纽扣能吃吗？不能！可能卡住喉咙！只有食物能放这里！）
+​Child C​（指着玩具硬币）： "This in mouth? ​Scary!​​"（这个放嘴里？可怕！）
+​Teacher: "Smart! ​Small, hard things​ stay ​out of mouths. Say: ‘Not food! Spit it out!’"
+
+## Daily Life
+
+擤鼻子 
+包伤口
+
+### Morning Routine
+
+### Dress up / take off
+keywords:
+    pull up, pull off, cuff,wrinkles 皱纹,stretch, heel,ankle,wiggle out/inside,tug,smooth,Snug,tuck in/away,
+    pinch, rip, point in,step in,pull to,waistband, zip up,neck hole,Wriggle out
+
 shoes/jackets/scarlf/hat
 tangle up
 
-### socks
+#### socks
+
 Pull up your socks,  
 Straighten the toe,  
 Hold the cuff,  
 Slide it on,  
 Check for wrinkles,  
-Pull to your toes,  
+Pull to your toes,  (沿小腿向脚趾方向整体均匀拉伸，消除脚背或足弓处的多余布料堆积。此动作确保袜子完全覆盖脚趾根部，避免因长度不足导致脚跟部位错位 误区​：将“to”等同于“朝…移动方向”（如walk to school），但“pull to”是固定搭配，表“拉至…位置”：例：Pull the curtains to the window（把窗帘拉到窗边）——实际是横向拉窗帘，非“朝窗户方向”)
 Tug the heel,  
 Smooth the top
 
@@ -143,7 +190,7 @@ Miss Evans: "Morning, Luna！Today we’re gonna practice putting on and taking 
 ​Luna: (指着海报) "Bear… me！" (举起小手挥了挥，跑向教室)
 ​Miss Evans: "Go, little sock master！And don’t forget—when we take off socks at home time, we’ll put them in your laundry basket (洗衣篮) to get all clean for tomorrow！" (目送Luna离开，轻轻整理地垫)
 
-### shoes
+#### shoes
 
 Take off your shoes  
 This shoe has velcro straps  
@@ -153,6 +200,24 @@ Pull the strap
 Rip the velcro  
 Put shoes neatly  
 Well done you
+
+Pull off your shoes  
+Tug the sticky tab  
+Wipe outdoor mud  
+Place indoors now  
+Line up on shoe rack  
+Check both feet
+
+脱鞋礼仪Etiquette of Taking Off Shoes​ 或简化为 ​Shoe Removal Etiquette
+Take off your shoes  
+See this sticky tab  
+Give it a little tug  
+There we go  
+Line them up neatly  
+No outdoor shoes on the mat  
+Pop on your slippers  （啪嗒一下穿上拖鞋！）→ 更生动，暗示“快速套上，别磨蹭～”
+Tuck your socks away  
+Wipe your feet please
 
 英国幼儿园宝宝脱鞋子英文互动对话（3-4岁版）
 ​场景​：英国某幼儿园的更衣角，铺着柔软的米色地垫，墙上贴着“自己的鞋子自己脱！”的卡通贴纸（画着小企鹅踮脚脱运动鞋）。3岁半的Leo穿着一双魔术贴运动鞋（浅蓝底色，带小恐龙图案），正站在小矮凳上，老师Miss Carter蹲在他旁边，手里拿着他的另一双室内拖鞋（毛绒兔耳朵款）。
@@ -177,6 +242,7 @@ Well done you
 ​Miss Carter: "Go, little shoe master！And don’t forget—after playtime, we’ll put on your outdoor shoes, and you can show me how you ‘unbutton’ them all by yourself！" (目送Leo离开，轻轻整理地垫)
 
 欧美对「宝宝鞋子魔术贴」的地道说法：​Velcro on baby shoes​（或更具体的 ​Velcro straps on baby shoes）
+
 Put on your socks  
 Point your toes in  
 Push your heel down  
@@ -184,25 +250,7 @@ Fasten the strap
 Check both shoes  
 Wiggle your toes
 
-Pull off your shoes  
-Tug the sticky tab  
-Wipe outdoor mud  
-Place indoors now  
-Line up on shoe rack  
-Check both feet
-
-脱鞋礼仪Etiquette of Taking Off Shoes​ 或简化为 ​Shoe Removal Etiquette
-Take off your shoes  
-See this sticky tab  
-Give it a little tug  
-There we go  
-Line them up neatly  
-No outdoor shoes on the mat  
-Pop on your slippers  （啪嗒一下穿上拖鞋！）→ 更生动，暗示“快速套上，别磨蹭～”
-Tuck your socks away  
-Wipe your feet please
-
-### tops
+#### tops
 Pull down the neck hole  
 Pinch the sleeve gently  
 Lift your arms up  
@@ -210,7 +258,30 @@ Wriggle out slowly
 Take off the sleeves  
 Fold it neatly
 
-### pants
+put your head through the hole,
+hold the collar with both hands,
+find the left sleeve,
+find the right sleeve,
+pull the sleeve up,
+straighten your top,
+tuck your tummy in
+#### pants
+
+Find the top of your pants—this soft, stretchy part where your tummy is. See? 
+This is the waistband.
+We need to pull down the waistband to make it easier for your legs to come out. 
+Hold your waistband，
+pull down slowly,
+bend your knees,
+step out carefully
+
+Pull your pants up,  
+Hold the waistband,  
+Step in one leg,  
+Step in the other,  
+Pull them to your waist,  
+Zip up the fly,  
+Check if comfy
 
 Pants Removal Training with Leg Sliding in British Nurseries​（英国幼儿园脱裤子训练·腿从裤腿抽出）
 
@@ -239,23 +310,6 @@ Pants Removal Training with Leg Sliding in British Nurseries​（英国幼儿�
 
 ​Lila​（举起小手挥了挥）: "Pro… me！"（专家…我！）
 
-put your head through the hole,
-hold the collar with both hands,
-find the left sleeve,
-find the right sleeve,
-pull the sleeve up,
-straighten your top,
-tuck your tummy in
-
-Pull your pants up,  
-Hold the waistband,  
-Step in one leg,  
-Step in the other,  
-Pull them to your waist,  
-Zip up the fly,  
-Check if comfy
-
-
 
 
 场景​：清晨，妈妈坐在床上，3岁宝宝站在面前，床边放着一件蓝色连帽上衣、一条条纹裤子和一双小运动鞋。
@@ -282,8 +336,8 @@ Check if comfy
 ​Toddler: (站起来跺脚) "Shoes on！Walk walk walk！" (原地踏步，差点撞到床头柜)
 ​Mom: "Slow down, little walker！You did it—all dressed up like a superhero！" (竖起大拇指)
 
-## 2. Food
-### Have Breakfast
+### Food
+#### Have Breakfast
 
 Pour your cereal,  
 Pass the milk,  
@@ -293,15 +347,15 @@ Finger check! CLEAN? Show me,
 Wipe your mouth,  
 Push your chair in
 
-### fruits and vegitables
+#### fruits and vegitables
 
 corn on the cob
 
-### other
+#### other
 croissant
 popsicle
 
-### 场景​：周末午餐时间，餐桌铺着卡通餐垫，大盘子里放着刚出炉的热披萨——金黄饼底、融化的芝士、香肠片和蘑菇片，旁边摆着儿童餐刀叉和小餐盘。
+#### 场景​：周末午餐时间，餐桌铺着卡通餐垫，大盘子里放着刚出炉的热披萨——金黄饼底、融化的芝士、香肠片和蘑菇片，旁边摆着儿童餐刀叉和小餐盘。
 
 ​Mom: "Lunchtime, my little pizza lover！Look what’s here—homemade pepperoni pizza！Can you say ‘pizza’?" (轻轻托起一块披萨递到宝宝面前)
 ​Toddler: (眼睛发亮，伸手去抓) "Piz…za!" (芝士被拽出一小条，黏在指尖)
@@ -324,14 +378,19 @@ popsicle
 ​Mom: "You’re such a pizza star！Let’s save a slice for Daddy—he’ll be home soon. But first… show me your happy dance because pizza makes you happy, right?" (播放轻快的儿歌)
 ​Toddler: (转着圈蹦跳，芝士渣掉在餐垫上) "Happy！Pizza！Dance！" (停下来扑进妈妈怀里) "Love pizza！Love Mommy！"
 
-## 3. House
+### House
 
-### hoursewares
+#### House Exterior
+
+
+#### Indoor
+
+#### hoursewares
 rake
 bucket
 ladle
 
-### housework
+#### housework
 
 Sunny Day, Cozy Beds!​
 
@@ -367,6 +426,19 @@ Let me tuck you in. Don’t kick the blanket off, or you'll get cold!"
 收工具：“Put the mop back in the bucket—good job!”（把拖把放回水桶～真棒！）
 
 ### Hygiene
+
+Keywords: palms,wrists,Sink, Wipe,Scrub, toothpaste, toothbrush,chewing sides,Rinse,Spit out,Rub,towel,Rinse off ,lather,forehead,forearms,elbows,armpits,bottom,sponge,squirt,shampoo,pat
+
+
+#### Potty
+Pull down your pants,  
+Sit on the potty,  
+Try to use your bladder,  
+Let the pee come out,  
+Tell me if you poo,  
+Wipe yourself clean,  
+Pull up your pants,  
+Wash your hands now  
 
 #### Toothbrushing
 Brush your teeth gently,  
@@ -412,26 +484,68 @@ Turn off water,
 Use the towel,
 Dry all over
 
+#### Hair Wash
 
-#### Potty
-Pull down your pants,  
-Sit on the potty,  
-Try to use your bladder,  
-Let the pee come out,  
-Tell me if you poo,  
-Wipe yourself clean,  
-Pull up your pants,  
-Wash your hands now  
+Check the water temperature,  
+Wet your hair gently,  
+Squirt some shampoo,  
+Rub in small circles,  
+Rinse with warm water,  
+Pat dry with a towel
+
+​Baby Hair Washing Training in British Nurseries​（英国幼儿园宝宝洗头发训练）
+
+英文对话（英国幼儿园浴室场景，3岁宝宝Leo）：
+​Teacher​（系着防水围裙，举着小黄鸭浴球，蹲在浴盆旁）: "Morning, Leo！Time for our hair washing adventure (洗头发大冒险)! Today, we’re going to make your hair super clean—like a little cloud that’s been washed by the rain. Ready to be my hair helper (洗头小助手)?"（早上好，利奥！今天是我们的“洗头发大冒险”时间！我们要让你的头发变得超干净——像被雨水洗过的小云朵。准备好当我的“洗头小助手”了吗？）
+
+​Leo​（抱着小黄鸭，眼睛发亮）: "Helper！Yes！I want to wash my hair！"（小助手！好呀！我想自己洗头发！）
+
+​1. 准备温水（Preparing Warm Water）​​
+​Teacher​（调节水温，用手搅了搅）: "First, let’s get the water ready. We need warm, not hot (温的，不烫的) water—like the temperature of your favorite milk！See? I’m testing it with my wrist… perfect！Now, let’s pour it gently over your hair… there！"（首先，准备水。我们需要“温的，不烫的”水——像你最喜欢的牛奶温度！看？我用手腕试过了…刚好！现在，轻轻把水倒在你头上…洗好了！）
+​Leo​（摸了摸头发，咯咯笑）: "Water… tickly！"（水…痒痒的！）
+
+​2. 打湿头发（Wetting Hair）​​
+​Teacher​（用小喷壶喷湿Leo的头发）: "Now, let’s wet your hair (打湿头发) like a little sponge！Squirt, squirt… all over your head, even behind your ears！"（现在，把你的头发“打湿”像一块小海绵！喷一喷，喷一喷…头发前后都要淋到！）
+​Leo​（晃脑袋，溅起小水花）: "Wet… splash！"（湿了…哗啦！）
+​Teacher​（检查）: "Great！Your hair is all wet—now it’s ready for the bubble magic (泡泡魔法)！"（太棒了！你的头发全湿了——现在可以开始“泡泡魔法”啦！）
+
+​3. 涂洗发水（Applying Shampoo）​​
+​Teacher​（挤了一点洗发水在手心，搓出泡泡）: "Next, we need shampoo (洗发水)—it’s like hair soap (头发肥皂) that makes bubbles！Look, my hands are making fluffy clouds (软绵绵的云) of bubbles！Now, let’s put them on your hair… gently… from the top down！"（接下来，我们需要“洗发水”——它像“头发肥皂”，能变出泡泡！看，我的手在搓“软绵绵的云”泡泡！现在，把它们涂在你头上…轻轻的…从上往下！）
+​Leo​（伸手摸泡泡，眼睛睁大）: "Bubbles… soft！"（泡泡…软软的！）
+​Teacher​（引导Leo自己搓）: "Can you help me rub them in? Use your little fingers (小手指)… like this… rub, rub, rub！"（你能帮我揉一揉吗？用你的“小手指”…像这样…搓一搓，搓一搓！）
+​Leo​（认真搓头发，咯咯笑）: "Rub… bubbles！"（搓…泡泡！）
+
+​4. 冲洗头发（Rinsing Hair）​​
+​Teacher​（用温水冲掉泡沫）: "Now, let’s rinse (冲洗) the bubbles away！Tilt your head back a little… there we go！The water is washing the bubbles off—like a rain shower (阵雨) for your hair！"（现在，把泡泡“冲掉”！稍微仰头…洗好了！水正在把泡泡冲走——像给你的头发下了场“阵雨”！）
+​Leo​（感受水流，扭动身体）: "Rinse… whoosh！"（冲…哗啦！）
+​Teacher​（检查）: "All clean！No more bubbles—your hair feels so smooth, like a slippery fish (滑溜溜的小鱼)！"（洗干净啦！没有泡泡了——你的头发摸起来好光滑，像滑溜溜的小鱼！）
+
+​5. 擦干头发（Drying Hair）​​
+​Teacher​（拿起小毛巾，轻轻按压）: "Last step—towel dry (用毛巾擦干)！We don’t rub hard, just pat, pat, pat (轻拍，轻拍，轻拍)… like this！See? Your hair is getting soft and warm！"（最后一步——“用毛巾擦干”！我们不用用力搓，只要“轻拍，轻拍，轻拍”…像这样！看？你的头发变得又软又暖！）
+​Leo​（抓着毛巾，模仿轻拍）: "Pat… pat！"（拍…拍！）
+​Teacher​（抱起Leo，擦干后梳头发）: "Perfect！Your hair is now a shiny cloud (亮闪闪的小云朵)！Want to try brushing it yourself later? You’re such a hair-washing pro (洗头发小专家)！"（太棒了！你的头发现在是“亮闪闪的小云朵”啦！等下想自己试试梳头发吗？你可是“洗头发小专家”！）
+​Leo​（摸着头发，开心地笑）: "Pro… me！"（专家…我！）
 
 #### Bath
 
+Wash your forehead with the sponge  
+Scrub your forearms gently  
+Clean your elbows now  
+Wash under your armpits  
+Rinse your bottom carefully  
+Use the sponge to lather  
+Rinse off all the soap  
+Dry with a soft towel
+
 Don't splash,不要把水溅出来Don't splash me.不要把水溅到我身上!
 Let's wash off the bubbles.
-▲现在我们把身上的泡泡冲干净
 Dry yourself with the bath towel/ towel.
-拿浴巾/毛巾把自己擦干。
-bath towel浴巾，towel 毛巾
-Be careful, the floor is slippery.小心地滑Let me blow-dry your hair.我帮你吹头发。Feel fresh now?现在感觉舒服吗?Now let's apply some body lotion.涂一点身体乳。Now put on your pajamas.穿上睡衣Let's go to bed.我们去睡觉吧!
+Be careful, the floor is slippery.小心地滑
+Let me blow-dry your hair.
+Feel fresh now?
+Now let's apply some body lotion.
+Now put on your pajamas.
+Let's go to bed.
 
 Turn on the tap  
 Get wet all over  
@@ -459,36 +573,64 @@ Wash off bubbles
 Step out gently  
 Dry with towel
 
-## 4. Daily Life
 
-擤鼻子 
-包伤口
+​Bathing Training for Babies in British Nurseries​（英国幼儿园宝宝洗澡训练）
 
-### 场景​：英国某幼儿园的户外沙坑区，阳光明媚。3岁的Luna蹲在沙堆旁玩铲子，不小心被凸起的石头绊倒，膝盖擦破了皮，坐在地上揉眼睛哭。老师Miss Evans听到声音立刻跑过来，蹲在她面前，脸上带着关切的微笑。
+​Teacher​（系着防水围裙，举着小黄鸭浴球，蹲在浴盆旁）: "Morning, Luna！Time for our bath adventure ! Today, we’re going to wash every part of your body—like a little puzzle. Ready to be my bath helper 
 
-​Miss Evans: "Oh, Luna！Did you hurt yourself? Let me come and help—don’t cry, sweetie. Let’s take a look at your owie (小伤痛) first." (轻轻捧起Luna的小手，擦掉眼泪)
-​Luna: (抽噎着) "Knee… ouch！Stingy！" (指着膝盖，眼泪啪嗒啪嗒掉)
-​Miss Evans: "I see—your knee has a little scrape (擦伤). It looks like a tiny red line, but no blood, okay? Let’s check if it’s super ouchy or just a little owie." (用干净的手指轻轻碰了碰伤口边缘，Luna缩了下) "Hmm, it’s a little owie—brave girl！"
+​Luna​（抱着小黄鸭，眼睛发亮）: "Helper！Yes！"（小助手！好呀！）
 
-​Miss Evans: "Now, let’s clean it gently. This special wound wash (伤口清洗液) smells like strawberries—your favorite！" (拿起喷瓶，喷了一点在棉片上) "We’ll wipe it softly, like tickling your knee… there, that’s it！" (棉片轻擦伤口，Luna抽了下鼻子)
+​1. 洗脸（Washing Face）​​
+​Teacher​（拿起小方巾，蘸温水）: "First, let’s wash your little face (小脸蛋). See this soft cloth? It’s like a tiny towel boat (小毛巾船). Let’s sail it gently over your cheeks… and your nose… and your forehead！"（首先，洗你的“小脸蛋”。看这块软毛巾？它像一艘“小毛巾船”。我们轻轻划着它，掠过你的脸颊…鼻子…额头！）
+​Luna​（咯咯笑，歪头配合）: "Boat… sailing！"（船…航行！）
+​Teacher​（轻擦）: "Wow, your face is so shiny—like a little mirror！Good job, helper！"（哇，你的脸亮闪闪的——像一面小镜子！做得好，小助手！）
 
-​Miss Evans: "All clean！Now, let’s put a bandage (创可贴) on it. Look, this one has dinosaurs (恐龙)—your favorite animal！" (撕开创可贴包装，轻轻贴在伤口上) "There, Mr. Dino is guarding your knee now—he’ll keep it safe！"
+​2. 洗脖子（Washing Neck）​​
+​Teacher​（换小海绵，挤泡泡）: "Next stop: your neck (脖子)! It’s like a little slide (小滑梯) between your head and shoulders. Let’s pour some bubble water (泡泡水) here… and rub, rub, rub！"（下一站：你的“脖子”！它像头和肩膀之间的“小滑梯”。我们倒点“泡泡水”在这里…搓一搓，搓一搓！）
+​Luna​（伸手摸脖子，咯咯笑）: "Slide… bubbly！"（滑梯…有泡泡！）
+​Teacher​（冲洗）: "All clean！Your neck feels so fresh—like a cool breeze！"（洗干净啦！你的脖子感觉好清爽——像一阵凉风！）
 
-​Luna: (盯着创可贴笑) "Dino… guard！" (用手指戳了戳创可贴上的恐龙图案)
-​Miss Evans: "Exactly！Mr. Dino says, ‘Be brave, Luna—you fell, but you’re okay！’ Let’s stand up and stretch your legs… ready? Hold my hand, and we’ll walk slowly to the bench." (扶着Luna站起来，慢慢走向旁边的长凳)
+​3. 洗肚子（Washing Tummy）​​
+​Teacher​（拍拍Luna的肚子）: "Now, your tummy (肚子)—the squishy part that says ‘I’m hungry!’ Let’s make it a bubble bath (泡泡浴)！Rub your hands in circles… like this… and watch the bubbles dance！"
 
-​Luna: (蹦跳了两下，又揉了揉膝盖) "Knee… better！" (指着创可贴) "Dino happy！"
-​Miss Evans: "Dino is very happy—you took care of your owie like a big kid！Now, let’s get some snack (点心)—a banana and milk will make your knee feel even better. And guess what? After snack, we can play gentle tag (慢跑抓人游戏)—no running too fast, okay?"
+​Luna​（拍肚子，模仿泡泡声）: "Bubbles… dance！"（泡泡…跳舞！）
+​Teacher​（轻拍）: "Perfect！Your tummy is so clean—you could eat off it！"（太棒了！你的肚子洗得真干净——都能在上面吃饭啦！）
 
-​Luna: (眼睛发亮) "Gentle tag！With Dino！" (举起创可贴上的恐龙，笑着跑向点心桌)
-​Miss Evans: "That’s my brave girl！And remember—if you ever feel another owie, just tell Miss Evans, and we’ll fix it together, like we did today. You’re so strong！" (目送Luna坐下，轻轻拍了拍她的背)
+​4. 洗背（Washing Back）​​
+​Teacher​（托住Luna的腋下，轻轻翻转）: "Up we go！Time to wash your back (小背背). It’s like a big leaf (大叶子) that needs a rinse. Let’s use the big sponge—rub, rub, rub… from top to bottom！"（起来啦！该洗你的“小背背”了。它像一片需要冲洗的“大叶子”。我们用大海绵——搓一搓，搓一搓…从上往下！）
+​Luna​（扭动身体，笑）: "Leaf… squishy！"（叶子…软乎乎！）
+​Teacher​（冲洗）: "Look at that—your back is sparkly！No more dust bunnies！"（看——你的背亮晶晶的！没有灰尘小团啦！）
+
+​5. 洗胳膊（Washing Arms）​​
+​Teacher​（握住Luna的小手臂）: "Arms next！Let’s make them slippery (滑溜溜). Start with the upper arms (大胳膊)—rub, rub… now the forearms (小胳膊)… and don’t forget the elbows (手肘)！"（接下来是胳膊！让它们变得“滑溜溜”。先洗“大胳膊”——搓一搓…现在洗“小胳膊”…别忘了“手肘”！）
+​Luna​（甩胳膊，模仿水流声）: "Slippery… splash！"（滑溜溜…哗啦！）
+​Teacher​（检查）: "Great！Your arms are so clean—you could hug a teddy bear without leaving fluff！"（太好啦！你的胳膊洗得真干净——抱泰迪熊都不会掉毛啦！）
+
+​6. 洗腋窝（Washing Armpits）​​
+​Teacher​（轻拍Luna的腋窝，用指腹搓）: "Now, the armpits (小腋窝)—they’re like secret caves (秘密山洞) that hide sweat. Let’s use the sensitive sponge (软海绵)… gentle circles… there we go！"（现在，是“小腋窝”——它们像“秘密山洞”，藏着汗水。我们用“软海绵”…轻轻画圈…洗干净啦！）
+​Luna​（缩了缩胳膊，笑）: "Cave… tickly！"（山洞…痒痒！）
+​Teacher​（拥抱她）: "No more stinky caves—just fresh and clean！"（再也没有臭臭的山洞啦——只有香香的、干净的！）
+
+​7. 洗屁股（Washing Bottom）​​
+​Teacher​（托住Luna的小屁股，用湿毛巾轻擦）: "Last but not least—your bottom (小屁屁)! It’s like a little cushion (小垫子) that needs a wipe. Let’s do front to back (从前到后)… gently… no red marks！"（最后一个——“小屁屁”！它像一个需要擦拭的“小垫子”。我们“从前到后”擦…轻轻的…别擦红！）
+​Luna​（扭屁股，笑）: "Cushion… clean！"（垫子…干净！）
+​Teacher​（拍拍）: "Perfect！Your bottom is so soft—ready for a fresh diaper later！"（太棒了！你的屁屁软乎乎的——等下换尿布正合适！）
+
+​8. 洗腿&脚&脚趾缝（Washing Legs, Feet & Toes）​​
+​Teacher​（脱掉Luna的袜子，握住小脚丫）: "Legs and feet time！Let’s start with the legs (小腿)—rub, rub… now the feet (小脚丫)—squish, squish… and the toes (脚趾头)—let’s get between them with the toe brush (脚趾刷)！"（腿和脚丫时间到！先洗“小腿”——搓一搓…现在洗“小脚丫”——捏一捏…还有“脚趾头”——用“脚趾刷”刷缝隙！）
+​Luna​（晃脚丫，模仿小鸭子）: "Legs… waddle！Feet… squish！Toes… squeak！"（腿…摇摇摆摆！脚丫…捏捏！脚趾…吱呀！）
+​Teacher​（冲净）: "All done！Your legs are so shiny—you could walk on a rainbow！And your toes… so clean, they’re ready for sock puppet play (袜子木偶游戏) later！"（洗完啦！你的腿亮闪闪的——能在彩虹上走路！还有你的脚趾…洗得真干净，等下可以玩“袜子木偶游戏”啦！）
+
+​Luna​（扑进老师怀里，浑身泡泡）: "Bath… fun！Helper… me！"（洗澡…好玩！小助手…我！）
+​Teacher​（抱起她，擦干）: "You’re such a bathing pro (洗澡小专家), Luna！Next time, you can help me get the soap—deal？"（你可是“洗澡小专家”，露娜！下次你可以帮我拿肥皂——成交吗？）
+​Luna​（点头，眼睛弯成月牙）: "Deal！"（成交！）
 
 ### mosquito bites
 net
 scratch
 itchy
 
-## 5. Emotions&Actions
+## Emotions&Actions
 
 ### Emotions
 😊 ​1. Smile（微笑）​​
@@ -807,28 +949,249 @@ pigment
 ​Peppa: "Travel with Peppa from Australia to Paris to the USA—discovering new places, making friends, and having fun along the way!"
 ​George: "Ice-cream! Horray!"
 ​Mummy Pig: "Every day is an adventure with Peppa and her friends—whether climbing monkey trees or dancing to the jukebox!"
-## Social
+
+### 场景​：英国某幼儿园的户外沙坑区，阳光明媚。3岁的Luna蹲在沙堆旁玩铲子，不小心被凸起的石头绊倒，膝盖擦破了皮，坐在地上揉眼睛哭。老师Miss Evans听到声音立刻跑过来，蹲在她面前，脸上带着关切的微笑。
+
+​Miss Evans: "Oh, Luna！Did you hurt yourself? Let me come and help—don’t cry, sweetie. Let’s take a look at your owie (小伤痛) first." (轻轻捧起Luna的小手，擦掉眼泪)
+​Luna: (抽噎着) "Knee… ouch！Stingy！" (指着膝盖，眼泪啪嗒啪嗒掉)
+​Miss Evans: "I see—your knee has a little scrape (擦伤). It looks like a tiny red line, but no blood, okay? Let’s check if it’s super ouchy or just a little owie." (用干净的手指轻轻碰了碰伤口边缘，Luna缩了下) "Hmm, it’s a little owie—brave girl！"
+
+​Miss Evans: "Now, let’s clean it gently. This special wound wash (伤口清洗液) smells like strawberries—your favorite！" (拿起喷瓶，喷了一点在棉片上) "We’ll wipe it softly, like tickling your knee… there, that’s it！" (棉片轻擦伤口，Luna抽了下鼻子)
+
+​Miss Evans: "All clean！Now, let’s put a bandage (创可贴) on it. Look, this one has dinosaurs (恐龙)—your favorite animal！" (撕开创可贴包装，轻轻贴在伤口上) "There, Mr. Dino is guarding your knee now—he’ll keep it safe！"
+
+​Luna: (盯着创可贴笑) "Dino… guard！" (用手指戳了戳创可贴上的恐龙图案)
+​Miss Evans: "Exactly！Mr. Dino says, ‘Be brave, Luna—you fell, but you’re okay！’ Let’s stand up and stretch your legs… ready? Hold my hand, and we’ll walk slowly to the bench." (扶着Luna站起来，慢慢走向旁边的长凳)
+
+​Luna: (蹦跳了两下，又揉了揉膝盖) "Knee… better！" (指着创可贴) "Dino happy！"
+​Miss Evans: "Dino is very happy—you took care of your owie like a big kid！Now, let’s get some snack (点心)—a banana and milk will make your knee feel even better. And guess what? After snack, we can play gentle tag (慢跑抓人游戏)—no running too fast, okay?"
+
+​Luna: (眼睛发亮) "Gentle tag！With Dino！" (举起创可贴上的恐龙，笑着跑向点心桌)
+​Miss Evans: "That’s my brave girl！And remember—if you ever feel another owie, just tell Miss Evans, and we’ll fix it together, like we did today. You’re so strong！" (目送Luna坐下，轻轻拍了拍她的背)
+
+## Nature & Outdoor
+
+### Playground 
+
+Keywords: queue, tidy up,
+
+### 宝宝白天黑夜区分
+Day and Night
+Open the curtains,  
+Look at the sun,  
+Wave to daytime,  
+See the bright sky,  
+Close the curtains,  
+Turn on the lamp,  
+Spot the moon,  
+Wave to nighttime,  
+See the twinkly stars,  
+Turn off the light
+
+Open the curtains,  
+Look at the sun,  
+Wave to birds,  
+Put on day clothes,  
+Play with toys,  
+Close the curtains,  
+Turn on nightlight,  
+Wear pyjamas,  
+Cuddle your teddy,  
+Close your eyes
+### Weather
+
+sunny/rainy/cloudy/windy）+ 体感词（chilly/warm/humid）
+
+Hang the blanket outside,  
+Feel the warm sunshine,  
+Sing "Sunshine warm and bright",  
+Fluff it gently now,  
+Say "Make my blanket fluffy light",  
+Watch ultraviolet rays work,  
+Know they kill dust mites,  
+See them fight germs too,  
+Sniff your duvet close,  
+Enjoy sunshine hugs smell
+
+Put on your raincoat,  
+Look at the grey sky,  
+Cloudy and chilly! Where does rain come from,  
+Yes—clouds! And where does it go,  
+Down, down to the ground,  
+Jump in the puddles,  
+Open your umbrella,  
+Splash with your wellies,  穿着雨靴踩水花！
+Wipe your wet hands ​擦擦手上的水珠！
+
+Feel the breeze,  轻风拂面起
+Is the wind gentle or gusty today,  今天的风是温和的还是阵风
+The wind is strong,  
+My kite goes up up,  
+Look—the Pinwheel is spinning fast,  
+Let's say: It's a gusty day 风一阵紧，一阵缓——好个疾风天！
+
+Look at the clouds,  
+See the white fog,  
+Touch the wet air,  
+Spot tiny water droplets,  
+Blow on the window,  
+Watch the fog swirl,  
+Feel the cold mist,  
+Wipe the damp glass
+
+(Morning Weather Report)​​
+​场景​：每日晨圈时间，幼儿轮流担任“天气播报员”
+​对话设计​：
+
+​Teacher: "Good morning, Lily! You’re our weather reporter today. Look outside—what do you see?"
+​Child: （指向窗外） "I see... clouds! It’s ​cloudy​!"
+​Teacher: "Brilliant! How does the air feel? Is it ​chilly​ or ​warm​?"
+​Child: （搓搓手臂） "Chilly! We need jumpers!"
+​Teacher: "Let’s tell everyone! Say: ‘Today is cloudy and chilly!’"
+​Class: （齐声跟读） "Cloudy and chilly!"
+
+(Rainy Day Science)​​
+​场景​：雨后户外探索水坑、雨滴
+​对话设计​：
+
+​Teacher: "Wow, it’s ​pouring​! （撑开伞） Listen—what sound does rain make?"
+​Child: "​Tap-tap-tap​! Like drums!"
+​Teacher: "Yes! Now let’s ​splash in puddles. Is the water cold or warm?"
+​Child: （跳进水坑） "Cold! My boots are ​soaked​!"
+​Teacher: "Where does rain come from? Yes—clouds​! And where does it go? ​Down, down to the ground!​​"
+
+(Windy Playtime)​​
+​场景​：大风天放飞纸风筝或吹泡泡
+​对话设计​：
+
+​Child: （举着风筝奔跑） "The wind is ​strong​! My kite goes ​up, up​!"
+​Teacher: "Is the wind ​gentle​ or ​gusty​ today? （举起风车） Look—it’s spinning fast! Let’s say: ‘It’s a ​gusty​ day!’"
+​Child: "Gusty day! Can I fly like a bird?"
+​Teacher: "​Whoosh​! Stretch your arms! What does wind feel like? ​Breezy? Tickly?​​"
+
+Weather Art & Emotion)​​
+​场景​：绘画天气并关联情绪
+​对话设计​：
+
+​Teacher: "Draw how the weather makes you feel! Is sunny day ​happy​ or ​grumpy​?"
+​Child: （画黄色太阳） "Happy! Like a smiley face!"
+​Teacher: "What about a stormy day? ​Bang! Crash!​​ Does it feel ​scared​ or ​excited​?"
+​Child: "Scared... but exciting with thunder!"
+
+​Foggy Adventures: English Dialogues for UK Preschoolers​（英国幼儿园雾天探索活动）
+
+英文对话设计（英国幼儿园花园场景，4-5岁幼儿）：
+​场景​：晨间户外活动时突遇浓雾，教师引导幼儿观察雾的特征并学习安全知识。
+
+​1. 发现雾气（Observing Fog）​​
+​Teacher​（指向远处）：
+"Look, children! The garden looks ​magical​ today. Can you see the ​fog​? It’s like a ​giant cloud hugging the ground​! What does it feel like? Gently wave your hands through it…"
+（看，孩子们！今天花园像被施了魔法。你们看到“雾”了吗？它像“巨大的云朵拥抱大地”！摸起来怎么样？轻轻用手挥一挥…）
+​Child A​（伸手触摸）：
+"​Cold and wet​! Like touching a ​cloud​!"（又冷又湿！像摸到了云！）
+​Teacher​：
+"Yes! Fog is ​tiny water droplets​ floating in the air. Shhh… listen! Do you hear the ​quietness​?"（对！雾是“空气中的小水珠”。嘘…听！多安静呀！）
+
+​2. 科学探索：雾的形成（Science in Action）​​
+​Teacher​（展示热水杯冒出的白汽）：
+"Watch this! When warm air meets cold air—poof!—it turns into ​foggy breath​! Just like when you ​breathe out on a chilly morning​!"
+（看！暖空气遇到冷空气——噗！——就变成“雾气的呼吸”！就像你们冷天哈气一样！）
+​Child B​（模仿哈气）：
+"My turn! Haa… See? ​Mini fog​!"（我也来！哈…看！“迷你雾”！）
+​Teacher​：
+"Brilliant! Now, why is fog ​white, not blue? Because light ​bounces​ on water droplets!"（真棒！雾为什么是白色？因为光在“水珠上跳舞”呀！）
+
+​3. 安全引导（Safety First）​​
+​Teacher​（分发反光背心）：
+"Fog makes things ​disappear​! Cars might not see us. Always wear ​bright colors​ and hold hands!"
+（雾会让东西“消失”！司机可能看不见我们。要穿“亮色衣服”并牵手哦！）
+​Child C​（紧握同伴的手）：
+"​Buddy system​! Like penguins in the snow!"（“小伙伴制度”！像雪地里的企鹅！）
+
+​4. 游戏化学习：雾中寻宝（Foggy Treasure Hunt）​​
+​Teacher​（藏起发光玩具）：
+"Time for ​fog detective​! Find the ​glowing stars​ I hid. Use your ​super ears—listen for jingles!"
+（“雾天小侦探”游戏开始！找“发光的星星”。用“超级耳朵”听叮当声！）
+​Children​（循声探索）：
+"​Found one​! It’s ​sparkly​!"（找到啦！亮晶晶的！）
+
+### Shadow Play Adventures
+
+keywords: Shadow, sun, dark shape, in front, waves back, Stretch tall! Tiptoe tiny!
 
 
-Say what happened  
-Share your feelings  
-Listen carefully  
-Think of ideas  
-Suggest a solution  
-Choose together  
-Say you're sorry  
-Be friends again
+1. Discovery: Outdoor Shadow Exploration​
+​Scene: Sunny playground, children observe their shadows.
 
-Choose a toy  
-Ask your friend nicely  
-Share the toy  
-Take turns playing  
-Play nicely together  
-Wait for your turn  
-Say thank you  
+​Teacher: "Look, Leo! Your ​dark shape​ on the ground is your ​shadow​! Wave at it—see? It waves back! 🌟"
+​Child A​ (jumping): "My shadow ​jumps too​! It grows ​tall​ when I stretch!"
+​Teacher: "Brilliant! Where is your shadow now? ​In front or behind​ you? Let’s chase Maya’s shadow!"
+​Child B: "I caught it! Stomp-stomp!"
 
-## Nature
+​Key Vocabulary:
 
+Shadow, sun, dark shape, in front/behind.
+​Action phrases: "Stretch tall!", "Tiptoe tiny!"
+​2. Science: Light Experiment Indoors​
+​Scene: Darkened classroom with a flashlight.
+
+​Teacher: "Shhh... ​darkness comes​! This torch is our ​sun. Shine it on Teddy—poof! A shadow appears! 🔦"
+​Child C​ (moving light): "I wiggle the light... shadow ​dances​!"
+​Teacher: "Yes! No light, no shadow. Now, make Teddy’s shadow ​giant... or ​tiny​! How?"
+​Child D: "Light close = BIG! Light far = small!"
+
+​Science Concepts:
+
+Shadows need ​light + object.
+​Position changes: "Near/far", "up/down".
+​3. Game: Shadow Tag​
+​Scene: Garden group game.
+
+​Teacher: "Time for ​Shadow Tag​! 🎯 Step on shadows, not friends! Run when I shout ‘Sunny day!’"
+​Child E​ (dodging): "Quick, hide under the tree! Shadow ​disappears—safe!"
+​Teacher: "Clever! Why no shadow here? ​Shade blocks sunlight​!"
+
+​Safety & Skills:
+
+​Movement: Run, dodge, freeze.
+​Rule: "Feet on shadows, not shoes!"
+​4. Creativity: Hand Shadow Theatre​
+​Scene: Dim corner with a flashlight.
+
+​Teacher​ (making rabbit hands): "​Behold—a floppy-eared ​bunny​! 🐇 Your turn! Make a ​wolf or bird​!"
+​Child F​ (spreading fingers): "​Flapping eagle!​​ Caw-caw!"
+​Teacher: "Wow! Now, tell a ​shadow story: ‘The eagle chases the bunny...’ 🎭"
+
+​Language Development:
+
+​Story phrases: "Once upon a shadow...", "The brave eagle..."
+​Emotive words: "Swooping", "hiding", "soaring".
+### Seasonal Transitions
+​场景​：通过图片讨论季节特征
+​对话设计​：
+
+​Teacher: （展示雪景图） "Which season is this? ​Winter​! What do we wear?"
+​Child: "​Scarf​! And ​gloves​!"
+​Teacher: "Smart! Now, in ​summer, （切到沙滩图） is it ​sunny​ or ​snowy​?"
+​Child: "Sunny! We eat ​ice cream​!"
+​Teacher: "What about autumn? ​Leaves fall down... crunch, crunch!​​"
+
+### 露营玩水
+shallow
+
+### in the garden
+keywords:
+
+
+场景教学示例：花园里的“Ladle Game”（长柄勺游戏）
+​场景设定​：英国幼儿园的户外花园（有种植区、小水池、玩具厨房），3-4岁宝宝Luna和小伙伴们。
+
+​1. 场景引入：用“问题+示范”激活兴趣​
+​Teacher​（举着长柄勺，蹲在种植区旁）: "Look, children！What’s this? It’s a ladle—a long-handled spoon (长柄勺)! See its big bowl? We can use it to scoop (舀) things！Who wants to help me feed the ducks (喂鸭子) today?"（看，孩子们！这是什么？是“长柄勺”——“长柄的勺子”！看它的大勺子！我们可以用它“舀”东西！今天谁想帮我“喂鸭子”？）
+​Luna​（踮脚摸勺子）: "Ladle！Scoop ducks！"（长柄勺！舀鸭子！）
+​Teacher​（递过小鸭子玩具）: "Great！Let’s pretend the ducks are thirsty. Use the ladle to scoop water from the pond… gently！Don’t spill！"（太棒了！我们假装鸭子渴了。用长柄勺从池塘里舀水…轻轻的！别洒出来！）
+
+#### Plants
 ​Plant Parts:
     Root, stem, leaf, petal, seed, bud, thorn, soil.
     Example: "Touch the ​petals​ gently—they are soft and colorful!"
@@ -861,9 +1224,33 @@ Wear your wellies,
 Touch the wet grass,  
 Mind the thorn  
 
-## Science
+## Social
 
-磁铁教学对话
+Keywords: Say please, Say thank you, share,
+
+Say what happened  
+Share your feelings  
+Listen carefully  
+Think of ideas  
+Suggest a solution  
+Choose together  
+Say you're sorry  
+Be friends again
+
+Choose a toy  
+Ask your friend nicely  
+Share the toy  
+Take turns playing  
+Play nicely together  
+Wait for your turn  
+Say thank you  
+
+
+## Science
+### Early Simple Mechanics
+乐高9656
+
+### 磁铁教学对话
 ​场景​：妈妈和3岁宝宝围坐在地毯上，面前摆着几块小磁铁、回形针、塑料玩具和冰箱贴。
 
 ​Mom: "Honey, come here. Look at these shiny little toys—do you know what they’re called? They’re magnets!" (拿起一块磁铁，在宝宝面前晃一晃)

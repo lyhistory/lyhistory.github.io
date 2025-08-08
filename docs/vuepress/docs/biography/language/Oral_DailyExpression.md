@@ -26,6 +26,20 @@ lowlife scum
   "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
 
+褶皱 wrinkles/creases
+	Let me smooth out the wrinkles in your shirt before you head to school—no one wants a crumpled uniform!"（上学前我帮你把衬衫的褶皱抚平——没人想穿皱巴巴的校服！）
+	​解析​："smooth out" 是最常用的「抚平褶皱」表达（字面「抹平」，口语中高频）；"crumpled"（皱巴巴的）强化褶皱的状态，符合家长对孩子衣着的细致关注。
+
+	How do I get the wrinkles out of these socks without an iron? They’re all bunched up from the wash."（没熨斗的话，怎么去掉袜子的褶皱？洗完都皱成一团了。）
+	​解析​："bunched up"（皱成一团）生动描述袜子因洗涤变形的状态；"without an iron" 明确限制条件（无熨斗），符合日常洗衣后的常见问题。
+
+	See? If you pull the fabric gently and smooth it out, the wrinkles in your pants will go away!"（看？轻轻拉布料然后抚平，裤子上的褶皱就消失啦！）
+	​解析​："pull the fabric gently"（轻轻拉布料）是教孩子操作的细节指导；"go away"（消失）用孩子能理解的简单词汇，符合亲子沟通的口语化特点。
+
+	"Your dress has a few creases—want me to iron them out real quick?"（你裙子有点褶子——要我快速熨一下吗？）
+	​解析​："creases"（褶子）比 "wrinkles" 更具体（指较深的褶痕）；"iron out"（熨平）是「用熨斗去除褶皱」的标准说法，"real quick" 口语化，体现帮忙的轻松感。
+
+
 我现在突然有事，等下再看
 	I suddenly have something to take care of now; I’ll check it again later.​
 	Something urgent came up—I’ll check back later.
@@ -386,6 +400,20 @@ lowlife scum
 提示：suitable(合适的、相配的)最常见的用法是以否定的形式出现在告示或通知上，如：下列节目儿童不宜。The following programme is not suitable for children.
 
 ### 英文表达
+
+#### 句子
+could you possibly
+Let me just say / Let's say
+I'm really into
+It's worth doing
+I was wondering if
+That makes sense
+To be honest
+I'm on the fence about
+It goes without saying that
+I couldn't agree more
+
+#### 短语
 a lean team 精干的团队
 
 all the more reasons for patience 所以才更需要耐心
@@ -1595,7 +1623,7 @@ bunker
 theater of war 战区
 missile
 massacre
-
+reservist 预备役军人英 [rɪˈzəːvɪst]
 surgical strike 外科手术式打击
 wreckage
 

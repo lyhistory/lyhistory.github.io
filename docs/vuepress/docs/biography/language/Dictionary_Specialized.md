@@ -17,8 +17,12 @@ Multivariate analysis 多变量分析
 anal 肛门
 apical dominance  顶芽优势
 
-bladder
-
+bladder 英 [ˈblædə] 美 [ˈblædər] 膀胱; 皮囊; 气囊; 囊状物; 泡状物; 浮囊(如鱼类的浮囊
+gums
+palms
+wrists
+waist
+fingertips
 contaminate 污染
 dehydration 脱水
 diarrhea
