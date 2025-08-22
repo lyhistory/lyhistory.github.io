@@ -25,6 +25,11 @@ lowlife scum
 +  Uncivilized
   "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
+下床
+	She ​got out of bed​ slowly and stretched."（她慢慢走下床伸了个懒腰。
+	He ​jumped out of bed​ when the alarm rang."（闹钟一响他就跳下了床。）
+	She ​leapt out of bed​ to answer the door."（她一跃下床去开门。）
+	The child ​slipped out of bed​ and tiptoed to the kitchen.孩子溜下床，踮脚走向厨房。
 
 褶皱 wrinkles/creases
 	Let me smooth out the wrinkles in your shirt before you head to school—no one wants a crumpled uniform!"（上学前我帮你把衬衫的褶皱抚平——没人想穿皱巴巴的校服！）
@@ -413,7 +418,7 @@ I'm on the fence about
 It goes without saying that
 I couldn't agree more
 
-#### 短语
+#### 句块
 a lean team 精干的团队
 
 all the more reasons for patience 所以才更需要耐心
@@ -678,6 +683,12 @@ workhorse
   例：He is the workhorse of the team.（他是团队的骨干。
 
 ### 逻辑
+
+by/from
+	​Raised by​	- Credits the agent (person/entity) initiating the issue	
+		The issue raised by the auditor requires review.
+​	 Raised from​ - Describes contextual origin (rarely used for agents)	
+		The conflict raised from budget cuts." (Not agent-focused)
 
 will/would
 	​现实性未来动作​：表示即将发生的具体行动或当前做出的决定，具有较高确定性。
@@ -1233,8 +1244,19 @@ Bubble wrap
 carring handles
 shoulder strap
 #### 家具
-mattress
-竹席 bamboo mat
+
+mat VS rug VS carpet
+	mattress
+	竹席 bamboo mat
+
+	门口 ​door mat​ 属功能性地垫，非 rug
+
+	rug​（局部装饰、可移动）
+
+	carpet​（整体覆盖、固定）wall-to-wall carpet
+
+	We bought a handmade rug for the living room and installed carpet in the bedrooms.
+
 
 #### 水电
 接触不良 poor contact

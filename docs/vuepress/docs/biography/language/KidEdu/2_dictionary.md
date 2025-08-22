@@ -73,6 +73,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 | ​​Blip​​   | /blɪp/  | 电子设备的短促提示音  | “My phone blipped with a new message.”（手机“滴”了一声，收到新消息。） |
 | ​​Zing​​   | /zɪŋ/   | 尖锐的摩擦/碰撞声   | “The arrow zinged through the air.”（箭“咻”地一声飞过空中。）       |
 
+### rhyme 
+
 ## Danger Awareness
 keywords: Safety Sensory Squeeze ​choke Spit out
 
@@ -114,6 +116,38 @@ Check with teacher—make it safe!" 👩🏫
 包伤口
 
 ### Morning Routine
+
+Good morning sleepyheads  
+Time to wake up  
+Open your eyes  
+Stretch your arms  
+Now sit up  
+Let’s fold the blanket  
+Stand by your bed  
+Put on your slippers  
+Walk to the bathroom  
+Wash your face
+
+🛏️ ​Scene 1: Morning Wake-Up Routine​
+​Teacher: "Good morning, sleepyheads! Time to wake up! ☀️ Open your eyes and stretch! Streeeetch!"
+​Child A​ (rubbing eyes): "My pillow is soft... 🛏️"
+​Teacher: "Yes! Your pillow is fluffy. Now sit up! Let’s ​fold the blanket."
+​Child B​ (patting blanket): "Fold, fold! Like this?" ✨
+​Teacher: "Good job! Now, ​put on your socks​ and ​slippers. Socks keep feet warm!"
+
+🧸 ​Scene 2: Tidying the Bedroom​
+​Teacher: "Look around! Toys are everywhere! 🧸 Let’s ​clean up​!"
+​Child C​ (holding teddy): "My ​teddy bear​ sleeps on the bed!"
+​Teacher: "Perfect! ​Put teddy on the pillow. Now, ​pick up blocks​ from the floor."
+​Child D​ (dropping blocks into bin): "Blocks in the ​toy box​! Clink, clink!" 📦
+​Teacher: "Well done! Your ​bedroom is tidy​ now. High five!" ✋
+
+📚 ​Scene 3: Bedtime Story​
+​Teacher​ (holding book): "Time for bed! ​Lie down​ and ​cover with quilt. Cozy?" 🛏️
+​Child E​ (snuggling): "Quilt is warm! Tell story?"
+​Teacher: "Yes! Tonight’s story: Goodnight Moon 🌙. See the ​lamp​? We need light to read!" 💡
+​Child F​ (pointing): "Turn on ​lamp, please! Click!"
+​Teacher: "Click! Light shines bright. Now close eyes... Sweet dreams, little stars!" 🌟
 
 ### Dress up / take off
 keywords:
@@ -385,6 +419,82 @@ popsicle
 
 #### Indoor
 
+##### Bedroom
+🧸 ​Scene 1: Organizing the Wardrobe​
+​Teacher: "Look, the wardrobe is open! Let’s sort clothes together!"
+​Child A​ (holding a shirt): "Shirt... hang?"
+​Teacher: "Yes! Hang shirts on ​hangers, then put in the wardrobe."
+​Child B​ (pointing): "Teddy’s scarf? Where?"
+​Teacher: "Scarf goes in the ​top drawer. See? Wardrobe has drawers for small things!"
+​Child C​ (pulling socks): "Socks fall down..."
+​Teacher: "Use the ​basket​! Socks love to cuddle inside baskets!"
+
+🚪 ​Scene 2: Exploring the Closet​
+​Teacher: "Who wants to peek in the closet? It’s like a secret cave!"
+​Child D​ (opening door): "Shoes! Messy!"
+​Teacher: "Oh dear! Let’s ​line up​ shoes inside the closet."
+​Child E​ (holding a hat): "Hat... here?"
+​Teacher: "Brilliant! Hats live on ​shelves​ in the closet."
+​Child F: "Blanket too big..."
+​Teacher: "Fold blanket small, then tuck it on the ​shelf. Closet loves tidy friends!"
+
+🧹 ​Scene 3: Cleaning the Rug​
+​Teacher: "Uh-oh! Crumbs on the rug! Time for ​vacuum​!"
+​Child G​ (pushing toy vacuum): "Vroom! Clean rug!"
+​Teacher: "Sweep crumbs to the ​dustpan, then rug will sparkle!"
+​Child H​ (kneeling): "Teddy dropped beans..."
+​Teacher: "Beans go ​in the bin. Rug says ‘thank you’ for helping!"
+​Child I: "Now jump?"
+​Teacher: "First, ​pat the rug​ flat. Now... jump test! Hooray!"
+
+##### kitchen
+
+Scene 1: Pretend Play Kitchen​
+​Teacher: "Let’s play in the pretend kitchen! What do you see?"
+
+​Child A: "I see a sink and a stove!"
+
+​Teacher: "Good! Can you wash the toy pot in the sink?"
+
+​Child B: "Yes! I wash the pot with water."
+
+​Teacher: "Now stir the pretend soup with a spoon."
+
+​Child C: "I stir the soup. Yummy!"
+
+​Scene 2: Mud Kitchen Outdoors​
+​Teacher: "Time for the mud kitchen! Mix dirt and water in the bucket."
+
+​Child D: "I mix it! Can I make a mud pie?"
+
+​Teacher: "Of course! Put leaves on top for decoration."
+
+​Child E: "I pour，water... splash! Now the pie is wet!"
+
+​Scene 3: Baking Pretend Cookies​
+​Teacher: "Let’s bake cookies! First, crack the eggs."
+
+​Child F: "I crack the eggs. Oops! A shell fell in."
+
+​Teacher: "No problem. Scoop it out with a spoon."
+
+​Child G: "Now I pour flour into the bowl!"
+
+​Teacher: "Great! Stir everything gently."
+
+​Scene 4: Kitchen Safety Rules​
+​Teacher: "The stoveis hot. Never touch it!"
+
+​Child H: "Use an oven mitt?"
+
+​Teacher: "Yes! Always use mitts for hot things. Waitfor food to cool before eating."
+
+##### living room
+
+##### bathroom
+
+##### 阳台 
+
 #### hoursewares
 rake
 bucket
@@ -625,10 +735,132 @@ Dry with towel
 ​Teacher​（抱起她，擦干）: "You’re such a bathing pro (洗澡小专家), Luna！Next time, you can help me get the soap—deal？"（你可是“洗澡小专家”，露娜！下次你可以帮我拿肥皂——成交吗？）
 ​Luna​（点头，眼睛弯成月牙）: "Deal！"（成交！）
 
-### mosquito bites
+### boo-boo
+
+🩹 ​Scene 1: Tripping Over a Toy​
+​Child A​ (rubbing knee): "Ouch! ​Boo-boo​ on knee!" 😢
+​Teacher: "Let me see! Oh, a little ​scrape​! We’ll ​clean it gently."
+​Child B​ (handing tissue): "​Wipe​ the boo-boo?"
+​Teacher: "Yes! Now blow softly – whoosh! Dirt flies away! ✨ No germs now!"
+
+🧊 ​Scene 2: Bumping into Furniture​
+​Child C​ (pointing to forehead): "​Bump​ here! Big ​bruise​!"
+​Teacher: "A purple ​bruise​! Don’t rub! Let’s ​press the ice pack​ – brrr, cold magic!" ❄️
+​Child D​ (touching ice pack): "​Ice pack​ make bruise happy?"
+​Teacher: "Yes! ​Ice pack​ takes the ​ouch​ away. Count with me: 1, 2, 3... all better!"
+
+💬 ​Scene 3: Putting on a Bandage​
+​Child E​ (showing elbow): "​Bleeding​! Need ​bandage​!"
+​Teacher: "First, ​wash​ with water. Pat dry... Now, ​tape the bandage​ tight! ✨ ​Bandage​ hugs your boo-boo!"
+​Child F​ (admiring bandage): "​Bandage​ shiny! No more cry!"
+​Teacher: "Brave star! Say: ‘Bye-bye, boo-boo​!’"
+#### Sand in the Eye
+
+👁️ ​Scene 1: Feeling the Eyelashes​
+​Teacher: "Look in the mirror! See your ​eyelashes​? They flutter like tiny butterflies! 🦋 Blink, blink! Can you feel them?"
+​Child A​ (blinking): "Soft ​eyelashes... tickle!"
+​Teacher: "Yes! ​Eyelashes​ protect your eyes. Now, cover eyes with ​eyelids​ gently—like curtains closing! 🎭"
+​Child B​ (closing eyes): "​Eyelid​ down! Dark now!"
+
+🏖️ ​Scene 2: Sand in the Eye!​​
+​Child C​ (rubbing eye): "Ouch! ​Grit​ in eye!" ✨
+​Teacher: "Stop! Never rub! Rubbing hurts ​eyelashes​ and ​eyelid. Let’s ​flush​ it out!" 💧
+​Child D: "Water help?"
+​Teacher: "Yes! Lean over the sink. I’ll pour ​clean water. Blink-blink in the stream! ​Flush​ the ​grit​ away!" 🚰
+​Child E​ (blinking under water): "Bye-bye, ​grit​!"
+
+
+😊 ​Scene 3: Aftercare Check​
+​Teacher: "All clean? Now, let’s check your ​eyelid​ and ​eyelashes​! Are they happy?" ✨
+​Child F​ (pointing): "​Eyelash​ wet... but no hurt!"
+​Teacher: "Good! If eye feels scratchy, tell a grown-up. Never touch with dirty hands!" 🙌
+​Children​ (chanting): "​Flush, don’t rub! Keep eyes safe!"
+
+#### 场景​：英国某幼儿园的户外沙坑区，阳光明媚。3岁的Luna蹲在沙堆旁玩铲子，不小心被凸起的石头绊倒，膝盖擦破了皮，坐在地上揉眼睛哭。老师Miss Evans听到声音立刻跑过来，蹲在她面前，脸上带着关切的微笑。
+
+​Miss Evans: "Oh, Luna！Did you hurt yourself? Let me come and help—don’t cry, sweetie. Let’s take a look at your owie (小伤痛) first." (轻轻捧起Luna的小手，擦掉眼泪)
+​Luna: (抽噎着) "Knee… ouch！Stingy！" (指着膝盖，眼泪啪嗒啪嗒掉)
+​Miss Evans: "I see—your knee has a little scrape (擦伤). It looks like a tiny red line, but no blood, okay? Let’s check if it’s super ouchy or just a little owie." (用干净的手指轻轻碰了碰伤口边缘，Luna缩了下) "Hmm, it’s a little owie—brave girl！"
+
+​Miss Evans: "Now, let’s clean it gently. This special wound wash (伤口清洗液) smells like strawberries—your favorite！" (拿起喷瓶，喷了一点在棉片上) "We’ll wipe it softly, like tickling your knee… there, that’s it！" (棉片轻擦伤口，Luna抽了下鼻子)
+
+​Miss Evans: "All clean！Now, let’s put a bandage (创可贴) on it. Look, this one has dinosaurs (恐龙)—your favorite animal！" (撕开创可贴包装，轻轻贴在伤口上) "There, Mr. Dino is guarding your knee now—he’ll keep it safe！"
+
+​Luna: (盯着创可贴笑) "Dino… guard！" (用手指戳了戳创可贴上的恐龙图案)
+​Miss Evans: "Exactly！Mr. Dino says, ‘Be brave, Luna—you fell, but you’re okay！’ Let’s stand up and stretch your legs… ready? Hold my hand, and we’ll walk slowly to the bench." (扶着Luna站起来，慢慢走向旁边的长凳)
+
+​Luna: (蹦跳了两下，又揉了揉膝盖) "Knee… better！" (指着创可贴) "Dino happy！"
+​Miss Evans: "Dino is very happy—you took care of your owie like a big kid！Now, let’s get some snack (点心)—a banana and milk will make your knee feel even better. And guess what? After snack, we can play gentle tag (慢跑抓人游戏)—no running too fast, okay?"
+
+​Luna: (眼睛发亮) "Gentle tag！With Dino！" (举起创可贴上的恐龙，笑着跑向点心桌)
+​Miss Evans: "That’s my brave girl！And remember—if you ever feel another owie, just tell Miss Evans, and we’ll fix it together, like we did today. You’re so strong！" (目送Luna坐下，轻轻拍了拍她的背)
+
+#### mosquito bites
 net
 scratch
 itchy
+
+🦟 ​Scene 1: Discovering a Mosquito Bite​
+​Child A​ (pointing to arm): "​Ouch! Red bump​ here!" 😢
+
+​Teacher: "Oh, a ​mosquito bite​! Does it feel ​itchy​?"
+
+​Child B​ (touching bite): "​Itchy​! Want ​scratch​!"
+
+​Teacher: "​Don’t scratch​! Scratching makes ​bump​ angry. Let’s ​pat gently​ instead!" ✨
+
+(Teacher demonstrates patting motion with fingertips)
+
+
+🧴 ​Scene 2: Applying Anti-Itch Cream​
+​Teacher: "Time for ​magic cream​! Squeeze a tiny ​dot..." (dots cream on bite)
+
+​Child C: "​Cream cold​! Like ice!" ❄️
+
+​Teacher: "Yes! ​Rub in circles​ – round and round! Now ​blow softly... whoosh! Bye-bye, ​itchy​!" 💨
+
+​Child D​ (copying): "​Blow softly​! ​Itchy​ gone?"
+
+
+🛡️ ​Scene 3: Preventing More Bites​
+​Teacher: "Let’s ​spray spray​! Arms up – pssst!" (sprays repellent on wrists)
+
+​Child E: "​Smell funny​!"
+
+​Teacher: "This ​spray​ keeps ​mosquitoes away​! ​Shake well, then ​squirt on skin​!" 💦
+
+​Child F: "​Bug sticker​ too?" (points to sticker)
+
+​Teacher: "Yes! ​Stick on shirt​! ​Bug sticker​ says: ‘No bites here!’" ✅
+
+### 学校生活询问
+
+Scene 1: After School​
+​Parent: "Did you eat lunch at nursery today?"
+
+​Child: "Yes! I ate fish fingers and peas."
+
+​Parent: "Fish fingers! Were they yummy?"
+
+​Child: "So yummy! I ate three pieces!"
+
+​Scene 2: Dinner Preparation​
+​Parent: "What did you have for snack time?"
+
+​Child: "Apple slices and yogurt dip."
+
+​Parent: "Was the yogurt sweet or plain?"
+
+​Child: "Strawberry sweet! My favourite!"
+
+​Scene 3: Reflecting on Meals​
+​Parent: "Tell me your favourite nursery food this week."
+
+​Child: "Cheesy pasta! And crunchy carrot sticks."
+
+​Parent: "Do you like carrots more than cucumbers?"
+
+​Child: "Yes! Carrots are orange and crunchy!"
 
 ## Emotions&Actions
 
@@ -950,24 +1182,7 @@ pigment
 ​George: "Ice-cream! Horray!"
 ​Mummy Pig: "Every day is an adventure with Peppa and her friends—whether climbing monkey trees or dancing to the jukebox!"
 
-### 场景​：英国某幼儿园的户外沙坑区，阳光明媚。3岁的Luna蹲在沙堆旁玩铲子，不小心被凸起的石头绊倒，膝盖擦破了皮，坐在地上揉眼睛哭。老师Miss Evans听到声音立刻跑过来，蹲在她面前，脸上带着关切的微笑。
 
-​Miss Evans: "Oh, Luna！Did you hurt yourself? Let me come and help—don’t cry, sweetie. Let’s take a look at your owie (小伤痛) first." (轻轻捧起Luna的小手，擦掉眼泪)
-​Luna: (抽噎着) "Knee… ouch！Stingy！" (指着膝盖，眼泪啪嗒啪嗒掉)
-​Miss Evans: "I see—your knee has a little scrape (擦伤). It looks like a tiny red line, but no blood, okay? Let’s check if it’s super ouchy or just a little owie." (用干净的手指轻轻碰了碰伤口边缘，Luna缩了下) "Hmm, it’s a little owie—brave girl！"
-
-​Miss Evans: "Now, let’s clean it gently. This special wound wash (伤口清洗液) smells like strawberries—your favorite！" (拿起喷瓶，喷了一点在棉片上) "We’ll wipe it softly, like tickling your knee… there, that’s it！" (棉片轻擦伤口，Luna抽了下鼻子)
-
-​Miss Evans: "All clean！Now, let’s put a bandage (创可贴) on it. Look, this one has dinosaurs (恐龙)—your favorite animal！" (撕开创可贴包装，轻轻贴在伤口上) "There, Mr. Dino is guarding your knee now—he’ll keep it safe！"
-
-​Luna: (盯着创可贴笑) "Dino… guard！" (用手指戳了戳创可贴上的恐龙图案)
-​Miss Evans: "Exactly！Mr. Dino says, ‘Be brave, Luna—you fell, but you’re okay！’ Let’s stand up and stretch your legs… ready? Hold my hand, and we’ll walk slowly to the bench." (扶着Luna站起来，慢慢走向旁边的长凳)
-
-​Luna: (蹦跳了两下，又揉了揉膝盖) "Knee… better！" (指着创可贴) "Dino happy！"
-​Miss Evans: "Dino is very happy—you took care of your owie like a big kid！Now, let’s get some snack (点心)—a banana and milk will make your knee feel even better. And guess what? After snack, we can play gentle tag (慢跑抓人游戏)—no running too fast, okay?"
-
-​Luna: (眼睛发亮) "Gentle tag！With Dino！" (举起创可贴上的恐龙，笑着跑向点心桌)
-​Miss Evans: "That’s my brave girl！And remember—if you ever feel another owie, just tell Miss Evans, and we’ll fix it together, like we did today. You’re so strong！" (目送Luna坐下，轻轻拍了拍她的背)
 
 ## Nature & Outdoor
 
@@ -1115,6 +1330,76 @@ Weather Art & Emotion)​​
 ​Children​（循声探索）：
 "​Found one​! It’s ​sparkly​!"（找到啦！亮晶晶的！）
 
+⚡ ​Scene 1: First Thunderclap – Calming Fears​
+​Child A​ (startled by a loud BOOM):
+
+"Oh no! ​Thunder​! Scary noise! 😨"
+​Teacher​ (gentle tone, hugging a teddy):
+"Shhh... It’s just the ​clouds​ talking! ​Lightning​ makes the flash, then ​thunder​ goes BOOM! Like a drum in the sky! 🥁"
+​Child B​ (curious):
+"Clouds... talking? Why so loud?"
+​Teacher:
+"When ​clouds bump, they make ​thunder​! Let’s count: 1, 2, 3... after ​lightning​! More seconds = storm is far!" ⏱️
+
+🌩️ ​Scene 2: Science & Safety – Lightning Experiment​
+​Teacher​ (using a flashlight and drum):
+
+"Watch! This torch is ​lightning​! Flash! 🔦 (hits drum) BOOM! That’s ​thunder​! Sound travels slow... light travels FAST! ✨"
+​Child C​ (imitating):
+"My turn! Flash-flash... Boom-boom! 💥"
+​Teacher​ (safety reminder):
+"Yes! Now, ​safety rule: If ​thunder​ roars, go indoors! Never hide under trees! 🌳" 
+
+🌧️ ​Scene 3: Storm Sounds & Sensory Play​
+​Teacher​ (leading a sound game):
+
+"Let’s make a ​storm​ together! Rub hands—shhh (wind)! Tap knees—pitter-patter (rain)! Stomp feet—BOOM (thunder)! Now... ​lightning​! Flash with fingers! ✨👐"
+​Child D​ (giggling):
+"My fingers ​lightning​! Zig-zag flash! ⚡"
+​Teacher:
+"Brilliant! ​Thunder​ after ​lightning... 1, 2... BOOM! Who’s brave like Lily?" 
+
+🌈 ​Scene 4: After the Storm – Rainbow Joy​
+​Child E​ (pointing outside):
+
+"Rain stopped! Sun smiling! 😊"
+​Teacher:
+"Look! A ​rainbow​! Red, yellow, blue... ​Rainbow​ says: ‘Storms end, happy times come!’ 🌈 Let’s sing:
+Rainbow, rainbow, bright and high,
+After thunder in the sky!" 🎶
+​Children​ (chanting together):
+"No more ​lightning, no more ​thunder...
+Just a ​rainbow, full of wonder!" ✨
+
+☔ ​Scene 1: Rain & Rainbow Discovery​
+​Teacher​ (pointing outside):
+
+"Look, children! The rain is ​pouring​ down! 🌧️ Pitter-patter, pitter-patter! Can you hear it?"
+​Child A​ (imitating raindrops):
+"​Pouring, pouring! Wet, wet!" 💧
+​Teacher:
+"Yes! When rain ​pours, the sky gets clean... and guess what comes after? A magical ​rainbow​!" 🌈
+
+🌈 ​Scene 2: Rainbow Colors Hunt​
+​Child B​ (jumping excitedly):
+
+"I see colors! Red... yellow... green!"
+​Teacher​ (holding prisms):
+"Brilliant! Let’s name all seven: ​Red, orange, yellow, green, blue, indigo, violet!​​" 
+
+​Child C​ (pointing at light refraction):
+"Light ​pours​ through the glass... colors dance!" ✨
+​Teacher:
+"Exactly! When light ​pours​ into water drops, it splits into rainbow colors! Magic!"
+
+🎨 ​Scene 3: Art & Science Fusion​
+​Teacher​ (setting up watercolor):
+
+"Now, let’s ​pour​ water on paper... Swoosh! Now add paint—watch colors blend!" 🖌️
+​Child D​ (dipping brush):
+"I ​pour​ red... and blue! Makes... ​purple​!" 💜
+​Teacher:
+"Genius! Mixing colors is like rain and sun making rainbows! What else can you create?"
 ### Shadow Play Adventures
 
 keywords: Shadow, sun, dark shape, in front, waves back, Stretch tall! Tiptoe tiny!

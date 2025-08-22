@@ -13,6 +13,27 @@ strong or eventual consistency 强一致 最终一致
 in an ad hoc manner
 Multivariate analysis 多变量分析
 
+incident vs enter
+    Sunlight incident on a water droplet refracts at the air-water interface."
+    （光线照射到水滴表面时在空气-水界面发生折射）
+    When light enters a droplet, its speed decreases, causing refraction.
+    （光进入水滴时速度降低引发折射）
+    ❌ 错误： “The laser enters the mirror.”（激光进入镜子）
+    → 镜子是反射面，激光实际是 ​incident on​ the mirror（入射到镜面）
+
+Refracts    
+    Light refracts into the droplet, bending toward the normal.
+    （光折射入水滴，向法线方向偏折）
+transmits
+    Light transmits through the droplet, undergoing internal reflection.
+    （光透射过水滴时发生内部反射）
+
+Disperses
+    Refracted light disperses into separate wavelengths due to differing refractive indices."
+    （折射光因不同波长折射率差异发生色散）
+    White light splits via dispersion inside the droplet, forming a spectrum."
+    （白光在滴内通过色散分离成光谱）
+    
 ## biography
 anal 肛门
 apical dominance  顶芽优势
