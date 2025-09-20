@@ -1172,6 +1172,13 @@ Time: at, on, in ("​​at​​ 5 PM")
 Place: under, over, between
 Direction: to, from, into
 
+| 介词     | 含义侧重                                   | 例句                                                                 | 自然度         |
+|--------|----------------------------------------|--------------------------------------------------------------------|-------------|
+| ​​at​​ | 指“在​​某个场所或地点​​”进行滑冰这项活动，强调场所的整体性。      | Let's go ​​skate at the roller rink​​ this weekend. (我们周末去旱冰场滑冰吧。) | ✅✅✅ ​​最常用​​ |
+| ​​in​​ | 强调在场地“内部”的物理空间感。                       | It's crowded ​​in the roller rink​​. (旱冰场里面很拥挤。)                   | ✅✅ 可用，但少用   |
+| ​​on​​ | 通常指在某个“平面”上，更多用于描述在“冰面”或“轮滑面”上滑行的具体动作。 | She is practicing new moves ​​on the rink​​. (她正在场地上练习新动作。)        | ✅✅ 可用，指平面   |
+
+
 along 
 	作介词（Preposition）
 		空间‌：指“沿某物的长度方向”（+ 线性路径，如道路、河流）。
@@ -1190,11 +1197,15 @@ alongside
 	作副词（Adverb）表示“在旁边”或“并行”
 	Two cars drove ‌alongside‌.（两辆车并排行驶。）
 at
+	表示精确的地点或小地点；具体的时刻点；活动、状态​
+
+	at the station (在车站)；at 9:00 AM (在上午9点)；at work (在工作) 
 	At no point between then and 01/03
 	at the same price
 
 
 by
+	By通常表示方式、方法或凭借（by bus, by me）
 	drawer by drawer 一个一个的翻抽屉
 	by rotation
 
@@ -1203,15 +1214,31 @@ cum  及; 和; 与; <拉>连同
 for
 
 from
+	from通常表示来源或起点（from Beijing, from now on）
 	In general,the parts are inseparable from the whole
 
-in 
+in / into
+	表示在较大或封闭的空间内；较长或泛指的时间段；状态​
+	in the room (在房间里)；in 2025 (在2025年)；in the morning (在早上)；in progress (进行中)
 	in the long run
+	
+	把手伸进手套​ 
+		​Put your hand into the glove.​​
+		Push your hand all the way in.​​
+
 of
 	of that I am sure
 	To be of value needs to be highly accurate and in near or real time.
 on
+	表示与表面接触；具体的某天或特定某天的上午、下午、晚上；关于（较正式或学术）​​
+
+	on the table (在桌上)；on Monday (在周一)；on a cold winter evening (在一个寒冷的冬夜)；a book on history (一本关于历史的书) 
 	next Monday就相当于时间状语,不需要再加on,这是习惯用法.只有today，next Monday，next week等时间副词或者时间词组可以省略on.
+	on our end​（或 on our side）。这里的 end指的是“（链条、通信或交易的）一端”。On在这里表示“在…上”，暗含一种“表面附着”或“责任承担”的隐喻，意思是问题或工作“在我们这一端”、“由我们这边负责”。
+
+	​install software on a system/computer​ 或 ​install software in an operating system。
+	•On在这里表示“在…之上”，把整个系统或计算机看作一个平台或基础。
+	•In虽然偶尔也可能见到，但不如 on常见和自然。In可能更强调“在操作系统这个环境内部”。
 over
 	year over year 年比
 	‌over the time （vs 副词短语 over time)
@@ -1224,6 +1251,9 @@ over
 per
 	per pax=per person/passenger person is a decent substitute for individuals, People is the ordinary plural of person
 to
+	表示方向、趋向；给予；关联、附着​
+	To my knowledge是一个固定短语，意思是“据我所知”、“就我所知”。这里的 to表示的是“就…而言”、“根据”的含义，强调一种“指向”或“关联”的关系
+	go to school (去学校)；give to me (给我)；the key to the door (门的钥匙) 
 	to closure
 	keep to the budget
 	to the extent that
@@ -1232,6 +1262,22 @@ to
 towards
 	towards The written exam paper at the end of the course contributes 70% towards your final assessment.
 
+through
+
+	​把手穿过袖子​
+		​Put your arm through the sleeve.​​
+		Find your way out of the sleeve.​
+
+一个短语有没有冠词（a/an/the），决定了它是强调“功能、状态”还是“具体地点”​。
+
+| 无冠词（抽象功能/状态）    | 中文含义        | 加冠词（具体地点/动作）        | 中文含义       |
+|-----------------|-------------|---------------------|------------|
+| ​​at school​​   | 在上学         | ​​at the school​​   | 在学校（地点）    |
+| ​​in school​​   | 在求学（强调学生身份） | ​​in the school​​   | 在学校里（建筑物内） |
+| ​​in hospital​​ | 住院（作为病人）    | ​​in the hospital​​ | 在医院里（地点）   |
+| ​​at hospital​​ | (较少用)       | ​​at the hospital​​ | 在医院（工作或探病） |
+| ​​at table​​    | 在吃饭         | ​​at the table​​    | 在桌子旁       |
+| ​​in bed​​      | 卧床（睡觉或生病）   | ​​in the bed​​      | 在床上        |
 
 对比：
 at in on 
@@ -1239,6 +1285,9 @@ at in on
 	https://tw.answers.yahoo.com/question/index?qid=20110817000015KK11854
 	Locators in Time and Place: http://grammar.ccc.commnet.edu/grammar/prepositions.htm
 
+in your lap
+	指 ​双手放置于大腿内侧形成的“凹陷空间”​，被双腿自然包围（如怀抱物品），而非仅置于膝盖表面
+	She sat with her hands in her lap.”（她双手放膝间坐着）→ 手被大腿内侧包裹，呈放松状态
 of for
 	purpose of purpose for http://english.stackexchange.com/questions/6969/the-purpose-of-versus-the-purpose-for-which-one-is-proper
 
@@ -1253,6 +1302,17 @@ at vs in
 	at/in at school workplace office home
 among amongst http://grammarist.com/usage/among-amongst/
 
+to/on
+	• 强调动作的方向和目的地时，用 ​deploy to the server​（部署到服务器上）。
+	• 强调产品已经存在于服务器之上/之中的状态时，可以用 ​deployed on the server​（部署在服务器上）。On同样更常见，表示服务器作为一个平台。
+	• Deployed in the server听起来像是产品被放在了服务器的“物理机箱里面”，除非特指这种情况，否则较少使用
+
+belong to​ ​所有权归属​ 人/物属于特定主体（人、组织、类别）
+	“The park belongs to the Crown.”（公园属于王室）
+​belong in​ ​环境适宜性​ 强调事物在特定场所的“自然存在感”或“功能合理性”
+	“Water bottles belong in parks for hydration.”（水壶属于公园，因补水合理）
+belong on​ ​位置合理性​ 强调事物在特定平面/空间中的“应然位置”
+	“Animals belong on this planet.”（动物本应存在于地球）	
 #### 复合介词
 as for
 as of 用于表示时间或日期的起点或截止点
@@ -1384,15 +1444,18 @@ be, seem, appear, become, feel, look, smell, taste, sound
 get enrolled
 	She ‌got enrolled‌ in Harvard.（她被哈佛录取了。）
 	Students must ‌get enrolled‌ before the deadline.（学生必须在截止日期前完成注册。）
-#### Auxiliary (Helping) Verbs​​
+#### 助动词 Auxiliary (Helping) Verbs​​
 ​​Definition:​​ Used with a main verb to form tenses, moods, or voices.
+​​Primary Auxiliaries:​​
+	be, have, do, get
+
 ​​Examples:​​
 
 She is ​​eating​​ dinner. (Present continuous)
 They have ​​finished​​ the work. (Perfect tense)
 He does ​​not​​ like coffee.
-​​Primary Auxiliaries:​​
-be, have, do
+
+It’s late, let’s ​get started​!
 
 #### 情态动词 Modal Verbs​​
 ​​Definition:​​ Auxiliary verbs expressing ability, permission, necessity, etc.
@@ -1903,6 +1966,12 @@ extrapolate （由已知资料对未知事实或价值） 推算，推断
 
 
 fabricate 编造 虚构
+fall 
+	I almost fell.
+	He ​fell​ off the ladder yesterday. 
+	She ​has fallen​ asleep. 
+	When the ambulance arrived, the old man ​had fallen​ unconscious. 
+	I saw the leaves ​were falling​ in the wind. 
 flatter
 fluctuate 波动 起伏
 forfeit （因违反协议、犯规、受罚等） 丧失，失去;

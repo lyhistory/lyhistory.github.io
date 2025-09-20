@@ -25,6 +25,217 @@ lowlife scum
 +  Uncivilized
   "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
+用来“刺”或“戳”的小工具
+	​手机取卡针​ ​SIM eject tool / "that little pin for the SIM card"​​ 
+	药瓶穿刺器​ ​Bottle opener / piercing cap 特指某些药瓶盖上附带，用于刺破瓶口密封的尖头。
+		”Twist the cap upside down; the ​piercing point​ on the inside will break the seal." (把瓶盖倒过来拧，里面的刺针会划开密封层。)
+	胶水/牙膏刺封头​ ​Piercing pin / inner seal piercer​ 
+		许多软管状产品（如胶水、牙膏）的盖子内部会有一个尖锥（pointed tip或 ​spike），第一次拧紧盖子时，这个尖锥会刺破管口的密封薄膜。
+	通用尖头工具​ ​Awl​ 通用的穿孔工具，常用于皮革、纸品等材质上打孔。
+		”Use an ​awl​ to make a small pilot hole before driving in the screw." (在拧螺丝之前，先用锥子钻一个小引导孔。)
+
+拧下来
+	| 中文场景       | 核心英文动词                      | 例句                                                               |
+	|------------|-----------------------------|------------------------------------------------------------------|
+	| ​​拧钥匙/瓶盖​​ | ​​Turn​​（最通用）               | ​​Turn​​ the key slowly. （慢慢​​拧​​钥匙。）                           |
+	|            | ​​Twist​​（强调“扭转”动作）         | ​​Twist​​ the cap to open the bottle. （​​拧​​开瓶盖。）               |
+	| ​​拧紧​​     | ​​Screw on​​ / ​​Tighten​​  | ​​Screw on​​ the lid tightly. （把盖子​​拧紧​​。）                      |
+	| ​​拧开/拧松​​  | ​​Unscrew​​ / ​​Screw off​​ | Can you ​​unscrew​​ this jar? （你能​​拧开​​这个罐子吗？）                  |
+	| ​​拧断​​     | ​​Twist off​​               | He ​​twisted off​​ the bottle cap. （他​​拧断​​了瓶盖。）              |
+	|            | ​​Break off​​ (靠蛮力折断)       | She ​​broke off​​ the tree branch. （她​​拧断​​了树枝。）                 |
+	| ​​拧干（毛巾）​​ | ​​Wring out​​               | ​​Wring out​​ the wet cloth. （把湿布​​拧干​​。）                       |
+	| ​​拧下（果实）​​ | ​​Twist off​​ (旋转摘下)        | He ​​twisted​​ an apple ​​off​​ the branch. （他从树枝上​​拧下​​一个苹果。） |
+	|            | ​​Pick​​ (更常用的“采摘”)         | We went to ​​pick​​ apples. （我们去​​摘​​苹果。）                     |
+
+
+坏了 蔫了
+	物理坏
+	She ​broke​ two strings. (她弄断了两根琴弦。) 
+	My phone is ​broken; I need to get it fixed. (我的手机坏了，得去修一下。)
+	质坏
+	The milk has ​spoiled​ because of the hot weather. (牛奶因为天气炎热变质了。) 
+	She ​spoils​ those kids of hers. (她把她那几个孩子给宠坏了。) 
+	The tall buildings have ​spoiled​ the view. (那些高楼大厦破坏了这片景色。) 
+
+	| 英文表达        | 中文含义        | 典型适用对象          | 例句                                                       |
+	|-------------|-------------|-----------------|----------------------------------------------------------|
+	| ​​Limp​​    | ​​蔫了​​（最常用） | 蔬菜、绿叶、花朵等       | The lettuce has gone ​​limp​​; we'd better use it soon. |
+	| ​​Wilted​​  | 枯萎了         | 蔬菜、植物叶片         | The ​​wilted​​ vegetables don't look fresh.             |
+	| ​​Soggy​​   | 受潮了（不脆了）    | 饼干、薯片、油炸食品等     | The cookie is ​​soggy​​.                                |
+	| ​​Rotten​​  | 烂了、腐烂了      | 水果（如苹果）、蔬菜、肉类   | The apple is ​​rotten​​.                               |
+	| ​​Moldy​​   | 发霉了         | 面包、奶酪、水果、果酱等    | The bread is ​​moldy​​.                                |
+	| ​​Spoiled​​ | 变质了（通用）     | 牛奶、酸奶、饭菜等易腐败食物  | The milk is ​​spoiled​​.                          |
+	| ​​Stale​​   | 不新鲜了（走味、变硬） | 面包、蛋糕、零食、空气等    | The bread is ​​stale​​.                              |
+	| ​​Ran cid​​ | 哈喇味、油脂变质    | 坚果、食用油、油炸食品、黄油等 | The butter has turned ​​rancid​​.                       |
+
+
+表示弹掉某物 flick something away / off ​
+	She ​flicked the dust off​ her book. (她弹掉了书上的灰尘。)
+
+瓣 Wedges
+	An orange has many wedges.
+电梯	
+	Lift 英 Elevator 美 升降电梯
+	Escalator 自动扶梯
+	Travelator / Moving Walkway​： 指的是自动人行道
+
+话到嘴边了，就差一点
+	What's that herb called... oh, ​it's on the tip of my tongue​! You know, the one you put in pasta...
+	The name of that author... ​it escapes me right now. He wrote that famous mystery novel.
+	I'm ​blanking on the word for​ that kitchen tool that chops things.
+	What do you call that thing that​ you use to open wine bottles?
+	Could you hand me the ​thingamajig​? You know, the little ​gadget​ for tightening screws." (能把那个小工具递给我吗？你知道的，就是拧螺丝的那个小玩意儿。) 注：Thingamajig/Thingy 在北美口语中很常见，泛指叫不出名字的小物件或小装置。
+水
+	白开水 ​plain boiled water
+	凉白开 ​cooled boiled water
+	温水 ​warm water
+	热水(饮) ​hot water
+	自来水 ​tap water
+	矿泉水 ​mineral water
+	纯净水 ​purified water
+特殊的配件
+	凉鞋/鞋上的带孔​ ​Eyelet - Grommet (更厚重耐磨)
+		Thread the lace through each ​eyelet.（把带子依次穿过每个孔眼。）
+		The strap on my backpack tore through the ​grommet.（我背包上的带子从那个加固孔眼里撕脱了。）
+	书包带上的调节扣​ ​Buckle - Adjustable buckle, Slide buckle
+		Slide the ​buckle​ to tighten the strap.（滑动扣子来收紧带子。）
+	绳子末端的硬壳​ Aglet
+		The ​aglet​ on my shoelace broke, making it hard to thread.（我鞋带上的包头坏了，很难穿进去。）
+	金属环状扣​ D-ring
+		Attach the leash to the ​D-ring​ on the harness.（把牵引绳扣在背带上的D形环上。）
+	魔术贴​ ​Velcro	- Hook-and-loop fastener
+旋钮
+	Dial​ 的核心在于它是一个带有刻度、数字或指示标记的盘面，其主要功能是供人读取数值或选择特定选项。
+	Knob​ 的核心是那个供你手抓握、旋转、按压的物理凸起部件，它强调的是操作动作本身。
+	Turn the ​knob​ to adjust the ​dial.”（转动旋钮来调节刻度盘。）
+
+	旋钮调节​ ​Dial-Fit System​ 
+		This children's helmet ​features a Dial-Fit system​ at the back for quick and precise sizing. Just ​turn the dial until the fit is snug and secure.
+		To adjust the helmet, rotate the knob/dial clockwise to tighten and counterclockwise to loosen.​​ The system offers infinite adjustment for a custom fit." (调整头盔时，顺时针旋转旋钮调紧，逆时针旋转调松。​​ 该系统提供无级调节，以实现定制化贴合。)
+
+	传统带子调节​ ​Strap Adjustment
+		This backpack has ​strap adjustment​ on the shoulders and waist."
+		Loosen the straps​ before you take off the helmet.
+		You can ​tighten the chin strap​ for a more secure fit.
+
+梯	
+	户外台阶​ Outdoor steps / Exterior steps
+		The museum has wide ​outdoor steps​ leading to its main entrance.
+	梯子 Ladder
+		He used a ​ladder​ to clean the gutters.
+	自动扶梯​ Escalator
+		We took the ​escalator​ to the third floor of the department store.
+	上下床的梯子​ Bunk bed ladder
+		The child climbed up the ​bunk bed ladder​ to reach the top bunk.
+	固定楼梯（室内）​​Stairs / Staircase
+		The old library has a magnificent marble ​staircase.
+	螺旋楼梯​ Spiral stair
+	直梯​ Straight stairs
+
+摆手	
+	He ​waved his hand​ to stop us from laughing.
+	She ​waved away​ my suggestion. （她摆手拒绝了我的建议。）
+	He ​waved his hand​ to say goodbye
+	Remember to ​swing your arms​ naturally while skating to maintain balance. （滑行时要记得自然地摆动手臂来保持平衡。）
+把手背在身后
+	The teacher walked into the classroom ​with his hands behind his back. 
+
+堵头 Plug/Cap
+	We need a ​plug​ for this faucet.
+馅饼
+	It's a savory pastry ​filled with chopped Chinese chives​ and sometimes other ingredients like eggs, vermicelli, or minced meat.
+	It's ​pan-fried​ until the outside is golden brown and crispy.
+	This is a ​Chinese Chive Pie. It's a popular savory snack with a crispy crust and flavorful chive filling.
+
+
+积分卡
+	Many coffee shops offer a ​stamp card​ where you get a free drink after purchasing ten.
+	Don't forget to scan your ​loyalty card​ to earn points on today's purchase.
+	Hi, could you please explain how this loyalty card works? Specifically, how do I earn points and what can I redeem them for?
+	You can ​redeem your points for a gift​ from the rewards catalog.
+吹凉
+	The soup is hot. Blow on it.
+	Blow on it to cool it off.​
+	Blow on your food to cool it down.
+	Can you blow on it to make it cooler?
+
+nuance细微差别
+
+抬脚
+	Lift your feet!​
+		Lift your feet​ higher to push harder and go faster!
+	Lift your feet up!​​ 或 ​Step up!/Step down!​
+		We're at the top! ​Lift your feet up!​​" / "​Step up!​​
+		Here's the bottom. ​Lift your feet up!​​" / "​Step down!
+	​​Step over (it)!​
+		There's a puddle. ​Step over it!​
+	Pick up your feet!​
+		The floor is messy. ​Pick up your feet!
+	Tuck your feet up!​
+		​Tuck your feet up​ on the couch.
+转圈
+	轮滑/滑冰转圈 Skate in circles​ / ​Circle the rink​
+		"Watch me ​skate in circles​!"
+	小朋友自转（原地）​ Spin around​
+		The kids ​spun around​ until they got dizzy.
+	牵着别人转圈 Twirl (someone around)​​
+		Dad ​twirled​ me ​around​ in the garden.
+	芭蕾/舞蹈转圈​ ​Pirouette​ （单脚尖旋转） / ​Turn​
+		The ballerina ​pirouetted​ across the stage.
+	物体/机器旋转​ ​Rotate​ / ​Revolve​
+		The Earth ​revolves​ around the Sun.
+	追尾巴转圈​ ​Spin in circles​
+		The puppy ​spun in circles​ chasing its tail.
+	游乐设施旋转​ ​Go round and round​
+		We ​went round and round​ on the merry-go-round.
+不要摸仙人掌 刺会扎到你
+	Don't touch the cactus! You'll get pricked by the spines!
+
+莲蓬头水喷在身上
+	I love the feeling of warm water ​spraying on my back.
+	The showerhead ​sprays​ a fine mist.
+	Point the showerhead away from your face; the water is ​hitting​ me too hard.
+	After my long run, I stood in the shower and let the hot water ​beat down on​ my sore muscles.
+	It felt amazing to feel the soapy water ​run down​ my body.
+皱皱
+	最地道、最常用的表达：Pruney prune​（西梅干/李子干），因为皮肤起皱后的样子非常像果干表面的褶皱。
+	Look! My fingers are ​all pruney​ from the swimming pool!
+	After doing the dishes for so long, my hands get ​pruney.
+	更正式/通用的表达：Wrinkled 泛指一切“起皱”，用途更广。既可以形容皮肤（因水、因年老），也可以形容衣服、纸张
+	My skin is ​wrinkled​ from wearing these damp gloves all day.
+	The ​wrinkled​ skin on his forehead showed his age.
+	If you stay in the bath too long, your fingertips ​wrinkle up.
+手上勒痕或印子
+	I have these ​marks​ on my wrist from my new watch strap.（我手腕上戴新手表留下了些印子。）
+	The tight gloves left ​red lines​ on my hands.（那副紧手套在我手上留下了红道道。）
+	You can see the ​imprint​ of the blood pressure cuff on my arm.（你能看到血压计袖带在我胳膊上压出的印儿。）
+	The straps were so tight they left ​indentations​ in my skin.（带子系得太紧，在我皮肤上勒出了凹痕。）
+	The rough edges of the brace caused ​chafing​ on my elbow.（护具的粗糙边缘磨疼了我的手肘。）
+	My skin is ​chafed​ from the harness.（我的皮肤被背带磨得生疼。）
+	This splint is ​rubbing​ against my skin.（这个夹板磨我的皮肤。）
+下床穿鞋
+	Get out of bed and put on your shoes
+气球破了
+	He ​burst​ the balloon by blowing too hard."（他吹太用力把气球吹爆了。）
+	The needle ​popped​ the balloon instantly."（针瞬间刺爆了气球。）
+	Check if the balloon is ​leaking."（检查气球是否漏气。）
+	She ​let the air out​ of the balloon slowly."（她慢慢给气球放气。）
+
+聊天群里有人at我
+	Someone mentioned me​ in the group chat just now.
+	She ​tagged me​ in a post about the event."（她在活动帖子中@了我。）
+	Can you ​ping me​ in the group? I missed the update."（群里@我下，我没看到更新。）
+	Hi [@Name], thanks for tagging me. Could you please let me know what you'd like me to assist with?
+
+屋檐下躲雨
+	We ​took shelter under the eaves​ during the sudden downpour. ​eaves​ 专指“屋檐”（屋顶边缘突出部分）
+	Quick! ​Stand under the overhang​ to avoid getting soaked! overhang​ 泛指“悬垂结构”（如屋檐、雨棚）
+	Shelter from the rain​（避雨）
+路边摊
+	Night markets in Taiwan are famous for their ​roadside stalls​ selling stinky tofu
+	You can find cheap jewelry at ​street stalls​ in Bangkok.
+	The ​food cart​ near the station sells delicious kebabs."（车站旁的小吃推车卖美味烤肉串）
+	The ​snack trolley​ on the train offers chips and soda."（火车上的零食推车提供薯片和汽水）
 下床
 	She ​got out of bed​ slowly and stretched."（她慢慢走下床伸了个懒腰。
 	He ​jumped out of bed​ when the alarm rang."（闹钟一响他就跳下了床。）
@@ -684,6 +895,18 @@ workhorse
 
 ### 逻辑
 
+everyone​​ 虽然在意思上指的是“所有的人”，但它在语法形式上是一个单数名词。这决定了它后面的谓语动词要用单数形式（第三人称单数）
+	Does everyone ​have​ their ticket?
+	虽然这些词谓语用单数，但在指代时（用代词指回它们），现代英语中为了避免性别歧视，更常用“they/their/them”等复数代词（尤其在口语中）。
+	有点别扭但语法曾要求​：Everyone should take ​his​ seat. – 传统语法要求用单数代词。
+	更自然且现代的用法​：Everyone should take ​their​ seat. 
+
+I noticed you were just falling.”​​ 很有意思，它描述的是一个 ​​“正在发生但尚未完成”​​ 的动作瞬间。对方可能摔倒了，也可能没有最终摔倒，这完全取决于这句话之后的实际情况。
+	A: "I noticed you were just falling. Are you okay?" （我刚才看到你要摔倒了。你没事吧？）
+	B: "Ouch... Yeah, I fell. My knee hurts." （哎哟……是啊，我摔倒了，膝盖好疼。）
+	A: "I noticed you were just falling. That was close!" （我刚才看你要摔倒了，真险啊！）
+	B: "Yeah, I almost fell but managed to grab the rail." （是啊，差点就摔了，幸好我抓住了栏杆。）
+
 by/from
 	​Raised by​	- Credits the agent (person/entity) initiating the issue	
 		The issue raised by the auditor requires review.
@@ -1246,11 +1469,15 @@ shoulder strap
 #### 家具
 
 mat VS rug VS carpet
-	mattress
+	床垫 mattress
 	竹席 bamboo mat
 
 	门口 ​door mat​ 属功能性地垫，非 rug
-
+	浴室防滑垫（bath mat）
+		Wipe your shoes on the ​doormat​ before entering.
+		The ​doormat​ says 'Welcome' and traps dirt from shoes.
+		The ​bath mat​ absorbs water quickly and prevents slipping.
+		"A ​bath mat​ with rubber backing prevents slips on wet tiles.
 	rug​（局部装饰、可移动）
 
 	carpet​（整体覆盖、固定）wall-to-wall carpet

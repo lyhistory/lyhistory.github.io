@@ -75,6 +75,299 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 ### rhyme 
 
+### Emotions
+😊 ​1. Smile（微笑）​​
+Mummy Pig's smile is very warm.​​
+​Granny pig, you smile nice. Thank you, grandpa pig.​​
+​George's smile is very sweet.​
+
+😂 ​2. Laugh（笑）​​
+​George laughs happily when he plays with Peppa.​​
+​Peppa and George giggle. 
+
+😠 ​3. Frown（皱眉）​​
+​Hmm…This pirate has very bad handwriting.​​
+​No, George. You can't put grass in my perfume.​
+
+😢 ​4. Cry（哭）​​
+​George's tears fall when he is sad.​​
+
+Afraid
+Angry
+Confused
+Curious
+Dispointed
+Embarrassed
+Excited
+Happy
+Lonely
+Peaceful
+Proud
+Sad
+Shy
+Silly
+Sorry
+Suprised
+Tired
+
+### Actions
+clap hands
+stamp feet
+wiggle
+wag
+
+📢 Shout（喊叫）​​
+​​"Off we go!" shouts Daddy Pig.​​
+​​"Hel----------p!"​​
+
+👂 Listen（听）​​
+​​"Listen to Mummy, children."​​
+​​"Let's see what the message says."​
+
+
+🎤 Sing（唱歌）​​
+​Mummy Pig sings a lullaby to Peppa and George at night.​​
+（旁白，猪妈妈唱摇篮曲）
+​​"The birds in the tree sing beautifully."​
+
+🦘 ​Skip（跳跃/省略）​​
+​​"Peppa plays hopscotch in the yard."​​
+（跳房子游戏隐含跳跃动作）
+​​"No need to panic, Granny Pig!"​
+
+🧳 Carry（搬运）​​
+​​"Grandpa, can you carry the treasure chest?"​​
+（佩奇请求搬运宝箱的隐含场景）
+​​"Mummy Pig carries the picnic basket to the boat."​
+
+
+📖 Read（阅读）​​
+​​"Daddy Pig reads a newspaper in the morning."​​
+（旁白，猪爸爸读报）
+​​"Can you read the pirate's message, Mummy?"​
+
+🏃 Jump（跳跃）​​
+​​"Peppa jumps happily in the garden."​​
+（旁白，佩奇在花园跳跃）
+​​"The little pigs jump rope happily."​
+
+🤗 Hug（拥抱）​​
+​​"George hugs his teddy bear when sleeping."​​
+（乔治睡觉时拥抱泰迪熊的隐含动作）
+​​"Peppa gives Granny a big hug after finding treasure."​
+
+👀 Look（看）​​
+​​"Look with eyes, not with fingers!"​​
+（护士教导观察植物的安全用语）
+​​"Look, George! A key!"​
+
+🌳 Swing（摇摆）​​
+​​"George's toy boat swings on the water."​​
+（玩具船在水面摇摆的隐含场景）
+​​"The wind in the meadow blows gently."​
+
+🤲 Catch（接住）​​
+​​"Catch the ball, George!"​​
+（佩奇与乔治玩球时的指令）
+​​"Daddy Pig tries to catch the dripping water from the roof."​
+
+🎯 Throw（投掷）​​
+​​"George throws the ball to Peppa."​​
+（乔治投球给佩奇的旁白）
+​​"Let's throw sticks for the treasure hunt clues!"​
+
+📞 Call（打电话）​​
+​​"Don't worry. I'll ring Dr. Brown-Bear."​​
+（猪妈妈，S1E25 Not Very Well，用英式口语"ring"替代"call"）
+​​"Mummy, can I ring daddy work and say happy birthday?"​
+
+🏗️ Build（建造）​​
+​​"Daddy: I'm building a new house."​​
+（猪爸爸，S4E02 The New House，工程主题场景）
+​​"George, let's build a snowman!"​
+
+🎮 Play（玩耍）​​
+​​"Peppa and George are having a lot of fun."​​
+（旁白，S1E26 Snow，描述雪仗游戏）
+​​"Who wants to play with this ball in the garden?"​
+
+🚪 Open（打开）​​
+​​"Open wide, please."​​
+（棕熊医生，S1E25 Not Very Well，检查身体指令）
+​​"Open your eyes, George! A key!"​
+
+🍰 Eat（吃）​​
+​​"Ask my mummy if I could have some ice cream."​​
+（佩奇装病时，S1E25 Not Very Well，典型儿童讨零食句式）
+​​"Dinosaurs ate potatoes? No!"​
+
+👅 Lick（舔）​​
+​​"Mummy, can I lick the spoon? Yes, you can lick the spoon."​
+
+🥛 Drink（喝）​​
+​​"George, take your spaces helmet off to drink your milk."​​
+（猪妈妈，S2E49 Stars，太空主题生活化）
+​​"The family are having mugs of hot milk."​
+
+🤹 ​Juggle（杂耍）​​
+注：剧集中无直接"juggle"台词，但以下场景隐含杂耍概念
+
+​​"Mr. Bull balances three bricks on his nose!"​
+
+💃 Dance（跳舞）​​
+​​"Up down up down, altogether now! Mr. Potato is dancing!"​
+
+🚀 Ride（乘坐）​​
+​​"Peppa and her friends are going to ride on the potato rocket."​​
+（旁白，S4E01 Potato City，游乐设施体验）
+​​"George wants to ride on the potato rocket too."​
+
+🧼 Wash（清洗）​​
+​​"Mummy Pig washes George's muddy hands after gardening."​
+
+🕵️ Hide（躲藏）​​
+​​"Quick, hide behind the tree before Daddy finds us!"​
+
+🚶  Walk（行走）​​
+​​"Dinosaurs would have walked the earth together."​
+
+🏃 Run（奔跑）​​
+​​"Peppa and her friends are running around having fun."​
+
+⛏️ Dig（挖掘）​​
+​​"George shouts 'Digger!' when seeing construction tools."​
+
+⚠️ Slip（滑倒）​​
+​​"Oops! Oh dear! It's not funny!"​
+
+👃 Sniff（嗅闻）​​
+​​"George sniffs the smelly flowers and cries."​
+
+🏁 Race（赛跑）​​
+​​"Let's race to the big tree! Ready, steady, go!"​
+
+🎁 Share（分享）​​
+​​"Peppa gives George half of her orange juice."​
+
+👣 Follow（跟随）​​
+​​"Remember children, stay close and follow me!"​
+
+✏️ Write（书写）​​
+​​"This pirate has very bad handwriting."​
+
+
+🎂 Make（制作）​​
+​​"We'll make Daddy's birthday cake with chocolate pieces!"​
+
+📺 Watch（观看）​​
+​​"Let's watch how vegetables grow in Potato City!"​
+
+💬 Talk（谈话）​​
+​​"May Peppa talk with Suzy, please?"​
+
+squirt squeeze spray 感觉差不多对比解析
+  想象一下洗手的过程：
+
+  1. 你 ​squeeze​（挤）一些洗手液到手上。
+      Squeeze​ the tube of toothpaste from the bottom.(从底部挤牙膏。)
+      He ​squeezed​ the sponge to get all the water out.(他捏紧海绵把水挤出来。)
+      She ​squeezed​ my hand tightly.(她紧紧地握住我的手。)
+  2. 如果洗手液瓶子的喷嘴是直流的，液体会 ​squirt​（喷射）出来。
+      The child ​squirted​ water from his water pistol.(孩子用水枪喷水。)
+      She ​squirted​ ketchup onto her fries.(她把番茄酱挤在薯条上。)
+      The lemon seed ​squirted​ out when I squeezed it.(我捏柠檬时，籽喷了出来。)
+  3. 如果喷嘴是雾状的，液体会 ​spray​（喷洒）出来。
+      She ​sprayed​ perfume on her neck.(她在脖子上喷了香水。)
+      The farmer ​sprayed​ the crops with pesticide.(农民给作物喷杀虫剂。)
+      The cat hissed when I ​sprayed​ it with water.(我朝猫喷水时，它发出了嘶嘶声。)
+### 触感
+squishy
+
+### My body
+
+​Scene 1: Introducing Our Hands​
+​Teacher: "Look at your hands! We use our hands to do many different things. What can your hands do?"
+
+​Child A: "My hands can clap and wave!"
+
+​Teacher: "Yes! We clap to show happiness and wave to say hello."
+
+​Scene 2: Naming Our Fingers​
+​Teacher: "Let’s count our fingers. One, two, three, four, five! Each finger has a name: thumb, index finger, middle finger, ring finger, and little finger."
+
+​Child B: "This is my thumb! It is short and strong."
+
+​Teacher: "Good! Point with your index finger. Wiggle your little finger!"
+
+​Scene 3: Hand Actions Game​
+​Teacher: "Show me how to pinch like a crab!"
+
+​Child C: "Pinch, pinch!"
+
+​Teacher: "Now squeeze your hands like a hug!"
+
+​Child D: "Squeeze gently!"
+
+​Teacher: "Can you flick your finger like a spring?"
+
+​Child E: "Flick! Like a tiny jump!"
+
+​Scene 4: Washing Hands​
+​Teacher: "Why do we wash hands?"
+
+​Child F: "To keep them clean!"
+
+​Teacher: "Scrub with soap between fingers and under nails. Rinse with water and dry with a towel."
+
+​Child G: "Clean hands stop germs!"
+
+​Scene 5: Protecting Our Hands​
+​Teacher: "How do we protect our hands?"
+
+​Child H: "Wear gloves in cold weather!"
+
+​Teacher: "Yes! Never touch sharp things. Trim nails carefully."
+
+​Child I: "And use lotion if skin feels dry!"
+
+
+Teacher:​​ "Children, look at my hand! This front part is our ​palm. It is soft and we use it to hold things." 
+
+​Child A:​​ "My ​palm​ can clap!"
+
+​Teacher:​​ "Yes! Now turn your hand over. The back side is called the ​back of the hand. It has bones underneath." 
+
+​Child B:​​ "The ​back of the hand​ has lines and veins!"
+
+​Teacher:​​ "Good observation! Now, where your hand connects to your arm is the ​wrist. It helps your hand move up and down." 
+
+​Child C:​​ "I can bend my ​wrist​! See?"
+
+​Teacher:​​ "Well done! So remember: ​palm​ for holding, ​back of the hand​ for protecting, and ​wrist​ for moving!"
+
+### 儿歌 
+
+1. Put Your Hands in the Air
+Put your hands in the air 
+and give a clap. (clap clap)
+Put your hands in the air 
+and give a clap. (clap clap)
+Put your hands in the air 
+and wiggle them up there.
+Put your hands in the air 
+and give a clap, in your lap!
+
+2. Open Them, Shut Them
+Open, shut them, open, shut them,
+Give a little clap
+Open, shut them, open, shut them, 
+Lay them in your lap
+Creep them, creep them, slowly 
+creep them, right up to your chin,
+Open up your little mouth,
+But do not let them in!
+
+
 ## Danger Awareness
 keywords: Safety Sensory Squeeze ​choke Spit out
 
@@ -110,11 +403,70 @@ Check with teacher—make it safe!" 👩🏫
 ​Child C​（指着玩具硬币）： "This in mouth? ​Scary!​​"（这个放嘴里？可怕！）
 ​Teacher: "Smart! ​Small, hard things​ stay ​out of mouths. Say: ‘Not food! Spit it out!’"
 
+Teacher:​​ "Children, look at the ground while we walk. See the round ​manhole cover​? Do not step on it. It might be slippery or dangerous."
+
+​Child A:​​ "I see it! I will walk around it."
+
+​Teacher:​​ "Good! Now, look at this ​dirty thing​ on the path. It is muddy. Avoid stepping on ​dirty things​ to keep your shoes clean."
+
+​Child B:​​ "I avoid the mud! My shoes stay clean!"
+
+​Teacher:​​ "Well done! And see that ​puddle​? Do not step in the ​puddle​ either. The water might be deep or dirty.
+
+​Child C:​​ "I will walk around the ​puddle​! I don't want wet feet!"
+
+​Teacher:​​ "Excellent! Always watch your steps. Walk safely on the clear path."
+
 ## Daily Life
 
 擤鼻子 
 包伤口
 
+### 称呼
+
+Scene 1: Family Photos​
+​Teacher: "Look at Lily’s family photo! Who is this man?"
+
+​Child A: "He is her ​father​!"
+
+​Teacher: "Yes! And this man with white hair?"
+
+​Child B: "He is her ​grandfather—her father’s father!"
+
+​Teacher: "Good! Now, this lady next to Lily’s mother?"
+
+​Child C: "She is her ​grandmother on Mommy’s side​!"
+
+​Scene 2: Relatives Visit​
+​Child D: "My uncle visited yesterday!"
+
+​Teacher: "Is he your father’s brother or mother’s brother?"
+
+​Child D: "Father’s brother! We call him ​Uncle Tom."
+
+​Child E: "My mother’s brother is also ​Uncle​! But he lives far away."
+
+​Teacher: "Right! Both are called ​uncles​ in English."
+
+​Scene 3: Age-Based Titles​
+​Teacher: "See that young man helping us? He is ​Mr. Brown."
+
+​Child F: "Why not call him Uncle?"
+
+​Teacher: "​Uncle​ is for family. For other grown-ups, we say ​Mr.​​ or ​Ms.​​!"
+
+​Child G: "And the old man in the park?"
+
+​Teacher: "We say ​Grandpa​ to show respect, even if he is not family!"
+
+​Scene 4: Family Tree Activity​
+​Teacher: "Draw your family tree! Who is next to your mother?"
+
+​Child H: "Her father! I call him ​Grandpa on Mommy’s side."
+
+​Teacher: "Perfect! And your father’s sister?"
+
+​Child I: "She is ​Aunt Lucy​! She gives me hugs!"
 ### Morning Routine
 
 Good morning sleepyheads  
@@ -225,6 +577,8 @@ Miss Evans: "Morning, Luna！Today we’re gonna practice putting on and taking 
 ​Miss Evans: "Go, little sock master！And don’t forget—when we take off socks at home time, we’ll put them in your laundry basket (洗衣篮) to get all clean for tomorrow！" (目送Luna离开，轻轻整理地垫)
 
 #### shoes
+
+Loosen the Velcro strap a bit to make it easier for your baby to put on/take off the shoes.
 
 Take off your shoes  
 This shoe has velcro straps  
@@ -371,6 +725,23 @@ Pants Removal Training with Leg Sliding in British Nurseries​（英国幼儿�
 ​Mom: "Slow down, little walker！You did it—all dressed up like a superhero！" (竖起大拇指)
 
 ### Food
+
+#### drink
+
+Teacher:​​ "Children, look at your straw! We use it to sip drinks. Watch me: I put the straw in my mouth and sip gently."
+
+​Child A:​​ "I sip my juice! Like this?"
+
+​Teacher:​​ "Good try! Remember: sip, do not bite the straw. Biting can break it and hurt your teeth."
+
+​Child B:​​ "But I like to chew it!"
+
+​Teacher:​​ "Chewing makes the straw soft and dirty. Sip softly to enjoy your drink safely."
+
+​Child C:​​ "I sip, not bite! My straw stays strong!"
+
+​Teacher:​​ "Excellent! If you bite, we replace the straw. Always sip like a quiet mouse."
+
 #### Have Breakfast
 
 Pour your cereal,  
@@ -412,128 +783,10 @@ popsicle
 ​Mom: "You’re such a pizza star！Let’s save a slice for Daddy—he’ll be home soon. But first… show me your happy dance because pizza makes you happy, right?" (播放轻快的儿歌)
 ​Toddler: (转着圈蹦跳，芝士渣掉在餐垫上) "Happy！Pizza！Dance！" (停下来扑进妈妈怀里) "Love pizza！Love Mommy！"
 
-### House
+### 玩具 doll
 
-#### House Exterior
+Plush 毛绒玩具
 
-
-#### Indoor
-
-##### Bedroom
-🧸 ​Scene 1: Organizing the Wardrobe​
-​Teacher: "Look, the wardrobe is open! Let’s sort clothes together!"
-​Child A​ (holding a shirt): "Shirt... hang?"
-​Teacher: "Yes! Hang shirts on ​hangers, then put in the wardrobe."
-​Child B​ (pointing): "Teddy’s scarf? Where?"
-​Teacher: "Scarf goes in the ​top drawer. See? Wardrobe has drawers for small things!"
-​Child C​ (pulling socks): "Socks fall down..."
-​Teacher: "Use the ​basket​! Socks love to cuddle inside baskets!"
-
-🚪 ​Scene 2: Exploring the Closet​
-​Teacher: "Who wants to peek in the closet? It’s like a secret cave!"
-​Child D​ (opening door): "Shoes! Messy!"
-​Teacher: "Oh dear! Let’s ​line up​ shoes inside the closet."
-​Child E​ (holding a hat): "Hat... here?"
-​Teacher: "Brilliant! Hats live on ​shelves​ in the closet."
-​Child F: "Blanket too big..."
-​Teacher: "Fold blanket small, then tuck it on the ​shelf. Closet loves tidy friends!"
-
-🧹 ​Scene 3: Cleaning the Rug​
-​Teacher: "Uh-oh! Crumbs on the rug! Time for ​vacuum​!"
-​Child G​ (pushing toy vacuum): "Vroom! Clean rug!"
-​Teacher: "Sweep crumbs to the ​dustpan, then rug will sparkle!"
-​Child H​ (kneeling): "Teddy dropped beans..."
-​Teacher: "Beans go ​in the bin. Rug says ‘thank you’ for helping!"
-​Child I: "Now jump?"
-​Teacher: "First, ​pat the rug​ flat. Now... jump test! Hooray!"
-
-##### kitchen
-
-Scene 1: Pretend Play Kitchen​
-​Teacher: "Let’s play in the pretend kitchen! What do you see?"
-
-​Child A: "I see a sink and a stove!"
-
-​Teacher: "Good! Can you wash the toy pot in the sink?"
-
-​Child B: "Yes! I wash the pot with water."
-
-​Teacher: "Now stir the pretend soup with a spoon."
-
-​Child C: "I stir the soup. Yummy!"
-
-​Scene 2: Mud Kitchen Outdoors​
-​Teacher: "Time for the mud kitchen! Mix dirt and water in the bucket."
-
-​Child D: "I mix it! Can I make a mud pie?"
-
-​Teacher: "Of course! Put leaves on top for decoration."
-
-​Child E: "I pour，water... splash! Now the pie is wet!"
-
-​Scene 3: Baking Pretend Cookies​
-​Teacher: "Let’s bake cookies! First, crack the eggs."
-
-​Child F: "I crack the eggs. Oops! A shell fell in."
-
-​Teacher: "No problem. Scoop it out with a spoon."
-
-​Child G: "Now I pour flour into the bowl!"
-
-​Teacher: "Great! Stir everything gently."
-
-​Scene 4: Kitchen Safety Rules​
-​Teacher: "The stoveis hot. Never touch it!"
-
-​Child H: "Use an oven mitt?"
-
-​Teacher: "Yes! Always use mitts for hot things. Waitfor food to cool before eating."
-
-##### living room
-
-##### bathroom
-
-##### 阳台 
-
-#### hoursewares
-rake
-bucket
-ladle
-
-#### housework
-
-Sunny Day, Cozy Beds!​
-
-How’s the weather today? Is it sunny or rainy?
-
-"Sunshine, sunshine, warm and bright,
-Make my blanket fluffy light!"
-
-Why do blankets love sunshine?" (Kills germs! Makes them smell like "sunshine hugs!").
-
-Ultraviolet rays kill ​dust mites​ and germs! Plus, it makes your duvet ​smell like sunshine hugs.
-
-Let's change the bedding. We take off the dirty sheets and put on the clean ones."
-（"我们来换床单，把脏的拆掉，铺上干净的。"）
-
-Help me air out the comforter on the balcony. The sunshine will make it fluffy!"
-（"帮我把被子晾在阳台晒一晒，阳光会让它蓬松起来！"）
-
-Let me tuck you in. Don’t kick the blanket off, or you'll get cold!"
-（"我给你盖好被子，别踢掉哦，不然会着凉。"）
-注：tuck in 指掖被角，具象化动作易被孩子理解。
-
-
-1. ​准备阶段​
-拿拖把：“Let’s get the mop ready!”（我们把拖把准备好！）
-装水：“Pour water into the bucket—splash, splash!”（往水桶里倒水～哗啦哗啦！）（注：“splash”是溅水声，宝宝会觉得有趣）
-2. ​拖地动作​
-开始拖：“Mop, mop, mop the floor—up and down!”（拖呀拖，拖地板～上上下下！）（边说边弯腰拖地）
-擦脏的地方：“There’s a dirty spot—wipe it, wipe it!”（有个脏脏的地方～擦一擦，擦一擦！）（用拖把重点擦）
-推拖把：“Push the mop, push, push!”（推拖把～推呀推！）（动作夸张一点，宝宝会被逗笑）
-3. ​完成阶段​
-看效果：“Look, the floor is clean now—shiny!”（看，地板变干净啦～亮晶晶！）（指着地板让宝宝看）
-收工具：“Put the mop back in the bucket—good job!”（把拖把放回水桶～真棒！）
 
 ### Hygiene
 
@@ -754,6 +1007,32 @@ Dry with towel
 ​Teacher: "First, ​wash​ with water. Pat dry... Now, ​tape the bandage​ tight! ✨ ​Bandage​ hugs your boo-boo!"
 ​Child F​ (admiring bandage): "​Bandage​ shiny! No more cry!"
 ​Teacher: "Brave star! Say: ‘Bye-bye, boo-boo​!’"
+
+
+Teacher: "Oh dear! You fell down! Let me check your knee and hand."
+
+​Child: "My knee hurts! And my hand has a scratch!"
+
+​Teacher: "I see a small cut on your knee. We need to clean it first."
+
+​Child: "Will it sting?"
+
+​Teacher: "Just a little. I will use ​antiseptic liquid​ to disinfect it. This prevents germs."
+
+​Child: "Okay... I will be brave!"
+
+​Teacher: "Good job! Now, let’s put a ​bandage​ on your knee and a ​plaster​ on your hand."
+
+​Child: "Thank you! Can I play now?"
+
+​Teacher: "Rest for a few minutes. Remember: walk slowly to avoid falling again!"
+
+• ​Scrape​：常与 scratch互换，指皮肤因摩擦而擦伤（abrasion）
+​He fell off his bike and got a scrape on his knee.​​（他从自行车上摔下来，擦伤了膝盖。）
+
+• ​Grazed​：特指皮肤被轻微擦破（scrape）
+​I grazed my knee when I fell.​​（我摔倒时擦破了膝盖。
+
 #### Sand in the Eye
 
 👁️ ​Scene 1: Feeling the Eyelashes​
@@ -862,248 +1141,49 @@ Scene 1: After School​
 
 ​Child: "Yes! Carrots are orange and crunchy!"
 
-## Emotions&Actions
-
-### Emotions
-😊 ​1. Smile（微笑）​​
-Mummy Pig's smile is very warm.​​
-​Granny pig, you smile nice. Thank you, grandpa pig.​​
-​George's smile is very sweet.​
-
-😂 ​2. Laugh（笑）​​
-​George laughs happily when he plays with Peppa.​​
-​Peppa and George giggle. 
-
-😠 ​3. Frown（皱眉）​​
-​Hmm…This pirate has very bad handwriting.​​
-​No, George. You can't put grass in my perfume.​
-
-😢 ​4. Cry（哭）​​
-​George's tears fall when he is sad.​​
-
-Afraid
-Angry
-Confused
-Curious
-Dispointed
-Embarrassed
-Excited
-Happy
-Lonely
-Peaceful
-Proud
-Sad
-Shy
-Silly
-Sorry
-Suprised
-Tired
-
-### Actions
-clap hands
-stamp feet
-wiggle
-wag
-
-📢 Shout（喊叫）​​
-​​"Off we go!" shouts Daddy Pig.​​
-​​"Hel----------p!"​​
-
-👂 Listen（听）​​
-​​"Listen to Mummy, children."​​
-​​"Let's see what the message says."​
-
-
-🎤 Sing（唱歌）​​
-​Mummy Pig sings a lullaby to Peppa and George at night.​​
-（旁白，猪妈妈唱摇篮曲）
-​​"The birds in the tree sing beautifully."​
-
-🦘 ​Skip（跳跃/省略）​​
-​​"Peppa plays hopscotch in the yard."​​
-（跳房子游戏隐含跳跃动作）
-​​"No need to panic, Granny Pig!"​
-
-🧳 Carry（搬运）​​
-​​"Grandpa, can you carry the treasure chest?"​​
-（佩奇请求搬运宝箱的隐含场景）
-​​"Mummy Pig carries the picnic basket to the boat."​
-
-
-📖 Read（阅读）​​
-​​"Daddy Pig reads a newspaper in the morning."​​
-（旁白，猪爸爸读报）
-​​"Can you read the pirate's message, Mummy?"​
-
-🏃 Jump（跳跃）​​
-​​"Peppa jumps happily in the garden."​​
-（旁白，佩奇在花园跳跃）
-​​"The little pigs jump rope happily."​
-
-🤗 Hug（拥抱）​​
-​​"George hugs his teddy bear when sleeping."​​
-（乔治睡觉时拥抱泰迪熊的隐含动作）
-​​"Peppa gives Granny a big hug after finding treasure."​
-
-👀 Look（看）​​
-​​"Look with eyes, not with fingers!"​​
-（护士教导观察植物的安全用语）
-​​"Look, George! A key!"​
-
-🌳 Swing（摇摆）​​
-​​"George's toy boat swings on the water."​​
-（玩具船在水面摇摆的隐含场景）
-​​"The wind in the meadow blows gently."​
-
-🤲 Catch（接住）​​
-​​"Catch the ball, George!"​​
-（佩奇与乔治玩球时的指令）
-​​"Daddy Pig tries to catch the dripping water from the roof."​
-
-🎯 Throw（投掷）​​
-​​"George throws the ball to Peppa."​​
-（乔治投球给佩奇的旁白）
-​​"Let's throw sticks for the treasure hunt clues!"​
 
-📞 Call（打电话）​​
-​​"Don't worry. I'll ring Dr. Brown-Bear."​​
-（猪妈妈，S1E25 Not Very Well，用英式口语"ring"替代"call"）
-​​"Mummy, can I ring daddy work and say happy birthday?"​
+​Scene 1: Greeting & General Feelings​
+​Mom: "How was your day at nursery today?"
 
-🏗️ Build（建造）​​
-​​"Daddy: I'm building a new house."​​
-（猪爸爸，S4E02 The New House，工程主题场景）
-​​"George, let's build a snowman!"​
+​Child: "It was fun! We played outside."
 
-🎮 Play（玩耍）​​
-​​"Peppa and George are having a lot of fun."​​
-（旁白，S1E26 Snow，描述雪仗游戏）
-​​"Who wants to play with this ball in the garden?"​
+​Mom: "Did you feel happy?"
 
-🚪 Open（打开）​​
-​​"Open wide, please."​​
-（棕熊医生，S1E25 Not Very Well，检查身体指令）
-​​"Open your eyes, George! A key!"​
+​Child: "Yes! I liked the playground."
 
-🍰 Eat（吃）​​
-​​"Ask my mummy if I could have some ice cream."​​
-（佩奇装病时，S1E25 Not Very Well，典型儿童讨零食句式）
-​​"Dinosaurs ate potatoes? No!"​
+​Scene 2: Learning Activities​
+​Mom: "What did Teacher Anna teach you?"
 
-👅 Lick（舔）​​
-​​"Mummy, can I lick the spoon? Yes, you can lick the spoon."​
+​Child: "We sang a rainbow song! Red, orange, yellow..."
 
-🥛 Drink（喝）​​
-​​"George, take your spaces helmet off to drink your milk."​​
-（猪妈妈，S2E49 Stars，太空主题生活化）
-​​"The family are having mugs of hot milk."​
+​Mom: "Wonderful! Did you draw pictures too?"
 
-🤹 ​Juggle（杂耍）​​
-注：剧集中无直接"juggle"台词，但以下场景隐含杂耍概念
+​Child: "I drew a big sun with yellow crayon."
 
-​​"Mr. Bull balances three bricks on his nose!"​
+​Scene 3: Friends & Social Time​
+​Mom: "Who did you play with at break time?"
 
-💃 Dance（跳舞）​​
-​​"Up down up down, altogether now! Mr. Potato is dancing!"​
+​Child: "I played blocks with Leo!"
 
-🚀 Ride（乘坐）​​
-​​"Peppa and her friends are going to ride on the potato rocket."​​
-（旁白，S4E01 Potato City，游乐设施体验）
-​​"George wants to ride on the potato rocket too."​
+​Mom: "Is Leo your favourite friend?"
 
-🧼 Wash（清洗）​​
-​​"Mummy Pig washes George's muddy hands after gardening."​
+​Child: "Yes! He shares his toy cars."
 
-🕵️ Hide（躲藏）​​
-​​"Quick, hide behind the tree before Daddy finds us!"​
+​Scene 4: Meals & Snacks​
+​Mom: "What did you eat for lunch?"
 
-🚶  Walk（行走）​​
-​​"Dinosaurs would have walked the earth together."​
+​Child: "Sandwiches and apple slices. Yummy!"
 
-🏃 Run（奔跑）​​
-​​"Peppa and her friends are running around having fun."​
+​Mom: "Did you drink all your milk?"
 
-⛏️ Dig（挖掘）​​
-​​"George shouts 'Digger!' when seeing construction tools."​
+​Child: "I drank half. Then water!"
 
-⚠️ Slip（滑倒）​​
-​​"Oops! Oh dear! It's not funny!"​
+​Scene 5: Tomorrow's Expectations​
+​Mom: "What do you want to do tomorrow?"
 
-👃 Sniff（嗅闻）​​
-​​"George sniffs the smelly flowers and cries."​
+​Child: "Paint at the easel! And play with water table."
 
-🏁 Race（赛跑）​​
-​​"Let's race to the big tree! Ready, steady, go!"​
-
-🎁 Share（分享）​​
-​​"Peppa gives George half of her orange juice."​
-
-👣 Follow（跟随）​​
-​​"Remember children, stay close and follow me!"​
-
-✏️ Write（书写）​​
-​​"This pirate has very bad handwriting."​
-
-
-🎂 Make（制作）​​
-​​"We'll make Daddy's birthday cake with chocolate pieces!"​
-
-📺 Watch（观看）​​
-​​"Let's watch how vegetables grow in Potato City!"​
-
-💬 Talk（谈话）​​
-​​"May Peppa talk with Suzy, please?"​
-
-### sports
-walking hop running tiptoe twirl galop 
-
-#### 宝宝轮滑护具英文教学对话（3岁版）
-​场景​：客厅地板铺着软地垫，妈妈蹲在宝宝面前，面前摆着一整套轮滑护具——头盔、护膝、护肘、护掌，还有一双可爱的卡通轮滑鞋。
-
-​Mom: "Hi, my little skater！Today we’re gonna try roller skating—super fun, but first… let’s put on our safety gear (安全装备)! Safety first, okay?" (举起头盔晃了晃)
-​Toddler: (眼睛发亮，指着头盔) "Helmet！" (伸手去抓，模仿"头盔"的发音)
-​Mom: "Yes, helmet—it’s like a magic hat for your head！It keeps your brain (大脑) safe, just like how your teddy bear’s blanket keeps him cozy." (轻轻把头盔扣在宝宝头上，调整松紧) "Snap, snap！" (按扣声) "All set—your brain is protected now！"
-
-​Mom: "Next, let’s protect your knees (膝盖)—they’re super important for jumping and running later!" (拿起护膝，比划着膝盖位置) "These are knee pads—see the soft padding? It’s like a pillow for your knees!" (帮宝宝套上护膝，粘好魔术贴) "Stick, stick！" (魔术贴粘贴声) "Knee pads on—you’re ready to bounce!"
-
-​Mom: "What about your elbows (手肘)? They’re like knees but on your arms！" (举起护肘，轻轻碰了碰宝宝手肘) "These elbow pads will keep your elbows from getting owies (小伤痛). Let’s put them on… there, snuggly!" (调整护肘位置，确保贴合)
-
-​Mom: "Last but not least—wrist guards (护掌)！When you fall, you might put your hands down… and these will keep your wrists safe!" (示范用手撑地的动作) "See? Soft and squishy—they’re like superhero gloves!" (帮宝宝戴上护掌，拉上魔术贴) "Zipped up！" (拉链声) "Now you’re a full superhero—ready to roll!"
-
-​Toddler: (晃着小脑袋，摸了摸头盔) "Superhero！" (试着站起来，护膝发出"吱呀"声) "Skate… skate！" (扶着茶几慢慢挪动)
-​Mom: "Whoa, slow down, little hero！Let’s practice standing first—feet shoulder-width apart, knees bent… there you go！" (扶着宝宝手臂保持平衡) "Now, push gently with one foot… wow, you moved an inch！" (鼓掌)
-
-​Toddler: (兴奋地滑出两步，差点摔倒但被护具保护) "Haha！Safe！" (扑进妈妈怀里)
-​Mom: "See? The safety gear worked—no owies at all！You’re such a brave skater. Let’s go slow, and when you’re ready, we can try gliding (滑行)！" (牵着宝宝的手，慢慢带滑)
-
-
-### playground
-
-Outdoor children's play equipment​（户外儿童游乐设备）
-
-The park has a lot of outdoor children's play equipment, perfect for kids to burn off energy."（公园有很多户外儿童游乐设备，很适合孩子们释放精力。
-
-+ Rocking horse​（摇摇马）
-  The little boy was laughing as he rode the wooden rocking horse on the playground.
-+ Rocking vehicle​（摇摇车）
-  Kids line up to ride the colorful rocking vehicles outside the supermarket.
-+ 旋转木马（Merry-go-round / Carousel）
-  The merry-go-round at the county fair spins fast—kids scream with excitement!
-  The historic carousel in the park has been operating since 1920.
-+ Swing set​（秋千架）
-  The kids are playing on the swing set by the garden.
-+ Slide​（滑梯）
-  The playground has a big red slide that all the toddlers love.
-+ ​Climbing frame​（攀爬架）
-  The climbing frame helps kids develop strength and coordination. 
-
-### draw
-pigment
-
-### play dough
-
-
-
+​Mom: "Great! Let’s pick your favourite apron now."
 
 ## Hospital
 
@@ -1184,335 +1264,63 @@ pigment
 
 
 
-## Nature & Outdoor
+## [House](/biography/language/kidedu/dictionary/dictionary_house.md)
+## [Nature & Outdoor](/biography/language/kidedu/dictionary/dictionary_outdoor.md)
 
-### Playground 
 
-Keywords: queue, tidy up,
 
-### 宝宝白天黑夜区分
-Day and Night
-Open the curtains,  
-Look at the sun,  
-Wave to daytime,  
-See the bright sky,  
-Close the curtains,  
-Turn on the lamp,  
-Spot the moon,  
-Wave to nighttime,  
-See the twinkly stars,  
-Turn off the light
-
-Open the curtains,  
-Look at the sun,  
-Wave to birds,  
-Put on day clothes,  
-Play with toys,  
-Close the curtains,  
-Turn on nightlight,  
-Wear pyjamas,  
-Cuddle your teddy,  
-Close your eyes
-### Weather
-
-sunny/rainy/cloudy/windy）+ 体感词（chilly/warm/humid）
-
-Hang the blanket outside,  
-Feel the warm sunshine,  
-Sing "Sunshine warm and bright",  
-Fluff it gently now,  
-Say "Make my blanket fluffy light",  
-Watch ultraviolet rays work,  
-Know they kill dust mites,  
-See them fight germs too,  
-Sniff your duvet close,  
-Enjoy sunshine hugs smell
-
-Put on your raincoat,  
-Look at the grey sky,  
-Cloudy and chilly! Where does rain come from,  
-Yes—clouds! And where does it go,  
-Down, down to the ground,  
-Jump in the puddles,  
-Open your umbrella,  
-Splash with your wellies,  穿着雨靴踩水花！
-Wipe your wet hands ​擦擦手上的水珠！
-
-Feel the breeze,  轻风拂面起
-Is the wind gentle or gusty today,  今天的风是温和的还是阵风
-The wind is strong,  
-My kite goes up up,  
-Look—the Pinwheel is spinning fast,  
-Let's say: It's a gusty day 风一阵紧，一阵缓——好个疾风天！
-
-Look at the clouds,  
-See the white fog,  
-Touch the wet air,  
-Spot tiny water droplets,  
-Blow on the window,  
-Watch the fog swirl,  
-Feel the cold mist,  
-Wipe the damp glass
-
-(Morning Weather Report)​​
-​场景​：每日晨圈时间，幼儿轮流担任“天气播报员”
-​对话设计​：
-
-​Teacher: "Good morning, Lily! You’re our weather reporter today. Look outside—what do you see?"
-​Child: （指向窗外） "I see... clouds! It’s ​cloudy​!"
-​Teacher: "Brilliant! How does the air feel? Is it ​chilly​ or ​warm​?"
-​Child: （搓搓手臂） "Chilly! We need jumpers!"
-​Teacher: "Let’s tell everyone! Say: ‘Today is cloudy and chilly!’"
-​Class: （齐声跟读） "Cloudy and chilly!"
-
-(Rainy Day Science)​​
-​场景​：雨后户外探索水坑、雨滴
-​对话设计​：
-
-​Teacher: "Wow, it’s ​pouring​! （撑开伞） Listen—what sound does rain make?"
-​Child: "​Tap-tap-tap​! Like drums!"
-​Teacher: "Yes! Now let’s ​splash in puddles. Is the water cold or warm?"
-​Child: （跳进水坑） "Cold! My boots are ​soaked​!"
-​Teacher: "Where does rain come from? Yes—clouds​! And where does it go? ​Down, down to the ground!​​"
-
-(Windy Playtime)​​
-​场景​：大风天放飞纸风筝或吹泡泡
-​对话设计​：
-
-​Child: （举着风筝奔跑） "The wind is ​strong​! My kite goes ​up, up​!"
-​Teacher: "Is the wind ​gentle​ or ​gusty​ today? （举起风车） Look—it’s spinning fast! Let’s say: ‘It’s a ​gusty​ day!’"
-​Child: "Gusty day! Can I fly like a bird?"
-​Teacher: "​Whoosh​! Stretch your arms! What does wind feel like? ​Breezy? Tickly?​​"
-
-Weather Art & Emotion)​​
-​场景​：绘画天气并关联情绪
-​对话设计​：
-
-​Teacher: "Draw how the weather makes you feel! Is sunny day ​happy​ or ​grumpy​?"
-​Child: （画黄色太阳） "Happy! Like a smiley face!"
-​Teacher: "What about a stormy day? ​Bang! Crash!​​ Does it feel ​scared​ or ​excited​?"
-​Child: "Scared... but exciting with thunder!"
-
-​Foggy Adventures: English Dialogues for UK Preschoolers​（英国幼儿园雾天探索活动）
-
-英文对话设计（英国幼儿园花园场景，4-5岁幼儿）：
-​场景​：晨间户外活动时突遇浓雾，教师引导幼儿观察雾的特征并学习安全知识。
-
-​1. 发现雾气（Observing Fog）​​
-​Teacher​（指向远处）：
-"Look, children! The garden looks ​magical​ today. Can you see the ​fog​? It’s like a ​giant cloud hugging the ground​! What does it feel like? Gently wave your hands through it…"
-（看，孩子们！今天花园像被施了魔法。你们看到“雾”了吗？它像“巨大的云朵拥抱大地”！摸起来怎么样？轻轻用手挥一挥…）
-​Child A​（伸手触摸）：
-"​Cold and wet​! Like touching a ​cloud​!"（又冷又湿！像摸到了云！）
-​Teacher​：
-"Yes! Fog is ​tiny water droplets​ floating in the air. Shhh… listen! Do you hear the ​quietness​?"（对！雾是“空气中的小水珠”。嘘…听！多安静呀！）
-
-​2. 科学探索：雾的形成（Science in Action）​​
-​Teacher​（展示热水杯冒出的白汽）：
-"Watch this! When warm air meets cold air—poof!—it turns into ​foggy breath​! Just like when you ​breathe out on a chilly morning​!"
-（看！暖空气遇到冷空气——噗！——就变成“雾气的呼吸”！就像你们冷天哈气一样！）
-​Child B​（模仿哈气）：
-"My turn! Haa… See? ​Mini fog​!"（我也来！哈…看！“迷你雾”！）
-​Teacher​：
-"Brilliant! Now, why is fog ​white, not blue? Because light ​bounces​ on water droplets!"（真棒！雾为什么是白色？因为光在“水珠上跳舞”呀！）
-
-​3. 安全引导（Safety First）​​
-​Teacher​（分发反光背心）：
-"Fog makes things ​disappear​! Cars might not see us. Always wear ​bright colors​ and hold hands!"
-（雾会让东西“消失”！司机可能看不见我们。要穿“亮色衣服”并牵手哦！）
-​Child C​（紧握同伴的手）：
-"​Buddy system​! Like penguins in the snow!"（“小伙伴制度”！像雪地里的企鹅！）
-
-​4. 游戏化学习：雾中寻宝（Foggy Treasure Hunt）​​
-​Teacher​（藏起发光玩具）：
-"Time for ​fog detective​! Find the ​glowing stars​ I hid. Use your ​super ears—listen for jingles!"
-（“雾天小侦探”游戏开始！找“发光的星星”。用“超级耳朵”听叮当声！）
-​Children​（循声探索）：
-"​Found one​! It’s ​sparkly​!"（找到啦！亮晶晶的！）
-
-⚡ ​Scene 1: First Thunderclap – Calming Fears​
-​Child A​ (startled by a loud BOOM):
-
-"Oh no! ​Thunder​! Scary noise! 😨"
-​Teacher​ (gentle tone, hugging a teddy):
-"Shhh... It’s just the ​clouds​ talking! ​Lightning​ makes the flash, then ​thunder​ goes BOOM! Like a drum in the sky! 🥁"
-​Child B​ (curious):
-"Clouds... talking? Why so loud?"
-​Teacher:
-"When ​clouds bump, they make ​thunder​! Let’s count: 1, 2, 3... after ​lightning​! More seconds = storm is far!" ⏱️
-
-🌩️ ​Scene 2: Science & Safety – Lightning Experiment​
-​Teacher​ (using a flashlight and drum):
-
-"Watch! This torch is ​lightning​! Flash! 🔦 (hits drum) BOOM! That’s ​thunder​! Sound travels slow... light travels FAST! ✨"
-​Child C​ (imitating):
-"My turn! Flash-flash... Boom-boom! 💥"
-​Teacher​ (safety reminder):
-"Yes! Now, ​safety rule: If ​thunder​ roars, go indoors! Never hide under trees! 🌳" 
-
-🌧️ ​Scene 3: Storm Sounds & Sensory Play​
-​Teacher​ (leading a sound game):
-
-"Let’s make a ​storm​ together! Rub hands—shhh (wind)! Tap knees—pitter-patter (rain)! Stomp feet—BOOM (thunder)! Now... ​lightning​! Flash with fingers! ✨👐"
-​Child D​ (giggling):
-"My fingers ​lightning​! Zig-zag flash! ⚡"
-​Teacher:
-"Brilliant! ​Thunder​ after ​lightning... 1, 2... BOOM! Who’s brave like Lily?" 
-
-🌈 ​Scene 4: After the Storm – Rainbow Joy​
-​Child E​ (pointing outside):
-
-"Rain stopped! Sun smiling! 😊"
-​Teacher:
-"Look! A ​rainbow​! Red, yellow, blue... ​Rainbow​ says: ‘Storms end, happy times come!’ 🌈 Let’s sing:
-Rainbow, rainbow, bright and high,
-After thunder in the sky!" 🎶
-​Children​ (chanting together):
-"No more ​lightning, no more ​thunder...
-Just a ​rainbow, full of wonder!" ✨
-
-☔ ​Scene 1: Rain & Rainbow Discovery​
-​Teacher​ (pointing outside):
-
-"Look, children! The rain is ​pouring​ down! 🌧️ Pitter-patter, pitter-patter! Can you hear it?"
-​Child A​ (imitating raindrops):
-"​Pouring, pouring! Wet, wet!" 💧
-​Teacher:
-"Yes! When rain ​pours, the sky gets clean... and guess what comes after? A magical ​rainbow​!" 🌈
-
-🌈 ​Scene 2: Rainbow Colors Hunt​
-​Child B​ (jumping excitedly):
-
-"I see colors! Red... yellow... green!"
-​Teacher​ (holding prisms):
-"Brilliant! Let’s name all seven: ​Red, orange, yellow, green, blue, indigo, violet!​​" 
-
-​Child C​ (pointing at light refraction):
-"Light ​pours​ through the glass... colors dance!" ✨
-​Teacher:
-"Exactly! When light ​pours​ into water drops, it splits into rainbow colors! Magic!"
-
-🎨 ​Scene 3: Art & Science Fusion​
-​Teacher​ (setting up watercolor):
-
-"Now, let’s ​pour​ water on paper... Swoosh! Now add paint—watch colors blend!" 🖌️
-​Child D​ (dipping brush):
-"I ​pour​ red... and blue! Makes... ​purple​!" 💜
-​Teacher:
-"Genius! Mixing colors is like rain and sun making rainbows! What else can you create?"
-### Shadow Play Adventures
-
-keywords: Shadow, sun, dark shape, in front, waves back, Stretch tall! Tiptoe tiny!
-
-
-1. Discovery: Outdoor Shadow Exploration​
-​Scene: Sunny playground, children observe their shadows.
-
-​Teacher: "Look, Leo! Your ​dark shape​ on the ground is your ​shadow​! Wave at it—see? It waves back! 🌟"
-​Child A​ (jumping): "My shadow ​jumps too​! It grows ​tall​ when I stretch!"
-​Teacher: "Brilliant! Where is your shadow now? ​In front or behind​ you? Let’s chase Maya’s shadow!"
-​Child B: "I caught it! Stomp-stomp!"
-
-​Key Vocabulary:
-
-Shadow, sun, dark shape, in front/behind.
-​Action phrases: "Stretch tall!", "Tiptoe tiny!"
-​2. Science: Light Experiment Indoors​
-​Scene: Darkened classroom with a flashlight.
-
-​Teacher: "Shhh... ​darkness comes​! This torch is our ​sun. Shine it on Teddy—poof! A shadow appears! 🔦"
-​Child C​ (moving light): "I wiggle the light... shadow ​dances​!"
-​Teacher: "Yes! No light, no shadow. Now, make Teddy’s shadow ​giant... or ​tiny​! How?"
-​Child D: "Light close = BIG! Light far = small!"
-
-​Science Concepts:
-
-Shadows need ​light + object.
-​Position changes: "Near/far", "up/down".
-​3. Game: Shadow Tag​
-​Scene: Garden group game.
-
-​Teacher: "Time for ​Shadow Tag​! 🎯 Step on shadows, not friends! Run when I shout ‘Sunny day!’"
-​Child E​ (dodging): "Quick, hide under the tree! Shadow ​disappears—safe!"
-​Teacher: "Clever! Why no shadow here? ​Shade blocks sunlight​!"
-
-​Safety & Skills:
-
-​Movement: Run, dodge, freeze.
-​Rule: "Feet on shadows, not shoes!"
-​4. Creativity: Hand Shadow Theatre​
-​Scene: Dim corner with a flashlight.
-
-​Teacher​ (making rabbit hands): "​Behold—a floppy-eared ​bunny​! 🐇 Your turn! Make a ​wolf or bird​!"
-​Child F​ (spreading fingers): "​Flapping eagle!​​ Caw-caw!"
-​Teacher: "Wow! Now, tell a ​shadow story: ‘The eagle chases the bunny...’ 🎭"
-
-​Language Development:
-
-​Story phrases: "Once upon a shadow...", "The brave eagle..."
-​Emotive words: "Swooping", "hiding", "soaring".
-### Seasonal Transitions
-​场景​：通过图片讨论季节特征
-​对话设计​：
-
-​Teacher: （展示雪景图） "Which season is this? ​Winter​! What do we wear?"
-​Child: "​Scarf​! And ​gloves​!"
-​Teacher: "Smart! Now, in ​summer, （切到沙滩图） is it ​sunny​ or ​snowy​?"
-​Child: "Sunny! We eat ​ice cream​!"
-​Teacher: "What about autumn? ​Leaves fall down... crunch, crunch!​​"
-
-### 露营玩水
-shallow
-
-### in the garden
-keywords:
-
-
-场景教学示例：花园里的“Ladle Game”（长柄勺游戏）
-​场景设定​：英国幼儿园的户外花园（有种植区、小水池、玩具厨房），3-4岁宝宝Luna和小伙伴们。
-
-​1. 场景引入：用“问题+示范”激活兴趣​
-​Teacher​（举着长柄勺，蹲在种植区旁）: "Look, children！What’s this? It’s a ladle—a long-handled spoon (长柄勺)! See its big bowl? We can use it to scoop (舀) things！Who wants to help me feed the ducks (喂鸭子) today?"（看，孩子们！这是什么？是“长柄勺”——“长柄的勺子”！看它的大勺子！我们可以用它“舀”东西！今天谁想帮我“喂鸭子”？）
-​Luna​（踮脚摸勺子）: "Ladle！Scoop ducks！"（长柄勺！舀鸭子！）
-​Teacher​（递过小鸭子玩具）: "Great！Let’s pretend the ducks are thirsty. Use the ladle to scoop water from the pond… gently！Don’t spill！"（太棒了！我们假装鸭子渴了。用长柄勺从池塘里舀水…轻轻的！别洒出来！）
-
-#### Plants
-​Plant Parts:
-    Root, stem, leaf, petal, seed, bud, thorn, soil.
-    Example: "Touch the ​petals​ gently—they are soft and colorful!"
-​Action Verbs:
-    Plant, grow, water, observe, smell, collect, protect.
-    Example: "Let’s ​water​ the seeds so they can ​grow​!"
-​Safety Rules:
-    "Look but don’t pick!" (for wildflowers)
-    "Thorns are sharp—use gentle hands!" (for roses/cacti)
-    "Ask an adult before touching!" (unfamiliar plants
-
-​Mummy Pig: "Stop being so rude! Some plants wear 'danger coats'—they might give tummy-aches!"
-​Nurse​ (示范尖刺植物): "Look with eyes, not with fingers! Thorns are like nature's tiny swords."
-
-英国园丁谚语​：
-"Nettles sting, poppies sleep—only fools taste what they can't keep."
-（荨麻刺人，罂粟催眠，傻子才尝不认识的东西）
-​美国童子军守则​：
-"Leaves of three? Let it be! Berries white? Run from sight!"
-（三片叶？别碰它！白浆果？快跑开！）
-
-
-
-Watch for thorns,  
-Pat the squishy mud,  
-Find the tiny bug,  
-Tap the log gently,  
-Look at the bug,  
-Wear your wellies,  
-Touch the wet grass,  
-Mind the thorn  
-
-## Social
+## School Social
 
 Keywords: Say please, Say thank you, share,
 
+###  present absent
+Scene 1: Roll Call Routine​
+​Teacher: "Children, let’s begin roll call. When I point to your name, stand up and say ​present​!"
+
+​Child A​ (stands up): "​Present​!"
+
+​Teacher: "Well done, Lily! Now, next name: Tom."
+
+​Child B​ (stands up): "​Present​!"
+
+​Scene 2: Recording Absence​
+​Teacher: "Who is ​absent​ today? Let’s check."
+
+​Child C: "Emma is ​absent​!"
+
+​Teacher: "Yes, Emma is ​absent from school​ today. We will mark it on the chart."
+
+​Child D: "Why is Emma ​absent​?"
+
+​Teacher: "She is sick. We hope she feels better soon."
+
+​Scene 3: Explaining Attendance​
+​Teacher: "If you are here, say ​present. If you are not here, we say ​absent."
+
+​Child E: "Like yesterday? I was ​absent​ because I visited Grandma!"
+
+​Teacher: "Correct! When you miss school, you are ​absent."
+
+​Scene 4: Practice Session​
+​Teacher: "Now, pretend your name is called. Stand and say ​present​!"
+
+​Child F​ (stands): "​Present​!"
+
+​Teacher: "Good! What if you are not here?"
+
+​Child G: "Then I am ​absent​!"
+
+​Scene 5: End of Roll Call​
+​Teacher: "Today, three friends are ​absent: Emma, Leo, and Mia. Everyone else is ​present​!"
+
+​Children​ (together): "We are all ​present​!"
+
+### hands
+
+Show me your hands. We use our hands to do many different things. Let's learn a song about our hands. Put your hands in the air and give a clap. Put your hands in the air and wiggle them up there. Put your hands in the air and give a clap. Put your hands in the air and give a clap, in your lap!
+
+
+### sharing toy
 Say what happened  
 Share your feelings  
 Listen carefully  
@@ -1529,6 +1337,127 @@ Take turns playing
 Play nicely together  
 Wait for your turn  
 Say thank you  
+
+
+### draw
+pigment
+
+### play dough
+
+### 3D vs. 2D Shapes
+Scene 1: Introducing 3D vs. 2D Shapes​
+​Teacher: "Look at this ​cube​! It is a ​3D shape. We can hold it! Now see this ​square​ on paper—it is ​flat. We call it a ​2D shape."
+
+​Child A: "3D shape is fat? 2D shape is flat?"
+
+​Teacher: "Yes! ​3D shapes​ are thick and can be touched. ​2D shapes​ are thin and drawn on paper."
+
+Teacher: "How many ​faces​ does it have?"
+
+​Child A: "Six ​faces​! Each ​face​ is a ​square​!"
+
+​Teacher: "Yes! And how many ​edges​?"
+
+​Child B: "Twelve ​edges​! I count them: one, two, three... twelve!"
+
+​Scene 2: Touching and Comparing Shapes​
+​Teacher: "Touch this ​sphere. It is round like a ​circle, but it is a ​3D ball​! The ​circle​ is its ​flat friend."
+
+​Child B: "My ball is 3D! The circle picture is 2D!"
+
+​Teacher: "Smart! Now, what ​2D shape​ is on the ​cube’s face​?"
+
+​Child C: "A ​square​! Each side is a square!"
+
+​Scene 3: Tracing 3D Shapes to Find 2D Shapes​
+​Teacher: "Let’s trace the ​cylinder’s bottom. See? It makes a ​circle​ on paper!" 
+
+​Child D: "I trace the ​cone​! It makes a ​circle​ too?"
+
+​Teacher: "The bottom is a ​circle, but the side is a ​triangle​! Trace it—oh, a triangle appears!" 
+
+​Scene 4: Matching Faces to 3D Objects​
+​Teacher: "What ​2D shape​ is on the ​pyramid’s bottom?"
+
+​Child E: "A ​square​!"
+
+​Teacher: "And its sides?"
+
+​Child F: "​Triangles​! Pointy triangles!"
+
+​Scene 5: Play with Shape Hunt​
+​Teacher: "Find a ​3D shape​ in the room. What ​2D shapes​ hide on its faces?"
+
+​Child G: "I found a ​box​! It has ​squares​ on every side!"
+
+​Child H: "My ​ice cream cone​ has a ​circle​ bottom and ​triangle​ side!"
+
+Scene 2: Comparing 3D Faces to 2D Shapes​
+​Teacher: "Now, trace the ​face​ of this ​cylinder. What ​2D shape​ do you see?"
+
+​Child C: "A ​circle​! The top and bottom are ​circles​!"
+
+​Teacher: "Good! How many ​faces​ on a cylinder?"
+
+​Child D: "Three ​faces​! Two ​circles​ and one ​rectangle​!"
+
+​Teacher: "And how many ​edges​?"
+
+​Child E: "Two ​edges​! Around the circles!"
+
+​Scene 3: Counting Edges and Faces on a Pyramid​
+​Teacher: "This ​pyramid​ has a ​square base. How many ​faces​?"
+
+​Child F: "Five ​faces​! One ​square​ and four ​triangles​!"
+
+​Teacher: "How many ​edges​?"
+
+​Child G: "Eight ​edges​! I count the lines!"
+
+​Scene 4: Shape Hunt Game​
+​Teacher: "Find a ​3D shape​ with six ​faces​ and twelve ​edges​!"
+
+​Child H: "The ​cube​! It has six ​square faces​ and twelve ​edges​!"
+
+​Teacher: "Now find one with no ​edges​ but curved ​faces​!"
+
+​Child I: "The ​sphere​! It is smooth and round!"
+
+### Traffic Light Rules​
+​Scene 1: Walking on the Pavement​
+​Teacher: "Stay on the pavement, children. Hold my hand."
+
+​Child A: "I hold your hand. Can I run?"
+
+​Teacher: "No, walk slowly. Look at the traffic lights ahead."
+
+​Scene 2: Preparing to Cross​
+​Child B: "How do we cross the road?"
+
+​Teacher: "First, find a zebra crossing. Wait for the green man."
+
+​Child C: "What if there is no zebra crossing?"
+
+​Teacher: "Find the safest spot. Look left, then right, then left again."
+
+​Scene 3: Traffic Light Rules​
+​Teacher: "Red light means stop. Green light means go. Yellow light means wait."
+
+​Child D: "I see a yellow light! Do we wait?"
+
+​Teacher: "Yes! Wait until it turns green. Never run when it is yellow."
+
+​Scene 4: Crossing Safely​
+​Teacher: "Now the light is green. Walk quickly but do not run."
+
+​Child E: "I look left and right. No cars!"
+
+​Teacher: "Good! Keep looking while you cross. Hold my hand tightly."
+
+​Scene 5: After Crossing​
+​Child F: "We are on the other side!"
+
+​Teacher: "Well done! Remember: Always use the zebra crossing and follow the lights."
 
 
 ## Science
