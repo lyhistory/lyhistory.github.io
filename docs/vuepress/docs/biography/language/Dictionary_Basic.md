@@ -633,6 +633,25 @@ Idea: freedom, happiness
 ​​Abstract nouns​​ (non-physical): love, time
 ​​Collective nouns​​ (groups): team, flock
 
+#### plural/singular 
+I have a blister on my left ​foot.
+Humans have two ​feet.
+The table is six ​feet​ long.
+He caught a ​10-foot​ fish. 注意​：此时用单数foot，且常带连字符。
+I need to have a ​tooth​ pulled.
+Brush your ​teeth​ twice a day.
+The ​teeth​ of the comb are broken.
+have a sweet ​tooth​（喜欢吃甜食）​注意​：此习语中常用单数
+
+Match the verb to the meaning rather than the form.
+	when talking about money as a single amount, treat it as singular:
+		Ten pounds is a lot of money.
+	when referring to individual units of currency use plural.
+		Ten pounds are scattered onto the surface.
+	Five miles is too far to walk.
+	Ten pints is more than enough.
+	Fish and chips is my favourite
+
 #### 数量词
 不可数数量词
 https://www.facebook.com/permalink.php?story_fbid=1661131650833479&id=1487230268223619
@@ -1178,6 +1197,26 @@ Direction: to, from, into
 | ​​in​​ | 强调在场地“内部”的物理空间感。                       | It's crowded ​​in the roller rink​​. (旱冰场里面很拥挤。)                   | ✅✅ 可用，但少用   |
 | ​​on​​ | 通常指在某个“平面”上，更多用于描述在“冰面”或“轮滑面”上滑行的具体动作。 | She is practicing new moves ​​on the rink​​. (她正在场地上练习新动作。)        | ✅✅ 可用，指平面   |
 
+in VS on
+	​On campus​：我们将“campus”（校园）认知为一个广阔的、开放的平面区域​（an open area），就像一张地图上的一个片区。介词 on非常适合用来表示“在…表面上”或“在…区域内”。类似的表达还有 on the playground（在操场上）、on the field（在田野/球场上）。
+	❌In campus​：如果将“campus”看作一个像房子一样的封闭的、有边界的立体空间​（an enclosed space），才会使用 in。但我们通常不这样看待校园，所以 in campus听起来非常别扭。我们只会说 in the classroom（在教室里）、in the library（在图书馆里），因为这些是具体的、封闭的建筑。
+	大型公共交通工具或高出地面的交通工具
+		Get in / Get off
+	小型、封闭的交通工具
+		Get on / Get Out Of
+
+in/into
+on/onto
+	​​“踩到某物上”​​ 既可以说 step onto something（强调“上去”的动作），也可以说 step on something（日常通用）。
+
+​	​“踩进某物里”​​ 既可以说 step into something（强调“进去”的动作），也可以说 step in something（日常通用）。
+
+on/to/onto
+	这里的 onto由 on+ to构成，它更具体地暗示了“移动并最终踏上其表面”的意象，这种用法带有一定的文学或修辞色彩，在演讲中为了表达一种“踏入新征程”的郑重感
+	When he arrived on campus, he felt a sense of belonging. 
+	When he went to campus, he met an old friend at the gate. 
+	He forgot to bring his textbook when he came to campus. 
+	As a freshman ​stepping onto campus​ for the first time, she was filled with a mix of excitement and anticipation for the unknown journey ahead.
 
 along 
 	作介词（Preposition）
@@ -1620,6 +1659,8 @@ gears up 常见搭配表“筹备”或“动员
 Hog off 强行占据某物并拒绝分享”或“彻底清除某物
 	He hogged off all the snacks.（他霸占了所有零食）
 	Farmers hogged off the weeds.（农民彻底清除了杂草）
+hold out on 拒绝给予；隐瞒；拖延​ 
+	All these sponsorships are small potatoes compared.to the one thing the school's been holding out on,which is naming rights for the school itself. They think there's a company that might be willing to-pay big bucks to put their name on our building.：学校目前获得的各种赞助（sponsorships）和出售学校自身命名权这笔潜在的大生意相比，都显得微不足道。学校一直在捂着这个最值钱的宝贝（即命名权），等待一个愿意出大价钱的买家。
 Line through, strike through, crossed through
 	短语动词用法‌（动作描述）：
 	line through：指“划掉”（如：She lined through the mistake.）8。

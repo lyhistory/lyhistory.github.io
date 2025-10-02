@@ -231,6 +231,28 @@ Conditional sentences aren’t always cut and dry. There are exceptions and spec
     Inverted conditionals are a more formal structure. They invert the subject and auxiliary verb in the if clause. For example, “Had I known [instead of “If I had known”], I would have acted differently.”
 
 ### 拆解
+#### 与格 Dative
+
+give somebody something” (双宾语结构)​​
+
+​​“give something to somebody” (与格结构)​
+
+虽然两者基本可以互换，但在日常使用中，母语者会根据一些细微的规则来选择：
+
+1. ​信息长度（尾重原则）​​：当“物”（直接宾语）的信息很长时，通常将其后置。
+
+  更顺口：She gave ​to her sister​ all the books that our mother had left us in her will.
+
+  不太顺口：She gave all the books that our mother had left us in her will ​to her sister.
+
+​2. 强调重点​：通常句末是信息的焦点。如果想强调“给谁”，就用“give something to somebody”结构。
+
+​3. 代词用法​：当直接宾语是代词（it, them）时，必须使用“give it/them to somebody”结构。
+
+  正确：Please give ​it to me.
+
+  错误：Please give ​me it.
+
 #### 独立主格结构（Absolute Construction）
 "独立主格"‌ 指由 ‌名词/代词（需与主句主语不同） + 非谓语成分（分词/不定式/形容词/介词短语等）‌ 构成的复合结构，在句中作状语修饰整个主句，但与主句主语无语法关联（故称"独立"）
 | 类型       | 示例                                                   |

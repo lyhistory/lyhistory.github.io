@@ -218,6 +218,30 @@ Regular Expression Language - Quick Reference http://msdn.microsoft.com/en-us/li
 Best Practices for Regular Expressions in the .NET Frameworkhttp://msdn.microsoft.com/en-us/library/gg578045(v=vs.110).aspx
 
 **java**
+
+Pattern.compile("<\\?xml[^>]*>.*?</(Saa:)?DataPDU>", Pattern.DOTALL)
+
+The regex string
+
+`<\\?xml[^>]*>.*?</(Saa:)?DataPDU>`
+
+Because it’s inside a Java string, \\? really means \? in the regex itself:
+	In Java, strings and regex both have their own escaping rules:
+
+	In a Java string literal, \ is the escape character.
+
+	So to represent a single backslash in the actual string, you must write \\.
+
+	In a regex, ? is a special character (it means zero or one).
+
+	To literally match the character ?, you must escape it as \?.
+
+
+
+So the real regex is:
+
+`<\?xml[^>]*>.*?</(Saa:)?DataPDU>`
+
 ```
 (\\+\\d{4}|\\-\\d{4})
 
@@ -247,6 +271,30 @@ public class MyClass {
 http://www.mkyong.com/regular-expressions/how-to-extract-html-links-with-regular-expression/
 http://www.mkyong.com/regular-expressions/10-java-regular-expression-examples-you-should-know/
 
+look ahead regex
+```
+import java.util.*;
+
+public class SplitXmlExample {
+    public static void main(String[] args) {
+        String input = "<?xml version=\"1.0\" encoding=\"xxx\"?><A></A>\n"
+                     + "<?xml version=\"1.1\" encoding=\"yyy\"?><B></B>";
+
+        // Split by "<?xml ", but keep the delimiter by adding it back later
+        String[] parts = input.split("(?=<\\?xml )");
+
+        for (String xml : parts) {
+            xml = xml.trim();
+            if (!xml.isEmpty()) {
+                System.out.println("One XML block:");
+                System.out.println(xml);
+                System.out.println("----");
+            }
+        }
+    }
+}
+
+```
 **python**
 ```
 #python 3.5.2

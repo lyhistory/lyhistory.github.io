@@ -25,6 +25,185 @@ lowlife scum
 +  Uncivilized
   "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
+红旗迎风飘扬
+	The red flag is fluttering in the wind
+	The red flag is flying in the wind.​ 强调旗帜飘扬的状态和持续性​ 
+	​The red flag streams in the wind.​​ 描绘旗帜像丝带或水流般舒展流畅地飘扬
+	The red flag flaps in the wind.​​ 强调风较大时旗帜拍打、扑动发出的声响和动态
+开关
+	Please flip the light ​switch. 
+	Press the red ​button​ to start the machine. 
+	She pulled the ​lever​ to activate the safety system. 
+矮凳 Stool
+赶上
+	Run after [someone]​​ ​在后方奔跑追赶的动作
+		The police ​ran after​ the thief. 
+	​Catch up (with)​​ ​从落后状态追平​
+		After missing two weeks of school, he studied hard to ​catch up with​ his classmates. 
+	Keep up (with)​ 保持同步不落后
+		The pace of the course is fast, and it's hard to ​keep up with​ the professor. 
+	Extend
+		The company plans to ​extend​ its business into new markets. 
+	Reach
+		After years of research, the scientist ​reached​ a groundbreaking conclusion. 
+太阳出来了​
+	​The sun is out.​​ 最常用、最口语化。强调太阳已经出现并在照耀的状态。
+	​The sun has come out.​强调太阳“拨云而出”的动作完成，天放晴了。
+	The sun is up.​​ 侧重于太阳已升上地平线这个事实，常于清晨使用。
+​太阳落山了​
+	​The sun is going down.​​ ​最常用。生动描述太阳正在西沉的过程。
+	​The sun is setting.​​ 较为正式的描述，强调“日落”这个自然现象。
+	The sun has set.​​ 强调日落动作已经完成，天完全黑了。
+晒太阳
+	​Get some sun​：这是最常用、最口语化的说法。它不强调具体姿势或目的，只是表示“到户外去接触阳光”。
+		You look pale. You should go outside and **get some sun**.（你脸色看起来有点苍白，应该出去晒晒太阳。）
+	​Soak up the sun​：这个词非常形象，soak up是“吸收”的意思，仿佛阳光像液体一样可以被吸收，充满了享受和愉悦感。
+		We spent the afternoon **soaking up the sun** on the beach.（我们整个下午都在海滩上晒太阳。）
+	Sunbathe​：这个词特指为了晒成古铜色肌肤（get a tan）​​ 或纯粹放松而进行的“日光浴”，通常意味着会躺着晒一段时间
+		She loves to **sunbathe** by the pool for hours.（她喜欢在泳池边晒好几个小时的日光浴。）
+	Bask in the sun​：这是一个比较文艺的表达，常用来描述一种温暖、满足、慵懒地享受阳光的状态，人或动物都适用
+		The cat **basked in the sun** on the windowsill.（猫咪在窗台上晒太阳。）
+
+
+撞倒
+	Knock over​ ​撞翻、打翻，强调物体因碰撞而从直立状态倒下，可能包含液体溅出或物品散落。不小心撞到桌子使杯子掉落：
+		I accidentally ​knocked over​ my coffee cup.
+	​Knock down​ ​撞倒、击倒，力度常比knock over大，强调使物体从高处坠落或使其倒地。也用于拆除建筑或降价。撞倒椅子：
+		I ​knocked​ the chair ​down.
+	​Run over​（车辆）碾过或撞倒，特指车辆与物体或人发生碰撞。车辆撞倒行人：
+		He was ​run over​ by a bus.
+	​Bump into ​​（无意中）撞上，强调意外的、较轻的碰撞，但不一定导致物体倒下。撞到某人：
+		I didn't mean to ​bump into​ you.
+靠右
+	Keep right.​​ ​最通用、直接的指令，常用于路标或简洁提醒。
+		"There's a car behind us, ​keep right." 
+	Keep to the right.​​ 意思与Keep right相同，语气稍显正式。
+		"Bicycles should ​keep to the right​ of the road." 
+	​Move to the right.​​ 强调“移动”到右侧的动作，常用于需要改变当前位置时。
+		"​Move to the right​ so the car can pass." 
+	Stay to the right.​​ 强调持续“保持”在右侧状态，常用于较长路段的提醒。
+		"On this path, ​stay to the right." 
+	Hug the right.​​ 非常形象的口语表达，强调紧贴右侧。
+		"The road is narrow, so ​hug the right." 
+掉在地上了 	dropped on the ground / ​fell to the ground
+	Her lollipop dropped on the ground.​​ 
+	He tripped and ​fell to the ground.
+摆渡车
+	Park Shuttle / ​Shuttle Cart / Shuttle Bus / Golf Cart 
+	Tram​ / ​Trolley​ 指沿着固定轨道或路线行驶的、有时连接多节车厢的观光小火车或有轨电车
+
+输电线 (Transmission Line)​​ ​普通电线 (Wire/Cable)​
+
+杆子
+	Pole​ 细长的杆状物
+		The car swerved and hit a ​telegraph pole. 
+		He used a long ​pole​ to knock the ball out of the tree. 
+	​Post ​粗短坚固的立柱
+		They are going to ​set up a post​ for the new mailbox.
+		The ​fence posts​ need to be replaced after the storm. 
+
+跨越
+	Step Over​ ​具体动作​：高抬腿迈过某个较低的障碍物。跨过水坑、跨过门槛
+		He ​stepped over​ the puddle carefully.
+	Cross​ ​具体动作​：从一边移动到另一边，横穿某个区域或线条。过马路、过桥、穿越边境
+		It's dangerous to ​cross​ the road here.
+	​Span ​具体状态​：指某物横跨、架于两端之上，强调跨越的幅度。桥梁横跨河流、知识涵盖多个领域
+		The bridge ​spans​ the river.
+	​Go Beyond​ ​抽象引申​：超越某个限度、标准或期望。超越极限、超出预期
+		Her dedication ​goes beyond​ her job requirements.
+	​Transcend​ ​抽象引申​：超越并升华，常带有哲学或积极色彩。超越文化差异、超越平凡
+		Great art can ​transcend​ cultural barriers.
+	​Break Through​ ​抽象引申​：突破障碍、限制或瓶颈。突破难关、科技创新
+		Scientists ​broke through​ in their research.
+
+
+放学了
+	We finish school at 3 PM. 我们下午3点放学
+	When do you ​get out of school​ today? I'll pick you up." (你今天什么时候放学​？我来接你。
+	Are you going to the library ​after school​?" (放学后你去图书馆吗？）
+	​Classes are over​ for today. Don't forget your homework." (今天的课到此结束，别忘了你们的作业。）
+	She usually ​leaves school​ and goes straight to the piano lesson." (她通常放学后直接去上钢琴课。）
+拉丝
+	This pizza has such ​stretchy cheese​! (这披萨的奶酪拉丝效果真好！)
+	Look at that amazing ​cheese stretch​! (看那惊人的奶酪拉丝​！)
+	The best part is the ​stretching cheese​ when you pull a slice. (最棒的就是你拿起一块时，奶酪拉丝的过程。)
+	强调拉出的丝是一条条的、线状的 I love the ​stringy cheese​ on a hot lasagna. (我喜欢热千层面上的拉丝奶酪。)
+淋浴头
+	​水龙头/混合阀​：​Faucet​（美式） / ​Tap​（英式），或者更具体地称为 ​Mixer valve​（混合阀），因为它负责混合冷热水
+	​控制手柄​：​Handle​
+	​水温旋钮​：​Temperature knob​（如果水温有单独旋钮）。
+	​冷水口​：​Cold (water) inlet​，通常搭配蓝色标记或字母 ​C​
+	​热水口​：​Hot (water) inlet​，通常搭配红色标记或字母 ​H​
+	​​Turn the handle towards the left​ (hotter) to increase the temperature. 
+	Lift the handle up​ to increase the water flow. 
+	Push down the handle​ to reduce the flow. 
+	You can ​control the water flow​ by lifting or pushing the handle. 
+	The ​water pressure is low; I have ​lifted the handle to the maximum, but it's still not strong enough.
+	Be careful when you ​turn the handle all the way to the left; the water can get very hot quickly.
+太热了 调成温水
+	Make it lukewarm, please.​​ (请把它弄成温的。)
+	Turn up the cold water.​​"（把冷水开大）或 "​Turn down the hot water.​​"（把热水关小）如果使用的是恒温花洒（thermostatic shower）​，调节起来更简单，通常直接说 "​Turn the temperature down.​​"（把温度调低）
+	The water's too hot.​​ Can you adjust it?
+	It's burning! ​Can you make it cooler?​​
+	Turn the handle towards the left​ (hotter) to increase the temperature. 
+	​Lift the handle up​ to increase the water flow. (向上提起手柄来增大水流量。)
+	Push down the handle​ to reduce the flow. (向下按压手柄来减小水流量。)
+	You can ​control the water flow​ by lifting or pushing the handle. (通过提起或按压手柄来控制水流量。)
+	Turn on the water​ by lifting the handle slightly. (轻轻提起手柄打开水。)
+	Remember to ​turn off the water​ tightly after showering. (淋浴后记得关紧水。)
+product placement 广告植入
+    They also get product placement in the morning news program the school streams into all the classrooms. And I kind of feel bad for the student reporters who have to pretend to like it. 在学校向所有教室直播的晨间新闻节目中。
+头发遮住眼睛
+	Her ​hair​ always ​falls over her eyes​ when she bends down.
+	I can't see anything; my ​hair is covering my eyes. 
+	Your ​fringe is getting in your eyes; you need a haircut. 
+捋头发
+	He ​ran his fingers through his hair​ to get it out of his face. 
+	She ​brushed her hair away from her eyes​ impatiently. 
+	He ​pushed his hair back​ with both hands. 
+	The dancer ​swept her hair out of her eyes​ with a graceful motion. 
+	She ​ran her fingers through her long hair​ to ​brush it away from her eyes​ while reading.
+	His ​fringe was so long it covered his eyes, so he kept ​sweeping it to the side
+袋子
+	帆布袋​ ​Canvas Bag
+	​轮滑装备包​ ​Roller Skating Gear Bag
+	食品包装袋​ ​Food Packaging Bag
+	Plastic/Paper/Shopping/Tote/Zippered/Sealed/Mesh  Bag​ 
+
+
+上下压的动作
+	压水井（上下压）​ Pump/Pull up and push down​ / ​Work the handle
+		You have to ​pump the handle​ up and down vigorously to get the water flowing. 
+		如果想更具体描述动作，可以说：​Pull the handle up and then push it down firmly.
+	轮滑鞋扣（下按）​​​Press down​ (until it clicks) /	​Push down​ (to engage the mechanism) / Click into place
+		你通常会听到“咔嗒”声（audible clicks）
+		Press down​ on the buckle until you hear a click; that means it's locked.
+	​轮滑鞋扣（松开）​​​Lift (up)​​ / ​Release
+		To loosen the skate, ​lift​ the lever on the buckle.
+		Release​ the mechanism to adjust the tightness. 
+	​扣紧状态​ ​Buckle​ / ​Fasten​ / ​Secure
+		Make sure you ​buckle​ the skate securely before you start. 
+	带齿条的收紧机制​ Ratchet Buckle​ / ​Quick-Release Buckle​ 通过棘齿机构实现快速收紧和一键释放的扣具系统。
+		将带齿的带子（the toothed strap）穿入扣具（thread the strap through the buckle）
+		然后，​反复下压并上提扣具的扳手/叶片​（repeatedly press down and lift up the buckle lever/latch）。每次上提时，内部的棘齿会卡住带子上的下一个齿，从而逐步收紧​（ratchet down或 ​tighten incrementally）
+		This buckle uses a ​ratchet system​ for micro-adjustments. 
+		To tighten, ​pull the strap​ firmly, then ​pump the buckle lever up and down​ until it's snug. You'll hear it ​click​ with each turn."（要收紧，先用力拉紧带子，然后反复按压扣具扳手直到贴合。每按一下你都会听到咔嗒声。）
+		Just ​press the red release button​ on the side and ​yank the strap​ to get it all out.
+		It's a ​ratcheting system. The ​teeth​ on the ​strap​ lock into the ​buckle, and it only loosens when you ​hit the release button.
+
+面条
+	宽面 (Lasagne / Tagliatelle)​
+	圆面 (Spaghetti / Vermicelli)​
+	扁面 (Linguine / Fettuccine)​
+	拉面​：​Hand-pulled noodles​
+	米粉​：​Rice noodles​ 或 ​Rice vermicelli​ (指细米粉)
+	刀削面​：​Sliced noodles​ 
+	方便面​：​Instant noodles​
+	乌冬面​：​Udon noodles
+	荞麦面​：​Soba noodles
+	中式挂面​：​Fine dried noodles​ 
+	菜单上通常会直接使用意大利语原名（如Linguine, Tagliatelle）。在亚洲超市或餐厅，则更常用“noodle”加上形状或原料的描述，比如“wide noodles”、“flat rice noodles”
+
 用来“刺”或“戳”的小工具
 	​手机取卡针​ ​SIM eject tool / "that little pin for the SIM card"​​ 
 	药瓶穿刺器​ ​Bottle opener / piercing cap 特指某些药瓶盖上附带，用于刺破瓶口密封的尖头。
@@ -629,6 +808,10 @@ I'm on the fence about
 It goes without saying that
 I couldn't agree more
 
+I don't want to give my teddy bear to daddy. 听起来不自然
+	通用、最自然​ I don't want to give Daddy my teddy bear.​
+	​强调“送走”​​ ​I don't want to give my teddy bear away.​​
+	​强烈拒绝​ ​I'm not giving my teddy bear to anyone!​
 #### 句块
 a lean team 精干的团队
 
@@ -894,7 +1077,23 @@ workhorse
   例：He is the workhorse of the team.（他是团队的骨干。
 
 ### 逻辑
+Shapes in the Clouds"​​ 而不是 "Shapes of the Clouds"，主要是为了准确表达“从云朵中看出形状”这个概念
+	​​"of" 强调“所属关系”​​：介词 ​​"of"​​ 通常表示一种直接的所属或描述关系。如果使用 "Shapes of the Clouds"，它更倾向于指云朵本身客观的、物理上的形状和分类​（比如气象学上说的积云、层云等），而不是我们主观想象出的图案 
+	​​"in" 强调“在其中”​​：介词 ​​"in"​​ 在这里表示这些形状是包含在云朵这个整体之内的，是我们观察和想象出来的图案。这完美契合了“从云朵里看出各种形状”这个充满童趣和想象力的活动
+画面感 by walk by / drive by / ​floating by / passing by / ​flying by 
+	这里的 "by" 是一个副词，而不是介词。它的核心意思是“经过”或“在旁边”
+	We sat on the hill, watching the clouds ​float by. 强调动态的经过
+	A piece of wood was ​floating​ on the water. 强调悬浮状态
 
+
+Bull's-Eye Grocery even paid to put stickers in the urinals, and I'm actually glad they did,because now the floors in the boys bathroom are a  lot less sticky.
+	一种常见于男厕小便池内的标靶贴纸。这类贴纸通常设计成目标靶心、足球球门、小苍蝇或其他趣味图案，目的是吸引使用者对准特定位置
+作为非母语者搞不清为什么有时候是进行时而不是普通现在时
+	But the Platinum High Flyers Club isn't the only nd now thet may the school is trying to make money. They're also selling corporate sponsorships
+	现在进行时 (Present Continuous)​​ 描述当前正在发生的动作或现阶段持续的状态
+	​一般现在时 (Simple Present)​​ 描述经常性、习惯性的动作或普遍事实
+	如果说 “The school ​tries​ to make money”（一般现在时），听起来像是在描述学校的一个常规特性或长期政策，语气相对中性。
+	而使用 “The school ​is trying​ to make money”（现在进行时）则强调了“当前”的主动努力，可能隐含了一种“不同于往常”或“值得关注”的意味。
 everyone​​ 虽然在意思上指的是“所有的人”，但它在语法形式上是一个单数名词。这决定了它后面的谓语动词要用单数形式（第三人称单数）
 	Does everyone ​have​ their ticket?
 	虽然这些词谓语用单数，但在指代时（用代词指回它们），现代英语中为了避免性别歧视，更常用“they/their/them”等复数代词（尤其在口语中）。

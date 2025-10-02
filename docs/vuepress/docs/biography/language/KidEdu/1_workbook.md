@@ -54,23 +54,7 @@ Then I brush my teeth, brush-teef! brush-teef!"
 3. Mirror Game​​
 Teacher says: "Show me ‘wash face’!" Kids mimic actions
 
-#### ​​Functional Phrases​
-Expressing needs: "I need to potty!" 
-Asking for help: "Help me, please!" (zipping coat) 
-Turn-taking: "My turn?" (at sink) 
 
-**Interactive Scenarios**​​
-​​
-1. Role-Play Stations​​
-​​Breakfast Table​​: Practice "Pass the milk, please!" with toy food .
-​​Coat Area​​: Hang coats while saying "My hook!" .
-​​
-2. Comic Strip Creation​​
-Kids draw their routines with speech bubbles:
-"First, I ​​get up​​. Then, I ​​comb hair​​!" 
-
-3. ​​Bathroom Hygiene Chant​​
-"Flush the potty! Wash with soap! Dry your hands—Ready to go!" 
 
 #### Cultural Integration & Assessment​
 

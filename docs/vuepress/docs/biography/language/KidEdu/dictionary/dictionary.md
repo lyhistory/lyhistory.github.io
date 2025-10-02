@@ -4,6 +4,16 @@ sidebarDepth: 3
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
+**Ideas/Sources:**
++ Daily Life
++ [Khan Kid Academic](/biography/language/kidedu/course_khan_kid_academic.md)
++ [牛津树分级阅读 Oxford Tree](/biography/language/kidedu/course_oxford_tree.md)
++ [Starfall](/biography/language/kidedu/course_starfall.md)
++ RAZ分级阅读
++ Peppa Pig
++ Sesame Street
++ Podcast: Wow in the World
+
 ## 0. ​Baby Talk / Motherese（婴儿语/妈妈语）​
 
 ### ​Hypocorism（爱称/昵称词）​
@@ -280,8 +290,16 @@ squirt squeeze spray 感觉差不多对比解析
       She ​sprayed​ perfume on her neck.(她在脖子上喷了香水。)
       The farmer ​sprayed​ the crops with pesticide.(农民给作物喷杀虫剂。)
       The cat hissed when I ​sprayed​ it with water.(我朝猫喷水时，它发出了嘶嘶声。)
-### 触感
+### 觉
+味道
+sweety salty
+
+感觉
+sore
+
+触感 
 squishy
+
 
 ### My body
 
