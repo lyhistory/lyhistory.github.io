@@ -1198,6 +1198,10 @@ Direction: to, from, into
 | ​​on​​ | 通常指在某个“平面”上，更多用于描述在“冰面”或“轮滑面”上滑行的具体动作。 | She is practicing new moves ​​on the rink​​. (她正在场地上练习新动作。)        | ✅✅ 可用，指平面   |
 
 in VS on
+	​in​ ​在……内部​ (一个三维立体空间内)
+		The birds are flying ​in the sky. 
+	​on​ ​在……表面​ (与一个平面接触)
+		There's a fly ​on​ the ceiling. 
 	​On campus​：我们将“campus”（校园）认知为一个广阔的、开放的平面区域​（an open area），就像一张地图上的一个片区。介词 on非常适合用来表示“在…表面上”或“在…区域内”。类似的表达还有 on the playground（在操场上）、on the field（在田野/球场上）。
 	❌In campus​：如果将“campus”看作一个像房子一样的封闭的、有边界的立体空间​（an enclosed space），才会使用 in。但我们通常不这样看待校园，所以 in campus听起来非常别扭。我们只会说 in the classroom（在教室里）、in the library（在图书馆里），因为这些是具体的、封闭的建筑。
 	大型公共交通工具或高出地面的交通工具
@@ -1205,6 +1209,12 @@ in VS on
 	小型、封闭的交通工具
 		Get on / Get Out Of
 
+	hit on the head 介词 on在这里表示接触一个表面。头部（head）、鼻子（nose）、背部（back）等被视为较硬、突出的表面，因此击打这些部位通常用 on
+	hit someone ​in​ the head”，则暗示击打力量较大，或针对眼睛等较柔软、易凹陷的部位，给人一种“打入内部”的感觉。例如：“The bullet hit him ​in​ the head.
+
+	bump into into表示进入或碰撞后陷入的状态。它生动地描绘了动作的意外性和方向感，即不是有意的撞击，而是“撞进去”的感觉
+		I wasn't looking and ​bumped into​ the door.（我没看路，撞到了门上。）
+		I ​bumped into​ an old friend at the supermarket yesterday.（我昨天在超市偶然遇到了一位老朋友。）
 in/into
 on/onto
 	​​“踩到某物上”​​ 既可以说 step onto something（强调“上去”的动作），也可以说 step on something（日常通用）。

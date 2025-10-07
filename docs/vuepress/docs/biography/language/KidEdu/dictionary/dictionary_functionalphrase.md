@@ -43,7 +43,13 @@ Kids draw their routines with speech bubbles:
 1. ​​Bathroom Hygiene Chant​​
 "Flush the potty! Wash with soap! Dry your hands—Ready to go!" 
 
-## do you
+## you
+
+### you are
+Wow, you’re so good at roller skating!
+You’re doing great with your roller skates!
+Look at you go! You're an amazing roller skater!
+
 ### do you like
 
 ## what 
@@ -52,6 +58,11 @@ Kids draw their routines with speech bubbles:
 
 ### what are you doing?
 
+### What sound does an animal make?​
+What sound does a duck make?​
+How does a duck sound?​
+Listen! What does a duck say?​​ 常用于和儿童互动，语气更生动、拟人化
+A: A duck ​quacks. / It says "​quack."
 ## where
 
 ### where are you going?
@@ -61,6 +72,14 @@ Kids draw their routines with speech bubbles:
 ### how many
 
 ### how is the weather today?
+
+## Remind
+
+​Watch for sharp edges!​​
+Mind the thorny bushes!​​
+Be careful, you might scrape your skin!​​
+
+Watch your step!​
 
 
 

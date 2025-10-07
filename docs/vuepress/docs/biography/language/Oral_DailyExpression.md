@@ -25,11 +25,136 @@ lowlife scum
 +  Uncivilized
   "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
+听话
+	Be good.​​ 要乖哦。
+	Behave (yourself).​​ 规矩点。
+	Are you being a good boy/girl?​​ 你是不是个乖宝宝呀？
+	Listen to Mommy/Daddy.​​ 要听妈妈/爸爸的话。
+	Well-behaved​ 行为得体的，有礼貌的
+	Act up​ 调皮，捣蛋
+	Be naughty​ 淘气的，不听话的
+	整体行为表现​ ​Was he/she well-behaved today?​​ “他/她今天表现好吗？
+	是否听从指令​ ​Did my child listen to you today?​​ ​Does he/she follow directions/instructions?​​ “我的孩子今天听您的话吗？
+	行为是否有问题​ ​Was there any problem with his/her behavior?​​ ​Do you have any concerns about his/her behavior? “他/她的行为有什么问题吗？
+	与同伴相处​ ​How did he/she get along with other children?​​ “他/她和其他小朋友相处得怎么样？
+	更口语化的夸奖​ ​Was he/she as good as gold?​​ 他/她非常乖吗？
+
+扶起	
+	Help someone up
+		She quickly **helped the fallen child up** and brushed the dust off his clothes.
+	Pick someone up
+	Lift someone up
+		After he fainted, two passers-by **picked him up** and carried him to a shady spot.
+	Pick something up
+		He **picked the overturned stool up** and placed it back under the table.
+	​Set something upright
+		During the earthquake, all the bookshelves in the study were knocked over, and it took me half a day to **set them all upright** again.
+	​Right something
+		The strong wind blew over the vase, and I had to **right it** several times.
+不小心把鞋踢到床下 
+	I accidentally kicked my shoes under the bed.
+	I shoved my shoes under the bed without thinking.
+偷懒
+	Slack off	I just want to **slack off** today.
+	​Goof off	Are you going to **goof off** every day?
+	Mess around	Don't just **mess around** all day!
+	Loaf on the job	Do not **loaf on the job** in the office!
+各种倒掉水
+	Empty​ ​最通用、直接。强调让容器变空的结果，中性语气。
+		Empty the water in the cup.
+	Pour out​ ​通用。强调“倾倒”这个动作本身，液体从容器中流出。
+		Please pour out the cold tea.
+	Dump out​ ​非常口语化。常暗示随意或急促地倒掉，有时带点不耐烦。
+		Just dump out that old coffee.
+	Throw out​ ​口语化。本意“扔掉”，引申为将液体作为垃圾倒掉。
+		You should throw out that old juice.
+	​Get rid of​ 强调“处理掉”不需要或有碍事的东西。
+		We need to get rid of the leftover coffee.
+	Toss out​ ​随意、轻快的口语表达，与 dump out 类似。
+		Just toss out what's left in your glass.
+
+We need to get rid of the leftover coffee.
+各种眼
+	针眼​ ​Needle eye​
+		指针尾穿线的孔。例句：It's hard to thread the cotton through the ​needle eye.
+	扣眼​ ​Buttonhole​
+		衣服上供纽扣穿过的开口。例句：He fastened the ​buttonhole.
+	鞋带眼​ ​Eyelet​
+		鞋子上穿鞋带的小孔，常带金属环加固。例句：The lace is drawn through the ​eyelets.
+拆
+	Take apart​ ​最通用。指为清洁、维修等目的而有条理地拆开物品，部件通常完好。
+		I need to ​take apart​ the laptop to clean the fan.
+	Disassemble 较正式。指按步骤系统性地拆卸机器或复杂物品，强调技术性。
+		The engineers ​disassembled​ the engine for a thorough inspection.
+	Dismantle​ 强调拆除整体结构，常指为使其失效或移除而进行的破坏性较强的拆卸。
+		The old factory was ​dismantled​ to make way for a new park.
+	Remove​ / ​Take off​ 指从某物上取下一个部件或附件，是最常用的“拆下”表达。
+		Please ​remove​ the battery before replacing the screen.
+	Detach​ 强调将连在一起的东西分开，解除连接，但东西本身可能完好。
+		​Detach​ the keyboard from the tablet for easier typing.
+	​Tear down​ / ​Knock down​ ​暴力拆除。指用强力将建筑物等大型结构摧毁、拆毁。
+		They plan to ​tear down​ the abandoned building.
+	Unscrew: 用螺丝刀“拧下”螺丝或通过螺丝固定的部件。
+	​Unbolt: 用扳手“拧下螺栓”。
+	​Disconnect: 侧重“断开”电源、管道或线路的连接。
+你的手或东西挡住我了	
+	You're blocking my view.​
+	I can't see. Your hand/thing is in the way.​
+	I can't see through/past your hand.​
+	You're in my line of sight.​
+多余了
+	Superfluous 通用/指物品
+		That stool in the corner is ​superfluous; we should remove it to create more space.
+	Surplus  指物品/资源
+		After the event, we donated the ​surplus​ chairs to a local school.
+	Unnecessary 通用/指言行
+		All this ​unnecessary​ furniture makes the room feel cramped.
+		Adding that much detail to the explanation was ​unnecessary; a simple answer would have sufficed.
+	Uncalled-for 特指言行唐突
+		Your critical remark about his work was completely ​uncalled-for.（你对他工作的批评完全是多余的​/不合时宜的。）
+	Redundant 指文字内容
+		The word "return" in the phrase "return back" is ​redundant.
+
+钥匙插进锁孔
+	Put the key in the lock
+		She ​put the key in the lock​ and turned it.
+	Insert the key into the lock
+		He took a small key and slowly ​inserted it into the lock. 
+	Ram the key into the lock 强调用力、迅速地插入，常带不耐烦或紧急的情绪
+		He ​rammed the key into the lock​ and kicked the door open.
+小心
+	Look out​：有时更侧重于“用眼睛留意”这个动作，提示对方注意观察周围环境。例如，在提醒别人注意前方路况时，用 Look out!就很自然。
+		**Look out!** That tree branch is about to fall!
+	​Watch out​：有时更侧重于“保持警觉、提防”的状态，强调对潜在危险的持续关注。例如，提醒别人提防小偷，会说 Watch out for pickpockets.
+		When you walk in the forest, **watch out for** snakes.
+	Watch + 直接宾语
+		​Watch your hands!​​（小心手！）
+		​Mind your fingers!​​（当心手指！）
+		Could you watch my bag for a moment?
+	Watch for + 宾语 
+		这里的 for表示目的，可以理解为“为了……而留意”或“等待……的出现”。你提醒的不是“尖锐边缘”这个物体本身，而是要警惕“碰到尖锐边缘”这个可能发生的事件
+		Watch for ice on the road when driving at night.
+		We're watching for any changes in the patient's condition.	
+	Watch out for + 宾语
+		这是语气最强的警告。watch out本身就是一个固定短语，意思是“提高警惕、当心”，再加上 for来指明具体的危险来源。它常用于危险迫在眉睫或后果可能比较严重的场合
+		Watch out for the dog! It might bite!
+		You need to watch out for scams when shopping online.
+		Watch out for the hot pan!
+只是提前跟你说一下 Heads-up
+	Give someone a heads-up 主动给予非正式的提前通知，让对方知晓某事。
+		Just wanted to ​give you a heads-up​ that we might have a new requirement coming next week.
+	Get a heads-up 收到他人的提前通知。
+		Thanks for the ​heads-up. I'll keep an eye on it.
+	Heads-up 用作提醒或通知本身。
+		​Heads-up: the meeting time is tentative.
+	Head up 领导/负责某个项目或团队（与“提前通知”无关）。
+		She will ​head up​ the new project.
 红旗迎风飘扬
-	The red flag is fluttering in the wind
+	Look, ​the flag is on the flagpole​ fluttering in the wind.
 	The red flag is flying in the wind.​ 强调旗帜飘扬的状态和持续性​ 
 	​The red flag streams in the wind.​​ 描绘旗帜像丝带或水流般舒展流畅地飘扬
 	The red flag flaps in the wind.​​ 强调风较大时旗帜拍打、扑动发出的声响和动态
+	Every morning, the students ​hoist the national flag up the flagpole.（每天早晨，学生们都将国旗升到旗杆顶端。）
 开关
 	Please flip the light ​switch. 
 	Press the red ​button​ to start the machine. 
@@ -63,6 +188,13 @@ lowlife scum
 		She loves to **sunbathe** by the pool for hours.（她喜欢在泳池边晒好几个小时的日光浴。）
 	Bask in the sun​：这是一个比较文艺的表达，常用来描述一种温暖、满足、慵懒地享受阳光的状态，人或动物都适用
 		The cat **basked in the sun** on the windowsill.（猫咪在窗台上晒太阳。）
+磕到了
+	I bumped my knee.​ 最常用。指不小心、较轻的碰撞或磕碰，可能不严重。
+		Ouch! ​I bumped my knee​ on the chair.
+	I banged my knee.​ ​强调撞击力度较大，通常更疼，可能伴随较大声响。
+		I ​banged my knee​ really hard on the desk and it's starting to swell.
+	​I hit my knee.​ 通用词。泛指“碰到”，力度可轻可重，但不如 bump 或 bang 生动。
+	I knocked my knee against/on... 强调磕碰在某个具体的物体表面上。
 
 
 撞倒
@@ -151,6 +283,14 @@ lowlife scum
 	You can ​control the water flow​ by lifting or pushing the handle. (通过提起或按压手柄来控制水流量。)
 	Turn on the water​ by lifting the handle slightly. (轻轻提起手柄打开水。)
 	Remember to ​turn off the water​ tightly after showering. (淋浴后记得关紧水。)
+水太小
+	The water pressure is too low.​​ (指水压不足)
+	The water flow is too weak/light.​​ (指水流细弱)
+	There isn't enough water.​​ / ​It's just a trickle.​​ 
+火太大了
+	​The heat is too high.​​ 
+	The flame is too strong/big.​​ 
+
 product placement 广告植入
     They also get product placement in the morning news program the school streams into all the classrooms. And I kind of feel bad for the student reporters who have to pretend to like it. 在学校向所有教室直播的晨间新闻节目中。
 头发遮住眼睛
@@ -170,7 +310,12 @@ product placement 广告植入
 	食品包装袋​ ​Food Packaging Bag
 	Plastic/Paper/Shopping/Tote/Zippered/Sealed/Mesh  Bag​ 
 
-
+鞋子后面有个小布条或者小环带可以穿鞋或脱鞋辅助拉的
+	Pull Loop​ 最通用的术语，直译为“拉环”，功能明确。
+	Boot Loop​	特指靴子上的拉环。
+		I'm looking for boots with a ​pull loop​ at the back.
+	Heel Tab​ / ​Pull Tab​	强调其位于鞋后跟的位置，有时也指鞋舌后方的拉袢。
+		This ​heel tab​ makes it so much easier to put on my shoes.
 上下压的动作
 	压水井（上下压）​ Pump/Pull up and push down​ / ​Work the handle
 		You have to ​pump the handle​ up and down vigorously to get the water flowing. 
@@ -1077,6 +1222,21 @@ workhorse
   例：He is the workhorse of the team.（他是团队的骨干。
 
 ### 逻辑
+时态在母语者大脑中的含义
+	过去式： 明确的时间点yesterday, last weekend, when it was in theaters​ 这样的词
+	完成式：跟时间没关系，只是谈经验
+
+	实例：
+	What did she say?
+	What has he said about the project so far?"​​ （他目前对这个项目都发表了什么看法？）
+	What did he say in the statement?"​​ （声明里具体说了什么？）-> 关注声明本身的内容。
+	What has he said now?"​​ （他现在终于说了什么？）-> 强调声明是刚发生的，并对当前舆论产生了即时影响
+
+	当你和宝宝一起读完某个角色对话框里的文字后，用这个问题非常自然。它帮助宝宝回顾和确认刚刚听到的信息，巩固理解。例如：
+	读完小老鼠的话后，可以指着图画问：“We just read the mouse's words. ​What did she say​?”（我们刚刚读了小老鼠的话。​她说了什么​？）
+	当画面上角色表情生动、但还没有揭示对话，或者你想鼓励宝宝超越书本内容进行创造时，用这个问题很棒。它引导宝宝根据情景推测角色的语言。例如：
+	指着图中哭泣的小羊，可以问：“The little lamb looks so sad. ​What does she say​ to her friend?”（小羊看起来很伤心。她会对她的朋友说些什么呢？）
+
 Shapes in the Clouds"​​ 而不是 "Shapes of the Clouds"，主要是为了准确表达“从云朵中看出形状”这个概念
 	​​"of" 强调“所属关系”​​：介词 ​​"of"​​ 通常表示一种直接的所属或描述关系。如果使用 "Shapes of the Clouds"，它更倾向于指云朵本身客观的、物理上的形状和分类​（比如气象学上说的积云、层云等），而不是我们主观想象出的图案 
 	​​"in" 强调“在其中”​​：介词 ​​"in"​​ 在这里表示这些形状是包含在云朵这个整体之内的，是我们观察和想象出来的图案。这完美契合了“从云朵里看出各种形状”这个充满童趣和想象力的活动
