@@ -52,9 +52,39 @@ Look at you go! You're an amazing roller skater!
 
 ### do you like
 
+## Let us
+let's pretend
+
+Teacher:​​ "Children, let's use our imagination! Let's pretend we are astronauts in a rocket."
+
+​Child A:​​ "Okay! I put on my helmet."
+
+​Teacher:​​ "Great! Now, let's pretend to blast off. Three, two, one... whoosh!"
+
+​Child B:​​ "We fly to the moon! I see stars."
+
+​Teacher:​​ "Yes! Let's pretend to walk on the moon. It has low gravity. We bounce slowly!"
+
+​Child C:​​ "I bounce like a kangaroo!"
+
+​Teacher:​​ "Now, let's pretend we see an alien. It is friendly! We wave hello."
+
+​Child D:​​ "Hello, alien! Let's be friends!"
+
+​Teacher:​​ "Excellent! Now, let's pretend to return to Earth. Fasten your seatbelts!"
+
+​Child E:​​ "We land safely. Home again!"
+
+​Teacher:​​ "Well done! Using 'let's pretend' helps us create fun stories together."
+
 ## what 
 
 ### what xxx(color/shape) is it?
+
+### ​What's that?​​ 
+​What's that?​​ / What's that sound/siren/noise?​​ 
+​That's an ambulance (siren).​
+That's the sound of an ambulance.​
 
 ### what are you doing?
 
@@ -64,6 +94,34 @@ How does a duck sound?​
 Listen! What does a duck say?​​ 常用于和儿童互动，语气更生动、拟人化
 A: A duck ​quacks. / It says "​quack."
 ## where
+
+### where xxx come from?
+where do you come from? mommy's tummy
+where does the rain come from?
+
+Teacher:​​ "Children, today we learn about 'come from'. Where do you come from?"
+
+​Child A:​​ "I come from mommy's tummy!"
+
+​Teacher:​​ "Good! Mommy carried you for nine months. Now, where does the rain come from?"
+
+​Child B:​​ "Rain comes from the clouds in the sky!"
+
+​Teacher:​​ "Yes! Clouds are made when water evaporates and rises high."
+
+​Child C:​​ "Where does the water come from?"
+
+​Teacher:​​ "Water comes from oceans and rivers. The sun heats it, and it goes up to make clouds."
+
+​Child D:​​ "Where do apples come from?"
+
+​Teacher:​​ "Apples come from apple trees! Farmers grow them in orchards."
+
+​Child E:​​ "Where do birds come from?"
+
+​Teacher:​​ "Birds come from eggs! Mommy birds lay eggs in nests."
+
+​Teacher:​​ "Excellent! We all come from different places, like families and nature."
 
 ### where are you going?
 

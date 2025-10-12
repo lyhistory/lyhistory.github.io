@@ -7,6 +7,10 @@
 [PyVideoTrans一键视频翻译+配音+字幕](https://github.com/jianchang512/pyvideotrans)
 https://mp.weixin.qq.com/s/6J35rQO8v69mpJfypFl8Tw
 
+[AI首席情报官 Wiseflow](https://github.com/TeamWiseFlow/wiseflow)
+
+[Axolotl微调Qwen2-7b开源大模型！AutoGen+Marker自动生成数据集！AutoGen Studio+GPT4评估Qwen2文章能力 ](https://www.youtube.com/watch?v=7zw2B8upP00)
+
 ## 基础
 
 ### Protocol

@@ -25,6 +25,18 @@ lowlife scum
 +  Uncivilized
   "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
+穿反了
+	backwards
+		Your shoes are on backwards 英语母语者将“穿反”理解为 ​整体方向性的错误 他们脑中的意象是：这双鞋本应鞋尖朝前，但现在却朝后了。至于这是由“穿错脚”还是其他方式造成的，这个短语本身并不深究，它只描述最终呈现的状态——方向反了，在大多数情况下，用 (shoes) are on backwards来表达“鞋子穿反了”是最地道和通用的。如果想更精确地指出是左右脚穿错，则可以使用 Your shoes are on the wrong feet.
+	inside out 里外反转​：指衣物或鞋子的里面和外面翻反了。Your sweater is on inside out.
+	back to front.​ 前后反转​：与 backwards类似，强调背面穿到了前面。 	I think you've got that pants on back to front.
+
+发生
+	How did this misunderstanding ​come about​? come about 常用于疑问句和否定句，探讨某事发生的缘由
+	A strange thing ​happened​ to me yesterday. happen 日常对话中描述任何事件，尤指偶然或意外事件
+	The accident ​occurred​ at midnight. It suddenly ​occurred​ to me that I had left the keys inside. occur 书面语、新闻报道；描述灵光一现
+	The conference will ​take place​ in May. ​take place 会议、活动、婚礼等预先计划好的事
+	A fire ​broke out​ in the old building. break out ​战争、火灾、疾病、争吵等
 听话
 	Be good.​​ 要乖哦。
 	Behave (yourself).​​ 规矩点。
@@ -206,6 +218,26 @@ We need to get rid of the leftover coffee.
 		He was ​run over​ by a bus.
 	​Bump into ​​（无意中）撞上，强调意外的、较轻的碰撞，但不一定导致物体倒下。撞到某人：
 		I didn't mean to ​bump into​ you.
+光束 light beams
+踩踏
+	​Step on 常为无意或中性
+		Ouch! You **stepped on** my foot!
+	Tread 可有意（如踩出路径），可无意（如踩到东西）
+		The cattle had **trodden** a path to the pond.
+	Trample 常为有意或发生在混乱中
+		The flowers were **trampled** by the crowd.
+松手
+	Let go (of)​	
+		Please **let go of** my hand.
+		It‘s time to **let go** of the past.
+		The child **let go** of the balloon and it flew away.
+	Release one‘s hold/grip
+		He **released his grip on** the rope.
+		She slowly **released her hold on** the document.
+
+	Relax one‘s grip
+		The massage therapist told me to **relax my grip**.
+		Seeing the child was safe, he finally **relaxed his grip** on the railing.
 靠右
 	Keep right.​​ ​最通用、直接的指令，常用于路标或简洁提醒。
 		"There's a car behind us, ​keep right." 
@@ -310,31 +342,7 @@ product placement 广告植入
 	食品包装袋​ ​Food Packaging Bag
 	Plastic/Paper/Shopping/Tote/Zippered/Sealed/Mesh  Bag​ 
 
-鞋子后面有个小布条或者小环带可以穿鞋或脱鞋辅助拉的
-	Pull Loop​ 最通用的术语，直译为“拉环”，功能明确。
-	Boot Loop​	特指靴子上的拉环。
-		I'm looking for boots with a ​pull loop​ at the back.
-	Heel Tab​ / ​Pull Tab​	强调其位于鞋后跟的位置，有时也指鞋舌后方的拉袢。
-		This ​heel tab​ makes it so much easier to put on my shoes.
-上下压的动作
-	压水井（上下压）​ Pump/Pull up and push down​ / ​Work the handle
-		You have to ​pump the handle​ up and down vigorously to get the water flowing. 
-		如果想更具体描述动作，可以说：​Pull the handle up and then push it down firmly.
-	轮滑鞋扣（下按）​​​Press down​ (until it clicks) /	​Push down​ (to engage the mechanism) / Click into place
-		你通常会听到“咔嗒”声（audible clicks）
-		Press down​ on the buckle until you hear a click; that means it's locked.
-	​轮滑鞋扣（松开）​​​Lift (up)​​ / ​Release
-		To loosen the skate, ​lift​ the lever on the buckle.
-		Release​ the mechanism to adjust the tightness. 
-	​扣紧状态​ ​Buckle​ / ​Fasten​ / ​Secure
-		Make sure you ​buckle​ the skate securely before you start. 
-	带齿条的收紧机制​ Ratchet Buckle​ / ​Quick-Release Buckle​ 通过棘齿机构实现快速收紧和一键释放的扣具系统。
-		将带齿的带子（the toothed strap）穿入扣具（thread the strap through the buckle）
-		然后，​反复下压并上提扣具的扳手/叶片​（repeatedly press down and lift up the buckle lever/latch）。每次上提时，内部的棘齿会卡住带子上的下一个齿，从而逐步收紧​（ratchet down或 ​tighten incrementally）
-		This buckle uses a ​ratchet system​ for micro-adjustments. 
-		To tighten, ​pull the strap​ firmly, then ​pump the buckle lever up and down​ until it's snug. You'll hear it ​click​ with each turn."（要收紧，先用力拉紧带子，然后反复按压扣具扳手直到贴合。每按一下你都会听到咔嗒声。）
-		Just ​press the red release button​ on the side and ​yank the strap​ to get it all out.
-		It's a ​ratcheting system. The ​teeth​ on the ​strap​ lock into the ​buckle, and it only loosens when you ​hit the release button.
+
 
 面条
 	宽面 (Lasagne / Tagliatelle)​
@@ -417,30 +425,7 @@ product placement 广告植入
 	自来水 ​tap water
 	矿泉水 ​mineral water
 	纯净水 ​purified water
-特殊的配件
-	凉鞋/鞋上的带孔​ ​Eyelet - Grommet (更厚重耐磨)
-		Thread the lace through each ​eyelet.（把带子依次穿过每个孔眼。）
-		The strap on my backpack tore through the ​grommet.（我背包上的带子从那个加固孔眼里撕脱了。）
-	书包带上的调节扣​ ​Buckle - Adjustable buckle, Slide buckle
-		Slide the ​buckle​ to tighten the strap.（滑动扣子来收紧带子。）
-	绳子末端的硬壳​ Aglet
-		The ​aglet​ on my shoelace broke, making it hard to thread.（我鞋带上的包头坏了，很难穿进去。）
-	金属环状扣​ D-ring
-		Attach the leash to the ​D-ring​ on the harness.（把牵引绳扣在背带上的D形环上。）
-	魔术贴​ ​Velcro	- Hook-and-loop fastener
-旋钮
-	Dial​ 的核心在于它是一个带有刻度、数字或指示标记的盘面，其主要功能是供人读取数值或选择特定选项。
-	Knob​ 的核心是那个供你手抓握、旋转、按压的物理凸起部件，它强调的是操作动作本身。
-	Turn the ​knob​ to adjust the ​dial.”（转动旋钮来调节刻度盘。）
 
-	旋钮调节​ ​Dial-Fit System​ 
-		This children's helmet ​features a Dial-Fit system​ at the back for quick and precise sizing. Just ​turn the dial until the fit is snug and secure.
-		To adjust the helmet, rotate the knob/dial clockwise to tighten and counterclockwise to loosen.​​ The system offers infinite adjustment for a custom fit." (调整头盔时，顺时针旋转旋钮调紧，逆时针旋转调松。​​ 该系统提供无级调节，以实现定制化贴合。)
-
-	传统带子调节​ ​Strap Adjustment
-		This backpack has ​strap adjustment​ on the shoulders and waist."
-		Loosen the straps​ before you take off the helmet.
-		You can ​tighten the chin strap​ for a more secure fit.
 
 梯	
 	户外台阶​ Outdoor steps / Exterior steps
@@ -1222,21 +1207,91 @@ workhorse
   例：He is the workhorse of the team.（他是团队的骨干。
 
 ### 逻辑
-时态在母语者大脑中的含义
-	过去式： 明确的时间点yesterday, last weekend, when it was in theaters​ 这样的词
-	完成式：跟时间没关系，只是谈经验
+#### 时态在母语者大脑中的含义
+	Present Simple:
+	Present Continous:
 
+	Past Simple tense： tells us a specific past time, time is very important, sometimes you can even guess the time. 明确的时间点yesterday, last weekend, when it was in theaters​ 这样的词
+	Present Perfect：talk about experience before now, it has already happened, the time is not important, maybe it's in your life, or maybe recently. 跟时间没关系，只是谈经验
+	Present Perpect Continous: means it has already happened/started before now, but it's still happening now.
+	Past Perfect: experience before a past time!
+	Past perfect continuous: it's like 'had done' and 'am doing' together, at a past time something has already started, but it was still happening at that past time.
 	实例：
+	A: What did you you do today?
+	B: (he used past tense and he said today, he must be talking about in the morning today.) Well I just watched a movie in the morning today.
+	A: Oh, have you watched that movie before?
+	B: (it's my experience, what time? that's not important, it has already happened..) Yep I have watched that movie about three times.
+	A: So that's it...You have been watching movies all day?
+	B: (He thinks I'm still watching the movie! I haven't watched the movie for the last two hours! Alright time to use a couple of tenses and make this right!) No no, I watched movies in the morning, but now I have been studying English for the last two hours.
+	A: Wow! I see what you did there! You just used two tenses in one sentence! Very impressive!
+
+	A: I love living in China, So have you lived in China before?
+	B: (ok, have lived, so present perfect, he's asking about my experience! I could just say yes, but maybe I'll be more specific, and use past tense, so he knows when I lived in China.) Yeah, I lived in China for 10 years, from 2010 to 2020.
+	A: (Wow okay, he used past tense, so he's not living in China now! That's why he used past tense! Like we say "When I was a kid" because I'm not a kid now) Wow okay! and had you been to China before that?
+	B: (Wow! past perfect tense, so he's asking about my experience before a past time! So the past time is 2010, He's asking about before that) Yeah I had travelled there once before.
+	A: So where have you been liviing recently?
+	B: (Present perfect continuous, it's from the past to now, and continuing now. Maybe I can use two tenses, both continuous!) Well I've been living in Japan, but now I'm visiting China for a holiday.
+	A: Oh I see! So where had you been living before you moved to China in 2010?
+	B: (Oh god! Past perfect continuous, it's like 'had done' and 'am doing' together, at a past time something has already started, but it was still happening at that time.) Well I had been living in Australia for most of my life, but I wanted to try something different, so I moved away!
+
 	What did she say?
 	What has he said about the project so far?"​​ （他目前对这个项目都发表了什么看法？）
 	What did he say in the statement?"​​ （声明里具体说了什么？）-> 关注声明本身的内容。
 	What has he said now?"​​ （他现在终于说了什么？）-> 强调声明是刚发生的，并对当前舆论产生了即时影响
+
+	should do VS should be doing（它暗示在当前这个时间点，某个动作按理说应该正在发生，但实际情况可能并非如此，带有一种轻微的建议或纠正意味）
+	We should be displaying the settlement price of last Friday” 隐含的意思是：根据规则（比如周一晚上7点前应显示上周五的结算价），​此刻系统屏幕上理应正在展示的是上周五的价格。
 
 	当你和宝宝一起读完某个角色对话框里的文字后，用这个问题非常自然。它帮助宝宝回顾和确认刚刚听到的信息，巩固理解。例如：
 	读完小老鼠的话后，可以指着图画问：“We just read the mouse's words. ​What did she say​?”（我们刚刚读了小老鼠的话。​她说了什么​？）
 	当画面上角色表情生动、但还没有揭示对话，或者你想鼓励宝宝超越书本内容进行创造时，用这个问题很棒。它引导宝宝根据情景推测角色的语言。例如：
 	指着图中哭泣的小羊，可以问：“The little lamb looks so sad. ​What does she say​ to her friend?”（小羊看起来很伤心。她会对她的朋友说些什么呢？）
 
+#### 委婉
+
+​​“could”是“can”的过去式，​​“would”是“will”的过去式，而​“should”通常也被视为“shall”的过去式。不过，它们的用法远不止表示过去这么简单，在现代英语中，它们更多地被用作独立的情态动词，来表达各种微妙的语气和意图。
+
+​can → could
+1. 过去的能力或可能性
+   When I was young, I ​could​ run very fast. 
+   He said he ​couldn't​ finish the work on time.
+2. 更委婉的请求或推测
+   ​Could​ you please pass me the salt? 
+3. 虚拟语气
+   If I ​could​ fly, I would travel around the world. 
+   It ​could​ rain this afternoon. 
+
+will → would​
+will和 would的关系是理解英语时态和语气的核心
+Will 主要指向未来 表达相对确定、直接的事实或预测
+Would 主要指向过去将来​（从过去视角看未来） 表达较不确定、委婉、假设性的情况
+To clarify, after confirming with Agnes, the changes would be: xxxx. 它暗示这些变更是“根据Agnes的说法将会是如此”，为信息留下了一丝回旋余地
+1. 过去将来的意愿或行动
+   She said she ​would​ call me back. 
+2. 更委婉的请求或习惯
+   Would​ you like a cup of tea?
+   When I was a child, I ​would​ often go fishing with my grandfather. (表示过去反复发生的习惯性动作)
+3. 虚拟语气
+   If I had enough money, I ​would​ buy a house. 
+
+​shall → should
+1. 过去将来（较少用）
+   I thought we ​should​ wait for them. 
+2. 提出建议、表示义务
+   ​Shall​ we begin the meeting? 
+   You ​should​ see a doctor if you feel unwell. 
+3. 虚拟语气
+   It's strange that he ​should​ say that. （真奇怪，他居然会那么说。）
+#### 同一句话不同意思
+
+“It's gone” 这个表达可能对应 ​​“It is gone”​​ 或 ​​“It has gone”​
+	It(主语) + is(系动词) + gone(形容词，作表语) 描述“不见了、消失了”的状态
+		I can't find my wallet; ​it's gone​!
+	It(主语) + has(助动词) + gone(过去分词，构成完成时) 强调“去、离开”的动作
+		The bird ​has gone​ to its nest.
+
+
+#### 其他
 Shapes in the Clouds"​​ 而不是 "Shapes of the Clouds"，主要是为了准确表达“从云朵中看出形状”这个概念
 	​​"of" 强调“所属关系”​​：介词 ​​"of"​​ 通常表示一种直接的所属或描述关系。如果使用 "Shapes of the Clouds"，它更倾向于指云朵本身客观的、物理上的形状和分类​（比如气象学上说的积云、层云等），而不是我们主观想象出的图案 
 	​​"in" 强调“在其中”​​：介词 ​​"in"​​ 在这里表示这些形状是包含在云朵这个整体之内的，是我们观察和想象出来的图案。这完美契合了“从云朵里看出各种形状”这个充满童趣和想象力的活动

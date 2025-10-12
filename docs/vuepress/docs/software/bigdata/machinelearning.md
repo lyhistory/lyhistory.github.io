@@ -93,6 +93,8 @@ regularization
 
 ## 神经网络
 
+[交互式图解人工智能 (AI) 手写数字识别](https://okai.brown.edu/zh/chapter0.html)
+
 [很好的对比了神经网络和logistic regression的区别 Artificial neural networks (ANN) - explained super simple](https://www.youtube.com/watch?v=XxZ0BibMTjw)
 
 [数字识别例子 Neural Networks Explained from Scratch using Python](https://www.youtube.com/watch?v=9RN2Wr8xvro)

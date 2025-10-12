@@ -317,6 +317,9 @@ tcpdump -i eth1 host 192.168.1.1 and port 80
 tcpflow -cp host 192.168.1.1
 ```
 ## 内核编程
+
+[Linux高性能编程_协程](https://mp.weixin.qq.com/s/KFbd1fw22UFS9LGnUuI4cw)
+
 ### Kernel bypass
 https://blog.cloudflare.com/kernel-bypass#/
 ### tcp
@@ -329,6 +332,9 @@ https://ebpf.io/
 [Introduction to BPF | LINUX Berkeley Packet Filter | CodiLime](https://www.youtube.com/watch?v=qXFi-G_7IuU)
 [Tutorial: Create Your First EBPF Program to Monitor Your System Using Bumblebee - Adam Sayah](https://www.youtube.com/watch?v=os2f0yfcgIU#/)
 
+## 应用编程
+
+[Linux高性能编程_无锁队列](https://mp.weixin.qq.com/s/4tnAYIry-kwS0PvDTxN-qQ)
 
 ## 辅助工具 
 

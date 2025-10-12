@@ -7,8 +7,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 [回目录](/docs/software)  《concurrency并发》
 
 阿里巴巴亿级流量并发手册
-
-## concurrency并发 VS Parallelism并行
+## 并发
+### concurrency并发 VS Parallelism并行
 首先要明确个词的意思，首先引用：
 > Concurrency means multiple tasks which start, run, and complete in overlapping time periods, in no specific order. Parallelism is when multiple tasks OR several part of a unique task literally run at the same time, e.g. on a multi-core processor. Remember that Concurrency and parallelism are NOT the same thing.
 > https://howtodoinjava.com/java/multi-threading/concurrency-vs-parallelism/
@@ -39,6 +39,48 @@ concurrent control或者并发控制是关乎系统的consistency一致性，
 其实从业务角度或者项目角度是难以实现exactly once的，所以要分清产品本身（server端和client端）能做到什么，以及结合到实际项目中又是会如何；
 
 另外关于并发的一个误区：handle并发并不一定需要多线程，比如nodejs，redis都是单线程处理的，原理就算通过event loop，再比如[Disruptor框架](/software/buildingblock/disruptor.md)是通过ringbuffer
+
+### 高并发
+
+[亿级(无限级)并发](https://mp.weixin.qq.com/s/ULxJqfZyDyzgfqSsTNGFhQ)
+
+关键指标：
+
+-响应时间(Response Time)
+
+-吞吐量(Throughput)
+
+-每秒查询率QPS(Query Per Second)
+
+-每秒事务处理量TPS(Transaction Per Second)
+
+-同时在线用户数量
+
+ 
+
+关键指标的维度：
+
+-平均，如：小时平均、日平均、月平均
+
+-Top百分数TP(Top Percentile)，如：TP50、TP90、TP99、TP4个9
+
+-最大值
+
+-趋势
+
+「并发」由于在互联网架构中，已经从机器维度上升到了系统架构层面，所以和「并行」已经没有清晰的界限。「并」(同时)是其中的关键。由于「同时」会引发多久才叫同时的问题，将时间扩大，又根据不同业务关注点不同，引申出了引申指标。
+
+引申指标：
+
+-活跃用户数，如：日活DAU(Daily Active User)、月活MAU(Monthly Active Users)
+
+-点击量PV(Page View)
+
+-访问某站点的用户数UV(Unique Visitor)
+
+-独立IP数IP(Internet Protocol)
+
+-日单量
 
 ## 1. 数据库Database Isolation
  
