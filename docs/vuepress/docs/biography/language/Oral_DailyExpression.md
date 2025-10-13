@@ -7,6 +7,16 @@ Common saying / Old adage 俗话/老话
 Polite formulas 客套话
 Buzzword / Slang 网络热词（如“内卷”、“躺平”）
 
+### 眼耳鼻舌身意
+
+​涩口
+	Astringent 
+		The strong green tea is quite ​astringent, leaving a dry feeling in my mouth.
+酸涩
+	Tart 	
+		She made a ​tart​ lemonade that made my lips pucker
+	​Acerb​ / ​Acerbic​ ​文学或专业用语，形容酸涩难忍，常引申为言辞“尖酸刻薄”。
+		The ​acerbic​ taste of the unripe persimmon was unbearable
 ### 骂人的句子
 dumass
 idiot
@@ -25,6 +35,54 @@ lowlife scum
 +  Uncivilized
   "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
+抱起来
+	Pick me up.​
+		I was too short to see the parade, so I said, "**Dad, pick me up!**"
+	​Carry me.​
+		My feet hurt after walking so long. **Dad, can you carry me** for a while?
+	Lift me up.
+		**Lift me up, Daddy**! I want to touch the leaves on that branch.
+	Hold me.​
+		I had a bad dream. **Dad, please hold me**.
+火车进站
+	pull in​
+		Look! Our train is ​pulling in.
+	​draw in​
+		The train ​drew in​ at 9 PM.
+	​arrive at the station​
+		The train has ​arrived at the station.
+	​get in	
+		Quick! The train has ​got in​ early.（快！火车提前到站了。）
+	公交车 The bus is coming.​​ 
+火车出站
+	​​pull out​
+		After a short stop, the train ​pulled out​ of the station.
+	move off​
+		The guard blew his whistle, and the train ​moved off.	
+	​depart​
+		The 10:52 train to Jinan will ​depart​ from Platform 7.
+	
+到站了
+	This is my stop.​​
+	I need to get off here.​​
+
+出发
+	Are you all set? Let's head out!​
+	Everyone buckle up! Let's roll.​
+	We're on our way!​
+	We've just set off.​
+熟
+	Unripe 专指水果、农作物等“未成熟”​
+		These bananas are **unripe**; they need a few more days in the sun.
+	​Uncooked​ ​泛指食物“未经过烹饪处理”​
+		Sushi is made with **uncooked** fish.
+	Undercooked 特指食物“烹饪火候不足”​，已加热但未完全做熟。
+		The chicken is still pink inside; it's **undercooked** and unsafe to eat.
+	Raw​ ​强调“生的、未加工的”自然状态，可用于食材或引申义。
+		This salad is made from **raw** vegetables.
+	​Green​ ​口语中直接形容水果“青涩的、未熟的”​
+		The tomatoes are still **green**; we have to wait for them to turn red.
+
 穿反了
 	backwards
 		Your shoes are on backwards 英语母语者将“穿反”理解为 ​整体方向性的错误 他们脑中的意象是：这双鞋本应鞋尖朝前，但现在却朝后了。至于这是由“穿错脚”还是其他方式造成的，这个短语本身并不深究，它只描述最终呈现的状态——方向反了，在大多数情况下，用 (shoes) are on backwards来表达“鞋子穿反了”是最地道和通用的。如果想更精确地指出是左右脚穿错，则可以使用 Your shoes are on the wrong feet.
@@ -357,14 +415,6 @@ product placement 广告植入
 	中式挂面​：​Fine dried noodles​ 
 	菜单上通常会直接使用意大利语原名（如Linguine, Tagliatelle）。在亚洲超市或餐厅，则更常用“noodle”加上形状或原料的描述，比如“wide noodles”、“flat rice noodles”
 
-用来“刺”或“戳”的小工具
-	​手机取卡针​ ​SIM eject tool / "that little pin for the SIM card"​​ 
-	药瓶穿刺器​ ​Bottle opener / piercing cap 特指某些药瓶盖上附带，用于刺破瓶口密封的尖头。
-		”Twist the cap upside down; the ​piercing point​ on the inside will break the seal." (把瓶盖倒过来拧，里面的刺针会划开密封层。)
-	胶水/牙膏刺封头​ ​Piercing pin / inner seal piercer​ 
-		许多软管状产品（如胶水、牙膏）的盖子内部会有一个尖锥（pointed tip或 ​spike），第一次拧紧盖子时，这个尖锥会刺破管口的密封薄膜。
-	通用尖头工具​ ​Awl​ 通用的穿孔工具，常用于皮革、纸品等材质上打孔。
-		”Use an ​awl​ to make a small pilot hole before driving in the screw." (在拧螺丝之前，先用锥子钻一个小引导孔。)
 
 拧下来
 	| 中文场景       | 核心英文动词                      | 例句                                                               |
@@ -1207,6 +1257,17 @@ workhorse
   例：He is the workhorse of the team.（他是团队的骨干。
 
 ### 逻辑
+#### 代称
+​Who is he/she?​ 已知性别或特定上下文的某个人
+	The man in blue looks familiar. ​Who is he?​​
+
+Who is it?​​ ​身份、性别均不明的“那个人”，如敲门声、电话那头的人、远处的身影
+	Someone is knocking. ​Who is it?
+
+电话或当指着具体可见的人或照片时，用“this”或“that”也非常常见和自然
+Who is this/that?"​
+
+
 #### 时态在母语者大脑中的含义
 	Present Simple:
 	Present Continous:

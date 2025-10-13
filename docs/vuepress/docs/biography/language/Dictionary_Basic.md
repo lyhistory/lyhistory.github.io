@@ -1199,9 +1199,13 @@ Direction: to, from, into
 
 in VS on
 	​in​ ​在……内部​ (一个三维立体空间内)
-		The birds are flying ​in the sky. 
+		The birds are flying ​in the sky.
+		She put the fruit salad ​in a large plate.（此用法较少见 仅当盘子有足够高的边沿，橙子像是被“包围”在其中时，才可能使用，但远不如 on普遍
+		in the bowel / in the pot​ 用于深形容器，强调内容物被容器包围在其中） 
 	​on​ ​在……表面​ (与一个平面接触)
 		There's a fly ​on​ the ceiling. 
+		There are some oranges ​on the plate.
+		​on the pan​ 用于浅口平底容器，强调内容物置于其表面 [固定搭配中用in 习语 ​​“a flash in the pan”​​（昙花一现）]
 	​On campus​：我们将“campus”（校园）认知为一个广阔的、开放的平面区域​（an open area），就像一张地图上的一个片区。介词 on非常适合用来表示“在…表面上”或“在…区域内”。类似的表达还有 on the playground（在操场上）、on the field（在田野/球场上）。
 	❌In campus​：如果将“campus”看作一个像房子一样的封闭的、有边界的立体空间​（an enclosed space），才会使用 in。但我们通常不这样看待校园，所以 in campus听起来非常别扭。我们只会说 in the classroom（在教室里）、in the library（在图书馆里），因为这些是具体的、封闭的建筑。
 	大型公共交通工具或高出地面的交通工具

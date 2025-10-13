@@ -528,6 +528,17 @@ keywords:
 ​Plant Parts:
     Root, stem, leaf, petal, seed, bud, thorn, soil.
     Example: "Touch the ​petals​ gently—they are soft and colorful!"
+    Stem（主茎）​​ 就像是植物的“主干道”或“中枢脊柱”。它从根部向上生长，分出枝条，叶片、花朵和果实都长在它上面。它的核心任务是输送水分和养分，并支撑整株植物。比如树的树干（trunk）、玫瑰的主枝，都是典型的 stem。
+
+    ​Stalk（柄）​​ 则更像是连接某个具体“站点”的“专用支路”。它特指支撑叶子、花朵或单个果实的那部分。例如，连接一个苹果和树枝的那根细长的梗，就是 stalk。像玉米、芹菜这类植物，我们食用的部分本身就是它们的 stalk
+
+    当作为动词使用时，这两个词的意思就完全不同了：
+    ​To stem​ 主要有两个意思：
+    ​起源于、由...造成，通常与介词 from连用（stem from）。例如：The conflict stems from a lack of communication.（冲突源于缺乏沟通。）​阻止、遏制​（某种流动或扩散），例如：stem the bleeding（止血），stem the tide of inflation（遏制通货膨胀的势头）。
+    ​To stalk​ 也有两个常见意思，但都与植物无关：
+      ​悄悄地跟踪、潜近，通常指捕食者跟踪猎物，或者令人不安地跟踪某人
+      ​趾高气扬地走、大步行走，通常带着怒气或高傲的姿态
+
 ​Action Verbs:
     Plant, grow, water, observe, smell, collect, protect.
     Example: "Let’s ​water​ the seeds so they can ​grow​!"
