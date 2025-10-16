@@ -93,6 +93,9 @@ Microcontrollers can be used to control a wide variety of electronic devices. Th
 
 
 ### 概念对比
+#### ROM，RAM，EEPROM，FLASH
+[什么是ROM，RAM，EEPROM，FLASH？](https://mp.weixin.qq.com/s/lRYLM1zX0uet8s6QqWW-Ww)
+
 #### microprocessor(in personal computer) VS microcontroller
 The main processor in a desktop computer or laptop will be a microprocessor. But the computer may have microcontrollers as well, to perform peripheral functions.
 
@@ -170,6 +173,9 @@ In conclusion, I should mention one major difference between these two. The appl
 
 
 #### 上电启动过程
+
+[一文理解单片机BootLoader的前世今生](https://mp.weixin.qq.com/s/4NJhxwnA660MXkO7Y4xNtA)
+
 + 电脑及微型电脑启动过程
   Booting process of a computer : When the computer is turned on it starts execution from the ROM (BIOS) that in turn located the Disk connected to the computer, then the MBR (Master boor record) of the Disk is loaded, the MBR located the disk partition where the OS is installed, then the OS is loaded in the RAM, then the computers completes its booting process.
 + 单片机
@@ -302,10 +308,57 @@ http://news.eeworld.com.cn/Test_and_measurement/ic514591.html
 对于有单片机、DSP、CPLD等可编程元件，可考虑重新刷一遍程序，排除程序运行异常造成的电路故障。
 
 
+### 工作台
+
+[极简电子工作台搭建指南](https://lcamtuf.substack.com/p/setting-up-an-electronics-workshop)
+
+
+推荐组合：
+
+Weller WT1010M套装（配1.3mm凿形烙铁头）约470美元
+Hakko FX-971基座+FX-9703手柄+T50-D1烙铁头（1.0mm）
+中国产 USB 供电 Pinecil 烙铁（性价比之选）
+烙铁头选择心得：
+
+1mm左右凿形头适合通用焊接
+适度锥度的尖头专攻精密贴片元件
+
+焊锡丝常见规格为 0.032英寸（0.8毫米）或 0.040 英寸（1毫米），但精密作业推荐 0.020英寸（0.5毫米）。尽管存在争议，无铅焊锡值得尝试：虽然某些产品手工焊接适配性差，但我长期使用的 Indium Corporation WIREFC-52838-0454（含松香芯）表现卓越。其他可选型号包括 AIM Solder 14054、Chip-Quik RASWLF.020 和 Weller T0051386499。
+
+工件固定与线材处理工具
+
+焊接作业需要一只手固定PCB，另一只手送锡丝，第三只手握烙铁，第四只手固定待焊接元件。
+
+因此，工件固定至关重要。默认选择是各类鳄鱼夹辅助装置，但它们操作繁琐且无法提供自然的手部支撑点。我最终用一款更稳固的PCB夹具（Hakko C1390C）替代了原有工具。
+
+在线材处理方面，自动剥线钳能大幅节省时间——我体验过的最佳型号是 Phoenix Wirefox 10（下图最底部）；针对超细线材，我另配有一款手动剥线钳 Knipex 12 80 040 SB。此外，小型平口剪线钳（如Hakko CHP-170或Weller 170MN）可整洁修剪元件引脚。
+
+电路诊断设备
+
+除焊台外，建立电子实验室另一项主要且难以避免的支出是示波器。该设备用于监测和记录电路中快速变化的信号；没有它就如同盲人摸象，即使是最简单的问题也可能成为诊断噩梦。
+
+Rigol 是备受认可的低成本品牌之一，其双通道 200 MHz型号 DS1202Z-E 零售价约350美元；同价位其他合理选择包括 Siglent SDS1202X-E 和 UNI-T UPO1202CS。
+
+除示波器外，还有三款我会随身携带（但新手无需立即购置）的设备：
+
+可调电源：该设备无需寻找电池或适配器即可为各类电路供电；精确的电流控制还能降低元件误损概率。我曾因杂牌电源故障饱受困扰，因此只信赖知名品牌。Siglent SPD1305X、UNI-T UDP1306C 和 Rigol DP711 均为合理选择。
+
+ 数字万用表：用于精确测量电压电流、电路通断测试及元件分类。我曾推荐Amprobe AM-510（现已停产），但 UNI-T 的 UT139C 采用了相同设计，售价60美元。台式型号精度更高且量程更广，但价格通常数倍于此。
+
+信号发生器：该设备可免去搭建振荡器的麻烦（这个需求非常常见！），能生成音频或射频波形，并为数字电路提供时钟信号。Rigol、BK Precision、Siglent 和 TTi 均有优质产品；Siglent SDG1022X Plus 似乎是理想选择。
+
 
 ### 工具
 
-#### 仿真
+#### 串口调试
+
+[USB转串口安卓免驱安装程序、库和例程，支持CH340/CH341/CH342/CH343/CH344/CH346/CH347/CH9101/CH9102/CH9103/CH9104/CH9111/CH9114/CH9143的，用于Android操作系统4.4及以上版本的USB Host模式，无需加载Android内核驱动，无需root权限操作。包含apk安装程序，lib库文件(Java Driver)，App Demo例程(USB转UART Demo工程SDK)。](https://www.wch.cn/downloads/CH341SER_ANDROID_ZIP.html)
+
+[CH34xUARTDemo](https://github.com/DeepAQ/CH34xUARTDemo)
+
+#### 仿真模拟
+
+[有没有支持直接运行MCU软件的模拟器？](https://mp.weixin.qq.com/s/Mfi6PanQ1vFjwx1loNdieQ)
 
 https://wokwi.com
 https://mp.weixin.qq.com/s/p4YQnxKWCcFlrLxXrPqMmw
@@ -359,6 +412,10 @@ blynk.io
 https://www.circuitbasics.com/how-to-build-an-electronics-work-bench/
 
 ## 通信协议
+
+[RadioLib：嵌入式设备的终极无线通信神器，一统无线江湖！](https://mp.weixin.qq.com/s/D3MX0SpzfYkH_9JFWN33Xw)
+
+[Apache PLC4X：开源的工业通信协议库，支持多种工业通信协议，包括Modbus、BACnet、OPC UA、S7等](https://mp.weixin.qq.com/s/_f7XiTlBszg6B9u_LvsC3w)
 
 [逼真动画展示I2C、SPI、UART的通信过程](https://mp.weixin.qq.com/s/d-BkHdBCnMH0uGmXF1r0xg)
 
@@ -725,5 +782,8 @@ https://mp.weixin.qq.com/s/fsCQdJOYUs0BcjfSUmvJvg
 
 为了实现上网自由，我做了一个多功能串口服务器
 https://mp.weixin.qq.com/s/_5b4g5MvrqcCJaA6NyeB8A
+
+
+[如何选择支持网络唤醒且长期电池供电的低功耗单片机](https://mp.weixin.qq.com/s/8frztmbbkrnHB18_E6SY4Q)
 
 <disqus/>

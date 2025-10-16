@@ -154,3 +154,6 @@ index.html
 </body>
 </html>
 ```
+
+
+[树莓派 Pico 也能支持强大且可靠的自动化测试！](https://mp.weixin.qq.com/s/lAilR2PP_YBErNkxa0FOwA)

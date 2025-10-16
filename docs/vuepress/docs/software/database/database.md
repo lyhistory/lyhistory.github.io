@@ -47,5 +47,9 @@ https://docs.oracle.com/cd/E15296_01/doc.111/e15167/featConnecting.htm#CJAFIDDC
 + archery
 + bytebase
 
+## questions
 
+uuid vs auto increment id
+
+[研发强烈反对用自增id，坚持用uuid做主键，该怎么办？](https://mp.weixin.qq.com/s/iJLJ5UMfxFqxiNvyTkqTqQ)
 <disqus/>

@@ -1,6 +1,14 @@
+[Clickworker](https://www.clickworker.com) 
+
+[黑人小哥靠Facebook广告代理在3年内赚到500万美元](https://mp.weixin.qq.com/s/B801JHPYITb0GvqGEZlz1w)
 
 
-## other
+[这两个大龄程序员，打算搞垮一个世界软件巨头！](https://mp.weixin.qq.com/s/6bffajDgblxgRpT5gFA69A)
+
+[I’ve built my first successful side project, and I hate it ](https://www.supertechfans.com/cn/post/2024-08-22-HackerNews/)
+
+[渔网紧身衣，欲到让我不敢看！在ETSY上用最少的布料挣最大的](https://mp.weixin.qq.com/s/j_P7lsQHGzrmgfXT-Nk9kg)
+
 仅凭一台手机和TikTok，这位中国小哥每月赚30万美金！📈太极课程在国外爆红，看看怎样将传统文化变现！🥋国潮如何走出去，让世界爱上中国太极？
 https://taichizidong.com/
 

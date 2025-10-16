@@ -1,3 +1,8 @@
+## CPF
+
+点击“Account Service”，选择“CPF Nomination”。
+
+
 ## hdb
 [Your Flat Buying Journey](https://www.hdb.gov.sg/cs/infoweb/residential/buying-a-flat#/)
 

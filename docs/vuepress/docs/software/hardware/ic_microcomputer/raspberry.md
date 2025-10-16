@@ -489,4 +489,8 @@ https://www.raspberrypi.org/forums/viewtopic.php?f=56&t=124149
 ## ref:
 [SSH the Pi from computer with a USB cable only](https://raspberrypi.stackexchange.com/questions/55928/ssh-the-pi-from-computer-with-a-usb-cable-only)
 
+[马来西亚最大州的每所小学都在使用树莓派！](https://mp.weixin.qq.com/s/p_ojirVsbmXedxmcSq_Kjg)
+
+[Sfera - 将树莓派引入工业自动化环境](https://mp.weixin.qq.com/s/gK5083QIC9HNvV_DOt-Gaw)
+
 <disqus/>

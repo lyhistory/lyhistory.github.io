@@ -2,14 +2,89 @@
 [AI News](https://aisecret.us/)
 
 ## todo
-[利用AI大模型，一键生成高清短视频 Generate short videos with one click using AI LLM.](https://github.com/lyhistory/tools_aigc_MoneyPrinterTurbo)
 
-[PyVideoTrans一键视频翻译+配音+字幕](https://github.com/jianchang512/pyvideotrans)
-https://mp.weixin.qq.com/s/6J35rQO8v69mpJfypFl8Tw
+[AI模型训练到底在训练什么？](https://mp.weixin.qq.com/s/tY-4z-D_IezAOeFgKZqedA)
+
+[图解深度学习 - 数据蒸馏和知识蒸馏 Data Distillation](https://mp.weixin.qq.com/s/6QipKFVDPSsKMpz8oyguBg)
+
+[Model Distillation 终于把神经网络中的知识蒸馏搞懂了！！](https://mp.weixin.qq.com/s/ISC68FL9p7tYqTYs9b7uBw)
+
+[Transformer Explained Visually: Learn How LLM Transformer Models Work with Interactive Visualization](https://github.com/poloclub/transformer-explainer)
+
+[终于有人将深度学习中重点做成了动画](https://mp.weixin.qq.com/s/rMtbq2UDwCGFNB9WUMLGrw)
+
+[GPT4All: Run Local LLMs on Any Device. Open-source and available for commercial use.](https://github.com/nomic-ai/gpt4all/)
 
 [AI首席情报官 Wiseflow](https://github.com/TeamWiseFlow/wiseflow)
 
+
+[保姆级教程~本地微调DeepSeek-R1-8b模型](https://mp.weixin.qq.com/s/uooA_ag1dI7DUCdBKJnuSQ)
+
+
+
+
 [Axolotl微调Qwen2-7b开源大模型！AutoGen+Marker自动生成数据集！AutoGen Studio+GPT4评估Qwen2文章能力 ](https://www.youtube.com/watch?v=7zw2B8upP00)
+
+rtvi-ai + pipecat 
+  https://github.com/rtvi-ai
+  https://github.com/pipecat-ai/pipecat
+
+
+
+[我让AI当黑客！基于DeepSeek+ollama的网安神器开发实录，效率提升300%](https://mp.weixin.qq.com/s/ffTEVgGloVFhL08YauxxOQ)
+
+[Aider + Claude + Invoke + Udio ：从头到尾使用 AI 创建游戏！（音乐、代码、动画）](https://mp.weixin.qq.com/s/kHtujRmlteH1ZVP_Tjn5OQ)
+
+[LLM在金融交易领域的实际应用:FinRobot开源平台的创新突破](https://mp.weixin.qq.com/s/FSSHrorj0SD9sxVX7SDPPg)
+
+
+[Restoration for TEMPEST images using deep-learning](https://github.com/emidan19/deep-tempest)
+
+多模态 multimodal 
+  [Mini-Omni: Language Models Can Hear, Talk While Thinking in Streaming](https://github.com/gpt-omni/mini-omni)
+
+
+API脚本
++ API管理分发
+    - [LLM API 管理 & 分发系统](https://github.com/songquanpeng/one-api)
+
++ 思考过程脚本：
+    - [显示思考过程转换项目](https://github.com/liandu2024/DeepSeek2URL) 源自：[chadyi 大佬的 显示思考+搜索项目](https://github.com/chadyi/Search-for-LLMAPI)
+
+[openwebui](https://openwebui.com/)
+
+```
+// Before proceeding, ensure you're using Python 3.11 to avoid compatibility issues.
+pip install open-webui
+open-webui serve //Running on  http://0.0.0.0:8080
+```
+
+Setting:
+1. Enable Web Search Engine
+2. Connections 
+    - OpenAI API
+        - https://groq.com/
+        - https://build.nvidia.com/
+        - 硅基流动API官网：https://cloud.siliconflow.cn/i/jPI17VGX  
+        - 火山方舟API官网：https://console.volcengine.com 
+        - 阿里百炼API官网：https://www.aliyun.com/product/bailian  
+        - 深度求索API官网：https://platform.deepseek.com  
+    - Ollama API
+        - http://localhost:11434
+
+
+
+desktop 
++ [cherry-ai](https://cherry-ai.com/)
+没有联网搜索功能，不过其中小程序如秘塔搜索使用了满血的deepseek可以补足
+
+brower Extension
++ Page Assist
+
+
+AI+RAG
+[AnythingLLM The all-in-one Desktop & Docker AI application with built-in RAG, AI agents](https://anythingllm.com/)
+
 
 ## 基础
 
@@ -83,23 +158,6 @@ https://www.youtube.com/watch?v=BHdP5oSISQE
 
 Drag & drop UI to build your customized LLM flow https://github.com/FlowiseAI/Flowise
 
-[自动化视频制作工具ShortGPT](https://github.com/lyhistory/tools_aigc_ShortGPT)
-https://mp.weixin.qq.com/s/tdgld7kH4GFhgtjOK1LQ7w
-
-### prompt
-[chatgpt#prompt](/software/bigdata/chatgpt#prompt-实战)
-https://prompthero.com/
-https://flowgpt.com/
-https://github.com/trigaten/Learn_Prompting
-
-https://udify.app/completion/SiKtiPJ9gHUrHUPy
-
-```
-我想着AI生成图片工具DALL-E中，制作一张内容为:「XXXXXXX」，请提供给我可以给AI生成图片的英文指令，另外注明要使用「专业摄影风格」。”
-```
-越狱:
-https://github.com/lyhistory/learn_aigc_CipherChat
-
 
 ### community
 开源 huggingface 
@@ -132,17 +190,6 @@ https://github.com/bbycroft/llm-viz
   
   
 
-### 音频处理
-文字转语音
-https://chattts.com/
-方言:
-https://github.com/rany2/edge-tts
-https://mp.weixin.qq.com/s/HhIE3QUfr6kh6-6jA2Tk_g
-
-OpenVoice
-https://mp.weixin.qq.com/s/QDPX7D1mnwwmmv1pb_TbOA
-
-
 ### Large Vision Models (LVM)
 #### Text to image model
 [Stable Diffusion model](/software/bigdata/stable_diffusion.md)
@@ -150,21 +197,7 @@ Stream Diffusion
 https://github.com/cumulo-autumn/StreamDiffusion
 https://colab.research.google.com/github/hewis123/stream-d/blob/main/Untitled2.ipynb
 
-#### Video Model - Image to Video
-https://github.com/camenduru/stable-video-diffusion-colab
 
-https://animatediff.github.io/
-
-https://mp.weixin.qq.com/s/jD1hoQNjUv9eCCH__dzOQQ
-
-https://mp.weixin.qq.com/s/aLXCrH4sUK8HY-h2D5zPSw
-
-Deepfake 视频换脸
-https://mp.weixin.qq.com/s/9RJGpxvKieMY4Mu__mHfFQ
-https://colab.research.google.com/drive/1NG9AoH3QDtC7h97z1Yodmn_CiiGh8Y1T?usp=sharing#scrollTo=0aHr4Fo-7IRy
-
-钉钉+SD+UE5
-https://mp.weixin.qq.com/s/fNxb2B5PiTTzTSXMuXHvOg
 
 ### ROBOT
 [Dobb·E An open-source, general framework for learning household robotic manipulation](https://dobb-e.com/)
@@ -202,20 +235,6 @@ https://hix.ai/
 
 https://mymap.ai/
 
-### 文字《=》语音
-
-https://ttsmaker.com/
-
-google bart
-open-source text-to-speech+ model.
-https://github.com/suno-ai/bark
-
-https://www.notta.ai/en
-
-### 语音翻译
-
-rask ai
-https://www.rask.ai/
 
 ### PPT
 MotionGo是必优科技(原口袋动画团队)全新升级的一款PPT动画插件,兼容WPS和office软件,轻量级产品,让PPT动效表达更专业。
@@ -231,21 +250,7 @@ https://gamma.app/?lng=en
 https://convert.leiapix.com/
 https://lumalabs.ai/interactive-scenes
 
-### 文字=》视频
 
-text to video https://runwayml.com/
-
-虚拟现实 https://github.com/princeton-vl/infinigen
-
-pika labs
-https://runwayml.com/
-
-https://wonderdynamics.com/
-
-https://github.com/SCUTlihaoyu/open-chat-video-editor
-
-极虎漫剪
-https://mp.weixin.qq.com/s/eKkcFNx77DJM4Usoc72fjw
 
 ### 市场分析
 transform your product knowledge into a detailed Ideal Customer Profile https://m1-project.com
@@ -287,15 +292,6 @@ https://github.com/chat2db/Chat2DB
 
 #### GPT GAMES World
 虚拟世界的人 Generative Agents: Interactive Simulacra of Human Behavior https://github.com/joonspk-research/generative_agents
-
-### 机器人
-#### open glass
-[Turn any glasses into AI-powered smart glasses](https://github.com/BasedHardware/OpenGlass)
-#### GPT+Eyes
-https://www.youtube.com/watch?v=w-wxguIs-0I
-#### GPT Robot
-https://hackaday.io/project/189041-a-workbench-companion-from-an-amazon-echo-dot
-https://www.youtube.com/watch?v=bO-DWWFolPw&embeds_referring_euri=https%3A%2F%2Fhackaday.io%2F&source_ve_path=MjM4NTE&feature=emb_title
 
 ## todo
 https://creatorkit.com/

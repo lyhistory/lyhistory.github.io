@@ -44,6 +44,9 @@ concurrent control或者并发控制是关乎系统的consistency一致性，
 
 [亿级(无限级)并发](https://mp.weixin.qq.com/s/ULxJqfZyDyzgfqSsTNGFhQ)
 
+[1000W长连接，如何建立和维护？千万用户IM ，如何架构设计?](https://mp.weixin.qq.com/s/juLGcZL2jkThbldPwRLNnw)
+
+
 关键指标：
 
 -响应时间(Response Time)

@@ -6,9 +6,9 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 **Ideas/Sources:**
 + Daily Life
-+ [Khan Kid Academic](/biography/language/kidedu/course_khan_kid_academic.md)
-+ [牛津树分级阅读 Oxford Tree](/biography/language/kidedu/course_oxford_tree.md)
-+ [Starfall](/biography/language/kidedu/course_starfall.md)
++ [Khan Kid Academic](/biography/edu/kidedu/course_khan_kid_academic.md)
++ [牛津树分级阅读 Oxford Tree](/biography/edu/kidedu/course_oxford_tree.md)
++ [Starfall](/biography/edu/kidedu/course_starfall.md)
 + RAZ分级阅读
 + Peppa Pig
 + Sesame Street
@@ -476,8 +476,8 @@ Teacher:​​ "Children, look at the ground while we walk. See the round ​man
 ​Mummy Pig: "Every day is an adventure with Peppa and her friends—whether climbing monkey trees or dancing to the jukebox!"
 
 
-## [Daily Life](/biography/language/kidedu/dictionary/dictionary_dailylife.md)
-## [House](/biography/language/kidedu/dictionary/dictionary_house.md)
-## [Nature & Outdoor](/biography/language/kidedu/dictionary/dictionary_outdoor.md)
-## [School Social](/biography/language/kidedu/dictionary/dictionary_schoolsocial.md)
-## [Science](/biography/language/kidedu/dictionary/dictionary_science.md)
+## [Daily Life](/biography/edu/kidedu/dictionary/dictionary_dailylife.md)
+## [House](/biography/edu/kidedu/dictionary/dictionary_house.md)
+## [Nature & Outdoor](/biography/edu/kidedu/dictionary/dictionary_outdoor.md)
+## [School Social](/biography/edu/kidedu/dictionary/dictionary_schoolsocial.md)
+## [Science](/biography/edu/kidedu/dictionary/dictionary_science.md)

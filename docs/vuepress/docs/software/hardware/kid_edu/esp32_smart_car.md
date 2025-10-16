@@ -409,6 +409,8 @@ Search on GitHub: Similarly, you can search for "ESP32 Joystick TFT control" or 
 + [L298N电机驱动](https://randomnerdtutorials.com/esp32-dc-motor-l298n-motor-driver-control-speed-direction/)
 + 废旧7000mAh充电宝+升压模块（淘宝DP2 15W）
 + todo [SG90舵机云台](https://www.techcoil.com/blog/how-to-control-a-sg90-servo-motor-with-the-esp8266-nodemcu-lua-development-board/)
+  SG90和MG90S 180度款舵机有无机械限位随机发货，无机械限位手动可以转动360度，程序脉冲控制0-180度转动，本店360度舵机可以控制正反转加减速，不能控制角度，具体使用可以观看测试视频 资料例程链接：https://pan.baidu.com/s/1QsTIKnoQsOTCkeYLLTTjTA?pwd=8889 提取码：8889
+  测试视频链接：https://v.youku.com/v_show/id_XNTg0NzI4NTkwOA==.html
 + todo ESP23CAM
 
 接线

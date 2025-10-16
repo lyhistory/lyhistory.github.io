@@ -13,7 +13,7 @@
   + 平台:
   联盟平台 也就是通常所说的联盟营销平台或者广告联盟，他们实际上是广告主的代理，负责站在广告主的角度，监督和管理联盟项目的每日运行和策略制定，包括合作伙伴关系、联盟客招募、推广指导和广告活动优化。
   - 国内联盟：多麦，淘宝联盟，京东联盟等
-  - 国外联盟：又分为一级联盟，二级联盟（返利网），其中一级二级联盟又分为综合性质的联盟（啥广告主都有），CPA联盟，CPS联盟。例如常见的：CJ；Shareasale；impact；Awin; Commission Junction、ShareASale等
+  - 国外联盟：又分为一级联盟，二级联盟（返利网），其中一级二级联盟又分为综合性质的联盟（啥广告主都有），CPA联盟，CPS联盟。例如常见的：CJ；Shareasale；impact；Awin; Commission Junction、ShareASale等 [联盟平台ShareASale联盟客佣金提现攻略](https://mp.weixin.qq.com/s/l3htltAUh34mluXf_RUnBQ)
 
 ### 营销
   营销是指，你从联盟里面的品牌方广告主的任务，通过你的个人渠道，完成广告主的任务，你可以获得广告主提供的任务佣金。
@@ -126,6 +126,9 @@ https://www.affpaying.com/affiliate-networks
 + MarketCall - pay per call offers
 
 ### Clickbank
+
+[我从ClickBank赚取的250,000刀秘诀](https://mp.weixin.qq.com/s/s7SYgSPnrTn38yHG1zLSmg)
+
 www.clickbank.com
 
 ### eCom CPA

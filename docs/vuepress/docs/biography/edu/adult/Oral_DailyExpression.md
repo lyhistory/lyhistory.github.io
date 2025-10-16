@@ -38,10 +38,13 @@ lowlife scum
 抱起来
 	Pick me up.​
 		I was too short to see the parade, so I said, "**Dad, pick me up!**"
+		Faster, Daddy! **Pick me up** again and spin me around!
 	​Carry me.​
 		My feet hurt after walking so long. **Dad, can you carry me** for a while?
+		I'm too tired to walk. **Can you carry me** home?
 	Lift me up.
 		**Lift me up, Daddy**! I want to touch the leaves on that branch.
+		**Lift me up** on your shoulders so I can see the show!
 	Hold me.​
 		I had a bad dream. **Dad, please hold me**.
 火车进站

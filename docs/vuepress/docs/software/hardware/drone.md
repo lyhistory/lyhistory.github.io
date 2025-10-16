@@ -129,4 +129,7 @@ https://hexoplus.com/product/hexo_drone_3d
 
 Drone with Raspberry and Arduino/Multiwii (part 1) https://holadimake.wordpress.com/2014/06/22/drone-with-raspberry-and-arduinomultiwii-part-1/comment-page-1/
 
+
+[自制Arduino遥控无人机、遥控蓝牙纸飞机、无接触式红外测温戒指｜DF创客周刊（第89期）](https://mp.weixin.qq.com/s/7qguoCQuFQcOdEAk4y70_Q)
+
 <disqus/>

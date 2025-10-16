@@ -252,6 +252,8 @@ Ctrl + Shift + P
 [Standard Setup of Toolchain for Windows](https://docs.espressif.com/projects/esp-idf/en/stable/esp32c3/get-started/windows-setup.html)
 [VSCODE + ESP-IDF EXTENTION](https://github.com/espressif/vscode-esp-idf-extension/blob/master/README.md)
 
+[ESP32组件机制与依赖管理全解析：手把手构建高效ESP32项目](https://mp.weixin.qq.com/s/Rjb8U50tUL7m9Gai2oOfKg)
+
 1. Config extension
 
 in the ESP-IDF homepage, quick action->click Config extension
@@ -556,6 +558,16 @@ https://espressif-docs.readthedocs-hosted.com/projects/arduino-esp32/en/latest/a
 ### ESP32CAM
 
 [pinout](https://microcontrollerslab.com/esp32-cam-ai-thinker-pinout-gpio-pins-features-how-to-program/)
+
+[一起玩儿物联网人工智能小车（ESP32）——112 ESP32 CAM采集图像的TFT显示](https://mp.weixin.qq.com/s/PN3QBkWrgBeN53dOhVuLJA)
+
+[用ESP32-CAM打造一个强大的智能监控系统](https://mp.weixin.qq.com/s/b95vnAO3ni6Xa82a20E8tQ)
+
+[监控摄像头](https://mp.weixin.qq.com/s/7MMBJ6_GHoTg09xs6Cdv8Q)
+
+[ESP32CAM系列：PC客户端远程播放实时录像](https://mp.weixin.qq.com/s/U1DeoTm8jRpZ4dZQ2ZYrfw)
+
+[远程实时监控利器，为ESP32-CAM打造的流媒体服务器：ESP32CAM-RTSP](https://mp.weixin.qq.com/s/pLjD4ADI4W_JpsmiyidAxA)
 
 #### 烧录方案
 没有usb接口，解决方案：
@@ -885,3 +897,8 @@ epc1=0x40204bc8 epc2=0x00000000 epc3=0x00000000 excvaddr=0x00000000 depc=0x00000
 ```
 
 
+[基于 Arduino IDE 搭建一个轻量的 ESP32 Web 服务器](https://mp.weixin.qq.com/s/Z5xEp-j2aRmmwlmxdoqKcg)
+
+[用ESP32C3做了个专业的GPS手表，最长续航100天！](https://mp.weixin.qq.com/s/8xnrpHXgx2m8_hFQEXM-mw)
+
+[非常好玩的一个嵌入式项目：GestureChef智能食谱伴侣（4.7寸电子纸+ESP32-S3+手势控制传感器）](https://mp.weixin.qq.com/s/GzDm6abq4KS0uG02cWFdPQ)
