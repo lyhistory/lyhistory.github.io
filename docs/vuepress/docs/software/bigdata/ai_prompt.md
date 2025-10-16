@@ -1,3 +1,7 @@
+mermaid/markdown/manim/svg/html
+
+winsurf提示词
+
 [17岁高中生写了个神级Prompt，直接把Claude强化成了满血o1](https://github.com/richards199999/Thinking-Claude/tree/main)
 
 

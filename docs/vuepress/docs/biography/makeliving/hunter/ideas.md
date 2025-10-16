@@ -1,5 +1,10 @@
 [Clickworker](https://www.clickworker.com) 
 
+跨境卖玄学产品
+
+[虚拟商品是指电子商务市场中的数字产品和服务（专指可以通过下载或在线等形式使用的数字产品和服务），具有无实物性质，是在网上发布时默认无法选择物流运输的商品，可以虚拟货币或现实货币交易买卖的虚拟商品或者虚拟社会服务。](https://mp.weixin.qq.com/s/b5fLBslLO5MC0YUCgcYXNA)
+
+
 [黑人小哥靠Facebook广告代理在3年内赚到500万美元](https://mp.weixin.qq.com/s/B801JHPYITb0GvqGEZlz1w)
 
 
