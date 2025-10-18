@@ -291,3 +291,14 @@ ref:
 
 比如内部maven的远程仓库泄漏，比如代码里面的acurator监控端口泄漏，比如内部的doc文档路径泄漏，
 比如内部的staging或uat测试环境泄漏
+
+#### 更多监控工具
+[Nagios是个开源的监控系统，号称网络监控的“瑞士军刀”。它能盯着服务器、网络设备、服务状态，甚至还能看房间温度，啥都逃不过它的眼睛！](https://www.nagios.org/)
+
+[Application to comfortably monitor your Internet traffic.](https://github.com/GyulyVGC/sniffnet)
+
+[Zabbix：企业级的“监控大管家”](https://www.zabbix.com/)
+
+[Prometheus：云时代的“监控新星”](https://prometheus.io/)
+
+[SolarWinds NPM：商业界的“监控贵族”](https://www.solarwinds.com/network-performance-monitor)

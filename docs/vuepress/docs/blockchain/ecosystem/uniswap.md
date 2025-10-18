@@ -877,3 +877,5 @@ refer:
 [Programming DeFi: Uniswap V2. Part 4](https://jeiwan.net/posts/programming-defi-uniswapv2-4/)
 [Programming DeFi: UniswapV2 full code](https://github.com/lyhistory/learn_web3_uniswapv2)
 [Uniswap V3 Development Book is Out!](https://jeiwan.net/posts/uniswap-v3-development-book-is-out/)
+
+[什么是 Uniswap V4：可定制的Hooks 和卓越的效率](https://mp.weixin.qq.com/s/oEVTyI_xyIGVM-y4OtZhuw)

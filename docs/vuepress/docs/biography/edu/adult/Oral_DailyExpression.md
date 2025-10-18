@@ -978,7 +978,240 @@ nuance细微差别
 提示：suitable(合适的、相配的)最常见的用法是以否定的形式出现在告示或通知上，如：下列节目儿童不宜。The following programme is not suitable for children.
 
 ### 英文表达
+#### Synonym - Words in mind
+adopt apply use
+ 
+adhere vs comply http://forum.wordreference.com/threads/adherence-compliance.1930164/
+  the new end date must be adhered to.
+align vs conform http://www.wikidiff.com/conform/align
+adequate decent
+acknowledge response
+amend remedy rectify modify change
+any arbitrary https://english.stackexchange.com/questions/8869/is-it-redundant-to-say-based-on-any-arbitrary-criteria
+attached annex
+advent emerge
+ask request
+axes dimensions angle
+analog analogy Analogous相似的，可比拟的; <生>同功的; 模拟式
+actualization ˌæktʃʊəlaɪ'zeɪʃən 实现，现实化 realization implementation
+ball sphere
+blink wink blink 是普通的眨眼 wink 是单眼表示暗示
+background backdrop
+back ago 2 years back (ago)
+broken spoil
+crowded 拥挤 packed
+conversely; the other way round;
+come again ( repeat/pardon)
+calibrate / recalibrate  tune / fine tune  redressal 调整，修正
+	all actions are calibrated amongst the three armed forces at what time what is to be done
+contradict反驳 与...矛盾 on contrary counter protest 反对
+correspond to 相应于 符合于 respond to 相应
+conformity consistent
+consecutive continuous constant constantly 时刻; 不断地，时常地; 常川; 历来;
+consistency collate tally
+contrary counter reverse opposite contra (contra balance 帐目对冲）
+consensus  一致; 舆论; 一致同意，合意 conscious
+controversial debatable
+consent concurrence, for exception please get the lecturer's concurrence
+collect / glean information
+close intimacy  affinity
+claim reimburse https://www.zhihu.com/question/37729052
+dash hyphen
+density compact
+deprecate obsolete
+differ / not in sync with / not be aligned
+  It can be differ for different organizational units and corporate functions
+  Organization may not be in sync with market force.
+  Top management and staff may not always be aligned.
+dizzy drowsiness sleepy faint mess up fatigue dazzle fuzzy faint
+dustbin liter bin
+emerge arise surface envision 预见想象 anticipate
+elicit 引出 诱出 solicit 恳求 征求 勾引
+expire dated
+excessive extreme over
+excel expert mastery 精通，熟练; 统治，控制; 优势
+exception , anomaly əˈnɒməl 异常现象; 异常，反常; 不规则; 畸形人（物）;
+fake counterfeit
+finally eventually ultimately
+	Arthur Anderson Consulting found it difficult to agree the requirements with BSkyB and produce a detailed requirement specification.This in turn lead to delays in producing the architectural design and ultimately the software code.
+guarantee warranty promise
+hush quite
+hurry rush: in a hurry
+hypen dash http://www.cbkx.com/2004-1/527.shtml
+intrinsic innately ɪ'neɪtlɪ 天赋地; 内在地，固有地 extrinsic
+increase grow proliferate
+interfere intrude interrupt
+interference和jamming
+jargon terminology
+Leverage, take advantage of
+lag latency
+mimic simulate spoof 哄骗; 讽刺; 戏弄; （进行） 滑稽的模仿;
+major offensive 军事] 大规模进攻，大举进攻
+massive stroke 严重的中风
+mandate authorize
+melt desolve
+moderate mild mediate
+national nationality ethnicity [eθˈnɪsəti] 种族地位，种族特点，种族渊源;
+nuance micro cosmetic
+novelty originality
+  originality relates directly with the idea of creation and Novelty is creating something different than the existing concept or use of a better idea thereby creating a new/fresh idea itself.
+opposite object to disagree argue challenge
+oblivious [əˈblɪviəs] ignorant innocent
+omission ignorance
+offload dump discharge pass
+precise concise
+preserve conserve battery
+population populated pre-populate
+proficient adj. 精通的，熟练的;n. 能手，老手，专家;  familiar skilled expert professional
+paradigm template style
+pertinent ˈpɜ:tɪnənt 有关的，相干的; 恰当的，中肯的; 关于…的; 切题的; related, relevant
+propagate pass broadcast disperse:  When no updates occur for a long period of time, eventually all udpates will propagate through the system and all the nodes will be consistent
+prominent profound
 
+regardless ;despite; in spite of; let alone / not mention; even though; set aside
+Set aside 'Me' time to revitalise and rejuvenate yourself. It could be as simple as taking a 10 minute break to chill! Set aside time to exercise, watch a good movie or simply listen to some music. You'll be amazed at how refreshed you'll be with a short break!
+rash rush rectless
+resovle resort
+resident residual adj.     残留的; 残余的;n. 剩余; 残渣; reside
+responsive to change, resilient, cater for changes,  comply with changes
+Scam con: con somebody out of some amount
+suburb outskirt
+subsequent, follow up, upfront
+superior > better  “In life a hypothesis that something is superior to something else cannot be scientifically proven but it can be demonstrated
+scrape 擦，刮; 擦去; 擦伤，刮破; 挖空; scratch
+specifically spəˈsɪfɪkli 特有地，明确地; 按种别地; 按特性地; especially,particularly,specially
+均可表“特别地”.
+especially一般表示某事物在意义、程度、重要性性超过其他事物.如：I love Italy,especially in summer.(我喜欢意大利,尤其在夏天.)
+particularly往往着重说明与同类事物不同的个别事物.如：The visitors admired his paintings,but particularly the portrait of his daughter.(来访者赞赏他所有的绘画,特别是他女儿的画像.)
+specially 多表示“专门地”,“为特别目的的地”,如表“不寻常”,“过分”等,可与especially通用.如：I made chocolate cake specially for you.(我特地为你做了巧克力蛋糕.)
+
+stimulate incentive
+stubs placeholder	replace ** with stubs to run your own configuration
+sophisticated complicated
+season调料 spice香料 source酱料
+sensible ˈsensəbl明智的; 通情达理的; 合乎情理的; 意识到的，能感觉到的 resonable
+subtraction， subduction是对减法这一数学算法的称谓。减号minus，同时minus和less都可以用在句中表示减去，后面加名词表示减去的部分
+spare save 节省，俭省; 不用，抽出，省掉; 宽恕，饶（命），救命，使某人免遭（麻烦等）; 出让，割爱，分让; 
+stance position attitude	: take a more relaxed stance
+syndicate affinity affiliate league
+	formed a syndicate ˈsɪndɪkət
+suspect(suspicious) doubt
+susceptible vulnerable sensitive
+in tune with customers = resonated with customers
+opt for... look for... choose...
+make a request , compose a http request
+niche - niche product	notch - top notch
+
+take no notice of 不注意(某人/某事物);不理会 despite me看不起
+
+workaround circumvent ˌsɜ:kəmˈvent 避免; 围绕，包围; 用计防止; （用欺骗手段） 陷害;  prevent
+work together / collaboration - It is expected that the efforts of all the students, when taken in synergy would provide a comprehensive collection of information in the "Big Data Engineering" area.
+
+In case
+the (whole) idea is, the (whole) point is
+
+chop&stamp&seal
+evaluate assessment
+revenue[进] (expense[消费]) tax[出]
+subsidy(津贴 奖学金) scholarship
+complimentary / free
+	*** is potentially complimentary to ***
+abbreviation / short for
+encounter confront
+what problems do you confront?
+alternate way to / replacement to
+replace a with b, substitute b for a
+
+subsidiary alternative
+enclosure vs attachment:
+http://english.stackexchange.com/questions/71757/enclosure-vs-attachment
+Are you using WordPress for podcasting? If so, it's important to know that newer versions of WordPress will automatically convert linked MP3 files to RSS enclosures, but using our SmartCast™ service will guarantee maximum compatibility and reliability for your podcast. Either way, you will need to make sure you're publishing a "full text" feed so your links make it into the RSS feed.
+https://support.google.com/feedburner/answer/78485?hl=en&ref_topic=13252&vid=1-635796169155976363-2547650487
+
+disaggregation vs segregation vs congregation
+
+under below beneath underneath 
+	http://www.phrasemix.com/answers/whats-the-difference-between-under-below-beneath-and-underne
+
+left over/ remain /rest
+ 
+scold shoot shrew
+  A week elapsed before she could see Elizabeth without scolding her
+irritate annoy frustrate
+  http://forum.wordreference.com/threads/annoy-vs-irritate.1550833/
+
+前(提前 之前 早于）upfront in advance prior to precede in advance pertaining to
+accostomed to get/be used to
+
+之前的 previous upstream
+
+后（后续 接着） subsequent/following/succeeding 接下来 next  subsequent following downstream
+
+Like always/as always/as usual http://forum.wordreference.com/threads/like-always-as-always-as-usual.1766024/
+  as usual - per usual https://www.quora.com/Whats-the-difference-between-as-usual-and-as-per-usual
+  as you usually do
+
+akin similar
+ambiguous ambiguity vague
+accountability responsibility liability
+benchmark collate calibrate
+cycling to work , biking to work, ride bike to work
+coordinated cooperation correlation
+condom vs rubber (rubber sticker) vs gum
+cosmetic toiletries
+conserve 保存 节省 reserve sustain 维持 经受
+consent 同意赞成 consensus 一致 共识  sensation 感觉 知觉 sensitivity 敏感 灵敏度
+conceive 设想 deceive 欺骗 perceive
+conscious anxious(anxiety)
+discrete scatter
+grocery goods  electronic gadgets
+intervene interfere 干涉
+perceive conscious realize
+prosecute sue
+perception feel cognition consciousness apperception
+serially sequence
+stimulation vs incentive
+  Incentives to motivate employees
+  Does governmental incentives or economic growth stimulate green-building construction
+
+oral verbal 
+	verbal warning "Oral Consent" or "Verbal Consent" 
+
+different variant
+stop halt
+ask / enquire
+ask for / request / apply for
+asked to / required to
+happened occurred
+argue retort debate dispute
+publish issued sign off finalize communicate to
+persist insist
+plural/singular compound multiple diverse
+ 
+ambitious timescale / challenge / tight schedule
+perform activity    proceed procedure
+entail/bring risk
+technique  technical
+
+administer / manage
+ the system would administer the rostering of pilots and cabin crew on commercial flights.
+掉下来 drop / fall / land / lose
+罚金 peanut fine
+奖励 bonus praise
+反对 object to/oppose be opposed to /disagree/protest
+迁移 transfer/migrate
+#### Contrast meaning  意义反差
+appealing  adj. 吸引人的，令人心动的; 恳求的; v. （迫切） 要求(appeal的现在分词); 将…上诉;
+
+beside vs besides
+beside（介词）
+	She sat beside the window. （她坐在窗边。）
+	My efforts seem small beside yours. （与你相比，我的努力显得微不足道。）
+	Your excuse is beside the point. （你的借口与主题无关。）
+besides‌‌作介词（包含性排除）
+	Besides pizza, we ordered pasta. （除了披萨，我们还点了意面。）
+besides作副词（补充信息）
+	I don’t want to go; besides, it’s raining. （我不想去；‌况且‌还在下雨。）
 #### 句子
 could you possibly
 Let me just say / Let's say
