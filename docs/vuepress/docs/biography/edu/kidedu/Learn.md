@@ -1,6 +1,13 @@
+## interactive online
 
 [PhET（Physics Education Technology）——由科罗拉多大学物理系诺贝尔物理学奖得主卡尔·威曼领衔研发的免费在线互动科学模拟平台。PhET 提供 170 多个互动科学模拟实验，涵盖物理、化学、生物、数学、工程科学和地球科学等五大学科领域，旨在通过沉浸式学习体验，让抽象的科学知识“活”起来，激发学生对科学探索的热情。](https://phet.colorado.edu/)
 
+microsculpture
+
+## books
+首图=》赛阅图书馆 https://mp.weixin.qq.com/s/486HfkI6sURoYwu8EcqKLg
+
+### 中国传统
 倪海厦
     黄帝内经
     抱朴子
@@ -9,6 +16,10 @@
 佛教典籍
 南怀瑾
 西藏生死书
+
+### STEM
+[Mathematics for Computer Science Book by Albert R. Meyer, Eric Lehman, and Frank Thomson Leighton](https://people.csail.mit.edu/meyer/mcs.pdf)
+
 特斯拉著作
 霍金
 
@@ -17,8 +28,12 @@
 费曼：
 the pleasure of finding things out Richard feynman
 
-microsculpture
 
+云端脚下：从一元二次方程到规范场论
+
+
+
+## program
 hello 算法
 https://github.com/lyhistory/tools_algo_hello-algo
 
@@ -30,24 +45,6 @@ https://github.com/freeCodeCamp/freeCodeCamp
 machine learning by chris albon: 
 https://github.com/DustinAlandzes/machine-learning-with-python-cookbook-notes
 https://nbviewer.org/github/DustinAlandzes/machine-learning-with-python-cookbook-notes/tree/master/
-
-首图=》赛阅图书馆 https://mp.weixin.qq.com/s/486HfkI6sURoYwu8EcqKLg
-
-elon mask nova synthesis https://andyjagoe.com/send-your-child-to-school-like-elon-musks/
-
-[Mathematics for Computer Science Book by Albert R. Meyer, Eric Lehman, and Frank Thomson Leighton](https://people.csail.mit.edu/meyer/mcs.pdf)
-
-云端脚下：从一元二次方程到规范场论
-
-According to Dr. Bruce Lipton, a former medical school professor and research scientist, proteins and signals are fundamental to life: 
-Protein plus signal equals behavior
-A protein's shape changes when it receives a signal, which is the basis of life. 
-Signals activate genes
-When a signal enters a cell's nucleus, it activates genes. This means that environmental signals, not genes alone, control genetic activity.
-
-https://www.commonsensemedia.org/
-
-
 
 [Interactive roadmaps, guides and other educational content to help developers grow in their careers.](https://github.com/kamranahmedse/developer-roadmap)
 
@@ -78,3 +75,38 @@ Harsha Suryanarayana 代码课
 适合：7岁 
 特色：三维场景，重在循环指令，支持调试，适合进阶学习阶段。
 任何编程学习路上的问题，欢迎家长们随时交流。
+
+## course
+elon mask nova synthesis https://andyjagoe.com/send-your-child-to-school-like-elon-musks/
+
+
+计算机：
+CS50
+CS144 计算机网络
+6.006算法导论
+
+吕世浩历史公开课
+
+教材：
+Interactive Linear Algebra Dan Margalit, Joseph Rabinoff https://textbooks.math.gatech.edu/ila/index2.html
+
+machine learning 一本书！解决（几乎所有）机器学习问题 https://github.com/lyhistory/learn_machinelearning
+
+学习工具：
+Noodle 是一个开源的教育平台，它的目标是通过提供一个单一的平台，让学生可以管理他们的所有教育相关事务。这个平台集成了各种生产力工具，如记笔记和任务管理，并提供有洞察力的自动化功能，以提高学生的生产力。
+https://github.com/ixahmedxi/noodle
+
+
+## thoughts
+According to Dr. Bruce Lipton, a former medical school professor and research scientist, proteins and signals are fundamental to life: 
+Protein plus signal equals behavior
+A protein's shape changes when it receives a signal, which is the basis of life. 
+Signals activate genes
+When a signal enters a cell's nucleus, it activates genes. This means that environmental signals, not genes alone, control genetic activity.
+
+https://www.commonsensemedia.org/
+
+## methods
+
+before bed hit up Theta Wave tracks 4 hertz on Youtube, play them while you learn, bonus hack snap your fingers mid session, make it your focus trigger, 
+

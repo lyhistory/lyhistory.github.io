@@ -7,6 +7,8 @@
 
 [SD变现宝：一键把comfyui工作流转换成小程序。](https://github.com/zhulu111/ComfyUI_Bxb)
 
+plaud.ai
+
 AI老外小程序
 
 易经八卦

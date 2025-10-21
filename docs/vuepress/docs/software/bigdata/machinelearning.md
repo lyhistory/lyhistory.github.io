@@ -72,6 +72,8 @@ https://blog.csdn.net/hu_666666/article/details/127204192
 梯度下降
 ![](/docs/docs_image/software/bigdata/machinelearning05.png)
 
+[为什么梯度是函数下降最快的方向,推导](https://blog.csdn.net/keeppractice/article/details/106820101) [推导关键词:全微分 点乘](https://www.cnblogs.com/zjj666/articles/15392808.html)
+
 ## 3. Logistic regression
 
 1. 线性回归要求变量服从正态分布，logistic回归对变量分布没有要求。
@@ -99,7 +101,13 @@ regularization
 
 [数字识别例子 Neural Networks Explained from Scratch using Python](https://www.youtube.com/watch?v=9RN2Wr8xvro)
 
-反向传播
+特征=>卷积核
+激活函数=>不能用阶跃函数
+梯度下降=>反向传播
+
+神经网络=>全连接
+卷积神经网络=>卷积方式连接
+transformer神经网络架构=>transformer连接方式
 
 CNN:
 一图胜千言：没有数学推导，5分钟理解CNN(卷积神经网络)的实现过程 

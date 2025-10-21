@@ -2,6 +2,8 @@
 
 https://github.com/google-gemini/gemini-cli
 
+codex
+
 [Omni Engineer：无需等待，几秒内生成应用程序！（ 支持 Ollama & Code Agent ）](https://mp.weixin.qq.com/s/Pu7ucvoYudcci9ukZ1xDhw)
 
 

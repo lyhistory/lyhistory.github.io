@@ -1,7 +1,10 @@
 
 [AI News](https://aisecret.us/)
 
+
 ## todo
+
+[Implement a ChatGPT-like LLM in PyTorch from scratch, step by step by sebastian raschka](https://github.com/lyhistory/learn_aigc_LLMs-from-scratch)
 
 [AI模型训练到底在训练什么？](https://mp.weixin.qq.com/s/tY-4z-D_IezAOeFgKZqedA)
 
