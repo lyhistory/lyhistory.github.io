@@ -1,5 +1,8 @@
 Science, technology, engineering, and mathematics 
-
+## About philosophy
+ontology 本体论，实体论;
+technical and philosophical
+	The book explores ‌technical and philosophical‌ challenges in artificial intelligence.（本书探讨人工智能领域的‌技术与哲学挑战‌。
 ## Science
 slice and dice 切片和切块 - 交叉分析
 fine tuning 微调
@@ -59,6 +62,8 @@ microorganism 微生物
 fart
 
 ## Chemistry
+催化剂 catalyst
+
 acid
 acetone
     Acetone is essentially nail varnish remover, this is sort of a super strength version

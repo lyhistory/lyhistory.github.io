@@ -1,6 +1,27 @@
 
 
 ## 工具
+### 头发 发卡
+	
+​Comb​ (细齿梳) / ​Brush​ (刷子，如气垫梳)
+	
+​Elastic​ / ​Hair tie​ / ​Rubber band
+	She ​tied up her hair​ with a handkerchief.
+​Bobby pin​ (U型细发卡) / ​Hair clip​ (按压式发卡)
+	She used a hair clip to keep her bangs out of her face.
+​Hair band 发箍
+
+​Bow 蝴蝶结发饰
+
+发型：
+	Let me make a ​parting​ for you.” (我来给你分一下头路。) 中分是 ​middle parting，侧分是 ​side parting。
+	I will ​do you a ponytail.” (我给你扎个马尾吧。)
+	Do you want ​two braids​?” (想扎两个麻花辫吗？)
+	Is it ​too tight​?
+	Is it ​pinching​ you? 夹到头皮/扯得疼吗？
+	Don't ​pull​ it off.” (别扯掉哦。) 
+
+
 ### 用来“刺”或“戳”的小工具
 	​手机取卡针​ ​SIM eject tool / "that little pin for the SIM card"​​ 
 	药瓶穿刺器​ ​Bottle opener / piercing cap 特指某些药瓶盖上附带，用于刺破瓶口密封的尖头。
@@ -27,6 +48,14 @@
 		Loosen the straps​ before you take off the helmet.
 		You can ​tighten the chin strap​ for a more secure fit.
 ## 物品
+### 漏网
+Strainer 指各种用于过滤的“滤网”
+Drain catcher
+	The ​drain catcher​ got clogged, so the water wasn't draining properly.
+Sink basket 美式英语
+	The ​sink basket​ is full of food scraps, I need to empty it.
+Sink grid / Grid rack 通常指架在池底、用于放置碗碟的“沥水架”，而非过滤残渣的网篮。
+
 ### 盖子
 
 Cap​ 通常指较小、可拧开或拔开的盖子，常用于饮料瓶、药瓶、笔等。
