@@ -2,10 +2,24 @@
 
 [PhET（Physics Education Technology）——由科罗拉多大学物理系诺贝尔物理学奖得主卡尔·威曼领衔研发的免费在线互动科学模拟平台。PhET 提供 170 多个互动科学模拟实验，涵盖物理、化学、生物、数学、工程科学和地球科学等五大学科领域，旨在通过沉浸式学习体验，让抽象的科学知识“活”起来，激发学生对科学探索的热情。](https://phet.colorado.edu/)
 
+
+[Re-imagining textbooks for every learner Learn Your Way transforms content into a dynamic and engaging learning experience tailored for you.](https://learnyourway.withgoogle.com/)
+
+
+[everyone-can-use-english](https://github.com/ZuodaoTech/everyone-can-use-english)
+
+[幕境是一款通过电影、美剧或文档中的真实语境学习英语单词的应用，让您在原汁原味的情境中记忆词汇，提升学习效率。](https://github.com/tangshimin/MuJing)
+
 microsculpture
 
 ## books
+[Z-Library (abbreviated as z-lib, formerly BookFinder) is a shadow library project for file-sharing access to scholarly journal articles, academic texts and ...](https://z-library.cc/)
+
+[Sci-Hub is a shadow library that provides free access to millions of research papers, regardless of copyright, by bypassing publishers' paywalls in various ways ...](https://www.sci-hub.pub/)
+
 首图=》赛阅图书馆 https://mp.weixin.qq.com/s/486HfkI6sURoYwu8EcqKLg
+
+维特根斯坦 逻辑哲学论
 
 ### 中国传统
 倪海厦
@@ -18,8 +32,12 @@ microsculpture
 西藏生死书
 
 ### STEM
+
+兰道尔 门罗 《what if》
 [Mathematics for Computer Science Book by Albert R. Meyer, Eric Lehman, and Frank Thomson Leighton](https://people.csail.mit.edu/meyer/mcs.pdf)
 
+Introductory Chemistry by Nivaldo J. Tro
+The Physics of Everyday Phenomena: A conceptual Introduction to Physics by W.Thomas Griffith Jullet W.Brosing
 特斯拉著作
 霍金
 
@@ -77,6 +95,13 @@ Harsha Suryanarayana 代码课
 任何编程学习路上的问题，欢迎家长们随时交流。
 
 ## course
+MIT Learn + ask tim learn.mit.edu
+khan academic:
+    www.khanacademy.org
+    schoolhouse.world
+    www.khanmigo.ai
+斯坦福在线高中
+
 elon mask nova synthesis https://andyjagoe.com/send-your-child-to-school-like-elon-musks/
 
 
@@ -96,7 +121,8 @@ machine learning 一本书！解决（几乎所有）机器学习问题 https://
 Noodle 是一个开源的教育平台，它的目标是通过提供一个单一的平台，让学生可以管理他们的所有教育相关事务。这个平台集成了各种生产力工具，如记笔记和任务管理，并提供有洞察力的自动化功能，以提高学生的生产力。
 https://github.com/ixahmedxi/noodle
 
-
+## games
+STEAM 游戏 It Works: Electronics Repair Simulator
 ## thoughts
 According to Dr. Bruce Lipton, a former medical school professor and research scientist, proteins and signals are fundamental to life: 
 Protein plus signal equals behavior

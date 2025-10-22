@@ -1,0 +1,1 @@
+[all of the workflows of n8n i could find (also from the site itself)](https://github.com/Zie619/n8n-workflows)

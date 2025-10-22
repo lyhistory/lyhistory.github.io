@@ -1,3 +1,7 @@
+[雾象是一款由大型语言模型（LLM）驱动的动画引擎 agent 。用户输入抽象概念或词语，雾象会将其转化为高水平的生动动画。](https://github.com/fogsightai/fogsight)
+
+[videotutor](https://videotutor.io/)
+
 [Real-time face swap and video deepfake with a single click and only a single image.](https://github.com/hacksider/Deep-Live-Cam)
 
 Deepfake 视频换脸
@@ -15,7 +19,20 @@ https://mp.weixin.qq.com/s/tdgld7kH4GFhgtjOK1LQ7w
 
 [VideoLingo-全自动视频搬运工具](https://mp.weixin.qq.com/s/-Ayo6lj65s4QEN3CXGLqZg)
 
-### 文字=》视频
+
+
+## 剪辑
+[CapCutAPI is a powerful editing API that empowers you to take full control of your AI-generated assets, including images, audio, video, and text. It provides the precision needed to refine and customize raw AI output, such as adjusting video speed or mirroring an image. ](https://github.com/sun-guannan/CapCutAPI)
+
+[AutoClip : AI-powered video clipping and highlight generation · 一款智能高光提取与剪辑的二创工具](https://github.com/zhouxiaoka/autoclip)
+
+opusclip
+
+## VLM 视频识别
+
+[A GPT-4o Level MLLM for Single Image, Multi Image and High-FPS Video Understanding on Your Phone](https://github.com/OpenBMB/MiniCPM-V)
+
+## 文字=》视频
 
 text to video https://runwayml.com/
 
@@ -31,7 +48,7 @@ https://github.com/SCUTlihaoyu/open-chat-video-editor
 极虎漫剪
 https://mp.weixin.qq.com/s/eKkcFNx77DJM4Usoc72fjw
 
-#### Video Model - Image to Video
+### Image to Video
 https://github.com/camenduru/stable-video-diffusion-colab
 
 https://animatediff.github.io/
@@ -44,3 +61,6 @@ https://mp.weixin.qq.com/s/aLXCrH4sUK8HY-h2D5zPSw
 
 钉钉+SD+UE5
 https://mp.weixin.qq.com/s/fNxb2B5PiTTzTSXMuXHvOg
+
+## 数字人
+wan2.2

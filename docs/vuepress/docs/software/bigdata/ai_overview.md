@@ -4,6 +4,8 @@
 
 ## todo
 
+[excel 手搓 transformer](https://www.byhand.ai/p/transformer-spreadsheet)
+
 [Implement a ChatGPT-like LLM in PyTorch from scratch, step by step by sebastian raschka](https://github.com/lyhistory/learn_aigc_LLMs-from-scratch)
 
 [AI模型训练到底在训练什么？](https://mp.weixin.qq.com/s/tY-4z-D_IezAOeFgKZqedA)
@@ -17,6 +19,8 @@
 [终于有人将深度学习中重点做成了动画](https://mp.weixin.qq.com/s/rMtbq2UDwCGFNB9WUMLGrw)
 
 [GPT4All: Run Local LLMs on Any Device. Open-source and available for commercial use.](https://github.com/nomic-ai/gpt4all/)
+
+[一饭封神：一个基于 AI 的智能菜谱生成平台，支持中华八大菜系 + 国际料理，提供营养分析、酒水推荐、菜谱效果图生成等全方位烹饪指导。](https://github.com/liu-ziting/what-to-eat)
 
 [AI首席情报官 Wiseflow](https://github.com/TeamWiseFlow/wiseflow)
 

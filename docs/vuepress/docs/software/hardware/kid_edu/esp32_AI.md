@@ -2,9 +2,13 @@ https://www.hackster.io/longpth/esp32-cam-ai-robot-50173c
 https://github.com/lyhistory/tools_iot_aigc-ESP32CamAI
 
 ## 小智项目：
-https://github.com/78/xiaozhi-esp32
-https://ccnphfhqs21z.feishu.cn/wiki/F5krwD16viZoF0kKkvDcrZNYnhb
 
+[GITHUB-xiaozhi-esp32](https://github.com/78/xiaozhi-esp32)
+[小智 AI 聊天机器人百科全书](https://ccnphfhqs21z.feishu.cn/wiki/F5krwD16viZoF0kKkvDcrZNYnhb)
+
+
+### 接线
+[小智AI聊天机器人面包板DIY硬件清单与接线教程](https://ccnphfhqs21z.feishu.cn/wiki/EH6wwrgvNiU7aykr7HgclP09nCh)
 
 ### building 
 
@@ -41,7 +45,7 @@ idf.py build flash monitor
 使用手机或电脑连接到设备的 WiFi 网络，通常以 Xiaozhi-XXXX 命名。选中并连接，等待几秒wifi热点连接成功，将自动进入选择界面，如果程序没有自动打开浏览器访问 http://192.168.4.1 ，请在确保无线局域网（WIFI）连接的网络是 Xiaozhi-XXXXXX 不要切换，使用浏览器 地址栏输入网址 http://192.168.4.1 进入设备的网络配置页面。
 
 你的设备在WI-FI或4G联网后，需要到 小智AI聊天机器人-控制面板 添加设备验证通过，才能正常使用设备进行AI语音聊天，请按照以下步骤操作：
-1) 电脑浏览器访问 小智AI聊天机器人-控制面板 后台：https://xiaozhi.me  创建智能体
+1) 电脑浏览器访问 小智AI聊天机器人-控制面板 后台：[xiaozhi.me](https://xiaozhi.me)  创建智能体
 2) 请先确保设备已连接到互联网，通过“你好，小智”唤醒，并出现要求添加设备的提示语6位设备验证码（可以重复唤醒重听）,然后去电脑上刚才创建的智能体上添加设备。
 
 

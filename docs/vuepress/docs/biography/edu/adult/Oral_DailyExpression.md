@@ -1,3 +1,5 @@
+https://www.playphrase.me/
+
 ## Think in English/ How to say in English 精准表达
 
 Everyday expressions 日常用语
@@ -1589,6 +1591,11 @@ To clarify, after confirming with Agnes, the changes would be: xxxx. 它暗示�
 
 
 #### 其他
+wipe up 擦牛奶/水等液体，用抹布吸上来
+wipe down 沿着大面积的一个方向擦 down the road/street
+wipe off 擦掉痕迹 笔迹
+wipe away 抚平伤痛泪水
+wipe out 消灭 敌人疾病
 Shapes in the Clouds"​​ 而不是 "Shapes of the Clouds"，主要是为了准确表达“从云朵中看出形状”这个概念
 	​​"of" 强调“所属关系”​​：介词 ​​"of"​​ 通常表示一种直接的所属或描述关系。如果使用 "Shapes of the Clouds"，它更倾向于指云朵本身客观的、物理上的形状和分类​（比如气象学上说的积云、层云等），而不是我们主观想象出的图案 
 	​​"in" 强调“在其中”​​：介词 ​​"in"​​ 在这里表示这些形状是包含在云朵这个整体之内的，是我们观察和想象出来的图案。这完美契合了“从云朵里看出各种形状”这个充满童趣和想象力的活动

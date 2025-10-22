@@ -1,5 +1,11 @@
 [开源的、模块化的GPT-4级语音对话系统](https://github.com/huggingface/speech-to-speech)
 
+
+## 语音克隆
+
+[VoxCPM: Tokenizer-Free TTS for Context-Aware Speech Generation and True-to-Life Voice Cloning](https://github.com/OpenBMB/VoxCPM)
+
+
 文字转语音
 https://chattts.com/
 方言:
