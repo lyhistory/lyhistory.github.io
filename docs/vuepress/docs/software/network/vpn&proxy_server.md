@@ -11,7 +11,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 由于特殊的国情，我国屏蔽了一些海外的网络服务，作为IT从业者为了工作学习不得不通过一些技术手段访问海外服务，这种手段俗称：翻:)(:墙、梯子、科学上网，本文纯粹从技术角度出发普及计算机理论基础，比如IP TCP UDP协议，ping telent tracert 软路由等工具，正向代理反向代理，流量加密中转等等，
 
 通常有两种常用方式([具体原理参考这里](/docs/software/network/network)，小白请忽略这里，继续看下面)：
-+ VPN:)(:翻墙
++ VPN:)(:科学研究
 + Proxy server代理上网
 
 + 推荐小白直接使用下面的现成产品即可；
@@ -20,9 +20,9 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 + 对于有基本知识或勇于尝试的同学们可以选择下面的自建方式；
 + 对于公司团队，可以两者都搞：购买现成产品+自建，互为备用；
 
-## 1. VPN:)(:翻墙
+## 1. VPN:)(:科学研究
 
-VPN的全名是virtual private network，缩写：VPN，是常用于连接中、大型企业或团体间私人网络的通讯方法。它利用隧道协议（Tunneling Protocol） 来达到发送端认证、消息保密与准确性等功能。值得注意的是VPN诞生的原因并不是为了翻墙，只是一些公司与公司间的网络通讯方式
+VPN的全名是virtual private network，缩写：VPN，是常用于连接中、大型企业或团体间私人网络的通讯方法。它利用隧道协议（Tunneling Protocol） 来达到发送端认证、消息保密与准确性等功能。值得注意的是VPN诞生的原因并不是为了科学研究，只是一些公司与公司间的网络通讯方式
 
 ### 1.1 现成产品(推荐小白使用)
 购买之后直接安装使用，
@@ -172,7 +172,7 @@ step 5: Once a secure, encrypted tunnel connects the user’s browser to the SSL
   - [Just My Socks 官网镜像1](https://justmysocks5.net/members/aff.php?aff=25045)
   - [Just My Socks 官网镜像2](https://justmysocks3.net/members/aff.php?aff=25045)
   - [Just My Socks 官网 (已被墙)](https://justmysocks.net/members/aff.php?aff=25045)
-
++ [这是免费的但是慎用！ Free HTTP, SOCKS4, & SOCKS5 Proxy List * Updated every 5 minutes *](https://github.com/proxifly/free-proxy-list)
 ### 2.2 自行搭建
 
 #### 2.2.1 理论（可跳过，直接看2.2.2步骤）
@@ -226,7 +226,7 @@ http Proxy=>Socks=>Socks5=>Shadowsocks，Shadowsocks-R=>VMESS
   - 时间：V2Ray要保证时间准确，因为这是为了安全设计的；
   - 密码：VMess只有id（使用UUID的格式），作用类似于shadowsocks的密码，但是，随机性远好于shadowsocks的密码，只是不太方便记忆（安全与方便的矛盾）；
   - UDP转发：VMess是基于TCP的协议，对于UDP包V2Ray会转成TCP再传输的。要UDP转发功能在客户端的socks协议中开启UDP转发即可；
-  - 路由器翻墙
+  - 路由器科学研究
   
   优点:
   更完善的协议

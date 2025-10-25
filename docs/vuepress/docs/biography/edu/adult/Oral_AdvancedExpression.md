@@ -1,6 +1,19 @@
 
 
 ## 工具
+
+### 拖车
+Trailer 最常用的词，指本身无动力、需要由汽车、卡车等牵引的车辆，用于运输货物或作为临时住所（拖挂式房车）
+	We hitched the ​trailer​ to the car to transport our camping gear.
+Tow truck 特指用于牵引、救援故障或违章车辆的专用卡车，车头通常有升降臂。
+	I had to call a ​tow truck​ after my car broke down on the highway.
+Articulated lorry​ 指铰接式卡车，即车头（牵引车）和货箱（挂车）可以分离的那种大型货车。
+Towing dolly 一种小型双轮拖车，常用来拖运故障的小轿车，将轿车的前轮固定在上面
+
+Cart 美式英语/Trolley英式英语 指超市购物车、机场手推行李车、或酒店里运送行李的两轮或四轮手推车。
+	Please grab a shopping ​cart​ so we can carry all the groceries.
+Pallet truck​ / ​Pallet jack 仓库和物流中常用的工具，有手动液压和电动两种，用于搬运托盘货物。中文里常俗称“地牛”
+
 ### 头发 发卡
 	
 ​Comb​ (细齿梳) / ​Brush​ (刷子，如气垫梳)
@@ -48,6 +61,29 @@
 		Loosen the straps​ before you take off the helmet.
 		You can ​tighten the chin strap​ for a more secure fit.
 ## 物品
+吊床 hammock
+	We anchored the ​hammock​ to the tree
+
+袋子
+	帆布袋​ ​Canvas Bag
+	​轮滑装备包​ ​Roller Skating Gear Bag
+	食品包装袋​ ​Food Packaging Bag
+	Plastic/Paper/Shopping/Tote/Zippered/Sealed/Mesh  Bag​ 
+
+
+
+面条
+	宽面 (Lasagne / Tagliatelle)​
+	圆面 (Spaghetti / Vermicelli)​
+	扁面 (Linguine / Fettuccine)​
+	拉面​：​Hand-pulled noodles​
+	米粉​：​Rice noodles​ 或 ​Rice vermicelli​ (指细米粉)
+	刀削面​：​Sliced noodles​ 
+	方便面​：​Instant noodles​
+	乌冬面​：​Udon noodles
+	荞麦面​：​Soba noodles
+	中式挂面​：​Fine dried noodles​ 
+	菜单上通常会直接使用意大利语原名（如Linguine, Tagliatelle）。在亚洲超市或餐厅，则更常用“noodle”加上形状或原料的描述，比如“wide noodles”、“flat rice noodles”
 ### 漏网
 Strainer 指各种用于过滤的“滤网”
 Drain catcher

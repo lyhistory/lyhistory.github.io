@@ -37,6 +37,55 @@ lowlife scum
 +  Uncivilized
   "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
+撸
+	​roll up your sleeves 最标准、最常用的表达，指把袖子一层层卷起来。
+		Before washing hands, he **rolled up his sleeves** to keep them dry.
+		The project is challenging, but we just need to **roll up our sleeves** and get it done.
+	pull up your sleeves 指临时性地把袖子往上拉一拉，未必卷得很规整。
+		It was getting hot, so she **pulled up her sleeves** casually.
+	strip	指用手顺着枝条将叶子等东西捋下来。
+		He **stripped** the leaves from the twig.
+	sweep back one's hair 形容用手将头发向后梳理或抚平的动作。
+		He **swept back his hair** with his fingers.
+
+舀
+	​Eat with a spoon.
+		It's easier for children to **eat porridge with a spoon**.
+	Spoon up the rice. 强调“舀起”饭并吃下去的这个动作过程
+		He **spooned up the soup** quickly because he was late.
+	Scoop up the rice 使用大饭勺或深口勺​（如冰淇淋勺）来舀取食物。
+		She used a large serving spoon to **scoop up the fried rice** onto her plate.
+掸
+	Dust off 最常用。指用手或工具拍打、拂去表面的灰尘、沙子等干燥的颗粒物。
+		After the beach, we ​dusted the sand off our feet.
+	​Brush off 强调用刷的动作或工具（如手、刷子）​刷掉附着物。
+		He ​brushed the lint off his suit jacket.
+	​Flick off 指用指尖快速轻弹，去掉小颗粒。
+		She ​flicked the crumb off the table.
+	Shake off 通过摇动身体或物品，使附着物脱落。
+		The dog ran out of the water and ​shook off the water droplets.
+
+烤
+	bake 密闭空间内均匀的干热，使食物结构发生变化（如面包膨胀、蛋糕凝固）
+		The traditional method of **clay baking** a whole chicken produces incredibly tender meat.
+	roast 开放式热源的直接炙烤，使食物表面产生焦香脆皮，内部保持多汁
+		We usually **roast** a chicken with potatoes and carrots for Sunday lunch.
+	cook
+		We **wrapped** the fish in foil and **cooked it in the embers** of the campfire.
+	Candied Yams​ 特指一道美式菜肴，红薯通常加糖、黄油和棉花糖等烤制，口感甜腻，与中式烤红薯不同
+坑
+	Pit 泛指各种地面凹陷或人工挖掘的坑​（矿井、沙坑、陷阱）
+		They dug a ​pit​ for the foundation. 
+	Pothole 特指路面因损坏形成的小坑洞
+		My bike hit a ​pothole​ and I almost fell off.
+	Crater 指火山喷口、陨石撞击或炸弹爆炸形成的巨大坑洞
+		We looked into the ​crater​ of the volcano.
+	Bumpy 描述表面不平整、有很多小坑的状态
+		The ​bumpy​ road made the ride very uncomfortable. 
+	Pitfall 比喻容易犯错、被坑的陷阱或隐患​（抽象概念）
+		Lack of clear planning is a common ​pitfall​ for new projects. 
+	Hollow​：指浅的凹陷或洞，也可以形容中空的坑
+	Dent​：通常指表面因撞击形成的凹痕
 天气凉爽
 	​It‘s cool.​​ / ​The weather is cool.​
 	It‘s pleasantly cool.​
@@ -510,26 +559,7 @@ product placement 广告植入
 	The dancer ​swept her hair out of her eyes​ with a graceful motion. 
 	She ​ran her fingers through her long hair​ to ​brush it away from her eyes​ while reading.
 	His ​fringe was so long it covered his eyes, so he kept ​sweeping it to the side
-袋子
-	帆布袋​ ​Canvas Bag
-	​轮滑装备包​ ​Roller Skating Gear Bag
-	食品包装袋​ ​Food Packaging Bag
-	Plastic/Paper/Shopping/Tote/Zippered/Sealed/Mesh  Bag​ 
 
-
-
-面条
-	宽面 (Lasagne / Tagliatelle)​
-	圆面 (Spaghetti / Vermicelli)​
-	扁面 (Linguine / Fettuccine)​
-	拉面​：​Hand-pulled noodles​
-	米粉​：​Rice noodles​ 或 ​Rice vermicelli​ (指细米粉)
-	刀削面​：​Sliced noodles​ 
-	方便面​：​Instant noodles​
-	乌冬面​：​Udon noodles
-	荞麦面​：​Soba noodles
-	中式挂面​：​Fine dried noodles​ 
-	菜单上通常会直接使用意大利语原名（如Linguine, Tagliatelle）。在亚洲超市或餐厅，则更常用“noodle”加上形状或原料的描述，比如“wide noodles”、“flat rice noodles”
 
 
 拧下来
@@ -2112,6 +2142,20 @@ Yellow box bus lane
 Change over
 
 The S-course (or S-curve) is a specific maneuver taught during driving training. It involves navigating through a series of curves shaped like the letter "S," often to simulate sharp or winding roads. This type of course is designed to help new drivers practice controlling the vehicle while steering through tight turns, maintaining proper speed, and ensuring smooth handling of the car.
+
+通用“抛锚”​​ ​My car broke down.​
+	We were late because **our car broke down** on the highway.
+突发爆胎​ ​I have a flat tire.​
+	I need to change **the flat tire** before we can go on.
+特指行驶中轮胎“爆裂”的瞬间 ​I had a blowout.​
+	He managed to control the car when it **had a blowout** at high speed.
+发动机熄火​ ​My car stalled.​
+	The engine **stalled** at the traffic light and I couldn't restart it.
+电瓶没电​ ​The battery is dead.​
+燃油耗尽​
+	​I ran out of gas.​​ (美式) 
+	​I ran out of petrol.​​ (英式)
+
 ### About Education
 trade school 职业技术学校
 diploma mill 文凭工厂

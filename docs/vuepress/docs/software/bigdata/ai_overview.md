@@ -4,6 +4,8 @@
 
 ## todo
 
+[HexStrike AI MCP Agents is an advanced MCP server that lets AI agents (Claude, GPT, Copilot, etc.) autonomously run 150+ cybersecurity tools for automated pentesting, vulnerability discovery, bug bounty automation, and security research. Seamlessly bridge LLMs with real-world offensive security capabilities.](https://github.com/0x4m4/hexstrike-ai)
+
 [excel 手搓 transformer](https://www.byhand.ai/p/transformer-spreadsheet)
 
 [Implement a ChatGPT-like LLM in PyTorch from scratch, step by step by sebastian raschka](https://github.com/lyhistory/learn_aigc_LLMs-from-scratch)

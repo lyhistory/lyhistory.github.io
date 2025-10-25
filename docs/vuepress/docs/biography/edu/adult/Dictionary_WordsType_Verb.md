@@ -226,7 +226,18 @@ approach to + 名词/动名词
 
 Because of the links between the Type A behavior pattern and heart disease, various approaches have been taken to changing this pattern of behavior.
 这是一个关于‌介词后非谓语动词形式‌的核心语法问题。关键在于识别 ‌"to" 的词性‌——此处 ‌"to" 是介词而非不定式符号‌，因此必须接 ‌动名词 (changing)‌
-## Phrasal Verbs (Verb + Adverb Particle)​​
+
+
+## 短语动词 Phrasal Verbs 
+Verb + Adverb Particle e.g 
+Verb + Preposition  e.g look for
+Verb + Adverb + Preposition e.g look forward to
+
+宾语插入测试：代词宾语可以插在中间基本是副词，否则是介词
+pick it up 副词，代词必须在中间
+look at it 介词，代词只能在介词后
+
+### 副词+动词 (Verb + Adverb Particle)​​
 ​​Definition:​​ Verb + Adverb Particle (sometimes called a "particle," not a true preposition). creates a ​​new meaning​​.
 
 Key Features:​​
@@ -265,6 +276,8 @@ Line through, strike through, crossed through
 	strike through：与 line through 同义（如：He struck through the outdated clause.）8。
 	‌分词修饰用法‌（被动或完成状态）：
 	crossed through：过去分词短语，作定语或表语（如：The crossed-through text was unreadable.）
+put on
+	We put the helmet on our heads.​​
 piled up
  books piled up on the desk（堆在桌上的书）
 place on
@@ -287,7 +300,10 @@ start off
 turn around
 	She ‌turned around‌ to face the unexpected visitor.
 	The new CEO managed to ‌turn‌ the company ‌around‌ within a year.新任CEO一年内成功‌扭转‌公司颓势
-## Prepositional Verbs(fixed preposition)
+take off
+	He ​took off his helmet from his head​ after the motorcycle race. 
+	She ​took the helmet off her head​ and placed it on the shelf. 
+### Prepositional Verbs(fixed preposition)
 Definition:​​ Verbs that ​​must​​ pair with a specific preposition.
 
 Key Features:​​

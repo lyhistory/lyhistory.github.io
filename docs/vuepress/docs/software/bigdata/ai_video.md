@@ -1,6 +1,16 @@
+
+## 视频生成
+### 教学水平
 [雾象是一款由大型语言模型（LLM）驱动的动画引擎 agent 。用户输入抽象概念或词语，雾象会将其转化为高水平的生动动画。](https://github.com/fogsightai/fogsight)
 
+[Video generation via code](https://github.com/showlab/Code2Video)
+
 [videotutor](https://videotutor.io/)
+
+
+
+[Unlimited-length talking video generation​​ that supports image-to-video and video-to-video generation](https://github.com/MeiGen-AI/InfiniteTalk)
+
 
 [Real-time face swap and video deepfake with a single click and only a single image.](https://github.com/hacksider/Deep-Live-Cam)
 
@@ -20,6 +30,8 @@ https://mp.weixin.qq.com/s/tdgld7kH4GFhgtjOK1LQ7w
 [VideoLingo-全自动视频搬运工具](https://mp.weixin.qq.com/s/-Ayo6lj65s4QEN3CXGLqZg)
 
 
+[虎牙，斗鱼，抖音，BiliBili，TikTok，Twitch🔥热门🔥智能直播视频剪辑发布AI机器人，自动化🤖，全智能化⚙（智能生成切片，标题，封面，简介），可视化👓，平台热门监控🌡，丰富插件随意扩展🕹，快速部署⚡，视频账号打造自动发布🌟，支持DIY](https://github.com/Geniusay/ChopperBot)
+
 
 ## 剪辑
 [CapCutAPI is a powerful editing API that empowers you to take full control of your AI-generated assets, including images, audio, video, and text. It provides the precision needed to refine and customize raw AI output, such as adjusting video speed or mirroring an image. ](https://github.com/sun-guannan/CapCutAPI)
@@ -31,6 +43,8 @@ opusclip
 ## VLM 视频识别
 
 [A GPT-4o Level MLLM for Single Image, Multi Image and High-FPS Video Understanding on Your Phone](https://github.com/OpenBMB/MiniCPM-V)
+
+[Real-time webcam demo with SmolVLM and llama.cpp server](https://github.com/ngxson/smolvlm-realtime-webcam)
 
 ## 文字=》视频
 

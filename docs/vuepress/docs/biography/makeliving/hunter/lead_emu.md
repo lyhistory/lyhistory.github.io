@@ -12,7 +12,9 @@ POPADS（跑流量必备）
 首先要有一个国外的身份，选择美国人的身份信息 附带你的网站信息下边
 或者通过「haoweichi」随机生成美国人信息复制即可
 
-指纹浏览器 PIA Proxy
+指纹浏览器 
+    [Nstbrowser 指纹浏览器实践篇](https://mp.weixin.qq.com/s/gt3JFEFfpej2PIGglpZg5w)
+    PIA Proxy
 
 
 EMU 联盟经理 IM洗白

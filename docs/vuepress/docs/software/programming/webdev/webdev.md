@@ -488,7 +488,7 @@ export default {
 
 站点各种测试工具，ping速度、dns解析速度
 
-注意用github page最好是绑定自己的域名，默认是二级域名，比如我的 lyhistory.github.io，我绑定了自己的 lyhistory.com，绑定方法很简单，
+注意用github page最好是绑定自己的域名([免费域名注册](https://github.com/DigitalPlatDev/FreeDomain))，默认是二级域名，比如我的 lyhistory.github.io，我绑定了自己的 lyhistory.com，绑定方法很简单，
 在你的域名供应商处加一个cname，具体看这里 https://help.github.com/en/github/working-with-github-pages/configuring-a-custom-domain-for-your-github-pages-site
 
 然后为了加速，我选择了cloudflare做dns解析，方法：
