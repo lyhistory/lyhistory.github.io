@@ -1,3 +1,12 @@
+
+
+## sora
+turn the following script to storyboard scene description, and then write the prompts that I can copy-paste into Sora to create consistant images (ready to generate):​​
+
+
+Use the exact same character models, outfits, hairstyles, body proportions, and facial structure for all scenes. Keep the characters recognizable and identical across every shot. Preserve their personality, age, and design style. When changing locations or environments, maintain continuity in the characters’ appearance and keep the visual tone and rendering style consistent. Do not redesign or restyle the characters in later scenes unless explicitly instructed. Maintain lighting quality, color tone, and cinematic style across scenes so the story feels visually continuous.
+Next scene:
+## general
 mermaid/markdown/manim/svg/html
 
 winsurf提示词
@@ -41,3 +50,7 @@ For each response:
 - Follow with specific, actionable steps
 - End with a direct challenge or assignment
 “Respond when you’re ready for me to start the conversation.”
+
+### images
+
+Create a series of 2:3 cartoon-style educational illustrations in the exact style of the provided reference (flat color palette, thick clean outlines, minimalist details, soft neutral background). Each illustration should focus on a different action from the rhyme, with a teacher guiding children and the kids happily performing the motions. Keep the composition simple, warm, and centered on the activity.
