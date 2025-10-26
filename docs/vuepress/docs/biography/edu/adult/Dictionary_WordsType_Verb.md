@@ -369,6 +369,13 @@ object to vs. resistance to(名词短语)
 	They object to the change.
 	Resistance to change is common.
 pledge to donate
+pop out
+	The onions stem underground, and pop out dirt as they grow big.
+	As the onions grow bigger underground, they push up and pop the dirt out.​
+	The onion plant develops a ​bulb​ underground. As this ​bulb​ swells and matures, it pushes up and loosens the soil above it.
+press out
+	Use a bowl to press out a circle from the playdough.​
+put out
 pump in
 pull over
 pursuant to 依照，按照，依据;

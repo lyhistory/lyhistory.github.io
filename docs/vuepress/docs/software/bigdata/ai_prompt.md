@@ -6,6 +6,24 @@ turn the following script to storyboard scene description, and then write the pr
 
 Use the exact same character models, outfits, hairstyles, body proportions, and facial structure for all scenes. Keep the characters recognizable and identical across every shot. Preserve their personality, age, and design style. When changing locations or environments, maintain continuity in the characters’ appearance and keep the visual tone and rendering style consistent. Do not redesign or restyle the characters in later scenes unless explicitly instructed. Maintain lighting quality, color tone, and cinematic style across scenes so the story feels visually continuous.
 Next scene:
+
+Use the same character models, facial features, outfits, hairstyles, proportions, and rendering style across all scenes. No redesigns. Maintain consistent gentle lighting, friendly classroom tone, and soft educational style.
+
+Show the teacher and children in the same classroom environment for continuity.
+
+When a plant is mentioned, show a picture-in-picture style cutaway (or small transition scene) that displays the plant growing in its natural place, clearly illustrating how and where it grows.
+
+[SCENE ACTION HERE]
+
+
+Use the same character models, facial features, outfits, hairstyles, proportions, and cartoon art style across all scenes. No redesigns. Keep the visuals friendly, soft, and child-safe.
+
+Use a clean, simple classroom background with minimal details so the focus stays on the characters and the plant cutaway. Avoid clutter or overly complex scenery.
+
+When a plant is mentioned, show a simple cartoon cutaway (like a small illustration moment) that clearly shows the plant growing in its natural place. Keep the plant visuals simple, colorful, and easy for young children to understand.
+
+[SCENE ACTION HERE]
+
 ## general
 mermaid/markdown/manim/svg/html
 
