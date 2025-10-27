@@ -104,10 +104,17 @@ https://www.youtube.com/watch?v=Cf4o-FKEwNA
 
 
 http://www.pronouncekiwi.com
+
 Q&A: How to pronounce GHOSTS, ASKS, GUESTS https://www.youtube.com/watch?v=tQKM27s-dac
 strong sounds: S N L weak: d t th
 How to Pronounce "ʌ", "æ" and "α"  https://www.youtube.com/watch?v=9rIpvlXddl8   hot hat hut
-Training words:
+
+English: How to Pronounce T and D consonants: American Accent
+https://www.youtube.com/watch?v=AzZswz8na5c
+
+https://www.youtube.com/watch?v=T7SWETadMn0&ebc=ANyPxKqORRMBUUh6lUvhuOcOUUasSpHy_E-F1n7njnFEbvIFcUbvWmWDCGRkc4cdV2w8EJjT2Ct7-x-9GMMtmsgFDd88jd7xNg
+
+### Training words:
 Accurate
 enthusiastic
 Execute legitimate matriculation
@@ -165,9 +172,11 @@ applicability
 enthusiasm
 Vacuum
 
-### 容易读错 a-z
+## 容易读错 a-z
 
-a
+### a
+access
+adequate [ˈædɪkwət]
 accurate ˈækjərət
 adhere [ədˈhɪə(r)]
 aerial  [ˈeəriəl]
@@ -177,6 +186,7 @@ anatomy əˈnætəmi  解剖
 antenna ænˈtenə
 aroma əˈrəʊmə
 automatically atomically
+calendar [ˈkælɪndə(r)]
 marathon [ˈmærəθən]
 wander wonder
 transit ˈtrænzɪt
@@ -192,16 +202,21 @@ triangle [ˈtraɪæŋgl]
  maternity [məˈtɜ:nəti]
 gauge [ɡeɪdʒ] garage [ˈgærɑ:ʒ]
 rational [ˈræʃnəl] rationale  [ˌræʃəˈnɑ:l]
-c
+hazardous ˈhæzədəs 冒险的; 有危险的; 碰运气的
+tenancy  ˈtenənsi  租期; 租用，租赁; 租屋; tendency  ˈtendənsi 倾向，趋势; （话或作品等的） 旨趣，意向; 性情; 癖好;
+### c
 facade
 mechanism
 ch
 chef ʃef chief Achilles əˈkili:z
-d
+### d
 procedure
-e
-adequate [ˈædɪkwət]
-calendar [ˈkælɪndə(r)]
+### e
+excess 
+exit
+lever ˈli:və(r)
+
+
 desert dessert
 emulator  [ˈemjuleɪtə(r)]
 elegant execute [ˈeksɪkju:t] exercise extract
@@ -219,15 +234,15 @@ resilient [rɪˈzɪliənt]
 semister [sɪˈmestə(r)]
 series ˈsɪəri:z   serious ˈsɪəriəs
 desert dessert
-g
+### g
 legacy
 hygiene [ˈhaɪdʒi:n]
 garage [ˈgærɑ:ʒ]
 plagiarism [ˈpleɪdʒərɪzəm]
-h
+### h
 hypnotize [ˈhɪpnətaɪz]
 hygiene
-i
+### i
 civilian [səˈvɪliən]
 crisis  [ˈkraɪsɪs]
 definite  [ˈdefɪnət]
@@ -240,7 +255,7 @@ privilege [ˈprɪvəlɪdʒ]
 reimburse [ˌri:ɪmˈbɜ:s]
 recipe [ˈresəpi]
 valentine
-o
+### o
 cork cock
 history [ˈhɪstri]
 repository [rɪˈpɒzətri]
@@ -251,12 +266,13 @@ tutor [ˈtju:tə(r)]
 constituent
 monopoly 英[məˈnɒpəli]
 secondment sɪ'kɒndmən  second ˈsekənd
-p
+### p
 ph
 peripheral [pəˈrɪfərəl]
 phonetic  fəˈnetɪk
 monophyletic  ˌmɒnəʊfaɪ'letɪk    monophony  mə'nɒfənɪ
-s
+### s
+designate [ˈdezɪgneɪt]
 visual ˈvɪʒuəl vision ˈvɪʒn supervision
 issue/tissue
 closure exposure measure
@@ -264,7 +280,7 @@ conclusion kənˈklu:ʒn   recursion rɪˈkɜ:ʃn
 scissor
 asia asian occasion impression
 s after voiced-unvoiced phonetic
-t
+### t
 mortgage( house loan)
 statue [ˈstætʃu:]
 ratio
@@ -272,13 +288,21 @@ tertiary  [ˈtɜ:ʃəri]
 fortune  [ˈfɔ:tʃu:n]
 mature [məˈtʃʊə(r)]
 manufacture [ˌmænjuˈfæktʃə(r)]
-u
+### u
 suit / suite  recruit
 circuit  [ˈsɜ:kɪt]
 plumber
-x
+tusk [tʌsk] task [tɑ:sk]
+substantial səbˈstænʃl
+tuple  tʌpl
+
+numeric [nju:'merɪk]
+pseudo
+router
+### x
 axis[ˈæksɪs]
-### 重读意思大不同
+
+## 重读意思大不同
 execute
 vowel元音 http://www.hjenglish.com/zimu/yuanyinzimu/
 元音发音( a/an) vs 元音字母
@@ -310,7 +334,7 @@ cloth
 clothes
  
  
-### 同音不同词
+## 同音不同词
 cycle circle
 salary celery
 serial cereal
@@ -323,27 +347,8 @@ prosecute 起诉prostitute妓女 persecute ˈpɜ:sɪkju:t （尤指宗教或政�
 toe tow
 trunk chunk
 old owed
-### 误读
-tusk [tʌsk] task [tɑ:sk]
-substantial səbˈstænʃl
-hazardous ˈhæzədəs 冒险的; 有危险的; 碰运气的
-lever ˈli:və(r)
-tenancy  ˈtenənsi  租期; 租用，租赁; 租屋; tendency  ˈtendənsi 倾向，趋势; （话或作品等的） 旨趣，意向; 性情; 癖好;
-tuple  tʌpl
-designate [ˈdezɪgneɪt]
-numeric [nju:'merɪk]
-pseudo
-router
  
- 
-English: How to Pronounce T and D consonants: American Accent
-https://www.youtube.com/watch?v=AzZswz8na5c
-
-https://www.youtube.com/watch?v=T7SWETadMn0&ebc=ANyPxKqORRMBUUh6lUvhuOcOUUasSpHy_E-F1n7njnFEbvIFcUbvWmWDCGRkc4cdV2w8EJjT2Ct7-x-9GMMtmsgFDd88jd7xNg
-
-
- 
-### Spelling 
+## Spelling 
 sincierity sincerely
 susceptible suspectable 
 complementary complimentary

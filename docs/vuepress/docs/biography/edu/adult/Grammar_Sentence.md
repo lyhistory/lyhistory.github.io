@@ -274,37 +274,6 @@ He rushed out, ‌face pale with anger‌.（他冲了出去，脸色铁青）
 部分语法学者认为 ‌"being is"‌ 构成冗余（双重系动词）
 ✅ He missed the deadline, ‌the reason being is‌ that he underestimated the complexity.
 
-#### infinitive 动词不定式
-‌Infinitive‌ 是动词的非谓语形式，其基本结构为 ‌to + 动词原形‌（如 to do），但某些语境下可省略 to（称为 ‌bare infinitive‌，如 do）
-
-‌语法独立性‌：
-不受主语的人称或数限制（如 I want to go 与 They want to go 中 to go 不变）36。
-‌动词性质保留‌：
-可带宾语或状语（如 to read a book、to speak clearly）26。
-‌形式多样性‌：
-包含完成式（to have done）和被动式（to be done）
-
-| **功能**   | **例句**                          | **说明**                     |
-|------------|-----------------------------------|------------------------------|
-| 主语        | `To learn is challenging.`        | 表抽象动作，多用于正式文本    |
-| 宾语        | `She decided to study.`           | 接在 `want`/`try` 等动词后    |
-| 定语        | `He has a plan to start.`         | 修饰名词，表目的/用途         |
-| 状语        | `She woke up early to catch...`   | 表目的/结果/原因             |
-| 补足语      | `My goal is to help others.`      | 补充说明主语/宾语性质        |
-
-| **语法场景**               | **动词形式**          | **例句**                      | **语法解析**                     |
-|----------------------------|-----------------------|-------------------------------|----------------------------------|
-| **情态动词 (*will*)**       | 不带 *to* 不定式      | *I **will stay**.*            | *stay* 直接依附情态动词构成谓语  |
-| **普通动词 (*want*)**       | 带 *to* 不定式        | *I **want to stay**.*         | *to stay* 作宾语，需 *to* 连接   |
-| **使役动词 (*make*)**       | 不带 *to* 不定式      | *He **made me stay**.*        | 强调强制动作，跳过 *to*          |
-| **疑问句中的情态动词**      | 不带 *to* 不定式      | ***Can** you **stay**?*       | 情态动词疑问式仍保留 bare 特性   |
-| **过去时态中的不定式**      | 不带 *to* 不定式      | *I **had to stay**.*          | *had to* 整体作情态，后接原形    |
-
-
-Sell the vision of what you want to be able to do
-组合后逻辑为“想做某事并具备能力实现”，属于复合不定式结构
-want（主动词） → to be（不定式） → able（形容词补语） → to do（不定式） 
-
 #### compound predicate 复合谓语
 同一主语下多个动作/状态	He ‌opened the door‌ and ‌walked in‌
 

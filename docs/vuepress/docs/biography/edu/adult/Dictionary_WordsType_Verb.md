@@ -184,49 +184,49 @@ extends to
 
 ## 非谓语动词
 
-### gerund‌ 动名词
+### infinitive 动词不定式(to do)
+‌Infinitive‌ 是动词的非谓语形式，其基本结构为 ‌to + 动词原形‌（如 to do），但某些语境下可省略 to（称为 ‌bare infinitive‌，如 do）
+
+‌语法独立性‌：
+不受主语的人称或数限制（如 I want to go 与 They want to go 中 to go 不变）36。
+‌动词性质保留‌：
+可带宾语或状语（如 to read a book、to speak clearly）26。
+‌形式多样性‌：
+包含完成式（to have done）和被动式（to be done）
+
+| **功能**   | **例句**                          | **说明**                     |
+|------------|-----------------------------------|------------------------------|
+| 主语        | `To learn is challenging.`        | 表抽象动作，多用于正式文本    |
+| 宾语        | `She decided to study.`           | 接在 `want`/`try` 等动词后    |
+| 定语        | `He has a plan to start.`         | 修饰名词，表目的/用途         |
+| 状语        | `She woke up early to catch...`   | 表目的/结果/原因             |
+| 补足语      | `My goal is to help others.`      | 补充说明主语/宾语性质        |
+
+| **语法场景**               | **动词形式**          | **例句**                      | **语法解析**                     |
+|----------------------------|-----------------------|-------------------------------|----------------------------------|
+| **情态动词 (*will*)**       | 不带 *to* 不定式      | *I **will stay**.*            | *stay* 直接依附情态动词构成谓语  |
+| **普通动词 (*want*)**       | 带 *to* 不定式        | *I **want to stay**.*         | *to stay* 作宾语，需 *to* 连接   |
+| **使役动词 (*make*)**       | 不带 *to* 不定式      | *He **made me stay**.*        | 强调强制动作，跳过 *to*          |
+| **疑问句中的情态动词**      | 不带 *to* 不定式      | ***Can** you **stay**?*       | 情态动词疑问式仍保留 bare 特性   |
+| **过去时态中的不定式**      | 不带 *to* 不定式      | *I **had to stay**.*          | *had to* 整体作情态，后接原形    |
+
+
+Sell the vision of what you want to be able to do
+组合后逻辑为“想做某事并具备能力实现”，属于复合不定式结构
+want（主动词） → to be（不定式） → able（形容词补语） → to do（不定式） 
+
+
+### gerund‌ 动名词 
 Gerund 是由 ‌动词原形 + -ing‌ 构成的‌名词性成分‌（如 swimming, reading），在句中起‌名词作用‌（可作主语、宾语、表语等）
 
 ‌主语 ‌Swimming‌ is good exercise.
 ‌宾语 I enjoy ‌reading‌.
 介词宾语 She is good at ‌dancing‌.
 ‌表语 His hobby is ‌cooking‌.
-#### 介词固定搭配
-情感/态度类‌
-‌be accustomed to‌ (习惯于)
-She is accustomed to ‌working‌ late.
-‌be opposed to‌ (反对)
-They are opposed to ‌cutting‌ down the trees.
-‌object to‌ (反对)
-He objected to ‌paying‌ extra fees.
 
-行为/习惯类‌
-‌devote time to‌ (投入时间做)
-He devotes his weekends to ‌painting‌.
-‌get around to‌ (抽时间做)
-I finally got around to ‌repairing‌ the door.
-‌resort to‌ (诉诸于)
-They resorted to ‌begging‌ for food.
-
-感官/互动类‌
-‌listen to‌ (听)
-I love listening to ‌birds singing‌.
-‌pay attention to‌ (注意)
-Pay attention to ‌reading‌ the instructions.
-
-其他高频搭配‌
-‌be committed to‌ (致力于)
-The team is committed to ‌improving‌ the system.
-‌be dedicated to‌ (献身于)
-She is dedicated to ‌helping‌ stray animals.
-
-approach to + 名词/动名词
-
-(It's) The simplest approach to formally developing software.
-
-Because of the links between the Type A behavior pattern and heart disease, various approaches have been taken to changing this pattern of behavior.
-这是一个关于‌介词后非谓语动词形式‌的核心语法问题。关键在于识别 ‌"to" 的词性‌——此处 ‌"to" 是介词而非不定式符号‌，因此必须接 ‌动名词 (changing)‌
-
+### participles 分词 (doing/done)
+作定语、状语、补语等
+The girl ​studying​ English is my sister.
 
 ## 短语动词 Phrasal Verbs 
 Verb + Adverb Particle e.g 
@@ -404,7 +404,40 @@ take off 出发  kick off 开始
 trade-off权衡
 wrap up 包裹 圆满完成
 
+情感/态度类‌
+‌be accustomed to‌ (习惯于)
+She is accustomed to ‌working‌ late.
+‌be opposed to‌ (反对)
+They are opposed to ‌cutting‌ down the trees.
+‌object to‌ (反对)
+He objected to ‌paying‌ extra fees.
 
+行为/习惯类‌
+‌devote time to‌ (投入时间做)
+He devotes his weekends to ‌painting‌.
+‌get around to‌ (抽时间做)
+I finally got around to ‌repairing‌ the door.
+‌resort to‌ (诉诸于)
+They resorted to ‌begging‌ for food.
+
+感官/互动类‌
+‌listen to‌ (听)
+I love listening to ‌birds singing‌.
+‌pay attention to‌ (注意)
+Pay attention to ‌reading‌ the instructions.
+
+其他高频搭配‌
+‌be committed to‌ (致力于)
+The team is committed to ‌improving‌ the system.
+‌be dedicated to‌ (献身于)
+She is dedicated to ‌helping‌ stray animals.
+
+approach to + 名词/动名词
+
+(It's) The simplest approach to formally developing software.
+
+Because of the links between the Type A behavior pattern and heart disease, various approaches have been taken to changing this pattern of behavior.
+这是一个关于‌介词后非谓语动词形式‌的核心语法问题。关键在于识别 ‌"to" 的词性‌——此处 ‌"to" 是介词而非不定式符号‌，因此必须接 ‌动名词 (changing)‌
 
 ## Common used verbs
 
@@ -500,7 +533,8 @@ consolidate
 contaminate 污染 弄脏
 contemplate 深思熟虑
 convey 传达 表达 ( vs convince https://www.linkedin.com/pulse/convey-vs-convince-secret-getting-paid-dawnna-st-louis)
-convene a meeting
+convene 
+	convene a meeting
 confine 限制
 congregate segregate
 converge 聚合 集中汇聚 <=> diverge:
@@ -573,7 +607,9 @@ dispute
 distract
 dither 犹豫不决; 发抖，颤抖
 dictate 规定
-He cannot be allowed to dictate what can and cannot be inspected
+	He cannot be allowed to dictate what can and cannot be inspected
+dominate
+	A ​massive billowing cloud​ began to dominate the sky, signaling a possible storm.
 dread 惧怕 担心
 duplicate replicate https://languagetips.wordpress.com/2014/04/03/weekly-language-usage-tips-duplicate-or-replicate/
 http://dba.stackexchange.com/questions/1587/database-duplication-vs-database-replication
@@ -617,6 +653,7 @@ estimate guesstimate
 esteem  尊敬，敬重; 认为，以为; 考虑; 估价
 escalate 升级
 evade 逃避 躲避
+	evade at full throttle
 evaluate
 	evaluate the situation from various angles and identify core issues.
 expedite 加速
@@ -812,16 +849,20 @@ refrain 抑制 避免
 rip off
 rinse 冲洗
 rotate vs spin vs revolve vs roll
-
+sabotage
 sanitize 清理 VS sterilize 
 http://homebrew.stackexchange.com/questions/180/what-is-the-difference-between-clean-sanitized-and-sterilized
 sanitize 净化消毒
 savvy 知道了解
 scatter 使散开
 scramble [ˈskræmbl] 攀登，爬; 争夺，抢夺; （植物） 蔓延; [航] 紧急起飞
+	scrambled data link
+	spectra denfensive scrambling
 screw up / mess up /spoil 搞砸
 scrap 报废; 废弃; 取消; 抛弃
 seek for license key
+Shatter
+	Beijing had shattered decades of skepticism surrounding its aerospace claims
 signify 意味; 预示; 表示…的意思 To signify that the customer has been successfully created, an appropritate message will be displayed in a Message Box.
 sit sit in（旁听）
 	Candidates must then sit computer-based multiple-choice examination to assess and measure project management knowledge.
@@ -905,6 +946,7 @@ vet 检查; 审查（某人过去的记录、资格等）; 诊疗
 violate
 visualize
 
+wink
 weave 编织 组合
 wean 使断奶; 使断念
 

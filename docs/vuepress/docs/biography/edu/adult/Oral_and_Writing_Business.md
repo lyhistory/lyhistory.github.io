@@ -136,7 +136,8 @@ working remotely www.techrepublic.com/blog/10-things/10-good-reasons-why-working
 
 transit strike 公交罢工
 ### About politics
-
+doctrines 教义 教条
+law enforcement
 appreciation depreciation
 belittle
 bifurcate
@@ -231,6 +232,13 @@ massacre
 reservist 预备役军人英 [rɪˈzəːvɪst]
 surgical strike 外科手术式打击
 wreckage
+
+
+monopoly on electronic warfare supremacy 对电子战优势的垄断
+radar 
+warfare
+A launch command, vetted by an AI fire control system, initiated the flight of a sleek, ramjet-powered Chinese missile streaking through the upper atmosphere toward a French-built aircraft. This event signified the crumbling of a long-standing assumption: that no non-Western air force could successfully deploy its indigenous weapon systems in real combat to challenge a frontline NATO-standard fighter.
+
 
 #### religion
 cult

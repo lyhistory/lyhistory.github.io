@@ -61,8 +61,8 @@ Pallet truck​ / ​Pallet jack 仓库和物流中常用的工具，有手动�
 		Loosen the straps​ before you take off the helmet.
 		You can ​tighten the chin strap​ for a more secure fit.
 ## 物品
-吊床 hammock
-	We anchored the ​hammock​ to the tree
+medal
+
 
 袋子
 	帆布袋​ ​Canvas Bag
@@ -84,6 +84,11 @@ Pallet truck​ / ​Pallet jack 仓库和物流中常用的工具，有手动�
 	荞麦面​：​Soba noodles
 	中式挂面​：​Fine dried noodles​ 
 	菜单上通常会直接使用意大利语原名（如Linguine, Tagliatelle）。在亚洲超市或餐厅，则更常用“noodle”加上形状或原料的描述，比如“wide noodles”、“flat rice noodles”
+### 家具
+stool
+
+吊床 hammock
+	We anchored the ​hammock​ to the tree
 ### 漏网
 Strainer 指各种用于过滤的“滤网”
 Drain catcher
@@ -190,7 +195,11 @@ Plug 指塞子，如浴缸塞 (bathtub plug)、电源插头 (electric plug)​
 	
 	书包带上的调节扣​ ​Buckle - Adjustable buckle, Slide buckle
 		Slide the ​buckle​ to tighten the strap.（滑动扣子来收紧带子。）
-	
+
+## 车辆
+forklift
+road ripper
+watering cart
 ## 不常见
 
 压水井（上下压）​ Pump/Pull up and push down​ / ​Work the handle

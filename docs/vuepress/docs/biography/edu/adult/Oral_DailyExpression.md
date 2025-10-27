@@ -37,6 +37,75 @@ lowlife scum
 +  Uncivilized
   "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
+咽喉要道 chokepoint
+记忆
+	recount 侧重向外讲述一个故事、经历或细节，内容通常较具体、完整。
+		She ​recounted​ her adventures in the Amazon to the fascinated audience. 
+		one poilot later recounted feeling like they were flying inside a maze of mirrors, never sure if what they saw was real or decoy
+	recall 侧重向内从记忆中提取信息，强调回忆的行为或能力。
+		I can't ​recall​ where I put my keys this morning.
+	Recollect 正式且努力的“追忆” Recollect和 recall意思非常接近，有时可以互换。但 recollect更强调平静而专注地、努力在脑海中追溯和搜集过去的片段，常常带有一种沉思的意味，比 recall更为正式
+	remind 侧重由外界因素触发记忆，或提醒某人某事。
+	remember 侧重记忆的状态，指信息自然存在于脑海中，或有意去记忆。
+	想说“有意识地想一件事”，用 ​recall。
+	想说“我没忘”或泛指记忆状态，用 ​remember。
+	想说“提醒别人”或“一事物让你联想到另一事物”，用 ​remind。
+	想表达“努力地、仔细地回想”，用更正式的 ​recollect。
+	讲故事 用recount
+
+注意到 take note 
+刮风 各种风
+	Wind
+	Breeze	微风
+		It's a ​moderate breeze—a great day for a picnic!
+	Gust	阵风
+	Gale	疾风 强度很大、具有一定破坏性的风，常指海上大风
+		The ​moderate gale​ made it difficult to walk outside.
+		The ​whole gale​ last night uprooted several trees in the park.
+	Storm	伴随暴雨、雷电等恶劣天气的强风
+	Hurricane / Typhoon 产生于热带洋面的强烈风暴系统，不同大洋名称不同
+	Tornado ​龙卷风
+	Monsoon 季风
+	Whirlwind / Cyclone 旋风	
+
+拒收
+	Reject 最通用。指拒绝接受货物、提议或想法，强调因不符合标准而“不接受”
+		The buyer has the right to **reject** the goods if they are damaged.
+	Refuse 常指坚决或礼貌地“拒绝”物品（如礼物、贿赂）或要求 
+		The judge **refused** the bribe.
+	Turn away​ 指拒绝某人进入或拒绝接收某人（如拒收学生、拒之门外）
+		The exclusive club **turned away** anyone not wearing a tie.
+	Dishonour 专业术语，主要用于商业和金融领域，指拒绝承兑汇票或票据 
+舒服
+	pleasant 天气、交谈、旅行、气味整体感受令人满意、愉悦 -独特用法​ 形容人“友善的” (a pleasant person)
+		It's a ​pleasant​ day for a walk.
+		We had a ​pleasant​ evening with friends.
+	Cozy / Cosy 房间、毯子、角落、氛围 由温暖、安全和亲密感带来的舒适 -独特用法 作名词指“茶壶保温罩”；动词短语 cozy up to有“讨好”之意
+		The cabin felt ​cozy​ while it snowed outside.
+		We sat in a ​cozy​ corner by the fireplace.
+	Comfortable 椅子、衣服、生活、收入水平 身体或心理上感到放松、没有不适 -独特用法 形容经济状况“宽裕的” (a comfortable income)
+		These shoes are very ​comfortable.
+		I feel ​comfortable​ sharing my ideas with you.
+
+
+服气
+	真心佩服 You blow me away.​/	You have my respect.​​ / ​You've got my admiration.
+	​/​I have to hand it to you.​/​That's very impressive.​
+	放弃争论 ​Fine, you win.​ / I surrender.​
+	无语或反讽 I'm speechless.​/ ​I have nothing to say.​
+弯
+	通用转弯
+		Turn 
+		Go around a bend/corner 指“绕过弯道或街角”，强调路径
+	轮滑转弯
+		Carve 指用刃深、弧度大的压步转弯 He **carved** a smooth arc on the pavement to avoid the obstacle.
+		Crossover 内侧腿越过外侧腿交叉蹬地。To maintain speed on the sharp curve, the skater performed a series of quick **crossovers**.
+		Parallel Slide​ 一种横向滑行甩尾的制动式转弯
+	摩托车压弯​
+		​Lean into the bend​ 准确描述身体和车身同时向弯内倾斜的核心动作 The experienced rider **leaned into the bend** perfectly, his knee nearly touching the ground.
+		Take a corner 	指“通过一个弯道”，强调过弯的整体过程
+		Cornering 指过弯的技术或过程，是讨论过弯技巧的常用名词
+
 撸
 	​roll up your sleeves 最标准、最常用的表达，指把袖子一层层卷起来。
 		Before washing hands, he **rolled up his sleeves** to keep them dry.

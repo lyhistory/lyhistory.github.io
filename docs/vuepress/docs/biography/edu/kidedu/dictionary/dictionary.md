@@ -292,7 +292,7 @@ squirt squeeze spray 感觉差不多对比解析
       The cat hissed when I ​sprayed​ it with water.(我朝猫喷水时，它发出了嘶嘶声。)
 ### 觉
 味道
-sweety salty
+sweety salty bitter
 
 感觉
 sore
