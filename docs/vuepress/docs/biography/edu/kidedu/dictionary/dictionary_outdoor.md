@@ -567,3 +567,41 @@ Look at the bug,
 Wear your wellies,  
 Touch the wet grass,  
 Mind the thorn  
+
+## Holiday
+
+剧情概要​：猪爷爷奶奶度假，将鹦鹉波利托付佩奇一家照顾
+。
+
+​Narrator: "Granny and Grandpa Pig are going on holiday. They are bringing Polly Parrot to Peppa's house so Peppa and George can look after her."
+​Grandpa Pig: "Hello, everyone!"
+​Peppa: "Hello, Grandpa Pig! Hello, Granny Pig!"
+​Granny Pig: "Polly is very excited about her holiday with Peppa and George."
+​Polly Parrot: "Hello, Polly! Waa!"
+​Granny Pig: "Polly likes birdseed. It's very important not to give Polly too much food."
+​Peppa: "Can Polly come out of the cage?"
+​Grandpa Pig: "Yes, but you must keep all the doors and windows closed, so Polly doesn't fly away."
+​Polly Parrot: "Would you like a cup of tea? Waa!"
+​Mummy Pig: "George! That is too much birdseed! Polly will grow very big and burst like a balloon... POP!"
+​Peppa: "Polly will have flown away! Don't worry, Peppa, I'm sure Polly is still inside."
+​Daddy Pig: "I'll rescue Polly... Come on, Polly!"
+​Granny Pig​（电话中）: "Please may I talk to Polly? Are you having a nice holiday?"
+
+剧情概要​：女王宣布全国假日，佩奇一家参观宫殿
+。
+
+​The Queen: "Today I have decided to give an award to the hardest working person in the country... Miss Rabbit!"
+​Mr. Bull: "The Queen has made it a holiday!"
+​Miss Rabbit: "I can't visit the Queen. I've got too much work to do!"
+​All Characters: "We're off to see the Queen!"
+​Peppa: "If you jump in muddy puddles, you must wear your boots, Your Majesty!"
+​The Queen: "Whee! Everyone loves jumping up and down in muddy puddles!"
+
+​剧情概要​：佩奇全球旅行，体验海滩、游轮等假日活动
+。
+
+​Narrator: "From fun days out at the carnival to splashing at the water park and setting sail on exciting cruise ship holidays, Peppa is always ready for something new."
+​Peppa: "Travel with Peppa from Australia to Paris to the USA—discovering new places, making friends, and having fun along the way!"
+​George: "Ice-cream! Horray!"
+​Mummy Pig: "Every day is an adventure with Peppa and her friends—whether climbing monkey trees or dancing to the jukebox!"
+

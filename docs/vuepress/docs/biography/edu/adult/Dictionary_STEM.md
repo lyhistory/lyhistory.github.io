@@ -80,9 +80,12 @@ fluoride 氟化物
 nitrogen
 oxidizer 氧化剂
 potassium
+propane 丙烷
 
 lid
 litmus test paper
+
+LNG abbr. 液化天然气（Liquefied Natural Gas）
 
 hydrogen 氢; 氢元素
 sulfide 硫化物

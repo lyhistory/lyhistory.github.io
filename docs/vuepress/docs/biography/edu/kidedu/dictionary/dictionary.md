@@ -436,44 +436,42 @@ Teacher:​​ "Children, look at the ground while we walk. See the round ​man
 ​Teacher:​​ "Excellent! Always watch your steps. Walk safely on the clear path."
 
 
+## 宝宝互动 coax
 
+Give Daddy a kiss.
+Kiss Daddy goodnight.
+Come over and lean on Daddy.
+Come here and sit with Daddy.
 
-## Holiday
+No answer, no cookies.​
+​You have to answer Daddy first, then you can have some cookies.​
+​If you don't answer Daddy, there will be no cookies.​
 
-剧情概要​：猪爷爷奶奶度假，将鹦鹉波利托付佩奇一家照顾
-。
+### gently reminds the child to express themselves with language instead of whining or crying.
+Use your words, please.​
+No whining. Remember to use your words.​
 
-​Narrator: "Granny and Grandpa Pig are going on holiday. They are bringing Polly Parrot to Peppa's house so Peppa and George can look after her."
-​Grandpa Pig: "Hello, everyone!"
-​Peppa: "Hello, Grandpa Pig! Hello, Granny Pig!"
-​Granny Pig: "Polly is very excited about her holiday with Peppa and George."
-​Polly Parrot: "Hello, Polly! Waa!"
-​Granny Pig: "Polly likes birdseed. It's very important not to give Polly too much food."
-​Peppa: "Can Polly come out of the cage?"
-​Grandpa Pig: "Yes, but you must keep all the doors and windows closed, so Polly doesn't fly away."
-​Polly Parrot: "Would you like a cup of tea? Waa!"
-​Mummy Pig: "George! That is too much birdseed! Polly will grow very big and burst like a balloon... POP!"
-​Peppa: "Polly will have flown away! Don't worry, Peppa, I'm sure Polly is still inside."
-​Daddy Pig: "I'll rescue Polly... Come on, Polly!"
-​Granny Pig​（电话中）: "Please may I talk to Polly? Are you having a nice holiday?"
+How would you feel if someone grabbed a toy from you?​
 
-剧情概要​：女王宣布全国假日，佩奇一家参观宫殿
-。
+I know you're upset, but I need you to use your words. Can you tell me what you want?
 
-​The Queen: "Today I have decided to give an award to the hardest working person in the country... Miss Rabbit!"
-​Mr. Bull: "The Queen has made it a holiday!"
-​Miss Rabbit: "I can't visit the Queen. I've got too much work to do!"
-​All Characters: "We're off to see the Queen!"
-​Peppa: "If you jump in muddy puddles, you must wear your boots, Your Majesty!"
-​The Queen: "Whee! Everyone loves jumping up and down in muddy puddles!"
+Please don't interrupt when others are talking. You can say 'excuse me' and wait for your turn.​
+### 宝宝拉着爸爸的手不好好走路，爸爸出言引导的场景
+The little girl, instead of walking properly, ​dragged her feet​ and ​swung playfully on her father's arm, tugging it backwards and sideways. her father, feeling the constant ​tugging, looked down with a smile. He tightened her ​secure hold​ on her daughter's hand and said in a ​firm but gentle tone, "Hey buddy, ​let's try walking properly. ​If you keep pulling my arm like this, we might both stumble.​​ How about we race to that next lamp post?
 
-​剧情概要​：佩奇全球旅行，体验海滩、游轮等假日活动
-。
+"​Walking feet, please!​​" the father reminded as his daughter began to ​stroll​ aimlessly, then suddenly ​lunged forward​ with all her weight, ​pulling hard on his arm. He ​staggered​ slightly but regained balance. With a playful sigh, he stopped and knelt down to her level. "​It's hard for me to walk steadily when you're swinging on my arm like this," he explained. "​Hold my hand nicely, and we can walk together safely. Okay?"
 
-​Narrator: "From fun days out at the carnival to splashing at the water park and setting sail on exciting cruise ship holidays, Peppa is always ready for something new."
-​Peppa: "Travel with Peppa from Australia to Paris to the USA—discovering new places, making friends, and having fun along the way!"
-​George: "Ice-cream! Horray!"
-​Mummy Pig: "Every day is an adventure with Peppa and her friends—whether climbing monkey trees or dancing to the jukebox!"
+Please walk properly/normally.
+Honey, if you keep pulling my arm like this, we might fall.
+Sweetie, you can choose to walk nicely holding my hand, or we can stop for a moment to adjust.
+Walking feet, please. 好好走路哦！
+Steady hands. 小手要稳一点
+It's hard for me to walk steadily when you're swinging on my arm like this.
+We're wobbling all over the path when we walk like this.
+I love holding your hand! But when you pull it down and back like this, it's hard for me to walk steadily. Let's try to walk together nicely, okay?
+I know it's fun to swing! You can choose to hold my hand and walk, or we can go to the park later and swing on the real swings. You decide.
+
+I see you're trying to skip and walk at the same time! It's tricky to coordinate. Let's focus on just walking for now.
 
 
 ## [Daily Life](/biography/edu/kidedu/dictionary/dictionary_dailylife.md)

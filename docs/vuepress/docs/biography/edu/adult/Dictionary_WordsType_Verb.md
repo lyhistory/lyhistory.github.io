@@ -870,6 +870,7 @@ suppose presume assume http://english.stackexchange.com/questions/396/what-are-t
 siphon 'saɪfn 用虹吸管吸（或输送）（液体）
 skim 略读; 撇去; 使掠过; （为逃税而）隐瞒（部分收入） ;
 slump 大幅度下降，暴跌; 沉重或突然地落下[倒下]
+snatch 抓住
 sniff 嗅探
 snoop 探听，窥探，管闲事
 solicit 寻求
@@ -949,6 +950,7 @@ visualize
 wink
 weave 编织 组合
 wean 使断奶; 使断念
+wobble
 
 yield 生产 获利 屈服 
 	Use Case, a description of a set of sequences of actions including variants, that a system performs that yield an observable result of value to the actor.

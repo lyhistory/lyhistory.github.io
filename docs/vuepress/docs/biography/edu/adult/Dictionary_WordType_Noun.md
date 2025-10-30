@@ -30,7 +30,11 @@ Match the verb to the meaning rather than the form.
 	Five miles is too far to walk.
 	Ten pints is more than enough.
 	Fish and chips is my favourite
+#### 单位
+pints
+ounce
 
+dwt abbr. 载重公吨位（deadweight ton）；本尼威特（pennyweight）
 #### 数量词
 不可数数量词
 https://www.facebook.com/permalink.php?story_fbid=1661131650833479&id=1487230268223619
@@ -64,6 +68,7 @@ burger flipper
 captive 俘虏 迷恋者
 carrier 运营商 dealer 经销商 reseller 代理商 distributor 分销商
 change agent 变革者
+charterer
 contractor 契约人 承包商
 coalition ˌkəʊəˈlɪʃn 联合; 同盟; 结合体; （两党或多党） 联合政府
 communiter 通勤者
@@ -164,12 +169,14 @@ atomicity 原子数; 原子价; 原子化合力; 原子力
 attrition 消耗; 摩擦; 消磨; （神学） 不彻底的忏悔;
 
 badge 徽章，像章，奖章; 象征，标记; [美国俚语] 警察
+beams 光柱
 binder 活页封面；缚者
 bootstrap  引导程序; 解靴带; 靴袢; 自益;
 booth 售货棚，摊位; 公用电话亭; 隔开的小间; （选举） 投票站
 bonnet  [ˈbɒnɪt] 阀帽; 童帽; （苏格兰男子的） 无边帽; 烟囱罩，壁炉罩
 boredom 厌倦; 讨厌，令人讨厌的事物; 无聊，无趣
 bureaucracy  官僚主义; 官僚机构; 官僚政治
+butt 烟头 屁股 靶场 接近地面部分的树干
 
 calibration 校准
 canvas
@@ -178,6 +185,8 @@ Catalyst n.     <化>触媒，催化剂; 〈比喻〉触发因素; 促进因素;
 causality 因果关系
 caveat 警告
 censorship n. 审查制度; 审查机构; 审察员的职权; [心] 潜意识中的抑制力;
+clutter
+	Letting go is not just about people or possessions - it's also about outdated habits, toxic thoughts, and emotional clutter that keep you stuck in the same cycle.
 communism ˈkɒmjunɪzəm 共产主义
 commodity 日用品
 compliancy  - a disposition or tendency to yield to the will of others noncompliance - failure to act in accordance with a wish or command.
@@ -318,6 +327,8 @@ mint 薄荷; 铸币厂;
 morality məˈræləti
 moat 壕沟，护城河;
 mortar [ˈmɔ:tə(r)] 砂浆; 迫击炮; 房产; 研钵;
+momentum 
+	Over time, these small acts of discipline will build unstoppable momentum, 
 mockery ˈmɒkəri 笑柄; 嘲笑，愚弄; （拙劣的） 模仿; 徒劳;
 
 
@@ -397,6 +408,7 @@ sanction 制裁
 saturation [ˌsætʃəˈreɪʃn]  饱和度; （达到） 饱和状态; 浸透，浸润; 饱和剂;
 scaffolding
 scarcity   [ˈskeəsəti]稀少; 不足，缺乏; 萧条
+scarecrow 稻草人
 seam [si:m] 煤层; 线缝; 接缝，接合处; 裂缝;
 sensation 知觉
 severity 严重

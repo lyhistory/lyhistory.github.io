@@ -141,7 +141,26 @@ Plug 指塞子，如浴缸塞 (bathtub plug)、电源插头 (electric plug)​
         **Cover** the pot **with the lid** and let it simmer for 20 minutes.
 拿下盖子
     lift the lid/cover, remove the cover, take off the lid。
+## 食品
+果脯 (总称)​​ ​Preserved fruit​ / ​Candied fruit
+葡萄干​ ​Raisin
+杏脯​ ​Dried apricot
+柿饼​ ​Dried persimmon
+桃脯​ ​Dried peach
+梅干/糖渍梅子​ ​Prune
+
+坚果 walnut pistachio
+腰果​ ​Cashew​ / ​Cashew nut
+杏仁​ ​Almond
+​栗子​ ​Chestnut
+花生​ ​Peanut
+南瓜子 ​Pepitas​ / ​Dried pumpkin seeds
+夏威夷果 ​Macadamia nut
+
 ## 服饰
+cape 斗篷 披肩
+
+
 ### 鞋子
 
 鞋盖 (鞋头盖)​​ ​Apron /​toe cap​  
@@ -191,6 +210,13 @@ Plug 指塞子，如浴缸塞 (bathtub plug)、电源插头 (electric plug)​
 		To tighten, ​pull the strap​ firmly, then ​pump the buckle lever up and down​ until it's snug. You'll hear it ​click​ with each turn."（要收紧，先用力拉紧带子，然后反复按压扣具扳手直到贴合。每按一下你都会听到咔嗒声。）
 		Just ​press the red release button​ on the side and ​yank the strap​ to get it all out.
 		It's a ​ratcheting system. The ​teeth​ on the ​strap​ lock into the ​buckle, and it only loosens when you ​hit the release button.
+
+Slippers（室内拖鞋）​​
+
+​Flip-flops（人字拖）​​
+
+​Sandals（凉鞋）​
+
 ### 包包
 	
 	书包带上的调节扣​ ​Buckle - Adjustable buckle, Slide buckle

@@ -1,4 +1,14 @@
-### About business
+## General
+
+### Business Result - Upper-intermediate Student's Book
+rapport
+renowned
+
+### 电话/会议
+I was talking on the phone and suddenly got disconnected.
+
+### Business Terms
+CAPEX abbr. 资本支出（capital expenditures）
 value proposition 企业或产品通过独特价值吸引客户的策略性陈述
 	A strong ‌value proposition‌ clearly communicates how your product solves customers' pain points better than competitors.（强大的价值主张需清晰传达产品如何优于竞品解决客户痛点。）
 touch points 强调用户与企业、品牌或产品产生互动的具体节点（如广告、客服、产品界面等）
@@ -54,6 +64,159 @@ subdued demand 需求不旺
 "growing steel demand in india and southeast asia offers some support, but may not fully offset potential moderation in China"
 可译为：
 ‌“印度及东南亚地区钢铁需求的持续增长提供了一定支撑，但可能无法完全抵消中国市场需求潜在放缓的影响。”
+
+### business dialogue
+
+Hey xxx, free to sync on the haircut logic later? Want to ensure I'm on the right track.
+
+so is the new product already returned from api?
+Yes, but typically only after the product is officially launched. APIs usually connect to the production database, so only data from launched products is accessible through the API.
+
+All APIs will return complete data when available. For testing, ensure the testing API environment is fully populated with the required data (there seems to be a gap in data handover from Luis to me). For production, data will only be accessible after the official launch.
+
+Hi team, I've identified a gap in the data handover from peter to me. To resolve this, could you confirm whether Luis had set up the testing API for you yesterday? This will help me ensure data continuity and proper configuration.
+
+Based on this, it appears testing APIs were never utilized from the outset. Let me also search through document backups to verify if any testing APIs existed previously.
+
+I would like to schedule a brief meeting later today to provide an update on the CAMT053 test. Please let me know what time would be convenient for you.
+
+This is to confirm that the settlement price displayed on a Monday (before 7:00 PM) should be the one from the previous Friday.
+
+The 'Accounts' category in the Excel file appears to be empty. What is the best way to verify its accuracy, regardless of whether it contains data or is supposed to be blank?
+
+touch base vs discuss
+    Would it be possible to connect briefly today at your convenience to discuss the clearing repository permissions?
+    do you have a few minutes today to touch base on the clearing repo permissions? Thanks!
+
+Is UAT testing performed in a test environment? If yes, how is the test environment maintained and how does APEX make sure it represents the production environment at the time of testing?
+
+"To my knowledge, there is no test environment. You should probably confirm with the Finance Department or the person who purchased this service. As far as I know, Yonyou provides their service by having users log into their system. All services are offered by Yonyou and are not hosted on our end."
+
+
+Are there scheduled jobs / batch jobs set up within the Yonyou application?
+
+If applicable, please provide details of the scheduled jobs in the system showing the job names and frequencies.
+
+"To my knowledge, no scheduled or batch jobs are configured on our end. If you are referring to business-process-related jobs (e.g., financial closing, automated reports), I recommend confirming with the Finance Department, as the IT team only manages user access and does not handle business-domain configurations.
+
+If your question pertains to scheduled jobs on Yonyou’s side (such as system backups or data synchronization), note that these are fully managed by Yonyou. Their internal processes are not visible to us, so we do not have details regarding job names or frequencies."
+
+### business email
+---
+
+Dear [Recipient's Name],
+
+I hope this email finds you well.
+
+Could you kindly review and approve the ​2025 Website Maintenance Contract​ along with the attached invoice at your earliest convenience? Please let me know if you need any additional details.
+
+Thank you for your time and support.
+
+Hi [Name],
+
+Seeking your approval on the ​2025 Website Maintenance Contract​ and attached invoice. Let me know if you need any changes.
+
+---
+Subject:​​ Re: Authorization Clarification for Annex A Sign-off
+
+Kindly note that Richard is not authorized to act in the capacity of CFO and sign off the Annex A.
+
+Currently the official CFO designation rests with our CEO, Peter.
+
+Regards,
+Tom
+
+Hi Tom,
+
+Thank you for the clarification. Noted that ​Peter (CEO)​​ remains the designated approver for Annex A in the absence of an official CFO.
+
+We’ll ensure to route the document to him for signing. Appreciate your guidance!
+
+---
+
+Hi [Name],
+
+Thank you for the clarification. I was just about to reach out to Nelson, but I’ll hold off and wait for Finance to follow up on the remaining steps.
+
+Appreciate your guidance!
+
+Hi Peter,
+
+Thank you for sharing this—much appreciated!
+
+Hi [Name],
+
+Thanks for sending these documents over. I've reviewed the attachment and everything looks in order.
+
+Appreciate your help!
+
+---
+Hi [Name],
+
+The LCD team has reviewed the quotes, invoice, and our existing ​Master Service Agreement. The vendor has already revised the invoice per peter's comments.
+
+Could you please ​sign Annex A​ at your earliest convenience? Let me know if you need any additional details.
+
+Thanks for your support!
+
+Dear Finance Team,
+
+Please find attached the signed documents for your reference. Kindly proceed with the payment arrangement at your earliest convenience.
+
+Thank you for your assistance.
+
+Hi [Name],
+
+May I postpone the update to tomorrow? I need Infra's assistance to whitelist my IP for admin page access, but they're on leave today.
+
+Let me know if this works for you.
+
+Dear [Name],
+
+I've completed the update as requested. Please review at your convenience and let me know if any adjustments are needed.
+
+---
+
+Hi [Manager's Name],
+
+The attached invoice is due soon, and the vendor has followed up for payment.
+
+Could you please review and approve it at your earliest convenience?
+
+Thank you,
+
+[Your Name]
+
+“has followed up” (现在完成时) 在商务沟通中通常比 “is following up” (现在进行时) 更专业、更常用
+
+​视角​：强调 ​动作的完成及其对现在的影响。它表达的意思是“供应商已经跟进过了（这个动作完成了），而我们现在收到了这个信息，需要处理它”。
+
+​隐含意义​：关注的是“跟进”这个事实本身，以及它给我们带来的结果（即我们需要行动）。它听起来像是一个客观的、已经发生的事件陈述，为我们的请求提供了一个中立的理由。
+
+The vendor is following up. (现在进行时)​​
+
+​视角​：描述 ​当前正在发生的动作。它表达的意思是“供应商此刻正在跟进”。
+
+​隐含意义​：这会给人一种“供应商正在紧盯着我们”的紧迫感，甚至可能带有一丝被催促的压迫感。在某些情况下，可能会被解读为你在向经理传递压力。
+
+## Specific Area
+### film narrative and visual composition 影视叙事
+​旁白​ Voice-over
+画中画 Picture-in-Picture (PIP)
+独白​ Monologue / Interior Monologue
+字幕​ Subtitle / Caption
+情节 Plot 次要情节 Subplot
+分屏​	Split Screen
+切出镜头/插入镜头 cutaway
+特写 Close-Up (CU)​​
+中景 Medium Shot (MS)​
+远景/全景 ​Long Shot (LS) / Wide Shot (WS)​
+俯拍镜头 High-Angle Shot
+仰拍镜头 Low-Angle Shot
+推位摄影/跟踪镜头 ​Tracking Shot
+Montage An editing technique that combines a series of short shots to condense space, time, or information. Specific types include ​Accelerated Montage​ (to increase tension) and ​American Montage​ (often to show the passage of time or a summary of events) 
+.
+
 ### About banking
 整存整取、零存整取和定活两用 3g.en8848.com.cn/hangye/bank/voadh/146480.html
 ### About Investment/Banking
@@ -100,10 +263,10 @@ Wholesale warehouse sale retail
 尾货 Wei Huo is the normal order of foreign trade surplus goods.
 merchandise / goods
 
-#### 电话/会议
-I was talking on the phone and suddenly got disconnected.
-
 ### About Employ
+
+to tender one's resignation（提交辞呈）to tender one's thanks（致以谢意）to tender an apology（致歉）to tender for a contract（为一份合同投标）
+The company submitted a tender for the construction project.（该公司为那个建设项目提交了一份标书。）
 
 Peter has tendered his resignation. There will be an interview to find his replacement.或 Peter has resigned. They will hold interviews to replace him.
 
@@ -135,6 +298,7 @@ working remotely www.techrepublic.com/blog/10-things/10-good-reasons-why-working
 裁员 chop cut 罢工
 
 transit strike 公交罢工
+
 ### About politics
 doctrines 教义 教条
 law enforcement
@@ -286,136 +450,7 @@ common good
 
 mega trend 大趋势”或“重大趋势”
   The shift toward multipolar globalization reflects a ‌mega trend‌ of geopolitical realignment.（多极化全球化的转向体现了地缘政治格局重构的‌重大趋势‌。）
-## business dialogue
+### About shipping
 
-Hey xxx, free to sync on the haircut logic later? Want to ensure I'm on the right track.
+seaborne 海运
 
-so is the new product already returned from api?
-Yes, but typically only after the product is officially launched. APIs usually connect to the production database, so only data from launched products is accessible through the API.
-
-All APIs will return complete data when available. For testing, ensure the testing API environment is fully populated with the required data (there seems to be a gap in data handover from Luis to me). For production, data will only be accessible after the official launch.
-
-Hi team, I've identified a gap in the data handover from peter to me. To resolve this, could you confirm whether Luis had set up the testing API for you yesterday? This will help me ensure data continuity and proper configuration.
-
-Based on this, it appears testing APIs were never utilized from the outset. Let me also search through document backups to verify if any testing APIs existed previously.
-
-I would like to schedule a brief meeting later today to provide an update on the CAMT053 test. Please let me know what time would be convenient for you.
-
-This is to confirm that the settlement price displayed on a Monday (before 7:00 PM) should be the one from the previous Friday.
-
-The 'Accounts' category in the Excel file appears to be empty. What is the best way to verify its accuracy, regardless of whether it contains data or is supposed to be blank?
-
-touch base vs discuss
-    Would it be possible to connect briefly today at your convenience to discuss the clearing repository permissions?
-    do you have a few minutes today to touch base on the clearing repo permissions? Thanks!
-
-Is UAT testing performed in a test environment? If yes, how is the test environment maintained and how does APEX make sure it represents the production environment at the time of testing?
-
-"To my knowledge, there is no test environment. You should probably confirm with the Finance Department or the person who purchased this service. As far as I know, Yonyou provides their service by having users log into their system. All services are offered by Yonyou and are not hosted on our end."
-
-
-Are there scheduled jobs / batch jobs set up within the Yonyou application?
-
-If applicable, please provide details of the scheduled jobs in the system showing the job names and frequencies.
-
-"To my knowledge, no scheduled or batch jobs are configured on our end. If you are referring to business-process-related jobs (e.g., financial closing, automated reports), I recommend confirming with the Finance Department, as the IT team only manages user access and does not handle business-domain configurations.
-
-If your question pertains to scheduled jobs on Yonyou’s side (such as system backups or data synchronization), note that these are fully managed by Yonyou. Their internal processes are not visible to us, so we do not have details regarding job names or frequencies."
-
-## business email
----
-
-Dear [Recipient's Name],
-
-I hope this email finds you well.
-
-Could you kindly review and approve the ​2025 Website Maintenance Contract​ along with the attached invoice at your earliest convenience? Please let me know if you need any additional details.
-
-Thank you for your time and support.
-
-Hi [Name],
-
-Seeking your approval on the ​2025 Website Maintenance Contract​ and attached invoice. Let me know if you need any changes.
-
----
-Subject:​​ Re: Authorization Clarification for Annex A Sign-off
-
-Kindly note that Richard is not authorized to act in the capacity of CFO and sign off the Annex A.
-
-Currently the official CFO designation rests with our CEO, Peter.
-
-Regards,
-Tom
-
-Hi Tom,
-
-Thank you for the clarification. Noted that ​Peter (CEO)​​ remains the designated approver for Annex A in the absence of an official CFO.
-
-We’ll ensure to route the document to him for signing. Appreciate your guidance!
-
----
-
-Hi [Name],
-
-Thank you for the clarification. I was just about to reach out to Nelson, but I’ll hold off and wait for Finance to follow up on the remaining steps.
-
-Appreciate your guidance!
-
-Hi Peter,
-
-Thank you for sharing this—much appreciated!
-
-Hi [Name],
-
-Thanks for sending these documents over. I've reviewed the attachment and everything looks in order.
-
-Appreciate your help!
-
----
-Hi [Name],
-
-The LCD team has reviewed the quotes, invoice, and our existing ​Master Service Agreement. The vendor has already revised the invoice per peter's comments.
-
-Could you please ​sign Annex A​ at your earliest convenience? Let me know if you need any additional details.
-
-Thanks for your support!
-
-Dear Finance Team,
-
-Please find attached the signed documents for your reference. Kindly proceed with the payment arrangement at your earliest convenience.
-
-Thank you for your assistance.
-
-Hi [Name],
-
-May I postpone the update to tomorrow? I need Infra's assistance to whitelist my IP for admin page access, but they're on leave today.
-
-Let me know if this works for you.
-
-Dear [Name],
-
-I've completed the update as requested. Please review at your convenience and let me know if any adjustments are needed.
-
----
-
-Hi [Manager's Name],
-
-The attached invoice is due soon, and the vendor has followed up for payment.
-
-Could you please review and approve it at your earliest convenience?
-
-Thank you,
-
-[Your Name]
-
-“has followed up” (现在完成时) 在商务沟通中通常比 “is following up” (现在进行时) 更专业、更常用
-
-​视角​：强调 ​动作的完成及其对现在的影响。它表达的意思是“供应商已经跟进过了（这个动作完成了），而我们现在收到了这个信息，需要处理它”。
-
-​隐含意义​：关注的是“跟进”这个事实本身，以及它给我们带来的结果（即我们需要行动）。它听起来像是一个客观的、已经发生的事件陈述，为我们的请求提供了一个中立的理由。
-
-The vendor is following up. (现在进行时)​​
-
-​视角​：描述 ​当前正在发生的动作。它表达的意思是“供应商此刻正在跟进”。
-
-​隐含意义​：这会给人一种“供应商正在紧盯着我们”的紧迫感，甚至可能带有一丝被催促的压迫感。在某些情况下，可能会被解读为你在向经理传递压力。

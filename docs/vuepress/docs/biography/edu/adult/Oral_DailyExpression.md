@@ -37,6 +37,79 @@ lowlife scum
 +  Uncivilized
   "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
+浴室穿着拖鞋洗完澡 把脚尖翘起来这样水就流走了
+	After a shower in the bathroom, just ​tilting your toes up​ for a moment ​drains the water away.
+	When your flip-flops are wet after a shower, ​a quick tilt of your feet​ lets the water ​run right off.
+	To get the water out of your sandals, simply ​lift your heels​ so the water ​rolls right off your toes.
+	In the bathroom after a shower, ​point your toes up to let the water drain​ from your flip-flops.
+倒水 
+	Pour out the water
+		Please pour out the old water from the cup.
+	Dump out the water
+		Just dump out the water in the bucket.
+	​Throw out the water
+		You should throw out this water; it's been sitting here for days.
+	Empty the water
+		Empty the water from the vase first.
+装水
+	​Fill with water
+		Could you fill the bottle with water for me?
+	Hold water
+		This new bucket doesn't hold water very well; it might leak.
+	Take in water 常指生物吸收水分或船只等进水的过程
+		Plants take in water through their roots.
+水洒了
+	Spill
+		I knocked over the cup and ​spilled​ the water.
+	​Knock over
+		The cat ​knocked over​ the vase.
+水溢出来了
+	Overflow
+		The sink ​overflowed​ because the tap was left on. 
+	​Boil over
+		Watch the milk so it doesn't ​boil over​! 
+扶
+	Support 最通用
+		The grandson gave his arm to **support** his grandfather.
+
+	Help 最常用、口语化
+		She saw the old man slip and quickly **helped him up**.
+		He **helped her to her feet** after she fell.
+	Hold 强调“抓握”以提供稳定或支撑，如扶栏杆、扶住某人手臂
+		**Hold on to** the railing when you go down the stairs.
+		He was **holding** the concrete safety rail with an unsteady hand.
+	Steady 特指使摇晃或不稳的人/物恢复稳定，如扶稳梯子
+		Two men were on the bridge-deck, **steadying** a ladder.
+	Lean on 指倚靠在某人或某物上以获取支撑。
+		The elevator is ​dirty​ because many people touch it. ​Come over and lean on Daddy​ instead.​
+
+路口
+	Intersection 泛指任何道路交叉口
+		Turn left at the next **intersection**.
+	Crossing 特指人行横道或穿行点​
+		Please use the zebra **crossing**.
+	Crossroads ​描述重要的十字路口或人生抉择​
+		Our company is at a **crossroads**.
+	Junction 指复杂的交通枢纽或连接点
+		Take the exit at **Junction** 5.
+闯红灯 Run a red light
+拿
+	get
+		Hold on, Dad is getting the roller skating gear from the car.
+	go get 更有动感
+		​Let's go get our roller skating equipment.
+	grab
+		Can you grab my helmet too, Dad?
+	fetch
+		Dad has gone to fetch the roller skating kit from the storage room.
+	pick up
+		We need to pick up our roller skating stuff.​
+	retrieve 正式或书面用语
+		Prior to the lesson, please **retrieve your roller skating apparatus** from the storage room.
+取快递 
+	Pick up/Collect a package/parcel
+		I need to **pick up a package** from the delivery point this afternoon.
+		Don't forget to **collect your parcel** from the locker before 8 PM.
 咽喉要道 chokepoint
 记忆
 	recount 侧重向外讲述一个故事、经历或细节，内容通常较具体、完整。
@@ -1805,13 +1878,29 @@ To clarify, after confirming with Agnes, the changes would be: xxxx. 它暗示�
 
 #### 其他
 
-will vs is going to
-	be going to ​事先考虑好的、明确的计划或意图
+​I don't/didn't/can't/couldn't find any exceptions.​
+​描述当前正在进行的检查
+	​如果你正处于检查过程中，想表达“到目前为止我还没发现异常”，用 ​I don't find any exceptions.​​ 它描述的是从检查开始到现在的一个当前状态。
+​汇报已完成的检查结果​
+	如果一次具体的检查已经结束，你需要汇报最终结果，用 ​I didn't find any exceptions.​​ 这是最常用、最中性的说法，清晰地陈述一个过去动作的结果​。​
+强调努力后仍无法找到
+	​当你想强调自己已经尽力排查，但就是找不到问题所在时，用 ​I can't find...​​ 或 ​I couldn't find...​。
+	​I can't find any exceptions.​​ 强调现在的努力和困境，带有些许挫败感。
+	​I couldn't find any exceptions.​​ 描述过去的努力和失败，或者在团队讨论中提出结论时，听起来比“didn't”更委婉和谨慎​，暗示“虽然我没找到，但可能存在问题”。
+
+will vs is going to vs ​will be doing
+	be going to ​事先考虑好的、明确的计划或意图 / 迹象表明某事即将发生时 想说“我计划/打算做…”或者“看这情况马上就要…了”，用 ​is going to。
+		Look at those dark clouds. It's ​going to rain. 
 	will 说话时临时决定的意图或主动提出的承诺 
 		​临时决定 That sounds great! I ​will​ watch it tonight.
 		主动承诺或提供帮助​ I ​will​ help you with your homework.
 		对普遍事实或趋势的预测​ She ​will​ be 10 years old next year.
-
+	想说“在未来的某个时刻，我将会正在做…”或者“根据安排，那时会发生…”，用 ​will be doing。
+		This time tomorrow, I'​ll be flying​ to Paris. 
+		We'​ll be having​ a meeting from 2 to 4 PM. Please don't disturb. 
+		Will you be using​ the car tonight? I need to run an errand. 用 "will be doing" 会比直接用 "what will you do" 听起来更委婉、更不具压迫感。What ​are you going to do​ this weekend? 直接询问对方的计划或打算
+	I ​am going to do​ my homework tonight. 
+	I ​will be doing​ my homework at 8 PM tonight. 
 
 What do you say?​​
 ​​“你该说什么？”​​ 用于提醒孩子在特定情境下（如收到礼物、得到帮助后）说出合适的礼貌用语。

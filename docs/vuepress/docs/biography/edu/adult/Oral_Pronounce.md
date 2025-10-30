@@ -175,6 +175,7 @@ Vacuum
 ## 容易读错 a-z
 
 ### a
+at
 access
 adequate [ˈædɪkwət]
 accurate ˈækjərət
@@ -187,23 +188,28 @@ antenna ænˈtenə
 aroma əˈrəʊmə
 automatically atomically
 calendar [ˈkælɪndə(r)]
-marathon [ˈmærəθən]
-wander wonder
-transit ˈtrænzɪt
-italic [ɪˈtælɪk]  italy  ['ɪtəlɪ]
-liaise [liˈeɪz] liaison
- penalty  [ˈpenəlti]
-proprietary [prəˈpraɪətri]
 civilian [səˈvɪliən]
-voyage [ˈvɔɪɪdʒ]
 clause
-referral [rɪˈfɜ:rəl]
-triangle [ˈtraɪæŋgl]
- maternity [məˈtɜ:nəti]
+concatenate
+dad
 gauge [ɡeɪdʒ] garage [ˈgærɑ:ʒ]
-rational [ˈræʃnəl] rationale  [ˌræʃəˈnɑ:l]
 hazardous ˈhæzədəs 冒险的; 有危险的; 碰运气的
+
+italic [ɪˈtælɪk]  italy  ['ɪtəlɪ]
+kate
+liaise [liˈeɪz] liaison
+maternity [məˈtɜ:nəti]
+marathon [ˈmærəθən]
+penalty  [ˈpenəlti]
+proprietary [prəˈpraɪətri]
+rational [ˈræʃnəl] rationale  [ˌræʃəˈnɑ:l]
+referral [rɪˈfɜ:rəl]
+transit ˈtrænzɪt
+triangle [ˈtraɪæŋgl]
 tenancy  ˈtenənsi  租期; 租用，租赁; 租屋; tendency  ˈtendənsi 倾向，趋势; （话或作品等的） 旨趣，意向; 性情; 癖好;
+
+wander wonder
+voyage [ˈvɔɪɪdʒ]
 ### c
 facade
 mechanism
@@ -247,6 +253,7 @@ civilian [səˈvɪliən]
 crisis  [ˈkraɪsɪs]
 definite  [ˈdefɪnət]
 dialect  ˈdaɪəlekt
+discipline 'disəplin
 drive -> driven
 itinerary [aɪˈtɪnərəri]
 naive [naɪˈi:v]
@@ -263,6 +270,7 @@ mandatory
 oven [ˈʌvn]
 horizontal
 tutor [ˈtju:tə(r)]
+thermometer
 constituent
 monopoly 英[məˈnɒpəli]
 secondment sɪ'kɒndmən  second ˈsekənd
