@@ -46,8 +46,15 @@ All 16 English Vowel Sounds (with Examples)
 **Note:**  
 - Americans often replace /ɪə/ and /eə/ with /ɪr/ and /er/ (*here* = /hɪr/, *hair* = /her/).
 
----
-
+​can​ (/kæn/) VS ​cane​ (/keɪn/)
+   The confusion between ​can​ (/kæn/) and ​cane​ (/keɪn/) stems from their similar consonant starts (/k/) and final /n/,
+   /æ/
+   - Mouth: Slightly open, lips relaxed (not rounded).
+   - Tongue: Low in the mouth, front part slightly raised
+   /eɪ/
+   - Mouth: Widens from a small "o" to a broad smile.
+   - Tongue: Moves from mid-low to mid-high, gliding between /e/ and /ɪ/.
+  
 #### 4. R-Controlled Vowels (Vowel + /r/)
 | Sound | IPA Symbol | Example Words |
 |-------|------------|---------------|
@@ -72,13 +79,101 @@ All 16 English Vowel Sounds (with Examples)
 
 #### Tips for Pronunciation:
 1. **Short vs. Long**:  
-   - /ɪ/ (short) → *sit* vs. /iː/ (long) → *seat*.  
-2. **Diphthongs glide**:  
+   - /ɪ/ (short) → *sit* vs. /iː/ (long) → *seat*.    
+   ​sleep​（/sliːp/）和 ​slip​（/slɪp/）
+   “I need ​sleep” → /sliːp/ 元音拉长，结尾轻柔。
+   “Mind the ​slip” → /slɪp/ 元音短促，结尾干脆有力
+
+   deep​ (/diːp/) vs. ​dip​ (/dɪp/)，​feel​ (/fiːl/) vs. ​fill​ (/fɪl/)
+1. **Diphthongs glide**:  
    - /aɪ/ = "ah" + "ee" (like *I*).  
-3. **R-controlled vowels**:  
+2. **R-controlled vowels**:  
    - Americans emphasize the /r/; British often omit it.  
 
 Need audio examples or help with a specific sound? Let me know! 😊
+
+### 辅音 consonant  
+
+#### voiceless  无声 or 有声
+apple
+   In English, voiceless stops (/p/, /t/, /k/) are ​aspirated​ (have a small puff of air) ​only when they start a stressed syllable. For example:
+
+   "Pat" (/pæt/) → /p/ is aspirated ([pʰ]) because it’s the onset of the stressed syllable.
+
+   "Apple" (/ˈæpəl/) → /p/ is ​unaspirated​ ([p]) because it’s in the ​coda​ (end) of the stressed syllable (/æp/), not at the onset.
+
+   Why Do Some People Say "b" Instead of "p"?​
+   If someone hears "apple" pronounced with a ​very weak /p/​​ (almost like /b/) and mimics it, they’ll replicate the mistake. This is common in informal learning (e.g., watching TV without focusing on pronunciation).
+
+often
+   Originally, the word "often"came from the Old English "oft"(meaning "frequently") with the suffix "-en"(used to form adverbs). In Middle English, it was pronounced with a silent t—/ˈɒfn/ (rhyming with "soften").
+
+   However, over time, ​pronunciation habits shifted:
+
+   In ​Modern British English, the tremains silent in most cases (pronounced /ˈɒfn/).
+
+   In ​American English​ (and increasingly in casual British speech), many native speakers now pronounce the t, resulting in /ˈɔːftn/ (sounds like "awf-tn"or "off-ten"to untrained ears).
+
+
+#### 清辅音 VS 无声?
+puppy​（/ˈpʌpi/）和 ​puppet​（/ˈpʌpɪt/）的发音确实高度相似，尤其美式英语中词尾的 /t/ 可能弱化（不完全爆破），导致听觉上“最后音似不发”
+
+
+#### 清辅音 VS 浊辅音
+​​/p/（清辅音）与 /b/（浊辅音）的本质区别​：​​/p/​​ 是清辅音，发音时声带不振动，气流从双唇爆破而出（如 lamp 末尾的 /p/）。​​/b/​​ 是浊辅音，发音时声带需振动（如 lamb 中的 /b/）。但 ​​/b/ 在词尾时可能弱化，甚至仅通过声带振动或口腔成阻姿势暗示，而不完全爆破
+
+lamp（/læmp/）和lamb（/læm/）的发音确实相似，但词尾的 ​​/p/​​ 和 ​​/b/​​ 在爆破音规则下存在本质差异，而语境中的区分主要依赖发音细节和上下文
+
+“Turn on the ​lamp” → /læmp/ 结尾有双唇轻碰的停顿感。
+
+“The ​lamb​ is soft” → /læm/ 结尾平滑，声带振动延续至闭唇
+
+cap（/kæp/） vs. cab（/kæb/）
+
+rip（/rɪp/） vs. rib（/rɪb/）
+
+[Should P ever sound like B?](https://www.youtube.com/watch?v=j7si2eMqNiI)
+People may pronounce "p" as "b" in some words because the surrounding sounds can influence the voicing of the consonant. Specifically, when a voiceless consonant like "p" is surrounded by voiced sounds, it can be influenced to become more like the voiced "b" sound. This occurs because the vocal cords are already vibrating for the surrounding sounds, making it easier and more natural to continue vibrating for the "p" as well. 
+Voicing: The main difference between "p" and "b" is that "p" is a voiceless sound (vocal cords don't vibrate), and "b" is a voiced sound (vocal cords vibrate).
+Influence of surrounding sounds: When "p" is placed between voiced sounds, the vibration can carry over, causing the "p" to sound more like a "b".
+Examples:
+In words like "paper," "happy," and "apple," the "p" can sound like a "b" because it is preceded and followed by voiced vowels.
+Language background: Speakers of languages that do not have a "p" sound will often substitute a "b" sound when speaking English, as seen in words like "pencil" being pronounced as "bencil".
+
+#### 清辅音+清辅音
+在“5th floor”这个短语中，​​/θ/​​（清辅音 th）与​/f/​​（清辅音）的连读确实存在难度，因为两个清辅音连续出现，且发音位置转换较快（舌尖从齿间切换到下唇抵上齿）
+
+​​/θ/（th）​​：舌尖轻触上齿下缘，气流从舌齿缝隙摩擦通过（需“咬舌”）
+。
+
+​​/f/（f）​​：下唇轻触上齿，气流从唇齿缝隙摩擦通过。
+
+​难点​：从“咬舌”到“咬唇”的动作需快速切换，若衔接不畅，容易模糊成/sf/或省略/th/音。
+
+可参考 Rachel’s English 的 TH 连读视频（搜索“linking TH sound”）观看舌位动态演示
+
+#### 连读变音 weak forms​ and ​linking
+
+an 
+   "An" has two weak forms: /æn/ (strong) or /ən/ (weak, e.g., "an apple" /ən ˈæpəl/).
+
+   an apple Why It Sounds Like "A Napple":
+   In connected speech, the ​​/n/ at the end of "an" links smoothly to the /æ/ at the start of "apple"​.
+
+   Why It’s Not Actually"A Napple":
+   You’re hearing ​coarticulation—when two sounds influence each other’s pronunciation. The /n/ of "an" stays, but the lack of a pause between "an" and "apple" makes it feel like one word: "napple."
+
+   To test this: Say "an apple" slowly → /ən/ + /ˈæpəl/ → then speed up—the /n/ and /æ/ blend, sounding like "ənˈæpəl" → which native listeners perceive as "an apple," not "a napple."
+
+“the”的核心规则是：
+
+   Before ​vowel sounds 后续单词以元音音素​（不是字母！）开头时，“the”弱读为​/ði/​​（类似“滴”的轻音）；
+
+   Before ​consonant sounds 后续单词以辅音音素开头时，“the”弱读为​/ðə/​​（类似“则”的轻音
+
+   the apple
+
+
 ### Correction 
 di
 Si
@@ -310,7 +405,57 @@ router
 ### x
 axis[ˈæksɪs]
 
-## 重读意思大不同
+## 重音 Stress
+1. 2 Syllables 双音节词是最易混淆的类别，​动词通常重音在第二音节，名词/形容词多在第一音节​（约70%符合此规律）。
+	
+import（n. 进口）/ˈɪmpɔːrt/ → import（v. 进口）/ɪmˈpɔːrt/；
+
+record（n. 记录）/ˈrekɔːrd/ → record（v. 录制）/rɪˈkɔːrd/；
+
+2. 3+ Syllables 多音节词（3+音节）：词缀决定重音位置
+-ic​
+   倒数第三音节（-ic前）   basic /ˈbeɪsɪk/（基本）；
+-tion/-sion
+   倒数第三音节（-tion前）education /ˌedʒuˈkeɪʃn/ 	decision /dɪˈsɪʒn/
+-ee​
+   最后音节（-ee结尾）employee /ɪmˈplɔɪiː/ 
+-ful/-ly​
+   原词重音位置不变  beautiful /ˈbjuːtɪfl/（美丽的，原词beau/ti/重音在第一音节） quickly /ˈkwɪkli/
+​​-pre-/-re-​
+   前缀后第一音节（-pre/-re开头）prescribe /prɪˈskraɪb/ return /rɪˈtɜːrn/
+-ous/-able
+   倒数第四音节（-ous/-able前）famous /ˈfeɪməs/ comfortable /ˈkʌmftəbl/
+
+3. 部分学术词汇（如 biology /baɪˈɒlədʒi/ 生物学）或外来词（如 piano /piˈænəʊ/ 钢琴）可能偏离规则，需结合词源判断
+
+4. Use Etymology (Word Roots) for Academic/High-Level Words 通过词源（词根词缀）辅助判断（适合学术/高阶词）
+
+4.1 希腊语词根（-logy, -graphy等）​​
+希腊语源的多音节词，重音常落在 ​倒数第三音节​（-logy前）：
+
+biology /baɪˈɒlədʒi/（生物学，-logy前为“bio-”）；
+
+geography /dʒiˈɒɡrəfi/（地理学，-graphy前为“geo-”）；
+
+psychology /saɪˈkɒlədʒi/（心理学，-logy前为“psycho-”）。
+
+​4.2 拉丁语词根（-tion, -ment等）​​
+拉丁语源的名词多以 ​​-tion/-ment​ 结尾，重音落在 ​倒数第三音节​（-tion前）：
+
+communication /kəˌmjuːnɪˈkeɪʃn/（沟通，-tion前为“communica-”）；
+
+development /dɪˈveləpmənt/（发展，-ment前为“develop-”）。
+
+​4.3 法语借词（-ette, -ee等）​​
+法语借词的重音常落在 ​最后音节​（尤其以 -ee/-ette 结尾）：
+
+employee /ɪmˈplɔɪiː/（雇员，-ee结尾）；
+
+cuisine /kwɪˈziːn/（烹饪，法语借词，重音在第二音节）。
+
+### 曾经读错
+
+### 重音位置意思大不同
 execute
 vowel元音 http://www.hjenglish.com/zimu/yuanyinzimu/
 元音发音( a/an) vs 元音字母
@@ -344,18 +489,22 @@ clothes
  
 ## 同音不同词
 cycle circle
+chilly chilli
+inquiry enquiry
+madder matter
+
+old owed
+
+partial parcel
+plane  plain [pleɪn]
+prosecute 起诉prostitute妓女 persecute ˈpɜ:sɪkju:t （尤指宗教或政治信仰的） 迫害; 烦扰，困扰; 强求，死缠着要;
 salary celery
 serial cereal
-madder matter
-partial parcel
-inquiry enquiry
-plane  plain [pleɪn]
-chilly chilli
-prosecute 起诉prostitute妓女 persecute ˈpɜ:sɪkju:t （尤指宗教或政治信仰的） 迫害; 烦扰，困扰; 强求，死缠着要;
+
 toe tow
 trunk chunk
-old owed
- 
+waste 和 waist
+
 ## Spelling 
 sincierity sincerely
 susceptible suspectable 
