@@ -444,8 +444,12 @@ Come over and lean on Daddy.
 Come here and sit with Daddy.
 
 No answer, no cookies.​
+No talking, no cookie!​
 ​You have to answer Daddy first, then you can have some cookies.​
 ​If you don't answer Daddy, there will be no cookies.​
+
+We have biscuits at home, sweetie. You can have some when we get back.
+The biscuits are at home. Let's go back and you can have one!
 
 ### gently reminds the child to express themselves with language instead of whining or crying.
 Use your words, please.​

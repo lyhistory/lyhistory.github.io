@@ -216,11 +216,18 @@ Sell the vision of what you want to be able to do
 want（主动词） → to be（不定式） → able（形容词补语） → to do（不定式） 
 
 
-### gerund‌ 动名词 
+### gerund‌ 动名词 或者 动词ing形式
+A ​gerund​ is a verb form that ends in ​​-ing​ and functions as a ​noun
 Gerund 是由 ‌动词原形 + -ing‌ 构成的‌名词性成分‌（如 swimming, reading），在句中起‌名词作用‌（可作主语、宾语、表语等）
 
 ‌主语 ‌Swimming‌ is good exercise.
-‌宾语 I enjoy ‌reading‌.
+‌宾语 
+	I enjoy ‌reading‌.
+	特殊 Go + Gerund​ (e.g., go swimming) To participate in a recreational activity, often involving movement or an experience.
+	​go roller skating 强调参与“滑旱冰”这项具体的活动
+	going ​to the roller skating rink 强调去往一个进行旱冰活动的具体地点​
+	​go to skate 表示​“去（某地）是为了滑冰”​，目的性更强
+
 介词宾语 She is good at ‌dancing‌.
 ‌表语 His hobby is ‌cooking‌.
 
@@ -236,6 +243,9 @@ Verb + Adverb + Preposition e.g look forward to
 宾语插入测试：代词宾语可以插在中间基本是副词，否则是介词
 pick it up 副词，代词必须在中间
 look at it 介词，代词只能在介词后
+
+Tear open
+Rip open
 
 ### 副词+动词 (Verb + Adverb Particle)​​
 ​​Definition:​​ Verb + Adverb Particle (sometimes called a "particle," not a true preposition). creates a ​​new meaning​​.

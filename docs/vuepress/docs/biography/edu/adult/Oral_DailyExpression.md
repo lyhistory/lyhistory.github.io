@@ -37,6 +37,35 @@ lowlife scum
 +  Uncivilized
   "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
+再来一口
+	Have another bite.​
+	​​Have another sip.​ 喝饮料/流质
+
+走直线
+	Walk straight / Walk in a straight line
+	Go straight​ / ​Drive straight
+
+打开
+	撕开
+		Tear open 最常用。指沿着预设的锯齿边或缺口较为整齐地撕开，动作相对轻柔、有方向性
+			It's easier to **tear open** the bag at the serrated edge.
+		Rip open 强调用力、快速甚至有些粗暴地撕开，不太在意撕开的形状是否整齐
+			He was so hungry that he **ripped open** the chip bag.
+		Tear the corner
+			Just **tear the corner** of the milk carton to open it.
+	剪开
+		Cut open Use scissors to ​cut open​ the sealed box. 
+	拉开
+		Zip open You can ​zip open​ the bag to access your belongings. 
+	拧开
+		Twist off​ / ​Twist open I can't ​twist off​ the lid of this jar. 
+	揭开
+		Peel off Peel off​ the cover of the yogurt. 
+	撬开
+		Pry open He used a crowbar to ​pry open​ the locked box. 
+	翻开
+		​Flip open​ / ​Flip up Flip open​ the lid of the gum
+	
 浴室穿着拖鞋洗完澡 把脚尖翘起来这样水就流走了
 	After a shower in the bathroom, just ​tilting your toes up​ for a moment ​drains the water away.
 	When your flip-flops are wet after a shower, ​a quick tilt of your feet​ lets the water ​run right off.
@@ -2313,7 +2342,12 @@ The S-course (or S-curve) is a specific maneuver taught during driving training.
 燃油耗尽​
 	​I ran out of gas.​​ (美式) 
 	​I ran out of petrol.​​ (英式)
-
+翻车
+	Rollover The news reported a serious ​rollover​ accident on the highway. 
+	引申含义：搞砸、失败​
+		​Screw up I ​screwed up​ the presentation by forgetting my laptop.
+		Flop Despite high expectations, the new product ​flopped​ in the market.
+		Go wrong Everything ​went wrong​ during the live broadcast. 
 ### About Education
 trade school 职业技术学校
 diploma mill 文凭工厂

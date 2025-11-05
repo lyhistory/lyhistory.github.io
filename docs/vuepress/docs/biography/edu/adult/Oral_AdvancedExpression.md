@@ -2,6 +2,8 @@
 
 ## 工具
 
+Tear Notch 包装上为方便撕开而设计的小缺口或凹口
+
 ### 拖车
 Trailer 最常用的词，指本身无动力、需要由汽车、卡车等牵引的车辆，用于运输货物或作为临时住所（拖挂式房车）
 	We hitched the ​trailer​ to the car to transport our camping gear.
@@ -63,6 +65,38 @@ Pallet truck​ / ​Pallet jack 仓库和物流中常用的工具，有手动�
 ## 物品
 medal
 
+浴室放莲蓬头的卡槽支架
+	Shower head holder
+	Shower bracket
+	Wall mount shower bracket 壁挂式淋浴支架
+	Shower arm mount 指固定连接莲蓬头和墙面的那根“淋浴臂”的支架
+花坛边宽宽的边缘
+	The (wide/broad) ledge of the flower bed ​最推荐、最常用。Ledge特指建筑物或构筑物上突出、平坦可供坐或站立的边缘部分，如窗台。能精准传达“宽边可坐”的概念。
+	​The (low) wall around the flower bed
+	Sitting ledge on the flower bed
+路上或小区门口的用来阻挡电动车的矮石墩或者金属柱
+	Bollard 指各种短柱状障碍物，通过宽度限制来控制车辆通行，允许行人和非机动车通过。例如：​Removable bollards​ are installed at the community entrance to prevent unauthorized vehicle access. 
+	Median 美式英语​ / ​Central Reserve 英式 指道路中央的隔离区，可能是绿化带、栅栏或水泥墩 The ​median​ on this avenue is planted with flowers and shrubs. 
+	Divider​ / ​Separator 泛指任何用于分隔车流或区域的设施 A concrete ​divider​ prevents head-on collisions on the highway. 
+	Greenbelt 指道路用地范围内用于绿化的条形地带  The city plans to expand the ​greenbelt​ along the road to improve the urban environment.
+	Barrier​ 指用于阻挡或防护的障碍物，如交通护栏 (Traffic barrier)  / ​Fence​ 通常指围墙、篱笆 / ​Railing 常指栏杆，如桥梁或阳台的护栏 A new pedestrian ​barrier​ was installed for safety. 
+小区门禁以及进出车库的升降栏杆
+	Barrier/Boom Gate 
+		The **barrier gate** at our community entrance opens automatically after license plate recognition.
+	​​Bollard​ / ​Rising Bollard 指设置于地面、可升降的短柱状障碍物
+		Rising **bollards** are installed after the barrier to prevent unauthorized vehicles from forcing their way through.
+	Access Control System 门禁系统（泛指）
+		The parking garage is secured by an advanced **access control system**.
+	Pedestrian Turnstile​ / ​Gate 人行闸机
+围板
+	​Temporary Fencing 最通用的说法，指任何临时性的围栏，如塑料水马、金属网等
+		They used ​temporary fencing​ to create a roller skating rink in the park's playground.
+	Portable Barrier​ 强调围挡是可移动、便携的
+		What kind of ​portable barriers​ are best for setting up a temporary skate area?
+	Hoarding 特指建筑工地用的高而坚固的临时围挡
+	Partition 指用于分隔空间的隔板或屏风，可以是临时或固定的。
+		We need to ​put up a partition​ here to separate the skating area from the pedestrian walkway.
+	Enclosure 强调“围起来形成一个封闭区域”的整体概念或结构
 
 袋子
 	帆布袋​ ​Canvas Bag

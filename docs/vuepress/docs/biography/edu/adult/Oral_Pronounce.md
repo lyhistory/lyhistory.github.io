@@ -1,6 +1,6 @@
 ## Basic
 
-### Vowel Consonant
+### Vowel 元音
 All 16 English Vowel Sounds (with Examples)
 
 #### 1. Short Vowels (Monophthongs)
@@ -92,7 +92,14 @@ All 16 English Vowel Sounds (with Examples)
 
 Need audio examples or help with a specific sound? Let me know! 😊
 
-### 辅音 consonant  
+### Consonant 辅音 
+
+清辅音 Voiceless Consonant
+
+浊辅音 Voiced Consonant 声带振动 包括爆破音中的浊音（如/b, d, g/）及其他辅音（如/v, z/等）
+
+爆破音​ Stop Consonant 指发音时气流在口腔完全阻塞后突然释放的辅音，与其在单词中的位置无关 6个音素：/p, b, t, d, k, g/ 爆破音分为清浊两类，只有浊爆破音（/b, d, g/）属于浊辅音，清爆破音（/p, t, k/）是清辅音
+
 
 #### voiceless  无声 or 有声
 apple
@@ -140,7 +147,17 @@ Examples:
 In words like "paper," "happy," and "apple," the "p" can sound like a "b" because it is preceded and followed by voiced vowels.
 Language background: Speakers of languages that do not have a "p" sound will often substitute a "b" sound when speaking English, as seen in words like "pencil" being pronounced as "bencil".
 
-#### 清辅音+清辅音
+#### 连续辅音连缀 
+Note: “省略”≠“吞音”，需保留“发音痕迹” 省略不是完全“吃掉”某个音，而是减少该音的时长或强度，让听者能通过上下文推断出省略的内容
+
+##### 同一个音
+当两个相同的辅音相邻时（如/s-s/、/ɡ-ɡ/），通常不会完全删掉其中一个，而是将发音延长或合并，听感上像一个“重读的辅音”。
+this side / big girl 可以通过「省音」（Elision）或「合并」让发音更流畅
+
+##### 不同音 爆破音+爆破音
+当两个不同的爆破音​（/p/b/t/d/k/g/）相邻时，前一个较弱或不送气的爆破音常被省略，只保留后一个音的发音动作。
+
+##### 不同音 清辅音+清辅音
 在“5th floor”这个短语中，​​/θ/​​（清辅音 th）与​/f/​​（清辅音）的连读确实存在难度，因为两个清辅音连续出现，且发音位置转换较快（舌尖从齿间切换到下唇抵上齿）
 
 ​​/θ/（th）​​：舌尖轻触上齿下缘，气流从舌齿缝隙摩擦通过（需“咬舌”）
@@ -175,6 +192,37 @@ an
 
 
 ### Correction 
+
+#### IH vs EE
+in vs see
+saying
+
+#### oo
+cooking [K.U K.IH.NG]
+football
+
+#### d t
+head
+made
+
+#### missing l
+fall
+feel
+old
+
+#### voiceless s vs voiced z
+s
+   sip 
+   s ending after a voiceless sound: nights
+z
+   zip
+   keys was because does those please always hers
+   s ending after a vowel sound:
+      eyes 
+   s ending after a voiced sound: weekends
+
+
+
 di
 Si
 Su
@@ -185,7 +233,7 @@ Though Throughput through throw thorough
 thorn thong  throne 
 https://www.youtube.com/watch?v=GDwlkidXYtc
 https://www.youtube.com/watch?v=Yx1crUwT10A
-2. 结尾或中间 L R M N
+1. 结尾或中间 L R M N
 L: milk
 R: four for fore
 
@@ -359,16 +407,22 @@ recipe [ˈresəpi]
 valentine
 ### o
 cork cock
+constituent
 history [ˈhɪstri]
-repository [rɪˈpɒzətri]
-mandatory
-oven [ˈʌvn]
 horizontal
+
+mandatory
+monopoly 英[məˈnɒpəli]
+
+oven [ˈʌvn]
+obscured
+   the haze obscured the view
+repository [rɪˈpɒzətri]
+secondment sɪ'kɒndmən  second ˈsekənd
 tutor [ˈtju:tə(r)]
 thermometer
-constituent
-monopoly 英[məˈnɒpəli]
-secondment sɪ'kɒndmən  second ˈsekənd
+
+
 ### p
 ph
 peripheral [pəˈrɪfərəl]
