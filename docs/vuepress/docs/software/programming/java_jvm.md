@@ -1,24 +1,787 @@
+---
+sidebar: auto
+sidebarDepth: 2
+footer: Author Ivan Kuznetsov
+---
 
-	
-## 基本概念
+## 基本知识
 
-### 步骤一：编译器：
-首先需要编译器将高级的.java程序文件编译成.class类文件，内容即byte code字节码指令/jvm指令（这段.class文件是一段包含着虚拟机指令、程序和数据片段的二进制文件，即字节码，为什么叫字节码？因为这种类型的代码以一个字节8bit为最小单位储存），
-然后聚合类文件、相关元数据和资源到同一个文件，以.jar为扩展名
-```
-java代码编译-->java class
-```
-字节码引擎对应jvm指令:[Java bytecode instruction listings](https://en.wikipedia.org/wiki/Java_bytecode_instruction_listings)
+### JVM是啥？
+类型：hotspot vm /  OpenJ9 
 
-### 步骤二：解释器：
-字节码经过JVM(解释器)的处理后生成电脑可以直接执行的机器码（JDK安装的JVM翻译成对应操作系统的机器码），至此java程序才能得以正确运行。
-JVM,java虚拟机，只是给字节码byte code提供解释翻译加载运行的一个工具（通常编程打包的程序都是直接到机器码，比如exe文件是windows的机器码可执行文件，Java语言设计只默认编译成中间语言byte code字节码，不编译成最终的机器码，然后jvm就会去解释执行），实际上不只是java语言，任何语言只要能转成bytecode 字节码都可以交由jvm加载，jvm会找到主程序并根据当前的操作系统解释成机器码运行；
+JVM是一份本地化的程序，本质上是可执行的文件-`/jre/bin/server/jvm.dll`，是静态的概念。
+
+程序运行起来成为进程，是动态的概念。java程序是跑在JVM上的，严格来讲，是跑在JVM实例上的，一个JVM实例其实就是JVM跑起来的进程，二者合起来称之为一个JAVA进程。各个JVM实例之间是相互隔离的。
+
+通常编程打包的程序都是直接到机器码，比如exe文件是windows的机器码可执行文件，Java语言设计只默认编译成中间语言byte code字节码，不编译成最终的机器码，然后jvm就会去解释执行），实际上不只是java语言，任何语言只要能转成bytecode 字节码都可以交由jvm加载，jvm会找到主程序并根据当前的操作系统解释成机器码运行
+
+**Notes:** 
+
+1. JVM VS Python VM
+   [JAVA需要经过一次编译成class文件，然后交给JVM跑，Python不需要编译，直接py交给PVM解释运行](https://medium.com/@rahul77349/difference-between-compiler-and-interpreter-with-respect-to-jvm-java-virtual-machine-and-pvm-22fc77ae0eb7)
+
+2. JAVA VS C++
+   ​Java​ 像是一辆自动挡汽车。你只需要挂 D 挡（用 synchronized）或 S 挡（用 volatile），汽车（JVM）会自动帮你处理换挡（内存屏障）、离合（缓存同步）等复杂操作。你很容易开，但无法精细控制引擎转速。
+   ​C++​​ 像是一辆手动挡赛车。它有离合器、档杆（不同的内存序）。你可以通过精准的跟趾动作、降档补油来榨取极限性能。但如果你操作不当，很容易熄火（数据竞争）甚至损坏发动机（程序崩溃）。
+
+![](/docs/docs_image/software/java/java_jvm01.png)
+
 ```
-Tips:
-工具hsdis打印汇编指令；
-反过来：
-javap java.class 可以把汇编指令/机器码反编译成jvm指令/字节码指令；
+JVM内存布局
+├── 堆内存 (Heap) - 对象实例存储区
+│   ├── 新生代 (Young Generation) - 新创建对象
+│   │   ├── Eden区 (伊甸园) - 对象诞生地
+│   │   └── Survivor区 (幸存者区)
+│   │       ├── Survivor 0 (From区)
+│   │       └── Survivor 1 (To区)
+│   └── 老年代 (Old Generation) - 长期存活对象
+│
+├── 方法区 (Method Area) - 类信息、常量池
+│   └── 运行时常量池
+├── 元空间 (Metaspace) - JDK8+替代永久代
+│
+└── 非堆内存
+    ├── 虚拟机栈 (VM Stack) - 线程私有
+    ├── 本地方法栈 (Native Stack)
+    └── 程序计数器 (Program Counter)
 ```
+
+### "编译"这个词在Java中有三个不同层次的含义​
+
+1. 前端编译：Java源码 → 字节码（.java → .class）
+   工具：`javac SimpleCalculator.java`
+   首先需要编译器将高级的.java程序文件编译成.class类文件，内容即byte code字节码指令/jvm指令（这段.class文件是一段包含着虚拟机指令、程序和数据片段的二进制文件，即字节码，为什么叫字节码？因为这种类型的代码以一个字节8bit为最小单位储存），然后聚合类文件、相关元数据和资源到同一个文件，以.jar为扩展名
+   字节码引擎对应jvm指令:[Java bytecode instruction listings](https://en.wikipedia.org/wiki/Java_bytecode_instruction_listings)
+2. JIT编译：字节码 → 本地机器码（运行时）
+   工具：JVM的JIT编译器（C1、C2等）
+   位置​：JVM内部的代码缓存(Code Cache)
+3. AOT编译：Java源码 → 本地机器码（提前编译）
+   ```
+   # 这是GraalVM等支持的提前编译
+   native-image SimpleCalculator
+   # 生成可直接执行的本地二进制文件
+   ```
+
+### 更新历史
+
+```
+JDK 1.0 (1996) - 初代JVM，解释执行
+  ↓
+JDK 1.1 (1997) - JIT编译器引入
+  ↓  
+JDK 1.2 (1998) - HotSpot VM诞生
+  ↓
+JDK 1.3 (2000) - HotSpot成为默认VM
+  ↓
+JDK 1.4 (2002) - 性能优化期
+  ↓
+JDK 5 (2004) - 监控和管理增强
+  ↓
+JDK 6 (2006) - 脚本语言支持
+  ↓
+JDK 7 (2011) - G1 GC引入
+  ↓
+JDK 8 (2014) - 元空间取代永久代
+  ↓  
+JDK 9 (2017) - 模块化系统
+  ↓
+JDK 11 (2018) - ZGC、Epsilon GC
+  ↓
+JDK 17 (2021) - LTS版本，性能大幅提升
+```
+
+## jvm运行全流程
+
+操作系统层面的启动过程
+
+//用户在终端执行：
+java SimpleCalculator
+
+
+//操作系统执行步骤：
+```
+完整JVM执行流程（从操作系统到Java程序）：
+┌─────────────────────────────────────────────────────────────┐
+│                       操作系统层面                           │
+│ 1. shell解析java SimpleCalculator命令                     │
+│ 2. 调用execve()系统调用创建新进程                          │
+│ 3. 加载JVM可执行文件到内存                                │
+│ 4. CPU程序计数器指向JVM入口点                            │
+└───────────────────────┬─────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────────┐
+│                       JVM初始化阶段 (C++代码)                        │
+│ 1. 分配堆内存、方法区、栈内存                             │
+│ 2. 创建系统线程（GC、Finalizer等）                        │
+│ 3. 初始化类加载器子系统                                   │
+│ 4. 创建主线程执行环境                                    │
+└───────────────────────┬─────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────────┐
+│                      类加载阶段                             │
+│ 1. 加载SimpleCalculator.class文件                        │
+│ 2. 验证、准备、解析、初始化                               │
+│ 3. 类信息存入方法区，静态变量初始化                       │
+│ 4. 找到main方法入口地址                                  │
+└───────────────────────┬─────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────────┐
+│                   线程和栈帧创建阶段                        │
+│ 1. 创建主线程栈空间                                     │
+│ 2. 创建main方法栈帧（局部变量表、操作数栈）               │
+│ 3. 程序计数器指向main方法第一条字节码                     │
+└───────────────────────┬─────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────────┐
+│                     字节码执行阶段                          │
+│ 1. 解释器逐条解释字节码                                  │
+│ 2. 方法调用时创建新栈帧，返回时销毁                       │
+│ 3. 程序计数器在字节码间移动                              │
+└───────────────────────┬─────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────────┐
+│                    JIT编译优化阶段                         │
+│ 1. 热点代码检测（方法调用计数）                           │
+│ 2. JIT编译器将热点字节码编译为本地机器码                  │
+│ 3. 后续调用直接执行机器码                                │
+└───────────────────────┬─────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────────┐
+│                      机器码执行阶段                         │
+│ 1. CPU直接执行编译后的本地代码                            │
+│ 2. 栈帧结构保持不变，但执行方式改变                       │
+└───────────────────────┬─────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────────┐
+│                      程序结束阶段                           │
+│ 1. main方法执行完毕返回                                 │
+│ 2. JVM清理资源，终止进程                                │
+│ 3. 操作系统回收进程资源                                 │
+└─────────────────────────────────────────────────────────────┘
+```
+
+JVM进程 vs Java线程
+
+操作系统层面:
+```
+JVM进程 = 一个完整的Java虚拟机实例
+├── 进程ID: 1234
+├── 内存空间: 包含所有内存区域（堆、方法区、栈等）
+├── 执行文件: java可执行程序（C++编写）
+└── 系统线程: JVM内部线程（GC、编译器等）
+```
+JVM层面:
+```
+Java线程 = JVM内部管理的执行单元  
+├── 主线程: 执行main方法的线程
+├── 工作线程: 用户创建的其他线程
+└── 系统线程: JVM内部的守护线程
+```
+### 编译字节码
+
+```
+// SimpleCalculator.java
+public class SimpleCalculator {
+    private static int classCounter = 0;  // 静态变量
+    private int instanceCounter;           // 实例变量
+    
+    public SimpleCalculator() {
+        classCounter++;
+        this.instanceCounter = classCounter;
+        System.out.println("创建第" + instanceCounter + "个计算器实例");
+    }
+    
+    public int add(int a, int b) {
+        int result = a + b;
+        System.out.println(a + " + " + b + " = " + result);
+        return result;
+    }
+    
+    public native double sqrt(double x);  // 本地方法
+    
+    public static void main(String[] args) {
+        System.out.println("=== 程序开始执行 ===");
+        
+        SimpleCalculator calc = new SimpleCalculator();
+        int sum = calc.add(5, 3);
+        
+        System.out.println("=== 程序执行结束 ===");
+    }
+}
+```
+
+编译后的字节码文件结构
+
+SimpleCalculator.class
+├── 魔数: CAFEBABE
+├── 版本号: JDK 8 (52.0)
+├── 常量池(Constant Pool)
+├── 访问标志: ACC_PUBLIC, ACC_SUPER  
+├── 类索引、父类索引
+├── 字段表: classCounter, instanceCounter
+└── 方法表: <init>, add, main
+
+main方法的完整字节码:
+```
+public static void main(java.lang.String[]);
+  descriptor: ([Ljava/lang/String;)V
+  flags: ACC_PUBLIC, ACC_STATIC
+  Code:
+    stack=2, locals=3, args_size=1
+    
+    // PC=0: 创建新对象
+    0: new           #2                  // class SimpleCalculator
+    // ↑ PC指针指向0，操作码new，操作数#2(指向常量池中的类引用)
+    
+    // PC=3: 复制栈顶引用
+    3: dup
+    // ↑ 复制对象引用，现在栈顶有两个相同的引用
+    
+    // PC=4: 调用构造函数
+    4: invokespecial #3                  // Method "<init>":()V
+    // ↑ 消耗一个引用，调用构造函数
+    
+    // PC=7: 存储到局部变量表
+    7: astore_1
+    // ↑ 将剩余的对象引用存入局部变量表索引1(calc变量)
+    
+    // PC=8: 加载calc引用
+    8: aload_1
+    // ↑ 从局部变量表加载calc引用到操作数栈
+    
+    // PC=9: 加载常数5
+    9: iconst_5
+    // ↑ 将整数5压入操作数栈
+    
+    // PC=10: 加载常数3
+    10: iconst_3
+    // ↑ 将整数3压入操作数栈
+    
+    // PC=11: 调用add方法
+    11: invokevirtual #4                 // Method add:(II)I 注意invokevirtual会检查该方法有没有进行jit编译优化,如果没有则解释执行,如果有则直接执行机器码
+    // ↑ 调用add方法，消耗calc引用和两个参数
+    
+    // PC=14: 存储结果
+    14: istore_2
+    // ↑ 将方法返回值存入局部变量表索引2(sum变量)
+    
+    // PC=15: 返回
+    15: return
+    // ↑ 方法结束，返回void
+```
+构造函数<init>字节码分析
+```
+// 构造函数的字节码
+public SimpleCalculator();
+  descriptor: ()V
+  flags: ACC_PUBLIC
+  Code:
+    stack=2, locals=1, args_size=1
+    
+    // PC=0: 调用父类(Object)构造函数
+    0: aload_0
+    1: invokespecial #1  // Method java/lang/Object."<init>":()V
+    
+    // PC=4: 静态变量classCounter自增
+    4: getstatic     #2  // Field classCounter:I
+    7: iconst_1
+    8: iadd
+    9: putstatic     #2  // Field classCounter:I
+    
+    // PC=12: 设置实例变量instanceCounter
+    12: aload_0
+    13: getstatic     #2  // Field classCounter:I  
+    16: putfield      #3  // Field instanceCounter:I
+    
+    // PC=19: 返回
+    19: return
+```
+add方法字节码分析
+```
+// add方法的字节码
+public int add(int, int);
+  descriptor: (II)I
+  flags: ACC_PUBLIC
+  Code:
+    stack=2, locals=4, args_size=3
+    
+    // 方法参数: this(隐含), a, b
+    // 局部变量: this, a, b, result
+    
+    // PC=0: 加载参数a
+    0: iload_1        // 加载局部变量1(a)到操作数栈
+    
+    // PC=1: 加载参数b  
+    1: iload_2        // 加载局部变量2(b)到操作数栈
+    
+    // PC=2: 相加
+    2: iadd           // 栈顶两个整数相加
+    
+    // PC=3: 存储到result变量
+    3: istore_3       // 结果存入局部变量3(result)
+    
+    // PC=4: 返回结果
+    4: iload_3        // 加载result到操作数栈
+    5: ireturn        // 返回整数
+```
+### 内存布局示意图
+
+#### 第一层 操作系统
+```
+进程地址空间布局：
+0x00000000-0x3FFFFFFF: 内核空间（操作系统）
+0x40000000-0x4000FFFF: JVM代码段（text）
+0x60000000-0x6000FFFF: JVM数据段（data）  
+0x80000000-0x8FFFFFFF: 堆初始区域
+0x7FFF0000-0x7FFFFFFF: 栈初始区域
+```
+​执行步骤：​​
+
+​命令解析​：shell接收到java SimpleCalculator命令
+
+​进程创建​：调用fork()+ execve()系统调用
+
+​加载可执行文件​：将JVM可执行文件映射到进程地址空间
+
+​设置执行上下文​：CPU程序计数器指向JVM入口地址
+
+​权限切换​：从用户态切换到内核态执行加载，再切回用户态执行JVM代码
+
+#### 第二层 JVM
+
+JVM内部数据结构创建
+```
+JVM内存管理器初始化：
+├── 堆内存(Heap)
+│   ├── 年轻代(Eden + Survivor)
+│   └── 老年代(Old Generation)
+├── 方法区(Method Area)
+│   ├── 类信息存储
+│   ├── 运行时常量池
+│   └── 静态变量区 ←【修正：静态变量完全在此处】
+└── 线程管理系统
+    ├── 主线程(Main Thread)
+    ├── VM线程(系统任务)
+    ├── GC线程(垃圾回收)
+    └── 其他系统线程
+```
+
+关键初始化步骤：​​
+
+   ​内存分配​：根据Xmx、Xms参数分配堆内存
+
+   ​线程创建​：创建并启动系统守护线程
+
+   ​类加载器初始化​：创建Bootstrap、Extension、Application类加载器
+
+   ​执行引擎准备​：初始化解释器和JIT编译器
+
+   ​主线程创建​：设置主线程栈空间和初始PC值
+
+#### 第三层：类加载阶段详细过程
+类加载双亲委派模型：​
+```
+类加载流程：
+Application ClassLoader收到加载SimpleCalculator请求
+    ↓
+委派给Extension ClassLoader
+    ↓
+委派给Bootstrap ClassLoader
+    ↓
+Bootstrap尝试加载（失败，非核心类）
+    ↓
+Extension尝试加载（失败，非扩展类）  
+    ↓
+Application ClassLoader从classpath加载
+```
+
+1. 方法区(Method Area) - 类级别信息
+```
+方法区内容（类级别，所有线程共享）：
+┌─────────────────────────────────────────────────┐
+│              SimpleCalculator类元数据             │
+├─────────────────────────────────────────────────┤
+│ 类信息：                                         │
+│   - 类名: SimpleCalculator                     │
+│   - 访问标志: public                           │
+│   - 父类: java.lang.Object                    │
+├─────────────────────────────────────────────────┤
+│ 方法定义（代码本身）：                            │
+│   - main方法: 字节码指令                        │
+│     [new, dup, invokespecial, aload_1, ...]   │
+│   - add方法: 字节码指令                         │
+│     [iload_1, iload_2, iadd, ireturn]          │
+│   - <init>构造方法: 字节码指令                   │
+│     [aload_0, invokespecial, ...]              │
+├─────────────────────────────────────────────────┤
+│ 字段定义：                                       │
+│   - classCounter: static int                  │
+│   - instanceCounter: int                      │
+├─────────────────────────────────────────────────┤
+│ 常量池：                                         │
+│   - 字符串字面量: "=== 程序开始执行 ==="等        │
+│   - 类引用: SimpleCalculator, System等          │
+└─────────────────────────────────────────────────┘
+
+方法区详细布局 (JVM数据段内):
+0x60010000: SimpleCalculator类结构
+    ├── 0x60010004: 方法表指针 → 0x60012000
+    ├── 0x60010008: 常量池指针 → 0x60013000  
+    └── 0x6001000C: 静态变量classCounter = 0
+
+0x60012000: 方法表
+    ├── 0x60012004: <init>方法字节码地址 → 0x60015000
+    ├── 0x60012008: add方法字节码地址 → 0x60016000
+    └── 0x6001200C: main方法字节码地址 → 0x60017000
+
+0x60013000: 常量池
+    ├── #1: Class SimpleCalculator
+    ├── #2: Field classCounter
+    ├── #3: Method <init>
+    └── #4: Method add
+```
+
+#### 第四层：执行主方法阶段详细过程
+
+Java虚拟机栈(Java Virtual Machine Stack) - 线程执行
+```
+main线程私有内存区域：
+┌─────────────────────────────────────────────────┐
+│               main线程                          │
+├─────────────────────────────────────────────────┤
+│ 程序计数器(PC): 0x700C (指向下条指令地址)        │
+├─────────────────────────────────────────────────┤
+│ Java虚拟机栈(Stack):                            │
+│   ┌─────────────────────────────────────────┐   │
+│   │          当前栈帧: main方法             │   │   ← 栈顶
+│   │   ┌─────────────────────────────────┐   │   │
+│   │   │ 局部变量表(Local Variables)      │   │   │
+│   │   │   [0] args: String[]@0x2000      │   │   │
+│   │   │   [1] calc: SimpleCalculator@0x1000│   │   │
+│   │   │   [2] sum: 8                     │   │   │
+│   │   └─────────────────────────────────┘   │   │
+│   │   ┌─────────────────────────────────┐   │   │
+│   │   │ 操作数栈(Operand Stack)         │   │   │
+│   │   │   当前: 空                      │   │   │
+│   │   └─────────────────────────────────┘   │   │
+│   │   ┌─────────────────────────────────┐   │   │
+│   │   │ 动态链接 → main方法在方法区的引用 │   │   │
+│   │   └─────────────────────────────────┘   │   │
+│   │   ┌─────────────────────────────────┐   │   │
+│   │   │ 返回地址 → 操作系统调用入口      │   │   │
+│   │   └─────────────────────────────────┘   │   │
+│   └─────────────────────────────────────────┘   │
+│                                                 │
+│   ┌─────────────────────────────────────────┐   │
+│   │          之前栈帧: add方法              │   │   ← 已销毁
+│   │           (方法调用结束后弹出栈)         │   │
+│   └─────────────────────────────────────────┘   │
+├─────────────────────────────────────────────────┤
+│ 本地方法栈(Native Method Stack):                 │
+│   - 用于JNI调用本地代码                         │
+└─────────────────────────────────────────────────┘
+
+主线程栈帧布局 (栈地址从高到低):
+
+0x7FFFFFF0: main方法栈帧
+├── 局部变量表(Local Variables):
+│   0x7FFFFFE8: args[0] = 参数数组引用
+│   0x7FFFFFEC: calc[1] = 0x8000(堆中对象地址)  
+│   0x7FFFFFF0: sum[2] = 8(方法返回值)
+│
+├── 操作数栈(Operand Stack):
+│   执行add方法前: [0x8000(calc引用), 5, 3]
+│   执行add方法后: [8(返回值)]
+│
+└── 栈帧数据:
+    返回地址: 0x15(main方法的下一条指令)
+    动态链接: 指向方法区的符号引用
+```
+
+堆内存(Heap) - 对象实例
+```
+堆内容（对象实例，所有线程共享）：
+┌─────────────────────────────────────────────────┐
+│              对象实例存储区                        │
+├─────────────────────────────────────────────────┤
+│ SimpleCalculator实例 @0x1000:                   │
+│   ┌─────────────────────────────────────────┐   │
+│   │ 对象头 (Mark Word)                      │   │
+│   │   - 哈希码、GC年龄、锁状态等              │   │
+│   ├─────────────────────────────────────────┤   │
+│   │ 类型指针 → 指向方法区的SimpleCalculator类 │   │
+│   ├─────────────────────────────────────────┤   │
+│   │ 实例数据:                               │   │
+│   │   - instanceCounter: 1                 │   │
+│   └─────────────────────────────────────────┘   │
+│                                                 │
+│ 静态变量存储区:                                  │
+│   - classCounter: 1 (静态变量完全存储在方法区，包括变量名和值都在方法区)  │
+└─────────────────────────────────────────────────┘
+
+对象创建过程:
+1. new指令执行时:
+   堆地址 0x8000: 分配SimpleCalculator对象
+   ├── 对象头(Mark Word): 0x8000-0x8007
+   ├── 类型指针: 指向 0x60010000(方法区中的类)
+   └── 实例数据: instanceCounter(初始值0)
+
+2. 构造函数执行后:
+   0x8008: instanceCounter = 1
+```
+
+PC寄存器(Program Counter Register)工作流程
+
+```
+时间线执行过程:
+
+时间点 T0 (PC=0x60017000):
+  当前线程: main线程
+  PC寄存器: 0x60017000 (main方法字节码起始)
+  执行: new #2 → 在堆 0x8000 创建对象
+  方法区查找: 通过常量池#2找到类信息(0x60010000)
+
+时间点 T1 (PC=0x60017003):
+  PC寄存器: 0x60017003
+  执行: dup → 复制对象引用
+
+时间点 T2 (PC=0x60017004):
+  PC寄存器: 0x60017004  
+  执行: invokespecial #3 → 调用构造函数
+  方法查找: 通过常量池#3找到<init>方法(0x60015000)
+
+时间点 T3 (PC=0x60017007):
+  PC寄存器: 0x60017007
+  执行: astore_1 → 存储到局部变量calc
+
+时间点 T4 (PC=0x60017008):
+  PC寄存器: 0x60017008
+  执行: aload_1 → 加载calc引用
+
+时间点 T5 (PC=0x6001700B):
+  当前线程: main线程（同一个！）
+  PC寄存器: 0x6001700B
+  执行: invokevirtual #4 → 调用add方法
+  方法查找: 通过常量池#4找到add方法(0x60016000)
+  PC跳转: 0x6001700B → 0x60016000
+  .....
+```
+
+执行过程内存状态变化图
+
+```
+初始状态:
+PC=0x60017000, 栈帧空, 堆空
+
+执行new指令后:
+PC=0x60017003, 堆0x8000创建对象, 操作数栈:[0x8000]
+类型指针指向: 0x60010000(方法区类结构)
+
+执行invokespecial后:  
+PC=0x60017007, 构造函数完成, 对象初始化完成
+静态变量classCounter在方法区0x6001000C处更新为1
+
+执行add方法时:
+PC=0x60016000(add方法), 新栈帧创建, 局部变量表:[this=0x8000, a=5, b=3]
+add方法字节码从方法区0x60016000读取
+
+方法返回后:
+PC=0x6001700E(main方法), add栈帧销毁, 操作数栈:[8]
+```
+##### 执行细节
+解释器在JVM代码段(0x40000000)中工作：​
+```
+解释器执行main方法流程：
+1. PC: 0x60017000 (main方法字节码在方法区)
+2. 解释器代码: 0x40001000 (在JVM代码段)
+3. 取指: 从方法区0x60017000读取字节码
+4. 执行: 在JVM代码段执行对应的机器码
+5. 更新PC: 根据指令长度更新
+```
+方法调用时的地址转换：​​
+```
+调用add方法时的地址流程：
+1. PC当前: 0x6001700B (main方法中的invokevirtual指令)
+2. 通过常量池#4查找: 找到add方法在方法区0x60016000
+3. 创建新栈帧: 在栈区域0x7FFF0000分配
+4. PC跳转: 0x6001700B → 0x60016000 (add方法字节码)
+```
+
+**JIT编译过程**
+
+编译前后的地址变化：​
+```
+编译前（解释执行）:
+方法字节码地址: 0x60016000 (在方法区)
+执行路径: PC → 解释器(0x40001000) → 字节码执行
+
+编译后（直接执行）:
+机器码地址: 0x60002000 (在JVM数据段的代码缓存区)
+执行路径: PC → 直接跳转到0x60002000执行机器码
+```
+
+代码缓存区在JVM数据段中的位置：​
+```
+JVM数据段详细布局:
+0x60000000-0x6000FFFF: JVM内部数据结构
+0x60001000-0x60011FFF: 方法区(Method Area) ← 新增！
+0x60012000-0x6001FFFF: 代码缓存区(Code Cache)
+
+代码缓存区内容:
+0x60012000: 编译后的add方法机器码
+0x60012020: 编译后的热点方法2机器码
+0x60012040: 编译后的热点方法3机器码
+```
+
+**热点检测和编译触发**
+
+​方法调用计数器在JVM数据段：
+```
+方法调用计数器表(在JVM数据段0x60000000):
+0x60000000: add方法计数器
+    ├── 方法地址: 0x60016000
+    ├── 调用次数: 10000 (达到阈值!)
+    └── 编译后地址: 0x60012000 (代码缓存)
+
+0x60000010: main方法计数器  
+    ├── 方法地址: 0x60017000
+    ├── 调用次数: 1
+    └── 编译后地址: 0x00000000 (未编译)
+```
+JIT编译触发过程：​
+```
+1. add方法第10000次调用时:
+   - 计数器更新: 0x60000000处的值从9999→10000
+   - 触发编译: JIT编译器(代码段0x40003000)启动
+
+2. 编译过程:
+   - 输入: 方法区中的字节码(0x60016000)
+   - 处理: JIT编译器代码(0x40003000) 
+   - 输出: 机器码存入代码缓存(0x60012000)
+
+3. 元数据更新:
+   - 方法表更新: 0x60012008处的add方法条目指向0x60012000
+   - 后续调用直接跳转到编译后代码
+```
+
+从解释执行到CPU执行的路径：
+```
+// 最底层的执行路径
+void execute_java_method(Method* method) {
+    if (method->is_compiled) {
+        // 编译执行：直接跳转到机器码
+        // 底层是汇编指令：jmp [method->compiled_entry]
+        asm_jump_to_compiled_code(method->compiled_entry);
+    } else {
+        // 解释执行：调用解释器函数
+        // 底层是C++函数调用
+        interpreter.interpret(method->bytecode);
+    }
+}
+
+// 解释器内部的循环
+void Interpreter::interpret(byte* bytecode) {
+    while (true) {
+        byte opcode = *bytecode++;
+        switch (opcode) {
+            case IADD: {
+                // 这些C++操作最终都编译为机器指令
+                int a = pop();
+                int b = pop();
+                push(a + b);
+                break;
+            }
+            // ...
+        }
+    }
+}
+```
+
+解释器运行在当前Java线程的上下文中(执行引擎不是独立线程，而是被Java线程调用的功能模块​)
+```
+从OS线程到Java线程的映射
+
+// JVM的线程实现（C++代码）
+class JavaThread {
+private:
+    pthread_t os_thread;     // 底层操作系统线程
+    ThreadState state;       // 线程状态
+    address pc;              // 程序计数器（Java字节码地址）
+    Stack* stack;           // Java栈
+    // ... 其他线程上下文信息
+    
+public:
+    void run() {
+        // 操作系统调度器选择这个线程执行
+        while (true) {
+            // 获取当前字节码指令
+            byte opcode = read_byte(pc);
+            
+            // 调用解释器执行（在当前OS线程上下文中）
+            Interpreter::execute_bytecode(this, opcode);
+        }
+    }
+};
+
+执行时刻：main线程执行到calc.add(5, 3)
+
+线程上下文：
+┌─────────────────────────────────────────────────┐
+│                main线程执行环境                 │
+├─────────────────────────────────────────────────┤
+│ 硬件层面：                                      │
+│   - CPU寄存器: 指向当前执行地址                 │
+│   - 栈指针: 指向main线程栈顶                   │
+│   - PC寄存器: 指向invokevirtual指令地址         │
+│                                                │
+│ JVM层面：                                       │
+│   - 线程控制块: 存储线程状态、PC值等            │
+│   - Java栈: 包含main方法栈帧                   │
+│   - 局部变量表: [args, calc, 未初始化]         │
+│   - 操作数栈: [calc引用, 5, 3]                 │
+└─────────────────────────────────────────────────┘
+
+解释器执行时的详细过程:
+
+// JVM内部的invokevirtual处理函数（C++代码）
+void Interpreter::invokevirtual(Thread* current_thread, int method_index) {
+    // current_thread参数就是当前执行的Java线程
+    // 对于main方法调用add方法，current_thread就是main线程
+    
+    // 1. 从当前线程的栈帧中获取参数
+    StackFrame* frame = current_thread->get_current_frame();
+    Object* receiver = frame->pop_operand();  // calc引用
+    int arg1 = frame->pop_operand();           // 5
+    int arg2 = frame->pop_operand();           // 3
+    
+    // 2. 查找方法
+    Method* method = resolve_method(method_index);
+    
+    // 3. 在当前线程中创建新栈帧
+    StackFrame* new_frame = current_thread->push_frame(method);
+    new_frame->set_local(0, receiver);  // this = calc
+    new_frame->set_local(1, arg1);      // a = 5  
+    new_frame->set_local(2, arg2);      // b = 3
+    
+    // 4. 更新当前线程的PC寄存器
+    current_thread->set_pc(method->bytecode_address);
+    
+    // 5. 开始解释执行（在当前线程上下文中）
+    interpret_method(current_thread, method);
+}
+
+```
+
+#### 第五层：程序结束阶段详细过程
+​资源清理顺序：​​
+
+​Java层面清理​：执行finalize方法（如果重写）
+
+​JVM层面清理​：销毁线程、释放堆内存
+
+​操作系统层面​：解除内存映射，回收进程资源
+
+## jvm概念拆解
 
 ### JVM 的线程是用户态线程还是内核态线程？
 
@@ -68,44 +831,114 @@ Java提供了自己的同步机制（如synchronized关键字和java.util.concur
 
 性能影响：线程的阻塞和唤醒操作会消耗一定的系统资源，包括CPU时间和内存空间。特别是当线程频繁地进行阻塞和唤醒操作时，这种开销会更加明显。因此，在编写多线程程序时，需要合理设计线程之间的同步和通信机制，以减少不必要的阻塞和唤醒操作，提高程序的性能和响应速度
 
-## jvm运行原理
 
-类型：hotspot vm /  OpenJ9 
+### Execution Engine 执行引擎
+```
+执行引擎组件：
+├── 解释器(Interpreter)
+│   ├── 字节码分派器(Bytecode Dispatcher)
+│   ├── 运行时助手(Runtime Helpers)  
+│   └── 栈帧管理器(Stack Frame Manager)
+│
+├── JIT编译器(Just-In-Time Compiler)
+│   ├── 中间表示生成(IR Generation)
+│   ├── 优化器(Optimizer)
+│   └── 代码生成器(Code Generator)
+│
+├── 代码缓存(Code Cache)
+│   └── 编译后机器码存储区
+│
+└── 分析器(Profiler)
+    ├── 方法调用计数器
+    └── 循环回边计数器
+```
 
-JVM是一份本地化的程序，本质上是可执行的文件-`/jre/bin/server/jvm.dll`，是静态的概念。
+解释器 Interpreter：
 
-程序运行起来成为进程，是动态的概念。java程序是跑在JVM上的，严格来讲，是跑在JVM实例上的，一个JVM实例其实就是JVM跑起来的进程，二者合起来称之为一个JAVA进程。各个JVM实例之间是相互隔离的。
+误解:字节码经过JVM(解释器)的处理后生成电脑可以直接执行的机器码, 实际情况​：解释器本身就是C++代码，直接执行字节码对应的操作, ​关键点​：解释器不是"翻译"，而是一个大switch-case，每个字节码对应一段直接执行的C++代码。
+```
+// JVM解释器的真实工作方式（C++代码）
+void Interpreter::execute() {
+    while (true) {
+        // 1. 从PC指向的地址取指令
+        byte opcode = fetch_byte(pc);
+        
+        // 2. 根据操作码直接执行对应的C++代码
+        switch (opcode) {
+            case IADD: {  // iadd指令
+                int b = pop_operand_stack();
+                int a = pop_operand_stack();
+                push_operand_stack(a + b);  // 直接执行加法操作
+                pc += 1;
+                break;
+            }
+            case NEW: {   // new指令
+                int class_index = fetch_u2(pc + 1);
+                Object* obj = heap_allocate(get_class(class_index));
+                push_operand_stack(obj);     // 直接分配对象
+                pc += 3;
+                break;
+            }
+            // ... 其他200多个指令的处理
+        }
+    }
+}
+```
+
+```
+Tips:
+工具hsdis打印汇编指令；
+反过来：
+javap java.class 可以把汇编指令/机器码反编译成jvm指令/字节码指令；
+```
+[The Java Virtual Machine Instruction Set](https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html)
+
+### Runtime Data Area 内存模型
 
 
-![](/docs/docs_image/software/java/java_jvm01.png)
 
+#### 方法区 / 元空间
+jdk8之前 永久栈
+jdk8之后 元空间
+
+常量
+静态变量
+类元信息
+
+注意:堆里面的对象实例instance的头部object head里面都有一个class pointer指针指向方法区的类元
+
+#### 栈（线程栈）
+方法区存的是"菜谱"，栈帧是"做菜时用的案板和调料"。
+
+程序计数器(多线程挂起再恢复后知道从哪里开始继续执行)
 
 线程栈：栈帧的先进先出（异步方法呢？）
+   栈帧：对应每个线程中调用的方法，相应概念：
+   局部变量表
+   操作数栈
+   动态链接
+   方法出口
+本地方法 native method
 
-栈帧：对应每个线程中调用的方法，相应概念：
-	局部变量表
-	操作数栈
-	动态链接
-	方法出口
+#### PC register JVM程序计数器 VS OS程序计数器
+```
+硬件层面：
+每个CPU核心只有一个PC寄存器（硬件寄存器）
+操作系统通过线程调度让PC在不同线程间切换
 
-本地方法：	Native method Stack，比如JNI调用c/C++程序
+JVM软件层面：
+每个Java线程有自己的"逻辑PC"，存储在线程控制块中：
+┌─────────────────┬──────────────────────┐
+│  主线程控制块   │  工作线程控制块       │
+├─────────────────┼──────────────────────┤
+│ 逻辑PC: 0x7000  │ 逻辑PC: 0x6000       │
+│ 栈指针: 0x7FF0  │ 栈指针: 0x7EF0       │
+│ 状态: RUNNABLE  │ 状态: WAITING        │
+└─────────────────┴──────────────────────┘
 
-方法区 Method Area： 静态变量
-
-Linux的内存空间地址从低到高一般分为五个部分：内核空间、栈区域、堆区域、BBS段、数据段和代码段
-
-内核空间：我们在编写应用程序（非内核空间程序）的时候，这一块地址我们是不能够使用的
-栈区域：程序中局部变量、函数参数、返回地址的地方地址。地址从低到高分配
-堆区域：由malloc,calloc等创建的空间，是运行的时候由程序申请的。地址由高到低
-BBS段：未初始化或初值为0的全局变量和静态局部变量
-数据段：已初始化且初值非0的全局变量和静态局部变量
-代码段：可执行代码、字符串字面值、只读变量
-
-
-**Notes:** [JVM VS Python VM](https://medium.com/@rahul77349/difference-between-compiler-and-interpreter-with-respect-to-jvm-java-virtual-machine-and-pvm-22fc77ae0eb7)
-JAVA需要经过一次编译成class文件，然后交给JVM跑，Python不需要编译，直接py交给PVM解释运行
-
-### JVM程序计数器 VS OS程序计数器
+操作系统调度时：
+CPU实际PC寄存器在不同线程的逻辑PC间切换
+```
 
 一. 介绍
 JVM程序计数器：
@@ -148,7 +981,13 @@ OS程序计数器：
 
 OS线程的PC寄存器中。
 
-### 堆heap
+#### 堆heap
+对象组成:
+   对象头 object head
+      分代年龄
+      class pointer
+   实例数据
+   对齐填充
 
  Heap memory  =  The younger generation  +  The old generation  +  Forever 
  The younger generation  = Eden District  +  Two Survivor District （From and To）
@@ -177,7 +1016,7 @@ jdk调优工具jvisualvm （插件 visualgc）
 
 图中下部分给出了调优的例子
 
-[双十一电商网站亿级流量JVM调优实战视频教程全集](https://www.bilibili.com/video/av74868832/)
+
 
 ```
 jmap -heap <pid>
@@ -229,7 +1068,20 @@ XX:SurvivorRatio
 https://blog.csdn.net/flyfhj/article/details/86630105
 ```
 
-## JAVA内存模型 JMM
+#### Native Method Area
+本地方法：	Native method Stack，比如JNI调用c/C++程序
+
+## 内存模型
+
+### JMM
+Linux的内存空间地址从低到高一般分为五个部分：内核空间、栈区域、堆区域、BBS段、数据段和代码段
+
+内核空间：我们在编写应用程序（非内核空间程序）的时候，这一块地址我们是不能够使用的
+栈区域：程序中局部变量、函数参数、返回地址的地方地址。地址从低到高分配
+堆区域：由malloc,calloc等创建的空间，是运行的时候由程序申请的。地址由高到低
+BBS段：未初始化或初值为0的全局变量和静态局部变量
+数据段：已初始化且初值非0的全局变量和静态局部变量
+代码段：可执行代码、字符串字面值、只读变量
 
 从抽象的角度来看，JMM定义了线程和主内存之间的抽象关系：线程之间的共享变量存储在主内存（main memory）中，每个线程都有一个私有的本地内存（local memory），本地内存中存储了该线程以读/写共享变量的副本。 本地内存是JMM的一个抽象概念，它涵盖了各种CPU缓存、寄存器以及其他的硬件和编译器优化。
 
@@ -294,6 +1146,7 @@ How to use it: You can use it by turning on the -XX:+UseSerialGC JVM argument
 Next off is the Parallel collector. This is the JVM’s default collector. Much like its name, its biggest advantage is that is uses multiple threads to scan through and compact the heap. The downside to the parallel collector is that it will stop application threads when performing either a minor or full GC collection. The parallel collector is best suited for apps that can tolerate application pauses and are trying to optimize for lower CPU overhead caused by the collector.
 
 #### The CMS Collector
+问题太多已经废弃
 Following up on the parallel collector is the CMS collector (“concurrent-mark-sweep”). This algorithm uses multiple threads (“concurrent”) to scan through the heap (“mark”) for unused objects that can be recycled (“sweep”). This algorithm will enter “stop the world” (STW) mode in two cases: when initializing the initial marking of roots (objects in the old generation that are reachable from thread entry points or static variables) and when the application has changed the state of the heap while the algorithm was running concurrently, forcing it to go back and do some final touches to make sure it has the right objects marked.
 
 The biggest concern when using this collector is encountering promotion failures which are instances where a race condition occurs between collecting the young and old generations. If the collector needs to promote young objects to the old generation, but hasn’t had enough time to make space clear it,  it will have to do so first which will result in a full STW collection – the very thing this CMS collector was meant to prevent. To make sure this doesn’t happen you would either increase the size of the old generation (or the entire heap for that matter) or allocate more background threads to the collector for him to compete with the rate of object allocation.
@@ -301,6 +1154,16 @@ The biggest concern when using this collector is encountering promotion failures
 Another downside to this algorithm in comparison to the parallel collector is that it uses more CPU in order to provide the application with higher levels of continuous throughput, by using multiple threads to perform scanning and collection. For most long-running server applications which are adverse to application freezes, that’s usually a good trade off to make. Even so, this algorithm is not on by default. You have to specify XX:+USeParNewGC to actually enable it. If you’re willing to allocate more CPU resources to avoid application pauses this is the collector you’ll probably want to use, assuming that your heap is less than 4Gb in size.  However, if it’s greater than 4GB, you’ll probably want to use the last algorithm – the G1 Collector.
 
 #### The G1 Collector
+大内存选G1
+
+G1收集器对分代模型进行了革新。它不再要求物理上连续的新生代和老年代空间，而是将堆划分为多个固定大小的Region。
+
+​逻辑分代​：G1仍然有新生代和老年代的概念。一部分Region被指定为Eden区，一部分为Survivor区，另一部分为Old区。但这些Region不需要在物理上连续。
+
+​分区回收​：G1的回收不再针对整个新生代或老年代，而是优先回收那些垃圾最多（Garbage-First）​​ 的Region，无论它属于哪个代。这种基于Region的回收机制是其实现可预测停顿时间的核心。
+
+​算法优势​：在回收Region时，G1会将存活对象从一个或多个Region复制（Evacuate）到另一个空闲Region。这个过程同时完成了标记-复制和内存整理，有效避免了内存碎片问题
+
 [Garbage-First Garbage Collector](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/g1_gc.html)
 [Garbage First Garbage Collector Tuning](https://www.oracle.com/technical-resources/articles/java/g1gc.html#/)
 
@@ -710,3 +1573,9 @@ https://www.eclipse.org/mat/downloads.php
 ```
 jmap -dump:format=b,file=core.26635.dump  $JAVA_HOME/bin/java core.26635 
 ```
+
+
+refer:
+
+[双十一电商网站亿级流量JVM调优实战视频教程全集](https://www.bilibili.com/video/av74868832/)
+[马士兵-JVM核心难点讲解—调优过程：G1垃圾回收器（核心算法+调优实战）](https://b23.tv/0ve9ibv)

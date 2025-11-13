@@ -6,6 +6,841 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《分布式缓存redis》
 
+## 0. 理论基础 Theory
+
+学习redis源码过程笔记、问题记录，通过代码阅读熟悉分布式NOSQL数据库redis cluster集群功能、主从复制，节点扩容、槽位迁移、failover故障切换、一致性选举完整分析，对理解redis源码很有帮助  https://github.com/daniel416/Reading-and-comprehense-redis/
+
+https://redis.io/topics/cluster-spec
+
+An introduction to Redis data types and abstractions https://redis.io/topics/data-types-intro
+
+### 0.1 基本
+
+#### Replication
+
+https://redis.io/topics/replication
+
+#### Redis Sentinel vs Redis Cluster
+
+
+
+https://stackoverflow.com/questions/31143072/redis-sentinel-vs-clustering
+
+### 0.2 Redis Cluster
+
+Goals:
+
+- High performance and linear scalability up to 1000  nodes. There are no proxies, asynchronous replication is used, and no  merge operations are performed on values.
+
+  默认是异步的replica，如果需要同步，则可利用 WAIT 命令
+
+- Acceptable degree of write safety: the system tries (in a best-effort way) to retain all the writes originating from clients  connected with the majority of the master nodes. Usually there are small windows where acknowledged writes can be lost. Windows to lose  acknowledged writes are larger when clients are in a minority partition.
+
+- Availability: Redis Cluster is able to survive  partitions where the majority of the master nodes are reachable and  there is at least one reachable slave for every master node that is no  longer reachable. Moreover using *replicas migration*, masters no longer replicated by any slave will receive one from a master which is covered by multiple slaves.
+
+#### Cluster Gossip Protocol
+
++ Every node maintains the following information about other nodes that it is aware of in the cluster: 
+
+  The node ID, IP and port of the node, a set of flags, what is the master of the node if it is flagged as slave, last time the node was pinged and the last time the pong was received, the current configuration epoch of the node, the link state and finally the set of hash slots served.
+
++ Cluster Bus --- TCP PORTS
+
+  Every Redis Cluster node requires two TCP connections open. The normal Redis TCP port used to serve clients, for example 6379, plus the port obtained by adding 10000 to the data port, so 16379 in the example.
+
+#### Cluster DATA SHARDING
+
+16384 slots, hash slot 哈希槽位（*dict大小）又称为bucket桶（不过很多地方都特指 *dictEntry为桶）,why ? https://cloud.tencent.com/developer/article/1042654
+16384这个数字也不是作者随意指定的，Redis集群内部使用位图（bit map）来标志一个slot是否被占用，为了减少集群之间信息交换的大小，信息的大小被固定为2048字节
+2048 bytes = 2^11 * 8 bit= 2^14 bit= 16384
+
+to compute what is the hash slot of a given key, we simply take the CRC16 of the key modulo 16384.
+
+```
+HASH_SLOT = CRC16(key) mod 16384
+```
+
+14 out of 16 CRC16 output bits are used (this is why there is a modulo 16384 operation in the formula above).
+
+Hash tag and multiple key operations 
+this{foo}key and another{foo}key are guaranteed to be in the same hash slot, and can be used together in a command with multiple keys as arguments
+redis集群不支持模糊匹配partial match，想要模糊匹配只能对一个个server或database操作，不可以整体cluster操作，不过hash tag可以潜在解决这个问题
+
+#### Consitensy guarantee
+
+Redis Cluster is not able to guarantee strong consistency. In practical terms this means that under certain conditions it is possible that Redis Cluster will lose writes that were acknowledged by the system to the client.
+Tradeoff between Synchronous write and Performance
+
++ scenario 1： Asynchronous writes
+
+  Your client writes to the master B. =》 The master B replies OK to your client. =》The master B propagates the write to its slaves B1, B2 and B3.
+
+  As you can see, B does not wait for an acknowledgement from B1, B2, B3 before replying to the client, since this would be a prohibitive latency penalty for Redis, so if your client writes something, B acknowledges the write, but crashes before being able to send the write to its slaves, one of the slaves (that did not receive the write) can be promoted to master, losing the write forever.
+
+  This is very similar to what happens with most databases that are configured to flush data to disk every second, so it is a scenario you are already able to reason about because of past experiences with traditional database systems not involving distributed systems. Similarly you can improve consistency by forcing the database to flush data to disk before replying to the client, but this usually results in prohibitively low performance. That would be the equivalent of synchronous replication in the case of Redis Cluster.
+
++ Scenario 2： synchronous writes
+
+  Redis Cluster has support for synchronous writes when absolutely needed, implemented via the WAIT command. This makes losing writes a lot less likely. However, note that Redis Cluster does not implement strong consistency even when synchronous replication is used: it is always possible, under more complex failure scenarios, that a slave that was not able to receive the write will be elected as master.
+
++ Scenario 3：network partition
+
+  There is also a client, that we will call Z1.
+
+  After a partition occurs, it is possible that in one side of the partition we have A, C, A1, B1, C1, and in the other side we have B and Z1.
+
+  Z1 is still able to write to B, which will accept its writes. If the partition heals in a very short time, the cluster will continue normally. However, if the partition lasts enough time for B1 to be promoted to master on the majority side of the partition, the writes that Z1 has sent to B in the mean time will be lost.
+
+  Note that there is a maximum window to the amount of writes Z1 will be able to send to B: if enough time has elapsed for the majority side of the partition to elect a slave as master, every master node in the minority side will have stopped accepting writes.
+
+  This amount of time is a very important configuration directive of Redis Cluster, and is called the node timeout.
+
+  After node timeout has elapsed, a master node is considered to be failing, and can be replaced by one of its replicas. Similarly, after node timeout has elapsed without a master node to be able to sense the majority of the other master nodes, it enters an error state and stops accepting writes.
+
+  
+
+#### currentEpoch & configEpoch
+
++ currentEpoch
+
+  Redis Cluster uses a concept similar to the Raft algorithm "term". In Redis Cluster the term is called epoch instead, and it is used in order to give incremental versioning to events. When multiple nodes provide  conflicting information, it becomes possible for another node to  understand which state is the most up to date.
+
+  The `currentEpoch` is a 64 bit unsigned number.
+
+  At node creation every Redis Cluster node, both slaves and master nodes, set the `currentEpoch` to 0.
+
++ configEpoch
+
+  Every master always advertises its `configEpoch` in ping and pong packets along with a bitmap advertising the set of slots it serves.
+
+  The `configEpoch` is set to zero in masters when a new node is created.
+
+  A new `configEpoch` is created during slave election. 
+
+  
+
+This mechanism in Redis Cluster is called last failover wins.
+When a slave fails over its master, it obtains a configuration epoch which is guaranteed to be greater than the one of its master (and more generally greater than any other configuration epoch generated previously). For example node B, which is a slave of A, may failover B with configuration epoch of 4. It will start to send heartbeat packets (the first time mass-broadcasting cluster-wide) and because of the following second rule, receivers will update their hash slot tables
+
+The same happens during reshardings. When a node importing a hash slot completes the import operation, its configuration epoch is incremented to make sure the change will be propagated throughout the cluster.
+
+>Practical example of configuration epoch usefulness during partitions
+>This section illustrates how the epoch concept is used to make the slave promotion process more resistant to partitions.
+
+> + A master is no longer reachable indefinitely. The master has three slaves A, B, C.
+> + Slave A wins the election and is promoted to master.
+> + A network partition makes A not available for the majority of the cluster.
+> + Slave B wins the election and is promoted as master.
+> + A partition makes B not available for the majority of the cluster.
+> + The previous partition is fixed, and A is available again.
+>   At this point B is down and A is available again with a role of master (actually UPDATE messages would reconfigure it promptly, but here we assume all UPDATE messages were lost). At the same time, slave C will try to get elected in order to fail over B. This is what happens:
+
+> 1.C will try to get elected and will succeed, since for the majority of masters its master is actually down. It will obtain a new incremental configEpoch.
+> 2.A will not be able to claim to be the master for its hash slots, because the other nodes already have the same hash slots associated with a higher configuration epoch (the one of B) compared to the one published by A.
+> 3.So, all the nodes will upgrade their table to assign the hash slots to C, and the cluster will continue its operations.
+> https://redis.io/topics/cluster-spec
+
+
+
+#### Cluster failover strategy 主从切换
+
+集群是否工作状态可以通过 cluster info查看cluster_state
+
+对于一个N个master node的集群来说，如果每个master node有一个slave，总共就是2N个节点：
+
+1）任何一个节点挂掉或者被network partitioned away都不影响整体的工作，如果是slave挂，没有影响，如果是master挂，其replica会被选举为新的master，依然没有影响
+
+2）如果一个master和其slave同时挂，则cluster无法工作（实际上不会“同时”，肯定是有时间差的，可以利用replica migration提高此情况下的可用性）
+
+3）如果一个master挂掉，并且没有slave，集群无法工作
+
+4）超半数master挂掉，集群无法选举，从而无法工作
+
+N建议为奇数：
+
+比如3个master节点和4个master节点的集群相比，如果都挂了一个master节点都能选举新master节点，如果都挂了两个master节点都没法选举新master节点了，所以奇数的master节点可以节省机器资源
+
+##### Step 1: Failure detection
+
+**PFAIL (*Possible failure*) flag:**
+
+A node flags another node with the `PFAIL` flag when the node is not reachable for more than `NODE_TIMEOUT` time. Both master and slave nodes can flag another node as `PFAIL`, regardless of its type.
+
+**FAIL flag:**
+
+The `PFAIL` flag alone is just local  information every node has about other nodes, but it is not sufficient  to trigger a slave promotion. For a node to be considered down the `PFAIL` condition needs to be escalated to a `FAIL` condition.
+
+A `PFAIL` condition is escalated to a `FAIL` condition when the following set of conditions are met:
+
+- Some node, that we'll call A, has another node B flagged as `PFAIL`.
+- Node A collected, via gossip sections, information about the state of B from the point of view of the majority of masters in the cluster.
+- The majority of masters signaled the `PFAIL` or `FAIL` condition within `NODE_TIMEOUT * FAIL_REPORT_VALIDITY_MULT` time. (The validity factor is set to 2 in the current implementation, so this is just two times the `NODE_TIMEOUT` time).
+
+If all the above conditions are true, Node A will:
+
+- Mark the node as `FAIL`.
+- Send a `FAIL` message to all the reachable nodes.
+
+Note that *the FAIL flag is mostly one way*. That is, a node can go from `PFAIL` to `FAIL`, but a `FAIL` flag can only be cleared in the following situations:
+
+- The node is already reachable and is a slave. In this case the `FAIL` flag can be cleared as slaves are not failed over.
+- The node is already reachable and is a master not serving any slot. In this case the `FAIL` flag can be cleared as masters without slots do not really participate  in the cluster and are waiting to be configured in order to join the  cluster.
+- The node is already reachable and is a master, but a long time (N times the `NODE_TIMEOUT`) has elapsed without any detectable slave promotion. It's better for it to rejoin the cluster and continue in this case.
+
+However the Redis Cluster failure detection has a liveness  requirement: eventually all the nodes should agree about the state of a  given node. There are two cases that can originate from split brain  conditions. Either some minority of nodes believe the node is in `FAIL` state, or a minority of nodes believe the node is not in `FAIL` state. In both the cases eventually the cluster will have a single view of the state of a given node:
+
+**Case 1**: If a majority of masters have flagged a node as `FAIL`, because of failure detection and the *chain effect* it generates, every other node will eventually flag the master as `FAIL`, since in the specified window of time enough failures will be reported.
+
+**Case 2**: When only a minority of masters have flagged a node as `FAIL`, the slave promotion will not happen (as it uses a more formal algorithm that makes sure everybody knows about the promotion eventually) and  every node will clear the `FAIL` state as per the `FAIL` state clearing rules above (i.e. no promotion after N times the `NODE_TIMEOUT` has elapsed).
+
+##### Step 2: Slave election and promotion
+
+Slave election and promotion is handled by slave nodes
+
+In order for a slave to promote itself to master, it needs to start  an election and win it. All the slaves for a given master can start an  election if the master is in `FAIL` state, however only one slave will win the election and promote itself to master.
+
+A slave starts an election when the following conditions are met:
+
+- The slave's master is in `FAIL` state.
+- The master was serving a non-zero number of slots.
+- The slave replication link was disconnected from the  master for no longer than a given amount of time, in order to ensure the promoted slave's data is reasonably fresh. This time is user  configurable.
+
+
+
+step 1) slave increment its `currentEpoch` counter, and request votes from master instances.
+
+step 2) Request Votes: broadcasting a `FAILOVER_AUTH_REQUEST` packet to every master node of the cluster. Then it waits for a maximum time of two times the `NODE_TIMEOUT` for replies to arrive (but always for at least 2 seconds).
+
+A slave discards any `AUTH_ACK` replies with an epoch that is less than the `currentEpoch` at the time the vote request was sent. This ensures it doesn't count votes intended for a previous election.
+
+step 3) Once a master has voted for a given slave, replying positively with a `FAILOVER_AUTH_ACK`, it can no longer vote for another slave of the same master for a period of `NODE_TIMEOUT * 2`. In this period it will not be able to reply to other authorization  requests for the same master. This is not needed to guarantee safety,  but useful for preventing multiple slaves from getting elected (even if  with a different `configEpoch`) at around the same time, which is usually not wanted.
+
+how master votes:
+
+i. A master only votes a single time for a given epoch, and refuses to vote for older epochs: every master has a lastVoteEpoch  field and will refuse to vote again as long as the `currentEpoch` in the auth request packet is not greater than the lastVoteEpoch. When a master replies positively to a vote request, the lastVoteEpoch is  updated accordingly, and safely stored on disk.
+
+ii. A master votes for a slave only if the slave's master is flagged as `FAIL`.
+
+iii. Auth requests with a `currentEpoch` that is less than the master `currentEpoch` are ignored. Because of this the master reply will always have the same `currentEpoch` as the auth request. If the same slave asks again to be voted, incrementing the `currentEpoch`, it is guaranteed that an old delayed reply from the master can not be accepted for the new vote.
+
+step 4) Once the slave receives ACKs from the majority of masters, it wins the election. Otherwise if the majority is not reached within the period of two times `NODE_TIMEOUT` (but always at least 2 seconds), the election is aborted and a new one will be tried again after `NODE_TIMEOUT * 4` (and always at least 4 seconds).
+
+Once a slave wins the election, it obtains a new unique and incremental `configEpoch` which is higher than that of any other existing master. It starts  advertising itself as master in ping and pong packets, providing the set of served slots with a `configEpoch` that will win over the past ones.
+
+In order to speedup the reconfiguration of other nodes, a pong packet is broadcast to all the nodes of the cluster. Currently unreachable nodes  will eventually be reconfigured when they receive a ping or pong packet  from another node or will receive an `UPDATE` packet from another node if the information it publishes via heartbeat packets are detected to be out of date.
+
+The other nodes will detect that there is a new master serving the same slots served by the old master but with a greater `configEpoch`, and will upgrade their configuration. Slaves of the old master (or the  failed over master if it rejoins the cluster) will not just upgrade the  configuration but will also reconfigure to replicate from the new  master. 
+
+##### Example
+
+- A master is no longer reachable indefinitely. The master has three slaves A, B, C.
+- Slave A wins the election and is promoted to master.
+- A network partition makes A not available for the majority of the cluster.
+- Slave B wins the election and is promoted as master.
+- A partition makes B not available for the majority of the cluster.
+- The previous partition is fixed, and A is available again.
+
+At this point B is down and A is available again with a role of master (actually `UPDATE` messages would reconfigure it promptly, but here we assume all `UPDATE` messages were lost). At the same time, slave C will try to get elected in order to fail over B. This is what happens:
+
+1. C will try to get elected and will succeed, since for  the majority of masters its master is actually down. It will obtain a  new incremental `configEpoch`.
+2. A will not be able to claim to be the master for its  hash slots, because the other nodes already have the same hash slots  associated with a higher configuration epoch (the one of B) compared to  the one published by A.
+3. So, all the nodes will upgrade their table to assign the hash slots to C, and the cluster will continue its operations.
+
+##### Case 1: network partition 短暂的脑裂
+
+除了Step 1提到的选举过程中的脑裂问题，选举前的读写也存在短暂的脑裂问题：
+
+Majority master nodes：A B
+
+Minority master nodes：C
+
+1) A write may reach a master, but while the master may be able to reply to the client, the write may not be propagated to slaves via the  asynchronous replication used between master and slave nodes. If the  master dies without the write reaching the slaves, the write is lost  forever if the master is unreachable for a long enough period that one  of its slaves is promoted. 
+
+2) A client with an out-of-date routing table may write to the old master  before it is converted into a slave (of the new master) by the cluster.
+
+Notes：
+
+for a master to be failed over it must be unreachable by the majority of masters for at least `NODE_TIMEOUT`, so if the partition is fixed before that time, no writes are lost. When the partition lasts for more than `NODE_TIMEOUT`, all the writes performed in the minority side up to that point may be  lost. However the minority side of a Redis Cluster will start refusing  writes as soon as `NODE_TIMEOUT` time has elapsed without  contact with the majority, so there is a maximum window after which the  minority becomes no longer available. Hence, no writes are accepted or  lost after that time.
+
+##### Case 2: master fail=>slave promote to master
+
+A<-A1
+
+B<-B1
+
+C<-C1
+
+In our example cluster with nodes A, B, C, if node B fails the cluster is not able to continue, since we no longer have a way to serve hash slots in the range 5501-11000.
+
+However when the cluster is created (or at a later time) we add a slave node to every master, so that the final cluster is composed of A, B, C that are master nodes, and A1, B1, C1 that are slave nodes. This way, the system is able to continue if node B fails.
+
+Node B1 replicates B, and B fails, the cluster will promote node B1 as the new master and will continue to operate correctly.
+
+However, note that if nodes B and B1 fail at the same time, Redis Cluster is not able to continue to operate.
+
+##### Case 3: mater & slave both fail, but slave fail first
+
+或者说出现orphaned master node的情况
+
+**解决方法:**
+
+replica migration，参考配置 **cluster-migration-barrier `<count>`**:
+
+如果 **cluster-migration-barrier `1`**，对于cluster：
+
+A<-A1
+
+B<-B1
+
+C<-C1
+
+需要增加机器VM4，然后VM4可以有一个或两个replica，比如：
+
+A<-A2
+
+C<-C2
+
+或
+
+A<-A2
+
+A<-A3
+
+如果 B1挂掉，B就成为了 orphaned master nodes，（如果B再挂掉，就无法提供服务，simply because there is no other instance to have a copy of the hash slots the master was serving.），所以引入了replica migration，就是当B1挂掉后，因为A有A1和A2等多个replica，所以其中一个可以migration称为B的replica，这样即使B再挂掉，仍然有一个replica可以被promote成为B，可能你会问，这么麻烦，给每个master node都搞多个replica不行吗，当然可以，不过 this is expensive.
+
+##### Case 4：Slave of Slave node
+
+Redis的主从关系是链式的，一个从节点也是可以拥有从节点的，
+
+当一个主A和从A1同时挂掉，A2被选举为新主，然后先重启A，主就会变成A2的从节点，再重启A1，A1仍然会是A的从节点，从而出现链式：A1->A->A2
+
+解决办法：
+
+cluster replicate 为A1指定主节点
+
+##### Case 5：网络不稳定，频繁主从切换
+
+解决办法：合理修正cluster-node-timeout
+
+Once the slave receives ACKs from the majority of masters, it wins the election.  Otherwise if the majority is not reached within the period of two times `NODE_TIMEOUT` (but always at least 2 seconds), the election is aborted and a new one will be tried again after `NODE_TIMEOUT * 4` (and always at least 4 seconds).
+
+As soon as a master is in `FAIL` state, a slave waits a short period of time before trying to get elected. That delay is computed as follows:
+
+```
+DELAY = 500 milliseconds + random delay between 0 and 500 milliseconds +
+        SLAVE_RANK * 1000 milliseconds.
+```
+
+The fixed delay ensures that we wait for the `FAIL` state to propagate across the cluster, otherwise the slave may try to get elected while the masters are still unaware of the `FAIL` state, refusing to grant their vote.
+
+
+
+##### Case 6: 常见现象：master nodes aggregate 
+
+假设3台机器M1 M2 M3, 创建cluster，3个master A B C，3个slave(或者6个slave) A1 B1 C1，一般会平均分配：
+
+```
+M1: A B1
+M2: B C1
+M3: C A1
+
+假设M2 down，
+M1: A B
+M3: C A1
+
+M2 up后，
+M1: A B
+M2: B1 C1
+M3: C A1
+
+可以看到M2并不会争夺回B，所以很容易推算当6个slave的情况下，极有可能，最终master节点全部跑到一台机器上
+```
+
+观点：kafka中类似的概念是topic leader和follower的分配，不同的是，当down掉的节点起来之后会抢夺回之前的topic leader，从而使得节点总是很平均，而redis不会抢夺，所以会越来越集中
+
+https://blog.csdn.net/zhouwenjun0820/article/details/105893144
+
+**解决办法：**
+
+参考 3.2 自动方式管理=> cluster failover 进行调整
+
+```
+HOST1:6379> cluster nodes
+afabffee7a9076d42c9640a77ae2db6e6eb52fae HOST1:6379@16379 myself,slave 27c88c277aa82340f5e2f9d73078d59399ed6b87 0 1632299474000 13 connected
+9f92fe21d31b4b18f54321fbedc809ca4afcf187 HOST3:6381@16381 slave b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d 0 1632299477000 9 connected
+27c88c277aa82340f5e2f9d73078d59399ed6b87 HOST2:6380@16380 master - 0 1632299475000 18 connected 0-5460
+b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d HOST2:6379@16379 master - 0 1632299474000 4 connected 5461-10922
+36d8fdd4eaedd2f601a2e27d9856d9b82dd8017c HOST3:6379@16379 slave 56ce383e2cb6affedd61317cfb35b05f29dfc7f1 0 1632299475000 15 connected
+56ce383e2cb6affedd61317cfb35b05f29dfc7f1 HOST2:6381@16381 master - 0 1632299477133 15 connected 10923-16383
+f24a6554ed2b64b071122bd16c7201aca1b184d0 HOST1:6380@16380 slave 56ce383e2cb6affedd61317cfb35b05f29dfc7f1 0 1632299476000 15 connected
+54d6095aca3e1edd27761e080651bb28144e3a81 HOST3:6380@16380 slave 27c88c277aa82340f5e2f9d73078d59399ed6b87 0 1632299476000 18 connected
+bb483966fa9a7d60c9020a75d19fb2a4d1e8acf0 HOST1:6381@16381 slave b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d 0 1632299476130 4 connected
+
+HOST2:6380> connect HOST1 6379
+HOST1:6379> cluster nodes
+afabffee7a9076d42c9640a77ae2db6e6eb52fae HOST1:6379@16379 myself,master - 0 1632299972000 19 connected 0-5460
+9f92fe21d31b4b18f54321fbedc809ca4afcf187 HOST3:6381@16381 slave b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d 0 1632299973000 9 connected
+27c88c277aa82340f5e2f9d73078d59399ed6b87 HOST2:6380@16380 slave afabffee7a9076d42c9640a77ae2db6e6eb52fae 0 1632299974517 19 connected
+b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d HOST2:6379@16379 master - 0 1632299972511 4 connected 5461-10922
+36d8fdd4eaedd2f601a2e27d9856d9b82dd8017c HOST3:6379@16379 slave 56ce383e2cb6affedd61317cfb35b05f29dfc7f1 0 1632299971508 15 connected
+56ce383e2cb6affedd61317cfb35b05f29dfc7f1 HOST2:6381@16381 master - 0 1632299974000 15 connected 10923-16383
+f24a6554ed2b64b071122bd16c7201aca1b184d0 HOST1:6380@16380 slave 56ce383e2cb6affedd61317cfb35b05f29dfc7f1 0 1632299974000 15 connected
+54d6095aca3e1edd27761e080651bb28144e3a81 HOST3:6380@16380 slave afabffee7a9076d42c9640a77ae2db6e6eb52fae 0 1632299971000 19 connected
+bb483966fa9a7d60c9020a75d19fb2a4d1e8acf0 HOST1:6381@16381 slave b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d 0 1632299973514 4 connected
+
+HOST1:6379> connect HOST3 6379
+HOST3:6379> cluster failover
+OK
+HOST3:6379> cluster nodes
+56ce383e2cb6affedd61317cfb35b05f29dfc7f1 HOST2:6381@16381 slave 36d8fdd4eaedd2f601a2e27d9856d9b82dd8017c 0 1632300416000 20 connected
+f24a6554ed2b64b071122bd16c7201aca1b184d0 HOST1:6380@16380 slave 36d8fdd4eaedd2f601a2e27d9856d9b82dd8017c 0 1632300416000 20 connected
+b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d HOST2:6379@16379 master - 0 1632300421801 4 connected 5461-10922
+afabffee7a9076d42c9640a77ae2db6e6eb52fae HOST1:6379@16379 master - 0 1632300420800 19 connected 0-5460
+27c88c277aa82340f5e2f9d73078d59399ed6b87 HOST2:6380@16380 slave afabffee7a9076d42c9640a77ae2db6e6eb52fae 0 1632300419000 19 connected
+36d8fdd4eaedd2f601a2e27d9856d9b82dd8017c HOST3:6379@16379 myself,master - 0 1632300417000 20 connected 10923-16383
+bb483966fa9a7d60c9020a75d19fb2a4d1e8acf0 HOST1:6381@16381 slave b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d 0 1632300419796 4 connected
+54d6095aca3e1edd27761e080651bb28144e3a81 HOST3:6380@16380 slave afabffee7a9076d42c9640a77ae2db6e6eb52fae 0 1632300418793 19 connected
+9f92fe21d31b4b18f54321fbedc809ca4afcf187 HOST3:6381@16381 slave b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d 0 1632300418000 9 connected
+```
+
+
+
+### 0.3 Sentinel
+
+
+### 0.4 深度探索
+
+#### Redis 底层数据结构
+
+[为了拿捏 Redis 数据结构，我画了 40 张图（完整版）](https://mp.weixin.qq.com/s/MGcOl1kGuKdA7om0Ahz5IA)
+[A Closer Look at Redis Dictionary Implementation Internals](https://codeburst.io/a-closer-look-at-redis-dictionary-implementation-internals-3fd815aae535)
+
+插入一个key value键值对的时候发生啥：
+
+第一步：决定键值对存储在哪个集群节点（集群层面）​​
+
+  ​计算方式：​​ slot = CRC16(key) % 16384
+
+  ​目的：​​ 当客户端要写入一个键值对时，Redis Cluster 首先用这个公式计算出这个键属于哪个 ​哈希槽（Slot）​。
+
+  ​结果：​​ 根据集群的配置，知道了这个槽由哪个节点（比如 Node A）负责管理。
+
+  ​动作：​​ 客户端就会把这个键值对发送到 Node A 去存储。
+
+  ​这一步解决了“数据在哪台机器上”的问题。​​
+
+​第二步：在节点内部，决定键值对放在哈希表的哪个桶里（单机内存层面）​​
+
+  现在，键值对已经到达了正确的节点（比如 Node A）。
+
+  Node A 会使用它自己的、本地的哈希表（就是我们之前讲的 dict、dictht、dictEntry结构）来存储这个键值对。
+
+  ​计算方式：​​ index = hashFunction(key) & sizemask
+
+  hashFunction是一个哈希函数（如 SipHash）。
+
+  sizemask是哈希表(table数组的长度)大小 size - 1。因为 size总是 2 的 n 次幂，所以 sizemask的二进制形式全是 1，& sizemask操作等价于 % size，但位运算效率更高。
+
+  ​目的：​​ 这个计算是为了确定这个键值对应该放在 Node A 本地哈希表的 table数组中的哪个位置（哪个“桶”里）。
+
+  ​结果：​​ 得到索引 index，然后将键值对（dictEntry）挂到这个桶对应的链表中。
+
+  ​这一步解决了“数据在这个节点的内存的哪个位置”的问题。​
+
+##### 1. Hash Slots in Redis Cluster:
+
+In Redis, the concept of "hash slots" refers to how Redis Cluster distributes keys across multiple Redis instances. Here’s a breakdown to clarify:
+Redis Cluster uses a concept of hash slots to determine which Redis instance (node) should store each key-value pair.
+There are exactly 16384 hash slots available in Redis Cluster (2^14), numbered from 0 to 16383.
+Each key is hashed to determine which hash slot it belongs to. **Redis then uses this hash slot number to determine the node responsible for storing and handling operations for keys within that slot.**
+
+Redis Cluster does maintain an in-memory mapping of all hash slots → cluster nodes.
+Each node (master or replica) keeps this mapping locally — not just the master node.
+That’s how every node can redirect a client to the correct node (MOVED or ASK replies).
+
+Redis implements cluster logic in the file:
+📄 src/cluster.c and header src/cluster.h
+```
+// clusterNode Represents a single node in the cluster (could be this node itself, or another peer).
+typedef struct clusterNode {
+    mstime_t ctime;          /* Node object creation time. */
+    char name[CLUSTER_NAMELEN]; /* Node name (40 char hex + null term). */
+    int flags;               /* Node type and state flags. */
+    uint64_t configEpoch;    /* Last configEpoch for this node. */
+    unsigned char slots[CLUSTER_SLOTS/8]; /* Bitmap of assigned slots. */
+    int numslots;            /* How many slots this node owns. */
+    ...
+} clusterNode;
+
+CLUSTER_SLOTS is defined as 16384
+slots[] is a bitmask — one bit per hash slot, so each node knows which slots it owns.
+
+//This is the global structure representing the cluster’s state from the perspective of this node.
+typedef struct clusterState {
+    clusterNode *myself;                /* Pointer to this node */
+    uint64_t currentEpoch;
+    int state;                          /* CLUSTER_OK, CLUSTER_FAIL, etc. */
+    clusterNode *slots[CLUSTER_SLOTS];  /* slot -> node mapping table */
+    dict *nodes;                        /* Hash table of all known nodes */
+    ...
+} clusterState;
+
+clusterNode *slots[CLUSTER_SLOTS]; is a direct array of 16,384 pointers, one per slot, each pointing to the clusterNode that currently owns that slot.
+
+So for example:
+clusterState.slots[0]   --> clusterNode A
+clusterState.slots[1]   --> clusterNode A
+clusterState.slots[5461] --> clusterNode B
+clusterState.slots[10923] --> clusterNode C
+
+
+When Redis receives a key, it computes:
+
+hash_slot = keyHashSlot(key);  // returns value in 0..16383
+owner = server.cluster->slots[hash_slot];
+
+If owner == myself → handle locally
+Else → reply MOVED <slot> <host:port>
+```
+##### 2. dict vs. dictht:
+
+Redis 使用一个非常高效的哈希表结构来存储键值对。它主要由三个核心结构体组成：dict、dictht、dictEntry。三者的关系可以看作是一个数据库 > 表 > 行的关系。
+key和 v保存了实际的键和值。
+
+![](/docs/docs_image/software/buildingblock/redis_dict1.png)
+
+Each Redis database has two dictionaries. The first one is used for keys with expiry date. It’s redisDb.expires, and values stored there are expiration timestamps. The other is for client values; it’s redisDb.dict.
+
+Each Redis dict has two hash tables. Both are implemented as a plain array; each slot, or bucket, contains a list of elements — in case of several elements’ hashes point at the same array index (this is known as a hash collision). 
+
+In the context of Redis internals, a dict (dictionary) is a data structure used within each Redis instance to store keys and values.
+dictht (dictionary hash table) is a specific implementation detail within the dict data structure in Redis.
+The dictht is where the actual hash table resides that maps keys to their corresponding values within a dict.
+
+Note: 
+  The number of hash slots (16384) in Redis Cluster does not directly correlate to the size of a dict or dictht in terms of memory or capacity.
+  Instead, hash slots are a logical division used for partitioning data across Redis nodes in a cluster setup.
+  Each Redis instance (node) manages its own dict, which can grow dynamically as keys and values are added.
+  In summary, the 16384 hash slots in Redis refer to how keys are distributed across nodes in a Redis Cluster, not to the size of individual dict or dictht structures within each Redis instance. Each Redis instance manages its own dict, and the dictht within it grows and shrinks dynamically based on the number of entries and other factors, but its size isn't directly tied to the number of hash slots in Redis Cluster.
+
+
+```
+struct redisDb {
+    dict *dict;     // all key-value pairs (main DB)
+    dict *expires;  // key expiration times
+    ...
+};
+
+typedef struct dict {
+    dictType *type;
+    void *privdata;
+    dictht ht[2];
+    long rehashidx; /* rehashing not in progress if rehashidx == -1 */
+    unsigned long iterators; /* number of iterators currently running */
+} dict;
+
+typedef struct dictht {
+    dictEntry **table;
+    unsigned long size;
+    unsigned long sizemask;
+    unsigned long used;
+} dictht;
+
+typedef struct dictEntry {
+    void *key;
+    union {
+        void *val;
+        uint64_t u64;
+        int64_t s64;
+        double d;
+    } v;
+    struct dictEntry *next; 
+} dictEntry;
+
+next指针是为了解决哈希冲突。当两个不同的键通过哈希函数计算出的索引相同时（哈希冲突），它们会通过这个 next指针被连接成一个单向链表。这种方式称为“链地址法”。
+
+```
+
+##### 3. Size of dict or dictht:
+```
+dict *d
+  ↓
+  +--------------------------------------------------+
+  | ht[0] : dictht                                   |
+  | ht[1] : dictht (for rehashing)                   |
+  +--------------------------------------------------+
+
+dictht ht[0]
+  ↓
+  +---------------------------------------------+
+  | table : dictEntry ** (array of bucket heads)|
+  | size, sizemask, used                        |
+  +---------------------------------------------+
+
+table (array of dictEntry*)
+  ↓
+  +------------+------------+------------+
+  | bucket[0]  | bucket[1]  | bucket[2]  | ...
+  +------------+------------+------------+
+        ↓            ↓            ↓
+      linked list  linked list  linked list
+
+
+d (dict)
+ ├── ht[0].table  ---> array of dictEntry* (length = size)
+ │       ├── table[0] -> dictEntry(key="foo")
+ │       ├── table[1] -> NULL
+ │       ├── table[2] -> dictEntry(key="bar") → dictEntry(key="baz")
+ │       └── ...
+ └── ht[1].table  ---> NULL (if not rehashing)
+
+```
+
+Note:
+When people casually say “dict size,” they could mean:
++ In C terms, “size” normally means sizeof(dict) → a compile-time constant (e.g. 48 bytes)
++ In Redis/algorithm terms, “size” usually means the number of keys stored (like the size of a map in high-level languages),they could mean:
+  - “the number of keys stored” → (ht[0].used + ht[1].used)
+  - or “the hash table’s current capacity” → (ht[0].size)
+
+The size of a dict or dictht in Redis depends on several factors:
+The number of entries (keys and values) stored within it.
+The load factor of the hash table (how full it is relative to its capacity).
+Redis dynamically resizes dictht as needed to maintain efficient hash table operations (like rehashing when load factor exceeds a threshold).
+
+The initial size of hash table dictht is 4.{存在哈希冲突时，redis中使用拉链法解决哈希冲突，但是dictentry数组的默认大小为4，发送哈希冲突的概率极高，如果不进行扩容，会导致哈希表的时间复杂度恶化为O(logN)，所以满足一定条件时需要进行dicEntry数组的扩容} As more & more keys enter into the system, the hash table size also grows. When does redis resize hash table? Redis can resize hash tables or simply [rehash in following 2 scenarios:](https://kousiknath.medium.com/a-little-internal-on-redis-key-value-storage-implementation-fdf96bac7453)
+
++ total_elements / total_buckets = 1 and dict resize is enabled. 
+  Enabling or disabling dict resize is handled by redis internally. Redis tries to avoid rehashing when some background process runs to do some sort of heavy operation like saving the database to disk as rehashing involves movement of memory pages in heavy amount. So simply stating, when background process runs, dict resize is usually disabled otherwise enabled.
++ total_elements / total_buckets > 5 ( force resize ratio, forcefully resizing is done)
+
+rehash的过程就是ht[0]和 ht[1]之间数据搬来搬去的过程，比如ht[0]触发了rehash，扩ht[1]，把ht[0]搬过来，接着ht[1]触发了，类似的扩ht[0] 
+
+Rehash的一个核心目的：减少哈希冲突，提高性能。​
+
+  index = hashFunction(key) & sizemask
+
+  hashFunction(key)：​这个值对于同一个 key是永远不变的。比如对 key1计算出的哈希值始终是 123456789。
+
+  变化的是 sizemask：因为 sizemask = size - 1，而 size在扩容后变大了。
+
+  举例说明：​​
+
+  假设当前哈希表 ht[0]的 size = 4，那么 sizemask = 3（二进制 ...0011）。
+
+  计算 key1的位置：hash1 & 0011-> 假设结果是 ...0011（十进制 3）。
+
+  计算 key2的位置：hash2 & 0011-> 假设结果也是 ...0011（十进制 3）。
+
+  所以 key1和 key2发生了冲突，都挂在 table[3]的链表上。
+
+  现在触发扩容，新的 ht[1]的 size = 8，则 sizemask = 7（二进制 ...0111）。​​
+
+  在Rehash迁移时，会为每个key重新计算它在新表中的位置：
+
+  计算 key1的新位置：hash1 & 0111-> 假设结果是 ...0011（十进制 3）。
+
+  计算 key2的新位置：hash2 & 0111-> 假设结果是 ...0111（十进制 7）。
+
+  ​你看，因为掩码（sizemask）的位数变多了（从2位变成3位），参与计算的哈希值位数也变多了，原本冲突的两个key，其哈希值在后3位不同的部分被暴露出来，从而计算出了不同的索引，它们就被分开了！​
+
+  这利用了哈希值的均匀分布特性。一个好的哈希函数（如Redis使用的SipHash）产生的哈希值是随机的、均匀分布的。
+
+  什么时候仍然会冲突？
+  ​有可能rehash后两个key仍然冲突。​​ 这种情况发生在：这两个key的哈希值在新掩码的所有位上仍然完全相同。
+
+  继续上面的例子，如果 key1的哈希值是 ...1011，key2的哈希值是 ...0011：
+
+  在 sizemask=3 (0011)时：1011 & 0011 = 0011，0011 & 0011 = 0011-> 冲突。
+
+  在 sizemask=7 (0111)时：1011 & 0111 = 0011，0011 & 0111 = 0011-> ​仍然冲突。
+
+  这是因为这两个哈希值的低3位都是 011。虽然扩容了，但只要它们哈希值在新掩码覆盖的位上是相同的，就还是会分配到同一个桶里。要解决这个冲突，可能需要再次扩容，让掩码能覆盖到它们开始出现差异的更高位。
+
+#### 内存优化
+
+[容量评估](https://blog.csdn.net/u011983531/article/details/79598671)
+https://cloud.tencent.com/developer/article/1004898
+https://www.cnblogs.com/yxhblogs/p/12713739.html
+
+##### 内存模型
+
+Each data type in Redis has its own encoding, and most of them have several encodings for different scenarios. Even sds strings (and yes, string keys are usually sds strings) can have multiple encodings.
+
+Sets, sorted sets, lists and hashes use a compact "ziplist" encoding in memory when they are small, but move to a memory wasteful yet faster encoding when they grow.
+
+The most complex object is the sorted set, which is a combination of a skiplist and a hash table. And the new streams object also has a very interesting representation.
+
+In RDB though, they get serialized into a compact representation and not kept as they are in memory.
+https://stackoverflow.com/questions/48057733/is-redis-data-stored-as-sds-or-as-objects
+
+Redis Ziplist https://redis.com/glossary/redis-ziplist/
+
+Redis automatically switches between ziplist and other data structures, such as linked lists or hash tables, based on certain criteria. The decision to use ziplists depends on factors like the number of elements and their sizes. Redis provides configuration options to control the threshold values for switching between different representations.
+
+conn.rpush(‘test’, ‘a’, ‘b’, ‘c’, ‘d’)
+4
+We start by pushing four items onto a LIST.
+
+conn.debug_object(‘test’)
+To obtain information about a specific object, we can utilize the “debug object” command.it is important to note that for nonziplist encodings (except for the special encoding of SETs), this number does not accurately reflect the actual memory consumption.
+
+redisobject：
+但redis大多数情况下并没有直接使用底层数据结构（sds ziplist skiplist等）来实现键值对数据库，而是基于这些数据结构创建了一个对象系统，每个对象都包含了一种具体数据结构。比如，当redis数据库新创建一个键值对时，就需要创建一个值对象，值对象的*ptr属性指向具体的SDS字符串。
+
+###### 底层数据结构Sting字符串容量评估
+一个简单的key-value键值对最终会产生4个消耗内存的结构，中间free掉的不考虑：
+
+
+1个dictEntry结构，24字节，负责保存具体的键值对 向上取整为32；(jemalloc 在分配内存时，会根据我们申请的字节数 N，找一个比 N 大，但是最接近 N 的 2 的幂次数作为分配的空间，这样可以减少频繁分配的次数。举个例子。如果你申请 6 字节空间，jemalloc 实际会分配 8 字节空间；如果你申请 24 字节空间，jemalloc 则会分配 32 字节。所以，在我们刚刚说的场景里，dictEntry 结构就占用了 32 字节。)
+1个redisObject结构，16字节，用作val对象；
+1个SDS结构，用作key字符串，占9个字节(free4个字节+len4个字节+字符串末尾”\0”1个字节)；
+1个SDS结构，用作val字符串，占9个字节(free4个字节+len4个字节+字符串末尾”\0”1个字节)
+
+　　当key个数逐渐增多，redis还会以rehash的方式扩展哈希表节点数组(也就是dictEntry[]数组)，即增大哈希表的bucket个数，每个bucket元素都是个指针(dictEntry*)，占8字节，bucket个数是超过key个数向上求整的2的n次方。
+
+　　真实情况下，每个结构最终真正占用的内存还要考虑jemalloc的内存分配规则，
+
+　jemalloc是一种通用的内存管理方法，着重于减少内存碎片和支持可伸缩的并发性，做redis容量评估前必须对jemalloc的内存分配规则有一定了解。
+
+jemalloc基于申请内存的大小把内存分配分为三个等级：small，large，huge：
+
+Small Object的size以8字节，16字节，32字节等分隔开，小于页大小；
+Large Object的size以分页为单位，等差间隔排列，小于chunk的大小；
+Huge Object的大小是chunk大小的整数倍。
+对于64位系统，一般chunk大小为4M，页大小为4K
+
+
+综上所述，string类型的容量评估模型为：
+
+总内存消耗 = (dictEntry大小＋redisObject大小＋key_SDS大小＋val_SDS大小) * key个数＋bucket个数 * 8
+【换算下来】
+总内存消耗 = (32 + 16 + key_SDS大小＋val_SDS大小) * key个数＋bucket个数 * 8 
+
+（1）举例说明
+当key长度为 13，value长度为15，key个数为2000，根据上面总结的容量评估模型，容量预估值为 (32 + 16 + 32 + 32) * 2000 + 2048 * 8 = 240384 
+
+（2）生产实践
+用redis做商品缓存，key为商品id，value为商品信息。key大约占用30个字节，value大约占用1500个字节。
+当缓存1百万商品时，容量预估值为(32 + 16 + 64 + 1536) * 1000000+ 1000000(预估) * 8 = 1656000000，约等于1.54G
+总结：当value比较大时，占用的内存约等于value的大小*个数
+
+###### 底层数据结构哈希表容量评估
+一个Hash存储结构最终会产生以下几个消耗内存的结构：
+
+1个SDS结构，用作key字符串，占9个字节(free4个字节+len4个字节+字符串末尾”\0”1个字节)；
+1个dictEntry结构，24字节，负责保存当前的哈希对象；
+1个redisObject结构，16字节，指向当前key下属的dict结构；
+1个dict结构，88字节，负责保存哈希对象的键值对；
+n个dictEntry结构，24*n字节，负责保存具体的field和value，n等于field个数；
+n个redisObject结构，16*n字节，用作field对象；
+n个redisObject结构，16*n字节，用作value对象；
+n个SDS结构，（field长度＋9）*n字节，用作field字符串；
+n个SDS结构，（value长度＋9）*n字节，用作value字符串；
+因为hash类型内部有两个dict结构，所以最终会有产生两种rehash，一种rehash基准是field个数，另一种rehash基准是key个数，结合jemalloc内存分配规则，hash类型的容量评估模型为：
+
+总内存消耗 = [key_SDS大小 + redisObject大小 + dictEntry大小 + dict大小 +(redisObject大小 * 2 + field_SDS大小 + val_SDS大小 + dictEntry大小) * field个数 + field_bucket个数 * 指针大小] * key个数 + key_bucket个数 * 指针大小
+【换算】
+总内存消耗 = [ key_SDS大小 + 16 + 24 + 88 + (16 * 2 + field_SDS大小 + val_SDS大小 + 24) * field个数 + field_bucket个数 * 8] * key个数 + key_bucket个数 * 8
+总内存消耗 =[128+ key_SDS大小 +(56 + field_SDS大小 + val_SDS大小 ) * field个数 + field_bucket个数 * 8] * key个数 + key_bucket个数 * 8
+
+生产实例
+用redis做商品缓存，key为商家id，field为商品id，value为商品信息。
+当有1000个key，每个key有1000个field，即总共1百万商品时，总容量跟使用key-value结构差不多，多出来几十兆的空间而已。
+
+##### 命令
+info memory
+memory usage
+memory stats
+memory doctor
+memory purge
+
+##### 优化思路
+
+[Memory Optimization for Redis](https://docs.redis.com/latest/ri/memory-optimizations/)
+Redis内存碎片通常是指Redis在内存中使用的空间并不是连续的，这是因为Redis在进行内存分配时遵循特定的内存管理策略，比如jemalloc，来减少内存碎片。
+
+如果您发现Redis的内存使用出现碎片问题，可能是因为您的应用程序正在进行频繁的键的添加和删除操作，这导致了内存不能被完全重用。
+
+解决方法：
+
+如果您正在频繁更换键，并且这些键的大小相似，您可以考虑使用CONFIG SET hash-max-ziplist-entries 512和CONFIG SET hash-max-ziplist-value 64这样的命令来减少哈希表的大小，从而减少内存碎片。
+
+如果您正在使用的是Redis的版本大于或等于4.0，您可以使用CONFIG SET activedefrag yes来启用自动内存碎片整理。
+
+定期手动运行MEMORY PURGE命令也可以帮助释放内存碎片。
+
+如果您正在使用的是Redis集群，请确保集群的配置是正确的，并且没有因为网络问题导致的数据倾斜分配。
+
+请注意，这些方法可能会影响Redis的性能，因此在调整配置或执行内存整理时，您应该在低峰时段进行操作，并且在生产环境中应该进行充分的测试。
+
+-------------------------
+
+redis hash slot 内存碎片
+Redis中的hash slot是一种数据分布策略，用于实现Redis集群的数据分布和负载均衡。在Redis集群中，所有的键都会根据它们的值被映射到不同的hash slot中。
+
+如果你在Redis集群中遇到了内存碎片的问题，这通常是因为某个或某些hash slot的内存使用并没有均衡分配。这可能是因为有些key被分配到了较小的slot，而其他的key被分配到了较大的slot，导致内存使用不均。
+
+解决这个问题的一种方法是通过重新分配键到不同的hash slot。Redis Cluster提供了CLUSTER REPLICATE命令，可以用来手动迁移hash slot。你可以先在新的节点上创建一个新的hash slot，然后将旧节点上的部分或全部hash slot迁移到新节点。
+
+下面是一个简单的例子，说明如何手动迁移hash slot：
+
+假设你想要迁移的hash slot是1，并且源节点是192.168.1.1:7000，目标节点是192.168.1.2:7000。
+
+在目标节点上创建一个新的hash slot：
+
+redis-cli -h 192.168.1.2 -p 7000 CLUSTER ADDSLOTS {slot}
+在源节点上迁移hash slot到目标节点：
+
+redis-cli -h 192.168.1.1 -p 7000 CLUSTER GETKEYSINSLOT 1 100
+上述命令会获取slot 1中的前100个key。然后，你可以使用MIGRATE命令将这些key迁移到目标节点：
+
+redis-cli -h 192.168.1.1 -p 7000 MIGRATE 192.168.1.2:7000 "" KEYS 100
+重复这个过程，直到源节点上的slot 1为空。
+
+注意：在实际操作中，你可能需要停止对这些key进行写操作，并且可能需要重新配置DNS，以便客户端可以连接到新的节点。
+
+此外，Redis 4.0及以上版本提供了CLUSTER RELOCATE命令，可以自动迁移hash slot中的keys，但这个命令不推荐在生产环境中使用，因为它可能会导致数据丢失。
+
+最后，定期监控集群的内存使用情况，并对键进行合理分布，可以最大程度上避免内存碎片问题。
+
+##### redis的opsForHash带来的内存空间优化
+https://my.oschina.net/u/2382040/blog/2236871
+
+
+#### 数据倾斜
+
+reshard
+https://blog.csdn.net/qq1309664161/article/details/126712760
+
+https://cloud.tencent.com/developer/article/1676492
+
+big key
+
+Scanning for big keys
+redis-cli --bigkeys
+
+https://programming.vip/docs/ali-yun-redis-big-key-search-tool.html
+
+#### 线程安全
+
+单线程，考虑是否原子操作
+
+Get 判断
+
+（时间窗口）
+
+Set （多线程覆盖）
+
+Setnx
+
+谈谈Redis的SETNX https://huoding.com/2015/09/14/463
+
+https://redis.io/commands/setnx
+
+https://github.com/StackExchange/StackExchange.Redis/blob/86b983496d3307903ce9bc2a3c7f207de42a0dea/StackExchange.Redis/StackExchange/Redis/RedisDatabase.cs
+
+
 ## 1. 安装使用
 https://redis.io/topics/quickstart
 
@@ -432,677 +1267,12 @@ The file dump.rdb is automatically imported.
 
 Connect to the database using redis-cli or any other client, to check that data have been imported. (for example SCAN)
 
-## 2. 理论基础 Theory
 
-学习redis源码过程笔记、问题记录，通过代码阅读熟悉分布式NOSQL数据库redis cluster集群功能、主从复制，节点扩容、槽位迁移、failover故障切换、一致性选举完整分析，对理解redis源码很有帮助  https://github.com/daniel416/Reading-and-comprehense-redis/
 
-https://redis.io/topics/cluster-spec
 
-An introduction to Redis data types and abstractions https://redis.io/topics/data-types-intro
+## 2. cluster 集群管理
 
-### 2.1 基本
-
-#### Replication
-
-https://redis.io/topics/replication
-
-#### Redis Sentinel vs Redis Cluster
-
-
-
-https://stackoverflow.com/questions/31143072/redis-sentinel-vs-clustering
-
-### 2.2 Redis Cluster
-
-Goals:
-
-- High performance and linear scalability up to 1000  nodes. There are no proxies, asynchronous replication is used, and no  merge operations are performed on values.
-
-  默认是异步的replica，如果需要同步，则可利用 WAIT 命令
-
-- Acceptable degree of write safety: the system tries (in a best-effort way) to retain all the writes originating from clients  connected with the majority of the master nodes. Usually there are small windows where acknowledged writes can be lost. Windows to lose  acknowledged writes are larger when clients are in a minority partition.
-
-- Availability: Redis Cluster is able to survive  partitions where the majority of the master nodes are reachable and  there is at least one reachable slave for every master node that is no  longer reachable. Moreover using *replicas migration*, masters no longer replicated by any slave will receive one from a master which is covered by multiple slaves.
-
-#### Cluster Gossip Protocol
-
-+ Every node maintains the following information about other nodes that it is aware of in the cluster: 
-
-  The node ID, IP and port of the node, a set of flags, what is the master of the node if it is flagged as slave, last time the node was pinged and the last time the pong was received, the current configuration epoch of the node, the link state and finally the set of hash slots served.
-
-+ Cluster Bus --- TCP PORTS
-
-  Every Redis Cluster node requires two TCP connections open. The normal Redis TCP port used to serve clients, for example 6379, plus the port obtained by adding 10000 to the data port, so 16379 in the example.
-
-#### Cluster DATA SHARDING
-
-16384 slots, hash slot 哈希槽位（*dict大小）又称为bucket桶（不过很多地方都特指 *dictEntry为桶）,why ? https://cloud.tencent.com/developer/article/1042654
-16384这个数字也不是作者随意指定的，Redis集群内部使用位图（bit map）来标志一个slot是否被占用，为了减少集群之间信息交换的大小，信息的大小被固定为2048字节
-2048 bytes = 2^11 * 8 bit= 2^14 bit= 16384
-
-to compute what is the hash slot of a given key, we simply take the CRC16 of the key modulo 16384.
-
-```
-HASH_SLOT = CRC16(key) mod 16384
-```
-
-14 out of 16 CRC16 output bits are used (this is why there is a modulo 16384 operation in the formula above).
-
-Hash tag and multiple key operations 
-this{foo}key and another{foo}key are guaranteed to be in the same hash slot, and can be used together in a command with multiple keys as arguments
-redis集群不支持模糊匹配partial match，想要模糊匹配只能对一个个server或database操作，不可以整体cluster操作，不过hash tag可以潜在解决这个问题
-
-#### Consitensy guarantee
-
-Redis Cluster is not able to guarantee strong consistency. In practical terms this means that under certain conditions it is possible that Redis Cluster will lose writes that were acknowledged by the system to the client.
-Tradeoff between Synchronous write and Performance
-
-+ scenario 1： Asynchronous writes
-
-  Your client writes to the master B. =》 The master B replies OK to your client. =》The master B propagates the write to its slaves B1, B2 and B3.
-
-  As you can see, B does not wait for an acknowledgement from B1, B2, B3 before replying to the client, since this would be a prohibitive latency penalty for Redis, so if your client writes something, B acknowledges the write, but crashes before being able to send the write to its slaves, one of the slaves (that did not receive the write) can be promoted to master, losing the write forever.
-
-  This is very similar to what happens with most databases that are configured to flush data to disk every second, so it is a scenario you are already able to reason about because of past experiences with traditional database systems not involving distributed systems. Similarly you can improve consistency by forcing the database to flush data to disk before replying to the client, but this usually results in prohibitively low performance. That would be the equivalent of synchronous replication in the case of Redis Cluster.
-
-+ Scenario 2： synchronous writes
-
-  Redis Cluster has support for synchronous writes when absolutely needed, implemented via the WAIT command. This makes losing writes a lot less likely. However, note that Redis Cluster does not implement strong consistency even when synchronous replication is used: it is always possible, under more complex failure scenarios, that a slave that was not able to receive the write will be elected as master.
-
-+ Scenario 3：network partition
-
-  There is also a client, that we will call Z1.
-
-  After a partition occurs, it is possible that in one side of the partition we have A, C, A1, B1, C1, and in the other side we have B and Z1.
-
-  Z1 is still able to write to B, which will accept its writes. If the partition heals in a very short time, the cluster will continue normally. However, if the partition lasts enough time for B1 to be promoted to master on the majority side of the partition, the writes that Z1 has sent to B in the mean time will be lost.
-
-  Note that there is a maximum window to the amount of writes Z1 will be able to send to B: if enough time has elapsed for the majority side of the partition to elect a slave as master, every master node in the minority side will have stopped accepting writes.
-
-  This amount of time is a very important configuration directive of Redis Cluster, and is called the node timeout.
-
-  After node timeout has elapsed, a master node is considered to be failing, and can be replaced by one of its replicas. Similarly, after node timeout has elapsed without a master node to be able to sense the majority of the other master nodes, it enters an error state and stops accepting writes.
-
-  
-
-#### currentEpoch & configEpoch
-
-+ currentEpoch
-
-  Redis Cluster uses a concept similar to the Raft algorithm "term". In Redis Cluster the term is called epoch instead, and it is used in order to give incremental versioning to events. When multiple nodes provide  conflicting information, it becomes possible for another node to  understand which state is the most up to date.
-
-  The `currentEpoch` is a 64 bit unsigned number.
-
-  At node creation every Redis Cluster node, both slaves and master nodes, set the `currentEpoch` to 0.
-
-+ configEpoch
-
-  Every master always advertises its `configEpoch` in ping and pong packets along with a bitmap advertising the set of slots it serves.
-
-  The `configEpoch` is set to zero in masters when a new node is created.
-
-  A new `configEpoch` is created during slave election. 
-
-  
-
-This mechanism in Redis Cluster is called last failover wins.
-When a slave fails over its master, it obtains a configuration epoch which is guaranteed to be greater than the one of its master (and more generally greater than any other configuration epoch generated previously). For example node B, which is a slave of A, may failover B with configuration epoch of 4. It will start to send heartbeat packets (the first time mass-broadcasting cluster-wide) and because of the following second rule, receivers will update their hash slot tables
-
-The same happens during reshardings. When a node importing a hash slot completes the import operation, its configuration epoch is incremented to make sure the change will be propagated throughout the cluster.
-
->Practical example of configuration epoch usefulness during partitions
->This section illustrates how the epoch concept is used to make the slave promotion process more resistant to partitions.
-
-> + A master is no longer reachable indefinitely. The master has three slaves A, B, C.
-> + Slave A wins the election and is promoted to master.
-> + A network partition makes A not available for the majority of the cluster.
-> + Slave B wins the election and is promoted as master.
-> + A partition makes B not available for the majority of the cluster.
-> + The previous partition is fixed, and A is available again.
->   At this point B is down and A is available again with a role of master (actually UPDATE messages would reconfigure it promptly, but here we assume all UPDATE messages were lost). At the same time, slave C will try to get elected in order to fail over B. This is what happens:
-
-> 1.C will try to get elected and will succeed, since for the majority of masters its master is actually down. It will obtain a new incremental configEpoch.
-> 2.A will not be able to claim to be the master for its hash slots, because the other nodes already have the same hash slots associated with a higher configuration epoch (the one of B) compared to the one published by A.
-> 3.So, all the nodes will upgrade their table to assign the hash slots to C, and the cluster will continue its operations.
-> https://redis.io/topics/cluster-spec
-
-
-
-#### Cluster failover strategy 主从切换
-
-集群是否工作状态可以通过 cluster info查看cluster_state
-
-对于一个N个master node的集群来说，如果每个master node有一个slave，总共就是2N个节点：
-
-1）任何一个节点挂掉或者被network partitioned away都不影响整体的工作，如果是slave挂，没有影响，如果是master挂，其replica会被选举为新的master，依然没有影响
-
-2）如果一个master和其slave同时挂，则cluster无法工作（实际上不会“同时”，肯定是有时间差的，可以利用replica migration提高此情况下的可用性）
-
-3）如果一个master挂掉，并且没有slave，集群无法工作
-
-4）超半数master挂掉，集群无法选举，从而无法工作
-
-N建议为奇数：
-
-比如3个master节点和4个master节点的集群相比，如果都挂了一个master节点都能选举新master节点，如果都挂了两个master节点都没法选举新master节点了，所以奇数的master节点可以节省机器资源
-
-##### Step 1: Failure detection
-
-**PFAIL (*Possible failure*) flag:**
-
-A node flags another node with the `PFAIL` flag when the node is not reachable for more than `NODE_TIMEOUT` time. Both master and slave nodes can flag another node as `PFAIL`, regardless of its type.
-
-**FAIL flag:**
-
-The `PFAIL` flag alone is just local  information every node has about other nodes, but it is not sufficient  to trigger a slave promotion. For a node to be considered down the `PFAIL` condition needs to be escalated to a `FAIL` condition.
-
-A `PFAIL` condition is escalated to a `FAIL` condition when the following set of conditions are met:
-
-- Some node, that we'll call A, has another node B flagged as `PFAIL`.
-- Node A collected, via gossip sections, information about the state of B from the point of view of the majority of masters in the cluster.
-- The majority of masters signaled the `PFAIL` or `FAIL` condition within `NODE_TIMEOUT * FAIL_REPORT_VALIDITY_MULT` time. (The validity factor is set to 2 in the current implementation, so this is just two times the `NODE_TIMEOUT` time).
-
-If all the above conditions are true, Node A will:
-
-- Mark the node as `FAIL`.
-- Send a `FAIL` message to all the reachable nodes.
-
-Note that *the FAIL flag is mostly one way*. That is, a node can go from `PFAIL` to `FAIL`, but a `FAIL` flag can only be cleared in the following situations:
-
-- The node is already reachable and is a slave. In this case the `FAIL` flag can be cleared as slaves are not failed over.
-- The node is already reachable and is a master not serving any slot. In this case the `FAIL` flag can be cleared as masters without slots do not really participate  in the cluster and are waiting to be configured in order to join the  cluster.
-- The node is already reachable and is a master, but a long time (N times the `NODE_TIMEOUT`) has elapsed without any detectable slave promotion. It's better for it to rejoin the cluster and continue in this case.
-
-However the Redis Cluster failure detection has a liveness  requirement: eventually all the nodes should agree about the state of a  given node. There are two cases that can originate from split brain  conditions. Either some minority of nodes believe the node is in `FAIL` state, or a minority of nodes believe the node is not in `FAIL` state. In both the cases eventually the cluster will have a single view of the state of a given node:
-
-**Case 1**: If a majority of masters have flagged a node as `FAIL`, because of failure detection and the *chain effect* it generates, every other node will eventually flag the master as `FAIL`, since in the specified window of time enough failures will be reported.
-
-**Case 2**: When only a minority of masters have flagged a node as `FAIL`, the slave promotion will not happen (as it uses a more formal algorithm that makes sure everybody knows about the promotion eventually) and  every node will clear the `FAIL` state as per the `FAIL` state clearing rules above (i.e. no promotion after N times the `NODE_TIMEOUT` has elapsed).
-
-##### Step 2: Slave election and promotion
-
-Slave election and promotion is handled by slave nodes
-
-In order for a slave to promote itself to master, it needs to start  an election and win it. All the slaves for a given master can start an  election if the master is in `FAIL` state, however only one slave will win the election and promote itself to master.
-
-A slave starts an election when the following conditions are met:
-
-- The slave's master is in `FAIL` state.
-- The master was serving a non-zero number of slots.
-- The slave replication link was disconnected from the  master for no longer than a given amount of time, in order to ensure the promoted slave's data is reasonably fresh. This time is user  configurable.
-
-
-
-step 1) slave increment its `currentEpoch` counter, and request votes from master instances.
-
-step 2) Request Votes: broadcasting a `FAILOVER_AUTH_REQUEST` packet to every master node of the cluster. Then it waits for a maximum time of two times the `NODE_TIMEOUT` for replies to arrive (but always for at least 2 seconds).
-
-A slave discards any `AUTH_ACK` replies with an epoch that is less than the `currentEpoch` at the time the vote request was sent. This ensures it doesn't count votes intended for a previous election.
-
-step 3) Once a master has voted for a given slave, replying positively with a `FAILOVER_AUTH_ACK`, it can no longer vote for another slave of the same master for a period of `NODE_TIMEOUT * 2`. In this period it will not be able to reply to other authorization  requests for the same master. This is not needed to guarantee safety,  but useful for preventing multiple slaves from getting elected (even if  with a different `configEpoch`) at around the same time, which is usually not wanted.
-
-how master votes:
-
-i. A master only votes a single time for a given epoch, and refuses to vote for older epochs: every master has a lastVoteEpoch  field and will refuse to vote again as long as the `currentEpoch` in the auth request packet is not greater than the lastVoteEpoch. When a master replies positively to a vote request, the lastVoteEpoch is  updated accordingly, and safely stored on disk.
-
-ii. A master votes for a slave only if the slave's master is flagged as `FAIL`.
-
-iii. Auth requests with a `currentEpoch` that is less than the master `currentEpoch` are ignored. Because of this the master reply will always have the same `currentEpoch` as the auth request. If the same slave asks again to be voted, incrementing the `currentEpoch`, it is guaranteed that an old delayed reply from the master can not be accepted for the new vote.
-
-step 4) Once the slave receives ACKs from the majority of masters, it wins the election. Otherwise if the majority is not reached within the period of two times `NODE_TIMEOUT` (but always at least 2 seconds), the election is aborted and a new one will be tried again after `NODE_TIMEOUT * 4` (and always at least 4 seconds).
-
-Once a slave wins the election, it obtains a new unique and incremental `configEpoch` which is higher than that of any other existing master. It starts  advertising itself as master in ping and pong packets, providing the set of served slots with a `configEpoch` that will win over the past ones.
-
-In order to speedup the reconfiguration of other nodes, a pong packet is broadcast to all the nodes of the cluster. Currently unreachable nodes  will eventually be reconfigured when they receive a ping or pong packet  from another node or will receive an `UPDATE` packet from another node if the information it publishes via heartbeat packets are detected to be out of date.
-
-The other nodes will detect that there is a new master serving the same slots served by the old master but with a greater `configEpoch`, and will upgrade their configuration. Slaves of the old master (or the  failed over master if it rejoins the cluster) will not just upgrade the  configuration but will also reconfigure to replicate from the new  master. 
-
-##### Example
-
-- A master is no longer reachable indefinitely. The master has three slaves A, B, C.
-- Slave A wins the election and is promoted to master.
-- A network partition makes A not available for the majority of the cluster.
-- Slave B wins the election and is promoted as master.
-- A partition makes B not available for the majority of the cluster.
-- The previous partition is fixed, and A is available again.
-
-At this point B is down and A is available again with a role of master (actually `UPDATE` messages would reconfigure it promptly, but here we assume all `UPDATE` messages were lost). At the same time, slave C will try to get elected in order to fail over B. This is what happens:
-
-1. C will try to get elected and will succeed, since for  the majority of masters its master is actually down. It will obtain a  new incremental `configEpoch`.
-2. A will not be able to claim to be the master for its  hash slots, because the other nodes already have the same hash slots  associated with a higher configuration epoch (the one of B) compared to  the one published by A.
-3. So, all the nodes will upgrade their table to assign the hash slots to C, and the cluster will continue its operations.
-
-##### Case 1: network partition 短暂的脑裂
-
-除了Step 1提到的选举过程中的脑裂问题，选举前的读写也存在短暂的脑裂问题：
-
-Majority master nodes：A B
-
-Minority master nodes：C
-
-1) A write may reach a master, but while the master may be able to reply to the client, the write may not be propagated to slaves via the  asynchronous replication used between master and slave nodes. If the  master dies without the write reaching the slaves, the write is lost  forever if the master is unreachable for a long enough period that one  of its slaves is promoted. 
-
-2) A client with an out-of-date routing table may write to the old master  before it is converted into a slave (of the new master) by the cluster.
-
-Notes：
-
-for a master to be failed over it must be unreachable by the majority of masters for at least `NODE_TIMEOUT`, so if the partition is fixed before that time, no writes are lost. When the partition lasts for more than `NODE_TIMEOUT`, all the writes performed in the minority side up to that point may be  lost. However the minority side of a Redis Cluster will start refusing  writes as soon as `NODE_TIMEOUT` time has elapsed without  contact with the majority, so there is a maximum window after which the  minority becomes no longer available. Hence, no writes are accepted or  lost after that time.
-
-##### Case 2: master fail=>slave promote to master
-
-A<-A1
-
-B<-B1
-
-C<-C1
-
-In our example cluster with nodes A, B, C, if node B fails the cluster is not able to continue, since we no longer have a way to serve hash slots in the range 5501-11000.
-
-However when the cluster is created (or at a later time) we add a slave node to every master, so that the final cluster is composed of A, B, C that are master nodes, and A1, B1, C1 that are slave nodes. This way, the system is able to continue if node B fails.
-
-Node B1 replicates B, and B fails, the cluster will promote node B1 as the new master and will continue to operate correctly.
-
-However, note that if nodes B and B1 fail at the same time, Redis Cluster is not able to continue to operate.
-
-##### Case 3: mater & slave both fail, but slave fail first
-
-或者说出现orphaned master node的情况
-
-**解决方法:**
-
-replica migration，参考配置 **cluster-migration-barrier `<count>`**:
-
-如果 **cluster-migration-barrier `1`**，对于cluster：
-
-A<-A1
-
-B<-B1
-
-C<-C1
-
-需要增加机器VM4，然后VM4可以有一个或两个replica，比如：
-
-A<-A2
-
-C<-C2
-
-或
-
-A<-A2
-
-A<-A3
-
-如果 B1挂掉，B就成为了 orphaned master nodes，（如果B再挂掉，就无法提供服务，simply because there is no other instance to have a copy of the hash slots the master was serving.），所以引入了replica migration，就是当B1挂掉后，因为A有A1和A2等多个replica，所以其中一个可以migration称为B的replica，这样即使B再挂掉，仍然有一个replica可以被promote成为B，可能你会问，这么麻烦，给每个master node都搞多个replica不行吗，当然可以，不过 this is expensive.
-
-##### Case 4：Slave of Slave node
-
-Redis的主从关系是链式的，一个从节点也是可以拥有从节点的，
-
-当一个主A和从A1同时挂掉，A2被选举为新主，然后先重启A，主就会变成A2的从节点，再重启A1，A1仍然会是A的从节点，从而出现链式：A1->A->A2
-
-解决办法：
-
-cluster replicate 为A1指定主节点
-
-##### Case 5：网络不稳定，频繁主从切换
-
-解决办法：合理修正cluster-node-timeout
-
-Once the slave receives ACKs from the majority of masters, it wins the election.  Otherwise if the majority is not reached within the period of two times `NODE_TIMEOUT` (but always at least 2 seconds), the election is aborted and a new one will be tried again after `NODE_TIMEOUT * 4` (and always at least 4 seconds).
-
-As soon as a master is in `FAIL` state, a slave waits a short period of time before trying to get elected. That delay is computed as follows:
-
-```
-DELAY = 500 milliseconds + random delay between 0 and 500 milliseconds +
-        SLAVE_RANK * 1000 milliseconds.
-```
-
-The fixed delay ensures that we wait for the `FAIL` state to propagate across the cluster, otherwise the slave may try to get elected while the masters are still unaware of the `FAIL` state, refusing to grant their vote.
-
-
-
-##### Case 6: 常见现象：master nodes aggregate 
-
-假设3台机器M1 M2 M3, 创建cluster，3个master A B C，3个slave(或者6个slave) A1 B1 C1，一般会平均分配：
-
-```
-M1: A B1
-M2: B C1
-M3: C A1
-
-假设M2 down，
-M1: A B
-M3: C A1
-
-M2 up后，
-M1: A B
-M2: B1 C1
-M3: C A1
-
-可以看到M2并不会争夺回B，所以很容易推算当6个slave的情况下，极有可能，最终master节点全部跑到一台机器上
-```
-
-观点：kafka中类似的概念是topic leader和follower的分配，不同的是，当down掉的节点起来之后会抢夺回之前的topic leader，从而使得节点总是很平均，而redis不会抢夺，所以会越来越集中
-
-https://blog.csdn.net/zhouwenjun0820/article/details/105893144
-
-**解决办法：**
-
-参考 3.2 自动方式管理=> cluster failover 进行调整
-
-```
-HOST1:6379> cluster nodes
-afabffee7a9076d42c9640a77ae2db6e6eb52fae HOST1:6379@16379 myself,slave 27c88c277aa82340f5e2f9d73078d59399ed6b87 0 1632299474000 13 connected
-9f92fe21d31b4b18f54321fbedc809ca4afcf187 HOST3:6381@16381 slave b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d 0 1632299477000 9 connected
-27c88c277aa82340f5e2f9d73078d59399ed6b87 HOST2:6380@16380 master - 0 1632299475000 18 connected 0-5460
-b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d HOST2:6379@16379 master - 0 1632299474000 4 connected 5461-10922
-36d8fdd4eaedd2f601a2e27d9856d9b82dd8017c HOST3:6379@16379 slave 56ce383e2cb6affedd61317cfb35b05f29dfc7f1 0 1632299475000 15 connected
-56ce383e2cb6affedd61317cfb35b05f29dfc7f1 HOST2:6381@16381 master - 0 1632299477133 15 connected 10923-16383
-f24a6554ed2b64b071122bd16c7201aca1b184d0 HOST1:6380@16380 slave 56ce383e2cb6affedd61317cfb35b05f29dfc7f1 0 1632299476000 15 connected
-54d6095aca3e1edd27761e080651bb28144e3a81 HOST3:6380@16380 slave 27c88c277aa82340f5e2f9d73078d59399ed6b87 0 1632299476000 18 connected
-bb483966fa9a7d60c9020a75d19fb2a4d1e8acf0 HOST1:6381@16381 slave b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d 0 1632299476130 4 connected
-
-HOST2:6380> connect HOST1 6379
-HOST1:6379> cluster nodes
-afabffee7a9076d42c9640a77ae2db6e6eb52fae HOST1:6379@16379 myself,master - 0 1632299972000 19 connected 0-5460
-9f92fe21d31b4b18f54321fbedc809ca4afcf187 HOST3:6381@16381 slave b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d 0 1632299973000 9 connected
-27c88c277aa82340f5e2f9d73078d59399ed6b87 HOST2:6380@16380 slave afabffee7a9076d42c9640a77ae2db6e6eb52fae 0 1632299974517 19 connected
-b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d HOST2:6379@16379 master - 0 1632299972511 4 connected 5461-10922
-36d8fdd4eaedd2f601a2e27d9856d9b82dd8017c HOST3:6379@16379 slave 56ce383e2cb6affedd61317cfb35b05f29dfc7f1 0 1632299971508 15 connected
-56ce383e2cb6affedd61317cfb35b05f29dfc7f1 HOST2:6381@16381 master - 0 1632299974000 15 connected 10923-16383
-f24a6554ed2b64b071122bd16c7201aca1b184d0 HOST1:6380@16380 slave 56ce383e2cb6affedd61317cfb35b05f29dfc7f1 0 1632299974000 15 connected
-54d6095aca3e1edd27761e080651bb28144e3a81 HOST3:6380@16380 slave afabffee7a9076d42c9640a77ae2db6e6eb52fae 0 1632299971000 19 connected
-bb483966fa9a7d60c9020a75d19fb2a4d1e8acf0 HOST1:6381@16381 slave b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d 0 1632299973514 4 connected
-
-HOST1:6379> connect HOST3 6379
-HOST3:6379> cluster failover
-OK
-HOST3:6379> cluster nodes
-56ce383e2cb6affedd61317cfb35b05f29dfc7f1 HOST2:6381@16381 slave 36d8fdd4eaedd2f601a2e27d9856d9b82dd8017c 0 1632300416000 20 connected
-f24a6554ed2b64b071122bd16c7201aca1b184d0 HOST1:6380@16380 slave 36d8fdd4eaedd2f601a2e27d9856d9b82dd8017c 0 1632300416000 20 connected
-b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d HOST2:6379@16379 master - 0 1632300421801 4 connected 5461-10922
-afabffee7a9076d42c9640a77ae2db6e6eb52fae HOST1:6379@16379 master - 0 1632300420800 19 connected 0-5460
-27c88c277aa82340f5e2f9d73078d59399ed6b87 HOST2:6380@16380 slave afabffee7a9076d42c9640a77ae2db6e6eb52fae 0 1632300419000 19 connected
-36d8fdd4eaedd2f601a2e27d9856d9b82dd8017c HOST3:6379@16379 myself,master - 0 1632300417000 20 connected 10923-16383
-bb483966fa9a7d60c9020a75d19fb2a4d1e8acf0 HOST1:6381@16381 slave b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d 0 1632300419796 4 connected
-54d6095aca3e1edd27761e080651bb28144e3a81 HOST3:6380@16380 slave afabffee7a9076d42c9640a77ae2db6e6eb52fae 0 1632300418793 19 connected
-9f92fe21d31b4b18f54321fbedc809ca4afcf187 HOST3:6381@16381 slave b78a3f4b07cc5cf58a871abcb4cc01fcbc05e96d 0 1632300418000 9 connected
-```
-
-
-
-### 2.3 Sentinel
-
-
-### 2.4 深度探索
-[为了拿捏 Redis 数据结构，我画了 40 张图（完整版）](https://mp.weixin.qq.com/s/MGcOl1kGuKdA7om0Ahz5IA)
-[A Closer Look at Redis Dictionary Implementation Internals](https://codeburst.io/a-closer-look-at-redis-dictionary-implementation-internals-3fd815aae535)
-
-![](/docs/docs_image/software/buildingblock/redis_dict1.png)
-
-Each Redis database has two dictionaries. The first one is used for keys with expiry date. It’s redisDb.expires, and values stored there are expiration timestamps. The other is for client values; it’s redisDb.dict.
-
-Each Redis dict has two hash tables. Both are implemented as a plain array; each slot, or bucket, contains a list of elements — in case of several elements’ hashes point at the same array index (this is known as a hash collision). 
-
-In Redis, the concept of "hash slots" refers to how Redis Cluster distributes keys across multiple Redis instances. Here’s a breakdown to clarify:
-
-1. Hash Slots in Redis Cluster:
-
-Redis Cluster uses a concept of hash slots to determine which Redis instance (node) should store each key-value pair.
-There are exactly 16384 hash slots available in Redis Cluster (2^14), numbered from 0 to 16383.
-Each key is hashed to determine which hash slot it belongs to. **Redis then uses this hash slot number to determine the node responsible for storing and handling operations for keys within that slot.**
-
-2. dict vs. dictht:
-
-In the context of Redis internals, a dict (dictionary) is a data structure used within each Redis instance to store keys and values.
-dictht (dictionary hash table) is a specific implementation detail within the dict data structure in Redis.
-The dictht is where the actual hash table resides that maps keys to their corresponding values within a dict.
-
-3. Relationship to Hash Slots:
-
-The number of hash slots (16384) in Redis Cluster does not directly correlate to the size of a dict or dictht in terms of memory or capacity.
-Instead, hash slots are a logical division used for partitioning data across Redis nodes in a cluster setup.
-Each Redis instance (node) manages its own dict, which can grow dynamically as keys and values are added.
-
-4. Size of dict or dictht:
-
-The size of a dict or dictht in Redis depends on several factors:
-The number of entries (keys and values) stored within it.
-The load factor of the hash table (how full it is relative to its capacity).
-Redis dynamically resizes dictht as needed to maintain efficient hash table operations (like rehashing when load factor exceeds a threshold).
-
-In summary, the 16384 hash slots in Redis refer to how keys are distributed across nodes in a Redis Cluster, not to the size of individual dict or dictht structures within each Redis instance. Each Redis instance manages its own dict, and the dictht within it grows and shrinks dynamically based on the number of entries and other factors, but its size isn't directly tied to the number of hash slots in Redis Cluster.
-
-
-```
-typedef struct dict {
-    dictType *type;
-    void *privdata;
-    dictht ht[2];
-    long rehashidx; /* rehashing not in progress if rehashidx == -1 */
-    unsigned long iterators; /* number of iterators currently running */
-} dict;
-
-typedef struct dictht {
-    dictEntry **table;
-    unsigned long size;
-    unsigned long sizemask;
-    unsigned long used;
-} dictht;
-
-typedef struct dictEntry {
-    void *key;
-    union {
-        void *val;
-        uint64_t u64;
-        int64_t s64;
-        double d;
-    } v;
-    struct dictEntry *next;
-} dictEntry;
-```
-
-The initial size of hash table dictht is 4.{存在哈希冲突时，redis中使用拉链法解决哈希冲突，但是dictentry数组的默认大小为4，发送哈希冲突的概率极高，如果不进行扩容，会导致哈希表的时间复杂度恶化为O(logN)，所以满足一定条件时需要进行dicEntry数组的扩容} As more & more keys enter into the system, the hash table size also grows. When does redis resize hash table? Redis can resize hash tables or simply rehash in following 2 scenarios:
-
-+ total_elements / total_buckets = 1 and dict resize is enabled. Enabling or disabling dict resize is handled by redis internally. Redis tries to avoid rehashing when some background process runs to do some sort of heavy operation like saving the database to disk as rehashing involves movement of memory pages in heavy amount. So simply stating, when background process runs, dict resize is usually disabled otherwise enabled.
-+ total_elements / total_buckets > 5 ( force resize ratio, forcefully resizing is done)
-- https://kousiknath.medium.com/a-little-internal-on-redis-key-value-storage-implementation-fdf96bac7453
-- 
-注意，上面的hash table  dictEntry **table; 是可以通过rehash扩容的(任意大小)，但是dict本身(上图dict\* dict)作为最外层的hash table大小是固定的
-
-so the dict size equals to slot size which is fixed 16384
-
-Yes, that's correct! In Redis, the size of the dictionary (also known as the hash table) is fixed at 16384 slots. This means that the dictionary can store up to 16384 keys before it starts to overflow and start using additional memory.
-
-The size of the dictionary is determined by the dict-size configuration parameter, which is set to 16384 by default. You can adjust this parameter to change the size of the dictionary, but keep in mind that increasing the size of the dictionary will use more memory.
-
-#### 内存优化
-
-[容量评估](https://blog.csdn.net/u011983531/article/details/79598671)
-https://cloud.tencent.com/developer/article/1004898
-https://www.cnblogs.com/yxhblogs/p/12713739.html
-
-##### 内存模型
-
-Each data type in Redis has its own encoding, and most of them have several encodings for different scenarios. Even sds strings (and yes, string keys are usually sds strings) can have multiple encodings.
-
-Sets, sorted sets, lists and hashes use a compact "ziplist" encoding in memory when they are small, but move to a memory wasteful yet faster encoding when they grow.
-
-The most complex object is the sorted set, which is a combination of a skiplist and a hash table. And the new streams object also has a very interesting representation.
-
-In RDB though, they get serialized into a compact representation and not kept as they are in memory.
-https://stackoverflow.com/questions/48057733/is-redis-data-stored-as-sds-or-as-objects
-
-Redis Ziplist https://redis.com/glossary/redis-ziplist/
-
-Redis automatically switches between ziplist and other data structures, such as linked lists or hash tables, based on certain criteria. The decision to use ziplists depends on factors like the number of elements and their sizes. Redis provides configuration options to control the threshold values for switching between different representations.
-
-conn.rpush(‘test’, ‘a’, ‘b’, ‘c’, ‘d’)
-4
-We start by pushing four items onto a LIST.
-
-conn.debug_object(‘test’)
-To obtain information about a specific object, we can utilize the “debug object” command.it is important to note that for nonziplist encodings (except for the special encoding of SETs), this number does not accurately reflect the actual memory consumption.
-
-redisobject：
-但redis大多数情况下并没有直接使用底层数据结构（sds ziplist skiplist等）来实现键值对数据库，而是基于这些数据结构创建了一个对象系统，每个对象都包含了一种具体数据结构。比如，当redis数据库新创建一个键值对时，就需要创建一个值对象，值对象的*ptr属性指向具体的SDS字符串。
-
-###### 底层数据结构Sting字符串容量评估
-一个简单的key-value键值对最终会产生4个消耗内存的结构，中间free掉的不考虑：
-
-
-1个dictEntry结构，24字节，负责保存具体的键值对 向上取整为32；(jemalloc 在分配内存时，会根据我们申请的字节数 N，找一个比 N 大，但是最接近 N 的 2 的幂次数作为分配的空间，这样可以减少频繁分配的次数。举个例子。如果你申请 6 字节空间，jemalloc 实际会分配 8 字节空间；如果你申请 24 字节空间，jemalloc 则会分配 32 字节。所以，在我们刚刚说的场景里，dictEntry 结构就占用了 32 字节。)
-1个redisObject结构，16字节，用作val对象；
-1个SDS结构，用作key字符串，占9个字节(free4个字节+len4个字节+字符串末尾”\0”1个字节)；
-1个SDS结构，用作val字符串，占9个字节(free4个字节+len4个字节+字符串末尾”\0”1个字节)
-
-　　当key个数逐渐增多，redis还会以rehash的方式扩展哈希表节点数组(也就是dictEntry[]数组)，即增大哈希表的bucket个数，每个bucket元素都是个指针(dictEntry*)，占8字节，bucket个数是超过key个数向上求整的2的n次方。
-
-　　真实情况下，每个结构最终真正占用的内存还要考虑jemalloc的内存分配规则，
-
-　jemalloc是一种通用的内存管理方法，着重于减少内存碎片和支持可伸缩的并发性，做redis容量评估前必须对jemalloc的内存分配规则有一定了解。
-
-jemalloc基于申请内存的大小把内存分配分为三个等级：small，large，huge：
-
-Small Object的size以8字节，16字节，32字节等分隔开，小于页大小；
-Large Object的size以分页为单位，等差间隔排列，小于chunk的大小；
-Huge Object的大小是chunk大小的整数倍。
-对于64位系统，一般chunk大小为4M，页大小为4K
-
-
-综上所述，string类型的容量评估模型为：
-
-总内存消耗 = (dictEntry大小＋redisObject大小＋key_SDS大小＋val_SDS大小) * key个数＋bucket个数 * 8
-【换算下来】
-总内存消耗 = (32 + 16 + key_SDS大小＋val_SDS大小) * key个数＋bucket个数 * 8 
-
-（1）举例说明
-当key长度为 13，value长度为15，key个数为2000，根据上面总结的容量评估模型，容量预估值为 (32 + 16 + 32 + 32) * 2000 + 2048 * 8 = 240384 
-
-（2）生产实践
-用redis做商品缓存，key为商品id，value为商品信息。key大约占用30个字节，value大约占用1500个字节。
-当缓存1百万商品时，容量预估值为(32 + 16 + 64 + 1536) * 1000000+ 1000000(预估) * 8 = 1656000000，约等于1.54G
-总结：当value比较大时，占用的内存约等于value的大小*个数
-
-###### 底层数据结构哈希表容量评估
-一个Hash存储结构最终会产生以下几个消耗内存的结构：
-
-1个SDS结构，用作key字符串，占9个字节(free4个字节+len4个字节+字符串末尾”\0”1个字节)；
-1个dictEntry结构，24字节，负责保存当前的哈希对象；
-1个redisObject结构，16字节，指向当前key下属的dict结构；
-1个dict结构，88字节，负责保存哈希对象的键值对；
-n个dictEntry结构，24*n字节，负责保存具体的field和value，n等于field个数；
-n个redisObject结构，16*n字节，用作field对象；
-n个redisObject结构，16*n字节，用作value对象；
-n个SDS结构，（field长度＋9）*n字节，用作field字符串；
-n个SDS结构，（value长度＋9）*n字节，用作value字符串；
-因为hash类型内部有两个dict结构，所以最终会有产生两种rehash，一种rehash基准是field个数，另一种rehash基准是key个数，结合jemalloc内存分配规则，hash类型的容量评估模型为：
-
-总内存消耗 = [key_SDS大小 + redisObject大小 + dictEntry大小 + dict大小 +(redisObject大小 * 2 + field_SDS大小 + val_SDS大小 + dictEntry大小) * field个数 + field_bucket个数 * 指针大小] * key个数 + key_bucket个数 * 指针大小
-【换算】
-总内存消耗 = [ key_SDS大小 + 16 + 24 + 88 + (16 * 2 + field_SDS大小 + val_SDS大小 + 24) * field个数 + field_bucket个数 * 8] * key个数 + key_bucket个数 * 8
-总内存消耗 =[128+ key_SDS大小 +(56 + field_SDS大小 + val_SDS大小 ) * field个数 + field_bucket个数 * 8] * key个数 + key_bucket个数 * 8
-
-生产实例
-用redis做商品缓存，key为商家id，field为商品id，value为商品信息。
-当有1000个key，每个key有1000个field，即总共1百万商品时，总容量跟使用key-value结构差不多，多出来几十兆的空间而已。
-
-##### 命令
-info memory
-memory usage
-memory stats
-memory doctor
-memory purge
-##### 优化思路
-
-[Memory Optimization for Redis](https://docs.redis.com/latest/ri/memory-optimizations/)
-Redis内存碎片通常是指Redis在内存中使用的空间并不是连续的，这是因为Redis在进行内存分配时遵循特定的内存管理策略，比如jemalloc，来减少内存碎片。
-
-如果您发现Redis的内存使用出现碎片问题，可能是因为您的应用程序正在进行频繁的键的添加和删除操作，这导致了内存不能被完全重用。
-
-解决方法：
-
-如果您正在频繁更换键，并且这些键的大小相似，您可以考虑使用CONFIG SET hash-max-ziplist-entries 512和CONFIG SET hash-max-ziplist-value 64这样的命令来减少哈希表的大小，从而减少内存碎片。
-
-如果您正在使用的是Redis的版本大于或等于4.0，您可以使用CONFIG SET activedefrag yes来启用自动内存碎片整理。
-
-定期手动运行MEMORY PURGE命令也可以帮助释放内存碎片。
-
-如果您正在使用的是Redis集群，请确保集群的配置是正确的，并且没有因为网络问题导致的数据倾斜分配。
-
-请注意，这些方法可能会影响Redis的性能，因此在调整配置或执行内存整理时，您应该在低峰时段进行操作，并且在生产环境中应该进行充分的测试。
-
--------------------------
-
-redis hash slot 内存碎片
-Redis中的hash slot是一种数据分布策略，用于实现Redis集群的数据分布和负载均衡。在Redis集群中，所有的键都会根据它们的值被映射到不同的hash slot中。
-
-如果你在Redis集群中遇到了内存碎片的问题，这通常是因为某个或某些hash slot的内存使用并没有均衡分配。这可能是因为有些key被分配到了较小的slot，而其他的key被分配到了较大的slot，导致内存使用不均。
-
-解决这个问题的一种方法是通过重新分配键到不同的hash slot。Redis Cluster提供了CLUSTER REPLICATE命令，可以用来手动迁移hash slot。你可以先在新的节点上创建一个新的hash slot，然后将旧节点上的部分或全部hash slot迁移到新节点。
-
-下面是一个简单的例子，说明如何手动迁移hash slot：
-
-假设你想要迁移的hash slot是1，并且源节点是192.168.1.1:7000，目标节点是192.168.1.2:7000。
-
-在目标节点上创建一个新的hash slot：
-
-redis-cli -h 192.168.1.2 -p 7000 CLUSTER ADDSLOTS {slot}
-在源节点上迁移hash slot到目标节点：
-
-redis-cli -h 192.168.1.1 -p 7000 CLUSTER GETKEYSINSLOT 1 100
-上述命令会获取slot 1中的前100个key。然后，你可以使用MIGRATE命令将这些key迁移到目标节点：
-
-redis-cli -h 192.168.1.1 -p 7000 MIGRATE 192.168.1.2:7000 "" KEYS 100
-重复这个过程，直到源节点上的slot 1为空。
-
-注意：在实际操作中，你可能需要停止对这些key进行写操作，并且可能需要重新配置DNS，以便客户端可以连接到新的节点。
-
-此外，Redis 4.0及以上版本提供了CLUSTER RELOCATE命令，可以自动迁移hash slot中的keys，但这个命令不推荐在生产环境中使用，因为它可能会导致数据丢失。
-
-最后，定期监控集群的内存使用情况，并对键进行合理分布，可以最大程度上避免内存碎片问题。
-
-##### redis的opsForHash带来的内存空间优化
-https://my.oschina.net/u/2382040/blog/2236871
-
-
-#### 数据倾斜
-
-reshard
-https://blog.csdn.net/qq1309664161/article/details/126712760
-
-https://cloud.tencent.com/developer/article/1676492
-
-big key
-
-Scanning for big keys
-redis-cli --bigkeys
-
-https://programming.vip/docs/ali-yun-redis-big-key-search-tool.html
-
-#### 线程安全
-
-单线程，考虑是否原子操作
-
-Get 判断
-
-（时间窗口）
-
-Set （多线程覆盖）
-
-Setnx
-
-谈谈Redis的SETNX https://huoding.com/2015/09/14/463
-
-https://redis.io/commands/setnx
-
-https://github.com/StackExchange/StackExchange.Redis/blob/86b983496d3307903ce9bc2a3c7f207de42a0dea/StackExchange.Redis/StackExchange/Redis/RedisDatabase.cs
-
-
-
-## 3. cluster 集群管理
-
-### 3.1 Commands&GUI
+### 2.1 Commands&GUI
 
 https://redis.io/topics/rediscli
 
@@ -1176,7 +1346,7 @@ use colon as separator https://redisdesktop.com/
 Dbeaver support nosql but only for enterprise edition
 Optionally we can choose fastoredis https://fastoredis.com/anonim_users_downloads
 
-### 3.2 自动方式管理
+### 2.2 自动方式管理
 
 #### cluster failover
 
@@ -1243,7 +1413,7 @@ There is an alternative way to import data from external instances to a Redis   
 
 cluster-replica-no-failover yes 可以用来禁止其中一个data center选举 promote master
 
-### 3.3 手动方式管理 
+### 2.3 手动方式管理 
 
 以下完全是我个人实验的总结：
 
@@ -1309,7 +1479,7 @@ https://www.jianshu.com/p/ff173ae6e478
 
 
 
-### 3.4 日常维护
+### 2.4 日常维护
 Read https://redis.io/topics/admin
 http://antirez.com/news/96
 
@@ -1339,20 +1509,20 @@ redis-cli latency doctor
 Monitor:
 https://redis.io/commands/MONITOR
 
-### 3.5 删除集群
+### 2.5 删除集群
 
 关闭所有集群上节点后，进入各个节点文件夹，删除以下文件：
 appendonly.aof
 dump.rdb
 nodes-*.conf
 
-## 4. Sentinel 管理
+## 3. Sentinel 管理
 
 
 
-## 5. Redis操作和系统集成 Integration
+## 4. Redis操作和系统集成 Integration
 
-### 5.0 Redis基本数据操作
+### 4.1 Redis基本数据操作
 
 #### Data types
 https://redis.io/topics/data-types
@@ -1433,12 +1603,12 @@ https://stackoverflow.com/questions/46062283/what-is-the-difference-between-the-
 #### TTL key
  Returns the remaining time to live of a key that has a timeout.
 
-### 5.1 StackExchange.Redis
+### 4.2 StackExchange.Redis
 Driver for .net: StackExchange.Redis 1.2https://github.com/StackExchange/StackExchange.Redis
 for partial matching
 Where are KEYS, SCAN, FLUSHDB etc? https://github.com/StackExchange/StackExchange.Redis/blob/41f427bb5ed8c23d0992a1411d0c92667b133d8e/docs/KeysScan.md
 
-### 5.2 Python
+### 4.3 Python
 
 ```
 pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org redis-py-cluster
@@ -1450,7 +1620,7 @@ pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org redis-
 >>> https://github.com/Grokzen/redis-py-cluster/blob/unstable/tests/test_commands.py
 ```
 
-### 5.3 Java-Spring boot integration
+### 4.4 Java-Spring boot integration
 
 https://docs.spring.io/spring-data/data-redis/docs/current/reference/html/
 
@@ -1486,13 +1656,12 @@ https://docs.spring.io/spring-data/data-redis/docs/current/reference/html/#clust
 
 
 
-## 6.Security hardening
+## 5. Security hardening
 
 Redis RU330课程 Redis Security 第3周学习笔记 https://blog.csdn.net/stevensxiao/article/details/113542159
 
 
-
-## Troubleshooting
+## 6. Troubleshooting
 
 ### ERR CROSSSLOT Keys in request don't hash to the same slot.
 模糊查询批量清理keys出现错误：
