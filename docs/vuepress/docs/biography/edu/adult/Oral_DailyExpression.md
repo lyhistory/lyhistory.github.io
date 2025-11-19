@@ -1293,6 +1293,14 @@ nuance细微差别
 
 ### 英文表达
 #### Synonym - Words in mind
+spike vs thorn
+	spike 多样化，可天然（如果皮上的突起、豪猪的刺）或人造（如鞋钉、墙钉）
+		The spikes on a durian's husk are very sharp, so you have to be careful when handling it. 
+	thorn 几乎完全来源于植物，是植物本体的一部分，由木质部构成
+		She pricked her finger on a thorn while cutting the roses.
+
+floor vs ground
+	建筑物内部 floor 室外 ground
 adopt apply use
  
 adhere vs comply http://forum.wordreference.com/threads/adherence-compliance.1930164/

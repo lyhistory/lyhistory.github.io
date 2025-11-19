@@ -438,6 +438,9 @@ Teacher:​​ "Children, look at the ground while we walk. See the round ​man
 
 ## 宝宝互动 coax
 
+Show me/Point to
+    Point to the dog's head.
+    Show me the red car.
 Give Daddy a kiss.
 Kiss Daddy goodnight.
 Come over and lean on Daddy.

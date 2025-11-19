@@ -1,3 +1,5 @@
+
+## pronounce
 https://commonenglishmistakes.wordpress.com/2009/07/30/spoilt-and-broken/
 wrong use of already
 Wednesday
@@ -29,3 +31,8 @@ Broadly speaking, there is a one-to-many mapping of Singlish vowel phonemes to B
 At the acrolectal level, the merged vowel phonemes are distinguished to some extent, and for some speakers elements from American English are introduced, such as pre-consonantal [r] (pronouncing the "r" in bird, port, etc.).[32] This is caused by the popularity of American TV programming.[citation needed] Current estimates are that about 20 per cent of university undergraduates sometimes use this American-style pre-consonantal [r] when reading a passage.[33]
 -- wikipedia Singlish 
 [/toggle]
+
+## sentence
+
+cos i need to go on maternity liao haha
+

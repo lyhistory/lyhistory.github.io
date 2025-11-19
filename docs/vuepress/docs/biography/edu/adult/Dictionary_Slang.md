@@ -1,5 +1,7 @@
 Urban Dictionary(SLANG)/lingo
 
+dp Decimal Places
+
 **BOYD:**
 
 Bring your own *device* —also called bring your own technology (BYOT), bring your own *phone* (BYOP)

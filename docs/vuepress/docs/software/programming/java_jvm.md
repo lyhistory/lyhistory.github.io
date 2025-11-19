@@ -1574,6 +1574,306 @@ https://www.eclipse.org/mat/downloads.php
 jmap -dump:format=b,file=core.26635.dump  $JAVA_HOME/bin/java core.26635 
 ```
 
+## JVM分层编译机制
+
+```
+JIT编译 (Just-In-Time Compilation)
+├── 方法JIT (Method JIT)
+│   ├── 触发条件: 方法调用次数达到阈值
+│   ├── 编译时机: 方法调用之间
+│   └── 执行方式: 下次调用时使用编译版
+│
+└── OSR编译 (On-Stack Replacement)
+    ├── 触发条件: 循环回边次数达到阈值  
+    ├── 编译时机: 方法执行过程中
+    └── 执行方式: 当前执行中热替换
+```
+
+### 解释执行（Tier 0）
+```
+// SimpleCalculator.java
+public class SimpleCalculator {
+    public int add(int a, int b) {
+        return a + b;  // 第一次执行：解释执行
+    }
+    
+    public static void main(String[] args) {
+        SimpleCalculator calc = new SimpleCalculator();
+        int result = calc.add(5, 3);  // 第1次调用
+        System.out.println("结果: " + result);
+    }
+}
+```
+
+执行过程图示：
+```
+第1次调用add方法：
+┌─────────────────────────────────┐
+│       解释执行 (Tier 0)         │
+├─────────────────────────────────┤
+│ PC → 方法区: 读取add方法字节码  │
+│ ↓                              │
+│ 解释器逐条解释执行:            │
+│   iload_1 → 加载a=5            │
+│   iload_2 → 加载b=3            │  
+│   iadd    → 执行5+3=8         │
+│   ireturn → 返回8             │
+│ ↓                              │
+│ 方法调用计数器: 0 → 1         │
+└─────────────────────────────────┘
+```
+
+### 第二阶段：C1简单编译（Tier 1）
+```
+public class SimpleCalculator {
+    public static void main(String[] args) {
+        SimpleCalculator calc = new SimpleCalculator();
+        
+        // 循环调用1500次
+        for (int i = 0; i < 1500; i++) {
+            calc.add(i, i+1);  // 第1-1500次调用
+        }
+        
+        // 第1501次调用时触发C1编译！
+        calc.add(1500, 1501);
+    }
+}
+```
+
+编译触发过程：
+```
+调用次数监控：
+调用第1499次: 计数器=1499 → 继续解释执行
+调用第1500次: 计数器=1500 → 触发C1编译！
+
+C1编译过程：
+┌─────────────────────────────────┐
+│        C1简单编译 (Tier 1)       │
+├─────────────────────────────────┤
+│ 编译成本: 0.1ms + 占用1KB内存   │
+│ 优化级别: 基础优化              │
+│ 生成代码: 简单的机器码          │
+│ 性能提升: 2倍 (10ms → 5ms)     │
+└─────────────────────────────────┘
+```
+
+### 第三阶段：C2深度编译（Tier 2）
+触发条件：add方法被调用10000次
+```
+public class SimpleCalculator {
+    public static void main(String[] args) {
+        SimpleCalculator calc = new SimpleCalculator();
+        
+        // 循环调用10000次
+        for (int i = 0; i < 10000; i++) {
+            calc.add(i, i+1);  // 第1-10000次调用
+        }
+        
+        // 第10001次调用时触发C2编译！
+        calc.add(10000, 10001);
+    }
+}
+```
+
+深度编译过程：
+```
+调用第9999次: 计数器=9999 → 执行C1编译的代码
+调用第10000次: 计数器=10000 → 触发C2编译！
+
+C2编译过程：
+┌─────────────────────────────────┐
+│        C2深度编译 (Tier 2)       │
+├─────────────────────────────────┤
+│ 编译成本: 10ms + 占用100KB内存  │
+│ 优化级别: 激进优化              │
+│ 生成代码: 高度优化的机器码      │
+│ 性能提升: 10倍 (10ms → 1ms)    │
+└─────────────────────────────────┘
+```
+
+### 编译成本及性能计算
+
+#### 编译成本计算基础
+
+假设的基准数据：
+
+  1条字节码指令编译时间 ≈ 0.001ms
+
+  1条机器指令占用内存 ≈ 8字节
+
+  固定开销（方法头等）≈ 0.05ms + 200字节
+
+add方法成本计算
+add方法字节码：
+```
+public int add(int a, int b);
+  Code:
+    0: iload_1    // 加载a
+    1: iload_2    // 加载b  
+    2: iadd       // 相加
+    3: ireturn    // 返回
+```
+
+C1编译成本计算：
+```
+编译时间 = 固定开销 + 指令数 × 单指令成本
+        = 0.05ms + 4条 × 0.001ms/条
+        = 0.05ms + 0.004ms 
+        = 0.054ms ≈ 0.1ms (四舍五入)
+
+内存占用 = 固定开销 + 指令数 × 单指令大小  
+        = 200字节 + 4条 × 8字节/条
+        = 200字节 + 32字节
+        = 232字节 ≈ 1KB (按页对齐)
+```
+
+C2编译成本计算：
+```
+C2编译有额外优化分析：
+- 方法内联分析: +2ms
+- 逃逸分析: +3ms  
+- 寄存器分配优化: +5ms
+
+编译时间 = 基础编译 + 优化分析
+        = 0.1ms + (2+3+5)ms
+        = 0.1ms + 10ms
+        = 10.1ms ≈ 10ms
+
+内存占用 = 基础代码 + 优化数据
+        = 1KB + 100KB (优化中间数据)
+        = 101KB ≈ 100KB
+```
+
+#### 性能基准测试依据
+
+  测试环境假设：
+
+  CPU：Intel i7-10700K（单核性能基准）
+
+  内存：DDR4 3200MHz
+
+  测试方法：微基准测试（JMH基准测试框架）
+
+解释执行 vs 编译执行的性能差异
+解释执行开销分析：
+```
+解释执行add方法的过程：
+1. 取指令: 从方法区读取字节码 (10时钟周期)
+2. 解码: 解析操作码含义 (5时钟周期)  
+3. 分派: 跳转到对应处理函数 (15时钟周期)
+4. 执行: 执行C++代码实现 (20时钟周期)
+5. 更新PC: 指向下条指令 (5时钟周期)
+
+总时钟周期 ≈ 55周期/字节码指令
+CPU频率: 4.7GHz = 4.7×10^9周期/秒
+每条指令时间 ≈ 55 / 4.7×10^9 ≈ 11.7纳秒
+```
+
+add方法的实际性能计算
+add方法字节码分析：
+```
+public int add(int a, int b) {
+    return a + b;  // 对应4条字节码指令
+}
+// 字节码序列: iload_1, iload_2, iadd, ireturn
+```
+解释执行时间计算：
+```
+4条指令 × 11.7纳秒/指令 = 46.8纳秒
+加上方法调用开销 ≈ 100纳秒 = 0.1微秒 ≈ 0.0001ms
+
+但实际测试值更大，因为：
+- 栈操作开销
+- 内存访问延迟  
+- 分支预测失败
+- 缓存未命中
+
+实际微基准测试结果：10ms是夸张的，真实值约0.01ms
+```
+
+教学简化原因：
+```
+实际值: 0.0001ms (太小，难以理解)
+教学值: 10ms (放大10万倍，便于理解比例关系)
+
+比例关系保持不变：
+解释执行 : C1编译 : C2编译 = 10ms : 5ms : 1ms
+                  = 100ns : 50ns : 10ns (实际)
+                  = 10 : 5 : 1 (比例)
+```
+
+SimpleCalculator的真实性能时间线
+
+```
+真实性能时间线（基于纳秒）：
+┌──────────────┬─────────────┬─────────────┬─────────────┐
+│  调用次数    │   执行方式   │   真实性能   │   教学简化   │
+├──────────────┼─────────────┼─────────────┼─────────────┤
+│  第1次       │ 解释执行    │ 100纳秒/次  │ "10ms/次"   │
+│  第2-1499次  │ 解释执行    │ 100纳秒/次  │ "10ms/次"   │
+│  第1500次    │ 触发C1编译  │ 编译耗时100微秒│ "0.1ms编译"│
+│  第1501次    │ C1编译执行  │ 50纳秒/次   │ "5ms/次"    │
+│  第1502-9999次│ C1编译执行 │ 50纳秒/次   │ "5ms/次"    │
+│  第10000次   │ 触发C2编译  │ 编译耗时10ms │ "10ms编译"  │
+│  第10001次起 │ C2编译执行  │ 10纳秒/次   │ "1ms/次"    │
+└──────────────┴─────────────┴─────────────┴─────────────┘
+```
+
+### SpringBoot应用的实际JIT案例
+```
+@SpringBootApplication
+public class ECommerceApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ECommerceApplication.class, args);
+    }
+}
+
+@RestController
+public class OrderController {
+    @Autowired
+    private OrderService orderService;
+    
+    // 高频API：订单查询
+    @GetMapping("/orders/{orderId}")
+    public Order getOrder(@PathVariable String orderId) {
+        // 触发条件：QPS > 100时，每分钟调用6000次
+        // 达到C1编译阈值(1500次)时间：1500/6000 = 0.25分钟
+        // 达到C2编译阈值(10000次)时间：10000/6000 = 1.67分钟
+        return orderService.findOrderById(orderId);
+    }
+    
+    // 低频API：订单统计（可能永远不会被编译）
+    @GetMapping("/orders/stats")
+    public OrderStats getStats() {
+        // 每天调用几次，达不到编译阈值
+        return orderService.calculateStats();
+    }
+}
+
+@Service
+public class OrderService {
+    // 热点业务方法
+    public Order findOrderById(String orderId) {
+        // 内层循环可能触发OSR编译
+        for (int i = 0; i < orderCache.size(); i++) {
+            if (orderCache.get(i).getId().equals(orderId)) {
+                return orderCache.get(i);
+            }
+        }
+        return database.lookupOrder(orderId);
+    }
+}
+```
+
+具体的时间触发示例,高频API的JIT时间线：
+```
+时间 00:00:00 - 应用启动
+时间 00:00:01 - 第一次调用getOrder()，解释执行
+时间 00:00:05 - 调用第100次，仍在解释执行
+时间 00:00:15 - 调用第1500次，触发C1简单编译
+时间 00:01:40 - 调用第10000次，触发C2深度优化
+时间 00:10:00 - 调用第10万次，完全优化稳定
+```
 
 refer:
 

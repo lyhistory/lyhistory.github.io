@@ -16,13 +16,13 @@ New->Factory->容器
 
 ### 1.1 Spring IoC容器
 
-IoC容器是大管家，你只需要告诉它需要某个bean，它就把对应的实例（instance）扔给你，至于这个bean是否依赖其他组件，怎样完成它的初始化，根本就不需要你关心。
 
-bean是什么？(Spring bean)
+
+#### Bean 是什么？(Spring bean)
 > The objects that form the backbone of your application and that are managed by the Spring IoC container are called beans. A bean is an object that is instantiated, assembled, and otherwise managed by a Spring IoC container. 
 > https://www.tutorialspoint.com/spring/spring_bean_definition.htm
 
-Spring Bean VS Java Bean:
+**Spring Bean VS Java Bean:**
 
 Java Beans are simple Java classes that encapsulate objects, while Spring Beans are managed by the Spring Framework and are used for dependency injection and lifecycle management.
 
@@ -38,9 +38,19 @@ DefaultListableBeanFactory作为一个比较通用的BeanFactory实现，它同�
 
 ![spring揭秘](/docs/docs_image/software/java/spring/java_spring_bean01.png)
 
+#### IoC容器
+IoC容器是大管家，你只需要告诉它需要某个bean，它就把对应的实例（instance）扔给你，至于这个bean是否依赖其他组件，怎样完成它的初始化，根本就不需要你关心。
+
 Spring提供了两种容器类型：BeanFactory和ApplicationContext：
 
 ![spring揭秘](/docs/docs_image/software/java/spring/java_spring_bean02.png)
+
+BeanFactory只是Spring IoC容器的一种实现，如果没有特殊指定，它采用采用延迟初始化策略：只有当访问容器中的某个对象时，才对该对象进行初始化和依赖注入操作。
+	对于资源有限，并且功能要求不是很严格的场景，BeanFactory是比较合适的IoC容器选择。
+
+	而在实际场景下，我们更多的使用另外一种类型的容器： ApplicationContext，它构建在BeanFactory之上，属于更高级的容器，除了具有BeanFactory的所有能力之外，还提供对事件监听机制以及国际化的支持等。它管理的bean，在容器启动时全部完成初始化和依赖注入操作。
+	ApplicationContext所管理的对象，在该类型容器启动之后，默认全部初始化并绑定完成。所以，相对于BeanFactory来说，ApplicationContext要求更多的系统资源，同时，因为在启动时就完成所有初始化，容器启动时间较之BeanFactory也会长一些。
+	在那些系统资源充足，并且要求更多功能的场景中，ApplicationContext类型的容器是比较合适的选择。
 
 **Spring IoC容器的整个工作流程大致可以分为两个阶段：**
 
@@ -57,22 +67,21 @@ Spring提供了两种容器类型：BeanFactory和ApplicationContext：
 	这个阶段触发是:当某个请求通过容器的getBean方法请求某个对象，或者因为依赖关系容器需要隐式的调用getBean时（如bean的注解@DependsOn 或者Autowired）;
 	容器会首先检查所请求的对象之前是否已经实例化完成。如果没有，则会根据注册的BeanDefinition所提供的信息实例化被请求对象，并为其注入依赖。当该对象装配完毕后，容器会立即将其返回给请求方法使用。
 
-	_Notes:Autowire vs getbean_
-	> Injecting a Prototype Bean into a Singleton Bean Problem https://www.logicbig.com/tutorials/spring-framework/spring-core/injecting-singleton-with-prototype-bean.html
+	**Notes:Autowire vs getbean:**
+	> [Injecting a Prototype Bean into a Singleton Bean Problem](https://www.logicbig.com/tutorials/spring-framework/spring-core/injecting-singleton-with-prototype-bean.html) 
 
-	> You can then use getBean to retrieve instances of your beans. The ApplicationContext interface has a few other methods for retrieving beans, but, ideally, your application code should never use them. Indeed, your application code should have no calls to the getBean() method at all and thus have no dependency on Spring APIs at all.
-	> https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html
+	> [You can then use getBean to retrieve instances of your beans. The ApplicationContext interface has a few other methods for retrieving beans, but, ideally, your application code should never use them. Indeed, your application code should have no calls to the getBean() method at all and thus have no dependency on Spring APIs at all.](https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html)
 
-	BeanFactory只是Spring IoC容器的一种实现，如果没有特殊指定，它采用采用延迟初始化策略：只有当访问容器中的某个对象时，才对该对象进行初始化和依赖注入操作。
-	对于资源有限，并且功能要求不是很严格的场景，BeanFactory是比较合适的IoC容器选择。
 
-	而在实际场景下，我们更多的使用另外一种类型的容器： ApplicationContext，它构建在BeanFactory之上，属于更高级的容器，除了具有BeanFactory的所有能力之外，还提供对事件监听机制以及国际化的支持等。它管理的bean，在容器启动时全部完成初始化和依赖注入操作。
-	ApplicationContext所管理的对象，在该类型容器启动之后，默认全部初始化并绑定完成。所以，相对于BeanFactory来说，ApplicationContext要求更多的系统资源，同时，因为在启动时就完成所有初始化，容器启动时间较之BeanFactory也会长一些。
-	在那些系统资源充足，并且要求更多功能的场景中，ApplicationContext类型的容器是比较合适的选择。
+#### bean生命周期接口
 
-**bean生命周期接口**
+Bean的生命周期：从配置到实例化:
 
-https://www.huaweicloud.com/articles/b59be8ffdcfbd1f8a1fe28bffe848d20.html
+1. 建立Bean定义注册表：Spring容器（如ClassPathXmlApplicationContext）启动时，会读取配置信息（XML、注解等），解析每个`<bean>`或@Component注解，在内存中创建一个BeanDefinition对象来存储所有配置信息。这就是配置阶段。
+
+2. 实例化Bean：当应用程序向容器请求一个Bean（或容器初始化所有单例Bean）时，容器会根据BeanDefinition的信息，通过Java反射机制调用构造方法来创建对象。这就是new一个对象的过程。
+
+3. Bean注入（依赖注入）：对象被创建后，它里面的属性可能还是null。此时，Spring容器会根据配置（如`<property>`标签或@Autowired注解），将这个Bean所依赖的其他Bean注入（设置）到相应的属性中。这就是“注入”发生的关键步骤！
 
 IoC容器负责管理容器中所有bean的生命周期，而在bean生命周期的不同阶段，Spring提供了不同的扩展点来改变bean的命运，例如EnvironmentPostProcessor、BeanFactoryPostProcessor等（具体参照：第2节 SpringApplication启动流程）:
 
@@ -113,229 +122,22 @@ System.out.println(yiifaa_1 == yiifaa_2);
     </constructor-arg>
 </bean>
 ```
-> https://blog.csdn.net/yiifaa/java/article/details/74852425
 
+#### bean定义 - Spring装配bean的三种方法 
 
+[The interface `org.springframework.context.ApplicationContext` represents the Spring IoC container and is responsible for instantiating, configuring, and assembling the aforementioned beans. The container gets its instructions on what objects to instantiate, configure, and assemble by reading configuration metadata. The configuration metadata is represented in：](https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/beans.html)
++ XML
++ [Java annotations](https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/beans.html#beans-annotation-config): 在业务类上使用注解（如@Component, @Autowired）
++ [Java code / JavaConfig](https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/beans.html#beans-java): 在专门的配置类中使用Java代码+注解（如@Configuration+@Bean）
 
-@bean方法调用的特殊性：
+  **混合使用三种装配**
 
-https://www.racecoder.com/archives/787/
+  1. 在类上可以使用 @import(bbsConfig.class)组合其他java注解
+  2. 在类上使用 @importResource("classpath:spring-dao.xml")组合其他xml注解
+  3. 在类上可以使用@ContenxtConfiguration包含class或者xml
+  4. 在xml中可以用引入xml注解，也可以使用引入java注解
 
-https://stackoverflow.com/questions/27990060/calling-a-bean-annotated-method-in-spring-java-configuration
-
-
-
-[Spring Boot 2.0 ：深入分析Spring Boot原理](https://blog.csdn.net/TheLudlows/article/details/81360067)
-
-spring boot之自动装配（spring-boot-autoconfigure） https://blog.csdn.net/wangjie5540/article/details/99542777
-
-原创 | 我被面试官给虐懵了，竟然是因为我不懂Spring中的@Configuration
-https://juejin.im/post/5d005860f265da1b7f297630
-
-#### Spring装配bean的三种方法：
-
-The interface `org.springframework.context.ApplicationContext` represents the Spring IoC container and is responsible for instantiating, configuring, and assembling the aforementioned beans. The container gets its instructions on what objects to instantiate, configure, and assemble by reading configuration metadata. The configuration metadata is represented in：
-
-XML, Java annotations, or Java code:
-
-https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/beans.html
-
-- [Annotation-based configuration](https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/beans.html#beans-annotation-config) 使用注解Annotation定义Bean
-
-  Spring 2.5 introduced support for annotation-based configuration metadata.
-
-  spring从两个角度实现自动化装配：组件扫描和自动装配
-
-  1) 创建可被发现的bean
-
-  ```java
-  @Component
-  这个简单的注解表明该类会作为组件类,并告知Spring要为这个类创建bean
-  
-  ----------------------------------------------------------------------------------------
-  --- 命名 bean id
-  ---------------------------------------------------------------------------------------- 
-  如果没有个bean设置ID,Spring会根据类名为其指定一个ID,默认名字就是把类名的第一个字母变为小写.
-  @Component("lonelyHeartsClub") //设置期望的ID
-  	public class SgtPeppers implements CompactDisc{
-  }
-  另外还一种为bean命名的方式,使用Java依赖注入规范中所提供的@Named注解来为bean设置ID
-  @Named("lonelyHeartsClub")
-  public class SgtPeppers implements CompactDisc{
-  }
-  
-  ----------------------------------------------------------------------------------------
-  --- 设置组件扫描的基础包
-  ----------------------------------------------------------------------------------------
-  当对一个类标注@Component注解时，表明该类会作为组件类，spring将为这个类创建bean。当在应用文中引用这个bean，spring会自动扫描事先指定的包查找这个  bean。但spring默认是不启用组件扫描的，可以在XML中配置加上。还有一种方法：在新建一个配置类，类中可以什么不用写，在配置类上加上@ComponentScan注解，spring会自动扫描改配置类所在的包。
-  //直接在value属性中指明包的名称
-  @Configuration
-  @ComponentScan("soundsystem")
-  public class CDPlayerConfig{}
-  
-  //通过basePackages属性配置
-  @Configuration
-  @ComponentScan(basePackages="soundsystem")
-  public class CDPlayerConfig{}
-  
-  //设置多个基础包,用数组表示
-  @Configuration
-  @ComponentScan(basePackages={"soundsystem","video"})
-  public class CDPlayerConfig{}
-  
-  //基础包以String类型表示是不安全的,如果重构代码的话,指定的基础包可能会出现错误,用指定为包中所包含的类或接口的方法
-  @Configuration
-  @ComponentScan(basePackageClasses={CDPlayer.class,DVDPlayer.class})
-  public class CDPlayerConfig{}
-  
-  ----------------------------------------------------------------------------------------
-  --- 添加注解自动装配Autowired
-  @Autowired可以换成@Inject,@Inject注解来源于Java依赖注入规范,该规范同时还为我们定义了@Named注解.
-  尽管@Inject和@Autowierd有细微的差别,但大多数场景下,它们都可以互换.
-  ----------------------------------------------------------------------------------------
-  @Autowired注解构造器：
-  @Component
-  public class CDPlayer implements MediaPlayer{
-    private CompactDisc cd;
-  
-    @Autowired//这表明当Spring创建CDPlayer bean的时候,会通过这个构造器来进行实例化并且会传入一个可设置给CompactDisc类型的bean.
-    public CDPlayer(CompactDisc cd){//构造器
-      this.cd = cd;
-    }
-  
-    public void paly(){
-      cd.paly();
-    }
-  }
-  
-  @Autowired注解属性的Setter方法：
-  @Autowired
-  public void setCompactDisc(CompactDisc cd){
-    this.cd = cd;
-  }
-  
-  如果没有匹配的bean,那么在应用上下文创建的时候,Spring会抛出一个异常,为了避免异常的出现,你可以将@Autowired的requied属性设置为false
-  @Autowired(required=false)
-  public void setCompactDisc(CompactDisc cd){
-    this.cd = cd;
-  }
-  
-  如果有多个bean都能满足依赖关系的话,Spring将会抛出一个异常,表明没有明确指定要选择哪个bean进行自动装配, 一般在组件类上添加注解@Qualifier()括号写这个bean的id，在注入时也加上@Qualifier(),写上bean的id
-  @Component
-  @Qualifier("postdao")
-  public interface Postdao{
-  . . . .
-  }
-  
-  @Component
-  @Qualifier("userdao")
-  public interface Userdao{
-  . . . .
-  }
-  
-  @Autowired
-  @Qualifier("usedao")
-  public void setUserdao(Userdao userdao)
-  {. . .
-  }
-  
-  @Autowired
-  @Qualifier("postdao")
-  public void setUserdao(Postdao postdao)
-  {. . .
-  }
-  ```
-
-- [Java-based configuration](https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/beans.html#beans-java) 基于java类提供Bean定义信息
-
-  所谓java based 我的理解是这里是说不需要依赖于spring，普通的java项目也可以用
-
-  Starting with Spring 3.0, many features provided by the [Spring JavaConfig project](http://www.springsource.org/javaconfig) became part of the core Spring Framework. Thus you can define beans external to your application classes by using Java rather than XML files. To use these new features, see the `@Configuration`, `@Bean, @Import` and `@DependsOn` annotations.
-
-  有些情况下,比如说,要将第三方库的组件装配到你的应用中,就不能使用前面的自动化装配方法 到第三方库中去给类加@Component和@Autowired注解,
-  在这种情况下,就需要采用显示装配的方式.在进行显示配置有Java和XML两种方案显示装配bean.
-
-  使用java代码，先新建一个配置类JavaConfig，里面都是配置所需的bean，不应该有业务逻辑代码，所以单独建一个类。
-
-  ```java
-  @Configuration
-  public class AppConfig {
-    @Bean
-    public MyService myService() {
-        return new MyServiceImpl();
-    }
-  }
-  public static void main(String[] args) {
-    ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
-    MyService myService = ctx.getBean(MyService.class);
-    myService.doStuff();
-  }
-  
-  public static void main(String[] args) {
-    AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
-    ctx.register(AppConfig.class, OtherConfig.class);
-    ctx.register(AdditionalConfig.class);
-    ctx.refresh();
-    MyService myService = ctx.getBean(MyService.class);
-    myService.doStuff();
-  }
-  
-  //创建JavaConfig类的关键在于为其添加@Configruation注解,表明这是一个配置类
-  @Configuration
-  public class CDPlayerConfig{
-      @Bean
-      public CompactDisc sgtPeppers(){
-        return new SgtPeppers();
-      }
-      //@Bean注解会告诉Spring这个方法将会返回一个对象,该对象要注册为Spring应用上下文的bean,默认情况下,
-      bean的ID于带有@Bean注解的方法名一样,也可以重命名
-  
-      @Bean(name="lonelyHeartsClubBand")
-      public CompactDisc sgtPeppers(){
-        return new SgtPeppers();
-      }
-  	
-      声明CompactDisc bean是非常简单,它自身没有其他依赖,但现在,我们需要声明CDPlayer bean,它依赖于CompactDisc,在JavaConfig中,如何将他们装配在一起呢?
-      @Bean
-      public CDPlayer cdPlayer(){
-        return new CDPlayer(sgtPeppers()); //因为sgtPeppers()方法上添加了@Bean注解,Spring将会拦截所有对它的调用,
-      //并确保直接返回该方法创建的bean,而不是每次都对其进行实际的调用.
-      }
-      等价于下面这种方式
-          
-      @Bean
-      public CDPlayer cdPlayer(CompactDisc compactDisc){//在这里,cdPlayer()方法请求一个CompactDisc作为参数,当Springs调用cdPlayer()创建CDPlayer bean的时候,
-  //它会自动装配一个CompactDisc到配置方法之中,然后方法体按照合适的方法来使用它.
-        return new CDPlayer(compactDisc);
-      }
-  	@Bean(name="lonelyHeartsClubBandPlayer")
-      public CDPlayer cdPlayer(CompactDisc lonelyHeartsClubBand){
-  		return new CDPlayer(compactDisc);
-      }
-  }
-  
-  More example：
-  
-  @Configuration
-  @ContextConfiguration(locations = {"classpath:spring/spring-dao.xml","classpath:scan.xml"}）
-  public class bbsConfig{
-  　　private Postdao postdao;
-  　　private Userdao userdao;
-  　　@Bean(name="postservice")
-     public PostService getPost()
-  　　{
-  　　return new PostserviceImpl(postdao,userdao);
-  　　}
-  }
-  
-  在对PostService的bean注入时，同时又依赖了两个bean，postdao和userdao。直接引用beanID就可以，spring会自动地从容器中获取这些bean，只要他们的配置是正确的就行。这个例子中userdao、postdao是Mybatis配置自动扫描将dao接口生成代理注入到spring的，其实也算是xml装配bean
-  这里如果再声明一个bean，返回的仍是postserviceImpl对象，和之前的那个bean完全一样，是同一个实例。一般spring @bean如果是同一个beanID，默认返回的是一个单例bean，注入的是同一个实例。如果修改其中一个会都改变的。
-  不过在这里要注意进行测试时，由于spring的单元测试和springIoc容器是完全独立的，postdao和userdao注入检测时是使用locations加载xml文件，而postservice使用classes加载config类的，但是两个不能同时混用在@ContextConfiguration中。所以非要都测试的话，就分开测试吧。
-  ```
-
-  
-
-- 基于xml配置Bean
+##### 基于xml配置Bean
 
   Configuration metadata is traditionally supplied in a simple and intuitive XML format
 
@@ -562,18 +364,315 @@ https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/ht
   配置postservice的bean时需要引入两个bean，postdao和userdao，放到constructor-arg的标签中，ref指的是依赖的bean的ID。如果是在javaConfig中配置的，就写@Bean的内容。如果是@Component就写@Qualifier的内容。这里是引入的是动态实现的dao接口的bean，是在spring-dao.xml中配置的，引入这个配置文件就可以自动获得beanID。
   ```
 
+
+##### [Annotation-based configuration](https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/beans.html#beans-annotation-config) 使用注解Annotation定义Bean
+
+  Spring 2.5 introduced support for annotation-based configuration metadata.
+
+  spring从两个角度实现自动化装配：组件扫描和自动装配
+
+  1) 创建可被发现的bean
+
+  ```java
+  @Component
+  这个简单的注解表明该类会作为组件类,并告知Spring要为这个类创建bean
   
+  ----------------------------------------------------------------------------------------
+  --- 命名 bean id
+  ---------------------------------------------------------------------------------------- 
+  如果没有个bean设置ID,Spring会根据类名为其指定一个ID,默认名字就是把类名的第一个字母变为小写.
+  @Component("lonelyHeartsClub") //设置期望的ID
+  	public class SgtPeppers implements CompactDisc{
+  }
+  另外还一种为bean命名的方式,使用Java依赖注入规范中所提供的@Named注解来为bean设置ID
+  @Named("lonelyHeartsClub")
+  public class SgtPeppers implements CompactDisc{
+  }
+  
+  ----------------------------------------------------------------------------------------
+  --- 设置组件扫描的基础包
+  ----------------------------------------------------------------------------------------
+  当对一个类标注@Component注解时，表明该类会作为组件类，spring将为这个类创建bean。当在应用文中引用这个bean，spring会自动扫描事先指定的包查找这个  bean。但spring默认是不启用组件扫描的，可以在XML中配置加上。还有一种方法：在新建一个配置类，类中可以什么不用写，在配置类上加上@ComponentScan注解，spring会自动扫描改配置类所在的包。
+  //直接在value属性中指明包的名称
+  @Configuration
+  @ComponentScan("soundsystem")
+  public class CDPlayerConfig{}
+  
+  //通过basePackages属性配置
+  @Configuration
+  @ComponentScan(basePackages="soundsystem")
+  public class CDPlayerConfig{}
+  
+  //设置多个基础包,用数组表示
+  @Configuration
+  @ComponentScan(basePackages={"soundsystem","video"})
+  public class CDPlayerConfig{}
+  
+  //基础包以String类型表示是不安全的,如果重构代码的话,指定的基础包可能会出现错误,用指定为包中所包含的类或接口的方法
+  @Configuration
+  @ComponentScan(basePackageClasses={CDPlayer.class,DVDPlayer.class})
+  public class CDPlayerConfig{}
+  
+  ----------------------------------------------------------------------------------------
+  --- 添加注解自动装配Autowired
+  @Autowired可以换成@Inject,@Inject注解来源于Java依赖注入规范,该规范同时还为我们定义了@Named注解.
+  尽管@Inject和@Autowierd有细微的差别,但大多数场景下,它们都可以互换.
+  ----------------------------------------------------------------------------------------
+  @Autowired注解构造器：
+  @Component
+  public class CDPlayer implements MediaPlayer{
+    private CompactDisc cd;
+  
+    @Autowired//这表明当Spring创建CDPlayer bean的时候,会通过这个构造器来进行实例化并且会传入一个可设置给CompactDisc类型的bean.
+    public CDPlayer(CompactDisc cd){//构造器
+      this.cd = cd;
+    }
+  
+    public void paly(){
+      cd.paly();
+    }
+  }
+  
+  @Autowired注解属性的Setter方法：
+  @Autowired
+  public void setCompactDisc(CompactDisc cd){
+    this.cd = cd;
+  }
+  
+  如果没有匹配的bean,那么在应用上下文创建的时候,Spring会抛出一个异常,为了避免异常的出现,你可以将@Autowired的requied属性设置为false
+  @Autowired(required=false)
+  public void setCompactDisc(CompactDisc cd){
+    this.cd = cd;
+  }
+  
+  如果有多个bean都能满足依赖关系的话,Spring将会抛出一个异常,表明没有明确指定要选择哪个bean进行自动装配, 一般在组件类上添加注解@Qualifier()括号写这个bean的id，在注入时也加上@Qualifier(),写上bean的id
+  @Component
+  @Qualifier("postdao")
+  public interface Postdao{
+  . . . .
+  }
+  
+  @Component
+  @Qualifier("userdao")
+  public interface Userdao{
+  . . . .
+  }
+  
+  @Autowired
+  @Qualifier("usedao")
+  public void setUserdao(Userdao userdao)
+  {. . .
+  }
+  
+  @Autowired
+  @Qualifier("postdao")
+  public void setUserdao(Postdao postdao)
+  {. . .
+  }
+  ```
 
-  **混合使用三种装配**
+##### [Java-based configuration](https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/beans.html#beans-java) 基于java类提供Bean定义信息
 
-  1. 在类上可以使用 @import(bbsConfig.class)组合其他java注解
-  2. 在类上使用 @importResource("classpath:spring-dao.xml")组合其他xml注解
-  3. 在类上可以使用@ContenxtConfiguration包含class或者xml
-  4. 在xml中可以用引入xml注解，也可以使用引入java注解
+  所谓java based 我的理解是这里是说不需要依赖于spring，普通的java项目也可以用
 
-#### 基于XML的三种注入方式：
+  Starting with Spring 3.0, many features provided by the [Spring JavaConfig project](http://www.springsource.org/javaconfig) became part of the core Spring Framework. Thus you can define beans external to your application classes by using Java rather than XML files. To use these new features, see the `@Configuration`, `@Bean, @Import` and `@DependsOn` annotations.
 
-https://www.cnblogs.com/wuchanming/p/5426746.html
+  有些情况下,比如说,要将第三方库的组件装配到你的应用中,就不能使用前面的自动化装配方法 到第三方库中去给类加@Component和@Autowired注解,
+  在这种情况下,就需要采用显示装配的方式.在进行显示配置有Java和XML两种方案显示装配bean.
+
+  使用java代码，先新建一个配置类JavaConfig，里面都是配置所需的bean，不应该有业务逻辑代码，所以单独建一个类。
+
+  ```java
+  @Configuration
+  public class AppConfig {
+    @Bean
+    public MyService myService() {
+        return new MyServiceImpl();
+    }
+  }
+  public static void main(String[] args) {
+    ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+    MyService myService = ctx.getBean(MyService.class);
+    myService.doStuff();
+  }
+  
+  public static void main(String[] args) {
+    AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+    ctx.register(AppConfig.class, OtherConfig.class);
+    ctx.register(AdditionalConfig.class);
+    ctx.refresh();
+    MyService myService = ctx.getBean(MyService.class);
+    myService.doStuff();
+  }
+  
+  //创建JavaConfig类的关键在于为其添加@Configruation注解,表明这是一个配置类
+  @Configuration
+  public class CDPlayerConfig{
+      @Bean
+      public CompactDisc sgtPeppers(){
+        return new SgtPeppers();
+      }
+      //@Bean注解会告诉Spring这个方法将会返回一个对象,该对象要注册为Spring应用上下文的bean,默认情况下,
+      bean的ID于带有@Bean注解的方法名一样,也可以重命名
+  
+      @Bean(name="lonelyHeartsClubBand")
+      public CompactDisc sgtPeppers(){
+        return new SgtPeppers();
+      }
+  	
+      声明CompactDisc bean是非常简单,它自身没有其他依赖,但现在,我们需要声明CDPlayer bean,它依赖于CompactDisc,在JavaConfig中,如何将他们装配在一起呢?
+      @Bean
+      public CDPlayer cdPlayer(){
+        return new CDPlayer(sgtPeppers()); //因为sgtPeppers()方法上添加了@Bean注解,Spring将会拦截所有对它的调用,
+      //并确保直接返回该方法创建的bean,而不是每次都对其进行实际的调用.
+      }
+      等价于下面这种方式
+          
+      @Bean
+      public CDPlayer cdPlayer(CompactDisc compactDisc){//在这里,cdPlayer()方法请求一个CompactDisc作为参数,当Springs调用cdPlayer()创建CDPlayer bean的时候,
+  //它会自动装配一个CompactDisc到配置方法之中,然后方法体按照合适的方法来使用它.
+        return new CDPlayer(compactDisc);
+      }
+  	@Bean(name="lonelyHeartsClubBandPlayer")
+      public CDPlayer cdPlayer(CompactDisc lonelyHeartsClubBand){
+  		return new CDPlayer(compactDisc);
+      }
+  }
+  
+  More example：
+  
+  @Configuration
+  @ContextConfiguration(locations = {"classpath:spring/spring-dao.xml","classpath:scan.xml"}）
+  public class bbsConfig{
+  　　private Postdao postdao;
+  　　private Userdao userdao;
+  　　@Bean(name="postservice")
+     public PostService getPost()
+  　　{
+  　　return new PostserviceImpl(postdao,userdao);
+  　　}
+  }
+  
+  在对PostService的bean注入时，同时又依赖了两个bean，postdao和userdao。直接引用beanID就可以，spring会自动地从容器中获取这些bean，只要他们的配置是正确的就行。这个例子中userdao、postdao是Mybatis配置自动扫描将dao接口生成代理注入到spring的，其实也算是xml装配bean
+  这里如果再声明一个bean，返回的仍是postserviceImpl对象，和之前的那个bean完全一样，是同一个实例。一般spring @bean如果是同一个beanID，默认返回的是一个单例bean，注入的是同一个实例。如果修改其中一个会都改变的。
+  不过在这里要注意进行测试时，由于spring的单元测试和springIoc容器是完全独立的，postdao和userdao注入检测时是使用locations加载xml文件，而postservice使用classes加载config类的，但是两个不能同时混用在@ContextConfiguration中。所以非要都测试的话，就分开测试吧。
+  ```
+
+@SpringBootApplication 等同于 @EnableAutoConfiguration + @ComponentScan + @Configuration, 后面启动原理部分有详解
+
+All of your application components (@Component, @Service, @Repository, @Controller etc.) are automatically registered as Spring Beans.
+
+Components(@Component @Service @Controller @Repository) VS Beans (@Beans):
+all component types are treated in the same way. The subtypes are mere markers, think code readability rather than features.
+https://www.tomaszezula.com/2014/02/09/spring-series-part-5-component-vs-bean/
+
+
+** @ComponentScan**
+
+** @Import**
+
+在4.2之前， @Import注解只支持导入配置类，但是在4.2之后，它支持导入普通类
+
+**@Conditional @ConditionalOn\***
+
+表示在满足某种条件后才初始化一个bean或者启用某些配置。它一般用在由 @Component、 @Service、 @Configuration等注解标识的类上面，或者由 @Bean标记的方法上。如果一个 @Configuration类标记了 @Conditional，则该类中所有标识了 @Bean的方法和 @Import注解导入的相关类将遵从这些条件。
+
+**@ConfigurationProperties与@EnableConfigurationProperties**
+
+当某些属性的值需要配置的时候，我们一般会在 application.properties文件中新建配置项，然后在bean中使用 @Value注解来获取配置的值;
+
+```
+@Configuration
+public class MyBatisConfiguration { 
+	@Value("${spring.datasource.driverClassName}")
+    private String jdbcDriverClassName;
+	@Value("${spring.datasource.url}")
+    private String jdbcUrl;
+    @Value("${spring.datasource.username}")
+    private String jdbcUsername;
+    @Value("${spring.datasource.password}")
+    private String jdbcPassword;
+    
+	@Bean(name = "dataSource",destroyMethod = "close")
+    public DataSource dataSource() {
+    	DruidDataSource datasource = new DruidDataSource();
+    	datasource.setDriverClassName(jdbcDriverClassName);
+    	datasource.setUrl(jdbcUrl);
+    	datasource.setUsername(jdbcUsername);
+    	datasource.setPassword(jdbcPassword);
+        return datasource;
+    }
+	
+	@Bean(name = {"sqlSessionFactory"})
+	@ConditionalOnMissingBean(name = {"sqlSessionFactory"})
+	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
+	....
+```
+
+但是如果同一个配置在多个地方使用，也存在不方便维护的问题，对于更为复杂的配置，Spring Boot提供了更优雅的实现方式，那就是 @ConfigurationProperties注解
+而@EnableConfigurationProperties的作用是将其注册为bean，否则项目不会将其scan为bean，具体：
+
+> In order to use a configuration class in our project, we need to register it as a regular Spring bean.
+
+> First of all, we can annotate such a class with @Component. Alternatively, we can use a @Bean factory method.
+
+> However, **in certain situations, we may prefer to keep a @ConfigurationProperties class as a simple POJO**. This is when @EnableConfigurationProperties comes in handy. We can specify all configuration beans directly on this annotation.
+
+> This is a convenient way to quickly register @ConfigurationProperties annotated beans.
+
+通过上面等表述，我们大概知道，如果用@component就会将其变成增强类，而不是plain old java object了，而是多了很多冗余的功能；
+
+```
+@ConfigurationProperties(prefix = "additional")
+public class AdditionalProperties {
+ 
+    private String unit;
+    private int max;
+ 
+    // standard getters and setters
+}
+@Configuration
+@EnableConfigurationProperties(AdditionalProperties.class)
+public class AdditionalConfiguration {
+     
+    @Autowired
+    private AdditionalProperties additionalProperties;
+     
+    // make use of the bound properties
+}
+```
+
+#### bean注入
+
+```
+Spring依赖注入技术演进：
+┌────────────────────────────────────────────────────────┐
+│                  配置方式演进                           │
+├────────────────────────────────────────────────────────┤
+│ 1. XML显式配置 (Spring 1.x)                            │
+│    ├── <property name="..." ref="..."/>               │
+│    ├── <constructor-arg ref="..."/>                  │
+│    └── 工厂方法注入                                   │
+│                                                        │
+│ 2. XML自动装配 (Spring 2.0)                            │
+│    ├── autowire="byName"                              │
+│    ├── autowire="byType"                              │
+│    ├── autowire="constructor"                         │
+│    ├── autowire="default"                             │
+│    └── autowire="no"                                  │
+│                                                        │
+│ 3. 注解驱动 (Spring 2.5)                                │
+│    ├── @Autowired (字段/构造器/方法注入)               │
+│    ├── @Resource (JSR-250)                            │
+│    ├── @Inject (JSR-330)                              │
+│    └── @Required                                      │
+│                                                        │
+│ 4. Java配置 (Spring 3.0)                               │
+│    ├── @Configuration + @Bean                         │
+│    └── 方法参数自动注入                               │
+└────────────────────────────────────────────────────────┘
+```
+##### 早期基于XML显式配置三种注入方式
 
 + 属性注入
 
@@ -698,8 +797,6 @@ https://www.cnblogs.com/wuchanming/p/5426746.html
   System.out.println(people5);
   ```
 
-  
-
 + 工厂方法注入，分为静态工厂和非静态工厂； 一般用得多的都是静态工厂；
 
   ```java
@@ -743,15 +840,9 @@ https://www.cnblogs.com/wuchanming/p/5426746.html
   People people7=(People)ac.getBean("people7");
   System.out.println(people7);
   ```
+##### 中期基于XML autowire="no|byName|byType|constructor|default"
 
-
-
-#### 基于Autowired 的三种注入方式
-
-https://stackoverflow.com/questions/39890849/what-exactly-is-field-injection-and-how-to-avoid-it
-
-https://medium.com/@ilyailin7777/all-dependency-injection-types-spring-336da7baf51b
-
+##### 现代基于Autowired 的三种注入方式
  如果你使用的是构造器注入
 恭喜你，当你有十几个甚至更多对象需要注入时，你的构造函数的参数个数可能会长到无法想像。
 
@@ -817,98 +908,9 @@ Spring4.0官方文档建议使用构造器注入。
        
   ```
 
-  
 
-  
 
-### 1.2. JavaConfig与常见Annotation
-
-**1.2.1. JavaConfig**
-
-@SpringBootApplication 等同于 @EnableAutoConfiguration + @ComponentScan + @Configuration, 后面启动原理部分有详解
-
-All of your application components (@Component, @Service, @Repository, @Controller etc.) are automatically registered as Spring Beans.
-
-Components(@Component @Service @Controller @Repository) VS Beans (@Beans):
-all component types are treated in the same way. The subtypes are mere markers, think code readability rather than features.
-https://www.tomaszezula.com/2014/02/09/spring-series-part-5-component-vs-bean/
-
-**1.2.2. @ComponentScan**
-
-**1.2.3. @Import**
-
-在4.2之前， @Import注解只支持导入配置类，但是在4.2之后，它支持导入普通类
-
-**1.2.4. @Conditional @ConditionalOn\***
-
-表示在满足某种条件后才初始化一个bean或者启用某些配置。它一般用在由 @Component、 @Service、 @Configuration等注解标识的类上面，或者由 @Bean标记的方法上。如果一个 @Configuration类标记了 @Conditional，则该类中所有标识了 @Bean的方法和 @Import注解导入的相关类将遵从这些条件。
-
-**1.2.5. @ConfigurationProperties与@EnableConfigurationProperties**
-
-当某些属性的值需要配置的时候，我们一般会在 application.properties文件中新建配置项，然后在bean中使用 @Value注解来获取配置的值;
-
-```
-@Configuration
-public class MyBatisConfiguration { 
-	@Value("${spring.datasource.driverClassName}")
-    private String jdbcDriverClassName;
-	@Value("${spring.datasource.url}")
-    private String jdbcUrl;
-    @Value("${spring.datasource.username}")
-    private String jdbcUsername;
-    @Value("${spring.datasource.password}")
-    private String jdbcPassword;
-    
-	@Bean(name = "dataSource",destroyMethod = "close")
-    public DataSource dataSource() {
-    	DruidDataSource datasource = new DruidDataSource();
-    	datasource.setDriverClassName(jdbcDriverClassName);
-    	datasource.setUrl(jdbcUrl);
-    	datasource.setUsername(jdbcUsername);
-    	datasource.setPassword(jdbcPassword);
-        return datasource;
-    }
-	
-	@Bean(name = {"sqlSessionFactory"})
-	@ConditionalOnMissingBean(name = {"sqlSessionFactory"})
-	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
-	....
-```
-
-但是如果同一个配置在多个地方使用，也存在不方便维护的问题，对于更为复杂的配置，Spring Boot提供了更优雅的实现方式，那就是 @ConfigurationProperties注解
-而@EnableConfigurationProperties的作用是将其注册为bean，否则项目不会将其scan为bean，具体：
-
-> In order to use a configuration class in our project, we need to register it as a regular Spring bean.
-
-> First of all, we can annotate such a class with @Component. Alternatively, we can use a @Bean factory method.
-
-> However, **in certain situations, we may prefer to keep a @ConfigurationProperties class as a simple POJO**. This is when @EnableConfigurationProperties comes in handy. We can specify all configuration beans directly on this annotation.
-
-> This is a convenient way to quickly register @ConfigurationProperties annotated beans.
-
-通过上面等表述，我们大概知道，如果用@component就会将其变成增强类，而不是plain old java object了，而是多了很多冗余的功能；
-
-```
-@ConfigurationProperties(prefix = "additional")
-public class AdditionalProperties {
- 
-    private String unit;
-    private int max;
- 
-    // standard getters and setters
-}
-@Configuration
-@EnableConfigurationProperties(AdditionalProperties.class)
-public class AdditionalConfiguration {
-     
-    @Autowired
-    private AdditionalProperties additionalProperties;
-     
-    // make use of the bound properties
-}
-```
-
-**1.2.6 配置属性加载顺序**
+### 配置属性加载顺序**
 ```
 1、开发者工具 `Devtools` 全局配置参数；
 
@@ -1083,8 +1085,119 @@ DataSourcePoolMetadataProvidersConfiguration是数据库连接池提供者的一
 
 ## 2. SpringApplication启动流程
 
-### 2.1. SpringApplication初始化
+Spring Boot应用启动流程：
+```
+┌─────────────────────────────────────────────────┐
+│               1. JVM启动阶段                    │
+├─────────────────────────────────────────────────┤
+│ 加载JVM → 类加载器初始化 → 字节码验证            │
+└───────────────────────┬─────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────┐
+│          2. SpringApplication.run()             │
+├─────────────────────────────────────────────────┤
+│ 设置无头模式 → 启动监听器 → 发布启动事件          │
+└───────────────────────┬─────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────┐
+│          3. 环境准备阶段                        │
+├─────────────────────────────────────────────────┤
+│ 创建应用参数 → 准备环境 → 加载配置 → 打印Banner  │
+└───────────────────────┬─────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────┐
+│          4. 应用上下文创建                      │
+├─────────────────────────────────────────────────┤
+│ 创建空容器实例 → 初始化异常报告器                 │
+└───────────────────────┬─────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────┐
+│          5. 上下文预处理                        │
+├─────────────────────────────────────────────────┤
+│ 设置环境 → 执行ApplicationContextInitializer     │
+│ → 加载Bean定义源                                │
+└───────────────────────┬─────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────┐
+│          6. ApplicationContext.refresh()        │
+├─────────────────────────────────────────────────┤
+│ 这是Spring容器的核心启动方法，包含所有子阶段       │
+└───────────────────────┬─────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────┐
+│          7. 嵌套子阶段（按顺序执行）             │
+├─────────────────────────────────────────────────┤
+│ 7.1 prepareRefresh()                            │
+│ 7.2 obtainFreshBeanFactory()                    │
+│ 7.3 prepareBeanFactory()                        │
+│ 7.4 postProcessBeanFactory()                    │
+│ 7.5 invokeBeanFactoryPostProcessors() ← 重要！  │
+│     ├── 扫描@Component注解类                    │
+│     ├── 创建BeanDefinition                     │
+│     ├── 注册到BeanFactory                      │
+│     └── 处理@AutoConfiguration                 │
+│ 7.6 registerBeanPostProcessors()                │
+│ 7.7 initMessageSource()                         │
+│ 7.8 initApplicationEventMulticaster()           │
+│ 7.9 onRefresh() ← 启动内嵌服务器！              │
+│ 7.10 registerListeners()                        │
+│ 7.11 finishBeanFactoryInitialization() ← 重要！ │
+│     ├── 实例化所有非懒加载单例Bean               │
+│     ├── 注入依赖                               │
+│     └── 调用生命周期回调                        │
+│ 7.12 finishRefresh()                            │
+└───────────────────────┬─────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────┐
+│          8. 启动收尾阶段                        │
+├─────────────────────────────────────────────────┤
+│ 后处理 → 发布启动事件 → 执行Runner → 发布就绪事件│
+└─────────────────────────────────────────────────┘
+```
 
+
+
+### JVM启动和类加载
+```
+// 阶段1：JVM层面的准备工作
+public class JVMStartupPhase {
+    public void execute() {
+        // 1. 加载JVM核心库
+        loadJVMCoreLibraries();          // rt.jar, charsets.jar等
+        
+        // 2. 初始化类加载器层次结构
+        initializeClassLoaders();        // Bootstrap → Extension → Application
+        
+        // 3. 加载SpringApplication主类
+        Class<?> mainClass = Class.forName("com.example.MyApplication");
+        
+        // 4. 验证字节码安全性
+        verifyBytecode(mainClass);       // 检查魔数、版本、指令合法性
+        
+        // 5. 准备静态变量和常量池
+        prepareStaticFields();          // 初始化静态常量
+        
+        // 6. 调用main方法入口
+        Method mainMethod = mainClass.getMethod("main", String[].class);
+        mainMethod.invoke(null, (Object) args);
+    }
+}
+
+// SpringBootApplication.java
+@SpringBootApplication
+public class MyApplication {
+    public static void main(String[] args) {
+        // 阶段1: JVM启动
+        SpringApplication.run(MyApplication.class, args);
+    }
+}
+
+1. 加载SpringApplication类到方法区
+2. 加载@SpringBootApplication注解元数据
+3. 验证字节码，准备静态变量
+4. 初始化Spring核心类（BeanFactory、ApplicationContext等）
+```
+### 初始化SpringApplication对象
 SpringBoot整个启动流程分为两个步骤：初始化一个SpringApplication对象、执行该对象的run方法。看下SpringApplication的初始化流程，SpringApplication的构造方法：
 
 ```
@@ -1107,9 +1220,78 @@ Spring Boot提供两种方式来添加**自定义监听器**：
 
 既然SpringApplication的初始化流程中已经从 spring.factories中获取到 ApplicationListener的实现类，那么我们直接在自己的jar包的 META-INF/spring.factories文件中新增配置即可：
 
-### 2.2. 启动流程
-
+### 执行该对象的run方法
 Spring Boot应用的整个启动流程都封装在 SpringApplication.run 方法中，其整个流程真的是太长太长了，但本质上就是在Spring容器启动的基础上做了大量的扩展，按照这个思路来看看源码
+
+Spring Boot启动调用栈（层次化视图）：
+```
+┌─────────────────────────────────────────────────┐
+│           SpringApplication.run()               │
+├─────────────────────────────────────────────────┤
+│ 1. 启动准备                                      │
+│    ├── configureHeadlessProperty()              │
+│    ├── getRunListeners()                        │
+│    └── listeners.starting() ← 发布启动事件       │
+│                                                │
+│ 2. 环境准备                                      │
+│    ├── new DefaultApplicationArguments(args)    │
+│    ├── prepareEnvironment() ← 核心！            │
+│    │   └── 加载所有配置源                        │
+│    │       ├── application.properties          │
+│    │       ├── application.yml                 │
+│    │       ├── 环境变量                         │
+│    │       └── 命令行参数                       │
+│    ├── configureIgnoreBeanInfo()               │
+│    └── printBanner()                           │
+│                                                │
+│ 3. 应用上下文创建                                │
+│    └── createApplicationContext()               │
+│        ├── Web应用: AnnotationConfigServletWebServerApplicationContext│
+│        └── 普通应用: AnnotationConfigApplicationContext│
+│                                                │
+│ 4. 异常报告器初始化                              │
+│    └── getSpringFactoriesInstances()            │
+│                                                │
+│ 5. 上下文预处理                                  │
+│    └── prepareContext()                         │
+│        ├── 设置环境environment                 │
+│        ├── 执行ApplicationContextInitializer    │
+│        ├── 发布ApplicationPreparedEvent        │
+│        └── 加载Bean定义源                      │
+│                                                │
+│ 6. 容器刷新 ← 真正核心！                        │
+│    └── refreshContext() → context.refresh()     │
+│        ├── 6.1 prepareRefresh()                │
+│        ├── 6.2 obtainFreshBeanFactory()        │
+│        ├── 6.3 prepareBeanFactory()            │
+│        ├── 6.4 postProcessBeanFactory()        │
+│        ├── 6.5 invokeBeanFactoryPostProcessors() ← 重要！│
+│        │   ├── 处理@Configuration类            │
+│        │   ├── 扫描@Component注解类            │
+│        │   ├── 解析@PropertySource            │
+│        │   └── 加载@AutoConfiguration         │
+│        ├── 6.6 registerBeanPostProcessors()     │
+│        ├── 6.7 initMessageSource()             │
+│        ├── 6.8 initApplicationEventMulticaster()│
+│        ├── 6.9 onRefresh() ← 重要！            │
+│        │   └── 创建并启动内嵌服务器             │
+│        ├── 6.10 registerListeners()            │
+│        ├── 6.11 finishBeanFactoryInitialization() ← 重要！│
+│        │   └── 实例化所有非懒加载单例Bean        │
+│        │       ├── 创建Bean实例               │
+│        │       ├── 依赖注入                   │
+│        │       └── 初始化回调                 │
+│        └── 6.12 finishRefresh()                │
+│                                                │
+│ 7. 启动收尾                                      │
+│    ├── afterRefresh()                          │
+│    ├── listeners.started() ← 发布启动完成事件    │
+│    ├── callRunners() ← 执行ApplicationRunner   │
+│    └── listeners.running() ← 发布应用就绪事件    │
+└─────────────────────────────────────────────────┘
+```
+
+核心代码
 ```
 /**
 	 * Run the Spring application, creating and refreshing a new
@@ -1118,29 +1300,71 @@ Spring Boot应用的整个启动流程都封装在 SpringApplication.run 方法�
 	 * @return a running {@link ApplicationContext}
 	 */
 	public ConfigurableApplicationContext run(String... args) {
+		// ============ 阶段0: 启动准备 ============
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 		ConfigurableApplicationContext context = null;
 		Collection<SpringBootExceptionReporter> exceptionReporters = new ArrayList<>();
+		// 1. 设置无头模式（确保在服务器环境运行）
 		configureHeadlessProperty();
+		// 2. 获取并启动所有SpringApplicationRunListener
 		SpringApplicationRunListeners listeners = getRunListeners(args);
-		listeners.starting();
+		listeners.starting(); // 发布ApplicationStartingEvent
 		try {
+			// ============ 阶段1: 环境准备 ============
+			// 3. 创建应用参数封装
 			ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);
+			// 4. 准备环境（⚠️ 这是真正的第一步核心操作！）
 			ConfigurableEnvironment environment = prepareEnvironment(listeners, applicationArguments);
+			// ✅ 这里加载所有配置：application.properties → application.yml → 环境变量 → 命令行参数
+        
+			// 5. 配置忽略的Bean信息（AOP相关）
 			configureIgnoreBeanInfo(environment);
+			// 6. 打印Banner（应用启动logo）
 			Banner printedBanner = printBanner(environment);
-			context = createApplicationContext();
+			
+			// ============ 阶段2: 上下文创建 ============
+			// 7. 创建应用上下文（根据应用类型）
+			context = createApplicationContext(); 
+			// Web应用: AnnotationConfigServletWebServerApplicationContext
+			// 普通应用: AnnotationConfigApplicationContext
+			
+			// 8. 初始化异常报告器
 			exceptionReporters = getSpringFactoriesInstances(SpringBootExceptionReporter.class,
 					new Class[] { ConfigurableApplicationContext.class }, context);
+			
+			// ============ 阶段3: 上下文预处理 ============
+			// 9. 准备上下文（⚠️ 关键预处理）
 			prepareContext(context, environment, listeners, applicationArguments, printedBanner);
+			// ✅ 这里包含：设置环境、执行ApplicationContextInitializer、加载Bean定义等
+			
+			// ============ 阶段4: 容器刷新 ============
+			// 10. 刷新上下文（⚠️ 最核心的阶段！）
 			refreshContext(context);
+			// ✅ 这里执行完整的ApplicationContext.refresh()，包含：
+			//    - BeanFactory准备
+			//    - 执行BeanFactoryPostProcessor（包括组件扫描）
+			//    - 注册BeanPostProcessor
+			//    - 初始化MessageSource
+			//    - 初始化事件广播器
+			//    - onRefresh() → 创建内嵌Web服务器
+			//    - 注册监听器
+			//    - 实例化所有非懒加载单例Bean
+			//    - 完成刷新
+			
+			// 11. 后刷新处理（空方法，可扩展）
 			afterRefresh(context, applicationArguments);
+			
+			// ============ 阶段5: 启动完成 ============
 			stopWatch.stop();
 			if (this.logStartupInfo) {
 				new StartupInfoLogger(this.mainApplicationClass).logStarted(getApplicationLog(), stopWatch);
 			}
-			listeners.started(context);
+			
+			// 12. 发布应用启动完成事件
+			listeners.started(context); // 发布ApplicationStartedEvent
+			
+			// 13. 执行所有Runner（ApplicationRunner/CommandLineRunner）
 			callRunners(context, applicationArguments);
 		}
 		catch (Throwable ex) {
@@ -1149,6 +1373,7 @@ Spring Boot应用的整个启动流程都封装在 SpringApplication.run 方法�
 		}
 
 		try {
+			// 14. 发布应用就绪事件
 			listeners.running(context);
 		}
 		catch (Throwable ex) {
@@ -1159,10 +1384,12 @@ Spring Boot应用的整个启动流程都封装在 SpringApplication.run 方法�
 	}
 ```
 
-1) 通过 SpringFactoriesLoader 查找并加载所有的 SpringApplicationRunListeners，通过调用starting()方法通知所有的SpringApplicationRunListener：应用开始启动了。SpringApplicationRunListener 其本质上就是一个事件发布者，它在SpringBoot应用启动的不同时间点发布不同应用事件类型(ApplicationEvent)，如果有哪些事件监听者(ApplicationListener)对这些事件感兴趣，则可以接收并且处理。前面的初始化流程中，SpringApplication 加载了一系列 ApplicationListener。发布事件的代码已经在SpringApplicationRunListeners中实现了。
+#### 获取并启动所有SpringApplicationRunListener
+通过 SpringFactoriesLoader 查找并加载所有的 SpringApplicationRunListeners，通过调用starting()方法通知所有的SpringApplicationRunListener：应用开始启动了。SpringApplicationRunListener 其本质上就是一个事件发布者，它在SpringBoot应用启动的不同时间点发布不同应用事件类型(ApplicationEvent)，如果有哪些事件监听者(ApplicationListener)对这些事件感兴趣，则可以接收并且处理。前面的初始化流程中，SpringApplication 加载了一系列 ApplicationListener。发布事件的代码已经在SpringApplicationRunListeners中实现了。
 SpringApplicationRunListener只有一个实现类： EventPublishingRunListener。此处的代码只会返回一个 SpringApplicationRunListeners ，注意后面多了一个s字母，看下源码就会发现该类就是包含了一个SpringApplicationRunListener的List。操作SpringApplicationRunListeners ，在内部会遍历每一个SpringApplicationRunListener，调用每一个SpringApplicationRunListener的实现类的starting方法
 
-2) 创建并配置当前应用将要使用的 Environment，Environment用于描述应用程序当前的运行环境，其抽象了两个方面的内容：配置文件(profile)和属性(properties)，开发经验丰富的同学对这两个东西一定不会陌生：不同的环境(eg：生产环境、预发布环境)可以使用不同的配置文件，而属性则可以从配置文件、环境变量、命令行参数等来源获取。因此，当Environment准备好后，在整个应用的任何时候，都可以从Environment中获取资源。
+#### 准备环境
+创建并配置当前应用将要使用的 Environment，Environment用于描述应用程序当前的运行环境，其抽象了两个方面的内容：配置文件(profile)和属性(properties)，开发经验丰富的同学对这两个东西一定不会陌生：不同的环境(eg：生产环境、预发布环境)可以使用不同的配置文件，而属性则可以从配置文件、环境变量、命令行参数等来源获取。因此，当Environment准备好后，在整个应用的任何时候，都可以从Environment中获取资源。
 
 	总结起来，主要完成以下几件事：
 	
@@ -1172,11 +1399,13 @@ SpringApplicationRunListener只有一个实现类： EventPublishingRunListener�
 	
 	- 调用SpringApplicationRunListener的 environmentPrepared()方法，通知事件监听者：应用的Environment已经准备好
 
-3) 打印Banner图案
+#### 打印Banner图案
 
-4) 根据不同的ApplicationType创建不同的Context，具体的类型回顾初始化中App类型的介绍
+#### 创建应用上下文
+根据不同的ApplicationType创建不同的Context，具体的类型回顾初始化中App类型的介绍
 
-5) 初始化ApplicationContext，主要完成以下工作：
+#### 准备上下文
+初始化ApplicationContext，主要完成以下工作：
 
 	- 将准备好的Environment设置给ApplicationContext
 	
@@ -1188,7 +1417,8 @@ SpringApplicationRunListener只有一个实现类： EventPublishingRunListener�
 	
 	- 调用SpringApplicationRunListener的 contextLoaded()方法，通知所有的监听者：ApplicationContext已经装载完毕
 
-6) refresh完成配置类的解析、各种BeanFactoryPostProcessor和BeanPostProcessor的注册、国际化配置的初始化、web内置容器的构造等等。
+#### 容器刷新
+refresh完成配置类的解析、各种BeanFactoryPostProcessor和BeanPostProcessor的注册、国际化配置的初始化、web内置容器的构造等等。
 
 以上就是Spring Boot的整个启动流程，其核心就是在Spring容器初始化并启动的基础上加入各种扩展点，这些扩展点包括：
 - ApplicationContextInitializer
@@ -1200,13 +1430,1464 @@ SpringApplicationRunListener只有一个实现类： EventPublishingRunListener�
 	org.springframework.beans.factory.config.BeanFactoryPostProcessor：
 	允许我们在容器实例化相应对象之前，对注册到容器的BeanDefinition所保存的信息做一些额外的操作，比如修改bean定义的某些属性或者增加其他信息等。
 
-## 3. 使用springboot开发应用
+### 实例分析启动流程
+```
+// 1. 主启动类
+@SpringBootApplication
+public class SimpleApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(SimpleApplication.class, args);
+    }
+}
 
-### 3.0 语法
+// 2. 一个简单的RestController
+@RestController
+public class HelloController {
+    @GetMapping("/hello")
+    public String hello() {
+        return "Hello World!";
+    }
+}
 
-SpringBoot常见异步编程 https://mp.weixin.qq.com/s/Z-GE_qBtnSgLQTVr9bQYcQ
+// 3. 配置文件application.properties
+server.port=8080
+spring.application.name=simple-demo
+```
+#### 阶段1: JVM启动（底层准备）
+`java -jar simple-app.jar`
 
-### 3.0 项目技巧
+加载JVM核心库
+
+初始化类加载器层次结构
+
+加载SimpleApplication.class到内存
+
+验证字节码安全性
+
+调用main方法入口
+
+#### 阶段2: SpringApplication.run() 初始化
+`SpringApplication.run(SimpleApplication.class, args);`
+
+```
+// 内部创建SpringApplication实例
+SpringApplication app = new SpringApplication(SimpleApplication.class);
+app.run(args);
+
+// 2.1 配置无头模式（确保在服务器环境运行）
+configureHeadlessProperty(); // java.awt.headless=true
+
+// 2.2 获取并启动监听器
+SpringApplicationRunListeners listeners = getRunListeners(args);
+listeners.starting(); // 发布ApplicationStartingEvent
+
+// 2.3 创建应用参数封装
+ApplicationArguments appArgs = new DefaultApplicationArguments(args);
+// 解析命令行参数：--server.port=9090 等
+```
+
+##### 发布启动事件 ⭐扩展点1: 启动事件监听
+`listeners.starting(); // 发布ApplicationStartingEvent`
+
+开发者扩展方式：
+```
+// 方式1: 实现ApplicationListener
+@Component
+public class MyStartingListener implements ApplicationListener<ApplicationStartingEvent> {
+    @Override
+    public void onApplicationEvent(ApplicationStartingEvent event) {
+        System.out.println("应用开始启动...");
+        // 场景：记录启动日志、初始化监控指标
+    }
+}
+
+// 方式2: 使用@EventListener注解
+@Component
+public class EventListenerService {
+    @EventListener
+    public void handleStartingEvent(ApplicationStartingEvent event) {
+        // 场景：验证环境配置、检查依赖服务
+        checkRequiredProperties();
+    }
+    
+    private void checkRequiredProperties() {
+        // 检查必需配置是否存在
+        if (System.getProperty("required.config") == null) {
+            throw new IllegalStateException("缺少必需配置");
+        }
+    }
+}
+```
+常见场景：
+
+启动日志记录：记录应用启动时间和参数
+
+环境验证：检查必需的环境变量和配置
+
+资源预加载：提前加载常用资源
+
+监控指标初始化：设置应用监控
+
+**完整事件顺序：**
+
+ApplicationStartingEvent- 最早，环境还未准备
+
+ApplicationEnvironmentPreparedEvent- 环境已准备，上下文未创建
+
+ApplicationContextInitializedEvent- 上下文已创建，Initializer已执行
+
+ApplicationPreparedEvent- 上下文已准备，refresh()未调用
+
+ApplicationStartedEvent- refresh()已完成，Runner未执行
+
+ApplicationReadyEvent- 完全就绪，Runner已执行
+
+#### 阶段3: 环境准备（加载配置）
+```
+// 3.1 加载所有配置源（按优先级）
+ConfigurableEnvironment environment = prepareEnvironment(listeners, appArgs);
+// 1.  application.properties → server.port=8080
+// 2.  application.yml (不存在)
+// 3.  环境变量 (SPRING_APPLICATION_JSON等)  
+// 4.  命令行参数 (--server.port=9090)
+// 5.  默认属性
+
+```
+=>
+```
+// SpringApplication.java
+private ConfigurableEnvironment prepareEnvironment(...) {
+    // 1. 创建环境对象（根据应用类型）
+    ConfigurableEnvironment environment = createEnvironment(); 
+    // Web应用: StandardServletEnvironment
+    // 普通应用: StandardEnvironment
+    
+    // 2. 配置PropertySource（配置源加载在这里发生！）
+    configurePropertySources(environment, args);
+    
+    // 3. 配置Profile
+    configureProfiles(environment, args);
+    
+    return environment;
+}
+
+// configurePropertySources内部的加载顺序：
+public void configurePropertySources(ConfigurableEnvironment environment, String[] args) {
+    // 配置源优先级（从高到低）：
+    // 1. 命令行参数 (--server.port=8080)
+    environment.getPropertySources().addFirst(new SimpleCommandLinePropertySource(args));
+    
+    // 2. ServletConfig参数 (Web应用)
+    // 3. ServletContext参数 (Web应用) 
+    // 4. JNDI属性
+    // 5. 系统环境变量
+    // 6. 系统属性
+    // 7. 随机值属性
+    // 8. 应用配置文件 ← 主要配置来源！
+    //    - application.properties
+    //    - application.yml  
+    //    - application-{profile}.properties
+    // 9. 默认属性
+}
+```
+
+##### 加载配置源 ⭐扩展点2: 自定义PropertySource
+开发者扩展方式：
+```
+
+@Component
+public class CustomPropertySourceConfig {
+    @PostConstruct
+    public void addCustomPropertySource() {
+        // 添加自定义配置源
+        MapPropertySource customSource = new MapPropertySource("custom", 
+            Collections.singletonMap("custom.property", "value"));
+        environment.getPropertySources().addFirst(customSource);
+    }
+}
+
+// 或者实现EnvironmentPostProcessor
+public class CustomEnvironmentPostProcessor implements EnvironmentPostProcessor {
+    @Override
+    public void postProcessEnvironment(ConfigurableEnvironment env, 
+                                     SpringApplication application) {
+        // 修改或添加配置源
+        env.getPropertySources().addFirst(...);
+
+        // 开发者在这里操作PropertySources
+        MutablePropertySources propertySources = environment.getPropertySources();
+        // 添加自定义配置源或修改现有配置
+        Map<String, Object> customProperties = new HashMap<>();
+        customProperties.put("custom.property", "value");
+        propertySources.addFirst(new MapPropertySource("custom", customProperties));
+    }
+}
+```
+
+常见场景：
+
+数据库配置加密：解密加密的数据库密码
+
+外部配置集成：从外部配置中心加载配置
+
+环境特定配置：根据运行环境动态调整配置
+
+##### printBanner
+
+```
+// 3.2 配置忽略的Bean信息（AOP相关）
+configureIgnoreBeanInfo(environment);
+
+// 3.3 打印Banner
+// 控制台输出Spring logo和版本信息
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+```
+=>
+```
+// configureIgnoreBeanInfo的实际作用：
+protected void configureIgnoreBeanInfo(ConfigurableEnvironment environment) {
+    // 设置系统属性，告诉Spring跳过某些Bean的元数据解析
+    // 这可以显著提高启动性能，特别是当有大量Bean时
+    
+    String ignore = environment.getProperty("spring.aop.ignore", "true");
+    if ("true".equals(ignore)) {
+        // 设置系统属性，优化AOP处理
+        System.setProperty("spring.aop.auto", "false");
+        
+        // 对于某些已知的基础设施Bean，跳过AOP代理创建
+        // 比如：BeanFactoryPostProcessor, BeanPostProcessor等
+        // 这些Bean不需要AOP代理，跳过检查可以提高性能
+    }
+}
+```
+
+开发者扩展方式：
+```
+// 自定义Banner
+public class CustomBanner implements Banner {
+    @Override
+    public void printBanner(Environment environment, 
+                           Class<?> sourceClass, PrintStream out) {
+        out.println("=== 我的应用 ===");
+        out.println("版本: " + environment.getProperty("app.version"));
+    }
+}
+
+// 在application.properties中指定
+spring.banner.location=classpath:my-banner.txt
+```
+
+#### 阶段4: 应用上下文创建
+```
+context = createApplicationContext();
+// 对于AnnotationConfigApplicationContext：
+// 在构造器中就创建了DefaultListableBeanFactory
+// 但此时是空的，只有基础设施
+```
+=>
+```
+// 检测到有spring-web依赖，创建Web容器
+return new AnnotationConfigServletWebServerApplicationContext();
+
+// 此时还是空容器，没有任何Bean
+```
+
+#### 阶段5: 上下文预处理
+`prepareContext(context, environment, listeners, appArgs, printedBanner);`
+=>
+```
+// 5.1 设置环境到上下文
+context.setEnvironment(environment);
+
+// 5.2 执行ApplicationContextInitializer（如果有）
+applyInitializers(context);
+
+// 发布ApplicationContextInitializedEvent
+listeners.contextInitialized(context);
+
+// 注册特定的单例Bean
+ConfigurableListableBeanFactory beanFactory = context.getBeanFactory();
+// 这里注册的是已经实例化的对象，不是BeanDefinition
+beanFactory.registerSingleton("springApplicationArguments", applicationArguments);
+if (printedBanner != null) {
+    beanFactory.registerSingleton("springBootBanner", printedBanner);
+}
+
+if (beanFactory instanceof DefaultListableBeanFactory) {
+    ((DefaultListableBeanFactory) beanFactory)
+        .setAllowBeanDefinitionOverriding(this.allowBeanDefinitionOverriding);
+}
+
+// 设置懒初始化（Spring Boot 2.2+）
+if (this.lazyInitialization) {
+    context.addBeanFactoryPostProcessor(new LazyInitializationBeanFactoryPostProcessor());
+}
+
+// 加载源（不是register(SimpleApplication.class)）
+// 将SimpleApplication.class转换为BeanDefinition存入BeanFactory
+// 但此时只是蓝图，还没有实例化
+Set<Object> sources = getAllSources(); // 获取所有配置源，包括主类SimpleApplication
+// load方法会处理配置类
+load(context, sources.toArray(new Object[0]));
+// BeanDefinitionLoader.load() 方法会：
+// 1. 如果source是Class且有@Configuration注解，注册为配置类
+// 2. 处理@ComponentScan，扫描指定包下的@Component类
+// 3. 处理@Import、@ImportResource等注解
+// 4. 为SimpleApplication创建BeanDefinition并注册到BeanFactory
+
+// 简单说：load()将SimpleApplication.class转换为BeanDefinition并注册
+// SimpleApplication.class → 作为配置类注册 → 解析注解 → 扫描包 → 注册其他Bean
+// 所以不是注册SimpleApplication本身，而是：
+// 注册SimpleApplication为配置类（BeanDefinition）
+// 解析其上的注解（@ComponentScan, @EnableAutoConfiguration）
+// 执行组件扫描找到其他Bean
+// 处理自动配置加载spring.factories中的配置
+
+// 5.4 发布ApplicationPreparedEvent
+listeners.contextPrepared(context);
+```
+
+##### 执行ApplicationContextInitializer ⭐扩展点3: 上下文初始化器
+`applyInitializers(context);`
+=>
+```
+// 执行所有ApplicationContextInitializer
+for (ApplicationContextInitializer initializer : initializers) {
+    initializer.initialize(context);
+}
+```
+开发者扩展方式：
+```
+// 方式1: 实现ApplicationContextInitializer
+public class MyContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+    @Override
+    public void initialize(ConfigurableApplicationContext context) {
+        // 场景1: 早期Bean注册,实际用例：需要在其他组件的配置阶段就提供服务的基础设施Bean。
+        context.getBeanFactory().registerSingleton("earlyService", new EarlyService());
+        // 这个Bean现在可以在任何BeanFactoryPostProcessor中使用
+        // 比如在自定义的BeanFactoryPostProcessor中：
+        // ConfigService config = beanFactory.getBean("configService");
+
+        // 场景2: 环境验证
+        Environment env = context.getEnvironment();
+        if (!env.containsProperty("db.url")) {
+            throw new IllegalStateException("数据库配置缺失");
+        }
+        
+        // 场景3: 动态配置
+        if (env.acceptsProfiles("cloud")) {
+            System.setProperty("server.port", "8081");
+        }
+    }
+}
+
+// 注册方式1: spring.factories
+// META-INF/spring.factories:
+org.springframework.context.ApplicationContextInitializer=com.example.MyContextInitializer
+
+// 注册方式2: 启动类设置
+new SpringApplicationBuilder(MyApp.class)
+    .initializers(new MyContextInitializer())
+    .run(args);
+```
+
+常见场景：
+
+早期Bean注册：在容器刷新前注册单例Bean
+
+环境验证：检查必需配置是否就绪
+
+动态配置：根据环境动态修改配置
+
+自定义BeanFactory设置：修改BeanFactory配置
+
+##### beanFactory.registerSingleton
+注意: beanFactory.registerSingleton("springApplicationArguments", applicationArguments);
+
+```
+# 启动Spring Boot应用时传入命令行参数
+java -jar myapp.jar --debug --server.port=9090 --spring.profiles.active=dev inputfile.txt
+
+在Spring Boot中，这些参数被封装为：
+ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);
+
+选项参数（Option Arguments）：以--开头
+
+--debug→ 选项名："debug"，值：空列表
+
+--server.port=9090→ 选项名："server.port"，值：["9090"]
+
+--spring.profiles.active=dev→ 选项名："spring.profiles.active"，值：["dev"]
+
+非选项参数（Non-option Arguments）：不以--开头
+
+inputfile.txt→ 非选项参数
+
+
+// 方式1：注入使用
+@Component
+public class MyComponent {
+    @Autowired
+    private ApplicationArguments args;
+    
+    public void checkArgs() {
+        // 检查是否有debug选项
+        if (args.containsOption("debug")) {
+            System.out.println("Debug模式已启用");
+        }
+        
+        // 获取server.port的值
+        List<String> portValues = args.getOptionValues("server.port");
+        if (!portValues.isEmpty()) {
+            String port = portValues.get(0);
+            System.out.println("端口号: " + port);
+        }
+        
+        // 获取非选项参数
+        List<String> nonOptionArgs = args.getNonOptionArgs();
+        System.out.println("非选项参数: " + nonOptionArgs);
+    }
+}
+
+// 方式2：在BeanFactoryPostProcessor中使用
+@Component
+public class MyBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
+    @Override
+    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
+        ApplicationArguments args = beanFactory.getBean("springApplicationArguments", ApplicationArguments.class);
+        
+        if (args.containsOption("dev")) {
+            // 开发环境特殊配置
+            enableDevelopmentFeatures();
+        }
+    }
+}
+```
+
+##### 为什么需要类型判断 beanFactory instanceof DefaultListableBeanFactory
+```
+// 在prepareContext方法中：
+if (beanFactory instanceof DefaultListableBeanFactory) {
+    // 只有DefaultListableBeanFactory才有这个方法
+    ((DefaultListableBeanFactory) beanFactory)
+        .setAllowBeanDefinitionOverriding(this.allowBeanDefinitionOverriding);
+        // true：允许同名Bean定义覆盖（后注册的覆盖先注册的）
+        // false：不允许覆盖，遇到同名Bean定义时抛出异常
+}
+```
+
+核心原因：Spring的设计支持多种BeanFactory实现, 虽然Spring Boot默认使用DefaultListableBeanFactory，但框架设计上支持多种实现：
+```
+// Spring支持的不同BeanFactory实现：
+public interface ConfigurableListableBeanFactory 
+    extends ListableBeanFactory, ConfigurableBeanFactory, AutowireCapableBeanFactory {
+    // 基础接口
+}
+
+// 主要实现类：
+public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory
+    implements ConfigurableListableBeanFactory, BeanDefinitionRegistry, Serializable {
+    // Spring默认使用的实现
+}
+
+// 其他可能的实现（理论上）：
+public class CustomBeanFactory implements ConfigurableListableBeanFactory {
+    // 用户自定义的BeanFactory实现
+}
+```
+实际应用场景：
+```
+// 场景1：Spring Boot测试中可能使用不同的BeanFactory
+@SpringBootTest
+@TestPropertySource(properties = "spring.main.allow-bean-definition-overriding=true")
+public class MyTest {
+    // 测试环境可能使用特殊的BeanFactory配置
+}
+
+// 场景2：自定义BeanFactory（虽然少见，但框架设计上支持）
+@Configuration
+public class CustomBeanFactoryConfig {
+    @Bean
+    public ConfigurableListableBeanFactory customBeanFactory() {
+        return new CustomBeanFactoryImplementation(); // 用户自定义实现
+    }
+}
+```
+
+##### 发布准备事件 ⭐扩展点4: 准备事件监听
+`listeners.contextPrepared(context); // ApplicationPreparedEvent`
+开发者扩展方式：
+```
+@Component
+public class PreparedEventListener implements ApplicationListener<ApplicationPreparedEvent> {
+    @Override
+    public void onApplicationEvent(ApplicationPreparedEvent event) {
+        ConfigurableApplicationContext context = event.getApplicationContext();
+        ConfigurableListableBeanFactory beanFactory = context.getBeanFactory();
+        
+        // 场景1: Bean定义分析（在实例化前）
+        String[] beanNames = beanFactory.getBeanDefinitionNames();
+        log.info("已注册Bean定义数量: {}", beanNames.length);
+        
+        // 场景2: 条件配置验证
+        if (!beanFactory.containsBeanDefinition("requiredBean")) {
+            throw new IllegalStateException("必需Bean未配置");
+        }
+        
+        // 场景3: 动态注册配置（基于现有Bean定义）
+        if (beanFactory.containsBeanDefinition("dataSource")) {
+            // 根据现有配置决定是否注册额外组件
+            registerAdditionalComponents(beanFactory);
+        }
+        
+        // 场景4: 性能监控设置
+        setupPerformanceMonitoring(beanFactory);
+        
+        // 预加载缓存
+        preloadCacheData();
+    }
+}
+```
+#### 阶段6: 容器刷新（核心！）
+`refreshContext(context); // → 调用context.refresh()`
+=>
+```
+AbstractApplicationContext:
+
+public void refresh() {
+    // 7.1 prepareRefresh() - 设置上下文激活状态、初始化属性源等
+    prepareRefresh();
+    
+    // 7.2 obtainFreshBeanFactory() - 获取或刷新BeanFactory
+    // 对于AnnotationConfigApplicationContext，这里会创建DefaultListableBeanFactory
+    // 但此时是空的，还没有Bean定义
+    ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
+    
+    // 7.3 prepareBeanFactory() - 配置BeanFactory的基础设施
+    // 设置类加载器、表达式解析器、属性编辑器
+    // 注册环境Bean等基础配置：environment、systemProperties、systemEnvironment
+    prepareBeanFactory(beanFactory);
+    // 此时BeanFactory中已有：
+    // - 几个registerSingleton的单例Bean
+    // - 一些BeanDefinition（来自load()）
+    // 但基础设施（如环境Bean、解析器等）还需要配置
+    
+    
+    // 7.4 postProcessBeanFactory() - 空方法，子类可重写
+    postProcessBeanFactory(beanFactory);
+    // Web应用在这里注册Servlet相关的Scope
+}
+```
+##### 6.1-6.4: 准备阶段
+```
+prepareRefresh();
+obtainFreshBeanFactory();
+prepareBeanFactory(beanFactory);
+postProcessBeanFactory(beanFactory);
+```
+##### 6.5: 执行BeanFactoryPostProcessor ⭐扩展点5: Bean工厂后处理
+`invokeBeanFactoryPostProcessors();`
+=>
+```
+// 6.5.1 处理@SpringBootApplication
+// → 包含@ComponentScan，扫描com.example包
+
+// 6.5.2 找到HelloController（有@RestController注解）
+// @RestController包含@Component，所以被扫描到
+
+// 6.5.3 创建BeanDefinition（Bean蓝图）
+BeanDefinition controllerDef = new RootBeanDefinition(HelloController.class);
+controllerDef.setScope(SCOPE_SINGLETON);
+
+// 6.5.4 注册到BeanFactory
+beanFactory.registerBeanDefinition("helloController", controllerDef);
+
+// 6.5.5 处理自动配置（@EnableAutoConfiguration）
+// 自动配置内嵌服务器、JSON转换器等
+```
+
+为什么需要 BeanFactoryPostProcessor（后处理）
+
+核心答案：动态性和条件化。有些配置无法在编写代码时确定，需要在运行时根据环境决定.
+
+处理对象:BeanDefinition（Bean蓝图）
+
+开发者扩展方式：
+```
+// 方式1: 实现BeanFactoryPostProcessor
+@Component
+public class MyBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
+    @Override
+    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
+        Environment env = beanFactory.getBean(Environment.class);
+        
+        // 场景1: 根据环境动态修改配置
+        if (env.acceptsProfiles("cloud")) {
+            BeanDefinition dbDef = beanFactory.getBeanDefinition("dataSource");
+            // 云环境使用连接池配置
+            dbDef.getPropertyValues().add("url", env.getProperty("CLOUD_DB_URL"));
+        }
+        
+        // 场景2: 条件注册Bean
+        if (isFeatureEnabled(env)) {
+            GenericBeanDefinition featureBean = new GenericBeanDefinition();
+            featureBean.setBeanClass(FeatureService.class);
+            ((DefaultListableBeanFactory) beanFactory)
+                .registerBeanDefinition("featureService", featureBean);
+        }
+        
+        // 场景3: 属性解密
+        BeanDefinition[] beanDefs = beanFactory.getBeanDefinitions();
+        for (BeanDefinition beanDef : beanDefs) {
+            decryptPropertyValues(beanDef); // 解密加密的属性值
+        }
+    }
+}
+```
+常见场景：
+
+Bean定义修改：改变作用域、懒加载设置等
+
+条件注册：根据条件动态注册Bean
+
+AOP代理设置：为特定Bean设置代理
+
+属性加密解密：处理加密的配置属性
+
+
+##### 6.6: 注册BeanPostProcessor ⭐扩展点6: Bean后处理
+```
+// 注册AutowiredAnnotationBeanPostProcessor
+// 用于后续处理@Autowired注入
+registerBeanPostProcessors(beanFactory);
+```
+
+处理对象:Bean实例（实际对象）
+
+开发者扩展方式：
+```
+@Component
+public class MyBeanPostProcessor implements BeanPostProcessor {
+    
+    // Bean初始化前调用
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) {
+        // 场景1: 监控统计
+        if (bean instanceof RestController) {
+            monitorBeanCreation(beanName, bean.getClass());
+        }
+        
+        // 场景2: 自定义注解处理
+        if (bean.getClass().isAnnotationPresent(MyAnnotation.class)) {
+            processCustomAnnotation(bean);
+        }
+        
+        return bean;
+    }
+    
+    // Bean初始化后调用
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) {
+        // 场景1: AOP代理创建 这个不是正常的场景而是springboot源码spring-boot-starter-aop的实现,纯粹是举例
+        if (bean instanceof MyService) {
+            return createProxy(bean); // 返回代理对象
+        }
+        
+        // 场景2: 缓存包装
+        if (bean instanceof Repository) {
+            return new CachingRepositoryWrapper((Repository) bean);
+        }
+        
+        return bean;
+    }
+}
+```
+
+常见场景：
+
+AOP代理：为Bean创建动态代理
+
+监控统计：记录Bean创建和调用统计
+
+缓存包装：为数据访问层添加缓存
+
+自定义注解处理：处理业务自定义注解
+
+##### 6.7-6.8: 消息源和事件广播器
+```
+initMessageSource();
+initApplicationEventMulticaster();
+```
+##### 6.9: 子类特定刷新 ⭐扩展点7: 内嵌服务器自定义
+`onRefresh(); // ServletWebServerApplicationContext.onRefresh()`
+=>
+```
+// 6.9.1 创建内嵌Tomcat服务器
+Tomcat tomcat = new Tomcat();
+tomcat.setPort(8080); // 从配置读取
+
+// 6.9.2 创建DispatcherServlet（Spring MVC核心）
+DispatcherServlet dispatcherServlet = new DispatcherServlet(context);
+
+// 6.9.3 注册Servlet映射
+context.addServlet("dispatcher", dispatcherServlet).addMapping("/");
+
+// 6.9.4 启动Tomcat（但还没开始监听端口）
+tomcat.start();
+```
+开发者扩展方式：
+```
+// 自定义内嵌服务器配置
+@Configuration
+public class ServerConfig {
+    
+    @Bean
+    public ServletWebServerFactory servletContainer() {
+        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
+        tomcat.setPort(8080);
+        tomcat.addConnectorCustomizers(connector -> {
+            // 自定义连接器配置
+            connector.setProperty("maxThreads", "200");
+        });
+        return tomcat;
+    }
+    
+    @Bean
+    public DispatcherServlet dispatcherServlet() {
+        return new DispatcherServlet();
+    }
+}
+```
+##### 6.10: 注册监听器
+`registerListeners();`
+##### 6.11: 完成BeanFactory初始化 ⭐扩展点8: Bean生命周期回调
+`finishBeanFactoryInitialization();`
+=>
+```
+// 6.11.1 实例化HelloController
+HelloController controller = new HelloController(); // 调用构造方法
+
+// 6.11.2 依赖注入（本例没有依赖，跳过）
+
+// 6.11.3 初始化回调
+// 调用@PostConstruct方法（本例没有）
+
+// 6.11.4 注册到单例池
+singletonObjects.put("helloController", controller);
+```
+
+开发者扩展方式：
+```
+@Component
+public class MyService implements InitializingBean, DisposableBean {
+    
+    // InitializingBean - 初始化回调
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        // 场景：资源初始化
+        initializeResources();
+        loadReferenceData();
+    }
+    
+    // DisposableBean - 销毁回调  
+    @Override
+    public void destroy() throws Exception {
+        // 场景：资源清理
+        cleanupResources();
+        closeConnections();
+    }
+    
+    // 或使用注解方式
+    @PostConstruct
+    public void init() {
+        // 初始化逻辑
+    }
+    
+    @PreDestroy
+    public void cleanup() {
+        // 清理逻辑
+    }
+}
+```
+##### 6.12: 完成刷新 ⭐扩展点9: 上下文刷新事件
+```
+// 发布ContextRefreshedEvent事件
+// 完成容器初始化
+finishRefresh();
+```
+开发者扩展方式：
+```
+@Component
+public class ContextRefreshedListener implements ApplicationListener<ContextRefreshedEvent> {
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        // 场景：容器刷新完成后执行初始化
+        ApplicationContext context = event.getApplicationContext();
+        
+        // 验证所有必需Bean是否就绪
+        validateRequiredBeans(context);
+        
+        // 启动后台任务
+        startBackgroundJobs();
+    }
+}
+```
+
+#### 阶段7: 启动收尾
+```
+// 7.1 后处理（空方法，可扩展）
+afterRefresh(context, applicationArguments);
+
+// 7.2 发布启动完成事件 ⭐扩展点10: 启动完成事件
+listeners.started(context); // ApplicationStartedEvent
+
+// 7.3 执行Runner（如果有ApplicationRunner/CommandLineRunner）⭐扩展点11: 启动Runner
+callRunners(context, appArgs);
+
+// 7.4 发布应用就绪事件 ⭐扩展点12: 应用就绪事件 
+listeners.running(context); // ApplicationReadyEvent
+
+// 7.5 Tomcat开始监听端口（真正接受请求）
+// 控制台输出: Tomcat started on port(s): 8080 (http)
+```
+Runner扩展方式：
+```
+@Component
+public class MyApplicationRunner implements ApplicationRunner {
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        // 场景1: 数据初始化
+        if (args.containsOption("init-data")) {
+            initializeSampleData();
+        }
+        
+        // 场景2: 连接检查
+        checkExternalServices();
+        
+        // 场景3: 缓存预热
+        warmUpCaches();
+    }
+}
+
+@Component  
+public class MyCommandLineRunner implements CommandLineRunner {
+    @Override
+    public void run(String... args) throws Exception {
+        // 处理命令行参数
+        for (String arg : args) {
+            if (arg.equals("--debug")) {
+                enableDebugMode();
+            }
+        }
+    }
+}
+```
+#### 最终状态：应用就绪
+时间点 T0: 创建BeanFactory（空）
+```
+// 刚创建时的BeanFactory内容：
+BeanFactory状态：
+├── singletonObjects: {}                    // 空单例池
+├── beanDefinitionMap: {}                  // 空Bean定义映射
+├── embeddedValueResolvers: []              // 空值解析器
+└── 基本基础设施: 
+    ├── 类加载器
+    ├── 类型转换服务
+    └── 基本属性编辑器
+```
+时间点 T1: registerSingleton("springApplicationArguments") → 添加具体对象
+```
+// 添加具体对象后的状态：
+BeanFactory状态：
+├── singletonObjects: 
+│   └── "springApplicationArguments" → ApplicationArguments实例
+├── beanDefinitionMap: {}                  // 仍然无Bean定义
+├── embeddedValueResolvers: []
+└── 基本基础设施
+```
+时间点 T2: load() → 注册BeanDefinition（蓝图）
+```
+// load()处理SimpleApplication.class后的状态：
+BeanFactory状态：
+├── singletonObjects: 
+│   └── "springApplicationArguments" → ApplicationArguments实例
+├── beanDefinitionMap: 
+│   ├── "simpleApplication" → BeanDefinition(SimpleApplication.class)
+│   ├── "helloController" → BeanDefinition(HelloController.class)   // 扫描到的
+│   ├── "userService" → BeanDefinition(UserService.class)           // 扫描到的
+│   └── 其他自动配置的BeanDefinition...
+├── embeddedValueResolvers: []
+└── 基本基础设施
+```
+时间点 T3: prepareBeanFactory() → 配置BeanFactory基础设施
+```
+// 配置基础设施后的状态：
+BeanFactory状态：
+├── singletonObjects: 
+│   ├── "springApplicationArguments" → ApplicationArguments实例
+│   └── "environment" → Environment实例              // 新添加的环境Bean
+├── beanDefinitionMap: 
+│   ├── "simpleApplication" → BeanDefinition
+│   ├── "helloController" → BeanDefinition
+│   └── ...
+├── embeddedValueResolvers: [默认值解析器]           // 新增
+└── 增强的基础设施:
+    ├── 完整的属性编辑器
+    ├── 表达式解析器
+    ├── 作用域管理器
+    └── 类型转换服务
+```
+时间点 T4: invokeBeanFactoryPostProcessors() → 处理所有BeanDefinition
+```
+// 处理后处理器后的状态（可能的变化）：
+BeanFactory状态：
+├── singletonObjects: 
+│   ├── "springApplicationArguments" → ApplicationArguments实例
+│   └── "environment" → Environment实例
+├── beanDefinitionMap: 
+│   ├── "simpleApplication" → BeanDefinition（可能被修改）
+│   ├── "helloController" → BeanDefinition（可能被修改）
+│   ├── "userService" → BeanDefinition（可能被修改）
+│   ├── "newDynamicBean" → BeanDefinition（可能新增） // 动态注册的
+│   └── ...
+├── embeddedValueResolvers: [默认值解析器]
+└── 基础设施
+```
+时间点 T5: finishBeanFactoryInitialization() → 实例化所有单例Bean
+```
+// 实例化所有单例Bean后的状态：
+BeanFactory状态：
+├── singletonObjects: 
+│   ├── "springApplicationArguments" → ApplicationArguments实例
+│   ├── "environment" → Environment实例
+│   ├── "simpleApplication" → SimpleApplication实例（已实例化）
+│   ├── "helloController" → HelloController实例（已实例化+依赖注入）
+│   ├── "userService" → UserService实例（已实例化+依赖注入）
+│   └── 所有其他单例Bean...
+├── beanDefinitionMap: 
+│   ├── "simpleApplication" → BeanDefinition
+│   ├── "helloController" → BeanDefinition
+│   └── ...（定义仍然保留）
+├── embeddedValueResolvers: [默认值解析器]
+└── 基础设施
+```
+
+应用启动完成后的状态：
+```
+├── BeanFactory中有：
+│   └── helloController : HelloController实例
+├── Web服务器：
+│   └── Tomcat运行在8080端口
+├── URL映射：
+│   └── /hello → HelloController.hello()方法
+└── 可以处理请求：
+    GET http://localhost:8080/hello → "Hello World!"
+```
+
+#### 具体业务场景1：加密配置解密服务
+```
+// 在ApplicationContextInitializer中早期注册解密服务
+public class DecryptionInitializer implements ApplicationContextInitializer {
+    @Override
+    public void initialize(ConfigurableApplicationContext context) {
+        // 早期注册解密服务
+        context.getBeanFactory().registerSingleton("configDecryptor", new ConfigDecryptor());
+        
+        // 现在其他BeanFactoryPostProcessor可以使用这个解密服务
+        // 例如：解密数据库密码、API密钥等敏感配置
+    }
+}
+
+// 在BeanFactoryPostProcessor中使用早期注册的Bean
+@Component
+public class DecryptionPostProcessor implements BeanFactoryPostProcessor {
+    @Override
+    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
+        // 获取早期注册的解密服务
+        ConfigDecryptor decryptor = beanFactory.getBean("configDecryptor", ConfigDecryptor.class);
+        
+        // 解密所有加密属性
+        BeanDefinition definition = beanFactory.getBeanDefinition("dataSource");
+        String encryptedPassword = (String) definition.getPropertyValues().get("password");
+        String decryptedPassword = decryptor.decrypt(encryptedPassword);
+        definition.getPropertyValues().add("password", decryptedPassword);
+    }
+}
+```
+#### 具体业务场景2：环境检测服务
+```
+// 早期注册环境检测服务
+public class EnvironmentDetectorInitializer implements ApplicationContextInitializer {
+    @Override
+    public void initialize(ConfigurableApplicationContext context) {
+        EnvironmentDetector detector = new EnvironmentDetector();
+        context.getBeanFactory().registerSingleton("envDetector", detector);
+        
+        // 根据环境动态设置配置
+        if (detector.isCloudEnvironment()) {
+            System.setProperty("server.port", "8081");
+            System.setProperty("spring.profiles.active", "cloud");
+        }
+    }
+}
+```
+#### 具体业务场景3：功能开关服务
+```
+// 早期注册功能开关服务，用于控制后续Bean的注册
+public class FeatureToggleInitializer implements ApplicationContextInitializer {
+    @Override
+    public void initialize(ConfigurableApplicationContext context) {
+        FeatureToggle toggle = new FeatureToggle();
+        context.getBeanFactory().registerSingleton("featureToggle", toggle);
+        
+        // 其他BeanFactoryPostProcessor可以查询功能开关状态
+        // 决定是否注册某些Bean
+    }
+}
+```
+## 3. Spring Boot应用监控与调优方案
+生产环境监控：使用APM工具（如SkyWalking、Pinpoint）
+
+开发阶段：集成Spring Boot DevTools进行热加载监控
+
+整体监控架构
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   应用层监控      │    │   JVM层监控      │    │   系统层监控      │
+│                 │    │                 │    │                 │
+│ • 启动时间监控    │    │ • 内存使用       │    │ • CPU使用率      │
+│ • Bean加载监控   │    │ • GC统计        │    │ • 磁盘IO         │
+│ • 请求响应监控    │    │ • 线程状态       │    │ • 网络流量       │
+└─────────┬───────┘    └─────────┬───────┘    └─────────┬───────┘
+          │                      │                      │
+          └──────────────────────┼──────────────────────┘
+                                 │
+                    ┌─────────────▼─────────────┐
+                    │     监控数据收集层          │
+                    │                           │
+                    │ • Micrometer              │
+                    │ • Spring Boot Actuator    │
+                    │ • 自定义监控组件           │
+                    └─────────────┬─────────────┘
+                                 │
+                    ┌─────────────▼─────────────┐
+                    │     数据存储与可视化        │
+                    │                           │
+                    │ • Prometheus + Grafana    │
+                    │ • ELK Stack               │
+                    │ • 时序数据库              │
+                    └───────────────────────────┘
+```
+### 依赖配置
+```
+<!-- Spring Boot Actuator -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+
+<!-- Micrometer Prometheus -->
+<dependency>
+    <groupId>io.micrometer</groupId>
+    <artifactId>micrometer-registry-prometheus</artifactId>
+</dependency>
+
+<!-- 性能监控 -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-aop</artifactId>
+</dependency>
+
+<!-- 日志监控 -->
+<dependency>
+    <groupId>net.logstash.logback</groupId>
+    <artifactId>logstash-logback-encoder</artifactId>
+    <version>7.2</version>
+</dependency>
+```
+
+### 启动过程专项监控
+```
+@Component
+public class StartupMonitor {
+    private static final Logger logger = LoggerFactory.getLogger(StartupMonitor.class);
+    
+    private long appStartTime;
+    private Map<String, Long> phaseTimestamps = new ConcurrentHashMap<>();
+    
+    @EventListener
+    public void handleApplicationStarting(ApplicationStartingEvent event) {
+        appStartTime = System.currentTimeMillis();
+        phaseTimestamps.put("starting", appStartTime);
+        logger.info("应用开始启动: {}", appStartTime);
+    }
+    
+    @EventListener
+    public void handleEnvironmentPrepared(ApplicationEnvironmentPreparedEvent event) {
+        long time = System.currentTimeMillis();
+        phaseTimestamps.put("environmentPrepared", time);
+        logger.info("环境准备完成, 耗时: {}ms", time - appStartTime);
+        
+        // 记录环境配置信息
+        Environment env = event.getEnvironment();
+        logger.info("Active Profiles: {}", Arrays.toString(env.getActiveProfiles()));
+        logger.info("Config Locations: {}", env.getProperty("spring.config.location", "default"));
+    }
+    
+    @EventListener
+    public void handleContextPrepared(ApplicationPreparedEvent event) {
+        long time = System.currentTimeMillis();
+        phaseTimestamps.put("contextPrepared", time);
+        logger.info("上下文准备完成, 总耗时: {}ms", time - appStartTime);
+        
+        // 记录Bean定义数量
+        ConfigurableListableBeanFactory beanFactory = event.getApplicationContext().getBeanFactory();
+        int beanDefinitionCount = beanFactory.getBeanDefinitionCount();
+        logger.info("Bean定义数量: {}", beanDefinitionCount);
+    }
+    
+    @EventListener
+    public void handleContextRefreshed(ContextRefreshedEvent event) {
+        long time = System.currentTimeMillis();
+        phaseTimestamps.put("contextRefreshed", time);
+        
+        ApplicationContext context = event.getApplicationContext();
+        String[] beanNames = context.getBeanDefinitionNames();
+        
+        logger.info("容器刷新完成, Bean实例化数量: {}, 总耗时: {}ms", 
+                   beanNames.length, time - appStartTime);
+        
+        // 分析Bean依赖关系
+        analyzeBeanDependencies(context, beanNames);
+        
+        // 识别慢加载Bean
+        identifySlowLoadingBeans();
+
+        // 记录启动性能指标
+        recordStartupMetrics();
+    }
+    
+    @EventListener
+    public void handleApplicationReady(ApplicationReadyEvent event) {
+        long totalTime = System.currentTimeMillis() - appStartTime;
+        logger.info("应用启动完成, 总耗时: {}ms", totalTime);
+        
+        // 发布启动性能报告
+        publishStartupReport(totalTime);
+    }
+    
+    private void analyzeBeanDependencies(ApplicationContext context, String[] beanNames) {
+        logger.info("=== Bean依赖分析 ===");
+        
+        for (String beanName : beanNames) {
+            if (beanName.contains("Service") || beanName.contains("Controller")) {
+                BeanDefinition bd = ((DefaultListableBeanFactory) 
+                    context.getAutowireCapableBeanFactory()).getBeanDefinition(beanName);
+                
+                if (bd.hasAttribute("dependsOn")) {
+                    String[] dependsOn = (String[]) bd.getAttribute("dependsOn");
+                    logger.info("Bean {} 依赖: {}", beanName, Arrays.toString(dependsOn));
+                }
+            }
+        }
+    }
+    
+    private void identifySlowLoadingBeans() {
+        logger.info("=== 慢加载Bean识别 ===");
+        
+        phaseTimestamps.entrySet().stream()
+            .filter(entry -> entry.getValue().getMaxTime() > 500) // 超过500ms
+            .sorted((e1, e2) -> Long.compare(e2.getValue().getMaxTime(), 
+                    e1.getValue().getMaxTime()))
+            .forEach(entry -> {
+                logger.warn("慢加载Bean: {}, 最大耗时: {}ms", 
+                    entry.getKey(), entry.getValue().getMaxTime());
+            });
+    }
+
+    private void recordStartupMetrics() {
+        // 记录到Micrometer指标
+        Metrics.gauge("application.startup.duration", 
+            System.currentTimeMillis() - appStartTime);
+        Metrics.gauge("application.beans.count", 
+            phaseTimestamps.size());
+    }
+    
+    private void publishStartupReport(long totalTime) {
+        logger.info("=== Spring Boot启动性能报告 ===");
+        logger.info("总启动时间: {}ms", totalTime);
+        
+        phaseTimestamps.entrySet().stream()
+            .sorted(Map.Entry.comparingByValue())
+            .forEach(entry -> {
+                logger.info("阶段 {}: {}ms", entry.getKey(), entry.getValue() - appStartTime);
+            });
+    }
+}
+```
+### Bean加载性能监控
+```
+@Component
+public class BeanLoadingMonitor implements BeanPostProcessor {
+    private final Map<String, Long> beanCreationStartTimes = new ConcurrentHashMap<>();
+    private final Map<String, BeanMetrics> beanMetrics = new ConcurrentHashMap<>();
+    
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) {
+        beanCreationStartTimes.put(beanName, System.currentTimeMillis());
+        return bean;
+    }
+    
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) {
+        Long startTime = beanCreationStartTimes.remove(beanName);
+        if (startTime != null) {
+            long duration = System.currentTimeMillis() - startTime;
+            BeanMetrics metrics = beanMetrics.computeIfAbsent(beanName, 
+                k -> new BeanMetrics(bean.getClass().getSimpleName()));
+            metrics.recordCreation(duration);
+            
+            if (duration > 100) { // 超过100ms记录警告
+                logger.warn("Bean [{}] 初始化耗时较长: {}ms", beanName, duration);
+            }
+        }
+        return bean;
+    }
+    
+    @EventListener
+    public void handleApplicationReady(ApplicationReadyEvent event) {
+        // 启动完成后输出Bean加载性能报告
+        logger.info("=== Bean加载性能报告 ===");
+        beanMetrics.entrySet().stream()
+            .sorted((e1, e2) -> Long.compare(e2.getValue().getMaxTime(), e1.getValue().getMaxTime()))
+            .limit(10) // 只显示最慢的10个Bean
+            .forEach(entry -> {
+                BeanMetrics metrics = entry.getValue();
+                logger.info("Bean [{}]: 最大耗时={}ms, 平均耗时={}ms", 
+                    entry.getKey(), metrics.getMaxTime(), metrics.getAverageTime());
+            });
+    }
+    
+    static class BeanMetrics {
+        private final String className;
+        private long totalTime;
+        private long maxTime;
+        private int count;
+        
+        BeanMetrics(String className) {
+            this.className = className;
+        }
+        
+        void recordCreation(long duration) {
+            totalTime += duration;
+            maxTime = Math.max(maxTime, duration);
+            count++;
+        }
+        
+        long getAverageTime() {
+            return count > 0 ? totalTime / count : 0;
+        }
+        
+        long getMaxTime() {
+            return maxTime;
+        }
+    }
+}
+```
+
+### 配置类加载监控
+```
+@Component
+public class ConfigurationLoadMonitor implements BeanFactoryPostProcessor {
+    
+    @Override
+    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+        if (beanFactory instanceof DefaultListableBeanFactory) {
+            DefaultListableBeanFactory dlbf = (DefaultListableBeanFactory) beanFactory;
+            
+            // 监控配置类解析
+            dlbf.addBeanPostProcessor(new BeanPostProcessor() {
+                @Override
+                public Object postProcessBeforeInitialization(Object bean, String beanName) {
+                    if (beanName != null && beanName.endsWith("Configuration")) {
+                        logger.debug("配置类加载: {}", beanName);
+                    }
+                    return bean;
+                }
+            });
+        }
+    }
+}
+```
+
+### JVM级别监控配置
+```
+# application-monitor.yml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,startup
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    enable:
+      jvm: true
+      system: true
+      logback: true
+  tracing:
+    sampling:
+      probability: 1.0
+
+# JVM监控配置
+server:
+  port: 8080
+spring:
+  application:
+    name: my-monitored-app
+```
+
+### 自定义健康检查与指标
+```
+@Component
+public class ApplicationHealthIndicator implements HealthIndicator {
+    
+    @Override
+    public Health health() {
+        // 检查应用健康状态
+        boolean isHealthy = checkApplicationHealth();
+        
+        if (isHealthy) {
+            return Health.up()
+                .withDetail("启动时间", ManagementFactory.getRuntimeMXBean().getUptime() + "ms")
+                .withDetail("内存使用", getMemoryUsage())
+                .build();
+        } else {
+            return Health.down()
+                .withDetail("错误原因", "应用运行异常")
+                .build();
+        }
+    }
+    
+    private String getMemoryUsage() {
+        Runtime runtime = Runtime.getRuntime();
+        long usedMemory = runtime.totalMemory() - runtime.freeMemory();
+        long maxMemory = runtime.maxMemory();
+        return String.format("%.2fMB/%.2fMB", 
+            usedMemory / 1024.0 / 1024.0, maxMemory / 1024.0 / 1024.0);
+    }
+}
+
+@Component
+public class CustomMetrics {
+    private final MeterRegistry meterRegistry;
+    private final Counter beanCreationCounter;
+    private final Timer startupTimer;
+    
+    public CustomMetrics(MeterRegistry meterRegistry) {
+        this.meterRegistry = meterRegistry;
+        this.beanCreationCounter = Counter.builder("application.beans.created")
+            .description("应用创建的Bean数量")
+            .register(meterRegistry);
+            
+        this.startupTimer = Timer.builder("application.startup.time")
+            .description("应用启动时间")
+            .register(meterRegistry);
+    }
+    
+    public void recordBeanCreation() {
+        beanCreationCounter.increment();
+    }
+    
+    public void recordStartupTime(long duration) {
+        startupTimer.record(duration, TimeUnit.MILLISECONDS);
+    }
+}
+```
+### 日志监控配置
+```
+<!-- logback-spring.xml -->
+<configuration>
+    <appender name="JSON" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <customFields>{"application":"${spring.application.name}"}</customFields>
+        </encoder>
+    </appender>
+    
+    <appender name="METRICS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/metrics.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/metrics.%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+    
+    <logger name="com.example.monitor" level="DEBUG" additivity="false">
+        <appender-ref ref="METRICS" />
+        <appender-ref ref="JSON" />
+    </logger>
+    
+    <root level="INFO">
+        <appender-ref ref="JSON" />
+    </root>
+</configuration>
+```
+
+### Grafana监控面板配置
+```
+{
+  "title": "Spring Boot应用监控",
+  "panels": [
+    {
+      "title": "启动时间监控",
+      "targets": [
+        {
+          "expr": "application_startup_time_seconds",
+          "legendFormat": "启动耗时"
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "title": "Bean加载性能",
+      "targets": [
+        {
+          "expr": "rate(application_beans_created_total[5m])",
+          "legendFormat": "Bean创建速率"
+        }
+      ],
+      "type": "graph"
+    },
+    {
+      "title": "JVM内存使用",
+      "targets": [
+        {
+          "expr": "jvm_memory_used_bytes{area=\"heap\"}",
+          "legendFormat": "堆内存"
+        }
+      ],
+      "type": "graph"
+    }
+  ]
+}
+```
+
+## 4. 使用springboot开发应用
+
+### 4.0 项目技巧
 
 #### include
 
@@ -1259,9 +2940,9 @@ mvn clean install -Dspring.profiles.active=dev
 
 
 
-### 3.1 业务开发
+### 4.1 业务开发
 
-#### 3.1.1 使用starter
+#### 4.1.1 使用starter
 
 ##### POM depenedency
 
@@ -1751,7 +3432,7 @@ BeanPostProcessor
 
 
 
-#### 3.1.2 springboot mvc
+#### 4.1.2 springboot mvc
 
 so by default, tomcat will create some temp folder under /tmp and use it later on
 
@@ -1763,7 +3444,7 @@ https://stackoverflow.com/questions/50523407/the-temporary-upload-location-tmp-t
 
 
 
-### 3.2 框架开发（starter）
+### 4.2 框架开发（starter）
 
 ConfigurationProperties和EnableConfigurationProperties是一对，
 前者定义对应配置文件的属性，后者是激活读取；
@@ -1853,9 +3534,653 @@ com.chm.test.HelloAutoConfiguration
 https://blog.csdn.net/zxc123e/article/details/80222967
 ```
 
+### 4.3 AOP切面编程
+Aspect（切面）横切关注点的模块化 @Aspect注解的类
+
+Join Point（连接点）程序执行过程中的点 方法调用、异常抛出
+
+Pointcut（切点）匹配连接点的表达式 execution(* UserService.*(..))
+
+Advice（通知）在连接点执行的动作 @Before, @After, @Around
+
+Target（目标）被代理的对象 UserService实例
+
+Proxy（代理）AOP创建的包装对象 CGLIB或JDK动态代理
+
+Weaving（织入）将切面应用到目标对象的过程 编译期、类加载期、运行期
+
+#### 什么是AOP
+传统OOP的问题：
+```
+// 业务类中混杂着横切关注点
+public class UserService {
+    public void createUser(User user) {
+        // 事务开始
+        Transaction tx = beginTransaction();
+        try {
+            // 权限检查
+            checkPermission();
+            
+            // 日志记录
+            log.info("创建用户: {}", user.getName());
+            
+            // 业务逻辑
+            userDao.save(user);
+            
+            // 事务提交
+            tx.commit();
+        } catch (Exception e) {
+            // 事务回滚
+            tx.rollback();
+            // 错误日志
+            log.error("创建用户失败", e);
+            throw e;
+        }
+    }
+}
+```
+AOP解决方案：
+```
+// 纯净的业务逻辑
+public class UserService {
+    public void createUser(User user) {
+        userDao.save(user); // 只关注业务逻辑
+    }
+}
+
+// 横切关注点通过AOP处理
+@Aspect
+@Component
+public class TransactionAspect {
+    @Around("execution(* UserService.*(..))")
+    public Object manageTransaction(ProceedingJoinPoint pjp) {
+        // 事务管理逻辑在这里统一处理
+    }
+}
+```
+
+#### Spring AOP实现机制-spring-boot-starter-aop
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-aop</artifactId>
+</dependency>
+
+// 对于每个Bean：
+1. Bean正常实例化、依赖注入、初始化
+2. AnnotationAwareAspectJAutoProxyCreator.postProcessAfterInitialization()被调用
+3. 检查Bean是否需要AOP代理
+4. 如果需要，创建JDK动态代理或CGLIB代理
+5. 返回代理对象（替代原始Bean）
+
+// Spring框架真实的AOP代理创建类结构：
+Object
+└── BeanPostProcessor (接口)
+    └── InstantiationAwareBeanPostProcessor (接口)  
+        └── SmartInstantiationAwareBeanPostProcessor (接口)
+            └── AbstractAutoProxyCreator (抽象类) ← 核心实现
+                └── AspectJAwareAdvisorAutoProxyCreator (抽象类)
+                    └── AnnotationAwareAspectJAutoProxyCreator (具体类) ← 实际工作的类！
+```
+这是Spring AOP的核心引擎
+```
+// 真实的Spring源码（简化版）
+public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
+    implements SmartInstantiationAwareBeanPostProcessor {
+    
+    // 核心方法：在Bean初始化后创建代理
+    @Override
+    public Object postProcessAfterInitialization(@Nullable Object bean, String beanName) {
+        if (bean != null) {
+            Object cacheKey = getCacheKey(bean.getClass(), beanName);
+            
+            // 检查是否已经处理过（避免循环）
+            if (!this.earlyProxyReferences.contains(cacheKey)) {
+                // 包装Bean（如果需要代理）
+                return wrapIfNecessary(bean, beanName, cacheKey);
+            }
+        }
+        return bean;
+    }
+    
+    // 核心方法：决定是否创建代理
+    protected Object wrapIfNecessary(Object bean, String beanName, Object cacheKey) {
+        // 1. 检查是否应该跳过代理
+        if (isInfrastructureClass(bean.getClass()) || shouldSkip(bean, beanName)) {
+            return bean;
+        }
+        
+        // 2. 获取适用的Advisors（切面逻辑）
+        Object[] specificInterceptors = getAdvicesAndAdvisorsForBean(bean.getClass(), beanName, null);
+        
+        // 3. 如果需要代理，创建代理对象
+        if (specificInterceptors != DO_NOT_PROXY) {
+            this.advisedBeans.put(cacheKey, Boolean.TRUE);
+            return createProxy(bean.getClass(), beanName, specificInterceptors, new SingletonTargetSource(bean));
+        }
+        
+        return bean;
+    }
+}
+```
+这是Spring Boot默认使用的具体实现
+```
+// 真实的Spring Boot AOP处理器
+public class AnnotationAwareAspectJAutoProxyCreator extends AspectJAwareAdvisorAutoProxyCreator {
+    
+    // 重写方法：支持@AspectJ注解风格的切面
+    @Override
+    protected List<Advisor> findCandidateAdvisors() {
+        // 调用父类方法查找基于配置的Advisor
+        List<Advisor> advisors = super.findCandidateAdvisors();
+        
+        // 添加基于@Aspect注解的Advisor
+        if (this.aspectJAdvisorsBuilder != null) {
+            advisors.addAll(this.aspectJAdvisorsBuilder.buildAspectJAdvisors());
+        }
+        return advisors;
+    }
+    
+    // 重写方法：支持JDK动态代理和CGLIB代理
+    @Override
+    protected boolean shouldProxyTargetClass(ConfigurableListableBeanFactory beanFactory, String beanName) {
+        // 检查@EnableAspectJAutoProxy配置
+        return (this.beanFactory != null && 
+                this.beanFactory.getBeanDefinition(beanName).isProxyTargetClass());
+    }
+}
+```
+
+#### 示例1：性能监控AOP
+```
+@Aspect
+@Component
+public class PerformanceMonitoringAspect {
+    private static final Logger logger = LoggerFactory.getLogger(PerformanceMonitoringAspect.class);
+    
+    // 监控Service层方法性能
+    @Around("execution(* com.example.service.*.*(..))")
+    public Object monitorPerformance(ProceedingJoinPoint joinPoint) throws Throwable {
+        String methodName = joinPoint.getSignature().getName();
+        String className = joinPoint.getTarget().getClass().getSimpleName();
+        
+        long startTime = System.currentTimeMillis();
+        try {
+            // 执行原始方法
+            Object result = joinPoint.proceed();
+            long executionTime = System.currentTimeMillis() - startTime;
+            
+            // 记录性能指标
+            if (executionTime > 100) { // 超过100ms记录警告
+                logger.warn("方法执行缓慢: {}.{}, 耗时: {}ms", 
+                    className, methodName, executionTime);
+            }
+            
+            // 记录到监控系统
+            Metrics.timer("service.method.duration")
+                .tag("class", className)
+                .tag("method", methodName)
+                .record(executionTime, TimeUnit.MILLISECONDS);
+            
+            return result;
+            
+        } catch (Exception e) {
+            long executionTime = System.currentTimeMillis() - startTime;
+            logger.error("方法执行异常: {}.{}, 耗时: {}ms", 
+                className, methodName, executionTime, e);
+            throw e;
+        }
+    }
+}
+```
+#### 示例2：事务管理AOP
+```
+@Aspect
+@Component
+public class TransactionAspect {
+    
+    @Autowired
+    private PlatformTransactionManager transactionManager;
+    
+    // 为所有@Transactional方法添加事务管理
+    @Around("@annotation(transactional)")
+    public Object manageTransaction(ProceedingJoinPoint joinPoint, 
+                                   Transactional transactional) throws Throwable {
+        
+        TransactionDefinition definition = new DefaultTransactionDefinition();
+        TransactionStatus status = transactionManager.getTransaction(definition);
+        
+        try {
+            logger.debug("开始事务: {}", joinPoint.getSignature());
+            
+            // 执行业务方法
+            Object result = joinPoint.proceed();
+            
+            // 提交事务
+            transactionManager.commit(status);
+            logger.debug("提交事务: {}", joinPoint.getSignature());
+            
+            return result;
+            
+        } catch (Exception e) {
+            // 回滚事务
+            transactionManager.rollback(status);
+            logger.debug("回滚事务: {}, 原因: {}", joinPoint.getSignature(), e.getMessage());
+            throw e;
+        }
+    }
+    
+    // 使用示例
+    @Service
+    public class UserService {
+        @Transactional
+        public void createUser(User user) {
+            // 业务逻辑，自动享有事务管理
+            userRepository.save(user);
+            userAuditRepository.logCreation(user);
+        }
+    }
+}
+```
+#### 示例3：缓存AOP
+```
+@Aspect
+@Component
+public class CacheAspect {
+    
+    @Autowired
+    private CacheManager cacheManager;
+    
+    // 方法缓存
+    @Around("@annotation(cacheable)")
+    public Object handleCacheable(ProceedingJoinPoint joinPoint, 
+                                Cacheable cacheable) throws Throwable {
+        
+        String cacheName = cacheable.value();
+        String key = generateCacheKey(joinPoint);
+        
+        Cache cache = cacheManager.getCache(cacheName);
+        ValueWrapper cachedValue = cache.get(key);
+        
+        if (cachedValue != null) {
+            logger.debug("缓存命中: {}.{}", 
+                joinPoint.getTarget().getClass().getSimpleName(),
+                joinPoint.getSignature().getName());
+            return cachedValue.get();
+        }
+        
+        // 缓存未命中，执行方法
+        Object result = joinPoint.proceed();
+        
+        // 缓存结果
+        cache.put(key, result);
+        logger.debug("缓存设置: {}.{}", 
+            joinPoint.getTarget().getClass().getSimpleName(),
+            joinPoint.getSignature().getName());
+        
+        return result;
+    }
+    
+    // 缓存失效
+    @After("@annotation(cacheEvict)")
+    public void handleCacheEvict(JoinPoint joinPoint, CacheEvict cacheEvict) {
+        String cacheName = cacheEvict.value();
+        Cache cache = cacheManager.getCache(cacheName);
+        
+        if (cacheEvict.allEntries()) {
+            cache.clear(); // 清空整个缓存
+        } else {
+            String key = generateCacheKey(joinPoint);
+            cache.evict(key); // 清除特定key
+        }
+    }
+    
+    private String generateCacheKey(ProceedingJoinPoint joinPoint) {
+        // 基于方法签名和参数生成缓存key
+        return joinPoint.getSignature().toShortString() + 
+               Arrays.toString(joinPoint.getArgs());
+    }
+}
+```
+#### 示例4：安全权限AOP
+```
+@Aspect
+@Component
+public class SecurityAspect {
+    
+    @Autowired
+    private AuthenticationService authService;
+    
+    // 方法级权限控制
+    @Around("@annotation(requiresPermission)")
+    public Object checkPermission(ProceedingJoinPoint joinPoint,
+                                RequiresPermission requiresPermission) throws Throwable {
+        
+        String permission = requiresPermission.value();
+        User currentUser = authService.getCurrentUser();
+        
+        if (!authService.hasPermission(currentUser, permission)) {
+            throw new AccessDeniedException(
+                "用户 " + currentUser.getUsername() + " 没有权限: " + permission);
+        }
+        
+        logger.info("权限检查通过: {} 执行 {}.{}", 
+            currentUser.getUsername(),
+            joinPoint.getTarget().getClass().getSimpleName(),
+            joinPoint.getSignature().getName());
+        
+        return joinPoint.proceed();
+    }
+    
+    // 参数级权限控制
+    @Before("execution(* delete*(..)) && args(id,..)")
+    public void checkDeletePermission(JoinPoint joinPoint, Long id) {
+        User currentUser = authService.getCurrentUser();
+        if (!authService.canDelete(currentUser, id)) {
+            throw new AccessDeniedException("无权删除资源: " + id);
+        }
+    }
+}
+```
+#### 示例5：日志记录AOP
+```
+@Aspect
+@Component
+public class LoggingAspect {
+    
+    // 方法调用日志
+    @Before("execution(* com.example.controller.*.*(..))")
+    public void logMethodEntry(JoinPoint joinPoint) {
+        logger.info("→ 进入方法: {}.{}", 
+            joinPoint.getTarget().getClass().getSimpleName(),
+            joinPoint.getSignature().getName());
+        
+        if (logger.isDebugEnabled()) {
+            logger.debug("方法参数: {}", Arrays.toString(joinPoint.getArgs()));
+        }
+    }
+    
+    // 方法退出日志
+    @AfterReturning(pointcut = "execution(* com.example.controller.*.*(..))", 
+                   returning = "result")
+    public void logMethodExit(JoinPoint joinPoint, Object result) {
+        logger.info("← 退出方法: {}.{}", 
+            joinPoint.getTarget().getClass().getSimpleName(),
+            joinPoint.getSignature().getName());
+        
+        if (logger.isDebugEnabled() && result != null) {
+            logger.debug("方法返回值: {}", result.toString());
+        }
+    }
+    
+    // 异常日志
+    @AfterThrowing(pointcut = "execution(* com.example..*.*(..))", 
+                  throwing = "ex")
+    public void logException(JoinPoint joinPoint, Exception ex) {
+        logger.error("✗ 方法执行异常: {}.{}", 
+            joinPoint.getTarget().getClass().getSimpleName(),
+            joinPoint.getSignature().getName(), ex);
+    }
+}
+```
+#### AOP最佳实践
+1. 切点表达式优化
+```
+@Aspect
+@Component
+public class OptimizedPointcutAspect {
+    
+    // 不好的写法：过于宽泛
+    // @Around("execution(* com.example..*(..))")
+    
+    // 好的写法：精确匹配
+    @Around("execution(* com.example.service.*Service.*(..))")
+    public Object serviceLayerMonitoring(ProceedingJoinPoint pjp) throws Throwable {
+        // 只监控Service层
+        return pjp.proceed();
+    }
+    
+    // 使用注解驱动更精确
+    @Around("@annotation(com.example.annotation.Monitored)")
+    public Object monitoredMethods(ProceedingJoinPoint pjp) throws Throwable {
+        // 只监控有@Monitored注解的方法
+        return pjp.proceed();
+    }
+}
+```
+2. 性能考虑
+```
+@Aspect
+@Component
+public class PerformanceOptimizedAspect {
+    
+    // 避免在切面中执行耗时操作
+    @Around("execution(* com.example..*(..))")
+    public Object optimizedAdvice(ProceedingJoinPoint pjp) throws Throwable {
+        // 不好的做法：每次都生成复杂日志
+        // String detailedLog = createDetailedLog(pjp); // 耗时操作
+        
+        // 好的做法：延迟计算
+        if (logger.isDebugEnabled()) {
+            logger.debug("执行方法: {}", pjp.getSignature());
+        }
+        
+        return pjp.proceed();
+    }
+}
+```
+## 5. Spring Boot启动优化
+
+启动性能监控和分析
+
+使用Spring Boot Actuator监控启动时间
+```
+# application.yml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: startup
+  endpoint:
+    startup:
+      enabled: true
+
+spring:
+  application:
+    name: myapp
+
+// 启动时间监控端点
+@RestController
+public class StartupMetricsController {
+    
+    @Autowired
+    private ApplicationStartup startup;
+    
+    @GetMapping("/startup-metrics")
+    public StartupMetrics getStartupMetrics() {
+        return startup.getMetrics();
+    }
+}
+
+// 启动时间分析结果示例
+public class StartupAnalysis {
+    public void analyzeStartupTime() {
+        System.out.println("启动阶段耗时分析:");
+        System.out.println("JVM启动: 0.8秒");
+        System.out.println("组件扫描: 4.2秒 (51%) ← 优化重点!");
+        System.out.println("Bean实例化: 2.1秒 (26%)");
+        System.out.println("自动配置: 1.1秒 (13%)");
+        System.out.println("服务器启动: 0.3秒 (4%)");
+        System.out.println("总启动时间: 8.5秒");
+    }
+}
+```
+
+使用JVM参数优化启动性能
+```
+# 优化启动速度的JVM参数
+java -jar myapp.jar \
+  -Xms512m -Xmx512m \          # 固定堆大小，避免动态调整
+  -XX:+UseG1GC \               # 使用G1垃圾回收器
+  -XX:MaxGCPauseMillis=200 \   # 控制GC停顿时间
+  -noverify \                  # 关闭字节码验证（开发环境）
+  -Dspring.jmx.enabled=false \ # 关闭JMX监控
+  -Dspring.main.lazy-initialization=true \ # 启用懒加载
+  -Dspring.context.index.enabled=true      # 启用类路径索引
+```
 
 
-## 4. Troubleshooting
+
+案例1：减少组件扫描范围
+```
+优化前（扫描整个包路径）：
+@SpringBootApplication
+@ComponentScan("com.example")  // 扫描整个项目包
+public class MyApplication {
+    // 启动时间: 8.2秒（扫描2000个类）
+}
+
+优化后（精确扫描必要包）：
+@SpringBootApplication
+@ComponentScan({
+    "com.example.controller",
+    "com.example.service", 
+    "com.example.config"
+    // 不扫描: com.example.entity, com.example.dto等
+})
+public class MyApplication {
+    // 启动时间: 3.1秒（只扫描500个类）
+}
+```
+
+案例2：使用懒加载优化
+```
+优化前（所有Bean立即加载）：
+@Service
+public class HeavyService {
+    // 启动时立即初始化，耗时2秒
+    public HeavyService() {
+        loadLargeDataSet();  // 耗时的初始化操作
+    }
+}
+优化后（按需懒加载）：
+@Service
+@Lazy  // 添加懒加载注解
+public class HeavyService {
+    // 第一次使用时才初始化
+    public HeavyService() {
+        loadLargeDataSet();
+    }
+}
+
+@RestController
+public class MyController {
+    @Autowired
+    private HeavyService heavyService;  // 启动时不初始化
+    
+    @GetMapping("/data")
+    public Data getData() {
+        // 第一次调用时才初始化HeavyService
+        return heavyService.processData();
+    }
+}
+
+```
+
+案例3：排除不必要的自动配置
+```
+优化前（加载所有自动配置）：
+@SpringBootApplication  // 默认加载100+个自动配置
+public class MyApplication {
+    // 启动时间: 6.5秒
+}
+
+优化后（排除不需要的配置）：
+@SpringBootApplication(exclude = {
+    DataSourceAutoConfiguration.class,      // 不使用数据库
+    SecurityAutoConfiguration.class,        // 不需要安全配置
+    MailSenderAutoConfiguration.class,     // 不需要邮件发送
+    CacheAutoConfiguration.class           // 不使用缓存
+})
+public class MyApplication {
+    // 启动时间: 3.8秒
+}
+
+```
+
+案例4：类路径索引优化
+```
+优化前（类路径扫描）：
+// Maven依赖包含大量不需要的jar
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId> <!-- 不用数据库 -->
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>  
+        <artifactId>spring-boot-starter-security</artifactId> <!-- 不用安全 -->
+    </dependency>
+</dependencies>
+
+优化后（精简依赖）：
+// 只引入必要的starter
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <!-- 移除不必要的starter -->
+</dependencies>
+
+// 添加类路径索引（Spring 5.2+）
+spring:
+  context:
+    index:
+      enabled: true  # 启用编译时类路径索引
+```
+
+案例5：使用Spring Fu进行函数式配置
+```
+传统配置方式：
+@Configuration
+public class TraditionalConfig {
+    @Bean
+    public MyService myService() {
+        return new MyService();  // 反射创建，性能一般
+    }
+}
+
+函数式配置（Spring Fu）：
+public class FunctionalConfig {
+    public static void main(String[] args) {
+        var app = new SpringApplication(Application.class)
+            .run(args);
+        
+        // 函数式注册Bean，避免反射开销
+        app.addInitializer((context) -> {
+            context.registerBean(MyService.class, 
+                () -> new MyService());  // 直接lambda创建
+        });
+    }
+}
+```
+
+案例6：编译时处理优化
+```
+使用Micronaut或Quarkus的编译时处理：
+// Quarkus示例：编译时处理依赖注入
+@ApplicationScoped
+public class MyService {
+    @Inject
+    MyRepository repository;  // 编译时生成注入代码，避免运行时反射
+}
+
+
+```
+
+
+## 6. Troubleshooting
 
 ### BeanDefinitionOverrideException 
 
