@@ -11,18 +11,19 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 <div>
 	<h3>架构经验</h3>
 	<ul>
-		<li><a href="/docs/software/highlevel/architecture">架构解读</a></li>
-		<li><a href="/docs/software/highlevel/os">操作系统</a></li>
-		<li><a href="/docs/software/highlevel/designpattern">设计模式</a></li>
-		<li><a href="/docs/software/programming/aop">AOP 面向切面编程</a></li>
-		<li><a href="/docs/software/highlevel/distrubuted_system">分布式系统开发</a></li>	
-		<li><a href="/docs/software/highlevel/microservice">微服务</a></li>	
-		<li><a href="/docs/software/highlevel/concurrent">并发控制</a></li>
-		<li><a href="/docs/software/highlevel/threadsafe">线程安全</a></li>
-		<li><a href="/docs/software/highlevel/high_availability">高可用</a></li>
+		<li><a href="/docs/software/highlevel/system_fundamental_os">Single-Machine Core 系统基础:操作系统</a></li>
+		<li><a href="/docs/software/highlevel/system_fundamental_data_structures">Single-Machine Core 系统基础:数据结构</a></li>
+		<li><a href="/docs/software/highlevel/system_fundamental_algorithm">Single-Machine Core 系统基础:算法</a></li>
+		<li><a href="/docs/software/highlevel/software_design_architecture">软件设计:架构解读</a></li>
+		<li><a href="/docs/software/highlevel/software_design_enterprise_architect">软件设计:企业架构</a></li>
+		<li><a href="/docs/software/highlevel/software_design_designpattern">软件设计:设计模式</a></li>
+		<li><a href="/docs/software/programming/aop">软件设计:AOP 面向切面编程</a></li>
+		<li><a href="/docs/software/highlevel/single_machine_concurrent">Single-Machine Application 单应用考虑:并发控制</a></li>
+		<li><a href="/docs/software/highlevel/single_machine_threadsafe">Single-Machine Application 单应用考虑:线程安全</a></li>
+		<li><a href="/docs/software/highlevel/distrubuted_system">Distributed System Primitives:分布式系统开发</a></li>	
+		<li><a href="/docs/software/highlevel/distrubuted_system_microservice">Distributed System Primitives:微服务</a></li>	
+		<li><a href="/docs/software/highlevel/distrubuted_system_high_availability">Distributed System Primitives:高可用</a></li>
 		<li><a href="/docs/software/highlevel/publickey_infrastructure">公钥基础设施</a></li>
-		<li><a href="/docs/software/highlevel/oauth2">Oauth2.0</a></li>
-		<li><a href="/docs/software/highlevel/data_structures">数据结构</a></li>
 	</ul>
 	<p>-------------------------</p>
 	<h3>软件开发经验</h3>
@@ -59,7 +60,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/buildingblock/servlet">server:servlet</a></li>
         <li><a href="/docs/software/buildingblock/nio_epoll">基础:BIO/NIO/多路复用/NETTY</a></li>
 		<li><a href="/docs/software/buildingblock/nio_netty">基础:nio netty</a></li>
-		<!--<li><a href="/docs/software/buildingblock/shiro">基础:shiro登录和权限管理</a></li>-->
+		<li><a href="/docs/software/buildingblock/shiro">授权基础:shiro登录和权限管理</a></li>
+		<li><a href="/docs/software/buildingblock/oauth2">授权基础:Oauth2.0</a></li>
 		<li><a href="/docs/software/buildingblock/zookeeper" >分布式框架zookeeper</a></li>
 		<li><a href="/docs/software/buildingblock/redis">分布式缓存redis</a></li>
 		<li><a href="/docs/software/buildingblock/kafka">分布式消息队列kafka批处理</a></li>

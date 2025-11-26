@@ -37,6 +37,24 @@ lowlife scum
 +  Uncivilized
   "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
+掉
+	come off 泛指护具从身体或衣物上脱离，使用最广泛
+		My elbow pad came off​ during the game.
+	fall off 强调因未固定好而掉下、跌落
+		The elbow guard​ almost fell off​ while I was skating.
+	come loose 指固定物变松，但未必完全掉落
+		The strap on my knee pad came loose.
+	detach 较正式，多用于描述护具的某个部分（如绑带、魔术贴）从主体分离
+		The padding detached​ from the sleeve.
+靠
+	Cuddle (up) / Snuggle (up)
+		On a cold winter night, the couple snuggled up​ under a blanket, watching movies.
+	Lean against/on
+		The child was tired and leaned against​ his mother's shoulder.
+	Next to each other
+		The two friends sat next to each other​ on the bus.
+	Bunch together
+		The sheep bunched together​ for warmth in the corner of the pen.
 再来一口
 	Have another bite.​
 	​​Have another sip.​ 喝饮料/流质
@@ -1914,6 +1932,9 @@ To clarify, after confirming with Agnes, the changes would be: xxxx. 它暗示�
 
 
 #### 其他
+has not
+	Oh, has Francis not sent his OT to you yet? 更正式、中立，或带有惊讶、关切
+	Hasn't​ Francis sent...? 日常对话中最常用
 
 ​I don't/didn't/can't/couldn't find any exceptions.​
 ​描述当前正在进行的检查

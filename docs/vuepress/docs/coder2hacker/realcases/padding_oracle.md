@@ -1,3 +1,6 @@
+[Hacker101 Encrypted Pastebin 通关教科书式详解](https://www.freebuf.com/articles/web/246497.html)
+
+
 this vulnerability is not related to the Oracle database or the Oracle Company in any way. In cryptography, an ‘oracle’ is a system that performs cryptographic actions by taking in certain input. Hence a ‘padding oracle’ is a type of system that takes in encrypted data from the user, decrypts it and verifies whether the padding is correct or not.
 
 There are two types of encryption schemes:

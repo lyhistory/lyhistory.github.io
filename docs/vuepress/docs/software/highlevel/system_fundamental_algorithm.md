@@ -1,3 +1,5 @@
+A well-defined, step-by-step procedure or formula for solving a problem or accomplishing a specific task. It is the core logic behind data processing and problem-solving in software
+
 dynamic programming
 divide and conquer
 迷宫生成算法 迷宫寻路算法

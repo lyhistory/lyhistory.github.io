@@ -26,6 +26,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 ## 线程安全概述
 
+A property of code or data structures that ensures it functions correctly during simultaneous execution by multiple threads. It is a key concern when implementing concurrent​ programs, preventing issues like race conditions.
+
 ![](/docs/docs_image/software/threadsafe/threadsafe00.png)
 
 **同步 异步 单线程 多线程?**

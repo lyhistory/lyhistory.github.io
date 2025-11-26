@@ -6,6 +6,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《架构》
 
+(Often referred to as Software Architecture or System Architecture) refers to the fundamental structures of a software system and the discipline of creating these structures. It involves high-level decisions about the organization of a system, the selection of structural elements and their interfaces, and their behavior as specified in the collaborations among those elements. The Enterprise Architect​ is the role responsible for defining this architecture at an organizational level, ensuring that IT strategy aligns with business goals.
+
 ## Where are we?
 
 以java开发举例:

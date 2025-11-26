@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 x是指任意一层，这里集中展示一些可以在各个层应用的协议或技术
 
 ## 层级剖析

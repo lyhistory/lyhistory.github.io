@@ -1,4 +1,6 @@
 
+The essential software that manages computer hardware, software resources, and provides common services for computer programs. Concepts like processes, memory management, and scheduling are fundamental to everything else 
+
 + CPU Processor
   - register
      寄存器是CPU内部的元件，寄存器拥有非常高的读写速度，所以在寄存器之间的数据传送非常快。它们可用来暂存指令、数据和位址。在中央处理器的控制部件中，包含的寄存器有指令寄存器(IR)和程序计数器(PC)。

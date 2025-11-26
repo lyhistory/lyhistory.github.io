@@ -1108,6 +1108,8 @@ ApplicationContext（应用上下文）
 
 ## 2. SpringApplication启动流程
 
+[Springboot Source Code](/software/programming/java_springboot_sourcecode.md)
+
 Spring Boot应用启动流程：
 ```
 ┌─────────────────────────────────────────────────┐
@@ -4556,5 +4558,33 @@ nohup: ignoring input no main manifest attribute
         </plugins>
     </build>
 ```
+
+---
+ref:
+
+@bean方法调用的特殊性：
+
+https://www.racecoder.com/archives/787/
+
+https://stackoverflow.com/questions/27990060/calling-a-bean-annotated-method-in-spring-java-configuration
+
+
+
+[Spring Boot 2.0 ：深入分析Spring Boot原理](https://blog.csdn.net/TheLudlows/article/details/81360067)
+
+spring boot之自动装配（spring-boot-autoconfigure） https://blog.csdn.net/wangjie5540/article/details/99542777
+
+原创 | 我被面试官给虐懵了，竟然是因为我不懂Spring中的@Configuration
+https://juejin.im/post/5d005860f265da1b7f297630
+
+https://blog.csdn.net/yiifaa/java/article/details/74852425
+https://www.huaweicloud.com/articles/b59be8ffdcfbd1f8a1fe28bffe848d20.html
+https://www.cnblogs.com/wuchanming/p/5426746.html
+https://stackoverflow.com/questions/39890849/what-exactly-is-field-injection-and-how-to-avoid-it
+
+https://medium.com/@ilyailin7777/all-dependency-injection-types-spring-336da7baf51b
+
+SpringBoot常见异步编程 https://mp.weixin.qq.com/s/Z-GE_qBtnSgLQTVr9bQYcQ
+
 
 <disqus/>

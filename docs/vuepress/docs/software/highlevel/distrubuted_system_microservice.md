@@ -7,6 +7,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 [回目录](/docs/software)  《微服务架构》
 
 ## 什么是微服务
+An architectural style that structures an application as a collection of loosely coupled, independently deployable, small, modular services. This is a popular pattern for building applications within a distributed system​.
 
 首先微服务是啥，微服务首先是一种架构思想，
 首先最初的很多产品都是单体monolithic架构，所有的服务都紧紧耦合在一个解决方案中，难以扩展，只能通过加cpu加内存的方式扩展，举例一个电商平台,

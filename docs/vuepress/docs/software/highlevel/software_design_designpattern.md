@@ -4,6 +4,8 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
+A general, reusable solution to a commonly occurring problem within a given context in software design. It represents a proven template for how to solve a problem, promoting best practices and code reusability
+
 圣杯与银弹 · 没用的设计模式
 https://draveness.me/holy-grail-design-pattern/
 

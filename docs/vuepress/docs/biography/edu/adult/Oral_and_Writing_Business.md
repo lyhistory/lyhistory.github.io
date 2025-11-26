@@ -66,6 +66,24 @@ subdued demand 需求不旺
 ‌“印度及东南亚地区钢铁需求的持续增长提供了一定支撑，但可能无法完全抵消中国市场需求潜在放缓的影响。”
 
 ### business dialogue
+Could you please provide the high-resolution original image? I'd like to use it for the banner and would appreciate it if the brightness could be adjusted to match our other banners.
+
+ok you need it by today？
+Yes, please. If you could, that would be great. Thank you!
+
+Hi xxx, our website vendor has sent the invoice and it's now in our internal processing stage. Could you kindly confirm if the approval flow is as follows:
+
+1. Obtain approvals from​ Finance , and LCD 
+
+2. Then initiate Annex A signing​ by the same parties
+
+Is this correct?
+
+Hi [Name], quick question on the Annex A signing sequence: Should Finance sign after Tom has signed, or should LCD sign first?
+
+Hi Peter, my colleague was curious about the rationale behind upgrading to the new version. I mentioned it's a best practice for security and performance, but would you have any additional insights to share?
+
+Hi Peter, gentle reminder on the upgrade rationale! If no further comments are needed, we’ll finalize this as the official explanation.
 
 Hey xxx, free to sync on the haircut logic later? Want to ensure I'm on the right track.
 
@@ -102,8 +120,32 @@ If applicable, please provide details of the scheduled jobs in the system showin
 If your question pertains to scheduled jobs on Yonyou’s side (such as system backups or data synchronization), note that these are fully managed by Yonyou. Their internal processes are not visible to us, so we do not have details regarding job names or frequencies."
 
 ### business email
+Hi [Name],
+
+I have no further comments on this./This looks good to me—no further comments from my side. Thanks!
+
+Thank you!
+
+[Your Name]
+
 ---
 
+Thanks for the update.​ I wasn't included on the earlier emails, so let me review the thread first to get up to speed. I'll then connect with Francis next Monday to discuss it.
+
+Thank you for filling me in.​ As I wasn't copied on the previous correspondence, I will need to go through the email history to fully understand the situation. I plan to discuss this matter with Francis next Monday and will follow up with you thereafter.
+
+---
+
+Hi [Name],
+
+I've added the new banner and timeline as requested. For the images, I've reused what was available in our media library. Please let me know if you'd like to change them.
+
+Also, for the FX timeline, the text appears a bit too long and is overflowing the current design.
+
+Best,
+
+[Your Name]
+---
 Dear [Recipient's Name],
 
 I hope this email finds you well.
