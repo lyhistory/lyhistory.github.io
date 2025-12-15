@@ -16,7 +16,8 @@ OpenVoice
 https://mp.weixin.qq.com/s/QDPX7D1mnwwmmv1pb_TbOA
 
 
-### 文字《=》语音
+## 文字《=》语音
+ElevenLabs
 
 https://ttsmaker.com/
 
@@ -26,7 +27,7 @@ https://github.com/suno-ai/bark
 
 https://www.notta.ai/en
 
-### 语音翻译
+## 语音翻译
 
 rask ai
 https://www.rask.ai/

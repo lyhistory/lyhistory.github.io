@@ -437,6 +437,23 @@ Teacher:​​ "Children, look at the ground while we walk. See the round ​man
 
 
 ## 宝宝互动 coax
+What
+    What does the broccoli taste like?​ Is it crunchy or soft?
+Where
+    The car went under the table! Where should we look?
+Which 
+    Which shoes should we wear today?​ The fast running shoes or the jumping rain boots?
+Let's​ 
+    Let's​ put on your sneakers! 
+    Let's make a click sound​ with the strap!
+Would you like 
+    Would you like to wear the red shirt or the blue one?
+Should
+    Should we eat the peas or the corn first?
+please
+    Can you please​ point your toes in?
+Great	
+    Great! Now, let's push your heel down.
 
 Show me/Point to
     Point to the dog's head.

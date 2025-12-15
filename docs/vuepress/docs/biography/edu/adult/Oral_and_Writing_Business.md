@@ -120,6 +120,19 @@ If applicable, please provide details of the scheduled jobs in the system showin
 If your question pertains to scheduled jobs on Yonyou’s side (such as system backups or data synchronization), note that these are fully managed by Yonyou. Their internal processes are not visible to us, so we do not have details regarding job names or frequencies."
 
 ### business email
+hi xxx, 
+we refer to the Maintenance Package received. Gratefu if you could kindly confirm that Mr. peter is a director of xxx Pte.Ltd. and has the authority to enter into the agreement on behalf of the company. Where relevant, please also share supporting documentation for our records.
+<=
+Dear peter,
+
+I am forwarding the request from our Legal Department below regarding confirmation of your directorship and signing authority. Could you kindly reply directly (with Legal copied) to clarify and provide the necessary supporting documentation?
+<=
+Dear [Legal Team],
+
+I confirm that Mr. peter  is a duly appointed director of xxx Pte. Ltd. and is authorized to enter into agreements on behalf of the company.
+
+For your records, please find attached a copy of the latest [BizFile / Company Business Profile from ACRA] reflecting his directorship.
+
 Hi [Name],
 
 I have no further comments on this./This looks good to me—no further comments from my side. Thanks!
