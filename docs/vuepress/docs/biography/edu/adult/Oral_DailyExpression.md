@@ -1,4 +1,8 @@
-https://www.playphrase.me/
+[单词句子查影片](https://www.playphrase.me/)
+
+[Search your favourite movie clip](https://clip.cafe/)
+
+[Master English pronunciation naturally! Learn how to pronounce tricky sounds like a native with YouGlish's real-world clips.](https://youglish.com)
 
 ## Think in English/ How to say in English 精准表达
 
@@ -37,6 +41,84 @@ lowlife scum
 +  Uncivilized
   "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
+叫
+	狗叫 bark
+	鸟/鸡叫 Cheep/Peep/Chirp/Twitter
+拽
+	Pull 最通用、中性的词
+		I had to pull​ my dress down​ after sitting. 
+	Tug 速、用力地拉一下
+		She tugged​ at his sleeve to get his attention.
+		The child tugged at​ his mother's coat to show her the toy. 
+	Yank 强调非常用力、甚至有些粗暴地猛拉，通常幅度较大且突然 
+		He yanked​ off​ his wet sweater. （他猛地一下把湿毛衣拽了下来
+	Grab 迅速地抓住或抓起
+	Pluck 用手指快速、轻巧地捏着衣服布料拉扯或弹拨的动作 
+		The child kept plucking​ at his mother's sleeve
+
+吸
+	Slurp 吸食流质食物（如面条、汤）时发出声音。常带有享受意味，但在某些文化中可能被认为不礼貌
+		 I like to slurp​ noodles loudly. It shows how much I enjoy them. 
+	Sip 小口地、安静地啜饮液体。常用于喝茶、咖啡或品酒 
+		She sipped​ her tea while reading the newspaper. 
+	Suck	通用词，含义广泛。可指用嘴吸食（如吸管）、吸收（知识）或物体间的强吸力。
+		The kid sucked​ the juice box dry. 
+		Plants suck​ up water through their roots.
+	Inhale	主要指呼吸动作中的“吸入”（空气、气味等）。用于食物时带有幽默色彩，形容吃得极快。
+		He inhaled​ the fresh morning air. 
+		After work, he inhaled​ a large pizza. 
+	Absorb	强调“吸收并保留”。常用于抽象概念（如知识、信息）或物理现象（如海绵吸水）
+		The sponge absorbed​ all the spilled water.
+		 It's hard to absorb​ so much information at once. 
+咬断
+	Bite off​ / Bite through
+		Be careful not to bite off​ more than you can chew. 小心点，别一次咬断太多面条嚼不过来
+	Snap
+		You need to snap​ the dry spaghetti in half to fit it in the pot.
+堂食
+	Eat in or take away?
+	We ate in at the burger shop yesterday.​ 
+	Shanghai has reopened dine-inservices. 
+	美式英语 For here or to go?
+对着
+	point at/to/towards, blow into
+		She pointed the gun at him
+		The policeman asked me to blow into the breathalyser
+	face, in front of, opposite
+		At the foot of the stairs she turned to face him
+		Their house is almost opposite ours
+	look out onto, have a ... frontage
+		The window looked out onto the terrace
+		The restaurant has a river frontage
+	be faced with, be confronted with
+		He finds himself faced with a whole new ball game
+		I was confronted with an array of knobs, levers, and switches
+	be fed up with, be sick and tired of, drive someone crazy/nuts
+		I'm fed up with the empty promises my boss keeps making
+		I'm sick and tired of meetings that go nowhere
+抹
+	用勺子勺几勺番茄酱抹在披萨胚上
+	Spoon and spread the pizza sauce onto the base.
+	Drop several spoonfuls of sauce onto the center of the base, then spread it out in a spiral motion.
+	Put the sauce on the pizza base with a spoon.
+突然浓密的一片或一小块草丛
+	A tussock/A thick patch of grass/A clump of grass
+相约明日
+	wave goodbye to the sun until tomorrow
+配音
+	dub
+抽风机
+	The bathroom exhaust fan is very noisy
+稻穗
+	Ear of rice 
+		Drooping ears of rice​ promise another good harvest. (沉甸甸的稻穗预示着又一个丰收。
+	Spike of rice
+		I am really glad to see these full spikes of rice! (看着这些饱满的稻穗，我真是高兴！
+车头
+	front of the vehicle/car
+	火车机车 locomotive
+	小汽车前部的引擎盖 hood(美式) / bonnet(英式)
+
 掉
 	come off 泛指护具从身体或衣物上脱离，使用最广泛
 		My elbow pad came off​ during the game.
@@ -320,6 +402,8 @@ lowlife scum
 		Stir well to avoid any **clumps**.
 
 硌
+	I've got sand/grit in my shoe, and it's hurting my foot.
+	Hold on, I need to get this sand out of my shoe. Shake the sand out of your shoes.
 	​There's something in my pocket pressing against me.​ 强调硬物“压迫”身体的感觉
 	​Something in my pocket is poking me.​ 强调硬物“戳、刺”的尖锐感。
 	​I can feel something hard digging into my [hip/leg].​ 生动描述硬物“硌”得生疼，仿佛要“陷进”肉里。
@@ -418,6 +502,10 @@ lowlife scum
 	I need to get off here.​​
 
 出发
+	We‘re setting off now.
+	It‘s getting late. Let’s head out.
+	The car is packed. Time to hit the road!
+	We‘d better get going​ if we want to arrive on time.
 	Are you all set? Let's head out!​
 	Everyone buckle up! Let's roll.​
 	We're on our way!​
@@ -1311,6 +1399,24 @@ nuance细微差别
 
 ### 英文表达
 #### Synonym - Words in mind
+Specific vs Particular
+	Specific	如果重点是内容的清晰、细节和精确度，担心对方觉得太笼统，用 specific。
+		specific instructions（明确的指示）, specific example（具体的例子）, specific time（确切的时间）
+		Could you be more specific?
+	Particular	如果重点是从一群类似事物中指定或突出某一个，用 particular。
+		this particular day（特指某一天）, in particular（尤其）, particular about...（对…挑剔）
+		I remember one particular story very clearly.
+		I love all music, but I love jazz in particular.
+		She is very particular about food.她对吃得很讲究/挑剔。
+	I'm looking for a specific/particular​ book. 
+		Specific  目标锁定：脑子里有明确标准（如ISBN、准确书名）。重点是“就是这本，而非他本”，强调精确性和唯一性
+		Particular 精挑细选：在众多书中特别留意某一本，可能因其版本、封面或特殊意义。重点是“为什么是这一本”，强调其特殊性或个人偏好
+	We need to follow the specific/particular​ rules
+		Specific	照章办事：指规则本身清晰、详细、可操作。强调规则内容的明确性，要求严格执行
+		Particular	特别关照：指在众多规则中，这几条规则本身因某种原因（如格外重要或易违规）而需要特别注意。强调规则个体的突出性
+	She has a specific/particular​ way of doing it.
+		Specific	方法论明确：描述的方法是固定的、有明确步骤的。侧重方式的具体性和可描述性
+		Particular	方式独特：描述的方法很独特，甚至可能有点挑剔或固执。侧重方式的独特性，常带主观色彩
 spike vs thorn
 	spike 多样化，可天然（如果皮上的突起、豪猪的刺）或人造（如鞋钉、墙钉）
 		The spikes on a durian's husk are very sharp, so you have to be careful when handling it. 
@@ -1672,7 +1778,11 @@ lose sight of
 	Don’t ‌lose sight of‌ your original goal.（不要‌忘记‌你的最初目标。）
 	‌例句 3（科技语境）‌
 	Light pollution causes us to ‌lose sight of‌ our true place in the universe.（光污染让我们‌看不到‌在宇宙中的真实位置。）
-
+	sight vs see
+	1) （突然或初次）看到，发现
+		After days at sea, the sailors sighted​ land.
+	2) 瞄准，观测
+		He sighted​ the target carefully before firing.
 marshal resources 韬光养晦
 
 name squatting [squatting 动物一样蹲下( squat的现在分词 ); 非法擅自占用; 为获得其所有权]
@@ -1848,11 +1958,17 @@ Who is this/that?"​
 	Present Simple:
 	Present Continous:
 
-	Past Simple tense： tells us a specific past time, time is very important, sometimes you can even guess the time. 明确的时间点yesterday, last weekend, when it was in theaters​ 这样的词
-	Present Perfect：talk about experience before now, it has already happened, the time is not important, maybe it's in your life, or maybe recently. 跟时间没关系，只是谈经验
-	Present Perpect Continous: means it has already happened/started before now, but it's still happening now.
-	Past Perfect: experience before a past time!
-	Past perfect continuous: it's like 'had done' and 'am doing' together, at a past time something has already started, but it was still happening at that past time.
+	**Past Simple tense：**
+		tells us a specific past time, time is very important, sometimes you can even guess the time. 明确的时间点yesterday, last weekend, when it was in theaters​ 这样的词
+		当对话双方都非常清楚动作发生在“刚刚过去的瞬间”时，时间状语常常被省略。“I found it!” 就是一个典型例子。你说出这句话时，你和听者都明白“找到”这个动作是前一秒才发生的，所以无需画蛇添足地说 “I found it just now.”
+	**Present Perfect：**
+		talk about experience before now, it has already happened, the time is not important, maybe it's in your life, or maybe recently. 跟时间没关系，只是谈经验
+	**Present Perpect Continous:** 
+		means it has already happened/started before now, but it's still happening now.
+	**Past Perfect:**
+		experience before a past time!
+	**Past perfect continuous:**
+		it's like 'had done' and 'am doing' together, at a past time something has already started, but it was still happening at that past time.
 	实例：
 	A: What did you you do today?
 	B: (he used past tense and he said today, he must be talking about in the morning today.) Well I just watched a movie in the morning today.
@@ -1932,9 +2048,23 @@ To clarify, after confirming with Agnes, the changes would be: xxxx. 它暗示�
 
 
 #### 其他
+
+I found it! vs I find it.
+	I found it! It was in my coat pocket all along.
+	表达个人感受或看法 I find it hard to concentrate. 
+	描述一个普遍事实或习惯 If you ever find money on the ground, you should try to return it. 
+
+Have you vs Do you have
+	baba black sheep, have you any wool 古典、正式。常用于古英语或文学作品中
+	Do you have any wool? 现代、通用。是现代英语中最标准、最常用的疑问句式。
+
 has not
-	Oh, has Francis not sent his OT to you yet? 更正式、中立，或带有惊讶、关切
+	Oh, has Francis not sent his OT to you yet? 更正式、中立，或带有惊讶、关切 书面语或需要表达特定情绪的口语
 	Hasn't​ Francis sent...? 日常对话中最常用
+
+Has set off VS Is set off
+	We are running late; our car has already set off.
+	The car alarm is set off​ by a sudden impact.
 
 ​I don't/didn't/can't/couldn't find any exceptions.​
 ​描述当前正在进行的检查
@@ -1947,18 +2077,30 @@ has not
 	​I couldn't find any exceptions.​​ 描述过去的努力和失败，或者在团队讨论中提出结论时，听起来比“didn't”更委婉和谨慎​，暗示“虽然我没找到，但可能存在问题”。
 
 will vs is going to vs ​will be doing
-	be going to ​事先考虑好的、明确的计划或意图 / 迹象表明某事即将发生时 想说“我计划/打算做…”或者“看这情况马上就要…了”，用 ​is going to。
-		Look at those dark clouds. It's ​going to rain. 
-	will 说话时临时决定的意图或主动提出的承诺 
-		​临时决定 That sounds great! I ​will​ watch it tonight.
-		主动承诺或提供帮助​ I ​will​ help you with your homework.
-		对普遍事实或趋势的预测​ She ​will​ be 10 years old next year.
-	想说“在未来的某个时刻，我将会正在做…”或者“根据安排，那时会发生…”，用 ​will be doing。
+	be going to 
+		1) ​事先考虑好的、明确的计划或意图  想说“我计划/打算做…”
+			I'm going to see​ a movie tonight.
+		2)  迹象表明某事即将发生时 或者“看这情况马上就要…了”
+			Look at those dark clouds. It's ​going to rain. 
+	will 
+		1) 说话时临时决定的意图或主动提出的承诺 
+			说话者的决心	I will be brave.​ 
+			​临时决定 That sounds great! I ​will​ watch it tonight.
+			主动承诺或提供帮助​ I ​will​ help you with your homework.
+				I don't have a pen." "Oh, I **'ll lend** you one.
+				I promise I **will finish** the work on time.
+		2) 对普遍事实或趋势的预测​ 
+   			She ​will​ be 10 years old next year.
+		3) 客观安排
+			Light provisioning will be provided
+		
+	​will be doing	
+		想说“在未来的某个时刻，我将会正在做…”或者“根据安排，那时会发生…”
 		This time tomorrow, I'​ll be flying​ to Paris. 
 		We'​ll be having​ a meeting from 2 to 4 PM. Please don't disturb. 
 		Will you be using​ the car tonight? I need to run an errand. 用 "will be doing" 会比直接用 "what will you do" 听起来更委婉、更不具压迫感。What ​are you going to do​ this weekend? 直接询问对方的计划或打算
-	I ​am going to do​ my homework tonight. 
-	I ​will be doing​ my homework at 8 PM tonight. 
+		I ​am going to do​ my homework tonight. 
+		I ​will be doing​ my homework at 8 PM tonight. 
 
 What do you say?​​
 ​​“你该说什么？”​​ 用于提醒孩子在特定情境下（如收到礼物、得到帮助后）说出合适的礼貌用语。

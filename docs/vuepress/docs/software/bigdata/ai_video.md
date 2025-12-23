@@ -53,6 +53,7 @@ https://mp.weixin.qq.com/s/fNxb2B5PiTTzTSXMuXHvOg
 wan2.2
 
 ### 教学视频
+#### 教学动画
 [雾象是一款由大型语言模型（LLM）驱动的动画引擎 agent 。用户输入抽象概念或词语，雾象会将其转化为高水平的生动动画。](https://github.com/fogsightai/fogsight)
 
 [Video generation via code](https://github.com/showlab/Code2Video)
@@ -85,7 +86,7 @@ Papagayo-NG → Synfig
             Load Synfig (.dat)
             Map mouths
 
-            
+
 ### 3D场景
 https://github.com/princeton-vl/infinigen
 

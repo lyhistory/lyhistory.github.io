@@ -2,7 +2,21 @@
 
 ## 工具
 
+Hammer 
+Screwdriver 
+Saw 
+Pliers 
+Wrench (美式) / Spanner (英式) 扳手
+Adjustable wrench/spanner 活扳
+Drill  
+Tape Measure 卷尺
+Screw 螺丝钉
+Nut  螺母
+Bolt 螺栓
+Nail 
+Washer  垫圈
 Tear Notch 包装上为方便撕开而设计的小缺口或凹口
+claw hammer/nail hammer 羊角锤 A dual-purpose hand tool primarily for driving nails in with the striking face and pulling them out with the forked "claw" . The distinctive V-shaped, forked "claw" at the back of the hammerhead, which resembles a goat's horn, is the source of its name .
 
 ### 拖车
 Trailer 最常用的词，指本身无动力、需要由汽车、卡车等牵引的车辆，用于运输货物或作为临时住所（拖挂式房车）
@@ -63,6 +77,9 @@ Pallet truck​ / ​Pallet jack 仓库和物流中常用的工具，有手动�
 		Loosen the straps​ before you take off the helmet.
 		You can ​tighten the chin strap​ for a more secure fit.
 ## 物品
+
+泡沫箱 Plastic foam​ / Foam box
+
 medal
 
 浴室放莲蓬头的卡槽支架
@@ -119,11 +136,43 @@ medal
 	中式挂面​：​Fine dried noodles​ 
 	菜单上通常会直接使用意大利语原名（如Linguine, Tagliatelle）。在亚洲超市或餐厅，则更常用“noodle”加上形状或原料的描述，比如“wide noodles”、“flat rice noodles”
 ### 家具
+锁孔 keyhole/lockhole
+推拉门	sliding door 
+ 
 stool
 
 吊床 hammock
 	We anchored the ​hammock​ to the tree
-### 漏网
+### 厨具
+铲子
+	Spatula	煎炒翻面用的铲子	Silicone spatula​ (硅胶锅铲)/Wooden spatula​ (木锅铲)/Stainless steel spatula​ (不锈钢锅铲)
+		Could you pass me the spatula? I need to flip the eggs. 
+	Turner	用于翻面、铲起食物的铲子，比如给汉堡、煎饼翻面
+		A turner​ is essential for making perfect pancakes.
+	Fish Slice	英国英语中使用，指带有漏孔的铲子，最初用于煎鱼，现在也用于其他食物
+		She used a fish slice​ to serve the grilled vegetables. 
+
+壶
+	Kettle  水壶
+	Electric kettle 电水壶
+	Teapot 茶壶 (通用)
+	Purple clay teapot  紫砂壶
+	Vacuum flask / Thermos 保温壶 (虽外形有差异，但功能相似，常统称) 通过真空层隔热，用于长时间保持水温。
+	coffee pot 咖啡壶
+	Jug 和 Pitcher 常指带柄的大口罐子或水壶，主要用于盛装和倾倒液体（如水、牛奶、果汁）
+垫
+	cushion 通用坐垫/软垫
+		seat cushion
+		armrest cushion
+		headrest cushion
+		inflatable cushion
+	pad
+		kneeling pad
+	mat
+	saddle 专指自行车的坐垫
+
+	
+#### 漏网
 Strainer 指各种用于过滤的“滤网”
 Drain catcher
 	The ​drain catcher​ got clogged, so the water wasn't draining properly.
@@ -131,7 +180,7 @@ Sink basket 美式英语
 	The ​sink basket​ is full of food scraps, I need to empty it.
 Sink grid / Grid rack 通常指架在池底、用于放置碗碟的“沥水架”，而非过滤残渣的网篮。
 
-### 盖子
+#### 盖子
 
 Cap​ 通常指较小、可拧开或拔开的盖子，常用于饮料瓶、药瓶、笔等。
     Twist off the bottle ​cap​ before drinking.
@@ -191,9 +240,20 @@ Plug 指塞子，如浴缸塞 (bathtub plug)、电源插头 (electric plug)​
 南瓜子 ​Pepitas​ / ​Dried pumpkin seeds
 夏威夷果 ​Macadamia nut
 
+汤汁
+	Cooking juices​ / Drippings 泛指汤汁/烹饪原汁
+		It's delicious to drizzle some of the cooking juices over the rice.​ 
+	Broth	肉汤/清汤	 light broth（清淡的肉汤）
+		You can spoon some of the flavorful broth over steamed rice.​
+	Sauce	浓汤/酱汁	rich sauce（浓郁的酱汁）
+	Stock	高汤/底汤
 ## 服饰
 cape 斗篷 披肩
-
+小布条 ​a small strip of cloth / strap, band, rag(指碎布条)
+	A cloth strip on an umbrella that secures the frame 伞上固定骨架的布条
+	One of the tie bands​ connecting the umbrella canopy to the rib is torn. (伞面上有一根固定伞骨的布条撕裂了。
+	The luggage was secured with a strong cloth strap. 行李用一根结实的布带固定着。
+	He cleaned the machine with an oily rag. (他用一块油污的碎布条擦拭机器。
 
 ### 鞋子
 

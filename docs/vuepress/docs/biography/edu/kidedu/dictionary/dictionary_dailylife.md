@@ -374,6 +374,9 @@ Keywords: palms,wrists,Sink, Wipe,Scrub, toothpaste, toothbrush,chewing sides,Ri
 
 
 #### Potty
+I'm just going to pop to the loo.​ (我很快去下厕所。) - 英式口语
+I'm taking a leak. (多指小便) / I'm taking a dump. (指大便)
+I'm peeing. / I'm pooping.
 I peed/pooped.
 I had a pee/poop.
 I did/went pee-pee/poo-poo.

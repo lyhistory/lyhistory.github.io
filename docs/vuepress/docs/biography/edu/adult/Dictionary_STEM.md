@@ -40,6 +40,23 @@ Disperses
     （白光在滴内通过色散分离成光谱）
     
 ## biography
+Insect
+	6 legs
+	3 parts: Head, Thorax​ (chest), and Abdomen​ (belly) 
+	Has 1 pair of antennae
+Arachnida e.g Spiders
+	4 pairs of legs on the cephalothorax​ (8 total)
+	2: Cephalothorax​ (fused head & thorax) and Abdomen​
+	No antennae
+Centipedes
+	1 pair per segment
+	2: Head and segmented trunk
+	1 pair antennae
+Millipedes
+	2 pairs per segment
+	2: Head and segmented trunk
+	1 pair antennae
+    
 anal 肛门
 apical dominance  顶芽优势
 

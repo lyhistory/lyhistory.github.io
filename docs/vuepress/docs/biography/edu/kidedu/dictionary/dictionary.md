@@ -14,6 +14,98 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 + Sesame Street
 + Podcast: Wow in the World
 
+Hello! I'm a 4-year-old living in the UK. Here are the words I use every day, sorted into groups to make them easier to learn. I've also included some simple sentences that Mummy, Daddy, and my teachers say all the time!
+
+👧 All About Me
+
+Body: head, hair, eye, ear, nose, mouth, face, hand, arm, leg, foot, toe, finger.
+
+Clothes: T-shirt, shirt, skirt, dress, jeans, trousers/pants, socks, shoes, jumper(sweater), coat, jacket, hat, cap, scarf, gloves, pajamas, trainers(sneakers), wellies(wellington boots/rain boots) .
+
+How I Feel: happy, sad, angry, tired, hungry, yummy(tasty), yucky(not tasty) .
+
+Simple Talk:
+
+"Mummy, I'm hungry." 
+
+"This is yummy!" 
+
+"I feel tired."
+
+🏡 At Home with My Family
+
+People: Mummy, Mum, Dad, Daddy, parents, baby, brother, sister, grandma, grandpa.
+
+Rooms & Things: home, room, bedroom, bathroom, kitchen, living room, bed, chair, table, sofa, TV, toy, doll, ball, bath, light, window, door.
+
+Routine:
+
+Morning: Wake up!, Brush teeth, Wash face, Get dressed.
+
+Meals: breakfast, lunch, dinner/supper, milk, water, juice, bread, egg, fish, apple, banana. Fork, spoon, plate, bowl, cup.
+
+Simple Talk:
+
+"Good morning, Mummy!" 
+
+"Can I have some milk?" 
+
+"It's time for​ breakfast." 
+
+"I want water." 
+
+🏫 My Day at School (Nursery/Reception)
+
+Places & People: school, nursery, classroom, playground, teacher, headteacher(headmaster/headmistress), friend, classmate.
+
+Activities & Rules: play, line up, paint, draw, read, sing, share, wait, listen, good job!.
+
+Asking: "May I go to the toilet/loo, please?" .
+
+Simple Talk:
+
+"It's my turn!" 
+
+"Let's share​ the toys." 
+
+"Who wants to​ play?" 
+
+🚌 Getting Around
+
+Vehicles: car, bus, train, bike, boat, plane.
+
+Outside: park, swing, slide, grass.
+
+Safety: "Please hold my hand." "Wait for the green man!" (at crossings) .
+
+Simple Talk:
+
+"Are we there​ yet?" 
+
+"Look, a big bus!" 
+
+🦁 The World Around Me
+
+Animals: cat, dog, bird, fish, rabbit, duck, horse, cow, pig, sheep, lion, tiger, elephant, giraffe(from trips to the farm or zoo!) .
+
+Nature: sun, cloud, rain, flower, tree, grass.
+
+Weather: It's sunny, rainy, cloudy, windy, cold, warm.
+
+Simple Talk:
+
+"It's sunny​ today." 
+
+"Look at the rain!" 
+
+🔢 Numbers, Colours, and Simple Ideas
+
+Colours: red, blue, yellow, green, orange, pink, purple, black, white, brown.
+
+Numbers (1-10, and a bit more!): one, two, three, four, five, six, seven, eight, nine, ten.
+
+Simple Ideas: big, small, hot, cold, up, down, in, out, on, under, please, thank you, sorry.
+
 ## 0. ​Baby Talk / Motherese（婴儿语/妈妈语）​
 
 ### ​Hypocorism（爱称/昵称词）​
@@ -290,7 +382,7 @@ squirt squeeze spray 感觉差不多对比解析
       She ​sprayed​ perfume on her neck.(她在脖子上喷了香水。)
       The farmer ​sprayed​ the crops with pesticide.(农民给作物喷杀虫剂。)
       The cat hissed when I ​sprayed​ it with water.(我朝猫喷水时，它发出了嘶嘶声。)
-### 觉
+### 五觉
 味道
 sweety salty bitter
 

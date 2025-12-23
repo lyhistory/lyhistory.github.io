@@ -65,7 +65,25 @@ subdued demand 需求不旺
 可译为：
 ‌“印度及东南亚地区钢铁需求的持续增长提供了一定支撑，但可能无法完全抵消中国市场需求潜在放缓的影响。”
 
+### business sentence
+Light provisioning will be provided 
+在航空、航海、技术文档等高度标准化的领域，沟通的首要原则是清晰、客观、避免歧义。使用被动语态能将注意力集中在关键的动作或状态上。例如，在航空通信中，说“The landing gear was extended”（起落架已放下）比“The pilot extended the landing gear”（飞行员放下了起落架）更简洁、焦点更突出。它弱化了个人因素，强调标准程序已被执行这一事实本身。
+​ 如果使用 “is going to be provided”，会隐含一种“（我们）打算/计划提供灯光”的意味。这会给通知带入一丝“主观意图”的色彩，仿佛这个决定是某个操作员临时起意或系统刚刚计划好的，反而削弱了通知作为既定程序的确定性和可靠性 。
 ### business dialogue
+A: Hi @xxx , need help on xxx. Sorry, i couldn't find a xxx chat group. 
+B: Sure, what's the specific issue? / Okay, could you please describe the problem? / Certainly. Could you please provide more details about the problem?
+
+A：I have made the payment, have you received it? (attached a screenshot)
+B: the picture you send is blur ,Pls send us clear picture
+A: ok wait, i made a mistake
+B: Hey! Wanted to follow up on the payment screenshot. The last one **came through** a bit blurry, so we couldn't **make out** the details. If you need any help with the process, just give me a shout
+
+  说 “The last one came through a bit blurry” 将问题归结于“传送过来”的状态，比直接说 “The screenshot you sent is blurry”（你发的截图是模糊的）听起来更委婉，对方更容易接受。这是一种常见的商务沟通技巧
+
+  ”make out“ 暗示你已经尝试去辨认了，但确实因为清晰度问题而失败。这比简单的 “I can’t see” 更能说明问题所在，并促使对方提供更清晰的信息。
+
+Our PM gave us a heads-up​ at the last meeting​ that all our systems may need to support 24/7 operation​ in the future, following new investment. Each system owner now needs to evaluate the manpower required, determining whether we should develop in-house​ or purchase a new system​ to meet this requirement. 
+
 Could you please provide the high-resolution original image? I'd like to use it for the banner and would appreciate it if the brightness could be adjusted to match our other banners.
 
 ok you need it by today？
@@ -120,6 +138,33 @@ If applicable, please provide details of the scheduled jobs in the system showin
 If your question pertains to scheduled jobs on Yonyou’s side (such as system backups or data synchronization), note that these are fully managed by Yonyou. Their internal processes are not visible to us, so we do not have details regarding job names or frequencies."
 
 ### business email
+hi xxx, could you assist to check and provide the following: xxxxx 
+<=Please find the requested [specific document, e.g., report, quotation] attached as requested.
+
+hi xx, the xxx account has an oustanding balance of xxx on invoice xxx tht is now 55 past due..... 
+<=
+Hi [Recipient's Name],
+
+Thank you for your email. We have reviewed the outstanding balance mentioned for Invoice [Invoice Number] and would like to clarify that our records indicate this invoice was fully paid last year upon renewal, and the associated license remains active.
+
+To help resolve this discrepancy, we have provided details below:
+
+Invoice Number: [Invoice Number]
+
+Payment Date: [Specify the exact date of payment]
+
+Payment Method: [e.g., Bank Transfer/Credit Card]
+
+Transaction ID/Reference: [Include the specific payment reference number]
+
+License Period: [Effective Date] to [Expiration Date], confirming current validity.
+
+Could you please verify the status at your end and confirm if the payment was possibly misapplied or if there is any missing documentation on our side? We are happy to provide additional proof of payment or cooperate closely to resolve this quickly.
+
+We appreciate your prompt attention to this matter and look forward to your update.
+
+Best regards,
+
 hi xxx, 
 we refer to the Maintenance Package received. Gratefu if you could kindly confirm that Mr. peter is a director of xxx Pte.Ltd. and has the authority to enter into the agreement on behalf of the company. Where relevant, please also share supporting documentation for our records.
 <=

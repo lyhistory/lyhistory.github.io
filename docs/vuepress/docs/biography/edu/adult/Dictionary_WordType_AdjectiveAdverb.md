@@ -490,7 +490,9 @@ ultimately eventually http://forum.wordreference.com/threads/eventually-finally-
 unilaterally ˌju:nɪˈlætərəlɪ 单方面地; 单方面做出地; 仅影响一方地; 单边地;
 
 validly  正当地，妥当地
-
+vigorously
+	She shook her head vigorously. (她用力地摇了摇头。
+	He vigorously denied​ the accusations. (他极力否认这些指控。
 whereas 然而 反之
 wholly 完全地，全部地; 十足，统统; 专门; 一并
 
