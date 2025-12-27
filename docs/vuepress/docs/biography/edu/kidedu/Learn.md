@@ -1,4 +1,18 @@
 ## interactive online
+LetMeEnglish.com
+BBC CBeebies
+这是"Hour of AI"(人工智能小时)网站，由Google、NASA和麻省理工等机构联合推出的免费AI教育资源平台。它包含100多个游戏化的AI学习项目，专为5-18岁孩子设计，通过"我的世界AI海洋卫士""AI编舞"等趣味活动，帮助孩子理解AI原理并掌握驾驭AI的能力。
+
+musicca
+
+BeddyStories
+www.coolmathgames.com
+github.com/algorithm-visualizer/algorithm-visualizer
+可视化函数 GeoGebra
+
+NASA AT HOME
+
+MIT <<how to make(almost) anything>>
 
 www.coolmathgames.com
 

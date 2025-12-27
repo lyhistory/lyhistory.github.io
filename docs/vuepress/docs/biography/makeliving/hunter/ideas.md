@@ -1,5 +1,9 @@
 [Clickworker](https://www.clickworker.com) 
 
+一条不露脸的YouTube短片赚7166美元，自动化运营秘诀 https://mp.weixin.qq.com/s/X_gYXbtfOeSK4RyPKQZJSA
+被人一拳打断下巴后，他做出一个散户交易Discord机器人，月入5位数美金 https://mp.weixin.qq.com/s/13eC8mRw-dG7PsECwki89Q
+
+
 跨境卖玄学产品
 
 [虚拟商品是指电子商务市场中的数字产品和服务（专指可以通过下载或在线等形式使用的数字产品和服务），具有无实物性质，是在网上发布时默认无法选择物流运输的商品，可以虚拟货币或现实货币交易买卖的虚拟商品或者虚拟社会服务。](https://mp.weixin.qq.com/s/b5fLBslLO5MC0YUCgcYXNA)

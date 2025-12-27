@@ -292,6 +292,17 @@ ref:
 比如内部maven的远程仓库泄漏，比如代码里面的acurator监控端口泄漏，比如内部的doc文档路径泄漏，
 比如内部的staging或uat测试环境泄漏
 
+#### [InterceptSuite](https://mp.weixin.qq.com/s/qOYvOMGZaaOtTVbtQJW9UQ) 
+
+传统抓包工具（如 Burp）工作在 应用层（Application Layer），只认识 HTTP/HTTPS 请求。它们依赖浏览器或 App 主动配置代理，一旦对方绕过代理，或者根本不走 HTTP，那就彻底歇菜。
+
+而 InterceptSuite 工作在更底层的 传输层（Transport Layer） 和 安全层（TLS/SSL），它可以：
+
+- 拦截任何基于 TCP 或 UDP 的 TLS 加密流量
+- 自动识别并处理 TLS 升级（比如 STARTTLS）
+- 支持 PostgreSQL、MySQL、SMTP、IMAP、FTPS 等非 HTTP 协议
+- 提供 Python 扩展接口，让你自己写解析器
+
 #### 更多监控工具
 [Nagios是个开源的监控系统，号称网络监控的“瑞士军刀”。它能盯着服务器、网络设备、服务状态，甚至还能看房间温度，啥都逃不过它的眼睛！](https://www.nagios.org/)
 

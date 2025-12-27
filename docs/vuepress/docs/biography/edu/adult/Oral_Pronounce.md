@@ -633,3 +633,21 @@ conservation conversation
 master maester
 scam(scamp) spam
 hash 弄乱 搞砸 harsh 刺耳的;残酷的 hissing
+
+## 练习
+As the saying goes, face the truth and push through
+She's super thankful for the beautiful birthday flowers
+
+The days are so long and slow when you're young
+
+Did the thin lady purchase those yellow running shoes
+
+The daughter is cooking another healthy dinner at home
+
+No dont put those things above the bathroom sink
+
+They both had an amazing view of today's football game
+
+They were looking for a good book
+I made three suger cookies and a great fig cake
+Who's the new theater student over there
