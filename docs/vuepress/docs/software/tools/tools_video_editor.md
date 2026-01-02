@@ -5,7 +5,6 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
 ## software
-+ [录屏神器 Cap](https://github.com/CapSoftware/Cap?tab=readme-ov-file)
 + opensource shotcut
     https://shotcut.org/download/
     https://github.com/mltframework/shotcut/releases

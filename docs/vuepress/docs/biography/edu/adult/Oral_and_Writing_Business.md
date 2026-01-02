@@ -108,9 +108,9 @@ Hey xxx, free to sync on the haircut logic later? Want to ensure I'm on the righ
 so is the new product already returned from api?
 Yes, but typically only after the product is officially launched. APIs usually connect to the production database, so only data from launched products is accessible through the API.
 
-All APIs will return complete data when available. For testing, ensure the testing API environment is fully populated with the required data (there seems to be a gap in data handover from Luis to me). For production, data will only be accessible after the official launch.
+All APIs will return complete data when available. For testing, ensure the testing API environment is fully populated with the required data (there seems to be a gap in data handover from Bob to me). For production, data will only be accessible after the official launch.
 
-Hi team, I've identified a gap in the data handover from peter to me. To resolve this, could you confirm whether Luis had set up the testing API for you yesterday? This will help me ensure data continuity and proper configuration.
+Hi team, I've identified a gap in the data handover from peter to me. To resolve this, could you confirm whether Bob had set up the testing API for you yesterday? This will help me ensure data continuity and proper configuration.
 
 Based on this, it appears testing APIs were never utilized from the outset. Let me also search through document backups to verify if any testing APIs existed previously.
 
@@ -138,6 +138,22 @@ If applicable, please provide details of the scheduled jobs in the system showin
 If your question pertains to scheduled jobs on Yonyou’s side (such as system backups or data synchronization), note that these are fully managed by Yonyou. Their internal processes are not visible to us, so we do not have details regarding job names or frequencies."
 
 ### business email
+
+Dear [HOD's Name],
+
+I am writing to seek your urgent approval for emergency changes made to the TESTAPI to resolve the OI display issue on the website/chart page.
+
+Upon investigation, I identified that the issue was caused by a code discrepancy in the TESTAPI server. The project was originally developed by Bob, and the deployed code had not been updated since his departure. It is unclear why the production code was inconsistent with the GitLab repository.
+
+I have now corrected the code to align with the repository and ensure consistent functionality. The fix has been documented in the following Jira ticket for your reference:
+
+www.xxx.com/ddd
+
+Could you please approve this emergency change at your earliest convenience? Should you require additional details or discussion, I am available for a quick call or meeting.
+
+Thank you for your support.
+
+
 hi xxx, could you assist to check and provide the following: xxxxx 
 <=Please find the requested [specific document, e.g., report, quotation] attached as requested.
 
@@ -188,9 +204,9 @@ Thank you!
 
 ---
 
-Thanks for the update.​ I wasn't included on the earlier emails, so let me review the thread first to get up to speed. I'll then connect with Francis next Monday to discuss it.
+Thanks for the update.​ I wasn't included on the earlier emails, so let me review the thread first to get up to speed. I'll then connect with Bob next Monday to discuss it.
 
-Thank you for filling me in.​ As I wasn't copied on the previous correspondence, I will need to go through the email history to fully understand the situation. I plan to discuss this matter with Francis next Monday and will follow up with you thereafter.
+Thank you for filling me in.​ As I wasn't copied on the previous correspondence, I will need to go through the email history to fully understand the situation. I plan to discuss this matter with Bob next Monday and will follow up with you thereafter.
 
 ---
 

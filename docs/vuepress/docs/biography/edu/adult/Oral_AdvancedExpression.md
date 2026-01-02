@@ -171,6 +171,28 @@ stool
 	mat
 	saddle 专指自行车的坐垫
 
+Slice​
+	Could you please slice the bread for the sandwich?
+	She sliced the lemon into thin rounds for the tea.
+Shred
+	This machine can shred cabbage for coleslaw quickly.
+	The recipe says to shred the cooked chicken with two forks.
+Julienne
+	For the salad, julienne the carrots so they look like matchsticks.
+	The chef demonstrated how to julienne a bell pepper skillfully.
+Dice
+	First, dice the onion and celery finely for the sauce.
+	The stir-fry tastes better when the carrots are diced into small cubes.
+Mince
+	You need to mince the garlic very finely to release its flavor.
+	Minced beef is often used to make spaghetti bolognese.
+Chop
+	Chop the fresh herbs just before adding them to the dish.
+	We need to chop some firewood for the camping trip.
+Cube
+	Cut the potatoes into cubes before boiling them for the salad.
+Remove 
+	Remove the corn kernels from the cob.
 	
 #### 漏网
 Strainer 指各种用于过滤的“滤网”

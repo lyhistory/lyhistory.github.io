@@ -528,68 +528,6 @@ Teacher:​​ "Children, look at the ground while we walk. See the round ​man
 ​Teacher:​​ "Excellent! Always watch your steps. Walk safely on the clear path."
 
 
-## 宝宝互动 coax
-What
-    What does the broccoli taste like?​ Is it crunchy or soft?
-Where
-    The car went under the table! Where should we look?
-Which 
-    Which shoes should we wear today?​ The fast running shoes or the jumping rain boots?
-Let's​ 
-    Let's​ put on your sneakers! 
-    Let's make a click sound​ with the strap!
-Would you like 
-    Would you like to wear the red shirt or the blue one?
-Should
-    Should we eat the peas or the corn first?
-please
-    Can you please​ point your toes in?
-Great	
-    Great! Now, let's push your heel down.
-
-Show me/Point to
-    Point to the dog's head.
-    Show me the red car.
-Give Daddy a kiss.
-Kiss Daddy goodnight.
-Come over and lean on Daddy.
-Come here and sit with Daddy.
-
-No answer, no cookies.​
-No talking, no cookie!​
-​You have to answer Daddy first, then you can have some cookies.​
-​If you don't answer Daddy, there will be no cookies.​
-
-We have biscuits at home, sweetie. You can have some when we get back.
-The biscuits are at home. Let's go back and you can have one!
-
-### gently reminds the child to express themselves with language instead of whining or crying.
-Use your words, please.​
-No whining. Remember to use your words.​
-
-How would you feel if someone grabbed a toy from you?​
-
-I know you're upset, but I need you to use your words. Can you tell me what you want?
-
-Please don't interrupt when others are talking. You can say 'excuse me' and wait for your turn.​
-### 宝宝拉着爸爸的手不好好走路，爸爸出言引导的场景
-The little girl, instead of walking properly, ​dragged her feet​ and ​swung playfully on her father's arm, tugging it backwards and sideways. her father, feeling the constant ​tugging, looked down with a smile. He tightened her ​secure hold​ on her daughter's hand and said in a ​firm but gentle tone, "Hey buddy, ​let's try walking properly. ​If you keep pulling my arm like this, we might both stumble.​​ How about we race to that next lamp post?
-
-"​Walking feet, please!​​" the father reminded as his daughter began to ​stroll​ aimlessly, then suddenly ​lunged forward​ with all her weight, ​pulling hard on his arm. He ​staggered​ slightly but regained balance. With a playful sigh, he stopped and knelt down to her level. "​It's hard for me to walk steadily when you're swinging on my arm like this," he explained. "​Hold my hand nicely, and we can walk together safely. Okay?"
-
-Please walk properly/normally.
-Honey, if you keep pulling my arm like this, we might fall.
-Sweetie, you can choose to walk nicely holding my hand, or we can stop for a moment to adjust.
-Walking feet, please. 好好走路哦！
-Steady hands. 小手要稳一点
-It's hard for me to walk steadily when you're swinging on my arm like this.
-We're wobbling all over the path when we walk like this.
-I love holding your hand! But when you pull it down and back like this, it's hard for me to walk steadily. Let's try to walk together nicely, okay?
-I know it's fun to swing! You can choose to hold my hand and walk, or we can go to the park later and swing on the real swings. You decide.
-
-I see you're trying to skip and walk at the same time! It's tricky to coordinate. Let's focus on just walking for now.
-
-
 ## [Daily Life](/biography/edu/kidedu/dictionary/dictionary_dailylife.md)
 ## [House](/biography/edu/kidedu/dictionary/dictionary_house.md)
 ## [Nature & Outdoor](/biography/edu/kidedu/dictionary/dictionary_outdoor.md)

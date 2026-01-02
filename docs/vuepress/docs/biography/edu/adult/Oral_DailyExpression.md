@@ -4,6 +4,13 @@
 
 [Master English pronunciation naturally! Learn how to pronounce tricky sounds like a native with YouGlish's real-world clips.](https://youglish.com)
 
+LetMeEnglish.com
+https://www.languageguide.org/
+BBC CBeebies
+[everyone-can-use-english](https://github.com/ZuodaoTech/everyone-can-use-english)
+
+[幕境是一款通过电影、美剧或文档中的真实语境学习英语单词的应用，让您在原汁原味的情境中记忆词汇，提升学习效率。](https://github.com/tangshimin/MuJing)
+
 ## Think in English/ How to say in English 精准表达
 
 Everyday expressions 日常用语

@@ -1,6 +1,5 @@
 ## interactive online
-LetMeEnglish.com
-BBC CBeebies
+
 这是"Hour of AI"(人工智能小时)网站，由Google、NASA和麻省理工等机构联合推出的免费AI教育资源平台。它包含100多个游戏化的AI学习项目，专为5-18岁孩子设计，通过"我的世界AI海洋卫士""AI编舞"等趣味活动，帮助孩子理解AI原理并掌握驾驭AI的能力。
 
 musicca
@@ -22,18 +21,11 @@ www.coolmathgames.com
 [Re-imagining textbooks for every learner Learn Your Way transforms content into a dynamic and engaging learning experience tailored for you.](https://learnyourway.withgoogle.com/)
 
 
-[everyone-can-use-english](https://github.com/ZuodaoTech/everyone-can-use-english)
-
-[幕境是一款通过电影、美剧或文档中的真实语境学习英语单词的应用，让您在原汁原味的情境中记忆词汇，提升学习效率。](https://github.com/tangshimin/MuJing)
 
 microsculpture
 
 ## books
-[Z-Library (abbreviated as z-lib, formerly BookFinder) is a shadow library project for file-sharing access to scholarly journal articles, academic texts and ...](https://z-library.cc/)
 
-[Sci-Hub is a shadow library that provides free access to millions of research papers, regardless of copyright, by bypassing publishers' paywalls in various ways ...](https://www.sci-hub.pub/)
-
-首图=》赛阅图书馆 https://mp.weixin.qq.com/s/486HfkI6sURoYwu8EcqKLg
 
 维特根斯坦 逻辑哲学论
 
@@ -68,6 +60,9 @@ the pleasure of finding things out Richard feynman
 
 
 ## program
+[造机器人 Build, share and collaborate across the four key components of physical intelligence: Hardware, Software, Data and Models.](https://tnkr.ai/)
+[Master programming by recreating your favorite technologies from scratch.](http://github.com/2025Emma/vibe-coding-cn)
+
 hello 算法
 https://github.com/lyhistory/tools_algo_hello-algo
 
@@ -151,4 +146,22 @@ https://www.commonsensemedia.org/
 ## methods
 
 before bed hit up Theta Wave tracks 4 hertz on Youtube, play them while you learn, bonus hack snap your fingers mid session, make it your focus trigger, 
+
+## resource
+
+[Z-Library (abbreviated as z-lib, formerly BookFinder) is a shadow library project for file-sharing access to scholarly journal articles, academic texts and ...](https://z-library.cc/)
+
+[Sci-Hub is a shadow library that provides free access to millions of research papers, regardless of copyright, by bypassing publishers' paywalls in various ways ...](https://www.sci-hub.pub/)
+
+首图=》赛阅图书馆 https://mp.weixin.qq.com/s/486HfkI6sURoYwu8EcqKLg
+
+[The largest collection of free stuff on the internet!](https://fmhy.net/)
+
+www.xuebapan.com
+
+[PaywallBuster brings together a variety of sites dedicated to bypassing frustrating paywalls into a single, streamlined platform. ](https://paywallbuster.com/)
+
+[Collection of publicly available IPTV channels from all over the world](https://github.com/iptv-org/iptv)
+
+https://www.skills.google/
 

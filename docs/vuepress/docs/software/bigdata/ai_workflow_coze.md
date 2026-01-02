@@ -7,6 +7,8 @@
 
 [speech_synthesis](https://bytedance.larkoffice.com/docx/WdDOdiB1BoRyBNxlkXWcn0n3nLc)
 
+[一站式影视&短剧解说神器](https://github.com/Narrator-AI/AI-Narration-Master-Coze)
+
 ## 技巧
 ### 合并长语音
 

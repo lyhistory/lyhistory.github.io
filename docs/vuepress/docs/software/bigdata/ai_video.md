@@ -5,6 +5,10 @@ Stable Video Diffusion (by Stability AI)
 
 [Long Video Generation](https://github.com/aigc-apps/EasyAnimate)
 
+[ViMax: Agentic Video Generation (Director, Screenwriter, Producer, and Video Generator All-in-One)](https://github.com/HKUDS/ViMax)
+
+[字字动画 - 完全免费的AIGC视频生成软件，主要用于AI短剧，AI电影，小说推文](https://github.com/TypeTale/TypeTale)
+
 ### 文字=》视频
 
 [Step‑Video‑TI2V](https://stepvideot2v.com/)
@@ -92,6 +96,8 @@ https://github.com/princeton-vl/infinigen
 
 ### 漫画
 
+[一个利用 AI 制作漫画的工具，支持脚本创作、分镜设计和角色风格控制。](https://github.com/morsoli/aimangastudio)
+
 https://animatediff.github.io/
 
 极虎漫剪
@@ -139,9 +145,13 @@ https://colab.research.google.com/drive/1NG9AoH3QDtC7h97z1Yodmn_CiiGh8Y1T?usp=sh
 
 ## 视频解析 VLM
 ### 字幕
+[An AI-powered video transcription and summarization tool that supports multiple video platforms including YouTube, Tiktok, Bilibili, and 30+ platforms.](https://github.com/wendy7756/AI-Video-Transcriber)
+
 [VideoLingo-全自动视频搬运工具](https://mp.weixin.qq.com/s/-Ayo6lj65s4QEN3CXGLqZg)
 
-### 配音
+### 配音(音色克隆)
+[AI视频翻译配音工具，100种语言双向翻译，一键部署全流程，可以生抖音，小红书，哔哩哔哩，视频号，TikTok，Youtube等形态的内容成适配](https://github.com/krillinai/KrillinAI)
+
 [PyVideoTrans一键视频翻译+配音+字幕](https://github.com/jianchang512/pyvideotrans)
 https://mp.weixin.qq.com/s/6J35rQO8v69mpJfypFl8Tw
 
@@ -150,3 +160,9 @@ https://mp.weixin.qq.com/s/6J35rQO8v69mpJfypFl8Tw
 
 [Real-time webcam demo with SmolVLM and llama.cpp server](https://github.com/ngxson/smolvlm-realtime-webcam)
 
+[Unlocking Video Understanding with SmolVLM-2: A Comprehensive Guide](https://kitemetric.com/blogs/unlocking-video-understanding-with-smolvlm-2-a-comprehensive-guide)
+
+[detection 标记](https://github.com/roboflow/supervision)
+## 视频转图文
+
+[AI 视频图文创作助手是一款 Web 工具, 基于 AI 大模型, 一键将视频和音频转化为各种风格的文档](https://github.com/hanshuaikang/AI-Media2Doc)

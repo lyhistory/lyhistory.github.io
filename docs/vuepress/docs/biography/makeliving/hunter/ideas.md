@@ -1,3 +1,5 @@
+[一人公司方法论](https://github.com/easychen/one-person-businesses-methodology)
+
 [Clickworker](https://www.clickworker.com) 
 
 一条不露脸的YouTube短片赚7166美元，自动化运营秘诀 https://mp.weixin.qq.com/s/X_gYXbtfOeSK4RyPKQZJSA

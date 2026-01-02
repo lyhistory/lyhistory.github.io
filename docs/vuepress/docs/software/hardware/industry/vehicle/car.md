@@ -4,6 +4,8 @@ sidebarDepth: 3
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
+[自动驾驶 openpilot is an operating system for robotics. Currently, it upgrades the driver assistance system on 300+ supported cars.](https://github.com/commaai/openpilot)
+
 https://github.com/f1xpl/openauto
 
 DTC: Diagnostic Trouble Codes 故障诊断码

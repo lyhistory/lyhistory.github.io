@@ -16,7 +16,7 @@ OpenVoice
 https://mp.weixin.qq.com/s/QDPX7D1mnwwmmv1pb_TbOA
 
 
-## 文字《=》语音
+## 文字 转 语音
 ElevenLabs
 
 https://ttsmaker.com/
@@ -27,7 +27,24 @@ https://github.com/suno-ai/bark
 
 https://www.notta.ai/en
 
+## 说话者识别
+[A Repository for Single- and Multi-modal Speaker Verification, Speaker Recognition and Speaker Diarization](https://github.com/modelscope/3D-Speaker)
+
+[Silero VAD: pre-trained enterprise-grade Voice Activity Detector](https://github.com/snakers4/silero-vad)
+
+## 实时语音
+[Multilingual Voice Understanding Model](https://github.com/FunAudioLLM/SenseVoice)
+
+[VibeVoice](https://github.com/microsoft/VibeVoice)
+
 ## 语音翻译
 
 rask ai
 https://www.rask.ai/
+
+## 电子书
+[Generate audiobooks from e-books, voice cloning & 1158+ languages!](https://github.com/DrewThomasson/ebook2audiobook)
+
+## 播客
+
+[SoulX-Podcast](https://github.com/Soul-AILab/SoulX-Podcast)

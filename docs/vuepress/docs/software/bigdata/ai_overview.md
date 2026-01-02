@@ -4,6 +4,16 @@
 
 ## todo
 
+[微舆：人人可用的多Agent舆情分析助手，打破信息茧房，还原舆情原貌，预测未来走向，辅助决策！从0实现，不依赖任何框架。](https://github.com/666ghj/BettaFish)
+
+[简单的舆情监控分析 - 多平台热点聚合+基于 MCP 的AI分析工具。监控35个平台（抖音、知乎、B站、华尔街见闻、财联社等），智能筛选+自动推送+AI对话分析（用自然语言深度挖掘新闻：趋势追踪、情感分析、相似检索等13种工具）。](https://github.com/sansan0/TrendRadar)
+
+
+
+[SpatialLM: Training Large Language Models for Structured Indoor Modeling](https://github.com/manycore-research/SpatialLM)
+
+[Social Analyzer](https://github.com/qeeqbox/social-analyzer)
+
 [HexStrike AI MCP Agents is an advanced MCP server that lets AI agents (Claude, GPT, Copilot, etc.) autonomously run 150+ cybersecurity tools for automated pentesting, vulnerability discovery, bug bounty automation, and security research. Seamlessly bridge LLMs with real-world offensive security capabilities.](https://github.com/0x4m4/hexstrike-ai)
 
 [excel 手搓 transformer](https://www.byhand.ai/p/transformer-spreadsheet)
@@ -108,6 +118,8 @@ Model Context Protocol vs Function Calling:
 [Simple tool, resource, prompt servers](https://github.com/modelcontextprotocol/python-sdk/tree/main/examples/servers)
 [Example servers](https://modelcontextprotocol.io/examples)
 [MCP inspector (postman like tool)](https://modelcontextprotocol.io/docs/tools/inspector)
+
+[Put an end to code hallucinations! GitMCP is a free, open-source, remote MCP server for any GitHub project](https://github.com/idosal/git-mcp)
 
 ### 私人部署 
 

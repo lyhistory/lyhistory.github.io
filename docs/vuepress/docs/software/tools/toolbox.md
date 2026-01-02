@@ -2,6 +2,9 @@ Keywords: Software, tools
 人和动物的区别是对工具的使用，
 大师和原始人的区别是对科技工具的使用
 
+## 录屏神器
+[ Cap](https://github.com/CapSoftware/Cap?tab=readme-ov-file)
+[Create stunning screen recordings for free. Open-source, no subscriptions, no watermarks, and free for commercial use. An alternative to Screen Studio.](https://github.com/siddharthvaddem/openscreen)
 ## Graphic
 
 Graphviz is open source graph visualization software. Graph visualization is a way of representing structural information as diagrams of abstract graphs and networks. It has important applications in networking, bioinformatics, software engineering, database and web design, machine learning, and in visual interfaces for other technical domains.
