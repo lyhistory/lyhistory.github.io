@@ -367,3 +367,23 @@ Daddy:​ "That's right! The wheels on the bus go round and round!"
 Daddy:​ "Let's play a game! What can you see​ in the basket? Can you see a blue car?"
 Child:​ (Picks up the car) "Look that!"
 Daddy:​ "Yes! You found it! Look at that​ blue car.
+
+### 宝宝用小手拉扯爸爸的保暖内衣衣领，衣领有弹性拉扯的很长 爸爸笑着说不要扯
+Here is a description of that warm and playful scene：
+
+The curious baby reaches out with a tiny hand, grabbing the collar of Dad's thermal underwear. The soft, stretchy fabric of the collar easily extends to a surprising length as the little one gives it a firm tug. A wide grin spreads across Dad's face, his eyes crinkling with amusement. He lets out a warm, playful laugh and gently says, "No, no, sweetie, don't pull on that," as he carefully loosens the little fingers from the stretched-out collar.
+
+### 妈妈给宝宝用毛巾擦脸，一块鼻屎掉了出来
+
+The baby giggled, squirming as Mom gently held the washcloth. With soft, careful wipes, she cleaned around his little nose and chubby cheeks. Suddenly, a tiny, dried booger​ came loose and landed right on the cloth. Mom smiled, showed it to him playfully, and said, "Look! A little booger popped out. All clean now!" before giving him a warm, final pat with the towel .
+
+### 宝宝看到一个长手臂的灌注水泥的机器，爸爸也不知道叫什么，然后查了下，原来是xxx
+Here is an English description of that scene between the baby and the father discovering the concrete pump truck:
+
+The baby, wide-eyed with curiosity, pointed a tiny finger at a giant machine stretching its long, folding arm high into the sky. It was busily pouring a thick, grey mixture. The father, following his child's gaze, looked at the impressive machine and realized he didn't know its specific name. He then took out his phone to look it up. A moment later, he smiled, leaned down to the baby's level, and said, "Look, that amazing machine is called a concrete pump truck! Its long arm is called a boom, and it's helping to build the new walls over there."
+
+### 宝宝轮滑的积分有169 可以兑换40 80 160的礼品玩具 宝宝选了一个160的玩具 
+I redeemed my 160 points for an awesome toy.
+I swapped my 160 points for a toy.
+
+After weeks of diligently practicing his inline skating, little Liam was thrilled to see his effort translated into 169 shiny credits. At the redemption store, his eyes scanned the shelves of toys tagged 40, 80, and 160. Without hesitation, he pointed to a magnificent remote-controlled car priced at 160 credits. “I want this one!” he beamed, proudly handing over his hard-earned points. His parents cheered, “Well done, sweetie! All those falls and get-back-ups were worth it.” As he clutched the coveted toy, Liam couldn’t stop grinning—already dreaming of his next skating adventure to earn more rewards.

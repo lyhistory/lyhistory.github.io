@@ -3,6 +3,8 @@
 
 ## coding
 
+[BuildingAI is an enterprise-grade open-source intelligent agent platform designed for AI developers, AI entrepreneurs, and forward-thinking organizations. ](https://github.com/BidingCC/BuildingAI)
+
 [antigravity](https://antigravity.google/)
 
 https://github.com/google-gemini/gemini-cli

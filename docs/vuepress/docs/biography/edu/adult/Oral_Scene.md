@@ -76,11 +76,3 @@ Releasing the Button: For each button, pinch it on the side where it has passed 
 
 Completion: Once all buttons are released, the garment can be opened and removed easily .
 
-## 宝宝用小手拉扯爸爸的保暖内衣衣领，衣领有弹性拉扯的很长 爸爸笑着说不要扯
-Here is a description of that warm and playful scene：
-
-The curious baby reaches out with a tiny hand, grabbing the collar of Dad's thermal underwear. The soft, stretchy fabric of the collar easily extends to a surprising length as the little one gives it a firm tug. A wide grin spreads across Dad's face, his eyes crinkling with amusement. He lets out a warm, playful laugh and gently says, "No, no, sweetie, don't pull on that," as he carefully loosens the little fingers from the stretched-out collar.
-
-## 妈妈给宝宝用毛巾擦脸，一块鼻屎掉了出来
-
-The baby giggled, squirming as Mom gently held the washcloth. With soft, careful wipes, she cleaned around his little nose and chubby cheeks. Suddenly, a tiny, dried booger​ came loose and landed right on the cloth. Mom smiled, showed it to him playfully, and said, "Look! A little booger popped out. All clean now!" before giving him a warm, final pat with the towel .

@@ -1,6 +1,8 @@
 
 ## 视频生成
 
+[AI 全自动短视频引擎 | AI Fully Automated Short Video Engine](https://github.com/AIDC-AI/Pixelle-Video)
+
 Stable Video Diffusion (by Stability AI)
 
 [Long Video Generation](https://github.com/aigc-apps/EasyAnimate)
@@ -166,3 +168,7 @@ https://mp.weixin.qq.com/s/6J35rQO8v69mpJfypFl8Tw
 ## 视频转图文
 
 [AI 视频图文创作助手是一款 Web 工具, 基于 AI 大模型, 一键将视频和音频转化为各种风格的文档](https://github.com/hanshuaikang/AI-Media2Doc)
+
+## 直播
+
+将 CAM++、SenseVoice​ 和 Silero VAD​ 结合起来，完全可以打造一个非常酷的、具备多模态交互能力的实时视频直播应用。这个想法很棒，它能让虚拟形象不仅“听得见”，还能“看得见”是谁在说话，并进行个性化的交互
