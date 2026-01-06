@@ -1,7 +1,9 @@
 
 ## 视频生成
 
-[AI 全自动短视频引擎 | AI Fully Automated Short Video Engine](https://github.com/AIDC-AI/Pixelle-Video)
+[成功，可以免费运行，用到：LLM可选/ngrok/，MoneyPrinterTurbo](https://github.com/harry0703/MoneyPrinterTurbo?tab=readme-ov-file) 
+
+[门槛：需要本地comfyi或者购买runninghub](https://github.com/AIDC-AI/Pixelle-Video)
 
 Stable Video Diffusion (by Stability AI)
 
@@ -152,6 +154,8 @@ https://colab.research.google.com/drive/1NG9AoH3QDtC7h97z1Yodmn_CiiGh8Y1T?usp=sh
 [VideoLingo-全自动视频搬运工具](https://mp.weixin.qq.com/s/-Ayo6lj65s4QEN3CXGLqZg)
 
 ### 配音(音色克隆)
+[智能视频多语言AI配音/翻译工具 - Linly-Dubbing — “AI赋能，语言无界”](https://github.com/Kedreamix/Linly-Dubbing)
+
 [AI视频翻译配音工具，100种语言双向翻译，一键部署全流程，可以生抖音，小红书，哔哩哔哩，视频号，TikTok，Youtube等形态的内容成适配](https://github.com/krillinai/KrillinAI)
 
 [PyVideoTrans一键视频翻译+配音+字幕](https://github.com/jianchang512/pyvideotrans)
@@ -169,6 +173,6 @@ https://mp.weixin.qq.com/s/6J35rQO8v69mpJfypFl8Tw
 
 [AI 视频图文创作助手是一款 Web 工具, 基于 AI 大模型, 一键将视频和音频转化为各种风格的文档](https://github.com/hanshuaikang/AI-Media2Doc)
 
-## 直播
+## 直播/AR增强现实
 
 将 CAM++、SenseVoice​ 和 Silero VAD​ 结合起来，完全可以打造一个非常酷的、具备多模态交互能力的实时视频直播应用。这个想法很棒，它能让虚拟形象不仅“听得见”，还能“看得见”是谁在说话，并进行个性化的交互

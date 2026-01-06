@@ -1,6 +1,11 @@
 
 [AI News](https://aisecret.us/)
 
+## 免费资源
+
+kaggle
+
+google colab
 
 ## todo
 
