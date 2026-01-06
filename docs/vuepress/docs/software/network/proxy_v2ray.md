@@ -593,3 +593,11 @@ http://ltang.suning.com {
     }
 }
 import sites/*
+
+### powershell/cmd/bash
+windows->settings->proxy, 找到代理服务器，
+然后到cmd设置：
+```
+$env:HTTP_PROXY="http://127.0.0.1:10809"
+$env:HTTPS_PROXY="http://127.0.0.1:10809"
+```
