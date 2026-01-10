@@ -1,3 +1,9 @@
+
+
+[English](https://fmhy.net/educational#english)
+
+[free2talk](https://www.free4talk.com/)
+
 [单词句子查影片](https://www.playphrase.me/)
 
 [Search your favourite movie clip](https://clip.cafe/)

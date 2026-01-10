@@ -1,5 +1,15 @@
 
+操作系统概述
+
 The essential software that manages computer hardware, software resources, and provides common services for computer programs. Concepts like processes, memory management, and scheduling are fundamental to everything else 
+## os selection
+[tail os](https://tails.net/)
+
+[umbrelOS](https://github.com/getumbrel/umbrel)
+
+## 模块
+
+CPU GUP NPU
 
 + CPU Processor
   - register
