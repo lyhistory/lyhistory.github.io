@@ -184,11 +184,11 @@ https://www.linuxv2ray.com/speedup/google-tcp-bbr-one-click-script-for-v2ray/
 
 #### 客户端：
 
-[三方下载地址](https://itlanyan.com/v2ray-clients-download/)
+[官网下载 xiaokangwang实现](https://www.v2ray.com/chapter_00/install.html)
+
+[三方下载地址 2dust实现](https://itlanyan.com/v2ray-clients-download/)
 
 ##### Windows客户端
-
-
 
 下载安装[V2RayN下载地址](https://github.com/v2ray/V2RayN)后运行V2rayN.exe，根据提示下载 dotnet framework 并安装后重启，添加vmess服务器：
 ```
@@ -506,6 +506,9 @@ https://iitii.github.io/2022/03/02/1
 
 ## Troubleshooting
 
+[For general discussion over Project V development and usage.](https://github.com/v2ray/discussion)
+
+
 ### 基本检查和终极方法
 + 网卡属性 ipv4 ip gateway dns
 + proxy设置
@@ -514,6 +517,24 @@ https://iitii.github.io/2022/03/02/1
 + 防火墙
 
 有时候观察到不稳定或者手机可以,windows不可以,完全可以通过升级客户端解决!
+
+### TUN 模式
+TUN mode creates a virtual network interface (like a mini-VPN adapter) on your system. It captures all your device's network traffic at the IP level (not just browser/app proxy settings), routes it through sing-box → your proxy server, and sends it out. This is great for games, apps that ignore system proxy, or sites that block partial proxies. Without TUN, you usually only proxy apps that respect HTTP/SOCKS settings (e.g., browsers).
+
+直接启动 tun模式
+
+如果不启动tun模式，也可以用 proxifier（收费）或 [ProxyBridge（免费）](https://github.com/InterceptSuite/ProxyBridge) (InterceptSuite version, as of late 2025/early 2026) is protocol-agnostic at the application level. It redirects TCP and UDP traffic from selected processes to your configured HTTP or (preferably) SOCKS5 proxy.It doesn't care what higher-level protocol the app uses (e.g., custom game protocol, RDP, SSH, databases, HTTP/3, DTLS, DNS-over-anything, proprietary thick-client stuff).
+
+
+
+如果是 powershell/cmd/bash 可以采用：
+
+windows->settings->proxy, 找到代理服务器，
+然后到cmd设置：
+```
+$env:HTTP_PROXY="http://127.0.0.1:10809"
+$env:HTTPS_PROXY="http://127.0.0.1:10809"
+```
 
 ### app/proxyman/outbound: failed to process outbound traffic
 一看就是出去的流量有问题，做了基本检查，防火墙也全关了，
@@ -594,10 +615,3 @@ http://ltang.suning.com {
 }
 import sites/*
 
-### powershell/cmd/bash
-windows->settings->proxy, 找到代理服务器，
-然后到cmd设置：
-```
-$env:HTTP_PROXY="http://127.0.0.1:10809"
-$env:HTTPS_PROXY="http://127.0.0.1:10809"
-```

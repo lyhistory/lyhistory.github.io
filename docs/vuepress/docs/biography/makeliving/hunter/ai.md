@@ -11,11 +11,7 @@ algrow.online
 
 plaud.ai
 
-AI老外小程序
 
-易经八卦
-	生日=》算命/图腾纹身
-	日期=》吉凶
 	
 EUC end user 自动写脚本程序
 
@@ -25,3 +21,11 @@ EUC end user 自动写脚本程序
 ### 部署 Vercel nextjs
 
 使用Vercel的NextJS无服务器函数。为什么呢？Vercel主机上的无服务器功能有一个慷慨的免费层，允许你在那里免费托管你的API，如果你不支持成百上千的用户，我认为他们的免费层对我们的用例来说是足够的。
+
+## AI老外小程序
+
+易经八卦
+	生日=》算命/图腾纹身
+	日期=》吉凶
+	
+I want to start up a AI project, the idea is motivated by "Pieter levels" on twitter who created many AI apps by himself and profit a lot which you can refer to and give suggestions along the project building journey, ok, here is my first project idea: I’d like to create an AI project where users can input their own birthdays or any arbitrary date, and the AI will generate results based on traditional Chinese Zhouyi (Book of Changes) and the Eight Trigrams. These results could indicate either auspiciousness or inauspiciousness, or offer a protective talisman phrase, each accompanied by detailed explanations

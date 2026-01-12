@@ -209,7 +209,7 @@ https://medium.com/@faridhashmi733/fix-burp-suite-ssl-secure-connection-failed-8
 
 ![fiddler https](/docs/docs_image/coder2hacker/ch2web/web03.png)
 
-Fiddler+proxifier
+Fiddler+proxifier(付费) / [ProxyBridge（免费）](https://github.com/InterceptSuite/ProxyBridge) 
 
 本机+桌面软件（不可以设置代理的软件）：配合Proxifier或其他
 
