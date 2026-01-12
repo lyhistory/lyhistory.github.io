@@ -1,3 +1,6 @@
+## 晚上下小雨，路边的路灯亮着，可以看到路灯的光前面一点地方光线下雾蒙蒙并且能清楚看到雨滴
+A light drizzle fell through the amber glow of the streetlamp. Beneath it, the air turned hazy with a fine, misty shimmer, and every raindrop caught the light as it fell, tracing fleeting silver streaks through the quiet dark.
+
 ## 带手表整个过程包括表带穿过 松紧然后表带卡扣或者卡针插到合适的孔洞里
 
 Here is an English description of the process of putting on a watch, incorporating the specific details you mentioned.
