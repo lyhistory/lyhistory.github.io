@@ -7,6 +7,31 @@ kaggle
 
 google colab
 
++ https://groq.com/
++ https://build.nvidia.com/
+  - z-ai/glm4.7
+  - minimaxai/minimax-m2.1
++ 硅基流动API官网：https://cloud.siliconflow.cn/i/jPI17VGX  
+  - Kwai-Kolors/Kolors
++ 火山方舟API官网：https://console.volcengine.com 
++ 阿里百炼API官网：https://www.aliyun.com/product/bailian
+  - qwen3-max
++ 深度求索API官网：https://platform.deepseek.com  
+
+## Protocol
+Model Context Protocol vs Function Calling:
+
+[Model Context Protocol Clearly Explained](https://www.youtube.com/watch?v=tzrwxLNHtRY)
+
+[Sample MCP client](https://github.com/modelcontextprotocol/python-sdk/blob/main/examples/clients/simple-chatbot/mcp_simple_chatbot/main.py)
+[Google maps MCP server](https://github.com/modelcontextprotocol/servers/blob/main/src/google-maps/index.ts#L297)
+[MCP Schema](https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/schema/2024-11-05/schema.ts)
+[Simple tool, resource, prompt servers](https://github.com/modelcontextprotocol/python-sdk/tree/main/examples/servers)
+[Example servers](https://modelcontextprotocol.io/examples)
+[MCP inspector (postman like tool)](https://modelcontextprotocol.io/docs/tools/inspector)
+
+[Put an end to code hallucinations! GitMCP is a free, open-source, remote MCP server for any GitHub project](https://github.com/idosal/git-mcp)
+
 ## todo
 
 [微舆：人人可用的多Agent舆情分析助手，打破信息茧房，还原舆情原貌，预测未来走向，辅助决策！从0实现，不依赖任何框架。](https://github.com/666ghj/BettaFish)
@@ -87,12 +112,6 @@ Setting:
 1. Enable Web Search Engine
 2. Connections 
     - OpenAI API
-        - https://groq.com/
-        - https://build.nvidia.com/
-        - 硅基流动API官网：https://cloud.siliconflow.cn/i/jPI17VGX  
-        - 火山方舟API官网：https://console.volcengine.com 
-        - 阿里百炼API官网：https://www.aliyun.com/product/bailian  
-        - 深度求索API官网：https://platform.deepseek.com  
     - Ollama API
         - http://localhost:11434
 
@@ -111,20 +130,6 @@ AI+RAG
 
 
 ## 基础
-
-### Protocol
-Model Context Protocol vs Function Calling:
-
-[Model Context Protocol Clearly Explained](https://www.youtube.com/watch?v=tzrwxLNHtRY)
-
-[Sample MCP client](https://github.com/modelcontextprotocol/python-sdk/blob/main/examples/clients/simple-chatbot/mcp_simple_chatbot/main.py)
-[Google maps MCP server](https://github.com/modelcontextprotocol/servers/blob/main/src/google-maps/index.ts#L297)
-[MCP Schema](https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/schema/2024-11-05/schema.ts)
-[Simple tool, resource, prompt servers](https://github.com/modelcontextprotocol/python-sdk/tree/main/examples/servers)
-[Example servers](https://modelcontextprotocol.io/examples)
-[MCP inspector (postman like tool)](https://modelcontextprotocol.io/docs/tools/inspector)
-
-[Put an end to code hallucinations! GitMCP is a free, open-source, remote MCP server for any GitHub project](https://github.com/idosal/git-mcp)
 
 ### 私人部署 
 

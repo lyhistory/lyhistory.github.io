@@ -1,9 +1,13 @@
 
 ## 视频生成
 
-[成功，可以免费运行，用到：LLM可选/ngrok/，MoneyPrinterTurbo](https://github.com/harry0703/MoneyPrinterTurbo?tab=readme-ov-file) 
+[story-flicks 成功。需要LLM和图片生成的api](https://github.com/alecm20/story-flicks)
+
+[成功，可以免费运行，但是效果不好，视频和文案不匹配，用到：LLM可选/ngrok/，MoneyPrinterTurbo](https://github.com/harry0703/MoneyPrinterTurbo?tab=readme-ov-file) 
 
 [门槛：需要本地comfyi或者购买runninghub](https://github.com/AIDC-AI/Pixelle-Video)
+
+[MoneyPrinterPlus 门槛：需要开通一些云服务](https://github.com/ddean2009/MoneyPrinterPlus)
 
 Stable Video Diffusion (by Stability AI)
 
