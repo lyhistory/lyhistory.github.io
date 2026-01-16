@@ -1,9 +1,13 @@
 
 ## 视频生成
 
-[story-flicks 成功。需要LLM和图片生成的api](https://github.com/alecm20/story-flicks)
+[目前最好的 story-flicks 成功。需要LLM和图片生成的api，可以蹭免费的阿里百炼llm和硅基流动的Kwai-Kolors/Kolors](https://github.com/alecm20/story-flicks)
 
 [成功，可以免费运行，但是效果不好，视频和文案不匹配，用到：LLM可选/ngrok/，MoneyPrinterTurbo](https://github.com/harry0703/MoneyPrinterTurbo?tab=readme-ov-file) 
+
+[short-video-factory 效果很差且需要手动给素材](https://github.com/YILS-LIN/short-video-factory?tab=readme-ov-file)
+
+[short-video-maker，完全免费，可惜失败，有bug，可以持续关注其接下来是否有更新](https://github.com/gyoridavid/short-video-maker)
 
 [门槛：需要本地comfyi或者购买runninghub](https://github.com/AIDC-AI/Pixelle-Video)
 
@@ -16,6 +20,12 @@ Stable Video Diffusion (by Stability AI)
 [ViMax: Agentic Video Generation (Director, Screenwriter, Producer, and Video Generator All-in-One)](https://github.com/HKUDS/ViMax)
 
 [字字动画 - 完全免费的AIGC视频生成软件，主要用于AI短剧，AI电影，小说推文](https://github.com/TypeTale/TypeTale)
+
+### code to video
+
+[remotion 3人以下公司免费](https://www.remotion.dev/)
+
+[Prompt to Video，有门槛，需要OPENAI_API_KEY和ELEVENLABS_API_KEY](https://github.com/remotion-dev/template-prompt-to-video)
 
 ### 文字=》视频
 
@@ -63,6 +73,7 @@ https://mp.weixin.qq.com/s/fNxb2B5PiTTzTSXMuXHvOg
 
 ### 数字人
 wan2.2
+
 
 ### 教学视频
 #### 教学动画
