@@ -1,6 +1,8 @@
 ## Tools
 [Fabric is an open-source framework for augmenting humans using AI. It provides a modular system for solving specific problems using a crowdsourced set of AI prompts that can be used anywhere.](https://github.com/danielmiessler/Fabric)
 
+[skills](https://skillsmp.com/)
+
 ## sora
 turn the following script to storyboard scene description, and then write the prompts that I can copy-paste into Sora to create consistant artoon-style images (ready to generate):​​
 

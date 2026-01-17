@@ -1,6 +1,8 @@
 
 [AI Code Guide is a roadmap to start coding with AI](https://github.com/automata/aicodeguide)
 
+[Turn any Git repository into a simple text digest of its codebase.](https://gitingest.com/)
+
 ## coding
 
 [BuildingAI is an enterprise-grade open-source intelligent agent platform designed for AI developers, AI entrepreneurs, and forward-thinking organizations. ](https://github.com/BidingCC/BuildingAI)
