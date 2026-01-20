@@ -538,16 +538,59 @@ git clone H:/Backup/test.git
 
 ## 5.Troubleshooting 
 
-?#1.If you are running git under a file system that is not case sensitive (Windows or OS X) this will occur if there are two branches with the same name but different capitalisation, e.g. user_model_changes and User_model_changes as both of the remote branches will match the same tracking ref. Delete the wrong remote branch (you shouldn't have branches that differ only by case) and then git remote prune origin and everything should work
+### git revert
+我在branch test2上的东西没提交，误操作 git pull origin test2，导致test2的内容自动merge到test1，并且我commit后push到了远程，现在需要回退只保留test1的内容，移除test2的改动
 
-?#2.The remote end hung up unexpectedly while git cloning
+$ git log
+commit 486b7cce58b86e5fd8870dafb88d5b28d312be65 (HEAD -> test2, origin/test2, temp)
+Author: Yue Liu <lyhistory@gmail.com>
+Date:   Tue Jan 20 13:03:46 2026 +0800
+
+    XXXXX
+
+commit 870d8b4809311fe68cc1d0591b6fa125fc40c7a8
+Merge: 438c7d0 2c6be1c
+Author: Yue Liu <lyhistory@gmail.com>
+Date:   Tue Jan 20 11:29:43 2026 +0800
+
+    Merge branch 'test1' of https://fakesite.com/database into test2
+
+commit 438c7d0ddb1562d9da99fbbd2102efe12020f68f
+Author: Yue Liu <lyhistory@gmail.com>
+Date:   Thu Apr 3 15:08:32 2025 +0800
+
+    XXXXX
+
+$ git show 870d8b4809311fe68cc1d0591b6fa125fc40c7a8
+commit 870d8b4809311fe68cc1d0591b6fa125fc40c7a8
+Merge: 438c7d0 2c6be1c
+Author: Yue Liu <lyhistory@gmail.com>
+Date:   Tue Jan 20 11:29:43 2026 +0800
+
+    Merge branch 'test1' of https://fakesite.com/database into test2
+
+$ git revert -m 1 870d8b4809311fe68cc1d0591b6fa125fc40c7a8
+[test2 1a409bb] Revert "Merge branch 'test1' of https://fakesite.com/database into test2"
+ Committer: Yue Liu <lyhistory@gmail.com>
+
+ 5 files changed, 883 deletions(-)
+ delete mode 100644 foo.ddl
+ delete mode 100644 boo.ddl
+ delete mode 100644 too.ddl
+
+
+
+### case sensitive
+If you are running git under a file system that is not case sensitive (Windows or OS X) this will occur if there are two branches with the same name but different capitalisation, e.g. user_model_changes and User_model_changes as both of the remote branches will match the same tracking ref. Delete the wrong remote branch (you shouldn't have branches that differ only by case) and then git remote prune origin and everything should work
+
+### The remote end hung up unexpectedly while git cloning
 With this kind of error, I usually start by raising the postBuffer size by:
 git config --global http.postBuffer 524288000
 (some comments below report having to double the value):
 git config --global http.postBuffer 1048576000
 http://stackoverflow.com/questions/6842687/the-remote-end-hung-up-unexpectedly-while-git-cloning
 
-?#3.error: Your local changes to the following files would be overwritten by merge: ****** Please, commit your changes or stash them before you can merge.
+### Your local changes to the following files would be overwritten by merge: ****** Please, commit your changes or stash them before you can merge.
 a.give up all local changes, and force update with latest source from remote
 git fetch --all git reset --hard origin/master
 b.only discard specific files which have conflicts
@@ -558,7 +601,7 @@ http://www.cppblog.com/deercoder/archive/2011/11/13/160007.html
 
 --
 
-Apendix:<<Merging and Branching Strategy>>
+## Apendix:<<Merging and Branching Strategy>>
 ![](/docs/docs_image/software/project_manage/git/git03.png)
 ![](/docs/docs_image/software/project_manage/git/git04.png)
 
