@@ -70,6 +70,28 @@ Light provisioning will be provided
 在航空、航海、技术文档等高度标准化的领域，沟通的首要原则是清晰、客观、避免歧义。使用被动语态能将注意力集中在关键的动作或状态上。例如，在航空通信中，说“The landing gear was extended”（起落架已放下）比“The pilot extended the landing gear”（飞行员放下了起落架）更简洁、焦点更突出。它弱化了个人因素，强调标准程序已被执行这一事实本身。
 ​ 如果使用 “is going to be provided”，会隐含一种“（我们）打算/计划提供灯光”的意味。这会给通知带入一丝“主观意图”的色彩，仿佛这个决定是某个操作员临时起意或系统刚刚计划好的，反而削弱了通知作为既定程序的确定性和可靠性 。
 ### business dialogue
+
+remind you / give you a reminder 更直接、通用，是标准表达
+
+give you a nudge 更随意、温和，像朋友间的悄悄话 非正式沟通，如同事、朋友间温和催促
+  Just a friendly nudge—don’t forget to submit your report by Friday!
+give you a heads up
+  Give me a heads up if you’re running late—we don’t want to start without you.
+
+Here are the updates:
+
+1. The iOS app has been recreated. However, the release is currently pending the renewal of our iOS Developer Account.
+2. Regarding the Google Play Store, there are new requirements for new app releases. The vendor estimates it will take about two days to make the necessary fixes.
+3. For the APK direct download on our website, I will upload the file tomorrow once my access ticket is approved.
+
+Hi Andrew, quick heads up—TOM mentioned we’re probably launching an ETH perpetual contract soon (still not 100% confirmed though). He suggested I reach out to you about the tool I shared with JACK last time—it might just need some config tweaks. I think UAT’s already been tested, so I just need your double-check to be sure. Just wanted to give you a nudge so you don’t forget when you’re back. Let me know if you need any details in the meantime! Thanks.
+
+Hi team, could you help with this Google Maps profile issue?
+
+**First off**(“off”在这里是虚词，无实际词汇意义，主要用于加强语气，使“first”的表达更口语化、更自然。类似的用法还有“right off”（立刻）、“straight off”（直接），其中的“off”均不承担具体语义，仅起到强化表达效果的作用。), I’m not sure who created this Google Maps profile **or** which account was used—if anyone recognizes the account, can you just log in with it and hit "edit profile"? That’s the easiest way to sort this out.
+
+If no one knows the original account, another option is to use the "suggest and edit" function (I circled it in red here). But heads up—using a Google account linked to our business is better for this. Right now, the only account I have access to is xx@xxx.com. Do you have a more appropriate business-linked account we can use instead?
+
 A: Hi @xxx , need help on xxx. Sorry, i couldn't find a xxx chat group. 
 B: Sure, what's the specific issue? / Okay, could you please describe the problem? / Certainly. Could you please provide more details about the problem?
 
@@ -138,6 +160,10 @@ If applicable, please provide details of the scheduled jobs in the system showin
 If your question pertains to scheduled jobs on Yonyou’s side (such as system backups or data synchronization), note that these are fully managed by Yonyou. Their internal processes are not visible to us, so we do not have details regarding job names or frequencies."
 
 ### business email
+
+Hi xxx,
+
+The iOS Developer Account (Account ID: [Insert Account ID if applicable]) for our mobile app project has expired. Vendor needs to use this account to publish a new app, so we have to renew it. Seeking your approval. Thanks.
 
 Dear [HOD's Name],
 

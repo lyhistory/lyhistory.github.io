@@ -541,6 +541,19 @@ git clone H:/Backup/test.git
 ### git revert
 我在branch test2上的东西没提交，误操作 git pull origin test2，导致test2的内容自动merge到test1，并且我commit后push到了远程，现在需要回退只保留test1的内容，移除test2的改动
 
+git revert -m 1 <merge-commit-id>
+
+-m的全称：--mainline（主线）
+作用：指定合并提交中需要保留的父提交（即合并前的主分支状态）。
+本质：Git 的合并提交有两个父提交，-m用于明确以哪个父提交为基准进行撤销操作
+
+父提交编号：在合并提交的 Merge:行中，第一个父提交（即执行 git merge时所在分支的最新提交）的编号为 1，第二个父提交（被合并的分支）编号为 2。
+
+比如下面的 Merge: 438c7d0 2c6be1c
+438c7d0就是merge之前的test2上面的分叉点（父提交）
+2c6be1c则是test1分支的最后一个提交
+
+```
 $ git log
 commit 486b7cce58b86e5fd8870dafb88d5b28d312be65 (HEAD -> test2, origin/test2, temp)
 Author: Yue Liu <lyhistory@gmail.com>
@@ -578,7 +591,7 @@ $ git revert -m 1 870d8b4809311fe68cc1d0591b6fa125fc40c7a8
  delete mode 100644 boo.ddl
  delete mode 100644 too.ddl
 
-
+```
 
 ### case sensitive
 If you are running git under a file system that is not case sensitive (Windows or OS X) this will occur if there are two branches with the same name but different capitalisation, e.g. user_model_changes and User_model_changes as both of the remote branches will match the same tracking ref. Delete the wrong remote branch (you shouldn't have branches that differ only by case) and then git remote prune origin and everything should work

@@ -313,3 +313,14 @@ ref:
 [Prometheus：云时代的“监控新星”](https://prometheus.io/)
 
 [SolarWinds NPM：商业界的“监控贵族”](https://www.solarwinds.com/network-performance-monitor)
+
+## troubleshooting
+
+### mobile app 抓包
+
+通过Fiddler抓包看到的信息，能否等同于或揭示出别人在本地调试安卓App时从源码中获得的详细SSL错误信息。
+
+简而言之，答案是：通常情况下，Fiddler抓包无法直接看到与安卓源码调试同样深度的SSL错误细节。您通过Fiddler看到的连接信息，和开发人员从日志中看到的 SSLHandshakeException，是站在不同视角观察同一事件的不同层面。
+
+Fiddler的角色是“中间人”：Fiddler能解密HTTPS的前提是，客户端（您的App）必须信任Fiddler自己生成的根证书。当您设置好代理后，App的所有网络请求先发给Fiddler，Fiddler再以自己的身份与真实服务器通信。因此，从网络层面看，Fiddler与服务器的TLS握手可能是成功的（这就是您看到的200 Connection Established）。
+错误发生在App内部：问题出在App接收到Fiddler返回的证书之后。App会按照自己的安全规则去验证这张证书。由于Android 7.0+默认不信任用户安装的证书（如Fiddler证书），或者App使用了SSL Pinning（证书绑定）​ 技术，只信任它自己预设的证书，就会在内部触发验证失败，抛出异常。这个错误发生在App进程内部，网络流量已经正常送达，因此Fiddler作为网络代理是无法感知到这个“应用层”的错误的。
