@@ -65,7 +65,17 @@ Docker里面有 null、host 和 bridge 三种网络模式
 ## useage
 
 ### run
+```
 docker-compose up --build
+
+docker-compose build backend --no-cache
+docker-compose up -d --force-recreate backend
+docker compose logs --follow
+
+docker cp <container_name_or_id>:/app <local_host_path>
+
+```
+
 ### enter linux container
 1. method 1
 

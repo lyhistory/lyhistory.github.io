@@ -1,14 +1,14 @@
 
 ## 视频生成
 
-[目前最好的 story-flicks 成功。需要LLM和图片生成的api，可以蹭免费的阿里百炼llm和硅基流动的Kwai-Kolors/Kolors](https://github.com/alecm20/story-flicks)
+[目前最好的 story-flicks 成功。需要LLM和图片生成的api，可以蹭免费的阿里百炼llm-qwen3-max和硅基流动的Kwai-Kolors/Kolors](https://github.com/alecm20/story-flicks) 
 
 [成功，完全免费，short-video-maker，完全免费](https://github.com/gyoridavid/short-video-maker),[另一个版本](https://github.com/DJCallyman/short-video-maker)
 
 [成功，可以免费运行，但是效果不好，视频和文案不匹配，用到：LLM可选/ngrok/，MoneyPrinterTurbo](https://github.com/harry0703/MoneyPrinterTurbo?tab=readme-ov-file) 
 
 
-[short-video-factory 效果很差且需要手动给素材](https://github.com/YILS-LIN/short-video-factory?tab=readme-ov-file)
+[short-video-factory 效果很差且需要手动给视频素材](https://github.com/YILS-LIN/short-video-factory?tab=readme-ov-file)
 
 
 [门槛：需要本地comfyi或者购买runninghub](https://github.com/AIDC-AI/Pixelle-Video)

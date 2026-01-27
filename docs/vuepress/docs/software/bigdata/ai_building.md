@@ -3,6 +3,14 @@
 
 [Turn any Git repository into a simple text digest of its codebase.](https://gitingest.com/)
 
+## build on existing github projects
+
+STEP 1: [Injest code](https://gitingest.com/)
+
+STEP 2: Feed previous result(Directory Structure AND File Content) to LLM
+
+STEP 3: Give requirement
+
 ## coding
 
 [BuildingAI is an enterprise-grade open-source intelligent agent platform designed for AI developers, AI entrepreneurs, and forward-thinking organizations. ](https://github.com/BidingCC/BuildingAI)
