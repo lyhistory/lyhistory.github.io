@@ -7,7 +7,11 @@ kaggle
 
 google colab
 
++ cloudflare ai worker
+  https://github.com/syednomishah/cloudflare-image-worker
+  https://developers.cloudflare.com/workers-ai/models/?tasks=Text-to-Image 
 + https://groq.com/
++ huggingface.co
 + https://build.nvidia.com/
   - z-ai/glm4.7
   - minimaxai/minimax-m2.1
