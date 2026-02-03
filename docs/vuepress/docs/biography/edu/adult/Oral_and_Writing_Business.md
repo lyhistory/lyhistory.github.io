@@ -71,6 +71,26 @@ Light provisioning will be provided
 ​ 如果使用 “is going to be provided”，会隐含一种“（我们）打算/计划提供灯光”的意味。这会给通知带入一丝“主观意图”的色彩，仿佛这个决定是某个操作员临时起意或系统刚刚计划好的，反而削弱了通知作为既定程序的确定性和可靠性 。
 ### business dialogue
 
+Summary of the Issue:
+
+The root cause is not a bug in your Java program itself, but a mismatch between the CSV data format and Excel's automatic interpretation.​ The problem is triggered by Excel's behavior, and the Java program's output can contributeto the confusion.
+
+Detailed Explanation:
+  + CSV Files are "Dumb" Text:​ Your Java program correctly writes data to the CSV file as plain text strings (e.g., "07:50:00", "2026-02-02 15:55:00"). A CSV file does not contain any formatting rules.
+  + Excel's "Smart" & Problematic Guessing:​ When you open a CSV file directly in Excel (e.g., by double-clicking it), Excel tries to be helpful by automatically guessing the data type for each column. It scans the first few rows to decide. If the first rows contain strings that look like standalone times (e.g., "07:50:00"), Excel may incorrectly classify the entire columnas a Time​ data type. It then applies a Time-only number format (like mm:ss.0), which is why you see 55:54.0—the underlying full datetime value is being displayed as if it were only a duration of minutes and seconds, hiding the date portion.
+Solutions:
+
+A. For Immediate Fix (Handling Existing Files in Excel): select column, right click, format, custom
+B. For a Permanent Fix (Java Program Best Practice):
+
+Modify the Java program's export logic to write consistently and unambiguously formatted​ datetime strings. The most reliable standard is ISO 8601​ format.
+
+Format:​ "yyyy-MM-dd'T'HH:mm:ss"(e.g., 2026-02-02T07:50:00)
+
+Why it works:​ This is an international standard. Excel and other tools recognize it clearly as a full date and time, drastically reducing the chance of misparsing. Ensure everyrow in that column uses this complete format.
+
+The display error is Excel's fault​ for applying an incorrect number format based on its automatic guess. However, you can prevent this guesswork​ by ensuring your Java program exports datetime values in a uniform, unambiguous, and complete ISO 8601 format. This is a data formatting best practice, not a bug fix.
+
 remind you / give you a reminder 更直接、通用，是标准表达
 
 give you a nudge 更随意、温和，像朋友间的悄悄话 非正式沟通，如同事、朋友间温和催促
@@ -160,6 +180,8 @@ If applicable, please provide details of the scheduled jobs in the system showin
 If your question pertains to scheduled jobs on Yonyou’s side (such as system backups or data synchronization), note that these are fully managed by Yonyou. Their internal processes are not visible to us, so we do not have details regarding job names or frequencies."
 
 ### business email
+hi team, kindly acknowledge the email and whether there are any patches for your systems. Please use the attached form to identify and assess vulnerabilities or patch updates under your care. 
+< Noted, thanks. Our website doesn't use [XX Plugin] or [XX Theme], so we're unaffected.
 
 Hi xxx,
 

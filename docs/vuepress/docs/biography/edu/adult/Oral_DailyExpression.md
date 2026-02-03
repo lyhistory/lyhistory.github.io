@@ -1956,6 +1956,13 @@ workhorse
   例：He is the workhorse of the team.（他是团队的骨干。
 
 ### 逻辑
+and vs or
+FYI, our new release has been approved on Google Play. You can now install it both from the Google Play Store and directly from our website.
+新版本已获批，现在既可以从Google Play商店安装，也可以直接从我们网站安装。（两个渠道都为您开放了）
+用 or 现在您可以从Google Play商店安装，或者直接从我们网站安装。（您需要在这两个方式中选一个）
+虽然语法上也说得通，但语气上更像是在给出操作选项或步骤指引，而不是兴奋地宣布两个渠道都已开通。
+You can have tea or​ coffee.
+We can meet on Monday or​ Tuesday.
 #### 代称
 ​Who is he/she?​ 已知性别或特定上下文的某个人
 	The man in blue looks familiar. ​Who is he?​​
@@ -2980,6 +2987,46 @@ shuttle 航天飞机
 thruster 推进器
 
 ## idiom saying 谚语/成语
+a drop in the ocean
+	The government's pledge to increase health funding by E1oom is just a drop in the ocean compared to the billions that need to be spent.
+actions speak louder than words
+	Stop apologising and prove to me that I can trust you - actions speak louder than words.
+to add fuel to the fire
+	Don't tell her about the delays - you'll just be adding fuel to the fire.
+the ball is in your court
+	I've done all I can do - the ball is in your court
+to bend over backwards
+	Our company is bending over backwards to satisfy our customers.
+to bite off more than you can chew
+	I think I've bittern off more than I can chew with this project.
+by the skin of one's teeth
+	I think I might have passed that exam by the skin of my teeth
+to cry wolf
+	My new flatmate is always crying wolf.
+to cut somebody some slack
+	You need to cut the intern some slack - they are still learning.
+to cut to the chase
+	To cut to the chase - I'm not comfortable working alongside John anymore.
+to get one's head around something
+	I'm going to spend tonight trying to get my head around this new legislation.
+to hear on the grapevine
+	I heard on the grapevine that our receptionist will be leaving us soon.
+it takes two to tango
+	Don't just blame him for the affair - it takes two to tango!
+to miss the boat
+	I think you've missed the boat on that application - they've already started interviewing candidates.
+a piece of cake
+	That pop quiz was a piece of cake
+calm down and act normally
+	I think you need to pull yourself togetehr and stop stressing about the presentation
+to sit/to be on the fence
+	I'm sitting on the fence on this one - I don't want to offend anyone.
+to step up one's game
+	If you really want to get this promotion, you'll need to step up your game.
+to sell someone out
+	I asked you to keep that information to yourself. I can't believe you sold me out like that!
+your guess is as good as mine
+	We just don't have enough data. Your guess is as good as mine.
 
 A throat to choke
 
