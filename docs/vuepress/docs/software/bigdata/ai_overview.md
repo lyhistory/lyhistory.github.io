@@ -8,8 +8,11 @@ kaggle
 google colab
 
 + cloudflare ai worker
-  https://github.com/syednomishah/cloudflare-image-worker
-  https://developers.cloudflare.com/workers-ai/models/?tasks=Text-to-Image 
+  - how to use
+    1. [run via rest api](https://developers.cloudflare.com/workers-ai/get-started/rest-api/)
+    2. [run via worker](https://github.com/syednomishah/cloudflare-image-worker)
+  - [models](https://developers.cloudflare.com/workers-ai/models/?tasks=Text-to-Image)
+    1. [@cf/runwayml/stable-diffusion-v1-5-inpainting](https://developers.cloudflare.com/workers-ai/models/stable-diffusion-v1-5-inpainting/#Usage)
 + https://groq.com/
 + huggingface.co
 + https://build.nvidia.com/

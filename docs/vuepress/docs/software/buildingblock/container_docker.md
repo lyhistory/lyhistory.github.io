@@ -74,6 +74,11 @@ docker compose logs --follow
 
 docker cp <container_name_or_id>:/app <local_host_path>
 
+windows:
+docker logs backend 2>&1| findstr /C:"searchtext"
+
+linux:
+docker logs backend 2>&1| grep "searchtext"
 ```
 
 ### enter linux container

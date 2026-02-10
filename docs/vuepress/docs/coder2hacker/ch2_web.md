@@ -219,16 +219,6 @@ _千万不要那个default走fiddler的proxy，不然会造成死循环，因为
 
 另外还有一款 wsockexpert  已经没人维护了
 
-手机抓包：
-	设置远程连接并只设置解密远程连接的https
-	
-![fiddler mobile](/docs/docs_image/coder2hacker/ch2web/web05.png)
-
-配置手机wifi代理：
-wifi proxy manual=> host port 8888
-	
-下载证书：
-手机打开http://\<host\>:\<port 8888\> 下载FiddlerRoot certificate 安装，默认选择APP/VPN即可
 
 fiddler高级用法：
 
@@ -302,6 +292,23 @@ ref:
 - 自动识别并处理 TLS 升级（比如 STARTTLS）
 - 支持 PostgreSQL、MySQL、SMTP、IMAP、FTPS 等非 HTTP 协议
 - 提供 Python 扩展接口，让你自己写解析器
+
+#### 手机抓包
+
++ PCAPdroid + Wireshark
++ fiddler
+	设置远程连接并只设置解密远程连接的https
+
+	![fiddler mobile](/docs/docs_image/coder2hacker/ch2web/web05.png)
+
+	配置手机wifi代理：
+	wifi proxy manual=> host port 8888
+		
+	下载证书：
+	手机打开http://\<host\>:\<port 8888\> 下载FiddlerRoot certificate 安装，默认选择APP/VPN即可
+
+手机问题：
++ ssl pin
 
 #### 更多监控工具
 [Nagios是个开源的监控系统，号称网络监控的“瑞士军刀”。它能盯着服务器、网络设备、服务状态，甚至还能看房间温度，啥都逃不过它的眼睛！](https://www.nagios.org/)
