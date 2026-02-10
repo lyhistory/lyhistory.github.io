@@ -267,7 +267,9 @@ Also, for the FX timeline, the text appears a bit too long and is overflowing th
 Best,
 
 [Your Name]
+
 ---
+
 Dear [Recipient's Name],
 
 I hope this email finds you well.
@@ -362,6 +364,149 @@ The vendor is following up. (现在进行时)​​
 ​视角​：描述 ​当前正在发生的动作。它表达的意思是“供应商此刻正在跟进”。
 
 ​隐含意义​：这会给人一种“供应商正在紧盯着我们”的紧迫感，甚至可能带有一丝被催促的压迫感。在某些情况下，可能会被解读为你在向经理传递压力。
+
+#### Example
+Hi Peter,
+
+While I recognize that xxx (formerly xxxx) has been a long-standing partner, we still need to ensure that this renewal aligns fully with our updated governance requirements.
+
+Before moving ahead with the signing of Annex C.pdf, it would be helpful to address the following points:
+
+•	Documentation: Pease share the MSA dated 1 Jan 2023 for legal review
+•	Procurement waiver / quotations: Under GA updated procedures (refer to attached) three quotations are required for items exceeding $1,000. Could you please confirm the estimated value of this package? If it exceeds the threshold, we will need either the additional quotations or a clear justification a clear justification for a waiver explaining why xxx is the only viable vendor.
+
+Thank you.
+
+Hi Mike,
+As spoken, we’d like to see GA’s advice on whether the renewal of our website maintenance services with xxx requires us to follow the procurement process of obtaining three quotations for items above $1,000.
+
+Hi Jane’
+
+Considering the nature of the engagement and the cooperation history, we suggest treating this as a single-source procurement.
+
+Hi Mike,
+Thanks for your advice and confirmation in treating this engagement as a single-source procurement.
+
+Following this, @Tom, may we kindly request LCD’s attention to review and proceed with the signing of Annex C.pdf accordingly.
+For ease of reference, we have attached Annex C.pdf, together with the invoice, the Website Development & Maintenance Package, and MSA dated 1 Jan 2023 for your review and necessary action.
+
+Thank you.
+
+Hi Jane,
+
+Thank you for the documentation. It appears that Annex C.pdf was not included in the attached.
+
+Could you please share the Annex C.pdf file? We will conduct our legal and provide comments within three business days
+
+Thank you.
+
+Hi Tom, 
+
+Please find the attached documents for your review and any further comments, prior to onward circulation. 
+
+The review has been conducted on the basis that the IT Department and the Finance Department have reviewed the relevant terms of the Master Service Agreement, Statement of Work, and invoice and have no outstanding queries in relation to their respective roles and responsibilities. 
+
+Thank you. 
+
+Best regards, 
+Jack 
+
+Hi Jane,
+
+Please see legal comments. 
+
+For your review and follow up.
+
+Thank you.
+
+Hi Finance,
+
+Kindly assist to review the comments raised by legal (copied over from a previous version).
+
+Thank you.
+
+Hi Jane,
+
+No comments for renewal contract and SoW. Pls ensure the supplier issue Tax Invoice after agreement signed(revised invoice & due date).
+
+Hi Tom,
+
+Finance has provided their comments and confirmation following their review of the renewal contract and SoW in the email below.
+
+Please let me know if you have any further comments. If there are none, I would appreciate a clean copy of the agreements for signing, as well as LCD’s and Finance’s sign-off on Annex C.pdf, prior to proceeding with the CEO’s signature on the agreement.
+
+Thank you.
+
+Best regards,
+
+Hi Finance,
+
+Please find attached Annex C.pdf for Finance sign-off.
+
+Thank you.
+
+Hi Jane,
+
+Annex C.pdf has been completed. For your follow up with Vendor.
+
+Thank you.
+
+-----------
+
+Hi Vendor!
+ 
+Thanks for the phone call earlier! Just to recap what we discussed.
+ 
+We note that there is a discrepancy in the late payment terms between the invoice and the APEX SG Website Development & Maintenance Package.
+ 
+The invoice states that “1.5% of the monthly balance will be charged as late payment fee after 30 days,” while the website maintenance package states that “late payments will be charged at an interest 5% per month.”
+ 
+Could you please confirm which of these terms is correct and provide an amended invoice or maintenance quotation accordingly?
+ 
+Additionally, just to confirm, will you be issuing a separate invoice for Q3-Q4 2026?
+ 
+Thank you for your clarification, and we would appreciate it you could provide us with the updated copy as soon as possible.
+
+Hi Jane,
+ 
+Thanks for the call earlier.
+I’ve amended the quotation and aligned it with the invoices, updated to 1.5% payment fee.
+Yes, For Q3–Q4, we will issue a separate invoice in early June.
+Thanks.
+
+Hi Vendor,
+ 
+Thank you so much for your prompt action.
+My apologies, could you also assist to standardize the phrasing on the invoice to be the same as the quotation? i.e. “Late payments will be charged at an interest 1.5% per month.”
+ 
+Appreciate your help!
+Thank you!
+ 
+Hi Jane,
+ 
+Please find attached amended invoice 756.
+Thanks.
+
+Hi Vendor,
+ 
+Please find attached the signed quotation.
+Kindly provide us a fully-signed copy once you have signed as well.
+ 
+Thank you.
+
+Hi Jane,
+ 
+Please find attached signed copy.
+ 
+Thanks.
+
+Hi Vendor,
+ 
+Apologies, I missed out one point earlier – could you also kindly re-issue the invoice with the invoice date and due date updated now that the agreement has been signed?
+
+Hi Jane,
+
+Please find attached updated invoice. Thanks.
 
 ## Specific Area
 ### film narrative and visual composition 影视叙事
