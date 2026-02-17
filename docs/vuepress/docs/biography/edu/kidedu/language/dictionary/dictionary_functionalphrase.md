@@ -142,6 +142,39 @@ Be careful, you might scrape your skin!​​
 Watch your step!​
 
 ## 宝宝互动 coax
+
+### recasting
+It's wonderful that you're thinking so carefully about how to nurture your child's language skills! The phrase "Look that, Daddy" is a very common and developmentally appropriate attempt from a young child. Your instinct to gently model the correct phrasing and expand on it with a question like "What can you see?" is perfectly aligned with natural language acquisition techniques. The approach you're considering is consistent with supportive language teaching practices.
+
+Here is a breakdown of how you can respond, along with some practical scenarios.
+
+💬 How to Respond Gently
+
+When your child says, "Look that, Daddy," the key is to first acknowledge the communication and then gently recast the sentence correctly, without directly pointing out the error.
+
+**Daddy:** (Following the child's gaze) "Oh, yes! I see it! Look at that!"
+
+**Rationale:** You're positively acknowledging your child's attempt to communicate and correctly modelling the phrase "Look at that." This is called recasting and is a very natural way to correct language.
+
+**Daddy:** "What can you see?" or "What do you see?"
+
+**Rationale:** This follows naturally from the child's observation. Both "What can you see?" and "What do you see?" are perfectly correct and used interchangeably in everyday British English. "What can you see?" might be very slightly more common when asking about a broader scene, but you can use both.
+
+**Child:** "Look that, Daddy!" (pointing at a bird)  
+**Daddy:** "Wow, look at that bird! It's so pretty. What can you see?"  
+**Child:** "Bird!"  
+**Daddy:** "Yes, a little brown bird. I can see it too!"
+
+**Child:** "Look that!" (pointing at a picture of a bus)  
+**Daddy:** "Great spotting! Look at that big red bus. What do you see on the bus?"  
+**Child:** "Wheels!"  
+**Daddy:** "That's right! The wheels on the bus go round and round!"
+
+**Daddy:** "Let's play a game! What can you see in the basket? Can you see a blue car?"  
+**Child:** (Picks up the car) "Look that!"  
+**Daddy:** "Yes! You found it! Look at that blue car."
+
+### Scenarios
 What
     What does the broccoli taste like?​ Is it crunchy or soft?
 Where
@@ -176,7 +209,7 @@ No talking, no cookie!​
 We have biscuits at home, sweetie. You can have some when we get back.
 The biscuits are at home. Let's go back and you can have one!
 
-### gently reminds the child to express themselves with language instead of whining or crying.
+#### gently reminds the child to express themselves with language instead of whining or crying.
 Use your words, please.​
 No whining. Remember to use your words.​
 
@@ -185,7 +218,7 @@ How would you feel if someone grabbed a toy from you?​
 I know you're upset, but I need you to use your words. Can you tell me what you want?
 
 Please don't interrupt when others are talking. You can say 'excuse me' and wait for your turn.​
-### 宝宝拉着爸爸的手不好好走路，爸爸出言引导的场景
+#### 宝宝拉着爸爸的手不好好走路，爸爸出言引导的场景
 The little girl, instead of walking properly, ​dragged her feet​ and ​swung playfully on her father's arm, tugging it backwards and sideways. her father, feeling the constant ​tugging, looked down with a smile. He tightened her ​secure hold​ on her daughter's hand and said in a ​firm but gentle tone, "Hey buddy, ​let's try walking properly. ​If you keep pulling my arm like this, we might both stumble.​​ How about we race to that next lamp post?
 
 "​Walking feet, please!​​" the father reminded as his daughter began to ​stroll​ aimlessly, then suddenly ​lunged forward​ with all her weight, ​pulling hard on his arm. He ​staggered​ slightly but regained balance. With a playful sigh, he stopped and knelt down to her level. "​It's hard for me to walk steadily when you're swinging on my arm like this," he explained. "​Hold my hand nicely, and we can walk together safely. Okay?"
@@ -202,13 +235,13 @@ I know it's fun to swing! You can choose to hold my hand and walk, or we can go 
 
 I see you're trying to skip and walk at the same time! It's tricky to coordinate. Let's focus on just walking for now.
 
-### 宝宝朝我轮滑过来  爸爸张口手抓住宝宝 然后宝宝说 i catch you
+#### 宝宝朝我轮滑过来  爸爸张口手抓住宝宝 然后宝宝说 i catch you
 
 "Yes! You got me! You're such a quick skater!"​ 
 
 That was a great catch! Now, it's Daddy's turn to catch YOU! Here I come!
 
-### 宝宝看到路边摊卖一小篮一小篮的草莓说 i want strawberry, i like strawberry 父亲应该怎么回应 买完后宝宝回家路上又说 i want strawberry， 意思要吃 爸爸说先回家 回家洗干净才可以吃
+#### 宝宝看到路边摊卖一小篮一小篮的草莓说 i want strawberry, i like strawberry 父亲应该怎么回应 买完后宝宝回家路上又说 i want strawberry， 意思要吃 爸爸说先回家 回家洗干净才可以吃
 
 (宝宝指着路边摊的草莓)
 
@@ -258,7 +291,7 @@ Child:​ (咬一口) Yummy! Sweet! I like strawberry!
 
 Dad:​ I'm glad you like it! It's delicious because you waited for it to be clean. Would you like to share one with me?
 
-### 爸爸给宝宝搓澡 背上搓下很多泥 然后用水冲掉
+#### 爸爸给宝宝搓澡 背上搓下很多泥 然后用水冲掉
 Scene: Bath Time Fun​
 
 "Time for your bath, sweetie!" Dad says, settling the baby into the warm tub. After a quick play with rubber ducks, he gently turns the baby around and says, "Let me give your back a good scrub. You’ve got some dirt from playing outside today."​ 
@@ -269,7 +302,7 @@ Once the scrubbing is done, Dad picks up the showerhead. "Now, let’s rinse all
 
 Finally, he wraps the baby in a fluffy towel and says, "All done! You’re so clean and smell wonderful!"​ 
 
-### 宝宝刷牙后说要吃汉堡，经过之前的经验爸爸发现如果直接拒绝宝宝会哭闹，然后爸爸模仿宝宝平时的表达说，我来问问你的小肚肚，哦 你的小肚肚说我好饱呀，不要再吃了，嘴巴不准再吃了，再吃我就装不下了
+#### 宝宝刷牙后说要吃汉堡，经过之前的经验爸爸发现如果直接拒绝宝宝会哭闹，然后爸爸模仿宝宝平时的表达说，我来问问你的小肚肚，哦 你的小肚肚说我好饱呀，不要再吃了，嘴巴不准再吃了，再吃我就装不下了
 
 Bedtime After-Brushing Snag
 
@@ -297,7 +330,7 @@ Dad:​ "Did you hear that? Your tummy says it's very full and happy. It's time 
 
 Dad:​ "How about we read your favorite storybook instead? And tomorrow, if your tummy is empty and growling in the morning, we can think about a yummy breakfast."
 
-### 将轮滑的轮子卸下并且装上冰刀，给宝宝解释轮滑和在冰上用冰刀滑冰的区别
+#### 将轮滑的轮子卸下并且装上冰刀，给宝宝解释轮滑和在冰上用冰刀滑冰的区别
 
 Dad:​ "Look! We took the wheels off your roller skates and put on a ice blade. See how it changes? On the ground, your roller skate wheels roll​ like a little car. On ice, this flat blade lets you glide​ and slide smoothly because it slips on the icy surface ."
 
@@ -307,7 +340,7 @@ Dad:​ "And remember how you stop with the brake pad on your roller skates? On 
 
 Dad:​ "So, wheels are for hard ground; blades are for icy slides. Ready to try gliding?"
 
-### 宝宝之前都是轮滑场地，第一次来到冰场
+#### 宝宝之前都是轮滑场地，第一次来到冰场
 
 It's wonderful that your little one is experiencing the ice rink for the first time after roller skating! Here is a way you can introduce the new environment in English, keeping it simple, encouraging, and full of wonder.
 
@@ -335,7 +368,7 @@ Positive Pace:​ Keep the first session short and sweet. The goal is to create 
 
 I hope you and your baby have a magical time on the ice
 
-### 宝宝说 look that daddy, 爸爸想教 what can/do you see
+#### 宝宝说 look that daddy, 爸爸想教 what can/do you see
 
 It's wonderful that you're thinking so carefully about how to nurture your child's language skills! The phrase "Look that, Daddy" is a very common and developmentally appropriate attempt from a young child. Your instinct to gently model the correct phrasing and expand on it with a question like "What can you see?" is perfectly aligned with natural language acquisition techniques. The approach you're considering is consistent with supportive language teaching practices.
 
@@ -368,22 +401,23 @@ Daddy:​ "Let's play a game! What can you see​ in the basket? Can you see a b
 Child:​ (Picks up the car) "Look that!"
 Daddy:​ "Yes! You found it! Look at that​ blue car.
 
-### 宝宝用小手拉扯爸爸的保暖内衣衣领，衣领有弹性拉扯的很长 爸爸笑着说不要扯
+#### 宝宝用小手拉扯爸爸的保暖内衣衣领，衣领有弹性拉扯的很长 爸爸笑着说不要扯
 Here is a description of that warm and playful scene：
 
 The curious baby reaches out with a tiny hand, grabbing the collar of Dad's thermal underwear. The soft, stretchy fabric of the collar easily extends to a surprising length as the little one gives it a firm tug. A wide grin spreads across Dad's face, his eyes crinkling with amusement. He lets out a warm, playful laugh and gently says, "No, no, sweetie, don't pull on that," as he carefully loosens the little fingers from the stretched-out collar.
 
-### 妈妈给宝宝用毛巾擦脸，一块鼻屎掉了出来
+#### 妈妈给宝宝用毛巾擦脸，一块鼻屎掉了出来
 
 The baby giggled, squirming as Mom gently held the washcloth. With soft, careful wipes, she cleaned around his little nose and chubby cheeks. Suddenly, a tiny, dried booger​ came loose and landed right on the cloth. Mom smiled, showed it to him playfully, and said, "Look! A little booger popped out. All clean now!" before giving him a warm, final pat with the towel .
 
-### 宝宝看到一个长手臂的灌注水泥的机器，爸爸也不知道叫什么，然后查了下，原来是xxx
+#### 宝宝看到一个长手臂的灌注水泥的机器，爸爸也不知道叫什么，然后查了下，原来是xxx
 Here is an English description of that scene between the baby and the father discovering the concrete pump truck:
 
 The baby, wide-eyed with curiosity, pointed a tiny finger at a giant machine stretching its long, folding arm high into the sky. It was busily pouring a thick, grey mixture. The father, following his child's gaze, looked at the impressive machine and realized he didn't know its specific name. He then took out his phone to look it up. A moment later, he smiled, leaned down to the baby's level, and said, "Look, that amazing machine is called a concrete pump truck! Its long arm is called a boom, and it's helping to build the new walls over there."
 
-### 宝宝轮滑的积分有169 可以兑换40 80 160的礼品玩具 宝宝选了一个160的玩具 
+#### 宝宝轮滑的积分有169 可以兑换40 80 160的礼品玩具 宝宝选了一个160的玩具 
 I redeemed my 160 points for an awesome toy.
 I swapped my 160 points for a toy.
 
 After weeks of diligently practicing his inline skating, little Liam was thrilled to see his effort translated into 169 shiny credits. At the redemption store, his eyes scanned the shelves of toys tagged 40, 80, and 160. Without hesitation, he pointed to a magnificent remote-controlled car priced at 160 credits. “I want this one!” he beamed, proudly handing over his hard-earned points. His parents cheered, “Well done, sweetie! All those falls and get-back-ups were worth it.” As he clutched the coveted toy, Liam couldn’t stop grinning—already dreaming of his next skating adventure to earn more rewards.
+
