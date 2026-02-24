@@ -21,6 +21,8 @@ https://github.com/google-gemini/gemini-cli
 
 [Vibe Coding 是一个与 AI 结对编程的终极工作流程，旨在帮助开发者丝滑地将想法变为现实。本指南详细介绍了从项目构思、技术选型、实施规划到具体开发、调试和扩展的全过程，强调以规划驱动和模块化为核心，避免让 AI 失控导致项目混乱。](https://github.com/2025Emma/vibe-coding-cn)
 
+[Antigravity -> Customize->workflow](https://github.com/JStaRFilms/VibeCode-Protocol-Suite)
+
 [MetaGPT: The Multi-Agent Framework](https://github.com/FoundationAgents/MetaGPT)
 
 codex

@@ -180,6 +180,12 @@ If applicable, please provide details of the scheduled jobs in the system showin
 If your question pertains to scheduled jobs on Yonyou’s side (such as system backups or data synchronization), note that these are fully managed by Yonyou. Their internal processes are not visible to us, so we do not have details regarding job names or frequencies."
 
 ### business email
+Johnny, please arrange for a 13 seater minibus on Monday, 27th may at 8pm. Pick up will be at 19, china street. Contact person I will let u know on Monday. It will be a one way trip from china street to 121, katong shopping centre.
+Let me know the details once u have them.
+Dear ***,
+The driver's name is **. His h/p: ******. Minibus vehicle no. *****. I will update for any changes.
+Feel free to call me on my hp:**** for any queries.
+
 hi team, kindly acknowledge the email and whether there are any patches for your systems. Please use the attached form to identify and assess vulnerabilities or patch updates under your care. 
 < Noted, thanks. Our website doesn't use [XX Plugin] or [XX Theme], so we're unaffected.
 

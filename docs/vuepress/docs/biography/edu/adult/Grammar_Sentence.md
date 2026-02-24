@@ -342,11 +342,31 @@ If you were wrong, admit it. You won't lose dignity but will gain respect.
 ## Pied-piping with inversion 伴随法则  
 To whom could we direct our questions?
 
-## Email Template:
-Johnny, please arrange for a 13 seater minibus on Monday, 27th may at 8pm. Pick up will be at 19, china street. Contact person I will let u know on Monday. It will be a one way trip from china street to 121, katong shopping centre.
-Let me know the details once u have them.
-Dear ***,
-The driver's name is **. His h/p: ******. Minibus vehicle no. *****. I will update for any changes.
-Feel free to call me on my hp:**** for any queries.
+## todo
+"Little Liam was thrilled to see his efforts translated into 169 shiny credits." 
+vs
+"Little Liam was thrilled to see his efforts translate into 169 shiny credits."
+1. Overall Sentence Structure
+
+This is a complex sentence with a main clause and an infinitive clause embedded in it:
+Main clause: "Little Liam was thrilled..."
+Infinitive clause (acting as the object of "thrilled"): "...to see his efforts translate into 169 shiny credits."
+
+The key verb phrase here is "was thrilled to see [something happen]." "Thrilled" is functioning as a predicate adjective (describing Liam's state), and "to see" is an infinitive phrase explaining what he's thrilled about.
+Inside that, "his efforts translate into 169 shiny credits" is an object clause describing what he sees. This inner clause uses a bare infinitive ("translate") because it follows the perception verb "see" (more on this below).
+
+The whole thing flows smoothly as one coherent thought: Liam is excited because he's witnessing his hard work turning into a reward.
+2. Why "Translate" Instead of "Translated"?
+
+In your original text: "...thrilled to see his effort translated into 169 shiny credits."
+"Translated" is a past participle, making the structure passive: "see his effort [being] translated" (the "being" is often omitted in English for brevity). This implies that some external process or system is translating/converting the effort into credits. It's grammatically correct but slightly more formal or stilted in this narrative context.
+
+In my suggestion: "...thrilled to see his efforts translate into 169 shiny credits."
+"Translate" is the base (bare infinitive) form of the verb. This is active voice: the efforts themselves are "translating" (meaning "turning into" or "resulting in") the credits. It's more direct, vivid, and idiomatic for storytelling—emphasizing the natural outcome of his work.
+
+
+"Translate into" is a common phrasal verb in English meaning "to change into" or "to result in" (e.g., "Hard work translates into success"). Both versions work, but the active "translate" fits better for a lively, present-tense feel in the narrative, even though the overall sentence is in past tense. This is because the "seeing" happens at the moment of thrill, and the translation is a timeless or ongoing result. English often uses the present tense in such embedded clauses for generality (e.g., "I watched the sun rise" not "rised").
+If you prefer the passive nuance, "translated" is fine too—no error there. My change was a stylistic polish for smoother readability, not a correction of a mistake.
+
 
 what can (not) do you for? http://english.stackexchange.com/questions/22405/distinction-what-can-i-do-you-for-vs-what-can-i-do-for-you
