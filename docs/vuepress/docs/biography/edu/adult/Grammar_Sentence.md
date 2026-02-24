@@ -232,6 +232,21 @@ Conditional sentences aren’t always cut and dry. There are exceptions and spec
     Inverted conditionals are a more formal structure. They invert the subject and auxiliary verb in the if clause. For example, “Had I known [instead of “If I had known”], I would have acted differently.”
 
 ### 拆解
+#### 分词 Participle
+分词（Participle）是英语中非限定动词（即不能单独作谓语，需与助动词配合）的重要类别，其本质是动词与形容词的结合体：
+
+保留动词的特征：可带宾语（如“being discussed”中的“discussed”隐含宾语“the project”）、被状语修饰（如“being carefully discussed”中的“carefully”）；
+
+具有形容词的功能：可修饰名词（作定语）、说明主语状态（作表语）或补充句子逻辑（作状语）。
+
+简言之，分词的作用是将动作“名词化”或“状态化”，使其能在句中承担除谓语外的其他成分（如定语、状语、主语、宾语等）。
+
+根据语态（主动/被动）和时态（进行/完成），分词分为现在分词（Doing）和过去分词（Done）
+
+现在分词的被动式是“being done”（如“being discussed”），表示“正在被……”（主动语态的进行时是“be doing”，被动语态的进行时则是“be being done”，但“being done”本身是非谓语形式）；
+
+过去分词的完成式是“having been done”（如“having been discussed”），表示“已经被……”（强调动作发生在谓语之前）。
+
 #### 与格 Dative
 
 give somebody something” (双宾语结构)​​
