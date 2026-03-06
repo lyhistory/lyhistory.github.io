@@ -246,6 +246,11 @@ Plug 指塞子，如浴缸塞 (bathtub plug)、电源插头 (electric plug)​
         **Cover** the pot **with the lid** and let it simmer for 20 minutes.
 拿下盖子
     lift the lid/cover, remove the cover, take off the lid。
+
+### Outdoor
+吊床 Hammock
+大草坪 Large lawn/meadow
+
 ## 食品
 果脯 (总称)​​ ​Preserved fruit​ / ​Candied fruit
 葡萄干​ ​Raisin
@@ -278,7 +283,14 @@ cape 斗篷 披肩
 	He cleaned the machine with an oily rag. (他用一块油污的碎布条擦拭机器。
 
 ### 鞋子
-
+运动鞋 
+	Sneakers
+		Sneakers are casual, lifestyle-oriented shoes​ designed for everyday wear​ (e.g., walking, running errands, casual outings) or light physical activities​ (e.g., short jogs, gym warm-ups). 
+	Trainers	
+		Trainers (or "training shoes") are performance-oriented shoes​ designed for specific sports or high-intensity workouts​ (e.g., running, cross-training, weightlifting, aerobics). 
+凉鞋 Sandals
+皮鞋 Leather shoes 
+	
 鞋盖 (鞋头盖)​​ ​Apron /​toe cap​  
     The leather ​apron​ of the shoe is finely stitched.
     I ​stepped on the toe cap​ of my new shoes and left a mark.
@@ -342,6 +354,8 @@ Slippers（室内拖鞋）​​
 forklift
 road ripper
 watering cart
+Bulldozer (推土机)
+dump truck​ 
 ## 不常见
 
 压水井（上下压）​ Pump/Pull up and push down​ / ​Work the handle

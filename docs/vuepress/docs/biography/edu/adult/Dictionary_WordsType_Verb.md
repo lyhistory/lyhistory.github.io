@@ -78,6 +78,16 @@ What’s the difference between will be and would be?
 https://www.quora.com/What%E2%80%99s-the-difference-between-will-be-and-would-be
 
 Discuss the key issues that must be considered in achieving it.
+
+I can't：聚焦“当下之境难逾越”（The present is what it is）。
+例："I can't lift this box—it's too heavy."（我现在举不起这箱子——太重了。）
+习语链接："You can't teach an old dog new tricks"（老狗学不会新把戏），用现在时强调“当下能力的固化”。
+
+I couldn't：承载“昨日之事不可追”或“虚愿难遂”（The past is a foreign country; wishes are flights of fancy）。
+① 过去时："Last year I couldn't speak French, but now I can."（去年我不会法语，但现在会了。）
+② 虚拟语气（表愿望）："I wish I couldn't hear that noise."（但愿我听不见那噪音——实际能听见，表无奈）。
+I wish I could be as healthy as you are at your age.
+
 ### Causative Verbs​ 使役动词
 
 ​​Definition:​​ Verbs indicating someone/something ​​causes an action​​.
@@ -217,6 +227,7 @@ want（主动词） → to be（不定式） → able（形容词补语） → t
 
 
 ### gerund‌ 动名词 或者 动词ing形式
+属于“名词性非谓语动词”，主要功能是替代名词，在句中作主语、宾语、表语或定语
 A ​gerund​ is a verb form that ends in ​​-ing​ and functions as a ​noun
 Gerund 是由 ‌动词原形 + -ing‌ 构成的‌名词性成分‌（如 swimming, reading），在句中起‌名词作用‌（可作主语、宾语、表语等）
 
@@ -231,9 +242,18 @@ Gerund 是由 ‌动词原形 + -ing‌ 构成的‌名词性成分‌（如 swi
 介词宾语 She is good at ‌dancing‌.
 ‌表语 His hobby is ‌cooking‌.
 
+We are going to learn counting numbers today.
+Let’s practice counting from 1 to 10.
+
 ### participles 分词 (doing/done)
+其本质是动词与形容词的结合体：
+
+保留动词的特征：可带宾语（如“being discussed”中的“discussed”隐含宾语“the project”）、被状语修饰（如“being carefully discussed”中的“carefully”）；
+
 作定语、状语、补语等
 The girl ​studying​ English is my sister.
+
+driving car, he is going home
 
 ## 短语动词 Phrasal Verbs 
 Verb + Adverb Particle e.g 
@@ -248,7 +268,7 @@ Tear open
 Rip open
 
 ### 副词+动词 (Verb + Adverb Particle)​​
-​​Definition:​​ Verb + Adverb Particle (sometimes called a "particle," not a true preposition). creates a ​​new meaning​​.
+​​Definition:​​ Verb + Adverb Particle (sometimes called a "particle" not a true preposition). creates a ​​new meaning​​.
 
 Key Features:​​
 

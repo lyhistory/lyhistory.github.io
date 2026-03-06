@@ -537,3 +537,11 @@ soon after
 ‌up and down‌（起伏不定；来回）
 	例：Her mood has been up and down recently.（她最近情绪起伏不定）
 	例：The cat ran up and down the staircase.（猫在楼梯上跑来跑去）
+
+
+## 比较级 Comparative and Superlative
+比较级是形容词或副词的形态变化（Morphological Feature），用于表达“两者之间的比较”（如“taller”比“tall”多了比较级后缀“-er”，“more quickly”比“quickly”多了程度副词“more”）
+
+It is best to allow only one analyst to work on a diagram at a time.
+
+[Generally, if a two-syllable word ends in /i/ or /o/ (e.g, easy, happy, silly, narrow), then it gets the morphological -er and -est. Otherwise it's more and most.](http://english.stackexchange.com/questions/67991/much-more-easy-versus-much-easier)

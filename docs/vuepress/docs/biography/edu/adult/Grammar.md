@@ -94,7 +94,23 @@ B: Yes, it looks very interesting.
 https://english.stackexchange.com/questions/26256/i-had-finished-the-work-on-friday-i-have-finished-the-work
 https://forum.wordreference.com/threads/i-was-wondering-if-you-have-had-had-a-chance.3187192/
 
-### 从句时态
+### 从句时态 backshifting
+When you use a past reporting verb:
+
+I realized…
+I didn’t know…
+I didn’t realize…
+I thought…
+
+English usually shifts the next verb into the past. This is called backshifting.
+
+Example：
+_Sorry, I didn’t realize you were on leave. I’ve already asked Peter for help. Enjoy your holiday in Korea!_
+Note: 
+    It doesn’t mean the leave is finished. It just matches the grammar pattern.
+    If you really want to avoid “were” You can restructure the sentence:
+    _Sorry, I didn’t realize that you’re on leave._
+    Using “that” sometimes makes “are” feel slightly more acceptable — but honestly, “were” still sounds more native.
 
 He said that he was tired.‌
 ‌语法结构‌：
@@ -134,7 +150,38 @@ he said he had done with me.‌
 从句动词 had done（过去完成时）表示动作发生于主句动作 said ‌之前‌，意为“结束关系或处理完毕”。“done with me” 为习惯表达，指“与我了断”6。
 ‌隐含含义‌：声明在说话前已终止关系（如分手或决裂）
 
-## 比较级 Comparative and Superlative
-It is best to allow only one analyst to work on a diagram at a time.
+### 混合时态
+The Key Idea: Different Verbs, Different Time References
 
-[Generally, if a two-syllable word ends in /i/ or /o/ (e.g, easy, happy, silly, narrow), then it gets the morphological -er and -est. Otherwise it's more and most.](http://english.stackexchange.com/questions/67991/much-more-easy-versus-much-easier)
+English tense here follows event completion, not sentence harmony:
++ Completed action → past tense
++ Current condition → present tense
++ General rule → modal (should)
+
+Example:
+✅ If the story prompt entered by the user has grammar errors, you should automatically correct it.
+✅ If the story prompt that was entered by the user has grammar errors, you should automatically
+
+Note: first sentence is Full Relative , and second one is Reduced relative clauses（缩减关系从句/省略式定语从句）
+You can only remove “that was” when:
++ It’s passive
++ The verb becomes a past participle (entered, uploaded, sent, written)
+
+We use past tense because the action is finished. Same pattern:
++ the file you uploaded
++ the message she sent
++ the data he entered
+All past tense — even if we are talking about them right now.
+
+Think of it like code logic:
+IF (prompt_was_entered AND prompt_has_errors)
+    THEN auto_correct()
+
+entered = action already completed
+
+has errors = current state of the prompt
+
+should auto-correct = rule that applies now
+
+So the tenses are not mismatched — they describe different things.
+

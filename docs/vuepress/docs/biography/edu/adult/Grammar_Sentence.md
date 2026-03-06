@@ -352,7 +352,15 @@ Closed Question / Open Question / Tag Question / Choice Question / Declarative s
 Answering Tag Questions https://www.englishclub.com/grammar/verbs-questions-tag-answering.htm
 If you were wrong, admit it. You won't lose dignity but will gain respect.
  
+反义疑问句
 
+You understand me, don't you?（你理解我，对吗？）
+Yes, I do.（是的，我理解）
+No, I don't.（不，我不理解）
+
+You don't understand me, do you?（你不理解我，对吗？）
+Yes, I do.（是的，我理解——隐含“你错了”）
+No, I don't.（不，我不理解——确认“你对了”）
 
 ## Pied-piping with inversion 伴随法则  
 To whom could we direct our questions?
