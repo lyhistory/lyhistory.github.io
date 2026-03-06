@@ -54,6 +54,9 @@ lowlife scum
 +  Uncivilized
   "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
+停顿
+	The synthesized speech features unduly brief pauses between sentences, creating a rushed, jarring cadence that feels uncomfortably pressing to the ear.
+	生成的语音两句话之间的停顿很短，听起来很赶不舒服
 叫
 	狗叫 bark
 	鸟/鸡叫 Cheep/Peep/Chirp/Twitter
@@ -535,11 +538,29 @@ lowlife scum
 	​Green​ ​口语中直接形容水果“青涩的、未熟的”​
 		The tomatoes are still **green**; we have to wait for them to turn red.
 
-穿反了
-	backwards
+反了
+	Backwards（向后/逆序）
 		Your shoes are on backwards 英语母语者将“穿反”理解为 ​整体方向性的错误 他们脑中的意象是：这双鞋本应鞋尖朝前，但现在却朝后了。至于这是由“穿错脚”还是其他方式造成的，这个短语本身并不深究，它只描述最终呈现的状态——方向反了，在大多数情况下，用 (shoes) are on backwards来表达“鞋子穿反了”是最地道和通用的。如果想更精确地指出是左右脚穿错，则可以使用 Your shoes are on the wrong feet.
+		You wrote the steps backwards—start with preparation, not conclusion.（你把步骤写反了——应从准备开始，而非结论。）
 	inside out 里外反转​：指衣物或鞋子的里面和外面翻反了。Your sweater is on inside out.
 	back to front.​ 前后反转​：与 backwards类似，强调背面穿到了前面。 	I think you've got that pants on back to front.
+	The length and width of the input image have been swapped with those of the output—for example, an input of 300×400 yields an output of 400×300.
+	Reverse（反转/颠倒）
+	The output image has its dimensions reversed​ from the input—e.g., 300×400 becomes 400×300.
+	In Reverse Order（逆序）
+	The chapters are arranged in reverse order—Chapter 5 comes before Chapter 1.（章节按逆序排列——第5章在第1章前面。）
+	Flip
+	The input’s length and width are flipped​ in the output—300×400 turns into 400×300.
+	Invert（倒置/上下翻）
+	The image is inverted: the top-bottom axis is reversed, so 300×400 becomes 400×300.
+	He inverted the meaning​ of my words—“support” became “oppose.”（他颠倒了我的话的意思——“支持”变成了“反对”。）
+	Transpose（转置/换元）
+	The aspect ratio is transposed: the input’s 300 (width) and 400 (height) are swapped to 400×300.
+	Opposite Direction（相反方向）
+	He walked in the opposite direction—toward the exit instead of the entrance.（他往相反方向走了——朝出口而不是入口。）
+	Mirror Image（镜像/左右反）
+	The text is a mirror image—left and right are reversed.（文本是镜像——左右反了。）
+
 
 发生
 	How did this misunderstanding ​come about​? come about 常用于疑问句和否定句，探讨某事发生的缘由
@@ -983,6 +1004,12 @@ nuance细微差别
 		The puppy ​spun in circles​ chasing its tail.
 	游乐设施旋转​ ​Go round and round​
 		We ​went round and round​ on the merry-go-round.
+	机械/天体（循环功能）	rotate in circles/ go round and round
+		The windmill blades rotate in circles, harnessing the breeze to grind grain.
+	情绪/思绪（反复纠结）	go in circles
+		He went in circles all night, unable to shake off the exam worry.（他整夜转圈圈想这事，甩不掉考试焦虑。）
+	
+
 不要摸仙人掌 刺会扎到你
 	Don't touch the cactus! You'll get pricked by the spines!
 
@@ -1036,6 +1063,8 @@ nuance细微差别
 	He ​jumped out of bed​ when the alarm rang."（闹钟一响他就跳下了床。）
 	She ​leapt out of bed​ to answer the door."（她一跃下床去开门。）
 	The child ​slipped out of bed​ and tiptoed to the kitchen.孩子溜下床，踮脚走向厨房。
+变形
+	The image has been horizontally stretched into a distorted form, with the figures appearing unnaturally stout as a consequence. 画面被横向拉伸变形了，人物也变胖了
 
 褶皱 wrinkles/creases
 	Let me smooth out the wrinkles in your shirt before you head to school—no one wants a crumpled uniform!"（上学前我帮你把衬衫的褶皱抚平——没人想穿皱巴巴的校服！）
@@ -1963,6 +1992,7 @@ FYI, our new release has been approved on Google Play. You can now install it bo
 虽然语法上也说得通，但语气上更像是在给出操作选项或步骤指引，而不是兴奋地宣布两个渠道都已开通。
 You can have tea or​ coffee.
 We can meet on Monday or​ Tuesday.
+
 #### 代称
 ​Who is he/she?​ 已知性别或特定上下文的某个人
 	The man in blue looks familiar. ​Who is he?​​

@@ -40,7 +40,8 @@ Definition:​​ Words that connect clauses, phrases, or words.
 Coordinating: and, but, or ("tea ​​and​​ coffee")
 Subordinating: because, if, although ("​​If​​ it rains")
 Correlative: either/or, neither/nor
-
+	✅ I can't find this item either under the business role or under the management role.
+	✅ I can find this item neither under the business role nor under the management role.
 whlist 同时; 时时，有时; 当…的时候; <英>同“while”;
 both  either neither http://www.grammar.cl/english/both-either-neither.htm
 wherein adv. 其中; 在那里，在哪方面; conj. 在哪一点上; 在什么地方;
