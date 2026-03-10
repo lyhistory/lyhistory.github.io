@@ -54,6 +54,22 @@ lowlife scum
 +  Uncivilized
   "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
+
+指出
+	Point that out
+	You are completely correct to call that out! 
+	Highlight that
+	Bring that up
+	Spot that
+
+原因
+	cause
+	culprit
+		Aha! I found the culprit. The database absolutely DOES have Apple mapped perfectly to 🍎.
+抖动
+	shake 
+	jitter
+		The remote upload finalized successfully. The CSS edge jitter bug has been fixed and all procedural emoji mappings have been purged from the database for the advanced tiers.
 停顿
 	The synthesized speech features unduly brief pauses between sentences, creating a rushed, jarring cadence that feels uncomfortably pressing to the ear.
 	生成的语音两句话之间的停顿很短，听起来很赶不舒服
@@ -2368,236 +2384,6 @@ https://www.tripadvisor.com.sg/ShowUserReviews-g294265-d2139541-r17779786-Mustaf
 
 
 
-### About Art
-软导线雕塑 Soft wire sculptures
-
-
-
-### About Clothing
-crew neck 圆领
-ripped hole
-https://www.threadsmagazine.com/readerproject/2015/04/02/how-to-properly-remove-clothing-labels
-sewing label holes stitching
-
-
-格子 checkered design 条纹 stripe （strip是脱衣舞^..^)
-背心 singlet/tank top 套管running sleeve
-褶状裙边 Accordion pleats （Accordion blinds褶状遮阳‘伞’）
-shoelace zipper collar
-
-### About Crypto
-Bitcoin led to a huge number of look-alike cryptocurrencies, and most public discussion has centred around the potential for illegal or illicit uses (such as the purchase of drugs on the Silk Road website). In keeping with the ‘libertarian’ origins of Bitcoin, it has been remarked that one of the major events which propelled Bitcoin to widespread adoption was the blockade of WikiLeaks by Visa and MasterCard.
-
-‌翻译‌:
-比特币催生了大量仿效型加密货币，且公众讨论多聚焦于其潜在的非法用途（例如在“暗网丝绸之路”上购买毒品）。与比特币的“自由意志主义”起源相一致，有观点指出，推动比特币被广泛采用的关键事件之一是维基解密（WikiLeaks）遭维萨（Visa）和万事达（MasterCard）支付封锁。
-
-### About driving 
-beacon 烽火; 灯塔，信号浮标; 指路明灯; 警标，界标;
-swerve [swɜ:v] 使突然转向; 使转弯;
-skid 打滑; 滑行; （通常指车辆） 侧滑; （住在） 贫民区;
-grip 握紧，抓牢; 吸引住：吸引…的兴趣或注意力; 引起;
-mishap灾祸; 不幸事故;
-demister [ˌdi:ˈmɪstə(r)] 去雾器，除雾器;
-concentration 浓度; 集中; 专心; 关注;
-placate [pləˈkeɪt] 安抚，抚慰，使平静; 使和解，平息;
-manoeuvre [məˈnu:və(r)] 调遣; 操纵，控制; 诱使，策划;
-aquaplane [ˈækwəpleɪn] 乘滑水板滑行; （指车辆） 在积水的路面上打滑;
-instrument panel 仪表板
-right of way
-road shoulder
-Reverse
-What are the normal bus lane hours on weekday evenings? 5.00pm - 8.00pm
-parallel continuous
-oncoming traffic
-It is illegal to reverse from a side road into a main road.
-three-lane carriageway
-you should slow down and give way as traffic converges into single lane.
-steering wheel
-Both hands should keep a light grip on the steering wheel with hands at the ten-to-two position
-What should you do when you are approaching a pool of water?
-Why must you position the front wheel of the car facing the kerb when parking on a road facing downhill?
-Prevent the car from rolling forward
-handbrake
-If you are dazzled by the lights of an oncoming vehicle
-B. slow down and stop if necessary.
-offset the glare by flashing your high beam. (wrong)
-zebra crossing?
-On a dual-carriageway, do not hog the middle of the road.
-Stationary
-hog
-hog
-Tyres and Tarmac
-Facility Signs are signs with black letters on white backgrounds with black borders
-When the light turns green, how many seconds should you wait before proceeding? 2 secs
-road hump
-Parallel continuous yellow lines indicate ___ at all times on that side of the road where these lines are drawn, except for immediate picking up or letting down of passengers.
-A. no parking
-A continuous white line along the centre of a road indicates
-B. Centre line of a two-way road.
-barricade
-lateral
-fluorescent
-beacon
-cruise
-viaduct
-gantry
-chevron
-obstruct
-abreast
-abide
-pillion
-conspicuous
-demarate
-overpass
-amber
-single carriageway dual
-one way
-tailgating
-Probation
-Bonnet
- 
-crest of slope 边坡顶
-demarcrate
- 
-A single carriageway (British English) or undivided highway (American English) is a road with one, two or more lanes arranged within a single carriageway with no central reservation to separate opposing flows of traffic.
-#############
-Drift horn
-Overtake accelerate
-Overtake cyclists
-Two way not overtake bend
-Place plate 2 times
-13 points
-24 in24
-Flash amber
-
-Overtake left lane drift horn 
-Facing traffic 1m
-back Facing 1.5 m 
-Stationary 1 m
-pass bike 1.5
-On right lane, lorry singnal left to ur lane, wait
-Bike against traffic ,prepare to stop
-Bike behaviour unstable, give more time
-Downhill give way
-Take off handbrake
-Engine brake less heat 2 more eff than 3
-Park down reverse upward 1 gear
-
-Turn left narrow road or lorry, turn right
-Tyre puncture, swing to the side firm hold
-swerve
-Bald tyre
-Before Move uphill, use handbrake
-Downhill low gear + foot brake
-Pull to puncture typre
-
-Bend
-Right > position more to left to have good view
-6 position
-
-Slow in built up area
-
-Minimum third party
-
-Avoid upcoming collision, Rip off the road
-
-move off from slope release handbrake only
-torque slattered
-
-Want to stop after junction, Signal left after turn
-
-Downshift
-When freewheel skip打滑 steer wheel feel light
-skid 
-Handbrake rear wheel
-Bald Tyre easy puncture
-Free wheel no engine brake
-Built up water and Typre called aquaplaing
-
-Overtake from left if front car signal right turn
-
-Never overtake cyclists when do left turning
-
-Before bend
- Watch out front car distance, center the car, 
- Gear 1
- Gear 2
-   Brake gently, if necessary try clutch, during after bend release clutch
- Gear 3
-Before slow down and stop
- Gear 1
-  Clutch first or clutch brake together
- Gear 2
-  Clutch shift to Gear 1, then free wheel then brake
- Gear 3
-
-Before lane change
- Signal
-mirrors
-left lane right lane
-brake early
-Assist other car overtake intention
-road mark road work 
-Keep Left lane, but some time it is for left turn only
-
-When come to complete stop shift to gear 1
-When left turn join the main road, trun head right to check traffic
-
-Right turn wait for the go straight car 
-
-Slope half clutch the release brake
-Yellow box bus lane
-Change over
-
-The S-course (or S-curve) is a specific maneuver taught during driving training. It involves navigating through a series of curves shaped like the letter "S," often to simulate sharp or winding roads. This type of course is designed to help new drivers practice controlling the vehicle while steering through tight turns, maintaining proper speed, and ensuring smooth handling of the car.
-
-通用“抛锚”​​ ​My car broke down.​
-	We were late because **our car broke down** on the highway.
-突发爆胎​ ​I have a flat tire.​
-	I need to change **the flat tire** before we can go on.
-特指行驶中轮胎“爆裂”的瞬间 ​I had a blowout.​
-	He managed to control the car when it **had a blowout** at high speed.
-发动机熄火​ ​My car stalled.​
-	The engine **stalled** at the traffic light and I couldn't restart it.
-电瓶没电​ ​The battery is dead.​
-燃油耗尽​
-	​I ran out of gas.​​ (美式) 
-	​I ran out of petrol.​​ (英式)
-翻车
-	Rollover The news reported a serious ​rollover​ accident on the highway. 
-	引申含义：搞砸、失败​
-		​Screw up I ​screwed up​ the presentation by forgetting my laptop.
-		Flop Despite high expectations, the new product ​flopped​ in the market.
-		Go wrong Everything ​went wrong​ during the live broadcast. 
-### About Education
-trade school 职业技术学校
-diploma mill 文凭工厂
-	Governments worldwide are tightening regulations to crack down on ‌diploma mills‌.（各国政府正加强监管打击野鸡大学。）
-
-Connect the dots when u look back
-Quit school but not quit study
-
-Don't hate the education system, embrace the challenges, train your mind 
-
-Have your own judgement,Believe in your decision but don't stick to it, make adjustment accordingly
-Don't believe authorities blindly
-
-Medical student who fatally poisoned his roommate as an April Fool’s joke loses his appeal against death sentence in China
-http://www.dailymail.co.uk/news/article-2901745/Medical-student-fatally-poisoned-room-mate-April-Fool-s-joke-loses-appeal-against-death-sentence-China.html
- 
-http://www.bloomberg.com/news/articles/2016-08-30/tencent-china-s-biggest-internet-company-wants-to-use-its-headquarters-as-a-testing-lab
- 
- By the age of 4, children from privileged backgrounds heard 30 million MORE WORDS than their peers under welfare. American researchers called this the 30 million word gap. Does a word gap exists in Singapore? How big is it and how do we close it?
-http://www.channelnewsasia.com/tv/tvshows/itfigures-s4/mind-the-gap/2307044.html
-
-ivory tower 象牙塔
-旁听 sit in
-
-eduction endowment fundation 教育捐赠基金会
-
-
-
-
 ### About family emotion
 Take Responsibilities for your parents and yourself
 
@@ -2723,100 +2509,6 @@ trolley 小推车
 hairstylist, hairdresser/barber
 cut/trim/wash/dry/style/perm/dye/hair care session
 style / shape the hair
-### About healthy/Medical
-dizzy and nauseous
-pass out
-
-ingestion digestion absorption and elimination http://seattlecentral.edu/faculty/jwhorley/Digestion.pdf
-Digestion begins with ingestion, where the food is taken in the mouth. Digestion and absorption take place in a series of steps with special enzymes playing important roles in digesting carbohydrates, proteins, and lipids. Elimination describes removal of undigested food contents and waste products from the body.
-
-pus‌：脓液
-  This pus, if it collects in large enough amounts, will bloat the **etheric body**(以太体（神秘学概念，指能量体或灵性身体）) leading to physical "puffiness" and water retention.
-  ‌直译‌：“这些脓液若积聚到足够量，会使以太体膨胀，进而导致身体‘浮肿’和水分滞留。”
-  ‌意译（医学语境）‌：  “脓液大量积聚时，可能引发以太体肿胀，并表现为体表浮肿及体液潴留。”
-**A course of treatment**
-refers to the series of medical steps or actions taken over a period of time to treat a condition. "Course" here highlights the sequence or timeline over which the treatment occurs.
-
-sun exposure vitamin afternoon ultraviolet light
-http://playgroundsafety.org/safety-tips/sun-exposure
-http://www.vitamindwiki.com/No+%E2%80%93+10+minutes+per+day+of+sun-UVB+is+NOT+enough
-
-body heals
-body natural healing process
-disease transmission
-
-
-Early detection through regular screening helps to detect the increase risk of chronic diseases like heart disease, stroke and kidney failure.
-Partnered with The Clinical Laboratory, the company will provide the below health screening package to you.
-Do seize this opportunity to have your health checked at your doorstep.
-Remember most things can wait but your health cannot.
-Conditions to be Screened for Type of Screening
-High Cholesterol Fasting Blood Test
-Full Lipid Profile
-Diabetes Fasting Blood Test
-High Blood Pressure Blodd Pressure Measurement
-Obesity BMI Measurement
-*Please do not consume any food or drinks (except plain water) 8 to 10 hours prior to the health screening.
-
-肠胃不好
-流眼泪
-呕吐腹泻
-wrist
-waist
-thigh
-yawn https://tw.voicetube.com/everyday/20150715
-sneeze http://www.iciba.com/%E6%89%93%E5%96%B7%E5%9A%8F
-病情英文 http://site.douban.com/143903/widget/notes/7032297/note/235927406/
-catch a cold, fever
-卫生hygiene bacteria
-sterilize
-sanitizer
-散光
-胶囊
-创可贴 plaster
-传染给你 infect you with the flu
-不停打喷嚏 sneeze  snooze（打瞌睡）
-嗓子哑/痒 itchy sore , sore throat
-痰 phlegm
-腹泻 diarrhea 消毒
-浑身是汗 sweaty
-药物过敏 allergic to
-免疫 immune
-口腔溃疡 ulcer
-抽筋 I feel a cramp in my lower leg. https://hk.answers.yahoo.com/question/index?qid=20110220000051KK00513
-眼睛干燥/痒/痛
-你的眼睛发炎了。Your eyes are infected.
-我的眼睛痒。I have itchy eyes.
-我眼睛怪怪的，觉得不舒服，好像有异物在眼睛里。I feel an irritation as if there are foreign objects in my eyes.
-我目炫。(或畏光，怕光)。My eyes are dazzled (photophobia).
-我眼睛感觉钝痛。I feel a dull pain in both eyes.
-好像眼底里在痛。The pain seems to come from inside of the eyes.
-我眼屎很多，每天早晨醒来，眼睑上下都黏在一起。I have so much eye discharge that my eyelids stick together when I wake up in the morning.
-我眼底里觉得痛，看东西的时候觉得疲累，而且流泪。I have pain inside my eyes, and feel strain in seeing and tear easily.
-我的左(右)眼没有视力。I lost sight in the left (right) eye.
-我的视力差多了。My vision has worsened.
-在暗暗的地方，我有视力困难。I have difficulty seeing when it is dark.
-我看东西模糊不清。I have blurred vision.
-我看东西的时候有双影。I have double vision.
-我看东西，看来小小的，又歪歪曲曲的。Objects look small and distorted.
-我看到有一个黑点在我的视野里。I have a black spot in my vision.
-我无法分辨颜色。I cannot distinguish the colors.
-
-注意个人卫生 People should wash regularly to ensure personal hygiene.
-ulcer 口腔溃疡 diarrhea 腹泻
-plaster 创可贴
-
-Palm Numb: Refers to a sensation of numbness or tingling in the palm, often due to nerve issues or circulation problems.
-
-fuzzy
- it can make your head spin. 
-
-保守治疗
-整容 plastic surgery
-二手烟 passive smoking secondhand smoke
-
-chronic 慢性病
-
 ### About Life
 
 #### About dailylife
@@ -2962,16 +2654,6 @@ Be modest humble
 
 
 
-### About music
-
-**Pro sound**, or professional audio, is a term that refers to the equipment and technology used to produce and deliver high-quality sound in professional settings: 
-Recording studios: For audio mastering and recording 
-Broadcast studios: For broadcasting audio 
-Live performances: For sound reinforcement at concerts and DJ events 
-Theaters: For sound reinforcement and piped music 
-Conference centers: For fixed installations 
-Educational institutions: For fixed installations 
-
 ### About nature
 scallop
 crayfish
@@ -2981,30 +2663,6 @@ squid
 puffer fish
 stingray
 
-
-### About Sports
-archery 射箭运动
-seesaw 跷跷板
-
-### About Tour/Culture
-预约/预订 make appointment advance subscribe(订阅)
-自由行 跟团
-景色 景点
-历史遗迹 遗址 遗产 heritage conservation  natural reserves/resource natural reservoir
-自然保护  preservation
-environmental sustainability
-tripod/lens
-http://www.thegreencorridor.org/
-
-late arrival - belate
-
-坐过站了 you missed your stop
-过关 （游戏过关 clear a stage）
-  1.(通过关口) pass a barrier; go through an ordeal
-  2.(比喻, 通过检验) pass a test; reach a standard
-
-Bridging service plays a key role in international communication.
-（桥梁服务在国际交流中起关键作用。
 
 #### Chinese Culture
 吃春卷‘形象’的谓之咬春
@@ -3017,6 +2675,8 @@ shuttle 航天飞机
 thruster 推进器
 
 ## idiom saying 谚语/成语
+under the hood
+	It turns out Cloudflare D1 has a hard size limit for both local simulations and remote executions for a single SQL transaction block. Wrangler reported the upload as "successful" on the surface previously, but under the hood, Cloudflare quietly rolled back the transaction because it was too large (0 rows written).
 a drop in the ocean
 	The government's pledge to increase health funding by E1oom is just a drop in the ocean compared to the billions that need to be spent.
 actions speak louder than words

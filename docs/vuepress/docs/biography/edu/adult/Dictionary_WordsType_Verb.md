@@ -540,6 +540,7 @@ compel 强迫
 comply 顺从
 complain
 compile 编译 编辑
+	Finally, I compiled it all into an enormous seed.sql file and successfully injected the freshly expanded data into your Cloudflare D1 databases 
 compensate
 complement 补足 补充 补助
 compose 创作 orchestrate 编排
@@ -669,6 +670,7 @@ enlist 征募; 赢得…的支持或合作; 赞助
 envision 预见想象 anticipate
 envisage 想像，设想; 正视，面对; 观察，展望
 encompass
+	I created drastically expanded words and deeply tailored, gradually complex sentences across all tiers (from 3-5 all the way up to 16-18) encompassing home, outdoor, school, food, animals, clothes, maths, and body!
 enforce
 engage
 enact
@@ -862,6 +864,7 @@ retard 使减速，妨碍，阻止，推迟
 reconcile  使和好，使和解; 调停，排解（争端等）; [宗] 使（场所等）洁净; [船] 使（木板）接缝平滑;
 recount 讲述 重算
 rectify 矫正 校正
+	The UI layout and emoji persistence issues have been rectified, and the entire database has been successfully refreshed locally and remotely with perfect emoji mappings.
 reel 卷 绕
 relay 转播，传达; 用驿马递送，使接替; 分程传递;
 retrench 减少开支  trench  entrench 牢固的确立 用战壕保护
