@@ -71,6 +71,10 @@ Light provisioning will be provided
 ​ 如果使用 “is going to be provided”，会隐含一种“（我们）打算/计划提供灯光”的意味。这会给通知带入一丝“主观意图”的色彩，仿佛这个决定是某个操作员临时起意或系统刚刚计划好的，反而削弱了通知作为既定程序的确定性和可靠性 。
 ### business dialogue
 
+I can’t find the email—have you added me to the loop? 我现在找不到那封邮件——你把我加进信息共享圈了吗？
+I couldn’t find the email—have you added me to the loop?  我刚才没找到那封邮件——你把我加进信息共享圈了吗？
+I don’t see the email—have you added me to the loop? 更口语化
+
 => can fast forward to today's date? 
 He’s here pressing me now, so let me be clear: 
 <= "Hi bro, just to clarify—the batch tasks have been stuck in a time loop​ since several months ago, so there’s no shortcut around the manual grind. I’m already in the thick of it, doing day-by-day manual triggering to advance the system one day at a time. For some dates, I even have to double up on operations​ to clear the backlog properly. I know it’s tedious, but I’m chugging through it methodically to get us back on track. Appreciate your understanding as I work through this step by step!"
@@ -184,6 +188,21 @@ If applicable, please provide details of the scheduled jobs in the system showin
 If your question pertains to scheduled jobs on Yonyou’s side (such as system backups or data synchronization), note that these are fully managed by Yonyou. Their internal processes are not visible to us, so we do not have details regarding job names or frequencies."
 
 ### business email
+hi xxx, seeking your approval to grant xx access to gitlab for test project. @xx, could you assist to grant xx acess to test project once xxx approves this request? 
+<= 
+Hi [Recipient’s Name],​
+
+I’ve granted [xx] access to the test project​ following [xxx]’s approval—as requested. Please let me know if [xx] encounters any issues logging in or needs additional permissions.
+
+Thank you for coordinating the approval process!
+
+Hi XXX,
+
+I’ve sent a private message to xxx with my input: Basically, yes—we do use non-essential cookies (such as the Google Analytics [GA] cookie). For the cookie banner implementation, we’ll need to ask the vendor to either install a plugin or customize the source code.
+
+@xxx, you mentioned you’d follow up with the vendor on this—please keep me posted on any updates when you have them. I’m happy to assist if you need support reviewing options.
+
+
 Johnny, please arrange for a 13 seater minibus on Monday, 27th may at 8pm. Pick up will be at 19, china street. Contact person I will let u know on Monday. It will be a one way trip from china street to 121, katong shopping centre.
 Let me know the details once u have them.
 Dear ***,
