@@ -71,6 +71,12 @@ Light provisioning will be provided
 ​ 如果使用 “is going to be provided”，会隐含一种“（我们）打算/计划提供灯光”的意味。这会给通知带入一丝“主观意图”的色彩，仿佛这个决定是某个操作员临时起意或系统刚刚计划好的，反而削弱了通知作为既定程序的确定性和可靠性 。
 ### business dialogue
 
+I’d assumed you’d tasked XXX with the installation—she attempted it moments ago and messaged me in the group about the snag she ran into.
+
+You never mentioned it was a testing environment—I’d assumed you were installing it on the production environment.
+
+If the yum installation fails, we’ll need Eric to help check the yum repository.
+
 I can’t find the email—have you added me to the loop? 我现在找不到那封邮件——你把我加进信息共享圈了吗？
 I couldn’t find the email—have you added me to the loop?  我刚才没找到那封邮件——你把我加进信息共享圈了吗？
 I don’t see the email—have you added me to the loop? 更口语化

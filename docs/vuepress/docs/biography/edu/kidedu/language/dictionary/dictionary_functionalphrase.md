@@ -218,6 +218,16 @@ How would you feel if someone grabbed a toy from you?​
 I know you're upset, but I need you to use your words. Can you tell me what you want?
 
 Please don't interrupt when others are talking. You can say 'excuse me' and wait for your turn.​
+#### 宝宝上课注意力不集中
+
+The little one has been struggling to maintain focus in class, fidgeting constantly and playing around even as the lesson proceeds—just moments ago, the chair tipped over, and he tumbled right off it.
+宝宝上课注意力不集中，小动作很多，一边上课一边玩，刚刚凳子倒了 从凳子上摔倒了了
+
+Please forgive me, Teacher—the little one has been so mischievous lately, struggling to maintain focus in class and not following along properly with the reading.
+老师对不起，宝宝太调皮，注意力不集中，不好好跟着读
+
+The little one, you need to speak properly, read along with the teacher, read carefully, and say it loudly and clearly.
+
 #### 宝宝拉着爸爸的手不好好走路，爸爸出言引导的场景
 The little girl, instead of walking properly, ​dragged her feet​ and ​swung playfully on her father's arm, tugging it backwards and sideways. her father, feeling the constant ​tugging, looked down with a smile. He tightened her ​secure hold​ on her daughter's hand and said in a ​firm but gentle tone, "Hey buddy, ​let's try walking properly. ​If you keep pulling my arm like this, we might both stumble.​​ How about we race to that next lamp post?
 

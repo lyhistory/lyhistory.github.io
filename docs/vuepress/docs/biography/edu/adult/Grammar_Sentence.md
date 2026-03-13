@@ -180,6 +180,8 @@ It’s used to talk about real and possible situations in the future. The struct
 
 For example, “If it rains, I will stay at home.”
 
+If the yum installation fails, we’ll need Eric to help check the yum repository.
+
 This is a real possibility: It might rain, and if it does, I will stay at home.
 
 Here are a few more examples:
@@ -210,6 +212,8 @@ To summarize, the second conditional is all about unreal or improbable situation
 It’s used to talk about unreal situations in the past. The structure is If + [past perfect], … would have + [past participle].
 
 For example, “If I had studied harder, I would have passed the exam.”
+
+If the installation had failed​ (过去完成时，虚拟), we would have needed​ (过去将来完成时) Eric’s help.
 
 In this sentence, the condition is “If I had studied harder,” and the result is “I would have passed the exam.”
 
