@@ -1,7 +1,13 @@
 
 ## 视频生成
 
-[目前最好的 story-flicks 成功。需要LLM和图片生成的api，可以蹭免费的阿里百炼llm-qwen3-max和硅基流动的Kwai-Kolors/Kolors](https://github.com/alecm20/story-flicks) 
+[待看 Learn how to automate faceless short-form + long-form video content and dominate YouTube, TikTok, Facebook & Instagram on autopilot — from idea → script → video → scheduled posts.](https://github.com/cporter202/automate-faceless-content)
+
+[待看 火宝短剧 - 基于AI的一站式短剧生成平台 《一句话生成完整短剧，从剧本到成片全自动化》](https://github.com/chatfire-AI/huobao-drama)
+
+[强依赖 Sora 或豆包视频服务接口地址](https://github.com/HBAI-Ltd/Toonflow-app)
+
+[目前最好的 story-flicks 成功。需要LLM和图片生成的api，可以蹭免费的阿里百炼llm-qwen3-max和硅基流动的Kwai-Kolors/Kolors](https://github.com/alecm20/story-flicks) 已经二次开发
 
 [成功，完全免费，short-video-maker，完全免费](https://github.com/gyoridavid/short-video-maker),[另一个版本](https://github.com/DJCallyman/short-video-maker)
 

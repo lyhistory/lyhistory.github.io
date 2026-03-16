@@ -192,6 +192,12 @@ Technically, Linux is 'booted' as soon as the init process (the first user space
 市面上很多一键u盘启动制作工具都有病毒，比如某某菜某某桃等，不小心电脑就成为别人的肉鸡，还是选用开源透明的工具比较靠谱：
 https://github.com/pbatard/rufus
 
+U盘启动神器Ventoy 
+在实际的系统维护中，需要很多实用工具。如磁盘管理工具diskgenius 修改windows密码等工具。但是这个工具Ventoy是没有的。因此，我们可以将 PE 环境制作成 ISO 镜像文件并放在 Ventoy 盘的根目录即可。
+FirPE
+HotPE工具箱
+微 PE 工具箱
+
 ## sdcard启动
 
 Win32DiskImager

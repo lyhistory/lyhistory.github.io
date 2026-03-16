@@ -1,3 +1,5 @@
+[创业失败案例](https://www.loot-drop.io/)
+
 [一人公司方法论](https://github.com/easychen/one-person-businesses-methodology)
 
 [Clickworker](https://www.clickworker.com) 

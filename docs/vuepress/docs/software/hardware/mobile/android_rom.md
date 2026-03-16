@@ -4,7 +4,7 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
-Key Concepts:
+## Key Concepts:
 
 ROM: Factory Images
 > Read-only memory (ROM) is a type of non-volatile memory used in computers and other electronic devices. Data stored in ROM cannot be electronically modified after the manufacture of the memory device. Read-only memory is useful for storing software that is rarely changed during the life of the system, also known as firmware. 
@@ -30,6 +30,13 @@ rom又分为官方rom/stock firmware和custom rom
 > Do you mean by installing stock Android? That's where XDA Developers come in, if any devs actually created custom ROMs for Mate 7.
 > https://forums.hardwarezone.com.sg/mobile-communication-technology-9/how-format-huawei-ascend-mate-7-pure-android-5502081.html
 
+Android ADB（Android Debug Bridge，安卓调试桥）是Google提供的一个命令行工具，属于Android SDK核心组件。它在电脑（开发机）与Android模拟器或真实设备之间建立连接，用于安装/调试应用、传输文件、查看日志、运行Shell命令等系统级操作，支持USB和无线网络连接。
+
+无需电脑，手机连接：
+1. LADB (Local ADB Shell)
+2. Shizuku
+
+## root
 我的旧手机华为mate7想改造成为一台黑客基站，需要升级android版本，但是要首先root一下，首先我还是清理了下手机，
 卸载了几乎除了系统安装的所有软件，手动删除了很多我认为是垃圾文件夹，估计是不慎删多了，google play打开出错，
 我直接reset工厂模式，然后下面是root的过程
@@ -51,8 +58,6 @@ root和unlock bootloader的区别
 > Root是”取得”系统最高权限，你可以自由存取/删除系统档案，也可以增加对于系统的控制能力.
 > Unlock Bootloader是解除系统启动加载器（Bootloader）的原厂限制，让用户可以使用到更多的功能（如刷新内核、刷ROM、修改超频….）
 > https://blog.csdn.net/my_xxh/article/details/51638085
-
-## root
 
 本来是想参照[How to ROOT Huawei Ascend Mate 7](https://huaweiflash.com/how-to-root-huawei-ascend-mate-7/)，
 结果他这种方法的prerequisite是按照twrp，然后安装twrp的前提是unlock bootloader解锁，然后解锁的申请通道被华为关闭了！

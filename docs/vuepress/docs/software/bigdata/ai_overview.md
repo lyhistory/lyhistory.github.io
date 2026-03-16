@@ -1,12 +1,17 @@
 
-[AI News](https://aisecret.us/)
 
 ## 免费资源
+
+[modelscope](https://github.com/modelscope)
 
 kaggle
 
 google colab
-
++ https://openrouter.ai/openrouter/free
++ [Opencode](https://opencode.ai/zen)
+  - minimax-m2.5-free
+  - big-pickle
+  - GPT 5 Nano
 + cloudflare ai worker
   - how to use
     1. [run via rest api](https://developers.cloudflare.com/workers-ai/get-started/rest-api/)
@@ -25,27 +30,30 @@ google colab
   - qwen3-max
 + 深度求索API官网：https://platform.deepseek.com  
 
-## Protocol
-Model Context Protocol vs Function Calling:
+## Info
+[A Simple and Universal Swarm Intelligence Engine, Predicting Anything. 简洁通用的群体智能引擎，预测万物](https://github.com/666ghj/MiroFish)
 
-[Model Context Protocol Clearly Explained](https://www.youtube.com/watch?v=tzrwxLNHtRY)
-
-[Sample MCP client](https://github.com/modelcontextprotocol/python-sdk/blob/main/examples/clients/simple-chatbot/mcp_simple_chatbot/main.py)
-[Google maps MCP server](https://github.com/modelcontextprotocol/servers/blob/main/src/google-maps/index.ts#L297)
-[MCP Schema](https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/schema/2024-11-05/schema.ts)
-[Simple tool, resource, prompt servers](https://github.com/modelcontextprotocol/python-sdk/tree/main/examples/servers)
-[Example servers](https://modelcontextprotocol.io/examples)
-[MCP inspector (postman like tool)](https://modelcontextprotocol.io/docs/tools/inspector)
-
-[Put an end to code hallucinations! GitMCP is a free, open-source, remote MCP server for any GitHub project](https://github.com/idosal/git-mcp)
-
-## todo
++ [AI News](https://aisecret.us/)
++ [AI News](https://github.com/RSSNext/Folo)
 
 [微舆：人人可用的多Agent舆情分析助手，打破信息茧房，还原舆情原貌，预测未来走向，辅助决策！从0实现，不依赖任何框架。](https://github.com/666ghj/BettaFish)
 
 [简单的舆情监控分析 - 多平台热点聚合+基于 MCP 的AI分析工具。监控35个平台（抖音、知乎、B站、华尔街见闻、财联社等），智能筛选+自动推送+AI对话分析（用自然语言深度挖掘新闻：趋势追踪、情感分析、相似检索等13种工具）。](https://github.com/sansan0/TrendRadar)
 
+[Real-time global intelligence dashboard — AI-powered news aggregation, geopolitical monitoring, and infrastructure tracking in a unified situational awareness interface](https://github.com/koala73/worldmonitor)
 
+[Real-time dashboard for monitoring global news, markets, and geopolitical events](https://github.com/hipcityreg/situation-monitor)
+## todo
+
+[AI agents running research on single-GPU nanochat training automatically](https://github.com/karpathy/autoresearch)
+
+[笔记本跑LLM Official inference framework for 1-bit LLMs](https://github.com/microsoft/BitNet)
+
+Segment Anything Model (SAM)
+https://mp.weixin.qq.com/s/-LWG3rOz60VWiwdYG3iaWQ
+
+
+Winglang，一门AI时代的全新编程语言 https://mp.weixin.qq.com/s/43k6Flpj5RhfT3MOxbF4aQ
 
 [SpatialLM: Training Large Language Models for Structured Indoor Modeling](https://github.com/manycore-research/SpatialLM)
 
@@ -295,76 +303,3 @@ transform your product knowledge into a detailed Ideal Customer Profile https://
 
 ### 家居设计
 https://collov.ai/
-
-
-## 按领域分
-### 安全渗透
-https://github.com/hackerai-tech/PentestGPT
-
-### 软件
-
-#### 开发
-[Open Interpreter lets LLMs run code (Python, Javascript, Shell, and more) locally.](https://github.com/OpenInterpreter/open-interpreter)
-
-[OpenDevin](https://github.com/OpenDevin/OpenDevin)
-
-[A framework to enable multimodal models to operate a computer](https://github.com/OthersideAI/self-operating-computer)
-[指令爬虫](https://pypi.org/project/scrapegraphai/)
-
-GitHub Copilot Workspace
-
-编程助手 codey
-
-OpenAI's Code Interpreter 
-open-interpreter https://github.com/lyhistory/tools_aigc_open-interpreter
-
-Draw a ui and make it real
-https://github.com/tldraw/make-real
-
-生成网站：
-https://typedream.com/
-
-#### GPT+DB
-An intelligent and versatile general-purpose SQL client and reporting tool for databases which integrates ChatGPT capabilities.(智能的通用数据库SQL客户端和报表工具)
-https://github.com/chat2db/Chat2DB
-
-#### GPT GAMES World
-虚拟世界的人 Generative Agents: Interactive Simulacra of Human Behavior https://github.com/joonspk-research/generative_agents
-
-## todo
-https://creatorkit.com/
-OpenDAN Open-source Private AI OS https://www.opendan.ai/
-
-从0实现网络安全“小”模型.md
-https://mp.weixin.qq.com/s/XyMmMl_XDithOt7gsW5qeA
-
-新手用ChatGPT仅需数小时轻松构建零日漏洞，69家专业公司都检测不出来：“不仅能调用开源库，还能彻底重写源代码”
-https://mp.weixin.qq.com/s/iY4sG9TFC0kOi7xTdJttTw
-
-
-一名大四学生如何用ChatGPT月入6.4万美元 https://mp.weixin.qq.com/s/Tig_bNbnclZGmtK4uvMkbg
-
-Chatbase.co
-
-Segment Anything Model (SAM)
-https://mp.weixin.qq.com/s/-LWG3rOz60VWiwdYG3iaWQ
-
-
-格斗之王！AI写出来的AI竟然这么强！#拳皇#街头霸王#AI#强化学习
-
-生成礼物建议。比如，母亲节快到了，该送什么礼物给你的妈妈，你可以到这个网站上描述你的需求，然后系统便会调用 AI 接口生成礼物建议。
-https://gen.gifts/
-
-Winglang，一门AI时代的全新编程语言 https://mp.weixin.qq.com/s/43k6Flpj5RhfT3MOxbF4aQ
-
-1.安全方面：
-给出私钥
-给出某个网站的可利用漏洞
-给出waf后的真实ip
-
-2.趋势
-给出问的最多的问题
-给出中国用户最关心的问题
-
-3.钱
-给出最好的投资机会

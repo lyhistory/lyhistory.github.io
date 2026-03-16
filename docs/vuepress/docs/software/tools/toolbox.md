@@ -2,6 +2,46 @@ Keywords: Software, tools
 人和动物的区别是对工具的使用，
 大师和原始人的区别是对科技工具的使用
 
+[List of "only yours" cloud services for everyday needs ](https://github.com/lyhistory/deploy-your-own-saas)🏴:
++ VPN
++ Music streaming service
++ Photo hosting
++ eBooks catalog
++ Google Docs
++ Netflix
++ Notes
++ Bookmarks service
++ URL shortener
++ Cloud storage
++ DNS
++ AdBlock
++ Email server
++ Chat server
++ Video calls
++ Publishing system
++ Disqus comments
++ Web analytics engine
++ Google search
++ Cloud backup
++ Web archive
++ file sharing server
++ Information storing and organization system
++ Password manager
++ Read it Later
++ RSS reader
++ Git server
++ Gist/PasteBin
++ Mailchimp
++ Kanban board
++ GPS tracking system
++ Personal finance tracker
++ Smart home
++ IFTTT
++ Container Management System
+
+## 网络诊断
+[网络诊断可视化 NetSonar is a network diagnostics tool for pinging hosts (ICMP/TCP/UDP/HTTP), managing network interfaces, and discovering local devices/services.](https://github.com/sn4k3/NetSonar)
+
 ## 录屏神器
 
 [Create stunning screen recordings for free. Open-source, no subscriptions, no watermarks, and free for commercial use. An alternative to Screen Studio.](https://github.com/siddharthvaddem/openscreen)
@@ -109,6 +149,8 @@ https://www.quora.com/Which-is-the-best-free-editing-software-for-dubbing
 
 
 ## 下载
+[Download videos from almost any website worldwide](https://github.com/nexmoe/VidBee)
+
 下载网页
 HTTrack Website Copier   http://www.httrack.com/
  Web2book    http://download.cnet.com/Web2book/3000-2648_4-10649163.html

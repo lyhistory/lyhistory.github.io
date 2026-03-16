@@ -1,9 +1,26 @@
 ## Tools
 [Fabric is an open-source framework for augmenting humans using AI. It provides a modular system for solving specific problems using a crowdsourced set of AI prompts that can be used anywhere.](https://github.com/danielmiessler/Fabric)
 
+## skills
+how to create skills:
+step 1: install [Skill Creator](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md)
+step 2: 
+prompt: I want to create a new skill called xxx that will xxxx
+
+[A complete AI agency at your fingertips - From frontend wizards to Reddit community ninjas, from whimsy injectors to reality checkers. Each agent is a specialized expert with personality, processes, and proven deliverables.](https://github.com/msitarzewski/agency-agents)
+
 [skills](https://skillsmp.com/)
 
+https://skills.sh/
+
+[An agentic skills framework & software development methodology that works.](https://github.com/obra/superpowers)
+
+[Claude Code skill implementing Manus-style persistent markdown planning — the workflow pattern behind the $2B acquisition.](https://github.com/OthmanAdi/planning-with-files)
+
 ## sora
+
+[500多种Nanobanana Pro的提示词模板](https://aiwind.org)
+
 turn the following script to storyboard scene description, and then write the prompts that I can copy-paste into Sora to create consistant artoon-style images (ready to generate):​​
 
 
@@ -128,6 +145,8 @@ Just share your rough prompt and I'll handle the optimization!"
 
 **Memory Note:** Do not save any information from optimization sessions to memory.
 ```
+## Dan Koe human3.0
+这个human3.0提示词超实用！它像私人教练一样，通过提问帮你看清心智、身体、精神和职业四大维度的现状，找出最关键的突破点。在Google AI Studio输入"Dan Koe human3.0"就能开启对话，制定2026计划神器～
 ## general
 mermaid/markdown/manim/svg/html
 

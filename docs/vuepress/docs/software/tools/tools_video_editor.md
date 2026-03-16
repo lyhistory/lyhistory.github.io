@@ -5,6 +5,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
 ## software
++ [OpenCut](https://github.com/OpenCut-app/OpenCut)
 + opensource shotcut
     https://shotcut.org/download/
     https://github.com/mltframework/shotcut/releases
