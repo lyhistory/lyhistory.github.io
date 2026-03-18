@@ -2675,6 +2675,8 @@ shuttle 航天飞机
 thruster 推进器
 
 ## idiom saying 谚语/成语
+rabbit hole
+	ain't got energy left to go into another AI rabbit hole haha
 under the hood
 	It turns out Cloudflare D1 has a hard size limit for both local simulations and remote executions for a single SQL transaction block. Wrangler reported the upload as "successful" on the surface previously, but under the hood, Cloudflare quietly rolled back the transaction because it was too large (0 rows written).
 a drop in the ocean

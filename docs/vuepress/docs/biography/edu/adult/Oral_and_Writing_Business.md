@@ -1035,6 +1035,11 @@ widget gadget device
 
 #### complicated expression
 
+The reason your local npm run deploy works while the Cloudflare auto-build fails relies on a discrepancy between your package.json script and your wrangler.toml configuration.
+
+Locally (npm run deploy): In your package.json, the deploy script is explicitly defined as wrangler deploy --minify src/index.js. Here, you are explicitly telling Wrangler to build and deploy using src/index.js as the entry point, overriding whatever default is placed in your configuration.
+Cloudflare Auto-Build: When you git push and Cloudflare triggers the automatic build for Workers/Pages, it uses the configuration defined in your wrangler.toml. In your wrangler.toml, the main entry point was set to main = "dist/index.js". Since there isn't a build step explicitly generating the dist/index.js bundle before Cloudflare attempts to deploy it, it throws the ✘ [ERROR] The entry-point file at "dist/index.js" was not found. error.
+
 The app will now let you click "Step 1: Generate Storyboard", presenting the timeline editor, letting you preview scripts/prompts/images and delete chunks or regenerate individual images before finally hitting "Step 2: Generate Video".
 
 You're right to question whether per-word synthesis is the right approach — it does multiply API calls by the word count and slightly changes the prosody (words sound more robotic/disconnected without sentence-level context)
