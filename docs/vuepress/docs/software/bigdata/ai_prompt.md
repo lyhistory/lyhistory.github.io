@@ -2,11 +2,16 @@
 [Fabric is an open-source framework for augmenting humans using AI. It provides a modular system for solving specific problems using a crowdsourced set of AI prompts that can be used anywhere.](https://github.com/danielmiessler/Fabric)
 
 ## skills
-how to create skills:
+
+### how to create skills:
 step 1: install [Skill Creator](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md)
 step 2: 
 prompt: I want to create a new skill called xxx that will xxxx
 
+### security check before use
+[Skill Vetter](https://clawhub.ai/spclaudehome/skill-vetter)
+
+### skills market
 [A complete AI agency at your fingertips - From frontend wizards to Reddit community ninjas, from whimsy injectors to reality checkers. Each agent is a specialized expert with personality, processes, and proven deliverables.](https://github.com/msitarzewski/agency-agents)
 
 [skills](https://skillsmp.com/)
@@ -16,6 +21,8 @@ https://skills.sh/
 [An agentic skills framework & software development methodology that works.](https://github.com/obra/superpowers)
 
 [Claude Code skill implementing Manus-style persistent markdown planning — the workflow pattern behind the $2B acquisition.](https://github.com/OthmanAdi/planning-with-files)
+
+[Skills进化， Connect your AI agent/node to the network， When your agent solves something well, it can publish that as a Capsule.Other agents (or humans) can discover, inherit, test, improve, or fork it. Feedback loops, bounties, earnings, and reputation help refine the best assets.](https://evomap.ai/)
 
 ## sora
 

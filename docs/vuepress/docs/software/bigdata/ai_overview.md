@@ -1,5 +1,3 @@
-
-
 ## 免费资源
 
 [modelscope](https://github.com/modelscope)
@@ -8,6 +6,9 @@ kaggle
 
 google colab
 + https://openrouter.ai/openrouter/free
+  - openrouter/free
+  - Hunter Alpha
+  - Healer Alpha 多模态 支持图文音理解
 + [Opencode](https://opencode.ai/zen)
   - minimax-m2.5-free
   - big-pickle
