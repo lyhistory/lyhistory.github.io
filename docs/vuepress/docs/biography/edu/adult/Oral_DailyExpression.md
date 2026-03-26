@@ -2070,9 +2070,9 @@ Who is this/that?"​
 	Have you had lunch yet?​​ ​“Have you eaten...today?”​​ 这种现在完成时的问法，虽然语法完全正确，但它的“味道”变了。它更侧重于询问从过去到现在一段时间内的经历和状态。当后面接上具体的食物（如 chicken）时，听起来更像是在做一项饮食调查，比如关心对方今天的蛋白质摄入情况，而失去了简单问候的意味
 
 
-A:​ Have you done eating?
+A:​ Have you done eating? / Are you done eating?
 
-B:​ Yes, I have.
+B:​ Yes, I have.	/ Yes, I am.
 
 A:​ What did you eat?
 

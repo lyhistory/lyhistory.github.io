@@ -245,6 +245,9 @@ Gerund 是由 ‌动词原形 + -ing‌ 构成的‌名词性成分‌（如 swi
 We are going to learn counting numbers today.
 Let’s practice counting from 1 to 10.
 
+Are you done eating? VS Are you done with your homework?
+“are you done + 动名词”并非绝对不用with，而是“be done + 动名词”是更口语、更常用的结构；“be done with + 名词/动名词”是完整形式（需加with），但适用场景不同。名词必须加with，是因为名词无法直接作“完成状态”的状语，需用介词with连接；而动名词可直接作状语（表“完成的动作”），故可省略with。
+
 ### participles 分词 (doing/done)
 其本质是动词与形容词的结合体：
 
