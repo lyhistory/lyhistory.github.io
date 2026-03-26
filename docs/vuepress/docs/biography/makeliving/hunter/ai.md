@@ -1,3 +1,6 @@
+
+https://github.com/bleedline/aimoneyhunter
+
 [油管完播率95%，30天涨粉6000，月入1200美金！自动化AI制作助眠视频，无脑复制！](https://mp.weixin.qq.com/s/IbTYTKQRZxiKutOXQKGJ0w)
 
 [一条不露脸的YouTube短片赚7166美元，自动化运营秘诀](https://mp.weixin.qq.com/s/X_gYXbtfOeSK4RyPKQZJSA)
