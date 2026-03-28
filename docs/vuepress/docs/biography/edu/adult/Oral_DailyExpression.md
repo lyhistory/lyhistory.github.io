@@ -1457,6 +1457,13 @@ nuance细微差别
 
 ### 英文表达
 #### Synonym - Words in mind
+Stamp VS Stomp
+	She stamped her foot in frustration.（她沮丧地跺了跺脚）——轻微情绪，强调“动作的目的性”。
+	She stomped her foot in anger.（她怒气冲冲地跺脚）——强烈情绪，强调“情绪的宣泄”。
+	He stamped the snow off his boots.（他跺脚抖落靴子上的雪）——实用动作，无强烈情绪。
+	He stomped around the yard to shake off mud.（他在院子里跺脚抖落泥）——若为实用目的，英式英语用“stamp”，美式英语可能用“stomp”，但“stomp”更强调“动作的沉重”。
+	The fans stamped their feet and cheered.（粉丝们跺脚欢呼）——强调“节奏性”，情绪较温和。
+	The fans stomped their feet and shouted.（粉丝们跺脚呐喊）——强调“情绪的强烈”，更符合美式英语的口语习惯。
 Specific vs Particular
 	Specific	如果重点是内容的清晰、细节和精确度，担心对方觉得太笼统，用 specific。
 		specific instructions（明确的指示）, specific example（具体的例子）, specific time（确切的时间）

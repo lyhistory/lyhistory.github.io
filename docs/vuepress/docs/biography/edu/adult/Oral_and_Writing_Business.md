@@ -71,6 +71,10 @@ Light provisioning will be provided
 ​ 如果使用 “is going to be provided”，会隐含一种“（我们）打算/计划提供灯光”的意味。这会给通知带入一丝“主观意图”的色彩，仿佛这个决定是某个操作员临时起意或系统刚刚计划好的，反而削弱了通知作为既定程序的确定性和可靠性 。
 ### business dialogue
 
+A:​ The meeting has started—please join us.
+
+B:​ I'm attempting to join, but it's stuck on "joining" and I haven't managed to get in yet. Probably a network lag.
+
 Hi XXX, have they decided who you’ll be handing over to? If not, could we start the handover sessions? I’m a bit worried that since your last day is approaching, they might assume I know all the details like you do—so maybe we should kick things off just to be safe.
 
 I’d assumed you’d tasked XXX with the installation—she attempted it moments ago and messaged me in the group about the snag she ran into.
