@@ -186,7 +186,7 @@ touch base vs discuss
     Would it be possible to connect briefly today at your convenience to discuss the clearing repository permissions?
     do you have a few minutes today to touch base on the clearing repo permissions? Thanks!
 
-Is UAT testing performed in a test environment? If yes, how is the test environment maintained and how does APEX make sure it represents the production environment at the time of testing?
+Is UAT testing performed in a test environment? If yes, how is the test environment maintained and how does xxx make sure it represents the production environment at the time of testing?
 
 "To my knowledge, there is no test environment. You should probably confirm with the Finance Department or the person who purchased this service. As far as I know, Yonyou provides their service by having users log into their system. All services are offered by Yonyou and are not hosted on our end."
 
@@ -406,7 +406,7 @@ The vendor is following up. (现在进行时)​​
 
 ​隐含意义​：这会给人一种“供应商正在紧盯着我们”的紧迫感，甚至可能带有一丝被催促的压迫感。在某些情况下，可能会被解读为你在向经理传递压力。
 
-#### Example
+#### Example 1
 Hi Peter,
 
 While I recognize that xxx (formerly xxxx) has been a long-standing partner, we still need to ensure that this renewal aligns fully with our updated governance requirements.
@@ -498,7 +498,7 @@ Hi Vendor!
  
 Thanks for the phone call earlier! Just to recap what we discussed.
  
-We note that there is a discrepancy in the late payment terms between the invoice and the APEX SG Website Development & Maintenance Package.
+We note that there is a discrepancy in the late payment terms between the invoice and the xxx SG Website Development & Maintenance Package.
  
 The invoice states that “1.5% of the monthly balance will be charged as late payment fee after 30 days,” while the website maintenance package states that “late payments will be charged at an interest 5% per month.”
  
@@ -548,6 +548,79 @@ Apologies, I missed out one point earlier – could you also kindly re-issue the
 Hi Jane,
 
 Please find attached updated invoice. Thanks.
+
+#### Example 2
+
+Hi Peter, 
+
+Thank you for your patience. Please find our comments below. Should you have any queries, please do not hesitate to reach out. 
+
+Kind regards, 
+LCD 
+
+++ Comments ++ 
+
+Website Maintenance – OOO 
+
+Master Agreement Comments (While this Master Agreement was signed in 2022, please take note of the below)
+
+Termination (Clause 10): XXX may by 90 days’ notice in writing terminate the Master Agreement, including the Schedule at any time. Nonetheless, such termination will not affect the SOWs which are in force. 
+
+Intellectual Property Rights (Clause 5): Please note that no intellectual property rights of either party are transferred or licensed as a result of any agreement entered into between the parties. 
+
+Fees (Clause 7): Fees relating to works provided by the supplier will be set out in the Schedule to the Master Agreement. The Supplier will invoice XXX for all sums due under the Master Agreement in two stages, 50% upon execution of the Schedule and 50% upon going live, and XXX shall pay such sums within 30 days from the date of invoice. 
+In the event that XXX considers the invoice invalid or incorrect for any reason, it shall notify the Supplier in writing and state the reasons for withholding payment. Failing which, XXX will raise no objection to any such invoice and will make full payment in accordance with it. 
+
+Confidentiality (Clause 11): XXX shall maintain the confidentiality of the supplier’s confidential information and shall not without the supplier’s prior written consent, use, disclose, copy or modify the supplier’s confidential information other than as necessary for the performance of its rights and obligations under the agreement. 
+
+XXX SG Website Development & Maintenance Package
+•	Please confirm that the scope of work required is accurately reflected. 
+•	Please note that additional items and quantities exceeding the quantity and scope of work listed will be separately charged as Variation Order. 
+•	Please note the details relating to cancellation fees (Paragraph 9 of “Terms & Conditions”).
+•	Please inform OOO Pte. Ltd. that there is some inconsistency regarding when invoices need to be paid. In this document, it is 30 days. However, in the invoice, it is 15 days. Please confirm which is the accurate one which should be relied on. 
+++ End ++
+
+Hi LCD,
+
+Thank you for your guidance and critical reminders regarding the agreement clauses.
+
+As requested:
+
+Revised quotes​ and corrected invoice​ attached, now fully aligned with:
+
+Clause 7.4: Payment terms explicitly adjusted to 30 days​ (previously 15 days).
+
+Attachment naming:
+
+[Vendor]_Revised_Quote_20240703_v2.pdf
+
+XXX_Invoice_#[Number]_30DayTerm.pdf
+
+Confirmed actions:
+
+Vendor reissued documents within 1 business day upon our request.
+
+Accounting will process payment upon your written confirmation​ of compliance.
+
+Next steps:
+
+If further revisions are needed, please advise by EOD today​ (to meet vendor payment cutoff).
+
+Ready to schedule a brief call to discuss Clause 5/10 implementation.
+
+Appreciate your partnership in ensuring airtight compliance.
+
+Best regards,
+
+Peter
+
+Hi [Name],
+
+Yes, I confirm the scope of work is accurately reflected. Upon receiving LCD's approval, I will initiate the Annex A signing process.
+
+Thanks,
+
+Peter
 
 ## Specific Area
 
