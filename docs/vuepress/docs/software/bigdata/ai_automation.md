@@ -151,6 +151,44 @@ o  What now -------------------------------------------------------------+
 |
 —  Onboarding complete. Dashboard opened; keep that tab to control OpenClaw.
 
+#### mission control
+
+[OpenClaw Office is the visual monitoring and management frontend for the OpenClaw Multi-Agent system. ](https://github.com/WW-AI-Lab/openclaw-office)
+
+[Your OpenClaw Headquarters in 3D](https://www.claw3d.ai/)
+
+[AI Agent Orchestration Dashboard - Manage AI agents, assign tasks, and coordinate multi-agent collaboration via OpenClaw Gateway.](https://github.com/abhi1693/openclaw-mission-control)
+
+```
+
+在主机上启动网关：
+openclaw gateway run
+获取带令牌的仪表盘 URL：
+openclaw dashboard --no-open
+将 WebSocket URL 和令牌粘贴到上方，或直接打开带令牌的 URL。
+
+改完config
+openclaw doctor --fix
+openclaw gateway restart
+
+openclaw gateway --port 18789
+# debug/trace mirrored to stdio
+openclaw gateway --port 18789 --verbose
+# force-kill listener on selected port, then start
+openclaw gateway --force
+
+临时换
+/model deepseek/deepseek-chat
+
+永久改默认：
+openclaw models set deepseek/deepseek-chat
+
+openclaw logs --follow
+
+更新：
+openclaw update
+```
+
 #### Security
 [OpenClaw Exposure Watchboard](https://openclaw.allegro.earth/)
 
@@ -443,11 +481,23 @@ OpenClaw memoryFlush 开了还是失忆怎么办？A：检查 softThresholdToke
 ```
 OpenClaw 子 Agent 并发限制经验值：同时最多跑 2 个子 Agent，4 个基本触发 API 429 限流。有依赖关系的任务（B 依赖 A 的输出）必须串行，在 AGENTS.md 里提醒主脑注意任务依赖即可。
 
-#### Cron 定时任务配置 — 精确到分钟的 AI 自动化
+/subagents list
+/subagents kill <id|#|all>
+/subagents log <id|#> [limit] [tools]
+/subagents info <id|#>
+/subagents send <id|#> <message>
+/subagents steer <id|#> <message>
+/subagents spawn <agentId> <task> [--model <model>] [--thinking <level>]
+
+#### [Cron 定时任务配置 — 精确到分钟的 AI 自动化](https://docs.openclaw.ai/automation/cron-jobs)
 
 openclaw cron list                     # 查看所有任务
 openclaw cron runs --id <任务ID>       # 查看执行历史
 openclaw cron edit <任务ID> --disable  # 禁用（推荐，而不是删除）
+
+8 AM daily	0 8 * * *
+Every 12 hours	0 */12 * * *
+Every day at midnight	0 0 * * *
 
 ```
 {
@@ -467,6 +517,16 @@ OpenClaw Cron 任务设了但没触发？A：99% 是时区问题——没设 tz
 
 #### openclaw.json 配置速查表 — 把每个参数调到最优
 所有配置写在 ~/.openclaw/openclaw.json，修改后 openclaw gateway restart 生效。
+
+升级3.31后老弹审批？
+```
+tools: {
+  exec: {
+    ask: "off",
+    security: "full"
+  }
+}
+```
 
 blockStreaming — 解决 AI 长回复要等很久的问题
 ```
@@ -502,30 +562,6 @@ Heartbeat 调优 — 防止 AI 在非活跃时间骚扰你
     }
   }
 }
-```
-
-
-
-#### mission control
-
-[OpenClaw Office is the visual monitoring and management frontend for the OpenClaw Multi-Agent system. ](https://github.com/WW-AI-Lab/openclaw-office)
-
-[Your OpenClaw Headquarters in 3D](https://www.claw3d.ai/)
-
-[AI Agent Orchestration Dashboard - Manage AI agents, assign tasks, and coordinate multi-agent collaboration via OpenClaw Gateway.](https://github.com/abhi1693/openclaw-mission-control)
-
-```
-openclaw gateway --port 18789
-# debug/trace mirrored to stdio
-openclaw gateway --port 18789 --verbose
-# force-kill listener on selected port, then start
-openclaw gateway --force
-
-临时换
-/model deepseek/deepseek-chat
-
-永久改默认：
-openclaw models set deepseek/deepseek-chat
 ```
 
 #### Skills
