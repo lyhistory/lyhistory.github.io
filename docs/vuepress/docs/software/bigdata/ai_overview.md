@@ -5,8 +5,14 @@
 kaggle
 
 google colab
+
+[awesome-free-llm-apis：把永久免费 LLM API 先整理成一张可直接拿来用的清单](https://github.com/mnfst/awesome-free-llm-apis)
+
++ Google Gemini
++ GitHub Models
 + https://openrouter.ai/openrouter/free
   - openrouter/free
+  - Nemotron 3 Super（free）
   - Hunter Alpha
   - Healer Alpha 多模态 支持图文音理解
 + [Opencode](https://opencode.ai/zen)
@@ -21,16 +27,22 @@ google colab
     1. [@cf/runwayml/stable-diffusion-v1-5-inpainting](https://developers.cloudflare.com/workers-ai/models/stable-diffusion-v1-5-inpainting/#Usage)
 + https://groq.com/
 + huggingface.co
-+ https://build.nvidia.com/
++ [英伟达nvidia](https://build.nvidia.com/)
+  - Kimi-K2.5
+  - GLM-4.7
   - z-ai/glm4.7
   - minimaxai/minimax-m2.1
++ Cerebras
++ Mistral AI
 + 硅基流动API官网：https://cloud.siliconflow.cn/i/jPI17VGX  
   - Kwai-Kolors/Kolors
+  -  Qwen/Qwen3.5-4B
 + 火山方舟API官网：https://console.volcengine.com 
 + 阿里百炼API官网：https://www.aliyun.com/product/bailian
   - qwen3-max
 + 深度求索API官网：https://platform.deepseek.com  
-
++ 智谱 AI 
+  - GLM-4.7-Flash 
 ## Info
 [A Simple and Universal Swarm Intelligence Engine, Predicting Anything. 简洁通用的群体智能引擎，预测万物](https://github.com/666ghj/MiroFish)
 

@@ -199,6 +199,8 @@ https://github.com/chat2db/Chat2DB
 
 ## hardware
 
+[Create hardware prototype designs by chatting with AI](https://www.blueprint.am/)
+
 [LeRobot: Making AI for Robotics more accessible with end-to-end learning](https://github.com/huggingface/lerobot)
 
 [LeKiwi - Low-Cost Mobile Manipulator](https://github.com/SIGRobotics-UIUC/LeKiwi)

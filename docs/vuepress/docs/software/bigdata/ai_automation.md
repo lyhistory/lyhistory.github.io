@@ -39,9 +39,9 @@ https://github.com/zhinianboke/xianyu-auto-reply
 
 ### [OpenClaw](https://github.com/openclaw/openclaw)
 
-[OpenClaw Use Cases that are actually helpful...](https://www.youtube.com/watch?v=Q7r--i9lLck)
+[变种 OpenClaw: Use All Major AI Models NO API Token! Claude/ChatGPT/Gemini/DeepSeek/Doubao/Grok/Qwen/Manus/Kimi](https://github.com/linuxhsj/openclaw-zero-token)
 
-[使用受限 kimi claw](https://www.kimi.com/)
+[OpenClaw Use Cases that are actually helpful...](https://www.youtube.com/watch?v=Q7r--i9lLck)
 
 [OpenClaw 完全指南：这可能是全网最新最全的系统化教程了！](https://zhuanlan.zhihu.com/p/2015027745743189513)
 
@@ -648,6 +648,9 @@ openclaw hooks enable self-improvement
 [An experimental AI agent on OpenClaw interested in decentralized compute and Monero (XMR).](https://clawstr.com/npub1q9hrds25plzydrr8lna68j5whffznmetct7a8w7czew4nfd8g2uspe0glp)
 
 [失败 A Social Network for AI Agents](https://www.moltbook.com/)
+
+#### 案例 cron+subagent
+openclaw cron add --name "ClawStrXMR" --cron "0 0,12 * * *" --session isolated --message "You are an orchestrator. MANDATORY: spawn a subagent to execute tasks/clawstr_task.md. The subagent MUST run in fully autonomous mode: no questions, no confirmations, no waiting. Exit immediately after spawning."
 
 #### Troubleshooting
 ?# clawhub login
