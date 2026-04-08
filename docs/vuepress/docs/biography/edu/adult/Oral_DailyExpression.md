@@ -36,7 +36,36 @@ Buzzword / Slang 网络热词（如“内卷”、“躺平”）
 		She made a ​tart​ lemonade that made my lips pucker
 	​Acerb​ / ​Acerbic​ ​文学或专业用语，形容酸涩难忍，常引申为言辞“尖酸刻薄”。
 		The ​acerbic​ taste of the unripe persimmon was unbearable
-### 骂人的句子
+### 不满
+#### 反讽（Irony/Sarcasm）
+
+褒义：Amazingly talented.（才华横溢到炸裂。）
+
+贬义："Wow, that's amazingly​ bad."
+
+同事提交的报告漏洞百出，老板看完面无表情地说：
+
+"Well, that’s just amazing."
+
+（“哇，可真是太‘棒’了。”）
+
+👉 潜台词：简直烂透了，我在无语凝噎。
+
+场景：司机开车直接撞上了路边的垃圾桶，乘客扶额吐槽：
+
+"Amazing​ driving, mate."
+
+（“老兄，你这车技真是‘举世无双’。”）
+
+"It's amazing​ how messy your desk is."
+
+（你桌子乱得简直令人“叹为观止”。）
+
+"He has an amazing​ ability to ruin everything."
+
+（他搞砸一切的能力简直“超凡入圣”。）
+
+#### 骂人
 dumass
 idiot
 hypocrisy 伪善
@@ -2015,6 +2044,66 @@ FYI, our new release has been approved on Google Play. You can now install it bo
 虽然语法上也说得通，但语气上更像是在给出操作选项或步骤指引，而不是兴奋地宣布两个渠道都已开通。
 You can have tea or​ coffee.
 We can meet on Monday or​ Tuesday.
+
+you may proceed VS please proceed VS you can proceed
+
+1. You may proceed —— “本官准奏”
+
+潜台词：我比你高级，我现在给你发许可证了。
+
+底层逻辑（May）：May代表的是 Permission（许可/授权）。当你用 May 时，你把自己放在了一个有权发号施令、给予批准的高位。
+
+适用人设：老板对下属、客户对供应商、或者法务/财务在走合规审批流程时。
+
+画面感：就像皇帝批奏折，或者将军在前线下令。如果你是个平级同事，对别人说这句，会显得极度傲慢（Arrogant）或者是在阴阳怪气（Sarcastic）。
+
+例句：The budget looks good. You may proceed​ with the purchase.(预算没问题，朕准你去买。)
+
+2. You can proceed —— “理论上你没问题了”
+
+潜台词：我只是陈述一个事实，你现在具备条件了。
+
+底层逻辑（Can）：Can代表的是 Ability / Circumstance（能力/客观条件允许）。用 Can 时，你在表达“因为某些前提条件达成了（比如钱到账了、数据对齐了），所以你现在‘能够’走了”。
+
+适用人设：偏理性的项目经理（PM）、技术支持（IT）、或者说这句话的人在撇清自己的主观意愿，纯粹在走流程。
+
+画面感：机器绿灯亮了，安检人员对你摆摆手说“你可以过去了”。它没有强烈的“命令”色彩，也没有强烈的“请求”色彩，就是公事公办。
+
+例句：The system is now online. You can proceed​ with the installation.(系统上线了，你们现在有条件去装软件了。)
+
+3. Please proceed —— “有劳阁下动手”
+
+潜台词：咱们是平级/队友，我拜托你赶紧开始吧。
+
+底层逻辑（Please）：Please代表的是 Request / Invitation（请求/邀请）。这是最典型的协作姿态（Collaborative），你在把对方当成合作伙伴来对待。
+
+适用人设：绝大多数职场打工人之间的日常沟通。
+
+画面感：餐厅服务员做出“您先请”的手势，或者同事之间互相配合时的客气。它完全抹平了权力差距，是最安全、最不会出错的表达。
+
+例句：Glad we're aligned. Please proceed.(很高兴我们意见一致了，那就麻烦你继续推进啦。)
+
+💡 总结：你该怎么选？
+
+为了让你以后用得精准，我对号入座帮你梳理一下：
+
+如果你是老板/甲方（要彰显地位）​ 👑
+
+用 "You may proceed."​ （此时配合一个点点头的动作，气场全开）
+
+如果你是 PM / 运营 / 配合部门（强调客观条件）​ 🤖
+
+用 "You can proceed."​ 或者更完整的 "You can proceed once..."（强调只要某个条件满足就能动）
+
+如果你是普通打工人（求人办事/平级协作）​ 🤝
+
+永远首选 "Please proceed."​ 或者更地道的说法 "Please go ahead."/ "Please move forward."
+
+💎 附赠一个高情商无敌表达：
+
+如果你不想显得像老板那么装，又觉得 "Please proceed" 有点干巴巴的，你想表达“既然都谈妥了，那咱们就赶紧动手吧”的积极协作态度，可以说：
+
+👉 "Let's proceed."​ (咱们一起推进吧) —— 把“你”变成了“咱们”，瞬间拉满 Teamwork（团队协作）的好感度！
 
 #### 代称
 ​Who is he/she?​ 已知性别或特定上下文的某个人

@@ -70,6 +70,12 @@ Light provisioning will be provided
 在航空、航海、技术文档等高度标准化的领域，沟通的首要原则是清晰、客观、避免歧义。使用被动语态能将注意力集中在关键的动作或状态上。例如，在航空通信中，说“The landing gear was extended”（起落架已放下）比“The pilot extended the landing gear”（飞行员放下了起落架）更简洁、焦点更突出。它弱化了个人因素，强调标准程序已被执行这一事实本身。
 ​ 如果使用 “is going to be provided”，会隐含一种“（我们）打算/计划提供灯光”的意味。这会给通知带入一丝“主观意图”的色彩，仿佛这个决定是某个操作员临时起意或系统刚刚计划好的，反而削弱了通知作为既定程序的确定性和可靠性 。
 ### business dialogue
+I didn’t initiate the cookie consent request—this was actually LCD’s requirement. It’s best to check with them directly, as I can only provide technical support.
+
+Hi bro, just to confirm—are the most critical​ times Monday morning (5:30-6:30) and every business day around 6:30 for the Settlement Price publish, is that right? I'll stand by​ those critical time points to be there in case anything needs support.
+
+xxx is inquiring/asking  whether we have the source code for xxx—it seems it's not in our GitLab repository.
+xxx has asked if we possess the xxx source code, as it appears to be missing from our GitLab.
 
 A:​ The meeting has started—please join us.
 
@@ -200,6 +206,45 @@ If applicable, please provide details of the scheduled jobs in the system showin
 If your question pertains to scheduled jobs on Yonyou’s side (such as system backups or data synchronization), note that these are fully managed by Yonyou. Their internal processes are not visible to us, so we do not have details regarding job names or frequencies."
 
 ### business email
+
+Hi,​
+
+I’ve verified the figures—there’s only one tiny difference: 123.125. I think it should normally round up to 123.13, but yours is​ 123.12. Could you just confirm if there are 2 gold holidays​ (that might affect the rounding)?
+
+A minor discrepancy​ was found in the figure 123.125: expected 123.13 (per rounding rules), but actual is 123.12. 
+
+<=
+Hi peter,
+
+We have confirmed that there are 2 gold holidays, Christmas Day (25 Dec) and Boxing Day (28 Dec) for Q1 2022.
+
+We have noted in our R-Script, it will round down the number “5” as seen below. Thus, your figure of 123.13 is correct and we have updated this figure in the excel.
+Please let us know if there anything else.
+
+Once we have your confirmation, we will proceed accordingly.
+=>
+Hi Peter,​
+
+Thank you for confirming the 2 gold holidays (Christmas Day and Boxing Day) and updating the figure. The explanation about the R-script rounding logic makes sense, and we confirm the corrected figure of 123.13 is accurate.
+
+All figures are now consistent, so please proceed with the next steps. Let us know if you need any further input from our side.
+
+Thank you for your attention to detail!
+
+Subject: New User Account Credentials for XXX System
+
+Hi [Recipient's Name],
+
+I’ve set up a new user account for you in the XXX system. Here are your credentials:
+
+Username: xxx
+
+Password: xxx
+
+Please use these details to log in. If you encounter any issues, feel free to reach out—I’m here to help.
+
+Best regards,
+
 hi xxx, seeking your approval to grant xx access to gitlab for test project. @xx, could you assist to grant xx acess to test project once xxx approves this request? 
 <= 
 Hi [Recipient’s Name],​
@@ -621,6 +666,24 @@ Yes, I confirm the scope of work is accurately reflected. Upon receiving LCD's a
 Thanks,
 
 Peter
+
+## TICKETS
+
+Subject: Temporary Internet Access Request for Website Test Environment
+
+Server IP: xxxx
+
+Purpose:
+
+To connect to the external network for installing and testing the Cookie Yes plugin, which is required to enable the Cookie Consent​ functionality.
+
+Description:
+
+As the test environment is currently offline, the system cannot perform automatic Cookie scanning, and the Cookie Consent feature may not operate as intended.
+
+Additionally, we need to verify whether Consent logs​ can still be recorded and function normally in offline mode (to ensure compliance and troubleshooting capabilities).
+
+Request: Temporarily allow internet access for the above server during the testing period.
 
 ## Specific Area
 
