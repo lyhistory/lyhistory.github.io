@@ -615,3 +615,15 @@ http://ltang.suning.com {
 }
 import sites/*
 
+### dns exchange failed
+
+option 1:
+ipconfig /flushdnsnetsh 
+winsock reset
+netsh int ip reset
+
+then restart
+
+
+option 2:
+Go to Settings -> Core Settings -> DNS Settings.On the Basic DNS Settings tab, replace any complex DNS-over-HTTPS (DoH) URLs with a plain IP address, such as Google Public DNS (8.8.8.8) or Cloudflare DNS (1.1.1.1).Ensure FakeIP is turned off in the Advanced DNS Settings to avoid additional complexities during troubleshooting.
