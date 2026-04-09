@@ -235,7 +235,10 @@ https://v2raya.org/docs/prologue/introduction/
    
 
 ##### 手机客户端：
-https://itlanyan.com/v2ray-clients-download/
++ [V2rayNG](https://github.com/2dust/v2rayNG/releases)
++ (推荐) [NekoBox for Android](https://github.com/MatsuriDayo/NekoBoxForAndroid/releases)
++ [更多](https://itlanyan.com/v2ray-clients-download/)
+
 
 
 ### 民间脚本(推荐小白，保姆式一步步即可)：
@@ -510,7 +513,11 @@ https://iitii.github.io/2022/03/02/1
 
 
 ### 基本检查和终极方法
-+ 网卡属性 ipv4 ip gateway dns
++ 先确认当前网络在不用vpn的情况下是正常的
++ 对比连接当前网络以及使用手机热点下是否使用vpn都是同样问题
++ 对比其他机器是否遇到同样问题
++ 对比其他的vpn client是否遇到同样问题（注意有些client的日志比较友好更容易定位问题）
++ 网卡属性 ipv4 ip gateway dns，看看是否是DNS污染问题
 + proxy设置
 + 是否跟其他vpn软件冲突
 + 浏览器插件是否有开启（比如定位服务）
@@ -519,9 +526,12 @@ https://iitii.github.io/2022/03/02/1
 有时候观察到不稳定或者手机可以,windows不可以,完全可以通过升级客户端解决!
 
 ### 手机连不上
-google pixel连上但是无法访问网络：fail to detect internet connection ios read/write on closed pipe
 
-+ Sync System Time: Incorrect device time is the most common cause of this error. Go to your device's Settings > System > Date & time and ensure "Set time automatically" is enabled.
+
++ Sync System Time: 
+    Incorrect device time is the most common cause of this error. Go to your device's Settings > System > Date & time and ensure "Set time automatically" is enabled.
+    这个是最常见的问题，比如我的 google pixel 6 pro 连上但是无法访问网络（v2rayNG)：fail to detect internet connection ios read/write on closed pipe，原因是长时间不用，日期时间都已经错了，刚开始我只注意到time错了，最后才发现日期远远落后于当前日期，多亏了我换用NekoBox for Android，错误提示比V2rayNG更加友好直接：Failed:Get "http://cp.cloudflare.com": tls: failed to verify certificate: x509; certificate has expired or is not yet valid: current time 2025-12-04.... is before 2026-03-12...
+
 
 
 ### TUN 模式

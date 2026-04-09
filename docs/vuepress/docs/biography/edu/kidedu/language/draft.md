@@ -20,8 +20,6 @@ i know how
 
 sing sang sung son
 
-tab 各种意思 make the foil into tabs
-
 立起来旗杆 搭起来帐篷
 切末
 
@@ -237,7 +235,6 @@ https://www.playphrase.me/
 https://clip.cafe/
 https://youglish.com
 
-straighten your top
 tuck your tummy in
 put your head through the hole
 step in one leg
