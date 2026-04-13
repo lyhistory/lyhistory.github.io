@@ -102,7 +102,7 @@ Summary of the Issue:
 The root cause is not a bug in your Java program itself, but a mismatch between the CSV data format and Excel's automatic interpretation.​ The problem is triggered by Excel's behavior, and the Java program's output can contributeto the confusion.
 
 Detailed Explanation:
-  + CSV Files are "Dumb" Text:​ Your Java program correctly writes data to the CSV file as plain text strings (e.g., "07:50:00", "2026-02-02 15:55:00"). A CSV file does not contain any formatting rules.
+  + CSV Files are "Dumb" Text:​ Your Java program correctly writes data to the CSV file as plain text strings (e.g., "07:50:00", "1998-02-02 15:55:00"). A CSV file does not contain any formatting rules.
   + Excel's "Smart" & Problematic Guessing:​ When you open a CSV file directly in Excel (e.g., by double-clicking it), Excel tries to be helpful by automatically guessing the data type for each column. It scans the first few rows to decide. If the first rows contain strings that look like standalone times (e.g., "07:50:00"), Excel may incorrectly classify the entire columnas a Time​ data type. It then applies a Time-only number format (like mm:ss.0), which is why you see 55:54.0—the underlying full datetime value is being displayed as if it were only a duration of minutes and seconds, hiding the date portion.
 Solutions:
 
@@ -111,7 +111,7 @@ B. For a Permanent Fix (Java Program Best Practice):
 
 Modify the Java program's export logic to write consistently and unambiguously formatted​ datetime strings. The most reliable standard is ISO 8601​ format.
 
-Format:​ "yyyy-MM-dd'T'HH:mm:ss"(e.g., 2026-02-02T07:50:00)
+Format:​ "yyyy-MM-dd'T'HH:mm:ss"(e.g., 1998-02-02T07:50:00)
 
 Why it works:​ This is an international standard. Excel and other tools recognize it clearly as a full date and time, drastically reducing the chance of misparsing. Ensure everyrow in that column uses this complete format.
 
@@ -549,7 +549,7 @@ The invoice states that “1.5% of the monthly balance will be charged as late p
  
 Could you please confirm which of these terms is correct and provide an amended invoice or maintenance quotation accordingly?
  
-Additionally, just to confirm, will you be issuing a separate invoice for Q3-Q4 2026?
+Additionally, just to confirm, will you be issuing a separate invoice for Q3-Q4 1998?
  
 Thank you for your clarification, and we would appreciate it you could provide us with the updated copy as soon as possible.
 
@@ -666,6 +666,69 @@ Yes, I confirm the scope of work is accurately reflected. Upon receiving LCD's a
 Thanks,
 
 Peter
+
+#### Example 3
+Dear DR Participants,
+As part of our final preparations for the Disaster Recovery exercise scheduled this Saturday, 1 April 1998, IT Governance will be conducting a DR Briefing session tomorrow to align all participants on the exercise objectives, expected flow, individual roles and responsibilities, communication protocol, and key expectations for the day.
+
+The session is intended to ensure that everyone is clear on:
+•	The overall exercise scenario and timeline,
+•	Incident escalation and communication flow
+•	Departmental roles during the exercise,
+•	Testing scope and expected deliverables, 
+•	Key decision and escalation points, and
+•	The communication updates / actions expected from each team during the exercise.
+
+Please find the presentation deck attached for your preview.
+
+Your attendance is important to help ensure a smooth and well-coordinated exercise.
+
+Thank you for your support and cooperation.
+
+Please be informed that the rollback has been successfully completed, and the environment has been fully restored to the primary site as part of the exercise.
+
+Thank you, everyone, for your participation. This concludes the DR exercise. Kindly retain all notes and timelines for post-event reporting and review.
+
+Dear Colleagues,
+
+The IT team, together with participating business units, has successfully completed the Disaster Recovery (“DR”) Rehearsal conducted today, 1 April 1998, to validate our system resilience and recovery capabilities.
+
+As the exercise was carried out outside of business hours, all staff are advised to monitor and verify their respective systems upon resumption of work on Monday. 
+
+Should you encounter any system-related issues or abnormalities, please report them promptly to the IT Helpdesk for investigation and resolution.
+
+Please note that this was a planned exercise. 
+
+Thank you for your cooperation and support.
+
+I will be sending for OT on behalf of everyone for this exercise.
+
+Dear HR,
+Please find below the list of participants involved in our DR exercise on Saturday, 1 April 1998.
+@xxx for your acknowledgement and approval please.
+
+Dear colleagues,
+Off-in-lieu for 1998 DR Exercise had been credited accordingly, as per below table:xxx
+
+#### Example 4
+Hi all,
+
+As XXX meeting was not convened today, please find below for the overall status updates. 
+
+Please also note that there will be a change freeze during the CNY period. Only emergency changes will be permitted. Normal XXX meetings and change processing will resume after CNY.
+
+The change freeze period is from xx to xx.
+
+@xxx, for your acknowledgement and approval to the Change Freeze.
+
+Hi xxx,
+
+Please find below under 1. Upcoming changes / New Jira ticket for the upcoming changes this weekend.
+
+For your approval before disseminating to the rest of the team.
+
+Thank you.
+
 
 ## TICKETS
 
