@@ -209,8 +209,11 @@ sni:域名
 添加后观察下方窗口输出结果，注意到：
 在文件夹 (...\V2RAY\v2rayN\bin\Xray) 下未找到Core文件 (文件名:xray, wxray)，请下载后放入文件夹，[下载地址](https://github.com/XTLS/Xray-core/releases)
 
-##### linux客户端：
-https://v2raya.org/docs/prologue/introduction/
+##### linux客户端
+
+[v2rayA 是一款专注于 Linux/路由器等平台，以 Web 界面实现全局透明代理的强大 V2Ray 客户端。与传统客户端（如 Windows 的 v2rayN、Android 的 v2rayNG）相比，v2rayA 优势在于配置极其简单、支持跨平台管理、分流功能强大，特别适合需要在服务端或高阶网络环境中使用的用户。](https://github.com/v2rayA/v2rayA)
+
+[安装文档](https://v2raya.org/docs/prologue/quick-start/)
 
 1. 安装 V2Ray 内核#
    可以直接安装V2RAY，不过还是推荐V2RayA的官方方法：
@@ -232,7 +235,8 @@ https://v2raya.org/docs/prologue/introduction/
    sudo systemctl enable v2raya.service
    ```
 4. http://localhost:2017/
-   
+   sudo v2raya --reset-password
+
 
 ##### 手机客户端：
 + [V2rayNG](https://github.com/2dust/v2rayNG/releases)
