@@ -41,4 +41,106 @@ A network interface controller (NIC, also known as a network interface card, net
 
 举例实例分析参考：[BIO/NIO/多路复用/NETTY](/docs/software/buildingblock/nio_epoll)
 
+## WIFI
+Wi-Fi adapter (NIC) is a piece of hardware that operates at:
+
+📡 Layer 1 (Physical)
+Antenna sends/receives radio waves
+Handles modulation/demodulation (turns waves ↔ bits)
+📶 Layer 2 (Data Link)
+Processes 802.11 frames
+Handles:
+MAC addresses
+Frame parsing
+Encryption/decryption (WPA2, WPA3)
+
+**Normal behavior (Managed mode)**
+
+In default mode, your adapter is doing a LOT internally:
+
+Filters packets:
+❌ Drops everything not meant for you
+✅ Keeps only your traffic
+Decrypts data using the Wi-Fi password
+Passes clean data up to:
+Layer 3 (IP)
+Layer 4 (TCP/UDP)
+
+👉 So normally, you never see:
+
+Raw frames
+Other people’s traffic
+Handshakes
+
+**Monitor Mode**
+🔧 Inside the adapter (this is the key part)
+
+The adapter now:
+
+Stops filtering packets
+Stops requiring association
+Stops decrypting (mostly)
+Sends raw 802.11 frames to the OS
+
+👉 This is why only certain adapters work:
+
+They must support:
+Monitor mode
+Raw frame output
+Packet injection (optional)
+
+📡 How the adapter captures a handshake
+
+Let’s walk through a real scenario:
+
+Environment:
+Router (AP)
+Phone (client)
+Your laptop with monitor-mode adapter
+
+📶 Step 1: Radio transmission (Layer 1)
+
+When your phone connects:
+
+Router and phone exchange radio signals
+
+Your adapter:
+
+Picks up those same signals (like a radio receiver)
+📦 Step 2: Frame decoding (Layer 2 in hardware)
+
+The adapter converts signals into:
+
+802.11 frames
+
+Example (simplified):
+
+[Frame Header]
+[ANonce]
+[SNonce]
+[MIC]
+📤 Step 3: Driver passes raw frames to OS
+
+Instead of filtering, it sends everything to tools like:
+
+Airodump-ng
+🧪 Step 4: Tool extracts handshake
+
+The tool looks for:
+
+EAPOL packets (handshake frames)
+
+👉 Once all 4 messages are seen:
+
+“WPA handshake captured” ✅
+
+👉 Encryption/decryption is usually handled by:
+
+The Wi-Fi adapter hardware/firmware
+
+BUT in monitor mode:
+
+You get encrypted data
+No automatic decryption
+
 ## [RDMA网卡](/software/project_manage/trading.md)
