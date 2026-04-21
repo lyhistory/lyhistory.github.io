@@ -31,6 +31,9 @@ microsculpture
 
 ## books
 
+穿越计算机的迷雾
+量子物理史话
+
 这就是数学(Building Blocks of Math)
 这就是物理(Building Blocks of Physical Science)
 

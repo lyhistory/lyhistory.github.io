@@ -13,6 +13,64 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 ## 1. [快速入门 Setup](https://www.raspberrypi.com/documentation/computers/getting-started.html)
 
+### sdcard VS SSD
+#### sdcard选择
+容量越大，存储卡寿命越长
+
+这是很多人不知道的冷知识。无论是 SD 卡还是 SSD，都有“擦写寿命”（比如 TL C颗粒）。
+
+大容量的存储卡内部可使用的冗余空间（Over-provisioning）更多，主控芯片能做更好的磨损均衡。同样是日常使用，128GB 卡的寿命和稳定性通常会明显好于 64GB。
+
+Class 10 (C10)：老大哥，底线担当。
+
+只要带这个标，就意味着最低写入速度绝对不低于 10MB/s。这是当今主流存储卡的及格线，日常存照片、装树莓派系统完全够用。
+
+U3：实力派，速度进阶。
+
+它是 UHS-I（高速总线）时代的标准，要求最低写入速度达到 30MB/s。拍 4K 视频、高速连拍 raw 格式照片必须用它。
+
+V30 等（补充彩蛋）：视频专家。
+
+看到带个 V字母的（如 V30, V60），那是专门为视频拍摄定的标准。V30 就代表最低 30MB/s 的视频录制保障。
+
+A1 (Application Performance Class 1)：入门应用级。
+
+官方要求：随机读取至少 1500 IOPS，随机写入至少 500 IOPS。
+
+(人话：应付日常系统运行、挂个轻量级服务毫无压力。)
+
+A2 (Application Performance Class 2)：狂暴应用级。
+
+官方要求：随机读取飙升至 4000 IOPS，随机写入达到 2000 IOPS。
+
+(人话：专治各种不服！海量小文件瞬间响应，跑 Kali Linux 这种需要频繁读写的系统简直是丝滑。)
+
+#### SSD 选择及配置
+树莓派5（NVMe SSD）和树莓派4B（USB外接SSD）,若是 NVMe，需配合硬盘盒或扩展板接入电脑
+
+SSD 尤其是 NVMe 硬盘的功耗不小，建议使用官方正规的大功率适配器（如 5V/5A），以免硬盘因供电不足而掉盘
+
+树莓派 5 原生支持 PCIe 接口，发挥 NVMe 满血性能的步骤如下：
+
+连线与使能：将 NVMe 硬盘通过扩展板（如 M.2 HAT+）插到树莓派 5 上。如果是全新安装，先用一张带系统的 SD 卡引导进入系统。
+
+更新引导固件 (EEPROM)：打开终端，输入 sudo raspi-config，进入 Advanced Options-> Bootloader Version，将其改为 Latest，保存退出并更新系统。
+
+开启 PCIe 接口：编辑引导配置文件 sudo nano /boot/firmware/config.txt，在文件末尾添加 dtparam=pciex1（若想开启 PCIe 3.0 满速，可再加一行 dtparam=pciex1_gen=3）。保存后重启。
+
+修改启动顺序：再次打开终端，输入 sudo rpi-eeprom-config --edit。找到 BOOT_ORDER这一行，将其修改为 BOOT_ORDER=0xf416（意思是优先尝试从 NVMe 硬盘启动）。
+
+大功告成：关机电，拔掉 SD 卡，再次上电，系统就会从 SSD 疾速启动了！
+
+树莓派 4B 没有 PCIe 接口，但支持从 USB 3.0 外接 SSD 启动，速度同样秒杀 SD 卡：
+
+更新引导固件：同样先用 SD 卡引导进入系统，打开终端输入 sudo raspi-config，将 Bootloader（引导加载程序）更新到最新版本。
+
+修改启动顺序：输入 sudo rpi-eeprom-config --edit，将 BOOT_ORDER的值修改为包含 USB 启动的优先级（例如 0xf14或 0xf41，具体可根据你的需求调整，核心是让 USB 排在前面）。
+
+大功告成：将做好的 SSD 插入树莓派 4B 的蓝色 USB 3.0 接口，拔掉 SD 卡，重新上电即可。
+
+
 ### format micro sdcard
 
 sandisk extreme plus

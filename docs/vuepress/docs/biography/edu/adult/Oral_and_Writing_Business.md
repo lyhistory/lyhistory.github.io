@@ -70,6 +70,26 @@ Light provisioning will be provided
 在航空、航海、技术文档等高度标准化的领域，沟通的首要原则是清晰、客观、避免歧义。使用被动语态能将注意力集中在关键的动作或状态上。例如，在航空通信中，说“The landing gear was extended”（起落架已放下）比“The pilot extended the landing gear”（飞行员放下了起落架）更简洁、焦点更突出。它弱化了个人因素，强调标准程序已被执行这一事实本身。
 ​ 如果使用 “is going to be provided”，会隐含一种“（我们）打算/计划提供灯光”的意味。这会给通知带入一丝“主观意图”的色彩，仿佛这个决定是某个操作员临时起意或系统刚刚计划好的，反而削弱了通知作为既定程序的确定性和可靠性 。
 ### business dialogue
+I noticed XX sent an email to XXX regarding a position account closure issue. Could you clarify if there are any manual steps we need to take in our clearing system​ related to this?
+
+The current head of the IT department ousted his predecessor through underhanded means. Hailing from the Infrastructure department himself, he lacked a solid grasp of the company's project development landscape—and indeed, no meaningful progress was made on projects during his tenure. His top priority now? To outsource the entire IT department while keeping only his original Infrastructure team intact.
+Here’s the lowdown: This guy basically clawed his way to the top by shoving out the old IT head. Since he’s from infra, he’s totally lost when it comes to actual project work—and surprise, nothing got done under him. Now? He’s pushing to outsource the whole IT crew so he can just keep his own infra team safe and sound. Classic self-preservation play: dodge the blame for the mess, keep his power base, and call it a “smart move.” Total win for him, total loss for the company.
+
+Forgot to add
+    Forgot to add: please CC me on the email.
+Forgot to mention / Forgot to say
+    I forgot to mention that Eric will make​ the firewall change on Saturday—it’s for the testing environment.
+Forgot to include
+    Apologies, I forgot to include the attachment in my last email.
+Forgot to tell you
+    Oh! I forgot to tell you, Mark got promoted!
+Slip my mind​ 
+    It completely slipped my mind to send you the report.
+Overlook
+    I overlooked the part about the budget in our meeting.
+Neglect to​ (忘记 / 疏于 —— 较正式，带点自责)
+    I neglected to inform you about the schedule change.
+
 I didn’t initiate the cookie consent request—this was actually LCD’s requirement. It’s best to check with them directly, as I can only provide technical support.
 
 Hi bro, just to confirm—are the most critical​ times Monday morning (5:30-6:30) and every business day around 6:30 for the Settlement Price publish, is that right? I'll stand by​ those critical time points to be there in case anything needs support.
@@ -206,6 +226,38 @@ If applicable, please provide details of the scheduled jobs in the system showin
 If your question pertains to scheduled jobs on Yonyou’s side (such as system backups or data synchronization), note that these are fully managed by Yonyou. Their internal processes are not visible to us, so we do not have details regarding job names or frequencies."
 
 ### business email
+
+Subject:​ Request to reschedule JPY changes deployment (Handover period)
+
+Hi [Name],
+
+Following up on the xx changes previously handled by xxx. Since I have just completed the handover, I need to conduct a thorough review to ensure there are no impacts on production.
+
+Regarding the go-live scheduled for next Monday, given the tight timeline, I won't be able to complete a full impact analysis in time.
+
+As you mentioned we can manually update the xxx.csv file as a temporary measure, could we postpone the xxx system changes until next weekend? This will allow me sufficient time to verify everything properly.
+
+Thanks for your understanding.
+<=
+ Thanks for your assistance.
+After department internal discussion, we think it is workable and we will manually add the rate into the xxx file for the next week.
+I have looped xxx in this email, you can contact him if require any further input from Risk Department. 
+=>
+Thank you for the confirmation and for arranging the manual update of the rate in the xxx file. That sounds good to me.
+
+I will proceed with a thorough review of the changes this week to ensure everything is ready for next weekend.
+
+Also, noted on xxx from Risk Department. I will reach out to him if I need any further clarification.
+
+Subject:​ Re: Summary of Changes for Nov 2026
+
+Hi [Sender's Name],
+
+Thank you for sending over this comprehensive summary. It's incredibly helpful as I get familiar with the upcoming changes for November 2026.
+
+We will review the points you've raised, check our internal status, and follow up as needed.
+
+Thanks again for your support.
 
 Hi,​
 
