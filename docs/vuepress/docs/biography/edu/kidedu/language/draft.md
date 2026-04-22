@@ -4,7 +4,6 @@
 自动上传工具：https://github.com/dreammis/social-auto-upload
 
 ## 灵感：
-in the garden: tools, vegetables: root, vines swirl
 
 https://www.languageguide.org/english/vocabulary/
 LetMeEnglish.com
