@@ -215,27 +215,18 @@ sni:域名
 
 [安装文档](https://v2raya.org/docs/prologue/quick-start/)
 
-1. 安装 V2Ray 内核#
-   可以直接安装V2RAY，不过还是推荐V2RayA的官方方法：
-   ```
-   curl -Ls https://mirrors.v2raya.org/go.sh | sudo bash
-   //安装后可以关掉服务，因为 v2rayA 不依赖于该 systemd 服务
-   sudo systemctl disable v2ray --now
-   ```
-2. 安装 v2rayA
-   ```
-   wget -qO - https://apt.v2raya.org/key/public-key.asc | sudo tee /etc/apt/trusted.gpg.d/v2raya.asc
-   echo "deb https://apt.v2raya.org/ v2raya main" | sudo tee /etc/apt/sources.list.d/v2raya.list
-   sudo apt update
-   sudo apt install v2raya
-   ```
-3. 启动 v2rayA / 设置 v2rayA 自动启动
+1. [安装 V2RayA](https://v2raya.org/en/docs/prologue/installation/debian/)
+   
+2. 启动 v2rayA / 设置 v2rayA 自动启动
    ```
    sudo systemctl start v2raya.service
    sudo systemctl enable v2raya.service
    ```
-4. http://localhost:2017/
+    http://localhost:2017/
    sudo v2raya --reset-password
+3. [Config](https://v2raya.org/en/docs/prologue/quick-start/#transparent-proxy)
+
+/etc/resolv.conf
 
 
 ##### 手机客户端：
