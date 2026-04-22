@@ -226,7 +226,9 @@ sni:域名
    sudo v2raya --reset-password
 3. [Config](https://v2raya.org/en/docs/prologue/quick-start/#transparent-proxy)
 
+别忘记配置dns:
 /etc/resolv.conf
+nameserver 1.1.1.1
 
 
 ##### 手机客户端：

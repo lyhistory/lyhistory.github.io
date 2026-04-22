@@ -70,6 +70,14 @@ Light provisioning will be provided
 在航空、航海、技术文档等高度标准化的领域，沟通的首要原则是清晰、客观、避免歧义。使用被动语态能将注意力集中在关键的动作或状态上。例如，在航空通信中，说“The landing gear was extended”（起落架已放下）比“The pilot extended the landing gear”（飞行员放下了起落架）更简洁、焦点更突出。它弱化了个人因素，强调标准程序已被执行这一事实本身。
 ​ 如果使用 “is going to be provided”，会隐含一种“（我们）打算/计划提供灯光”的意味。这会给通知带入一丝“主观意图”的色彩，仿佛这个决定是某个操作员临时起意或系统刚刚计划好的，反而削弱了通知作为既定程序的确定性和可靠性 。
 ### business dialogue
+
+Hi xxx, just to let you know I will be rotating the Monday morning shift with you
+Thanks for letting me know. Could you please share the shift roster? I’d like to confirm who is scheduled for next Monday—will you be taking the first shift or shall I?
+
+We do not currently have an internal penetration testing program. Regarding external pentests on the XXX system, I don't recall any recent assessments
+
+Hi [Name], quick check on the Clearing System pentest history. I only have records for Web/Mobile, and I’m not sure if xxx received anything either. Since IT Gov usually coordinates the external side, do you know if this was ever done?
+
 I noticed XX sent an email to XXX regarding a position account closure issue. Could you clarify if there are any manual steps we need to take in our clearing system​ related to this?
 
 The current head of the IT department ousted his predecessor through underhanded means. Hailing from the Infrastructure department himself, he lacked a solid grasp of the company's project development landscape—and indeed, no meaningful progress was made on projects during his tenure. His top priority now? To outsource the entire IT department while keeping only his original Infrastructure team intact.
