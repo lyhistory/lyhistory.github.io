@@ -70,6 +70,17 @@ Light provisioning will be provided
 在航空、航海、技术文档等高度标准化的领域，沟通的首要原则是清晰、客观、避免歧义。使用被动语态能将注意力集中在关键的动作或状态上。例如，在航空通信中，说“The landing gear was extended”（起落架已放下）比“The pilot extended the landing gear”（飞行员放下了起落架）更简洁、焦点更突出。它弱化了个人因素，强调标准程序已被执行这一事实本身。
 ​ 如果使用 “is going to be provided”，会隐含一种“（我们）打算/计划提供灯光”的意味。这会给通知带入一丝“主观意图”的色彩，仿佛这个决定是某个操作员临时起意或系统刚刚计划好的，反而削弱了通知作为既定程序的确定性和可靠性 。
 ### business dialogue
+we don't have accounts that match this account number. 
+Understood. It's odd that this account number was included; perhaps Peter added it by mistake. I'll go ahead and remove it. Could you please do a final sanity check on all the accounts listed below to ensure everything else is correct? Thanks!
+
+This data was prepared by XXX. Given his usual high standards, this seems quite uncharacteristic of him. Could we double-check if there’s a mismatch elsewhere, or if the source file might have changed?
+
+oh i thought you asked me to update the jira ticket and assign xxx as the checker, maybe i misheard
+
+I’m currently getting up to speed with these operational workflows. Having focused primarily on coding before, I’m still building my confidence in handling these daily routines. I’ll be looking to learn a lot from you guys—thanks for your patience and guidance!
+I’m in the process of familiarizing myself with these operations. My background has been more code-heavy, so I’m still getting the hang of these day-to-day tasks. I really appreciate your support as I navigate this learning curve.
+I’m just starting to dive into these ops. I used to live in the code all day, so the daily routine stuff is pretty new to me. Definitely need to learn from you all—bear with me as I get up to speed!
+<= No worries, can hit me up anytime 
 
 Hi xxx, just to let you know I will be rotating the Monday morning shift with you
 Thanks for letting me know. Could you please share the shift roster? I’d like to confirm who is scheduled for next Monday—will you be taking the first shift or shall I?
@@ -234,6 +245,14 @@ If applicable, please provide details of the scheduled jobs in the system showin
 If your question pertains to scheduled jobs on Yonyou’s side (such as system backups or data synchronization), note that these are fully managed by Yonyou. Their internal processes are not visible to us, so we do not have details regarding job names or frequencies."
 
 ### business email
+
+below is the interview feedback for candidate whom we interviewed just now, feel free to edit/add in your comments. if no further comments, pls also let me know so i can sent out asap
+<=
+Reviewed and I'm aligned with the feedback. No further comments from my end. Please go ahead and send it out. Thanks!
+/
+All good from me, no additional comments. Feel free to send it out. Thanks!
+/
+Looks good to me! No changes, please fire away. Thanks!
 
 Subject:​ Request to reschedule JPY changes deployment (Handover period)
 

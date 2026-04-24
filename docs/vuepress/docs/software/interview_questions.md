@@ -1201,7 +1201,7 @@ example：@components
 
 https://lyhistory.com/docs/software/programming/java_springboot.html#_1-1-spring-ioc%E5%AE%B9%E5%99%A8
 
-## frontend
+## ⚛️ Frontend / React / Web Development Questions
 
 what's the difference between javascript typescript?
 how about nodejs and reactjs, what's differences and things in common
@@ -1221,6 +1221,215 @@ virtual dom（
 
 webpage loading speed optimize
 https://lyhistory.com/docs/software/programming/interview_frontend.html#%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96
+
+1. React Architecture & State Management
+
+Question:​
+
+“You’ve built responsive web apps with React and Next.js. Can you walk us through how you structure a typical React application, and how you manage state in a medium sized project?”
+
+What to Listen For:​
+
+Component hierarchy, folder structure
+
+State management choices (Context API, Redux, Zustand, etc.)
+
+Separation of concerns (UI vs business logic)
+
+"For a medium-sized React/Next.js project, I usually follow a Feature-Based Folder Structure. Instead of grouping files by type (e.g., putting all components in one folder), I group them by domain or feature (e.g., src/features/documents, src/features/dashboard). This makes it easier to maintain and scale.
+
+    Backend Translation:​ This is exactly like moving away from a Layered Architecture​ (where you put all controllers in one folder, all services in another) to a Modular/Domain-Driven Architecture.
+
+    Old way (Layered):controllers/, services/, models/(Hard to find everything related to a specific feature).
+
+    Candidate's way (Modular):modules/user/, modules/payments/, modules/documents/(All controllers, services, and models for a specific feature live together).
+
+For state management, I follow the rule of thumb: start simple, scale when necessary. I primarily use React Context API​ for global UI state (like theme toggling or user authentication status) because it's lightweight and built-in. However, if the application has complex, deeply nested state (like multi-step forms or real-time data synchronization), I would introduce a library like Zustand​ or Redux Toolkit​ for predictable state updates and better debugging capabilities.
+
+Regarding the separation of concerns, I strictly keep UI components dumb​ (purely presentational) and lift the business logic up to custom hooks or container components. This makes the UI reusable and the logic easily testable."
+
+    Backend Translation:​ This is your Caching Strategy​ and Application State.
+
+    Context APIis like storing temporary session data in a simple HashMapor ConcurrentHashMapin memory. It's fast, built-in, and perfect for simple things (like storing the logged-in user's ID for the current request).
+
+    Redux/Zustandis like implementing a proper Redis​ or Memcached​ layer. You use it when the data is complex, shared by thousands of concurrent users/sessions, and you need powerful tools to inspect, persist, and debug that data reliably.
+
+Follow-up:​
+
+“How do you decide between client side and server side rendering in Next.js?”
+
+"I decide based on the nature of the page. If it's a dynamic dashboard​ requiring real-time user interactions and frequent data updates, I lean towards Client-Side Rendering (CSR)​ to reduce server load and improve interactivity. However, if it's a public-facing page​ with static content or SEO requirements (like a landing page or a blog), I heavily utilize Server-Side Rendering (SSR)​ or Static Site Generation (SSG). SSR ensures the HTML is pre-rendered on the server, making it crawlable by search engines and improving the initial load time for the user."
+
+2. Performance Optimization in Web Apps
+
+Question:​
+
+
+“Imagine System A’s frontend is loading slowly.You’re assigned to investigate. Walk us through how you’d approach this — from initial triage to identifying the root cause. What are the first 3 things you’d check, and what optimizations would you consider?”
+
+What to Listen For:​
+
+Bundle size, lazy loading, code splitting
+
+Image optimization, caching strategies
+
+Network requests, API response times
+
+"When faced with a slow-loading frontend, my first step is to quantify the problem​ using Chrome DevTools (specifically the Lighthouse audit and Network tab) rather than guessing.
+
+The first 3 things I would check are:
+
+Bundle Size & Dependencies:​ I'd analyze the JavaScript bundle using tools like webpack-bundle-analyzerto see if there are any heavy third-party libraries that could be lazily loaded or replaced.
+
+Network Waterfall:​ I'd check the Network tab to identify if the bottleneck is the frontend itself or the backend APIs. If an API is taking 5 seconds to return data, optimizing the frontend won't solve the core issue.
+
+Render Performance:​ Using the React Profiler, I'd check for unnecessary re-renders. If a state change in the header is causing the entire page to re-render, I'd implement React.memoor useMemoto isolate the updates.
+
+Based on this triage, optimizations could include implementing Lazy Loading​ for images and routes, adding caching headers​ for static assets, or refactoring the code to split the main bundle into smaller, on-demand chunks."
+
+3. Debugging Frontend Issues
+
+Question:​
+
+“A user reports that a form submission isn’t working in production, but it works locally. How would you investigate this?”
+
+What to Listen For:​
+
+Browser DevTools usage (Network, Console, Application tabs)
+
+Environment differences (API endpoints, CORS, auth tokens)
+
+Log analysis, reproduction steps
+
+"The first thing I would do is try to replicate the environment. Since it works locally but fails in production, it's likely an environment-specific variable (like an API base URL, CORS policy, or an authentication token mismatch).
+
+My investigation steps would be:
+
+Check the Browser Console:​ Look for unhandled promise rejections, 404 (Not Found), or 500 (Internal Server Error) network responses when the form is submitted.
+
+Inspect Network Payloads:​ Compare the payload being sent from the local environment versus the production environment. Is the JSON structure correct? Are the headers (like Content-Typeor Authorization) properly attached?
+
+Check Application Logs:​ If the frontend seems fine, I would check the backend logs (or ask the backend team) to see if the request is even reaching the server, or if it's being blocked by an API Gateway or a firewall rule.
+
+Use Feature Toggles/Debug Mode:​ If possible, I would enable a debug mode in the production build to log more verbose error messages to a monitoring tool like Sentry to catch the exact stack trace."
+
+4. Integration Between Frontend & Backend
+
+Question:​
+
+“You’ve worked on both frontend (React) and backend (C#). How do you design a clean contract between frontend and backend teams?”
+
+What to Listen For:​
+
+API design (REST, GraphQL)
+
+Data shaping, error handling conventions
+
+Versioning and backward compatibility
+
+"To ensure a smooth contract between frontend and backend, communication and documentation are key. I prefer using Swagger/OpenAPI​ specifications. It allows both teams to agree on the endpoint structures, request/response schemas, and error formats before actual development starts.
+
+From a technical standpoint:
+
+Consistent Error Handling:​ We should agree on a standard error response object (e.g., { success: false, message: 'Error description', code: 400 }). This allows the frontend to reliably parse errors and display user-friendly notifications.
+
+Data Shaping:​ Backends often return nested ORM objects that the UI doesn't need. I would discuss creating specific DTOs (Data Transfer Objects)​ or using GraphQL. GraphQL is excellent here because it allows the frontend to request exactlythe data it needs, preventing over-fetching.
+
+Versioning:​ We must agree on an API versioning strategy (e.g., /api/v1/users). This ensures that if we need to change a core data structure, we don't break existing frontend deployments."
+
+5. Responsive Design & UX
+
+Question:​
+
+“Describe a time when you improved the user experience of a web application. What was the problem, and what changes did you make?”
+
+What to Listen For:​
+
+Mobile‑first design, CSS media queries
+
+Accessibility considerations
+
+User feedback loops
+
+"In my previous project, we had a legacy admin dashboard that was built purely for desktop users. As the user base started accessing it via tablets, the experience was terrible—buttons were misaligned, and data tables were unreadable.
+
+I took the initiative to refactor the core layout components using CSS Media Queries​ and a Mobile-First approach. Instead of trying to shrink the desktop view, I redesigned the critical user flows (like the approval workflow) to stack elements vertically on smaller screens.
+
+I also implemented a collapsible sidebar​ and replaced traditional HTML tables with card-based layouts for mobile views. To validate the changes, I conducted informal user feedback sessions with the operations team. The result was a 30% reduction in support tickets related to mobile usability."
+
+
+6. Investigating a Production Incident
+
+Scenario:​
+
+“A high-severity incident is raised: users can’t upload documents to System A. You’re the lead investigator. Describe your step-by-step approach.”
+
+What to Listen For:​
+
+Starts with impact assessment (how many users, business impact)
+
+Checks logs, error messages, and recent changes
+
+Reproduces issue (on test/staging if possible)
+
+Uses SQL to validate data integrity
+
+Provides timely updates to users and management
+
+Proposes preventive measures afterward
+
+"My step-by-step approach to a high-severity incident like this would be:
+
+Immediate Triage & Impact Assessment:​ Determine the scope. Is it affecting all users or a specific tenant/client? Check the error rates and logs in our monitoring tool (e.g., Splunk or Azure Monitor).
+
+Check Recent Changes:​ Look at the deployment history. Was there a recent code deploy, a database migration, or a configuration change that correlates with the start of the incident?
+
+Reproduce & Isolate:​ Try to reproduce the issue in a staging or pre-production environment using the same steps. If it's environment-specific, check configurations (e.g., storage bucket permissions, API keys).
+
+Root Cause Analysis:​ Once identified, apply a fix. If the fix takes time, I explore a rollback to the last known stable version to restore service immediately.
+
+Communication:​ Keep stakeholders updated every 30-60 minutes regarding the status, impact, and ETA for resolution.
+
+Follow-up:​
+
+“How would you handle pressure from business stakeholders while investigating?”
+
+Regarding pressure from stakeholders:I remain calm and empathetic. I set clear expectations—giving regular, honest updates is crucial. I focus on gathering facts rather than speculating, and I prioritize restoring service over finding the root cause initially (mitigation first, investigation second)."
+
+7. how do you store credentials in the frontend
+
+Think of LocalStorage & SessionStorage (The "Insecure Client-Side Cache") as non-HttpOnly browser caches. They are accessible via JavaScript running on the page.
+
+Think of cookies as HTTP headers managed by the browser. This is the industry standard for authentication.
+
+⚛️ Mini‑Task: Search Filter in React
+Task Description
+
+“Imagine you’re building a user list page in React. The page displays a list of users fetched from an API. You need to add a search box that filters users by name as the user types. 
+Walk us through how you’d implement this — from component design to state handling and performance considerations.”
+
+
+Component Structure​
+“How would you split this into components?”
+✅ I would split this into at least three components: a parent UserListContainerto handle data fetching, a SearchBarcomponent for the input field, and a UserListcomponent to render the filtered results. This keeps the code clean and reusable.
+❌ I'll just put everything in one big component. It's faster to write, and I can use regular JavaScript functions inside the JSX to filter the list whenever I need it.
+
+State Management​
+“Where would you store the search term and filtered list?”
+✅ I would use the useStatehook to manage the searchTerm. As the user types, I'll update the searchTerm state. I don't want to duplicate data by storing a separate filteredUsersarray, so I'll calculate the filtered list dynamically on every render.
+❌ I would create two state variables: one for searchTerm and another for filteredUsers. When the user types, I'll update the searchTerm and immediately run a .filter()on the original list, then save the result into filteredUsers.
+
+Filtering Logic & Performance:
+“How would you filter the list efficiently?” “What would you do to avoid unnecessary renders?”
+✅ To filter efficiently, I'll use the useMemohook. This way, the filtering function only recalculates when the searchTermor the original userslist changes, preventing heavy operations on every keystroke. If the dataset is extremely large or comes from an API, I would look into implementing a debouncefunction on the input to limit how often the filtering or API calls actually trigger.
+❌ I'll just filter the array directly inside the component's return statement using users.filter(...). It usually runs fast enough on modern computers, so I don't think adding extra hooks like useMemois necessary unless the app starts lagging.
+
+Edge Cases​
+“How would you handle empty results or loading states?”
+✅ I’ll always return a stable array from useMemo—even if it’s empty—to avoid runtime errors. I’ll also add a conditional check: if the filtered list is empty, I’ll render a simple 'No users found' message instead of rendering nothing.
+❌ If there are no users, the page will just be blank. I guess I could add an ifstatement to check the length before mapping, but usually, the list has data so it's fine.
+
+
 
 ## high level
 

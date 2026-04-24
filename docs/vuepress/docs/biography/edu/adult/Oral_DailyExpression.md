@@ -2782,6 +2782,8 @@ shuttle 航天飞机
 thruster 推进器
 
 ## idiom saying 谚语/成语
+You’ve hit the nail on the head! Your intuition is absolutely correct. 
+
 rabbit hole
 	ain't got energy left to go into another AI rabbit hole haha
 under the hood

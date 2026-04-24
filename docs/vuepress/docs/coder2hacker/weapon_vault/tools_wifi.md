@@ -39,6 +39,12 @@ echo "?l?l?l" > mask_right.txt
 # 执行组合攻击
 hashcat -m 22000 -a 1 output.hc22000 mask_left.txt mask_right.txt
 
+A segmentation fault with Hashcat on a Raspberry Pi is almost never about your command — it’s usually environment / build / hardware limits.
+
+8-digit attack:
+hashcat.exe -m 22000 hash.hc22000 -a 3 ?d?d?d?d?d?d?d?d
+4 letters + 4 digits:
+hashcat.exe -m 22000 hash.hc22000 -a 3 ?l?l?l?l?d?d?d?d
 ```
 
 
