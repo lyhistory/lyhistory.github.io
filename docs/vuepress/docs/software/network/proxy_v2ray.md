@@ -530,6 +530,8 @@ https://iitii.github.io/2022/03/02/1
     这个是最常见的问题，比如我的 google pixel 6 pro 连上但是无法访问网络（v2rayNG)：fail to detect internet connection ios read/write on closed pipe，原因是长时间不用，日期时间都已经错了，刚开始我只注意到time错了，最后才发现日期远远落后于当前日期，多亏了我换用NekoBox for Android，错误提示比V2rayNG更加友好直接：Failed:Get "http://cp.cloudflare.com": tls: failed to verify certificate: x509; certificate has expired or is not yet valid: current time 2025-12-04.... is before 2026-03-12...
 
 
+### google tablet连不上
+发现是因为我用另一个账号连接了，所以其他账号就连不上，登录其他账号确保断开即可。
 
 ### TUN 模式
 TUN mode creates a virtual network interface (like a mini-VPN adapter) on your system. It captures all your device's network traffic at the IP level (not just browser/app proxy settings), routes it through sing-box → your proxy server, and sends it out. This is great for games, apps that ignore system proxy, or sites that block partial proxies. Without TUN, you usually only proxy apps that respect HTTP/SOCKS settings (e.g., browsers).
