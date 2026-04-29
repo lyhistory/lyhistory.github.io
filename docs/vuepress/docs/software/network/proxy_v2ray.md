@@ -645,12 +645,4 @@ Go to Settings -> Core Settings -> DNS Settings.On the Basic DNS Settings tab, r
 
 ### 代码 突然出现 Invalid CSRF token
 
-I found the exact reason why this was happening only when V2Ray is running!
-
-When you use V2Ray, your Python backend's traffic to NVIDIA's API routes through the proxy. My newly added fallback code used the requests library, which by default sends User-Agent: python-requests/2.31.0. Cloudflare WAF (which protects the NVIDIA API) aggressively blocks python-requests user agents when the connection comes from a known VPN/Proxy IP (from your V2Ray node), and it responds with a 403 WAF Challenge that contains CSRF validations (hence the "Invalid CSRF token" error you experienced).
-
-Previously, when it "used to work" with the other model, the standard OpenAI library was used, which has its own OpenAI/Python User-Agent that wasn't blocked as aggressively by the WAF.
-
-I have updated the backend/app/services/llm.py code to impersonate a standard Chrome browser (User-Agent: Mozilla/5.0 ...) in the fallback payload. This will allow the request to pass cleanly through Cloudflare's proxy WAF.
-
-Since you are running Docker Compose, simply restart your backend so the updated llm.py logic takes effect. Let me know if that clears it up!
+未知原因，重启电脑就好了

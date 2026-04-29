@@ -70,6 +70,25 @@ Light provisioning will be provided
 在航空、航海、技术文档等高度标准化的领域，沟通的首要原则是清晰、客观、避免歧义。使用被动语态能将注意力集中在关键的动作或状态上。例如，在航空通信中，说“The landing gear was extended”（起落架已放下）比“The pilot extended the landing gear”（飞行员放下了起落架）更简洁、焦点更突出。它弱化了个人因素，强调标准程序已被执行这一事实本身。
 ​ 如果使用 “is going to be provided”，会隐含一种“（我们）打算/计划提供灯光”的意味。这会给通知带入一丝“主观意图”的色彩，仿佛这个决定是某个操作员临时起意或系统刚刚计划好的，反而削弱了通知作为既定程序的确定性和可靠性 。
 ### business dialogue
+Found a quirky thing in Excel: when you merge cells, the data lives in the top-left cell only. The rest are basically blank.
+
+what should nostro reconcile behavior be like for 910am? Not all banks have jpy in their statement <=
+I’m not entirely sure I follow — from the code perspective, we simply compare the opening and closing balances on the bank statement against our internal records. If there is no Nostro balance (e.g., certain banks do not report JPY), then there is nothing to reconcile, so no action is triggered. That’s how I currently understand the logic.
+
+you should tell me this earlier let me verify the code
+<=
+didn’t expect you no check , pls verify thx
+<=
+Understood. Please note that without the SWIFT token, my ability to investigate is limited. Going forward, please share all​ potentially relevant information upfront so I can verify thoroughly. Thanks.
+
+thanks for sharing all the info, this is the first time i see put these pieces together，previously  i implemented the code by following the tech design docs without the view from business operation perspective, previously the mode is more like issues happened, xxx ask me, then i dive into the code, now the mode is shifting, please do not assume I have any business context, you can just treat me as a blank paper, share anything you think might have impact,eventually i hope can map all your business views with the codes i implemented, thanks again!
+
+The results are in line with yesterday's investigation.
+The findings align with yesterday’s investigation.
+As expected, this matches yesterday's findings.
+The outcome is consistent with the investigative results from yesterday.
+This confirms yesterday's preliminary investigation.
+
 we don't have accounts that match this account number. 
 Understood. It's odd that this account number was included; perhaps Peter added it by mistake. I'll go ahead and remove it. Could you please do a final sanity check on all the accounts listed below to ensure everything else is correct? Thanks!
 
@@ -808,6 +827,20 @@ For your approval before disseminating to the rest of the team.
 
 Thank you.
 
+#### Example 5
+This is my first time handling this task, so I’d appreciate your guidance.
+
+I noticed that the file you provided is missing AUPO, 1BTC, and ETH​ compared to the current UAT stress test scenarios. Could you please advise whether I should remove these items​ or keep them as is?
+<=
+We provided parameters for “Gold,” which collectively refers to AUP, AUP1, AUP10, and AUP100, as they all share the same reference price.
+
+During the previous UAT for the first batch of FX Perpetuals, we submitted the stress test parameters intended for production configuration after testing. These excluded other planned but not yet launched products such as 1BTC, 1BTCP, ETH, ETHP. I am not certain what the usual practice is regarding whether such products should remain in UAT, but they will not be included in this round of testing.
+
+Screenshots from the last UAT reflect the products present in the system; however, the number of stress test scenarios aligns with currently launched products, which implies that unlaunched products were not included. 
+<=
+I’ve set up the UAT environment for your testing. Please let me know if everything looks correct on your end.
+
+Happy to answer any questions if needed!
 
 ## TICKETS
 
