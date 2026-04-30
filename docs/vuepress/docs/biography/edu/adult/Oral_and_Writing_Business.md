@@ -70,6 +70,11 @@ Light provisioning will be provided
 在航空、航海、技术文档等高度标准化的领域，沟通的首要原则是清晰、客观、避免歧义。使用被动语态能将注意力集中在关键的动作或状态上。例如，在航空通信中，说“The landing gear was extended”（起落架已放下）比“The pilot extended the landing gear”（飞行员放下了起落架）更简洁、焦点更突出。它弱化了个人因素，强调标准程序已被执行这一事实本身。
 ​ 如果使用 “is going to be provided”，会隐含一种“（我们）打算/计划提供灯光”的意味。这会给通知带入一丝“主观意图”的色彩，仿佛这个决定是某个操作员临时起意或系统刚刚计划好的，反而削弱了通知作为既定程序的确定性和可靠性 。
 ### business dialogue
+Just to clarify, we aren't the owners of the content. We handle technical support only, but the pages themselves are maintained by other departments. Unfortunately, we don't have the latest files on hand.
+Just to reiterate, the page source lists LCD as the author, so they should logically have the records. As IT, we are completely blind to the changes made on their end. I can fix technical errors (like broken links), but for missing files or content updates, I simply don't have the data to act on. This really needs to go back to LCD.
+Different pages belong to different departments. They are responsible for updating their own content, and IT has no visibility into the changes made on their end. Therefore, they should logically have the records. While they sometimes request IT assistance for updates, they remain the content authors.
+Ping me anytime for tech stuff. For content, I can point you to the authors, or​ if you already have the correct source files, I can help push the update. Thanks!
+
 Found a quirky thing in Excel: when you merge cells, the data lives in the top-left cell only. The rest are basically blank.
 
 what should nostro reconcile behavior be like for 910am? Not all banks have jpy in their statement <=
