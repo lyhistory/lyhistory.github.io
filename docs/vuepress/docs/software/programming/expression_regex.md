@@ -150,6 +150,9 @@ https://www.howtogeek.com/661101/how-to-use-regular-expressions-regexes-on-linux
 https://www.gnu.org/software/findutils/manual/html_node/find_html/Regular-Expressions.html#Regular-Expressions
 
 ### 2.2 notepad++
+** multiple whitespace to single whitespace**
+`[^\S\r\n]+`
+
 
 **1.multiple line to single line**
 ```

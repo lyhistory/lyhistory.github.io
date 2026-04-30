@@ -10,13 +10,6 @@ LetMeEnglish.com
 BBC CBeebies
 ENJOY https://github.com/ZuodaoTech/everyone-can-use-english
 
-
-基础英文句子
-
-i can do that
-
-i know how
-
 sing sang sung son
 
 立起来旗杆 搭起来帐篷
