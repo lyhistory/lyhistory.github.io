@@ -187,4 +187,6 @@ A segmentation fault with Hashcat on a Raspberry Pi is almost never about your c
 hashcat.exe -m 22000 hash.hc22000 -a 3 ?d?d?d?d?d?d?d?d
 4 letters + 4 digits:
 hashcat.exe -m 22000 hash.hc22000 -a 3 ?l?l?l?l?d?d?d?d
+
+hashcat --restore
 ```
