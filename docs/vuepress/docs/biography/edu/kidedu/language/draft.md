@@ -48,16 +48,6 @@ socket 吹风机支架
 cheese has important nurtuins like protein and  catcilum
 show me
 
- Opposites
-Big small
-Slow fast
-Happy sad
-Long short
-high low
-Day night
-
-
-
 面团在芝麻里面打滚沾上芝麻
 
 跳绳
