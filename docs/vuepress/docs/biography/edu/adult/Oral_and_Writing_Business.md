@@ -70,6 +70,9 @@ Light provisioning will be provided
 在航空、航海、技术文档等高度标准化的领域，沟通的首要原则是清晰、客观、避免歧义。使用被动语态能将注意力集中在关键的动作或状态上。例如，在航空通信中，说“The landing gear was extended”（起落架已放下）比“The pilot extended the landing gear”（飞行员放下了起落架）更简洁、焦点更突出。它弱化了个人因素，强调标准程序已被执行这一事实本身。
 ​ 如果使用 “is going to be provided”，会隐含一种“（我们）打算/计划提供灯光”的意味。这会给通知带入一丝“主观意图”的色彩，仿佛这个决定是某个操作员临时起意或系统刚刚计划好的，反而削弱了通知作为既定程序的确定性和可靠性 。
 ### business dialogue
+could you help assist in porting/copying/migrating full UAT data to DEV, let us know when its done, OPS will clean the data. 
+<=Done. UAT data has been ported to DEV.Please proceed with the data cleanup.
+
 we noted that the DEV don't have the xxx accounts (UAT have these accounts), could you assist in porting these position accounts over to DEV
 <=
 currently there is no automated script​ to selectively migrate only those specific accounts from UAT to DEV. The only available option on our side would be a full UAT data refresh into DEV, which means all existing DEV data would be overwritten.
