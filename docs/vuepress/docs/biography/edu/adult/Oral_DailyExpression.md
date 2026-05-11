@@ -106,6 +106,30 @@ lowlife scum
   "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
 
+眼屎 鼻屎
+	mucus” (medical / neutral)
+	“snot” (casual, often used with kids)
+	“runny nose / nasal discharge” (more polite)
+	Examples:
+	“He has a lot of mucus.”
+	“The kid has a runny nose.”
+	“Don’t touch your snot—use a tissue.”
+
+	In classrooms / with kids, people usually say: “nose discharge” or simply “runny nose”
+	“eye crust” (most natural neutral term)
+	“eye discharge” (medical / formal)
+	“sleep” (very common everyday English for kids!)
+
+	Examples:
+	“She has some sleep in her eyes this morning.”
+	“He wiped the eye crust away.”
+	“Eye discharge is normal when you wake up.”
+
+抠牙 pick your teeth Don’t pick your teeth at the table.
+剔牙 floss your teeth You should floss your teeth every day.
+抠鼻屎 pick your nose He picked his nose when no one was looking.
+抠脚 pick your toes” / “pick at your feet He was picking at his feet.
+
 指出
 	Point that out
 	You are completely correct to call that out! 
@@ -248,7 +272,11 @@ lowlife scum
 		Pry open He used a crowbar to ​pry open​ the locked box. 
 	翻开
 		​Flip open​ / ​Flip up Flip open​ the lid of the gum
-	
+	夹开
+		crack open nuts with a tool
+	解开
+		Take out/off  the hairpin / hair clip 
+
 浴室穿着拖鞋洗完澡 把脚尖翘起来这样水就流走了
 	After a shower in the bathroom, just ​tilting your toes up​ for a moment ​drains the water away.
 	When your flip-flops are wet after a shower, ​a quick tilt of your feet​ lets the water ​run right off.
@@ -294,7 +322,12 @@ lowlife scum
 		Two men were on the bridge-deck, **steadying** a ladder.
 	Lean on 指倚靠在某人或某物上以获取支撑。
 		The elevator is ​dirty​ because many people touch it. ​Come over and lean on Daddy​ instead.​
-
+立起来
+	“Let’s put up the flagpole.”
+	“They erected a flagpole in the schoolyard.” (more formal)
+搭
+	“We set up the tent in the campsite.”
+	“pitch a tent” (more idiomatic / slightly more natural outdoorsy English)
 路口
 	Intersection 泛指任何道路交叉口
 		Turn left at the next **intersection**.
@@ -1312,6 +1345,13 @@ nuance细微差别
 		Let's cut up the watermelon for the party." （我们把西瓜切块用于聚会）
 		Dad used a serrated knife to cut the watermelon into wedges.（爸爸用锯齿刀把西瓜切成瓣）
 		Kids practice fine motor skills by slicing toy apples.（儿童通过切玩具苹果练习精细动作）
+切沫
+	“chop it up”
+	“cut it into small pieces”
+	“dice it” (small cubes, cooking term)
+	Examples:
+	“Chop the vegetables into small pieces.”
+	“Dice the onions.”
 我晕了 
 	Doctor, I suddenly felt dizzy with blurred vision.(医生，我突然头晕伴随视力模糊) 
 	Standing up too fast made me lightheaded.(站得太快让我有点头晕) 
@@ -2302,6 +2342,8 @@ What do you say?​​
 ​How do you say?​​
 ​​“这个用英语怎么说？”​​ 用于当孩子想知道某个词或某句话用英语如何表达时。
 
+擦
+	Wipe your face with a towel.
 wipe up 擦牛奶/水等液体，用抹布吸上来
 wipe down 沿着大面积的一个方向擦 down the road/street
 wipe off 擦掉痕迹 笔迹
@@ -2635,7 +2677,7 @@ trolley 小推车
 
 ### About hair cut
 理发：http://blogs.teachersammy.com/Blogs/entry/describing-hairdessing-in-English-1#.WdXv_z6g-Ul
-hairstylist, hairdresser/barber
+hairstylist, Hair Salon Barber's hairdresser/barber
 cut/trim/wash/dry/style/perm/dye/hair care session
 style / shape the hair
 ### About Life

@@ -1,3 +1,49 @@
+## About me
+
+hi, i'm xxx, i've working in IT industry for 15 years, i have my own website sharing my IT knowledges for free, 
+it covers traditional software development/blockchain/eithical hacking and hardware like raspberry pi and arduino.
+my last job experience is mainly focusing on java development using spring boot and spring cloud components, we developed clearing system from scratch 
+and i partipicated in all lifecycles from system design to deployment and migration to cloud, and i also implemented serveral side projects on my own for example the btcp funding rate calc.
+my personal hobby is both exploring new IT technics and dive down existing technics in my personal time,
+for example when i explore blockchain I was very curios about ECDSA and it triggered my insteresting of connecting the dots from AES RSA i previously learned in https with this ECDSA, so i self learned Professor Christof Paar's online cryptography course to understand  how
+cryptography involved from shift cipher to public-key cryptography, FROM RSA TO Elliptic Curve Cryptosystems, AND then to better understand the underpin cyclic groups, i self learned
+Abstract algebra group theory.
+
+and along the way i understand that not all the cryptography set up are safe, some may have vulnerbilities, then i tried one of it called padding oracle and i successfully passed Encrypted Pastebin test on hacker101, i very enjoyed
+the moment when I can understand the whole theory and technica and utilize it successfully.
+
+It's always being my great feel of statisfaction 
+when i understood IT knowledges which i already know from another perspective or grasp a new skills, for example the first time i can view a software product from hackers point of view 
+and can exploit the vulnerbilities i identified, the first time i can assembly some arduino hardware pieces and make it work.
+in summary, i love to use my known kownledges and also egar to learn new things so that i can keep building my own knowledges palacess making the exsiting ones stronger and adding new ones.
+
+talking about my weekness i think 
+firt i'm not a smart person or genius person, i have to devote myself and put a lot of time to get result, i don't like to say i understand this thing or that 100%.
+another one should be that i don't quite like to memorize all the details, i believe most normal people like me when we have explored so many different areas of IT knowledges,
+it's quite challenge for me to remember every details of each techinics,  that's why i have my own website and github repo, what i do is lazy loading, i keep notes and organize the kownledge base nicely and then clear from my memory,
+for example when i use redis i'll read through my notes and quikly pick up the most important details that i need and load it into my active brain zone, when i don't use it i'll gradually clean it from my brain,
+i'm not sure how other people can memorize so many things all the time but that's the way i do it, probably a weekness.
+
+optimized:
+Hi, I’m XXX. I have been working in the IT industry for over 15 years. I also run my own website where I share IT knowledge for free. The topics cover traditional software development, blockchain, ethical hacking, and hardware projects involving Raspberry Pi and Arduino.
+
+In my most recent role, I mainly focused on Java development using Spring Boot and Spring Cloud. My team developed a clearing system from scratch, and I participated in the full software lifecycle, including system design, development, deployment, and cloud migration. I also built several side projects independently, such as a BTC perpetual funding rate calculator.
+
+One of my biggest interests is continuously exploring new technologies while also deeply understanding existing ones. For example, when I started learning blockchain, I became very curious about ECDSA. That curiosity led me to connect it with concepts like AES and RSA that I had previously encountered in HTTPS and cryptography.
+
+To gain a deeper understanding, I self-studied Professor Christof Paar’s online cryptography course, where I learned how cryptography evolved from classical ciphers to public-key cryptography, from RSA to elliptic curve cryptography. To better understand the mathematical foundations behind these systems, I also self-learned abstract algebra and group theory.
+
+Along the way, I realized that not all cryptographic implementations are secure, and some contain vulnerabilities. I became interested in security research and experimented with attacks such as the Padding Oracle Attack. I successfully completed the Encrypted Pastebin challenge on Hacker101. I really enjoy the process of understanding both the theory and the practical implementation, and then applying that knowledge successfully in real-world scenarios.
+
+What gives me the greatest sense of satisfaction is gaining a deeper understanding of technology from different perspectives or mastering new skills. For example, the first time I viewed software from a hacker’s perspective and successfully exploited a vulnerability I identified, or the first time I assembled Arduino hardware components and made them work.
+
+In summary, I enjoy both applying my existing knowledge and continuously learning new things. I like building connections between different areas of technology and strengthening my overall understanding over time.
+
+As for my weaknesses, first, I don’t consider myself a genius or naturally gifted person. I usually need to invest significant time and effort to truly understand something deeply. I also tend to avoid claiming that I understand something “100%” because technology always has more depth to explore.
+
+Another weakness is that I don’t try to memorize every technical detail permanently. After exploring many areas of IT, it becomes difficult to retain everything in active memory all the time. That’s one reason why I maintain my own website and GitHub repositories as structured knowledge bases.
+
+My approach is somewhat like “lazy loading” in software engineering: I organize and document knowledge clearly, and when I need a technology again — for example Redis — I can quickly review my notes, reload the important concepts into active memory, and become productive again efficiently. When I stop using a technology for a while, I naturally let some low-level details fade. I’m not sure whether this is a weakness or simply my personal learning style, but it’s how I manage knowledge across many technical domains.
 ## General
 
 ### Business Result - Upper-intermediate Student's Book
@@ -312,6 +358,16 @@ It's best for me to learn the business logic ASAP. Then, when real issues pop up
 Let me know if anything looks wrong (e.g., the XX name). I'm guessing we might use Dev for DMP, so I'll check those settings now just to be prepared./I'll review the configuration beforehand.
 
 < Hi [Name], I've reviewed the JPY collateral SFTP setup. The functionality is already in place, so no changes are needed since the logic remains unchanged. Regarding DMP, per Confluence, it recommends using the Dev environment. Thanks! 
+
+#### Example 3
+A (colleague):Hey, I’m planning to take leave from May 1st to May 7th.
+B (you):Got it. That’s fine. No worries.
+A:Just wanted to check if that works for you.
+B:Yeah, that’s okay. I’ll make sure I take my leave on different dates so we don’t overlap.
+A:Perfect, thanks. Since it’s just the two of us handling this, we should avoid being away at the same time.
+B:Exactly. I’ll schedule mine accordingly and make sure there’s coverage.
+A:Great, appreciate it.
+B:No problem. Enjoy your break!
 
 ### business email
 
@@ -1460,6 +1516,8 @@ forces/considerations/constraints
 widget gadget device
 
 #### complicated expression
+
+the subtitle trail the spoken voice
 
 The reason your local npm run deploy works while the Cloudflare auto-build fails relies on a discrepancy between your package.json script and your wrangler.toml configuration.
 

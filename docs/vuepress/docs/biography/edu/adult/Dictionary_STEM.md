@@ -79,6 +79,9 @@ microorganism 微生物
 fart
 
 ## Chemistry
+
+Chemist  Pharmacy
+
 催化剂 catalyst
 
 acid

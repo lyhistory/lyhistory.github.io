@@ -406,7 +406,7 @@ lag jet lag/ internet lag/ lag time
 
 mean=> means is a means to
 
-## Compound words 复合词 / etyma 词根
+## Compound words 复合词 / etyma 词根 etymology
 
 asymmetric 不对称的
 anti  antispetic 防腐剂/消毒水
@@ -628,7 +628,10 @@ under undercharging underestimate undertake undermine 逐渐削弱
 
 uphold
 
+## 易错
 
+find found founded Meaning: discover or locate something
+Found → Founded → Founded Meaning: establish/create an organization, company, school, etc.
 
 ---
 

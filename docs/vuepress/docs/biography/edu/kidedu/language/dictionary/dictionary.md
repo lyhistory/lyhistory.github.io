@@ -383,13 +383,24 @@ squirt squeeze spray 感觉差不多对比解析
       The farmer ​sprayed​ the crops with pesticide.(农民给作物喷杀虫剂。)
       The cat hissed when I ​sprayed​ it with water.(我朝猫喷水时，它发出了嘶嘶声。)
 ### 五觉
-味道
+
+#### sight (视觉) see things with our eyes
+#### hearing (听觉) hear sounds with our ears
+#### smell (嗅觉) smell with our nose
+#### taste (味觉) taste with our tongue
 sweety salty bitter
 
-感觉
-sore
+#### touch (触觉 / 触感) feel things with our skin
+“texture” or “feel”
+Used when talking about how something feels to touch (surface quality).
+“The texture of this fabric is soft.”
+“It has a rough texture.”
 
-触感 
+Used more generally and naturally in everyday speech.
+“I like the feel of this shirt.”
+“The phone has a smooth feel.”
+
+sore
 squishy
 
 

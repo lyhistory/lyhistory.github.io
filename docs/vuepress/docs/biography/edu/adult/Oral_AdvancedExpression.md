@@ -281,6 +281,9 @@ cape 斗篷 披肩
 	One of the tie bands​ connecting the umbrella canopy to the rib is torn. (伞面上有一根固定伞骨的布条撕裂了。
 	The luggage was secured with a strong cloth strap. 行李用一根结实的布带固定着。
 	He cleaned the machine with an oily rag. (他用一块油污的碎布条擦拭机器。
+band 
+	wrist band
+	rubber band
 
 ### 鞋子
 运动鞋 
@@ -356,6 +359,8 @@ road ripper
 watering cart
 Bulldozer (推土机)
 dump truck​ 
+harvester
+
 ## 不常见
 
 压水井（上下压）​ Pump/Pull up and push down​ / ​Work the handle

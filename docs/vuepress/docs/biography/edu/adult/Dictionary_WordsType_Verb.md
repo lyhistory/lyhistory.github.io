@@ -396,6 +396,8 @@ line up
 look after
 "​​Look after​​" = care for vs. "​​Look into​​" = investigate.
 lay down lay off
+	“Lie down” = your body moves to a flat position
+	“Lay down” = put something down
 opt-out 自愿退出; 不参加;
 opt-in 选择进入; 选择使用; 选入;
 object to vs. resistance to(名词短语)

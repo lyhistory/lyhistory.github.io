@@ -5,68 +5,51 @@
 
 ## TODO
 
-yields
-blow的多种含义
+hygiene
+	don't pick nose nose/eye discharge
 
+生物和物品 生物才能敲门
+roller skating是运动 skates是装备
+
+​Stop playing with your food.​​ 
+sing sang sung son
+
+th sound
+U OO
+thin
+phonic rythm
+explain plural one apple  two apples  Grains of rice
+
+NAME OF Finger
+
+单词的多种含义：
+give me a prompt for AI animation generation tool: kid education about the word xxx, and its various meanings or relation or the meaning evolved history
+
+yields
+blow
 phone telepohone microphone phonic
-etymology
-understand
-Hair Salon Barber's
-Chemist  Pharmacy
 hang - hang out/on
 stoop 
-lie vs lie down
-lie down vs lay down
-give me a prompt for AI animation generation tool: kid education about the word drill, and its various meanings or relation or the meaning evolved history
+lie lie vs lie down
 crust
 gist
-pond puddle lake river
-NAME OF Finger
 NUT
 flip
-find found founded
-proof 醒发 Put the dough into the proofer and wait for it to rise.”​ 或 “Put the dough into the proofer and let it rise.”
-rise various meanings including dough proof
+rise: various meanings including dough proof
 sift
 tug
 flower flour 
-th sound
-phonic rythm
-explain plural one apple  two apples  Grains of rice
 clause
 spray
 spay
 scoop
-band rubber band
+assembly 集合点  assembly point
 
-
-​Stop playing with your food.​​ 
-
-
-
-集合点 assembly point
-
-sing sang sung son
-
-立起来旗杆 搭起来帐篷
-切末
-
-生物和物品 生物才能敲门
-roller skating是运动 skates是装备
-错开日期请假
-触感
-擦脸
-擤鼻涕
-抠牙 剔牙 抠鼻屎
-用工具夹开坚果
-各种鼻涕
-眼屎
-收割机
 常用动作
 脚伸出来
 手翻过来
-
 光晕
+
 脏东西 食物残渣 头发等
 冲进下水道
 
@@ -85,9 +68,6 @@ show me
 
 面团在芝麻里面打滚沾上芝麻
 
-跳绳
-
-流汗了 汗湿衣服
 
 
 tuck your tummy in
@@ -103,8 +83,7 @@ fasten strap
 wiggle your toes
 sit on the potty
 bladder
-pee
-poo
+
 wipe yourself clean
 wet your palms
 rub the soap
@@ -113,38 +92,6 @@ rinse off germs
 gums
 scrub the outer surfaces
 spit out the residue
-the subtitle trail the spoken voice
-
-
-U OO
-
-thin
-
-Take out/off  the hairpin / hair clip.
-
-hi, i'm xxx, i've working in IT industry for 15 years, i have my own website sharing my IT knowledges for free, 
-it covers traditional software development/blockchain/eithical hacking and hardware like raspberry pi and arduino.
-my last job experience is mainly focusing on java development using spring boot and spring cloud components, we developed clearing system from scratch 
-and i partipicated in all lifecycles from system design to deployment and migration to cloud, and i also implemented serveral side projects on my own for example the btcp funding rate calc.
-my personal hobby is both exploring new IT technics and dive down existing technics in my personal time,
-for example when i explore blockchain I was very curios about ECDSA and it triggered my insteresting of connecting the dots from AES RSA i previously learned in https with this ECDSA, so i self learned Professor Christof Paar's online cryptography course to understand  how
-cryptography involved from shift cipher to public-key cryptography, FROM RSA TO Elliptic Curve Cryptosystems, AND then to better understand the underpin cyclic groups, i self learned
-Abstract algebra group theory.
-
-and along the way i understand that not all the cryptography set up are safe, some may have vulnerbilities, then i tried one of it called padding oracle and i successfully passed Encrypted Pastebin test on hacker101, i very enjoyed
-the moment when I can understand the whole theory and technica and utilize it successfully.
-
-It's always being my great feel of statisfaction 
-when i understood IT knowledges which i already know from another perspective or grasp a new skills, for example the first time i can view a software product from hackers point of view 
-and can exploit the vulnerbilities i identified, the first time i can assembly some arduino hardware pieces and make it work.
-in summary, i love to use my known kownledges and also egar to learn new things so that i can keep building my own knowledges palacess making the exsiting ones stronger and adding new ones.
-
-talking about my weekness i think 
-firt i'm not a smart person or genius person, i have to devote myself and put a lot of time to get result, i don't like to say i understand this thing or that 100%.
-another one should be that i don't quite like to memorize all the details, i believe most normal people like me when we have explored so many different areas of IT knowledges,
-it's quite challenge for me to remember every details of each techinics,  that's why i have my own website and github repo, what i do is lazy loading, i keep notes and organize the kownledge base nicely and then clear from my memory,
-for example when i use redis i'll read through my notes and quikly pick up the most important details that i need and load it into my active brain zone, when i don't use it i'll gradually clean it from my brain,
-i'm not sure how other people can memorize so many things all the time but that's the way i do it, probably a weekness.
 
 ## 灵感：
 
