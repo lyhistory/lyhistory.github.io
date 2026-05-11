@@ -39,6 +39,28 @@ Buzzword / Slang 网络热词（如“内卷”、“躺平”）
 ### 不满
 #### 反讽（Irony/Sarcasm）
 
+fascinating
+场景：同事拉着你，花了10分钟抱怨公司食堂的筷子太短，并且还在继续。
+反讽例句："Fascinating. I'll be sure to bring that up at the next board meeting."
+
+场景：你熬夜做的方案被老板否决了，原因是他更喜欢红色的封面，而你的封面是深红色的。
+反讽例句："Oh, that's just fascinating. I'm so glad my hard work came down to a shade of red."
+
+场景：你刚洗完车，天上就掉下来一只鸟精准拉在了引擎盖上。
+反讽例句："Well, that's just fascinating, isn't it?"
+
+
+场景：你上班快要迟到了，刚冲出门发现下暴雨，而且你没带伞。
+反讽例句："Awesome. Just awesome. Of course it's raining."
+
+场景：朋友说：“我的电脑刚才蓝屏了，写了一下午的论文全没了。”
+反讽例句："Oh, that's just awesome."（这里带有强烈的共情和无奈，而不是真的觉得好）
+
+场景：老板宣布周末要加班，而你刚好订了周末的票。
+反讽例句："Awesome. There goes my weekend."
+
+/s是 sarcasm（反讽）的专属标记。("That's just awesome /s")
+
 褒义：Amazingly talented.（才华横溢到炸裂。）
 
 贬义："Wow, that's amazingly​ bad."

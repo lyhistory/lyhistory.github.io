@@ -910,7 +910,7 @@ Thank you.
 This is my first time handling this task, so I’d appreciate your guidance.
 
 I noticed that the file you provided is missing AUPO, 1BTC, and ETH​ compared to the current UAT stress test scenarios. Could you please advise whether I should remove these items​ or keep them as is?
->=
+>
 We provided parameters for “Gold,” which collectively refers to AUP, AUP1, AUP10, and AUP100, as they all share the same reference price.
 
 During the previous UAT for the first batch of FX Perpetuals, we submitted the stress test parameters intended for production configuration after testing. These excluded other planned but not yet launched products such as 1BTC, 1BTCP, ETH, ETHP. I am not certain what the usual practice is regarding whether such products should remain in UAT, but they will not be included in this round of testing.
@@ -918,9 +918,8 @@ During the previous UAT for the first batch of FX Perpetuals, we submitted the s
 Screenshots from the last UAT reflect the products present in the system; however, the number of stress test scenarios aligns with currently launched products, which implies that unlaunched products were not included. 
 <=
 I’ve set up the UAT environment for your testing. Please let me know if everything looks correct on your end.
-
 Happy to answer any questions if needed!
->=
+>
 RMD has successfully tested and verified the stress test results, and there are no issues with rolling out to production. Please ensure that unlaunched products are excluded from the production release.
 <=
 Noted, thanks for the updates, do we have a scheduled date for the production release yet?
@@ -928,6 +927,29 @@ Noted, thanks for the updates, do we have a scheduled date for the production re
 No specific date, at your earliest convenience.
 <=
 Hi [Name], just a heads-up! I've deployed it to the prod-parallel env​ and all looks good.  Created the Jira ticket, and we're targeting next weekend​ for the Prod release (pending CAB review).
+
+#### Example 6
+<
+There won’t be any additional charges to include a Cookie Banner for the APEX Website.
+The vendor wants to confirm if the attached video shows what we are looking for, and if we have any requirements for the Cookie Banner.
+>
+Can you clarified with the vendor on the followings:
+xxxxx
+Kindly request the vendor to confirm whether the above enhancements can be implemented, and whether any technical limitations apply.
+>
+Following our discussion with the vendor a month ago, I would like to check on the progress of the cookie banner implementation. 
+Please let me know the current status and any next steps.
+<
+Vendor has identified two plugins that may be used to support the request. 
+Both plugins are free for use on one domain, unless advanced features are required.
+Vendor has also confirmed that logs can be recorded for CookieYes.
+If the CookieYes watermark on the cookie banner is acceptable, this can be used as a free feature and no payment will be required.
+Appreciate if you could discuss with management and advise which option we should proceed with.
+Please find comparison table below:xxxx
+>
+We will proceed with the free version of CookieYes, and the watermark on the cookie banner is acceptable.
+<
+Thank you. We have conveyed (the message) to/Informed/Notified/Communicated to/Relayed to the vendor to proceed with the free version of CookieYes.
 
 ## TICKETS
 
