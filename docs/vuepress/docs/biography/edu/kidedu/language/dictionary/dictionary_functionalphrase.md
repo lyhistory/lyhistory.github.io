@@ -142,7 +142,7 @@ Be careful, you might scrape your skin!​​
 Watch your step!​
 
 ## 宝宝互动 coax
-
+show me
 ### recasting
 It's wonderful that you're thinking so carefully about how to nurture your child's language skills! The phrase "Look that, Daddy" is a very common and developmentally appropriate attempt from a young child. Your instinct to gently model the correct phrasing and expand on it with a question like "What can you see?" is perfectly aligned with natural language acquisition techniques. The approach you're considering is consistent with supportive language teaching practices.
 

@@ -5,6 +5,7 @@
 
 ## TODO
 
+can i have icecream 
 hygiene
 	don't pick nose nose/eye discharge
 
@@ -44,54 +45,10 @@ spray
 spay
 scoop
 assembly 集合点  assembly point
-
-常用动作
-脚伸出来
-手翻过来
-光晕
-
-脏东西 食物残渣 头发等
-冲进下水道
-
-抬起脚尖 这样水就留出去了
-毛巾掉毛
-刷牙姿势 咬住牙齿
-muddy stain
-can i have icecream 
-socket 吹风机支架
-扭屁股
-机油 pump oil
-汽油 燃油 fuel
-
-cheese has important nurtuins like protein and  catcilum
-show me
-
-面团在芝麻里面打滚沾上芝麻
+socket
+stain muddy stain, substain
 
 
-
-tuck your tummy in
-put your head through the hole
-step in one leg
-pull to your waist
-zip up 
-comfy
-hold the waistband
-point your toes in
-push your heel down
-fasten strap
-wiggle your toes
-sit on the potty
-bladder
-
-wipe yourself clean
-wet your palms
-rub the soap
-scrub your fingertips
-rinse off germs
-gums
-scrub the outer surfaces
-spit out the residue
 
 ## 灵感：
 
@@ -224,6 +181,28 @@ https://youglish.com
 
 sharp corners
 electrical outlets
+
+tuck your tummy in
+put your head through the hole
+step in one leg
+pull to your waist
+zip up 
+comfy
+hold the waistband
+point your toes in
+push your heel down
+fasten strap
+wiggle your toes
+sit on the potty
+
+wipe yourself clean
+wet your palms
+rub the soap
+scrub your fingertips
+rinse off germs
+gums
+scrub the outer surfaces
+spit out the residue
 
 ## 场景描述：
 1. 根据场景描述生成动画 story-flick

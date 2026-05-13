@@ -40,6 +40,7 @@ Disperses
     （白光在滴内通过色散分离成光谱）
     
 ## biography
+bladder
 Insect
 	6 legs
 	3 parts: Head, Thorax​ (chest), and Abdomen​ (belly) 
@@ -79,10 +80,13 @@ microorganism 微生物
 fart
 
 ## Chemistry
-
+机油 pump oil
+汽油 燃油 fuel
 Chemist  Pharmacy
 
 催化剂 catalyst
+
+cheese has important nutritions like protein and  catcilum
 
 acid
 acetone

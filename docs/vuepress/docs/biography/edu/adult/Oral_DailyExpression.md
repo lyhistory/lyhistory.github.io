@@ -105,6 +105,54 @@ lowlife scum
 +  Uncivilized
   "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
+脏东西
+	dirt
+	mess
+	debris
+	gunk (informal)
+	dirty stuff (simple/kid-friendly)
+	“There’s dirt on the floor.”
+	“Clean up the mess.”
+	“Remove any debris.”
+食物残渣
+	food scraps
+	food residue (more formal)
+	leftover bits of food
+	“There are food scraps on the table.”
+	“Clean the food residue off the plate.”
+头皮屑
+	dandruff
+	“I have dandruff.”
+	“There’s dandruff on his shoulders.”
+	“This shampoo helps reduce dandruff.”
+冲进下水道
+	“The food scraps were washed down the drain.”
+	“My ring went down the drain!”
+	“Hair can clog the drain instead of going down it.”
+毛巾掉毛
+	“The towel sheds lint.” 
+	“The towel is shedding.”
+	“The towel leaves lint everywhere.”
+描述刷牙过程，比如 咬住牙齿 这样可以清洁牙齿外侧
+	“bite your teeth together”
+	“close your teeth”
+	“clench your teeth lightly” (less common for kids)
+	Hold your toothbrush, add toothpaste, and brush your teeth. Bite your teeth together to clean the outside, then open your mouth to clean the inside. Don’t forget your tongue, then rinse and spit.
+扭
+	She twisted her waist while dancing.
+	Move your body and sway your hips.
+	The baby wiggled his butt.
+	The kids were shaking their butts and laughing.
+沾
+	面团在芝麻里面打滚沾上芝麻
+	Roll the dough in sesame seeds until it’s coated.
+	Roll the dough around in the sesame seeds so the sesame sticks to it.
+
+汗湿
+	My clothes got sweaty / soaked with sweat.
+	“My shirt is soaked with sweat.”
+	“I was sweating through my clothes.”
+	“My clothes are damp with sweat.
 
 眼屎 鼻屎
 	mucus” (medical / neutral)
@@ -278,10 +326,12 @@ lowlife scum
 		Take out/off  the hairpin / hair clip 
 
 浴室穿着拖鞋洗完澡 把脚尖翘起来这样水就流走了
+	When I shower in slippers, water gets inside them. I just lift my toes a little so the water drains out.
 	After a shower in the bathroom, just ​tilting your toes up​ for a moment ​drains the water away.
 	When your flip-flops are wet after a shower, ​a quick tilt of your feet​ lets the water ​run right off.
 	To get the water out of your sandals, simply ​lift your heels​ so the water ​rolls right off your toes.
 	In the bathroom after a shower, ​point your toes up to let the water drain​ from your flip-flops.
+	
 倒水 
 	Pour out the water
 		Please pour out the old water from the cup.
@@ -550,6 +600,11 @@ lowlife scum
 	The child fell asleep with his **head resting on my lap** while we were watching the movie.
 	She saw a picture of herself sitting on the grass, and he **lay with his head lying on her lap**.
 	I gently **cradled his head in my lap** after he fell and hurt himself.
+翻
+	翻过来 turn outside in
+	Turn your hand over so I can see your palm.
+	Flip your hand over
+
 伸手
 	Hold out your hand.​​ 最通用，指手掌朝上或朝前“伸出”，常用于接受物品或握手。
 		Please ​hold out your hand. I need to check your pulse.
@@ -569,6 +624,8 @@ lowlife scum
 		​Step into your shoes, then pull them up.
 	Stretch your legs.​​
 		It was good to get out of the car and ​stretch our legs.
+		Stretch your leg out straight.
+		He stuck his foot out.
 	​Push your foot in hard.​ 	
 		Push your foot in hard​ while I hold the heel of the shoe for you.
 	​Step down firmly.​
@@ -2699,7 +2756,7 @@ Fifty-fifty 一半对一半
 in a worse-case scenario 更严重的情况是
 Allow me 让我来
 Anytime 随时吩咐
-翻过来 turn outside in
+
 hardly that 很难算是
 现在没事了 now is all right
 时差 time difference
