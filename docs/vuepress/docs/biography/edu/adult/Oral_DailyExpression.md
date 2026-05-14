@@ -105,6 +105,18 @@ lowlife scum
 +  Uncivilized
   "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
+proof 醒发 
+	Put the dough into the proofer and wait for it to rise.”​ 或 “Put the dough into the proofer and let it rise.”
+光晕
+	glow - Soft light coming from something.
+		The moon had a soft glow.
+	halo - A ring of light around something.
+		There was a halo around the sun.
+	aura - A special surrounding feeling/light (more abstract/spiritual).
+		The painting creates a mysterious aura.
+	lens flare
+		The photo has lens flare from the sunlight.
+
 脏东西
 	dirt
 	mess

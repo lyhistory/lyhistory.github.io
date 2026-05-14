@@ -7,10 +7,16 @@ kaggle
 google colab
 
 [awesome-free-llm-apis：把永久免费 LLM API 先整理成一张可直接拿来用的清单](https://github.com/mnfst/awesome-free-llm-apis)
-
-+ Google Gemini
++ [Groq](http://console.groq.com)
+  - Llama 3.3 70B（当年最强开源模型之一）
+  - Mixtral 8x7B
+  - Gemma 2 9B
++ [Google Gemini](https://aistudio.google.com/)
+  - Gemini 3 Pro
+  - Gemini 3 Flash
+  - gemini-3.1-flash-lite-preview
 + GitHub Models
-+ https://openrouter.ai/openrouter/free
++ [OpenRouter](https://openrouter.ai/openrouter/free) 
   - openrouter/free
   - Nemotron 3 Super（free）
   - Hunter Alpha

@@ -5,21 +5,15 @@
 
 ## TODO
 
-can i have icecream 
-hygiene
-	don't pick nose nose/eye discharge
+Phonic Rhythm
 
-生物和物品 生物才能敲门
-roller skating是运动 skates是装备
+can i have icecream 
 
 ​Stop playing with your food.​​ 
-sing sang sung son
 
 th sound
-U OO
+
 thin
-phonic rythm
-explain plural one apple  two apples  Grains of rice
 
 NAME OF Finger
 
@@ -48,14 +42,14 @@ assembly 集合点  assembly point
 socket
 stain muddy stain, substain
 
-
-
 ## 灵感：
-
+https://www.englishcentral.com/video/40259
 https://www.languageguide.org/english/vocabulary/
 LetMeEnglish.com
 BBC CBeebies
 ENJOY https://github.com/ZuodaoTech/everyone-can-use-english
+
+https://www.antimoon.com/about/about.htm
 
 ### 词汇
 🏘️ People & Family
@@ -150,30 +144,6 @@ bank(financial institution / side of a river), bat(animal / sports equipment), l
 
 Bark Date Spring Match Wave Current Letter Rock
 
-## 火柴人对话：
-	adobe animate characte+剪映抠图蒙版  https://new.express.adobe.com/home/tools/animate-from-audio
-
-## 科普知识/词源解析/词汇对比/发音 fogsight:
-https://fogsight.ai/app
-
-## coze工作流+chatgpt+Sora:
-
-英国幼儿园宝宝关于玩玩具之后要整理的对话，比如包括You should clean up after you play. Put the toys back in the toy box.  注意我的要求不一定是合理的，如果这个不是宝宝需要掌握的句型或者是有问题的请给出其他句型选项 ，纯英文输出（不要带emoji），每个句子都要有根据，不要编造错误的英文句子以防误导孩子，请自己给自己的输出结果进行语法纠错（只需要输出正确的结果！），对话只需要两个人其中一个是女孩宝宝，另一个可以是老师或者家长，给一个英文标题
-	
-Create a series of 2:3 cartoon-style educational illustrations in the exact style of the provided reference (flat color palette, thick clean outlines, minimalist details, soft neutral background). Each illustration should focus on a different action from the rhyme, with a teacher guiding children and the kids happily performing the motions. Keep the composition simple, warm, and centered on the activity.
-
-
-turn the following script to storyboard scene description, and then write the prompts that I can copy-paste into Sora to create consistant artoon-style images (ready to generate):​​
-
-
-Use the exact same character models, outfits, hairstyles, body proportions, and facial structure for all scenes. Keep the characters recognizable and identical across every shot. Preserve their personality, age, and design style. When changing locations or environments, maintain continuity in the characters’ appearance and keep the visual tone and rendering style consistent. Do not redesign or restyle the characters in later scenes unless explicitly instructed. Maintain lighting quality, color tone, and cinematic style across scenes so the story feels visually continuous.
-
-Use the same characters, outfits, hairstyles, facial features, and proportions in every scene. No redesigns. Cartoon-style, bright soft colors, clean simple background. Friendly classroom setting with the same layout, teacher’s desk, and colorful learning posters on the wall. Gentle child-safe educational tone.
-
-Use the same Mom and little girl character designs in every scene: same outfits, hairstyles, facial features, body proportions, and colors. Soft, friendly cartoon style with smooth shading and simple clean backgrounds. Scenes take place outdoors on a hill or park during the same sunset, with consistent lighting, warm glow, and sky colors. Maintain strict visual continuity across all scenes.
-Mom and little girl standing side by side on a grassy hill, waving goodbye to the sun as it touches the horizon. Soft pastel cartoon sunset with warm glowing colors.
-
-
 ## 单词/句子找电影
 https://www.playphrase.me/
 https://clip.cafe/
@@ -207,3 +177,28 @@ spit out the residue
 ## 场景描述：
 1. 根据场景描述生成动画 story-flick
 2. 分析描述已有视频片段 VLM
+
+
+## 科普知识/词源解析/词汇对比/发音 fogsight:
+https://fogsight.ai/app
+
+## 火柴人对话：
+	adobe animate characte+剪映抠图蒙版  https://new.express.adobe.com/home/tools/animate-from-audio
+
+## coze工作流+chatgpt+Sora:
+
+英国幼儿园宝宝关于玩玩具之后要整理的对话，比如包括You should clean up after you play. Put the toys back in the toy box.  注意我的要求不一定是合理的，如果这个不是宝宝需要掌握的句型或者是有问题的请给出其他句型选项 ，纯英文输出（不要带emoji），每个句子都要有根据，不要编造错误的英文句子以防误导孩子，请自己给自己的输出结果进行语法纠错（只需要输出正确的结果！），对话只需要两个人其中一个是女孩宝宝，另一个可以是老师或者家长，给一个英文标题
+	
+Create a series of 2:3 cartoon-style educational illustrations in the exact style of the provided reference (flat color palette, thick clean outlines, minimalist details, soft neutral background). Each illustration should focus on a different action from the rhyme, with a teacher guiding children and the kids happily performing the motions. Keep the composition simple, warm, and centered on the activity.
+
+
+turn the following script to storyboard scene description, and then write the prompts that I can copy-paste into Sora to create consistant artoon-style images (ready to generate):​​
+
+
+Use the exact same character models, outfits, hairstyles, body proportions, and facial structure for all scenes. Keep the characters recognizable and identical across every shot. Preserve their personality, age, and design style. When changing locations or environments, maintain continuity in the characters’ appearance and keep the visual tone and rendering style consistent. Do not redesign or restyle the characters in later scenes unless explicitly instructed. Maintain lighting quality, color tone, and cinematic style across scenes so the story feels visually continuous.
+
+Use the same characters, outfits, hairstyles, facial features, and proportions in every scene. No redesigns. Cartoon-style, bright soft colors, clean simple background. Friendly classroom setting with the same layout, teacher’s desk, and colorful learning posters on the wall. Gentle child-safe educational tone.
+
+Use the same Mom and little girl character designs in every scene: same outfits, hairstyles, facial features, body proportions, and colors. Soft, friendly cartoon style with smooth shading and simple clean backgrounds. Scenes take place outdoors on a hill or park during the same sunset, with consistent lighting, warm glow, and sky colors. Maintain strict visual continuity across all scenes.
+Mom and little girl standing side by side on a grassy hill, waving goodbye to the sun as it touches the horizon. Soft pastel cartoon sunset with warm glowing colors.
+

@@ -12,7 +12,7 @@ Idea: freedom, happiness
 ​​Abstract nouns​​ (non-physical): love, time
 ​​Collective nouns​​ (groups): team, flock
 
-#### plural/singular 
+## plural/singular 
 I have a blister on my left ​foot.
 Humans have two ​feet.
 The table is six ​feet​ long.
@@ -30,12 +30,16 @@ Match the verb to the meaning rather than the form.
 	Five miles is too far to walk.
 	Ten pints is more than enough.
 	Fish and chips is my favourite
-#### 单位
+
+### Collective Nouns
+Grains of rice
+
+## 单位
 pints
 ounce
 
 dwt abbr. 载重公吨位（deadweight ton）；本尼威特（pennyweight）
-#### 数量词
+## 数量词
 不可数数量词
 https://www.facebook.com/permalink.php?story_fbid=1661131650833479&id=1487230268223619
 
@@ -45,7 +49,7 @@ quite a few
 
 or so 是后置型模糊量词短语，核心规则为 ‌“数量词 + or so”
 more or less 是 ‌多功能模糊量化短语
-#### descriptive noun/agent nouns
+## descriptive noun/agent nouns
 actuator
 adversary ˈædvəsəri 对手，敌手; 魔鬼;
 agnostic 不可知论者
@@ -138,9 +142,7 @@ terminator
 trusty
 trustee
 
-#### common nouns
-
-
+## common nouns
 acronym ˈækrənɪm 缩写词
 acre [ˈeɪkə(r)]
 accreditation 委派，信赖，鉴定合格;
@@ -467,7 +469,7 @@ workaround 变通办法
 wrath rɒθ 愤怒; 激怒
 
 
-#### Verb --> Noun
+## Verb --> Noun
 continue continuity
 compare comparison
 compile compilation
@@ -489,7 +491,7 @@ retrieve retrieval
 slip slippage
 specify specifier
 
-#### Adjective -> Noun
+## Adjective -> Noun
 implicit -> implication
 	the likely implications of change
 explicit -> explication

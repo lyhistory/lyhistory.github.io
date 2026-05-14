@@ -391,6 +391,9 @@ legacy
 hygiene [ˈhaɪdʒi:n]
 garage [ˈgærɑ:ʒ]
 plagiarism [ˈpleɪdʒərɪzəm]
+
+yum vs young sung vs son 
+
 ### h
 hypnotize [ˈhɪpnətaɪz]
 hygiene
@@ -409,6 +412,8 @@ reimburse [ˌri:ɪmˈbɜ:s]
 recipe [ˈresəpi]
 valentine
 ### o
+U OO
+
 cork cock
 constituent
 history [ˈhɪstri]

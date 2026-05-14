@@ -44,6 +44,8 @@ Keywords: Software, tools
 
 ## 录屏神器
 
+[直播+录屏](https://obsproject.com/)
+
 [Create stunning screen recordings for free. Open-source, no subscriptions, no watermarks, and free for commercial use. An alternative to Screen Studio.](https://github.com/siddharthvaddem/openscreen)
 [Cap 有bug](https://github.com/CapSoftware/Cap?tab=readme-ov-file)
 ## Graphic
