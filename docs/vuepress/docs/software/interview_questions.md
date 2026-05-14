@@ -1201,6 +1201,26 @@ example：@components
 
 https://lyhistory.com/docs/software/programming/java_springboot.html#_1-1-spring-ioc%E5%AE%B9%E5%99%A8
 
+### JVM
+
+"If I run a simple Java program from the command line, could you walk me through what happens behind the scenes, from compilation to execution?"
+
+"What is the difference between the JDK, JRE, and JVM?"
+
+### Springboot
+
+"What is the difference between a Java Bean and a Spring Bean?
+
+"No problem, let's skip Java Beans for now. Just focusing on Spring Boot—can you briefly explain what a Spring Bean​ is? 
+And maybe compare it to just instantiating a regular Java class (like a POJO) manually using the new keyword?"
+
+What this achieves:​
+
+It shifts the focus to their practical experience. You are essentially asking them to explain the Inversion of Control (IoC)​ principle—that Spring manages the lifecycle and wiring of objects rather than the developer doing it manually.
+
+ And what is the default scope of a Spring Bean?"
+"When would you use a prototype scope instead of singleton?"
+
 ## ⚛️ Frontend / React / Web Development Questions
 
 what's the difference between javascript typescript?
@@ -1222,7 +1242,7 @@ virtual dom（
 webpage loading speed optimize
 https://lyhistory.com/docs/software/programming/interview_frontend.html#%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96
 
-1. React Architecture & State Management
+### React Architecture & State Management
 
 Question:​
 
@@ -1260,7 +1280,7 @@ Follow-up:​
 
 "I decide based on the nature of the page. If it's a dynamic dashboard​ requiring real-time user interactions and frequent data updates, I lean towards Client-Side Rendering (CSR)​ to reduce server load and improve interactivity. However, if it's a public-facing page​ with static content or SEO requirements (like a landing page or a blog), I heavily utilize Server-Side Rendering (SSR)​ or Static Site Generation (SSG). SSR ensures the HTML is pre-rendered on the server, making it crawlable by search engines and improving the initial load time for the user."
 
-2. Performance Optimization in Web Apps
+### Performance Optimization in Web Apps
 
 Question:​
 
@@ -1287,7 +1307,7 @@ Render Performance:​ Using the React Profiler, I'd check for unnecessary re-re
 
 Based on this triage, optimizations could include implementing Lazy Loading​ for images and routes, adding caching headers​ for static assets, or refactoring the code to split the main bundle into smaller, on-demand chunks."
 
-3. Debugging Frontend Issues
+### Debugging Frontend Issues
 
 Question:​
 
@@ -1313,31 +1333,7 @@ Check Application Logs:​ If the frontend seems fine, I would check the backend
 
 Use Feature Toggles/Debug Mode:​ If possible, I would enable a debug mode in the production build to log more verbose error messages to a monitoring tool like Sentry to catch the exact stack trace."
 
-4. Integration Between Frontend & Backend
-
-Question:​
-
-“You’ve worked on both frontend (React) and backend (C#). How do you design a clean contract between frontend and backend teams?”
-
-What to Listen For:​
-
-API design (REST, GraphQL)
-
-Data shaping, error handling conventions
-
-Versioning and backward compatibility
-
-"To ensure a smooth contract between frontend and backend, communication and documentation are key. I prefer using Swagger/OpenAPI​ specifications. It allows both teams to agree on the endpoint structures, request/response schemas, and error formats before actual development starts.
-
-From a technical standpoint:
-
-Consistent Error Handling:​ We should agree on a standard error response object (e.g., { success: false, message: 'Error description', code: 400 }). This allows the frontend to reliably parse errors and display user-friendly notifications.
-
-Data Shaping:​ Backends often return nested ORM objects that the UI doesn't need. I would discuss creating specific DTOs (Data Transfer Objects)​ or using GraphQL. GraphQL is excellent here because it allows the frontend to request exactlythe data it needs, preventing over-fetching.
-
-Versioning:​ We must agree on an API versioning strategy (e.g., /api/v1/users). This ensures that if we need to change a core data structure, we don't break existing frontend deployments."
-
-5. Responsive Design & UX
+### Responsive Design & UX
 
 Question:​
 
@@ -1358,7 +1354,7 @@ I took the initiative to refactor the core layout components using CSS Media Que
 I also implemented a collapsible sidebar​ and replaced traditional HTML tables with card-based layouts for mobile views. To validate the changes, I conducted informal user feedback sessions with the operations team. The result was a 30% reduction in support tickets related to mobile usability."
 
 
-6. Investigating a Production Incident
+### Investigating a Production Incident
 
 Scenario:​
 
@@ -1396,7 +1392,7 @@ Follow-up:​
 
 Regarding pressure from stakeholders:I remain calm and empathetic. I set clear expectations—giving regular, honest updates is crucial. I focus on gathering facts rather than speculating, and I prioritize restoring service over finding the root cause initially (mitigation first, investigation second)."
 
-7. how do you store credentials in the frontend
+### how do you store credentials in the frontend
 
 Think of LocalStorage & SessionStorage (The "Insecure Client-Side Cache") as non-HttpOnly browser caches. They are accessible via JavaScript running on the page.
 
@@ -1430,6 +1426,48 @@ Edge Cases​
 ❌ If there are no users, the page will just be blank. I guess I could add an ifstatement to check the length before mapping, but usually, the list has data so it's fine.
 
 
+## Crosscutting
+### CORS, Origin, and Credential Storage (Frontend-Backend Security)
+
+"Since you have experience with both frontend and backend, do you know what CORS is which is cross origin resource sharing?
+If yes, can you explain what the 'Origin' includes? 
+
+"When we talk about 'Origin' in the context of web security and CORS, we mean the specific identity of the frontend application trying to access the backend. 
+Can you tell me which specific parts of a URL make up this 'Origin'? 
+For example, if my frontend is running at https://app.company.com:8080, what are the distinct components that the browser uses to define its origin?"
+
+
+Also, where would you store authentication credentials on the frontend, and how would you configure the backend to securely send them cross-origin?"
+
+*"Let me rephrase. Let's say your frontend is hosted on https://app.com and your API is on https://api.com.
+
+First, if you wanted to store a user's login token securely on the browser so it persists across page refreshes, where would you put it?
+
+Second, once it's stored, what specific configurations do you need to add in your Spring Boot backend to allow the browser to actually send that credential automatically with every cross-origin request?"*
+
+### Integration Between Frontend & Backend
+
+Question:​
+
+“You’ve worked on both frontend (React) and backend (C#). How do you design a clean contract between frontend and backend teams?”
+
+What to Listen For:​
+
+API design (REST, GraphQL)
+
+Data shaping, error handling conventions
+
+Versioning and backward compatibility
+
+"To ensure a smooth contract between frontend and backend, communication and documentation are key. I prefer using Swagger/OpenAPI​ specifications. It allows both teams to agree on the endpoint structures, request/response schemas, and error formats before actual development starts.
+
+From a technical standpoint:
+
+Consistent Error Handling:​ We should agree on a standard error response object (e.g., { success: false, message: 'Error description', code: 400 }). This allows the frontend to reliably parse errors and display user-friendly notifications.
+
+Data Shaping:​ Backends often return nested ORM objects that the UI doesn't need. I would discuss creating specific DTOs (Data Transfer Objects)​ or using GraphQL. GraphQL is excellent here because it allows the frontend to request exactlythe data it needs, preventing over-fetching.
+
+Versioning:​ We must agree on an API versioning strategy (e.g., /api/v1/users). This ensures that if we need to change a core data structure, we don't break existing frontend deployments."
 
 ## high level
 
@@ -1440,6 +1478,26 @@ BASEtheory
 https://lyhistory.com/docs/software/highlevel/distrubuted_system.html#_2-1-2-%E4%B8%80%E8%87%B4%E6%80%A7%E7%8A%B6%E6%80%81%E6%9C%BA
 
 ## monolithic application to microservice
+
+### Spring Boot: Monolith vs. Microservices
+
+In your experience working with Spring Boot.
+Did you use it as a single monolithic application or as part of a microservices architecture?
+ 
+What are the main challenges that microservices introduce, and how did you address them?"
+
+"How do you handle transactions that span multiple microservices?"
+
+"Let me give you a quick example. Imagine you have an Order Service​ and a Payment Service. 
+If the Order Service successfully creates an order, but the Payment Service fails halfway through charging the credit card, 
+how do you handle that? How do you ensure you don't end up with a paid order that doesn't exist, or an unpaid order that is marked as complete?"
+
+What this achieves:​
+
+This provides the necessary context (the classic Distributed Transaction / Microservices Saga pattern scenario). It allows the candidate to demonstrate their knowledge of eventual consistency, message queues (like RabbitMQ/Kafka), or patterns like the Saga pattern.
+
+---
+
 https://lyhistory.com/docs/software/highlevel/microservice.html#%E4%BB%80%E4%B9%88%E6%98%AF%E5%BE%AE%E6%9C%8D%E5%8A%A1
 
 is it correct if I say microservices is just to slice into smaller services based on business logic for example, or can i say microservices is only comprised of small services, what else is missing?
@@ -1450,7 +1508,6 @@ could you give me some examples of how microservices communicated with each othe
 
 single point of failure
 transactions consistency
-
 
 
 have you ever heard of CRUD, what's it? what's the method in a http request to do CRUD respectively?

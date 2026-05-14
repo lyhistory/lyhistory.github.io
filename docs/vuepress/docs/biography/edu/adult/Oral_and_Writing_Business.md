@@ -46,6 +46,12 @@ Another weakness is that I don’t try to memorize every technical detail perman
 My approach is somewhat like “lazy loading” in software engineering: I organize and document knowledge clearly, and when I need a technology again — for example Redis — I can quickly review my notes, reload the important concepts into active memory, and become productive again efficiently. When I stop using a technology for a while, I naturally let some low-level details fade. I’m not sure whether this is a weakness or simply my personal learning style, but it’s how I manage knowledge across many technical domains.
 ## General
 
+Brief​ = 做减法（给摘要）
+    Brief me on the project. 
+Articulate​ = 练表达（说清楚）
+    Articulate your thoughts. 
+Elaborate​ = 做加法（展开说）
+    Could you elaborate on that? 
 ### Business Result - Upper-intermediate Student's Book
 rapport
 renowned
@@ -390,6 +396,7 @@ A:Great, appreciate it.
 B:No problem. Enjoy your break!
 
 ### business email
+attaching the document for xxx's benefit/reference/information
 
 For the participating departments (xxx,,xxx), kindly confirm the representatives who will participate in the exercise and attend training. Attendance is compulsory for these representatives. Please inform RMD of any scheduling conflicts by Monday, 11 May 2026.
 Hi [Name], I have a conflict as I've applied for half-day leave on the morning of 12 May and the afternoon of 13 May. Would it be possible to reschedule? If not, I can still join via mobile. Thanks! 
@@ -1006,7 +1013,7 @@ Hi [Name], just a heads-up! I've deployed it to the prod-parallel env​ and all
 
 #### Example 6
 <
-There won’t be any additional charges to include a Cookie Banner for the APEX Website.
+There won’t be any additional charges to include a Cookie Banner for the xxx Website.
 The vendor wants to confirm if the attached video shows what we are looking for, and if we have any requirements for the Cookie Banner.
 >
 Can you clarified with the vendor on the followings:
