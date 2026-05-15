@@ -129,6 +129,12 @@ Light provisioning will be provided
 在航空、航海、技术文档等高度标准化的领域，沟通的首要原则是清晰、客观、避免歧义。使用被动语态能将注意力集中在关键的动作或状态上。例如，在航空通信中，说“The landing gear was extended”（起落架已放下）比“The pilot extended the landing gear”（飞行员放下了起落架）更简洁、焦点更突出。它弱化了个人因素，强调标准程序已被执行这一事实本身。
 ​ 如果使用 “is going to be provided”，会隐含一种“（我们）打算/计划提供灯光”的意味。这会给通知带入一丝“主观意图”的色彩，仿佛这个决定是某个操作员临时起意或系统刚刚计划好的，反而削弱了通知作为既定程序的确定性和可靠性 。
 ### business dialogue
+Hi [Name], sorry for the short notice, but I can't make the interview today. I need to focus on prepping for the weekend server restarts after Eric’s patches. A few servers are new to us, so I need to verify the services manually.
+Also, I took a quick look at the resumes—personally, I feel they might not be the best fit, but let’s wait for [xx] and Andrew to weigh in.
+
+"if xx isn't a fit, how about xxx?"
+"Definitely not a match either."
+
 I won't be joining the next interview round. Since this role reports directly to XX, he/she should have the final say on the ideal candidate profile. XX​ is well-versed in what’s needed, so I trust his/her judgment to make the final call. 我不会参加下一轮面试了。因为这个职位直接向XX汇报，他/她应该对理想人选的画像有最终决定权。XX非常清楚需要什么样的人才，所以我完全相信他/她的判断来做最终决定
 
 I’m familiar with fast-forwarding, but this was my first time manually generating operational reports. I quickly skimmed through the cron job to understand the dependencies.
@@ -393,6 +399,9 @@ It's best for me to learn the business logic ASAP. Then, when real issues pop up
 Let me know if anything looks wrong (e.g., the XX name). I'm guessing we might use Dev for DMP, so I'll check those settings now just to be prepared./I'll review the configuration beforehand.
 
 < Hi [Name], I've reviewed the JPY collateral SFTP setup. The functionality is already in place, so no changes are needed since the logic remains unchanged. Regarding DMP, per Confluence, it recommends using the Dev environment. Thanks! 
+Hi [Name], I checked the negative interest rate logic. It looks like it’s been there untouched for a while and supports both +/- rates fine.
+
+Since I didn't write it and there's no docs, I can't fully vouch for the internal logic (some code looks a bit iffy, but might be intended). As long as it works, I'd prefer not to touch it for now. Let me know if we hit any bugs later!
 
 #### Example 3
 A (colleague):Hey, I’m planning to take leave from May 1st to May 7th.

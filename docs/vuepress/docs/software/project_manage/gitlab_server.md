@@ -1963,6 +1963,9 @@ Indicates whether this runner can pick jobs without tags
 troubleshoot gitlab-runner:
 https://docs.gitlab.com/runner/faq/
 
+gitlab-runner status
+gitlab-runner verify
+gitlab-runner start
 ### Deployment approvals
 
 [Tech Evaluation](https://gitlab.com/gitlab-org/gitlab/-/issues/344233)

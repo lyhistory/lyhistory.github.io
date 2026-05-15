@@ -97,6 +97,22 @@ mysql
 mysqldump
 
 mysqladmin
+```
+# 查看数据库是否还活着（Ping）
+mysqladmin ping
+
+# 查看数据库状态（运行了多久、多少个连接）
+mysqladmin status
+
+# 查看当前连接的线程（谁在连数据库）
+mysqladmin processlist
+
+# 重新加载权限表（改完用户权限后不用重启服务，用这个）
+mysqladmin reload
+
+# 设置新密码
+mysqladmin password 'newpassword'
+```
 
 验证配置：`mysqld --verbose --help | grep skip-slave-start`
 

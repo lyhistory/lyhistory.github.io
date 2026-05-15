@@ -648,6 +648,14 @@ https://www.rootusers.com/how-to-install-dnf-package-manager-in-centosrhel/
 + Remi's RPM repository https://rpms.remirepo.net
 
 ## 服务管理 service/systemctl 
+查看全部服务：
++方法一
+  systemctl list-units --type=service --state=running
+  systemctl list-unit-files --type=service
+  systemctl --type=service
++方法二 The "Network Perspective" (Works on all versions)
+  sudo ss -tulpn
+  netstat -tupln | grep LISTEN
 
 ### System V 
 is the oldest init system, used in
