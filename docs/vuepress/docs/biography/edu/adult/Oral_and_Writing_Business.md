@@ -129,7 +129,15 @@ Light provisioning will be provided
 在航空、航海、技术文档等高度标准化的领域，沟通的首要原则是清晰、客观、避免歧义。使用被动语态能将注意力集中在关键的动作或状态上。例如，在航空通信中，说“The landing gear was extended”（起落架已放下）比“The pilot extended the landing gear”（飞行员放下了起落架）更简洁、焦点更突出。它弱化了个人因素，强调标准程序已被执行这一事实本身。
 ​ 如果使用 “is going to be provided”，会隐含一种“（我们）打算/计划提供灯光”的意味。这会给通知带入一丝“主观意图”的色彩，仿佛这个决定是某个操作员临时起意或系统刚刚计划好的，反而削弱了通知作为既定程序的确定性和可靠性 。
 ### business dialogue
-Hi [Name], sorry for the short notice, but I can't make the interview today. I need to focus on prepping for the weekend server restarts after Eric’s patches. A few servers are new to us, so I need to verify the services manually.
+Hi xxx, sorry for delay, on sick leave today. Just approved your ticket
+Hope you feel better soon! Take care.
+
+Testing shows there is no impact on the xxx system, which is now retrieving api data normally. However, I suspect this is infrastructure-related. Could you please investigate why some user accounts were locked on both the xxx and xxx system?"
+
+The PostgreSQL user on the xxx Server​ appears to be locked by an admin. Since xx is currently unavailable, I’ve raised a access ticket and it is now pending approval from xxx."
+
+
+Hi [Name], sorry for the short notice, but I can't make the interview today. I need to focus on prepping for the weekend server restarts after Peter’s patches. A few servers are new to us, so I need to verify the services manually.
 Also, I took a quick look at the resumes—personally, I feel they might not be the best fit, but let’s wait for [xx] and Andrew to weigh in.
 
 "if xx isn't a fit, how about xxx?"
@@ -199,7 +207,7 @@ Here’s the lowdown: This guy basically clawed his way to the top by shoving ou
 Forgot to add
     Forgot to add: please CC me on the email.
 Forgot to mention / Forgot to say
-    I forgot to mention that Eric will make​ the firewall change on Saturday—it’s for the testing environment.
+    I forgot to mention that Peter will make​ the firewall change on Saturday—it’s for the testing environment.
 Forgot to include
     Apologies, I forgot to include the attachment in my last email.
 Forgot to tell you
@@ -228,7 +236,7 @@ I’d assumed you’d tasked XXX with the installation—she attempted it moment
 
 You never mentioned it was a testing environment—I’d assumed you were installing it on the production environment.
 
-If the yum installation fails, we’ll need Eric to help check the yum repository.
+If the yum installation fails, we’ll need Peter to help check the yum repository.
 
 I can’t find the email—have you added me to the loop? 我现在找不到那封邮件——你把我加进信息共享圈了吗？
 I couldn’t find the email—have you added me to the loop?  我刚才没找到那封邮件——你把我加进信息共享圈了吗？

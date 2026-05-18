@@ -49,6 +49,26 @@ jstack -F <PID/Thread ID>
 
 ## 案例
 
+### ssh失败提示：This account is currently not available.
+
+passwd -S target_user 未显示用户被锁定
+
+```
+cat /etc/passwd
+target_user:x:26:26:PostgreSQL Server:/var/lib/pgsql:/sbin/nologin
+```
+ps -ef | grep target_user 程序还活着没影响
+usermod -s /bin/bash target_user
+
+```
+ausearch -i | less
+查今天下午 2 点到 3 点之间，谁动了 /etc/passwd：
+ausearch -i -f /etc/passwd --start 04/01/2026 00:00:00 --end 04/02/2026 00:00:00
+
+type=PROCTITLE msg=audit(04/1/2026 03:56:23.817) : proctitle=usermod -s /sbin/nologin target_user
+
+```
+
 ### java程序莫名其妙“自动关闭” who killed java process?
 
 https://qzy.im/blog/2020/07/oom-killer-killed-java-process-in-linux/

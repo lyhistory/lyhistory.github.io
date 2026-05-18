@@ -59,6 +59,8 @@ set -x 可以显示shell在执行什么程序
 
   2>&1 标准错误输出重定向到标准输出
 
+  &>>是 >> file 2>&1的简写
+
   如果需要sudo权限，可以用tee：sudo tee
 
   ```
@@ -657,6 +659,37 @@ https://www.rootusers.com/how-to-install-dnf-package-manager-in-centosrhel/
   sudo ss -tulpn
   netstat -tupln | grep LISTEN
 
+自动启动服务:
++ 方法一
+  systemctl is-enabled <service-name>
++ cronjob
+  ```
+  crontab -l:
+  SHELL=/bin/bash
+  PATH=/sbin:/bin:/usr/bin:/usr/sbin:/home/test/bin
+  HOME=/home/test
+  */2 * * * 1-5 sh -x /home/test/crontab/pullup.sh > /home/test/crontab/log/pullup.log
+
+  pullup.sh:
+  #!/bin/bash 
+  #此脚本是检查进程是否丢失，如果丢失直接启动
+  ulimit -c unlimited
+  export LD_LIBRARY_PATH=.
+  send=`date '+%Y-%m-%d-%H:%M:%S'`
+  while read line1 line2 line3 line4 line5  
+  do  
+          echo "check $line1 start time $send"
+          ret=`ps -ef | grep $line1 | grep -v grep |awk '{printf "%s\n",$8}'`
+          if [ -z "$ret" ]
+          then
+                  echo "$line1 restart"
+                  cd $HOME/$line1
+                  nohup ./$line1 &
+          fi
+          echo "check end"
+                                                                                            
+  done <  $HOME/list/list.run
+  ```
 ### System V 
 is the oldest init system, used in
 Debian 6 and earlier
