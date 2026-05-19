@@ -5,8 +5,6 @@
 
 ## TODO
 
-Phonic Rhythm
-
 can i have icecream 
 
 ​Stop playing with your food.​​ 

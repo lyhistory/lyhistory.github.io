@@ -39,6 +39,8 @@ https://github.com/zhinianboke/xianyu-auto-reply
 
 ### [OpenClaw](https://github.com/openclaw/openclaw)
 
+[AlphaClaw wraps OpenClaw with a convenient setup wizard, self-healing watchdog, Git-backed rollback, and full browser-based observability. Ships with anti-drift prompt hardening to keep your agent disciplined, and simplifies integrations (e.g. Google Workspace, Google Pub/Sub, Telegram Topics, Slack, Discord) so you can manage multiple agents from one UI instead of config files.](https://github.com/chrysb/alphaclaw)
+
 [变种 OpenClaw: Use All Major AI Models NO API Token! Claude/ChatGPT/Gemini/DeepSeek/Doubao/Grok/Qwen/Manus/Kimi](https://github.com/linuxhsj/openclaw-zero-token)
 
 [OpenClaw Use Cases that are actually helpful...](https://www.youtube.com/watch?v=Q7r--i9lLck)
@@ -671,7 +673,6 @@ fix: enable Tun AND Global routing if using vpn like v2ray
 
 ### Trade
 
-[AlphaClaw wraps OpenClaw with a convenient setup wizard, self-healing watchdog, Git-backed rollback, and full browser-based observability. Ships with anti-drift prompt hardening to keep your agent disciplined, and simplifies integrations (e.g. Google Workspace, Google Pub/Sub, Telegram Topics, Slack, Discord) so you can manage multiple agents from one UI instead of config files.](https://github.com/chrysb/alphaclaw)
 
 [7x24 AI Agent that saves and makes money autonomously.](https://github.com/Qiyd81/moneyclaw-py)
 

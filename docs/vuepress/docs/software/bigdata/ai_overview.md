@@ -7,6 +7,12 @@ kaggle
 google colab
 
 [awesome-free-llm-apis：把永久免费 LLM API 先整理成一张可直接拿来用的清单](https://github.com/mnfst/awesome-free-llm-apis)
+
++ Mistral AI 每月 10 亿 Token 免费，无需信用卡
+  Provider: Custom / OpenAI-compatible
+  Base URL: https://api.mistral.ai/v1
+  Model: mistral-small-latest 或 mistral-medium-latest
+  API Key: 从 console.mistral.ai 获取
 + [Groq](http://console.groq.com)
   - Llama 3.3 70B（当年最强开源模型之一）
   - Mixtral 8x7B
@@ -39,7 +45,6 @@ google colab
   - z-ai/glm4.7
   - minimaxai/minimax-m2.1
 + Cerebras
-+ Mistral AI
 + 硅基流动API官网：https://cloud.siliconflow.cn/i/jPI17VGX  
   - Kwai-Kolors/Kolors
   -  Qwen/Qwen3.5-4B
@@ -49,6 +54,7 @@ google colab
 + 深度求索API官网：https://platform.deepseek.com  
 + 智谱 AI 
   - GLM-4.7-Flash 
++ 月之暗面 Kimi
 ## Info
 [A Simple and Universal Swarm Intelligence Engine, Predicting Anything. 简洁通用的群体智能引擎，预测万物](https://github.com/666ghj/MiroFish)
 
