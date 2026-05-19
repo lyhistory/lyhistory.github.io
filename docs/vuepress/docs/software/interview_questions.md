@@ -1248,13 +1248,9 @@ Question:​
 
 “You’ve built responsive web apps with React and Next.js. Can you walk us through how you structure a typical React application, and how you manage state in a medium sized project?”
 
-What to Listen For:​
+*"Let me rephrase that. First, let's talk about folders and files: When you create a React project, how do you organize your code? Do you just put everything in one folder, or do you group related files together?
 
-Component hierarchy, folder structure
-
-State management choices (Context API, Redux, Zustand, etc.)
-
-Separation of concerns (UI vs business logic)
+Second, let's talk about data: In a medium-sized app, data needs to be shared between many components. How do you handle passing that data around so it doesn't become a mess?"*
 
 "For a medium-sized React/Next.js project, I usually follow a Feature-Based Folder Structure. Instead of grouping files by type (e.g., putting all components in one folder), I group them by domain or feature (e.g., src/features/documents, src/features/dashboard). This makes it easier to maintain and scale.
 
@@ -1266,6 +1262,62 @@ Separation of concerns (UI vs business logic)
 
 For state management, I follow the rule of thumb: start simple, scale when necessary. I primarily use React Context API​ for global UI state (like theme toggling or user authentication status) because it's lightweight and built-in. However, if the application has complex, deeply nested state (like multi-step forms or real-time data synchronization), I would introduce a library like Zustand​ or Redux Toolkit​ for predictable state updates and better debugging capabilities.
 
+In a medium-sized app, passing data deeply through multiple layers of components (prop drilling) becomes unmanageable and makes the code brittle. To avoid this mess, I rely on a combination of strategies depending on the data type:
+
+Lifting State Up:​ For data shared between a parent and its direct children, I keep the state in the closest common ancestor.
+
+Custom Hooks & Composition:​ I extract complex data-fetching logic into custom hooks (e.g., useDocuments). This encapsulates the state management, and I simply pass the returned values as props to presentational components.
+
+Global State Management:​ For data that truly needs to be accessed by unrelated components across the app (like authenticated user details, themes, or notifications), I introduce a global store like Zustand or React Context to provide a single source of truth without prop drilling.
+
+```
+Prop Drilling (Messy):
+function Parent() {
+  const user = { name: 'Alice' };
+  return <Child1 user={user} />;
+}
+
+function Child1({ user }) {
+  return <Child2 user={user} />;
+}
+
+function Child2({ user }) {
+  return <Child3 user={user} />;
+}
+
+function Child3({ user }) {
+  return <div>{user.name}</div>;
+}
+
+Custom Hook (Clean):
+// Define a custom hook
+function useUser() {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    // Fetch user data
+    setUser({ name: 'Alice' });
+  }, []);
+  return user;
+}
+
+// Now any component can use it directly
+function Child3() {
+  const user = useUser();
+  return <div>{user?.name}</div>;
+}
+
+// No need for intermediate components to pass props
+function Parent() {
+  return <Child3 />;
+}
+```
+
+
+*"Let's talk about how you write your components. Do you mix your data-fetching and calculations directly inside the component that draws the buttons and text?
+
+Or do you try to keep them separate? For example, have you ever used Custom Hooks​ to extract your logic, keeping your UI components clean and focused only on displaying things?"*
+
+
 Regarding the separation of concerns, I strictly keep UI components dumb​ (purely presentational) and lift the business logic up to custom hooks or container components. This makes the UI reusable and the logic easily testable."
 
     Backend Translation:​ This is your Caching Strategy​ and Application State.
@@ -1273,6 +1325,180 @@ Regarding the separation of concerns, I strictly keep UI components dumb​ (pur
     Context APIis like storing temporary session data in a simple HashMapor ConcurrentHashMapin memory. It's fast, built-in, and perfect for simple things (like storing the logged-in user's ID for the current request).
 
     Redux/Zustandis like implementing a proper Redis​ or Memcached​ layer. You use it when the data is complex, shared by thousands of concurrent users/sessions, and you need powerful tools to inspect, persist, and debug that data reliably.
+```
+❌ Bad Practice: Mixing Data-Fetching & UI (Messy Component)
+// UserList.jsx - A "fat" component doing too much
+import { useState, useEffect } from 'react';
+
+function UserList() {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Data fetching mixed in the component
+  useEffect(() => {
+    setLoading(true);
+    fetch('/api/users')
+      .then(res => res.json())
+      .then(data => {
+        // Complex calculation mixed in
+        const activeUsers = data.filter(user => user.isActive);
+        const sortedUsers = activeUsers.sort((a, b) => a.name.localeCompare(b.name));
+        setUsers(sortedUsers);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  // More calculations mixed in
+  const totalUsers = users.length;
+  const adminCount = users.filter(u => u.role === 'admin').length;
+
+  // UI rendering
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
+  return (
+    <div>
+      <h2>Total Users: {totalUsers}</h2>
+      <h3>Admins: {adminCount}</h3>
+      <ul>
+        {users.map(user => (
+          <li key={user.id}>{user.name} - {user.email}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default UserList;
+
+
+✅ Good Practice: Separating Logic with Custom Hooks
+// useUsers.js - Custom Hook (Logic separated)
+import { useState, useEffect } from 'react';
+
+export function useUsers() {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch('/api/users')
+      .then(res => res.json())
+      .then(data => {
+        const activeUsers = data.filter(user => user.isActive);
+        const sortedUsers = activeUsers.sort((a, b) => a.name.localeCompare(b.name));
+        setUsers(sortedUsers);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  // Derived calculations
+  const totalUsers = users.length;
+  const adminCount = users.filter(u => u.role === 'admin').length;
+
+  return { users, loading, error, totalUsers, adminCount };
+}
+
+// UserList.jsx - Clean UI Component (Only renders)
+import { useUsers } from './useUsers';
+
+function UserList() {
+  const { users, loading, error, totalUsers, adminCount } = useUsers();
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
+  return (
+    <div>
+      <h2>Total Users: {totalUsers}</h2>
+      <h3>Admins: {adminCount}</h3>
+      <ul>
+        {users.map(user => (
+          <li key={user.id}>{user.name} - {user.email}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default UserList;
+```
+
+*"When it comes to sharing data globally (like a user's login status or a shopping cart), there are different tools. Have you used the built-in React Context API? And have you ever felt the need to bring in an external library like Redux​ or Zustand?
+
+In your opinion, what are the main differences between using Context and using something like Redux?"*
+
+"The main differences lie in how they trigger updates​ and their developer experience:
+
+Rendering Optimization:​ When the state changes in Context API, everycomponent consuming that context re-renders, regardless of whether they use the specific changed value. Redux (and Zustand) uses a centralized store with selectors; components only re-render if the specific slice of state they selected has changed.
+
+DevTools & Debugging:​ Redux comes with excellent DevTools that allow you to time-travel debug, view action payloads, and track state changes seamlessly. Context API lacks built-in advanced debugging tools.
+
+Middleware:​ Redux has a powerful middleware ecosystem (like Redux Thunk or Saga) to handle complex asynchronous logic and side effects cleanly. Context API is purely a synchronous state propagation mechanism and requires manual setup for async operations."
+
+```
+1. Implementation with Context API (The "Parameter Passing" Approach)
+In Context, when the cart updates, every component that consumes the Context re-renders, even if they don't care about the cart.
+// CartContext.js (The Global State)
+import { createContext, useState, useContext } from 'react';
+
+const CartContext = createContext();
+
+export function CartProvider({ children }) {
+  const [cartItems, setCartItems] = useState([]);
+  const [theme, setTheme] = useState('light'); // 👈 ADDED THEME
+
+  const addToCart = (item) => {
+    setCartItems(prev => [...prev, item]);
+  };
+
+  // Everything is bundled into ONE object
+  return (
+    <CartContext.Provider value={{ cartItems, addToCart, theme, setTheme }}>
+      {children}
+    </CartContext.Provider>
+  );
+}
+
+export const useCart = () => useContext(CartContext);
+
+
+// Header.jsx
+function Header() {
+  // This component ONLY cares about cartItems.length
+  const { cartItems } = useCart(); 
+  
+  console.log('Header rendered');
+  return <div>Cart: {cartItems.length}</div>;
+}
+
+If we change the theme (e.g., setTheme('dark')), the Headercomponent still re-renders. Why? Because the CartProviderpasses a new object​ as its value every time any state inside it changes. React sees that the object reference has changed, so it re-renders all​ consumers, even if they don't use the changed property.
+
+2. Redux Example (The Fix)
+
+In Redux, components subscribe to specific slices​ of state.
+
+// Header.jsx with Redux
+import { useSelector } from 'react-redux';
+
+function Header() {
+  // This component ONLY subscribes to cart items
+  const cartCount = useSelector(state => state.cart.items.length);
+  
+  console.log('Header rendered');
+  return <div>Cart: {cartCount}</div>;
+}
+```
 
 Follow-up:​
 
@@ -1398,7 +1624,7 @@ Think of LocalStorage & SessionStorage (The "Insecure Client-Side Cache") as non
 
 Think of cookies as HTTP headers managed by the browser. This is the industry standard for authentication.
 
-⚛️ Mini‑Task: Search Filter in React
+### Mini‑Task: Search Filter in React
 Task Description
 
 “Imagine you’re building a user list page in React. The page displays a list of users fetched from an API. You need to add a search box that filters users by name as the user types. 

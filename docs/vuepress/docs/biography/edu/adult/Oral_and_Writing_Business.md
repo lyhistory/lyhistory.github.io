@@ -1116,6 +1116,23 @@ rip customers off 宰客
 How To Protect Your Business From The Dark Side Of The Internet Of Things https://www.forbes.com/sites/centurylink/2016/02/15/how-to-protect-your-business-from-the-dark-side-of-the-internet-of-things/#19b71ccf5fcf
 
 ### Software engineer 
+Refactored legacy code and eliminated major technical debt
+    Resolved major technical debt  ​ 这是IT行业的专有核心词汇。它不仅指代码写得烂，更指为了赶进度而牺牲代码质量的“历史遗留隐患”。为什么不用 "Fixed bugs"？​ 因为 "Fixed bugs" 只是修修补补，而 "Resolved technical debt" 体现出你是在从根本上治理系统顽疾，老板看到这个词会觉得你非常有架构意识和长远眼光。
+
+    modernized legacy code 现代化/重构升级遗留代码/祖传代码
+
+I took on the role of the technical gatekeeper-challenged short-term hacks. Whenever I spotted a short-term hack or a risky design choice during our reviews, I wasn't afraid to push back. My goal was always to protect the team from accumulating severe technical debt down the line.
+    challenged short-term hacks 反对权宜之计/临时歪招
+
+I saw that our old codebase was becoming a bottleneck. So, I championed the shift to XXX. It wasn't just an upgrade; it was about standardizing how we write components. This move significantly improved our code consistency and made onboarding new features much smoother.
+    Championed 主导 它比 "Led"（领导）、"Promoted"（推广）或 "Advocated"（倡导）都要强有力
+
+I noticed our team lacked standards when reviewing Java code, which slowed us down. So, I took the initiative to author​ our internal Java guidelines. By actively promoting these best practices, I managed to align the team's engineering mindset, which massively cut down our new hires' onboarding time.
+    Authored Wrote只是写，而 Authored​ 带有“原创、权威著述”的意味。它暗示这份指南不是在网上随便复制粘贴的，而是你凭借深厚的踩坑经验，从无到有（From Scratch）​ 提炼出来的真知灼见。
+
+I didn't just lead the strategy; I stayed deeply hands-on with the redesign. We transformed the platform’s most critical engine from a rigid system into a flexible, rule-driven automation framework. This allowed us to ship new features without rewriting the core logic every time.
+    hands-on with the redesign / involved in​ the redesign / remaining the cornerstone​ of the redesign
+I didn't just write code; I acted as the bridge. Because I developed/acquired deep expertise in the maritime domain, I was able to take those really complex requirements and decompose them​ into clear technical docs and diagrams. This made the handoff to the dev team seamless.
 
 "Possess a strong command of both theoretical depth and practical breadth to rapidly resolve complex issues."（拥有深厚的理论深度和广泛的实践广度，能够快速解决复杂问题。）
 
@@ -1175,9 +1192,9 @@ shrink & zoom & magnification（放大率） & resolution（分辨率）
 shrink :
 1. a. To become or appear to become smaller: The shadows shrank as the sun rose higher. The mountains shrank in the distance as we drove away.
 b. To become smaller from exposure to heat, moisture, or cold: The sweater shrank in the wash.
-2. To become reduced in amount or value; dwindle: His savings quickly shrank. The market for that product has been shrinking.
-3. To move back or away, especially in fear: "She shrank back against the wall and flattened her palms against it" (Pearl S. Buck).
-4. To show reluctance; hesitate: We should not shrink from making such a sacrifice.
+1. To become reduced in amount or value; dwindle: His savings quickly shrank. The market for that product has been shrinking.
+2. To move back or away, especially in fear: "She shrank back against the wall and flattened her palms against it" (Pearl S. Buck).
+3. To show reluctance; hesitate: We should not shrink from making such a sacrifice.
 shrink volume 缩小容量
 compression 压缩
 zoom out photog films television to decrease rapidly the magnification of the image of a distant object by means of a zoom lens
@@ -1486,6 +1503,14 @@ pre-populate
 propagate : product quantity is changed but not propagated
 proposal
     The customer had signed the proposal to indicate acceptance.
+Revamp​ 界面翻新​ 换皮肤、改布局、更新视觉风格以匹配新设计。
+	Revamped the marketing website, boosting visual appeal and user engagement.
+Refactor​ 代码重构​ 优化底层逻辑、拆分组件、清理烂代码。
+	Refactored the legacy React components, improving rendering performance by 30%.
+Redesign​ 重新设计​ 推翻原有交互流程，重新绘制原型图和UI稿。
+	Collaborated with product managers to redesign the checkout flow, reducing cart abandonment.
+Overhaul​ 系统大修​ 更换核心框架、迁移数据库、重构整体架构。
+	Led a complete infrastructure overhaul, migrating the monolith to microservices.
 reflect impact
 refine
 	The process itself needs to be continuously improved by disciplined redefinition and refinement
