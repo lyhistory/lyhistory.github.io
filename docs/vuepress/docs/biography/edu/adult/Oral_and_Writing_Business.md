@@ -129,6 +129,10 @@ Light provisioning will be provided
 在航空、航海、技术文档等高度标准化的领域，沟通的首要原则是清晰、客观、避免歧义。使用被动语态能将注意力集中在关键的动作或状态上。例如，在航空通信中，说“The landing gear was extended”（起落架已放下）比“The pilot extended the landing gear”（飞行员放下了起落架）更简洁、焦点更突出。它弱化了个人因素，强调标准程序已被执行这一事实本身。
 ​ 如果使用 “is going to be provided”，会隐含一种“（我们）打算/计划提供灯光”的意味。这会给通知带入一丝“主观意图”的色彩，仿佛这个决定是某个操作员临时起意或系统刚刚计划好的，反而削弱了通知作为既定程序的确定性和可靠性 。
 ### business dialogue
+Do you want me to manually trigger​ these jobs now, or just wait for the auto-run tonight​ to generate the reports?
+
+Please refrain from performing any operations​ while I am backing up the database.
+
 Hi xxx, sorry for delay, on sick leave today. Just approved your ticket
 Hope you feel better soon! Take care.
 
@@ -138,7 +142,16 @@ The PostgreSQL user on the xxx Server​ appears to be locked by an admin. Since
 
 
 Hi [Name], sorry for the short notice, but I can't make the interview today. I need to focus on prepping for the weekend server restarts after Peter’s patches. A few servers are new to us, so I need to verify the services manually.
+
 Also, I took a quick look at the resumes—personally, I feel they might not be the best fit, but let’s wait for [xx] and Andrew to weigh in.
+
+Morning [Name]. Just a heads-up that I’m required to support xxx with xxx tomorrow.
+I likely won’t be able to attend the interview, but if we wrap up early, I’ll pop in. It depends on how the xxx progresses.  If I can't make it, I'll just pass my questions to xxx
+
+The xxx is scheduled for the 21st to the 26th, during which​ I'm required to support the team.
+
+Just a heads-up that xxx has called in sick/taken leave tomorrow,so he won’t be attending. Probably best to reschedule.​ What do you think?
+Hi, xxx just said he's off tmr, can't join either. Probably best to reschedule.
 
 "if xx isn't a fit, how about xxx?"
 "Definitely not a match either."
@@ -420,6 +433,50 @@ A:Perfect, thanks. Since it’s just the two of us handling this, we should avoi
 B:Exactly. I’ll schedule mine accordingly and make sure there’s coverage.
 A:Great, appreciate it.
 B:No problem. Enjoy your break!
+
+#### Example 4
+=>
+hi xxx has created a withdrawal, but the value date they put as 22 may 2026. will there be any issue if we were to process the withdrawal today? 
+<=
+Thanks for flagging. I need to review the code logic first​ to see if processing it today against a future value date will trigger any errors.
+By the way, is this the first time this has come up? / Quick qn: Is this a new scenario?
+/ Just checking, is this actually a precedent?
+=>
+we havent experience before. last time i dunno 
+<=
+is there a specific reason they set the value date to 22/5 instead of today?​ I'm trying to determine if this was a mistake or intentional. If it's an error, should we ask them to amend it, or would it be better to cancel and recreate the request?
+Do we know why the value date was set to 22/5 instead of today?​ Based on my review of the code, there shouldn't be any restriction preventing a future value date from being processed.
+=> i have yet to communicate with xxx, want to check system behavior with you first before contacting. so i know what to expect of system behavior 
+<=
+Code-wise, we allow it. But not sure how the bank side will handle it.​ Like, do they block the funds now and release on 22/5?​ And will there be any interest implications?​ I have no visibility on that part.
+>=
+Err bank will only process and settle the withdrawal according to the value date 
+<=
+if the bank processes it on the value date, then we're all good from our end.
+Let me double confirm again just in case.
+
+=>
+I would expect the nostro  for CNH won't be settled today, the status will be "released", only until 22 May bank side settle the transaction then only we receive the confirmation message and the nostro ledger matched, status change to "settled", plese help to confirm this statement also
+<=
+As mentioned earlier, I don't have visibility into the bank's internal processing. However, based on standard practice, your assumption is logically correct: the bank should settle on the value date (22/5), triggering our confirmation and Nostro matching.
+
+That said, if the bank were to send the confirmation today instead, it would indeed cause an exception in our clearing system logic.
+
+=>
+1. If bank don’t send confirmation today all schedules will complete successfully? 2. If bank send confirmation, any remediation like manual matching confirmation?
+<=
+1. Yes, if the bank doesn't send the confirmation today, the scheduler will complete successfully.​ I don't see any blocks in the code.
+
+2.It's not a matching issue. The core risk is that the system could create duplicate entries in the Nostro balance table.​ In that scenario, we'd likely have to perform a manual DB update, which is highly risky and strictly a last resort.
+
+With the DMP currently underway and XXX's interview scheduled, my bandwidth is completely stretched.​ Given the load, I'd strongly advise against releasing it today—it's too risky.
+Since they set value date to 22/5, they shouldn't expect settlement today.​ Just release it tmr.
+
+=>
+Eh can release tomorrow? [Facepalm] I didn’t know can go this route as well 
+<=
+I don't see any code-level issues. If releasing today is a concern, we can simply advise them to submit a new request tomorrow instead.
+
 
 ### business email
 attaching the document for xxx's benefit/reference/information
