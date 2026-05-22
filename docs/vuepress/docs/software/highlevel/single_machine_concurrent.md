@@ -86,7 +86,39 @@ concurrent control或者并发控制是关乎系统的consistency一致性，
 -日单量
 
 ## 1. 数据库Database Isolation
- 
+
+MySQL：默认 REPEATABLE READ，通过 MVCC + Next-Key Lock​ 在避免脏读、不可重复读的同时，一定程度上防止幻读，适合传统业务系统。
+    在 MySQL 的 InnoDB 引擎中，当你处于默认的 REPEATABLE READ​ 级别时，如果你执行了一个范围查询（比如 SELECT * FROM orders WHERE amount > 100），InnoDB 不仅会给找到的现有行加上锁，还会给这个范围的“间隙”（Gap）加上锁（这被称为 Next-Key Lock，即记录锁+间隙锁）。
+
+    结果：其他事务根本无法在这个范围内插入新数据。
+
+    结论：既然插不进来，MySQL 的 RR 级别在物理层面上彻底杜绝了幻读的发生。这也是为什么很多老司机会说“MySQL 的 RR 已经等同于 Serializable 了”。
+
+PostgreSQL：默认 READ COMMITTED，实现更简单，每个语句看到的是语句开始时的已提交数据，符合大多数应用场景，且并发性能较好。
+
+    PostgreSQL 在 REPEATABLE READ​ 级别使用了一种叫做“谓词锁”的机制。它不会真正去锁住数据表不让别人写，而是在事务提交时进行比对。
+
+    场景：如果你的事务在运行期间，有其他事务偷偷插入了符合你查询条件的新数据。
+
+    结果：当你尝试提交当前事务时，PostgreSQL 会直接抛出一个错误：ERROR: could not serialize access due to concurrent update（由于并发更新导致无法序列化访问）。
+
+    结论：PG 通过“强制报错回滚”的方式，在 RR 级别也达成了防幻读的业务语义。
+
+Oracle 数据库：默认的 READ COMMITTED
+
+根据 Oracle 官方文档，Oracle 数据库默认的隔离级别确实是 读已提交（READ COMMITTED）。
+但是！Oracle 在处理这个隔离级别时，依托其强大的 MVCC（多版本并发控制）​ 机制，展现出了一些非常优秀的特性：
+绝不允许“脏读”：这是底线。
+不会出现“死锁”：Oracle 采用了“一路读快照、写操作排队”的巧妙设计。读数据永远不会加锁，也不会被写操作阻塞（即著名的 Readers don't block writers, writers don't block readers）。这让它在高并发的 OLTP（在线事务处理）系统中表现极佳。
+
+可能出现“不可重复读”和“幻读”：因为每次执行查询时，它看到的都是以当前时间为基准的已提交数据快照。如果其他事务在你两次查询之间提交了修改，你就会看到不一样的结果。
+
+非常有意思的是，Oracle 没有实现 SQL 标准中的 READ UNCOMMITTED（读未提交）和 REPEATABLE READ（可重复读）。
+
+如果你觉得 READ COMMITTED不够用，Oracle 直接为你提供了两个跳跃级的选项：
+SERIALIZABLE（串行化）：提供绝对的强一致性，防幻读。但如果并发冲突严重，很容易抛出 ORA-08177错误，需要业务代码做重试机制。
+READ ONLY（只读）：顾名思义，整个事务只能查询，不能修改，适合做数据报表拉取。
+
 Isolation (database systems) https://en.wikipedia.org/wiki/Isolation_(database_systems)#Read_committed
 
 幻读

@@ -1722,8 +1722,6 @@ What this achieves:​
 
 This provides the necessary context (the classic Distributed Transaction / Microservices Saga pattern scenario). It allows the candidate to demonstrate their knowledge of eventual consistency, message queues (like RabbitMQ/Kafka), or patterns like the Saga pattern.
 
----
-
 https://lyhistory.com/docs/software/highlevel/microservice.html#%E4%BB%80%E4%B9%88%E6%98%AF%E5%BE%AE%E6%9C%8D%E5%8A%A1
 
 is it correct if I say microservices is just to slice into smaller services based on business logic for example, or can i say microservices is only comprised of small services, what else is missing?
@@ -1736,16 +1734,69 @@ single point of failure
 transactions consistency
 
 
-have you ever heard of CRUD, what's it? what's the method in a http request to do CRUD respectively?
-GET for Read, POST is for CREATE, PUT is for UPDATE and DELETE is for DELETE
-
-for a typical client-server model, what's 
-SQL:
-
-
-blockchain:
+## blockchain:
 
 blockchain aka distributed ledger, what do you think is the fundmental differences between distributed ledger and traditional distributed system like spark flink kafka  
 byzantine general problem
 
 what's the property of Digital Signature
+
+## middleware
+### kafka
+#### Question 1: The "Hot Partition" Problem (Throughput & Scalability)
+
+Interviewer Script:​
+
+"Let's say we have a Kafka topic with 6 partitions and 3 consumers in a group. We notice that while 5 partitions are being consumed very quickly, one specific partition is lagging heavily, causing a bottleneck for the entire service. How would you diagnose and fix this?"
+
+🔴 Red Flag Answer:​ "I would just add more consumers." (Adding more consumers won't help if the partition causing the lag is already at maximum capacity).
+
+🟢 Strong Answer:​ The candidate should immediately recognize this as a Partition Skew​ or Hot Partition​ issue.
+
+Diagnosis:​ Check the keys of the messages. Kafka determines the partition based on the hash of the message key. If a specific key (e.g., user_id: 123) is producing 90% of the traffic, all those messages go to the same partition.
+
+Solution:​ Change the partitioning strategy (e.g., round-robin or a custom partitioner that distributes high-volume keys across multiple partitions), or further subdivide the topic.
+
+💡 Backend Analogy for you:​ This is exactly like a Database Hotspot. If you shard your database by User_IDand one massive enterprise client (ID: 999) generates 90% of the writes, their specific shard will become a bottleneck, regardless of how fast the other shards are.
+
+Question 2: Ensuring Strict Ordering (Consistency)
+
+Interviewer Script:​
+
+"In our payment system, we have events like Payment_Initiated, Payment_Processed, and Payment_Completed. It is critical that these are processed in exact order. How does Kafka handle message ordering, and what trade-offs must we accept to guarantee strict ordering?"
+
+🔴 Red Flag Answer:​ "Kafka guarantees global ordering." (It does not, only per-partition ordering).
+
+🟢 Strong Answer:​
+
+Mechanism:​ Kafka only guarantees ordering within a single partition. To achieve strict global ordering, you must use a topic with exactly one partition.
+
+The Trade-off:​ A single partition means you can only have one consumer​ reading from it. This completely kills horizontal scalability and throughput.
+
+Real-world approach:​ A senior dev will say they avoid global ordering. Instead, they ensure ordering per entity​ (e.g., all events for Payment_ID: 456go to the same partition by using the ID as the Kafka key), allowing parallel processing for different payments while maintaining order for a specific payment.
+
+💡 Backend Analogy for you:​ This is like Single-Threaded vs. Multi-Threaded​ execution. Ensuring strictly ordered logs globally is like forcing a multi-threaded application to run on a single CPU core. You gain absolute order, but you lose all concurrency.
+
+Question 3: Idempotency in Consumers (Reliability)
+
+Interviewer Script:​
+
+"Kafka brokers can fail, and consumers can crash. Because of this, Kafka has a mechanism to retry sending messages. How do you ensure that retried messages don't accidentally cause duplicate side effects in your database (e.g., charging a credit card twice)?"
+
+🔴 Red Flag Answer:​ "I rely on Kafka's 'exactly-once' semantics." (While Kafka supports this, it's notoriously hard to configure correctly and only works for specific stream-processing scenarios, not standard consumer-to-DB writes).
+
+🟢 Strong Answer:​ The candidate should discuss Idempotency​ at the application level.
+
+Solution:​ Use a unique event_id(UUID) attached to every Kafka message. Before processing an event, the consumer checks a processed_eventstable in the database. If the event_idalready exists, it skips the operation. This is called an Idempotency Key.
+
+Alternative:​ Leverage Kafka's consumer offsets. If the database write succeeds but updating the offset fails, the consumer will re-read the message. Hence, the database write must be wrapped in a transaction alongside the offset commit.
+
+💡 Backend Analogy for you:​ This is identical to handling HTTP POST Retries​ or Webhook Deduplication. If a payment gateway sends you the same "payment success" webhook twice due to a network timeout, your API must check if that specific transaction ID has already been settled before processing it again.
+
+## other
+
+have you ever heard of CRUD, what's it? what's the method in a http request to do CRUD respectively?
+GET for Read, POST is for CREATE, PUT is for UPDATE and DELETE is for DELETE
+
+for a typical client-server model, what's 
+SQL:

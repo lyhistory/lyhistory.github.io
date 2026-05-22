@@ -1173,6 +1173,10 @@ rip customers off 宰客
 How To Protect Your Business From The Dark Side Of The Internet Of Things https://www.forbes.com/sites/centurylink/2016/02/15/how-to-protect-your-business-from-the-dark-side-of-the-internet-of-things/#19b71ccf5fcf
 
 ### Software engineer 
+Prop drilling (also called "threading props" or "component chaining") is the process of passing data through multiple nested components in a UI framework like React. It occurs when intermediary components must accept and pass down a prop—even if they don't use it directly—solely to reach a deeply nested component.
+
+resolved by restarting laptop, long overdue restart 长时间不重启
+
 Refactored legacy code and eliminated major technical debt
     Resolved major technical debt  ​ 这是IT行业的专有核心词汇。它不仅指代码写得烂，更指为了赶进度而牺牲代码质量的“历史遗留隐患”。为什么不用 "Fixed bugs"？​ 因为 "Fixed bugs" 只是修修补补，而 "Resolved technical debt" 体现出你是在从根本上治理系统顽疾，老板看到这个词会觉得你非常有架构意识和长远眼光。
 
