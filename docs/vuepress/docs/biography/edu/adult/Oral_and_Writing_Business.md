@@ -477,6 +477,41 @@ Eh can release tomorrow? [Facepalm] I didn’t know can go this route as well
 <=
 I don't see any code-level issues. If releasing today is a concern, we can simply advise them to submit a new request tomorrow instead.
 
+#### Example 5
+Interviewee (challenging):​
+
+"I'm curious as to why we are covering these specific topics. Is this actually reflective of the day-to-day work, or is it more of a theoretical exercise?"
+/
+"Just checking, do we really use these things on the job? Or is it just for the interview?"
+Interviewer (calmly):​
+
+"Primarily, we ask these because they form the foundation. We need to gauge the breadth and depth​ of your technical knowledge.
+
+Beyond that, take Kafka for example—our clearing system is heavily reliant on​ a bespoke engine core we built on top of it. All our business logic is implemented on top of this core, so a deep understanding​ of Kafka isn't just preferable; it's essential for the role."
+/
+"First, it’s about the basics. We need to see your depth​ lah.
+
+Second, for Kafka specifically, our clearing system is built deep​ on it. We wrote our own engine core using Kafka, so if you don't understand Kafka well, you won't be able to handle the business code."
+
+I see you got some working experience with Kafka. Can you explain the different types of offsets in Kafka? Like, what are they for?
+
+The Pivot (If the candidate forgets specifics)
+If the candidate replies:​
+
+“I just used it before lah, but that was quite some time ago… I kind of forgot already.”
+
+or​
+
+“That one I only touched a bit here and there, didn’t really go deep into all the features.”
+
+"I just used it; I don't remember the specifics. It was a project from a long time ago, so I've forgotten most of it."
+OR 
+"As for this one, I only used it briefly and didn't really get into all the features."
+
+Then you pivot:​
+
+“No worries. Then just share whatever you still remember. How did you actually use the offsets in your project? What was the scenario like?”
+
 
 ### business email
 attaching the document for xxx's benefit/reference/information
