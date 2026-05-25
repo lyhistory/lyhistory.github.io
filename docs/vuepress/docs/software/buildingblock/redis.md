@@ -1290,7 +1290,7 @@ https://redis.io/topics/rediscli
   ```
   redis-cli --cluster help
   //连接
-  redis-cli -c -h <HOSTIP> -p <PORT>
+  redis-cli -c -h <HOSTIP> -p <PORT> //注意这里 -c是集群模式，不加就是单机模式，不过不加也是同样支持集群命令（只要节点本身是集群节点），但普通键值命令可能报错 (error) MOVED 1234 10.29.100.13:6379（提示键在哪个槽位、哪个节点）
   	cluster help
   	cluster info
   	cluster nodes
@@ -1662,6 +1662,71 @@ Redis RU330课程 Redis Security 第3周学习笔记 https://blog.csdn.net/steve
 
 
 ## 6. Troubleshooting
+### General
+/var/log/redis/redis-server.log
+
+```
+# 看服务状态（重点看 Active: failed 或 exited）
+systemctl status redis-server -l
+# 看 Redis 日志（日志路径在 redis.conf 的 logfile 配置，如 /var/log/redis/redis-server.log）
+tail -n 50 /var/log/redis/redis-server.log
+```
+
+### 别人安装的redis并且没有history，如何定位启动方式和conf
+```
+# 1. 先抓运行中Redis的主PID（优先拿第一个redis-server进程）
+PID=$(pgrep -o redis-server 2>/dev/null)
+[ -z "$PID" ] && PID=$(ps aux | grep -v grep | grep redis-server | awk '{print $2}' | head -1)
+[ -z "$PID" ] && echo "❌ 当前没有运行中的Redis进程" && exit
+echo -e "📌 当前Redis主进程PID：$PID\n"
+
+# 2. 判断启动方式
+echo "=== 启动方式判定 ==="
+if grep -q 'system\.slice\|user\.slice' /proc/$PID/cgroup 2>/dev/null; then
+  echo "✅ 是 【systemctl/systemd 启动】托管的服务"
+  # 顺便捞对应的unit名称
+  UNIT=$(systemctl status $PID 2>/dev/null | head -1 | sed 's/● //g' | awk -F' - ' '{print $1}')
+  [ -n "$UNIT" ] && echo "   对应服务名：$UNIT"
+else
+  PPID=$(cat /proc/$PID/stat | awk '{print $4}')
+  PCMD=$(ps -p $PPID -o args= 2>/dev/null || cat /proc/$PPID/cmdline | tr '\0' ' ')
+  echo "❌ 不是systemctl管的，是【手动执行 redis-server】拉起的"
+  echo "   它的父进程（PPID=$PPID）是：$PCMD"
+fi
+
+# 3. 定位使用的conf路径
+echo -e "\n=== conf路径定位 ==="
+# 读进程启动时的原始命令行参数（redis-server会把启动时传的conf原样存在这里）
+CMDLINE=$(cat /proc/$PID/cmdline | tr '\0' ' ')
+echo "   进程启动完整命令：$CMDLINE"
+# 抠出.conf后缀的参数
+CONF=$(echo "$CMDLINE" | grep -oE '[[:space:]]/?[^ ]+\.conf' | head -1 | xargs)
+if [ -n "$CONF" ]; then
+  # 如果你启动时用了相对路径，自动拼工作目录转绝对路径
+  if [[ ! "$CONF" == /* ]]; then
+    CWD=$(readlink /proc/$PID/cwd)
+    CONF="$CWD/$CONF"
+  fi
+  echo "✅ 正在使用的conf绝对路径：$CONF"
+else
+  echo "⚠️  启动时【没有传入外部conf文件】，走的是Redis内置默认配置+纯命令行参数启动"
+  echo "   想查生效的配置直接连进去跑：CONFIG GET 配置项名 （比如 CONFIG GET dir 看数据目录）"
+fi
+```
+### 修复数据
+查看数据目录（如 dir /data/redis）下的 dump.rdb和 appendonly.aof，若文件大小异常（如 0 字节）或权限不足（非 Redis 用户可写），需修复。
+```
+redis-check-rdb /data/redis/dump.rdb  # 输出错误并尝试修复，修复后替换原文件
+redis-check-aof --fix /data/redis/appendonly.aof  # 修复后替换原文件
+```
+### 集群模式拓扑错误
+Redis 集群节点的 nodes-<port>.conf记录了集群拓扑，若文件残留旧信息（如已下线节点 ID），会导致节点无法正确加入集群。
+```
+# 停止 Redis（以 systemd 为例）
+systemctl stop redis-server  
+# 备份并删除 nodes.conf
+mv /data/redis/nodes-6379.conf /data/redis/nodes-6379.conf.bak
+```
 
 ### ERR CROSSSLOT Keys in request don't hash to the same slot.
 模糊查询批量清理keys出现错误：

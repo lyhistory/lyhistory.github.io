@@ -129,6 +129,8 @@ Light provisioning will be provided
 在航空、航海、技术文档等高度标准化的领域，沟通的首要原则是清晰、客观、避免歧义。使用被动语态能将注意力集中在关键的动作或状态上。例如，在航空通信中，说“The landing gear was extended”（起落架已放下）比“The pilot extended the landing gear”（飞行员放下了起落架）更简洁、焦点更突出。它弱化了个人因素，强调标准程序已被执行这一事实本身。
 ​ 如果使用 “is going to be provided”，会隐含一种“（我们）打算/计划提供灯光”的意味。这会给通知带入一丝“主观意图”的色彩，仿佛这个决定是某个操作员临时起意或系统刚刚计划好的，反而削弱了通知作为既定程序的确定性和可靠性 。
 ### business dialogue
+Jus reach home.​I need to put the kids to bed​ tonight, so shall we hop on a Tencent Meeting​ tomorrow to go through this together?
+
 Do you want me to manually trigger​ these jobs now, or just wait for the auto-run tonight​ to generate the reports?
 
 Please refrain from performing any operations​ while I am backing up the database.
@@ -478,13 +480,27 @@ Eh can release tomorrow? [Facepalm] I didn’t know can go this route as well
 I don't see any code-level issues. If releasing today is a concern, we can simply advise them to submit a new request tomorrow instead.
 
 #### Example 5
-Interviewee (challenging):​
 
+
+Interviewee/Candidate (challenging):​
+“Is this really day-to-day work related?”
+/
 "I'm curious as to why we are covering these specific topics. Is this actually reflective of the day-to-day work, or is it more of a theoretical exercise?"
 /
 "Just checking, do we really use these things on the job? Or is it just for the interview?"
+
 Interviewer (calmly):​
 
+*“That’s a fair question. Most of the time, you don’t need to think about it. But when production breaks at 2 AM, you do.
+
+Let me ask you this: have you ever encountered an OutOfMemoryErrorin production?​ If you didn’t understand how the JVM allocates memory, how would you even begin to fix it?”*
+/
+“That’s a fair point—most developers don’t think about JVM internals while writing business logic. But here’s why it matters: Java is deceptive. You can make a tiny change—like tweaking a cache, adjusting a thread pool, or even just upgrading a dependency—and it works perfectly in testing. Then, two weeks later, production starts throwing OutOfMemoryErrors or grinding to a halt.
+
+These issues don’t show up immediately because they depend on cumulative effects: memory leaks grow slowly, GC pressure builds over time, or a race condition only triggers under specific load patterns. When that happens at 2 AM, you can’t pause production to read the JVM spec. You need the mental model already in placeto diagnose it quickly.
+
+So yes, it’s not day-to-day coding. But it isday-to-day ownership. If you’re the one deploying the code, you’re the one getting the call when it breaks. Knowing how the JVM works isn’t theoretical—it’s the difference between restarting the pod and actually fixing the problem.”
+/
 "Primarily, we ask these because they form the foundation. We need to gauge the breadth and depth​ of your technical knowledge.
 
 Beyond that, take Kafka for example—our clearing system is heavily reliant on​ a bespoke engine core we built on top of it. All our business logic is implemented on top of this core, so a deep understanding​ of Kafka isn't just preferable; it's essential for the role."
@@ -493,7 +509,7 @@ Beyond that, take Kafka for example—our clearing system is heavily reliant on�
 
 Second, for Kafka specifically, our clearing system is built deep​ on it. We wrote our own engine core using Kafka, so if you don't understand Kafka well, you won't be able to handle the business code."
 
-I see you got some working experience with Kafka. Can you explain the different types of offsets in Kafka? Like, what are they for?
+I see you got some working experience with Kafka. Can you explain the different types of offsets in Kafka? Like, what are they for? It's perfectly fine if you can't recall the specific names right now; just describe what they do in the system, and we'll work from there.
 
 The Pivot (If the candidate forgets specifics)
 If the candidate replies:​
@@ -512,6 +528,36 @@ Then you pivot:​
 
 “No worries. Then just share whatever you still remember. How did you actually use the offsets in your project? What was the scenario like?”
 
+
+
+
+#### Example 6
+This is a technical interview for a IT Level2 role. The candidate claims hands-on experience with Kafka, but struggles when asked about delivery guarantees. The interviewer probes deeper after receiving a vague or overconfident response.
+/
+Interview setting for senior engineer role. Candidate say he very familiar with Kafka, but when question come to exactly-once and data reliability, answer quite vague. Interviewer start to probe more.
+
+Interviewer:​
+So when we talk about Kafka guaranteeing exactly-once delivery—no message loss, no duplication—you’re saying you’ve never had to configure anything for that? You just rely on defaults?
+/
+Eh, regarding Kafka’s exactly-once delivery—make sure no data lost, no duplicate—you mean you all never need to configure anything one meh? Just use default like that?
+
+Candidate:​
+Yeah, I think Kafka handles it intelligently out of the box. We’ve never really needed extra config or custom code./Ya, I think Kafka smart enough already. We never do any special settings or coding.
+
+Interviewer:​
+Right… so what you’re suggesting is that Kafka, by default, supports all of this seamlessly. In practice, though, that’s not quite true. It’s more likely that someone else in your team had already handled the configuration and application logic before you joined, and you’ve simply inherited a stable setup. Would that be fair to say?
+/Hmm, so you’re saying Kafka by default already support everything intelligently lah. But actually, that’s not really true hor. Most likely, your ex-colleague already set up all the config and write the logic long ago, you join halfway, so never see the details. Is it like that ah?
+
+(Candidate denies this.)
+
+Interviewer:​
+Interesting. Because here’s the thing—duplicated messages can sometimes be handled downstream in application logic without touching Kafka APIs directly. But missing data? That’s gone for good. You’ve never actually faced data loss in production? No monitoring system, no reconciliation jobs to detect discrepancies between source and sink?
+/
+Then I very curious leh. Normally, duplicated messages still can handle at code level without touching Kafka API. But data missing? Once missing, confirm gone already. You never encounter data loss before meh? Got monitoring system or not? Do data recon or compare here and there to check got missing data or not?
+
+So, let me get this straight. Are you essentially saying that data integrity—both loss and duplication—is not a priority for you or your team? That you operate without ensuring data consistency?
+/
+Aiya, so basically you mean you all don't care about data missing or duplication in your projects, is it? Just let it be like that, no need to bother, right?
 
 ### business email
 attaching the document for xxx's benefit/reference/information

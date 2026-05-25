@@ -31,6 +31,9 @@ how to find whether a script run as a nohup finished or not?
   Then you can check if it's there with ps or kill:
   `ps -p $HISPID`
   `kill -0 $HISPID`
+  但是实际上遇到问题，当script.sh包含连接数据库的操作时，即使这样做仍然出现：
+  Terminal close -- query aborted
+  这个错误可能代表脚本执行不完整，比如导入导出数据不完整，即使使用了 nohup，MySQL 客户端仍可能对终端状态敏感（尤其是标准输入/输出关联终端时）。一旦终端断开，正在执行的 mysql < test.sql会被中止，导致数据缺失或表结构不完整。更稳妥的运行方式：`nohup bash your_script.sh > import.log 2>&1 &`这样所有输出都会写入日志文件，避免终端关闭导致进程异常。若数据量较大，可考虑在 MySQL 命令中添加 --force或调整超时参数，防止意外中断。当你直接运行 nohup your_script.sh时，如果系统默认 Shell 是 sh而非 bash，或者脚本在子 Shell 中运行，它对终端的依赖性更强，更容易因终端注销而连带杀死内部的 mysql进程。
 
 set -x 可以显示shell在执行什么程序
 

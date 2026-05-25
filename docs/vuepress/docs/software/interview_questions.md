@@ -1743,7 +1743,11 @@ what's the property of Digital Signature
 
 ## middleware
 ### kafka
-#### Question 1: The "Hot Partition" Problem (Throughput & Scalability)
+#### Can you explain the different types of offsets in Kafka? Like, what are they for?
+No worries. Then just share whatever you still remember. How did you actually use the offsets in your project? What was the scenario like?
+#### how do you guarantees exactly-once in kafka, explain kafka's 'exactly-once' semantics.
+In Kafka, we normally refer to the delivery and consumption of the message. But in a real case, we actually mean consumption coupled with the processing logic—including delivery to the downstream. So, a message should not be considered as consumed or delivered until it has completed processing.
+#### The "Hot Partition" Problem (Throughput & Scalability)
 
 Interviewer Script:​
 
@@ -1759,7 +1763,7 @@ Solution:​ Change the partitioning strategy (e.g., round-robin or a custom par
 
 💡 Backend Analogy for you:​ This is exactly like a Database Hotspot. If you shard your database by User_IDand one massive enterprise client (ID: 999) generates 90% of the writes, their specific shard will become a bottleneck, regardless of how fast the other shards are.
 
-Question 2: Ensuring Strict Ordering (Consistency)
+#### Ensuring Strict Ordering (Consistency)
 
 Interviewer Script:​
 
@@ -1777,7 +1781,7 @@ Real-world approach:​ A senior dev will say they avoid global ordering. Instea
 
 💡 Backend Analogy for you:​ This is like Single-Threaded vs. Multi-Threaded​ execution. Ensuring strictly ordered logs globally is like forcing a multi-threaded application to run on a single CPU core. You gain absolute order, but you lose all concurrency.
 
-Question 3: Idempotency in Consumers (Reliability)
+#### Idempotency in Consumers (Reliability)
 
 Interviewer Script:​
 
