@@ -1319,7 +1319,7 @@ echo "exclude.internal.topics=false" > consumer.config
 
 ## 4. Exactly-Once 一致性语义
 
-### 4.1 Exactly-Once-Message-Processing
+### 4.1 Batch Processing: Exactly-Once-Message-Processing
 
 > there are only two hard problems in distributed systems: 
 > 1. Guaranteed order of messages 
@@ -1425,7 +1425,59 @@ Thus since an offset commit is just  another write to a Kafka topic, and since a
 + Consumer Indepth 跳转至 [深入Kafka Consumer消费者解析](/docs/software/buildingblock/kafka_consumer)
 + Producer Indepth 跳转至 [深入Kafka Producer生产者解析](/docs/software/buildingblock/kafka_producer)
 
-### 4.2 Exactly-Once-Stream-Processsing
+### 4.2 Streaming Processing: Exactly-Once-Stream-Processsing
+
+Kafka Streams API​ → it can​ give a stronger, officially named EOS​ via processing.guarantee=exactly_once_v2, because Streams owns the read-process-write cycle within Kafka​ and can tie offset commits and produces into a transaction. But even then, outside-Kafka sinks​ are not covered.
+
+The "read-process-write" cycle in Kafka's official exactly-once semantics (both for plain consumers + Streams) refers exclusively to operations that stay inside the Kafka ecosystem:
+
+Read = consume from a Kafka source topic
+
+Process = stateless/stateful transformation (Streams does this in its local RocksDB state store, btw, that's part of the underlying arch)
+
+Write = produce to a Kafka destination topic
+
+The transaction coordinator in Kafka can only "see" operations that happen on Kafka brokers. It cannot reach outside the Kafka cluster to, say, your Postgres DB, your Elasticsearch index, your Salesforce API, or your S3 bucket. Those are "outside-Kafka sinks".
+
+So if your pipeline is:
+
+Kafka Topic A → Streams app → Write to Postgres
+
+Even if you enable Streams EOS, the transaction covers the read (offset commit) and the produce (if you produce to Topic B), but the Postgres write is outsidethat transaction. If the app crashes after writing to Postgres but before committing the Kafka offset, you get a duplicate write to Postgres on restart. The Kafka transaction can't rollback the Postgres write, because it's not a 2-phase commit across heterogeneous systems.
+
+That's what "outside-Kafka sinks not covered" means. The "write" in the read-process-write cycle is only Kafka topic writes, not external writes.
+
+
+可以这样分层理解：底层是通用的消息管道（Messaging），上层是流计算引擎（Streaming）。两者的 Exactly Once 关注点完全不同。
+
+The #1 thing junior/mid candidates get wrong about Streams: it is not a separate cluster or service you spin up like Flink or Spark Streaming. It is an embedded client librarythat runs inside your own Java application, same as a plain consumer/producer, with 3 extra core components under the hood:
+
+1. Task Model: Streams splits your workload into "tasks" where 1 task = 1 consumer thread assigned to exactly 1 partition of your source topic (1:1 mapping, always). This means max parallelism of your Streams app = number of partitions of your input topic. Each task owns its own state, no shared state between tasks.
+
+2. Local State Stores (RocksDB): Streams can’t keep aggregated/windowed state in memory, so by default it uses an embedded RocksDB (disk-based KV store) on the local VM to store KTables, windowed counts, session state, etc. To make this fault-tolerant, every state update is also asynchronously replicated to a hidden, auto-created changelog topic​ in your Kafka cluster. If your Streams app instance crashes, the new instance assigned the partition re-reads the changelog to rebuild the local RocksDB state from scratch.
+
+3. Auto-Created Internal Topics: Streams silently spins up 3 types of internal topics you never interact with directly:
+
+Changelog topics (for state store replication, as above)
+
+Repartition topics (if you do a groupBy/jointhat changes the record key, Streams silently reprocesses and shuffles data to the right partition behind the scenes)
+
+Dead letter queue topics (if you configure error handling for malformed records)
+
+**For EOS specifically under the hood:**
+
+Each Streams task uses a single idempotent transactional producer. For every batch of records it reads from its assigned partition:
+
+It starts a Kafka transaction
+
+Applies process logic, writes any output records to Kafka destination topics(part of the transaction)
+
+Commits the source partition offset (also part of the transaction)
+
+If any step fails/crashes: Kafka rolls back the entire transaction (no produced records visible to consumers, offset not advanced). If it succeeds: the transaction is committed atomically.
+
+Again: this onlyworks if every step stays in Kafka.
+
 
 or stream processing applications built  using Kafka’s Streams API, we leverage the fact that the source of truth for the state store and the input offsets are Kafka topics. Hence we  can transparently fold this data into transactions that atomically write to multiple partitions, and thus provide the exactly-once guarantee for streams across the read-process-write operations.
 
