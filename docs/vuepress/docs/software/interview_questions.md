@@ -1175,17 +1175,68 @@ https://lyhistory.com/docs/software/highlevel/concurrent.html#concurrency%E5%B9%
 
 how do you resolve dependency conflicts
 
+
+
+### JVM
+
+
+"If I run a simple Java program from the command line, could you walk me through what happens behind the scenes, from compilation to execution?"
+
+Beyond writing application code, have you ever had to work directly with the JVM itself—for example, tuning JVM parameters, analyzing heap dumps, or troubleshooting GC behavior? Can you walk me through a specific incident where your understanding of the JVM helped solve a production issue?
+
 can you name the JVM class loader?
 
-spring bean vs java bean?
+"What is the difference between the JDK, JRE, and JVM?"
 
-the default scope of bean in springboot (singleton prototype)
+“Which JVM flags do you set as defaults for every Spring Boot service?”​
+
+Expect:-XX:+HeapDumpOnOutOfMemoryError, -XX:+UseContainerSupport, -XX:MaxRAMPercentage=75.0.
+
+“How do you diagnose a ‘GC overhead limit exceeded’ error?”​
+
+Expect:Analyze GC logs, check for memory leaks, reduce object creation, tune GC algorithm (G1GC).
+
+“What’s the difference between Minor GC and Full GC?”​
+
+Expect:Minor GC cleans Young Gen (fast), Full GC cleans entire heap (slow, stops-the-world).
+
+### Springboot
+
+#### spring bean vs java bean?
+
+What is the difference between a Java Bean and a Spring Bean?
+
+"No problem, let's skip Java Beans for now. Just focusing on Spring Boot—can you briefly explain what a Spring Bean​ is? 
+And maybe compare it to just instantiating a regular Java class (like a POJO) manually using the new keyword?"
+
+What this achieves:​
+
+It shifts the focus to their practical experience. You are essentially asking them to explain the Inversion of Control (IoC)​ principle—that Spring manages the lifecycle and wiring of objects rather than the developer doing it manually.
+
+#### the default scope of bean in springboot (singleton prototype)
 https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html
 
-spring bean lifecycle
-https://medium.com/@TheTechDude/spring-bean-lifecycle-full-guide-f865966e89ce
+ And what is the default scope of a Spring Bean?"
+"When would you use a prototype scope instead of singleton?"
 
-what is dependency injection or invesion of control?
+Let me push on that a little: if I have a @Component class A, does that mean there is literally only one instance of A running in my entire Spring Boot application process, full stop?
+
+What exactly is the boundary here? Like, who's keeping track of that single instance? Is it the JVM? Or is there something else owning it?
+
+"It's a common shorthand to say 'one per Spring Boot app', but technically, Singleton scope in Spring means one instance per ApplicationContext (IoC container), not one per JVM process or classloader.
+
+In a standard, normal Spring Boot app, we only have one root ApplicationContext that starts up at launch, so for all practical purposes, yes — there's only one instance of that singleton bean A in the app. The container creates it on startup (or on first request if it's lazy), caches it in the container's internal bean factory map, and hands out that same cached reference every time someone requests A via @Autowired or getBean().
+
+But if you did something weird like explicitly create a second child ApplicationContext manually and load the same config, you'd get a second instance of A, because that second context has its own bean cache. The 'singleton' boundary is the container, not the whole process."
+
+#### can you name the IOC container in spring?
+https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/beans.html
+
+ApplicationContextis a​ BeanFactory, but with more features.
+
+Think of BeanFactoryas the engine, and ApplicationContextas the full car with steering, brakes, and AC.
+
+#### what is dependency injection or invesion of control?
 https://www.linkedin.com/pulse/spring-ioc-boot-bandewar-shiva-krishna/
 
 + Inversion of Control (IoC), in the context of the Spring framework is a central design pattern with a primary focus on dependency injection (DI). IoC not only limited to Dependency Injection(DI), but also involves the complete lifecycle management of dependencies within the Spring framework.
@@ -1197,36 +1248,18 @@ benefit:
 + This is achieved by having objects declare their dependencies, and then the IoC container injects those dependencies into the objects when they are created. The IoC container can also manage the lifecycle of the dependencies, which helps to prevent memory leaks and other problems.
 + In Spring, the IoC container is typically initialized from the main class of the application. The main class then configures the IoC container by telling it about the beans that need to be created and managed. The IoC container then creates the beans and injects their dependencies. 
 
-can you name the IOC container in spring?
-https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/beans.html
 
 
-can you name the annotations in spring or spring boot？
+
+#### spring bean lifecycle
+https://medium.com/@TheTechDude/spring-bean-lifecycle-full-guide-f865966e89ce
+
+
+#### can you name the annotations in spring or spring boot？
 example：@components 
 @Conditional @ConditionalOn
 
 https://lyhistory.com/docs/software/programming/java_springboot.html#_1-1-spring-ioc%E5%AE%B9%E5%99%A8
-
-### JVM
-
-"If I run a simple Java program from the command line, could you walk me through what happens behind the scenes, from compilation to execution?"
-
-"What is the difference between the JDK, JRE, and JVM?"
-
-### Springboot
-
-"What is the difference between a Java Bean and a Spring Bean?
-
-"No problem, let's skip Java Beans for now. Just focusing on Spring Boot—can you briefly explain what a Spring Bean​ is? 
-And maybe compare it to just instantiating a regular Java class (like a POJO) manually using the new keyword?"
-
-What this achieves:​
-
-It shifts the focus to their practical experience. You are essentially asking them to explain the Inversion of Control (IoC)​ principle—that Spring manages the lifecycle and wiring of objects rather than the developer doing it manually.
-
- And what is the default scope of a Spring Bean?"
-"When would you use a prototype scope instead of singleton?"
-
 ## ⚛️ Frontend / React / Web Development Questions
 
 what's the difference between javascript typescript?
