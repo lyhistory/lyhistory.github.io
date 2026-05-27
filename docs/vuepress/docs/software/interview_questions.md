@@ -27,9 +27,34 @@ https://lyhistory.com/docs/software/highlevel/publickey_infrastructure.html#clar
 ### MyObject obj = new MyObject()
 what happens when you declare MyObject obj = new MyObject()in Java. Where does objlive, where does the object live, and what happens if we keep creating objects without cleaning them up?”
 
+Let’s break it down. When you write:
+
+MyObject obj = new MyObject();
+where exactly is the variable objstored, and where is the actual MyObjectinstance stored? 
+
+Think of it like this: objis the remote control, and the MyObjectis the TV. Where do you keep the remote, and where do you keep the TV?
+
+And where is the class metadata​ for MyObject stored? For example, information about its methods, fields, and constants—where does the JVM keep that?”
+
 “objis a reference variable​ stored on the current thread’s stack​ (specifically, in that thread’s current method stack frame). The actual MyObjectinstance is allocated on the heap.
 
 Additionally, the class metadata​ for MyObject(its structure, method definitions, constant pool, etc.) is stored in the Method Area. In Java 8+, this area is part of Metaspace, which resides in native memory (outside the Java heap).”
+
+Inside the heap, every object has a specific layout. Can you walk me through what’s stored inside a Java object when it’s created—for example, for new MyObject()? Specifically, what’s in the object header, and what’s in the instance data?
+
+Rephrased (If They Look Confused)
+
+“When the JVM creates an object on the heap, it doesn’t just store your fields. There’s extra information attached to every object.
+
+Think of it like a shipping package: the contents are your data, but the box has a label with tracking info.
+
+What’s in that label (object header), and what are the contents (instance data)?”
+
+Or:
+
+“If I take a memory snapshot of a MyObjectinstance, what parts would I see besides the fields I defined?”
+
+
 ### ​HashMap底层实现与优化（考察数据结构与JDK源码理解）​​
 ​问题​：
 

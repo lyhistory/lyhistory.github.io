@@ -5,6 +5,122 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《java实用基础》
 
+Java vs C++ 核心区别（对象 & 引用）
+
+✅ Java 只有值传递，没有引用传递。​
+
+✅ Java 的“引用”本身，也是按值传递的。
+
+| 对比点 | Java | C++ |
+|------|------|-----|
+| 对象存储位置 | 只能在堆 | 栈或堆 |
+| 访问对象方式 | 引用（不能运算） | 指针 / 引用 |
+| 是否有指针 | ❌ 没有 | ✅ 有 |
+| 是否支持指针运算 | ❌ 不支持 | ✅ 支持 |
+| 传参本质 | 值传递（引用的值） | 值传递 / 指针传递 |
+| 内存释放 | GC 自动回收 | 手动 delete |
+| 空值表示 | `null` | `nullptr` |
+
+```
+Java 代码示例（引用类型）
+
+class Person {
+    String name;
+    Person(String name) { this.name = name; }
+}
+
+public class Test {
+    static void swap(Person x, Person y) {
+        Person temp = x;
+        x = y;
+        y = temp;
+    }
+
+    public static void main(String[] args) {
+        Person a = new Person("A");
+        Person b = new Person("B");
+
+        swap(a, b);
+        System.out.println(a.name); // A
+        System.out.println(b.name); // B
+    }
+}
+
+❌ 交换失败​
+
+原因：x、y只是引用的副本
+
+x是 a的拷贝
+
+改 x不会影响 a
+
+但通过 x可以改对象内容
+
+👉 “传的是遥控器，不是电视”
+
+栈（main）     栈（方法）      堆
+a ─────┐      x ─────┘   ┌──► Object
+b ─────┴──►  y ────────┘
+
+---
+
+C++ 版本（真正的引用传递）
+#include <iostream>
+using namespace std;
+
+class Person {
+public:
+    string name;
+    Person(string n) : name(n) {}
+};
+
+void swap(Person*& x, Person*& y) {
+    Person* temp = x;
+    x = y;
+    y = temp;
+}
+
+int main() {
+    Person* a = new Person("A");
+    Person* b = new Person("B");
+
+    swap(a, b);
+    cout << a->name << endl; // B
+    cout << b->name << endl; // A
+}
+
+✅ 交换成功，显式操作内存
+
+a ───────────► Object
+↑
+x（别名，不是拷贝）
+
+x就是 a本身
+
+改 x等于改 a
+
+---
+
+一句话总结
+
+> **Java：对象 = 引用类型，引用 ≈ 不能乱用的指针**  
+> **C++：对象可以是值，也可以是指针，完全由你控制**
+
+Java：
+
+你复印了一把钥匙给别人
+
+→ 别人能用钥匙开门（改对象）
+
+→ 但不能把你手里的钥匙换成别的
+
+C++ 引用：
+
+你把门禁卡直接给别人
+
+→ 他刷的就是你的卡
+
+```
 
 ## 1. JAVA Dev Tools
 
