@@ -2759,6 +2759,25 @@ trolley 小推车
 hairstylist, Hair Salon Barber's hairdresser/barber
 cut/trim/wash/dry/style/perm/dye/hair care session
 style / shape the hair
+
+Barber:​ "Good afternoon. How would you like it?" / "Bro, how you want?"
+
+"I trust your judgment. Just tidy it up and don't take too much off."
+"Surprise me! Just keep it looking neat and professional."
+"I'm not sure, what do you recommend for my face shape?"
+Just a trim, please. You know best.
+Whatever is easy to manage, I'll leave it to you.
+Just a clean-up around the sides and back, top stays as is.
+You decide! As long as it looks good.
+
+Take it quite short./Cut shorter.
+Crew Cut"​ / "Buzz Cut 平头
+Tighten up the sides/Fade the sides."​ / "Shave sides.
+Trim the top, just thin it out./Layer the top, make it less thick
+
+"I'd like a classic Crew Cut. Keep it very short on the sides and back, but just thin out​ the top without losing the length."
+（我要一个经典平头。两边和后面很短，但头顶只打薄，不要剪短。）
+
 ### About Life
 
 #### About dailylife

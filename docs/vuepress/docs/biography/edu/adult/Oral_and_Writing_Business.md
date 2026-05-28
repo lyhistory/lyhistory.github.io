@@ -129,6 +129,13 @@ Light provisioning will be provided
 在航空、航海、技术文档等高度标准化的领域，沟通的首要原则是清晰、客观、避免歧义。使用被动语态能将注意力集中在关键的动作或状态上。例如，在航空通信中，说“The landing gear was extended”（起落架已放下）比“The pilot extended the landing gear”（飞行员放下了起落架）更简洁、焦点更突出。它弱化了个人因素，强调标准程序已被执行这一事实本身。
 ​ 如果使用 “is going to be provided”，会隐含一种“（我们）打算/计划提供灯光”的意味。这会给通知带入一丝“主观意图”的色彩，仿佛这个决定是某个操作员临时起意或系统刚刚计划好的，反而削弱了通知作为既定程序的确定性和可靠性 。
 ### business dialogue
+I'm looking for a role that offers more stimulation. I find highly repetitive tasks​ can be a bit demotivating over time.
+
+I wish to make a formal complaint.
+I'm not satisfied with the current arrangement regarding my workload and compensation. I'd like to formally raise a grievance.
+
+My colleague left, and I've taken over. The boss says I'm doing brilliantly, but there's been zero compensation​ for the extra workload./Apparently, praise is the only compensation​ I get for doing two people's jobs now.
+
 Jus reach home.​I need to put the kids to bed​ tonight, so shall we hop on a Tencent Meeting​ tomorrow to go through this together?
 
 Do you want me to manually trigger​ these jobs now, or just wait for the auto-run tonight​ to generate the reports?
@@ -528,8 +535,14 @@ Then you pivot:​
 
 “No worries. Then just share whatever you still remember. How did you actually use the offsets in your project? What was the scenario like?”
 
+inteviewer: how you write your components.
+interviewee: "i dont' undertand this question, what do you expect me to answer"
+inteviewer:
+    If you’ve worked extensively on frontend projects, you should have developed a sense of what makes a component well‑written versus problematic.
 
+    I’m asking you to share your perspective: what practices do you consider ‘good’ when writing components, and what pitfalls have you learned to avoid?​
 
+    I’m less interested in listing frameworks or syntax, and more interested in whether you’ve reflected on your own work—because true experience comes from paying attention to what works and what doesn’t, not just from having done the work.
 
 #### Example 6
 This is a technical interview for a IT Level2 role. The candidate claims hands-on experience with Kafka, but struggles when asked about delivery guarantees. The interviewer probes deeper after receiving a vague or overconfident response.
@@ -1254,6 +1267,9 @@ rip customers off 宰客
 How To Protect Your Business From The Dark Side Of The Internet Of Things https://www.forbes.com/sites/centurylink/2016/02/15/how-to-protect-your-business-from-the-dark-side-of-the-internet-of-things/#19b71ccf5fcf
 
 ### Software engineer 
+overload / name mangling
+override 
+overwrite
 Prop drilling (also called "threading props" or "component chaining") is the process of passing data through multiple nested components in a UI framework like React. It occurs when intermediary components must accept and pass down a prop—even if they don't use it directly—solely to reach a deeply nested component.
 
 resolved by restarting laptop, long overdue restart 长时间不重启

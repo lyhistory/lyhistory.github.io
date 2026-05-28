@@ -1082,6 +1082,30 @@ https://blog.csdn.net/flyfhj/article/details/86630105
 
 ## 内存模型
 
+JVM 进程 RES =
+    堆（-Xmx）
+  + 元空间
+  + 线程栈（线程数 × -Xss）
+  + 直接内存
+  + JIT 代码缓存
+  + JVM 自身开销
+  + glibc 内存碎片
+  
+假设：
+-Xmx8g
+线程数 400
+-Xss1m
+元空间 512m
+直接内存 1g
+
+≈ 8g (heap)
++ 0.4g (stack)
++ 0.5g (metaspace)
++ 1g (direct)
++ ~0.5g (JVM + code cache)
+= ~10.5g
+
+
 ### JMM
 Linux的内存空间地址从低到高一般分为五个部分：内核空间、栈区域、堆区域、BBS段、数据段和代码段
 
@@ -1885,6 +1909,17 @@ public class OrderService {
 ```
 
 ## Troubleshooting
+
+| OOM 类型 | 典型原因 | 增大内存是否有效 | 说明 |
+|---|---|---|---|
+| `Java heap space` | 对象过多、内存泄漏 | ✅ **有效** | 需同步调大 `-Xmx` |
+| `GC overhead limit exceeded` | GC 频繁但回收效果差 | ✅ **有效** | 本质仍是堆不足 |
+| `Metaspace` | 类加载过多（热部署/反射/CGLIB） | ✅ **有效** | 需调大 `-XX:MaxMetaspaceSize` |
+| `Unable to create new native thread` | 线程数过多、系统限制 | ❌ **无效** | 通常需减小 `-Xss` 或限流 |
+| `Direct buffer memory` | NIO/Netty 使用过多堆外内存 | ✅ **有效** | 需调大 `-XX:MaxDirectMemorySize` |
+| `Out of swap space` | 系统物理内存 + Swap 耗尽 | ❌ **无效** | 需排查堆外内存泄漏 |
+| `Requested array size exceeds VM limit` | 申请超大数组 | ❌ **无效** | 代码逻辑问题 |
+| `Kill process or sacrifice child` | Linux OOM Killer 杀进程 | ❌ **视情况** | 需控制 JVM 总内存上限 |
 
 ### -XX:MaxMetaspaceSize
 A microservice using dynamic class generation (e.g., Spring proxies, ByteBuddy, or Groovy scripts) starts failing after several hours with java.lang.OutOfMemoryError: Metaspace.
