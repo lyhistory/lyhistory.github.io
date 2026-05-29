@@ -1,12 +1,12 @@
 ## 免费资源
 
-[modelscope](https://github.com/modelscope)
 
-kaggle
-
-google colab
+服务器:
++ kaggle
++ google colab
 
 [awesome-free-llm-apis：把永久免费 LLM API 先整理成一张可直接拿来用的清单](https://github.com/mnfst/awesome-free-llm-apis)
+[A list of free LLM inference resources accessible via API.](https://github.com/cheahjs/free-llm-api-resources)
 
 + Mistral AI 每月 10 亿 Token 免费，无需信用卡
   Provider: Custom / OpenAI-compatible
@@ -45,6 +45,8 @@ google colab
   - z-ai/glm4.7
   - minimaxai/minimax-m2.1
 + Cerebras
++ modelscope
+  ModelScope provides a highly generous free API inference tier, offering a daily combined quota of 2,000 free API calls across hundreds of popular models (including Qwen, DeepSeek, GLM, and MiniMax)
 + 硅基流动API官网：https://cloud.siliconflow.cn/i/jPI17VGX  
   - Kwai-Kolors/Kolors
   -  Qwen/Qwen3.5-4B
@@ -55,6 +57,7 @@ google colab
 + 智谱 AI 
   - GLM-4.7-Flash 
 + 月之暗面 Kimi
++ 国家超算互联网
 ## Info
 [A Simple and Universal Swarm Intelligence Engine, Predicting Anything. 简洁通用的群体智能引擎，预测万物](https://github.com/666ghj/MiroFish)
 

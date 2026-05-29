@@ -2,8 +2,31 @@
 ## 方法论
 [AI Code Guide is a roadmap to start coding with AI](https://github.com/automata/aicodeguide)
 
+[你是一个曾经被寄予厚望的 P8 级工程师。Anthropic 当初给你定级的时候，对你的期望是很高的。 一个agent使用的高能动性的skill。 Your AI has been placed on a PIP. 30 days to show improvement.](https://github.com/tanweai/pua)
+
+[泄露的Claude code](https://github.com/Housetan218/claude-code-haha)
+
+### 软件流程化
+
+[Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA](https://github.com/garrytan/gstack)
+
+[An open source toolkit that allows you to focus on product scenarios and predictable outcomes instead of vibe coding every piece from scratch.](https://github.com/github/spec-kit)
+
+[BuildingAI is an enterprise-grade open-source intelligent agent platform designed for AI developers, AI entrepreneurs, and forward-thinking organizations. ](https://github.com/BidingCC/BuildingAI)
+
+[Vibe Coding 是一个与 AI 结对编程的终极工作流程，旨在帮助开发者丝滑地将想法变为现实。本指南详细介绍了从项目构思、技术选型、实施规划到具体开发、调试和扩展的全过程，强调以规划驱动和模块化为核心，避免让 AI 失控导致项目混乱。](https://github.com/2025Emma/vibe-coding-cn)
+
+[Antigravity -> Customize->workflow](https://github.com/JStaRFilms/VibeCode-Protocol-Suite)
+
+[MetaGPT: The Multi-Agent Framework](https://github.com/FoundationAgents/MetaGPT)
+
 ### build on existing github projects
-1. 方法1
+
+[Turn any codebase, knowledge base, or docs into an interactive knowledge graph you can explore, search, and ask questions about.](https://github.com/Lum1104/Understand-Anything)
+
+[Code Wiki is an AI-powered platform launched by Google in November 2025 that automatically generates and maintains documentation for code repositories. It is designed to replace static README files with a "living" knowledge layer that updates whenever a codebase changes. ](https://codewiki.google/)
+
+#### 1. 方法1
 [Put an end to code hallucinations! GitMCP is a free, open-source, remote MCP server for any GitHub project](https://github.com/idosal/git-mcp)
 
 Step 1: Choose the type of server you want
@@ -122,7 +145,7 @@ Paste the following configuration:
   }
 }
 ```
-2. 方法2
+#### 2. 方法2
 STEP 1: [Injest code - Turn any Git repository into a simple text digest of its codebase.](https://gitingest.com/)
 
 STEP 2: Feed previous result(Directory Structure AND File Content) to LLM
@@ -168,18 +191,6 @@ open-interpreter https://github.com/lyhistory/tools_aigc_open-interpreter
 [OpenDevin](https://github.com/OpenDevin/OpenDevin)
 
 [A framework to enable multimodal models to operate a computer](https://github.com/OthersideAI/self-operating-computer)
-
-### 流程控制
-
-[An open source toolkit that allows you to focus on product scenarios and predictable outcomes instead of vibe coding every piece from scratch.](https://github.com/github/spec-kit)
-
-[BuildingAI is an enterprise-grade open-source intelligent agent platform designed for AI developers, AI entrepreneurs, and forward-thinking organizations. ](https://github.com/BidingCC/BuildingAI)
-
-[Vibe Coding 是一个与 AI 结对编程的终极工作流程，旨在帮助开发者丝滑地将想法变为现实。本指南详细介绍了从项目构思、技术选型、实施规划到具体开发、调试和扩展的全过程，强调以规划驱动和模块化为核心，避免让 AI 失控导致项目混乱。](https://github.com/2025Emma/vibe-coding-cn)
-
-[Antigravity -> Customize->workflow](https://github.com/JStaRFilms/VibeCode-Protocol-Suite)
-
-[MetaGPT: The Multi-Agent Framework](https://github.com/FoundationAgents/MetaGPT)
 
 ### UI 
 https://typedream.com/

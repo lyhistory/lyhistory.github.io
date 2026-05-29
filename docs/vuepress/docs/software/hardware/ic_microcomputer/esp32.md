@@ -555,6 +555,12 @@ Guide for WS2812B Addressable RGB LED Strip with Arduino https://randomnerdtutor
 
 https://espressif-docs.readthedocs-hosted.com/projects/arduino-esp32/en/latest/api/ledc.html
 
+### turns radio signals into spatial intelligence
+[让 WiFi 信号变成你的眼睛 RuView turns commodity WiFi signals into real-time spatial intelligence, vital sign monitoring, and presence detection — all without a single pixel of video](https://github.com/ruvnet/RuView)
+
+### 亲眼看见原子！手搓隧穿显微镜项目开源
+[A Scanning Tunneling Microscope Project](https://github.com/Dimsmary/OpenSTM)
+
 ### ESP32CAM
 
 [pinout](https://microcontrollerslab.com/esp32-cam-ai-thinker-pinout-gpio-pins-features-how-to-program/)

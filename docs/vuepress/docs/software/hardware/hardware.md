@@ -350,6 +350,9 @@ Rigol 是备受认可的低成本品牌之一，其双通道 200 MHz型号 DS120
 
 ### 工具
 
+#### ESP32工具
+[网页上实时看到 ESP32 所有引脚状态 GPIOViewer Arduino Library to see live GPIO Pins on ESP32 boards](https://github.com/thelastoutpostworkshop/gpio_viewer)
+
 #### 串口调试
 
 [USB转串口安卓免驱安装程序、库和例程，支持CH340/CH341/CH342/CH343/CH344/CH346/CH347/CH9101/CH9102/CH9103/CH9104/CH9111/CH9114/CH9143的，用于Android操作系统4.4及以上版本的USB Host模式，无需加载Android内核驱动，无需root权限操作。包含apk安装程序，lib库文件(Java Driver)，App Demo例程(USB转UART Demo工程SDK)。](https://www.wch.cn/downloads/CH341SER_ANDROID_ZIP.html)

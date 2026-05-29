@@ -35,6 +35,10 @@ https://github.com/zhinianboke/xianyu-auto-reply
 
 [指令爬虫](https://pypi.org/project/scrapegraphai/)
 
+[Make Any Website into CLI & Use your logged-in browser by AI agent.](https://github.com/jackwener/OpenCLI)
+
+[Use opencli CLI to interact with social/content websites (Bilibili, Zhihu, Twitter/X, YouTube, Weibo, 小红书, V2EX, Reddit, HackerNews, 雪球, BOSS直聘 etc.)](https://github.com/joeseesun/qiaomu-opencli-skills)
+
 ## all-in-one
 
 ### [OpenClaw](https://github.com/openclaw/openclaw)
@@ -154,6 +158,8 @@ o  What now -------------------------------------------------------------+
 —  Onboarding complete. Dashboard opened; keep that tab to control OpenClaw.
 
 #### mission control
+
+[Open-source multi-agent orchestration system for OpenClaw, enabling swarm intelligence via unified group chat.](https://github.com/1Panel-dev/ClawSwarm)
 
 [OpenClaw Office is the visual monitoring and management frontend for the OpenClaw Multi-Agent system. ](https://github.com/WW-AI-Lab/openclaw-office)
 
@@ -567,6 +573,11 @@ Heartbeat 调优 — 防止 AI 在非活跃时间骚扰你
 ```
 
 #### Skills
+clawhub 龙虾专属应用商店
+tavily-search 给龙虾开天眼
+agent-browser 给龙虾装机械手
+elite-longterm-memory 龙虾永久记忆体
+
 ```
 <workspace>/skills/     ← 你自己写的（最高优先级）
 ~/.openclaw/skills/     ← 全局安装的
@@ -651,6 +662,9 @@ openclaw hooks enable self-improvement
 
 [失败 A Social Network for AI Agents](https://www.moltbook.com/)
 
+#### 案例 电商
+[用开源的 OpenClaw，完全可以"手搓"出一个功能高度相似的跨境电商 AI 团队](https://mp.weixin.qq.com/s/AGV4ZSTjBu5VWIX3kXTWqA)
+
 #### 案例 cron+subagent
 openclaw cron add --name "ClawStrXMR" --cron "0 0,12 * * *" --session isolated --message "You are an orchestrator. MANDATORY: spawn a subagent to execute tasks/clawstr_task.md. The subagent MUST run in fully autonomous mode: no questions, no confirmations, no waiting. Exit immediately after spawning."
 
@@ -687,6 +701,11 @@ fix: enable Tun AND Global routing if using vpn like v2ray
 
 
 ### Others
+
+[Self-programming autonomous AI agent on Raspberry Pi Zero 2W. 960+ cycles, 47 self-built tools, 417 essays, 1077 knowledge files. Zero API cost. Live: seed-brain.vercel.app](https://github.com/seedpi867-cmd/seed)
+
+[The simplest autonomous AI agent. One bash script. Any LLM CLI. Wake up, build prompt from files, call LLM, sleep, repeat.](https://github.com/seedpi867-cmd/brain-loop)
+
 
 [MimiClaw turns a tiny ESP32-S3 board into a personal AI assistant.](https://github.com/memovai/mimiclaw)
 

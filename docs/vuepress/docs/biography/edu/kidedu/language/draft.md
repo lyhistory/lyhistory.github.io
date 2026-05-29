@@ -4,6 +4,26 @@
 自动上传工具：https://github.com/dreammis/social-auto-upload
 
 ## TODO
+风很冷 吹得手冰凉
+gimbal
+tripod
+swipe 
+tilt
+搓掉
+卷起来
+杯子倒扣过来
+盛东西 碗里装着饭
+
+stuff toy
+stuffy
+What do you like about playground
+What do you like to play on the playground
+I like to play hopscotch/seesaw/swing/scooter/ball on the playground
+tickle
+
+what's wrong with your pencil
+my pencil is dull 
+i got a pencil sharpener sharp
 
 can i have icecream 
 
@@ -17,6 +37,7 @@ NAME OF Finger
 
 单词的多种含义：
 give me a prompt for AI animation generation tool: kid education about the word xxx, and its various meanings or relation or the meaning evolved history
+
 
 yields
 blow

@@ -25,6 +25,8 @@ gitlab cicd
 
 针对设备或基础服务的cicd（安全补丁，运维部署）
 
+[1Panel 是一款现代化、开源的 Linux 服务器运维管理面板。用户可以通过 Web 图形界面轻松管理服务器，实现主机监控、文件管理、数据库管理和容器管理等操作 ](https://1panel.cn/)
+
 [宝塔 www.bt.cn](https://www.bt.cn/btcode.html)
 
 Chef Vs Puppet Vs Ansible

@@ -1,3 +1,7 @@
+[Pinterest（海外版小红书）无货源联盟套利](https://mp.weixin.qq.com/s/WBHOOA9bGN8WE6WxwQK3oQ)
+
+[现在是人类历史上最好的赚钱机会，但窗口只剩 12～24 个月](https://mp.weixin.qq.com/s/8e8Ayh8xgWhP0HWVMhUBEg)
+
 [创业失败案例](https://www.loot-drop.io/)
 
 [一人公司方法论](https://github.com/easychen/one-person-businesses-methodology)

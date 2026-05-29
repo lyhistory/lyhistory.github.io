@@ -29,7 +29,12 @@ microsculpture
 ## 动画片
 中医世界漫游记
 
+Molly and Mack
+Our Family我们一家人
+
 ## books
+
+数理人文 - 丘成桐
 
 穿越计算机的迷雾
 量子物理史话
