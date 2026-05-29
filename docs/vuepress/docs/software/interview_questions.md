@@ -1273,18 +1273,58 @@ benefit:
 + This is achieved by having objects declare their dependencies, and then the IoC container injects those dependencies into the objects when they are created. The IoC container can also manage the lifecycle of the dependencies, which helps to prevent memory leaks and other problems.
 + In Spring, the IoC container is typically initialized from the main class of the application. The main class then configures the IoC container by telling it about the beans that need to be created and managed. The IoC container then creates the beans and injects their dependencies. 
 
-
-
-
-#### spring bean lifecycle
-https://medium.com/@TheTechDude/spring-bean-lifecycle-full-guide-f865966e89ce
-
-
 #### can you name the annotations in spring or spring boot？
 example：@components 
 @Conditional @ConditionalOn
 
 https://lyhistory.com/docs/software/programming/java_springboot.html#_1-1-spring-ioc%E5%AE%B9%E5%99%A8
+
+#### Spring Boot application lifecycle—from 
+Walk me through the Spring Boot application lifecycle—from startup to shutdown.
+
+Then give me a real example​ where misunderstanding the lifecycle caused a bug or forced you to redesign part of your application
+
+“Spring Boot’s lifecycle has three core phases:
++ Startup Phase​
+
+JVM launches → main()runs.
+
+SpringApplication prepares the ApplicationContext.
+
+Beans are scanned, instantiated, and wired (@Component, @Service, etc.).
+
+Embedded server (Tomcat/Netty) starts.
+
+Application is ready to serve traffic.
+
++ Running Phase​
+
+HTTP requests arrive.
+
+Beans handle business logic, DB connections, caching, messaging, etc.
+
++ Shutdown Phase​
+
+Graceful shutdown triggered (SIGTERM, actuator /shutdown).
+
+Spring closes the context → destroys beans in reverse order.
+
+Resources (DB pools, threads, file handles) are released.”
+
+
+If you need to execute logic only after all beans are fully initialized, but before the app starts accepting traffic, which hook do you use?
+
+spring bean lifecycle
+https://medium.com/@TheTechDude/spring-bean-lifecycle-full-guide-f865966e89ce
+
+Explain the Spring Bean lifecycle. Give me a concrete example where initializing something in the constructor caused a bug, and how you fixed it using lifecycle hooks.”
+
+“If I have two beans, A and B, and A depends on B, who initializes first? Can I control that order?”
+
+Strong answer:​
+
+“B initializes first, then A. You can control order with @DependsOn, or by using SmartLifecycleif startup sequencing matters.”
+
 ## ⚛️ Frontend / React / Web Development Questions
 
 what's the difference between javascript typescript?
