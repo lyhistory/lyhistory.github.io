@@ -544,6 +544,16 @@ inteviewer:
 
     I’m less interested in listing frameworks or syntax, and more interested in whether you’ve reflected on your own work—because true experience comes from paying attention to what works and what doesn’t, not just from having done the work.
 
+Interviewer: Thanks for walking through your background. Let’s talk a bit about your frontend experience. You mentioned you’ve worked with both Angular and React. How do you typically write a React component?
+
+Candidate:​
+
+“To be honest, my recent work has been mostly with AngularJS. I have touched React, but I wouldn’t say I’m deep in it—my practical experience is definitely stronger on the Angular side.”
+
+Interviewer:​
+
+“That’s perfectly alright. Just talk to me about how you write an AngularJS component then.​ React and Angular share the same fundamental logic. I’m not looking for specific syntax(Syntax is just Google-able; that mindset isn’t.); I want to hear how you structure things, how you manage state, and how you think about reusability. The principles are what matter.”
+
 #### Example 6
 This is a technical interview for a IT Level2 role. The candidate claims hands-on experience with Kafka, but struggles when asked about delivery guarantees. The interviewer probes deeper after receiving a vague or overconfident response.
 /
@@ -571,6 +581,31 @@ Then I very curious leh. Normally, duplicated messages still can handle at code 
 So, let me get this straight. Are you essentially saying that data integrity—both loss and duplication—is not a priority for you or your team? That you operate without ensuring data consistency?
 /
 Aiya, so basically you mean you all don't care about data missing or duplication in your projects, is it? Just let it be like that, no need to bother, right?
+
+#### Example 7
+Interviewee:​
+
+“Honestly, I don’t think most of the stuff you’re asking about would come up in my day‑to‑day work.”
+
+Interviewer:​
+
+“You’re right—a junior developer usually doesn’t need to worry about those details. But as a senior, you can’t treat the JVM as a black box. When a production outage hits at 2 AM, you can’t afford to start learning how memory management works from scratch.”
+
+Interviewee:​
+
+“But in my current role, I’ve never actually run into those kinds of problems, so I never got exposure to them.”
+
+Interviewer:​
+
+“That’s a very common situation—most people don’t encounter low‑level issues early on. But moving from junior to senior isn’t just about waiting for problems to appear. It requires genuine curiosity and a willingness to explore deeper topics proactively, even when things seem to be working fine. Otherwise, you’re always reacting instead of leading.”
+
+Interviewee:​
+
+“Well, when issues do come up, I can just query AI tools to get quick solutions. That’s how most developers work nowadays, right?”
+
+Interviewer:​
+
+“True, AI can be a useful assistant—but remember, you’re applying for a senior​ role. AI outputs aren’t guaranteed to be correct, especially for complex, system‑specific problems. You need solid foundational knowledge to review, validate, and challenge​ those answers. Otherwise, you’re just blindly trusting a tool—and that’s risky when you’re the one accountable for production stability.”
 
 ### business email
 attaching the document for xxx's benefit/reference/information
