@@ -51,6 +51,7 @@ As for my weaknesses, first, I don’t consider myself a genius or naturally gif
 Another weakness is that I don’t try to memorize every technical detail permanently. After exploring many areas of IT, it becomes difficult to retain everything in active memory all the time. That’s one reason why I maintain my own website and GitHub repositories as structured knowledge bases.
 
 My approach is somewhat like “lazy loading” in software engineering: I organize and document knowledge clearly, and when I need a technology again — for example Redis — I can quickly review my notes, reload the important concepts into active memory, and become productive again efficiently. When I stop using a technology for a while, I naturally let some low-level details fade. I’m not sure whether this is a weakness or simply my personal learning style, but it’s how I manage knowledge across many technical domains.
+
 ## General
 
 Brief​ = 做减法（给摘要）
@@ -60,8 +61,97 @@ Articulate​ = 练表达（说清楚）
 Elaborate​ = 做加法（展开说）
     Could you elaborate on that? 
 ### Business Result - Upper-intermediate Student's Book
+Note: the language in this unit is more common in British English than American English.
+
 rapport
 renowned
+
+#### Being polite and diplomatic 礼貌策略 (Politeness Strategies)​ 和 缓和语 (Hedging)
+A. 情态动词与间接请求 (Modal Verbs & Indirect Requests)
+Requests (asking somebody else) 
+1. Can you Can you 默认「咱俩没那么生分/这事太小不值当客套，我预期你大概率顺手就办了」；Could you 是主动退半步加缓冲，潜台词是「我知道这事儿麻烦/咱没熟到我能直接支使你，我先放低姿态问你方不方便」
+2. Would you mind
+3. I was wondering if you could?
+
+Permission (asking something for yourself)
+1. could I
+2. I wonder if I could
+3. would it be a problem for you if I
+   
+Offering help 
+1. Can I Can I 是「走个口头流程，我默认你不会拦我/这事儿小到你不至于不许」；Could I 是把「批不批准的最终决定权」完全递到对方手里，明明白白告诉他「我知道这事儿归你管，我真的在等你点头」
+2. would you like me to 
+3. would it help if I
+   
+母语者才知道的反常识潜规则（中式英语最容易踩坑）
+
+❌ 根本不存在「永远用Could就更礼貌」的规则：你对亲哥说「Could you lift that end of the sofa for me bro?」他绝对笑你「你丫喝多了？叫你哥帮个忙还整这么外道？」过度客套反而显生分、像你在讽刺他。
+
+地位/金钱关系会直接推翻亲疏逻辑：你是付了钱的消费者，对服务员说「Can you take this wrong order back?」完全合理，没人觉得你粗鲁；但你免费蹭朋友的车，哪怕你们穿一条裤子，也得说「Could you drop me off at the 7-11?」
+
+冷礼貌场合会用Could you当「带笑的警告」：邻居家音响吵到凌晨3点，你上去敲门脸绷着说「Couldyou pleaseturn that down?」（重读could和please），比骂街还冲——这时候用Can you反而像泼皮吵架，Could you就是「我给你留最后一次体面，赶紧关」
+
+Suggestions 
+1. Shall we
+2. Perhaps we should
+3. why don't we
+
+B. 委婉表达与模糊限制语 (Mitigation & Hedges)
+There will be a delay.
+
+↔ 1. I'm sorry, but it looks like there will be a small delay.
+
+There is a problem.
+
+↔ 2. There seems to be an issue with this. It's nothing serious.
+
+I disagree.
+
+↔ 3. To be honest, I think it might be better to ... (+ alternative)
+
+↔ 4. Yes, I can see what you're saying, but do't you think that ... ?
+
+That gives us very little time.
+
+↔ 5. Actually, that doesn't give us much time.
+
+I think it's better to ask Liyu.
+
+↔ 6. Wouldn't it be better to ask Liyu?
+
+Quality will be a problem.
+
+↔ 7. What about quality? Can we be sure it will be okay?
+
+It will be very expensive.
+
+↔ 8. It might be quite expensive. / It won't be cheap.
+
+C. Rewrite each sentence using the words in brackets. Make them more polite/diplomatic.
+
+Can we meet again next week? (wonder/could)
+    I am wondering if we could meet again next week?
+
+You've made a mistake on the invoice. (there/seems)
+    There seeems to be a mistake on the invioce.
+
+The quality is low. (not very)
+    The quality is not very good.
+
+Shall I speak to Mr Baker? (would/you/like)
+    Would you like me to speak to Mr Baker?
+
+Your estimate for the cost is low. (might/ little)
+    Your estimate for the cost might be a little low.
+
+We should wait. (wouldn't/better idea)
+    Wouldn't it be a better idea to wait?
+
+It's a bad idea. (honest/I'm not sure/good)
+    To be honest, I'm not sure it's a good idea.
+
+Let's cancel the project. (perhaps/should think about)
+    Perhaps we should think about canceling the project.
 
 ### 电话/会议
 I was talking on the phone and suddenly got disconnected.
@@ -608,6 +698,19 @@ Interviewer:​
 “True, AI can be a useful assistant—but remember, you’re applying for a senior​ role. AI outputs aren’t guaranteed to be correct, especially for complex, system‑specific problems. You need solid foundational knowledge to review, validate, and challenge​ those answers. Otherwise, you’re just blindly trusting a tool—and that’s risky when you’re the one accountable for production stability.”
 
 ### business email
+
+deploy= 【纯技术黑话，仅限技术内部用】
+release= 【业务/版本视角的正式词，对技术/业务都能说】
+roll out= 【最万能、最不冒犯的词，全场景通用，尤其适合你写邮件的场景】
+push= 【最轻量、最非正式，仅限小改动/客户端场景】
+Just a heads-up: 它的底层潜台词是「这件事你此前没预期/不知道，我先给你打个预防针别让你撞见懵圈」
+Quick sync on that param change we discussed:/ Following up on our earlier thread about the param tweak:直接锚定「就是咱们之前邮件里跟的那件事」，开门见山，完全不会有任何「你突然通知我啥新事」的歧义
+Further to our previous emails about the config parameter update:/ As flagged in our earlier thread,Further to...是英式商务邮件的神级固定开头，专门用来接「双方早就在跟的待办事项」，潜台词就是「这不是新消息，就是我们之前说的事完成了，我给你同步进度」，公事公办但没有FYI那种甩锅的冷感
+we rolled out the recent changes to production last weekend./We've completed the rollout of the latest changes to the production environment last weekend》 Could you help verify on your side when you get a chance?/Could you double-check​ on your side when you get a moment, please?/Would you mind checking on your side at your convenience?/Can you check on your side when you have a min
+Let me know if anything looks off, thanks!
+
+
+
 attaching the document for xxx's benefit/reference/information
 
 For the participating departments (xxx,,xxx), kindly confirm the representatives who will participate in the exercise and attend training. Attendance is compulsory for these representatives. Please inform RMD of any scheduling conflicts by Monday, 11 May 2026.
