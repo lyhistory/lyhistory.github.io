@@ -699,18 +699,6 @@ Interviewer:​
 
 ### business email
 
-deploy= 【纯技术黑话，仅限技术内部用】
-release= 【业务/版本视角的正式词，对技术/业务都能说】
-roll out= 【最万能、最不冒犯的词，全场景通用，尤其适合你写邮件的场景】
-push= 【最轻量、最非正式，仅限小改动/客户端场景】
-Just a heads-up: 它的底层潜台词是「这件事你此前没预期/不知道，我先给你打个预防针别让你撞见懵圈」
-Quick sync on that param change we discussed:/ Following up on our earlier thread about the param tweak:直接锚定「就是咱们之前邮件里跟的那件事」，开门见山，完全不会有任何「你突然通知我啥新事」的歧义
-Further to our previous emails about the config parameter update:/ As flagged in our earlier thread,Further to...是英式商务邮件的神级固定开头，专门用来接「双方早就在跟的待办事项」，潜台词就是「这不是新消息，就是我们之前说的事完成了，我给你同步进度」，公事公办但没有FYI那种甩锅的冷感
-we rolled out the recent changes to production last weekend./We've completed the rollout of the latest changes to the production environment last weekend》 Could you help verify on your side when you get a chance?/Could you double-check​ on your side when you get a moment, please?/Would you mind checking on your side at your convenience?/Can you check on your side when you have a min
-Let me know if anything looks off, thanks!
-
-
-
 attaching the document for xxx's benefit/reference/information
 
 For the participating departments (xxx,,xxx), kindly confirm the representatives who will participate in the exercise and attend training. Attendance is compulsory for these representatives. Please inform RMD of any scheduling conflicts by Monday, 11 May 2026.
@@ -1326,6 +1314,16 @@ No specific date, at your earliest convenience.
 <=
 Hi [Name], just a heads-up! I've deployed it to the prod-parallel env​ and all looks good.  Created the Jira ticket, and we're targeting next weekend​ for the Prod release (pending CAB review).
 
+deploy= 【纯技术黑话，仅限技术内部用】
+release= 【业务/版本视角的正式词，对技术/业务都能说】
+roll out= 【最万能、最不冒犯的词，全场景通用，尤其适合你写邮件的场景】
+push= 【最轻量、最非正式，仅限小改动/客户端场景】
+Just a heads-up: 它的底层潜台词是「这件事你此前没预期/不知道，我先给你打个预防针别让你撞见懵圈」
+Quick sync on that param change we discussed:/ Following up on our earlier thread about the param tweak:直接锚定「就是咱们之前邮件里跟的那件事」，开门见山，完全不会有任何「你突然通知我啥新事」的歧义
+Further to our previous emails about the config parameter update:/ As flagged in our earlier thread,Further to...是英式商务邮件的神级固定开头，专门用来接「双方早就在跟的待办事项」，潜台词就是「这不是新消息，就是我们之前说的事完成了，我给你同步进度」，公事公办但没有FYI那种甩锅的冷感
+we rolled out the recent changes to production last weekend./We've completed the rollout of the latest changes to the production environment last weekend》 Could you help verify on your side when you get a chance?/Could you double-check​ on your side when you get a moment, please?/Would you mind checking on your side at your convenience?/Can you check on your side when you have a min
+Let me know if anything looks off, thanks!
+
 #### Example 6
 <
 There won’t be any additional charges to include a Cookie Banner for the xxx Website.
@@ -1348,6 +1346,11 @@ Please find comparison table below:xxxx
 We will proceed with the free version of CookieYes, and the watermark on the cookie banner is acceptable.
 <
 Thank you. We have conveyed (the message) to/Informed/Notified/Communicated to/Relayed to the vendor to proceed with the free version of CookieYes.
+
+#### Example 7
+
+Hi GitLab Sales Team,Our GitLab Premium subscription expires on April 1, 2020, and we would like to renew it for another year with the exact same setup and seat count.Because we do not see an auto-renew option in our Customers Portal, please guide us through the next steps for renewal.Please provide a formal quote or invoice for this renewal so our finance team can process the payment.
+
 
 ## TICKETS
 
