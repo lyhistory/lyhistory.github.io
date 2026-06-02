@@ -1351,6 +1351,12 @@ Thank you. We have conveyed (the message) to/Informed/Notified/Communicated to/R
 
 Hi GitLab Sales Team,Our GitLab Premium subscription expires on April 1, 2020, and we would like to renew it for another year with the exact same setup and seat count.Because we do not see an auto-renew option in our Customers Portal, please guide us through the next steps for renewal.Please provide a formal quote or invoice for this renewal so our finance team can process the payment.
 
+Thank you for reaching out regarding your renewal.
+To confirm, your current subscription is 10 seats of Self-Managed - Premium. 
+You would like to renew with the same plan and seats, is that correct? 
+Once confirmed, I'll send over a renewal quote.
+
+
 #### Example 8
 As we are approaching financial year-end, we would be grateful for your assistance with the following matters to facilitate the year end closing process:
 1.	Please submit all expense claims（费用报销) incurred on or before 30 June 2026 by end of 2 July 2026. If you do not anticipate incurring any expenses during the last week of June, please prepare and submit your claim in advance.如果你觉得接下来一周都没啥钱要报，那就别等到月底最后一天才交单，现在就交掉，省得拖到财年关账那天手忙脚乱。
