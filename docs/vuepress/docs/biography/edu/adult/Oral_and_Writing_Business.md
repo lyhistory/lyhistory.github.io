@@ -218,7 +218,14 @@ subdued demand 需求不旺
 Light provisioning will be provided 
 在航空、航海、技术文档等高度标准化的领域，沟通的首要原则是清晰、客观、避免歧义。使用被动语态能将注意力集中在关键的动作或状态上。例如，在航空通信中，说“The landing gear was extended”（起落架已放下）比“The pilot extended the landing gear”（飞行员放下了起落架）更简洁、焦点更突出。它弱化了个人因素，强调标准程序已被执行这一事实本身。
 ​ 如果使用 “is going to be provided”，会隐含一种“（我们）打算/计划提供灯光”的意味。这会给通知带入一丝“主观意图”的色彩，仿佛这个决定是某个操作员临时起意或系统刚刚计划好的，反而削弱了通知作为既定程序的确定性和可靠性 。
+
+Prepare the service startup steps after XXX patches the system this weekend.
+
 ### business dialogue
+
+hi  , gotten news from xx that DMP is over. you guys can revert the DEV environment back to normal.
+<=Just to clarify, do you mean shutting down the environment? Since it's a testing space, there isn't really a 'default' state to go back to. If it's no longer needed, we can decommission it.
+
 I'm looking for a role that offers more stimulation. I find highly repetitive tasks​ can be a bit demotivating over time.
 
 I wish to make a formal complaint.
@@ -696,6 +703,20 @@ Interviewee:​
 Interviewer:​
 
 “True, AI can be a useful assistant—but remember, you’re applying for a senior​ role. AI outputs aren’t guaranteed to be correct, especially for complex, system‑specific problems. You need solid foundational knowledge to review, validate, and challenge​ those answers. Otherwise, you’re just blindly trusting a tool—and that’s risky when you’re the one accountable for production stability.”
+
+#### Example 8
+hi xxx, Bank send the statement after 7.30am. will it recon itself if left it on its own?
+not urgent, else I was thinking can leave it to tmr and see whether the schedule will reconcile itself at 7.30am，just asking only, no worries
+
+Hey, looks like the auto-reconciliation probably won't fire tomorrow. Ever run into this before? Might be safer to just do a manual one.
+i think havent do manual before ba 
+oh, so you mean you never did manual reconcile?
+i went to lookup history, seems i performed before which is a bit weird for me haha
+Oh, so you havedone it before! That makes way more sense. I was about to say, if you've really never touched it, that would be a miracle. The bank's timing is never that perfect!
+
+ok look different perspective, if leave it there will anything else be affected?
+
+from code, so far i don't see any impact, but probably from business logic we should always handle it properly
 
 ### business email
 
@@ -1356,6 +1377,8 @@ To confirm, your current subscription is 10 seats of Self-Managed - Premium.
 You would like to renew with the same plan and seats, is that correct? 
 Once confirmed, I'll send over a renewal quote.
 
+Thanks for confirming. Yes, that’s correct — we’d like to renew the 10 seats of Self-Managed Premium​ under the same terms.
+Looking forward to receiving the quote.
 
 #### Example 8
 As we are approaching financial year-end, we would be grateful for your assistance with the following matters to facilitate the year end closing process:

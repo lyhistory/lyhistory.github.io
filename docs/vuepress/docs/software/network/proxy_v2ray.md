@@ -522,13 +522,24 @@ https://iitii.github.io/2022/03/02/1
 
 有时候观察到不稳定或者手机可以,windows不可以,完全可以通过升级客户端解决!
 
-### 手机连不上
+
+### 手机
+
+#### 连不上
 
 
 + Sync System Time: 
     Incorrect device time is the most common cause of this error. Go to your device's Settings > System > Date & time and ensure "Set time automatically" is enabled.
     这个是最常见的问题，比如我的 google pixel 6 pro 连上但是无法访问网络（v2rayNG)：fail to detect internet connection ios read/write on closed pipe，原因是长时间不用，日期时间都已经错了，刚开始我只注意到time错了，最后才发现日期远远落后于当前日期，多亏了我换用NekoBox for Android，错误提示比V2rayNG更加友好直接：Failed:Get "http://cp.cloudflare.com": tls: failed to verify certificate: x509; certificate has expired or is not yet valid: current time 2025-12-04.... is before 2026-03-12...
 
+#### 手机连电脑热点
+1. v2rayN 开 TUN 模式（会创建一张 sing-tun虚拟网卡）
+2. 开启 Windows 移动热点 → 把热点的流量强行引导过虚拟网卡：
+   到：控制面板 → 网络和共享中心 → 更改适配器设置
+
+右键 sing-tun虚拟网卡 → 属性 → 共享​ → ✅ 允许其他用户通过此计算机的 Internet 连接 → 家庭网络连接选热点对应的 本地连接xx*
+
+做完后手机直接连热点就行，不用填任何代理，所有流量走 v2ray。
 
 ### google tablet连不上
 发现是因为我用另一个账号连接了，所以其他账号就连不上，登录其他账号确保断开即可。
