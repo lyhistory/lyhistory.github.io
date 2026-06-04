@@ -702,6 +702,12 @@ fix: enable Tun AND Global routing if using vpn like v2ray
 
 [梁文峰去年量化收益56.6%，我让龙虾复刻了一个7x24小时的量化交易系统。](https://mp.weixin.qq.com/s/o-pc1KW-rJCoZIqetlFM_w)
 
+加密货币交易机器人
+  [gekko](https://github.com/askmike/gekko)
+  [GreenGekko](https://github.com/mark-sch/GreenGekko)
+  RedGekko
+  Freqtrade
+  Hummingbot
 
 ### Others
 
