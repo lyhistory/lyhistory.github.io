@@ -218,7 +218,14 @@ subdued demand 需求不旺
 Light provisioning will be provided 
 在航空、航海、技术文档等高度标准化的领域，沟通的首要原则是清晰、客观、避免歧义。使用被动语态能将注意力集中在关键的动作或状态上。例如，在航空通信中，说“The landing gear was extended”（起落架已放下）比“The pilot extended the landing gear”（飞行员放下了起落架）更简洁、焦点更突出。它弱化了个人因素，强调标准程序已被执行这一事实本身。
 ​ 如果使用 “is going to be provided”，会隐含一种“（我们）打算/计划提供灯光”的意味。这会给通知带入一丝“主观意图”的色彩，仿佛这个决定是某个操作员临时起意或系统刚刚计划好的，反而削弱了通知作为既定程序的确定性和可靠性 。
+
+Prepare the service startup steps after XXX patches the system this weekend.
+
 ### business dialogue
+
+hi  , gotten news from xx that DMP is over. you guys can revert the DEV environment back to normal.
+<=Just to clarify, do you mean shutting down the environment? Since it's a testing space, there isn't really a 'default' state to go back to. If it's no longer needed, we can decommission it.
+
 I'm looking for a role that offers more stimulation. I find highly repetitive tasks​ can be a bit demotivating over time.
 
 I wish to make a formal complaint.
@@ -697,19 +704,21 @@ Interviewer:​
 
 “True, AI can be a useful assistant—but remember, you’re applying for a senior​ role. AI outputs aren’t guaranteed to be correct, especially for complex, system‑specific problems. You need solid foundational knowledge to review, validate, and challenge​ those answers. Otherwise, you’re just blindly trusting a tool—and that’s risky when you’re the one accountable for production stability.”
 
+#### Example 8
+hi xxx, Bank send the statement after 7.30am. will it recon itself if left it on its own?
+not urgent, else I was thinking can leave it to tmr and see whether the schedule will reconcile itself at 7.30am，just asking only, no worries
+
+Hey, looks like the auto-reconciliation probably won't fire tomorrow. Ever run into this before? Might be safer to just do a manual one.
+i think havent do manual before ba 
+oh, so you mean you never did manual reconcile?
+i went to lookup history, seems i performed before which is a bit weird for me haha
+Oh, so you havedone it before! That makes way more sense. I was about to say, if you've really never touched it, that would be a miracle. The bank's timing is never that perfect!
+
+ok look different perspective, if leave it there will anything else be affected?
+
+from code, so far i don't see any impact, but probably from business logic we should always handle it properly
+
 ### business email
-
-deploy= 【纯技术黑话，仅限技术内部用】
-release= 【业务/版本视角的正式词，对技术/业务都能说】
-roll out= 【最万能、最不冒犯的词，全场景通用，尤其适合你写邮件的场景】
-push= 【最轻量、最非正式，仅限小改动/客户端场景】
-Just a heads-up: 它的底层潜台词是「这件事你此前没预期/不知道，我先给你打个预防针别让你撞见懵圈」
-Quick sync on that param change we discussed:/ Following up on our earlier thread about the param tweak:直接锚定「就是咱们之前邮件里跟的那件事」，开门见山，完全不会有任何「你突然通知我啥新事」的歧义
-Further to our previous emails about the config parameter update:/ As flagged in our earlier thread,Further to...是英式商务邮件的神级固定开头，专门用来接「双方早就在跟的待办事项」，潜台词就是「这不是新消息，就是我们之前说的事完成了，我给你同步进度」，公事公办但没有FYI那种甩锅的冷感
-we rolled out the recent changes to production last weekend./We've completed the rollout of the latest changes to the production environment last weekend》 Could you help verify on your side when you get a chance?/Could you double-check​ on your side when you get a moment, please?/Would you mind checking on your side at your convenience?/Can you check on your side when you have a min
-Let me know if anything looks off, thanks!
-
-
 
 attaching the document for xxx's benefit/reference/information
 
@@ -1326,6 +1335,16 @@ No specific date, at your earliest convenience.
 <=
 Hi [Name], just a heads-up! I've deployed it to the prod-parallel env​ and all looks good.  Created the Jira ticket, and we're targeting next weekend​ for the Prod release (pending CAB review).
 
+deploy= 【纯技术黑话，仅限技术内部用】
+release= 【业务/版本视角的正式词，对技术/业务都能说】
+roll out= 【最万能、最不冒犯的词，全场景通用，尤其适合你写邮件的场景】
+push= 【最轻量、最非正式，仅限小改动/客户端场景】
+Just a heads-up: 它的底层潜台词是「这件事你此前没预期/不知道，我先给你打个预防针别让你撞见懵圈」
+Quick sync on that param change we discussed:/ Following up on our earlier thread about the param tweak:直接锚定「就是咱们之前邮件里跟的那件事」，开门见山，完全不会有任何「你突然通知我啥新事」的歧义
+Further to our previous emails about the config parameter update:/ As flagged in our earlier thread,Further to...是英式商务邮件的神级固定开头，专门用来接「双方早就在跟的待办事项」，潜台词就是「这不是新消息，就是我们之前说的事完成了，我给你同步进度」，公事公办但没有FYI那种甩锅的冷感
+we rolled out the recent changes to production last weekend./We've completed the rollout of the latest changes to the production environment last weekend》 Could you help verify on your side when you get a chance?/Could you double-check​ on your side when you get a moment, please?/Would you mind checking on your side at your convenience?/Can you check on your side when you have a min
+Let me know if anything looks off, thanks!
+
 #### Example 6
 <
 There won’t be any additional charges to include a Cookie Banner for the xxx Website.
@@ -1348,6 +1367,38 @@ Please find comparison table below:xxxx
 We will proceed with the free version of CookieYes, and the watermark on the cookie banner is acceptable.
 <
 Thank you. We have conveyed (the message) to/Informed/Notified/Communicated to/Relayed to the vendor to proceed with the free version of CookieYes.
+
+#### Example 7
+
+Hi GitLab Sales Team,Our GitLab Premium subscription expires on April 1, 2020, and we would like to renew it for another year with the exact same setup and seat count.Because we do not see an auto-renew option in our Customers Portal, please guide us through the next steps for renewal.Please provide a formal quote or invoice for this renewal so our finance team can process the payment.
+
+Thank you for reaching out regarding your renewal.
+To confirm, your current subscription is 10 seats of Self-Managed - Premium. 
+You would like to renew with the same plan and seats, is that correct? 
+Once confirmed, I'll send over a renewal quote.
+
+Thanks for confirming. Yes, that’s correct — we’d like to renew the 10 seats of Self-Managed Premium​ under the same terms.
+Looking forward to receiving the quote.
+
+#### Example 8
+As we are approaching financial year-end, we would be grateful for your assistance with the following matters to facilitate the year end closing process:
+1.	Please submit all expense claims（费用报销) incurred on or before 30 June 2026 by end of 2 July 2026. If you do not anticipate incurring any expenses during the last week of June, please prepare and submit your claim in advance.如果你觉得接下来一周都没啥钱要报，那就别等到月底最后一天才交单，现在就交掉，省得拖到财年关账那天手忙脚乱。
+2.	Please provide all outstanding invoices(未交/未付发票） relating to your department by 2 July 2026.
+3.	For departmental expenses incurred on or before 30 June 2026 where services have already been rendered or goods/items have already been received, but the invoice has not yet been received, please provide the following information for accrual（应计/预提） purposes:
+•	Estimated amount, excluding GST;
+•	Description of the expense;
+•	Name of vendor/supplier; and
+•	Supporting documents, where available, such as quotations, purchase orders, delivery orders, or email correspondence with vendors.
+
+Please take note of the following:
+o	All claims, invoices, and accrual information should be submitted by the stated deadline to ensure proper recording in the correct financial period.
+o	Late submissions may not be captured in the current financial year-end closing.
+o	Please ensure that all submissions are complete and supported by the necessary documents.
+Your timely submission will help ensure that all expenses are properly recorded in the correct financial period.
+
+Please do not hesitate to let us know if you have any queries.
+
+Just got the finance notice for year-end closing, which reminded me—our GitLab license expires on April 1st, 2026.​ Are you handling the renewal?
 
 ## TICKETS
 

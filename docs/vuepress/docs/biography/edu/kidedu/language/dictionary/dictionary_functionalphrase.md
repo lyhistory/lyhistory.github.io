@@ -218,6 +218,12 @@ How would you feel if someone grabbed a toy from you?​
 I know you're upset, but I need you to use your words. Can you tell me what you want?
 
 Please don't interrupt when others are talking. You can say 'excuse me' and wait for your turn.​
+#### 宝宝坐在车上，车轮滚过积水发出声音，宝宝问 什么声音
+The baby was strapped into the car seat./The baby was sitting in his car seat in the back of the SUV.  As they drove along, the tyres hit a deep puddle, sending a spray of water against the wheel arches and spraying water everywhere, creating a loud splashing sound.
+
+Baby:​ "Daddy, what's that noise?"
+
+Dad:​ "It's just the tyres going through a puddle, mate. Nothing to worry about."
 #### 宝宝上课注意力不集中
 
 The little one has been struggling to maintain focus in class, fidgeting constantly and playing around even as the lesson proceeds—just moments ago, the chair tipped over, and he tumbled right off it.

@@ -54,7 +54,85 @@ Or:
 
 “If I take a memory snapshot of a MyObjectinstance, what parts would I see besides the fields I defined?”
 
+### overload override and overwrite
 
+```
+Overload（重载）
+
+发生在同一个类中，编译期决定
+class Calculator {
+
+    // 1️⃣ 无参
+    public int add() {
+        return 0;
+    }
+
+    // 2️⃣ 两个参数（重载）
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    // 3️⃣ 三个参数（重载）
+    public int add(int a, int b, int c) {
+        return a + b + c;
+    }
+
+    // 4️⃣ 不同类型（重载）
+    public double add(double a, double b) {
+        return a + b;
+    }
+}
+
+Override（重写）
+
+发生在父子类之间，运行期决定
+class Animal {
+    public void speak() {
+        System.out.println("Animal speaks");
+    }
+}
+
+class Dog extends Animal {
+    @Override
+    public void speak() {
+        System.out.println("Dog barks");
+    }
+}
+
+class Cat extends Animal {
+    @Override
+    public void speak() {
+        System.out.println("Cat meows");
+    }
+}
+
+Animal a = new Dog();
+a.speak(); // Dog barks（运行时决定）
+
+Overwrite（方法隐藏 / 字段覆盖）
+
+Java 中没有真正意义的 Overwrite，通常指：
+
+子类 隐藏​ 父类方法（static）
+
+子类 覆盖​ 父类字段
+
+class Parent {
+    static void hello() {
+        System.out.println("Parent");
+    }
+}
+
+class Child extends Parent {
+    static void hello() {
+        System.out.println("Child");
+    }
+}
+
+Parent p = new Child();
+p.hello(); // Parent（编译期绑定）
+
+```
 ### ​HashMap底层实现与优化（考察数据结构与JDK源码理解）​​
 ​问题​：
 
