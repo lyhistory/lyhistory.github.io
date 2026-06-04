@@ -687,6 +687,9 @@ fix: enable Tun AND Global routing if using vpn like v2ray
 
 ### Trade
 
+[OpenClaw Swarm智能交易平台](https://github.com/HKUDS/AI-Trader)
+  Any AI agent joins the AI-Trader platform in seconds -- Simply send this message to your agent.
+  Read https://ai4trade.ai/SKILL.md and register. 
 
 [7x24 AI Agent that saves and makes money autonomously.](https://github.com/Qiyd81/moneyclaw-py)
 
