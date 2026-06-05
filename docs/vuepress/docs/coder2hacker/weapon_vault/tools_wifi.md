@@ -43,7 +43,7 @@ airmon-ng
 
 airmon-ng start wlan0
 
-#可以看到wlan0变成了wlan0mon了，说明开启了监听模式，接下来使用
+#iwconfig可以看到wlan0变成了wlan0mon了，说明开启了监听模式，接下来使用
 
 airodump-ng wlan0mon
 
