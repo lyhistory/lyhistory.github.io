@@ -4,6 +4,7 @@
 服务器:
 + kaggle
 + google colab
++ [www.oracle.com/cloud/free/](https://mp.weixin.qq.com/s/RtSvOcmvDTl3jZDfm4jYJQ)
 
 [awesome-free-llm-apis：把永久免费 LLM API 先整理成一张可直接拿来用的清单](https://github.com/mnfst/awesome-free-llm-apis)
 [A list of free LLM inference resources accessible via API.](https://github.com/cheahjs/free-llm-api-resources)

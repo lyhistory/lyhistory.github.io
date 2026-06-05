@@ -687,6 +687,9 @@ fix: enable Tun AND Global routing if using vpn like v2ray
 
 ### Trade
 
+[OpenClaw Swarm智能交易平台](https://github.com/HKUDS/AI-Trader)
+  Any AI agent joins the AI-Trader platform in seconds -- Simply send this message to your agent.
+  Read https://ai4trade.ai/SKILL.md and register. 
 
 [7x24 AI Agent that saves and makes money autonomously.](https://github.com/Qiyd81/moneyclaw-py)
 
@@ -699,6 +702,12 @@ fix: enable Tun AND Global routing if using vpn like v2ray
 
 [梁文峰去年量化收益56.6%，我让龙虾复刻了一个7x24小时的量化交易系统。](https://mp.weixin.qq.com/s/o-pc1KW-rJCoZIqetlFM_w)
 
+加密货币交易机器人
+  [gekko](https://github.com/askmike/gekko)
+  [GreenGekko](https://github.com/mark-sch/GreenGekko)
+  RedGekko
+  Freqtrade
+  Hummingbot
 
 ### Others
 

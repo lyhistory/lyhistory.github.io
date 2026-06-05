@@ -1,3 +1,9 @@
+[Strix 是一个开源的 AI 自动化渗透测试工具。你给它一个目标（代码目录、GitHub 仓库或者线上地址），一群 AI Agent 就会像真人黑客一样，自动跑你的应用、找漏洞、写 PoC 验证，最后给你一份报告。跟传统扫描器的最大区别：Strix 会动态运行你的代码，真正去「打」一遍，验证通过的才算漏洞，不是简单的模式匹配。](https://github.com/usestrix/strix)
+
+[许多黑客工具都是零散的 GitHub 仓库，安装繁琐、兼容性差、更新困难。hackingtool 把这一切打包成一个现代化 TUI（文本用户界面） 框架](https://github.com/Z4nzu/hackingtool)
+
+[Kali部署HexStrike配合Trae提高挖洞效率](https://mp.weixin.qq.com/s/sej6OWG4V7q7MJodtkcpgA)
+
 [PentAGI is an innovative tool for automated security testing that leverages cutting-edge artificial intelligence technologies. The project is designed for information security professionals, researchers, and enthusiasts who need a powerful and flexible solution for conducting penetration tests.](https://github.com/vxcontrol/pentagi)
 
 [Shannon Lite is an autonomous, white-box AI pentester for web applications and APIs. It analyzes your source code, identifies attack vectors, and executes real exploits to prove vulnerabilities before they reach production.](https://github.com/KeygraphHQ/shannon)

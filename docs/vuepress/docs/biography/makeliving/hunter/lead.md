@@ -1,3 +1,5 @@
+真正的睡后收入：Rebill 类（也称为 Recurring Commission 或 Subscription-based）的联盟营销计划，是目前 Affiliate 界公认的“长期饭票”。
+
 ## Affiliate Marketing 联盟 营销 基本概念
   
 ### 联盟

@@ -14,11 +14,10 @@ tilt
 杯子倒扣过来
 盛东西 碗里装着饭
 
+soy beans(sort of a milk substance)
+dairy
 stuff toy
 stuffy
-What do you like about playground
-What do you like to play on the playground
-I like to play hopscotch/seesaw/swing/scooter/ball on the playground
 tickle
 
 what's wrong with your pencil

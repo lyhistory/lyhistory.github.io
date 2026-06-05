@@ -151,6 +151,8 @@ https://www.quora.com/Which-is-the-best-free-editing-software-for-dubbing
 
 
 ## 下载
+[Motrix Next](https://github.com/AnInsomniacy/motrix-next)
+
 [Download videos from almost any website worldwide](https://github.com/nexmoe/VidBee)
 
 下载网页

@@ -1456,6 +1456,13 @@ rip customers off 宰客
 How To Protect Your Business From The Dark Side Of The Internet Of Things https://www.forbes.com/sites/centurylink/2016/02/15/how-to-protect-your-business-from-the-dark-side-of-the-internet-of-things/#19b71ccf5fcf
 
 ### Software engineer 
+
+wire through
+I’ll treat this as two tracks: first inspect the current Douyin failure screenshot from Docker so we know what blocked it, then wire those screenshots through the publish status API and frontend so failures are visible in the UI. I’ll also check the Docker setup and give you a concrete path for manual browser interaction, because headless Playwright inside Docker needs extra plumbing for that.
+
+I’ll pull the latest XHS and WeChat screenshots from Docker first, then patch against what the pages actually show. From your description, XHS likely needs date/time picker interaction instead of direct text fill, and WeChat probably needs direct input[type=file].set_input_files() rather than clicking the upload rectangle.
+
+
 overload / name mangling
 override 
 overwrite
