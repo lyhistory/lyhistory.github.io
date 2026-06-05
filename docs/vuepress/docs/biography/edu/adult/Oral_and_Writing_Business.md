@@ -1380,6 +1380,9 @@ Once confirmed, I'll send over a renewal quote.
 Thanks for confirming. Yes, that’s correct — we’d like to renew the 10 seats of Self-Managed Premium​ under the same terms.
 Looking forward to receiving the quote.
 
+Good day! The renewal quote is ready, but before I send it over, can you please confirm if the licenses you need are Standard Cloud licenses or Offline Cloud licenses?
+
+I’m a bit unsure about the difference between the two, our usual process is to download the license from your customers.gitlab.com and then upload it to our self-hosted admin dashboard, please see the screenshots below for reference
 #### Example 8
 As we are approaching financial year-end, we would be grateful for your assistance with the following matters to facilitate the year end closing process:
 1.	Please submit all expense claims（费用报销) incurred on or before 30 June 2026 by end of 2 July 2026. If you do not anticipate incurring any expenses during the last week of June, please prepare and submit your claim in advance.如果你觉得接下来一周都没啥钱要报，那就别等到月底最后一天才交单，现在就交掉，省得拖到财年关账那天手忙脚乱。
