@@ -167,11 +167,15 @@ Model Context Protocol vs Function Calling:
 
 ## coding
 
-[antigravity](https://antigravity.google/)
-
++ codex
+  - [CodexPlusPlus](https://github.com/BigPizzaV3/CodexPlusPlus)
+  - [cc-switch](https://github.com/farion1231/cc-switch)
++ [antigravity](https://antigravity.google/)
++ CodeGPT/Continue+ollama/groq
++ GitHub Copilot 
 https://github.com/google-gemini/gemini-cli
 
-codex
+
 
 阿里百炼 多模态
 
