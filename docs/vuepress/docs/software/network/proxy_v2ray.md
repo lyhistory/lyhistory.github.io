@@ -522,6 +522,7 @@ https://iitii.github.io/2022/03/02/1
 
 有时候观察到不稳定或者手机可以,windows不可以,完全可以通过升级客户端解决!
 
+### [V2rayN如何让指定网址通过，或不通过代理](https://github.com/2dust/v2rayN/issues/3983)
 
 ### 手机
 
