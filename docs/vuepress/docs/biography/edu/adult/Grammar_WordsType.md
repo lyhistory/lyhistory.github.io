@@ -518,7 +518,9 @@ meter
 
 mega
 	megabyte megatrends
-mono: monolithic整体的 monopoly垄断的
+mono: 
+	monolithic整体的 monopoly垄断的
+	monologue 独白
 mag- magnitude(altitude longitude latitude) magnet magnify magnetic
 	mag-‌：源自 ‌magnetic‌（磁性的）的缩写，常见于技术术语（如 magcard 指磁卡）
 	magstripe 磁卡 （信用卡磁条）

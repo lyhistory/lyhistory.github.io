@@ -6,7 +6,15 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 ## jdk
 
-Jdk vs Openjdk
+OpenJDK 是上游源码项目，Oracle JDK 和 Adoptium/Temurin 是下游的 JDK 发行版，后者免费，前者商用收费。用一个比喻就懂了——OpenJDK 是配方，各家厂商是不同面包房，烤出来的蛋糕口味基本一致，但包装和售后不同。
+OpenJDK（上游源码项目，配方）
+   │  甲骨文烘焙       Eclipse 基金会烘焙
+   ▼                     ▼
+Oracle JDK          Eclipse Adoptium（基金会/工作组名）
+（商业发行版）             │
+   │                 Eclipse Temurin（旗下 JDK 产品名）
+   ▼                     ▼
+收费（生产环境）        完全免费
 
 https://www.oracle.com/technetwork/java/javase/downloads/index.html
 archive
