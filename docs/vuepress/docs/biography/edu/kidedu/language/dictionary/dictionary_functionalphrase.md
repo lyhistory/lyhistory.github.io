@@ -144,6 +144,20 @@ Watch your step!​
 ## 宝宝互动 coax
 show me
 ### recasting
+#### 啥 what
+Baby:​ "One four is four, two four is 啥 (shà)?"
+
+Dad:​ "Oh, you're doing great with your math! In English, we say 'What is two times four?' or 'Two fours are eight.' Can you say that with me?"
+
+Child:​ "Two four is what?"
+
+Dad:​ "Good try! Listen: 'What is two times four?'​ Can you say that?"
+
+Child:​ "What is two times four?"
+
+Dad:​ "Yes! And the answer is eight!"
+
+#### Look at that
 It's wonderful that you're thinking so carefully about how to nurture your child's language skills! The phrase "Look that, Daddy" is a very common and developmentally appropriate attempt from a young child. Your instinct to gently model the correct phrasing and expand on it with a question like "What can you see?" is perfectly aligned with natural language acquisition techniques. The approach you're considering is consistent with supportive language teaching practices.
 
 Here is a breakdown of how you can respond, along with some practical scenarios.

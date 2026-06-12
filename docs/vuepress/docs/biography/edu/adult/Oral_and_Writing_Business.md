@@ -718,6 +718,22 @@ ok look different perspective, if leave it there will anything else be affected?
 
 from code, so far i don't see any impact, but probably from business logic we should always handle it properly
 
+#### Example 9
+
+you want to do morning shift
+
+    internal monologue describing your confusion in English:
+
+    "Wait, why is he asking me if I want the morning shift? Next Monday is already mine. It’s literally on the schedule.
+
+    Is he asking because he forgot? Or is he actually trying to see if I’ll give it up? Maybe he wants to swap shifts but doesn't want to say it directly. Or... did something change that I don't know about? Am I mixing up the dates?
+
+    I better clarify this, because I don't want to lose my shift or agree to something I didn't mean to."
+
+Yeah, that's what I have on my schedule for next Monday too / Yes, I'm scheduled for the morning shift next Monday. Is there a change? / I am, but are you looking to switch or did you need that day off?
+/ Oh, I thought it was my shift. Am I remembering that wrong?
+/ I thought we were taking turns—this week is yours and next week is mine, isn't it?
+
 ### business email
 
 attaching the document for xxx's benefit/reference/information
@@ -1383,6 +1399,11 @@ Looking forward to receiving the quote.
 Good day! The renewal quote is ready, but before I send it over, can you please confirm if the licenses you need are Standard Cloud licenses or Offline Cloud licenses?
 
 I’m a bit unsure about the difference between the two, our usual process is to download the license from your customers.gitlab.com and then upload it to our self-hosted admin dashboard, please see the screenshots below for reference
+
+Hope you’re having a good week.
+Just following up to check if the quote and invoice are ready for us? We’d like to review them so we can proceed with the next steps. / Quick check on the status—are the quote and invoice ready yet? We’re ready to move forward as soon as we receive them.
+Looking forward to hearing from you.
+
 #### Example 8
 As we are approaching financial year-end, we would be grateful for your assistance with the following matters to facilitate the year end closing process:
 1.	Please submit all expense claims（费用报销) incurred on or before 30 June 2026 by end of 2 July 2026. If you do not anticipate incurring any expenses during the last week of June, please prepare and submit your claim in advance.如果你觉得接下来一周都没啥钱要报，那就别等到月底最后一天才交单，现在就交掉，省得拖到财年关账那天手忙脚乱。
