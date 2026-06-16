@@ -9,6 +9,9 @@
 [awesome-free-llm-apis：把永久免费 LLM API 先整理成一张可直接拿来用的清单](https://github.com/mnfst/awesome-free-llm-apis)
 [A list of free LLM inference resources accessible via API.](https://github.com/cheahjs/free-llm-api-resources)
 
+[几百个免费 AI 模型配额，一键接入本地项目。](https://github.com/romgX/openrelay)
+
++ [Agnes-AI 全模态](https://agnes-ai.com/)
 + Mistral AI 每月 10 亿 Token 免费，无需信用卡
   Provider: Custom / OpenAI-compatible
   Base URL: https://api.mistral.ai/v1
