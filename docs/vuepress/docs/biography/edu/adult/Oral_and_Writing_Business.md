@@ -1404,6 +1404,19 @@ Hope you’re having a good week.
 Just following up to check if the quote and invoice are ready for us? We’d like to review them so we can proceed with the next steps. / Quick check on the status—are the quote and invoice ready yet? We’re ready to move forward as soon as we receive them.
 Looking forward to hearing from you.
 
+Hope you’re doing well.
+
+I’m writing to follow up on my request for the license renewal quote and invoice for our GitLab subscription.
+
+Our finance team has notified us that all outstanding vendor claims and invoices must be submitted by this Friday, May 31st to facilitate our fiscal year-end closing and audit compliance. Without the official quote and invoice from GitLab, we won’t be able to initiate our internal approval and payment process before this cut-off.
+
+To avoid any lapse in our license coverage (which would disrupt our engineering team’s workflows) and to ensure both parties can recognize this revenue in our respective fiscal years, could you please prioritize this request and share the required documents at your earliest convenience?
+
+If the final invoice is still being processed, a draft/provisional quote would also work for us to kick off our internal approval workflow while we wait for the final version. Alternatively, if there’s a self-service portal link for generating the renewal docs, feel free to share it and we can process it on our end immediately.
+
+Please let me know if you need any additional information (e.g. current subscription end date, renewal SKU) to expedite this. Thanks so much for your urgent support.
+
+
 #### Example 8
 As we are approaching financial year-end, we would be grateful for your assistance with the following matters to facilitate the year end closing process:
 1.	Please submit all expense claims（费用报销) incurred on or before 30 June 2026 by end of 2 July 2026. If you do not anticipate incurring any expenses during the last week of June, please prepare and submit your claim in advance.如果你觉得接下来一周都没啥钱要报，那就别等到月底最后一天才交单，现在就交掉，省得拖到财年关账那天手忙脚乱。
