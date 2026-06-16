@@ -66,6 +66,51 @@ Note: the language in this unit is more common in British English than American 
 rapport
 renowned
 
+强化词 (Intensifiers) 与形容词的搭配 
+In a competitive business, you can only succeed if you see a new gap​ in the market​.
+I think you'll need about €50,000 as start-up capital​ to launch your new company.
+If you look at our business plan​ you'll see it contains our financial estimates.
+I'd rather borrow the money from my parents than have to share the profits with a venture capitalist.
+If I lend you €30,000 to set up the business, what do you expect will be the return​ on my investment?
+A business angel could give you some extra financial backing​, until you start making a profit.
+We made use of our large network contacts​ and found people who could help us.
+
+This project is extremely​ risky. Be careful!
+Their plan is absolutely ridiculous.
+My new member of staff is totally​ useless.
+You've been incredibly​ helpful. Thanks a lot.
+This system is really​ complex.
+
+
+(Conversation 1)
+
+A: Jose, I don't believe it! 
+B: Tanya! How are you? What have you been up to?
+A: Oh, the same old things... still working for TTB. What about you? 
+B: I've had a couple of jobs since I left TTB but I've just set up on my own. Which reminds me. Could you do me a favour?​
+A: Sure. 
+B: The thing is, I've been looking for a document recently on website insurance. I think I left it at TTB.
+A: Well, I'm not sure. Send me the details and I'll see what I can do.
+
+(Conversation 2)
+
+A: It's good of you to meet me this morning. 
+B: Don't mention it. When was the last time we saw each other?
+A: At that conference in Lisbon. 
+B: That's right. How's life treating you?​ 
+A: Not bad, though I've had problems with my employer. Actually that's the reason why I asked to meet. Could you put me in touch with anyone who might have a position, since you're well known in the business?
+B: I'll certainly think about it.​ Why don't we have a drink first. Then let's talk about it over dinner.
+
+现在完成进行时 (Present Perfect Continuous) vs. 现在完成时 (Present Perfect Simple)
+动作持续用 doing，结果状态用 done。
+I've been calling her all afternoon and she still hasn't got back to me.
+They've sent me the final report. I just need to check it.
+I've been workingin this department while two of their staff are away.
+I hope they've been keeping you busy. How much longer are you on secondment here?
+We've finally agreed the deal and the contract has been signed.
+She's applied for a new job. I think the interview for it is next week.
+Hello! I haven't seen you for ages!
+
 #### Being polite and diplomatic 礼貌策略 (Politeness Strategies)​ 和 缓和语 (Hedging)
 A. 情态动词与间接请求 (Modal Verbs & Indirect Requests)
 Requests (asking somebody else) 
