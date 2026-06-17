@@ -185,12 +185,19 @@ If the yum installation fails, we’ll need Eric to help check the yum repositor
 This is a real possibility: It might rain, and if it does, I will stay at home.
 
 Here are a few more examples:
-
+If we decide before Friday, then everyone will know by Monday.
+If I ask Lisa, you will ask Tish.
 If you study hard, you will pass the exam.
 If I see her, I will say hello.
 If they don’t hurry, they will miss the train.
 
 If you name it, we will do it=>U name it, we do it
+
+If they don't hurry, they'll miss the bus.
+Lisa will have a lot of fun when she goes​ to Germany to study next year.
+Unless they reduce​ the price, they'll never sell their house.
+Annabel will look for a job as soon as she gets​ her degree.
+You will never finish​ your homework if you keep chatting with your friends on Facebook.
 
 Remember, the first conditional is all about real possibilities in the future. It’s not about general truths or hypothetical situations. It’s about what might happen.
 
@@ -205,6 +212,21 @@ Here are a few more examples:
 If I were you, I would take the job.
 If it snowed in the Sahara, it would be a miracle.
 If they knew the truth, they would be shocked.
+What would you offer if I could pay you in cash?
+If we rented​ that big flat, we 'd have​ enough room for the dog.
+I would buy​ a huge house with a garden if I won the lottery.
+If you painted​ this room white it would be​ much lighter.
+I would do​ it myself if I had​ more time.
+I wouldn't be​ so broke if I didn't spend​ so much on going out.
+Maybe if I shared​ a flat with friends, I would get​ on better with my parents.
+I could go​ travel next summer if I had​ more money.
+Carla might move out of her shared flat if she found​ a job.
+If my girlfriend didn't have to​ work so hard, we could​ see each other more often.
+If I went​ to bed earlier, I wouldn't be​ so tired all the time.
+If we had the money, we would buy​ a beautiful house in the country.
+If I were you, I would take​ the dress back to the shop: it just doesn't suit you.
+If it weren't​ so windy, we could go for a walk on the beach.
+If you found​ some extra money in your bank account, would you spend it?
 
 To summarize, the second conditional is all about unreal or improbable situations. It’s not about what will happen but what could happen in an alternate reality.
 
@@ -232,8 +254,10 @@ Conditional sentences aren’t always cut and dry. There are exceptions and spec
 
 + Mixed conditionals
     Mixed conditionals are a blend of second and third conditionals. They’re used when the time referenced in the if clause is not the same as the time referenced in the main clause. For example, “If I had worked harder [past], I would be in a better job now [present].”
+    Sarah would be​ really upset if she doesn't find her necklace. We must help her look for it.
 + Inverted conditionals and formal structures
     Inverted conditionals are a more formal structure. They invert the subject and auxiliary verb in the if clause. For example, “Had I known [instead of “If I had known”], I would have acted differently.”
+
 
 ### 拆解
 #### 分词 Participle
@@ -299,10 +323,74 @@ He rushed out, ‌face pale with anger‌.（他冲了出去，脸色铁青）
 #### 后置定语（postpositive modifier）‌ 
 have confidence to do sth / in sb 
 
-#### 省略状语从句
+#### 状语从句
+##### Subordinating Conjunction 从属连词
+Temporal Subordinating Conjunctions
+（时间从属连词）
+after / as / as soon as / before / by the time / once / till / until / when / whenever / while
+Conditional Subordinating Conjunctions
+（条件从属连词）
+if / unless / as long as / in case / supposing / in the event that / whether or not / provided that
+Concessive Subordinating Conjunctions
+（让步从属连词）
+although / though / even if / even though / much as（你列的as much as属于这种半固定让步结构，不算纯单字连词）
+Causal Subordinating Conjunctions
+（原因从属连词）
+because / since / now that
+Purpose/Final Subordinating Conjunctions
+（目的从属连词）
+so that / in order that / lest（lest是偏古旧正式的否定目的连词，表“以免”）
+Manner Subordinating Conjunctions
+（方式从属连词）
+as if / as though
+Place Subordinating Conjunctions
+（地点从属连词，也叫Relative Adverbs当引导定语/状语时）
+where / wherever / whereas（whereas偏对比转折，也算广义的concessive/contrast subordinator）
+另外像 now that / as long as / in the event that / in order that这种多词组合的，叫 Complex Subordinating Conjunctions / Compound Subordinating Conjunctions（复合/短语从属连词），本质还是从属连词的一种。
+
+than：是 Comparative Particle / Comparative Conjunction（比较标记/比较连词），引导的是省略型比较分句，不算状语从句专属的从属连词。
+that：是个多面手，当它引导名词性从句（主语/宾语/表语从句）时术语叫 Complementizer（补足语化标记）；只有当它和so搭配引导结果状语从句（so...that...）时，才是从属连词结构的一部分。
+only / only if：only本身是副词，不能直接引导从句；only if是强调型条件结构，算条件从属结构的固定搭配，不是单个从属连词。
+as much as：是半固定比较/让步结构，不是单个独立连词。
+
+https://www.grammarly.com/blog/subordinating-conjunctions/
+
+I won't do anything unless everyone wants me to.
+As long as you keep quite about your deal, no one else will ask about a remuneration package.
+Provided that I have use of IT support all next week, there'll be no problems with installing the new software.
+Supposing we stretch the budget, then we can take on a trainee.
+
+##### 让步状语从句 (Concession)
+Even though he is rich, he isn’t very generous.
+Despite going on a diet, he’s still a bit overweight.
+Despite the fact that he’s careful, he’s had two accidents this year.
+In spite of the fact that he doesn’t speak English, he still found a good job.
+Cats make great pets although personally I prefer dogs.
+I’m afraid of flying​ in spite of knowing that it’s safer than driving.
+
+##### 目的状语从句 (Purpose)
+
+You should turn off your TV and DVD player at night so as to save electricity.
+I’m going to work late tonight so that I can leave early​ tomorrow.
+You need to go to the UK for a month so that you can practise your English.
+She took a taxi so as to be on time for her first day at work.
+
+##### 原因状语 / 简单陈述句 (Reason / Simple Statements)
+
+I’m saving to buy a new car. The one I have now is ten years old.
+My sister’s gone to New York for an interview​ with an American company.
+
+##### 结果状语从句 (Result)
+I felt so stressed that I went to a spa for a massage.
+
+##### 方式状语从句 (Manner)
+My mum looks as if she’s in her forties even though she’s in her sixties.
+半部分 as if（好像）引导的是方式状语从句，后半部分 even though引导的是让步状语从句
+
+##### 省略状语从句
 as spoken 是 ‌"as it is spoken"‌ 的省略形式，属于状语从句的省略结构
 
-#### 比较状语从句 
+##### 比较状语从句 
 Friction is normal as is conflict, don't avoid it altogether
 完整形式应为 `as conflict is normal`   因主句与从句表语相同（normal），故省略表语形成 `as is conflict`
 倒装结构 `as is conflict` 强化"冲突"与"摩擦"的并列关系 
@@ -310,10 +398,7 @@ Friction is normal as is conflict, don't avoid it altogether
 Courage is vital, as is perseverance in adversity`（勇气至关重要，逆境中的坚持亦然）
 Success requires effort as does opportunity
 
-#### Subordinating Conjunction 从属连词
-after/although/as/as if/as long as/as much as/as soon as/as though/because/before/by the time/even if/even though/if/in case/in order that/in the event that/lest/now that/once/only/only if/provided that/since/so/supposing/than/that/though/till/unless/until/when/whenever/where/whereas/wherever/whether or not/while
 
-https://www.grammarly.com/blog/subordinating-conjunctions/
 
 #### 倒装 inversion‌
 1. ‌完全倒装 (Full Inversion)‌
@@ -335,14 +420,9 @@ https://www.grammarly.com/blog/subordinating-conjunctions/
 例句：
 "‌Never have I seen‌ such a spectacular view." （正常语序：I have never seen...）
 
-
 条件状语从句前置（Only when...）引发主句倒装（should you go...）
 Only when you are sure your existing toolset will not suffice should you go out into the marketplace
 You should go out into the marketplace ‌only when‌ you are sure your existing toolset will not suffice.
-
-
-
- 
 
 ## 修辞手法
 metaphor,analogy,allusion

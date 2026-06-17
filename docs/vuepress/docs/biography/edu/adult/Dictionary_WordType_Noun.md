@@ -470,6 +470,11 @@ wrath rɒθ 愤怒; 激怒
 
 
 ## Verb --> Noun
+zero-derivation
+	have / get a sit-down
+	have a lie-down/wash/cry/think/look/chat/go
+	need a smoke
+	grab a bite
 continue continuity
 compare comparison
 compile compilation

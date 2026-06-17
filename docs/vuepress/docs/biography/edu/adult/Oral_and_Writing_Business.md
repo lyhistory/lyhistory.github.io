@@ -66,7 +66,256 @@ Note: the language in this unit is more common in British English than American 
 rapport
 renowned
 
-强化词 (Intensifiers) 与形容词的搭配 
+Don't spend too much time on this. It isn’t important.
+I'd like to spend a little less time in meetings and more time actually doing some work.
+Too few people have applied for the post. We don’t have enough good candidates.
+Hardly anyone internally has applied. They are nearly all external.
+Lots of time has been spent on this. Too much in fact.
+
+We've always stay​ true to our principle of fairness to the customer and the supplier.
+Companies in the 21st century which don't act​ responsibly are likely to receive bad publicity.
+How about donate​ more time to helping a charity?
+All our employees take an active part in our fund-raising activities.
+If we did more videoconferencing and less flying, we'd reduce​ the impact we have on the environment.
+Currently, this factory doesn't comply​ with regulations on the disposal of waste water.
+All our subsidiaries share a strong commitment to supporting the local community.
+
+We are not involved in the corruption​ scandal.
+Customers will ask questions about our credibility​ if we don't do something quickly.
+He says he isn't prejudiced against older applicants but he never employs anyone over 40.
+We want to be described as an ethical​ business.我们要做一家有底线的企业，并且希望外界也这样看待我们。
+Appearances can be deceptive – he seems friendly but be careful!
+
+They're offering people over 55 the chance to take early retirement​.
+They've asked me to move to Sales, but it seems like a sideways平级调动​ move.
+Many women in my position reach a glass​ ceiling and can't go any further.
+It's only a temporary secondment​借调 for six months while a colleague goes on maternity leave.
+1,300 workers have been laid off​ from a factory in Marseille.
+To retain​ our key staff, it may be necessary to offer additional incentives.
+We found that bringing in flexitime reduced staff turnover 人员流动率 指员工离职率​ and in fact increased applications from skilled people.
+Many employees prefer plenty of job mobility​ “岗位轮换”或“职能流动” to staying in one place for the whole of their career.
+In order to get on​ in life 生活中成功是固定搭配, it's who you know, not what you know.
+
+I suggest you weigh up all the options before you make a final decision.
+Sometimes you just have to trust your own instincts rather than spend more time analysing facts. 
+As long as everyone else has confidence in your decisions, then things will probably work out OK. 
+I simply can’t decide between the two options. Which do you think is better? 
+
+fairness: Company agrees to pay workers from other countries an equal amount.
+bribery: CEO paid colleagues to take part in illegal financial activities.
+discrimination: Woman to prosecute company for paying her less than male colleagues doing the same job. 它确实不是个完整句子，但这是故意的。这是报纸标题写法（headline style）A woman is taking legal action against the company / is going to prosecute the company​ for paying her less than male colleagues doing the same job.
+generosity: Business owner leaves fortune to charity.
+greed: Shareholders take profits while workers receive no pay rise.
+outgoing： He loves socializing and meeting people. That’s what makes him a good marketing manager.
+pragmatic： We need someone who takes a practical and realistic attitude to any kind of task. 
+impulsive： The reason for her success is that as soon as she hears a good idea she takes action – she doesn’t wait to hear what the problems might be. 
+creative： If you work in design you need to be a person who likes to come up with original ideas. 
+conventional： I like a traditional approach to decision-making. 
+tactful： The CEO is diplomatic and good at talking to people about difficult matters.
+detached： He’s good at staying out of office politics and doesn’t get involved. 
+methodical：Our accounts manager does things step by step. As a result, she never makes mistakes!
+
+Journalist: Will the fact that so many companies are now outsourcing lead to major job losses over there?
+Politician: Certainly jobs in sectors such as telecommunications and IT could be affected.
+Journalist: But this means skilled workers are out of work. Where will they find new jobs?
+Politician: Well, of course, companies will retain their core activities which will always need well-qualified people with expertise. I also want to add that outsourcing is necessary for companies to gain through a competitive edge. Without streamlining their operations they won't survive in the global economy.
+
+#### Business communication skills
+You can check the details with Amalie. She 's coming in​ later this afternoon as arranged.
+One day, when I have enough money, I'm going to start​ my own business.
+The flight from Jakarta lands​ at 5 p.m. your time according to my e-ticket.
+
+Sorry about the late delivery. Let me call the warehouse to check and I'll call you straight back.
+
+Statistics show that export growth is at 5% this year.
+You will notice on this chart how many jobs have been lost.
+Have a look at these figures.
+A further point to mention is that Bangalore has a high-trained workforce.
+Let's turn our attention to the effects of this.
+Looking at this slide, we can see the reason for the fall.
+We've looked at India, so let's move on to China.
+This next part relates back to what I was saying earlier.
+Before I go today, I'd like to leave you  with some food for thought 值得琢磨的东西 / 让人回去想一想的点子、问题或提醒（不是真食物）.
+The message I'd like to send you away with today is this.
+
+A: I'm really sorry, I completely forgot the time.
+B: No problem, I was busy too.
+
+A: When are you back in the office?
+B: I'm not sure. I'll let you know before I leave today.
+
+A: What we need to decide on today is what to include in the repatriation package. The areas we need to discuss are salaries, education for children and the request for loans to buy houses. Let's look at what our options are. One option would be to offer a basic package to everyone.
+B: Sorry, but it just wouldn't work if we offered everyone the same. For example, you have some people with no children and some with five. Then you have people already with a house and those with nowhere to live when they get back.
+A: Well, supposing we gave everyone the same salary rise as a percentage?
+B: That's a good start. And then what I propose is that we take each person case-by-case. So if you guaranteed equal pay rises, I think they'd let you bargain more easily with other incentives.
+A: Good. That sounds like a plan. So, a recap. If I look at realistic figures for the rise, you'll spend some time looking at each individual's needs. OK?
+B: I'm happy with that. I can even talk to each of them by phone before the official meeting ...
+
+A: We'd like to invite you to the theatre this evening.
+B: That would be great. What's on?
+A: It's a Russian theatre company performing Hamlet.
+B: That sounds really​ interesting.
+
+A: If you're free, we'd be delighted to see you​ at dinner this evening.
+B: Sorry, but I'm meeting someone for drinks at six.
+A: Oh well, you're welcome​ to come later if you change your mind.
+
+A: While you are in Italy, it would be a good idea to​ visit our supplier in Salerno. It will save time and money later on.
+B: That makes sense.
+A: Ask them to show you round their factory. It's well worth a visit.
+
+A: Looking at the facts. They’re here in black and white. We are overspending.
+B: What you say is right, but there are some good reasons. We’ve had to invest in more advertising and marketing in order to grow.
+A: Yes, but that was budgeted for last year. What I mean is we’ve spent money on unplanned items.
+A classic example is this list of expenses. I’m not convinced that all these are necessary. Look at this restaurant bill for over $200!
+A: Exactly. But that is a marketing cost. Clients have to be taken out.
+B: In other words, you’re saying our staff should go to the most expensive restaurants they can find.
+A: Obviously I think it would be crazy for an employee on a business trip to only choose expensive places on their own. But with clients it’s important.
+B: Jens, what’s your position on this?
+C: As far as I’m concerned, until we set clear limits and give our staff written guidelines on travel expenses, we’ll always have this discussion …
+B: … but the drawback is that every trip is different. It’s hard to say there’s one rule for every type of expense.
+A: Hang on. Let’s hear what Jens has to say.
+C: In my opinion we need to define what they can and can’t do.
+A: Good idea. Let’s draw up some action points …
+
+budgeted​ — "that was budgeted​ for last year"
+At core: put into the official spending plan and approved in advance, not improvised.
+A company's budget is the forward-looking document where Finance says: we may spend £X on Y, and here's the cap.When something was budgeted, it passed that process — it's been earmarked, the money is (supposedly) set aside for it, and spending it isn't itself the scandal.
+In this speaker's mouth it's doing a rhetorical job:
+"Advertising & marketing — fine, I actually agree those cost money. Those were budgeted, so I'm not complaining about those. What I'm complaining about is the stuff that wasn't​ — the unplanned creep."
+So the native-speaker connotation​ is: legitimate / authorized / expected vs. off-the-books / ad-hoc.Saying "it was budgeted" is a way of drawing a line — this spend has a paper trail; the rest doesn't.
+
+take out​ — "Clients have to be taken out."
+The phrasal verb is take someone out​ = host them socially at your expense​ (typically dinner, drinks, a show, golf, etc.), andit's understood that you're paying specifically to build/maintain the relationship.
+I'll take you out for dinner→ I'm treating you.
+In business: take clients out→ client entertainment / hospitality​ as a recognised category of spend.
+The key nuance: it's not just "go out together." It carries who's paying​ + the instrumental purpose​ (relationship management, deal flow, goodwill). That's why A uses it defensively — "That $200 isn't waste, it's the cost of doing business. Client relationships require face-time and a meal on us."
+(There's also a faint old-school corporate flavour to it — "taking people out" is the kind of thing strict companies now police heavily with per-diems and written policies, which is exactly the argument C is about to make.)
+
+#### description of the graph
+
+Overall Summary
+
+The graph illustrates the total number of cumulative jobs exported from the United States over a 20-year period, from 1992 to 2012. The vertical axis represents the number of jobs in millions, while the horizontal axis shows the years. Overall, the trend is one of massive and consistent growth, with the total number of jobs increasing almost fivefold by the end of the period.
+
+Initial Phase (1992–2000)
+In 1992, the baseline for cumulative jobs exported was extremely low, starting at just 0.6 million. Over the next eight years, the graph shows a steady and linear increase. By the year 2000, the figure had risen to approximately 9.2 million, indicating a significant acceleration in job exports during the 1990s.
+
+Acceleration Phase (2000–2008)
+The growth continued into the 21st century without any significant decline. The rate of increase remained high, pushing the cumulative total past the 20-million mark around 2006. By 2008, the graph reached its peak value for the observed period, hitting 28.7 million cumulative exported jobs.
+
+Recent Trends (2008–2012)
+After reaching its zenith in 2008, the graph shows a slight downward movement. However, the decline is minimal, and by 2012, the figure had only decreased marginally to 28.1 million. Despite this minor dip towards the end of the period, the overall level remains exceptionally high compared to the starting point.
+
+a description of the line graphs:
+Dips slightly:​ A small drop.
+Sharp increase:​ A steep rise.
+Highest/Lowest point:​ The peak/trough.
+Steady decline:​ A consistent fall.
+Plateau:​ A period where the value stays relatively flat.
+Trajectory:​ The path or direction of the data.
+Crashes dramatically:​ Falls very sharply.
+
+"Okay, let’s have a look at these two line graphs.
+
+Starting with the top graph:​ The overall trend here shows a significant decrease over the year. At the beginning of the year, in January, the figure starts at around 60%. It then dips slightly​ in February, but then we see a sharp increase, reaching the highest point​ of the entire year—almost 90%—in March. After this peak, the line goes into a steady decline throughout the middle of the year. There’s a small plateau or slight flattening during the summer months of June and July, hovering around the 50% mark. However, it continues to fall after that, hitting the lowest point​ at the very end of the year in December, where it drops below the 25% line, to roughly 20%.
+
+Now, looking at the bottom graph:​ This graph follows a very similar pattern, but the figures are generally lower. It also starts in January, but at a much lower point—around 40%. It increases gradually to a peak in March, although this peak is noticeably lower than the first graph, sitting at about 55%. From March onwards, it follows a downward trajectory. By the end of the year, in December, the line crashes dramatically. It falls well below the 20% grid line, ending up at approximately 10%."
+
+#### Making Suggestions/Invitations:
+A. Inviting People
+Why don't we have dinner together​ this weekend?
+Shall we start the project​ tomorrow?
+Let's go to the library / go to library​ on Saturday.
+Do you fancy going to the cinema​ this evening? 
+How about fishing on Sunday? 
+Would you be keen on studying​ later?
+Are you up for meeting up​ this week?
+
+B. Phrases for accepting
+e.g. I wouldn't miss it for the world.
+That sounds great!
+I'd love to.
+Count me in!​
+It's a date.
+
+C. Phrases for Declining Invitations
+
+I am not up for​ that.
+I don't fancy​ that.
+I'm not into​ that.
+That's not my cup of tea. - only for negative
+
+D. Dealing with Project Problems
+
+Think of a common problem together that one of your customers might complain about. If you are in the customer role try to think form their perspective. What is the problem? What action do you want and when do you want it?
+For the staff role try to think of how you can keep the customer satisfied whilst making sure you do not promise something you cannot deliver. Try to make sure you reach a WIN-WIN situation.
+
+Customer:
+
+"Hi. I'm calling about the software update. It was supposed to be ready this morning, but I still haven't got the download link. I'm a bit stuck here. Any chance you could check on that for me?"
+
+Staff:
+
+"Hello, sorry about that. Let me have a look... Right, it looks like we hit a small snag with the final checks. I can't promise it'll be there in the next ten minutes, but I can chase the tech team for you. As an apology, I'll add an extra month of support onto your account, free of charge. Does that sound alright?"
+
+Customer:
+
+"That's fair enough, cheers. Just as long as I get it by lunchtime."
+
+Staff:
+
+"No worries. I'll drop you an email the moment it's live. Thanks for your patience."
+
+#### Passive/Active form
+A business award has been given to him.→ He has been given a business award.
+We expect he will leave straightaway.→ It is expected that he will leave straightaway.
+You are being fired. I have made the final decision.→ You are being fired. The final decision has been made.
+Sue still hasn't fixed the problem with all the computers.→ The problem with all the computers hasn't been fixed by Sue yet.
+Everyone knows that the CEO will retire next year.→ It is known to all that the CEO will retire next year.
+Employees will answer all customer complaints within five working days.→ All customer complaints will be answered by employees within five working days.
+Somebody locks up the warehouse at ten.→ The warehouse is locked up at ten by somebody.
+You were phoned while you were out.→ Somebody phoned you while you were out.
+They are promoting you to office manager.→ You are being promoted to office manager by them.
+
+#### Question Forms:
+    - Yes/no or closed questions
+        "Is anybody sitting here?" / "Are you a student?"
+    - Tag questions (反意疑问句 )
+        "It's so hot today, isn't it?" / "...I haven't seen you in class before, have I?"
+    - Declarative statements with rising intonation (陈述句升调)
+        I'm a second year student, and you?
+    - Open questions
+        Are you a student or​ is it for work?
+    - Choice questions
+        So you're not​ from around here?
+
+John: Excuse me is anybody sitting here?
+Jane: Uh no... I'll just move my bag.
+John: Thanks... I need a sit down.... It's so hot today, isn't it?
+Jane: Erm... yeah, I guess so.
+John: Anyway, my name's John. How about you?/And you?
+Jane: Jane
+John: Okay... so... Didn't I see you in here yesterday? About 3 o'clock?
+Jane: Nooo, don't think so, this is my first time.
+John: Oh...... okay...... I thought I saw you here yesterday with Tom Hawk. We went to school together. Do you know him?
+Jane: No, sorry. Don't know him.
+John: Everybody knows Tom. So you're not from around here?
+Jane: No.. no, I moved here recently.
+John: Okay... Soooo... what are you reading? Anything interesting?
+Jane: Oh, nothing really. Just some book for research.
+John: Are you a student or is it for work?
+Jane: Err... I'm a student. I study English at City University.
+John: Really, I'm studying English there too! What year are you?
+Jane: I'm a second year student.
+John: So am I but I haven't seen you in class before, have I?
+Jane: No, I only study part time so I usually go in the evenings, and you?
+John: I go everyday during the week usually with Mr. Russell? Have you studied with him?
+Jane: Yeah, I have. He's so boring. Did you understand that lecture last week about William Shakespeare? I mean what are we supposed to write about for that assignment.
+John: No idea. What did he mean........
+
+
+#### 强化词 (Intensifiers) 与形容词的搭配 
 In a competitive business, you can only succeed if you see a new gap​ in the market​.
 I think you'll need about €50,000 as start-up capital​ to launch your new company.
 If you look at our business plan​ you'll see it contains our financial estimates.
@@ -100,6 +349,19 @@ A: At that conference in Lisbon.
 B: That's right. How's life treating you?​ 
 A: Not bad, though I've had problems with my employer. Actually that's the reason why I asked to meet. Could you put me in touch with anyone who might have a position, since you're well known in the business?
 B: I'll certainly think about it.​ Why don't we have a drink first. Then let's talk about it over dinner.
+
+#### 时态
+现在进行时表将来 当英语想表达“我已经计划好了的未来”时，经常偷懒直接用“正在进行”的形式。
+We've booked places and we're staying​ at the Westin Hotel.
+什么时候进行时表将来最“自然”？
+有具体的未来时间状语：
+We are staying​ there next week.
+I'm meeting John tomorrow.
+We're flying to Paris next Monday.
+谈论旅行/行程计划：
+We are going​ to Rome, and then we are flying​ to Athens.
+表示“一段时间内持续的状态”：
+She is living​ in London for the next month.
 
 现在完成进行时 (Present Perfect Continuous) vs. 现在完成时 (Present Perfect Simple)
 动作持续用 doing，结果状态用 done。
@@ -197,6 +459,59 @@ It's a bad idea. (honest/I'm not sure/good)
 
 Let's cancel the project. (perhaps/should think about)
     Perhaps we should think about canceling the project.
+
+#### Controlling a narrative and telling a story
+
+1. Introducing the story Phrases
+Did I ever tell you about...?
+Have I ever told you about...?
+2. Sequencing Phrases
+Then what happened was...
+After that...
+Then...
+Later...
+So...
+Suddenly
+Anway
+3. Phrases for keeping the listener involved
+You'll never guess what happened next.
+You won't believe what happened.
+You can imagine what it was like.
+Can you guess what happened next?
+4. Phrases for returning to story after interruption
+So anyway...
+As I was saying...
+So where was I...
+5. Ending an anecdote
+In the end...
+To cut a long story short...
+
+Story: The Ultimate Bad Day of Paco
+
+(1. Introducing the story)
+Did I ever tell you about​ the worst night of my friend Paco’s life? You think you have bad days, but trust me, Paco’s takes the cake.
+
+(2. Sequencing Phrases)
+It started so innocently. He was just lying in bed, fast asleep. Then what happened was, the bed frame completely collapsed under him! He woke up with terrible back pain.
+
+(3. Phrases for keeping the listener involved)
+Limping to the bathroom to ease the pain, you'll never guess what happened next. He stepped right on a rusty nail! He screamed, jumped back in shock, and ended up slipping down the entire staircase. When he looked in the mirror, he had two massive black eyes—he looked like a panda.
+
+(2. Sequencing Phrases)
+After that, things didn't get better. He took some painkillers, but they were so strong that he immediately threw up everywhere. Later, still clutching his aching back, he managed to call the doctor to schedule an emergency appointment for the morning.
+
+(3. Phrases for keeping the listener involved)
+You won't believe what happened​ when he was waiting for the taxi the next morning. While standing at the curb, a stray dog ran up and bit his leg! He was hopping around in agony, which is exactly when the taxi pulled up.
+
+(2. Sequencing Phrases)
+Suddenly, as he was getting into the cab, a speeding car came out of nowhere. The impact sent Paco flying. So, he ended up with a compound fracture in his arm—the bone was literally sticking out!
+
+(4. Phrases for returning to story after interruption)
+Okay, deep breaths... so anyway, the ambulance finally arrived. The paramedics put him on a stretcher to carry him inside. As I was saying, just as they lifted him, one of them tripped, and Paco slid right off the stretcher back onto the pavement. This time, his leg snapped too, and yes, the bone came out.
+
+(5. Ending an anecdote)
+In the end, they rushed him to the ER. The doctor gave him a shot, but even then, fate wasn't done with him. The needle snapped clean off and stayed stuck in his skin!
+To cut a long story short, if you visit Paco today, you’ll find him lying in a hospital bed, wrapped from head to toe in bandages like a mummy. It’s been one disaster after another!
 
 ### 电话/会议
 I was talking on the phone and suddenly got disconnected.
@@ -1461,6 +1776,7 @@ If the final invoice is still being processed, a draft/provisional quote would a
 
 Please let me know if you need any additional information (e.g. current subscription end date, renewal SKU) to expedite this. Thanks so much for your urgent support.
 
+hi xxx, did you get my email following up with GitLab about the renewal invoice? Still nothing after a whole week.​ Weird.
 
 #### Example 8
 As we are approaching financial year-end, we would be grateful for your assistance with the following matters to facilitate the year end closing process:
@@ -1481,6 +1797,21 @@ Your timely submission will help ensure that all expenses are properly recorded 
 Please do not hesitate to let us know if you have any queries.
 
 Just got the finance notice for year-end closing, which reminded me—our GitLab license expires on April 1st, 2026.​ Are you handling the renewal?
+
+#### Example 9
+Could I trouble you to set up SFTP access for our new risk colleague, peter?
+
+Certainly! I've just set up the access and sent the credentials to peter directly.
+/
+Yes, absolutely. I've configured the SFTP account and shared the login details with peter via email.
+Let me know if he runs into any issues.
+
+Here are the SFTP credentials for your access:
+Host:​ xxx.com
+Username:​ peter
+Password:​ test123
+Please note that this is a temporary password; we recommend changing it upon your first login.
+If you encounter any connection issues, please ensure you are connecting via port 22​ (standard for SFTP) and feel free to reach out.
 
 ## TICKETS
 

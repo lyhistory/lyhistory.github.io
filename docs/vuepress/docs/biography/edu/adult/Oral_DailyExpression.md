@@ -2168,6 +2168,17 @@ workhorse
   例：He is the workhorse of the team.（他是团队的骨干。
 
 ### 逻辑
+here vs
+✅ in here / out here / from here / through here / around here
+❌ at here（at也是点状定位，跟 here的“这里=这个地点”语义打架；要说 at this place，不说 at here）
+Didn't I see you in here yesterday?
+说话者在一家店/咖啡馆/办公室之类的地方说这句话，"in here" 的 in精准传达了 "inside this establishment / this room"​ 的含义。如果只说：
+Didn't I see you here​ yesterday?
+也没错，但稍微泛一些——你可能在门口附近、外头走廊也算"here"。加了 in，就是把范围锁死在室内空间内部。
+
+Sit here.（坐这儿，可能椅子就在旁边）
+Sit in here.（进来坐到“里面来”；比如进屋、上车、进包间）
+
 and vs or
 FYI, our new release has been approved on Google Play. You can now install it both from the Google Play Store and directly from our website.
 新版本已获批，现在既可以从Google Play商店安装，也可以直接从我们网站安装。（两个渠道都为您开放了）
