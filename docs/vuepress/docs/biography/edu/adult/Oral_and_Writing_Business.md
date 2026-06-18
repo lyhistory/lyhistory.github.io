@@ -215,6 +215,40 @@ Steady decline:​ A consistent fall.
 Plateau:​ A period where the value stays relatively flat.
 Trajectory:​ The path or direction of the data.
 Crashes dramatically:​ Falls very sharply.
+an upward trend
+    surge, climb, soar, skyrocket, boom, rise steadily
+the highest point
+    peak, climax, summit, record high, maximum
+a downward trend
+    decline, slump, plummet, collapse, nosedive, fall sharply
+the lowest point
+    trough, nadir, rock bottom, minimum, all - time low
+stability
+    remain steady, stabilize, plateau, hold constant, maintain equilibrium
+fluctuation
+    vary, oscillate, swing, seesaw, experience ups and downs
+
+Sales shot up dramatically and surpassed all our expectations.
+The coverage rate decreased steadily by 10% every year.
+There was a slight rise in unit price from £0.75 to £0.77.
+The marketing department has grown considerably in the last three years and doubled its size.
+A gradual rise in raw material prices has slowly but surely eroded our margin.
+Up to now we have ignored the rapid growth in the sector but the growth is so fast that we cannot continue to do this.
+There was a sharp and noticeable jump in wastage in a very short time.
+The online marketing costs are dropping slightly. However, the decline is so small that we shouldn't include it in the final figures.
+
+Let's move on to the statistics. In the 1960s we spent about 25% of our household income on food, but this has now actually dropped from 10% to 15%. However, the proportion of the average food budget that we spend in restaurants and on takeaways has risen dramatically from 2% to 33% in the same period. Most importantly, I would like to point out that annual national expenditure on ready meals fluctuated somewhere between £250 million and £300 million just 10 years ago but this has now jumped from nearly £400 million to almost £700 million. This has resulted from an increase by 100% in the numbers of single households and a decline in the time we spend cooking our main meal. This was around 2.5 hours in the 60s but has fallen significantly and today stands at 15 minutes. What does all this mean for us in the packaging industry?
+
+1. To our surprise, it was the sales of Product A that took off over the Christmas period with sales 51% above target and Product B that slumped with sales 34% below target. As a result, we are redesigning the packaging for Product B and are forecasting that sales will recover by Easter. If this does not happen and sales show no improvement, we will seriously have to consider taking Product B off the market.
+
+2. In this period, Brand A's market share slipped from 9% to 8% and Brand B's share plummeted from 6% to just 1%. Our Brand Z rose from 10% to 25%. If we look at the budget for TV advertising during this period, we can see clearly that Brand Z doubled its budget from €250,000 to €500,000. The print advertising budget emained stable during the same period but was concentrated on the target market.
+
+3. I'd now like to focus on the carbon dioxide content. Have a look at this graph. There have been unexpected fluctuations in the carbon dioxide content since the first unit was installed three years ago. It has fluctuated between 0.33% and 4% as we have experienced multiple failures. The units are now working efficiently and carbon dioxide content is held steady at 0.33% and we expect this to stay at 0.2% by the end of the year.
+
+4. Let's move onto the statistics. In 1900, 15% of the workforce was aged over 55 and by 2000 this had grown significantly to 33%. We expect this to jump to roughly 40% by 2030. Life expectancy was approximately 46 years in 1900 but this has soared dramatically to round about 80 today. What does this all mean for us when we look at the question of age diversity?
+
+Tip
+If you describe a lot of trends, use a wide variety of vocabulary and be dramatic. Sales rocketed in the third quarter is more dramatic and tells your audience more about the trend than Sales increased in the third quarter, for example.
 
 "Okay, let’s have a look at these two line graphs.
 
