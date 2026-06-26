@@ -1812,6 +1812,22 @@ Please let me know if you need any additional information (e.g. current subscrip
 
 hi xxx, did you get my email following up with GitLab about the renewal invoice? Still nothing after a whole week.​ Weird.
 
+Hi GitLab Support Team,
+I am writing to request the renewal of our GitLab Premium subscription. I have previously attempted to contact our assigned account manager, Justine Millana, via email twice but have not received a response. As our internal financial deadline is approaching, I need to escalate this request through official channels.
+Here are the details of our current subscription and renewal request:
+Current Plan:​ GitLab Premium (Self-Managed)
+Number of Seats:​ 12
+Current Expiry Date:​ September 24, 2026
+Renewal Requirement:​ We wish to renew with the exact same setup (12 seats, Self-Managed Premium).
+Urgency:
+Our finance department requires all vendor invoices to be submitted by June 30th​ to avoid delays in payment processing. Additionally, we want to ensure there is no lapse in our license coverage.
+Could you please prioritize this request, generate the quote and invoice, and advise on the next steps? If our previous Account Manager is unavailable, please assign a new point of contact for this renewal.
+Thank you for your assistance.
+Best regards,
+
+Hey, just a heads-up—the GitLab renewal is gonna be roughly $X,XXX​ for the 12 seats. Would you be able to reply to Finance's email about upcoming expenses?
+
+Right now, only three of us are active. If we drop the seats down to, say, 6, we'd basically cut the cost in half.
 #### Example 8
 As we are approaching financial year-end, we would be grateful for your assistance with the following matters to facilitate the year end closing process:
 1.	Please submit all expense claims（费用报销) incurred on or before 30 June 2026 by end of 2 July 2026. If you do not anticipate incurring any expenses during the last week of June, please prepare and submit your claim in advance.如果你觉得接下来一周都没啥钱要报，那就别等到月底最后一天才交单，现在就交掉，省得拖到财年关账那天手忙脚乱。

@@ -23,6 +23,21 @@ sys 系统时间：程序在内核态运行的时长。
 + Upstart: init,CentOS 6, 配置文件：/etc/inittab, /etc/init/*.conf。
 
 + Systemd： systemd, CentOS 7,配置文件：/usr/lib/systemd/system、 /etc/systemd/system
+  /usr/lib/systemd/system/（或 /lib/systemd/system/）: 存放“软件包带来的原始 unit 文件”（vendor 提供的）​
+  /etc/systemd/system/: 给管理员用的层：覆盖 / 定制 / 管理“enable 链接 / wants 关系”
+  /usr/lib/systemd/system/*.service RPM/DEB 安装 PostgreSQL 时把 postgresql-12.service放到这里 Loaded: loaded (/usr/lib/systemd/system/postgresql-12.service; ...) 当你执行：systemctl enable postgresql-12 systemd 做的事并不是往 /usr/lib/systemd/system/写东西，而是在 /etc/systemd/system/的某个 .wants/目录里创建一个 符号链接，指向那个 service 文件：/etc/systemd/system/multi-user.target.wants/postgresql-12.service -> /usr/lib/systemd/system/postgresql-12.service 真正的“是否自启”开关，其实表现为： /etc/systemd/system/<某个target>.wants/<服务>.service这个链接是否存在, 除了 .wants/链接之外，/etc/systemd/system/还有两层常见用途：
+  - 管理员放自己的 unit 文件（优先级最高）
+  - 覆盖/补充 vendor 文件（推荐做法：用 drop-in）
+    ```
+    mkdir -p /etc/systemd/system/postgresql-12.service.d
+    vi /etc/systemd/system/postgresql-12.service.d/local.conf
+    例如只改某几行：
+    [Service]
+    LimitNOFILE=500000
+    
+    然后 systemctl daemon-reload 规则很简单： /etc/systemd/system/里的同名 unit 会覆盖 /usr/lib/systemd/system/里的。
+  ```
+  
 
 3. 系统初始化
 
@@ -462,7 +477,74 @@ The Type= directive can be one of the following:
 #### The [Path] Section
 
 #### The [Timer] Section
+可以取代crontab
 
+```
+我们要实现：每周一 05:00，确保 appuser 的 Shell 是 /bin/bash
+Step 1：创建 Service（定义“干什么”）
+⚠️ 注意：Service 只定义动作，不定义时间。
+创建文件：/etc/systemd/system/fix-appuser-shell.service
+[Unit]
+Description=Ensure appuser login shell is /bin/bash
+After=network.target
+
+[Service]
+Type=oneshot
+# 防御性判断：只有当前不是 bash 时才修改
+ExecStart=/bin/bash -c '[ "$(getent passwd appuser | cut -d: -f7)" != "/bin/bash" ] && /usr/sbin/usermod -s /bin/bash appuser'
+# 防止脚本卡死
+TimeoutSec=30
+# 明确指定用户（虽然 usermod 需要 root）
+User=root
+
+[Install]
+WantedBy=multi-user.target
+Step 2：创建 Timer（定义“什么时候干”）
+创建文件：/etc/systemd/system/fix-appuser-shell.timer
+[Unit]
+Description=Run fix-appuser-shell weekly on Monday at 5AM
+Requires=fix-appuser-shell.service
+
+[Timer]
+# 每周一 05:00
+OnCalendar=Mon *-*-* 05:00:00
+# 如果关机期间错过了任务，开机后补执行（非常实用）
+Persistent=true
+# 防止多个任务同时启动导致冲突
+AccuracySec=1m
+# 可选：在预定时间前后随机延迟（适合大规模集群）
+# RandomizedDelaySec=5min
+
+[Install]
+WantedBy=timers.target
+三、部署与常用命令
+1. 重载配置
+systemctl daemon-reload
+2. 启用并启动 Timer
+systemctl enable --now fix-appuser-shell.timer
+3. 查看 Timer 状态（看下次执行时间）
+systemctl list-timers | grep fix
+# 或者
+systemctl status fix-appuser-shell.timer
+4. 手动测试执行（无需等待周一）
+systemctl start fix-appuser-shell.service
+5. 查看日志（这是最大的爽点）
+journalctl -u fix-appuser-shell.service
+# 实时追踪
+journalctl -u fix-appuser-shell.service -f
+四、为什么这个写法更“规范”？
+✅ 1. 日志自带上下文
+Cron 里你看到的是：usermod: no changes
+Systemd 里你看到的是：
+Apr 01 05:00:01 server systemd[1]: Starting Ensure appuser login shell...
+Apr 01 05:00:01 server bash[12345]: usermod: no changes
+Apr 01 05:00:01 server systemd[1]: Started Ensure appuser login shell.
+包含 PID、时间、返回状态，排错效率天差地别。
+✅ 2. 安全性更高
+Type=oneshot+ TimeoutSec防止脚本异常占用资源。
+✅ 3. 容灾能力强
+Persistent=true保证了如果你周一凌晨服务器在重启，开机后会自动补执行，不会漏掉任务。
+```
 #### The [Slice] Section
 
 ## 案例分析

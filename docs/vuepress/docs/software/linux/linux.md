@@ -124,6 +124,10 @@ set -x 可以显示shell在执行什么程序
 
 ## 用户身份和权限
 
+为什么要用 getent而不是直接 cat /etc/passwd？
+cat /etc/passwd 只看本地文件, 看不到 LDAP、NIS、AD 用户​
+getent passwd 看所有来源,最全、最标准,现在的服务器经常接入 LDAP​ 或 Active Directory，用户信息不在 /etc/passwd里。getent能帮你统一查询
+
 + sudo 是一种常见的提权方式，它可以让普通用户暂时获得管理员权限。具体来说，用户通过 sudo 命令运行某个命令时，系统将询问用户密码，并验证其是否有权限执行该命令。如果验证通过，则该命令将以管理员身份运行。下面是一个 sudo 的示例
 
 + su 命令（即 "superuser"）则是另外一种提权方式，它允许用户将自己切换到 root 用户账户并获取 root 权限。这比 sudo 命令提供的管理员特权更高级。通常情况下，建议尽可能少使用 su 命令，以避免出现安全问题
@@ -143,7 +147,6 @@ sudo su -l _gvm -s /bin/bash
 
 sudo sh -c "cmds"
 
-
 ```
 
 Permissions take a different meaning for directories. Here's what they mean:
@@ -155,12 +158,14 @@ Permissions take a different meaning for directories. Here's what they mean:
 系统启动用户
 
 ```
+ps -eo pid,user,comm | grep -i mysql
+
 -----------------------------------------------------
 --- mysql
 -----------------------------------------------------
 $ systemctl status mysqld
 ● mysqld.service - MySQL Server
-   Loaded: loaded (/usr/lib/systemd/system/mysqld.service; enabled; vendor preset: disabled)                                                                                          
+   Loaded: loaded (/usr/lib/systemd/system/mysqld.service; enabled; vendor preset: disabled)    # enabled; vendor preset: disabled 意思是 软件包作者默认建议：这个服务“不自启”（preset = disabled），但你们这台机器后来被明确 systemctl enable过了，于是最终状态变成了 enabled                                                                                      
    Active: active (running) since Thu 2021-07-08 09:44:33 SGT; 2 months 1 days ago
      Docs: man:mysqld(8)
            http://dev.mysql.com/doc/refman/en/using-systemd.html

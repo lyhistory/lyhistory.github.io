@@ -2507,6 +2507,8 @@ will/would
 yet/already/
 	否定句 未完成（中性）
 	He hasn’t replied ​yet.
+	Any feedback from HQ?
+	We haven’t heard anything from HQ yet./HQ hasn’t given any feedback yet.
 	在疑问句中，“yet” 表示“已经”，用于中性询问进展，不带有惊讶情绪，常置于句末。
 	Have you finished your homework yet?
 	Is the tea cold yet?

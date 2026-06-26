@@ -52,7 +52,7 @@ https://tukaani.org/xz/
 
 Docker里面有 null、host 和 bridge 三种网络模式
 
-## useage
+## usage
 
 ### run
 ```
@@ -113,3 +113,15 @@ https://docs.docker.com/get-started/swarm-deploy/
 https://hub.docker.com/
 
 https://www.vagrantup.com/downloads.html
+
+## Troubleshooting
+
+Error response from daemon: ports are not available: exposing port TCP 0.0.0.0:8081 -> 127.0.0.1:0: listen tcp 0.0.0.0:8081: bind: An attempt was made to access a socket in a way forbidden by its access permissions.
+
+```
+# 查看当前的动态端口范围（记下起始和结束，以便恢复）
+netsh int ipv4 show dynamicportrange tcp
+
+# 设置新的动态端口范围（通常 49152-65535 是标准的高位范围）
+netsh int ipv4 set dynamicportrange tcp start=49152 num=16384
+```

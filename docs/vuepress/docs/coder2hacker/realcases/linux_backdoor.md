@@ -87,6 +87,8 @@ linux下的木马文件一般为elf后缀 可以直接搜索elf后缀的文件
 
 `查看计划任务  crontab -l`
 
+查看自启动服务 
+
 `隐藏的计划任务后门查看 cat -A /var/spool/cron/root`
 
 `编辑用户的计划任务     crontab -e`

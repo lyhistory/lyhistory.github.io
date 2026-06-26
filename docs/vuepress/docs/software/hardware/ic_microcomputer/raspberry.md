@@ -347,9 +347,16 @@ Click Yes to verify the script sequence.
 Sit back and let the compiler install the files onto your standard clean image (takes about 30–45 minutes).Exit out of the manager screen and launch the dashboard layout using: emulationstation
 ```
 
-how to add classic Nintendo, Sega, or GameBoy game files to the system
+how to add classic Nintendo, Sega, or GameBoy game files to the system:
 
 https://romsfun.com/
+
+Super Mario Bros
+Tetris（NES/GB）​ — 俄罗斯方块
+Chip 'n Dale（松鼠大作战，NES）​
+Pac-Man（NES 版或 Arcade）
+Donkey Kong Country（SNES）
+Kirby（星之卡比，NES/SNES）
 
 ### VPN Server / Anonymously with a DIY Raspberry Pi VPN/TOR Router
 https://medium.com/@rasmurtech/step-by-step-guide-to-configuring-a-raspberry-pi-as-a-tor-router-and-installing-the-tor-browser-dd0df49a9e8a
@@ -448,6 +455,18 @@ remote_port = 8081
 ```
 
 ## Troubleshooting
+
+### 硬件问题
+#### wifi模块
+mmc1: error -110 whilst initialising SDIO card
+找不到网卡
+解决办法，外插一个usb网卡
+
+#### 声音
+如果屏幕支持声音可以输出到 hdmi
+
+### 显示器触摸屏
+是否需要额外供电
 
 ### 关于显示器无法显示：
 /boot/config.txt
