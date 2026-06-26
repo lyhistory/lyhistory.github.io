@@ -716,6 +716,7 @@ fix: enable Tun AND Global routing if using vpn like v2ray
 [The simplest autonomous AI agent. One bash script. Any LLM CLI. Wake up, build prompt from files, call LLM, sleep, repeat.](https://github.com/seedpi867-cmd/brain-loop)
 
 
+[PicoClaw: Ultra-Efficient AI Assistant in Go](https://github.com/sipeed/picoclaw)
 [MimiClaw turns a tiny ESP32-S3 board into a personal AI assistant.](https://github.com/memovai/mimiclaw)
 
 [nanobot: Ultra-Lightweight Personal AI Assistant](https://github.com/HKUDS/nanobot)

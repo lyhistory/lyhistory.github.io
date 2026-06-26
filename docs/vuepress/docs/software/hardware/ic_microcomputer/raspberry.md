@@ -322,6 +322,34 @@ feh -d -S filename ./
 ```
 
 ## 5. Use Cases
+### Game
+####  and RetroPie on 1GB Pi 3B
+
+Minetest not work
+
+[Minecraft Pi (Modded) worked](https://gitea.thebrokenrail.com/minecraft-pi-reborn/minecraft-pi-reborn/src/tag/3.0.3/docs/GETTING_STARTED.md)
+
+
+```
+wget -qO- https://raw.githubusercontent.com/Botspot/pi-apps/master/install | bash
+
+Once it installs, a new Pi-Apps icon will appear on your desktop. Open it.Navigate to the Games category.Select Minecraft Pi (Modded) and click Install.
+
+
+sudo apt install -y git dialog xmlstarlet
+git clone --depth=1 https://github.com/RetroPie/RetroPie-Setup.git
+cd RetroPie-Setup
+sudo ./retropie_setup.sh
+
+A blue terminal interface window will appear.
+Highlight Basic Install with your keyboard arrows and hit Enter.
+Click Yes to verify the script sequence.
+Sit back and let the compiler install the files onto your standard clean image (takes about 30–45 minutes).Exit out of the manager screen and launch the dashboard layout using: emulationstation
+```
+
+how to add classic Nintendo, Sega, or GameBoy game files to the system
+
+https://romsfun.com/
 
 ### VPN Server / Anonymously with a DIY Raspberry Pi VPN/TOR Router
 https://medium.com/@rasmurtech/step-by-step-guide-to-configuring-a-raspberry-pi-as-a-tor-router-and-installing-the-tor-browser-dd0df49a9e8a
