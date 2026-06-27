@@ -107,4 +107,16 @@ most of the time I have used the Arduino Uno,
 Arduino as ISP and Arduino Bootloaders https://docs.arduino.cc/built-in-examples/arduino-isp/ArduinoISP
 
 
+什么时候 Arduino 会“用到卡”？
+
+是你额外加一个 SD 模块/板载 SD 插座（SPI 接 CS/MOSI/MISO/SCK + 电源），典型用途不是“存固件”，而是存数据/文件：
+
+数据日志：温度/电流/GPS 按时间写 CSV（“离线黑匣子”）
+
+配置文件：从卡里读一串参数（阈值、PID、WiFi SSID——如果还挂了 ESP 那种）
+
+素材/资源：放 WAV（简易播放）、放字库/图片索引、放脚本/指令队列
+
+升级思路：有些方案会把新固件放进 SD，再用 bootloader/底层把 Flash 重刷（这属于高级玩法，一般别碰）
+
 <disqus/>

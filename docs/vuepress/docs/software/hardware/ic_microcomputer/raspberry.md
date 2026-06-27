@@ -323,7 +323,7 @@ feh -d -S filename ./
 
 ## 5. Use Cases
 ### Game
-####  and RetroPie on 1GB Pi 3B
+#### Minecraft and RetroPie on 1GB Pi 3B Raspberry Pi OS  Desktop
 
 Minetest not work
 
@@ -348,8 +348,27 @@ Sit back and let the compiler install the files onto your standard clean image (
 ```
 
 how to add classic Nintendo, Sega, or GameBoy game files to the system:
+RetroPie/
+└── roms/
+    ├── nes/          ← NES 红白机游戏扔这
+    ├── snes/         ← SNES 超任游戏扔这
+    ├── arcade/       ← 街机（MAME/FBNeo）扔这
+    ├── neogeo/       ← 拳皇、合金弹头扔这（要 BIOS）
+    ├── psx/          ← PS1 扔这（要 BIOS）
+    └── ...其他平台
 
-https://romsfun.com/
+rom下载
+- [romsfun](https://romsfun.com/)
+- Gamulator
+- nesyouxixiazai.com.cn
+
+标签：
+- (World) 世界版，美版基础上锁区放宽，通常 ≈ USA
+- (Rev A)/ (Rev B) 修订版，原版有 bug 后出的修正 ROM
+- [!] 业内评的"最佳 dump"，优先下带这个的
+- [b] bad dump（损坏/不完整），避开
+- (Proto) 原型版/早期测试版
+- (Hack) 民间改版（比如马里奥画风替换、难度改）
 
 Super Mario Bros
 Tetris（NES/GB）​ — 俄罗斯方块
@@ -357,6 +376,22 @@ Chip 'n Dale（松鼠大作战，NES）​
 Pac-Man（NES 版或 Arcade）
 Donkey Kong Country（SNES）
 Kirby（星之卡比，NES/SNES）
+
+scp *.nes pi@retropie.local:/home/pi/RetroPie/roms/nes/
+
+坑 1：NeoGeo（拳皇）要单独放 BIOS
+
+你前面说过想玩拳皇，NeoGeo 不是光扔 neogeo/kof98.zip就行的：
+
+要去下个 neogeo.zip(BIOS)，扔 ~/RetroPie/roms/neogeo/同时也扔一份到 ~/RetroPie/BIOS/
+
+然后 kof98.zip扔 neogeo/
+
+不然进游戏黑屏或卡 LOADING
+
+坑 2：PS1 (psx/) 也要 BIOS
+
+scph1001.bin扔 ~/RetroPie/BIOS/，游戏扔 psx/，PS1 游戏常是 .cue+.bin一对，别只拷 bin 漏 cue。
 
 ### VPN Server / Anonymously with a DIY Raspberry Pi VPN/TOR Router
 https://medium.com/@rasmurtech/step-by-step-guide-to-configuring-a-raspberry-pi-as-a-tor-router-and-installing-the-tor-browser-dd0df49a9e8a

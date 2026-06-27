@@ -1897,6 +1897,17 @@ impedance 阻抗
 
 headphone jack   battery life   trackpad  dock(多功能底座) connector adapter
 Peripherals 外围设备  mother board 主板
+
+USB input device​ —— 强调它是输入设备（鼠标、手柄都算）
+
+USB HID device​ —— 技术分类上的称呼，HID = Human Interface Device（人机接口设备）
+
+USB receiver / USB dongle​ —— 如果你说的是无线鼠标或手柄上那个插在电脑上的小接收器
+
+USB gamepad / USB controller​ —— 特指手柄
+
+USB mouse​ —— 特指鼠标
+
 Lightning to 30-pin Adaptor(苹果闪电接口转换器)
 https://www.yahoo.com/tech/iphone-7-already-generating-more-excitement-iphone-6s-214543073.html
 https://www.yahoo.com/tech/iphone-7-already-generating-more-excitement-iphone-6s-214543073.html
