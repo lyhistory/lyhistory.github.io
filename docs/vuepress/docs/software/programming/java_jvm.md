@@ -388,6 +388,76 @@ Analogy:​
 
     Class Metadata​ = The factory’s master specification sheet (materials, dimensions, assembly steps) derived from the blueprint. The factory (JVM) doesn’t re-read the blueprint for every engine; it uses the master sheet.
 
+**Clearing Up a Key Misconception: Does new MyObject() Also Create MyObject.class?**
+
+No, absolutely not.
+
+These are two completely different things that live at different times and different memory locations.
+
+What is MyObject.class?
+
+MyObject.class is an object of type java.lang.Class.
+
+It is not​ a parent class of MyObject, nor is it created with the newkeyword.
+
+It is automatically created by the JVM during the "class loading" phase. It is a singleton​ – there is exactly one Classobject per class in the entire JVM. When the class is first referenced (e.g., when you declare MyObject obj), the JVM loads the bytecode from the .classfile, creates a Classobject on the heap, and stores its metadata in Metaspace.
+
+What does new MyObject()do?
+
+When you write new MyObject(), the JVM allocates memory on the heap​ for a new instance​ of MyObject.
+
+Inside that instance, there is an object header containing a klass pointer​ (also called class pointer) that points to the MyObject.class object. This pointer tells the JVM: "I am an instance of MyObject."
+
+Analogy
+
+MyObject.class(the Classobject): This is like the architectural blueprint​ for a house. There is only one blueprint for the entire neighborhood.
+
+new MyObject()(an instance): This is like building an actual house​ based on that blueprint. You can build many houses (obj1, obj2, ...) from the same blueprint.
+
+Conclusion:​ Building a house (new MyObject()) does not​ create a new blueprint. The blueprint (MyObject.class) was already created by the JVM when the class was loaded, long before you called new.
+
+Klass Pointer 指向的是 Metaspace 里的 C++ 结构 InstanceKlass（即“类元数据”），不是指向堆里的 MyObject.class这个 Java 对象。
+
+```
+new MyObject() 实例 @堆
+┌──────────────────────────┐
+│  对象头                  │
+│  ├─ Mark Word            │
+│  └─ Klass Pointer  ──────┼──→  InstanceKlass of MyObject(C++结构, Metaspace)
+│  实例字段                │        ↑
+└──────────────────────────┘        │ _java_mirror
+                                    │
+                            MyObject.class 对象 @堆
+                            （java.lang.Class 实例）
+                              → Klass Pointer → InstanceKlass of java.lang.Class (Metaspace)
+```
+
+InstanceKlass（Metaspace）里有一个字段叫 _java_mirror，指向堆里的 MyObject.class对象。
+
+MyObject.class这个 Java 对象本身也是一个普通对象，它自己的对象头里也有一个 Klass Pointer，指向 java.lang.Class的 InstanceKlass（在 Metaspace）—— 这是另一个 InstanceKlass，不是 MyObject的那个。
+
+为什么 HotSpot 要搞这么绕：C++ 侧 和 Java 侧各一份
+
+这是理解的关键：
+
+C++ 侧（Metaspace 的 InstanceKlass）：JVM 自己用的，存字节码、方法表、字段偏移量，用来做 invokevirtual、字段访问、类型检查。JVM 干活主要看这个。
+
+Java 侧（堆里的 java.lang.Class对象）：给 Java 程序员用的，getClass()、反射、MyObject.class拿到的就是它。
+
+两者通过 _java_mirror互相关联：
+
+JVM 想暴露类信息给 Java 代码 → 走 _java_mirror拿到 Class 对象。
+
+Java 代码 obj.getClass()→ 从对象头 Klass Pointer 找到 InstanceKlass，再从 _java_mirror拿到堆里的 Class 对象返回给你。
+
+Klass Pointer 指向 Metaspace 里的 InstanceKlass（MyObject 的类元数据，C++ 结构）。​
+
+MyObject.class是堆里一个普通的 java.lang.Class实例，由 InstanceKlass._java_mirror指向它，它不是 Klass Pointer 的目标，而是镜像（mirror）。
+
+所以如果有人再写"Klass Pointer 指向 MyObject.class"，你知道那是口语偷懒——严格说是"Klass Pointer → InstanceKlass → _java_mirror → MyObject.class"。
+
+java.lang.Object是所有“对象实例”的共同祖先，定义了对象能做什么（包括当锁）；java.lang.Class是所有“类”的运行时化身，住在堆里，是 JVM 暴露给 Java 程序的一面镜子，让你可以反过来审视类的结构。两者通过继承（Class继承 Object）和镜像机制（_java_mirror）紧密耦合在一起。
+
 类加载双亲委派模型：​
 ```
 类加载流程：
@@ -515,10 +585,10 @@ main线程私有内存区域：
 ├─────────────────────────────────────────────────┤
 │ SimpleCalculator实例 @0x1000:                   │
 │   ┌─────────────────────────────────────────┐   │
-│   │ 对象头 (Mark Word)                      │   │
+│   │ 对象头: Mark Word                      │   │
 │   │   - 哈希码、GC年龄、锁状态等              │   │
 │   ├─────────────────────────────────────────┤   │
-│   │ 类型指针 → 指向方法区的SimpleCalculator类 │   │
+│   │ 对象头: Klass Pointer 类型指针 → 指向方法区的SimpleCalculator类 │   │
 │   ├─────────────────────────────────────────┤   │
 │   │ 实例数据:                               │   │
 │   │   - instanceCounter: 1                 │   │
@@ -1079,6 +1149,59 @@ https://blog.csdn.net/flyfhj/article/details/86630105
 
 #### Native Method Area
 本地方法：	Native method Stack，比如JNI调用c/C++程序
+
+Every Java object has an object header​ consisting of a Mark Word​ and a Klass Pointer. The Mark Word is the key to the locking mechanism. The JVM uses it to store lock state, and depending on the state, it either contains the lock information directly or points to a heavier data structure called an ObjectMonitor.
+
+The ObjectMonitoris a C++ structure allocated in the JVM’s native memory​ (not on the Java heap). It contains the full monitor logic: owner thread, recursion count, entry list (threads waiting to acquire the lock), and wait set (threads waiting via Object.wait()).
+
+Below is the corrected transition table, now showing exactly when and how the ObjectMonitor participates:
+
+Lock State Transitions (Simplified HotSpot Implementation)
+
+| Lock State | Mark Word Content | ObjectMonitor Status | What Happens |
+|------------|-------------------|----------------------|---------------|
+| **No Lock** | Identity hash code, GC age, etc. | **Does not exist** | Object is newly created. No synchronization is happening. |
+| **Biased Locking** | Thread ID (of the bias owner) + epoch + GC age | **Does not exist** | A single thread acquires the lock. The JVM records the thread ID in the Mark Word. No Monitor needed because there is no contention. |
+| **Lightweight Locking** | Pointer to a **Lock Record** on the owning thread's stack | **Does not exist** | When a second thread tries to acquire the lock, the bias is revoked. The first thread copies the Mark Word to a Lock Record, then updates the Mark Word to point to that Lock Record. Both threads spin via CAS. Still no Monitor because spinning avoids OS-level blocking. |
+| **Heavyweight Locking** | Pointer to an **ObjectMonitor** | **Created in native memory** | If spinning fails or there is actual contention, the lock inflates. The JVM allocates an `ObjectMonitor` in native memory, fills in its fields (owner, recursions), and updates the Mark Word to point to this Monitor. All subsequent threads that fail to acquire the lock are parked (blocked) by the OS and queued inside the Monitor's entry list. |
+
+类元数据（Class Metadata，在 Metaspace 中）确实不存储任何对象运行时的锁状态。​
+
+每个对象的锁状态（是偏向锁、轻量级锁还是重量级锁，被哪个线程持有）完全存在于该对象自己的 Mark Word​ 中。
+
+但是，元数据中有一处与同步相关的“静态”信息：
+
+方法的访问标志（Access Flags）：如果一个方法是 synchronized，编译器会在方法的 access_flags中设置 ACC_SYNCHRONIZED标志。这个信息存储在类元数据的 方法表​ 中。
+
+当调用该方法时，JVM 看到这个标志，就知道在进入方法前必须获取锁（实例方法锁 this，静态方法锁 Class对象），退出时释放锁。
+
+但这只是一个“指示牌”，实际的锁状态仍然记录在对象头的 Mark Word 中。
+
+In most of the previous discussions, java.lang.Objectwas implicitly present but intentionally omitted​ to keep the focus on the immediate concepts. However, it is not irrelevant​ – especially when talking about class metadata, inheritance, and the wait()/notify()mechanism.
+
+Why java.lang.Object matters:
+
+Every class inherits from Object​
+
+MyObjectextends Object(directly or indirectly). In the class metadata (Metaspace), MyObject’s metadata has a superclass pointer​ that points to Object’s metadata. This is how the JVM knows that every MyObjectinstance can be treated as an Objectand can invoke Objectmethods like hashCode(), equals(), and getClass().
+
+The Classobject itself is an Object​
+
+MyObject.classis an instance of java.lang.Class, and java.lang.Classextends Object. Therefore, even the Classobject inherits Object’s methods. This means you can actually call wait()or notify()on a Classobject (though it’s rarely done in application code).
+
+Monitor methods are defined in Object​
+
+The methods wait(), notify(), and notifyAll()are declared in java.lang.Object. They operate on the monitor associated with the object. When you write:
+```
+synchronized(obj) {
+    obj.wait();
+}
+```
+you are using the monitor of obj(stored in its header/Monitor) but invoking a method inherited from Object. This is why these methods are in Object– every object has a monitor, so every object should be able to participate in monitor-based waiting.
+
+Why we ignored it earlier​
+
+In the context of explaining where objects live​ and how static vs. instance locks differ, the focus was on the immediate class​ (MyObject) and its instances. The fact that MyObject inherits from Objectdoes not change the memory layout of the instance (the Object part is just part of the instance data, but in reality, the instance data starts with fields from the root class upward). It also does not change the fact that the lock is taken on the MyObjectinstance or the MyObject.classobject. So for simplicity, Object was left out.
 
 ## 内存模型
 
