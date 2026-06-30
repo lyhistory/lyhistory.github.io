@@ -1165,7 +1165,99 @@ Lock State Transitions (Simplified HotSpot Implementation)
 | **Lightweight Locking** | Pointer to a **Lock Record** on the owning thread's stack | **Does not exist** | When a second thread tries to acquire the lock, the bias is revoked. The first thread copies the Mark Word to a Lock Record, then updates the Mark Word to point to that Lock Record. Both threads spin via CAS. Still no Monitor because spinning avoids OS-level blocking. |
 | **Heavyweight Locking** | Pointer to an **ObjectMonitor** | **Created in native memory** | If spinning fails or there is actual contention, the lock inflates. The JVM allocates an `ObjectMonitor` in native memory, fills in its fields (owner, recursions), and updates the Mark Word to point to this Monitor. All subsequent threads that fail to acquire the lock are parked (blocked) by the OS and queued inside the Monitor's entry list. |
 
-类元数据（Class Metadata，在 Metaspace 中）确实不存储任何对象运行时的锁状态。​
+```
+class MyObject {
+    synchronized void foo() { ... }          // 锁是 obj1 实例
+    synchronized static void staticFoo() { ... } // 锁是 MyObject.class
+}
+
+MyObject obj1 = new MyObject();
+```
+第一阶段：偏向锁（Biased Locking）—— 只有一个线程
+Thread 1第一次调用 obj1.foo()。
+JVM 发现 obj1目前是无锁状态，且开启了偏向锁。
+它直接在 obj1的对象头 Mark Word​ 里写入 Thread 1的 ID，并标记为“偏向模式”。
+此时没有任何 Lock Record，也没有 Monitor，Thread 1 进入同步块几乎没有性能损耗。
+
+第二阶段：轻量级锁（Lightweight Lock）—— 自旋争夺
+现在 Thread 2来了，它也调用 obj1.foo()，想进同一个同步块。
+1. 撤销偏向（Bias Revocation）
+Thread 2一看 Mark Word，里面写的是 Thread 1的 ID，说明被别人偏向占用了。偏向锁不允许多线程竞争，于是 JVM 触发偏向撤销。
+2. Thread 1 升级锁（栈上分配 Lock Record）
+JVM 会让 Thread 1（在安全点）在自己的线程栈里创建一个 Lock Record（锁记录）。
+把 obj1原始的 Mark Word（包含 hashCode 等）拷贝到这个 Lock Record 里做备份。
+然后 Thread 1通过 CAS​ 操作（因为 Mark Word 是所有线程都能看到的共享数据。虽然 Thread 1 是偏向锁的持有者，但 Thread 2 此刻可能已经在尝试修改 Mark Word 了），把 obj1的 Mark Word 更新为指向自己栈里那个 Lock Record 的指针。
+至此，Thread 1持有的锁从“偏向锁”升级成了“轻量级锁”。
+注意： 偏向锁撤销并不是“原子地”把 Thread 1 的锁升级为轻量级锁。在撤销过程中，Thread 2 并没有被强制挂起，它也在积极地尝试获取锁，所以可能thread 1会失败，在实际 HotSpot 代码中，偏向锁撤销时的 CAS 失败会导致撤销操作失败，然后 JVM 会重新尝试获取锁，如果发现已经有线程持有轻量级锁，就会走锁膨胀路径。
+
+3. Thread 2 开始自旋（Spinning）
+Thread 2发现 Mark Word 已经指向了 Thread 1的 Lock Record，知道自己抢不到。
+但它不马上放弃，而是进入自旋（Spinning）状态：在一个循环里不断地用 CAS 尝试修改 Mark Word，试图换成自己的（期望值始终是当前读到的值 可能是 Thread 1 的指针，也可能是无锁，这样做的目的是在 Thread 1 释放锁的瞬间“感知”到变化。但绝不会在 Thread 1 还持有锁的时候强行覆盖，因为 CAS 的期望值不匹配会直接失败。）。
+为什么还没有 Monitor？​ 因为自旋就是在 CPU 上“空转”忙等，完全在用户态完成，不需要请求操作系统把线程挂起。只要 Thread 1快点执行完，Thread 2就能在自旋期间抢到锁，避免了昂贵的上下文切换。
+自旋的核心逻辑是：
+```
+// Thread 2 的视角（伪代码）
+LockRecord myLR = 在栈上创建LockRecord();
+myLR.displacedHeader = obj1.MarkWord; // 先拷贝一份当前的 Mark Word
+
+while (true) {
+    long currentMark = obj1.MarkWord;
+    
+    if (currentMark == 无锁状态) {
+        // Thread 1 释放了锁，Mark Word 恢复了无锁状态
+        // Thread 2 尝试 CAS 获取锁
+        if (CAS(&obj1.MarkWord, 期望=无锁状态, 新值=指向myLR的指针)) {
+            // 成功拿到锁，退出循环
+            break;
+        }
+        // CAS 失败说明被别的线程抢了，继续循环
+    } else if (currentMark == 指向Thread1的LockRecord) {
+        // Thread 1 还持有锁，什么也不做，继续空转等
+        // 这里可以选择短暂 yield 或者直接继续循环
+        continue;
+    } else if (currentMark == 指向某个Monitor的指针) {
+        // 锁已经膨胀成重量级锁了，Thread 2 直接去排队
+        goto 重量级锁竞争;
+    }
+}
+```
+
+第三阶段：重量级锁（Heavyweight Lock / Monitor Inflation）—— 膨胀与阻塞
+如果 Thread 1执行得很慢，Thread 2自旋了很多次（或者达到了自适应自旋的阈值）还是抢不到。
+1. 锁膨胀（Inflation）
+JVM 判定：“自旋太浪费 CPU 了，别转了，申请个正式的 Monitor 吧。” （任务管理器里 CPU 使用率很高
+但实际的业务吞吐量并没有提升
+自旋线程占着 CPU 时间片，其他有用的线程反而得不到执行机会）
+JVM 在 Native Memory（C++ 层面的内存）​ 中分配一个 ObjectMonitor结构体。
+2. 填充 ObjectMonitor 字段
+```
+ObjectMonitor {
+    _owner      = Thread 1;     // 当前锁的持有者
+    _recursions = 0;            // 重入计数器
+    _cxq        = NULL;         // 最近竞争失败的线程栈
+    _EntryList  = NULL;         // 处于阻塞状态的线程队列
+    _WaitSet    = NULL;         // 调用 wait() 后等待的线程
+}
+```
+3. 更新 Mark Word
+obj1的 Mark Word 被改写为指向这个 ObjectMonitor 的指针，并打上“重量级锁”的标志位。
+4. Thread 2 被挂起（Park）
+Thread 2停止自旋，JVM 调用操作系统原语（如 Linux 的 futex），把 Thread 2挂起（park），线程状态变为 BLOCKED。Thread 2被放进 Monitor 的 _EntryList队列里乖乖排队。
+5. 释放与唤醒
+终于，Thread 1执行完了 foo()方法准备退出。
+它发现 Mark Word 指向的是一个 Monitor，于是把 Monitor 的 _owner设为 null。
+接着调用 unpark唤醒 _EntryList里排队的 Thread 2。
+Thread 2被操作系统重新调度，拿到锁，进入同步块。
+
+如果是 synchronized static void staticFoo() { ... }
+
+上面的整套流程完全一样，唯一区别是：
+锁对象不再是 obj1，而是 MyObject.class这个 Class 对象。
+因为 Class 对象在 JVM 中是全局唯一的，所有线程调用 staticFoo()都会去争抢同一个 MyObject.class的 Mark Word。
+所以静态同步方法的竞争往往是“全局性”的，更容易从偏向锁一路膨胀到重量级锁。
+
+
+类元数据（Class Metadata，在 Metaspace 中）不存储任何对象运行时的锁状态。​
 
 每个对象的锁状态（是偏向锁、轻量级锁还是重量级锁，被哪个线程持有）完全存在于该对象自己的 Mark Word​ 中。
 

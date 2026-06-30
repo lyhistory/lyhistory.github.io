@@ -375,8 +375,35 @@ SDR 收发器 vs USB WiFi 网卡
 + PortaPack 加成：HackRF 上扣一块 PortaPack（屏 + 电池 + 旋钮），脱离电脑独立跑，扫频/发信/录音全触摸屏搞定，挂树上都能用
 
 #### Ground Station
+SatNOGS = Satellite NOetworked Ground Station，希腊 Libre Space Foundation 搞的开源分布式 LEO 卫星地面站网络，2014 年 NASA Space App Challenge 黑客松起的头，后来拿了 Hackaday Prize 一等奖。简单说就是：把"卫星地面站"做成开源套件 + 全球协作网络，个人花几百刀就能搭一个，数据全员共享。
+
+SatNOGS Network​  全球调度 Web 平台，你在这预约观测、看别人站的回传
+SatNOGS Client​ 跑在你树莓派上的 Agent，从 Network 拉任务 → 调 SDR 收 → 数据回传
+SatNOGS DB​ 众包卫星发射机数据库（频率、调制、TLE），API 开放
+SatNOGS Ground Station​ 硬件本体：天线 + rotator 转台 + LNA + SDR，连到 Client
+
 [SatNOGS](https://wiki.satnogs.org/Main_Page)
 [SatNOGS Setup with hackrf](https://youtu.be/f0IdYLwt7js?si=c5SQ5YFcic9eLNXa)
+
+玩法分层（从"凑齐能跑"到"硬核"）
+🟢 入门：不动 rotator 也能玩
+固定 VHF/UHF 小天线（70cm/2m 段 Yagi 或 helical，SatNOGS 官方有设计），Pi + RTL-SDR 摆阳台
+Client 没 rotator 也能跑——系统靠 TLE 算 AOS/LOS（卫星进出可视范围），多普勒校正自动调 SDR 中心频
+收 NOAA 15/18/19 的 APT 云图、Meteor-M 2 的 LRPT 云图，虽然这些不是 SatNOGS 主推（它是 CubeSat 遥测为主），但 Pi + RTL-SDR 这套硬件顺手就能收
+🟡 中级：挂 SatNOGS Network 赚观测
+去 network.satnogs.org 注册 → 建站拿 API token → sudo satnogs-setup填 SATNOGS_API_TOKEN / STATION_ID / LAT,LON,ELEV / SDR 设备
+你的站会出现在世界地图上，别人（或你自己）可以预约你这站的过境观测
+典型产出：CubeSat 遥测帧（解码后能看到电压/温度/姿态）、信标、科研实验下行，全部公开可查
+国内站少，你挂一个对亚太区覆盖贡献挺大
+🔴 进阶：3D 打印 rotator + LNA + 上高频
+SatNOGS V3 rotator 设计开源，两个 NEMA14 + Arduino Micro 控，8 小时能打完
+加 LNA（低噪放）放天线端，70cm/2m 段 Yagi 或 helical 官方有图纸
+上 HackRF（1 MHz–6 GHz）就能追更高频段，或者玩 ISS SSTV/APRS 中继
+有火腿执照还能双向（SatNOGS 官方设计目前是接收为主，但硬件链路上收发 SDR 都支持）
+⚫ 硬核向
+自己改 Client 的解调插件（SatNOGS 默认解遥测帧，有些 CubeSat 用非常规调制得自己写 GNUradio flowgraph 挂进去）
+多站协同：同一颗星过境时你+AOS/LOS 前后衔接的两站同时收，丢包率骤降
+应急场景：LEO 卫星有时候承担灾害区中继，地面站网络能补常规通信塌了的窟窿——Libre Space Foundation 本身就有这个愿景
 
 ### 3D print
 ### Router
