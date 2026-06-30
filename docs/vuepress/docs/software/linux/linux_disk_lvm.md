@@ -17,6 +17,10 @@ e2fsck - allows checking of the modified file system for errors.
 resize2fs - modifies existing file system to fit new size bounds.
 ```
 
+lsblk  -f 会把 LABEL / UUID / 文件系统 / 挂载点​ 一起打出来
+
+sudo fdisk -l /dev/sda 看这张卡多大、几个分区
+
 ## file sharing protocol
 
 Linux: NFS

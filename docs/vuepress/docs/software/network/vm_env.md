@@ -318,7 +318,7 @@ sudo yum install epel-release
 sudo yum install python-pip
 https://linuxize.com/post/how-to-install-pip-on-centos-7/
 
-### 2.3 Clone和Snapshot
+### 2.3 备份 Clone和Snapshot
 
 建议安装之后设置一个origin的snapshot，而且每个重大修改之后做一个snapshot，这样可以随时restore和clone出某个状态的机器，
 

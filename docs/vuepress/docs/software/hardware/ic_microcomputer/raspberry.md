@@ -78,6 +78,8 @@ if your sdcard more than 32G, windows disk manager may not be able to format it 
 + (ubuntu mate for raspberry)[https://ubuntu-mate.org/raspberry-pi/]
 + multiple boot with berryboot (predefined os: rasbian/ubuntu mate,core/kali,etc.
 
+### 备份工具
+sdcard copier
 ### 如果有显示器:可以连接显示器
 Connect to monitor(change monitor setting) 
 
@@ -104,6 +106,22 @@ network={
 ```
 touch ssh
 ```
+### 如果无头模式不行可以使用TTL串口连笔记本
+用三根细线把树莓派的 GPIO 引脚 ↔ 另一台电脑（你的主力机）连起来，让树莓派像一台"老式路由器/交换机"那样，从串口直接吐出 Linux 终端，不用 HDMI、不用网线、不用 WiFi，通电就能登进去敲命令。
+
+USB-TTL 转接板（也叫 CH340 / CP2102 / FT232 小板）
+⚠️ 关键：树莓派 GPIO 是 3.3V 电平，别买成纯 RS232（DB9 那种大头的），那个 12V 会直接烧 GPIO。​ USB-TTL 小板是对的，RS232 转接头是错的。
+
+LINUX:
+```
+ls /dev/ttyUSB*     # 插上小板后一般会出 /dev/ttyUSB0（CH340）或 /dev/tty.usbserial-*（Mac）
+screen /dev/ttyUSB0 115200 8N1
+# 或 mac: screen /dev/tty.usbserial-xxxxx 115200
+```
+Windows：
+PuTTY：Connection type 选 Serial，Serial line 填 COM3（设备管理器里看），Speed 115200
+或 Windows Terminal + putty -serial COM3 -sercfg 115200,8,n,1,N
+波特率 115200，数据位 8，停止位 1，无校验，无流控。
 
 ### 启动 boot
 For headless install only:
@@ -139,6 +157,7 @@ If you are using the raspian distribution from raspberrypi.org, raspberrypi.loca
   Navigate to and select SSH
   Choose Yes
   Select Ok
++ [rasp connect](https://connect.raspberrypi.com/devices)
 + VNC
   sudo apt update
   sudo apt install realvnc-vnc-server realvnc-vnc-viewer
@@ -322,8 +341,51 @@ feh -d -S filename ./
 ```
 
 ## 5. Use Cases
+### Kid Edu
++ [Astro Pi is an ESA Education project run in collaboration with the Raspberry Pi Foundation.](https://astro-pi.org/)
+
+### Home Automation 
+[home assistant os](https://www.home-assistant.io/installation/raspberrypi/)
+### SDR
+	
+SDR 收发器 vs USB WiFi 网卡
+
+| 维度 | Alfa (AWUS036 系列) | HackRF One |
+|---|---|---|
+| 本质 | USB WiFi 网卡 | SDR 收发器 |
+| 频率 | 仅 2.4G / 5G WiFi 信道 | **1 MHz – 6 GHz**（短波到 5G 全包） |
+| 协议 | 只认 802.11 | 任意（WiFi/Zigbee/BLE/ADS-B/遥控/GSM…） |
+| 收发 | 收（STA）+ 发（managed，只能发 802.11 帧） | **半双工收发**，发任意调制 |
+| 监听 | monitor mode（WiFi 帧） | 原始 IQ，所有信号都能录 |
+| 注入 | packet injection（Deauth/FakeAuth 那套） | 自己造波形，重放/干扰/spoofing |
+| 接口 | 走 NetworkManager / cfg80211 | 走 libusb + GNU Radio / hackrf_transfer |
+| 价格 | ¥300–900 | ¥2000–3000 |
+| 典型用途 | 蹭网审计、WPA 握手抓包、rogue AP | 协议研究、非 WiFi 射频、GPS 欺骗、重放 |
+
+互不冲突：Alfa 走 cfg80211归 NetworkManager 管（monitor 时 ip link set wlan1 down && iw dev wlan1 set type monitor切），HackRF 走 libhackrf归 GNU Radio 管，两套 USB 各自 DMA 不抢。
+
+
+玩法清单 - 配合 GNU Radio / SDR# / CubicSDR / Universal Radio Hacker 这些软件：
++ 频谱扫频：看周围有哪些信号在飞（WiFi、4G、蓝牙、遥控、对讲机）
++ 协议分析/重放：Zigbee、BLE、汽车遥控 433/315MHz 抓包 + 重放（⚠️合法边界自己把握）
++ ADS-B 飞机追踪：1090MHz 解航班，地图可视化
++ FM/AM/短波听电台——但这是杀鸡用牛刀，RTL-SDR 就够了
++ GSM/LTE 实验：配合 osmocom 搭迷你基站（实验室环境，别上公网频段）
++ GPS spoofing：用 HackRF 发假 GPS 信号盖过真的，安卓机定位会被骗（论文级玩法，法拉第笼里玩）
++ PortaPack 加成：HackRF 上扣一块 PortaPack（屏 + 电池 + 旋钮），脱离电脑独立跑，扫频/发信/录音全触摸屏搞定，挂树上都能用
+
+#### Ground Station
+[SatNOGS](https://wiki.satnogs.org/Main_Page)
+[SatNOGS Setup with hackrf](https://youtu.be/f0IdYLwt7js?si=c5SQ5YFcic9eLNXa)
+
+### 3D print
+### Router
+RaspAP OS
+
 ### Game
-#### Minecraft and RetroPie on 1GB Pi 3B Raspberry Pi OS  Desktop
+#### Scratch+Minecraft and RetroPie（retro gaming emulator） on 1GB Pi 3B Raspberry Pi OS  Desktop
+
+recommend: scratch
 
 Minetest not work
 
@@ -399,9 +461,7 @@ https://medium.com/@rasmurtech/step-by-step-guide-to-configuring-a-raspberry-pi-
 https://makezine.com/projects/browse-anonymously-with-a-diy-raspberry-pi-vpntor-router/
 How to Make a Raspberry Pi VPN Server https://www.electromaker.io/tutorial/blog/raspberry-pi-vpn-server
 
-### retro gaming emulator
-
-### 5.1 Auto Watering system
+### Auto Watering system
 Arduino, solenoid valve with a power supply, breadboard, electronic water sensor, rain bird sprinkler head, and a relay.
 http://blogs.sourceallies.com/2014/06/automated-plant-watering-system/
 http://makezine.com/2015/04/13/video-walkthrough-automatic-garden-watering-data-logging-arduino/
