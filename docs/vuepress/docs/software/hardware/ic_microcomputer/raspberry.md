@@ -346,6 +346,18 @@ feh -d -S filename ./
 
 ### Home Automation 
 [home assistant os](https://www.home-assistant.io/installation/raspberrypi/)
+```
+ha network info wlan0
+ha network update wlan0 --ipv4-method auto --ipv6-method auto \
+  --wifi-auth wpa-psk --wifi-mode infrastructure \
+  --wifi-ssid "你家SSID" --wifi-psk "你家密码"
+
+login
+ip addr
+```
+8123​ Home Assistant Core（主程序）日常 web UI，onboarding / 仪表盘 / 配置全在这
+4357​ HAOS Supervisor / Observer 容器 纯状态页，看 supervisor、core、DNS、Multicast 各组件是绿是红，不依赖 core 起来
+
 ### SDR
 	
 SDR 收发器 vs USB WiFi 网卡
