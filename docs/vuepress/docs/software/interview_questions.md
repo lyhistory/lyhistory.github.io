@@ -1610,7 +1610,16 @@ Explain the Spring Bean lifecycle. Give me a concrete example where initializing
 
 Strong answer:​
 
-“B initializes first, then A. You can control order with @DependsOn, or by using SmartLifecycleif startup sequencing matters.”
+Yes, absolutely. In Spring, if Bean A depends on Bean B, the most straightforward and recommended way to control their initialization order is by using Constructor Injection.
+
+When you inject Bean B into Bean A through A’s constructor, the Spring IoC container is forced to resolve and fully initialize Bean B beforeit can instantiate Bean A. Because the container needs a ready instance of B to pass as an argument to A's constructor, this naturally establishes a strict creation sequence: B is created first, then A.
+
+Beyond just guaranteeing the order, constructor injection is actually considered a best practice because it ensures your dependencies are immutable and non-null right from the moment the bean is instantiated. It also helps prevent circular dependencies at startup time rather than at runtime.
+
+追问：
+"Yes, absolutely. If A actually needs an instance of B to function, the best way is constructor injection. Spring will naturally instantiate B before A because it needs B as a constructor argument. This is better than @DependsOnbecause it's type-safe, refactoring-friendly, and expresses the real intent — 'A cannot exist without B'."
+
+"That said, @DependsOnstill has its place — for example, when A doesn't directly reference B but relies on some side effect of B's initialization, like global registry setup or controlling shutdown order. In those cases, @DependsOnis the right tool."
 
 “In one project, we initialized a custom database connection pool​ inside a @Serviceconstructor.
 

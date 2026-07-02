@@ -4,15 +4,19 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
+## 1.知识点Overview
+
 [official documents](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-documentation)
+
+> While the Spring framework focuses on providing flexibility to you, Spring Boot aims to shorten the code length and provide you with the easiest way to develop a web application. With annotation configuration and default codes, Spring Boot shortens the time involved in developing an application.
+> https://www.tutorialspoint.com/spring_boot/index.htm
+
 
 自动配置、起步依赖、Actuator、命令行界面(CLI) 是Spring Boot最重要的4大核心特性
 
 Servlet->EJB->Struts->SpringMVC->SpringBoot
 
 New->Factory->容器
-
-## 1.知识点Overview
 
 ### 启动加载器 SpringFactoriesLoader
 
@@ -3207,6 +3211,133 @@ public class CustomMetrics {
 ```
 
 ## 4. 使用springboot开发应用
+
+
+
+
+Spring boot web default web server:
+Asp.net default is IIS Express, how about spring boot web?
+Tomcat vs. Jetty vs. Undertow: Comparison of Spring Boot Embedded Servlet Containers 
+https://examples.javacodegeeks.com/enterprise-java/spring/tomcat-vs-jetty-vs-undertow-comparison-of-spring-boot-embedded-servlet-containers/
+
+### 3.1 Plugins
+
+** spring-boot-maven-plugin
+```
+<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${spring-boot-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+```
+
+这个plugin很重要，其中的repackage是把java程序打包成为executable程序，否则就只是普通的jar包（纠正：实际测试即使没用这个plugin，pom parent继承了org.springframework.boot，一样可以生成可执行程序，原因见后面关于这个包的解释），不能直接执行，比如hello world，需要javac之后生成的class，用java *.class才能执行，而且如果java程序比较负责，依赖了外部的包，还要给出classpath或libpath，极其麻烦，maven本身就是包管理器，最基本的职责就是mvn package打成普通的jar包，然后mvn install到本地.m2 repository，然后mvn deploy到远程的repository，当需要运行的时候就是用前面提到的java命令执行，当然也可以直接用mvn执行，好处是mvn会自动去.m2下面找到依赖的包，
+mvn exec:java -Dexec.mainClass="com.example.Main" -Dexec.args="arg0 arg1"，可以看到mvn实际也就是调用java命令
+首先使用这个plugin的情况下，正常的mvn clean package，生成XXX-0.0.1-SNAPSHOT.jar和XXX-0.0.1-SNAPSHOT.jar.origninal：
+可以重命名一下orignial为jar，反编译对比下：
+
+![](/docs/docs_image/software/java/java_springboot01.png)
+
+对比可以看到，普通的jar包里面的东西被再次包入了BOOT-INF，然后增加了一个org.springframework.boot.loader的启动包
+执行方法：
+project里：mvn spring-boot:run
+打成包后：java -server -jar XXXX.jar --spring.config.location=/config/
+
+这里居然还有个比较傻逼的比较 https://www.baeldung.com/spring-boot-run-maven-vs-executable-jar
+有点意思，还有人这么较真
+
+然后我好奇测试了下mvn最原始的打包plugin，看打成一个fat jar会如何
+![](/docs/docs_image/software/java/java_springboot02.png)
+无法运行，估计是缺少springboot的上下文，spring boot的程序自然真正的入口应该是spring boot那个loader，加了annotation的那个所谓的入口main实际只是为spring boot loader准备的入口；
+
+** maven-enforcer-plugin
+这个是用来检查依赖问题的  mvn enforcer:enforce
+
+### 3.2 Dependencies
+
+Parent org.springframework.boot
+https://www.baeldung.com/spring-boot-dependency-management-custom-parent
+
+继承两种方式：
+	直接写在parent里面；
+	写在dependencymanagement里面
+```
+<dependencyManagement>
+     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <version>1.5.6.RELEASE</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+```
+
+如果没有继承org.springframework.boot,如果有多个入口方法，在pom中指定：
+```
+<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.lyhistory.rce.shiro.WebApp</mainClass>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+```
+
+如果继承org.springframework.boot,如果有多个入口方法，就多一种方式，在pom中指定：
+```
+<parent>
+   	 <groupId>org.springframework.boot</groupId>
+   	 <artifactId>spring-boot-starter-parent</artifactId>
+   	 <version>1.5.9.RELEASE</version>
+   	 <relativePath /> <!-- lookup parent from repository -->
+</parent>
+
+<properties>
+  <start-class>com.xx.xx</start-class>
+</properties>
+```
+
+### 3.3 Integration 
+
+#### 3.3.1 redis
+@Autowired
+Private RedisTemplate redisTemplate;
+https://github.com/spring-projects/spring-boot/issues/7238
+
+一文搞定 Spring Data Redis 详解及实战 https://cloud.tencent.com/developer/article/1349818
+SpringBoot下Redis相关配置是如何被初始化的 https://my.oschina.net/u/3866531/blog/1858069
+
+Which type of injection??
+深度解析SpringBoot2.x整合Spring-Data-Redis https://www.itcodemonkey.com/article/13627.html
+
+#### [3.3.2 Shiro](/docs/software/buildingblock/shiro)
+
+#### more
+
+Thymeleaf https://www.baeldung.com/thymeleaf-in-spring-mvc
 
 ### 4.0 项目技巧
 
