@@ -140,32 +140,103 @@ https://docs.spring.io/spring/docs/5.1.6.RELEASE/spring-framework-reference/ (sp
 
 ### Beans
 
-**Spring uses the class name and converts the first letter to lowercase**.
+[**Spring uses the class name and converts the first letter to lowercase**.](https://www.baeldung.com/spring-bean-names)
 
-https://www.baeldung.com/spring-bean-names
+Spring Bean 生命周期完整时序图
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        Spring IoC Container Startup                          │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             
+   │
+│  1. 扫描 & 解析配置                                                           
+   │
+│     ├── 读取 @ComponentScan / @Import / XML                                  
+   │
+│     └── 将 BeanDefinition 注册到 BeanFactory                                 
+   │
+│                                                                             
+   │
+│  2. 实例化前 (Instantiation Aware)                                           
+   │
+│     ├── BeanFactoryPostProcessor 执行（可修改 BeanDefinition）                
+   │
+│     └── InstantiationAwareBeanPostProcessor.postProcessBeforeInstantiation() 
+   │
+│                                                                             
+   │
+│  3. 实例化 (Instantiation)                                                   
+   │
+│     └── 调用构造器创建对象（此时依赖还没注入，对象处于"半成品"状态）             
+   │
+│         ├── ★ 如果有构造器注入 → 递归触发依赖 Bean 的创建（回到步骤2）         
+   │
+│         └── ★ 这就是"构造器注入控制顺序"的底层原因                            
+   │
+│                                                                             
+   │
+│  4. 属性填充 (Populate Properties)                                           
+   │
+│     ├── 解析 @Autowired / @Value / @Resource                                 
+   │
+│     ├── 字段注入 & Setter 注入在这里完成                                      
+   │
+│     └── InstantiationAwareBeanPostProcessor.postProcessProperties()          
+   │
+│                                                                             
+   │
+│  5. Aware 回调                                                               
+   │
+│     ├── BeanNameAware.setBeanName()                                          
+   │
+│     ├── BeanClassLoaderAware.setBeanClassLoader()                            
+   │
+│     ├── BeanFactoryAware.setBeanFactory()                                    
+   │
+│     └── ApplicationContextAware.setApplicationContext()                      
+   │
+│                                                                             
+   │
+│  6. 初始化前 (Before Initialization)                                         
+   │
+│     └── BeanPostProcessor.postProcessBeforeInitialization()                  
+   │
+│         ├── @PostConstruct 就是在这里被调用的！                               
+   │
+│         └── ApplicationContext 里的 CommonAnnotationBeanPostProcessor         
+   │
+│                                                                             
+│  7. 初始化 (Initialization)                                                  
+│     ├── ★ @PostConstruct 标注的方法执行                                       
+│     ├── InitializingBean.afterPropertiesSet()                                
+│     └── 自定义 init-method / @Bean(initMethod=...)                           
+│                                                                             
+│  8. 初始化后 (After Initialization)                                          
+│     └── BeanPostProcessor.postProcessAfterInitialization()                   
+│         └── ★ AOP 代理就是在这里织入的（如果 Bean 需要被代理）                 
+│                                                                             
+│  9. Bean 就绪 — 放入单例池 (Singleton Objects)，可以被使用                     
+│                                                                             
+│  ───────────────────── 应用运行期间 ─────────────────────                     
+│                                                                             
+│  10. 销毁阶段 (Shutdown)                                                     
+│      ├── @PreDestroy 标注的方法                                               
+│      ├── DisposableBean.destroy()                                            
+│      └── 自定义 destroy-method                                                
+│                                                                             
+└─────────────────────────────────────────────────────────────────────────────┘
+```
 
-### Autowired
+键顺序速记口诀：
+
+构 → 填 → Aware → @PostConstruct → afterPropertiesSet → initMethod → AOP代理 → 就绪
+
+#### Autowired
 
 https://www.baeldung.com/spring-autowire
 
-### Spring AOP
+#### Spring AOP
 [refer to aop-spring aop](/software/programming/aop.md#spring-aop)
-
-### 代理
-动态代理 静态代理
-cglib 通过使用proxy设计模式 远程调用看起来像本地调用
-增强类 如mybatis，fastclassbyspringcglib
-
-```
-保存生成的动态代理类或者增强类
-@EnableAsync
-@SpringBootApplication
-public class Application {
-    public static void main(String[] args) {
-    	System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY,"C:\\Workspace\\debug");
-        SpringApplication.run(Application.class, args);
-    }
-```
 
 ## Spring MVC
 [spring mvc 处理流程源码解析](https://blog.csdn.net/u013905744/article/details/110263867)

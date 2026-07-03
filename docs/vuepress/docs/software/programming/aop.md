@@ -1,10 +1,143 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
+## Overview
+### 代理设计模式
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    代理设计模式 (Proxy Pattern)               │
+│              —— 为其他对象提供一种代理以控制访问               │
+└───────────┬─────────────────────────────────┬───────────────┘
+            │                                 │
+    ┌───────▼────────┐               ┌────────▼────────┐
+    │   静态代理       │               │   动态代理        │
+    │ (编译期确定)     │               │ (运行期生成)      │
+    └────────────────┘               ├─────────────────┤
+                                    │ • JDK动态代理    │──→ 基于接口
+                                    │ • CGLIB动态代理  │──→ 基于继承(增强类)
+                                    └─────────────────┘
+                                             │
+                    ┌────────────────────────┼────────────────────────┐
+                    │                        │                        │
+            ┌───────▼───────┐      ┌────────▼────────┐     ┌────────▼────────┐
+            │  Spring AOP    │      │  MyBatis Mapper │     │  远程调用(RPC)   │
+            │ @Transactional│      │ Mapper接口代理   │     │ Feign/Dubbo     │
+            │ @Async @Cache  │      │ SQL自动映射      │     │ 像本地方法调用   │
+            └───────────────┘      └─────────────────┘     └─────────────────┘
+```
+
+代理模式 → 远程调用看起来像本地调用,是代理模式的另一个经典应用方向（不是AOP，但思想同源）：
+```
+// 你写的代码 - 看起来就是本地调用
+@Autowired
+private OrderService orderService;  // 实际可能是 Feign 代理 / Dubbo 代理
+
+orderService.createOrder(request);  // 实际走了网络请求
+```
+对开发者来说，就像调用本地方法一样。这和AOP的区别在于：
+
+AOP：代理的目的是增强方法（加日志、事务、鉴权等）
+
+RPC代理：代理的目的是屏蔽通信细节（网络、序列化）
+
+
+MyBatis 的 Mapper 代理
+```
+// 你只定义了接口，没有实现类
+public interface UserMapper {
+    @Select("SELECT * FROM user WHERE id = #{id}")
+    User selectById(Long id);
+}
+
+// 使用时
+User user = userMapper.selectById(1L);  // 谁执行的SQL？
+```
+MyBatis 在启动时通过 JDK动态代理​ 为 UserMapper接口生成了代理实现类：
+```
+MapperProxy implements InvocationHandler {
+    invoke() {
+        // 解析注解/XML中的SQL
+        // 执行JDBC操作
+        // 映射结果集
+    }
+}
+```
+这也是代理模式，但和 Spring AOP 的关系是：MyBatis 自己管自己的代理，Spring 只是把它创建的代理对象纳入IOC容器管理。
+
+
+Spring AOP 选择动态代理，因为AOP需要在不修改源码的情况下，对任意Bean的方法进行增强。如果用手写静态代理，那每个Service都要写一个代理类，完全不可维护。
+
+Spring AOP 底层有两种动态代理方式：
+
+JDK动态代理：
+
+条件：目标类实现了接口
+
+原理：java.lang.reflect.Proxy在运行时生成一个实现相同接口的代理类
+
+限制：只能代理接口中定义的方法
+
+CGLIB动态代理：
+
+条件：目标类没有实现接口（或配置强制使用CGLIB）
+
+原理：通过ASM字节码框架，继承目标类生成子类，重写父类方法来实现增强
+
+产物：你看到的 xxx$$EnhancerBySpringCGLIB$$xxx就是这个子类
+```
+// Spring 选择代理策略的逻辑（简化版）
+if (目标类实现了接口) {
+    使用 JDK 动态代理;
+} else {
+    使用 CGLIB;
+}
+```
+
+fastclassbyspringcglib是 CGLIB 的一个性能优化机制：
+
+普通反射调用：Method.invoke()→ JVM需要检查方法权限、参数校验等，较慢
+
+FastClass机制：CGLIB 会为代理类和目标类各生成一个 FastClass，里面用一个 switch或数组索引直接调用方法，绕过反射，速度接近直接调用
+生成的类名类似：
+UserService$$EnhancerBySpringCGLIB$$a3b4c5d6  // 代理类
+UserService$$FastClassBySpringCGLIB$$e7f8g9h0  // 代理类的FastClass
+UserService$$FastClassBySpringCGLIB$$i1j2k3l4  // 目标类的FastClass
+
+
+保存生成的动态代理类或者增强类:
+```
+@EnableAsync
+@SpringBootApplication
+public class Application {
+    public static void main(String[] args) {
+    	System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY,"C:\\Workspace\\debug"); //这行代码的作用是：让 CGLIB 把运行时生成的字节码 .class文件保存到磁盘，方便你反编译查看。配合 @EnableAsync很有意义：@EnableAsync会让 Spring 为标注了 @Async方法的 Bean 创建AOP代理,没有这个代理，@Async方法就是普通同步方法,保存下来的 class 文件里，你能看到代理类是如何在方法调用前后织入异步逻辑的
+        SpringApplication.run(Application.class, args);
+    }
+```
+你可以试着反编译看看那个 $$EnhancerBySpringCGLIB$$类，会发现它的方法体大致是：
+```
+// 伪代码：CGLIB代理方法的真实逻辑
+public Object methodName(args) {
+    if (methodInterceptors匹配) {
+        return adviceChain.proceed();  // 走AOP拦截器链
+    } else {
+        return super.methodName(args); // 直接调用父类（目标类）方法
+    }
+}
+```
+
+
+### AOP概念点
+
 AOP是aspect oriented programing的简称，意为面向切面编程，对OOP的补充。 
 
 AOP is used along with spring Ioc to provide a very capable middleware solution.
 
 Note: Cross cutting concerns are one of the concerns in any application such as logging, security, caching, etc. They are present in one part of the program but they may affect other parts of the program too.
 
-## 概念对比
 
 通知（Advice）包含了需要用于多个应用对象的横切行为，完全听不懂，没关系，通俗一点说就是定义了“什么时候”和“做什么”。It’s the behavior that addresses system-wide concerns (logging, security checks, etc…). This behavior is represented by a method to be executed at a JoinPoint. This behavior can be executed Before, After, or Around the JoinPoint according to the Advice type as we will see later.
 
@@ -19,6 +152,8 @@ interceptor == Advice
 引入（Introduction）允许我们向现有的类中添加新方法或者属性。
 
 织入（Weaving）是把切面应用到目标对象并创建新的代理对象的过程，分为编译期织入、类加载期织入和运行期织入。
+
+
 
 ### java aop(aspectj) VS spring aop
 
@@ -263,6 +398,417 @@ https://stackoverflow.com/questions/49159666/how-to-intercept-each-method-call-w
 https://blog.csdn.net/gavin_john/article/details/80252414
 
 ## Spring(Boot) AOP
+
+### 例子
+Spring AOP = 代理设计模式 + 动态代理技术（JDK/CGLIB）+ 拦截器链
+```
+public interface UserService {
+    void addUser(String name);
+    void deleteUser(String name);
+}
+
+public class UserServiceImpl implements UserService {
+    @Override
+    public void addUser(String name) {
+        System.out.println("   [目标] 添加用户: " + name);
+        deleteUser(name); // ← 注意：内部调用！
+    }
+
+    @Override
+    public void deleteUser(String name) {
+        System.out.println("   [目标] 删除用户: " + name);
+    }
+}
+```
+第一部分：手撕 JDK 动态代理 Demo
+1. 写一个 InvocationHandler
+```
+import java.lang.reflect.*;
+
+public class MyInvocationHandler implements InvocationHandler {
+    private final Object target; // 被代理的目标对象
+
+    public MyInvocationHandler(Object target) {
+        this.target = target;
+    }
+
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        // 方法调用前的增强
+        System.out.println("[代理] 准备执行: " + method.getName());
+
+        // 调用目标对象的实际方法
+        Object result = method.invoke(target, args);
+
+        // 方法调用后的增强
+        System.out.println("[代理] 执行完毕: " + method.getName());
+        return result;
+    }
+}
+```
+2. 创建代理对象并使用
+```
+public class Demo {
+    public static void main(String[] args) {
+        UserService target = new UserServiceImpl();
+
+        UserService proxy = (UserService) Proxy.newProxyInstance(
+                target.getClass().getClassLoader(),
+                target.getClass().getInterfaces(),
+                new MyInvocationHandler(target)
+        );
+
+        proxy.addUser("张三");
+    }
+}
+
+[代理] 准备执行: addUser
+   [目标] 添加用户: 张三
+   [目标] 删除用户: 张三          ← 注意这里！
+[代理] 执行完毕: addUser
+```
+3. 核心原理
+
+JDK 动态代理在运行时生成了一个类似这样的代理类（伪代码）：
+```
+public class $Proxy0 extends Proxy implements UserService {
+    public void addUser(String name) {
+        // 所有方法调用都转发给 InvocationHandler.invoke()
+        handler.invoke(this, addUserMethod, new Object[]{name});
+    }
+}
+```
+关键点：代理对象持有目标对象的引用，在 invoke方法中决定何时、如何调用目标方法。这就是 Spring AOP 的地基。
+
+第二部分：升级——模拟 Spring AOP 拦截器链
+
+Spring AOP 不是在 InvocationHandler里写死增强逻辑，而是用责任链模式把多个增强（Advice）串起来。
+
+1. 定义拦截器接口（模仿 Spring 的 MethodInterceptor）
+```
+public interface MyMethodInterceptor {
+    Object invoke(MyMethodInvocation invocation) throws Throwable;
+}
+```
+2. 写两个拦截器
+```
+public class LogInterceptor implements MyMethodInterceptor {
+    @Override
+    public Object invoke(MyMethodInvocation invocation) throws Throwable {
+        System.out.println("  [日志] 方法名: " + invocation.getMethod().getName());
+        return invocation.proceed(); // 继续链
+    }
+}
+
+public class TransactionInterceptor implements MyMethodInterceptor {
+    @Override
+    public Object invoke(MyMethodInvocation invocation) throws Throwable {
+        System.out.println("  [事务] begin transaction");
+        try {
+            Object result = invocation.proceed(); // 继续链
+            System.out.println("  [事务] commit");
+            return result;
+        } catch (Exception e) {
+            System.out.println("  [事务] rollback");
+            throw e;
+        }
+    }
+}
+```
+3. 实现 MethodInvocation（责任链驱动器）
+
+这是 Spring AOP 最核心的设计——ReflectiveMethodInvocation的简化版：
+```
+import java.lang.reflect.Method;
+import java.util.List;
+
+public class MyMethodInvocation {
+    private final Object target;
+    private final Method method;
+    private final Object[] args;
+    private final List<MyMethodInterceptor> interceptors;
+    private int currentIndex = 0;
+
+    public MyMethodInvocation(Object target, Method method, Object[] args,
+                              List<MyMethodInterceptor> interceptors) {
+        this.target = target;
+        this.method = method;
+        this.args = args;
+        this.interceptors = interceptors;
+    }
+
+    public Method getMethod() { return method; }
+
+    public Object proceed() throws Throwable {
+        // 所有拦截器都执行完了，才调用目标方法
+        if (currentIndex == interceptors.size()) {
+            return method.invoke(target, args);
+        }
+        // 取出当前拦截器，index+1，然后调用
+        MyMethodInterceptor interceptor = interceptors.get(currentIndex++);
+        return interceptor.invoke(this); // ← 递归调用，形成链式
+    }
+}
+```
+4. 改造 InvocationHandler
+```
+public class AopInvocationHandler implements InvocationHandler {
+    private final Object target;
+    private final List<MyMethodInterceptor> interceptors;
+
+    public AopInvocationHandler(Object target, List<MyMethodInterceptor> interceptors) {
+        this.target = target;
+        this.interceptors = interceptors;
+    }
+
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        MyMethodInvocation invocation =
+                new MyMethodInvocation(target, method, args, interceptors);
+        return invocation.proceed(); // 启动责任链
+    }
+}
+```
+5. 测试
+```
+public class AopDemo {
+    public static void main(String[] args) {
+        UserService target = new UserServiceImpl();
+
+        List<MyMethodInterceptor> chain = List.of(
+                new TransactionInterceptor(),
+                new LogInterceptor()
+        );
+
+        UserService proxy = (UserService) Proxy.newProxyInstance(
+                target.getClass().getClassLoader(),
+                target.getClass().getInterfaces(),
+                new AopInvocationHandler(target, chain)
+        );
+
+        proxy.addUser("李四");
+    }
+}
+
+[事务] begin transaction
+  [日志] 方法名: addUser
+   [目标] 添加用户: 李四
+   [目标] 删除用户: 李四
+  [事务] commit
+
+调用流程图
+proxy.addUser()
+  │
+  ▼
+AopInvocationHandler.invoke()
+  │
+  ▼
+MyMethodInvocation.proceed()
+  │
+  ├─→ TransactionInterceptor.invoke()
+  │     │
+  │     ├─→ MyMethodInvocation.proceed()
+  │           │
+  │           ├─→ LogInterceptor.invoke()
+  │                 │
+  │                 ├─→ MyMethodInvocation.proceed()
+  │                       │
+  │                       ├─→ method.invoke(target)  ← 目标方法！
+  │                       │
+  │                 ◄─────┤
+  │           ◄────────────┤
+  │     ◄──────────────────┤
+  ▼
+返回结果
+```
+Spring AOP 的本质：代理对象 + InvocationHandler+ MethodInvocation责任链。每一个 @Before、@After、@Around最终都被包装成一个 MethodInterceptor，由 ReflectiveMethodInvocation按顺序驱动执行。
+
+第三部分：为什么 @Transactional 会失效？
+
+现在我们回到第一部分的那个输出，仔细看这一行：
+`[目标] 删除用户: 张三          ← 注意这里没有经过代理！`
+
+场景复现
+```
+@Service
+public class UserServiceImpl implements UserService {
+
+    @Transactional
+    @Override
+    public void addUser(String name) {
+        // ... 数据库操作 ...
+        deleteUser(name); // 内部调用
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public void deleteUser(String name) {
+        // ... 数据库操作 ...
+    }
+}
+```
+预期：deleteUser应该开启一个新事务。
+
+实际：deleteUser上的 @Transactional(REQUIRES_NEW)完全不生效，它直接加入了 addUser的事务。
+
+原因剖析
+```
+外部调用者 → proxy.addUser()
+                  │
+                  ▼
+         TransactionInterceptor.invoke()
+                  │
+                  ▼
+         target.addUser()    ← 这里的 this 是目标对象！
+                  │
+                  ├── deleteUser()   ← this.deleteUser()
+                  │                     等于 target.deleteUser()
+                  │                     绕过了 proxy！
+                  │                     没有经过 TransactionInterceptor！
+
+用我们上面手撕的代码来解释：
+// 在 MyMethodInvocation.proceed() 中
+method.invoke(target, args);  // ← target 是原始对象，不是代理！
+
+// 所以在 target.addUser() 里调用 deleteUser() 时
+// 等价于 this.deleteUser()，也就是 target.deleteUser()
+// 根本没有走 proxy → InvocationHandler → 拦截器链
+一句话总结：@Transactional是靠代理对象织入的，而内部调用（this.xxx()）不经过代理对象，所以事务拦截器不会被触发。
+```
+
+解决办法
+用 AopContext.currentProxy()或拆到另一个 Service
+
+方案一：AopContext.currentProxy()
+```
+@SpringBootApplication
+@EnableAspectJAutoProxy(exposeProxy = true) // ← 必须加这个！否则 AopContext 拿不到代理
+public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
+
+@Service
+public class UserServiceImpl implements UserService {
+
+    @Override
+    @Transactional
+    public void addUser(String name) {
+        System.out.println("   [addUser] 添加用户: " + name);
+
+        // 关键改动：通过 AopContext 拿到当前代理对象，再调用 deleteUser
+        ((UserService) AopContext.currentProxy()).deleteUser(name);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void deleteUser(String name) {
+        System.out.println("   [deleteUser] 删除用户: " + name);
+        // 这里会开启一个新事务，独立于 addUser 的事务
+    }
+}
+
+外部调用 → proxy.addUser()
+               │
+               ▼
+        TransactionInterceptor（addUser事务开启）
+               │
+               ▼
+        target.addUser()
+               │
+               ├── AopContext.currentProxy()  ← 拿到了 proxy 本身！
+               │       │
+               │       ▼
+               │  proxy.deleteUser()
+               │       │
+               │       ▼
+               │  TransactionInterceptor（REQUIRES_NEW，挂起旧事务，开新事务）
+               │       │
+               │       ▼
+               │  target.deleteUser()
+               │       │
+               │       ▼
+               │  TransactionInterceptor（提交新事务，恢复旧事务）
+               │
+               ▼
+        TransactionInterceptor（提交 addUser 事务）
+
+```
+方案二：拆到另一个 Service（推荐）
+```
+// ===== 第一个 Service：负责"添加"相关 =====
+@Service
+public class AddUserService {
+
+    @Autowired
+    private DeleteUserService deleteUserService; // ← 注入另一个 Service
+
+    @Transactional
+    public void addUser(String name) {
+        System.out.println("   [addUser] 添加用户: " + name);
+
+        // 通过另一个 Service 的代理对象调用
+        deleteUserService.deleteUser(name); // ← 这里走的是 proxy！
+    }
+}
+
+// ===== 第二个 Service：负责"删除"相关 =====
+@Service
+public class DeleteUserService {
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void deleteUser(String name) {
+        System.out.println("   [deleteUser] 删除用户: " + name);
+    }
+}
+
+外部调用 → AddUserService的proxy.addUser()
+               │
+               ▼
+        TransactionInterceptor（addUser事务）
+               │
+               ▼
+        AddUserService.target.addUser()
+               │
+               ├── deleteUserService.deleteUser()  ← 这是另一个 Bean 的代理！
+               │       │
+               │       ▼
+               │  DeleteUserService的proxy.deleteUser()
+               │       │
+               │       ▼
+               │  TransactionInterceptor（REQUIRES_NEW）
+               │       │
+               │       ▼
+               │  target.deleteUser()
+```
+
+补充方案三：Self-Injection（自注入）
+
+```
+@Service
+public class UserServiceImpl implements UserService {
+
+    @Autowired  // ← 注入自己（Spring 注入的是代理对象！）
+    @Lazy //⚠️ 注意：自注入在某些老版本 Spring 中需要加 @Lazy避免循环依赖报错：
+    private UserService self;
+
+    @Override
+    @Transactional
+    public void addUser(String name) {
+        System.out.println("   [addUser] 添加用户: " + name);
+        self.deleteUser(name); // ← 通过代理调用！
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void deleteUser(String name) {
+        System.out.println("   [deleteUser] 删除用户: " + name);
+    }
+}
+
+```
+原理：@Autowired注入的是 Spring 容器里的 Bean，而这个 Bean 已经被 AOP 代理过了。所以 self实际上是代理对象，不是 this。
 
 ### 原理
 
