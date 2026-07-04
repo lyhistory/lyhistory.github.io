@@ -1188,6 +1188,184 @@ public class AppConfig {
 - Setter 注入（可选依赖）
 - 字段注入（不推荐，隐藏依赖、测试困难）
 
+字段注入：循环依赖
+```
+@Service
+public class OrderService {
+
+    @Autowired
+    private PaymentService paymentService;
+
+    public void createOrder() {
+        System.out.println("创建订单");
+        paymentService.charge();
+    }
+}
+
+@Service
+public class PaymentService {
+
+    @Autowired
+    private OrderService orderService;
+
+    public void charge() {
+        System.out.println("扣款");
+        orderService.validate();
+    }
+
+    public void validate() {
+        System.out.println("校验订单");
+    }
+}
+启动没问题，调用也没问题。
+
+原因是 Spring 用了三级缓存的"迂回战术"：
+1. 先 new OrderService()（此时 paymentService 是 null）
+2. 再 new PaymentService()（此时 orderService 是 null）
+3. 把 OrderService 的"半成品"引用提前暴露给 PaymentService
+4. 给 PaymentService 注入 OrderService 的半成品引用
+5. 给 OrderService 注入 PaymentService 的完整实例
+6. 两边都注入完了，各自补全
+
+看起来很智能对吧？但问题是——
+
+你以为两个类"互相依赖"是合理的，其实这是设计层面的坏味道。就像两个人互相喂饭，谁也离不开谁，拆不开、改不动。
+
+构造器注入（启动直接报错）
+@Service
+public class OrderService {
+
+    private final PaymentService paymentService;
+
+    public OrderService(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
+
+    public void createOrder() {
+        paymentService.charge();
+    }
+}
+
+@Service
+public class PaymentService {
+
+    private final OrderService orderService;
+
+    public PaymentService(OrderService orderService) {
+        this.orderService = orderService;
+    }
+
+    public void charge() {
+        orderService.validate();
+    }
+}
+启动时报错：
+BeanCurrentlyInCreationException:
+Requested bean is currently in creation: Is there an unresolvable circular reference?
+1. Spring 要创建 OrderService → 需要 PaymentService 作为参数
+2. Spring 去创建 PaymentService → 需要 OrderService 作为参数
+3. 死锁了，谁也出不来
+为什么报错反而是好事？
+构造器注入就像一个严格的代码审查员：你设计有问题，我就不让你过
+
+怎么解决？—— 拆出一个第三方
+
+@Service
+public class OrderService {
+
+    private final OrderValidator orderValidator;
+
+    public OrderService(OrderValidator orderValidator) {
+        this.orderValidator = orderValidator;
+    }
+
+    public void createOrder(PaymentService paymentService) {
+        orderValidator.validate();
+        paymentService.charge();
+    }
+}
+
+@Service
+public class PaymentService {
+
+    private final OrderValidator orderValidator;
+
+    public PaymentService(OrderValidator orderValidator) {
+        this.orderValidator = orderValidator;
+    }
+
+    public void charge() {
+        orderValidator.validate();
+    }
+}
+
+@Service
+public class OrderValidator {
+
+    public void validate() {
+        System.out.println("校验订单");
+    }
+}
+
+OrderService ──→ OrderValidator
+PaymentService ──→ OrderValidator
+谁也不依赖谁了，循环依赖消失。测试也好写了，每个类各司其职。
+
+```
+字段注入：测试困难
+```
+@Service
+public class UserService {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    public String getUserName(Long id) {
+        return userRepository.findNameById(id);
+    }
+}
+
+@Test
+public void testGetUserName() {
+    UserService service = new UserService(); // ← 直接 new
+    
+    // ❌ userRepository 是 null，一调用就 NPE
+    service.getUserName(1L); 
+}
+你想测 UserService，但它里面的 userRepository是 private的，外面没法塞进去。
+
+解决办法：
+
+用 ReflectionTestUtils.setField(service, "userRepository", mock)—— 靠反射硬塞，测试代码又臭又长
+
+或者干脆上 @SpringBootTest—— 启动整个 Spring 容器，一个单元测试跑 5 秒，慢得离谱
+
+构造器注入（推荐）
+@Service
+public class UserService {
+
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public String getUserName(Long id) {
+        return userRepository.findNameById(id);
+    }
+}
+
+@Test
+public void testGetUserName() {
+    UserRepository mockRepo = Mockito.mock(UserRepository.class);
+    when(mockRepo.findNameById(1L)).thenReturn("Alice");
+
+    UserService service = new UserService(mockRepo); // ← 直接传进去
+
+    assertEquals("Alice", service.getUserName(1L)); // ✅ 干净利落
+}
+
+```
 ##### 注解驱动的自动装配（Spring 2.5+）
 - `@[Autowired](https://www.baeldung.com/spring-autowire)`（Spring 原生，默认 byType）：可用于构造器、方法、字段、参数，默认 byType
 - `@Resource`（JSR-250，默认 byName）：主要用于字段和 setter，默认 byName
