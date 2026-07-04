@@ -4,6 +4,10 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
+## 前置知识
+- [JVM 类加载放 Java 基础笔记，这里不写](/software/programming/java_jvm.md)
+- [Spring框架](/software/programming/java_spring.md)
+
 ## Why Spring Boot（简化了什么）
 
 [official documents](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-documentation)
@@ -14,199 +18,12 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 Servlet->EJB->Struts->SpringMVC->SpringBoot
 
-## 核心特性
-## 自动配置原理
-
-
-### 配置属性加载顺序
-```
-1、开发者工具 `Devtools` 全局配置参数；
-
-2、单元测试上的 `@TestPropertySource` 注解指定的参数；
-
-3、单元测试上的 `@SpringBootTest` 注解指定的参数；
-
-4、命令行指定的参数，如 `java -jar springboot.jar --name="Java技术栈"`；
-
-5、命令行中的 `SPRING_APPLICATION_JSONJSON` 指定参数, 如 `java -Dspring.application.json='{"name":"Java技术栈"}' -jar springboot.jar`
-
-6、`ServletConfig` 初始化参数；
-
-7、`ServletContext` 初始化参数；
-
-8、JNDI参数（如 `java:comp/env/spring.application.json`）；
-
-9、Java系统参数（来源：`System.getProperties()`）；
-
-10、操作系统环境变量参数；
-
-11、`RandomValuePropertySource` 随机数，仅匹配：`ramdom.*`；
-
-12、JAR包外面的配置文件参数（`application-{profile}.properties（YAML）`）
-
-13、JAR包里面的配置文件参数（`application-{profile}.properties（YAML）`）
-
-14、JAR包外面的配置文件参数（`application.properties（YAML）`）
-
-15、JAR包里面的配置文件参数（`application.properties（YAML）`）
-
-16、`@Configuration`配置文件上 `@PropertySource` 注解加载的参数；
-
-17、默认参数（通过 `SpringApplication.setDefaultProperties` 指定）；
-```
-
-### Spring容器的事件监听机制
-
-Java提供了实现事件监听机制的两个基础类：自定义事件类型扩展自 java.util.EventObject、事件的监听器扩展自 java.util.EventListener
-
-Spring的ApplicationContext容器内部中的所有事件类型均继承自 org.springframework.context.AppliationEvent，容器中的所有监听器都实现 org.springframework.context.ApplicationListener接口，并且以bean的形式注册在容器中。一旦在容器内发布ApplicationEvent及其子类型的事件，注册到容器的ApplicationListener就会对这些事件进行处理。
-
-ApplicationEvent继承自EventObject，Spring提供了一些默认的实现，比如： ContextClosedEvent表示容器在即将关闭时发布的事件类型， ContextRefreshedEvent表示容器在初始化或者刷新的时候发布的事件类型......
-
-容器内部使用ApplicationListener作为事件监听器接口定义，它继承自EventListener。ApplicationContext容器在启动时，会自动识别并加载EventListener类型的bean，一旦容器内有事件发布，将通知这些注册到容器的EventListener。
-
-ApplicationContext接口继承了ApplicationEventPublisher接口，该接口提供了 voidpublishEvent(ApplicationEventevent)方法定义，不难看出，ApplicationContext容器担当的就是事件发布者的角色。如果有兴趣可以查看 AbstractApplicationContext.publishEvent(ApplicationEventevent)方法的源码：ApplicationContext将事件的发布以及监听器的管理工作委托给 ApplicationEventMulticaster接口的实现类。在容器启动时，会检查容器内是否存在名为applicationEventMulticaster的ApplicationEventMulticaster对象实例。如果有就使用其提供的实现，没有就默认初始化一个SimpleApplicationEventMulticaster作为实现。
-
-最后，如果我们业务需要在容器内部发布事件，只需要为其注入ApplicationEventPublisher依赖即可：实现ApplicationEventPublisherAware接口或者ApplicationContextAware接口
-
-### 自动配置原理
-
-@SpringBootApplication开启**组件扫描和自动配置**，
-而 SpringApplication.run则负责**启动引导应用程序**。 @SpringBootApplication是一个复合 Annotation，它将三个注解组合在一起：
-
-- **@SpringBootConfiguration**就是 @Configuration，它是Spring框架的注解，标明该类是一个 JavaConfig配置类; allow to register extra beans in the context or import additional configuration classes;
-
-- **@ComponentScan**启用组件扫描;enable @Component scan on the package where the application is located;
-
-- **@EnableAutoConfiguration**注解：
-	表示开启Spring Boot自动配置功能，Spring Boot会根据应用的依赖、自定义的bean、classpath下有没有某个类 等等因素来猜测你需要的bean，然后注册到IOC容器中;
-	enable [Spring Boot’s auto-configuration mechanism](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using-boot-auto-configuration)
-
-_Notes:_
-> You should only ever add one @SpringBootApplication or @EnableAutoConfiguration annotation. We generally recommend that you add one or the other to your primary @Configuration class only.
-> https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using-boot-auto-configuration
-
-开始讲解原理，先看EnableAutoConfiguration：
-```
-@Target(value=TYPE)
- @Retention(value=RUNTIME)
- @Documented
- @Inherited
- @AutoConfigurationPackage
- @Import(value=AutoConfigurationImportSelector.class)
-public @interface EnableAutoConfiguration
-```
-重点是@Import(EnableAutoConfigurationImportSelector.class)，这里它将把 EnableAutoConfigurationImportSelector作为bean注入到容器中，
-```
-@Override
-	public String[] selectImports(AnnotationMetadata metadata) {
-		try {
-			AnnotationAttributes attributes = getAttributes(metadata);
-			List<String> configurations = getCandidateConfigurations(metadata,
-					attributes);
-			configurations = removeDuplicates(configurations);
-			Set<String> exclusions = getExclusions(metadata, attributes);
-			configurations.removeAll(exclusions);
-			configurations = sort(configurations);
-			recordWithConditionEvaluationReport(configurations, exclusions);
-			return configurations.toArray(new String[configurations.size()]);
-		}
-		catch (IOException ex) {
-			throw new IllegalStateException(ex);
-		}
-	}
-```
-EnableAutoConfigurationImportSelector.selectImports()是何时执行的？其实这个方法会在容器启动过程中执行： AbstractApplicationContext.refresh(),
-这个EnableAutoConfigurationImportSelector类会扫描所有的jar包，将所有符合条件的@Configuration配置类注入的容器中，何为符合条件，看看 META-INF/spring.factories的文件内容：
-```
-https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot-autoconfigure/src/main/resources/META-INF/spring.factories
-.....
-org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,\
-.....
-```
-然后举例看 DataSourceAutoConfiguration：
-```
-https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/jdbc/DataSourceAutoConfiguration.java
-@Configuration(proxyBeanMethods = false)
-@ConditionalOnClass({ DataSource.class, EmbeddedDatabaseType.class })
-@ConditionalOnMissingBean(type = "io.r2dbc.spi.ConnectionFactory")
-@EnableConfigurationProperties(DataSourceProperties.class)
-@Import({ DataSourcePoolMetadataProvidersConfiguration.class, DataSourceInitializationConfiguration.class })
-public class DataSourceAutoConfiguration {
-```
-@ConditionalOnClass({DataSource.class,EmbeddedDatabaseType.class})：当Classpath中存在DataSource或者EmbeddedDatabaseType类时才启用这个配置，否则这个配置将被忽略。
-注意上面的DataSourceProperties，
-@EnableConfigurationProperties(DataSourceProperties.class)：将DataSource的默认配置类注入到IOC容器中，DataSourceproperties定义为：
-```
-@ConfigurationProperties(prefix = "spring.datasource")
-public class DataSourceProperties implements BeanClassLoaderAware, InitializingBean {
-	private ClassLoader classLoader;
-	/**
-	 * Name of the datasource. Default to "testdb" when using an embedded database.
-	 */
-	private String name;
-	/**
-	 * Whether to generate a random datasource name.
-	 */
-	private boolean generateUniqueName = true;
-	/**
-	 * Fully qualified name of the connection pool implementation to use. By default, it
-	 * is auto-detected from the classpath.
-	 */
-	private Class<? extends DataSource> type;
-
-	/**
-	 * Fully qualified name of the JDBC driver. Auto-detected based on the URL by default.
-	 */
-	private String driverClassName;
-
-	/**
-	 * JDBC URL of the database.
-	 */
-	private String url;
-
-	/**
-	 * Login username of the database.
-	 */
-	private String username;
-
-	/**
-	 * Login password of the database.
-	 */
-	private String password;
-	
-```
-很清晰对应配置spring.datasource，然后是连接池配置：
-
-@Import({ Registrar.class, DataSourcePoolMetadataProvidersConfiguration.class })：导入其他额外的配置，就以DataSourcePoolMetadataProvidersConfiguration为例吧,
-DataSourcePoolMetadataProvidersConfiguration是数据库连接池提供者的一个配置类，即Classpath中存在 org.apache.tomcat.jdbc.pool.DataSource.class，则使用tomcat-jdbc连接池，如果Classpath中存在 HikariDataSource.class则使用Hikari连接池。
-
-### Environment vs ApplicationContext
-Environment是ApplicationContext的一部分
-
-Environment（环境）:
-- 配置数据管理
-- 属性、Profile、配置源
-- 房子的水电配置系统
-- 配置信息存取
-
-ApplicationContext（应用上下文）:
-- 完整的容器生态系统
-- Bean工厂、事件发布、资源加载等
-- 整个房子+家具+设施
-- 完整的应用生命周期管理
-
-ApplicationContext（应用上下文）
-├── Environment（环境配置）
-│   ├── PropertySources（属性源）
-│   ├── Profiles（环境配置）
-│   └── 配置数据存取API
-│
-├── BeanFactory（Bean管理）
-├── MessageSource（国际化）
-├── ApplicationEventPublisher（事件发布）
-├── ResourceLoader（资源加载）
-└── 其他容器服务
+## 核心特性概览
+- 起步依赖（Starter）
+- 自动配置（一句话概述）
+- 内嵌服务器
+- 外部化配置
+- Actuator & DevTools
 
 ## SpringApplication启动流程
 
@@ -1873,7 +1690,173 @@ public class FeatureToggleInitializer implements ApplicationContextInitializer {
     }
 }
 ```
-## 3. Spring Boot应用监控与调优方案
+
+## 自动配置原理（深入）
+- @EnableAutoConfiguration 与 SpringFactoriesLoader
+- 条件注解体系
+- 自动配置的触发时机
+- 排除与覆盖自动配置
+- Spring Boot 2.7+ 的变化（.imports 文件）
+
+
+@SpringBootApplication开启**组件扫描和自动配置**，
+而 SpringApplication.run则负责**启动引导应用程序**。 @SpringBootApplication是一个复合 Annotation，它将三个注解组合在一起：
+
+- **@SpringBootConfiguration**就是 @Configuration，它是Spring框架的注解，标明该类是一个 JavaConfig配置类; allow to register extra beans in the context or import additional configuration classes;
+
+- **@ComponentScan**启用组件扫描;enable @Component scan on the package where the application is located;
+
+- **@EnableAutoConfiguration**注解：
+	表示开启Spring Boot自动配置功能，Spring Boot会根据应用的依赖、自定义的bean、classpath下有没有某个类 等等因素来猜测你需要的bean，然后注册到IOC容器中;
+	enable [Spring Boot’s auto-configuration mechanism](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using-boot-auto-configuration)
+
+_Notes:_
+> You should only ever add one @SpringBootApplication or @EnableAutoConfiguration annotation. We generally recommend that you add one or the other to your primary @Configuration class only.
+> https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using-boot-auto-configuration
+
+开始讲解原理，先看EnableAutoConfiguration：
+```
+@Target(value=TYPE)
+ @Retention(value=RUNTIME)
+ @Documented
+ @Inherited
+ @AutoConfigurationPackage
+ @Import(value=AutoConfigurationImportSelector.class)
+public @interface EnableAutoConfiguration
+```
+重点是@Import(EnableAutoConfigurationImportSelector.class)，这里它将把 EnableAutoConfigurationImportSelector作为bean注入到容器中，
+```
+@Override
+	public String[] selectImports(AnnotationMetadata metadata) {
+		try {
+			AnnotationAttributes attributes = getAttributes(metadata);
+			List<String> configurations = getCandidateConfigurations(metadata,
+					attributes);
+			configurations = removeDuplicates(configurations);
+			Set<String> exclusions = getExclusions(metadata, attributes);
+			configurations.removeAll(exclusions);
+			configurations = sort(configurations);
+			recordWithConditionEvaluationReport(configurations, exclusions);
+			return configurations.toArray(new String[configurations.size()]);
+		}
+		catch (IOException ex) {
+			throw new IllegalStateException(ex);
+		}
+	}
+```
+EnableAutoConfigurationImportSelector.selectImports()是何时执行的？其实这个方法会在容器启动过程中执行： AbstractApplicationContext.refresh(),
+这个EnableAutoConfigurationImportSelector类会扫描所有的jar包，将所有符合条件的@Configuration配置类注入的容器中，何为符合条件，看看 META-INF/spring.factories的文件内容：
+```
+https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot-autoconfigure/src/main/resources/META-INF/spring.factories
+.....
+org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,\
+.....
+```
+然后举例看 DataSourceAutoConfiguration：
+```
+https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/jdbc/DataSourceAutoConfiguration.java
+@Configuration(proxyBeanMethods = false)
+@ConditionalOnClass({ DataSource.class, EmbeddedDatabaseType.class })
+@ConditionalOnMissingBean(type = "io.r2dbc.spi.ConnectionFactory")
+@EnableConfigurationProperties(DataSourceProperties.class)
+@Import({ DataSourcePoolMetadataProvidersConfiguration.class, DataSourceInitializationConfiguration.class })
+public class DataSourceAutoConfiguration {
+```
+@ConditionalOnClass({DataSource.class,EmbeddedDatabaseType.class})：当Classpath中存在DataSource或者EmbeddedDatabaseType类时才启用这个配置，否则这个配置将被忽略。
+注意上面的DataSourceProperties，
+@EnableConfigurationProperties(DataSourceProperties.class)：将DataSource的默认配置类注入到IOC容器中，DataSourceproperties定义为：
+```
+@ConfigurationProperties(prefix = "spring.datasource")
+public class DataSourceProperties implements BeanClassLoaderAware, InitializingBean {
+	private ClassLoader classLoader;
+	/**
+	 * Name of the datasource. Default to "testdb" when using an embedded database.
+	 */
+	private String name;
+	/**
+	 * Whether to generate a random datasource name.
+	 */
+	private boolean generateUniqueName = true;
+	/**
+	 * Fully qualified name of the connection pool implementation to use. By default, it
+	 * is auto-detected from the classpath.
+	 */
+	private Class<? extends DataSource> type;
+
+	/**
+	 * Fully qualified name of the JDBC driver. Auto-detected based on the URL by default.
+	 */
+	private String driverClassName;
+
+	/**
+	 * JDBC URL of the database.
+	 */
+	private String url;
+
+	/**
+	 * Login username of the database.
+	 */
+	private String username;
+
+	/**
+	 * Login password of the database.
+	 */
+	private String password;
+	
+```
+很清晰对应配置spring.datasource，然后是连接池配置：
+
+@Import({ Registrar.class, DataSourcePoolMetadataProvidersConfiguration.class })：导入其他额外的配置，就以DataSourcePoolMetadataProvidersConfiguration为例吧,
+DataSourcePoolMetadataProvidersConfiguration是数据库连接池提供者的一个配置类，即Classpath中存在 org.apache.tomcat.jdbc.pool.DataSource.class，则使用tomcat-jdbc连接池，如果Classpath中存在 HikariDataSource.class则使用Hikari连接池。
+
+## 外部化配置
+- 配置文件格式与加载顺序
+- Profile 切换
+- @ConfigurationProperties vs @Value
+- 配置源优先级（命令行 > 环境变量 > 配置文件 > defaults）
+
+```
+1、开发者工具 `Devtools` 全局配置参数；
+
+2、单元测试上的 `@TestPropertySource` 注解指定的参数；
+
+3、单元测试上的 `@SpringBootTest` 注解指定的参数；
+
+4、命令行指定的参数，如 `java -jar springboot.jar --name="Java技术栈"`；
+
+5、命令行中的 `SPRING_APPLICATION_JSONJSON` 指定参数, 如 `java -Dspring.application.json='{"name":"Java技术栈"}' -jar springboot.jar`
+
+6、`ServletConfig` 初始化参数；
+
+7、`ServletContext` 初始化参数；
+
+8、JNDI参数（如 `java:comp/env/spring.application.json`）；
+
+9、Java系统参数（来源：`System.getProperties()`）；
+
+10、操作系统环境变量参数；
+
+11、`RandomValuePropertySource` 随机数，仅匹配：`ramdom.*`；
+
+12、JAR包外面的配置文件参数（`application-{profile}.properties（YAML）`）
+
+13、JAR包里面的配置文件参数（`application-{profile}.properties（YAML）`）
+
+14、JAR包外面的配置文件参数（`application.properties（YAML）`）
+
+15、JAR包里面的配置文件参数（`application.properties（YAML）`）
+
+16、`@Configuration`配置文件上 `@PropertySource` 注解加载的参数；
+
+17、默认参数（通过 `SpringApplication.setDefaultProperties` 指定）；
+```
+
+## 生产级特性
+- Actuator 端点
+- DevTools 热部署原理
+  
+
+## Spring Boot应用监控与调优方案
 生产环境监控：使用APM工具（如SkyWalking、Pinpoint）
 
 开发阶段：集成Spring Boot DevTools进行热加载监控
@@ -2308,10 +2291,7 @@ public class CustomMetrics {
 }
 ```
 
-## 4. 使用springboot开发应用
-
-
-
+## 使用springboot开发应用
 
 Spring boot web default web server:
 Asp.net default is IIS Express, how about spring boot web?
