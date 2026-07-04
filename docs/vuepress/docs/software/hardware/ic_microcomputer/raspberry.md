@@ -347,6 +347,7 @@ feh -d -S filename ./
 ### Home Automation 
 [home assistant os](https://www.home-assistant.io/installation/raspberrypi/)
 ```
+手动连接wifi：
 ha network info wlan0
 ha network update wlan0 --ipv4-method auto --ipv6-method auto \
   --wifi-auth wpa-psk --wifi-mode infrastructure \
@@ -354,9 +355,47 @@ ha network update wlan0 --ipv4-method auto --ipv6-method auto \
 
 login
 ip addr
+
 ```
 8123​ Home Assistant Core（主程序）日常 web UI，onboarding / 仪表盘 / 配置全在这
 4357​ HAOS Supervisor / Observer 容器 纯状态页，看 supervisor、core、DNS、Multicast 各组件是绿是红，不依赖 core 起来
+
+然后我突然想到自己还有一个树莓派内置wifi坏了，但是我有一个玩 Aircrack-ng 时候买的USB 网卡，但是担心插上去之后识别不了已经绑定的wlan0，有可能识别是wlan1，所以尝试改造已有wifi连接(成功)
+
+```
+vi /etc/NetworkManager/system-connections/Supervisor\ wlan0.nmconnection
+
+注释掉树莓派内置 WiFi 模块的专属硬件路径地址。Netwo:
+#[match]
+#path=platform-3f300000.mmcnr;
+```
+另外据说还有这种方式
+```
+HAOS 开发者文档 给了一条官方路：在 SD 卡 boot 分区（FAT，/boot或 /boot/firmware，Windows/Mac/Linux 都能直接读）建目录：
+CONFIG/network/
+里面放一个 .nmconnection文件（Unix LF 换行，别 CRLF），比如叫 usb-wifi：
+[connection]
+id=usb-wifi
+uuid=d55162b4-6152-4310-9312-8f4c54d86afa //UUID 随便找个在线生成器来一个 UUID v4 就行
+type=wifi
+
+[wifi]
+mode=infrastructure
+ssid=你的SSID
+# 故意不写 interface-name，任意 wlan 都能匹配
+
+[wifi-security]
+auth-alg=open
+key-mgmt=wpa-psk
+psk=你的密码
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=stable-privacy
+method=auto
+```
 
 ### SDR
 	
