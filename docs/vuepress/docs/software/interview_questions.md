@@ -1606,9 +1606,28 @@ https://medium.com/@TheTechDude/spring-bean-lifecycle-full-guide-f865966e89ce
 
 Explain the Spring Bean lifecycle. Give me a concrete example where initializing something in the constructor caused a bug, and how you fixed it using lifecycle hooks.”
 
-“If I have two beans, A and B, and A depends on B, who initializes first? Can I control that order?”
+##### Dependency
 
-Strong answer:​
+**If I have two beans, A and B, and A depends on B, who initializes first?**
+
+❌ "A depends on B, so B initializes first — meaning Spring calls new B() before new A()."—— 这里的 "initializes" 其实说的是 instantiation，他在混用。
+✅ "B goes through instantiation and initialization first, then A's constructor can receive it."—— 分得清。
+
+When you say 'B initializes first', do you mean Spring calls new B() first, or do you mean B goes through its full lifecycle — injection, @PostConstruct, all that — before A gets it?"
+
+Ah right — I meant B is fully initialized, not just instantiated. So B's @PostConstructwould have run before A's constructor even sees it.
+
+Oh — so there's a difference between instantiation and initialization? Let me think… instantiation is new, initialization is the stuff after — injection, @PostConstruct?
+
+Exactly. And that's why with constructor injection, when A's constructor runs, B is already both instantiated and​ initialized — which is stronger than most people realize.
+
+Let me give you a concrete case. If A uses @Autowired Bon a field, and A's constructor tries to call b.doSomething()— what happens?
+NPE null pointer exception
+Right. Because at that point, new A()has happened — A is instantiated​ — but B hasn't been injected yet, so A isn't initialized. That's the difference. newis one thing, being ready-to-use is another.
+
+OK, so if A uses constructor injection for B — at the moment A's constructor body runs, has B's @PostConstructalready executed, or not yet?
+
+**Can I control that order?**
 
 Yes, absolutely. In Spring, if Bean A depends on Bean B, the most straightforward and recommended way to control their initialization order is by using Constructor Injection.
 
@@ -1619,9 +1638,9 @@ Beyond just guaranteeing the order, constructor injection is actually considered
 追问：
 "Yes, absolutely. If A actually needs an instance of B to function, the best way is constructor injection. Spring will naturally instantiate B before A because it needs B as a constructor argument. This is better than @DependsOnbecause it's type-safe, refactoring-friendly, and expresses the real intent — 'A cannot exist without B'."
 
-"That said, @DependsOnstill has its place — for example, when A doesn't directly reference B but relies on some side effect of B's initialization, like global registry setup or controlling shutdown order. In those cases, @DependsOnis the right tool."
+"That said, @DependsOn still has its place — for example, when A doesn't directly reference B but relies on some side effect of B's initialization, like global registry setup or controlling shutdown order. In those cases, @DependsOnis the right tool."
 
-“In one project, we initialized a custom database connection pool​ inside a @Serviceconstructor.
+##### “In one project, we initialized a custom database connection pool​ inside a @Serviceconstructor.
 
 Everything worked locally, but in production we saw intermittent Timeout waiting for connectionerrors.
 
