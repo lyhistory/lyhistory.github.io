@@ -442,7 +442,7 @@ System.out.println(yiifaa_1 == yiifaa_2);
   - Setter 注入（可选依赖）
   - 字段注入（不推荐，测试困难）
 
-
+```
 ┌────────────────────────────────────────────────────────┐
 │                  配置方式演进                           │
 ├────────────────────────────────────────────────────────┤
@@ -468,6 +468,7 @@ System.out.println(yiifaa_1 == yiifaa_2);
 │    ├── @Configuration + @Bean                         │
 │    └── 方法参数自动注入                               │
 └────────────────────────────────────────────────────────┘
+```
 
 ##### XML：`<bean>` 定义 + `<property>` 注入
 
@@ -1188,7 +1189,32 @@ public class AppConfig {
 - Setter 注入（可选依赖）
 - 字段注入（不推荐，隐藏依赖、测试困难）
 
-字段注入：循环依赖
+###### 字段注入问题：NPE
+```
+@Component
+public class A {
+
+    @Autowired
+    private B b;  // 字段注入
+
+    public A() {
+        // ❌ 致命错误！这里 b 是 null
+        b.doSomething();  // NullPointerException
+    }
+}
+
+时间轴 ──────────────────────────────────────────────────────────────→
+
+【构造器注入场景】
+B: [实例化B] → [注入B的依赖] → [B的@PostConstruct] → ✅ B完全就绪
+A:                                              [拿到B] → [实例化A] → ...
+
+【字段注入场景】
+A: [实例化A（构造器执行）] → ⚠️ 此时B还没注入进来
+B:                        [实例化B] → [注入B的依赖] → [B的@PostConstruct]
+A:                                      [注入A的@Autowired字段B] → ✅ A就绪
+```
+###### 字段注入：循环依赖
 ```
 @Service
 public class OrderService {

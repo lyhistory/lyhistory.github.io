@@ -1601,33 +1601,52 @@ Resources (DB pools, threads, file handles) are released.”
 
 If you need to execute logic only after all beans are fully initialized, but before the app starts accepting traffic, which hook do you use?
 
-spring bean lifecycle
+#### spring bean lifecycle
 https://medium.com/@TheTechDude/spring-bean-lifecycle-full-guide-f865966e89ce
 
-Explain the Spring Bean lifecycle. Give me a concrete example where initializing something in the constructor caused a bug, and how you fixed it using lifecycle hooks.”
+##### Explain the Spring Bean lifecycle. 
+Give me a concrete example where initializing something in the constructor caused a bug, and how you fixed it using lifecycle hooks.”
 
-##### Dependency
+##### If I have two beans, A and B, and A depends on B, who initializes first?
 
-**If I have two beans, A and B, and A depends on B, who initializes first?**
+###### candidates often hesitate because the phrase "A depends on B"​ feels ambiguous.
+The candidate's internal thought process usually goes something like this:
+What does 'depends' actually mean here? Does it simply mean A holds a reference to B internally? Or does it mean A needs to wait for B's initialization logic to fully complete before A can start? Are we talking about constructor instantiation, or the entire lifecycle including @PostConstruct? And if A truly depends on B, isn't Spring supposed to just figure it out automatically — or do I need to intervene?
 
+
+interviewer: That hesitation is exactly the right instinct. The term 'depends on' is actually overloaded in Spring. To answer correctly, you need to clarify how​ A depends on B. Let's think about two specific scenarios:
+
+In the first case, A has an explicit, structural dependency​ on B. A needs to directly reference B — for example, B is injected into A via a constructor parameter or a setter method. A literally cannot be constructed without B.
+
+In the second case, A does not​ directly reference B at all. There is no @Autowired Bfield inside A. However, A still needs to wait for B to finish its full initialization first. Why?
+Because B's initialization produces a side effect​ — maybe B's @PostConstructmethod modifies a global static variable, populates a shared cache, or updates a system-wide configuration. A's own initialization logic then reads from that global state.
+Even though A has no idea B even exists in its codebase, functionally, A depends on B's side effects being completed first.
+
+
+"So now, with those two scenarios in mind — how does Spring behave differently in each case? And what tools do you have to control or override that behavior?"
+
+A senior-level candidate might respond like this:
+"It depends on what kind of dependency we're talking about. If A has a direct reference to B — say, through constructor injection — then Spring automatically instantiates B first because A literally can't be constructed without it. But if it's an indirect dependency, where A doesn't reference B but relies on some global state or side effect that B produces during its @PostConstruct, then Spring won't know about it. In that case, I'd use @DependsOn("b")to explicitly declare the initialization order. Without that, the container makes no guarantees about which bean finishes first."
+
+###### pivot: instantiation VS initialization
 ❌ "A depends on B, so B initializes first — meaning Spring calls new B() before new A()."—— 这里的 "initializes" 其实说的是 instantiation，他在混用。
 ✅ "B goes through instantiation and initialization first, then A's constructor can receive it."—— 分得清。
 
 When you say 'B initializes first', do you mean Spring calls new B() first, or do you mean B goes through its full lifecycle — injection, @PostConstruct, all that — before A gets it?"
 
-Ah right — I meant B is fully initialized, not just instantiated. So B's @PostConstructwould have run before A's constructor even sees it.
+❌Oh — so there's a difference between instantiation and initialization? Let me think… instantiation is new, initialization is the stuff after — injection, @PostConstruct?
+✅With constructor injection, when A's constructor runs, B is already both instantiated and​ initialized — which is stronger than most people realize. 
 
-Oh — so there's a difference between instantiation and initialization? Let me think… instantiation is new, initialization is the stuff after — injection, @PostConstruct?
-
-Exactly. And that's why with constructor injection, when A's constructor runs, B is already both instantiated and​ initialized — which is stronger than most people realize.
-
-Let me give you a concrete case. If A uses @Autowired Bon a field, and A's constructor tries to call b.doSomething()— what happens?
-NPE null pointer exception
+###### pivot: Let me give you a concrete case. If A uses @Autowired B on a field, and A's constructor tries to call b.doSomething()— what happens?
+✅NPE null pointer exception
 Right. Because at that point, new A()has happened — A is instantiated​ — but B hasn't been injected yet, so A isn't initialized. That's the difference. newis one thing, being ready-to-use is another.
 
-OK, so if A uses constructor injection for B — at the moment A's constructor body runs, has B's @PostConstructalready executed, or not yet?
+###### pivot: PostConstruct
+OK, so if A uses constructor injection for B — at the moment A's constructor body runs, has B's @PostConstruct already executed, or not yet?
 
-**Can I control that order?**
+I meant B is fully initialized, not just instantiated. So B's @PostConstruct would have run before A's constructor even sees it.
+
+###### **Can I control that order?**
 
 Yes, absolutely. In Spring, if Bean A depends on Bean B, the most straightforward and recommended way to control their initialization order is by using Constructor Injection.
 
@@ -1635,11 +1654,64 @@ When you inject Bean B into Bean A through A’s constructor, the Spring IoC con
 
 Beyond just guaranteeing the order, constructor injection is actually considered a best practice because it ensures your dependencies are immutable and non-null right from the moment the bean is instantiated. It also helps prevent circular dependencies at startup time rather than at runtime.
 
-追问：
-"Yes, absolutely. If A actually needs an instance of B to function, the best way is constructor injection. Spring will naturally instantiate B before A because it needs B as a constructor argument. This is better than @DependsOnbecause it's type-safe, refactoring-friendly, and expresses the real intent — 'A cannot exist without B'."
+###### DependsOn - A doesn't directly reference B but relies on some side effect of B's initialization,
+"Yes, absolutely. If A actually needs an instance of B to function, the best way is constructor injection. Spring will naturally instantiate B before A because it needs B as a constructor argument. This is better than @DependsOn because it's type-safe, refactoring-friendly, and expresses the real intent — 'A cannot exist without B'."
 
 "That said, @DependsOn still has its place — for example, when A doesn't directly reference B but relies on some side effect of B's initialization, like global registry setup or controlling shutdown order. In those cases, @DependsOnis the right tool."
+@DependsOn的真正用途
+场景 1：间接依赖（没有对象引用）
+```
+@Component
+public class A {
+    // A 里面根本没有 B 的引用
+    // 但 B 会在启动时往一个全局静态 Map 里注册数据
+    // A 启动时需要读那个 Map
+}
 
+@Component
+@DependsOn("b")  // 必须等 B 先初始化完
+public class A {
+    @PostConstruct
+    public void init() {
+        GlobalRegistry.getData(); // 依赖 B 已经注册过
+    }
+}
+```
+场景 2：控制销毁顺序
+```
+@DependsOn("dataSource")
+@Component
+public class CacheManager {
+    // Spring 会保证：先销毁 CacheManager，再销毁 dataSource
+    // 否则 CacheManager 还在用连接池时连接池就没了
+}
+```
+场景 3：第三方库的静态初始化
+有些遗留系统或驱动需要在 JVM 层面先注册（比如某些 JDBC driver 的早期写法），这时候构造器注入根本注入不了任何东西，@DependsOn是唯一选择。
+
+###### Follow-up 1: Field Injection Trap
+"OK, so what if A uses @Autowiredon a field to inject B, instead of constructor injection? Does the order change? And can you use B inside A's constructor?"
+(Expected: No, you cannot use B in A's constructor — it's still null at that point. Field injection populates dependencies AFTER the constructor runs. Constructor injection guarantees B is fully initialized before A is even created.)
+###### Follow-up 2: Testing
+"Why do you say constructor injection is better than field injection? Give me a concrete example."
+(Expected: With field injection, you can't pass a mock dependency into a unit test without reflection or starting the whole Spring context. With constructor injection, you just newthe class and pass in a mock. Clean, fast, framework-independent tests.)
+
+
+##### What happens if A depends on B, and B also depends on A?
+
+第一层：直接回答现象
+"It depends on how the dependencies are injected. With constructor injection, Spring will fail fast at startup with a BeanCurrentlyInCreationException. That's actually a good thing — it surfaces the design problem immediately rather than hiding it."
+第二层：解释为什么（展示原理）
+"Constructor injection requires the dependency to be ready before the object is even created. So when A needs B and B needs A, neither can be instantiated first — it's a deadlock at the container level."
+第三层：对比字段/Setter 注入（展示深度）- Deep Dive — Why Does Field Injection "Work"?
+"With field or setter injection, Spring can handle it through its three-level cache mechanism. It creates the raw object first (before injection), exposes an early reference via singletonFactories, then fills properties later. But this is really just a workaround — it masks a design smell."
+
+第四层：给出工程建议（展示经验）
+"In practice, I avoid circular dependencies entirely. If I encounter one, I refactor — usually by extracting a third component C that both A and B depend on, or using @Lazyas a tactical fix when refactoring isn't immediately feasible."
+
+Follow-up : Practical Scenario
+"Let's say you're reviewing a teammate's code and you see a circular dependency resolved by field injection. What would you tell them, and how would you suggest fixing it?"
+(Expected: Point out it's a design smell. Suggest extracting shared logic into a third bean, or using @Lazyas a tactical workaround if refactoring isn't immediately feasible. Mention that constructor injection would have caught this at development time.)
 ##### “In one project, we initialized a custom database connection pool​ inside a @Serviceconstructor.
 
 Everything worked locally, but in production we saw intermittent Timeout waiting for connectionerrors.
@@ -1703,6 +1775,80 @@ Later, we added @PreDestroyto stop the consumer cleanly during redeployments.”
 
 
 ## ⚛️ Frontend / React / Web Development Questions
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                  FRONTEND CORE CONCEPTS CHEAT SHEET                 │
+└─────────────────────────────────────────────────────────────────────┘
+
+━━━ 1. STATE — What & Why ━━━
+
+• State = Component's memory. When state changes, UI re-renders.
+• Without state, UI is a static template. State makes it interactive.
+• Local state (useState) ≠ Server state (React Query / cached API data).
+
+
+━━━ 2. HTTP IS STATELESS — The Connection ━━━
+
+• Server forgets everything between requests → no built-in memory.
+• Frontend MUST maintain: auth status, cart, UI mode, user preferences.
+• That's exactly why frontend state management exists.
+
+
+━━━ 3. PROPS vs STATE ━━━
+
+┌──────────┬──────────────────────┬──────────────────────────┐
+│          │ PROPS                 │ STATE                    │
+├──────────┼──────────────────────┼──────────────────────────┤
+│ Source   │ Parent passes down    │ Component owns it        │
+│ Mutable? │ Read-only (by child)  │ Child can update         │
+│ Trigger  │ Parent re-renders     │ Calls setState → re-render│
+│ Metaphor │ Parameters given to   │ Your own notebook        │
+│          │ you by someone else   │                          │
+└──────────┴──────────────────────┴──────────────────────────┘
+
+
+━━━ 4. PROP DRILLING — Problem & Fixes ━━━
+
+Problem:  Data needed by deep child → passed through N layers that
+          DON'T use it. Intermediate components become pass-throughs.
+
+Fixes (in order of preference):
+  ① Composition (children/slots)  — pass JSX, not data
+  ② Context                        — for low-frequency globals
+  ③ State library (Zustand/Redux)  — for complex cross-cutting state
+  ④ Keep drilling                  — if only 1-2 levels, it's fine!
+
+
+━━━ 5. HOOKS — When & Why ━━━
+
+• Hook = "Hook into" React's internal system (state, lifecycle, context).
+• Custom hooks = extract stateful logic OUT of UI components.
+• Rule: If a component's useEffect grows beyond ~10 lines of logic →
+        extract into useXxx() custom hook.
+
+Separation of concerns:
+  Hooks   → HOW to compute / fetch / manage logic
+  Props   → WHAT data flows between components
+  UI      → HOW to render
+
+
+━━━ 6. QUICK ANSWER TEMPLATES ━━━
+
+Q: "Why does frontend need state?"
+→ "HTTP is stateless. Server forgets. Frontend must remember."
+
+Q: "Props vs State?"
+→ "Props are inputs from parent, read-only. State is owned, mutable,
+   and triggers re-render when changed."
+
+Q: "What is prop drilling?"
+→ "Passing props through layers that don't need them. Fix with
+   composition first, Context for globals, store for complexity."
+
+Q: "When to use a custom hook?"
+→ "When stateful logic is reused across components, or when a
+   component mixes too much logic with rendering."
+```
 
 what's the difference between javascript typescript?
 how about nodejs and reactjs, what's differences and things in common
@@ -1724,6 +1870,206 @@ webpage loading speed optimize
 https://lyhistory.com/docs/software/programming/interview_frontend.html#%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96
 
 ### React Architecture & State Management
+
+These tie together. HTTP is stateless, so the server forgets between requests — which means the frontend has to maintain its own state: who's logged in, what's in the cart, current UI mode. That's what useStateis for.
+State lives in some component and flows down via props. When a deeply nested child needs that state, you end up passing props through layers of components that don't use them — that's prop drilling. It's not inherently wrong, but when intermediate components become prop pass-throughs, it's a smell.
+Solutions: React composition (children) is usually the first choice — just render the deep component higher up and pass it down as JSX. If that doesn't fit, useContextfor low-frequency stuff like auth or theme. For complex cross-cutting state, a store like Zustand.
+Hooks, separately, are about separating concerns — extracting stateful logic out of components. useUser()instead of scattering fetch/loading/error inside the component. So props are for data flow between components; hooks are for encapsulating logic. Two different axes.
+
+#### what's state
+```
+HTTP 是无状态的
+   ↓
+前端必须有 State（自己记东西）
+   ↓
+State 要往下传 → Props
+   ↓
+Props 一层层穿 → Prop Drilling（痛点）
+   ↓
+怎么解决？Context / 状态提升 / 组合 / 状态库
+   ↓
+逻辑怎么从 UI 抽出去？Hooks
+```
+一句话总结：HTTP 的无状态逼出了前端的 State，State 催生了组件化数据流，数据流搞复杂了就出现了 Property Drift，Hooks 是解决这个问题的最佳实践。
+
+HTTP stateless is exactly why frontend state management exists. The server forgets everything between requests, so the client has to remember who the user is, what they've done, and what they're looking at.
+
+#### Prop Drilling
+
+定义：当深层子组件需要某个数据，但中间的父组件都不用，数据只能一层层 props 往下"钻"，像钻井一样
+```
+// App → Layout → Sidebar → UserMenu → Avatar
+// Avatar 要用 userId，但中间三层都不用
+
+function App() {
+  const [userId, setUserId] = useState("123");
+  return <Layout userId={userId} />;
+}
+
+function Layout({ userId }) {
+  return <Sidebar userId={userId} />;  // 自己不用，传下去
+}
+
+function Sidebar({ userId }) {
+  return <UserMenu userId={userId} />; // 自己不用，传下去
+}
+
+function UserMenu({ userId }) {
+  return <Avatar userId={userId} />;   // 终于用了
+}
+```
+resolve 1:
+```
+const UserContext = createContext();
+
+function App() {
+  const [user, setUser] = useState({ id: "123", role: "admin" });
+  return (
+    <UserContext.Provider value={user}>
+      <Layout />
+    </UserContext.Provider>
+  );
+}
+
+// 中间层全解脱了
+function Layout() { return <Sidebar />; }
+function Sidebar() { return <UserMenu />; }
+
+// 只用到的地方才消费
+function Avatar() {
+  const user = useContext(UserContext);
+  return <img src={`/avatar/${user.id}`} />;
+}
+```
+solve 2: Component Composition
+```
+// 不用 drilling，也不用 Context，直接把"要渲染什么"当 children 传下去
+function Layout({ children }) {
+  return <div className="layout">{children}</div>;
+}
+
+function App() {
+  const [userId] = useState("123");
+  return (
+    <Layout>
+      <Sidebar>
+        <UserMenu>
+          <Avatar userId={userId} />  {/* 直接传，不用钻 */}
+        </UserMenu>
+      </Sidebar>
+    </Layout>
+  );
+}
+
+或者更 React 经典的模式——render prop / slot 模式：
+
+function App() {
+  const [userId] = useState("123");
+  return (
+    <Layout
+      sidebar={<UserMenu avatar={<Avatar userId={userId} />} />}
+    />
+  );
+}
+```
+SOLVE 3: 状态库（Zustand / Redux / Pinia 等）
+当 Context + useReducer 都不够用时（比如状态要跨很远、要中间件、要 selector 精细化重渲染）：
+Zustand：轻量，直接 const user = useUserStore(s => s.user)
+Redux Toolkit：重，但有 devtools + middleware 生态
+
+Kent Dodds 那句名言）：
+"Props drilling isn't always bad — sometimes it's just how React flows data. But when the intermediate components don't actually need the prop, that's the smell. The fix is often composition (children), not Context."
+还有那句经典的："Context is for low-frequency changes (theme, locale, auth). High-frequency state shouldn't go in Context."
+
+Drilling vs Drift 
+Prop drilling is about props traveling through unnecessary intermediate components. Property drift — if you meant that — is when a child copies a prop into local state and then the prop updates upstream but the local state doesn't follow. Different problem, different fix: drilling → composition/Context; drift → stop copying props, or sync with useEffect, or use keyto reset.
+
+Prop Drilling — Decision Tree
+```
+START: Deep child needs data from ancestor
+  │
+  ▼
+┌─────────────────────────────────────┐
+│ Q1: Only 1-2 layers between?        │
+│    (e.g. Parent → Child → Grandchild)│
+└─────────────────────────────────────┘
+  │YES                        │NO
+  ▼                           ▼
+Just drill it.              Q2: Do intermediate
+Explicit > clever.          components NEED the data?
+                            │
+                    YES     │     NO
+                    ▼       ▼       ▼
+              Normal        │    They're just
+              prop flow     │    pass-throughs
+                            ▼
+                    ┌───────────────────┐
+                    │ Q3: How often     │
+                    │ does data change? │
+                    └───────────────────┘
+                      │            │
+                  Rare/Infrequent  │
+                  (theme, locale,  │
+                   auth user)      │ Frequent
+                        │          │ (input values,
+                        ▼           │ real-time data)
+                 Use Context        ▼
+                        │      ┌──────────────────┐
+                        │      │ Q4: Is it truly  │
+                        │      │ app-wide shared?  │
+                        │      └──────────────────┘
+                        │        │          │
+                        │     Yes│          │No
+                        │        ▼          ▼
+                        │   State Library  Composition
+                        │   (Zustand,     (children/
+                        │    Redux)        render prop)
+                        │        │          │
+                        └────────┴──────────┘
+                                 ▼
+                          Final Recommendation
+
+
+━━━ DECISION SUMMARY ━━━
+
+Layer Depth    │ Intermediate Need Data? │ Change Frequency │ Solution
+───────────────┼─────────────────────────┼──────────────────┼──────────────
+1-2 levels     │ Yes or No               │ Any              │ Just drill it
+3+ levels      │ No                      │ Low              │ Context
+3+ levels      │ No                      │ High             │ Composition
+Any            │ No                      │ High + shared    │ Zustand/Store
+Deep + complex │ N/A                     │ Complex logic    │ Lift + Store
+
+
+━━━ RED FLAGS (what NOT to do) ━━━
+
+✗ Putting high-frequency state (typing input, mouse position) in Context
+  → every keystroke re-renders ALL consumers
+
+✗ Using Redux for everything because "it's standard"
+  → overkill for simple local UI state
+
+✗ Creating Context for every piece of state
+  → fragmentation, harder to trace data flow
+
+✗ Using custom hook just to wrap useState in one component
+  → premature abstraction, no reuse benefit
+
+
+━━━ ONE-LINE RULES OF THUMB ━━━
+
+• "Drill by default. Opt out only when it hurts."
+• "Composition beats Context. Context beats Store."
+• "Hooks separate logic from UI. Props separate data from logic."
+```
+
+#### props vs state
+什么时候用 Props：
+数据是父组件控制的（列表项、配置项、回调函数）
+子组件只是"展示"，不需要自己改
+什么时候用 State：
+组件内部的交互反馈（输入框内容、展开/收起、loading 状态）
+数据只跟这个组件有关，别的组件不需要知道
 
 #### Hooks and prop
 
