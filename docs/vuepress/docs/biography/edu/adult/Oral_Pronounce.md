@@ -6,6 +6,122 @@ https://www.englishaccentsmap.com/
 ### Vowel 元音
 All 16 English Vowel Sounds (with Examples)
 
+```
+16个元音符号及对应单词示例
+
+1. /iː/ —— 长元音 “ee”
+- beat
+- sea
+- see
+- tea
+- key
+
+2. /ɪ/ —— 短元音 “i”
+- bit
+- sit
+- ship
+- fish
+- big
+
+3. /ɛ/ —— 短元音 “e”
+- bet
+- bed
+- pen
+- red
+- hen
+
+4. /æ/ —— 短元音 “a”
+- bat
+- cat
+- hat
+- map
+- sad
+
+5. /eɪ/ —— 双元音 “ay”
+- bait
+- day
+- say
+- play
+- rain
+
+6. /aɪ/ —— 双元音 “i”
+- bite
+- my
+- fly
+- sky
+- time
+
+7. /oʊ/ —— 双元音 “o”
+- boat
+- go
+- home
+- snow
+- toe
+
+8. /aʊ/ —— 双元音 “ow”
+- bout
+- cow
+- now
+- how
+- flower
+
+9. /uː/ —— 长元音 “oo”
+- boot
+- moon
+- food
+- school
+- rule
+
+10. /ʌ/ —— 短元音 “u”
+- butt
+- cup
+- sun
+- fun
+- love
+
+11. /ɑː/ —— 长元音 “ar”
+- bot (英式发音 /bɒt/，美式 /bɑːt/)
+- car
+- far
+- star
+- bar
+
+12. /ɔː/ —— 长元音 “or”
+- bought
+- law
+- saw
+- door
+- more
+
+13. /ɜː/ —— 长元音 “er”
+- Bert
+- bird
+- her
+- nurse
+- word
+
+14. /ʊ/ —— 短元音 “oo”
+- book
+- look
+- cook
+- good
+- foot
+
+15. /ɔɪ/ —— 双元音 “oy”
+- boy
+- toy
+- joy
+- coin
+- voice
+
+16. /ə/ —— 弱读音 “schwa”
+- about
+- sofa
+- teacher
+- banana
+- problem
+```
+
 #### 1. Short Vowels (Monophthongs)
 | Sound | IPA Symbol | Example Words (UK/US) |
 |-------|------------|------------------------|
@@ -319,6 +435,10 @@ enthusiasm
 Vacuum
 
 ## 容易读错 a-z
+/m/​ 双唇闭死闭着
+/n/​舌尖顶上齿龈（牙龈那个小棱）唇自然开着，但舌头封门​
+/ŋ/​ (sing) 舌面抬起来顶软腭 嘴开得更大
+例子 yum VS young
 
 ### a
 at

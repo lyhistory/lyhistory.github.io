@@ -489,6 +489,12 @@ new MyObject() 实例 @堆
                                 │ Klass Pointer
                                 │
                                 |→ Klass Pointer → InstanceKlass of java.lang.Class (Metaspace)（所有 XXX.class 对象共享这一个）
+                                | _java_mirror 指针
+                                v
+                                [java.lang.Class 对象] (堆，也就是 java.lang.Class.class)
+                                | _klass 指针
+                                v
+                                [InstanceKlass of java.lang.Class] (Metaspace)  <-- 回到原点！
 ```
 
 InstanceKlass（Metaspace）里有一个字段叫 _java_mirror，指向堆里的 MyObject.class对象。
@@ -500,6 +506,28 @@ InstanceKlass（Metaspace）里有一个字段叫 _java_mirror，指向堆里的
     这个对象是 JVM 自动 new出来的，不需要你手动 new。
 
     而且每个类只有一个，是单例的。
+
+为什么java.lang.Class是“自指”而不是“另一个”？
+
+    任何对象都必须有 klass 指针：MyObject.class这个对象是堆里的普通对象，它的 klass 指针必须指向某个 InstanceKlass，那就是 InstanceKlass of java.lang.Class。
+
+    任何 InstanceKlass 都必须有 _java_mirror：JVM 规定每个 InstanceKlass都要通过 _java_mirror关联到一个堆中的 Class对象，以便 Java 代码能访问到类元数据。
+
+    当 JVM 启动并加载 java.lang.Class类时，它在 Metaspace 创建了 InstanceKlass of java.lang.Class，同时在堆中创建了唯一的 java.lang.Class对象。这个 InstanceKlass 的 _java_mirror就直接指向这个刚创建的 Class 对象本身。
+
+    因此，这是一个双向的环状引用：
+
+    InstanceKlass of java.lang.Class ⇌ java.lang.Class 对象
+
+    不存在“另一个 mirror”，也不存在无限递归的内存占用。
+    代码验证:
+    ```
+    Class<?> myObjectClass = MyObject.class;
+    Class<?> classClass = java.lang.Class.class;
+
+    System.out.println(myObjectClass.getClass() == classClass); // true
+    System.out.println(classClass.getClass() == classClass);     // true，自指！
+    ```
 
 MyObject.class这个 Java 对象本身也是一个普通对象，它自己的对象头里也有一个 Klass Pointer，指向 java.lang.Class的 InstanceKlass（在 Metaspace）—— 这是另一个 InstanceKlass，不是 MyObject的那个。
     所有 XXX.Class 的 Klass Pointer 都指向同一个 InstanceKlass of java.lang.Class

@@ -2378,6 +2378,22 @@ in/on bed
 	She sat on the bed and cried.  ✅ 她坐在床沿/床面上哭（没钻进被子）
 	There's a cat sleeping on my bed. ✅ 猫在我床面上睡
 #### 其他
+
+Jack Hartmann  "see it, say it, sign it, the letters are the alphabet"
+sign​ 作动词时，母语者脑里的词义优先级大概是：
+签名（最常用）→ sign a check / sign the contract
+打手势 / 示意​ → sign to me to come closer / sign "OK"
+(聋人)手语​ → sign ASL, sign the alphabet
+❌ 普通"写字母"​ —— 这个义项基本不存在，母语者不会往这想
+也就是说，"sign + 字母/语言单位"这个搭配，天然指向手语，不是写字。要表达"写字母"，母语者会说 write the letter​ 或 trace the letter（描红），绝不会说 sign it。
+做个手势/示意:
+sign to me to come closer​ ≈ "打手势让我靠近"（手势可以是 OK、食指勾一下、摆手都行）
+gesture for me to come closer​ ≈ 同上，更口语万能
+motion me over​ ≈ 美式口语最爱，"抬下巴/抬手示意我过去"
+beckon (to) me​ ≈ "招手唤我"，英式小说里常见
+signal me to stop​ ≈ "给暗号让我停"，偏开车/战术/正式场合
+
+
 Follow up as needed 积极主动、客观务实。你是在告诉对方：“这事儿我们接手了，后续动作看实际情况而定。”
 Follow up if needed 带有条件假设和不确定性。它把主动权完全推给了“未来的某个假设”，有时会让对方觉得你目前倾向于按兵不动（do nothing unless forced to）。
 

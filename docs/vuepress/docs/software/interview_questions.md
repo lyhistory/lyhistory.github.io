@@ -1609,6 +1609,16 @@ Give me a concrete example where initializing something in the constructor cause
 
 ##### If I have two beans, A and B, and A depends on B, who initializes first?
 
+If I have two beans, A and B, and I say A depends on B — what comes to your mind? What would the code look like? How would you actually express that dependency in code?
+/
+If I tell you that bean A depends on bean B, what does that mean to you? How would you represent that relationship in code, and what implications would it have?"
+
+Just to give you a nudge — I'm thinking about the Spring bean lifecycle and how injection actually works under the hood.
+/
+I'll give you a hint — think about what happens during the bean lifecycle and when injection kicks in."
+/
+To point you in the right direction — this touches on the bean lifecycle and the different ways injection can happen.
+
 ###### candidates often hesitate because the phrase "A depends on B"​ feels ambiguous.
 The candidate's internal thought process usually goes something like this:
 What does 'depends' actually mean here? Does it simply mean A holds a reference to B internally? Or does it mean A needs to wait for B's initialization logic to fully complete before A can start? Are we talking about constructor instantiation, or the entire lifecycle including @PostConstruct? And if A truly depends on B, isn't Spring supposed to just figure it out automatically — or do I need to intervene?
@@ -2072,6 +2082,10 @@ Deep + complex │ N/A                     │ Complex logic    │ Lift + Store
 数据只跟这个组件有关，别的组件不需要知道
 
 #### Hooks and prop
+
+I noticed you have frontend experience with Aurelia. Can you walk me through how you would build a component? I'm less interested in the specific syntax — more curious about your thought process. How do you approach it from start to finish?
+
+Let me make it more concrete. Suppose I ask you to build a UserList page that fetches user data from a backend API. How would you organize the file structure for this feature, and what's your reasoning behind that structure?
 
 *"Let's talk about how you write your components. Do you mix your data-fetching and calculations directly inside the component that draws the buttons and text?
 
@@ -2665,6 +2679,12 @@ https://lyhistory.com/docs/software/highlevel/distrubuted_system.html#_2-1-2-%E4
 ## monolithic application to microservice
 
 ### Spring Boot: Monolith vs. Microservices
+
+I see you have experience transforming legacy systems into microservices — could you share what the main challenges were?
+/
+I noticed you've done legacy-to-microservices transformations before — what were the biggest challenges?
+/英国人说话偏含蓄、喜欢用 softener（缓冲词）​ 
+I see you've got some experience with transforming legacy systems into microservices — would you mind sharing what the main challenges were?
 
 In your experience working with Spring Boot.
 Did you use it as a single monolithic application or as part of a microservices architecture?

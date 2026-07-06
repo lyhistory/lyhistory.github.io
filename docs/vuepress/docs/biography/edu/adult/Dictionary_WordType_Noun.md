@@ -141,6 +141,16 @@ technician
 terminator
 trusty
 trustee
+## 可数/不可数
+规律：越抽象/越整体 → 不可数；越具体/越强调种类或个体 → 可数。
+
+fruit 作"水果"统称 → 不可数 The flowers are yellow; the fruit is​ red.（果实是红的。）
+fruits 作"多种水果"或"成果" → 可数 Apples, oranges, and bananas are three different fruits. the fruits​ of my labor
+
+food 泛指"食物"这个东西 → 不可数 Food is​ expensive these days.
+foods 强调"不同种类的食物" → 可数 Processed foods​ are bad for you.（加工类食品——多种品类）
+
+
 
 ## common nouns
 acronym ˈækrənɪm 缩写词

@@ -1915,6 +1915,9 @@ Next Steps
 
 “Given the candidate’s C# background, could we clarify the rationale for interviewing him for these roles? Is it for potential cross‑system flexibility, or is there a specific skill set we’re prioritizing?”
 “Candidate shows strong problem‑solving and support experience; final placement depends on confirming whether System A or B aligns better with his profile.”
+## Customer sercvie
+I will get back to you once I get the orders
+Great! Looking forward to receiving your order details.
 ## TICKETS
 
 Subject: Temporary Internet Access Request for Website Test Environment
@@ -1983,10 +1986,18 @@ How To Protect Your Business From The Dark Side Of The Internet Of Things https:
 
 ### Software engineer 
 
+Adjust the gimbal's tilt manually or use the virtual joystick on the touchscreen.
+可手动调整云台俯仰角度，或在触摸屏上使用虚拟摇杆进行调整。
+
 wire through
 I’ll treat this as two tracks: first inspect the current Douyin failure screenshot from Docker so we know what blocked it, then wire those screenshots through the publish status API and frontend so failures are visible in the UI. I’ll also check the Docker setup and give you a concrete path for manual browser interaction, because headless Playwright inside Docker needs extra plumbing for that.
 
 I’ll pull the latest XHS and WeChat screenshots from Docker first, then patch against what the pages actually show. From your description, XHS likely needs date/time picker interaction instead of direct text fill, and WeChat probably needs direct input[type=file].set_input_files() rather than clicking the upload rectangle.
+
+
+alphanumeric
+computer/CYBER  forensics​ 从电脑、手机、服务器、网络流量里提取数字证据的科学，用来查黑客、数据泄露、网络犯罪，证据要能在法庭上站得住
+具体干的事：恢复被删文件、追踪网络攻击路径、分析恶意软件、做磁盘镜像……所以是 Information Security 的"调查分支"，跟"防"（安全）和"查"（取证）是一对。
 
 
 overload / name mangling
