@@ -1729,6 +1729,13 @@ If you encounter any connection issues, please ensure you are connecting via por
 
 ## Interview
 
+### CV
+Adept 比 good at 更正式，比 expert 稍低调一点，暗含"手到擒来"的意味
+    Adept at bridging the gap between complex system design and effective team collaboration
+Meticulous 带褒义，强调做事每一步都认真、不马虎
+    meticulous planning / meticulous attention to detail 
+    building meticulous, future-proof systems
+### interviewer
 Hi [Name], sorry for the short notice, but I can't make the interview today. I need to focus on prepping for the weekend server restarts after Peter’s patches. A few servers are new to us, so I need to verify the services manually.
 
 Also, I took a quick look at the resumes—personally, I feel they might not be the best fit, but let’s wait for [xx] and Andrew to weigh in.
@@ -2689,6 +2696,20 @@ speculate vs hedge vs invest vs infer
 
 ### About Start up Business/Entrepreneurship
 
+SLA = Service Level Agreement
+    全称：Service Level Agreement（服务等级协议）
+    本质：甲方乙方之间签的"履约标准合同"——不光约定"你给我提供什么服务"，更关键的是约定做到什么程度算合格、做不到怎么罚。
+    Daily datasets to be sent out by global exchange market open hours (e.g. LSEG, NASDAQ...) as per SLA.
+Subsidiary
+    XXX is a subsidiary of ABC Inc.
+wholly owned subsidiary​ → 全资子公司（100% 持股）
+
+indirect subsidiary​ → 间接子公司（母公司通过另一家子公司再控股它）
+
+parent company / holding company​ → 母公司 / 控股公司
+
+affiliate​ → 关联公司（持股但未必到"控制"程度，比 subsidiary 松一点）
+
 A sudden spike in interest in 'Green' options has taken us by surprise, how to offer energy efficient models, and still manage our legacy inventory.
 市场对“绿色”选项的兴趣激增令我们措手不及，如何在提供高能效产品的同时妥善处理传统库存？legacy inventory‌ 指因技术迭代或政策变化滞销的传统产品（如燃油车、非智能电器）
 
@@ -2716,6 +2737,9 @@ Wholesale warehouse sale retail
 merchandise / goods
 
 ### About Employ
+
+Personnel 字面意思：人员、员工、全体职员（集合名词，没有复数形式）。
+    deployment personnel​ = 部署人员 / 运维人员 / DevOps 工程师。
 
 to tender one's resignation（提交辞呈）to tender one's thanks（致以谢意）to tender an apology（致歉）to tender for a contract（为一份合同投标）
 The company submitted a tender for the construction project.（该公司为那个建设项目提交了一份标书。）
