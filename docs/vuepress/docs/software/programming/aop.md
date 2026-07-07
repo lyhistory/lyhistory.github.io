@@ -401,6 +401,7 @@ https://blog.csdn.net/gavin_john/article/details/80252414
 
 ### 例子
 Spring AOP = 代理设计模式 + 动态代理技术（JDK/CGLIB）+ 拦截器链
+
 ```
 public interface UserService {
     void addUser(String name);
@@ -842,6 +843,98 @@ managed components & proxy(jdk proxy&cglib)
 https://docs.spring.io/spring/docs/2.5.x/reference/aop.html
 
 https://www.credera.com/blog/technology-insights/open-source-technology-insights/aspect-oriented-programming-in-spring-boot-part-2-spring-jdk-proxies-vs-cglib-vs-aspectj/
+
+### 规则
+Spring 在选择代理技术时，有一个非常明确的优先级逻辑。
+
+1. 默认规则（Boot 2.x 之后）
+
+只要这个类有接口，默认用 JDK 动态代理；没有接口，用 CGLIB。
+- 目标类实现了至少一个接口
+  JDK 动态代理​
+  基于接口规范，性能好，JDK 原生支持
+- 目标类没有实现接口
+  CGLIB​
+  只能通过继承（子类化）来增强
+
+2. 为什么 @Async/ @Configuration强制用 CGLIB？
+@Async和 @Configuration是个很好的观察点。
+- @Configuration（类级别代理）：
+它需要拦截类内部的方法调用（this.method()）。
+
+JDK 动态代理是基于接口的，它没法拦截类内部的方法调用（因为调用的是目标对象本身，而不是代理对象）。
+
+CGLIB 通过继承类并重写方法，能做到这一点（虽然 @Transactional这种 Method-level 的自调用依然不行，但 Class-level 的拦截逻辑 CGLIB 更强）。
+- @Async：
+
+它需要增强具体的方法逻辑（扔到线程池）。
+
+同样，为了稳妥地覆盖所有情况（尤其是类内部的调用意图），Spring 强制使用 CGLIB。
+
+3. Spring Boot 2.x 之后的“潜规则”
+
+现在的 Spring Boot 项目，如果你看到日志里全是 CGLIB，不要惊讶。
+
+因为在 Spring Boot 2.x 之后，默认配置变成了：
+`spring.aop.proxy-target-class=true`
+这意味着：默认强制使用 CGLIB，不管你有没有接口。
+
+为什么要改？
+
+因为 JDK 动态代理有个大坑：它只能拦截接口中定义的方法。如果你的类里有一个方法没写在接口里，JDK 代理就拦不住。CGLIB 基于继承，能拦截所有 public和 protected方法（只要不是 final），更安全，心智负担更小。
+
+### 如何通过日志/代码确认 Bean 是否被代理？
+这是排查 @Transactional失效、AOP 不生效的终极手段。
+
+方法 1：看类名（最直观）
+
+在调试时打个断点，或者打印 bean.getClass().getName()：
+```
+@Autowired
+private OrderService orderService;
+
+@PostConstruct
+public void checkProxy() {
+    System.out.println(orderService.getClass().getName());
+}
+```
+方法 2：开启 DEBUG 日志（推荐）
+
+在 application.yml中开启 Spring AOP 的日志：
+```
+logging:
+  level:
+    org.springframework.aop: debug
+    org.springframework.transaction: trace
+```
+启动应用时，你会看到类似这样的日志：
+```
+DEBUG o.s.aop.framework.CglibAopProxy - Creating CGLIB proxy...
+TRACE o.s.t.i.TransactionInterceptor - Getting transaction for...
+```
+
+这能明确告诉你：
+
+哪个类正在被代理。
+
+事务拦截器是否在正确的时机介入。
+
+方法 3：利用 AopContext（验证自调用场景）
+
+如果你想验证是不是因为自调用导致事务失效，可以用我们之前提到的 AopContext：
+```
+@Service
+public class OrderService {
+
+    public void B() {
+        // 如果不加 @EnableAspectJAutoProxy(exposeProxy = true)，这里会抛异常
+        Object proxy = AopContext.currentProxy();
+        System.out.println(proxy == this); // false 说明当前在代理环境中
+    }
+}
+```
+如果这段代码抛了 IllegalStateException，说明当前方法根本不在 Spring AOP 的管理范围内（或者没开启暴露代理），这是排查问题的铁证。
+
 
 ### 用法
 #### Spring AOP

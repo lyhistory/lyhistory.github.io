@@ -361,15 +361,19 @@ Environment 是底层存储，@Value 是上层消费方式。当你写 @Value("$
 
 构 → 填 → Aware → @PostConstruct → afterPropertiesSet → initMethod → AOP代理 → 就绪
 
+Spring 的“统一套路”：​ 凡是需要“偷偷加料”的魔法注解，底层全是 AOP 代理。关键在于代理粒度和技术手段的不同。核心逻辑只有一个：这个类必须是 Spring 容器管理的 Bean，且方法调用必须经过 Spring 生成的代理对象。
+
++ 类级别代理：最典型的就是 @Configuration（Full Mode）。Spring 会使用 CGLIB 对整个类进行增强，拦截类内部的所有方法调用（包括 this.xxx()自调用），目的是保证 @Bean方法返回的是容器内的单例，而不是 new 出来的新对象。
++ 方法级别代理：下面列表中绝大多数的注解（如 @Transactional、@Async等）都属于此类。它们通常只拦截特定的方法。一旦在类内部发生自调用（即 this.methodA()调用 this.methodB()），调用会绕过代理直接作用于目标对象，导致注解失效（除非使用 AspectJ 模式）。
 常见的"会触发AOP代理"的注解:
-+ @Transactional 	JDK 动态代理 / CGLIB
-+ @Async CGLIB（因为要拦截方法调用）
-+ @Cacheable/ @CacheEvict JDK 动态代理 / CGLIB
-+ @Validated CGLIB
-+ @FeignClient 动态代理（Feign 自己生成的）
-+ 自定义 @Aspect切面匹配到的 JDK 动态代理 / CGLIB
-注意：​ 这些注解不是只能加在 @Service上，加在 @Component、@Repository、@Controller甚至普通类上（如果该类被扫描为 Bean）都会触发代理。
-一个容易忽略的点
+- @Transactional：JDK 动态代理 / CGLIB（方法级）。注意自调用失效问题。默认有接口用 JDK，无接口用 CGLIB；Boot 2.x 后默认强制 CGLIB。
+- @Async：CGLIB（方法级）。必须走代理才能将任务提交到线程池。
+- @Cacheable/ @CacheEvict：JDK 动态代理 / CGLIB（方法级）。
+- @Validated：CGLIB（方法级）。用于方法参数的校验拦截。
+- @FeignClient：动态代理（Feign 自己生成的，非 Spring AOP）。属于 RPC 接口的接口代理。
+- 自定义 @Aspect切面匹配到的类：JDK 动态代理 / CGLIB（取决于切点定义，通常是方法级）。
+注意：这些注解不是只能加在 @Service上。只要该类被 Spring 扫描并管理为 Bean（即加了 @Component、@Repository、@Controller或 @Configuration），Spring 就会为其创建代理，注解便会生效。反之，如果一个类没被 Spring 托管，上面的注解就仅仅是“摆设”。
+
 ```
 @Service
 public class UserService {
@@ -379,7 +383,124 @@ public class UserService {
 }
 ```
 这个 UserService会被代理。但代理的是 UserService，不是 createUser方法本身。代理对象包裹着原始对象，在调用 createUser前后插入事务逻辑。
+执行流程是这样的：
+```
+你调用 bean.createUser() 
+    ↓
+Spring 生成的代理对象（Proxy）
+    ↓
+事务拦截器（TransactionInterceptor）开启事务
+    ↓
+目标对象（Target）的 A() 真正执行
+    ↓
+事务提交/回滚
+```
+但如果是自调用（同一个类里 B() 调 A()）：
+```
+@Service
+public class OrderService {
 
+    public void B() {
+        System.out.println("B 中的 this 类型: " + this.getClass()); 
+        // 输出: class com.xxx.TestService （目标类，不是代理）
+
+        A();  // ← 本质是 this.A()，直接调用，没有经过代理！
+    }
+
+    @Transactional
+    public void A() {
+        // 数据库操作
+    }
+}
+
+你调用 bean.B()
+    ↓
+代理对象（Proxy）→ 发现 B() 没有 @Transactional，不开启事务
+    ↓
+目标对象的 B() 执行
+    ↓
+this.A() ← 这里 this 就是目标对象本身，不是代理！
+    ↓
+直接调用目标对象的 A()，完全绕过了代理
+    ↓
+事务拦截器根本没机会介入 → 事务失效
+
+一句话总结：@Transactional是靠代理对象"拦一道"才生效的，自调用绕过了代理，所以拦截器没介入，事务自然不生效。
+
+解决方案（从最推荐到最不推荐）
+
+✅ 方案一：拆到不同的 Bean 中（最推荐）
+@Service
+public class ServiceA {
+
+    @Autowired
+    private ServiceB serviceB;
+
+    public void B() {
+        serviceB.A();  // 通过代理对象调用，事务生效
+    }
+}
+
+@Service
+public class ServiceB {
+
+    @Transactional
+    public void A() {
+        // 数据库操作
+    }
+}
+✅ 方案二：使用 AopContext 获取当前代理（次推荐）
+@Service
+public class OrderService {
+
+    public void B() {
+        ((OrderService) AopContext.currentProxy()).A();
+    }
+
+    @Transactional
+    public void A() {
+        // 数据库操作
+    }
+}
+✅ 方案三：使用 AspectJ 模式（编译期/类加载期织入）
+@EnableTransactionManagement(mode = AdviceMode.ASPECTJ)
+@Configuration
+public class TxConfig {}
+
+✅ 方案四：编程式事务（TransactionTemplate）
+@Service
+public class OrderService {
+
+    @Autowired
+    private TransactionTemplate transactionTemplate;
+
+    public void B() {
+        transactionTemplate.execute(status -> {
+            A();  // 在事务模板内调用，事务生效
+            return null;
+        });
+    }
+
+    public void A() {
+        // 数据库操作
+    }
+}
+⚠️ 方案五：给 B() 也加上 @Transactional（容易踩坑）
+@Service
+public class OrderService {
+
+    @Transactional
+    public void B() {
+        A();  // A 的事务注解会被忽略，但 B 的事务会传播到 A
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void A() {
+        // ...
+    }
+}
+
+```
 
 Bean的生命周期：从配置到实例化:
 

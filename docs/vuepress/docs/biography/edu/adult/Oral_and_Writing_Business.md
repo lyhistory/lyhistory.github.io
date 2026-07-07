@@ -617,6 +617,11 @@ Prepare the service startup steps after XXX patches the system this weekend.
 
 ### business dialogue
 
+hi bro, can help check when is the cut off time for this file to upload, lattest by what time? it's not hurry , just enquiry
+<=
+Hey bro, I believe it should be done before the daily 'Shift Market Price' task runs at 6 PM — just to confirm, the file you upload only contains the last price, right? 
+But I'm curious: since you guys aren't sure about the latest time, how do you normally decide when to upload it? I mean, by rights, Peter should have sent you a daily operations manual or something that tells you what to do when and what the dependencies are — that's why I'm asking.
+
 hi  , gotten news from xx that DMP is over. you guys can revert the DEV environment back to normal.
 <=Just to clarify, do you mean shutting down the environment? Since it's a testing space, there isn't really a 'default' state to go back to. If it's no longer needed, we can decommission it.
 
@@ -1954,6 +1959,14 @@ desktop/laptop ram ssd hd monitor main processor case main board driver keyboard
 
 impedance 阻抗
 	impedance mismatch 不匹配的障碍 The Controller layer reduces the impedance mismatch between HTTP and the Domain Model.
+
+云台的三个旋转轴对应的英文是：
+
+俯仰​ → Pitch
+
+偏航​ → Yaw
+
+横滚​ → Roll
 
 #### Technical Products Specification and Review
 
