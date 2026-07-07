@@ -11,6 +11,10 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 <div>
 	<h3>架构经验</h3>
 	<ul>
+		<li><a href="/docs/software/highlevel/core_concepts_consistency&coordination">核心概念:一致性并发隔离</a></li>
+		<li><a href="/docs/software/highlevel/core_concepts_ccore_concepts_data_integrity">核心概念:数据完整性</a></li>
+		<li><a href="/docs/software/highlevel/core_concepts_reliability_patterns">核心概念:可靠性模式</a></li>
+		<li><a href="/docs/software/highlevel/core_concepts_extensibility">核心概念:扩展性方法</a></li>
 		<li><a href="/docs/software/highlevel/system_fundamental_os">Single-Machine Core 系统基础:操作系统</a></li>
 		<li><a href="/docs/software/highlevel/system_fundamental_data_structures">Single-Machine Core 系统基础:数据结构</a></li>
 		<li><a href="/docs/software/highlevel/system_fundamental_algorithm">Single-Machine Core 系统基础:算法</a></li>
@@ -18,7 +22,6 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/highlevel/software_design_enterprise_architect">软件设计:企业架构</a></li>
 		<li><a href="/docs/software/highlevel/software_design_designpattern">软件设计:设计模式</a></li>
 		<li><a href="/docs/software/programming/aop">软件设计:AOP 面向切面编程</a></li>
-		<li><a href="/docs/software/highlevel/single_machine_concurrent">Single-Machine Application 单应用考虑:并发控制</a></li>
 		<li><a href="/docs/software/highlevel/single_machine_threadsafe">Single-Machine Application 单应用考虑:线程安全</a></li>
 		<li><a href="/docs/software/highlevel/distrubuted_system">Distributed System Primitives:分布式系统开发</a></li>	
 		<li><a href="/docs/software/highlevel/distrubuted_system_microservice">Distributed System Primitives:微服务</a></li>	

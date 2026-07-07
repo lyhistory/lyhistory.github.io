@@ -6,6 +6,9 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《线程安全》
 
+**关联主文档**：[Core Concept: Consistency & Coordination](./core_concepts_consistency&coordination.md)
+**定位**：本文档是主文档中“并发控制（Concurrency Control）”章节的底层实现细节，专注于 JVM 内存模型与锁机制。
+
 关键词：
 并发 并行 高并发 低并发 互斥 同步 异步 单线程 多线程
 
