@@ -7,6 +7,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 ## jdk
 
 OpenJDK 是上游源码项目，Oracle JDK 和 Adoptium/Temurin 是下游的 JDK 发行版，后者免费，前者商用收费。用一个比喻就懂了——OpenJDK 是配方，各家厂商是不同面包房，烤出来的蛋糕口味基本一致，但包装和售后不同。
+```
 OpenJDK（上游源码项目，配方）
    │  甲骨文烘焙       Eclipse 基金会烘焙
    ▼                     ▼
@@ -15,6 +16,7 @@ Oracle JDK          Eclipse Adoptium（基金会/工作组名）
    │                 Eclipse Temurin（旗下 JDK 产品名）
    ▼                     ▼
 收费（生产环境）        完全免费
+```
 
 https://www.oracle.com/technetwork/java/javase/downloads/index.html
 archive
@@ -107,6 +109,9 @@ Enter to keep the current selection[+], or type selection number:
 failed to create /var/lib/alternatives/java.new: Permission denied
 $ which java
 /usr/bin/java
+
+$ readlink -f $(which java)
+
 $ ll /usr/bin/java
 lrwxrwxrwx 1 root root 22 Nov 25  2019 /usr/bin/java -> /etc/alternatives/java
 $ ll /etc/alternatives/java
@@ -144,6 +149,41 @@ rpm -e jre1.8-1.8.0_221-fcs
 
 
 ## jdk troubleshooting
+
+### 忘记是如何安装的
+```
+# 1. 查 yum 日志
+grep -i openjdk /var/log/yum.log*
+
+# 2. 查 rpm 安装时间
+rpm -qi java-1.8.0-openjdk | grep "Install Date"
+
+# 3. 查谁最近登录过
+last | head -20
+
+# 4. 查 alternatives 什么时候被改过（高级）
+ls -lrt /etc/alternatives | grep java
+```
+### maven依赖
+
+Maven 本身不能独立运行，必须依赖外置 JDK/JRE
+Maven 的 bin/mvn（Linux 下）启动顺序是这样的：
+```
+# 1. 先看有没有 JAVA_HOME
+if [ -z "$JAVA_HOME" ]; then
+  # 2. 没有的话去 PATH 里找 java
+  JAVA=$(which java 2>/dev/null)
+else
+  JAVA=$JAVA_HOME/bin/java
+fi
+
+# 3. 两个都找不到 → 报错退出
+```
+所以理论上：
+
+✅ 只装 JDK + PATH 里有 java​ → Maven 能跑（不设 JAVA_HOME 也行）
+
+✅ 设了 JAVA_HOME​ → Maven 优先用 JAVA_HOME
 
 ### security
 

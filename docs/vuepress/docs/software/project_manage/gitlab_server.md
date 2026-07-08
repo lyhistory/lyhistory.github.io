@@ -1907,6 +1907,15 @@ https://docs.gitlab.com/runner/install/index.html
 
 /etc/gitlab-runner/config.toml
 
+```
+this account is currently not available
+
+# grep gitlab-runner /etc/passwd
+gitlab-runner:x:992:989:GitLab Runner:/home/gitlab-runner:/sbin/nologin
+
+sudo -u gitlab-runner bash
+```
+
 STEP 2: REGISTER
 一台runner可以注册多个executor
 
@@ -1965,7 +1974,51 @@ https://docs.gitlab.com/runner/faq/
 
 gitlab-runner status
 gitlab-runner verify
+gitlab-runner list
 gitlab-runner start
+
+注意避坑：
+executor主要是shell和docker两种，注册后会体现在配置文件中
+/etc/gitlab-runner/config.toml
+```
+[[runners]]
+  name = "devops01-shell"
+  executor = "shell"
+  tags = ["shell"]
+
+[[runners]]
+  name = "devopsv01-docker"
+  executor = "docker"
+  tags = ["docker"]
+  [runners.docker]
+    image = "alpine:latest"
+```
+然后在 .gitlab-ci.yml里精确指定：
+```
+mvn:package:old:
+  stage: mvn-package
+  tags:
+    - shell   # ← 明确用 shell runner
+  script:
+    - mvn package
+
+mvn:package:2.0.0:
+  stage: mvn-package
+  tags:
+    - docker  # ← 明确用 docker runner
+  image: maven:3.9.9-eclipse-temurin-17
+  script:
+    - mvn package
+```
+docker才能用image,如果是shell需要自己安装相应工具
+
+⚠️ 一个坑提醒你：你原 yml 里有 source ~/.bash_profile，shell executor 的 CI job 是非 login、non-interactive shell，~/.bash_profile默认不加载（它只对 login shell 生效），~/.bashrc也不一定。所以：
+
+JAVA_HOME/ PATH改在 .gitlab-ci.yml的 before_script里最稳
+
+或者改 Runner 宿主上 gitlab-runner用户的 ~/.bashrc+ 在 yml 里 source ~/.bashrc
+
+
 ### Deployment approvals
 
 [Tech Evaluation](https://gitlab.com/gitlab-org/gitlab/-/issues/344233)
