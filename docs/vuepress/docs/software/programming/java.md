@@ -1919,7 +1919,7 @@ OS name: "windows 8.1", version: "6.3", arch: "x86", family: "windows"
 ```
 
 ## 5. JAVA Virtual Machine JVM
-[refer to java_jvm](/software/programming/java_jvm.md)
+[refer to java_jvm](/software/highlevel/single_machine_core_managed_runtime_jvm.md)
 
 
 Refer:

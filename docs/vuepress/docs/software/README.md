@@ -11,22 +11,30 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 <div>
 	<h3>架构经验</h3>
 	<ul>
-		<li><a href="/docs/software/highlevel/core_concepts_consistency&coordination">核心概念:一致性并发隔离</a></li>
-		<li><a href="/docs/software/highlevel/core_concepts_ccore_concepts_data_integrity">核心概念:数据完整性</a></li>
-		<li><a href="/docs/software/highlevel/core_concepts_reliability_patterns">核心概念:可靠性模式</a></li>
-		<li><a href="/docs/software/highlevel/core_concepts_extensibility">核心概念:扩展性方法</a></li>
-		<li><a href="/docs/software/highlevel/system_fundamental_os">Single-Machine Core 系统基础:操作系统</a></li>
-		<li><a href="/docs/software/highlevel/system_fundamental_data_structures">Single-Machine Core 系统基础:数据结构</a></li>
-		<li><a href="/docs/software/highlevel/system_fundamental_algorithm">Single-Machine Core 系统基础:算法</a></li>
-		<li><a href="/docs/software/highlevel/software_design_architecture">软件设计:架构解读</a></li>
-		<li><a href="/docs/software/highlevel/software_design_enterprise_architect">软件设计:企业架构</a></li>
-		<li><a href="/docs/software/highlevel/software_design_designpattern">软件设计:设计模式</a></li>
-		<li><a href="/docs/software/programming/aop">软件设计:AOP 面向切面编程</a></li>
+		<li><a href="/docs/software/highlevel/core_concepts_publickey_infrastructure">Core 核心概念:公钥基础设施</a></li>
+		<li><a href="/docs/software/highlevel/core_concepts_consistency&coordination">Core 核心概念:一致性并发隔离</a></li>
+		<li><a href="/docs/software/highlevel/core_concepts_ccore_concepts_data_integrity">Core 核心概念:数据完整性</a></li>
+		<li><a href="/docs/software/highlevel/core_concepts_reliability_patterns">Core 核心概念:可靠性模式</a></li>
+		<li><a href="/docs/software/highlevel/core_concepts_extensibility">Core 核心概念:扩展性方法</a></li>
+		<li><a href="/docs/software/highlevel/core_concepts_extensibility_aop">核心概念:扩展性方法:AOP 面向切面编程</a></li>
+		<li><a href="/docs/software/highlevel/single_machine_core_os">Single-Machine Core:操作系统</a></li>
 		<li><a href="/docs/software/highlevel/single_machine_threadsafe">Single-Machine Application 单应用考虑:线程安全</a></li>
-		<li><a href="/docs/software/highlevel/distrubuted_system">Distributed System Primitives:分布式系统开发</a></li>	
-		<li><a href="/docs/software/highlevel/distrubuted_system_microservice">Distributed System Primitives:微服务</a></li>	
-		<li><a href="/docs/software/highlevel/distrubuted_system_high_availability">Distributed System Primitives:高可用</a></li>
-		<li><a href="/docs/software/highlevel/publickey_infrastructure">公钥基础设施</a></li>
+		<li><a href="/docs/software/highlevel/single_machine_core_managed_runtime">Single-Machine Core:托管运行时</a></li>
+		<li><a href="/docs/software/highlevel/single_machine_core_managed_runtime_jvm">Single-Machine Core:托管运行时:JVM</a></li>
+		<li><a href="/docs/software/highlevel/single_machine_core_data_structures">Single-Machine Core 系统基础:数据结构</a></li>
+		<li><a href="/docs/software/highlevel/single_machine_core_algorithm">Single-Machine Core 系统基础:算法</a></li>
+		<li><a href="/docs/software/highlevel/application_framework_spring">Application-Framework:基于spring分布式微服务入门</a></li>
+		<li><a href="/docs/software/highlevel/application_framework_springboot">Application-Framework:springboot原理解析</a></li>
+        <li><a href="/docs/software/highlevel/application_framework_springboot_sourcecode" >Application-Framework:springboot源码阅读</a></li>
+		<li><a href="/docs/software/highlevel/software_design_designpattern">Software-Design 软件设计:设计模式</a></li>
+		<li><a href="/docs/software/highlevel/software_design_architecture">Software-Design 软件设计:架构解读</a></li>
+		<li><a href="/docs/software/highlevel/distrubuted_system">Distributed System Core:分布式系统理论</a></li>	
+		<li><a href="/docs/software/highlevel/distrubuted_system_microservice">Distributed System Core:微服务</a></li>	
+		<li><a href="/docs/software/highlevel/distrubuted_system_high_availability">Distributed System Core:高可用</a></li>
+		<!--<li><a href="/docs/software/highlevel/distrubuted_system_infrastructure">Distributed System Primitives:基础设施</a></li>-->
+		<li><a href="/docs/software/highlevel/distrubuted_system_container_docker">Distributed System Primitives:容器化docker</a></li>
+		<li><a href="/docs/software/highlevel/distrubuted_system_orchestration_kubernetes">Distributed System Primitives: 编排 kubernetes</a></li>
+		<li><a href="/docs/software/highlevel/distrubuted_system_enterprise_architect">软件设计:企业架构</a></li>
 	</ul>
 	<p>-------------------------</p>
 	<h3>软件开发经验</h3>
@@ -53,10 +61,6 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<!--<li><a href="/docs/software/programming/ruby">ruby</a></li>-->
 		<li><a href="/docs/software/programming/java">基础:java实用基础</a></li>
 		<li><a href="/docs/software/programming/java_jdk">基础:java jdk</a></li>
-		<li><a href="/docs/software/programming/java_jvm">基础:java jvm</a></li>
-		<li><a href="/docs/software/programming/java_spring">基础:基于spring分布式微服务入门</a></li>
-		<li><a href="/docs/software/programming/java_springboot">基础:springboot原理解析</a></li>
-        <li><a href="/docs/software/programming/java_springboot_sourcecode" >基础:springboot源码阅读</a></li>
 		<li><a href="/docs/software/buildingblock/server_apache_httpd">server:apache httpd</a></li> 
 		<li><a href="/docs/software/buildingblock/server_nginx">server: nginx</a></li>
 		<li><a href="/docs/software/buildingblock/server_jetty">server: jetty</a></li>
@@ -110,8 +114,6 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 		<li><a href="/docs/software/network/layer_x">X层: 工作在各层</a></li>
 		<li><a href="/docs/software/network/network_virtualbox_mode">基于virtualbox构建网络环境</a></li>
         <li><a href="/docs/software/buildingblock/vm_env">开发测试环境-虚拟机和容器</a></li>
-		<li><a href="/docs/software/buildingblock/container_docker">docker</a></li>
-		<li><a href="/docs/software/network/container_kubernetes">kubernetes</a></li>
 		<li><a href="/docs/software/network/vpn&proxy_server">vpn梯子基础</a></li>
 		<li><a href="/docs/software/network/vpn_openvpn">OpenVPNS</a></li>
 		<li><a href="/docs/software/network/proxy_v2ray">V2ray搭梯子</a></li>
@@ -190,14 +192,175 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 </div>
 
 ```
+逻辑结构：
+
+📁 0. Core Concepts (核心概念 / 横切关注点)
+│   # 贯穿所有层级的理论基础，不依赖具体技术栈
+│
+├── Consistency & Isolation (一致性与隔离)
+│   ├── Consistency Models (Linearizability, Sequential, Eventual)
+│   ├── Isolation Levels (Read Uncommitted -> Serializable, Snapshot Isolation)
+│   └── CAP & PACELC Theorems
+│
+├── Concurrency & Coordination (并发与协作)
+│   ├── Concurrency Control (Locking, OCC, MVCC)
+│   ├── Synchronization Primitives (Mutex, Semaphore, CAS)
+│   └── Scheduling (CFS, Rate Limiting, Leaky Bucket)
+│
+├── Extensibility Mechanisms (扩展机制)
+│   ├── Hook (React Hooks, WordPress Hooks, Shutdown Hooks)
+│   ├── Callback & Event Loop (Node.js, Browser)
+│   ├── Interceptor & Filter (Servlet Filter, Spring Interceptor)
+│   └── AOP (Aspect-Oriented Programming) 
+│
+├── Reliability Patterns (可靠性模式)
+│   ├── Idempotency (幂等性)
+│   ├── Retry & Backoff (Exponential Backoff)
+│   ├── Circuit Breaker (熔断)
+│   └── Bulkhead (舱壁模式)
+│
+├── Data Integrity (数据完整性)
+│   ├── Checksum & CRC
+│   ├── Hash (MD5, SHA Families)
+│   └── Merkle Tree (默克尔树)
+│
+└── Security Foundation (安全基础)
+    ├── Authentication & Authorization (AuthN/AuthZ)
+    ├── Public Key Infrastructure (PKI) 
+    └── Encryption (Symmetric, Asymmetric, TLS Handshake)
+
+📁 1. High Level Foundations (高层基础)
+│   # 单机环境下的基石
+│
+├── Single-Machine Core (单机核心)
+│   ├── Computer Architecture (CPU Cache, Memory Hierarchy)
+│   ├── Operating System (Process, Thread, Interrupt, VM, Syscall)
+│   ├── Data Structures 
+│   │   ├── Linear (Array, List)
+│   │   ├── Tree (BST, B-Tree, LSM)
+│   │   └── Hash (Map, Bloom Filter)
+│   └── Algorithms 
+│       ├── Sorting & Searching
+│       ├── Graph Algorithms
+│       └── Dynamic Programming
+│
+├── Managed Runtime (托管运行时)
+│   ├── JVM Internals
+│   │   ├── Class Loading (Delegation Model, SPI)
+│   │   ├── Memory Management (GC Algorithms: G1, ZGC)
+│   │   ├── Execution Engine (Interpreter, JIT, AOT)
+│   │   └── Java Memory Model (JMM, Happens-Before)
+│   └── CLR / V8 / Python Runtime (对照学习)
+│
+└── Application Framework (应用框架)
+    ├── Spring Ecosystem (Boot, Core, Data, Cloud)
+    ├── .NET (ASP.NET Core, EF Core)
+    └── Frontend Frameworks (React, Vue)
+
+📁 2. Software Design
+│
+├── Foundational Principles 
+│   ├── OOP Principles (SOLID, GRASP, DRY, KISS)
+│   └── Modeling & UML (类图，时序图，用例图)
+│
+├── Design Patterns (GoF 设计模式)  <- 建立在上面原则之上的“套路”
+│   ├── Creational (Factory, Singleton, Builder)
+│   ├── Structural (Adapter, Decorator, Proxy)
+│   └── Behavioral (Observer, Strategy, Command)
+│
+├── Architectural Patterns (架构风格)  <- 建立在上面模式之上的“蓝图”
+│   ├── Monolithic & Layered (MVC, DDD)
+│   ├── Microservices (Decomposition, API Gateway)
+│   │   └── 🔗 Link: ../3-Distributed_System_Theory/Core_Architectures/Microservices
+│   └── Event-Driven Architecture
+│
+└── Engineering Practices (工程实践)
+    ├── Clean Code & Refactoring
+    ├── Version Control (Git Workflow)
+    └── Testing Strategies (Unit, Integration, E2E)
+
+📁 3. Distributed System Theory (分布式系统理论 - 新增核心)
+│   # 这一层是“道”，是所有分布式系统的指导思想
+│
+├── Core Architectures
+│   ├── Distributed System Overview 
+│   ├── Microservices 
+│   └── High Availability (高可用设计) 
+│		├── Active/Active vs Active/Passive
+│		├── Failover Mechanisms
+│		├── Disaster Recovery (DR)
+│		└── SLA & Uptime Metrics
+|
+├── Fundamental Theorems (基础理论)
+│   ├── CAP Theorem 
+│   ├── FLP Impossibility
+│   └── BASE Theory 
+│
+├── Consensus Algorithms (共识算法 - 核心)
+│   ├── Fault Tolerance (CFT / Non-BFT)
+│   │   ├── 2PC / 3PC
+│   │   ├── Paxos (Basic, Multi) 
+│   │   ├── Raft (Leader Election, Log Replication) 
+│   │   └── ZAB (ZooKeeper Atomic Broadcast) 
+│   └── Byzantine Fault Tolerance (BFT)
+│       ├── Byzantine Generals Problem 
+│       ├── PBFT (Practical BFT) 
+│       └── Nakamoto Consensus (PoW + Longest Chain) 
+│
+│
+📁 4. Distributed System Primitives (分布式系统原语 - 技术实现)
+│   # 这一层是“术”，是具体的产品和工具
+│
+├── Enterprise Architecture (企业架构) 
+│   ├── TOGAF / Zachman Frameworks
+│   ├── Integration Styles (File Transfer, Shared DB, Messaging, RPC)
+│   └── ESB & API Management
+│
+├── Infrastructure (基础设施)
+│   ├── Containerization (Docker, containerd, runc)
+│   ├── Orchestration (Kubernetes, Scheduler, Operator Pattern)
+│   └── Service Mesh (Istio, Linkerd, Sidecar)
+│
+├── Communication (通信)
+│   ├── Network Protocols (HTTP/2, HTTP/3, WebSocket)
+│   ├── RPC Frameworks (gRPC, Dubbo, Thrift)
+│   └── Message Queue (Kafka, RabbitMQ, Pulsar)
+│
+├── Coordination (协调)
+│   ├── Consensus Algorithms (Raft, Paxos, Zab)
+│   ├── Distributed Lock (Redis Redlock, Chubby)
+│   └── Cluster Membership (Gossip, Heartbeat)
+│
+└── Observability (可观测性)
+    ├── Logging (ELK Stack)
+    ├── Metrics (Prometheus, Grafana)
+    └── Tracing (Jaeger, Zipkin, OpenTelemetry)
+
+📁 5. Database (数据存储)
+├── Relational Databases (MySQL, PostgreSQL, Oracle)
+├── NoSQL Databases (MongoDB, Redis, Cassandra)
+├── Storage Engine (B+Tree vs LSM Tree, WAL)
+└── Distributed Storage (Sharding, Replication, Quorum)
+
+📁 6. Network & Ops (网络与运维)
+├── Network Fundamentals (TCP/IP, DNS, HTTP/S)
+├── Linux Administration (Shell, Systemd, Iptables)
+├── CI/CD (Jenkins, GitLab CI, GitHub Actions)
+└── Cloud Providers (AWS, Azure, GCP - Compute, Storage, Network)
+
+📁 7. Project Management (项目管理)
+├── Methodology (Agile, Scrum, Kanban, Waterfall)
+├── Product Management (MVP, Roadmap, User Story)
+└── DevOps Culture (CALMS, Collaboration)      
+
  __   __   __   ___  __             __        ___  __   
 /  ` /  \ |  \ |__  |__) |__|  /\  /  ` |__/ |__  |__)  
 \__, \__/ |__/ |___ |  \ |  | /~~\ \__, |  \ |___ |  \  
                                                         
                  __  ___  __   __        __   __        
 |    \ / |__| | /__`  |  /  \ |__) \ /  /  ` /  \  |\/| 
-|___  |  |  | | .__/  |  \__/ |  \  |  .\__, \__/  |  | 
-                                                        
+|___  |  |  | | .__/  |  \__/ |  \  |  .\__, \__/  |  |
+
 ```
 
 

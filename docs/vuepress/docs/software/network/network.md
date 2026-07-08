@@ -719,7 +719,7 @@ RPC框架众多，比如netty:
 
 https通信是http建立在tls上，最新的tls1.3(SSL is deprecated predecessor of TLS)，TLS typically relies on a set of trusted third-party certificate authorities to establish the authenticity of certificates. 也就是CA
 
-TLS握手发生在TCP握手结束之后，具体参考《publickey_infrastructure.md/[#](/docs/software/highlevel/publickeyinfrastructure.html#_3-1-ssl-tls)3.1 SSL/TLS》
+TLS握手发生在TCP握手结束之后，具体参考《publickey_infrastructure.md/[#](/software/highlevel/core_concepts_publickey_infrastructure.md#_3-1-ssl-tls)3.1 SSL/TLS》
 
 ##### 不同协议的数据包路径
 [能ping通，TCP就一定能连通吗？](https://mp.weixin.qq.com/s/gLrRgfwmzMvk9T6MIY4cWg)

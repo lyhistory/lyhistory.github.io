@@ -357,4 +357,4 @@ For the same reason, since developers might be habitually using Keccak in blockc
 
 https://lyhistory.com/docs/blockchain/btc/btc_dev.html#_3-5-transactions
 
-https://lyhistory.com/docs/software/highlevel/publickey_infrastructure.html
+https://lyhistory.com/docs/software/highlevel/core_conecepts_publickey_infrastructure.html

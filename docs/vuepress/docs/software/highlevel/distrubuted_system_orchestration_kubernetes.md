@@ -4,6 +4,8 @@ sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
+K8s 是分布式系统的操作系统
+
 容器管理/虚拟机管理
 
 Network：了解K8S的网络通信模型 https://mp.weixin.qq.com/s/377KvwujtxVVLDxLTYmt9A

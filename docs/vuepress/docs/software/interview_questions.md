@@ -19,7 +19,7 @@ which layer does the tls/ssl work on
 
 does TLS handshake happen after or before TCP handshake?
 
-https://lyhistory.com/docs/software/highlevel/publickey_infrastructure.html#clarification
+https://lyhistory.com/docs/software/highlevel/core_concepts_publickey_infrastructure.html#clarification
 
 ## java
 以下是5个能够有效评估Java开发人员技术水平的核心面试问题，涵盖基础能力、进阶原理和系统设计三个维度，并附考察要点及参考答案方向：

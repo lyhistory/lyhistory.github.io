@@ -5,8 +5,8 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
 ## 前置知识
-- [JVM 类加载放 Java 基础笔记，这里不写](/software/programming/java_jvm.md)
-- [Spring框架](/software/programming/java_spring.md)
+- [JVM 类加载放 Java 基础笔记，这里不写](/software/highlevel/single_machine_core_managed_runtime_jvm.md)
+- [Spring框架](/software/highlevel/application_framework_spring.md)
 
 ## Why Spring Boot（简化了什么）
 
@@ -27,7 +27,7 @@ Servlet->EJB->Struts->SpringMVC->SpringBoot
 
 ## SpringApplication启动流程
 
-[Springboot Source Code](/software/programming/java_springboot_sourcecode.md)
+[Springboot Source Code](/software/highlevel/application_framework_springboot_sourcecode.md)
 
 Spring Boot应用启动流程：
 ```
