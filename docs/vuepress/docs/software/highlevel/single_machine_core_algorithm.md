@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 A well-defined, step-by-step procedure or formula for solving a problem or accomplishing a specific task. It is the core logic behind data processing and problem-solving in software
 
 dynamic programming

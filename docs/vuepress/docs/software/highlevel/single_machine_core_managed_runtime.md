@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 ## 引言：从操作系统到分布式系统的桥梁
 
 在计算机科学的体系结构中，**Managed Runtime**（托管运行时）处于一个承上启下的关键位置。它位于操作系统（OS）之上，应用程序框架之下，是理解“单机核心”如何支撑“分布式系统”的关键过渡层。

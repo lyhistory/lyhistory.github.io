@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 ```
 Extensibility Mechanisms (扩展机制)
    ├── Hook (React Hooks, WordPress Hooks, Shutdown Hooks)

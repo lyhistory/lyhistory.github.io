@@ -1,7 +1,7 @@
 ---
 sidebar: auto
-sidebarDepth: 2
-footer: Author Ivan Kuznetsov
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 
 ## 基本知识

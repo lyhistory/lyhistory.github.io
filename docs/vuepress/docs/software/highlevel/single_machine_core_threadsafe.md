@@ -1,6 +1,6 @@
 ---
 sidebar: auto
-sidebarDepth: 3
+sidebarDepth: 4
 footer: MIT Licensed | Copyright © 2018-LIU YUE
 ---
 

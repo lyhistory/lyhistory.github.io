@@ -1,4 +1,10 @@
 
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 ## 1. Enterprise Project Management - Overview
 PM:	Project Management
 SQM:	Software Quality Management
