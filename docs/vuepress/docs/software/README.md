@@ -12,29 +12,29 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<h3>架构经验</h3>
 	<ul>
 		<li><a href="/docs/software/highlevel/core_concepts_publickey_infrastructure">Core 核心概念:公钥基础设施</a></li>
-		<li><a href="/docs/software/highlevel/core_concepts_consistency&coordination">Core 核心概念:一致性并发隔离</a></li>
-		<li><a href="/docs/software/highlevel/core_concepts_ccore_concepts_data_integrity">Core 核心概念:数据完整性</a></li>
-		<li><a href="/docs/software/highlevel/core_concepts_reliability_patterns">Core 核心概念:可靠性模式</a></li>
-		<li><a href="/docs/software/highlevel/core_concepts_extensibility">Core 核心概念:扩展性方法</a></li>
+		<li><a href="/docs/software/highlevel/core_concepts_consistency">Core 核心概念:一致性并发隔离 Consistency|Concurrency|Isolation</a></li>
+		<li><a href="/docs/software/highlevel/core_concepts_data_integrity">Core 核心概念:数据完整性 Integrity</a></li>
+		<li><a href="/docs/software/highlevel/core_concepts_reliability_patterns">Core 核心概念:可靠性模式 Reliability</a></li>
+		<li><a href="/docs/software/highlevel/core_concepts_extensibility">Core 核心概念:扩展性方法 Extensibility</a></li>
 		<li><a href="/docs/software/highlevel/core_concepts_extensibility_aop">Core 核心概念:扩展性方法:AOP 面向切面编程</a></li>
-		<li><a href="/docs/software/highlevel/single_machine_core_os">Single-Machine Core:操作系统</a></li>
-		<li><a href="/docs/software/highlevel/single_machine_core_managed_runtime">Single-Machine Core:托管运行时</a></li>
+		<li><a href="/docs/software/highlevel/single_machine_core_os">Single-Machine Core:操作系统 OS</a></li>
+		<li><a href="/docs/software/highlevel/single_machine_core_managed_runtime">Single-Machine Core:托管运行时 Managed Runtime</a></li>
 		<li><a href="/docs/software/highlevel/single_machine_core_managed_runtime_jvm">Single-Machine Core:托管运行时:JVM</a></li>
-		<li><a href="/docs/software/highlevel/single_machine_threadsafe">Single-Machine Application 单应用考虑:线程安全</a></li>
-		<li><a href="/docs/software/highlevel/single_machine_core_data_structures">Single-Machine Core 系统基础:数据结构</a></li>
-		<li><a href="/docs/software/highlevel/single_machine_core_algorithm">Single-Machine Core 系统基础:算法</a></li>
+		<li><a href="/docs/software/highlevel/single_machine_threadsafe">Single-Machine Application 单应用考虑:线程安全 ThreadSafe</a></li>
+		<li><a href="/docs/software/highlevel/single_machine_core_data_structures">Single-Machine Core 系统基础:数据结构 Data Structure</a></li>
+		<li><a href="/docs/software/highlevel/single_machine_core_algorithm">Single-Machine Core 系统基础:算法 Algorithm</a></li>
 		<li><a href="/docs/software/highlevel/application_framework_spring">Application-Framework:spring框架</a></li>
 		<li><a href="/docs/software/highlevel/application_framework_springboot">Application-Framework:springboot框架</a></li>
         <li><a href="/docs/software/highlevel/application_framework_springboot_sourcecode" >Application-Framework:springboot源码阅读</a></li>
-		<li><a href="/docs/software/highlevel/software_design_designpattern">Software-Design 软件设计:设计模式</a></li>
-		<li><a href="/docs/software/highlevel/software_design_architecture">Software-Design 软件设计:架构解读</a></li>
+		<li><a href="/docs/software/highlevel/software_design_designpattern">Software-Design 软件设计:设计模式 Design Pattern</a></li>
+		<li><a href="/docs/software/highlevel/software_design_architecture">Software-Design 软件设计:架构解读 Architecture</a></li>
 		<li><a href="/docs/software/highlevel/distrubuted_system">Distributed System Core:分布式系统理论</a></li>	
-		<li><a href="/docs/software/highlevel/distrubuted_system_microservice">Distributed System Core:微服务</a></li>	
-		<li><a href="/docs/software/highlevel/distrubuted_system_high_availability">Distributed System Core:高可用</a></li>
+		<li><a href="/docs/software/highlevel/distrubuted_system_microservice">Distributed System Core:微服务 Microservices</a></li>	
+		<li><a href="/docs/software/highlevel/distrubuted_system_high_availability">Distributed System Core:高可用 High Availability</a></li>
 		<!--<li><a href="/docs/software/highlevel/distrubuted_system_infrastructure">Distributed System Primitives:基础设施</a></li>-->
 		<li><a href="/docs/software/highlevel/distrubuted_system_container_docker">Distributed System Primitives:容器化docker</a></li>
 		<li><a href="/docs/software/highlevel/distrubuted_system_orchestration_kubernetes">Distributed System Primitives: 编排 kubernetes</a></li>
-		<li><a href="/docs/software/highlevel/distrubuted_system_enterprise_architect">Distributed System Primitives:企业架构</a></li>
+		<li><a href="/docs/software/highlevel/distrubuted_system_enterprise_architect">Distributed System Primitives:企业架构 Enterprise Architect</a></li>
 	</ul>
 	<p>-------------------------</p>
 	<h3>软件开发经验</h3>
