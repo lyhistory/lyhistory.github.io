@@ -3,6 +3,15 @@ https://www.englishaccentsmap.com/
 
 ## Basic
 
+在国际音标（IPA）里，i代表“长衣音”，但在很多美式教材里，为了区分长短和口型，会用双字母来标注短元音。
+| 通俗写法 | IPA 音标 | 名称 | 例词 | 备注 |
+| :--- | :--- | :--- | :--- | :--- |
+| **i** | /iː/ | Close front vowel | **see** | 长音，嘴角咧开，像微笑 |
+| **ih** | /ɪ/ | Near-close front vowel | **sit** | **短音**，嘴微张，松弛 |
+| **ee** | /iː/ | (同上) | **see** | 美式通俗写法，像汉字“伊” |
+| **ih** | /ɪ/ | (同上) | **sit** | 美式通俗写法，像汉字“一”但短促 |
+
+
 ### Vowel 元音
 All 16 English Vowel Sounds (with Examples)
 
@@ -151,7 +160,7 @@ All 16 English Vowel Sounds (with Examples)
 
 ---
 
-#### 3. Diphthongs (Gliding Vowels)
+#### 3. Diphthongs 双元音 (Gliding Vowels)
 | Sound | IPA Symbol | Example Words |
 |-------|------------|---------------|
 | /eɪ/  | eɪ         | **m**a**ke**, **d**a**y**, **r**ai**n** |
@@ -173,7 +182,26 @@ All 16 English Vowel Sounds (with Examples)
    /eɪ/
    - Mouth: Widens from a small "o" to a broad smile.
    - Tongue: Moves from mid-low to mid-high, gliding between /e/ and /ɪ/.
-  
+
+双元音就是一个元音滑向另一个元音，前重后轻，前长后短。英语里最核心的有 8 个（通用美式口音），可以分为几组来记：
+合口双元音（嘴巴由大变小）
+
+| 通俗写法 | IPA 音标 | 例词 | 谐音联想 |
+| :--- | :--- | :--- | :--- |
+| **ay** | /eɪ/ | f**ay**ce (face) | 诶~（像打招呼） |
+| **oy** | /ɔɪ/ | b**oy** | 奥~伊 |
+| **ow** | /aʊ/ | c**ow** | 啊~呜（像牛叫） |
+| **ow** (另一种) | /oʊ/ | g**o** | 欧~（像公鸡叫） |
+
+集中双元音（滑向弱元音 /ə/）
+
+| 通俗写法 | IPA 音标 | 例词 | 谐音联想 |
+| :--- | :--- | :--- | :--- |
+| **eer** | /ɪər/ | b**eer** | 伊~尔 |
+| **air** | /ɛər/ | h**air** | 艾~尔 |
+| **ure** | /jʊər/ | p**ure** | 尤~尔 |
+
+
 #### 4. R-Controlled Vowels (Vowel + /r/)
 | Sound | IPA Symbol | Example Words |
 |-------|------------|---------------|
@@ -183,6 +211,23 @@ All 16 English Vowel Sounds (with Examples)
 
 **Note:**  
 - British English often drops the /r/ (*car* = /kɑː/), while Americans pronounce it clearly (/kɑːr/).
+
+美式 R 控制元音（卷舌音）
+
+| 通俗写法 | IPA 音标 | 例词 | 谐音联想 |
+| :--- | :--- | :--- | :--- |
+| **ar** | /ɑr/ | c**ar** | 啊儿 |
+| **or** | /ɔr/ | f**or**k | 奥儿 |
+| **er** | /ɜr/ | b**ir**d | 额儿（卷舌） |
+| **air** | /ɛr/ | sc**ar**e | 艾儿（卷舌） |
+
+#### 5.意大利语元音纯度练习
+
+| 音节 | IPA 音标 | 对比英语发音 | 备注 |
+| :--- | :--- | :--- | :--- |
+| **di** | /di/ | 类似 **dee**，但不拖长 | 短促、清晰 |
+| **Si** | /si/ | 类似 **see**，但更紧促 | 意大利语“是”，无滑动 |
+| **Su** | /su/ | 类似 **soon** 的开头 | 圆唇，无卷舌 |
 
 ---
 
@@ -310,60 +355,14 @@ an
    the apple
 
 
-### Correction 
+## 容易读错 a-z
+/m/​ 双唇闭死闭着
+/n/​舌尖顶上齿龈（牙龈那个小棱）唇自然开着，但舌头封门​
+/ŋ/​ (sing) 舌面抬起来顶软腭 嘴开得更大
+例子 yum VS young
 
-#### IH vs EE
-in vs see
-saying
-
-#### oo
-cooking [K.U K.IH.NG]
-football
-
-#### d t
-head
-made
-
-#### missing l
-fall
-feel
-old
-
-#### voiceless s vs voiced z
-s
-   sip 
-   s ending after a voiceless sound: nights
-z
-   zip
-   keys was because does those please always hers
-   s ending after a vowel sound:
-      eyes 
-   s ending after a voiced sound: weekends
-
-
-
-di
-Si
-Su
-M n r
-1. th thr tr
-Throw threw through /θru/-
-Though Throughput through throw thorough
-thorn thong  throne 
-https://www.youtube.com/watch?v=GDwlkidXYtc
-https://www.youtube.com/watch?v=Yx1crUwT10A
-1. 结尾或中间 L R M N
-L: milk
-R: four for fore
-
-3.ə "ʌ", "æ" and "α"
-https://www.youtube.com/watch?v=1UCRonoyFpw
- 
 华人英语发音最常见的10个错误 https://www.youtube.com/watch?v=8SdYhInBGuY
-
-
 https://www.youtube.com/watch?v=Cf4o-FKEwNA
-
 
 http://www.pronouncekiwi.com
 
@@ -371,76 +370,16 @@ Q&A: How to pronounce GHOSTS, ASKS, GUESTS https://www.youtube.com/watch?v=tQKM2
 strong sounds: S N L weak: d t th
 How to Pronounce "ʌ", "æ" and "α"  https://www.youtube.com/watch?v=9rIpvlXddl8   hot hat hut
 
+ə "ʌ", "æ" and "α"
+https://www.youtube.com/watch?v=1UCRonoyFpw
+
 English: How to Pronounce T and D consonants: American Accent
 https://www.youtube.com/watch?v=AzZswz8na5c
 
 https://www.youtube.com/watch?v=T7SWETadMn0&ebc=ANyPxKqORRMBUUh6lUvhuOcOUUasSpHy_E-F1n7njnFEbvIFcUbvWmWDCGRkc4cdV2w8EJjT2Ct7-x-9GMMtmsgFDd88jd7xNg
 
-### Training words:
-Accurate
-enthusiastic
-Execute legitimate matriculation
-Measuring
-Effectiveness
-Corollary
-Illustrate
-Deviation
-Appropriate
-Alternative
-convergence
-thresholds
-throttle
-Surveillance
-Cohesive
-cohesion
-Encapsulation
-Velocity
-Accuracy
-Adequacy
-Alleged
-Adhere
-explicitly
-tertiary
-facet packet
-plagiarism algorithm
-Sophisticated monolith
-Anxious
-Physiology
-Interior
-Acronym
-Negligible Negligent fraudulent
-malicious
-Amateur
-angel
-Succinctly
-pedestrian
-Encyclopedia
-Psychology
-Technology
-epiphany
-Liaison
-Pragmatism
-longitudinal
-horizontal
-substract
-lieu
-kiosk
-Collision
-rigorous
-analogous
-Leisure
-Exponentially
-applicability
-enthusiasm
-Vacuum
-
-## 容易读错 a-z
-/m/​ 双唇闭死闭着
-/n/​舌尖顶上齿龈（牙龈那个小棱）唇自然开着，但舌头封门​
-/ŋ/​ (sing) 舌面抬起来顶软腭 嘴开得更大
-例子 yum VS young
-
 ### a
+
 at
 access
 adequate [ˈædɪkwət]
@@ -483,6 +422,10 @@ ch
 chef ʃef chief Achilles əˈkili:z
 ### d
 procedure
+
+d VS t:
+head
+made
 ### e
 excess 
 exit
@@ -517,6 +460,13 @@ yum vs young sung vs son
 ### h
 hypnotize [ˈhɪpnətaɪz]
 hygiene
+
+### L missing
+milk
+fall
+feel
+old
+
 ### i
 civilian [səˈvɪliən]
 crisis  [ˈkraɪsɪs]
@@ -533,6 +483,9 @@ recipe [ˈresəpi]
 valentine
 ### o
 U OO
+
+cooking [K.U K.IH.NG]
+football
 
 cork cock
 constituent
@@ -556,6 +509,9 @@ ph
 peripheral [pəˈrɪfərəl]
 phonetic  fəˈnetɪk
 monophyletic  ˌmɒnəʊfaɪ'letɪk    monophony  mə'nɒfənɪ
+### R
+four for fore
+
 ### s
 designate [ˈdezɪgneɪt]
 visual ˈvɪʒuəl vision ˈvɪʒn supervision
@@ -565,6 +521,19 @@ conclusion kənˈklu:ʒn   recursion rɪˈkɜ:ʃn
 scissor
 asia asian occasion impression
 s after voiced-unvoiced phonetic
+
+#### voiceless s vs voiced z
+s
+   sip 
+   s ending after a voiceless sound: nights
+z
+   zip
+   keys was because does those please always hers
+   s ending after a vowel sound:
+      eyes 
+   s ending after a voiced sound: weekends
+
+
 ### t
 mortgage( house loan)
 statue [ˈstætʃu:]
@@ -584,8 +553,24 @@ tuple  tʌpl
 numeric [nju:'merɪk]
 pseudo
 router
+
+####  th thr tr
+Throw threw through /θru/-
+Though Throughput through throw thorough
+thorn thong  throne 
+https://www.youtube.com/watch?v=GDwlkidXYtc
+https://www.youtube.com/watch?v=Yx1crUwT10A
+
 ### x
-axis[ˈæksɪs]
+axis[ˈæksɪs] 
+
+### z
+
+pizza
+   意大利语原音 /ˈpit.tsa/ 批擦
+   美式剑桥标 /ˈpit.sə/，但把 ts 拆成 t + s  批特萨
+   英语借词的通俗读法，把 za 读得像"扎/萨" 批萨
+
 
 ## 重音 Stress
 1. 2 Syllables 双音节词是最易混淆的类别，​动词通常重音在第二音节，名词/形容词多在第一音节​（约70%符合此规律）。
@@ -687,7 +672,7 @@ toe tow
 trunk chunk
 waste 和 waist
 
-## Spelling 
+## 拼读相近 
 sincierity sincerely
 susceptible suspectable 
 complementary complimentary
@@ -763,6 +748,64 @@ scam(scamp) spam
 hash 弄乱 搞砸 harsh 刺耳的;残酷的 hissing
 
 ## 练习
+Accurate
+enthusiastic
+Execute legitimate matriculation
+Measuring
+Effectiveness
+Corollary
+Illustrate
+Deviation
+Appropriate
+Alternative
+convergence
+thresholds
+throttle
+Surveillance
+Cohesive
+cohesion
+Encapsulation
+Velocity
+Accuracy
+Adequacy
+Alleged
+Adhere
+explicitly
+tertiary
+facet packet
+plagiarism algorithm
+Sophisticated monolith
+Anxious
+Physiology
+Interior
+Acronym
+Negligible Negligent fraudulent
+malicious
+Amateur
+angel
+Succinctly
+pedestrian
+Encyclopedia
+Psychology
+Technology
+epiphany
+Liaison
+Pragmatism
+longitudinal
+horizontal
+substract
+lieu
+kiosk
+Collision
+rigorous
+analogous
+Leisure
+Exponentially
+applicability
+enthusiasm
+Vacuum
+
+
 As the saying goes, face the truth and push through
 She's super thankful for the beautiful birthday flowers
 

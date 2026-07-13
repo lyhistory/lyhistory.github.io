@@ -224,7 +224,8 @@ sni:域名
    ```
     http://localhost:2017/
    sudo v2raya --reset-password
-3. [Config](https://v2raya.org/en/docs/prologue/quick-start/#transparent-proxy)
+3. 一定要设置 [Config](https://v2raya.org/en/docs/prologue/quick-start/#transparent-proxy)
+    Transparent Proxy/System Proxy: On: Proxy except CN Sites / redirect / Proxy except CN Sites
 
 别忘记配置dns:
 /etc/resolv.conf

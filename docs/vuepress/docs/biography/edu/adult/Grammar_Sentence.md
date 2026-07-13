@@ -4,13 +4,13 @@ syntax and semantic 语法和语义
 
 主语 ：Tom（名词）
 
-谓语 ：is sitting（动词短语） 2
+谓语 ：is sitting（动词短语）
 
-宾语 ：in your big sitting room（介词短语作地点状语） 1
+宾语 ：in your big sitting room（介词短语作地点状语）
 
 定语 ：your friend（名词短语作定语）
 
-状语 ：after dinner（时间状语） 2
+状语 ：after dinner（时间状语）
 
 补语 ：listening to some beautiful music（动名词短语作后置定语
 
@@ -260,6 +260,14 @@ Conditional sentences aren’t always cut and dry. There are exceptions and spec
 
 
 ### 拆解
+#### 副词 情态动词 第三人称单数
+
+Adverb has no effect​ on the verb—the verb still changes for third-person singular.
+He eats. → He never eats. never: "I'm just an adverb. The verb still needs to agree with the subject."
+
+Can, could, should​ (modal verbs) block​ the verb from changing—the verb stays in its base form.
+He eats. → He can eat. can/could/should: "I'm a modal. I handle the grammar now. The verb after me stays raw." Modals replace​ the tense/agreement role of the main verb. Once a modal is present, it alone carries finiteness​ (tense, person). The main verb becomes a bare infinitive​ (no -s, no to). This is why modals are called "finite auxiliaries"—they take over the job of agreeing with the subject, freeing the main verb from inflection.
+
 #### 分词 Participle
 分词（Participle）是英语中非限定动词（即不能单独作谓语，需与助动词配合）的重要类别，其本质是动词与形容词的结合体：
 
