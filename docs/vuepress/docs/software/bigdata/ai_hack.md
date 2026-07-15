@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 [Strix 是一个开源的 AI 自动化渗透测试工具。你给它一个目标（代码目录、GitHub 仓库或者线上地址），一群 AI Agent 就会像真人黑客一样，自动跑你的应用、找漏洞、写 PoC 验证，最后给你一份报告。跟传统扫描器的最大区别：Strix 会动态运行你的代码，真正去「打」一遍，验证通过的才算漏洞，不是简单的模式匹配。](https://github.com/usestrix/strix)
 
 [许多黑客工具都是零散的 GitHub 仓库，安装繁琐、兼容性差、更新困难。hackingtool 把这一切打包成一个现代化 TUI（文本用户界面） 框架](https://github.com/Z4nzu/hackingtool)

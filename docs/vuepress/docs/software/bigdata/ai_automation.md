@@ -1,3 +1,9 @@
+---
+sidebar: auto
+sidebarDepth: 4
+footer: MIT Licensed | Copyright © 2018-LIU YUE
+---
+
 [Run your own AI cluster at home with everyday devices ](https://github.com/exo-explore/exo)
 
 ## 桌面端自动化
