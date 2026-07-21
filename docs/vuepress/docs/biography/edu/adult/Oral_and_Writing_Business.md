@@ -54,6 +54,10 @@ My approach is somewhat like “lazy loading” in software engineering: I organ
 
 ## General
 
+accompany  陪伴”、“伴随” 引申 配套”或“附带
+    Each of the case studies ... is accompanied by​ an Expert View ...
+
+
 Brief​ = 做减法（给摘要）
     Brief me on the project. 
 Articulate​ = 练表达（说清楚）
@@ -1732,6 +1736,44 @@ Password:​ test123
 Please note that this is a temporary password; we recommend changing it upon your first login.
 If you encounter any connection issues, please ensure you are connecting via port 22​ (standard for SFTP) and feel free to reach out.
 
+#### Example 10
+Dear xxx Team,
+
+Can you please advise why we received duplicate execution for the following trades (logs from production are inline below)? This caused duplicated trade entries on our end, it happened after the weekend session reset that these 3 trades got resent by xxx FIX server.
+
+Please advise,
+
+Hi xxx Team,
+
+Please be advised that this happened again - we received duplicates on the xxx feed after the login on Monday morning.
+Can you please investigate and give some feedback?
+
+<=
+Noted with thanks – we’ll look into this.
+ 
+May I also check whether Peter had responded to your previous query on this? Just want to make sure I’m not missing any important context following his resignation.
+ 
+>=
+We did not receive a response from Peter at that time.
+However, as the issue did not recur on our connection and our system was able to identify and remove the duplicate trades in our back-office system last time, we did not pursue further investigation until the most recent occurrence (on Monday).
+<=
+Thanks for confirming there was no prior response from Peter.
+Following up on the duplicate trades: our investigation confirms this is expected behavior tied specifically to our scheduled weekend server restarts.
+Our current architecture prioritizes "at-least-once" delivery to ensure zero data loss during these restarts, which means we cannot guarantee duplicates will not occur​ after restarts.
+Given your back-office system successfully managed the duplicates previously, please continue to apply those filters on your side going forward.
+>=
+Thank you for the investigation and prompt response.
+Am I correct in assuming that xxx is unable to add an indicator or flag to identify messages that may have been previously delivered on the session, similar to the PossResend/PosDupFlag fields in the FIX message header, to align as closely as possible with the FIX standard?
+<=
+Thanks for your follow-up and for referencing the FIX standard – your understanding of the purpose of `PossResend`/`PosDupFlag` fields in FIX messaging is absolutely correct.
+ 
+To clarify, duplicates only occur during our weekly scheduled maintenance restarts, not from transient session-level issues that FIX flags typically address. Adding this flag isn't a simple toggle; it would require persisting delivery state across restarts, which constitutes a significant architectural change.
+ 
+As we are currently in the midst of a major version upgrade, we are keeping changes minimal to ensure stability. Since this is manageable via your existing deduplication logic, we don't have an immediate plan to introduce this enhancement. However, we can revisit this on our roadmap if operational requirements evolve. 
+>=
+Thank you for the confirmation. As advised, we will implement business logic filtering to identify trades that have already been received.
+<=
+Noted with thanks. We appreciate your support in working around this on your end. Please don't hesitate to reach out if any further questions arise.
 ## Interview
 
 ### CV
@@ -1927,6 +1969,11 @@ Next Steps
 
 “Given the candidate’s C# background, could we clarify the rationale for interviewing him for these roles? Is it for potential cross‑system flexibility, or is there a specific skill set we’re prioritizing?”
 “Candidate shows strong problem‑solving and support experience; final placement depends on confirming whether System A or B aligns better with his profile.”
+## Group chats
+Hi all! Added everyone into thisgroup chat to communicate easier for the SEO project。@xxx l've given you admin rights so feel free to add anyone in your team that's relevant to this project ，Also, now that our new website islive, shall we discuss the next step?
+
+Hi all, thanks for the kind update. Ihave replied to the email on the nextstep. Erm can everyone introduceyourself so I can save your name?
+
 ## Customer sercvie
 I will get back to you once I get the orders
 Great! Looking forward to receiving your order details.
@@ -3196,6 +3243,10 @@ shoelace zipper collar
 
 
 ### About healthy/Medical
+Upper Respiratory Infection (上呼吸道感染) 
+Cough (咳嗽)：是肺或气管里不舒服，想往外喷东西（痰或气）。声音通常在胸腔。
+Croup (哮吼)：是喉咙眼（喉头）肿了，气流进出不畅。声音像从金属管子里发出来的，位置很高，就在脖子那儿。
+
 dizzy and nauseous
 pass out
 
