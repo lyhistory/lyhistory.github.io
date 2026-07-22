@@ -7,6 +7,19 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 Refers to
 <<Blockchain:EOS>>
 
+gcc&make
+./configure is typically equivalent to ./configure --prefix=/usr/local https://askubuntu.com/questions/891835/what-does-prefix-do-exactly-when-used-in-configure
+
+GCC and MakeCompiling, Linking and BuildingC/C++ Applications
+https://www3.ntu.edu.sg/home/ehchua/programming/cpp/gcc_make.html
+
+make --print-data-base | grep 'CXX'
+
+ CPPFLAGS are flags that need to be passed to the C pre-processor before compilation, and LDFLAGS are flags that need to be passed to the linker to generate the final binary.
+CFLAGS enables the addition of switches for the C compiler, while CXXFLAGS is meant to be used when invoking a C++ compiler. Similarly, a variable CPPFLAGS exists with switches to be passed to the C or C++ preprocessor.
+
+The magic behind configure, make, make install https://robots.thoughtbot.com/the-magic-behind-configure-make-make-install
+
 http://cpp.sh/
 https://developers.google.com/edu/c++/
 

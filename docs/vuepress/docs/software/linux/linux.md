@@ -13,8 +13,38 @@ LAB:  [Minimal Linux](https://github.com/ivandavidov/minimal)
 在linux操作系统中，每一个进程中都有一个文件描述符表，它是一个指针数组，系统默认初始化了数组的前3位。第0位指向标准的输入流（一般是键盘），第1位指向标准的输出流（一般是显示器），第2位指向标准的错误流（一般是也显示器）。
 现在如果有一个进程中只打开了一个 hello.txt 文件,那么这个进程的文件描述符表的第3位就是指向这个 hello.txt 的指针。之后如果该进程创建了一个socket，那么这个文件描述符表的第4位就是指向这个socket的指针，因为在linux中一切皆文件，socket也是一个文件。我们所说的文件描述符就是进程中这个数组的下标，因此他也可以说是一个索引
 
+```
+b – for 512-byte blocks (this is the default if no suffix is used)
+c – for bytes
+w – for two-byte words
+k – for Kilobytes (units of 1024 bytes)
+M – for Megabytes (units of 1048576 bytes)
+G – for Gigabytes (units of 1073741824 bytes)
+
+
+/bin/
+
+/etc/:	config files
+	/etc/profile
+
+/var/:	logs & volumes 
+/var/lib/docker
+/var/log/ 
+/var/run/
+/opt/:	customized
+
+/usr/
+	/usr/lib/python3.6/site-packages
+
+Nginx:
+	/etc/logrotate.d/nginx
+/usr/sbin/nginx   	
+
+```
 
 ## 命令执行本质
+
+[tldr](https://tldr.sh) vs [man](https://opensource.com/article/17/7/using-man-pages)
 
 一个命令行终端是一个shell进程，在这个终端里执行的程序都是作为该shell进程的子进程。
 如果子进程命令阻塞终端shell进程，shell进程就会等待子进程退出才能接收其他命令；
@@ -39,9 +69,29 @@ set -x 可以显示shell在执行什么程序
 
 当使用 sudo 时，系统会使用 /etc/sudoers 这个文件中规定的该用户的权限和环境变量
 
+
+$ END OF LINE
+gg 
+g$
+G
+The command dw will delete from the current cursor position to the beginning of the next word character. The command d$ (note, that's a dollar sign, not an 'S') will delete from the current cursor position to the end of the current line. D is a synonym for d$.
+
+$* :	$* is one of the special bash parameters which is used to expands positional parameters from position one. if you give double quotes and expansion is done within double quotes, it only expands to a single word and corresponding value of each parameter will be separated by the first letter of the IFS environment variable defined in bash.
+$$ is the process ID (PID) of the script itself.
+$BASHPID is the process ID of the current instance of Bash. This is not the same as the $$ variable, but it often gives the same result.
+
+
 ## 重定向/管道
 
 ![](/docs/docs_image/software/linux/linux_redirect01.png)
+
+&> vs 2>&1
+https://askubuntu.com/questions/635065/what-is-the-differences-between-and-21
+放在>后面的&，表示重定向的目标不是一个文件，而是一个文件描述符，内置的文件描述符如下
+1 => stdout 2 => stderr 0 => stdin
+	>
+	>>
+	2> /dev/null https://www.zhihu.com/question/53295083
 
 + 重定向
 
@@ -230,6 +280,19 @@ WantedBy=multi-user.target
 
 系统自动启动程序：
 sudo systemctl list-unit-files --type=service --state=enabled --all
+
+### wheel组的概念
+wheel组的概念继承自UNIX。当服务器需要进行一些日常系统管理员无法执行的高级维护时，往往就要用到root权限;而"wheel”组就是一个包含这些特殊权限的用户池;也就是说，如果你不是“wheel”组的成员，就无法取得root权限进行一些特权的操作;
+为什么需要wheel组?
+通常在UNIX下，即使我们是系统的管理员，也不推荐用root用户登录来进行系统管理。一般情况下用普通用户登录，在需要root权限执行一些操作时，再su登录成为root用户。但是，任何人只要知道了root的密码，就都可以通过su命令来登录为root用户-一这无疑为系统带来了安全隐患。所以，将普通用户加入到wheel组，被加入的这个普通用户就成了管理员组内的用户，但如果不对一些相关的配置文件进行配置，这个管理员组内的用户与普通用户也没什么区别就像警察下班后，没有带:枪、穿这便衣和普通人(用户)一样，虽然他的的确确是警察。
+如何把用户加入wheel组?
+前面说了，除了root用户，只有wheel组的成员有特权执行高级操作，那么怎么把用户提升成为
+wheel 用户组成员呢?
+可以使用vigr来编辑/etc/group文件，将新的用户名追加到wheel组的末尾，就像这样
+wheel::10:root,kc
+我们希望的是剥夺被加入到wheel组用户以外的普通用户通过su命令来登录为对于服务器来说，root的机会|即只有属于wheel 组的用户才可以用su登录为root)。这样就进一步增强了系统的安全性。具体步骤如下:1) 修改 /etc/pam.d/su 文, 到 "#auth required /lib/security/$ISA/pam_wheel.so use_uid”这一行，将行首的"#”去掉。
+2)修改/etc/login.defs文件，在最后一行增加"SU_WHEEL_ONLY yes” 语句。
+然后，用"usermod-Gwheel 用户名”将一个用户添加到wheel组中;然后，用刚刚被添加到wheel组的用户登录，并执行su命令登录为root用户;这时，输入了正确的root密码就可以正常的登录为root用户了。
 
 ## 文件系统
 umask 指定在建立文件时预设的权限掩码
@@ -474,6 +537,30 @@ https://unix.stackexchange.com/questions/321315/get-cron-to-run-in-the-same-envi
 + Redhat 
 
   for databases(because those database companies use redhat, it’s tested)
+
+What are the pros/cons of deb vs. rpm? https://unix.stackexchange.com/questions/634/what-are-the-pros-cons-of-deb-vs-rpm
+One should avoid using .rpm package on a Debian system.
+Comparison of major Linux package management systems  https://linuxconfig.org/comparison-of-major-linux-package-management-systems
+
+SwitchingToUbuntu/FromLinux/RedHatEnterpriseLinuxAndFedora https://help.ubuntu.com/community/SwitchingToUbuntu/FromLinux/RedHatEnterpriseLinuxAndFedora
+
+1) rpm based
+rpm=>yum
+Repo: https://fedoraproject.org/wiki/EPEL
+/etc/repos.d
+Set up yum repository
+https://www.digitalocean.com/community/tutorials/how-to-set-up-and-use-yum-repositories-on-a-centos-6-vps
+yum provides filename
+2) deb based
+deb/dpkg=>apt
+/etc/sources.list.d/
+Set up apt repository
+http://troglobit.com/2017/09/30/set-up-a-debian-ubuntu-apt-repository/
+
+Vi /etc/apt/sources.list 
+https://wiki.debian.org/SourcesList
+
+apt-file search filename
 
 ### 基本安装方法
 
@@ -1080,3 +1167,27 @@ nginx -v
 ```
 yum swap -- remove openssl-libs-1.0.1e-42.el7_1.9.x86_64 -- install openssl-libs-1.0.2k-19.el7.x86_64.rpm 
 ```
+### Command not found
+https://superuser.com/questions/548508/why-cant-i-sudo-some-commands-e-g-vim
+For example:
+Docker-compose installed in /usr/local/bin with chmod +x
+But when sudo docker-compose ****, got command not found,
+Because /etc/sudoers will reset and clear env with
+secure_path = /sbin:/bin:/usr/sbin:/usr/bin
+Sudo visudo
+	https://www.tecmint.com/set-sudo-password-timeout-session-longer-linux/
+
+bashrc bash_profile
+Virtualenv
+/usr/bin
+https://askubuntu.com/questions/121413/understanding-bashrc-and-bash-profile
+
+
+---
+
+## refer
+
+Course:
+[Top 5 Free Linux Courses for Programmers](https://hackernoon.com/top-5-free-linux-courses-for-programmers-4a433b4edade) 
+[Linux运维及云计算年薪30W入门经典教程【马哥亲讲】](https://ke.qq.com/course/119808) 
+

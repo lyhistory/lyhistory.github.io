@@ -8,6 +8,13 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 ## 基本命令
 
+Check firewall
+Ping ip and telnet port	
+netstat port check ipv4 or ipv6 ( config bind to 0.0.0.0 to enable ipv4 or try disable ipv6)
+	Ipv6 binding is ok, but Make sure::
+	[sysctl net.ipv6.bindv6only=0](https://stackoverflow.com/questions/29957143/make-docker-use-ipv4-for-port-binding)
+
+
 查端口找pid netstat -anp|grep :80 
 
 pid查程序：
@@ -133,4 +140,5 @@ https://serverfault.com/questions/199434/how-do-i-make-curl-use-keepalive-from-t
 ```
 while :;do echo -e "GET / HTTP/1.1\nhost: $YOUR_VIRTUAL_HOSTNAME\n\n";sleep 1;done|telnet $YOUR_SERVERS_IP 80
 ```
+
 

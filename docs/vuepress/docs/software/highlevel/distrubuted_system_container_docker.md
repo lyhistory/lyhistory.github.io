@@ -6,7 +6,9 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 
 ## Basics
-
+我所理解的docker-compose是编排容器的。例如，你有一个php镜像，一个mysql镜像，一个nginx镜像。如果没有docker-compose，那么每次启动的时候，你需要敲各个容器的启动参数，环境变量，容器命名，指定不同容器的链接参数等等一系列的操作，相当繁琐。而用了docker-composer之后，你就可以把这些命令一次性写在docker-composer.ym文件中，以后每次启动这一整个环境(含3个容器)的时候，你只要敲一个docker-composer up命令就ok了。
+而dockerfile的作用是从无到有的构建镜像。
+两个完全不是一码事
 ### Volumes
 
 Volumes are the primary way to store persistent data in Docker. They solve the problem that containers are ephemeral — meaning when you delete or recreate a container (e.g., docker-compose down or docker stop), any data inside it (files, databases, etc.) is lost unless you save it somewhere outside the container.
@@ -71,7 +73,48 @@ linux:
 docker logs backend 2>&1| grep "searchtext"
 ```
 
+```
+Docker start ‘container id’
+Detach ctrl+p+q
+Docker attach ‘name’
+Docker exec -it ‘container’ bash
+https://stackoverflow.com/questions/30172605/how-to-get-into-a-docker-container
+ 
+Docker run
+ 
+Docker cp
+https://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container
+ 
+Docker export import
+Docker save load
+http://tuhrig.de/difference-between-save-and-export-in-docker/
+ 
+Create private repository: docker registry  	https://docs.docker.com/registry/deploying/
 
+Docker basic:
+Docker images	Docker ps -a
+docker rmi <ImageID>	Docker rm <Container ID>
+### start docker
+docker run --name python3 -d python:3.6
+Use the command docker exec -it <container name> /bin/bash to get a bash shell in the container
+Generically, use docker exec -it <container name> <command> to execute whatever command you specify in the container.
+### get into docker
+docker exec -it <container name> /bin/bash
+http://phase2.github.io/devtools/common-tasks/ssh-into-a-container/
+sudo docker exec -ti redis_exporter_loadtest /bin/sh
+
+
+### transfer data between host and docker
+docker cp [OPTIONS] CONTAINER:SRC_PATH DEST_PATH|- 
+docker cp [OPTIONS] SRC_PATH|- CONTAINER:DEST_PATH
+		https://docs.docker.com/engine/reference/commandline/cp/
+### persist data on host machine
+	docker volume
+	https://docs.docker.com/storage/volumes/
+### more
+ 	sudo docker top <containerid>
+
+```
 
 ### enter linux container
 1. method 1
