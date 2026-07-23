@@ -1,3 +1,7 @@
+
+Interactive Linear Algebra Dan Margalit, Joseph Rabinoff https://textbooks.math.gatech.edu/ila/index2.html
+
+
 交换律 分配律
 符号 量纲
 
@@ -55,4 +59,4 @@ $$x^3 = (u + v)^3 = u^3 + v^3 + 3uv(u + v) = u^3 + v^3 + 3uvx$$
 
 • **历史例子:** 《几何原本》中, 欧几里得用**矩形面积**求平方根 (如求 $\sqrt{ab}$, 可构造长为 $a$、宽为 $b$的矩形, 其“几何平均”边长即为 $\sqrt{ab}$); 阿基米德用**圆柱与圆锥的体积关系**推导立方根 (如球的体积公式 $V = \frac{4}{3}\pi r^3$, 若已知体积求半径, 则需开立方)。
   
-### 
+### [群论](/blockchain/cryptography/algebra_0_modular_arithmetic.md)
