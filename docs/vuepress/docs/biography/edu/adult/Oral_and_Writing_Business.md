@@ -1001,6 +1001,14 @@ Yeah, that's what I have on my schedule for next Monday too / Yes, I'm scheduled
 / Oh, I thought it was my shift. Am I remembering that wrong?
 / I thought we were taking turns—this week is yours and next week is mine, isn't it?
 
+#### website dev
+i want to check if we were to create an additional page under PFMI, maybe call "Aggregate Exposure Report"，do we need external vendor to do this?，or you can do it on your end. 
+
+Can you send over the finalized requirements in a Word doc? That way I can evaluate if we can handle it internally.
+
+For your reference, as agreed with the vendor, direct code changes are restricted. However, as long as the setup can be managed through the backend UI, it shouldn't be an issue.
+
+
 ### business email
 
 attaching the document for xxx's benefit/reference/information
