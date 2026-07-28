@@ -132,23 +132,67 @@ Below, the word 'he' functions as a subject, and so the verb agrees in number wi
 ​​Key Point:​​ Without an object, the sentence is incomplete.
 ❌ She ate. → ❓ (What did she eat?)
 
-#### Transitive Verb+infinitive 及物动词加不定时
+#### Vt + to-inf / V-ing（作宾语） 
 
-box in
-	The traffic boxed us in.（车流把我们困住了。
-	My car was boxed in by a truck.
-freak out 是 ‌多功能口语短语‌，核心用法包括：
-	及物动词（freak sb out）表“使某人失控”
-	不及物动词（freak out）表“自行情绪爆发”
 mean to
 	means many things to many people, to some it's xxx to others xx
 	mean 为 ‌及物动词‌，需接宾语（如 mean something 或 mean to do）
 	to 为 ‌不定式标记‌（非介词），引导动作目标（mean to help = “打算帮助”）
 	‌不可替换‌：mean to 中的 to 不能改为其他介词（如 mean for 含义不同）
 
-walk you through
-get through
-lift it up  sum up  assemble up
+├─ 可互换（微差）：love / like / hate / prefer
+├─ 不可互换（互斥）：remember / forget / stop / try / mean
+└─ 只接 to-inf：want / decide / hope
+   只接 V-ing：enjoy / mind / avoid
+
+I like swimming.（我喜欢游泳 ← 长期爱好）
+
+I like to swim​ when I'm stressed.（压力大了我会去游 ← 具体情境/倾向）
+
+remember to do：记得要去做（事还没做）
+
+Remember to lock​ the door.（记得锁门 → 还没锁）
+
+remember doing：记得做过过（事已做，回忆）
+
+I remember locking​ the door.（我记得我锁了 → 已经锁过）
+
+forget（跟 remember 对称）
+
+forget to do​ → 忘了要去（没做，漏了）：Forgot to pay​ the bill.
+
+forget doing​ → 忘了做过（做了但不记得）：I'll never forget meeting​ you.
+
+stop
+
+stop to do：停下手头事，去做另一件（to 表目的）
+
+He stopped to smoke.（他停了下来 → 去抽烟）
+
+stop doing：停止做某事（doing 是被停的动作）
+
+He stopped smoking.（他把烟戒了 / 停下抽烟这动作）
+
+try
+
+try to do：努力去做（未必成功）
+
+I tried to lift​ it but couldn't.（我使劲抬，抬不动）
+
+try doing：试着用某种方式做（换方法）
+
+Try using​ oil instead.（试试用油吧）
+
+mean
+
+mean to do：打算做
+
+I didn't mean to hurt​ you.（我没想伤你）
+
+mean doing：意味着（主语通常是事不是人）
+
+Success means working​ hard.（成功意味着努力）
+
 
 ### Intransitive Verbs (VI)​​
 ​​Definition:​​ Do ​​not require an object​​; the action stays with the subject.
@@ -269,6 +313,16 @@ look at it 介词，代词只能在介词后
 
 Tear open
 Rip open
+
+box in
+	The traffic boxed us in.（车流把我们困住了。
+	My car was boxed in by a truck.
+freak out 是 ‌多功能口语短语‌，核心用法包括：
+	及物动词（freak sb out）表“使某人失控”
+	不及物动词（freak out）表“自行情绪爆发”
+walk you through
+get through
+lift it up  sum up  assemble up
 
 ### 副词+动词 (Verb + Adverb Particle)​​
 ​​Definition:​​ Verb + Adverb Particle (sometimes called a "particle" not a true preposition). creates a ​​new meaning​​.

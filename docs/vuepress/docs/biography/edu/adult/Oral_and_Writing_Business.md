@@ -2072,7 +2072,7 @@ rip customers off 宰客
 How To Protect Your Business From The Dark Side Of The Internet Of Things https://www.forbes.com/sites/centurylink/2016/02/15/how-to-protect-your-business-from-the-dark-side-of-the-internet-of-things/#19b71ccf5fcf
 
 ### Software engineer 
-
+SME Subject Matter Expert，中文一般译作"领域专家 / 业务专家"，
 Adjust the gimbal's tilt manually or use the virtual joystick on the touchscreen.
 可手动调整云台俯仰角度，或在触摸屏上使用虚拟摇杆进行调整。
 
