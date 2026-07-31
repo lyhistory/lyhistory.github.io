@@ -994,7 +994,12 @@ ok no hurry. so when it is ready, xxx can receive?
 
 ### business email
 
+Hi Finance Team,
+Below are the accounts that were used last year in the XXX system (xxxxx). Please let me know if there are any changes. If not, I will simply update the expiry dates to extend them.
+
 attaching the document for xxx's benefit/reference/information
+
+please refer to the xx section in the attached file.
 
 For the participating departments (xxx,,xxx), kindly confirm the representatives who will participate in the exercise and attend training. Attendance is compulsory for these representatives. Please inform RMD of any scheduling conflicts by Monday, 11 May 2026.
 Hi [Name], I have a conflict as I've applied for half-day leave on the morning of 12 May and the afternoon of 13 May. Would it be possible to reschedule? If not, I can still join via mobile. Thanks! 
