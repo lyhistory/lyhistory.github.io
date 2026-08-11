@@ -171,10 +171,8 @@ https://mp.weixin.qq.com/s/9RJGpxvKieMY4Mu__mHfFQ
 https://colab.research.google.com/drive/1NG9AoH3QDtC7h97z1Yodmn_CiiGh8Y1T?usp=sharing#scrollTo=0aHr4Fo-7IRy
 
 ## 视频解析 VLM
-### 字幕
-[An AI-powered video transcription and summarization tool that supports multiple video platforms including YouTube, Tiktok, Bilibili, and 30+ platforms.](https://github.com/wendy7756/AI-Video-Transcriber)
-
-[VideoLingo-全自动视频搬运工具](https://mp.weixin.qq.com/s/-Ayo6lj65s4QEN3CXGLqZg)
+### 字幕翻译合成
+[视频转字幕、字幕翻译、AI 配音与声音克隆、字幕烧录——免费开源的一站式桌面工具。基于 Whisper / FunASR 等本地模型离线语音转文字，批量处理 + 全平台 GPU 加速，跨 Windows / macOS / Linux。Free, open-source desktop app to generate, translate, dub & burn video subtitles — local Whisper speech-to-text, AI dubbing & voice cloning, offline, GPU-accelerated.](https://github.com/buxuku/SmartSub)
 
 ### 配音(音色克隆)
 [智能视频多语言AI配音/翻译工具 - Linly-Dubbing — “AI赋能，语言无界”](https://github.com/Kedreamix/Linly-Dubbing)
