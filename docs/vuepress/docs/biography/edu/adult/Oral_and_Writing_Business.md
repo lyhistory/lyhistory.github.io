@@ -889,6 +889,34 @@ Since I didn't write it and there's no docs, I can't fully vouch for the interna
 hi  , gotten news from xx that DMP is over. you guys can revert the DEV environment back to normal.
 <=Just to clarify, do you mean shutting down the environment? Since it's a testing space, there isn't really a 'default' state to go back to. If it's no longer needed, we can decommission it.
 
+##### request data 
+A: hi . in sftp seems like the house report earliest records we can retrieve is 20230901, can i request for 20220401 and 20220415 records? 
+Me: Hey A! So those 2022 dates you asked for — the thing is, these are pre-cloud migration records and honestly I'm not sure where they live right now 😅 I checked with B from infra but he's also a bit lost because this was all C's territory and there wasn't really a handover when C left.
+
+Did you ever request similar old data from C before? If you have any memory of roughly when that was or how it worked, that'd give us a good lead to chase down. Thanks! 🤞
+A:  I dont think we have requested from before 
+Me: Got it, makes sense. In that case, we'll have to rely on B to see what he can dig up from the infra side. I'll keep you posted if anything turns up!
+Me: Update on this — B managed to locate the historical data, but unfortunately the report folder itself is empty 😕 Our only option now is to try reading from test.sql and see if we can extract what you need. If that works, we'll go ahead; otherwise we might be out of luck. I'll keep you posted once we give it a shot!
+/Unfortunately the HOUSE report folder is empty 😕 Our only option now is to try reading from test.sql — unless you have other ideas?
+A:  hmm. we will use other sources such as trading for now， so we wont need this urgently. but if you have the time, please help us find the files for completeness of our records 
+Me: B did find the location, but the folder is actually empty — there are no report files there at all. So basically, the only thing I can do is try to pull the data from the historical archived db (test.sql) if you still want it.
+Not sure what happened to these historical reports though — wasn't me who handled them previously 😅
+
+
+A: hi bro I have some requests need you assist double check our numbers
+ME: OK
+A: I forward you the request email first, so you can work out any sql needed, meanwhile im double checking the numbers my team generated before sending over our numbers to you then latter only I send the email with our numbers processed concurrently first ba if you dun mind.
+sent you the email, feel free to call me if any qns
+ME: let me see
+ME: Hey man, XXX hasn't sent over the historical data yet. I can't really push him too hard 'cause he mentioned XX is also chasing him on other tasks 😅
+A: he will work on it when free ba
+
+Hi! I've verified Table 1 (Volume & Value) for 2022–2025 and all figures tally.
+
+For 2019–2021: As discussed with A, we launched the new  system in 2021, so I only have partial data for that year. Data prior to 2021 resides in the legacy system archives. However, we no longer have access to that system, nor do we have any documentation explaining its data structure or how to query it. C also mentioned during his handover that since the legacy system was decommissioned, nothing related to the legacy system was passed over.
+
+In short, we have no operational knowledge of how to retrieve or interpret that legacy data. If we need to validate it, it would require a significant time investment to dig through raw data without any technical reference, so it's not feasible in the short term.
+
 #### it gov
 Hi Peter, my colleague was curious about the rationale behind upgrading to the new version. I mentioned it's a best practice for security and performance, but would you have any additional insights to share?
 
@@ -1234,7 +1262,7 @@ Seeking your approval on the ​2025 Website Maintenance Contract​ and attache
 ---
 Subject:​​ Re: Authorization Clarification for Annex A Sign-off
 
-Kindly note that Richard is not authorized to act in the capacity of CFO and sign off the Annex A.
+Kindly note that peter is not authorized to act in the capacity of CFO and sign off the Annex A.
 
 Currently the official CFO designation rests with our CEO, Peter.
 
