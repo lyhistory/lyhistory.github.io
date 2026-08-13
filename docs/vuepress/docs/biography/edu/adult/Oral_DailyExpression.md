@@ -105,6 +105,22 @@ lowlife scum
 +  Uncivilized
   "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
+及格/不及格
+	pass / fail
+	This design passes.（这个设计及格了）
+	His excuse totally fails.（他的借口完全不及格）
+	pass muster​ —— 最贴近"及格"的泛化用法
+	Your proposal doesn't pass muster with the client.（你的方案客户那边不及格）
+	make the cut​ —— "够格、达标"
+	Only three out of ten candidates made the cut.（十个候选人里只有三个及格）
+	up to par / below par​ —— "达到/达不到水准"
+	Her performance this quarter is below par.（她这季度表现不及格）
+	hit the mark / miss the mark​ —— "命中目标 / 没命中"
+	The campaign missed the mark.（这次营销活动不及格）
+	fall short (of expectations)​ —— "不及预期"
+	The results fell short.（成绩不及格/结果不达标）
+
+
 proof 醒发 
 	Put the dough into the proofer and wait for it to rise.”​ 或 “Put the dough into the proofer and let it rise.”
 光晕

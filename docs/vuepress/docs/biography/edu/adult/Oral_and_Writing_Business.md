@@ -918,6 +918,26 @@ For 2019–2021: As discussed with A, we launched the new  system in 2021, so I 
 In short, we have no operational knowledge of how to retrieve or interpret that legacy data. If we need to validate it, it would require a significant time investment to dig through raw data without any technical reference, so it's not feasible in the short term.
 
 #### it gov
+Hi xxx, 
+Can i check with you if there's Change Request to be filled up/required by vendor for the website change?
+To double-check: who​ needs to fill out the Change Request form—the vendor or us?/
+Just to clarify the process: this requirement actually came from GMS and Ops, while I'm just handling the implementation. In this case, who should be the one to officially raise the Change Request?
+So basically, Tom and Peter are the requesters. I'm handling the report generation, while Vendor is building the webpage to display them. I'll liaise with the vendor on the file location, but all requirement docs and UI specs will come directly from Tom/Peter.
+
+Also, since I'm not entirely familiar with the new process yet, could you please confirm the above and share the Change Request form (or any other required documentation) with me?
+
+There's 2 different kinds of Change Request here.
+
+So, 1 is the request to Vendor (this one should be whoever wants the change to happen, and IT as the middle person should link them up), Vendor should have their own set of CR form for the requirements from 
+our Change Request (JIRA), this one will have to raise after Vendor and Tom/Peter discuss finish the details
+
+let me go and confirm with xxx，i'll update you soon
+
+Thanks! That helps a lot. To be transparent, I've got multiple priorities running in parallel​ right now, with the implementation being the main focus. My bandwidth is pretty stretched, so I really appreciate you taking the lead on confirming this.
+
+I'm keen to move this forward, but I'm currently spread pretty thin​ across the implementation and other commitments. Once you confirm the CR process, I'll prioritize it as best I can."
+（我很想推进这事，但我现在被实施工作和其他任务拉扯得很厉害。一旦你确认了CR流程，我会尽力排期的。）
+
 Hi Peter, my colleague was curious about the rationale behind upgrading to the new version. I mentioned it's a best practice for security and performance, but would you have any additional insights to share?
 
 Hi Peter, gentle reminder on the upgrade rationale! If no further comments are needed, we’ll finalize this as the official explanation.
@@ -998,6 +1018,8 @@ Yeah, that's what I have on my schedule for next Monday too / Yes, I'm scheduled
 / I thought we were taking turns—this week is yours and next week is mine, isn't it?
 
 #### website dev
+@xx Need your help creating a new MAS Aggregate Exposure Report​ page. It should look similar to the existing TEST page, but without the file upload feature.
+I'll handle syncing the files to /wp-content/uploads/reports/, so the page just needs to list them for download. @XXX, please provide the UI specs and content details here, and let us know the deadline. Thanks!
 
 
 Just to clarify, we aren't the owners of the content. We handle technical support only, but the pages themselves are maintained by other departments. Unfortunately, we don't have the latest files on hand.
@@ -1746,6 +1768,17 @@ Your timely submission will help ensure that all expenses are properly recorded 
 Please do not hesitate to let us know if you have any queries.
 
 Just got the finance notice for year-end closing, which reminded me—our GitLab license expires on April 1st, 2026.​ Are you handling the renewal?
+
+Subject:​ Action Required: Confirmation of Clearing System Accounts (Due by Aug 26, 2026)
+Hi Finance team,
+
+Below are the accounts used in the Clearing System last year. Please let me know if any details need updating.
+
+If no changes are advised by Aug 26, 2026, I will automatically extend the expiry dates to prevent service interruption.
+
+Please be aware that failure to confirm may lead to reconciliation breaks from Aug 26, 2026​ onwards.
+
+xxxx
 
 #### Account setup
 Could I trouble you to set up SFTP access for our new risk colleague, peter?
