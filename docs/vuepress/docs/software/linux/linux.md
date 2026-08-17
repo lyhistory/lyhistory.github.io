@@ -1182,6 +1182,67 @@ Virtualenv
 /usr/bin
 https://askubuntu.com/questions/121413/understanding-bashrc-and-bash-profile
 
+### 新用户访问WordPress文件夹
+创建一个新用户deployer，需要 /var/www/html/test.com/wp-content/uploads 访问，
+当前权限：
+drwxr-xr-x.  21 root root 4096 Dec 22  2022 var   
+drwxr-xr-x.  4 root root   33 Dec 22  2025 www  
+drwxr-xr-x. 4 root root 76 Dec 22  2025 html  
+drwxr-xr-x. 8 apache apache 4096 Jan  9  2026 test.com  
+drwxr-xr-x. 16 apache apache  4096 Mar 20  2025 wp-content  
+drwxr-xr-x.  15 apache apache  230 Aug 11 13:39 uploads，
+我
+现在需要deployer从另外一个地方scp文件到/var/www/html/test.com/wp-content/uploads/test（test目录还未创建）
+
+要成功 scp 一个文件到 /var/www/html/test.com/wp-content/uploads/test/file.txt，系统会逐级检查每一层目录的权限：
+对父目录只需要最小的x权限，
+对uploads需要wx进入 + 创建子目录/文件 
+
+前的每一层都是 drwxr-xr-x（755），这意味着：
+
+✅ 任何用户都能逐级 cd 进去（因为 other 有 r-x）
+
+❌ 任何非 root、非 apache 组的用户都无法在 uploads 下创建文件/目录（因为 other 没有 w）
+
+```
+useradd -m -s /bin/bash deployer
+passwd deployer   # 设置 SSH 登录密码，或者用 SSH Key（推荐）
+usermod -aG apache deployer
+
+# 确保 apache 组对 uploads 有写权限
+chmod g+w /var/www/html/test.com/wp-content/uploads
+
+# 设置 SGID（最关键的一步）
+chmod g+s /var/www/html/test.com/wp-content/uploads
+
+mkdir /var/www/html/test.com/wp-content/uploads/test
+chown -R deployer:apache /var/www/html/test.com/wp-content/uploads/test
+chmod -R 775 /var/www/html/test.com/wp-content/uploads/test
+
+确保网站程序能正常读取（列出+访问文件）
+Linux 权限层面已经解决了（SGID + 组权限），但还有两个关键点：
+1️⃣ umask 设置
+
+确保 deployer 创建的文件默认权限是 644（文件）和 755（目录），这样 apache（作为 other 或 group）能读能列：
+# 在 deployer 的 ~/.bashrc 或 ~/.profile 里加
+umask 022
+
+这样新文件就是 -rw-r--r--，apache 作为 other 能读；新目录就是 drwxr-xr-x，apache 能列能进。
+
+2️⃣ SELinux（非常重要！你系统开了 SELinux）
+
+你 ls -l 显示 drwxr-xr-x. 末尾有个 .，说明 SELinux 在 enforcing 模式。即使 Linux 权限全对，SELinux 也可能阻止 httpd 读取新上传的文件或阻止 ssh 用户写入。
+
+检查当前上下文：
+ls -Z /var/www/html/test.com/wp-content/uploads
+正常情况下应该是 httpd_sys_content_t 或 httpd_sys_rw_content_t。如果 deployer 创建的文件变成了 user_home_t 之类的，httpd 会报 403。
+
+修复方法：
+# 确保 uploads 及其子目录的 SELinux 类型正确
+semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/html/test.com/wp-content/uploads(/.*)?"
+restorecon -Rv /var/www/html/test.com/wp-content/uploads
+
+```
 
 ---
 
