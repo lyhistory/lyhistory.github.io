@@ -918,6 +918,9 @@ For 2019–2021: As discussed with A, we launched the new  system in 2021, so I 
 In short, we have no operational knowledge of how to retrieve or interpret that legacy data. If we need to validate it, it would require a significant time investment to dig through raw data without any technical reference, so it's not feasible in the short term.
 
 #### it gov
+Hi xx, about xxx'S request yesterday for investor UAT accounts—what’s the procedure? It’s not just my XX system access; we also need XX to set up the VPN and XX to handle the trading accounts.
+On my end, I’m a bit stuck—I don’t even have the names of the specific users yet, or who I should ultimately pass the credentials to. Also, should we be provisioning new accounts for them, or is it okay to share existing admin access?
+
 Hi xxx, 
 Can i check with you if there's Change Request to be filled up/required by vendor for the website change?
 To double-check: who​ needs to fill out the Change Request form—the vendor or us?/
@@ -1018,6 +1021,8 @@ Yeah, that's what I have on my schedule for next Monday too / Yes, I'm scheduled
 / I thought we were taking turns—this week is yours and next week is mine, isn't it?
 
 #### website dev
+Pending confirmation from my infra colleague — if they confirm it's safe to proceed without introducing security vulnerabilities, we won't need the upload feature. Otherwise, we'll still require GMS or Ops users to upload it manually
+
 @xx Need your help creating a new MAS Aggregate Exposure Report​ page. It should look similar to the existing TEST page, but without the file upload feature.
 I'll handle syncing the files to /wp-content/uploads/reports/, so the page just needs to list them for download. @XXX, please provide the UI specs and content details here, and let us know the deadline. Thanks!
 
@@ -1042,6 +1047,9 @@ hi  i got a qn about the redhat upgrade UAT. part of the test that ops team feel
 ok no hurry. so when it is ready, xxx can receive? 
 <=Yeah exactly, that's the bare minimum. If that doesn't work, there's no test.​
 
+#### progress check
+bro trade exposure report is ready? we can help do validate result "UAT"
+Not right now — too many things have come up. I'm currently heads-down preparing docs for the investors.
 ### business email
 
 Hi Finance Team,
