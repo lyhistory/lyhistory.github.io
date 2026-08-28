@@ -2101,6 +2101,9 @@ I will get back to you once I get the orders
 Great! Looking forward to receiving your order details.
 ## TICKETS
 
+Impact:​ If this change is not implemented, the current API calls will fail after September 1st, 2026, according to CompassFT (our data supplier). Consequently, the BTC funding rate will not be auto-generated, causing downstream failures in clearing system jobs due to the missing rate.
+Risk:​ Low. This change only updates the API call method without altering the API itself. Results will be immediately verifiable post-deployment.
+
 Summary of the Issue:
 
 The root cause is not a bug in your Java program itself, but a mismatch between the CSV data format and Excel's automatic interpretation.​ The problem is triggered by Excel's behavior, and the Java program's output can contributeto the confusion.
