@@ -139,6 +139,325 @@ Step 4: Each configured Realm is checked to see if it implements the same Author
 + 基于权限 **permission-based security**
 
 ## 2.实例代码剖析
+### 例子
+```
+Filter 注册（SSOAutoConfig.shiroFilter()）
+@Bean("shiroFilter")
+public ReloadableShiroFilterFactoryBean shiroFilter(SecurityManager shiroSecurityManager) {
+    ReloadableShiroFilterFactoryBean factoryBean = new ReloadableShiroFilterFactoryBean(...);
+    factoryBean.setSecurityManager(shiroSecurityManager);
+    factoryBean.setLoginUrl(...);      // ← 未登录跳转的登录页 URL 在这里注册
+    factoryBean.setUnauthorizedUrl(...); // ← 无权限跳转的 URL 在这里注册
+
+    Map<String, Filter> filterMap = factoryBean.getFilters();
+    // ★ KickOutSessionControlFilter 在这里注册，key 是 "kickout"
+    final KickOutSessionControlFilter kickOutSessionControlFilter = new KickOutSessionControlFilter();
+    kickOutSessionControlFilter.setKickOutUrl(...); // ← 被踢后跳转的 URL 在这里注册
+    filterMap.put("kickout", kickOutSessionControlFilter);
+    // ★ RoleServiceAuthorizationFilter 在这里注册，key 是 "roleService"
+    filterMap.put("roleService", new RoleServiceAuthorizationFilter(factoryBean));
+    factoryBean.setFilters(filterMap);
+    return factoryBean;
+}
+Filter 链规则（ReloadableShiroFilterFactoryBean.getFilterChainMap()）
+// 兜底规则：所有请求都经过这三个 Filter
+filterChainMap.put("/**", "kickout,authc,roleService");
+// 另外从数据库加载的 URL 规则也会 put 进来，比如：
+// /admin/** = roles[admin]  （假设数据库里配了）
+
+Listener 注册（SSOAutoConfig.authenticator()）
+@Bean
+public Authenticator authenticator(KickOutSessionListener kickOutSessionListener) {
+    ModularRealmAuthenticator authenticator = new ModularRealmAuthenticator();
+    // ★ KickOutSessionListener 在这里注册为认证监听器
+    authenticator.setAuthenticationListeners(Arrays.asList(kickOutSessionListener));
+    return authenticator;
+}
+
+SessionManager 注册（SSOAutoConfig.sessionManager()）
+@Bean
+public SessionManager sessionManager() {
+    ShiroSessionManager shiroSessionManager = new ShiroSessionManager();
+    shiroSessionManager.setGlobalSessionTimeout(serverSessionTimeout); // ← Session 超时在这
+    shiroSessionManager.setSessionDAO(new EnterpriseCacheSessionDAO());
+    // ★ Cookie 名字在这注册，这就是你理解的 "token"
+    shiroSessionManager.setSessionIdCookie(new SimpleCookie(SSOConst.SESSION_TOKEN));
+    return shiroSessionManager;
+}
+```
+
+一、未登录访问受限页面：请求如何被拦截并踢到登录页
+
+张三浏览器输入 https://domain/admin/page，此时他没有 JSESSIONID Cookie。
+
+请求对象长这样（简化）：
+```
+request:
+  method=GET
+  requestURI=/admin/page
+  headers: {Host: domain, Cookie: (空)}
+  session: null
+
+response:
+  status=未定
+  headers: {}
+```
+请求经过 DelegatingFilterProxy 进入 Shiro，由 AbstractShiroFilter 调用 PathMatchingFilterChainResolver 匹配 Filter 链。
+因为 /admin/page 匹配 /**，所以 Filter 链是：
+[KickOutSessionControlFilter, FormAuthenticationFilter(authc), RoleServiceAuthorizationFilter(roleService)]
+
+第一个 Filter：KickOutSessionControlFilter
+```
+// isAccessAllowed 返回 !kickOutEnabled
+// 如果开启了踢人功能 → 返回 false → 走 onAccessDenied
+protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+    return !this.isKickOutEnabled(); // 开启了 → false
+}
+
+protected boolean onAccessDenied(ServletRequest request, ServletResponse response) {
+    Subject subject = getSubject(request, response);
+    // 没登录，subject.getPrincipal() 抛异常或返回 null
+    // rtnFlag = true → return true（放行，不拦截未登录的人）
+    if (!subject.isAuthenticated() && !subject.isRemembered()) {
+        return true; // 没登录，不走踢人逻辑，直接放行到下一个 Filter
+    }
+    // ... 已登录才会检查是否被踢
+}
+mappedValue 是什么：​ 对于 /** = kickout,authc,roleService 这条规则，kickout 后面没有参数，所以 mappedValue = null
+第二个 Filter：FormAuthenticationFilter（authc）
+// 父类 AuthenticatingFilter.isAccessAllowed()
+protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+    Subject subject = getSubject(request, response);
+    return subject.isAuthenticated() || subject.isRemembered();
+}
+此时 Cookie 为空 → DefaultWebSessionManager 取不到 Session → subject.isAuthenticated() 返回 false。
+
+→ isAccessAllowed 返回 false​ → 触发 onAccessDenied()：
+// FormAuthenticationFilter.onAccessDenied()
+protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
+    if (isLoginRequest(request, response)) {
+        return true; // 这是登录请求，放行
+    } else {
+        // ★ 跳转的登录页 URL 就是 SSOAutoConfig 里 setLoginUrl() 注册的
+        saveRequestAndRedirectToLogin(request, response);
+        return false;
+    }
+}
+```
+→ WebUtils.issueRedirect(request, response, loginUrl) 往 response 写入：
+```
+response:
+  status=302
+  headers: {Location: /login}  // 或者你配置的登录页路径
+```
+浏览器收到 302，跳转到登录页。后面的 RoleServiceAuthorizationFilter 不会执行。
+
+二、用户登录：subject.login() 如何触发 Realm 查 userinfo
+
+张三在登录页输入用户名 zhangsan、密码 123456，点击登录。
+
+登录请求进入 LoginController.login()：
+```
+// LoginController 简化代码
+@PostMapping("/login")
+public TESTResponse login(@RequestBody LoginRequest loginInfo) {
+    Subject subject = SecurityUtils.getSubject();
+    // 假设前端没传 userType，后端写死默认值
+    if (!StringUtils.hasText(loginInfo.getUserType())) {
+        loginInfo.setUserType(SSOConst.DEFAULT_BIZTYPE); // "default"
+    }
+    // 构建 Token
+    TerminalLoginToken token = new TerminalLoginToken(loginInfo.getUserName(), loginInfo.getPassword());
+    token.setUserType(loginInfo.getUserType()); // "default"
+    token.setTerminal(TerminalEnum.WEB.getTerminalType());
+    // 触发登录
+    subject.login(token); // ★ 核心调用
+    return TESTResponse.ok();
+}
+```
+subject.login(token) 的数据流：
+```
+subject.login(token)
+  ↓
+DefaultWebSecurityManager.login()  // 你的 SSOAutoConfig 里定义的 Bean
+  ↓
+ModularRealmAuthenticator.authenticate(token)  // 你配置的 authenticator() Bean
+  ↓
+doSingleRealmAuthentication(customRealm, token)  // customRealm 是你 SSOAutoConfig.customRealm() 返回的
+  ↓
+customRealm.doGetAuthenticationInfo(token)  // ★ 你的 CustomRealm 重写的方法
+```
+在 CustomRealm.doGetAuthenticationInfo() 里：
+```
+// CustomRealm 简化代码
+@Override
+protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+    TerminalLoginToken terminalToken = (TerminalLoginToken) token;
+    // terminalToken.getUsername() = "zhangsan"
+    // terminalToken.getUserType() = "default"
+
+    // 1. 取 AclDefinition
+    CustomAclDefinition custAclDef = UserContextUtil.getCustomAclDefinition("default");
+    // custAclDef = {dataSource:"security", systemId:2}
+
+    // 2. 查用户（简化 SQL）
+    // @DS("security") 切数据源
+    // SELECT id, loginname, password, pwd_salt, pwd_error_times FROM t_user WHERE loginname = 'zhangsan'
+    SSOUser user = UserContextUtil.getUserService().getUserInfo(custAclDef, "zhangsan", ...);
+
+    // 3. 检查锁定
+    if (user.getPwdErrorTimes() >= 5) {
+        throw new AuthenticationException("Too many incorrect user passwords, the user is locked");
+    }
+
+    // 4. 返回认证信息（Principal 是整个 SSOUser 对象）
+    return new SimpleAuthenticationInfo(
+        user,                    // ★ Principal 是 SSOUser 对象，不是 loginName 字符串
+        user.getPassword(),
+        new SimpleByteSource(user.getPwdSalt()),
+        "customRealm"
+    );
+}
+```
+getUserInfo() 里的数据库查询：
+```
+// SecurityUserServiceImpl 简化代码
+@DS(value = "#aclDef.dataSource") // 动态数据源，值为 "security"
+@Override
+public SSOUser getUserInfo(CustomAclDefinition aclDef, String loginName, ...) {
+    // 实际执行的 SQL（简化）
+    String sql = "SELECT id, loginname, password, pwd_salt, pwd_error_times " +
+                 "FROM t_user WHERE loginname = ? AND is_active = 1";
+    // jdbcTemplate 执行查询
+    SSOUser user = jdbcTemplate.queryForObject(sql, new Object[]{loginName}, new UserRowMapper());
+    // 如果 user 为 null 或 pwd_error_times >= 5，抛异常或返回 null
+    return user;
+}
+```
+认证成功后，DefaultWebSecurityManager 创建 Session，ShiroSessionManager 通过 EnterpriseCacheSessionDAO 把 Session 存进缓存，并通过 SimpleCookie(SSOConst.SESSION_TOKEN) 把 JSESSIONID 写回给浏览器。
+同时，KickOutSessionListener 被触发
+因为 KickOutSessionListener 注册在 authenticator.setAuthenticationListeners() 里：
+```
+@Override
+public void onSuccess(AuthenticationToken token, AuthenticationInfo info) {
+    Subject subject = SecurityUtils.getSubject();
+    Session session = subject.getSession(); // 创建 Session
+    String sessionId = (String) session.getId();
+    // 把 sessionId 存进 Redis List，key = username
+    redisTemplate.execute(addSessionAndExpireList, sessionListKey, sessionId, sessionExpire);
+    // 检查是否超过 maxSession，如果超过 → ShiroSessionUtil.kickoutSession(旧session)
+}
+```
+
+三、登录后访问 & 授权检查：如何查 permission
+
+张三登录成功后，再次访问 https://domain/admin/page，这次 request 里带了 Cookie: JSESSIONID=abc123。
+
+第一个 Filter：KickOutSessionControlFilter
+```
+onAccessDenied() {
+    SSOUser ssoUser = (SSOUser) subject.getPrincipal(); // 从 Session 取出 SSOUser
+    Session session = subject.getSession(); // 从 Cookie abc123 恢复 Session
+    // 检查是否被踢
+    if (session.getAttribute(SSOConst.SESSION_KEY_KICKOUT) != null) {
+        subject.logout();
+        WebUtils.issueRedirect(request, response, kickOutUrl); // 跳到登录页
+        return false;
+    }
+    return true; // 没被踢，放行
+}
+```
+第二个 Filter：FormAuthenticationFilter
+FormAuthenticationFilter.isAccessAllowed() 通过（因为 Session 有效）。
+```
+isAccessAllowed() {
+    // Cookie abc123 → Session 有效 → subject.isAuthenticated() = true
+    return true; // 放行
+}
+```
+第三个 Filter：RoleServiceAuthorizationFilter
+```
+protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object o) {
+    // o = mappedValue = null
+
+    Subject subject = getSubject(request, response);
+    String requestURI = getPathWithinApplication(request); // "/admin/page"
+
+    // 从 subject 里取 SSOUser（认证时放进去的整个对象）
+    SSOUser ssoUser = (SSOUser) subject.getPrincipal();
+    // ssoUser.getUserId() = 1001
+
+    String userType = UserContextUtil.getRequestUserType(); // "default"
+    CustomAclDefinition aclDef = UserContextUtil.getCustomAclDefinition(userType);
+
+    // 超级管理员直接放行
+    if (UserContextUtil.isSecuritySystemAdmin(aclDef, ssoUser.getLoginName())) {
+        return true;
+    }
+
+    // ★ 用 userId + requestURI 查数据库判断权限
+    return UserContextUtil.getUserService().checkUrlPermission(aclDef, ssoUser.getUserId(), requestURI);
+}
+如果 return false（没权限）：
+protected boolean onAccessDenied(ServletRequest request, ServletResponse response) {
+    // 跳转到 SSOAutoConfig 里 setUnauthorizedUrl() 注册的 URL
+    WebUtils.issueRedirect(request, response, unauthorizedUrl);
+    return false;
+}
+如果数据库里还配了 /admin/** = roles[admin]
+
+那 ReloadableShiroFilterFactoryBean 加载的 filterChainMap 里会有：
+/admin/** = roles[admin]
+这条规则会被 PathMatchingFilterChainResolver 匹配到，在 roleService 之前（因为数据库规则先加载，但 /** 是兜底在最后），RolesAuthorizationFilter 会触发 CustomRealm.doGetAuthorizationInfo()：
+
+@Override
+protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+    SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+    SSOUser user = (SSOUser) principals.getPrimaryPrincipal(); // 整个 SSOUser 对象
+    CustomAclDefinition aclDef = UserContextUtil.getCustomAclDefinition(user.getUserType());
+
+    // 查角色（简化 SQL）
+    // SELECT role FROM t_role WHERE user_id = 1001
+    List<String> roles = UserContextUtil.getUserService().findUserRoles(aclDef, user.getUserId());
+    info.addRoles(roles);
+
+    // 查权限（简化 SQL）
+    // SELECT perm FROM t_perm WHERE user_id = 1001
+    List<String> perms = UserContextUtil.getUserService().findUserPerms(aclDef, user.getUserId());
+    info.addStringPermissions(perms);
+
+    return info; // Shiro 框架自己比对是否有 "admin" 角色
+}
+
+```
+
+四、踢人（Kickout）逻辑：跳转到登录页的另一种情况
+
+注册位置回顾
+
+```
+// SSOAutoConfig 里：
+filterMap.put("kickout", kickOutSessionControlFilter); // Filter 注册
+authenticator.setAuthenticationListeners(Arrays.asList(kickOutSessionListener)); // Listener 注册
+
+踢人完整流程
+
+1. 张三设备A登录 → SessionA 创建
+   → KickOutSessionListener.onSuccess()
+   → Redis List 里存入 SessionA 的 id
+
+2. 张三设备B登录 → SessionB 创建
+   → KickOutSessionListener.onSuccess()
+   → Redis List 里存入 SessionB 的 id
+   → 发现超过 maxSession=1
+   → ShiroSessionUtil.kickoutSession(SessionA)  // 给 SessionA 打标记
+
+3. 设备A再次访问 /admin/page
+   → KickOutSessionControlFilter.onAccessDenied()
+   → session.getAttribute(SESSION_KEY_KICKOUT) != null
+   → subject.logout()
+   → WebUtils.issueRedirect(request, response, kickOutUrl)  // 跳到登录页
+```
 
 ### 2.1 基于shiro-spring-boot-web-starter简单demo分析
 ```
