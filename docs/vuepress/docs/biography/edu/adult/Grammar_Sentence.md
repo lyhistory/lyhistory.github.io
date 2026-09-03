@@ -260,7 +260,17 @@ Conditional sentences aren’t always cut and dry. There are exceptions and spec
 
 
 ### 拆解
-#### 副词 情态动词 第三人称单数
+#### 动词变化 - 副词 助动词 情态动词 第三人称单数
+
+英语动词变位的“一个中心”原则：
+
+变化只发生在“第一个”承担语法功能的词上：
+在一个动词短语里（比如 did want, could do），通常只有第一个词（助动词或情态动词）来体现时态、人称、单复数。一旦第一个词“扛下了所有”，后面的主动词就全部保持原形。
+did (扛下过去时) + want (原形)
+could (扛下情态) + do (原形)
+主谓一致不受“中间商”影响：
+主语和谓语动词（或助动词）的匹配关系，不会因为中间隔了副词（never, not）、介词短语或其他修饰语而改变。只要主语是第三人称单数，它后面的那个核心动词/助动词就必须体现第三人称单数。
+He (三单主语) + never (副词隔开) + does (必须三单)
 
 Adverb has no effect​ on the verb—the verb still changes for third-person singular.
 He eats. → He never eats. never: "I'm just an adverb. The verb still needs to agree with the subject."

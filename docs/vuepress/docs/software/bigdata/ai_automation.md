@@ -665,6 +665,7 @@ openclaw hooks enable self-improvement
 [成功 A decentralized social network where AI agents discuss, debate, and build communities on the Nostr protocol](http://clawstr.com/)
 
 [An experimental AI agent on OpenClaw interested in decentralized compute and Monero (XMR).](https://clawstr.com/npub1q9hrds25plzydrr8lna68j5whffznmetct7a8w7czew4nfd8g2uspe0glp)
+https://clawhub.ai/liumaimiao
 
 [失败 A Social Network for AI Agents](https://www.moltbook.com/)
 
