@@ -9,7 +9,7 @@ example 3: I don't just stop at resolving issues; I scrutinize whether the fix a
 
 hi, i'm xxx, i've working in IT industry for 15 years, i have my own website sharing my IT knowledges for free, 
 it covers traditional software development/blockchain/eithical hacking and hardware like raspberry pi and arduino.
-my last job experience is mainly focusing on java development using spring boot and spring cloud components, we developed clearing system from scratch 
+my last job experience is mainly focusing on java development using spring boot and spring cloud components, we developed XXX system from scratch 
 and i partipicated in all lifecycles from system design to deployment and migration to cloud, and i also implemented serveral side projects on my own for example the btcp funding rate calc.
 my personal hobby is both exploring new IT technics and dive down existing technics in my personal time,
 for example when i explore blockchain I was very curios about ECDSA and it triggered my insteresting of connecting the dots from AES RSA i previously learned in https with this ECDSA, so i self learned Professor Christof Paar's online cryptography course to understand  how
@@ -34,7 +34,7 @@ i'm not sure how other people can memorize so many things all the time but that'
 optimized:
 Hi, I’m XXX. I have been working in the IT industry for over 15 years. I also run my own website where I share IT knowledge for free. The topics cover traditional software development, blockchain, ethical hacking, and hardware projects involving Raspberry Pi and Arduino.
 
-In my most recent role, I mainly focused on Java development using Spring Boot and Spring Cloud. My team developed a clearing system from scratch, and I participated in the full software lifecycle, including system design, development, deployment, and cloud migration. I also built several side projects independently, such as a BTC perpetual funding rate calculator.
+In my most recent role, I mainly focused on Java development using Spring Boot and Spring Cloud. My team developed a XXX system from scratch, and I participated in the full software lifecycle, including system design, development, deployment, and cloud migration. I also built several side projects independently, such as a BTC perpetual funding rate calculator.
 
 One of my biggest interests is continuously exploring new technologies while also deeply understanding existing ones. For example, when I started learning blockchain, I became very curious about ECDSA. That curiosity led me to connect it with concepts like AES and RSA that I had previously encountered in HTTPS and cryptography.
 
@@ -635,7 +635,7 @@ This data was prepared by XXX. Given his usual high standards, this seems quite 
 oh i thought you asked me to update the jira ticket and assign xxx as the checker, maybe i misheard
 
 
-I noticed XX sent an email to XXX regarding a position account closure issue. Could you clarify if there are any manual steps we need to take in our clearing system​ related to this?
+I noticed XX sent an email to XXX regarding a position account closure issue. Could you clarify if there are any manual steps we need to take in our XXX system​ related to this?
 
 The current head of the IT department ousted his predecessor through underhanded means. Hailing from the Infrastructure department himself, he lacked a solid grasp of the company's project development landscape—and indeed, no meaningful progress was made on projects during his tenure. His top priority now? To outsource the entire IT department while keeping only his original Infrastructure team intact.
 Here’s the lowdown: This guy basically clawed his way to the top by shoving out the old IT head. Since he’s from infra, he’s totally lost when it comes to actual project work—and surprise, nothing got done under him. Now? He’s pushing to outsource the whole IT crew so he can just keep his own infra team safe and sound. Classic self-preservation play: dodge the blame for the mess, keep his power base, and call it a “smart move.” Total win for him, total loss for the company.
@@ -734,8 +734,8 @@ This is to confirm that the settlement price displayed on a Monday (before 7:00 
 The 'Accounts' category in the Excel file appears to be empty. What is the best way to verify its accuracy, regardless of whether it contains data or is supposed to be blank?
 
 touch base vs discuss
-    Would it be possible to connect briefly today at your convenience to discuss the clearing repository permissions?
-    do you have a few minutes today to touch base on the clearing repo permissions? Thanks!
+    Would it be possible to connect briefly today at your convenience to discuss the XXX repository permissions?
+    do you have a few minutes today to touch base on the XXX repo permissions? Thanks!
 
 
 #### ops team vs dev team
@@ -821,7 +821,7 @@ I would expect the nostro  for CNH won't be settled today, the status will be "r
 <=
 As mentioned earlier, I don't have visibility into the bank's internal processing. However, based on standard practice, your assumption is logically correct: the bank should settle on the value date (22/5), triggering our confirmation and Nostro matching.
 
-That said, if the bank were to send the confirmation today instead, it would indeed cause an exception in our clearing system logic.
+That said, if the bank were to send the confirmation today instead, it would indeed cause an exception in our XXX system logic.
 
 =>
 1. If bank don’t send confirmation today all schedules will complete successfully? 2. If bank send confirmation, any remediation like manual matching confirmation?
@@ -853,7 +853,7 @@ from code, so far i don't see any impact, but probably from business logic we sh
 ##### updates
 > any updates require to SFTP files regarding JPY collateral?
 < What updates are needed for the JPY collateral SFTP files?
-> Historically, JPY is one of the currency that has negative interest rate. Right now, the interest rate has gone to positive interest rate. on the month JPY is on negative interest rate, we need to do internal booking to NCS. It is chargeback to clearing member.
+> Historically, JPY is one of the currency that has negative interest rate. Right now, the interest rate has gone to positive interest rate. on the month JPY is on negative interest rate, we need to do internal booking to NCS. It is chargeback to XXX member.
 This is the input file we upload to sftp, then sftp will generate 5 output files, screenshot from UAT
 < ok, means: 1. This scenario already tested in UAT, you just want to confirm whether prod is ready, right? 2. currently no member with jpy collateral, so not urgent? 
 > yes, got time for you to find out
@@ -953,7 +953,7 @@ Hi Peter, gentle reminder on the upgrade rationale! If no further comments are n
 
 We do not currently have an internal penetration testing program. Regarding external pentests on the XXX system, I don't recall any recent assessments
 
-Hi [Name], quick check on the Clearing System pentest history. I only have records for Web/Mobile, and I’m not sure if xxx received anything either. Since IT Gov usually coordinates the external side, do you know if this was ever done?
+Hi [Name], quick check on the XXX System pentest history. I only have records for Web/Mobile, and I’m not sure if xxx received anything either. Since IT Gov usually coordinates the external side, do you know if this was ever done?
 
 Hi xxx, our website vendor has sent the invoice and it's now in our internal processing stage. Could you kindly confirm if the approval flow is as follows:
 
@@ -1385,6 +1385,35 @@ The vendor is following up. (现在进行时)​​
 
 ​隐含意义​：这会给人一种“供应商正在紧盯着我们”的紧迫感，甚至可能带有一丝被催促的压迫感。在某些情况下，可能会被解读为你在向经理传递压力。
 
+#### IT GOV
+XXX System is selected for the upcoming round’s quarterly backup recovery test
+
+Please perform the following, and reply this email with relevant testing report:
+
+1)	Pick one day’s backup file archived on OBS;
+2)	Restore the backup file in XXX testing environment;
+3)	Compare with actual data, and to ensure data restored from OBS backup file is complete and accurate.
+4)	Remove the restored backup data in the testing environment after the above has been completed.
+
+I have attached the previous completed restoration test for your reference.
+
+Appreciate it if the test can be completed by 31 Dec 2025 (Wed). Thank you very much.
+
+--
+
+Please help to retrieve the XXX Production backup for 7 November 2025 and place it at 192.168.1.200:/XXX/data/backup by 8 December 2025.
+
+Please also note that the IP belongs to XXX Production Parallel Environment which reside in the production zone. Strictly place the backup in the mentioned file path. Ensure that the permission for the backup file is usable for XXX user.
+
+Thanks!
+
+--
+Mentioned backup file has been placed to the destination file path.
+--
+I have verified that the backup from OBS can be used for restoration. As 7 Nov 2025 backup is used, EOD for 7 Nov 2025 is completed and the next clear date is 10 Nov 2025. The trade count for 7 Nov 2025 is presented in the screenshot below. Please note that this represent single sided trade. Thanks!
+
+
+
 #### renewal of our website maintenance services
 ##### LCD challenge
 Hi Peter,
@@ -1790,10 +1819,10 @@ Please do not hesitate to let us know if you have any queries.
 
 Just got the finance notice for year-end closing, which reminded me—our GitLab license expires on April 1st, 2026.​ Are you handling the renewal?
 
-Subject:​ Action Required: Confirmation of Clearing System Accounts (Due by Aug 26, 2026)
+Subject:​ Action Required: Confirmation of XXX System Accounts (Due by Aug 26, 2026)
 Hi Finance team,
 
-Below are the accounts used in the Clearing System last year. Please let me know if any details need updating.
+Below are the accounts used in the XXX System last year. Please let me know if any details need updating.
 
 If no changes are advised by Aug 26, 2026, I will automatically extend the expiry dates to prevent service interruption.
 
@@ -1956,11 +1985,11 @@ So yes, it’s not day-to-day coding. But it isday-to-day ownership. If you’re
 /
 "Primarily, we ask these because they form the foundation. We need to gauge the breadth and depth​ of your technical knowledge.
 
-Beyond that, take Kafka for example—our clearing system is heavily reliant on​ a bespoke engine core we built on top of it. All our business logic is implemented on top of this core, so a deep understanding​ of Kafka isn't just preferable; it's essential for the role."
+Beyond that, take Kafka for example—our XXX system is heavily reliant on​ a bespoke engine core we built on top of it. All our business logic is implemented on top of this core, so a deep understanding​ of Kafka isn't just preferable; it's essential for the role."
 /
 "First, it’s about the basics. We need to see your depth​ lah.
 
-Second, for Kafka specifically, our clearing system is built deep​ on it. We wrote our own engine core using Kafka, so if you don't understand Kafka well, you won't be able to handle the business code."
+Second, for Kafka specifically, our XXX system is built deep​ on it. We wrote our own engine core using Kafka, so if you don't understand Kafka well, you won't be able to handle the business code."
 
 I see you got some working experience with Kafka. Can you explain the different types of offsets in Kafka? Like, what are they for? It's perfectly fine if you can't recall the specific names right now; just describe what they do in the system, and we'll work from there.
 
@@ -2118,7 +2147,7 @@ Note: This item was not covered during the handover from [XXX]. IT requires addi
 
 TBD (dependent on requirements clarification and resumption of RMD discussion).
 
-Impact:​ If this change is not implemented, the current API calls will fail after September 1st, 2026, according to CompassFT (our data supplier). Consequently, the BTC funding rate will not be auto-generated, causing downstream failures in clearing system jobs due to the missing rate.
+Impact:​ If this change is not implemented, the current API calls will fail after September 1st, 2026, according to CompassFT (our data supplier). Consequently, the BTC funding rate will not be auto-generated, causing downstream failures in XXX system jobs due to the missing rate.
 Risk:​ Low. This change only updates the API call method without altering the API itself. Results will be immediately verifiable post-deployment.
 
 Hi [Name],

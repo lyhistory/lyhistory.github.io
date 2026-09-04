@@ -172,7 +172,7 @@ https://colab.research.google.com/drive/1NG9AoH3QDtC7h97z1Yodmn_CiiGh8Y1T?usp=sh
 
 ## 视频解析 VLM
 ### 字幕翻译合成
-[视频转字幕、字幕翻译、AI 配音与声音克隆、字幕烧录——免费开源的一站式桌面工具。基于 Whisper / FunASR 等本地模型离线语音转文字，批量处理 + 全平台 GPU 加速，跨 Windows / macOS / Linux。Free, open-source desktop app to generate, translate, dub & burn video subtitles — local Whisper speech-to-text, AI dubbing & voice cloning, offline, GPU-accelerated.](https://github.com/buxuku/SmartSub)
+[验证有效 视频转字幕、字幕翻译、AI 配音与声音克隆、字幕烧录——免费开源的一站式桌面工具。基于 Whisper / FunASR 等本地模型离线语音转文字，批量处理 + 全平台 GPU 加速，跨 Windows / macOS / Linux。Free, open-source desktop app to generate, translate, dub & burn video subtitles — local Whisper speech-to-text, AI dubbing & voice cloning, offline, GPU-accelerated.](https://github.com/buxuku/SmartSub)
 
 ### 配音(音色克隆)
 [智能视频多语言AI配音/翻译工具 - Linly-Dubbing — “AI赋能，语言无界”](https://github.com/Kedreamix/Linly-Dubbing)

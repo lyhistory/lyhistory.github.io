@@ -570,8 +570,7 @@ The consumer application need not use Kafka's built-in offset storage, it can st
 
 Configure `enable.auto.commit=false` 
 
-因为每条record 都携带其offset信息根据模型
-![atomic-read-process-write](/docs/docs_image/software/buildingblock/kafka/kafka_exactly_once01.png)，将write和mark read（Use the offset provided with each [`ConsumerRecord`](https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/ConsumerRecord.html) to save your position）作为一个transaction提交；
+因为每条record 都携带其offset信息根据模型，将write和mark read（Use the offset provided with each [`ConsumerRecord`](https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/ConsumerRecord.html) to save your position）作为一个transaction提交；
 
 启动或“重启”时：
 
@@ -597,6 +596,20 @@ endOffsets（返回the offset of the upcoming message, i.e. the offset of the la
   比如主题T-TARGET ，现在处理到了offset=1000，决定做一次全量快照，此时全量快照中保存下内存状态和start offset=1000，kafka send全量快照到 T-QuanLiang中，然后在callback时，可以获取到全量快照在T-QuanLiang的 quanliang offset比如=0，T-TARGET进来新的消息（或者之前做全量快照的指令本身就是条消息），继续事务性的记录增量快照 T-ZengLiang，此时最新记录的增量消息的内容是 quanliang offset=0&&end offset=1001
 
   恢复的时候，先 找到T-ZengLiang最后一个消息 ，获取到quanliang offset=0&&end offset=1001，然后通过quanliang offset=0去seek(T-QuanLiang, 0) 拿到 start offset=1000和当时的内存数据，从而恢复内存数据，然后从1000开始(1000,1001],只需要重新计算下1001这条数据更新下内存即可，从1002开始往后都是新的消息
+
+
+![atomic-read-process-write](/docs/docs_image/software/buildingblock/kafka/kafka_exactly_once01.png)
+图示解析：
+所以假设A和B的设计是这样，他们poll kafka消息，然后交给循环队列disruptor worker异步处理，disruptor worker会做的是每消费一条数据就会同步用transaction producer的事务发送两个东西：一个是处理后的产出消息给下游，一个是offset存到另一个offset Topic里面，假设B在onPartitionsAssigned的时候先去读取offset topic拿到上一次处理的位置会有问题，因为：
+1. 即使我在onPartitionsRevoked停掉disruptor 但是无法做到“瞬间断电式”停止：
+  即使你在 onPartitionsRevoked 里调用了 disruptor.shutdown()，Disruptor 里可能还有正在执行的任务，或者任务已经调用了 producer.send() 但消息还在缓冲区。这些任务会继续尝试提交事务。
+
+2. 或者A网络断开也好没有立即停止，导致比如A连上kafka后transaction producer还能往kafka发消息：A 可能还在愉快地处理数据，并试图用旧的事务提交 Offset 和下游消息，
+
+假设 B 读到了 Offset=100，然后开始消费。但此时 A 其实已经处理到了 105 并且还在尝试提交（或者 A 的事务因为跨了 Rebalance 导致部分提交）。这会导致 B 从 100 开始，而 100~105 的数据可能被 A 写过一次下游，造成重复写入；或者 B 覆盖了 A 还没写完的状态，造成数据错乱。
+
+解决办法应该是B先不要读offset topic而是先用同一个transaction producer id new一个transaction Produer，这样可以用kafka的fence挡住A往kafka再发任何消息
+
 
 
 ### 4.4 上游(produce to topic 2)->下游(consume topic 2) - isolation.level

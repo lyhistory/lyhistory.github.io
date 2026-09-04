@@ -723,10 +723,35 @@ fix: enable Tun AND Global routing if using vpn like v2ray
 [The simplest autonomous AI agent. One bash script. Any LLM CLI. Wake up, build prompt from files, call LLM, sleep, repeat.](https://github.com/seedpi867-cmd/brain-loop)
 
 
-[PicoClaw: Ultra-Efficient AI Assistant in Go](https://github.com/sipeed/picoclaw)
+
 [MimiClaw turns a tiny ESP32-S3 board into a personal AI assistant.](https://github.com/memovai/mimiclaw)
 
 [nanobot: Ultra-Lightweight Personal AI Assistant](https://github.com/HKUDS/nanobot)
 
 [Open-source Agent OS built in Rust](http://github.com/RightNow-AI/openfang)
 [Open-source orchestration for zero-human companies](https://github.com/paperclipai/paperclip)
+
+## Tested-RaspberryPi
+### Picoclaw
+[PicoClaw: Ultra-Efficient AI Assistant in Go](https://github.com/sipeed/picoclaw)
+```
+mkdir workspace
+cd workspace/
+mkdir picoclaw
+cd picoclaw/
+mv ~/Downloads/picoclaw_Linux_arm64.tar.gz .
+tar -zxvf picoclaw_Linux_arm64.tar.gz
+./picoclaw onboard #This creates ~/.picoclaw/config.json and the workspace directory.
+
+./picoclaw agent -m "Hi, introduce yourself"
+
+
+./picoclaw-launcher # Open http://localhost:18800 in your browser
+ps -lef|grep "pico"
+cd ~/.picoclaw/
+less config.json
+
+
+picoclaw skills search "web scraping"
+picoclaw skills install <skill-name>
+```

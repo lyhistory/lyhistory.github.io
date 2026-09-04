@@ -213,10 +213,16 @@ sni:域名
 
 [v2rayA 是一款专注于 Linux/路由器等平台，以 Web 界面实现全局透明代理的强大 V2Ray 客户端。与传统客户端（如 Windows 的 v2rayN、Android 的 v2rayNG）相比，v2rayA 优势在于配置极其简单、支持跨平台管理、分流功能强大，特别适合需要在服务端或高阶网络环境中使用的用户。](https://github.com/v2rayA/v2rayA)
 
-[安装文档](https://v2raya.org/docs/prologue/quick-start/)
+[安装文档-貌似域名过期](https://v2raya.org/docs/prologue/quick-start/)
 
-1. [安装 V2RayA](https://v2raya.org/en/docs/prologue/installation/debian/)
-   
+1. 安装 V2RayA
+   ```
+    wget -qO - https://apt.v2raya.org/key/public-key.asc | sudo tee /etc/apt/keyrings/v2raya.asc
+    echo "deb [signed-by=/etc/apt/keyrings/v2raya.asc] https://apt.v2raya.org/ v2raya main" | sudo tee /etc/apt/sources.list.d/v2raya.list
+    sudo apt update
+    sudo apt install v2raya v2ray ## 也可以使用 xray 包
+
+   ```
 2. 启动 v2rayA / 设置 v2rayA 自动启动
    ```
    sudo systemctl start v2raya.service
@@ -227,7 +233,7 @@ sni:域名
 3. 一定要设置 [Config](https://v2raya.org/en/docs/prologue/quick-start/#transparent-proxy)
     Transparent Proxy/System Proxy: On: Proxy except CN Sites / redirect / Proxy except CN Sites
 
-别忘记配置dns:
+如果ping google.com 不通就配置dns:
 /etc/resolv.conf
 nameserver 1.1.1.1
 

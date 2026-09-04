@@ -228,6 +228,33 @@ while(true) {  struct task = GetFromQueue(); // 从队列中取出数据  task->
 如果线程池中的任务有I/O操作，那么务必对此任务设置超时，否则处理该任务的线程可能会一直阻塞下去
 线程池中的任务最好不要同步等待其它任务的结果
 
+### 例子-jvm进程
+运行 java -jar your-app.jar 启动一个 Spring Boot 程序时，正常情况下只有一个操作系统进程（即一个 JVM 进程），默认不会创建任何子进程。
+
+这里的关键是区分进程和线程：
+
+主进程：java 命令会在操作系统中创建一个 JVM 进程（PID）。
+内部线程：这个 JVM 进程内部会创建大量线程，例如：
+Main 线程（运行 main 方法）
+垃圾回收（GC）线程（如 CMS、G1 的并发标记线程）
+JIT 编译线程（C1/C2 编译器）
+信号分发线程（SIGINT、SIGTERM 处理）
+异步日志或线程池线程（如 Tomcat 的 http-nio-8080-exec-* 线程）
+这些线程属于同一个 JVM 进程，并不是操作系统的独立“子进程”。
+
+通常会有子进程的例外情况：
+
+如果你的 Java 代码显式调用了 Runtime.getRuntime().exec() 或 ProcessBuilder，例如用代码去执行 mysqldump、nginx -t、python script.py 等外部命令，就会派生新的子进程。
+某些中间件或异步监控工具（比如自己写的 jcmd 触发脚本）可能会，但默认的纯 Spring Boot 应用不会。
+
+如何排查确认：
+
+使用 jps -l：只显示 Java 相关的 JVM 进程。
+使用 Linux 的 ps -ef | grep java：只看到一个 Java 进程（除非你同时运行了多个 Java 程序）。
+使用 pstree -p <PID>：查看该 JVM 进程的子进程，默认结果通常为空（只有 PID 本身，除非它派生了外部程序）。
+
+总结：跑一个 Spring Boot 程序，就是一个 JVM 进程，内部包含 N 个线程。如果没在代码里主动调用外部进程，是不存在子进程的。
+
 ## false sharing
 sometimes false sharing can turn multithreading against us.
 
