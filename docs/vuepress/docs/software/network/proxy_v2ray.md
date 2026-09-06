@@ -555,7 +555,7 @@ https://iitii.github.io/2022/03/02/1
 ### TUN 模式
 TUN mode creates a virtual network interface (like a mini-VPN adapter) on your system. It captures all your device's network traffic at the IP level (not just browser/app proxy settings), routes it through sing-box → your proxy server, and sends it out. This is great for games, apps that ignore system proxy, or sites that block partial proxies. Without TUN, you usually only proxy apps that respect HTTP/SOCKS settings (e.g., browsers).
 
-直接启动 tun模式
+直接启动 tun模式 （看v2ray提示可能要求下载[sing-box](https://github.com/SagerNet/sing-box/)）
 
 如果不启动tun模式，也可以用 proxifier（收费）或 [推荐Netch，有进程模式](https://github.com/netchx/netch)  或 [ProxyBridge（免费）](https://github.com/InterceptSuite/ProxyBridge) (InterceptSuite version, as of late 2025/early 2026) is protocol-agnostic at the application level. It redirects TCP and UDP traffic from selected processes to your configured HTTP or (preferably) SOCKS5 proxy.It doesn't care what higher-level protocol the app uses (e.g., custom game protocol, RDP, SSH, databases, HTTP/3, DTLS, DNS-over-anything, proprietary thick-client stuff).
 
