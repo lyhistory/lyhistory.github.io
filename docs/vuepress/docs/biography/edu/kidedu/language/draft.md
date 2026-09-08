@@ -1,6 +1,8 @@
 
 #少儿英语 #英语启蒙 #磨耳朵英语 #日常英语 #口语 #英语 #English
 
+#科普 #stem #亲子教育 #物理
+
 自动上传工具：https://github.com/dreammis/social-auto-upload
 
 ## TODO
