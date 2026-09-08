@@ -747,10 +747,13 @@ tar -zxvf picoclaw_Linux_arm64.tar.gz
 
 
 ./picoclaw-launcher # Open http://localhost:18800 in your browser
+./picoclaw-launcher -host 192.168.1.100
 ps -lef|grep "pico"
 cd ~/.picoclaw/
 less config.json
-
+  "tools": {
+  "allow_read_paths": ["~/.picoclaw/config.json", "~/.picoclaw/logs"],
+  "allow_write_paths": null,
 
 picoclaw skills search "web scraping"
 picoclaw skills install <skill-name>

@@ -1028,6 +1028,13 @@ Yeah, that's what I have on my schedule for next Monday too / Yes, I'm scheduled
 
 #### website dev
 
+By the way, just checking—you know how to upload it to the website, right?
+It seems like right now you have to manually remove the old file (for example, test2026.xlsx) before uploading the new one.
+If you'd like to have the old file automatically replaced, please ask [xx] to specify this requirement in the website WeChat group.
+Since I'm not the original requestor, I can't make that call myself, but once you confirm the requirement, I can liaise with the vendor.
+
+I'm not the requestor, but I do think the manual delete-then-upload step is pretty tedious. Auto-replacement probably isn't a simple tweak though, so we'll need [xxx] to raise it formally. I can take it to the vendor once that's confirmed.
+
 Hi [Name], could you please confirm a date so we can release the webpage first? I'll need to create a Jira ticket for XXX to kick off the internal approval process
 
 日常 Does the date work for you to do the release?
@@ -1386,6 +1393,12 @@ The vendor is following up. (现在进行时)​​
 ​隐含意义​：这会给人一种“供应商正在紧盯着我们”的紧迫感，甚至可能带有一丝被催促的压迫感。在某些情况下，可能会被解读为你在向经理传递压力。
 
 #### IT GOV
+Hi [xxx], please check the attached. Quick update on the mobile app—it's no longer maintained. I can't even open the CMS now, and no one's used it for a long time."
+Hi [xxx], 
+For the Mobile App—just a quick note: it's entirely vendor-developed and no longer maintained (almost zero users, and I can't even open the CMS now).
+Since I don't have visibility into the technical components and don't have time to dig into it today, I'm unable to submit the inputs by the deadline.
+Could you let me know if we can exempt it from this round, or if I should reach out to the vendor for the info (which would need more time)?
+
 XXX System is selected for the upcoming round’s quarterly backup recovery test
 
 Please perform the following, and reply this email with relevant testing report:
@@ -1409,6 +1422,7 @@ Thanks!
 
 --
 Mentioned backup file has been placed to the destination file path.
+
 --
 I have verified that the backup from OBS can be used for restoration. As 7 Nov 2025 backup is used, EOD for 7 Nov 2025 is completed and the next clear date is 10 Nov 2025. The trade count for 7 Nov 2025 is presented in the screenshot below. Please note that this represent single sided trade. Thanks!
 
