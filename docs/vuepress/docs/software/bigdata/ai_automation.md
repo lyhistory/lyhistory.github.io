@@ -742,6 +742,7 @@ cd picoclaw/
 mv ~/Downloads/picoclaw_Linux_arm64.tar.gz .
 tar -zxvf picoclaw_Linux_arm64.tar.gz
 ./picoclaw onboard #This creates ~/.picoclaw/config.json and the workspace directory.
+#配置 openrouter
 
 ./picoclaw agent -m "Hi, introduce yourself"
 

@@ -1813,6 +1813,8 @@ Best regards,
 Hey, just a heads-up—the GitLab renewal is gonna be roughly $X,XXX​ for the 12 seats. Would you be able to reply to Finance's email about upcoming expenses?
 
 Right now, only three of us are active. If we drop the seats down to, say, 6, we'd basically cut the cost in half.
+
+Morning! I need your help with the GitLab renewal — it expires on Sep 24, 2026. As you may recall, they never responded to my emails, so I raised a ticket. Following their suggestion, I logged into the portal, but now my account is blocked, which means I can't access the invoices. Could you try checking from your end? I've included the password below. If you're unable to see them either, could you please reach out to them via email to request the invoices? Thanks!
 #### Finance
 As we are approaching financial year-end, we would be grateful for your assistance with the following matters to facilitate the year end closing process:
 1.	Please submit all expense claims（费用报销) incurred on or before 30 June 2026 by end of 2 July 2026. If you do not anticipate incurring any expenses during the last week of June, please prepare and submit your claim in advance.如果你觉得接下来一周都没啥钱要报，那就别等到月底最后一天才交单，现在就交掉，省得拖到财年关账那天手忙脚乱。
