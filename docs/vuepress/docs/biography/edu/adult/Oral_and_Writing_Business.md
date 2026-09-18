@@ -920,6 +920,13 @@ Hi! I've verified Table 1 (Volume & Value) for 2022–2025 and all figures tally
 For 2019–2021: As discussed with A, we launched the new  system in 2021, so I only have partial data for that year. Data prior to 2021 resides in the legacy system archives. However, we no longer have access to that system, nor do we have any documentation explaining its data structure or how to query it. C also mentioned during his handover that since the legacy system was decommissioned, nothing related to the legacy system was passed over.
 
 In short, we have no operational knowledge of how to retrieve or interpret that legacy data. If we need to validate it, it would require a significant time investment to dig through raw data without any technical reference, so it's not feasible in the short term.
+##### incident
+Yesterday's T+1 confirmed rate failed to generate. This was due to CompassFT data point loss exceeding 10%. Per our calculation algorithm, we suppress the confirmed rate when this happens.
+That said, I still have a few other things to look into. While I'm investigating those, would you like me to manually insert the confirmed rate for the 20260918 T+1 session so you can see it on the webpage? Or is that not needed?
+
+Ops can monitor the website for daily funding rate generation—that's how it's supposed to work. Previously, I think peter or someone else would call me if it failed to generate or if the generated rate didn't look right
+
+To summarize: don't rely on alerts only. Follow the SOP to check the actual values on the website. If you can see it on the website, it means the clearing system can see it too. For example, if you find a missing confirmed funding rate for the next session (e.g., at 2026-09-17 18:00), then we have the entire time window from 2026-09-17 18:00 to 2026-09-18 05:30 to fix it.
 
 #### it gov
 Hey, for that emergency change we're doing this weekend — do I need to fill out a form for approval or what? If so, mind sharing the template?
@@ -1062,6 +1069,12 @@ For your reference, as agreed with the vendor, direct code changes are restricte
 Hi X, quick heads-up. We need a new page—basically a clone of the PFMI page. XX will share the UI specs and content. One key thing: instead of an upload feature, just pull the files directly from the server (e.g., wp-content/uploads/xxx). I’ll set up a cron job to drop the files there.
 
 #### project test
+DB restored. Starting services now. Please don't test yet—I need to observe the job engine. If no issues, we can continue testing tomorrow. 
+
+Hi [xxx], I ran into an issue when I tried to flip the clear date. It seems I've found the first serious problem introduced by our Spring Boot upgrade. The drastic changes in JDK and Spring Boot versions appear to have altered the underlying classpath loading mechanism. As a result, even though we can compile the Java program without any issues, it might crash in certain code branches triggered by various scenarios.
+
+The issue is really interesting — I've never seen this kind of problem before. Basically, we compiled the upgraded Spring Boot program without any issues, but it seems there's some kind of lazy loading mechanism at play. So at runtime, it can't find the actual methods.
+
 hi  i got a qn about the redhat upgrade UAT. part of the test that ops team feel is required is to test if trades and position account can flow in xxx. can i check if the test environment of xxx can receive the trades and position accounts from xx test environment?
 <= not ready yet
 ok no hurry. so when it is ready, xxx can receive? 

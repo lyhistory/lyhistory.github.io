@@ -565,8 +565,211 @@ Jstack是常用的排查工具，它能输出在某一个时间，Java进程中�
 
 ## TROUBLESHOOT
 
-为什么有时我在日志中只看到异常名”java.lang.NullPointerException”，却没有异常栈
+### 编译通过但是运行时找不到方法
+刚开始是页面上批量更改计划任务调整时间，但是报错，而数据库是成功刷新的，所以怀疑是内存状态有问题
+```
+jcmd <pid> GC.class_histogram | findstr JobTaskDto，看 com.lyhistory.test.job.dto.JobTaskDto 的实例数，和 t_job_task 里"窗口内"的行数对比；差得离谱就说明 map 少装了很多（JDK17 支持）。
+
+heap dump + MAT/VisualVM（jcmd <pid> GC.heap_dump D:\dump.hprof，在 MAT 里查 JobStorageServiceImpl.taskInstanceMap）。arthas 其实在 OpenJDK 17 上也能跑（java -jar arthas-boot.jar），只是要能拿到 jar。
+```
+但是往前查看日志发现前面有个地方已经出错了
+```
+java.lang.NoSuchMethodError: 'boolean com.google.common.base.Platform.stringIsNullOrEmpty(java.lang.String)'
+	at com.google.common.base.Strings.isNullOrEmpty(Strings.java:68)
+```
+
+猜测：
+然后想到该springboot项目从2.4.5 升级到springboot3.5.7，jdk从openjdk8升级到JDK17 , kafka3.8.0
+
+Strings.isNullOrEmpty 内部去调 com.google.common.base.Platform.stringIsNullOrEmpty，而这个方法在当前运行时的 Platform 类里不存在 → 说明 classpath 上有两个不一致的 guava（Strings 来自一个版本、Platform 来自另一个），或者某个 shaded/被裁剪的 guava 混进来了
+
+调查：
+```
+jcmd 2346965 VM.command_line                                     
+jcmd 2346965 VM.system_properties | grep -i "class.path" 
+
+jcmd 2346965 VM.command_line
+2346965:
+VM Arguments:
+jvm_args: -Dlog4j2.formatMsgNoLookups=true --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED -Dfastjson2.parser.autoTypeSupport=true
+java_command: ./current/test-job-engine.jar
+java_class_path (initial): ./current/test-job-engine.jar
+Launcher Type: SUN_STANDARD
+
+JARBIN=$(dirname "$(readlink -f "$(command -v java)")")/jar
+# 扫描 fat jar 内部的所有内嵌 jar（Spring Boot 解压后的缓存目录或直接从 jar 里读）
+# 如果应用正在运行，Spring Boot 会把它解压到 /tmp 或工作目录，但最简单的是直接扫描 jar 本身
+mkdir -p /tmp/jar_scan
+cd /tmp/jar_scan
+jar tf /path/to/test-job-engine.jar | grep '\.jar$' > jar_list.txt
+while read j; do
+  jar xf /path/to/test-job-engine.jar "$j" 2>/dev/null
+done < jar_list.txt
+
+# 现在扫描所有解压出来的 jar
+for j in BOOT-INF/lib/*.jar; do
+  if "$JARBIN" tf "$j" 2>/dev/null | grep -q '^com/google/common/base/Platform.class$'; then
+    echo "FOUND Platform.class in: $j"
+    "$JARBIN" tf "$j" 2>/dev/null | grep -c '^com/google/common/base/Strings.class$' | xargs -I {} echo "  hasStrings: {}"
+  fi
+done
+
+FOUND Platform.class in: BOOT-INF/lib/google-collections-1.0-rc2.jar
+  hasStrings: 0
+FOUND Platform.class in: BOOT-INF/lib/guava-27.0-jre.jar
+  hasStrings: 1
+
+
+新包:
+unzip -Z1 test-job-engine.jar | grep -nE '^BOOT-INF/lib/(guava|google-collections)'
+237:BOOT-INF/lib/google-collections-1.0-rc2.jar
+292:BOOT-INF/lib/guava-27.0-jre.jar
+
+老包:
+$ unzip -Z1 test-job-engine.jar |grep -nE '^BOOT-INF/lib/(guava|google-collections)'
+186:BOOT-INF/lib/google-collections-1.0-rc2.jar
+207:BOOT-INF/lib/guava-16.0.1.jar
+
+新包:
+mvn -pl test-job-engine -am dependency:tree -Dincludes=com.google.guava:guava -Dverbose
+[INFO] --- dependency:3.8.1:tree (default-cli) @ test-job-engine ---
+[INFO] com.lyhistory.test:test-job-engine:jar:2.0.0-SNAPSHOT
+[INFO] \- com.lyhistory.test:test-job:jar:2.0.0-SNAPSHOT:compile
+[INFO]    +- org.apache.curator:curator-recipes:jar:5.9.0:compile (version managed from 5.9.0)
+[INFO]    |  \- org.apache.curator:curator-framework:jar:5.9.0:compile (version managed from 5.9.0)
+[INFO]    |     \- org.apache.curator:curator-client:jar:5.9.0:compile (version managed from 5.9.0)
+[INFO]    |        \- (com.google.guava:guava:jar:32.0.0-jre:compile - omitted for conflict with 27.0-jre)
+[INFO]    \- com.alipay.sofa.common:sofa-common-tools:jar:2.1.1:compile (version managed from 2.1.1)
+[INFO]       \- com.google.guava:guava:jar:27.0-jre:compile
+
+mvn -pl test-job-engine -am dependency:tree -Dincludes=com.google.collections -Dverbose
+[INFO] --- dependency:3.8.1:tree (default-cli) @ test-job-engine ---
+[INFO] com.lyhistory.test:test-job-engine:jar:2.0.0-SNAPSHOT
+[INFO] \- com.lyhistory.test:test-core:jar:2.0.0-SNAPSHOT:compile
+[INFO]    \- com.google.collections:google-collections:jar:1.0-rc2:compile (version managed from 1.0-rc2)
+
+老包:
+mvn -pl test-job-engine -am dependency:tree -Dincludes=com.google.guava:guava -Dverbose
+[INFO] --- dependency:3.1.2:tree (default-cli) @ test-job-engine ---
+[INFO] Verbose not supported since maven-dependency-plugin 3.0
+[INFO] com.lyhistory.test:test-job-engine:jar:1.4.0-SNAPSHOT
+[INFO] \- com.lyhistory.test:test-job:jar:1.4.0-SNAPSHOT:compile
+[INFO]    \- org.apache.curator:curator-recipes:jar:2.12.0:compile
+[INFO]       \- org.apache.curator:curator-framework:jar:2.12.0:compile
+[INFO]          \- org.apache.curator:curator-client:jar:2.12.0:compile
+[INFO]             \- com.google.guava:guava:jar:16.0.1:compile
+
+mvn -pl test-job-engine -am dependency:tree -Dincludes=com.google.collections -Dverbose
+[INFO] --- dependency:3.1.2:tree (default-cli) @ test-job-engine ---
+[INFO] Verbose not supported since maven-dependency-plugin 3.0
+[INFO] com.lyhistory.test:test-job-engine:jar:1.4.0-SNAPSHOT
+[INFO] \- com.lyhistory.test:test-core:jar:1.4.0-SNAPSHOT:compile
+[INFO]    \- com.google.collections:google-collections:jar:1.0-rc2:compile
+```
+分析：
+
+```
+import com.google.common.base.Strings;
+// ...
+Strings.isNullOrEmpty(ret);
+```
+javac 编译这段代码时，需要做的事：
+
+1. 在 classpath 上找 com/google/common/base/Strings.class（或源码）。
+
+2. 检查 Strings 类里有没有 isNullOrEmpty(String) 这个方法（看方法签名）。
+
+3. 只要这个方法存在，编译就通过，生成一条 invokestatic 指令，指向 Strings.isNullOrEmpty。
+
+关键点：javac 完全不会去检查 Strings.isNullOrEmpty 方法内部是怎么实现的，也不会去加载或检查 Platform 类。因为 Platform 是 Strings 类的内部实现细节，不是你代码里直接引用的。
+
+classpath 扫描过程（编译时）
+
+classpath 上有两个相关 jar：google-collections-1.0-rc2.jar 和 guava-xx.jar。
+
+javac 要找 Strings 类，它按顺序扫 classpath（顺序是 google-collections 在前）：
+先在 google-collections 里找 com/google/common/base/Strings.class → 没有（这个 jar 只有 Platform）。
+继续往下，在 guava jar 里找到了 Strings.class → 有 isNullOrEmpty 方法​ → 编译通过。
+Platform 类呢？​ javac 根本没去加载它，因为你的代码里没有直接写 Platform.xxx，javac 不需要知道 Platform 存不存在、里面有什么方法。
+
+所以编译时：
+
+Strings 类来自 guava（有方法）✅
+Platform 类完全没被用到​ ✅
+编译顺利通过，跟 google-collections 里的 Platform 毫无关系。
+
+运行时：JVM 需要加载 Platform，而且加载的是 google-collections 里的
+
+运行时，当你的代码第一次执行到 Strings.isNullOrEmpty(ret) 时，JVM 实际做的事情：
+
+1. 加载 Strings 类：JVM 需要 com.google.common.base.Strings。类加载器按 BOOT-INF/lib/ 的文件名顺序扫描：
+    - google-collections 里没有 Strings → 跳过。
+    - guava 里有 Strings → 加载它（来自 guava）。
+2. 执行 Strings.isNullOrEmpty 的字节码：这个方法内部会调用 Platform.stringIsNullOrEmpty（guava 27 的实现）。
+3. 此时 JVM 才需要加载 Platform 类：因为要调用它的方法。
+4. 类加载器再次按文件名顺序扫描 BOOT-INF/lib/：
+    第一个包含 com/google/common/base/Platform.class 的 jar 是 google-collections-1.0-rc2.jar（因为它字母序在 guava 前面）→ 加载这个 Platform 类。
+5. JVM 在已加载的 Platform 类里找 stringIsNullOrEmpty 方法 → 没找到（google-collections 的 Platform 是远古版本，没有这个方法）→ 抛出 NoSuchMethodError。
+
+注意：这里 Strings 类确实是从 guava 加载的（跟编译时一样），但 Platform 类是从 google-collections 加载的（因为 google-collections 里也有 Platform，而且排在前面）。这就是冲突的根源：同一个包 com.google.common.base 下的两个类，分别来自两个不同的 jar。
+
+疑问：为啥执行guava的 Platform.stringIsNullOrEmpty不直接调用guava自己的Platform方法，而是再次扫描，guava里面不应该也有import 自己的这个类吗？
+
+JVM 的类加载器不是“从同一个 jar 里找配套类”，而是“拿着全类名去全局 classpath 里按顺序找，找到谁就是谁”。比如：
+在 Strings.java 源码里看到：
+```
+package com.google.common.base;
+import com.google.common.base.Platform; // 这个 import
+```
+这个 import 的作用仅仅是告诉 编译器：“下面我写 Platform 的时候，你帮我展开成 com.google.common.base.Platform”。它只是一个编译期语法糖，让你可以少写包名。
+
+到了运行时，字节码里根本没有 import 这个概念。编译后的 Strings.class 文件里，对 Platform 的引用已经变成了完整的全限定名 com.google.common.base.Platform。JVM 执行时，只认这个全限定名，完全不知道、也不关心 Strings 和 Platform 在源码里是不是同一个包、是不是同一个 jar。
+当 Strings.isNullOrEmpty() 执行到需要调用 Platform.stringIsNullOrEmpty() 时，JVM 需要做的是：加载 com.google.common.base.Platform 这个类。
+
+它怎么加载？委托给当前类的类加载器（你的 Spring Boot 应用里，是 LaunchedURLClassLoader）。这个加载器内部维护了一个 URL 列表（就是 BOOT-INF/lib/ 下所有 jar 的地址），然后做一件事：
+
+拿着 com/google/common/base/Platform.class 这个路径，按 URL 列表的顺序，逐个 jar 去查，找到第一个匹配的类文件，就加载它。
+
+它不会说：“哦，Strings 是从 guava-27.0-jre.jar 里加载的，那 Platform 也应该去这个 jar 里找。”
+
+它也不会说：“这两个类包名一样，应该在一起。”
+
+它更不会说：“同一个 jar 里的类应该优先互相引用。”
+
+类加载器完全没有这种“就近原则”或“同源原则”。它的逻辑就是：全局扫描，先到先得。
+
+因为 JVM 在加载 Platform 的时候，根本不知道 Strings 是从 guava 来的。对类加载器来说，所有 jar 都是平等的，它只认类名。即使 Strings 和 Platform 在同一个 guava jar 里，类加载器也不会建立这种“关联关系”。
+
+这就像你去图书馆借书：
+
+你先借了《Strings 的故事》（这本书是从 A 书架拿的）。
+然后你需要《Platform 的秘籍》，你告诉图书管理员“我要借《Platform 的秘籍》”。
+管理员按书架编号从 1 号开始找，在 1 号书架上发现了这本书（虽然是盗版/旧版），就直接借给你了。
+他不会说：“哦，你之前那本《Strings 的故事》是从 3 号书架拿的，那这本也应该去 3 号书架找。”——因为图书系统里，书是按书名检索的，不是按你之前借的书的位置。
+
+修复：
+```
+方法一：
+最直接就是不用google的这个Strings.isNullOrEmpty 改成!StringUtils.hasLength
+
+方法二：
+删掉 <dependency>com.google.collections:google-collections</dependency>
+
+方法三：
+声明保留，加 <scope>provided</scope> —— 编译时还在、打包时不进 BOOT-INF/lib
+
+方法四：
+可以直接从 fat jar 里摘掉那个嵌套 jar（fat jar 就是个 zip）：
+cp test-job-engine.jar test-job-engine.jar.bak
+zip -d test-job-engine.jar 'BOOT-INF/lib/google-collections-1.0-rc2.jar'
+unzip -p test-job-engine.jar BOOT-INF/classpath.idx | grep -n google-collections   # 见下
+
+
+```
+
+### 为什么有时我在日志中只看到异常名”java.lang.NullPointerException”，却没有异常栈
 
 示例的异常信息中，异常名、细节信息、路径三个元素都有，但是，由于JVM的优化，细节信息和路径可能会被省略。
 
 这经常发生于服务器应用的日志中，由于相同异常已被打印多次，如果继续打印相同异常，JVM会省略掉细节信息和路径队列，向前翻阅即可找到完整的异常信息。
+
