@@ -929,6 +929,8 @@ Ops can monitor the website for daily funding rate generation—that's how it's 
 To summarize: don't rely on alerts only. Follow the SOP to check the actual values on the website. If you can see it on the website, it means the clearing system can see it too. For example, if you find a missing confirmed funding rate for the next session (e.g., at 2026-09-17 18:00), then we have the entire time window from 2026-09-17 18:00 to 2026-09-18 05:30 to fix it.
 
 #### it gov
+Hi [Name], xxx has requested additional GitLab repository permissions for other projects. Should I grant these directly, or does he need to submit a formal request first?
+
 Hey, for that emergency change we're doing this weekend — do I need to fill out a form for approval or what? If so, mind sharing the template?
 
 Hi xx, about xxx'S request yesterday for investor UAT accounts—what’s the procedure? It’s not just my XX system access; we also need XX to set up the VPN and XX to handle the trading accounts.
