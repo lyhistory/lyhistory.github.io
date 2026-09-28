@@ -921,6 +921,12 @@ For 2019–2021: As discussed with A, we launched the new  system in 2021, so I 
 
 In short, we have no operational knowledge of how to retrieve or interpret that legacy data. If we need to validate it, it would require a significant time investment to dig through raw data without any technical reference, so it's not feasible in the short term.
 ##### incident
+Heads up on the SOD sanity check script: earlier today two of us ran the import at almost the same time. We got lucky — the data is fine this time, but that was pure chance, not by design.
+The script does DELETE + LOAD DATA on the same table, so two concurrent runs can silently corrupt the data (missing/duplicated rows) while still reporting SUCCESS. There's no error, no warning — you'd only notice days later.
+Please do NOT run it at the same time as anyone else. Only one person at a time.​ Check with the team first if you're unsure.
+I'm adding a lock to the script so this can't happen again, but until then let's be disciplined about it.
+
+
 Yesterday's T+1 confirmed rate failed to generate. This was due to CompassFT data point loss exceeding 10%. Per our calculation algorithm, we suppress the confirmed rate when this happens.
 That said, I still have a few other things to look into. While I'm investigating those, would you like me to manually insert the confirmed rate for the 20260918 T+1 session so you can see it on the webpage? Or is that not needed?
 
@@ -1830,6 +1836,29 @@ Hey, just a heads-up—the GitLab renewal is gonna be roughly $X,XXX​ for the 
 Right now, only three of us are active. If we drop the seats down to, say, 6, we'd basically cut the cost in half.
 
 Morning! I need your help with the GitLab renewal — it expires on Sep 24, 2026. As you may recall, they never responded to my emails, so I raised a ticket. Following their suggestion, I logged into the portal, but now my account is blocked, which means I can't access the invoices. Could you try checking from your end? I've included the password below. If you're unable to see them either, could you please reach out to them via email to request the invoices? Thanks!
+
+Hi GitLab team,
+Could you please provide us with the .gitlab-license file? We need it to complete our license activation.
+
+The renewal has been completed on our end. Could you please confirm if you received the confirmation email and were able to apply the license file successfully?
+
+Hi,
+Thanks for confirming the renewal is complete on your end.
+I should clarify our setup: our GitLab instance is self-hosted and has no network connection, so the license cannot be pulled automatically. We need to manually upload​ the .gitlab-license file through the admin UI — which means we must receive the file itself from you first.
+So far we have not received it: no confirmation email and no license file. 
+
+
+Hi,
+
+Yes, we do have access to xxx@xx.com​ — that is our mailbox. I have checked it thoroughly.
+
+To be clear: I found two confirmation emails, which I have attached as screenshots. Neither of them contains an attached license file.​ I have also checked the spam / junk folder — nothing there either.
+
+Could you please help us with the following:
+
+Confirm the exact sender email address​ used to deliver the license (the "From:" address), so we can check whether our mail gateway filtered it.
+Confirm the exact date and time​ the license email was sent, and the subject line, so we can search our mail server logs.
+Resend the .gitlab-license file directly to this thread​ as an attachment, or provide a fresh download link.
 #### Finance
 As we are approaching financial year-end, we would be grateful for your assistance with the following matters to facilitate the year end closing process:
 1.	Please submit all expense claims（费用报销) incurred on or before 30 June 2026 by end of 2 July 2026. If you do not anticipate incurring any expenses during the last week of June, please prepare and submit your claim in advance.如果你觉得接下来一周都没啥钱要报，那就别等到月底最后一天才交单，现在就交掉，省得拖到财年关账那天手忙脚乱。
