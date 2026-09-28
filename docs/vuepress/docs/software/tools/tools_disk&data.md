@@ -116,8 +116,10 @@ Synology Drive Client 是 DSM 附加套件 Synology Drive Server 的桌面实用
 Synology Note Station Client
 Synology Note Station Client讓您連線至 Synology NAS 上的 Note Station。從本機電腦便可離線管理筆記及待辦清單。
 
-#### 同步
-Active Backup for Business
+#### Encryption Key 
+[Manage storage encryption key](https://kb.synology.com/en-global/APM/help/APM/Manage_encryption_key?version=1_0)
+
+[How do I unlock an encrypted volume?](https://kb.synology.com/en-my/DSM/tutorial/How_do_I_unlock_an_encrypted_volume)
 
 #### ssh docker
 
