@@ -160,9 +160,13 @@ public SpringApplication(ResourceLoader resourceLoader, Class<?>... primarySourc
 
 Spring Boot提供两种方式来添加**自定义监听器**：
 
-通过 SpringApplication.addListeners()或者 SpringApplication.setListeners()两个方法来添加一个或者多个自定义监听器
+1. 通过 SpringApplication.addListeners()或者 SpringApplication.setListeners()两个方法来添加一个或者多个自定义监听器，在你自己的 main 里、run() 之前调用。
 
-既然SpringApplication的初始化流程中已经从 spring.factories中获取到 ApplicationListener的实现类，那么我们直接在自己的jar包的 META-INF/spring.factories文件中新增配置即可：
+2. 配置里加：在自己的 jar 包里放 META-INF/spring.factories，写一行 org.springframework.context.ApplicationListener=你的实现类。使用方（启动类）一行代码都不用改。
+SpringApplication 的构造器里就有这么一句（SpringApplication.java:288）：
+`setListeners((Collection) getSpringFactoriesInstances(ApplicationListener.class));`
+也就是说：spring.factories 里那一行，本质上就是被框架替你调了一次 setListeners。getSpringFactoriesInstances 会用 SpringFactoriesLoader 扫描 classpath 上所有 jar 的 META-INF/spring.factories（每个 jar 各扫各的，不存在覆盖合并问题），按 key = 接口全限定名、value = 实现类列表取出来，反射实例化后作为初始监听器列表。所以那段话的意思是：既然框架启动时已经会自动去读这个文件，那你作为框架/jar 作者，只要"加配置"就够了，不需要用户改代码——这就是零侵入。
+
 
 ### 执行该对象的run方法
 Spring Boot应用的整个启动流程都封装在 SpringApplication.run 方法中，其整个流程真的是太长太长了，但本质上就是在Spring容器启动的基础上做了大量的扩展，按照这个思路来看看源码

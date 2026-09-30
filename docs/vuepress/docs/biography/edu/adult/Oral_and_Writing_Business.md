@@ -1847,6 +1847,7 @@ Thanks for confirming the renewal is complete on your end.
 I should clarify our setup: our GitLab instance is self-hosted and has no network connection, so the license cannot be pulled automatically. We need to manually upload​ the .gitlab-license file through the admin UI — which means we must receive the file itself from you first.
 So far we have not received it: no confirmation email and no license file. 
 
+To help us issue the correct offline license file, could you please confirm if you have access to the xxx@xxx.com inbox. The file was sent here
 
 Hi,
 
@@ -1859,6 +1860,26 @@ Could you please help us with the following:
 Confirm the exact sender email address​ used to deliver the license (the "From:" address), so we can check whether our mail gateway filtered it.
 Confirm the exact date and time​ the license email was sent, and the subject line, so we can search our mail server logs.
 Resend the .gitlab-license file directly to this thread​ as an attachment, or provide a fresh download link.
+
+I believe the license email has been resent to xxx@xxx.com. Could you please check your inbox again, including any spam or junk folders?
+
+If you still haven't received it, please let me know and I will provide the .gitlab-license file to you directly.
+
+Thank you — the license file you resent this morning was received successfully.
+
+However, when I try to import it in the Admin Area (Menu > Admin > Settings > General > License file > Add a license), GitLab rejects it with the error: "This license has already expired."
+
+I have removed any previously expired licenses from Admin > Subscription​ and retried the import, but the same error appears immediately. The instance system clock is correct (NTP-synchronized), so this does not appear to be a clock-skew issue on our side.
+
+Could you please verify the following on the license record:
+
+The Start Date​ and End Date​ encoded in the license file — the End Date appears to be in the past.
+Whether the correct license was attached to the resend — it may be the previous/expired one rather than the renewed one.
+A fresh, newly generated .gitlab-license file with a valid future end date, or confirmation that our subscription is active and can be reissued.
+
+For reference, we are running GitLab [version/edition, e.g. 16.7.0-ee]​ in an offline (air-gapped) environment, so an activation code cannot be used here — the file-based license is the only option.
+
+Once we have a valid file, I will upload it and confirm activation right away.
 #### Finance
 As we are approaching financial year-end, we would be grateful for your assistance with the following matters to facilitate the year end closing process:
 1.	Please submit all expense claims（费用报销) incurred on or before 30 June 2026 by end of 2 July 2026. If you do not anticipate incurring any expenses during the last week of June, please prepare and submit your claim in advance.如果你觉得接下来一周都没啥钱要报，那就别等到月底最后一天才交单，现在就交掉，省得拖到财年关账那天手忙脚乱。
