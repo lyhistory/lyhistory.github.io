@@ -4,7 +4,7 @@
 
 ## [Sentences](/biography/edu/adult/Grammar_Sentence.md)
 
-## Tense
+## Tense 时态
 
 动词的形式有多种：动词原形、动词三单、动词过去时、动词的现在分词、过去分词 以do为例，对应 do, does, did, doing, done
 
@@ -19,6 +19,28 @@ who'd have guessed? 谁能猜得到？
 pretty much has been done
 
 ### Present simple and Present continuous
+
+wears​ = 习惯性、长期的状态（他“总是”这样）
+is wearing​ = 说话这一刻的临时状态（他“现在”这样）
+    描述外貌特征/长期状态
+    He wears glasses. （他戴眼镜。）
+    潜台词：他的眼睛不好，平时就需要戴眼镜，这是他的外貌特征之一。
+    He wears shirts. （他穿衬衫。）
+    潜台词：他的穿衣风格就是如此，总是穿衬衫，或者他的工作必须穿衬衫。
+    描述职业或身份要求
+    As a banker, he wears formal shirts every day. （作为银行家，他每天穿正装衬衫。）
+    The professor wears glasses. （那位教授戴眼镜。）
+    描述一贯的喜好或习惯
+    He wears blue shirts on Mondays. （他习惯周一穿蓝衬衫。）
+    He always wears glasses, even at home. （他总戴着眼镜，即使在家也戴。
+    描述此刻的穿着（你看他一眼，描述他身上穿的）
+    Look at him! He is wearing​ glasses and a white shirt today. （看他！他今天戴着眼镜，穿着一件白衬衫。）
+    潜台词：你正在观察他，描述你眼前看到的穿着。可能他平时不戴眼镜，或者今天换了一件特定的衬衫。
+    强调“今天/这次”的暂时状态
+    He usually wears contact lenses, but today he is wearing​ glasses. （他通常戴隐形眼镜，但今天戴了框架眼镜。）
+    He is wearing​ a very expensive shirt to the party. （他正穿着一件很贵的衬衫去参加派对。——强调这件特定的衬衫）
+    在照片或视频中描述画面
+    In this photo, he is wearing​ glasses and a black shirt. （在这张照片里，他戴着眼镜，穿着黑衬衫。）
 
 "How do you interpret" is a general question asking for someone's understanding or explanation of something, while "how are you interpreting" focuses on how a specific person is currently understanding or analyzing something in the moment, implying a more active process of making sense of information.
 

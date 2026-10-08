@@ -739,6 +739,10 @@ touch base vs discuss
 
 
 #### ops team vs dev team
+Hi, figures verified,​ quick check: you'll round 0.49 up to 1, right? If so, then all good./ If so, everything tallies up and we're all good./If yes, then all good—no discrepancies./ If yes, we're aligned and all set.
+
+Hi bro, quick check on these two on-hold tasks. For EOD shift market data, I believe you check if DSP published successfully, then off hold. For Set system in EOD Ending State, what do you check before off hold?
+
 I’m currently getting up to speed with these operational workflows. Having focused primarily on coding before, I’m still building my confidence in handling these daily routines. I’ll be looking to learn a lot from you guys—thanks for your patience and guidance!
 I’m in the process of familiarizing myself with these operations. My background has been more code-heavy, so I’m still getting the hang of these day-to-day tasks. I really appreciate your support as I navigate this learning curve.
 I’m just starting to dive into these ops. I used to live in the code all day, so the daily routine stuff is pretty new to me. Definitely need to learn from you all—bear with me as I get up to speed!
@@ -1880,6 +1884,39 @@ A fresh, newly generated .gitlab-license file with a valid future end date, or c
 For reference, we are running GitLab [version/edition, e.g. 16.7.0-ee]​ in an offline (air-gapped) environment, so an activation code cannot be used here — the file-based license is the only option.
 
 Once we have a valid file, I will upload it and confirm activation right away.
+
+Hi, following up on my previous email — the GitLab license file we received is incorrect and cannot be imported. Could you please resend the correct license file to us? Thank you.
+
+Hi GitLab Support Team,
+
+I noticed that the license file you sent has incorrect start and end dates. It appears to be the license from our previous subscription rather than the latest one.
+
+I've attached a screenshot for your reference. Could you please review and resend the correct license file at your earliest convenience?
+
+Subject:​ Complaint: Incorrect license file issued twice + no response from Deepika Raj – URGENT/Incorrect license file sent twice — requesting immediate reissue
+
+Hi GitLab Support,
+
+I am filing this ticket to escalate a serious issue with our license delivery.
+
+Timeline of events:
+
+Initially, we requested a new license file. No file was sent for an extended period.
+After I raised a complaint, Deepika Raj​ resent a file — however, it was the wrong file: the old, already-expired license​ instead of the new one.
+I immediately followed up to request the correct license, but Deepika Raj has not replied since.
+
+We are currently unable to activate/renew our GitLab instance due to this ongoing issue. This is causing operational disruption.
+
+Request:​ Please urgently resend the correct, valid license file​ to this email address. Our subscription/order details are as follows:
+
+Order/Subscription ID: [填ID]
+Company/Namespace: [填公司名]
+Plan: [Premium/Ultimate, Self-managed/GitLab.com]
+Seats: [数量]
+Expected format: [license file / 24-char activation key]
+
+Please acknowledge this ticket and confirm when the correct license will be delivered. If Deepika Raj is unavailable, please assign this to another team member.
+
 #### Finance
 As we are approaching financial year-end, we would be grateful for your assistance with the following matters to facilitate the year end closing process:
 1.	Please submit all expense claims（费用报销) incurred on or before 30 June 2026 by end of 2 July 2026. If you do not anticipate incurring any expenses during the last week of June, please prepare and submit your claim in advance.如果你觉得接下来一周都没啥钱要报，那就别等到月底最后一天才交单，现在就交掉，省得拖到财年关账那天手忙脚乱。
