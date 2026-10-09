@@ -939,6 +939,13 @@ Ops can monitor the website for daily funding rate generation—that's how it's 
 To summarize: don't rely on alerts only. Follow the SOP to check the actual values on the website. If you can see it on the website, it means the clearing system can see it too. For example, if you find a missing confirmed funding rate for the next session (e.g., at 2026-09-17 18:00), then we have the entire time window from 2026-09-17 18:00 to 2026-09-18 05:30 to fix it.
 
 #### it gov
+Morning xxx, hope everything wraps up smoothly on your last day! 🎉
+I've got a CBH ticket for routine password renewal. Just sent a friend request to xxx but still pending her approval. If you're tied up, could you just give her a quick heads-up to check it? Thanks!
+
+Pretty sure GitLab screwed up on their end — we've always been self-managed, no clue how they logged it as SaaS. Screenshots attached. Also, not sure if the payment needs a top-up or refund since the order type was wrong. Could you let xxx know about this too
+
+We can't use SaaS based on our initial decision — using SaaS means hosting our code repo on their servers
+
 Hi [Name], xxx has requested additional GitLab repository permissions for other projects. Should I grant these directly, or does he need to submit a formal request first?
 
 Hey, for that emergency change we're doing this weekend — do I need to fill out a form for approval or what? If so, mind sharing the template?
@@ -1916,6 +1923,49 @@ Seats: [数量]
 Expected format: [license file / 24-char activation key]
 
 Please acknowledge this ticket and confirm when the correct license will be delivered. If Deepika Raj is unavailable, please assign this to another team member.
+
+My name is Sachin, and I’m with GitLab Support. Thank you for sharing the timeline and the screenshot.
+ 
+I’m very sorry for the delay, the expired license file you received, and the lack of an update following your repeated requests. I understand how challenging this has been, especially with your GitLab instance affected and your operations disrupted. You should not have 
+had to follow up repeatedly to get clarity on your renewal.
+ 
+I have verified the following billing account:
+Billing account name: xxx
+Account ID: xxx
+Billing contact email: xxx
+ 
+Your renewed Premium subscription, Subscription ID: xxx, is listed with a start date of September 24, 2026, and an end date of September 24, 2027. However, it is currently recorded as a SaaS Premium subscription, while your request concerns a license file for your GitLab instance.
+ 
+To make sure we address the correct issue, could you please confirm whether this renewal was intended for your Self-Managed GitLab instance, rather than GitLab.com? This will help us clarify the subscription discrepancy before proceeding with the license request.
+ 
+I recognize the urgency, but I don’t yet have a confirmed delivery time for a replacement license and do not want to give you an inaccurate estimate. I’ll keep you updated through this ticket as we work through the next step
+
+Subject:​ Re: [你的工单号，如果有的话] - Clarification on Self-Managed Renewal & License Request
+
+Hi Sachin,
+
+Thank you for your response and the sincere apology. I appreciate you verifying the account details.
+
+To clarify and address the discrepancy you mentioned:
+
+Self-Managed, not SaaS: We have always been using a Self-Managed GitLab instance, not GitLab.com (SaaS). This is definitely not a new purchase; it is a renewal​ of our existing Self-Managed subscription.
+Why it became SaaS: A colleague of mine handled the payment and renewal process this time, and we are not exactly sure why it was recorded as a SaaS subscription on your end. It was absolutely intended to be a renewal for our Self-Managed instance.
+Our Requirement: We urgently need a Self-Managed license​ (the license file for our instance), not a SaaS license.
+
+Could you please correct the subscription type in your system from SaaS to Self-Managed and proceed with issuing the correct license for our instance? As our operations are currently disrupted by the expired license, we would greatly appreciate it if you could prioritize this correction and provide a timeline for when the correct license can be delivered.
+
+Thank you for your understanding and urgent attention to this matter. I’ll wait for your update via this ticket.
+
+Thank you for clarifying. I understand that xxx has always used a Self-Managed GitLab instance and that this payment was intended to renew your existing Self-Managed subscription, not purchase a GitLab.com subscription.
+ 
+I’m sorry for the subscription discrepancy and the continued disruption this has caused. Your requirement is clear: you need the correct Self-Managed licensing for your existing instance.
+ 
+The renewal, A-xxx, is currently listed as SaaS Premium. Resolving this requires a review of the renewal order, rather than simply resending the existing license file. Support cannot directly switch the subscription between SaaS and Self-Managed, but I’ll follow up with Deepika to review your clarification and confirm the appropriate steps to resolve the discrepancy and provide the correct licensing.
+ 
+I don’t yet have a confirmed resolution or delivery timeline, but I’ll update you here once the next steps are confirmed. In the meantime, please do not purchase a replacement subscription until we confirm how to proceed with your existing renewal.
+ 
+Thank you for explaining the situation. I recognize the urgency and am sorry again for the delay.
+
 
 #### Finance
 As we are approaching financial year-end, we would be grateful for your assistance with the following matters to facilitate the year end closing process:
