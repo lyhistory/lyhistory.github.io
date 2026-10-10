@@ -79,7 +79,7 @@ https://post.smzdm.com/p/a90xmo3o/
 
 西数
 
-### 群晖 synology
+### 群晖 synology DS224+
 
 [工具](https://www.synology.cn/zh-cn/support/download/DS224+?version=7.2#utilities)
 
@@ -91,8 +91,8 @@ Mobile:
 
 Desktop：
 + Synology Assistant
-Synology Assistant 是一款桌面实用程序，可在局域网中搜索 Synology 服务器。使您可以搜索并连接到 Synology 服务器或设置 Wake on LAN (WOL)。
-
+  Synology Assistant 是一款桌面实用程序，可在局域网中搜索 Synology 服务器。使您可以搜索并连接到 Synology 服务器或设置 Wake on LAN (WOL)。
+  右键->网络硬盘 即可设置samba文件夹访问
 配置：
 
 + 远程连接 Quick Connect 
