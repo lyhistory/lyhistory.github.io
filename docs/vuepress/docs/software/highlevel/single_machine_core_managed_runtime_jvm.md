@@ -2644,6 +2644,17 @@ Two classes initialize each other via static fields, causing infinite recursion 
 
 ### Direct Memory (Off-Heap)
 
+你可以把 JVM 想象成一个带仓库管理员的物流中心：
+
+堆内存（Heap）：仓库里面。所有货物（Java 对象）都有管理员（GC，垃圾回收器）盯着，货物位置经常会被挪动（内存整理），进出都有严格登记。好处是安全、方便，坏处是管理员忙起来（Full GC）整个仓库得停下来，而且货物要运出仓库时，管理员怕你乱动，会强制让你先把货物拷贝到一个仓库外的临时堆场，才能装车。
+
+堆外内存（Off-Heap）：仓库外面的临时堆场（操作系统直接管理的内存）。这里 GC 根本管不着，货物位置固定不动。好处是：
+不触发 GC：不会让应用卡顿。
+减少一次数据拷贝：当数据要发到网络（通过 Linux 系统调用 write）时，操作系统内核需要去一个“固定地址”读取数据。如果数据在堆里，GC 可能会移动它，所以 JDK 底层会偷偷把堆内数据拷贝到堆外，再发给内核。如果你一开始就直接把数据写在堆外，就省了这次拷贝，速度更快。
+
+Kafka 里的体现：
+Kafka Producer 的 RecordAccumulator（消息累加器）在攒批时，会把你的 byte[] 从堆内拷贝进一块预先分配的堆外内存（DirectByteBuffer），然后 Sender 线程直接用这块堆外内存做 NIO 网络写出，省了一次拷贝。
+
 Problem:
 
 App crashes with OutOfMemoryErroreven though heap is half empty.

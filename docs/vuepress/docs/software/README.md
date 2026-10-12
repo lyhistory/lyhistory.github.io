@@ -28,13 +28,13 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
         <li><a href="/docs/software/highlevel/application_framework_springboot_sourcecode" >Application-Framework:springboot源码阅读</a></li>
 		<li><a href="/docs/software/highlevel/software_design_designpattern">Software-Design 软件设计:设计模式 Design Pattern</a></li>
 		<li><a href="/docs/software/highlevel/software_design_architecture">Software-Design 软件设计:架构解读 Architecture</a></li>
-		<li><a href="/docs/software/highlevel/distrubuted_system">Distributed System Core:分布式系统理论</a></li>	
-		<li><a href="/docs/software/highlevel/distrubuted_system_microservice">Distributed System Core:微服务 Microservices</a></li>	
-		<li><a href="/docs/software/highlevel/distrubuted_system_high_availability">Distributed System Core:高可用 High Availability</a></li>
-		<!--<li><a href="/docs/software/highlevel/distrubuted_system_infrastructure">Distributed System Primitives:基础设施</a></li>-->
-		<li><a href="/docs/software/highlevel/distrubuted_system_container_docker">Distributed System Primitives:容器化docker</a></li>
-		<li><a href="/docs/software/highlevel/distrubuted_system_orchestration_kubernetes">Distributed System Primitives: 编排 kubernetes</a></li>
-		<li><a href="/docs/software/highlevel/distrubuted_system_enterprise_architect">Distributed System Primitives:企业架构 Enterprise Architect</a></li>
+		<li><a href="/docs/software/highlevel/distributed_system">Distributed System Core:分布式系统理论</a></li>	
+		<li><a href="/docs/software/highlevel/distributed_system_microservice">Distributed System Core:微服务 Microservices</a></li>	
+		<li><a href="/docs/software/highlevel/distributed_system_high_availability">Distributed System Core:高可用 High Availability</a></li>
+		<!--<li><a href="/docs/software/highlevel/distributed_system_infrastructure">Distributed System Primitives:基础设施</a></li>-->
+		<li><a href="/docs/software/highlevel/distributed_system_container_docker">Distributed System Primitives:容器化docker</a></li>
+		<li><a href="/docs/software/highlevel/distributed_system_orchestration_kubernetes">Distributed System Primitives: 编排 kubernetes</a></li>
+		<li><a href="/docs/software/highlevel/distributed_system_enterprise_architect">Distributed System Primitives:企业架构 Enterprise Architect</a></li>
 	</ul>
 	<p>-------------------------</p>
 	<h3>软件开发经验</h3>

@@ -39,7 +39,7 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 	<p>-------------------------</p>
 	<h3>深入解析</h3>
 	<ul>
-		<li><a href="/docs/software/highlevel/distrubuted_system" >底层:从故障容错分布式系统到拜占庭容错分布式账本</a></li>
+		<li><a href="/docs/software/highlevel/distributed_system" >底层:从故障容错分布式系统到拜占庭容错分布式账本</a></li>
 		<li><a href="/docs/software/highlevel/publickeyinfrastructure">底层:公钥基础设施</a></li>
 		<li><a href="/docs/blockchain/blockchain_cryptography" >区块链:密码学</a></li>
 		<li><a href="/docs/blockchain/blockchain_consensus" >区块链:解密挖矿与共识的误解</a></li>

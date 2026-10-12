@@ -5,7 +5,14 @@ footer: MIT Licensed | Copyright © 2018-LIU YUE
 
 [回目录](/docs/software)  《java实用基础》
 
-Java vs C++ 核心区别（对象 & 引用）
+## Misconception
+
+JAVA版本：J2SE vs J2ME vs J2EE
+https://www.geeksforgeeks.org/j2se-vs-j2me-vs-j2ee-whats-the-difference/
+
+### Java vs C++ 核心区别（对象 & 引用）
+Java always passes arguments by value, NOT by reference.
+https://stackoverflow.com/questions/40480/is-java-pass-by-reference-or-pass-by-value/12429953#12429953
 
 ✅ Java 只有值传递，没有引用传递。​
 
@@ -301,6 +308,12 @@ Install new software/ marketpalce 如果报错
 
 
 ## 2.JAVA Language
+
+java魔术手法： 
+	[demo參考](https://github.com/lyhistory/learn_coding/tree/master/java)
+cglib增强类+代理
+元注解
+
 https://github.com/lyhistory/java-learn?organization=lyhistory&organization=lyhistory
 https://github.com/lyhistory/learn_coding
 
@@ -318,12 +331,6 @@ Instead of MD5, Java HashMap uses a combination of shifting and bitwise XOR oper
 
 In summary, while MD5 is a robust cryptographic hash function, it is not suitable for the specific requirements of a HashMap in terms of size, performance, collision handling, and distribution of hash codes across buckets in a hash table.
 
-### 2.1 Misconception
-Java always passes arguments by value, NOT by reference.
-https://stackoverflow.com/questions/40480/is-java-pass-by-reference-or-pass-by-value/12429953#12429953
-
-JAVA版本：J2SE vs J2ME vs J2EE
-https://www.geeksforgeeks.org/j2se-vs-j2me-vs-j2ee-whats-the-difference/
 
 ### 内部类 外部类
 
@@ -376,7 +383,7 @@ class InnerClass{
 于是即便是两个独立的字节码文件，InnerClass访问OutterClass的成员也变得顺理成章了。
 由此我们也可以从中感受到虚拟机开发人员设计的巧妙，既不违反顶层语言的语法规则，又不违反自己中间代码的原则。 
 
-### [POJO VS Java Beans](https://www.tutorialspoint.com/pojo-vs-java-beans)**
+### [POJO VS Java Beans](https://www.tutorialspoint.com/pojo-vs-java-beans)
 POJO: Plain-Old-Java-Object
 Java Beans: The only difference between both the classes is Java make java beans objects serialized so that the state of a bean class could be preserved in case required.
 So due to this a Java Bean class must either implements Serializable or Externalizable interface.
@@ -430,7 +437,437 @@ https://blog.csdn.net/mine_song/article/details/72651388
 
 父线程捕获子线程异常需要利用executorservice
 
-### JAXB
+### 序列化 反序列化
+#### Java 原生、Kryo、JSON（Jackson）
+假设我们有一个 User 类：
+```
+public class User {
+    private Integer id;
+    private String name;
+    // constructors, getters, setters...
+}
+```
+程序 A（Producer）要发一个 User(1, "张三")，程序 B（Consumer）要收到这个对象。
+##### java原生序列化案例流程
+1️⃣ Producer 应用线程：对象 → 二进制字节
+```
+// 对象必须实现 Serializable
+public class User implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private Integer id;
+    private String name;
+}
+
+User user = new User(1, "张三");
+
+// 👉类型信息👈：JDK 自动把类名、serialVersionUID、字段描述写进流里
+ByteArrayOutputStream bos = new ByteArrayOutputStream();
+ObjectOutputStream oos = new ObjectOutputStream(bos);
+oos.writeObject(user);           // 写入对象图
+oos.close();
+byte[] valueBytes = bos.toByteArray();
+// valueBytes 开头是：0xACED 0x0005（魔数+版本）
+// 接着是：类名 "com.xxx.User"、serialVersionUID、字段类型描述、字段值...
+
+┌─ 魔数+版本 ─┐
+AC ED 00 05
+├─ 对象标记 ─┤
+73
+├─ 类描述开始 ─┤
+72
+├─ 类名长度(2字节) + 类名UTF-8 ─┤
+00 10  "com.xxx.User"
+├─ serialVersionUID(8字节) ─┤
+00 00 00 00 00 00 00 01
+├─ 标志位(1字节) + 字段数(2字节) ─┤
+02  00 02
+├─ 字段1描述: 类型'I' + 名长2 + "id" ─┤
+49  02  69 64
+├─ 字段2描述: 类型'L' + 名长4 + "name" ─┤
+4C  04  6E 61 6D 65
+├─ 类描述结束 ─┤
+78
+├─ 父类描述(Object到此为止) ─┤
+70
+├─ 字段实际值 ─┤
+00 00 00 01        ← id = 1 (4字节int)
+74                 ← TC_STRING标记
+00 06              ← 长度6
+E5 BC A0 E4 B8 89  ← "张三" UTF-8
+
+类型信息：完整类名 + UID + 字段签名，全部在 payload 里，不需要任何外部辅助。
+```
+2️⃣ 封装 ProducerRecord
+```
+ProducerRecord<byte[], byte[]> record = new ProducerRecord<>(
+    "user-topic",
+    "user-1".getBytes(),
+    valueBytes
+);
+// 👉类型信息👈：不需要 Header，payload 里全有
+producer.send(record);
+```
+3️⃣ Producer Client 内部
+`valueBytes (堆内) → RecordAccumulator → 攒批 → 拷贝到堆外 DirectByteBuffer → NIO 发送`
+
+4️⃣ Kafka Broker 持久化
+`TCP 接收 → 解析 → 追加写入 .log 文件`
+.log 文件里：0xACED... 开头的一堆二进制乱码,Broker 不解析，只管存
+
+5️⃣ Consumer Client 接收
+`FetchRequest → Broker 读文件 → 网络返回 → Consumer 堆内 byte[]`
+
+6️⃣ Consumer 应用线程：byte[] → Object
+```
+for (ConsumerRecord<byte[], byte[]> record : records) {
+    byte[] valueBytes = record.value();
+    
+    // 👉类型信息👈：从 payload 里读类名
+    ByteArrayInputStream bis = new ByteArrayInputStream(valueBytes);
+    ObjectInputStream ois = new ObjectInputStream(bis);
+    User user = (User) ois.readObject(); 
+    // 内部：读魔数 → 读类名 → Class.forName() 加载类 → 反射创建实例 → 反射填字段
+    
+    System.out.println(user.getName()); // "张三"
+}
+```
+Java 原生总结：类型信息完整自带在 payload 头部，Consumer 不需要 Header、不需要约定，JDK 自己从流里读类名加载类。
+
+
+##### JSON（Jackson）案例流程
+1️⃣ Producer 应用线程：对象 → JSON 文本 → byte[]
+
+JVM 内存中的 Object → 序列化字节（Producer 应用线程）
+
+这一步发生在你的业务代码里，还在 JVM 堆中。
+```
+// 内存里有一个对象
+User user = new User(1, "张三");// 不需要实现任何接口
+
+// 序列化成 JSON 字符串，再变成 byte[]（这就是 Kafka 真正要的）
+ObjectMapper objectMapper = new ObjectMapper();
+String jsonString = objectMapper.writeValueAsString(user); // // 👉类型信息👈：JSON 里只有字段名和值，没有类名 '{"id":1,"name":"张三"}'← 没有 "class" 字段
+byte[] valueBytes = jsonString.getBytes(StandardCharsets.UTF_8);
+```
+
+2️⃣ 封装 ProducerRecord：类型信息塞进 Header
+```
+// 封装成 Kafka 的 ProducerRecord
+ProducerRecord<byte[], byte[]> record = new ProducerRecord<>(
+    "user-topic",
+    "user-1".getBytes(),//（key 也序列化）
+    valueBytes
+);
+// 👉类型信息👈：必须靠 Header 或约定，payload 自己不带
+record.headers().add("x-my-class", "com.xxx.User".getBytes(StandardCharsets.UTF_8));
+producer.send(record);
+
+此时内存里：user 对象在堆里，valueBytes 是字节数组也在堆里，record 对象引用着它们。
+
+
+上面是手动转，kafka可以自动转：
+// 1. 配置里指定 Serializer（不再是 ByteArraySerializer）
+props.put("key.serializer", 
+    "org.apache.kafka.common.serialization.StringSerializer");
+props.put("value.serializer", 
+    "org.springframework.kafka.support.serializer.JsonSerializer"); 
+// 或者自己写一个 JsonSerializer
+
+// 2. 业务代码里直接丢对象，不手动转！
+Producer<String, User> producer = new KafkaProducer<>(props);
+
+User user = new User(1, "张三");
+ProducerRecord<String, User> record = new ProducerRecord<>(
+    "user-topic",    // topic
+    "user-1",       // key（String）
+    user             // value（直接丢 User 对象！）
+);
+
+producer.send(record); // ← 这里 Kafka 客户端内部自动调用 JsonSerializer.serialize()
+
+当你调用 producer.send(record) 时，Kafka 客户端会调用你配置的 JsonSerializer.serialize(topic, user)。
+
+Spring Kafka 的 JsonSerializer 内部逻辑大致是：
+
+// 伪代码，展示核心逻辑
+public byte[] serialize(String topic, Headers headers, User data) {
+    
+    // 1. 把类型信息写进 Header
+    // header key 默认是 "__TypeId__"
+    String className = data.getClass().getName(); // "com.xxx.User"
+    headers.add("__TypeId__", className.getBytes(StandardCharsets.UTF_8));
+    
+    // 2. 用 Jackson 把对象转成 JSON 字节
+    String json = objectMapper.writeValueAsString(data);
+    return json.getBytes(StandardCharsets.UTF_8);
+}
+```
+
+3️⃣ Producer Client 内部线程发送（应用线程 → Sender 线程 → 网络）（涉及堆外内存）
+
+（和上面一样：堆内 → 攒批 → 堆外 → NIO）
+
+当你调用 producer.send(record) 时，Kafka 客户端内部发生了这些事：
+
+1) 拦截器 & 序列化器（应用线程调用）
+
+如果你配置了 value.serializer=org.apache.kafka.common.serialization.ByteArraySerializer（上面已经手动转了），或者你用 StringSerializer / JsonSerializer，这里会确保 value 变成 byte[]。
+
+2) 分区器（Partitioner）
+
+根据 keyBytes 的 hash 决定发到哪个分区（比如分区 0）。
+
+3) 累加器（RecordAccumulator）
+
+记录不是马上发，而是先拷贝到一个批处理缓冲区（MemoryRecords，本质是 ByteBuffer）里，攒够一批或时间到了再发。这减少了网络 syscall 次数。
+
+4) Sender 线程（I/O 线程）
+
+Kafka Producer 有一个后台守护线程 Sender：
+
+从 RecordAccumulator 里拉出批次（ProducerBatch）。
+把多个 ProducerBatch 按 Broker 节点分组，构建 ProduceRequest。
+通过 Java NIO SocketChannel​ 把二进制数据写进网络通道。
+
+此时，字节从 JVM 堆外内存（或直接通过 Socket 发送）变成了网络上的 TCP 数据包。
+为什么强调堆外？​ 因为网络 I/O 最终要调用操作系统内核，内核只能直接访问堆外内存（地址固定）。Kafka 在这里用堆外内存避免了一次 copy_from_user，提升了吞吐量。拿着这块堆外内存，通过 NIO SocketChannel.write(ByteBuffer) 直接发到网络。
+
+4️⃣ Kafka Broker 接收与持久化（网络 → 磁盘）
+Broker 端（Kafka 服务器）：
+
+1)网络线程池（SocketServer）：接收到 TCP 数据，解析出 ProduceRequest。
+2)请求放入队列：交给 I/O 线程（ReplicaManager）。
+3)写入磁盘（核心）：
+Broker 不关心字节里是 JSON 还是 Kryo，它只把 byte[] 追加写到对应分区的日志文件（Log Segment）里，比如：
+`/tmp/kafka-logs/user-topic-0/00000000000000000000.log`
+文件内容就是一串字节。如果是 JSON，你用 cat 命令看，看到的就是 {"id":1,"name":"张三"} 这样的文本（因为 UTF-8 编码的文本字节就是文本）；如果是 Kryo，你看到的就是乱码二进制。
+同时更新索引文件（.index, .timeindex）。
+
+4)副本同步：如果是多副本，Follower Broker 会去 Leader 拉取这些字节，同样存盘。
+5)返回 ACK：根据 acks 配置，等写入完成（或副本确认）后，给 Producer 返回成功。
+
+注意：Broker 持久化的是字节流，不是"Java 对象"，也不是"文本文件"——只是恰好 JSON 的字节用文本编辑器打开能看懂。
+
+5️⃣ Consumer Client 线程接收（网络 → 消费者缓冲区）
+
+程序 B 启动了一个 Kafka Consumer 客户端：
+
+5.1 消费者心跳与拉取线程
+
+Consumer 内部有一个 HeartbeatThread 和 主循环线程（调用 poll() 的线程）。
+
+5.2 poll() 触发网络请求
+
+当你调用 consumer.poll(Duration) 时：
+
+1)Consumer 网络客户端（基于 NIO）向 Broker 发送 FetchRequest，说：“我要分区 0 从偏移量 123 开始的消息”。
+2)Broker 从日志文件里读出对应的字节，返回 FetchResponse。
+
+5.3 接收与解包
+1)网络线程收到 TCP 数据包，解析出 Records（MemoryRecords 对象，里面是 ByteBuffer）。
+2)这些字节被放进 Consumer 的已完成拉取队列（CompletedFetch）。
+3)poll() 方法从队列里取出数据，调用你配置的 key.deserializer 和 value.deserializer。
+
+6️⃣ Consumer 应用线程：byte[] → JSON → Object 反序列化字节 → JVM 内存中的 Object（Consumer 应用线程）
+```
+手动：
+for (ConsumerRecord<String, String> record : records) {
+    // 👉类型信息👈：第一步读 Header 拿类名
+    String className = new String(
+        record.headers().lastHeader("x-my-class").value(), 
+        StandardCharsets.UTF_8
+    ); // "com.xxx.User"
+    
+    Class<?> clazz = Class.forName(className);
+    
+    // JSON → 对象（Jackson 反射 newInstance + set 字段）
+    User user = (User) objectMapper.readValue(record.value(), clazz);
+}
+
+假设 Consumer 配置了，就是框架自动：
+
+key.deserializer=org.apache.kafka.common.serialization.StringDeserializer
+value.deserializer=org.apache.kafka.common.serialization.StringDeserializer
+
+// 1. poll() 返回，Kafka 客户端已经用 StringDeserializer 把 byte[] 变成了 String
+ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
+
+for (ConsumerRecord<String, String> record : records) {
+    User user = record.value(); // 直接就是 User，框架已经帮你反序列化好了
+    
+    // 现在 user 又是一个在 JVM 堆里的普通 Java 对象了！
+    System.out.println(user.getName()); // 输出: 张三
+}
+
+
+```
+此时：字节已经完全消失，内存里重新有了一个 User 对象，它的内存地址和 Producer 端那个完全无关，只是字段值一样。
+
+全流程总结图
+```
+【程序 A - Producer JVM】
+User对象(0x111) 
+  │
+  ├─ 业务线程: JSON序列化 + getBytes()
+  │
+  ▼
+byte[] (堆里) ──► ProducerRecord ──► 拦截器/序列化器(确认是byte[])
+  │
+  ▼
+RecordAccumulator (批量缓冲区)
+  │
+  ▼
+Sender线程 (NIO SocketChannel)
+  │
+  ▼ (TCP/IP 网络)
+  
+【Kafka Broker 服务器】
+  │
+  ▼
+SocketServer 接收 ──► 解析请求
+  │
+  ▼
+直接追加写入 .log 文件 (磁盘上的字节序列)
+  │
+  ▼ (TCP/IP 网络)
+
+【程序 B - Consumer JVM】
+  │
+  ▼
+Consumer 网络线程接收 ──► 放入 CompletedFetch 队列
+  │
+  ▼
+poll() 主循环 ──► StringDeserializer 把 byte[] 变回 String
+  │
+  ▼
+业务代码: objectMapper.readValue() ──► 反射创建 User对象(0x222)
+  │
+  ▼
+User对象(0x222) 在 B 的 JVM 堆里被正常使用
+```
+
+##### kryo案例流程
+1️⃣ Producer JVM 内存 → 序列化字节（应用线程）：对象 → 二进制 → byte[]
+```
+// 1. 内存里的对象
+User user = new User(1, "张三");
+
+// 2. Kryo 序列化（二进制，不是文本！）
+Kryo kryo = new Kryo();
+Output output = new Output(1024, -1); // 内部是 byte[]
+kryo.writeClassAndObject(output, user); 
+byte[] bytes = output.toBytes(); 
+// 未注册：bytes 里大概是：[类ID/类名长度+类名][字段二进制]
+├─ 类标识标记(varint) ─┤
+01                   ← 表示"接下来是类名"
+├─ 类名长度(varint) + 类名UTF-8 ─┤
+10  "com.xxx.User"  ← 16字节长度 + 类名
+├─ 字段值（按FieldSerializer默认顺序） ─┤
+01                  ← id = 1 (Kryo用变长int编码，1只占1字节)
+06                  ← name长度 = 6
+E5 BC A0 E4 B8 89  ← "张三" UTF-8
+
+//注册：
+User user = new User(1, "张三");
+Kryo kryo = new Kryo();
+kryo.register(User.class, 1); // 固定 ID
+
+Output output = new Output(1024, -1);
+kryo.writeClassAndObject(output, user);
+byte[] valueBytes = output.toBytes();
+
+payload 前几个字节 0x01（只是一个数字）
+
+```
+此时：bytes 是普通的堆内 byte[]，但里面的内容不是人能读的 JSON，而是紧凑的二进制。跟java原生的区别是这个bytes里面有类型信息
+
+2️⃣  Producer Client 发送（涉及堆外内存）
+```
+ProducerRecord<byte[], byte[]> record = new ProducerRecord<>(
+    "user-topic", 
+    "user-1".getBytes(), 
+    bytes
+);
+// 👉类型信息👈：不需要 Header，自带在 payload 里
+producer.send(record);
+```
+3️⃣ Producer Client 内部
+
+（堆内 → 攒批 → 堆外 → NIO）
+
+4️⃣ Kafka Broker 持久化
+Kafka Broker 接收与持久化写入 .log 文件。
+文件里存的就是 Kryo 的二进制乱码。如果你用 vim 打开，会看到 ^@^B... 这样的不可读字符。
+注意：Kryo 的类标识（ID 或类名）已经包含在这些字节里了，不需要像 JSON 那样依赖 Kafka Header 来指明类型。
+
+5️⃣ Consumer Client 接收（网络 → 堆外 → 堆内）
+
+（和上面一样）
+
+6️⃣ Consumer 应用线程反序列化字节：byte[] → Kryo → Object
+```
+ConsumerRecords<byte[], byte[]> records = consumer.poll(Duration.ofMillis(100));
+for (ConsumerRecord<byte[], byte[]> record : records) {
+    // 1. 拿到 Kafka 给的纯字节
+    byte[] valueBytes = record.value();
+    // 2. Kryo 反序列化
+    Input input = new Input(valueBytes);
+    
+    // 👉类型信息👈：从 payload 开头读类标识
+    // 已注册模式：读 varint 1 → 查本地注册表 → User.class
+    // 未注册模式：读类名字符串 → Class.forName()
+    User user = (User) kryo.readClassAndObject(input);
+    // 内部：readClass 读类标识 -> 找到 User.class -> FieldSerializer 反射/Unsafe 创建实例 → 填字段
+    // 现在 user 是 Consumer JVM 堆里的一个新对象了
+    System.out.println(user.getName()); // 张三
+}
+```
+
+Kryo 反序列化不是用 Java 原生 ObjectInputStream，而是走 Input + Kryo + ClassResolver + Serializer。readClass 只是其中“读类标识、拿到 Registration”这一步，真正建对象由对应 Serializer 完成。
+
+1) 整体调用链
+
+以最常用的几种入口为例：
+
+kryo.readObject(input, SomeClass.class)：调用方已经告诉 Kryo 目标类型，不读类信息，直接用 SomeClass 的注册/默认 Serializer 反序列化字段。
+kryo.readClassAndObject(input)：先从流里读“类是谁”，再读对象。等价于先 readClass 再按得到的 Registration 反序列化。适合 RPC/存储里类型不完全已知的场景。
+kryo.readClass(input)：只读类标识，返回 Registration（里面含 Class、id、Serializer），不读对象体。一般你在自定义 Serializer 里用来处理“字段类型运行时才确定”的情况。
+2) readClass 内部在干什么
+
+Kryo.readClass 委托给 ClassResolver.readClass(Input)，默认实现 DefaultClassResolver。它维护几张表：
+
+idToRegistration：类 id → Registration
+classToRegistration：Class → Registration
+未注册类名场景还会用 name↔id 缓存，避免同一个类名反复写全限定名
+
+反序列化时的分支：
+
+1.流里读一个 varint 类标识。
+2.如果是“已注册 id”：直接用 id 查 idToRegistration，拿到 Registration（class + serializer）。
+3.如果是“未注册/按名字”标记：读类全限定名 → 用 ClassLoader 加载 Class → 若 registrationRequired=false 则隐式注册并分配/缓存 id，下次同图里再出现就用 id；若 registrationRequired=true 且没注册，就抛异常。
+4.返回 Registration 给上层，上层再调 Serializer.read(kryo, input, type) 填充字段、创建实例。
+3) 注册 vs 不注册对字节和性能的影响
+注册：kryo.register(Foo.class, 10)，写/读只传小 varint id，体积小、最快；但两端必须“同类同 id 同 serializer”。
+不注册（setRegistrationRequired(false)）：首次出现写类名+后续用 name id；灵活但：
+- 体积大
+- 反序列化端会按流中类名用 ClassLoader 加载，存在任意类加载/实例化安全风险
+- 多 JVM/重启后若靠自动分配 id，不保证一致，所以跨节点通常要么固定显式 id，要么直接用 writeClassAndObject 写类名
+Kryo 5 默认 registrationRequired=true；很多老例子用 false。
+
+4) 和对象创建、引用、字段的关系
+拿到 Class 后，Serializer 负责 new 对象：普通 POJO 用 FieldSerializer 反射/Unsafe/Objenesis 建实例再填字段；基本类型、String、集合、Map 等有专用 Serializer。
+若开启引用（setReferences(true)，默认常开），同一对象图第二次出现不重读字段，而是读一个引用序号，从 ReferenceResolver 取已建好的对象，避免循环引用死递归。
+readObject 因为已知类型，可跳过类标识；readClass/readClassAndObject 才会触发 ClassResolver 解析。
+5) 常见坑
+readClass 返回 null：流里是 null 类标识、或自定义 ClassResolver 特殊处理；调用方要判空。
+跨服务用自动注册 id 不一致 → 反序列化报 unregistered class / 错类。解决：显式 register(cls, fixedId) 且两端注册顺序/id 完全一致，或改用类名模式。
+ClassNotFoundException：未注册类名场景加载不到类，检查 kryo.setClassLoader(...)、TCCL、OSGi/Quarkus/WebApp 类加载器。
+Kryo 实例线程不安全，用 ThreadLocal 或每次新建；每次完整对象图后 reset()（autoReset 默认会）。
+Kryo 4 与 5 线格式通常不兼容，老数据别直接用 5 读。
+
+#### JAXB
+JAXB（Java Architecture for XML Binding）是专门负责 Java 对象 ⇄ XML 文本​ 之间互相转换的序列化/反序列化框架
+
 ```
 xjc -XautoNameResolution -p com.lyhistory.test test.xsd
 ```
@@ -467,14 +904,7 @@ xjc -XautoNameResolution -p com.lyhistory.test -extension -b jaxb-bindings.xjb
 ### exceptions
 [java exceptions](/docs/software/programming/java_exceptions)
 
-### 2.3 JAVA ADVANCE
-
-java魔术手法： 
-	[demo參考](https://github.com/lyhistory/learn_coding/tree/master/java)
-cglib增强类+代理
-元注解
-
-#### 2.3.1 Concurrency handling
+### Concurrency handling
 
 **method 1:Multi-thread** 
 
@@ -503,7 +933,7 @@ https://blog.csdn.net/dweizhao/article/details/73480025
 
 
 
-#### 2.3.2 JNI
+### JNI
 Interface Definition Language IDL
 https://www.ejbtutorial.com/corba/interface-definition-language-idl-hello-world-tutorial-with-java-and-c
 
@@ -529,7 +959,7 @@ https://www.cnblogs.com/harrymore/p/10570284.html
 https://www.cnblogs.com/yejg1212/archive/2013/06/07/3125392.html
 C++ ide attach javaw
 
-#### 2.3.3 others
+### others
 Functional reference
 Functional Interfaces https://www.baeldung.com/java-8-functional-interfaces
 https://www.codementor.io/eh3rrera/using-java-8-method-reference-du10866vx
