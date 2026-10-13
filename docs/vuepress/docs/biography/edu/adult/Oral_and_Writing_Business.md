@@ -739,6 +739,21 @@ touch base vs discuss
 
 
 #### ops team vs dev team
+hi bro, i heard about the RHEL9 upgrade, anything clearing side needed ops to run for testing? 
+
+Hey bro — for a RHEL 9 upgrade, short answer: test everything you can think of, and then some. The more coverage, the better.​ Big distro jumps (7→8 was already heavy, 8→9 is no exception) touch way more than just the kernel — glibc, OpenSSL, systemd, Python stack, deprecated syscalls, repo structure, even SELinux defaults can bite you./Haha fair enough — sometimes the honest answer is the best answer with ops. You can keep it casual but clear, something like:
+
+"Yeah, between you and me, I don’t have a fixed scope yet either 😅
+
+Best way to put it: since it’s a major OS jump, we really need to test everything​ — all the web UIs, all the ops tools/scripts you guys use day-to-day, cron jobs, log checks, the lot. Basically, if you click it or run it in prod today, we need to see it survive on RHEL 9.
+
+Right now I’m blocked though — xxx told me xxx is prepping the machines, so I don’t have the boxes yet. Once they’re ready, we can walk through your daily flow together and make sure nothing breaks. Sound good?"
+
+ok , maybe better to give us some scope and run in which environment etc. trading side xxx setting up environment for us to run through. is there same thing for clearing?
+
+from what xxx told me, xxx is preparing the machine, I don't have the machines yet
+
+
 Hi, figures verified,​ quick check: you'll round 0.49 up to 1, right? If so, then all good./ If so, everything tallies up and we're all good./If yes, then all good—no discrepancies./ If yes, we're aligned and all set.
 
 Hi bro, quick check on these two on-hold tasks. For EOD shift market data, I believe you check if DSP published successfully, then off hold. For Set system in EOD Ending State, what do you check before off hold?
@@ -1966,7 +1981,66 @@ I don’t yet have a confirmed resolution or delivery timeline, but I’ll updat
  
 Thank you for explaining the situation. I recognize the urgency and am sorry again for the delay.
 
+Hi Sachin,
 
+Just to add some context that might help with the review:
+
+Our GitLab instance is self-hosted and deployed in an offline environment​ (no external internet access). This might explain why the core functionalities are still accessible at the moment — the instance likely isn't able to phone home for real-time license validation.
+
+However, in the admin portal, we're seeing the following warning banner:
+
+"Your subscription expired! Please delete your current license if you want to downgrade to the free plan."
+
+So while things appear to work for now, we'd really like to get the correct Self-Managed license issued as soon as possible to avoid any potential disruption.
+
+Hope this additional info helps on your end.
+
+I’m sorry for the continued delay, the expired license file you received, and the uncertainty this has caused your team. Although you’ve confirmed that your repositories remain accessible, I understand that the expired-subscription warning and the possibility of further disruption are concerning. You should not have had to follow up repeatedly to get the help you need.
+ 
+While we work to resolve the renewal issue, we can offer a temporary Self-Managed trial license file suitable for your offline instance as a goodwill gesture.
+ 
+Your previous license shows 12 seats, so we can use that as an initial seat count rather than hold up the temporary assistance while confirming the exact number. Could you please confirm how many seats you currently need? If you need more than 12, please let us know so we can arrange an appropriate seat count for the temporary license.
+ 
+This temporary license is separate from the resolution of your paid renewal, which we’ll continue to follow up on. I’ll keep you updated on the license delivery and the renewal progress through this ticket.
+ 
+Thank you for your patience, and I’m sorry again for the experience you’ve had so far.
+
+Hi Sachin,
+
+Thank you for the update, and we really appreciate the goodwill gesture of a temporary license.
+
+To confirm: 12 seats is correct — no changes​ from our previous license. That matches our current needs perfectly, so no need to adjust the seat count.
+
+Please go ahead and issue the temporary Self-Managed license for 12 seats at your convenience. We'll keep an eye out for it, and of course, we're happy to continue working with you on the paid renewal in parallel.
+
+Thanks again for your patience and help getting this sorted.
+
+Hi [经理名字],
+
+Forwarding the email thread below for visibility. Here's a quick summary of what happened and where things stand:
+
+Background:
+
+[同事A] (who has left the team) was previously handling the GitLab renewal payment. Last time's renewal went through without any issues.
+This time, however, something went wrong on GitLab's end — they internally issued the wrong license type/file for our instance.
+
+What I found & did:
+
+I imported the license file they provided and immediately noticed it wasn't correct (admin portal showed an expiration warning despite payment being made).
+I opened a support ticket with GitLab directly: [Ticket link: xxx]
+GitLab support has since apologized for the error and offered us a temporary Self-Managed license​ as a goodwill gesture while they investigate what caused the mix-up.
+
+Current status:
+
+Temporary license (12 seats) is being issued — this should keep us running without disruption.
+GitLab is still investigating why the wrong license was generated.
+Next steps may involve a payment adjustment or refund, depending on what they find and what the correct license should cost.
+
+Ask:
+
+Since this may involve payment reconciliation (top-up or refund), could [同事B] please take over from here and follow up on the ticket? I can hand over the ticket access and any context needed.
+
+Let me know if you have any questions.
 #### Finance
 As we are approaching financial year-end, we would be grateful for your assistance with the following matters to facilitate the year end closing process:
 1.	Please submit all expense claims（费用报销) incurred on or before 30 June 2026 by end of 2 July 2026. If you do not anticipate incurring any expenses during the last week of June, please prepare and submit your claim in advance.如果你觉得接下来一周都没啥钱要报，那就别等到月底最后一天才交单，现在就交掉，省得拖到财年关账那天手忙脚乱。
