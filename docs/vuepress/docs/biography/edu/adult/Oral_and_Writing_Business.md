@@ -737,6 +737,8 @@ touch base vs discuss
     Would it be possible to connect briefly today at your convenience to discuss the XXX repository permissions?
     do you have a few minutes today to touch base on the XXX repo permissions? Thanks!
 
+#### requirements confirm
+Hi xxx, I don't see any changes to the funding rate calculation algorithm. Could you confirm if I'm missing anything?
 
 #### ops team vs dev team
 hi bro, i heard about the RHEL9 upgrade, anything clearing side needed ops to run for testing? 
@@ -1068,6 +1070,18 @@ Yeah, that's what I have on my schedule for next Monday too / Yes, I'm scheduled
 / I thought we were taking turns—this week is yours and next week is mine, isn't it?
 
 #### website dev
+The upload span file page keeps getting 500 errors. This traces back to the performance issue I reported a long time ago — editing the page loads all files at once (years of data), maxing out memory.
+I've been patching it by increasing memory_limit, but we've now hit the server's max. Can't raise it anymore.
+Please fix the root cause so it doesn't load every file on edit. Thanks!
+
+Please look into this. If it's tricky to fix, maybe we can take a different approach — create a new page for future uploads, and turn the current page into a history/archive page? That way we're not loading everything at once.
+
+
+Hey [Name], before you go ahead and split the new page and the history page, I think a quicker option would be to debug the span file upload page first.
+Here’s what I’ve observed: if I calculated correctly, all the files on that page add up to at most 400MB total. But I had to bump the PHP memory limit from 6000M all the way up to 6500M just to get the Divi builder to work normally on that page. That means editing this page is somehow consuming around 6GB of memory, which is clearly abnormal behavior.
+I think you can optimize this by debugging what’s going on behind the scenes. Could you please look into it and see what’s causing such massive memory usage? Let me know if you need any further details from my side.
+
+Hey, if I'm not wrong, the memory_limit I set is per PHP thread. So when editing this page, one of its child threads ends up consuming over 6GB of memory. I suspect it's the Divi Builder combined with the post revisions that's causing this memory spike.
 
 By the way, just checking—you know how to upload it to the website, right?
 It seems like right now you have to manually remove the old file (for example, test2026.xlsx) before uploading the new one.
@@ -2015,6 +2029,54 @@ Please go ahead and issue the temporary Self-Managed license for 12 seats at you
 
 Thanks again for your patience and help getting this sorted.
 
+Thank you for confirming that 12 seats is correct. I’m sorry again for the delay and the uncertainty your team has experienced.
+ 
+I’ve created a 14-day temporary Self-Managed Premium license for 12 seats, with an expiry date of October 23, 2026. The license file has been sent to support@xxx.com as a goodwill gesture while we continue working to resolve your paid renewal.
+ 
+Please download the license file from that email and follow the instructions to apply a license file to your GitLab instance. You’ll need to sign in to your instance as an administrator to upload and apply the new license. If you don’t see the email, please check your spam or junk folder.
+ 
+Once you’ve applied it, please let us know whether the license is active and your Premium features are available. If you encounter any issues, share the error message or a screenshot so we can help.
+ 
+We’ll continue following up on your paid renewal and keep you updated through this ticket.
+
+Hi [Name],
+
+Apologies for the late reply — I was tied up with something else.
+
+Thanks a lot! The license works perfectly. Premium features are now active on our instance.
+
+Best regards,
+
+Thank you for letting me know. 
+ 
+I’m glad to hear the temporary license is working perfectly and that your team can continue using your GitLab instance. I’m sorry again for the delay and the disruption this caused, and I really appreciate your patience throughout the process.
+ 
+You will receive a customer satisfaction survey, we’d be grateful if you could share your feedback. It helps us understand what went well and where we can improve your support experience.
+ 
+Please reach out if you need any help in the meantime.
+
+Hi Sachin Singh,
+
+Thanks, I'll complete the survey.
+
+The temporary license is set to expire on Oct 23. What should we do next? Could you share an update on the paid renewal status and confirm when we can expect the official license file?
+
+Best regards,
+
+Thank you for checking in. I’m glad the temporary Self-Managed license is working for your team. I understand how important it is to have the paid renewal resolved and the official license in place before the temporary license expires on October 23, 2026.
+ 
+I’ve followed up internally with the relevant team and have kept this at the top of my priorities. We’re working to confirm the next steps and expected timeline. I don’t have a confirmed completion or delivery date yet, and I’m sorry for the continued uncertainty.
+ 
+Please continue using the temporary license in the meantime. I’ll keep this ticket open and update you as soon as I have a confirmed update.
+
+Hi Sachin,
+
+Thanks for the update. I appreciate you keeping this on your radar.
+
+With Oct 23 fast approaching, could you confirm: if the official license isn't delivered in time, can we get a temporary extension to bridge the gap? We want to make sure there's no interruption to our service.
+
+Thanks,
+
 Hi [经理名字],
 
 Forwarding the email thread below for visibility. Here's a quick summary of what happened and where things stand:
@@ -2041,6 +2103,12 @@ Ask:
 Since this may involve payment reconciliation (top-up or refund), could [同事B] please take over from here and follow up on the ticket? I can hand over the ticket access and any context needed.
 
 Let me know if you have any questions.
+
+Thank you for following up with Gitlab on this issue. Noted on the updates in the ticket. Unfortunately, I do not have access to the email address(tech-support@xxx.com) and I will try to get access to it soon. Based on the  conversation in the ticket, there does not seem to be a payment adjustment or refund for the temporary self-managed license that they have kindly offered us. Please let me know if there are any further payment-related concerns or follow-up actions required at this stage. 
+
+I followed up with GitLab today asking what we should do next once the temporary license expires on Oct 23. The screenshot shows their reply.
+
+Please help keep monitoring it and follow up on their investigation results and next steps, in case I forget to reply to them in time — I have multiple high-priority tasks in parallel and might not be able to keep up with this ticket.
 #### Finance
 As we are approaching financial year-end, we would be grateful for your assistance with the following matters to facilitate the year end closing process:
 1.	Please submit all expense claims（费用报销) incurred on or before 30 June 2026 by end of 2 July 2026. If you do not anticipate incurring any expenses during the last week of June, please prepare and submit your claim in advance.如果你觉得接下来一周都没啥钱要报，那就别等到月底最后一天才交单，现在就交掉，省得拖到财年关账那天手忙脚乱。
