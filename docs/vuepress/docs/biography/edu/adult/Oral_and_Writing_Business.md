@@ -872,6 +872,16 @@ ok look different perspective, if leave it there will anything else be affected?
 
 from code, so far i don't see any impact, but probably from business logic we should always handle it properly
 ##### updates
+Hi [Name], could you let me know when you list the new product in the trading system? I'll then list it on the clearing side."
+
+let us know once clearing system has the products listed, thanks
+Done, the products are now listed in the clearing system. Please note the following:
+SPAN Parameters:​ RMD is still working on adding the new SPAN parameters (which include the new products).
+Stress Test Parameters:​ The new stress test parameters are not enabled yet; they will be enabled together with the new SPAN parameters.
+Funding Rate:​ The updates involve changes to multiple components (the funding rate program, impact mid-price program, and funding rate API), so it will take some additional time.
+
+So, UAT is on 1.5.1 but prod is on 1.5.2. I already deployed the 1.5.2 version directly through GitLab CI/CD. The GitLab renewal this time was messed up by their guys, so now we have a temporary license. Yesterday I created a branch locally and pushed it, but CI/CD just didn't recognize it. Not sure if it's the temp license or some GitLab bug. Anyway, I got around it by creating the branch remotely.
+
 > any updates require to SFTP files regarding JPY collateral?
 < What updates are needed for the JPY collateral SFTP files?
 > Historically, JPY is one of the currency that has negative interest rate. Right now, the interest rate has gone to positive interest rate. on the month JPY is on negative interest rate, we need to do internal booking to NCS. It is chargeback to XXX member.
@@ -1070,6 +1080,9 @@ Yeah, that's what I have on my schedule for next Monday too / Yes, I'm scheduled
 / I thought we were taking turns—this week is yours and next week is mine, isn't it?
 
 #### website dev
+ I came out with different approach, you may check it out first and also found out some plugin approach that I might to demo to you first. Can we arrange a short meeting to discuss about this?
+ Got it. We have a new products list in UAT today, so let me find a slot and schedule a time to discuss this. I’ll get back to you shortly.
+
 The upload span file page keeps getting 500 errors. This traces back to the performance issue I reported a long time ago — editing the page loads all files at once (years of data), maxing out memory.
 I've been patching it by increasing memory_limit, but we've now hit the server's max. Can't raise it anymore.
 Please fix the root cause so it doesn't load every file on edit. Thanks!
