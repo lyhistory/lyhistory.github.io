@@ -2122,6 +2122,40 @@ Thank you for following up with Gitlab on this issue. Noted on the updates in th
 I followed up with GitLab today asking what we should do next once the temporary license expires on Oct 23. The screenshot shows their reply.
 
 Please help keep monitoring it and follow up on their investigation results and next steps, in case I forget to reply to them in time — I have multiple high-priority tasks in parallel and might not be able to keep up with this ticket.
+
+I hope this message finds you well.
+Regarding your request to amend your renewed seats to Self-Managed Premium Licenses, we are truly sorry for the delay and for any inconvenience this has caused. We’ll do our best to resolve this as quickly as possible.
+To correct the renewal, we’ll need to reprocess the order but with the correct license type. I’ve attached the renewal quote for 12 seats of Self-Managed Premium.
+Can you also confirm whether you need Standard Cloud Licenses or Offline Licenses?
+Please let me know if you have any questions or if you're ready to move forward with the renewal order.
+Again, I sincerely apologize for the delay and appreciate your patience.
+
+Thank you for the correction and the attached quote.
+
+We require Offline Licenses​ for our Self-Managed instance, as we host it on our own infrastructure and need to import the license file directly.
+
+Could you please confirm if the original payment can be applied to this new quote (same amount $4,176), or let us know the next steps?
+We appreciate your patience and assistance in resolving this quickly.
+
+Hi [同事名字], please help follow up on this amendment. I'm not sure whether [Peter/同事A] has already processed the payment. The amount in the new quote is the same as the old (wrong) one, so no extra payment needed if we have already paid. Please help confirm the payment status and push this through. Thanks!
+
+Hi xx,
+
+Following up from xxx on this matter, our Finance team has confirmed that the payment for the previous quotation was **remitted** on 1 October 2026.
+
+Could you please confirm whether the existing payment can be applied to the new quotation for the correct license type? Kindly advise us on how we should proceed with the new quotation to avoid duplicate payment.
+
+Thank you for confirming your offline licensing requirement. 
+We apologize for the inconvenience. As part of the rebook-debook process, the original payment can be applied to the replacement quote for $4,176.
+Please note that the extension provided by our Support team is valid only through October 23. To avoid any interruption or loss of access, the rebook order must be processed by that date.
+If everything looks good, please sign and return the quote via email or I can send it via DocuSign whichever you prefer. Please let me know who the authorized signer is. 
+
+Hi A,
+
+Please advise — DocuSign or signed file returned via email? The extension expires tomorrow, Oct 23.
+
+Thanks!
+
 #### Finance
 As we are approaching financial year-end, we would be grateful for your assistance with the following matters to facilitate the year end closing process:
 1.	Please submit all expense claims（费用报销) incurred on or before 30 June 2026 by end of 2 July 2026. If you do not anticipate incurring any expenses during the last week of June, please prepare and submit your claim in advance.如果你觉得接下来一周都没啥钱要报，那就别等到月底最后一天才交单，现在就交掉，省得拖到财年关账那天手忙脚乱。
