@@ -22,6 +22,16 @@ what parts of the body haven't bird got?
 what parts of the body have we got?
 we have got
 what parts of the body haven't we got?
+how many arms do you got?
+two?
+how about octpus？
+rinos have got horn
+we are the same in some ways but different in others。
+
+how are people and animals different?
+we can do different things.
+can birds fly? yes they can.
+can you fly? no i can't.
 
 the orange, we pronouce the because it's before vowel o
 
