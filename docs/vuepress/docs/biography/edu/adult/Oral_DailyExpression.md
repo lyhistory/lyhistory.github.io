@@ -105,6 +105,7 @@ lowlife scum
 +  Uncivilized
   "Leaving trash everywhere in a public park is not just lazy—it’s a sign of uncivilized behavior that harms the community."（在公园乱扔垃圾不只是懒惰，更是没素质的表现，会损害公共环境。）
 ### 中文=>英文
+
 及格/不及格
 	pass / fail
 	This design passes.（这个设计及格了）
@@ -605,8 +606,36 @@ proof 醒发
 噎
 	​Don't gobble!​​ Eat slowly, or you'll choke.
 
-催
-	Hurry up and eat your food.​
+催促/快点
+	Hurry up​	中等	最通用，朋友、家人之间Hurry up and eat your food.​
+	Come on​	轻松/略带不耐烦	等朋友、催孩子。“Come on, let's go!”
+	Get a move on​	口语化，稍带催促	英式常用。“We need to get a move on if we want to catch that bus.”
+	Step on it​	较急	坐车时对司机说，或一般催促。“Step on it, we're gonna miss the train!”
+	Make it snappy​	俏皮/略急	美式口语。“Make it snappy, I've only got five minutes.”
+	Chop-chop​	轻松/俏皮	对小孩或熟人说，源自粤语“快些”。“Chop-chop, dinner's getting cold!”
+	
+	礼貌对同事、下属。“Could you speed this up? The client is waiting.”
+
+	中性/紧迫强调时间紧。“We need to pick up the pace—we're on a tight schedule.”
+
+	正式/直接工作进度催促。“We need to pick up the pace to meet the deadline.”
+
+	正式/商务强调时间关键。“Time is of the essence on this project.”
+
+	非常正式商务邮件、客服。“I'd appreciate it if we could expedite the process.”
+
+	商务项目加速。“Is there any way we can fast-track the approval?”
+
+	Move it!​	强硬/命令式	紧急时刻，对熟人或下属。“Move it! The building's on fire!”
+	On the double!​	军事/紧急非常快。“Get over here on the double!”
+	Make it quick​	直接	“Make it quick, I'm in the middle of something.”
+	No time to waste​	紧迫	“No time to waste—let's go now.”
+	We're running out of time​	焦虑/紧急	“We're running out of time, just decide!”
+
+	Whenever you get a chance...​非常委婉“Whenever you get a chance, could you send me that file?”
+	No rush, but...​客气“No rush, but we do need it by Friday.”
+	At your earliest convenience​正式委婉邮件常用。“Please reply at your earliest convenience.”
+	I was wondering if you could do this sooner rather than later.​极度委婉对上级或客户。
 
 裹
 	Wrap
@@ -2393,6 +2422,33 @@ in/on bed
 	Put the laundry on the bed.    ✅ 把衣服放在床面上
 	She sat on the bed and cried.  ✅ 她坐在床沿/床面上哭（没钻进被子）
 	There's a cat sleeping on my bed. ✅ 猫在我床面上睡
+
+fill in vs fill up:
+	Fill up（装满、填满）
+
+	核心意思：​ 把某个容器、空间或总量填满，直到它达到最大容量。
+
+	常见场景：
+
+	容器/空间：​ 把杯子倒满水、把车加满油、停车场停满车。
+	Could you fill up​ my water bottle?（你能把我的水壶装满水吗？）
+	I need to fill up​ the car with gas.（我得去给车加满油。）
+	表格（整个表格）：​ 在美式英语中，可以说 fill up a form，意思是“把整张表格填完”。
+	He filled up​ the application form.（他把申请表填好了。）
+	吃撑：​ I filled up​ on pizza.（我吃披萨吃撑了。）
+
+	Fill in（填入、填补）
+
+	核心意思：​ 在某个有空白、空缺或缺失的地方，把内容填进去。
+
+	常见场景：
+
+	填表格的空白处：​ 在英式英语和正式场合更常用，指在表格的空格里写字。
+	Please fill in​ your name and address.（请填入你的姓名和地址。）
+	填补空缺（职位/角色）：​ 临时顶替某人的位置。
+	Can you fill in​ for me at the meeting?（你能替我开个会吗？）
+	告知详情：​ 把某人不知道的信息告诉他（fill someone in on something）。
+	Let me fill you in​ on what happened.（我来跟你说说发生了什么。）
 #### 其他
 
 Jack Hartmann  "see it, say it, sign it, the letters are the alphabet"

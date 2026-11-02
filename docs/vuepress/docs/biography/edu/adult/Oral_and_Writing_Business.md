@@ -1130,6 +1130,8 @@ For your reference, as agreed with the vendor, direct code changes are restricte
 Hi X, quick heads-up. We need a new page—basically a clone of the PFMI page. XX will share the UI specs and content. One key thing: instead of an upload feature, just pull the files directly from the server (e.g., wp-content/uploads/xxx). I’ll set up a cron job to drop the files there.
 
 #### project test
+Hey team, just a quick update—the trading system and clearing system are now connected after the config changes. We're good to go for testing. Please start your smoke tests when you get a chance.
+    
 DB restored. Starting services now. Please don't test yet—I need to observe the job engine. If no issues, we can continue testing tomorrow. 
 
 Hi [xxx], I ran into an issue when I tried to flip the clear date. It seems I've found the first serious problem introduced by our Spring Boot upgrade. The drastic changes in JDK and Spring Boot versions appear to have altered the underlying classpath loading mechanism. As a result, even though we can compile the Java program without any issues, it might crash in certain code branches triggered by various scenarios.

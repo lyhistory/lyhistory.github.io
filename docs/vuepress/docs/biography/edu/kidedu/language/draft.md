@@ -6,6 +6,14 @@
 自动上传工具：https://github.com/dreammis/social-auto-upload
 
 ## TODO
+Thanks for showing up for our class today. 
+
+what can we see in the jungle?
+tress bushes water
+what animals live in the jungle
+monkeys can swing on their tail
+chameleons it can change different colors
+
 how are people and animals different?
 we eat different food.
  
@@ -26,6 +34,8 @@ how many arms do you got?
 two?
 how about octpus？
 rinos have got horn
+lions have got mane, we have got hair.
+lions have got paw, we have got hands.
 we are the same in some ways but different in others。
 
 how are people and animals different?
@@ -33,6 +43,21 @@ we can do different things.
 can birds fly? yes they can.
 can you fly? no i can't.
 
+how are people and animals different?
+sleep for different number of hours. 
+human usually sleep for 8 hours.
+elephant sleep for 3 hours.
+bat sleep for 15 hours.
+
+
+how are people and animals different?
+we live in different places/have different homes.
+bat live in the cave.
+bird live in the nest.
+squirrel live in the tree.
+we live in the house.
+i've got a big tail, i have got 4 legs, i love nuts, i can climb, i live in a tree, what am I?
+i've got tail, i havne't got legs, i can climb, what am i?
 the orange, we pronouce the because it's before vowel o
 
 
@@ -297,6 +322,36 @@ Daddy:​ Teddy is wet, baby. He needs to dry his body at home. We can't take hi
 Baby:​ Poor Teddy...
 
 Daddy:​ Yes, poor Teddy. Let's give him a kiss and say bye-bye. We'll see him later when he is all dry!
+
+
+
+Mum:​ Right then, children! Today we’re making Chinese dumplings — jiaozi!
+
+Oliver:​ Brilliant! I’ve had dumplings before, but never made them. What’s the filling, Mei?
+
+Mei:​ We’ve got two sorts! One is pork and Chinese cabbage, and the other is vegetable with tofu.
+
+Oliver:​ Pork and cabbage? That sounds lovely! What goes into the filling?
+
+Mei:​ First, we chop the cabbage really finely and squeeze out the water. Then we mix it with minced pork, a bit of ginger, some spring onions, and soy sauce.
+
+Mum:​ And for the veggie one, we use tofu, carrots, mushrooms, and lots of spring onions. It’s all about the filling!
+
+Oliver:​ Can I have a go at mixing the pork filling? It looks like great fun!
+
+Mei:​ Sure! Here’s the big spoon. Mix it until it’s all sticky — that makes the filling nice and juicy.
+
+Oliver:​ (Stirring) Blimey, it smells amazing! Is it ready yet?
+
+Mum:​ Nearly! Now we need to wrap them. Take a wrapper, put a spoonful of filling in the middle, and pinch the edges together.
+
+Oliver:​ Like this? It looks a bit like a wonky boat…
+
+Mei:​ That’s fine! As long as the filling doesn’t fall out. Well done, Oliver!
+
+Mum:​ Right, into the steamer they go. In ten minutes, we’ll have a proper dumpling feast!
+
+Oliver:​ I can’t wait! Dumplings are top-notch!
 
 风很冷 吹得手冰凉
 gimbal
