@@ -530,7 +530,22 @@ proof 醒发
 		She ​flicked the crumb off the table.
 	Shake off 通过摇动身体或物品，使附着物脱落。
 		The dog ran out of the water and ​shook off the water droplets.
-
+拍
+	pat	She patted​ the dog on the head.
+	stroke	He stroked​ her hair gently.
+	flap	The bird flapped​ its wings.
+	flutter	A butterfly fluttered​ by.
+	slap	He slapped​ the table in anger.
+	smack		She smacked​ the mosquito on her arm.
+	swat	He swatted​ a fly with a newspaper.
+	tap	Someone tapped​ me on the shoulder.
+	rap	She rapped​ on the window.
+	flick	He flicked​ the dust off his coat.
+	brush	She brushed​ the crumbs off the table.
+	clap	The audience clapped​ enthusiastically.
+	applaud		Everyone applauded​ the performance.
+	bounce		The kids were bouncing​ a ball.
+	dribble	He dribbled​ the ball down the court.
 烤
 	bake 密闭空间内均匀的干热，使食物结构发生变化（如面包膨胀、蛋糕凝固）
 		The traditional method of **clay baking** a whole chicken produces incredibly tender meat.

@@ -6,7 +6,41 @@
 自动上传工具：https://github.com/dreammis/social-auto-upload
 
 ## TODO
+
+interactive：
+who is the gift/baloon for?
+
 Thanks for showing up for our class today. 
+
+circus
+
+what are you doing?
+i'm playing football.do you want to join me.
+sure
+
+goes to bed and she has a dream
+
+what's your favorite food?
+what is it made of?
+what's your faviorte toy?
+what shape is it made of?
+
+
+
+vole vs mouse
+vole has round face and eat plants' roots
+but mouse has pointed face and eat almost everything
+turtles live in the sea 
+totorsise live on land
+
+FABLE:
+the fox and crow
+
+what can you do in the park?
+we can look for the folowers.
+we can have picnic.
+look, the sandwiches are triangles, the cookies are circle, the eggs are oval, the bread slices are rectangle
+
 
 what can we see in the jungle?
 tress bushes water
@@ -52,6 +86,7 @@ bat sleep for 15 hours.
 
 how are people and animals different?
 we live in different places/have different homes.
+rabbits live in the burrow
 bat live in the cave.
 bird live in the nest.
 squirrel live in the tree.
@@ -60,6 +95,20 @@ i've got a big tail, i have got 4 legs, i love nuts, i can climb, i live in a tr
 i've got tail, i havne't got legs, i can climb, what am i?
 the orange, we pronouce the because it's before vowel o
 
+how are we different?
+we can do different things.
+i can't climb but i can skip.
+
+how are we different?
+we wear different clothes
+
+how are we different?
+we look different
+she's got long and dark hair and big brown eyes.
+
+how are we different?
+we are different ages
+baby toddler children teenage adult elderly person
 
 Parent (家长):​ Come here, baby! Let's look at our home. (过来宝贝！我们来看看我们的家。)
 
