@@ -6,11 +6,35 @@
 自动上传工具：https://github.com/dreammis/social-auto-upload
 
 ## TODO
-
-interactive：
+### interactive：
 who is the gift/baloon for?
 
+a pile of / a large puddle of / a bucket of /...
+
+i will describe and you will guess what it is
+guess furniture:
+it's something that we used every night for sleep
+it's not bed but you can lay down or sit, it's very soft
+it's look like a pillow, usually put it on sofa
+it's a box that brings you shows, just press the button and then you goes.
+it's in your bedroom, it's where you store your clothes
+
+preposition:
+hide and find where is
+on top of the wardrobe
+under the bed
+
+### FABLE:
+the fox and crow
+
+### free
 Thanks for showing up for our class today. 
+
+my favourite things in Turkey/China/Guagnzhou/US/Singapore/Malay
+i like xx, it's my city
+the palace is very pretty
+i like boat ride ..
+i like food is very nice
 
 circus
 
@@ -25,16 +49,11 @@ what is it made of?
 what's your faviorte toy?
 what shape is it made of?
 
-
-
 vole vs mouse
 vole has round face and eat plants' roots
 but mouse has pointed face and eat almost everything
 turtles live in the sea 
 totorsise live on land
-
-FABLE:
-the fox and crow
 
 what can you do in the park?
 we can look for the folowers.
@@ -47,6 +66,7 @@ tress bushes water
 what animals live in the jungle
 monkeys can swing on their tail
 chameleons it can change different colors
+---
 
 how are people and animals different?
 we eat different food.
@@ -110,229 +130,103 @@ how are we different?
 we are different ages
 baby toddler children teenage adult elderly person
 
-Parent (家长):​ Come here, baby! Let's look at our home. (过来宝贝！我们来看看我们的家。)
+how are we different?
+our homes are different.
+it's a flat/cottage/bungalow/villa/cabin
+it's big/small/new/old
+it has got a garden/swimming pool
+i'd like to live in a 
+our homes have got furniture.
+wardobe/bookcase/cuboard/ cushion on sofa vs pillow on bed/
+rooms:bedroom kitchen bathroom living room dining room
+what can you see in the room
+what can you do in the room
 
-Baby (宝宝):​ Okay, Mama/Papa! (好呀！)
+how are we different?
+we are different in different ways.
+we are different ages.
+we look different.
+we wear different clothes.
+we can do different things.
+we like different things.
 
-Parent:​ Look! This is your bedroom. (看！这是你的卧室。)
 
-(动作：轻轻拍拍小床)
-
-Parent:​ We sleep here. Nighty night! (我们在这里睡觉。晚安！)
-
-Baby:​ Nighty night! (晚安！)
-
-Parent:​ And this is the bathroom. (这是浴室。)
-
-(动作：假装刷牙或洗手的动作)
-
-Parent:​ We take a bath here. Splish splash! (我们在这里洗澡。哗啦哗啦！)
-
-Baby:​ Splish splash! (哗啦哗啦！)
-
-Parent:​ Here is the kitchen. (这里是厨房。)
-
-(动作：深吸一口气，假装闻味道)
-
-Parent:​ Mmm! Mommy cooks yummy food here. (嗯！妈妈在这里做好吃的食物。)
-
-Baby:​ Yummy! (好吃！)
-
-Parent:​ Now, look at this BIG room! (现在，看看这个大房间！)
-
-Baby:​ Wow! So big! (哇！好大！)
-
-Parent:​ Yes! This is where we eat and play. (对！这是我们吃饭和玩耍的地方。)
-
-Parent:​ Look! This side is near the kitchen. (看！这一边靠近厨房。)
-
-(动作：指着餐桌)
-
-Parent:​ We eat here. This is our dining area. (我们在这里吃饭。这是我们的用餐区。)
-
-Baby:​ Eat! (吃饭！)
-
-Parent:​ And look over there! Near the window/balcony. (再看看那边！靠近窗户/阳台的地方。)
-
-(动作：指向沙发或玩具)
-
-Parent:​ We play and read books there. That is our living room. (我们在那里玩和看书。那是我们的客厅。)
-
-Baby:​ Play! (玩！)
-
-Parent:​ See? The dining area and the living room are together! (看到了吗？用餐区和客厅是连在一起的！)
-
-(动作：张开双手画一个大圈)
-
-Parent:​ One big, happy room! (一个很大、很幸福的房间！)
-
-Baby:​ Happy room! (幸福的房间！)
-
+Parent :​ Come here, baby! Let's look at our home. 
+Baby :​ Okay, Mama/Papa! 
+Parent:​ Look! This is your bedroom. 
+Parent:​ We sleep here. Nighty night! 
+Baby:​ Nighty night! 
+Parent:​ And this is the bathroom.
+Parent:​ We take a bath here. Splish splash!
+Baby:​ Splish splash!
+Parent:​ Here is the kitchen.
+Parent:​ Mmm! Mommy cooks yummy food here. 
+Baby:​ Yummy! 
+Parent:​ Now, look at this BIG room! 
+Baby:​ Wow! So big! 
+Parent:​ Yes! This is where we eat and play. 
+Parent:​ Look! This side is near the kitchen.
+Parent:​ We eat here. This is our dining area. 
+Baby:​ Eat!
+Parent:​ And look over there! Near the window/balcony. 
+Parent:​ We play and read books there. That is our living room. 
+Baby:​ Play!
+Parent:​ See? The dining area and the living room are together! 
+Parent:​ One big, happy room! 
+Baby:​ Happy room! 
 
 
 🎬 完整对话脚本（边吃水果边讲）
 
 Mama:​ Baby, you just ate a yummy strawberry. Do you know where it's going?
-
-（宝贝，你刚吃了一颗美味的草莓。你知道它去哪儿了吗？）
-
 Baby:​ It's in my tummy!
-
-（在我肚子里！）
-
 Mama:​ That's right! But guess what — it's going on a trip inside your body! Want to follow it?
-
-（对！但是你知道吗——它要在你身体里进行一次旅行！想跟着看看吗？）
-
 Baby:​ Yes! Where does it go first?
-
-（想！它先去哪儿？）
-
 Mama:​ First, your teeth chop it up — crunch crunch! Then your tongue helps you swallow. Down the slide it goes — whoosh!
-
-（首先，你的牙齿把它切碎——咔嚓咔嚓！然后舌头帮你吞下去。沿着滑梯下去——嗖！）
-
 Baby:​ Where's the slide?
-
-（滑梯在哪儿？）
-
 Mama:​ It's inside your neck! It's called a food pipe. The strawberry slides all the way down to your tummy. Gurgle gurgle!
-
-（在你脖子里面！它叫食物管道。草莓一路滑到你的胃里。咕噜咕噜！）
-
 Baby:​ What happens in the tummy?
-
-（胃里发生什么？）
-
 Mama:​ Your tummy is like a blender! It mixes the strawberry into a mushy soup. Then it goes into tiny twisty tubes that take the good stuff to make you strong.
-
-（你的胃像一个搅拌机！它把草莓搅拌成糊状的汤。然后它进入细细弯弯的管子，那些管子把好东西拿走，让你变强壮。）
-
 Baby:​ And then?
-
-（然后呢？）
-
 Mama:​ The parts we don't need go into a big tube and turn into... POOPOO!​ 💩
-
-（我们不需要的部分进入一条大管子，变成……便便！）
-
 Baby:​ Eww! Poopoo!
-
-（噫！便便！）
-
 Mama:​ That's right! And when it's ready, you sit on the potty and push push — out it comes! The strawberry's trip is all done!
-
-（对呀！当它准备好了，你坐到小马桶上"嗯嗯"——它就出来啦！草莓的旅行结束啦！）
-
 
 
 🎬 升级版对话（正式词汇 + 宝宝语混搭）
 
 Mama:​ Baby, after you swallow, the food goes down a slide into your tummy. The big name for tummy is stomach! 🫄
-
-（宝贝，吞下去之后，食物沿着滑梯进到你的肚肚里。肚肚的大名叫 stomach！）
-
 Baby:​ Stomach!
-
-（Stomach！）
-
 Mama:​ Right! In the stomach, food gets all mushy. Then it goes into twisty tubes called intestines. 🌀
-
-（对！在 stomach 里，食物变成糊糊。然后它进入弯弯的管子，叫 intestines。）
-
 Mama:​ The thin ones take the good stuff — they're small intestines. The thick one makes poopoo — that's the large intestine! 💩
-
-（细的管子把好东西拿走——它们叫 小肠。粗的管子制造便便——那是 大肠！）
-
 Baby:​ Small intestine, large intestine!
-
-（小肠！大肠！）
-
 Mama:​ Perfect! You're so smart! 🌟
-
-（太棒了！你真聪明！）
-
 
 
 🎬 5岁版完整对话：食物的探险之旅
 
 Mama:​ Sweetie, you just ate a banana. Do you want to know what happens to it inside your body?
-
-（宝贝，你刚吃了一根香蕉。想知道它在你身体里发生了什么吗？）
-
 Baby:​ Yeah! It goes to my tummy!
-
-（想！它去我的肚肚里！）
-
 Mama:​ Right! But your body is like a long adventure park for food. Want to be a tour guide and follow it?
-
-（对！但你的身体对食物来说就像一个大型探险乐园。想当导游跟着它看看吗？）
-
 Baby:​ Yes! Let's go!
-
-（想！走吧！）
-
 Mama:​ Step 1 — Mouth!​ 🦷
-
 Your teeth chop the banana into tiny pieces. Your tongue mixes it with spit. Then... gulp! You swallow it!
-
-（第一步——嘴巴！你的牙齿把香蕉切成小块。舌头把它和口水混合。然后……咕咚！你吞下去了！）
-
 Baby:​ Where does it go next?
-
-（接下来去哪儿？）
-
 Mama:​ Step 2 — Esophagus!​ 🎢
-
 It goes down a long tube called the esophagus. It's like a slide in your throat! Whoosh! Down it goes!
-
-（第二步——食道！它沿着一条叫"食道"的长管子下去。就像你喉咙里的一条滑梯！嗖！下去了！）
-
 Baby:​ Cool!
-
-（酷！）
-
 Mama:​ Step 3 — Stomach!​ 🌀
-
 The banana lands in your stomach. Your stomach has strong muscles. It squeezes and mixes — gurgle gurgle! — turning the banana into a mushy soup!
-
-（第三步——胃！香蕉落到你的胃里。你的胃有强壮的肌肉。它挤压、搅拌——咕噜咕噜！——把香蕉变成糊状的汤！）
-
 Baby:​ Like a blender!
-
-（像一个搅拌机！）
-
 Mama:​ Exactly! Step 4 — Small Intestine!​ 🧪
-
 The mushy soup flows into the small intestine. It's a very long, twisty tube — about as long as you are tall! It takes out all the nutrients — the good stuff that makes you grow big and strong.
-
-（没错！第四步——小肠！糊糊汤流进小肠。它是一条很长很弯的管子——差不多和你一样高！它把所有的营养都提取出来——就是让你长高长壮的好东西。）
-
 Baby:​ Wow, as tall as me?
-
-（哇，和我一样高？）
-
 Mama:​ Yep! Step 5 — Large Intestine!​ 💩
-
 Whatever your body doesn't need goes into the large intestine. It's thicker and shorter. It squeezes out the water and turns the rest into poopoo!
-
-（对！第五步——大肠！身体不需要的东西进入大肠。它更粗更短。它把水挤出来，把剩下的变成便便！）
-
-
 Mama:​ Step 6 — Rectum and Anus!​ 🚽
-
 The poopoo waits in the rectum — like a little waiting room. When it's ready, your anus opens and... push push! Out it comes! All done!
-
-（第六步——直肠和肛门！便便在直肠里等着——就像一个等候室。准备好了，肛门打开……嗯嗯！它就出来啦！全部完成！）
-
 Baby:​ That's so cool! The banana went on a whole adventure!
-
-（太酷了！香蕉经历了一次完整的探险！）
-
 Mama:​ It sure did! Your body is amazing, right?
-
-（确实！你的身体很神奇，对吧？）
-
 
 场景1：宝宝说不喜欢学校，问为什么，宝宝说有小朋友不跟我玩欺负我
 
