@@ -11,6 +11,9 @@ who is the gift/baloon for?
 
 a pile of / a large puddle of / a bucket of /...
 
+what's this?
+cupboard wardrobe
+
 i will describe and you will guess what it is
 guess furniture:
 it's something that we used every night for sleep
@@ -23,6 +26,27 @@ preposition:
 hide and find where is
 on top of the wardrobe
 under the bed
+
+i want bread and juice, where are they?
+
+plants in/on the window?
+on/under
+
+fIRST  NEXT THEN FINALLY
+
+WHAT is the house mdade of
+it is made of
+special house
+snow can be used to build an igloo
+straw can be used to build a straw bale house
+whool can be used to build a yurt
+tree house
+camper
+cave house
+
+it is special because xxx
+
+what would xxx if you were xxx
 
 ### FABLE:
 the fox and crow
@@ -106,6 +130,7 @@ bat sleep for 15 hours.
 
 how are people and animals different?
 we live in different places/have different homes.
+differenet animals live in different palaces
 rabbits live in the burrow
 bat live in the cave.
 bird live in the nest.
@@ -137,7 +162,7 @@ it's big/small/new/old
 it has got a garden/swimming pool
 i'd like to live in a 
 our homes have got furniture.
-wardobe/bookcase/cuboard/ cushion on sofa vs pillow on bed/
+wardobe/bookcase/cuboard/ cushion on sofa vs pillow on bed/bouncy sofa
 rooms:bedroom kitchen bathroom living room dining room
 what can you see in the room
 what can you do in the room
