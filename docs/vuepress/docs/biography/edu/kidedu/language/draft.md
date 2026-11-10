@@ -6,7 +6,27 @@
 自动上传工具：https://github.com/dreammis/social-auto-upload
 
 ## TODO
+
+Thanks for showing up for our class today. 
+
+
+
+
 ### interactive：
+
+what's your favorite food?
+what is it made of?
+what's your faviorte toy?
+what shape is it made of?
+
+the orange, we pronouce the because it's before vowel o
+
+Can you describe this?
+hint:
+
+i've got a big tail, i have got 4 legs, i love nuts, i can climb, i live in a tree, what am I?
+i've got tail, i havne't got legs, i can climb, what am i?
+
 who is the gift/baloon for?
 
 a pile of / a large puddle of / a bucket of /...
@@ -46,13 +66,18 @@ cave house
 
 it is special because xxx
 
-what would xxx if you were xxx
+
+
+what are you doing?
+i'm playing football.do you want to join me.
+sure
 
 ### FABLE:
 the fox and crow
 
 ### free
-Thanks for showing up for our class today. 
+explain: i guess, i think, if
+what would xxx if you were xxx
 
 my favourite things in Turkey/China/Guagnzhou/US/Singapore/Malay
 i like xx, it's my city
@@ -62,16 +87,11 @@ i like food is very nice
 
 circus
 
-what are you doing?
-i'm playing football.do you want to join me.
-sure
+
 
 goes to bed and she has a dream
 
-what's your favorite food?
-what is it made of?
-what's your faviorte toy?
-what shape is it made of?
+
 
 vole vs mouse
 vole has round face and eat plants' roots
@@ -90,18 +110,17 @@ tress bushes water
 what animals live in the jungle
 monkeys can swing on their tail
 chameleons it can change different colors
+
 ---
 
 how are people and animals different?
 we eat different food.
- 
 what do fish eat? fish food.
 what to cows eat? hay.
 what do rabbits eat ? they eat carrots, we eat carrots too.
 
 how are people and animals different?
 our bodies are different.
-
 what parts of the body have bird got?
 the mouth of birds is beak.
 what parts of the body haven't bird got?
@@ -120,6 +139,7 @@ how are people and animals different?
 we can do different things.
 can birds fly? yes they can.
 can you fly? no i can't.
+the dog can dig.
 
 how are people and animals different?
 sleep for different number of hours. 
@@ -134,11 +154,12 @@ differenet animals live in different palaces
 rabbits live in the burrow
 bat live in the cave.
 bird live in the nest.
+fish live in the water
 squirrel live in the tree.
 we live in the house.
-i've got a big tail, i have got 4 legs, i love nuts, i can climb, i live in a tree, what am I?
-i've got tail, i havne't got legs, i can climb, what am i?
-the orange, we pronouce the because it's before vowel o
+our homes have got rooms.
+our homes have got furniture.
+
 
 how are we different?
 we can do different things.
@@ -156,14 +177,17 @@ we are different ages
 baby toddler children teenage adult elderly person
 
 how are we different?
-our homes are different.
+our homes are different. they are different in different ways.
+our house type are different. 
 it's a flat/cottage/bungalow/villa/cabin
 it's big/small/new/old
 it has got a garden/swimming pool
 i'd like to live in a 
-our homes have got furniture.
+our homes have got different furnitures.
 wardobe/bookcase/cuboard/ cushion on sofa vs pillow on bed/bouncy sofa
+our homes have got different rooms.
 rooms:bedroom kitchen bathroom living room dining room
+our homes are made of different materials
 what can you see in the room
 what can you do in the room
 
