@@ -9,15 +9,18 @@
 
 Thanks for showing up for our class today. 
 
-
-
-
 ### interactive：
 
 what's your favorite food?
 what is it made of?
+Pizza
+It's made of bread, cheese, and tomatoes!
 what's your faviorte toy?
+My teddy bear! It's so soft and cuddly!
+It's made of soft fabric!
+“Look at this toy block. What shape is it?
 what shape is it made of?
+cube
 
 the orange, we pronouce the because it's before vowel o
 
@@ -73,8 +76,11 @@ i'm playing football.do you want to join me.
 sure
 
 ### FABLE:
-the fox and crow
+https://aesop.nanitalk.com/en/fables
 
+中国历史故事
+中国民俗故事
+易经
 ### free
 explain: i guess, i think, if
 what would xxx if you were xxx
